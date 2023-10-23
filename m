@@ -2,91 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A77717D3DD9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 19:35:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 301467D3DF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 19:40:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230171AbjJWRfE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 13:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48158 "EHLO
+        id S233406AbjJWRkz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 13:40:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229717AbjJWRfD (ORCPT
+        with ESMTP id S233661AbjJWRky (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 13:35:03 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7449994;
-        Mon, 23 Oct 2023 10:35:01 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39NFINoQ009003;
-        Mon, 23 Oct 2023 17:34:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=yvlCbiRr18FdVxgfxneGyjIS4OoyzH6zgRsET/Jvi98=;
- b=cN/m+cgb4c7nh3fve4+y6YT7hVUwJeS6ieqdGF6RWBYFOnlXV3EfpDY9LeoZL10yoPeh
- nxY41pEJsan9ZcDOrExwBOGEMmJGqqEs63U1mX+fnyPC3PPJZEWBuihz0xe/nwfPLhKb
- 1RG6pU1z76ZDtJ1J1zL/mgyaL+jsBgTpNFLafZ/NvVYHECSY3pxKz5FpqM32iu68kGfe
- OkSTXo49bwSaCFe/TARbOnm3Wj7tZFDuyBNfsuFV/bfarmDpm4AOpc8Mpo6CSUquqznr
- 00y4nSGjGH2E+aT9F0qS5wIAiZhTus4sXbw85sjv3CW/PE7yyM08JuO3kpI3ZvJUIeHs pQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tv6r2cr1d-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 17:34:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39NHYpPf017938
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 17:34:51 GMT
-Received: from [10.216.7.46] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 23 Oct
- 2023 10:34:43 -0700
-Message-ID: <c50e9266-2308-4fd5-b102-f604bf4ce2e8@quicinc.com>
-Date:   Mon, 23 Oct 2023 23:04:38 +0530
+        Mon, 23 Oct 2023 13:40:54 -0400
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 580D6C5;
+        Mon, 23 Oct 2023 10:40:52 -0700 (PDT)
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6ce2cc39d12so2432576a34.1;
+        Mon, 23 Oct 2023 10:40:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698082851; x=1698687651;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ci20MeXAaJovlWs32J4lQ2AOh7wVQ5T3pLsa9J8Ay3o=;
+        b=KsBGxYy7s00yZBPtCryBg0UJ8IA6gfTsCm8avo2UM1QLeMHmAcW9gPH14KW4r7AoON
+         vTx1eFh6JE3YjNn1jNXqFs+2eTsMYX7fqu+9249lt+2MWtBFzeG58CorgZPNYpZmkvBq
+         MxdK+U5LeyzIO0IO78vB5zx2XvXIBKewisR4Yz3LlmAjUA4hJUIiy25pZBClueCcUBTb
+         J9pUP8FtsSz0HeQ0/KQmiARdyJ0qmy3hNE5bk+c9VF4Rj/A3lmo/yGbeIwSpZ3wEKLu2
+         L9bhb6arxzP5LjW98ZkppDLxxu+kdjaCro0wajXVSkAx9BMvgB7H7SjCG42znKEn+TMS
+         Vl7A==
+X-Gm-Message-State: AOJu0YxVy/m6T6V0UA+rPYEMFMLn+PpZcqeXagTL0taue3Oiii+2QM/n
+        uod9ILj87/udA5yP867sfg==
+X-Google-Smtp-Source: AGHT+IG9RRIIApJVrYk+XEij6WOv/Dl0c/S+lWqfznYF8ZkbRj8yAI1ZaacK6GpVmpiljJ7E0ZLZOA==
+X-Received: by 2002:a05:6830:16c9:b0:6c4:8441:f90 with SMTP id l9-20020a05683016c900b006c484410f90mr10480313otr.24.1698082851524;
+        Mon, 23 Oct 2023 10:40:51 -0700 (PDT)
+Received: from herring.priv ([2607:fb91:e6e0:8169:8cd7:6070:de02:c079])
+        by smtp.gmail.com with ESMTPSA id c23-20020a9d6c97000000b006c619f17669sm1491924otr.74.2023.10.23.10.40.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Oct 2023 10:40:50 -0700 (PDT)
+Received: (nullmailer pid 864623 invoked by uid 1000);
+        Mon, 23 Oct 2023 17:40:49 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 08/10] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+From:   Rob Herring <robh@kernel.org>
+To:     Nikita Travkin <nikita@trvn.ru>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-9-quic_kriskura@quicinc.com>
- <ZTaauQewazaaFonF@hovoldconsulting.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZTaauQewazaaFonF@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: f7QCm6TWSGo2izP2PykhLjqDjP3EZzbk
-X-Proofpoint-GUID: f7QCm6TWSGo2izP2PykhLjqDjP3EZzbk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-23_16,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- adultscore=0 clxscore=1015 priorityscore=1501 phishscore=0 spamscore=0
- mlxlogscore=695 impostorscore=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310230153
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        Lee Jones <lee@kernel.org>, linux-kernel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20231023-pm8916-dtsi-bms-lbc-v2-1-343e3dbf423e@trvn.ru>
+References: <20231023-pm8916-dtsi-bms-lbc-v2-0-343e3dbf423e@trvn.ru>
+ <20231023-pm8916-dtsi-bms-lbc-v2-1-343e3dbf423e@trvn.ru>
+Message-Id: <169808265626.861066.13083505051202182067.robh@kernel.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: Add pm8916
+ vm-bms and lbc
+Date:   Mon, 23 Oct 2023 12:40:49 -0500
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -94,79 +73,40 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On Mon, 23 Oct 2023 11:20:32 +0500, Nikita Travkin wrote:
+> PM8916 (and probably some other similar pmics) have hardware blocks for
+> battery monitoring and charging. Add patterns for respecive nodes so the
+> devicetree for those blocks can be validated properly.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
 
-On 10/23/2023 9:39 PM, Johan Hovold wrote:
-> On Sat, Oct 07, 2023 at 09:18:04PM +0530, Krishna Kurapati wrote:
->> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
->> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
->> platforms.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 84 ++++++++++++++++++++++++++
->>   1 file changed, 84 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> index cad59af7ccef..5f64f75b07db 100644
->> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->> @@ -3330,6 +3330,90 @@ system-cache-controller@9200000 {
->>   			interrupts = <GIC_SPI 582 IRQ_TYPE_LEVEL_HIGH>;
->>   		};
->>   
->> +		usb_2: usb@a4f8800 {
->> +			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,dwc3";
-> 
-> So you went with a dedicated compatible even though you are now
-> inferring the number of ports from the interrupts property.
-> 
-> Should we drop that compatible again or is there any other reason to
-> keep a separate one?
->  >> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
->> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
->> +					      <&pdc 129 IRQ_TYPE_EDGE_RISING>,
->> +					      <&pdc 128 IRQ_TYPE_EDGE_RISING>,
->> +					      <&pdc 131 IRQ_TYPE_EDGE_RISING>,
->> +					      <&pdc 130 IRQ_TYPE_EDGE_RISING>,
->> +					      <&pdc 133 IRQ_TYPE_EDGE_RISING>,
->> +					      <&pdc 132 IRQ_TYPE_EDGE_RISING>,
->> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
->> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +			interrupt-names = "dp_hs_phy_1", "dm_hs_phy_1",
->> +					  "dp_hs_phy_2", "dm_hs_phy_2",
->> +					  "dp_hs_phy_3", "dm_hs_phy_3",
->> +					  "dp_hs_phy_4", "dm_hs_phy_4",
->> +					  "ss_phy_1", "ss_phy_2",
->> +					  "pwr_event_1",
->> +					  "pwr_event_2",
->> +					  "pwr_event_3",
->> +					  "pwr_event_4";
-> 
-> The interrupt order does not match the binding, where the power event
-> interrupts come first.
-> 
-> And we probably also want the hs_phy_irqs here after fixing the
-> incomplete binding.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-You want to update the driver code for this as well ? I have no problem 
-in adding it in DT and binding but not in driver.
+yamllint warnings/errors:
 
-> 
->> +			usb_2_dwc3: usb@a400000 {
->> +				compatible = "snps,dwc3";
->> +				reg = <0 0x0a400000 0 0xcd00>;
->> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-> 
-> I'd also like to know what that second dwc3 interrupt is for and whether
-> it should be defined here as well.
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml:
+Error in referenced schema matching $id: http://devicetree.org/schemas/power/supply/qcom,pm8916-bms-vm.yaml
 
-Second interrupts is for HW acceleration I believe for which support is 
-not there currently.
+doc reference errors (make refcheckdocs):
 
-Regards,
-Krishna,
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231023-pm8916-dtsi-bms-lbc-v2-1-343e3dbf423e@trvn.ru
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
