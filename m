@@ -2,185 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B2BE7D2E0D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 11:22:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4D887D2E29
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 11:25:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232696AbjJWJVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 05:21:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46530 "EHLO
+        id S232894AbjJWJZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 05:25:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232982AbjJWJVl (ORCPT
+        with ESMTP id S233042AbjJWJZn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 05:21:41 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CCFCD71;
-        Mon, 23 Oct 2023 02:21:38 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5ABFC433C7;
-        Mon, 23 Oct 2023 09:21:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698052897;
-        bh=uGmAHWWEHuC6CtTkdGrPEy+s20iQcX/+23N0QeT0Bkw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ublXkvkmewNO5+joVQ7EinSOUJ+/TGCa+HaP+yUl7fR8fEzCZKnjEGTQamdf4s6Tu
-         Eq611qj4Qv3n0bbj+bg6idQApdlwc8PYP7f4/8xHaFbmGBmLpRb2ohKubgYYZq//gf
-         iV2p0AnKrzU6hM6NXgqxC/a2OzXb5KV+t/zZ0tkStoa03ZJCHlmL8WnnkC9AQzvLe9
-         cAagHjNUonEAtB1egSy7/YwfmoEPSwx+ouI25HgdsVATWkUNE1LMFqDellVLOHdN2A
-         w/APbQM3fBYOLOOw0o4IPiMEV/2yOupLhjEFkWVBcsnXvLNNoO1Rl+E/4ErOlCEtw4
-         4w7D/PJ02BAcA==
-Received: from johan by xi.lan with local (Exim 4.96)
-        (envelope-from <johan@kernel.org>)
-        id 1qur8B-0007vL-2p;
-        Mon, 23 Oct 2023 11:21:51 +0200
-Date:   Mon, 23 Oct 2023 11:21:51 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
-Message-ID: <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-6-quic_kriskura@quicinc.com>
- <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
- <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+        Mon, 23 Oct 2023 05:25:43 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA18E10CE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:25:40 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40837ebba42so22529915e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 02:25:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698053139; x=1698657939; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nW7i7b8vhIed47V4oIjE0BLCMbc+AJZblIGq7PmcJLw=;
+        b=vvznWHg4H/k/yMBpsXXrEDoPXAEF0NIpfM4NlGG/6VCP9Tanq/K6u9S5oq0UvyoPuk
+         15INw/7eyUN4H55/2AUDf9If7hX5xNWWuxqebkN8f2gXcyw60NH4IUk8msqmsjWEQYLB
+         2gPDeydYkegR/as9vfWYWV9z3qdNU7X3MIwNTMJesOy/0NJw/vdlpfHqQXAXFhuptcAP
+         mOYG+NxwLdfMp6Dk1mtXd3UOhLVn5+nf6a/3kmFAQe2jCEtxwQP2qCuw/1L647SV6ym4
+         G2/iotsrGOrAXrhG8mnJbK0KZeqn+HqSSbsrGv1YF1iicHwL7hYWH9mUoPcYWTF5+2iJ
+         jLog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698053139; x=1698657939;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nW7i7b8vhIed47V4oIjE0BLCMbc+AJZblIGq7PmcJLw=;
+        b=DOz2KyTSKMS57qTIqmy3SRi1w+YViADb2oCPnSARAGiWQVRNaMH5ZaIi3Vdz2pxwNW
+         hxJ1+EXTYofzOMkQdwTUkWvE1dz/MN79Y4rkoB0zyDI6udvEkzt9aNl3YOa2vGF9Ar7O
+         3dQsA3CJ7RNE6yRZWjjW58VEVnuGm2GiJ6XBDhJDiTTsh1Cb34xeV2mx5CJXXKpHvB9C
+         Vah+y/OA4IFomnWCZc8zvu7sNS3jPc641J1mEy0/cxOF8QJiOSgTL7br2DeVYrDlMSBQ
+         OQF+EFTYn72iRzCxOzVNTwHs/rwM2U/Eq7azedFS5WkzRudvTZD5F+NXSy2d0zf4jVgS
+         53Hw==
+X-Gm-Message-State: AOJu0YzuorAgEa4QiRS2ie4CW+QS3sAPPzjrLiIiarYyGfLsNMj0q9mt
+        a8FEGN605yQMFxZApXAwcMVxlw==
+X-Google-Smtp-Source: AGHT+IFt6bH6eWAWqYdvbo82OTM0VsELjJsDajLCqJ5B8zgFbysym8oqDmMe3V7OGWNFqSaw0jxu1A==
+X-Received: by 2002:a05:600c:450d:b0:3ff:233f:2cfb with SMTP id t13-20020a05600c450d00b003ff233f2cfbmr6412466wmo.23.1698053139208;
+        Mon, 23 Oct 2023 02:25:39 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id p12-20020a05600c418c00b0040773c69fc0sm13481557wmh.11.2023.10.23.02.25.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Oct 2023 02:25:38 -0700 (PDT)
+Message-ID: <70072874-6fa8-46ba-bf26-c35aa6ec7bb6@linaro.org>
+Date:   Mon, 23 Oct 2023 11:25:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/5] soc/arm64: qcom: add initial version of memory
+ dump
+Content-Language: en-US
+To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@quicinc.com,
+        quic_tingweiz@quicinc.com
+References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 23, 2023 at 12:11:45AM +0530, Krishna Kurapati PSSNV wrote:
-> On 10/20/2023 6:53 PM, Johan Hovold wrote:
-> > On Sat, Oct 07, 2023 at 09:18:01PM +0530, Krishna Kurapati wrote:
-
-> >> +#define NUM_PHY_IRQ		4
-> >> +
-> >> +enum dwc3_qcom_ph_index {
-> > 
-> > "phy_index"
-> > 
-> >> +	DP_HS_PHY_IRQ_INDEX = 0,
-> >> +	DM_HS_PHY_IRQ_INDEX,
-> >> +	SS_PHY_IRQ_INDEX,
-> >> +	HS_PHY_IRQ_INDEX,
-> >> +};
-> >> +
-> >>   struct dwc3_acpi_pdata {
-> >>   	u32			qscratch_base_offset;
-> >>   	u32			qscratch_base_size;
-> >>   	u32			dwc3_core_base_size;
-> >> +	/*
-> >> +	 * The phy_irq_index corresponds to ACPI indexes of (in order) DP/DM/SS
-> >> +	 * IRQ's respectively.
-> >> +	 */
-> >> +	int			phy_irq_index[NUM_PHY_IRQ - 1];
-> >>   	int			hs_phy_irq_index;
-> >> -	int			dp_hs_phy_irq_index;
-> >> -	int			dm_hs_phy_irq_index;
-> >> -	int			ss_phy_irq_index;
-> >>   	bool			is_urs;
-> >>   };
-> >>   
-> >> @@ -73,10 +84,12 @@ struct dwc3_qcom {
-> >>   	int			num_clocks;
-> >>   	struct reset_control	*resets;
-> >>   
-> >> +	/*
-> >> +	 * The phy_irq corresponds to IRQ's registered for (in order) DP/DM/SS
-> >> +	 * respectively.
-> >> +	 */
-> >> +	int			phy_irq[NUM_PHY_IRQ - 1][DWC3_MAX_PORTS];
-> >>   	int			hs_phy_irq;
-> >> -	int			dp_hs_phy_irq;
-> >> -	int			dm_hs_phy_irq;
-> >> -	int			ss_phy_irq;
-> > 
-> > I'm not sure using arrays like this is a good idea (and haven't you
-> > switched the indexes above?).
-> > 
-> > Why not add a port structure instead?
-> > 
-> > 	struct dwc3_qcom_port {
-> > 		int hs_phy_irq;
-> > 		int dp_hs_phy_irq;
-> > 		int dm_hs_phy_irq;
-> > 		int ss_phy_irq;
-> > 	};
-> > 
-> > and then have
-> > 
-> > 	struct dwc3_qcom_port ports[DWC3_MAX_PORTS];
-> > 
-> > in dwc3_qcom. The port structure can the later also be amended with
-> > whatever other additional per-port data there is need for.
-> > 
-> > This should make the implementation cleaner.
-> > 
-> > I also don't like the special handling of hs_phy_irq; if this is really
-> > just another name for the pwr_event_irq then this should be cleaned up
-> > before making the code more complicated than it needs to be.
-> > 
-> > Make sure to clarify this before posting a new revision.
+On 23/10/2023 11:20, Zhenhua Huang wrote:
+> Qualcomm memory dump driver is to cooperate with firmware, providing the
+> hints(id and size) of storing useful debugging information into pre-allocated
+> memory. Firmware then does the real data capture. The debugging information
+> includes cache contents, internal memory, registers. 
 > 
-> hs_phy_irq is different from pwr_event_irq.
+> The driver dynamically reserves memory and provides the hints(dump id and size)
+> following specified protocols with firmware. After crash and warm reboot,
+> firmware scans these information and stores contents into reserved memory
+> accordingly. Firmware then enters into full dump mode which dumps whole DDR
+> to host through USB.
 
-How is it different and how are they used?
+How does it relate to minidump?
 
-> AFAIK, there is only one of this per controller.
-
-But previous controllers were all single port so this interrupt is
-likely also per-port, even if your comment below seems to suggest even
-SC8280XP has one, which is unexpected (and not described in the updated
-binding):
-
-	Yes, all targets have the same IRQ's. Just that MP one's have
-	multiple IRQ's of each type. But hs-phy_irq is only one in
-	SC8280 as well.
-
-	https://lore.kernel.org/lkml/70b2495f-1305-05b1-2039-9573d171fe24@quicinc.com/
-
-Please clarify.
-
-> >> -static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, char *irq_name,
-> >> -				char *disp_name, int irq)
-> >> +static int dwc3_qcom_prep_irq(struct dwc3_qcom *qcom, const char *irq_name,
-> >> +				const char *disp_name, int irq)
-> > 
-> > Ok, here you did drop the second name parameter, but without renaming
-> > the first and hidden in a long diff without any mention anywhere.
-> > 
-> I didn't understand the comment. Can you please elaborate.
-> I didn't drop the second parameter. In the usage of this call, I passed 
-> same value to both irq_name and disp_name:
 > 
-> "dwc3_qcom_prep_irq(qcom, irq_names[i], irq_names[i], irq);"
+> User then get full dump using PCAT and can parse out these informations.
 > 
-> I mentioned in cover-letter that I am using same name as obtained from 
-> DT to register the interrupts as well. Should've mentioned that in 
-> commit text of this patch. Will do it in next version.
+> Dump id and size are provided by bootconfig. The expected format of a
+> bootconfig file is as follows:-
+> memory_dump_config {
+> 	<node name> {
+> 		id = <id of HW component>
+> 		size = <dump size of HW component>
+> 	}
+> }
+> 
+> for example:
+> memory_dump_config {
+>         c0_context_dump {
+> 		id = 0
+> 		size = 0x800
+>         }
+> }
+> 
+> Test based on 6.6-rc1.
 
-Ah, sorry I misread the diff. You never drop the second name even though
-it is now redundant as I pointed on in a comment to one of the earlier
-patches.
+I don't think so (or you miss yamllint).
 
-Johan
+$ git checkout v6.6-rc1
+$ b4 am...
+$ dt_binding_chec
+
+qcom,mem-dump.yaml:5:10: [error] string value is redundantly quoted with
+any quotes (quoted-strings)
+
+
+Best regards,
+Krzysztof
+
