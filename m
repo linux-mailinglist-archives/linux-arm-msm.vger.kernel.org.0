@@ -2,152 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F7667D373E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 14:54:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A59977D3868
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 15:50:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229956AbjJWMyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 08:54:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34540 "EHLO
+        id S229707AbjJWNuL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 09:50:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229914AbjJWMyu (ORCPT
+        with ESMTP id S229589AbjJWNuK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 08:54:50 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A5F5101
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 05:54:48 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c5071165d5so13922221fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 05:54:47 -0700 (PDT)
+        Mon, 23 Oct 2023 09:50:10 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51BA991
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 06:50:08 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c5210a1515so50140301fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 06:50:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698065686; x=1698670486; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698069006; x=1698673806; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bauWTuO13BcYojF8Q9XKoja26EpZMbhqGAwdScx4+Xo=;
-        b=JdKOH+RDlYDzTx/BRl+rQEt46jvulcwu0uenz3Tj0xOXSXVduyAx9yaQ7Rl3TN0cRE
-         P4ZQoxRb8ve0p2n9T/4JF0R6EEContsCQj3mYxsrIKGKp9+E6eckT+sY6iMDC0lSz6v0
-         PM+R+7Zl0zZ8HOGCXsFi3H24tTjiVU5om3AnQdFo5pC0rqBaXKmyYYyYJuRnQQ1yD6T6
-         jaxruCnvdqSMsJwbHfzOrTCPm5uIfkiJOTCDdqxF51viuT8eiWu6uEPrr1zVNaRCBUW+
-         ttgPisae0Z1ckHFHpGhoSnsUMKCYg4FkwxoGfBsgSgm1PusD1VxzEq98i2Lwt+MkYLhe
-         8ZpQ==
+        bh=p4dzCg7KZAa1pqs+2lmIym8cEv1bEx0TEnLwptO2/Vg=;
+        b=bF6GF3aa+B8fKRZaclavnJeA26/axrIhpi2izruqx39LdI6xayPUjC8KtCXUIYrxAV
+         VlwB+h65a2VcB5WEOvXuY4Vx5cWDYTP84TXmSh09EDJLWMun2FHgyNwWtMKwiAbY+0Ud
+         Elx2aEZPriKRo8UmWP1+mTs//CwBjdyXNN2SlTyIiF2McctxxfL59s91SSF8b1VQoGJW
+         Ilj2cb0iH7SVWcmNzmIaCc6fvg3H2ekWhDoXxbQiaBaN3zZ4vpH62Zfu3PtC5JWBlOT+
+         m4/DveEhus9AdOluA50XIR5v9JNJ9Zac23t1+HvRGjmRPDyixSfy0AQp37ZhWkHiHwy0
+         dIVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698065686; x=1698670486;
+        d=1e100.net; s=20230601; t=1698069006; x=1698673806;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bauWTuO13BcYojF8Q9XKoja26EpZMbhqGAwdScx4+Xo=;
-        b=tdKIjhkhMxuAcSvVP/VSWQt+RB81HxUmTkz5HkFqrHpDTSI4+rHrG9hNsfhLKtR+Ae
-         Fewd2I3N3fBA6n0gfVOnnhTpv2s3GsiVh1iM8Yx/G35CY1LyIPl2CDazK+PgrtZC0XCu
-         MvrLgalX4dILbtlwcT4cHxdVLc75VJOyR9Ntc16DsT7lKOxNH+nM/y9RE5ghmiUge/aS
-         1KCVxwkiKlUFIdYfgyUySVD02wBwaDrsBViKT7WBsk2W+pbVXtOUt0KhJp1jLaAqA5L9
-         upKbX0Xb3N97CghZvPFEuNl38OXjd2p8Wmo9gA1VclP8cCwbg7JF+CCdXqJ6J0k59SYI
-         3V7Q==
-X-Gm-Message-State: AOJu0YwyYqTjB52CmGmLFD97hh+erLhod4A0NTdODCbxwnIcWMYs58kJ
-        kG2mGicycytti36vzaOrFToApQ==
-X-Google-Smtp-Source: AGHT+IHwtrqlN6e2vx84l/SIg+ScaqycRcjufdwFxlY+IDQ3B7Ywb1QmN/5y4PEXqeGbzKYY83267g==
-X-Received: by 2002:a2e:a167:0:b0:2c5:12ae:adb3 with SMTP id u7-20020a2ea167000000b002c512aeadb3mr6047586ljl.44.1698065686284;
-        Mon, 23 Oct 2023 05:54:46 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id i21-20020a05600c355500b00405bbfd5d16sm9509384wmq.7.2023.10.23.05.54.44
+        bh=p4dzCg7KZAa1pqs+2lmIym8cEv1bEx0TEnLwptO2/Vg=;
+        b=fd/a+wy/G/IDKSEJq+iS+kABUMDioaiP+jKiIAutlQxRCydcA+WBt+lNtMUCCzS10B
+         Lq7LpJTOhuetRbk/zb8yIsYS0Cd/lkpZMXcdQ8Z3QuPk4i7WUkPr0DTOX+8XTSEDCkJZ
+         GZ2hO9XDP6YAFrT2Gfe73mLRpNW63Df50UqO5euYvV1RBmDYQxoeXYIMC4NPwhvMk7to
+         K9wh1mynvW9Sf7Iz+ILaktta3oNWjzhmxudyYTc3F/CyJXixuFALGD1c7u5hIypdUjfC
+         cZN9xch/jEfwrHzTmlZ4P9FwEUS2RqlzuIT32h/pLPxgBCZ7q0EeBp5mJVe+9BlmVSAu
+         m2gw==
+X-Gm-Message-State: AOJu0YySJIr6kz31mhhgEfeae6IQwZOTf9bieCD3HJjcxgrc4Lfv97Iu
+        7GOH+JdyVGpvx2beaDGqR0qxJQ==
+X-Google-Smtp-Source: AGHT+IEQ4WBPBtS2Ox9Bm+ePm+PXigmAVHXAmyLqEzyDaPgd1UuV+VW7vRb0C23sGArP96jdeblznQ==
+X-Received: by 2002:a2e:3c03:0:b0:2c5:2357:be98 with SMTP id j3-20020a2e3c03000000b002c52357be98mr6559362lja.44.1698069006480;
+        Mon, 23 Oct 2023 06:50:06 -0700 (PDT)
+Received: from [192.168.204.110] (178235177080.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.80])
+        by smtp.gmail.com with ESMTPSA id c15-20020a2e680f000000b002c504d8260esm1596302lja.24.2023.10.23.06.50.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 05:54:45 -0700 (PDT)
-Message-ID: <2887644a-2286-47f2-ac38-1a9f7b757014@linaro.org>
-Date:   Mon, 23 Oct 2023 14:54:44 +0200
+        Mon, 23 Oct 2023 06:50:06 -0700 (PDT)
+Message-ID: <757382c1-142b-454c-b2b5-7ec97bd7328d@linaro.org>
+Date:   Mon, 23 Oct 2023 15:50:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 0/5] soc/arm64: qcom: add initial version of memory
  dump
 Content-Language: en-US
 To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, kernel@quicinc.com,
         quic_tingweiz@quicinc.com
 References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
- <70072874-6fa8-46ba-bf26-c35aa6ec7bb6@linaro.org>
- <10848e69-b994-b562-d5d3-25a7ca40cb97@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <10848e69-b994-b562-d5d3-25a7ca40cb97@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/10/2023 14:18, Zhenhua Huang wrote:
-> 
-> 
-> On 2023/10/23 17:25, Krzysztof Kozlowski wrote:
->> On 23/10/2023 11:20, Zhenhua Huang wrote:
->>> Qualcomm memory dump driver is to cooperate with firmware, providing the
->>> hints(id and size) of storing useful debugging information into pre-allocated
->>> memory. Firmware then does the real data capture. The debugging information
->>> includes cache contents, internal memory, registers.
->>>
->>> The driver dynamically reserves memory and provides the hints(dump id and size)
->>> following specified protocols with firmware. After crash and warm reboot,
->>> firmware scans these information and stores contents into reserved memory
->>> accordingly. Firmware then enters into full dump mode which dumps whole DDR
->>> to host through USB.
->>
->> How does it relate to minidump?
-> 
-> Minidump is used for dumping *software* related data/information. While 
-> the memory dump is used to communicate with firmware to dump *hardware* 
-> related information.
+On 23.10.2023 11:20, Zhenhua Huang wrote:
+> Qualcomm memory dump driver is to cooperate with firmware, providing the
+Firmware == The hypervisor? The TZ? Some uncore chip?
 
-I would argue then you should integrate both things...
+> hints(id and size) of storing useful debugging information into pre-allocated
+> memory. Firmware then does the real data capture. The debugging information
+> includes cache contents, internal memory, registers. 
+Exposing all of the user's data.. Is this enabled by default?
 
-Best regards,
-Krzysztof
+> 
+> The driver dynamically reserves memory and provides the hints(dump id and size)
+> following specified protocols with firmware. After crash and warm reboot,
+> firmware scans these information and stores contents into reserved memory
+> accordingly. Firmware then enters into full dump mode which dumps whole DDR
+> to host through USB.
+Is that only something that works on engineering / prototype devices?
 
+> User then get full dump using PCAT and can parse out these informations.
+Is PCAT open-source, or at least freely available?
+
+> 
+> Dump id and size are provided by bootconfig. The expected format of a
+> bootconfig file is as follows:-
+Is it the same bootconfig that Google invented? Wasn't that just key=val?
+
+> memory_dump_config {
+> 	<node name> {
+> 		id = <id of HW component>
+> 		size = <dump size of HW component>
+> 	}
+> }
+> 
+> for example:
+> memory_dump_config {
+>         c0_context_dump {
+> 		id = 0
+> 		size = 0x800
+>         }
+> }
+> 
+> Test based on 6.6-rc1.
+That's sorta ancient, especially since you're likely looking to get
+this merged in 6.8.. -next would probably be a better target.
+
+Konrad
