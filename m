@@ -2,108 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4131F7D2CAF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 10:27:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC1527D2CD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 10:37:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232716AbjJWI1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 04:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33164 "EHLO
+        id S229498AbjJWIhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 04:37:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbjJWI1b (ORCPT
+        with ESMTP id S229463AbjJWIhS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 04:27:31 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B75AD65
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:27:29 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5a81ab75f21so29814927b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:27:29 -0700 (PDT)
+        Mon, 23 Oct 2023 04:37:18 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4F73FC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:37:16 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b9c907bc68so44599141fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698049648; x=1698654448; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mZOFQ0M9LgikeEj2rkmCDSHNE1BhU9zXckel0uG4DB4=;
-        b=M1sH6teBF5ovungRCquHWkw/YDlESHlQmnHjVVoBPlN75vp9DFByTsQJeBfKfHOsZ4
-         L/JwJ4Hz+DD2oe+TBnihj61lS30kg9ozGmyDJeFG9H3/wW8MoX5HHG7ldHRHi4yjeUM2
-         UO9gqKv+1pWhq8r42d7waqLp1NKT5uUdIG1OZUyGNwzCVmCWtz9WvC94McR+dODgpqWl
-         rkJdJNhgWdMMUWgnL5+EdomjE8+cGGxk1HGQU3rv3LAdLIX58kArHBNCfrlKZxeIa56+
-         jaiGlMzPkBrbdmMIfL/evnUVaKpyvOvnt7spM/HYQwAq6fEL1lgVS7iDIGNq6cYJqYUG
-         Qv8A==
+        d=linaro.org; s=google; t=1698050235; x=1698655035; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=me2MC4nn/CV3tpkA7KZB34ZTwycbNAKshOBYMr2X+Pk=;
+        b=PPhvIOR7tf5eRKVGIOnItTLxoqVfUtMphG2mxi5WG83HKhPmatY8WspWdceVH+Cg98
+         tPjI+S9JB2VUevZ5k4WVdY/GNpKFmANGaU62cBOwNV+d875stIGB6pGbDiHI0/guxG3O
+         cZ5GUT+jyJqDHGUcrZrryE0G6mura5rZPg+ZhayY0tiW3RPFhmGdPJg3TJ0iDTRVy+7R
+         UymCwJWTXvYwYgB4+1SBaeX0BSbkVVhmEqPyc5eB//esbWk8et42rprRHXGu/q/nfi/J
+         WDQaBL4CDuTbYmsdvnkZWs+0P7RfzJka7VqSHui7+91ih2KozkMrxwxp4M6d6gUX/TW+
+         Mg+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698049648; x=1698654448;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mZOFQ0M9LgikeEj2rkmCDSHNE1BhU9zXckel0uG4DB4=;
-        b=UxUi4KLjyqxTjttwd0dN+xDcxxmOxTCAOvZOVSGKpyO5dsXKsz7XPqjxmGXJGNHjvm
-         j4T0+QPiNO0zzR4++xevSGbLBkAicLqvtb44vmmMKY5EwYHqeVJbCodc7F1MKDA/N8TD
-         eYRWgxoOD2YxbQ+Mn8VYm+OLQCs8oh7rhe8O5VwUEfNu0s/U4X3Jc9iS8oxE2ShjNRDx
-         E7Gr+nDyjutUdClmzO63HTvB/+cWDe499Ua8V//E0XXQJ5hqPSdAAKeItV6JW5vYL/4Q
-         mMRM4T4YcvugRGFN1QsmYEh7xZiacELXTTa6kUS1kZqeYkBymSlSs/Uj4tD8M8BziKn+
-         IaJg==
-X-Gm-Message-State: AOJu0YyNGuLB1awseQiNo0fYGQNbFkQA5G8DnreDTwgxNKkxc40xFW01
-        IGcGEi9e69V/nJ6QFwU3hX+XK9pelwhyMoyci9ZTTw==
-X-Google-Smtp-Source: AGHT+IGSavD/b+qLnxLyBKBAb/sJuaSpIHsaO9sHOD3ZetzmZkYjrXXXn+jJIOcoXv+71ys7FgOIacmNZkJIWD7KUpA=
-X-Received: by 2002:a81:a0d7:0:b0:59b:d3cd:ffb6 with SMTP id
- x206-20020a81a0d7000000b0059bd3cdffb6mr8677462ywg.33.1698049648757; Mon, 23
- Oct 2023 01:27:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698050235; x=1698655035;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=me2MC4nn/CV3tpkA7KZB34ZTwycbNAKshOBYMr2X+Pk=;
+        b=SYOPa9Ez9Ov3Wwq0queYr4Fpm5gVbDDIqFgbn9IzJcTV2RlwXGOAKkl4D7T+sOJLfM
+         b60KaSBsS1BFTIsq26dIJxn9fHF4uLD5Yi3zXHq39b/QW3HMqm263Sof6b+KEP2z4bW3
+         VE7VMdTY8giRZBfvwmhcDN7TqQCru+0OrsoM9NQUlt1gHfpA4M64T+tlvn51DcC5BAvB
+         F8oPawUuDQ/LVadbjTFENDdTbQjVUS+chSRASFmJ1sBUUXvClPSfHtuwi522yV+Tufhv
+         AH7/1ef2jODwRqQy4MbiOkWZ0DMTqG8kA0LYQMXdQbQbzx1lmXPOqatcvEPJHZcnJwng
+         xk2w==
+X-Gm-Message-State: AOJu0YzZ6rWav0cAF/CMHvIgioKyNmHp6Hc+WHEUVMR8K1Nk51CKhwTW
+        HgvCeDkXx8zdd5ObVXQ5f/o73w==
+X-Google-Smtp-Source: AGHT+IHlKoNRRLj9D+bLl/GMYZXBlYtqehKTnbdPLVHoetbAT9+UytWeVgCL/DfTleBsee6/yAUHYQ==
+X-Received: by 2002:a2e:a589:0:b0:2c5:1a8e:e4c9 with SMTP id m9-20020a2ea589000000b002c51a8ee4c9mr6107923ljp.31.1698050234775;
+        Mon, 23 Oct 2023 01:37:14 -0700 (PDT)
+Received: from [192.168.86.24] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id az20-20020a05600c601400b004054dcbf92asm8758062wmb.20.2023.10.23.01.37.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Oct 2023 01:37:14 -0700 (PDT)
+Message-ID: <06a2c115-278a-47e0-b5ba-74639b6b23aa@linaro.org>
+Date:   Mon, 23 Oct 2023 09:37:10 +0100
 MIME-Version: 1.0
-References: <20231013145935.220945-1-krzysztof.kozlowski@linaro.org>
- <CACRpkdZUSkr2MLB870Y5O2Qxvbnz++XUKMm+BXG1yx9vrOEvwA@mail.gmail.com> <8f608e3c-a282-4df2-abcd-8e38efc35843@linaro.org>
-In-Reply-To: <8f608e3c-a282-4df2-abcd-8e38efc35843@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 23 Oct 2023 10:27:17 +0200
-Message-ID: <CACRpkdYzhEJhN9BFdbZkJ7LurtT+dFMg97SLY-q91SNCZ8bikw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] pinctrl: qcom: lpass-lpi: allow slew rate bit in
- main pin config register
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] ASoC: dt-bindings: qcom,q6dsp-lpass-ports: Add WSA2
+ audio ports IDs
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+References: <20231019153541.49753-1-krzysztof.kozlowski@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20231019153541.49753-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
         version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 23, 2023 at 10:22=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+Hi Krzysztof,
 
-> On 23/10/2023 10:19, Linus Walleij wrote:
-> > On Fri, Oct 13, 2023 at 4:59=E2=80=AFPM Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >
-> >
-> >> Changes in v2
-> >
-> > I tried to apply this to the pinctrl devel branch:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.gi=
-t/log/?h=3Ddevel
-> >
-> > It doesn't apply, could you rebase it?
->
-> The context depends on my previous fix which you applied and sent for
-> v6.6 already:
-> https://lore.kernel.org/linux-arm-msm/CACRpkdaybnYEmkgv7VG4fh5sXQ7uwHm2wH=
-2Khja-P1b6idYr8w@mail.gmail.com/
->
-> I can rebase, but I am afraid it will cause conflicts. Is it reasonable
-> for you to merge v6.6-rc7 into your devel branch?
+On 19/10/2023 16:35, Krzysztof Kozlowski wrote:
+> Add defines for audio ports used on Qualcomm WSA2 LPASS (Low Power
+> Audio SubSystem).
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> index 39f203256c4f..c5ea35abf129 100644
+> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> @@ -139,6 +139,11 @@
+>   #define DISPLAY_PORT_RX_5	133
+>   #define DISPLAY_PORT_RX_6	134
+>   #define DISPLAY_PORT_RX_7	135
+> +#define WSA2_CODEC_DMA_RX_0	136
+> +#define WSA2_CODEC_DMA_TX_0	137
+> +#define WSA2_CODEC_DMA_RX_1	138
+> +#define WSA2_CODEC_DMA_TX_1	139
+> +#define WSA2_CODEC_DMA_TX_2	140
+>   
 
-Torvalds is usually not super-happy when we do that, especially
-this late in the development cycle it gets a bit ugly with all
-the stuff that brings in.
+Patches looks fine as it is, but do you realize that this s a dead code 
+w.r.t upstream.
+WSA2 is used only with 4 speaker setup and in such cases we use WSA 
+codec dma to drive 4 channels.
 
-Can we wait with this patch set until the next development
-cycle or is it urgent?
+So WSA2 will not be used by itself.
+I would prefer support for this to be added when we are really able to 
+test WSA2 by itself.
 
-Yours,
-Linus Walleij
+thanks,
+Srini
+
+>   #define LPASS_CLK_ID_PRI_MI2S_IBIT	1
+>   #define LPASS_CLK_ID_PRI_MI2S_EBIT	2
