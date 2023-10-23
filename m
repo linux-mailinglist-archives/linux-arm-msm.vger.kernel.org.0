@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A59977D3868
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 15:50:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B4E47D3890
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 15:56:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229707AbjJWNuL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 09:50:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34598 "EHLO
+        id S230242AbjJWN4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 09:56:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbjJWNuK (ORCPT
+        with ESMTP id S230012AbjJWN4n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 09:50:10 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51BA991
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 06:50:08 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c5210a1515so50140301fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 06:50:08 -0700 (PDT)
+        Mon, 23 Oct 2023 09:56:43 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E3FB10A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 06:56:41 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-507ac66a969so4483842e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 06:56:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698069006; x=1698673806; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698069399; x=1698674199; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=p4dzCg7KZAa1pqs+2lmIym8cEv1bEx0TEnLwptO2/Vg=;
-        b=bF6GF3aa+B8fKRZaclavnJeA26/axrIhpi2izruqx39LdI6xayPUjC8KtCXUIYrxAV
-         VlwB+h65a2VcB5WEOvXuY4Vx5cWDYTP84TXmSh09EDJLWMun2FHgyNwWtMKwiAbY+0Ud
-         Elx2aEZPriKRo8UmWP1+mTs//CwBjdyXNN2SlTyIiF2McctxxfL59s91SSF8b1VQoGJW
-         Ilj2cb0iH7SVWcmNzmIaCc6fvg3H2ekWhDoXxbQiaBaN3zZ4vpH62Zfu3PtC5JWBlOT+
-         m4/DveEhus9AdOluA50XIR5v9JNJ9Zac23t1+HvRGjmRPDyixSfy0AQp37ZhWkHiHwy0
-         dIVQ==
+        bh=ZGDsFAnQCaoq3b3jA1o7GPQU1Dt8En35Q16rALo+5eU=;
+        b=ikHzxRvQbVpH5vrJmgvBAYlQUvzHU9PiKsK3jk0Kmm9nAkwXa+R/KoHWEBKABWq9gA
+         b1nhvkRVfBg3W0Fde2H0nKxr/WuKc3vlcWyheKUuHjx+RUFBFZS6Sytuoz5x1S9/wrYk
+         8jcyyupv/GK+MwjnLIQ3rZcXaQJqfzO6H4/wRYtnYxh7dCuVsHCeXM/SjTkor6klpiku
+         tAPWnEO4lWRfj06IOsrlBYDggeZJ2+42uqfeZn/BdcbANvuzqjoXn2CHIzMeAUCnQ8Hf
+         Q0edfjZ+DRjFi9s0g0A760GrnACCCAW13KrG/PNcFQPUXYIS/tey+VkVV/OEf9KEunYa
+         hi8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698069006; x=1698673806;
+        d=1e100.net; s=20230601; t=1698069399; x=1698674199;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p4dzCg7KZAa1pqs+2lmIym8cEv1bEx0TEnLwptO2/Vg=;
-        b=fd/a+wy/G/IDKSEJq+iS+kABUMDioaiP+jKiIAutlQxRCydcA+WBt+lNtMUCCzS10B
-         Lq7LpJTOhuetRbk/zb8yIsYS0Cd/lkpZMXcdQ8Z3QuPk4i7WUkPr0DTOX+8XTSEDCkJZ
-         GZ2hO9XDP6YAFrT2Gfe73mLRpNW63Df50UqO5euYvV1RBmDYQxoeXYIMC4NPwhvMk7to
-         K9wh1mynvW9Sf7Iz+ILaktta3oNWjzhmxudyYTc3F/CyJXixuFALGD1c7u5hIypdUjfC
-         cZN9xch/jEfwrHzTmlZ4P9FwEUS2RqlzuIT32h/pLPxgBCZ7q0EeBp5mJVe+9BlmVSAu
-         m2gw==
-X-Gm-Message-State: AOJu0YySJIr6kz31mhhgEfeae6IQwZOTf9bieCD3HJjcxgrc4Lfv97Iu
-        7GOH+JdyVGpvx2beaDGqR0qxJQ==
-X-Google-Smtp-Source: AGHT+IEQ4WBPBtS2Ox9Bm+ePm+PXigmAVHXAmyLqEzyDaPgd1UuV+VW7vRb0C23sGArP96jdeblznQ==
-X-Received: by 2002:a2e:3c03:0:b0:2c5:2357:be98 with SMTP id j3-20020a2e3c03000000b002c52357be98mr6559362lja.44.1698069006480;
-        Mon, 23 Oct 2023 06:50:06 -0700 (PDT)
+        bh=ZGDsFAnQCaoq3b3jA1o7GPQU1Dt8En35Q16rALo+5eU=;
+        b=B6Wj2djicv3dVL/arnsgJp3jYh1iNqVF+wjxVldqbqJEkc0wpjeJJNPXP4IWqs9zDP
+         xJIuO4tKIFq0jDVL95Sekpw7S8lTr2V26VBJ/feMlJFOkj3qt7XLsOIxxl//2NfeExqy
+         AaLpMrqLyJtAdt3mZB6GqvUlPgyVQdOp91oXxhpt67uERzAPvOyKyML7WGMBJbbT6RBV
+         pJM5pQwQqYMeCL8DYgTKBAkOwyUBDQyO6Icct+F+9fkZqjrpZhtXYVsWt6b5le6CWjGb
+         PpCUpKIIQ/DnyYVVMjoOrJB8kgJBwM/CUrgjrpMRi3w5K73k/YasLIXxfhUjyABhd1IH
+         cvpQ==
+X-Gm-Message-State: AOJu0Yw8a0jaxkGm45zyHZEcQy1wAry+p8SKezL7rwSp8CPp+uiIAJ8u
+        LN2XOtUKnKxHWW8pN6pPP52Jww==
+X-Google-Smtp-Source: AGHT+IGu1bOYZpsjOtP1nsc004gIteSqjbTZ8e3xJlLp6zjU7iNPT6jIXRlHtD1TSO07ZMCnrEmR2w==
+X-Received: by 2002:ac2:55a5:0:b0:507:9a87:26c1 with SMTP id y5-20020ac255a5000000b005079a8726c1mr5143576lfg.26.1698069399499;
+        Mon, 23 Oct 2023 06:56:39 -0700 (PDT)
 Received: from [192.168.204.110] (178235177080.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.80])
-        by smtp.gmail.com with ESMTPSA id c15-20020a2e680f000000b002c504d8260esm1596302lja.24.2023.10.23.06.50.04
+        by smtp.gmail.com with ESMTPSA id c8-20020a056512074800b004fe202a5c7csm1704041lfs.135.2023.10.23.06.56.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 06:50:06 -0700 (PDT)
-Message-ID: <757382c1-142b-454c-b2b5-7ec97bd7328d@linaro.org>
-Date:   Mon, 23 Oct 2023 15:50:03 +0200
+        Mon, 23 Oct 2023 06:56:39 -0700 (PDT)
+Message-ID: <1e9605c6-0afb-4613-927f-c07227334f51@linaro.org>
+Date:   Mon, 23 Oct 2023 15:56:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/5] soc/arm64: qcom: add initial version of memory
- dump
+Subject: Re: [PATCH v1 3/5] soc: qcom: memory_dump: Add memory dump driver
 Content-Language: en-US
 To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, robh+dt@kernel.org,
@@ -64,6 +63,7 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, kernel@quicinc.com,
         quic_tingweiz@quicinc.com
 References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+ <1698052857-6918-4-git-send-email-quic_zhenhuah@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -100,12 +100,13 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+In-Reply-To: <1698052857-6918-4-git-send-email-quic_zhenhuah@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -113,47 +114,46 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 23.10.2023 11:20, Zhenhua Huang wrote:
-> Qualcomm memory dump driver is to cooperate with firmware, providing the
-Firmware == The hypervisor? The TZ? Some uncore chip?
-
-> hints(id and size) of storing useful debugging information into pre-allocated
-> memory. Firmware then does the real data capture. The debugging information
-> includes cache contents, internal memory, registers. 
-Exposing all of the user's data.. Is this enabled by default?
-
+> Qualcomm memory dump driver initializes system memory dump table.
+> Firmware dumps system cache, internal memory, peripheral registers
+> to DDR as per this table after system crashes and warm resets. The
+> driver reserves memory, populates ids and sizes for firmware dumping
+> according to the configuration.
 > 
-> The driver dynamically reserves memory and provides the hints(dump id and size)
-> following specified protocols with firmware. After crash and warm reboot,
-> firmware scans these information and stores contents into reserved memory
-> accordingly. Firmware then enters into full dump mode which dumps whole DDR
-> to host through USB.
-Is that only something that works on engineering / prototype devices?
+> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
+> ---
+[...]
 
-> User then get full dump using PCAT and can parse out these informations.
-Is PCAT open-source, or at least freely available?
 
-> 
-> Dump id and size are provided by bootconfig. The expected format of a
-> bootconfig file is as follows:-
-Is it the same bootconfig that Google invented? Wasn't that just key=val?
+> +#define MAX_NUM_ENTRIES		0x150
+The number of entries makes more sense as a dec number
 
-> memory_dump_config {
-> 	<node name> {
-> 		id = <id of HW component>
-> 		size = <dump size of HW component>
-> 	}
-> }
-> 
-> for example:
-> memory_dump_config {
->         c0_context_dump {
-> 		id = 0
-> 		size = 0x800
->         }
-> }
-> 
-> Test based on 6.6-rc1.
-That's sorta ancient, especially since you're likely looking to get
-this merged in 6.8.. -next would probably be a better target.
+> +#define QCOM_DUMP_MAKE_VERSION(major, minor)	(((major) << 20) | (minor))
+> +#define QCOM_DUMP_TABLE_VERSION		QCOM_DUMP_MAKE_VERSION(2, 0)
+I feel like doing this:
+
+#define QCOM_DUMP_TABLE_VERSION(major, minor)	((major << 20) | (minor))
+
+...
+
+someval = QCOM_DUMP_TABLE_VERSION(2, 0)
+
+would make more sense, since v2.0 seems to be the only supported target..
+
+[...]
+
+> +			if (phys_addr > phys_end_addr) {
+> +				dev_err_probe(dev, -ENOMEM, "Exceeding allocated region\n");
+> +				return -ENOMEM;
+> +			}
+> +		} else {
+> +			continue;
+You can check for the inverse and bail out early, saving yourself
+a lot of tabs
+
+[...]
+
+> +MODULE_DESCRIPTION("Memory Dump Driver");
+Missing some mention of it being QC specific
 
 Konrad
