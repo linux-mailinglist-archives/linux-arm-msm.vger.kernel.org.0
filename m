@@ -2,150 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D10787D35DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 13:55:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EDB27D35F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 13:59:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232798AbjJWLzI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 07:55:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42410 "EHLO
+        id S233443AbjJWL7X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 07:59:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231512AbjJWLzH (ORCPT
+        with ESMTP id S233419AbjJWL7W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 07:55:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69CC6AF;
-        Mon, 23 Oct 2023 04:55:04 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39NBsPc9031622;
-        Mon, 23 Oct 2023 11:55:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=GdM270Ymk4GmaoE8s1C0BZCXZ4sHC1MXNy0TNyH38c4=;
- b=HmZlQbwHKZ3saMsMm13Mh1hc9Z1qVfTwDCuQy4k8GJXlwrAR57KxcZw5PXsCmNdeAzR7
- bXL0eqH7MsAzshtO0JtU61UmIUBPCYsHA2xv7NL203UNEQyj5kIYuLSlf0obmXjimsiq
- pbhAhj+By6IF6umBZXHFk3hn0a/FknsoOgSQ2CFvIPTD/lPRLJ8aVPCv3SfThNtGSzSh
- m3nwyX5qBsOvbCGrdYPpUGC80lbh1talrGlZR4qyOPuCR99yW0ppEcrgQBwG8bUlpWHQ
- ww7p2ezuw5IspjSPMRAcwnxyJYTFpd6AWAGGbnJfOTqRJPfdhfKHmgp7zPn4iZK1KERT pQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tv7u3v8kq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 11:55:01 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39NBt0GU025086
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 23 Oct 2023 11:55:00 GMT
-Received: from [10.239.132.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 23 Oct
- 2023 04:54:55 -0700
-Message-ID: <d3b62002-c29c-a45e-279f-7d07c697aa77@quicinc.com>
-Date:   Mon, 23 Oct 2023 19:54:52 +0800
+        Mon, 23 Oct 2023 07:59:22 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD9EF5;
+        Mon, 23 Oct 2023 04:59:20 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9b6559cbd74so488100666b.1;
+        Mon, 23 Oct 2023 04:59:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698062358; x=1698667158; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nnqy7dSxOjQjqscv4DWvyJMFvfwEd0TnRvRI5+ZbjWo=;
+        b=m7flUE3mJRnPL2h+1TVvA1/SxuXPj/RJldsppMLplwaffwRWSGl9j75jV2r2mD6n8D
+         jqT4Qap+9N+Q3IIFQkmRVGRu6TC8Bdy6UcNOO8ri9kC+hhtkAwwnACPWMX8xFcYw+u7E
+         vLQvWiQuS8FZdPJgAXBtf6Ttr/KOmgHDl2f8kFHT/SrFT0mnMSKty0rCoDkj5NeC88Y9
+         jhKR+778paeJPa7eqc2FIzDiHOMyKUBzqdliNUVl6mJtJbzCm5rn7RBhFFn4L1NZPdrw
+         1nenTcSL8YbSswoXJ4jMIp/WphuhIQVe5N/t8c8fCY3+2yGgoLnypnRBoJqpwSgjAsiR
+         hnog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698062358; x=1698667158;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nnqy7dSxOjQjqscv4DWvyJMFvfwEd0TnRvRI5+ZbjWo=;
+        b=Ae6vsQtzLEWHZMnMixxytO9M+8tvW7i4ZqHkE06olrzvNWtzddw7ePkNEY2ny/+gRN
+         +1HawVZmH1A87Rjllk/YLRVLiomUP5TDXJQa7rimwP2PDsvaE79cIdLdl0dVkEviCj0R
+         9Y54+bRMsotQZmnkMo/AGhGbQdkPjxQwZEQMdv0gzAgvj/uEAGWhjoJc0K8/tPtt5lg8
+         M3zVXC4atrGCbeTgoUtKYz1sKBWiV9K+D2GI4dask5ByRTOqGDojcEqrB4EIjGlRl4b8
+         CacA2bc1IP1rQoSJi9MtVSkrCPtmLIgMv7dYZHoWiwREWQciGOODyk7Y6vZdap/S4dZg
+         JIbQ==
+X-Gm-Message-State: AOJu0YxnN7RwjPuc1hyQMUo1EuGfFCUboXRfLQUgfNs6cOHFp4TgTFL5
+        3NZIxnJBaEQJod4yx6tph/v5OzIOjOOczmHUJZL0873hk7Mj/6Qp
+X-Google-Smtp-Source: AGHT+IEn0NHJ4SfG0P+T4S3NwQqFTArELhFnDro91pfObDGaOIHYbJg5GjpcRO9l38DOWF/Ws4+OojefE8nrEYCon5s=
+X-Received: by 2002:a17:907:9485:b0:9be:f71d:9471 with SMTP id
+ dm5-20020a170907948500b009bef71d9471mr7774826ejc.68.1698062358169; Mon, 23
+ Oct 2023 04:59:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v1 1/5] dt-bindings: soc: qcom: Add memory_dump driver
- bindings
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_tingweiz@quicinc.com>
-References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
- <1698052857-6918-2-git-send-email-quic_zhenhuah@quicinc.com>
- <27fcdcc1-b29b-43b2-8b1a-c648dd9e696c@linaro.org>
-From:   Zhenhua Huang <quic_zhenhuah@quicinc.com>
-In-Reply-To: <27fcdcc1-b29b-43b2-8b1a-c648dd9e696c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PmZJVdcFGMnJ25jI4nqqVqd7lWtZ3dWf
-X-Proofpoint-ORIG-GUID: PmZJVdcFGMnJ25jI4nqqVqd7lWtZ3dWf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-23_10,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 mlxlogscore=934
- suspectscore=0 mlxscore=0 phishscore=0 bulkscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310230104
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20231023090230.43210-1-lukapanio@gmail.com> <20231023090230.43210-2-lukapanio@gmail.com>
+ <26b65551-1437-4e21-947e-1628052b7c36@linaro.org>
+In-Reply-To: <26b65551-1437-4e21-947e-1628052b7c36@linaro.org>
+From:   Luka Panio <lukapanio@gmail.com>
+Date:   Mon, 23 Oct 2023 13:59:07 +0200
+Message-ID: <CACi=Ov7MXJsEazZZbisHWUfZD4B8WxtKROjwu-EEQfRgPHSGkA@mail.gmail.com>
+Subject: Re: [PATCH v8 2/2] arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial
+ device tree
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 2023/10/23 17:27, Krzysztof Kozlowski wrote:
-> On 23/10/2023 11:20, Zhenhua Huang wrote:
->> Add bindings for the QCOM Memory Dump driver providing debug
-> 
-> Bindings are for hardware, not driver. This suggests it is not suitable
-> for bindings at all.
-> 
->> facilities. Firmware dumps system cache, internal memory,
->> peripheral registers to reserved DDR as per the table which
->> populated by the driver, after crash and warm reset.
-> 
-> Again driver :/
-
-Thanks for pointing out. Qualcomm memory dump device is a reserved 
-memory region which is used to communicate with firmware. I will update 
-description in next version.
-
+Ok sorry just didn't got it right. will send a new patchset tomorrow.
 Thanks,
-Zhenhua
-
-> 
->>
->> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
->> ---
->>   .../bindings/soc/qcom/qcom,mem-dump.yaml           | 42 +++++++++++++++++++++
->>   .../devicetree/bindings/sram/qcom,imem.yaml        | 44 ++++++++++++++++++++++
->>   2 files changed, 86 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml
->> new file mode 100644
->> index 0000000..87f8f51
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,mem-dump.yaml
->> @@ -0,0 +1,42 @@
->> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
->> +%YAML 1.2
->> +---
->> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,mem-dump.yaml#"
->> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-> 
-> Drop quotes.
-> 
-> It does not look like you tested the bindings, at least after quick
-> look. Please run `make dt_binding_check` (see
-> Documentation/devicetree/bindings/writing-schema.rst for instructions).
-> Maybe you need to update your dtschema and yamllint.
-> 
->> +
->> +title: Qualcomm memory dump
-> 
-> Describe hardware, not driver.
-> 
->> +
->> +description: |
->> +  Qualcomm memory dump driver dynamically reserves memory and provides hints(id and size)
-> 
-> Again, driver, so not suitable for DTS and bindings.
-> 
-> Best regards,
-> Krzysztof
-> 
+Luka Panio
