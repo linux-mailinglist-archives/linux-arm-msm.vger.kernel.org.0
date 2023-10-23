@@ -2,68 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B4E47D3890
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 15:56:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21EEA7D38B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 16:00:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230242AbjJWN4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 09:56:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54142 "EHLO
+        id S231262AbjJWOAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 10:00:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230012AbjJWN4n (ORCPT
+        with ESMTP id S231265AbjJWOAI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 09:56:43 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E3FB10A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 06:56:41 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-507ac66a969so4483842e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 06:56:41 -0700 (PDT)
+        Mon, 23 Oct 2023 10:00:08 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB1210C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:00:04 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507b18cf2e1so4573775e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698069399; x=1698674199; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698069603; x=1698674403; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZGDsFAnQCaoq3b3jA1o7GPQU1Dt8En35Q16rALo+5eU=;
-        b=ikHzxRvQbVpH5vrJmgvBAYlQUvzHU9PiKsK3jk0Kmm9nAkwXa+R/KoHWEBKABWq9gA
-         b1nhvkRVfBg3W0Fde2H0nKxr/WuKc3vlcWyheKUuHjx+RUFBFZS6Sytuoz5x1S9/wrYk
-         8jcyyupv/GK+MwjnLIQ3rZcXaQJqfzO6H4/wRYtnYxh7dCuVsHCeXM/SjTkor6klpiku
-         tAPWnEO4lWRfj06IOsrlBYDggeZJ2+42uqfeZn/BdcbANvuzqjoXn2CHIzMeAUCnQ8Hf
-         Q0edfjZ+DRjFi9s0g0A760GrnACCCAW13KrG/PNcFQPUXYIS/tey+VkVV/OEf9KEunYa
-         hi8A==
+        bh=joifu3LEve1vM1OBDiP/ssq3Acb5MrmoAobzst77V3U=;
+        b=EjXdKug6vvtqLxTgjZM+oPE7gSVOtxEzNM24OlV5u8py5CVxcAoxoVnxbkuWMR3KbA
+         YCEWTdcMd7o1IT09Ffy3TrMig52AILYTEWE3ViWwMDnhndSkzG+nBCBwmuqvdklGUvW2
+         5Cx1WIECOUNafg/Uze1Ef9nlvzD9vTHthQkqQhwTw2uHRsAJ9iBEXXAErm3gz7OCys6U
+         QRN3f+6BuSYvd6WSf/6U24c6RbFAgAdlOPNEzbP3zvreirWBXdx1Rsvwp0q3nsxYCGWj
+         No+LEvqNEKEZAHh5nuTU35JevnLSh5b4yXtrOZ8qCQM89qdebP8XrnlQo4mao6LM+Adr
+         D2Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698069399; x=1698674199;
+        d=1e100.net; s=20230601; t=1698069603; x=1698674403;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZGDsFAnQCaoq3b3jA1o7GPQU1Dt8En35Q16rALo+5eU=;
-        b=B6Wj2djicv3dVL/arnsgJp3jYh1iNqVF+wjxVldqbqJEkc0wpjeJJNPXP4IWqs9zDP
-         xJIuO4tKIFq0jDVL95Sekpw7S8lTr2V26VBJ/feMlJFOkj3qt7XLsOIxxl//2NfeExqy
-         AaLpMrqLyJtAdt3mZB6GqvUlPgyVQdOp91oXxhpt67uERzAPvOyKyML7WGMBJbbT6RBV
-         pJM5pQwQqYMeCL8DYgTKBAkOwyUBDQyO6Icct+F+9fkZqjrpZhtXYVsWt6b5le6CWjGb
-         PpCUpKIIQ/DnyYVVMjoOrJB8kgJBwM/CUrgjrpMRi3w5K73k/YasLIXxfhUjyABhd1IH
-         cvpQ==
-X-Gm-Message-State: AOJu0Yw8a0jaxkGm45zyHZEcQy1wAry+p8SKezL7rwSp8CPp+uiIAJ8u
-        LN2XOtUKnKxHWW8pN6pPP52Jww==
-X-Google-Smtp-Source: AGHT+IGu1bOYZpsjOtP1nsc004gIteSqjbTZ8e3xJlLp6zjU7iNPT6jIXRlHtD1TSO07ZMCnrEmR2w==
-X-Received: by 2002:ac2:55a5:0:b0:507:9a87:26c1 with SMTP id y5-20020ac255a5000000b005079a8726c1mr5143576lfg.26.1698069399499;
-        Mon, 23 Oct 2023 06:56:39 -0700 (PDT)
+        bh=joifu3LEve1vM1OBDiP/ssq3Acb5MrmoAobzst77V3U=;
+        b=M9JGop00YxmjISmyyvkAfvyXZDI59dvIhi6TKnpCorHzTQrl8xMvmo8RtAcfy69K0i
+         3jDYGgvbJNCOBKqT5HSAEBrHfJ00j3jOPsNiR0u3QZYRPfjFM27ccDd0WxNxyE3knrva
+         bzDOPqp961ZdArlAY1c9QULiRzpUntAbag14x7CArMWorKAhkrksxxf3gFIc9OOTq8fV
+         iTV6IobBeLnHewzlNikpGBFOZsUKDDxEWVeZkJF0U5WiAfoRc/5lBHgStMhkpPJOZupH
+         7d9e/d3ejGBr91333UrXICU0K0mJvDB/XHiYRFCI1gDQhC4NyBzBVkUn58yoeC1YV89y
+         lTvw==
+X-Gm-Message-State: AOJu0YzeNiIw+Qc8Kfp9TPqmSX2gWroBMKHwpxy3y4Yum+/Fhb1/nebW
+        jCaIp7in6G34GbV3cq4ROiOGuQ==
+X-Google-Smtp-Source: AGHT+IFrtb9YbLiCDkqk99kjeOsRB8xIvp4vEoFUl9MZx1Q2cWGyBOpKkCWxHIYFbkNpCrk8OZjHtg==
+X-Received: by 2002:ac2:42c1:0:b0:503:3644:4a98 with SMTP id n1-20020ac242c1000000b0050336444a98mr6478074lfl.2.1698069602632;
+        Mon, 23 Oct 2023 07:00:02 -0700 (PDT)
 Received: from [192.168.204.110] (178235177080.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.80])
-        by smtp.gmail.com with ESMTPSA id c8-20020a056512074800b004fe202a5c7csm1704041lfs.135.2023.10.23.06.56.37
+        by smtp.gmail.com with ESMTPSA id s16-20020a056512215000b0050300e013f3sm1711680lfr.254.2023.10.23.06.59.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 06:56:39 -0700 (PDT)
-Message-ID: <1e9605c6-0afb-4613-927f-c07227334f51@linaro.org>
-Date:   Mon, 23 Oct 2023 15:56:36 +0200
+        Mon, 23 Oct 2023 07:00:02 -0700 (PDT)
+Message-ID: <efecb4cf-e42b-40fb-aa68-37433529604b@linaro.org>
+Date:   Mon, 23 Oct 2023 15:59:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/5] soc: qcom: memory_dump: Add memory dump driver
+Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sm8350: Fix remoteproc interrupt
+ type
 Content-Language: en-US
-To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kernel@quicinc.com,
-        quic_tingweiz@quicinc.com
-References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
- <1698052857-6918-4-git-send-email-quic_zhenhuah@quicinc.com>
+To:     Luca Weiss <luca@z3ntu.xyz>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kees Cook <keescook@chromium.org>,
+        Tony Luck <tony.luck@intel.com>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        Rob <Me@orbit.sh>, Clayton Craft <clayton@igalia.com>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>
+References: <20231018-nia-sm8350-for-upstream-v2-0-7b243126cb77@igalia.com>
+ <20231019040623.GA5142@thinkpad>
+ <ca42af11-7b92-4d07-9b93-367f92c886fe@linaro.org>
+ <6985565.DvuYhMxLoT@z3ntu.xyz>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -100,11 +116,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <1698052857-6918-4-git-send-email-quic_zhenhuah@quicinc.com>
+In-Reply-To: <6985565.DvuYhMxLoT@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -113,47 +129,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23.10.2023 11:20, Zhenhua Huang wrote:
-> Qualcomm memory dump driver initializes system memory dump table.
-> Firmware dumps system cache, internal memory, peripheral registers
-> to DDR as per this table after system crashes and warm resets. The
-> driver reserves memory, populates ids and sizes for firmware dumping
-> according to the configuration.
+On 21.10.2023 21:34, Luca Weiss wrote:
+> On Samstag, 21. Oktober 2023 19:44:20 CEST Konrad Dybcio wrote:
+>> On 10/19/23 06:06, Manivannan Sadhasivam wrote:
+>>> On Wed, Oct 18, 2023 at 10:17:15PM +0200, Konrad Dybcio wrote:
+>>>> On 10/18/23 16:25, Nia Espera wrote:
+>>>>> In a similar vein to
+>>>>> https://lore.kernel.org/lkml/20220530080842.37024-3-manivannan.sadhasiva
+>>>>> m@linaro.org/, the remote processors on sm8350 fail to initialize with
+>>>>> the 'correct' (i.e., specified in downstream) IRQ type. Change this to
+>>>>> EDGE_RISING.
+>>>>>
+>>>>> Signed-off-by: Nia Espera <nespera@igalia.com>
+>>>>> ---
+>>>>
+>>>> Hm, apparently 8250 and 7180 have the same thing.
+>>>>
+>>>> Mani, could you elaborate on this?
+>>>
+>>> So the remoteproc driver expects the wdog interrupts to be edge triggered
+>>> as the rest of the interrupts, but DT specifies them as level triggered.
+>>> This won't cause any issue during the first instance of the probe as the
+>>> driver requested trigger will be given precedence. But if the probe
+>>> defers for some reason and during the next try, request_irq() will fail
+>>> with error similar to below:
+>>>
+>>> irq: type mismatch, failed to map hwirq-x for interrupt-controller@xxxxxx!
+>>>
+>>> This error is often confusing and I tried to fix it. But Maz didn't agree
+>>> with me, so I just ended up fixing the DTs for some platform I have
+>>> access to.
+>>>
+>>> So ideally, DTs of all platforms should be fixed to pass correct trigger
+>>> type.
+>> So, this should be edge for all platforms, correct?
 > 
-> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-> ---
-[...]
-
-
-> +#define MAX_NUM_ENTRIES		0x150
-The number of entries makes more sense as a dec number
-
-> +#define QCOM_DUMP_MAKE_VERSION(major, minor)	(((major) << 20) | (minor))
-> +#define QCOM_DUMP_TABLE_VERSION		QCOM_DUMP_MAKE_VERSION(2, 0)
-I feel like doing this:
-
-#define QCOM_DUMP_TABLE_VERSION(major, minor)	((major << 20) | (minor))
-
-...
-
-someval = QCOM_DUMP_TABLE_VERSION(2, 0)
-
-would make more sense, since v2.0 seems to be the only supported target..
-
-[...]
-
-> +			if (phys_addr > phys_end_addr) {
-> +				dev_err_probe(dev, -ENOMEM, "Exceeding allocated region\n");
-> +				return -ENOMEM;
-> +			}
-> +		} else {
-> +			continue;
-You can check for the inverse and bail out early, saving yourself
-a lot of tabs
-
-[...]
-
-> +MODULE_DESCRIPTION("Memory Dump Driver");
-Missing some mention of it being QC specific
+> I'd believe so, iirc when I looked at the driver it always requests that
+> interrupt type.
+> 
+> For reference, these are my patches:
+> 
+> sm6350:
+> https://github.com/z3ntu/linux/commit/0522b7a1b981d80884a785c7e654bb5094ea1bc2
+> 
+> sc7280:
+> https://github.com/z3ntu/linux/commit/ead1d7b8f5648535b857cfa9250aac2480f00ed3
+Can you send those, as well as fix up other outliers? Probably won't get in
+for this cycle, but still very much worth to get them upstream..
 
 Konrad
