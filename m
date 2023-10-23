@@ -2,122 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21EEA7D38B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 16:00:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E31C7D38D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 16:04:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231262AbjJWOAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 10:00:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59246 "EHLO
+        id S230250AbjJWOEo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 10:04:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231265AbjJWOAI (ORCPT
+        with ESMTP id S231219AbjJWOEn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 10:00:08 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB1210C1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:00:04 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507b18cf2e1so4573775e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:00:04 -0700 (PDT)
+        Mon, 23 Oct 2023 10:04:43 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE63D73
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:04:39 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-32db8f8441eso2680162f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 07:04:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698069603; x=1698674403; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=joifu3LEve1vM1OBDiP/ssq3Acb5MrmoAobzst77V3U=;
-        b=EjXdKug6vvtqLxTgjZM+oPE7gSVOtxEzNM24OlV5u8py5CVxcAoxoVnxbkuWMR3KbA
-         YCEWTdcMd7o1IT09Ffy3TrMig52AILYTEWE3ViWwMDnhndSkzG+nBCBwmuqvdklGUvW2
-         5Cx1WIECOUNafg/Uze1Ef9nlvzD9vTHthQkqQhwTw2uHRsAJ9iBEXXAErm3gz7OCys6U
-         QRN3f+6BuSYvd6WSf/6U24c6RbFAgAdlOPNEzbP3zvreirWBXdx1Rsvwp0q3nsxYCGWj
-         No+LEvqNEKEZAHh5nuTU35JevnLSh5b4yXtrOZ8qCQM89qdebP8XrnlQo4mao6LM+Adr
-         D2Rg==
+        d=linaro.org; s=google; t=1698069877; x=1698674677; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=feOKUCgu/NwWDJRdl5k00+5MbUdrzhLpwZuuii6+kaw=;
+        b=C/q7geUvj5BPCfDAEpc5fH2qGpQKXMydwwdEGvsD5fdW8oLGOfdx7lAxNs26aW1Lqd
+         TVSfW289P4rIgRuhKkHjDw7yy6O5y6pZgj/huAlF1nFivxiIdKJOkza3E9Yk4LBY0Ae+
+         uhrIjcm7lm+4fJ0TsrNSocVG6zLcBBd3bpjPkEkj9RY7BUV8m4IGwDx9pe60BgbdAL1i
+         Cs/o7U3pdeN6/4ckc04PRYWSBOCqokgHd8ZmTYpaPjUXRuoTVQDSEEXc0n6K5X361r8l
+         yDMtU643KAgXZgpsbUj445xh2yzjy8OBgJKltrMgXY/iiCjSlHWYa0OhflBLQ2b5FXSs
+         LdpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698069603; x=1698674403;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=joifu3LEve1vM1OBDiP/ssq3Acb5MrmoAobzst77V3U=;
-        b=M9JGop00YxmjISmyyvkAfvyXZDI59dvIhi6TKnpCorHzTQrl8xMvmo8RtAcfy69K0i
-         3jDYGgvbJNCOBKqT5HSAEBrHfJ00j3jOPsNiR0u3QZYRPfjFM27ccDd0WxNxyE3knrva
-         bzDOPqp961ZdArlAY1c9QULiRzpUntAbag14x7CArMWorKAhkrksxxf3gFIc9OOTq8fV
-         iTV6IobBeLnHewzlNikpGBFOZsUKDDxEWVeZkJF0U5WiAfoRc/5lBHgStMhkpPJOZupH
-         7d9e/d3ejGBr91333UrXICU0K0mJvDB/XHiYRFCI1gDQhC4NyBzBVkUn58yoeC1YV89y
-         lTvw==
-X-Gm-Message-State: AOJu0YzeNiIw+Qc8Kfp9TPqmSX2gWroBMKHwpxy3y4Yum+/Fhb1/nebW
-        jCaIp7in6G34GbV3cq4ROiOGuQ==
-X-Google-Smtp-Source: AGHT+IFrtb9YbLiCDkqk99kjeOsRB8xIvp4vEoFUl9MZx1Q2cWGyBOpKkCWxHIYFbkNpCrk8OZjHtg==
-X-Received: by 2002:ac2:42c1:0:b0:503:3644:4a98 with SMTP id n1-20020ac242c1000000b0050336444a98mr6478074lfl.2.1698069602632;
-        Mon, 23 Oct 2023 07:00:02 -0700 (PDT)
-Received: from [192.168.204.110] (178235177080.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.80])
-        by smtp.gmail.com with ESMTPSA id s16-20020a056512215000b0050300e013f3sm1711680lfr.254.2023.10.23.06.59.59
+        d=1e100.net; s=20230601; t=1698069877; x=1698674677;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=feOKUCgu/NwWDJRdl5k00+5MbUdrzhLpwZuuii6+kaw=;
+        b=Y9d78QHen1fr6xNSn2caU7ACDWw8F3EccSICUItmug5D70ofG+LNmiGLLT5f9hkxH5
+         yAwjHEIhFu/JYr8PFV31tP8enH2+dK3qyXbsES4DmhQ3U1tdeez+KXCmi6y721izcWx9
+         mfGxYx1JoRNU4UubxqdCIn889cyyQ+Wq54HW3k+cvbtIF18CAcBoQS3lYMEJM81IhYBP
+         LMEQahg1pK40yYS4gdxCf0FPs6ief8L4ahi8FrJ3p0lYdG+ebiGtibPFQ3sUa/xPchbl
+         kHsLIUYeLU37dtgkxJ+OsT1o44Wnf9mLxzbz8nRYn4Ba905nWeUcZJB7qtGSjwnAPpGC
+         nu1g==
+X-Gm-Message-State: AOJu0YzrkfZEqWxS+AoG4bLHWIenPaTe2+XaUAHnfjeY29UrQL24eKi8
+        xkCnSB7GLY0RqXJ7AWv54BzK1Q==
+X-Google-Smtp-Source: AGHT+IHy+5g34JuyY2T0tSV2kR1cQY5CepkcDP3rqVrwZ20pyk2L/CnPgo0cBTG/n9ky2O9UJlK/xw==
+X-Received: by 2002:adf:e808:0:b0:32d:9a36:b518 with SMTP id o8-20020adfe808000000b0032d9a36b518mr6259762wrm.69.1698069877341;
+        Mon, 23 Oct 2023 07:04:37 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:a36e:a5d9:26ae:74b1? ([2a01:e0a:982:cbb0:a36e:a5d9:26ae:74b1])
+        by smtp.gmail.com with ESMTPSA id n7-20020a5d6b87000000b003140f47224csm7796062wrx.15.2023.10.23.07.04.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Oct 2023 07:00:02 -0700 (PDT)
-Message-ID: <efecb4cf-e42b-40fb-aa68-37433529604b@linaro.org>
-Date:   Mon, 23 Oct 2023 15:59:58 +0200
+        Mon, 23 Oct 2023 07:04:36 -0700 (PDT)
+Message-ID: <925cc416-e8e0-4a68-addb-8a7d11d3895c@linaro.org>
+Date:   Mon, 23 Oct 2023 16:04:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: sm8350: Fix remoteproc interrupt
- type
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Rob Herring <robh+dt@kernel.org>,
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v9 2/4] Input: add core support for Goodix Berlin
+ Touchscreen IC
+Content-Language: en-US, fr
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc:     linux-input@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
-        Rob <Me@orbit.sh>, Clayton Craft <clayton@igalia.com>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>
-References: <20231018-nia-sm8350-for-upstream-v2-0-7b243126cb77@igalia.com>
- <20231019040623.GA5142@thinkpad>
- <ca42af11-7b92-4d07-9b93-367f92c886fe@linaro.org>
- <6985565.DvuYhMxLoT@z3ntu.xyz>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <6985565.DvuYhMxLoT@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
+        Bastien Nocera <hadess@hadess.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231021-topic-goodix-berlin-upstream-initial-v9-0-13fb4e887156@linaro.org>
+ <20231021-topic-goodix-berlin-upstream-initial-v9-2-13fb4e887156@linaro.org>
+ <ZTX4dPa3CxZacDph@google.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <ZTX4dPa3CxZacDph@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
@@ -129,52 +111,296 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21.10.2023 21:34, Luca Weiss wrote:
-> On Samstag, 21. Oktober 2023 19:44:20 CEST Konrad Dybcio wrote:
->> On 10/19/23 06:06, Manivannan Sadhasivam wrote:
->>> On Wed, Oct 18, 2023 at 10:17:15PM +0200, Konrad Dybcio wrote:
->>>> On 10/18/23 16:25, Nia Espera wrote:
->>>>> In a similar vein to
->>>>> https://lore.kernel.org/lkml/20220530080842.37024-3-manivannan.sadhasiva
->>>>> m@linaro.org/, the remote processors on sm8350 fail to initialize with
->>>>> the 'correct' (i.e., specified in downstream) IRQ type. Change this to
->>>>> EDGE_RISING.
->>>>>
->>>>> Signed-off-by: Nia Espera <nespera@igalia.com>
->>>>> ---
->>>>
->>>> Hm, apparently 8250 and 7180 have the same thing.
->>>>
->>>> Mani, could you elaborate on this?
->>>
->>> So the remoteproc driver expects the wdog interrupts to be edge triggered
->>> as the rest of the interrupts, but DT specifies them as level triggered.
->>> This won't cause any issue during the first instance of the probe as the
->>> driver requested trigger will be given precedence. But if the probe
->>> defers for some reason and during the next try, request_irq() will fail
->>> with error similar to below:
->>>
->>> irq: type mismatch, failed to map hwirq-x for interrupt-controller@xxxxxx!
->>>
->>> This error is often confusing and I tried to fix it. But Maz didn't agree
->>> with me, so I just ended up fixing the DTs for some platform I have
->>> access to.
->>>
->>> So ideally, DTs of all platforms should be fixed to pass correct trigger
->>> type.
->> So, this should be edge for all platforms, correct?
-> 
-> I'd believe so, iirc when I looked at the driver it always requests that
-> interrupt type.
-> 
-> For reference, these are my patches:
-> 
-> sm6350:
-> https://github.com/z3ntu/linux/commit/0522b7a1b981d80884a785c7e654bb5094ea1bc2
-> 
-> sc7280:
-> https://github.com/z3ntu/linux/commit/ead1d7b8f5648535b857cfa9250aac2480f00ed3
-Can you send those, as well as fix up other outliers? Probably won't get in
-for this cycle, but still very much worth to get them upstream..
+Hi Dmitry,
 
-Konrad
+On 23/10/2023 06:37, Dmitry Torokhov wrote:
+> Hi Neil,
+> 
+> On Sat, Oct 21, 2023 at 01:09:24PM +0200, Neil Armstrong wrote:
+>> +static int goodix_berlin_get_ic_info(struct goodix_berlin_core *cd)
+>> +{
+>> +	u8 afe_data[GOODIX_BERLIN_IC_INFO_MAX_LEN];
+> 
+> You probably already saw the kernel test robot message, I think we
+> should allocate this buffer in the heap (and free it once its no longer
+> needed).
+
+Indeed I haven't received it on 9 patch submitting, anyway moved it to head.
+
+> 
+>> +	__le16 length_raw;
+>> +	u16 length;
+>> +	int error;
+>> +
+>> +	error = regmap_raw_read(cd->regmap, GOODIX_BERLIN_IC_INFO_ADDR,
+>> +				&length_raw, sizeof(length_raw));
+>> +	if (error) {
+>> +		dev_info(cd->dev, "failed get ic info length, %d\n", error);
+>> +		return error;
+>> +	}
+>> +
+>> +	length = le16_to_cpu(length_raw);
+>> +	if (length >= GOODIX_BERLIN_IC_INFO_MAX_LEN) {
+>> +		dev_info(cd->dev, "invalid ic info length %d\n", length);
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	error = regmap_raw_read(cd->regmap, GOODIX_BERLIN_IC_INFO_ADDR,
+>> +				afe_data, length);
+>> +	if (error) {
+>> +		dev_info(cd->dev, "failed get ic info data, %d\n", error);
+>> +		return error;
+>> +	}
+>> +
+>> +	/* check whether the data is valid (ex. bus default values) */
+>> +	if (goodix_berlin_is_dummy_data(cd, (const uint8_t *)afe_data, length)) {
+> 
+> This cast is not needed.
+> 
+>> +		dev_err(cd->dev, "fw info data invalid\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	if (!goodix_berlin_checksum_valid((const uint8_t *)afe_data, length)) {
+> 
+> This cast is not needed either.
+> 
+>> +		dev_info(cd->dev, "fw info checksum error\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	error = goodix_berlin_convert_ic_info(cd, afe_data, length);
+>> +	if (error)
+>> +		return error;
+>> +
+>> +	/* check some key info */
+>> +	if (!cd->touch_data_addr) {
+>> +		dev_err(cd->dev, "touch_data_addr is null\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void goodix_berlin_parse_finger(struct goodix_berlin_core *cd,
+>> +				       const void *buf, int touch_num)
+>> +{
+>> +	const struct goodix_berlin_touch_data *touch_data = buf;
+>> +	int i;
+>> +
+>> +	/* Check for data validity */
+>> +	for (i = 0; i < touch_num; i++) {
+>> +		unsigned int id;
+>> +
+>> +		id = FIELD_GET(GOODIX_BERLIN_TOUCH_ID_MASK, touch_data[i].id);
+>> +
+>> +		if (id >= GOODIX_BERLIN_MAX_TOUCH) {
+>> +			dev_warn(cd->dev, "invalid finger id %d\n", id);
+>> +			return;
+> 
+> Is it important to abort entire packet if one if the slots has incorrect
+> data? Can we simply skip over these contacts?
+
+Indeed, merged the for loops and simply skip the invalid finger id.
+
+> 
+>> +		}
+>> +	}
+>> +
+>> +	/* Report finger touches */
+>> +	for (i = 0; i < touch_num; i++) {
+>> +		input_mt_slot(cd->input_dev,
+>> +			      FIELD_GET(GOODIX_BERLIN_TOUCH_ID_MASK,
+>> +					touch_data[i].id));
+>> +		input_mt_report_slot_state(cd->input_dev, MT_TOOL_FINGER, true);
+>> +
+>> +		touchscreen_report_pos(cd->input_dev, &cd->props,
+>> +				       __le16_to_cpu(touch_data[i].x),
+>> +				       __le16_to_cpu(touch_data[i].y),
+>> +				       true);
+>> +		input_report_abs(cd->input_dev, ABS_MT_TOUCH_MAJOR,
+>> +				 __le16_to_cpu(touch_data[i].w));
+>> +	}
+>> +
+>> +	input_mt_sync_frame(cd->input_dev);
+>> +	input_sync(cd->input_dev);
+>> +}
+>> +
+>> +static void goodix_berlin_touch_handler(struct goodix_berlin_core *cd,
+>> +					const void *pre_buf, u32 pre_buf_len)
+>> +{
+>> +	static u8 buffer[GOODIX_BERLIN_IRQ_READ_LEN(GOODIX_BERLIN_MAX_TOUCH)];
+> 
+> No, please no static data. The drivers should be ready to handle more
+> than one device on a system. If the buffer is large-ish put it into
+> goodix_berlin_core.
+
+This is a typo from vendor kernel, I didn't want a static buffer here...
+
+The buffer is only 26 bytes, it's small enough to stay here in non-static.
+
+> 
+> 
+>> +	u8 point_type, touch_num;
+>> +	int error;
+>> +
+>> +	/* copy pre-data to buffer */
+>> +	memcpy(buffer, pre_buf, pre_buf_len);
+>> +
+>> +	touch_num = FIELD_GET(GOODIX_BERLIN_TOUCH_COUNT_MASK,
+>> +			      buffer[GOODIX_BERLIN_REQUEST_TYPE_OFFSET]);
+>> +
+>> +	if (touch_num > GOODIX_BERLIN_MAX_TOUCH) {
+>> +		dev_warn(cd->dev, "invalid touch num %d\n", touch_num);
+>> +		return;
+>> +	}
+>> +
+>> +	if (touch_num) {
+>> +		/* read more data if more than 2 touch events */
+>> +		if (unlikely(touch_num > 2)) {
+>> +			error = regmap_raw_read(cd->regmap,
+>> +						cd->touch_data_addr + pre_buf_len,
+>> +						&buffer[pre_buf_len],
+>> +						(touch_num - 2) * GOODIX_BERLIN_BYTES_PER_POINT);
+>> +			if (error) {
+>> +				dev_err_ratelimited(cd->dev, "failed to get touch data, %d\n",
+>> +						    error);
+>> +				return;
+>> +			}
+>> +		}
+>> +
+>> +		point_type = FIELD_GET(GOODIX_BERLIN_POINT_TYPE_MASK,
+>> +				       buffer[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN]);
+>> +
+>> +		if (point_type == GOODIX_BERLIN_POINT_TYPE_STYLUS ||
+>> +		    point_type == GOODIX_BERLIN_POINT_TYPE_STYLUS_HOVER) {
+>> +			dev_warn_once(cd->dev, "Stylus event type not handled\n");
+>> +			return;
+>> +		}
+>> +
+>> +		if (!goodix_berlin_checksum_valid(&buffer[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN],
+>> +						  touch_num * GOODIX_BERLIN_BYTES_PER_POINT + 2)) {
+>> +			dev_err(cd->dev, "touch data checksum error, data: %*ph\n",
+>> +				touch_num * GOODIX_BERLIN_BYTES_PER_POINT + 2,
+>> +				&buffer[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN]);
+>> +			return;
+>> +		}
+>> +	}
+>> +
+>> +	goodix_berlin_parse_finger(cd, &buffer[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN],
+>> +				   touch_num);
+>> +}
+>> +
+>> +static int goodix_berlin_request_handle_reset(struct goodix_berlin_core *cd)
+>> +{
+>> +	gpiod_set_value(cd->reset_gpio, 1);
+>> +	usleep_range(2000, 2100);
+>> +	gpiod_set_value(cd->reset_gpio, 0);
+>> +
+>> +	msleep(GOODIX_BERLIN_NORMAL_RESET_DELAY_MS);
+> 
+> The reset line handling is optional, we should skip waits if there is
+> no GPIO defined for the board.
+
+Ack, instead I only call this if gpio is valid.
+
+> 
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static irqreturn_t goodix_berlin_threadirq_func(int irq, void *data)
+>> +{
+>> +	struct goodix_berlin_core *cd = data;
+>> +	u8 buf[GOODIX_BERLIN_IRQ_READ_LEN(2)];
+>> +	u8 event_status;
+>> +	int error;
+>> +
+>> +	/* First, read buffer with space for 2 touch events */
+>> +	error = regmap_raw_read(cd->regmap, cd->touch_data_addr, buf,
+>> +				GOODIX_BERLIN_IRQ_READ_LEN(2));
+>> +	if (error) {
+>> +		dev_err_ratelimited(cd->dev, "failed get event head data, %d\n", error);
+>> +		return IRQ_HANDLED;
+>> +	}
+>> +
+>> +	if (buf[GOODIX_BERLIN_STATUS_OFFSET] == 0)
+>> +		return IRQ_HANDLED;
+>> +
+>> +	if (!goodix_berlin_checksum_valid(buf, GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN)) {
+>> +		dev_warn_ratelimited(cd->dev, "touch head checksum err : %*ph\n",
+>> +				     GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN, buf);
+>> +		return IRQ_HANDLED;
+>> +	}
+>> +
+>> +	event_status = buf[GOODIX_BERLIN_STATUS_OFFSET];
+>> +
+>> +	if (event_status & GOODIX_BERLIN_TOUCH_EVENT)
+>> +		goodix_berlin_touch_handler(cd, buf, GOODIX_BERLIN_IRQ_READ_LEN(2));
+>> +
+>> +	if (event_status & GOODIX_BERLIN_REQUEST_EVENT) {
+>> +		switch (buf[GOODIX_BERLIN_REQUEST_TYPE_OFFSET]) {
+>> +		case GOODIX_BERLIN_REQUEST_CODE_RESET:
+>> +			goodix_berlin_request_handle_reset(cd);
+>> +			break;
+>> +
+>> +		default:
+>> +			dev_warn(cd->dev, "unsupported request code 0x%x\n",
+>> +				 buf[GOODIX_BERLIN_REQUEST_TYPE_OFFSET]);
+>> +		}
+>> +	}
+>> +
+>> +	/* Clear up status field */
+>> +	regmap_write(cd->regmap, cd->touch_data_addr, 0);
+>> +
+>> +	return IRQ_HANDLED;
+>> +}
+>> +
+>> +static int goodix_berlin_input_dev_config(struct goodix_berlin_core *cd,
+>> +					  const struct input_id *id)
+>> +{
+>> +	struct input_dev *input_dev;
+>> +	int error;
+>> +
+>> +	input_dev = devm_input_allocate_device(cd->dev);
+>> +	if (!input_dev)
+>> +		return -ENOMEM;
+>> +
+>> +	cd->input_dev = input_dev;
+>> +	input_set_drvdata(input_dev, cd);
+>> +
+>> +	input_dev->name = "Goodix Berlin Capacitive TouchScreen";
+>> +	input_dev->phys = "input/ts";
+>> +
+>> +	input_dev->id = *id;
+>> +
+>> +	input_set_abs_params(cd->input_dev, ABS_MT_POSITION_X, 0, SZ_64K - 1, 0, 0);
+>> +	input_set_abs_params(cd->input_dev, ABS_MT_POSITION_Y, 0, SZ_64K - 1, 0, 0);
+>> +	input_set_abs_params(cd->input_dev, ABS_MT_TOUCH_MAJOR, 0, 255, 0, 0);
+>> +
+>> +	touchscreen_parse_properties(cd->input_dev, true, &cd->props);
+>> +
+>> +	error = input_mt_init_slots(cd->input_dev, GOODIX_BERLIN_MAX_TOUCH,
+>> +				    INPUT_MT_DIRECT | INPUT_MT_DROP_UNUSED);
+>> +	if (error)
+>> +		return error;
+>> +
+>> +	return input_register_device(cd->input_dev);
+> 
+> Please in functions with multiple possible failure paths use format
+> 
+> 	error = op(...);
+> 	if (error)
+> 		return error;
+> 
+> 	return 0;
+
+Ack, will check for this in the whole patchset.
+
+Thanks for review,
+Neil
+
+> 
+> Thanks.
+> 
+
