@@ -2,79 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A50D97D2BA3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 09:46:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6901B7D2C04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 09:57:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbjJWHq0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 03:46:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44984 "EHLO
+        id S229463AbjJWH5t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 03:57:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbjJWHqZ (ORCPT
+        with ESMTP id S229452AbjJWH5t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 03:46:25 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8486A6;
-        Mon, 23 Oct 2023 00:46:23 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-99bdeae1d0aso436998566b.1;
-        Mon, 23 Oct 2023 00:46:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698047182; x=1698651982; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3ihrHhV1qIWSGDUJPcmUG3Dq/nYNoW90MCo7DQQacUk=;
-        b=Pn6pqNJND3u+os1+PBKwkyN9b8EAcvDeRhnqslE3ASRfqObpuVlUBBQcvvKQ6h7/oY
-         i38y8xV2pC2CGzdvMLK/r+AX3/JcvRFmUOetEgV4bDukyesOKRhzmg4HpgM2vdGyWerV
-         bSgtirENU/w9zS6gJKqw8LZ/i0rvdvERz6UT6aMrzWgZAUxjyHab8GxDmts38yhcKGht
-         NG681Nq7qujRCFZ8wzPQmsHmdDjHNylyrDdgq+L/UGxNL4LRILcGu0w1oH0wlub1b7Q7
-         INF90QuYwROB1tKNQCujfFLalnwW01zG/3LEAKHTv04VeCVUthunA9IL+LF5v7q776cn
-         5naQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698047182; x=1698651982;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3ihrHhV1qIWSGDUJPcmUG3Dq/nYNoW90MCo7DQQacUk=;
-        b=lHWcuDAbolglD2qQrBMaIIREeenlxwhST3mwNOB1I4Ge0FtkBnUAEQghK3om07oA74
-         ZML3lMWiZ1Fv2xlsStkDQ2YWzqEz1Wt34vMxrMZuYZenniPF/7uDAzn3mZDNckVshq/2
-         pReVlVbZ5ruU9Wi3TPumOERdBqhdQWPbZyGrRcxYXnB3rL8mgFmA+x6I7G34eL46DDaS
-         VkBQiqkVUnKJ1X3OUS8Bi/9Xd9eqHxh9GxSyfYx44FmT5usKwiZN2uOIp+MV2Q74Rmxy
-         lTLFxo5lCbWzg9b4pDPDKVfWtq8Cx+HiLqsbLuX6BMCNjZU0/YIYcCVShjAGV5jPfF/7
-         cpRg==
-X-Gm-Message-State: AOJu0Yznzjk+WkV8JzeqqZ4YvmWe000FTiAeWWociPLpOHSdIycR4u6U
-        u+A80EjGdofbrzU7B2nwm2ACqK1QttnxtOaLpu8=
-X-Google-Smtp-Source: AGHT+IEmA9OHcn5Osk80Y4+FXM/A/b/CLQ/mIiAggZOS1PbCqvFL3RZBYcIk8Po6Iih5KX6fVHr1gC8OzZ2dm5V0toQ=
-X-Received: by 2002:a17:906:4fc7:b0:9be:30c2:b8ff with SMTP id
- i7-20020a1709064fc700b009be30c2b8ffmr6512097ejw.61.1698047182034; Mon, 23 Oct
- 2023 00:46:22 -0700 (PDT)
+        Mon, 23 Oct 2023 03:57:49 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FF0DA6;
+        Mon, 23 Oct 2023 00:57:46 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39N7RVnO003055;
+        Mon, 23 Oct 2023 07:57:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=c7KP3Zqe35K/UITXRHfu9WloJc95Zxfye7HE8lRDw1Q=;
+ b=LO04fbQGS+K5kWBRwLwH/SFLsQWsCW3igdRmGALdXuURqWRcSqyt4BlB7BYMaC97ikzK
+ uDSYPDrzPj7wMUpOwLdCxsFCqFkcWJruehMJg31XGB/2ncRDpOMa87kIqVfyZc/uugmK
+ PK2GgbY7EXuN1OTTVxg40OetT1ZbSv6+o/WbC1NclUNw+G+PYSpR4hzF/Ijy7LrRSmhO
+ oJaYBO0YF6HfUNZtzGBcAlQemjQaKHk5431stZMyYVLxu6odP5w9Jk85ts+56yDdP2xn
+ W1auaDR0oTnlkqjv/o+1z1T1Er7WM6TeSst1Rp9nepACXMF8My+gnqx/mwfhcei4rwbp /g== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tv5ndue0r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Oct 2023 07:57:36 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39N7vZET002897
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Oct 2023 07:57:35 GMT
+Received: from aiquny2-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Mon, 23 Oct 2023 00:57:29 -0700
+From:   Maria Yu <quic_aiquny@quicinc.com>
+To:     <catalin.marinas@arm.com>, <will@kernel.org>, <arnd@arndb.de>
+CC:     Maria Yu <quic_aiquny@quicinc.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH] arm64: module: PLT allowed even !RANDOM_BASE
+Date:   Mon, 23 Oct 2023 15:57:14 +0800
+Message-ID: <20231023075714.21672-1-quic_aiquny@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <20231023074319.14456-1-lukapanio@gmail.com>
-In-Reply-To: <20231023074319.14456-1-lukapanio@gmail.com>
-From:   Luka Panio <lukapanio@gmail.com>
-Date:   Mon, 23 Oct 2023 09:46:10 +0200
-Message-ID: <CACi=Ov7Ev3UNfL8Mqd0DXcURBEfM1r_RhEmKMw5gRGTKHmgdvA@mail.gmail.com>
-Subject: Re: [PATCH v7] arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial
- device tree
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Tony Luck <tony.luck@intel.com>,
-        "Guilherme G . Piccoli" <gpiccoli@igalia.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mFIgwhexEX5_sUkfBMghA9gGEGxsMVFw
+X-Proofpoint-ORIG-GUID: mFIgwhexEX5_sUkfBMghA9gGEGxsMVFw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-23_06,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=430 bulkscore=0
+ adultscore=0 impostorscore=0 mlxscore=0 phishscore=0 priorityscore=1501
+ clxscore=1011 suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
+ definitions=main-2310230069
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The v7 patch was sent outside of the patchset and to be ignored, sorry for that.
-Thanks,
-Luka Panio
+Module PLT feature can be enabled even when RANDOM_BASE is disabled.
+Break BLT entry counts of relocation types will make module plt entry
+allocation fail and finally exec format error for even correct and plt
+allocation available modules.
+
+Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+---
+ arch/arm64/kernel/module-plts.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/arch/arm64/kernel/module-plts.c b/arch/arm64/kernel/module-plts.c
+index bd69a4e7cd60..21a67d52d7a0 100644
+--- a/arch/arm64/kernel/module-plts.c
++++ b/arch/arm64/kernel/module-plts.c
+@@ -167,9 +167,6 @@ static unsigned int count_plts(Elf64_Sym *syms, Elf64_Rela *rela, int num,
+ 		switch (ELF64_R_TYPE(rela[i].r_info)) {
+ 		case R_AARCH64_JUMP26:
+ 		case R_AARCH64_CALL26:
+-			if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
+-				break;
+-
+ 			/*
+ 			 * We only have to consider branch targets that resolve
+ 			 * to symbols that are defined in a different section.
+
+base-commit: 05d3ef8bba77c1b5f98d941d8b2d4aeab8118ef1
+-- 
+2.17.1
+
