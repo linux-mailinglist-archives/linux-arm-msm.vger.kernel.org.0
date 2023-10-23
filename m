@@ -2,65 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF3FB7D3DFD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 19:41:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA82B7D3E0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 19:43:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233935AbjJWRlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 13:41:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38724 "EHLO
+        id S233661AbjJWRnI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 13:43:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233934AbjJWRlG (ORCPT
+        with ESMTP id S233780AbjJWRnG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 13:41:06 -0400
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B168B127;
-        Mon, 23 Oct 2023 10:40:59 -0700 (PDT)
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-1e59894d105so2455059fac.1;
-        Mon, 23 Oct 2023 10:40:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698082859; x=1698687659;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WHWTYZr8FmE5PUvdMZVU7eOQxQR0Lau59W2wz9H66io=;
-        b=rv6MvtoMBvJvvrqQljs7hyfMf602Jloa/ZxYE3g6ohSZfsgnwg/hOoHjFvgUBb8wN2
-         +yhONBk1mNyzPEbjDnyeKSg14fmXs1HuAP6TE7gZZHu70y3L0onZS4MuqSGqRPEiA5PN
-         BtRWjdbNinrbalafMyptKrsJ5F3i02pSkYL3W6gBUe83HRojVJkBWS9hlLyMeetf4ZVR
-         5jqCP2z/oOJ2rqNWKhVkoLWVsxET2pLHl5wxrer58OdnF8oHB2wRJidnecgjTnO246+4
-         68BoKv3QYUYGyaPMfo7txINzRGc2XvHJS9sXNPyZHO/yYkkjiiT7U9Hw5VtCQx12Y6Z3
-         wSkw==
-X-Gm-Message-State: AOJu0Ywqyg1f7jVqCPPxYl21Bk7bW0ToGZvujQJeqTWro1aViEzFxAl2
-        XRAgqcPhzMO+ZcmKyXfSdzWKNV7w7w==
-X-Google-Smtp-Source: AGHT+IFdkzQW0SkH8ivVGhUgbuDwmE2LjOJ5Rnm5NYbNyP8uexHH0vKzEUigqypqTE+3qABbcu0gsA==
-X-Received: by 2002:a05:6870:2183:b0:1e9:b2fe:9ea7 with SMTP id l3-20020a056870218300b001e9b2fe9ea7mr12765065oae.43.1698082858883;
-        Mon, 23 Oct 2023 10:40:58 -0700 (PDT)
-Received: from herring.priv ([2607:fb91:e6e0:8169:8cd7:6070:de02:c079])
-        by smtp.gmail.com with ESMTPSA id ec24-20020a0568708c1800b001e5dd8a29c6sm1744864oab.29.2023.10.23.10.40.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Oct 2023 10:40:58 -0700 (PDT)
-Received: (nullmailer pid 864630 invoked by uid 1000);
-        Mon, 23 Oct 2023 17:40:49 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Mon, 23 Oct 2023 13:43:06 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9E498;
+        Mon, 23 Oct 2023 10:43:03 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39NGrEWF021316;
+        Mon, 23 Oct 2023 17:42:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Thbvvz6X+dAXdwI8GyfmFVSpYdfQyNnRvRh5T6KVgDs=;
+ b=dnurKmnxAhvUTlo44pBlF+ZYn8UMDEf2aCqDckdxHoVmISI0dPSFEa6klZCDBWvH1moa
+ lChPJ5MkEbpvaUwuWyvWPEkqNIAFgMF0wVZ4LmVS7rLaHXj5zIwt3IHnPd6ygP4IAJVr
+ oK3afcJyYH4YUmLmu5uin15Uydp4YOE83PBb47Jazb9ij5z1x0jOL9vs4mW94AHFp9NW
+ Q8EGeOHrFZ1OnxRAawB3XvbctXekLr9dpeZPkEXAsBXLJK8oiSDrBUNcBTRo67cea+jU
+ bwCid2a/H2ONmnYlFk0uqPDDRkEOSZgl3L/JIMewKNtm5GeqXdpbv72HBQ5UMcO2p4bs rw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3twtxwrejb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Oct 2023 17:42:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39NHgqIF007389
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 23 Oct 2023 17:42:52 GMT
+Received: from [10.216.7.46] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 23 Oct
+ 2023 10:42:45 -0700
+Message-ID: <faa647ed-9692-4233-b421-b9e6271f8934@quicinc.com>
+Date:   Mon, 23 Oct 2023 23:12:40 +0530
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>
-Cc:     robh+dt@kernel.org, quic_tingweiz@quicinc.com, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, kernel@quicinc.com
-In-Reply-To: <1698052857-6918-3-git-send-email-quic_zhenhuah@quicinc.com>
-References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
- <1698052857-6918-3-git-send-email-quic_zhenhuah@quicinc.com>
-Message-Id: <169808266064.861239.7420927840211548252.robh@kernel.org>
-Subject: Re: [PATCH v1 2/5] dt-bindings: sram: qcom,imem: document sm8250
-Date:   Mon, 23 Oct 2023 12:40:49 -0500
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 09/10] arm64: dts: qcom: sa8295p: Enable tertiary
+ controller and its 4 USB ports
+Content-Language: en-US
+To:     Johan Hovold <johan@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-10-quic_kriskura@quicinc.com>
+ <ZTad-_toGkumYx6O@hovoldconsulting.com>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZTad-_toGkumYx6O@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gM9Yoy4cwfT-mfFK2KJNiKj1cExvwry2
+X-Proofpoint-GUID: gM9Yoy4cwfT-mfFK2KJNiKj1cExvwry2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-23_16,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0 spamscore=0
+ malwarescore=0 bulkscore=0 impostorscore=0 suspectscore=0 mlxscore=0
+ mlxlogscore=792 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310230154
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -68,41 +94,63 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Mon, 23 Oct 2023 17:20:54 +0800, Zhenhua Huang wrote:
-> Add compatible for sm8250 IMEM.
+
+On 10/23/2023 9:53 PM, Johan Hovold wrote:
+> On Sat, Oct 07, 2023 at 09:18:05PM +0530, Krishna Kurapati wrote:
+>> Enable tertiary controller for SA8295P (based on SC8280XP).
+>> Add pinctrl support for usb ports to provide VBUS to connected peripherals.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sa8295p-adp.dts | 49 ++++++++++++++++++++++++
+>>   1 file changed, 49 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>> index fd253942e5e5..271000163823 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sa8295p-adp.dts
+>> @@ -9,6 +9,7 @@
+>>   #include <dt-bindings/gpio/gpio.h>
+>>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>   #include <dt-bindings/spmi/spmi.h>
+>> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
 > 
-> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> Sort order ('p' < 'r').
+
+ACK
+
+> 
+>> +&usb_2 {
+>> +	pinctrl-0 = <&usb2_en_state>,
+>> +		    <&usb3_en_state>,
+>> +		    <&usb4_en_state>,
+>> +		    <&usb5_en_state>;
+>> +	pinctrl-names = "default";
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>>   &usb_2_hsphy0 {
+>>   	vdda-pll-supply = <&vreg_l5a>;
+>>   	vdda18-supply = <&vreg_l7g>;
+>> @@ -729,3 +740,41 @@ wake-n-pins {
+>>   		};
+>>   	};
+>>   };
+>> +
+>> +&pmm8540c_gpios {
+> 
+> Sort order here too ('p' < 't' in "&tlmm").
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+ACK.
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/sram/qcom,imem.yaml:56:1: [error] duplication of key "patternProperties" in mapping (key-duplicates)
-./Documentation/devicetree/bindings/sram/qcom,imem.yaml:73:1: [error] duplication of key "patternProperties" in mapping (key-duplicates)
-./Documentation/devicetree/bindings/sram/qcom,imem.yaml:120:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
+>> +	usb2_en_state: usb2-en-state {
+> 
+> No need to include '_state' in the labels.
+> 
+Any specific reason ? I have no problem if removing the suffix but just 
+wanted to know the reason.
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/sram/qcom,imem.yaml:120:1: found a tab character where an indentation space is expected
-./Documentation/devicetree/bindings/sram/qcom,imem.yaml:120:1: found a tab character where an indentation space is expected
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1698052857-6918-3-git-send-email-quic_zhenhuah@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Regards,
+Krishna,
