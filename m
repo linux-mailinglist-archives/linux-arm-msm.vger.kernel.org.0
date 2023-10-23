@@ -2,169 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD2687D2C26
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 10:04:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66E847D2C3B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Oct 2023 10:08:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229540AbjJWIEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 04:04:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40550 "EHLO
+        id S229591AbjJWII5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 04:08:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbjJWIEB (ORCPT
+        with ESMTP id S229513AbjJWII4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 04:04:01 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3478DB7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:03:58 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-d9a3d737d66so2233749276.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Oct 2023 01:03:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698048237; x=1698653037; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gmB9mDTwiF3uEH0iaSmju1hjjf2PC63Y5fnQXGlfFvY=;
-        b=fu7Fm2CWDTbU4vgkZvk0KUscLqzKdSu6257lMymgRY9sILLbrOqdqyinFyrNaDGfE4
-         m1nBqXpywvnoLTZ1tRewNBSZuvo0XQ+12uYKvMrvPBxGG6bx/sxoYOdOPh1942HSpuTq
-         che/cfCX5eANbAMk8+pZl6fzmuYHd9y9Z3iqTxGENKMe9e8/YxwvwPX0JLweZiyUogDy
-         vIXBTWsMpWbolKvbLfxoo8f3IWF0MrQ6oXZmiz6vO8qDTYgJuJzAh4X/JdgyJhSthmN9
-         mFGCuOs8ufYglvDsYWHA9busqoiS/wJeSXpd2VMSWGMLQafa3RJ8VlV6OPBIbGgo2tEJ
-         qkVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698048237; x=1698653037;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gmB9mDTwiF3uEH0iaSmju1hjjf2PC63Y5fnQXGlfFvY=;
-        b=eU73cz+tZ3IvFqL8ryt7U2dLmZkgKDqxwOg3udFv5Jl/BQmW4UHHMj/W5Z86aLUoj7
-         AdQMb2nDM7KGLcJ0d0cK7jyWFE3yajQqV5Eo2pea8d58Q8Lm2GYB5/Ca4fzCH3NmRqbj
-         zjQrGisxb4IkdhVjTmqTNSzQuO7en5tFs5mVt3HzFNbzLqEECr5F5aRcvQ6Bpwf6b96h
-         rTbgR5dPq40xzW34zce2VtBFA7f68cn3NKZbVl2cdStRVYE081QFq+BBEC7Y5jBfYe5g
-         zV9P5jAF2IH+P7YJ/tX1vEdJPrR1TrFvgF66C64gmIQbwRaG+UASb0PSZEYBo/oQNWw9
-         qOmQ==
-X-Gm-Message-State: AOJu0Yy7gRSOZRyiM8orZaVSJeBZZKcb6tY9IueciV6gsq6vm2zifxgh
-        ILEhTieTw9LkD4NqbwzXavtv/dqBkQYN6JE9w1kB9Q==
-X-Google-Smtp-Source: AGHT+IElEdOoTwEWHGztCKoP/uOTBAVSI/z9UeRXX/JNfSNw3yEy28Sub6mcDg2QCSreuoawpXgqJLjt53W3G81bRMU=
-X-Received: by 2002:a25:ef4e:0:b0:d9d:116a:89c8 with SMTP id
- w14-20020a25ef4e000000b00d9d116a89c8mr4808003ybm.54.1698048237350; Mon, 23
- Oct 2023 01:03:57 -0700 (PDT)
+        Mon, 23 Oct 2023 04:08:56 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F4FA6;
+        Mon, 23 Oct 2023 01:08:54 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id B2FC45C0290;
+        Mon, 23 Oct 2023 04:08:53 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute5.internal (MEProxy); Mon, 23 Oct 2023 04:08:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm2; t=1698048533; x=1698134933; bh=CO
+        pt03Eh0fEEnCE5W21Vph3o8D+rTTaPmsSG2cQhMKM=; b=BkUqBezm7JcPV3K9Lu
+        Wy+OacQyNYe0wCPzOGauv/L0seeMFHf4+xskSnHZqCFvzclTRy+iSt285XafKqVn
+        CUxKz6RCuOqlxcPCDcLi94dtwSRFOOFj2+yb1VyOwKqIF7rSafdQcQBHZJbHpLdf
+        zdZBcrHKFlCSfcvZ7kTapsFd4t7+X6wkViw/Ysvef8FldaHailfA/zR30RJyWp8X
+        gEPIDWwwB6k9J6y0dKXhEJfSFJazwuGLS9SXSlL6NAr2gGUamxe8OeAnj/C1k/e9
+        f4h3I8/tYwMloX1JEfyfEkWSp197+TFJdmYfpKzNqEtIm4H82LGPzZ0STw7JZy+7
+        1ZHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm3; t=1698048533; x=1698134933; bh=COpt03Eh0fEEn
+        CE5W21Vph3o8D+rTTaPmsSG2cQhMKM=; b=O+m18wVj4mkJV37R6uPel8zayuhyN
+        +mbwrgqyTiBzBngipKf583Gjf9LLGk0T0nmt2j/OjbfUp18wRd69f4NC5IH8+8gL
+        omiv/+g/IebNPTDwsUnMAatcMp6E5/wjqJ0DAfudz5dkOs6jL8z6/P0+kjEHrCI2
+        vOOzZ8yNN9Zhzg9WRwXoP86+WbZK9NiPZzgX4j/R08IkuUn+1hMJftPIrJwo5DwU
+        T4OOw01Hlh7gFddMfwNE+gGspjg5sY3AYMcpTDdfAGBsDnatDv57zHBcwRazBFG/
+        0OcMzH78+VoYtjO7/jhKXn1hs/vlAAgTtH7JzynwKFZCbC0jau+/qPOIw==
+X-ME-Sender: <xms:FSo2ZdlYG-VKMSTk7Un2OI2CFw79ChZj2-zOJsCV2kpOiheMo4uoOg>
+    <xme:FSo2ZY3meXy79UfoqcwEFfPsEni-ZdzsFNQlgKvXTePUbFRDH9EP5Ycfxcr6wfu_d
+    tc18iHcB5VPgD2WRLw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrkeeiucetufdoteggodetrfdotffvucfrrh
+    hofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    epofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehrnhguuceu
+    vghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvghrnh
+    epffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdekteffnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhguse
+    grrhhnuggsrdguvg
+X-ME-Proxy: <xmx:FSo2ZTowZkzzfDOhWPrhcdYZsDcJbtQSF-DM51LQYK6E1TOPjv_Clg>
+    <xmx:FSo2ZdkQMl2DBaqkBqLvbUXotq75RkSetU4_KTjz-b0j5nwb6K6yew>
+    <xmx:FSo2Zb3mw5t2f4gT0E-pnQJJH1aszufa0kliKx0I5-zuXZz6cJyLXA>
+    <xmx:FSo2Zb_6VKVMz8SRQ4_jisgO-NyEmApKYmPitRDvMxjQAYXMd2TptA>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id 56F06B60089; Mon, 23 Oct 2023 04:08:53 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1048-g9229b632c5-fm-20231019.001-g9229b632
 MIME-Version: 1.0
-References: <20230708072835.3035398-1-quic_jprakash@quicinc.com>
- <20230708072835.3035398-8-quic_jprakash@quicinc.com> <20230708165955.08c1159c@jic23-huawei>
- <13d5dee2-1da4-2ad0-91f8-a53b43adba2b@quicinc.com>
-In-Reply-To: <13d5dee2-1da4-2ad0-91f8-a53b43adba2b@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 23 Oct 2023 11:03:46 +0300
-Message-ID: <CAA8EJprb=804S=GfxPw_7AxoHRO1XzC+wGPCsvNGrRpJgj+y6A@mail.gmail.com>
-Subject: Re: [PATCH 07/11] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
-To:     Jishnu Prakash <quic_jprakash@quicinc.com>
-Cc:     Jonathan Cameron <jic23@kernel.org>, agross@kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linus.walleij@linaro.org, Jonathan.Cameron@huawei.com,
-        sboyd@kernel.org, quic_subbaram@quicinc.com,
-        quic_collinsd@quicinc.com, quic_kamalw@quicinc.com,
-        marijn.suijten@somainline.org, andriy.shevchenko@linux.intel.com,
-        krzysztof.kozlowski@linaro.org,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Cosmin Tanislav <demonsingur@gmail.com>,
-        Mike Looijmans <mike.looijmans@topic.nl>,
-        Ramona Bolboaca <ramona.bolboaca@analog.com>,
-        ChiYuan Huang <cy_huang@richtek.com>,
-        Ibrahim Tilki <Ibrahim.Tilki@analog.com>,
-        William Breathitt Gray <william.gray@linaro.org>,
-        Lee Jones <lee@kernel.org>,
-        =?UTF-8?Q?Leonard_G=C3=B6hrs?= <l.goehrs@pengutronix.de>,
-        Haibo Chen <haibo.chen@nxp.com>, linux-iio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <56c2d30b-2f25-4613-aab1-00fccbd2fa05@app.fastmail.com>
+In-Reply-To: <20231023075714.21672-1-quic_aiquny@quicinc.com>
+References: <20231023075714.21672-1-quic_aiquny@quicinc.com>
+Date:   Mon, 23 Oct 2023 10:08:33 +0200
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Maria Yu" <quic_aiquny@quicinc.com>,
+        "Catalin Marinas" <catalin.marinas@arm.com>,
+        "Will Deacon" <will@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+        "Ard Biesheuvel" <ardb@kernel.org>
+Subject: Re: [PATCH] arm64: module: PLT allowed even !RANDOM_BASE
+Content-Type: text/plain
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 23 Oct 2023 at 09:15, Jishnu Prakash <quic_jprakash@quicinc.com> wrote:
+On Mon, Oct 23, 2023, at 09:57, Maria Yu wrote:
+> Module PLT feature can be enabled even when RANDOM_BASE is disabled.
+> Break BLT entry counts of relocation types will make module plt entry
+> allocation fail and finally exec format error for even correct and plt
+> allocation available modules.
 >
-> Hi Jonathan,
+> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+
+Adding Ard Biesheuvel to Cc, as he added the check in commit
+a257e02579e42 ("arm64/kernel: don't ban ADRP to work around
+Cortex-A53 erratum #843419")
+
+>  arch/arm64/kernel/module-plts.c | 3 ---
+>  1 file changed, 3 deletions(-)
 >
-> On 7/8/2023 9:29 PM, Jonathan Cameron wrote:
-> > On Sat, 8 Jul 2023 12:58:31 +0530
-> > Jishnu Prakash <quic_jprakash@quicinc.com> wrote:
+> diff --git a/arch/arm64/kernel/module-plts.c 
+> b/arch/arm64/kernel/module-plts.c
+> index bd69a4e7cd60..21a67d52d7a0 100644
+> --- a/arch/arm64/kernel/module-plts.c
+> +++ b/arch/arm64/kernel/module-plts.c
+> @@ -167,9 +167,6 @@ static unsigned int count_plts(Elf64_Sym *syms, 
+> Elf64_Rela *rela, int num,
+>  		switch (ELF64_R_TYPE(rela[i].r_info)) {
+>  		case R_AARCH64_JUMP26:
+>  		case R_AARCH64_CALL26:
+> -			if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
+> -				break;
+> -
+>  			/*
+>  			 * We only have to consider branch targets that resolve
+>  			 * to symbols that are defined in a different section.
 
-> >> +
-> >> +    ret = adc5_get_fw_data(adc);
-> >> +    if (ret < 0) {
-> >> +            dev_err(adc->dev, "adc get dt data failed, ret=%d\n", ret);
-> >> +            return ret;
-> >> +    }
-> >> +
-> >> +    for (i = 0; i < adc->num_sdams; i++) {
-> >> +            ret = devm_request_irq(dev, adc->base[i].irq, adc5_gen3_isr,
-> >> +                                    0, adc->base[i].irq_name, adc);
-> >> +            if (ret < 0) {
-> >> +                    dev_err(adc->dev, "Getting IRQ %d failed, ret=%d\n", adc->base[i].irq, ret);
-> >> +                    return ret;
-> >> +            }
-> >> +    }
-> >> +
-> >> +    ret = adc_tm_register_tzd(adc);
-> >> +    if (ret < 0)
-> >> +            return ret;
-> >> +
-> >> +    if (adc->n_tm_channels)
-> >> +            INIT_WORK(&adc->tm_handler_work, tm_handler_work);
-> >> +
-> >> +    indio_dev->name = pdev->name;
-> >> +    indio_dev->modes = INDIO_DIRECT_MODE;
-> >> +    indio_dev->info = &adc5_gen3_info;
-> >> +    indio_dev->channels = adc->iio_chans;
-> >> +    indio_dev->num_channels = adc->nchannels;
-> >> +
-> >> +    return devm_iio_device_register(dev, indio_dev);
-> >> +}
-> >> +
-> >> +static int adc5_gen3_exit(struct platform_device *pdev)
-> >> +{
-> > As you are mixing devm manged cleanup and the explicit sort the
-> > result is that you remove the userspace interfaces 'after' you run
-> > everything in here. I'm thinking disabling the channels at least
-> > isn't a good idea in that case.
-> >
-> > If you want to use devm (which is good) then you need to work out how
-> > to register additional callbacks during probe to tear down everything in
-> > the right order (typically the reverse of what happens in probe)
-> > devm_add_action_or_reset() is the way to add those extra callbacks.
-> >
-> > If not, just don't use devm for at least those bits that will end up
-> > running out of order (such as iio_device_register()) and manually call their
-> > cleanup routines instead.
->
->
-> I checked some other examples in the iio/adc/ folder, I think I see what
-> you mean here. It looks like drivers with a remove callback always use
-> iio_device_register and iio_device_unregister instead of the devm_*
-> variant, due to the issue with sysfs removal as you said.
->
-> I'll update the probe and remove functions similarly, to do explicit
-> cleanups as required, avoiding devm_ usage for places where it should be
-> avoided.
+I see there are two such checks (in partition_branch_plt_relas()
+and in count_plts()), can you explain in more detail how you
+concluded that one of them is correct but the other one is not?
 
-I think you got the message all wrong. There is nothing bad with using
-devm_. As a matter of fact it is a preferred form in most of the
-cases. However you have to be careful to tear down your device in the
-correct order. And as Jonathan pointed
-out, you might add necessary hooks manually by calling
-devm_add_action_or_reset().
-
-[skipped the rest]
-
-
-
--- 
-With best wishes
-Dmitry
+     Arnd
