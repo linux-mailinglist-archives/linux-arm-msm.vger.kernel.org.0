@@ -2,77 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BE067D4A55
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:35:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5A6C7D4A9D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:42:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232659AbjJXIfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 04:35:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55094 "EHLO
+        id S233825AbjJXImF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 04:42:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234079AbjJXIee (ORCPT
+        with ESMTP id S233904AbjJXImD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 04:34:34 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFCA810EC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 01:34:28 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507c8316abcso5675568e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 01:34:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698136466; x=1698741266; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=P4+Uwe00Vj2uJxQCVZngDERfeMYn2777PTVakZc20IQ=;
-        b=ANLbrsjM+k8d80IyeyK0gl3Vf+NzE56sCbXg0kzsAKfVeNWeqfQj93ZxD/7aPNza1q
-         GsxM0FzeuOf5Z3G7oG3X9jnuiBJoT80Phmq2AjVXf3+4/re/28klXBsIrORNiVWP7IYD
-         ICCceuDUTqb/X+TK4pW4kgFH7j0zelzg313E/lN5/i6e7u56Dmc8psaifyiy+xj5SDC3
-         x+hZZYL6vDo6lXd9Ui886DfV59tLpwUqDr7F3CFkCKKWFes8v57ntnRlokyTFzc6xNeC
-         u7ww7bItS/YLHtZvie8Ewr8olR3X9FUFwQtHVEvZtT3WGdUTifFQDT5rbkv1SS5hsnFw
-         TkmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698136466; x=1698741266;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P4+Uwe00Vj2uJxQCVZngDERfeMYn2777PTVakZc20IQ=;
-        b=CbzrmWiA+O6AmYezWRk2Y2HaWz9OR7zKwEOEZFpvPuU87ZfRQWkXW738ercgrTLCAB
-         GPygios4QjmjF1UidFMH8dH2O7CNHbcSFyvRcLhaDTi0fE1UMl4T3CZTBuraIto20PQJ
-         hAyAtpA49U/Vqc9i5bvuguXZjiieNn2TLwIN4v7/8jMlvtR9DZQfd6Q+KOKyLeMSgk9N
-         /7OysWl4gko/bye1eLtm9OdJO47BfjotzN7ZDMIJ977h+ORswDV9EQDJC9b798NbWt0g
-         pHcIYnR377kSX8IBXc/i2jBh5WRf2ZcqcvHBmVy79smQddNZcBr9+XwLizvrcc45qcL6
-         pADA==
-X-Gm-Message-State: AOJu0Yxvi+h1+gDxhnF3sOmBsZLkj7zRm8Xyz+tB/jPQDfT44wf9/i1k
-        XKikcUzhGUFz88z9lZly9fiZ5g==
-X-Google-Smtp-Source: AGHT+IFt8Y9TExLjkYxcgInX0TgeANWlzRHwrnZOa+czvMtz9RrjAv/+SjgtnanyCGs9JuJbjqxBSw==
-X-Received: by 2002:a2e:99c8:0:b0:2c1:522a:8e25 with SMTP id l8-20020a2e99c8000000b002c1522a8e25mr7492311ljj.32.1698136466364;
-        Tue, 24 Oct 2023 01:34:26 -0700 (PDT)
-Received: from [172.30.205.198] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id q19-20020a05600c46d300b0040836519dd9sm11408994wmo.25.2023.10.24.01.34.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Oct 2023 01:34:25 -0700 (PDT)
-Message-ID: <3dff444b-c439-4c40-9d21-1e390f449840@linaro.org>
-Date:   Tue, 24 Oct 2023 10:34:24 +0200
+        Tue, 24 Oct 2023 04:42:03 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63ECD12C;
+        Tue, 24 Oct 2023 01:42:00 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39O7fNlc000679;
+        Tue, 24 Oct 2023 08:41:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=gySDwgLbcFWjq9SutAIKJaVMTjlGX9BPGXsVpeNRcBk=;
+ b=E3QhKZSUXzkkMHDq3Ss4/eN+D3oZtNXounjWCSBTOLqgIWW/RlWXTJcM2fL5wowPScaT
+ YUSfvXTgn4GtAPGAD4GXvAJI67+F00zUw5KeAqPD91ixlfjemxlr4rrM+eTH0mk/pqXQ
+ gw2iBC5DZIkGfiZvebMIam9pEWwYDzrUBNEVlN0Drv0hWt5bOVOi464VosOhWkRhkw7j
+ gVf6+VOfMyotptBEd8CJkpRvsRG/3maKDYhq62jhKKGwNz90bUYnav/ZeBU0aaZHKU0m
+ DuRYFxjff2CtYGA4oxcsuUE1zK7d2JRSDBL9yPZUAy17I7AuFMS1ypBPoxhw/N+NHZq1 cA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3twxa0hebr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Oct 2023 08:41:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39O8fhRG011642
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Oct 2023 08:41:43 GMT
+Received: from [10.249.18.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 24 Oct
+ 2023 01:41:36 -0700
+Message-ID: <00044364-9a6a-4138-9c17-7b0b801e9f10@quicinc.com>
+Date:   Tue, 24 Oct 2023 14:11:31 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: pm8916: Add BMS and charger
+Subject: Re: [PATCH v13 06/10] usb: dwc3: qcom: Enable wakeup for applicable
+ ports of multiport
 Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
+To:     Johan Hovold <johan@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20231023-pm8916-dtsi-bms-lbc-v2-0-343e3dbf423e@trvn.ru>
- <20231023-pm8916-dtsi-bms-lbc-v2-2-343e3dbf423e@trvn.ru>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231023-pm8916-dtsi-bms-lbc-v2-2-343e3dbf423e@trvn.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
+        <quic_shazhuss@quicinc.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-7-quic_kriskura@quicinc.com>
+ <ZTaViatsRY7LCbIX@hovoldconsulting.com>
+ <7e9bdd65-35b7-43c2-810a-2cd81f736084@quicinc.com>
+ <ZTdt-wyCHh3i0SlK@hovoldconsulting.com>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZTdt-wyCHh3i0SlK@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ksY2q5lXohwGC7tFx5fG0_k9SAMQS3LX
+X-Proofpoint-ORIG-GUID: ksY2q5lXohwGC7tFx5fG0_k9SAMQS3LX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-24_07,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
+ mlxscore=0 phishscore=0 mlxlogscore=964 impostorscore=0 clxscore=1015
+ bulkscore=0 adultscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
+ definitions=main-2310240073
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,52 +96,76 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 10/23/23 08:20, Nikita Travkin wrote:
-> pm8916 contains some hardware blocks for battery powered devices:
+On 10/24/2023 12:40 PM, Johan Hovold wrote:
+>>>
+>>> This comment no longer makes sense with your current implementation.
+>>>
+>> Can you help elaborate on your comment ? Do you mean that this API
+>> doesn't get speed on all ports, but this has to be called in a loop to
+>> get all the port speeds ? In that sense, I agree, I can change the
+>> comments here.
 > 
-> - VM-BMS: Battery voltage monitoring block.
-> - LBC: Linear battery charger.
-> 
-> Add them to the pmic dtsi so the devices that make use of those blocks
-> can enable them.
-> 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
->   arch/arm64/boot/dts/qcom/pm8916.dtsi | 48 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 48 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> index f4de86787743..4b2e8fb47d2d 100644
-> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-> @@ -41,6 +41,35 @@ watchdog {
->   			};
->   		};
+> It does not make sense to keep only half the comment after your update
+> as it is a suggestion for how one could go about and generalise this for
+> multiport, which is what you are now doing.
 >   
-> +		pm8916_charger: charger@1000 {
-> +			compatible = "qcom,pm8916-lbc";
-> +			reg = <0x1000>, <0x1200>, <0x1300>, <0x1600>;
-> +			reg-names = "chgr", "bat_if", "usb", "misc";
-> +
-> +			interrupts = <0x0 0x10 0 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x10 5 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x10 6 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x10 7 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x12 0 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x12 1 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x13 0 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x13 1 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x13 2 IRQ_TYPE_EDGE_BOTH>,
-> +				     <0x0 0x13 4 IRQ_TYPE_EDGE_BOTH>;
-> +			interrupt-names = "vbat_det",
-> +					  "fast_chg",
-> +					  "chg_fail",
-> +					  "chg_done",
-> +					  "bat_pres",
-> +					  "temp_ok",
-> +					  "coarse_det",
-> +					  "usb_vbus",
-So, both the charger and the USBIN driver use the same irq? :/
 
-Konrad
+Thanks for explanation. Will update the comments.
+
+>>> But perhaps this should be done using usb_hub_for_each_child() instead
+>>> as that may be more efficient. Then you use this function to read out
+>>> the speed for all the ports in go (and store it in the port structures I
+>>> mentioned). Please determine which alternative is best.
+>>>
+>> Either ways is fine. We would have qcom->num_ports to determine how many
+>> speeds we can read.
+> 
+> That's not the point. I'm referring to which alternative is less
+> computationally expensive and allows for a clean implementation.
+> 
+> Please do try to figure it out yourself.
+> 
+I don't think its much of a difference:
+
+while (loop over num_ports) {
+	read_usb2_speed()
+}
+
+read_usb2_speed() {
+	while (loop over num_ports) {
+		hub api to read speed.
+	}
+}
+
+The second one would avoid calling read_usb2_speed multiple times. Will 
+take that path.
+
+>>>
+>>> [ I realise that the confusion around hs_phy_irq may be partly to blame
+>>> for this but since that one is also a per-port interrupt, that's no
+>>> longer an issue. ]
+>>
+>> I don't want to add support for this right away [1]. I would like to
+>> keep hs_phy_irq outside the loop for now.
+> 
+> No. Stop trying to take shortcuts. Again, this is upstream, not
+> Qualcomm's vendor kernel.
+> 
+
+I don't think it is a shortcut.
+
+The reason I said I would keep it out of loop is I know why we need 
+DP/DM/SS IRQ's during wakeup. The wakeup signals come in as 
+rising/falling edges in high speed on DP/DM lines and LFPS terminations 
+come on SS lines.
+
+So we need these 3 interrupts for sure in wakeup context.
+hs_phy_irq is not mandatory for wakeup. Any particular reason why it is 
+needed to add driver support for hs_phy_irq's of multiport now ? May be 
+I am missing something. If there is any reason why we need to add it 
+now, I would try to learn and see if it has any side effects (like 
+generating spurious wakeup's) and if nothing, I would add it back to 
+port structure.
+
+Regards,
+Krishna,
