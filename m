@@ -2,65 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C289A7D4CFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 11:54:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A83F7D4D5C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 12:11:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232119AbjJXJyX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 05:54:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58526 "EHLO
+        id S234186AbjJXKLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 06:11:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234132AbjJXJyV (ORCPT
+        with ESMTP id S234227AbjJXKLJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 05:54:21 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F02AA118;
-        Tue, 24 Oct 2023 02:54:19 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF3BC433C8;
-        Tue, 24 Oct 2023 09:54:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1698141259;
-        bh=W+0QNqrgDZnOgi+hua/M9Ooqieg02b9bat44s6CqMUI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rU3EL63smcyw4DW29cAE87yiTKhtpmVZoah8oPz++M+9CngOTdXHOpiDWm6zB8G0P
-         cxWLL5j2Unb+zvM2Ztic/IytOdi+nrfwR1KXcK0YKDQnppva8BZE15ST8L7AjJnLYO
-         1ZmSZVPjy8VGBg+EQ6GxSTZQhUniGjXogo0c4iGY=
-Date:   Tue, 24 Oct 2023 11:54:14 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com, ahalaney@redhat.com,
-        quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
-Message-ID: <2023102408-deodorize-frequent-184e@gregkh>
-References: <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
- <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
- <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
- <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
- <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
- <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
- <196601cc-f8c6-4266-bfff-3fd69f0ab31c@quicinc.com>
- <ZTeL4nSw6dMGKODm@hovoldconsulting.com>
- <2023102429-craftsman-student-ba77@gregkh>
- <ZTeObdjSSok0tttg@hovoldconsulting.com>
+        Tue, 24 Oct 2023 06:11:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6969F9;
+        Tue, 24 Oct 2023 03:11:06 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39O8KD2u030309;
+        Tue, 24 Oct 2023 10:11:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=YffooxULNv7b8kk2n2L8oG5mv+aN01WiO5p6mu3vx9w=;
+ b=jUogb4BX3c4RGEd3Yjfsj3z2b1YuZnJPlwJZTk7u08L5jjrIuwVcMDVJzrn9BhmfrbJh
+ 4XKxkuqAcxg7UcwBdlVAqoJpMN7jNVScHJK/ZYaSo3PJTWzzvABecxJrhMfnhnifMbpf
+ F7lkbbN7gudhFwiHJIXgXvvK0QZaOzrdU+5IW0epmw1GpNZfnzsQn99IaEv+oulpSqZK
+ 63siRJ2f+psYyD8A6CoFU5liPVIDGF/HLVHi/jNQiRQwMAj7uPnC1nJZoMaUWo5XbSqt
+ Lt7Xm97HzMVdAoS2ohBRcXPkeDexoPr/phaKm4NC+3qgbQ6oJCjgtEeFM0PjzseUr7+4 rg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tx7r80h63-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Oct 2023 10:11:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39OAB2NW012545
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Oct 2023 10:11:02 GMT
+Received: from [10.239.132.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 24 Oct
+ 2023 03:10:57 -0700
+Message-ID: <ac42f27e-007d-1157-ae46-403420d9fdcb@quicinc.com>
+Date:   Tue, 24 Oct 2023 18:10:54 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZTeObdjSSok0tttg@hovoldconsulting.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v1 0/5] soc/arm64: qcom: add initial version of memory
+ dump
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_tingweiz@quicinc.com>
+References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+ <757382c1-142b-454c-b2b5-7ec97bd7328d@linaro.org>
+From:   Zhenhua Huang <quic_zhenhuah@quicinc.com>
+In-Reply-To: <757382c1-142b-454c-b2b5-7ec97bd7328d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Ci7jOvFrbEtjXvCsYpMVLQ1TMk__-oj8
+X-Proofpoint-GUID: Ci7jOvFrbEtjXvCsYpMVLQ1TMk__-oj8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-24_09,2023-10-19_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ mlxlogscore=747 lowpriorityscore=0 bulkscore=0 phishscore=0 spamscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310240084
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,26 +84,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 24, 2023 at 11:29:17AM +0200, Johan Hovold wrote:
-> On Tue, Oct 24, 2023 at 11:23:19AM +0200, Greg Kroah-Hartman wrote:
-> > On Tue, Oct 24, 2023 at 11:18:26AM +0200, Johan Hovold wrote:
-> 
-> > > And we may even consider reverting the updated bindings as it appears
-> > > they are still not correct.
-> > 
-> > If you can tell me what the git ids of them are, I'll be glad to do so
-> > right now, sorry for taking them "early".
-> 
-> That's
-> 
-> 	ca58c4ae75b6 ("dt-bindings: usb: qcom,dwc3: Add bindings for SC8280 Multiport")
-> 
-> and
-> 
-> 	eb3f1d9e42b1 ("dt-bindings: usb: Add bindings for multiport properties on DWC3 controller")
-> 
-> It's probably best to just revert them now.
 
-Now reverted, thanks.
 
-greg k-h
+On 2023/10/23 21:50, Konrad Dybcio wrote:
+> On 23.10.2023 11:20, Zhenhua Huang wrote:
+>> Qualcomm memory dump driver is to cooperate with firmware, providing the
+> Firmware == The hypervisor? The TZ? Some uncore chip?
+
+It's part of bootloader which also needs to cooperate with TZ. After 
+system crash and warm reset, system enters debug mode which needs the 
+dump table.
+
+> 
+>> hints(id and size) of storing useful debugging information into pre-allocated
+>> memory. Firmware then does the real data capture. The debugging information
+>> includes cache contents, internal memory, registers.
+> Exposing all of the user's data.. Is this enabled by default?
+
+In theory it can be controlled by static bool download_mode = 
+IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT); in driver qcom_scm.c.
+But from my local test on RB5, it can always enter into download mode seems.
+
+> 
+>>
+>> The driver dynamically reserves memory and provides the hints(dump id and size)
+>> following specified protocols with firmware. After crash and warm reboot,
+>> firmware scans these information and stores contents into reserved memory
+>> accordingly. Firmware then enters into full dump mode which dumps whole DDR
+>> to host through USB.
+> Is that only something that works on engineering / prototype devices?
+> 
+>> User then get full dump using PCAT and can parse out these informations.
+> Is PCAT open-source, or at least freely available?
+
+I see it is introduced in doc of development-kit for RB5, but in another 
+mail Caleb mentioned it's still needing to sign up... which I need to 
+further investigate.
+
+> 
+>>
+>> Dump id and size are provided by bootconfig. The expected format of a
+>> bootconfig file is as follows:-
+> Is it the same bootconfig that Google invented? Wasn't that just key=val?
+
+Seems not same, the author is not from google :) it's kernel XBC(extra 
+boot config): lib/bootconfig.c
+
+> 
+>> memory_dump_config {
+>> 	<node name> {
+>> 		id = <id of HW component>
+>> 		size = <dump size of HW component>
+>> 	}
+>> }
+>>
+>> for example:
+>> memory_dump_config {
+>>          c0_context_dump {
+>> 		id = 0
+>> 		size = 0x800
+>>          }
+>> }
+>>
+>> Test based on 6.6-rc1.
+> That's sorta ancient, especially since you're likely looking to get
+> this merged in 6.8.. -next would probably be a better target.
+
+Sure, Thanks. Will verify in -next.
+
+> 
+> Konrad
+
+Thanks,
+Zhenhua
