@@ -2,116 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DFB987D56C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 17:44:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8D487D57AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 18:12:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343610AbjJXPoF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 11:44:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40330 "EHLO
+        id S234970AbjJXQMp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 12:12:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343648AbjJXPoF (ORCPT
+        with ESMTP id S1344166AbjJXQMg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 11:44:05 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EB96DE;
-        Tue, 24 Oct 2023 08:44:03 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507ad511315so6868508e87.0;
-        Tue, 24 Oct 2023 08:44:03 -0700 (PDT)
+        Tue, 24 Oct 2023 12:12:36 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6C9610DA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 09:12:12 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d9ace5370a0so3686285276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 09:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698162241; x=1698767041; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iAtX50oj9/g4Jj7MoJHLYgtiDO9X9MamioUdOkSL84U=;
-        b=Vps4c53XtZP/dWsmj1IqiguYaojqlFC9tdUjCi3hABSg1XOaCP8+puDfYLEHKlfBjo
-         ++5xCJHoKes2IBptHA7ZKqmjiyI9t3w6sA2mX0RvqEmkO0AZBZnqolN6Ir4BzgbbTQry
-         bUI516qTCzQvVmopUe2KfsAiofRiDtZCACaXr8lzgvpvEKUdHiX7m+h7hiBhD+K9wZBT
-         fDoW9dp3mAOGaxJ10huL0lgSSDSUr8VnSetPzdzK2n7CiQ/CRARVWLlulRjy0ysT/rtK
-         qX37Z0Ud+3uFeD7spdtLbtJ7HNCLQwtBnbqAORMZWtv9nOY68CHQPr0Dgm3vRrewTPSX
-         MipA==
+        d=linaro.org; s=google; t=1698163931; x=1698768731; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/pjBUbLx3Wj6CmYiqOhDTL336nEXm92LuAjn2RJuUXA=;
+        b=fB3MCDsolGJfkZXE5b8zs4f5XmqwhLMBgbB63lp+7mMp6sdBnXj0+8fG32rdlNOzED
+         nDHFNuIb4n/gIJJCzocYGTwdtgxCI7PjaTVsDNZ3v14s2WumO6QrZhl2Mhck8tJRXo/Y
+         zsjOOW04UFSUuJ6ADYxYcA72/jt56mREbjTyZi2plqrWuDONU2fkEQPSPyD6AQ4vMZ0D
+         WI7WweU045zlyBPLvk3xpDtdxjGS8nmlxHIdTnBQTI1HjPK/SKzjznzdixWHnhbZ8bwc
+         aIj6n/lQiU3H7WR+lmsKymv4nj7Xmy6A9SAhQvIoobUsfKSwVvRFXhS1nmSbFprCA3Zy
+         MC9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698162241; x=1698767041;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iAtX50oj9/g4Jj7MoJHLYgtiDO9X9MamioUdOkSL84U=;
-        b=fvihhZY554UhZyNO0PA2rkVX2y6FgGNM5J8Qo3Lp1Xlq+O/u+lBmyoJAzxH+/nbaYR
-         UDcWmUcP5S+XUfSUtdpNA2ApWyG+CmzfLgIPJ/5kUgwbFGrHovPq1Jvc+mHv3hOo1xSW
-         pm6VQ+5Z7R36W6p1KAf3hN0cMAz/yF4q2Aj8LidtxCQ+e32ki7jylwNh0i9uQbVxkNG/
-         bt5A3cSFJ9Gv4hRQVbY5R1Cjoo7x9ow011lxt3Luz3nKALkPC02z01BBQW1uLiQwCuKy
-         aC44kd1y0sjeQbkkCxG6v/igwUzKe5NDlGstR2HQBsjSCxRGgX2QhbWxUERxed60B9Rn
-         ByWQ==
-X-Gm-Message-State: AOJu0YxIRLoBNY/m+VKOtD5FJ3R1bLnzzkGQ2Tsi65/jOjHOP5U2QkTN
-        ZnHSsepan9QdJb3zmSGkwhw=
-X-Google-Smtp-Source: AGHT+IHckGOQYFMTmquZLFr43MgbTJoFsIUVfHPS/n9O8bbLfmLjS2FEbsIJj+9O/gNAVib1TLGgCg==
-X-Received: by 2002:a05:6512:2815:b0:503:3447:b704 with SMTP id cf21-20020a056512281500b005033447b704mr11756275lfb.0.1698162240966;
-        Tue, 24 Oct 2023 08:44:00 -0700 (PDT)
-Received: from debian.lan ([37.45.216.172])
-        by smtp.googlemail.com with ESMTPSA id m1-20020ac24ac1000000b0050810b02cffsm102420lfp.22.2023.10.24.08.44.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Oct 2023 08:44:00 -0700 (PDT)
-From:   Dzmitry Sankouski <dsankouski@gmail.com>
-Cc:     Dzmitry Sankouski <dsankouski@gmail.com>,
+        d=1e100.net; s=20230601; t=1698163931; x=1698768731;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/pjBUbLx3Wj6CmYiqOhDTL336nEXm92LuAjn2RJuUXA=;
+        b=UpTYq2dHs9HB7s8YvUH8j6wMxJ/ykFLyRG02szo6LawBlwdMnq9yIilmRlBRnLWVwz
+         mO7u5CUSOSAXmh8Xk6F8txKOhrfZZZ/QuQ6xg6OTz/9dKtn+BnMkuXEloK1yWw9FuHmB
+         g5uOfDLxudnzedTbklE5a62rVXq4fuYh8bP/e/8tXwQSa96HGgX4i7ULsv3VGbFSB+2/
+         hh3t679xzIVEk29M1QT/PeTxhkWFFT5LDViGHK70ZmUKZJJ/1R3k4DGBKlzaVljPUXri
+         gt4rDwNeD9LyDHRCwlRSoSTHwqvfTtrVHuQ7s38wFWw7lmhvYZN8rKa+s3O4cPZiq/HK
+         LTvA==
+X-Gm-Message-State: AOJu0Yy9wkaK3IuF/rjbs0cbdo+CgeuvMXAoXvQqMS5ruI6VDAitu7Du
+        MmQdiRyVwRXBgIhfN6++yjG/MPo9MnezV/g8KEWV4g==
+X-Google-Smtp-Source: AGHT+IGTTwt4rHCuJ4w6CclzOwAHuYNSeyL9ErpNapwRYZRld/tKa5wE03Hs0mv9jEAhPtzgvqw2DogicE9JUIqA2Ug=
+X-Received: by 2002:a25:b203:0:b0:da0:50e6:12c5 with SMTP id
+ i3-20020a25b203000000b00da050e612c5mr1524017ybj.62.1698163931147; Tue, 24 Oct
+ 2023 09:12:11 -0700 (PDT)
+MIME-Version: 1.0
+References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
+ <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
+ <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
+ <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
+ <ZTeyhR7YY7VgWQlU@kernkonzept.com> <CAPDyKFrcV8iJnJ904j1jkx0E8PaOLmiTZ7CKk7EV8qQ71AZdbA@mail.gmail.com>
+ <ZTfBZqBwqskhFydZ@kernkonzept.com>
+In-Reply-To: <ZTfBZqBwqskhFydZ@kernkonzept.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 24 Oct 2023 18:11:34 +0200
+Message-ID: <CAPDyKFooPLCmJeqjhiMm7HRdW5UrEw0yHvGF9fgLvOigsgbWxg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain devices
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 6/6] arm64: dts: qcom: starqltechn: add supply to framebuffer
-Date:   Tue, 24 Oct 2023 18:43:38 +0300
-Message-Id: <20231024154338.407191-7-dsankouski@gmail.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20231024154338.407191-1-dsankouski@gmail.com>
-References: <20231024154338.407191-1-dsankouski@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
+        stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This prevents framebuffer from shutting down.
+On Tue, 24 Oct 2023 at 15:07, Stephan Gerhold
+<stephan.gerhold@kernkonzept.com> wrote:
+>
+> On Tue, Oct 24, 2023 at 02:49:32PM +0200, Ulf Hansson wrote:
+> > On Tue, 24 Oct 2023 at 14:03, Stephan Gerhold
+> > <stephan.gerhold@kernkonzept.com> wrote:
+> > >
+> > > On Thu, Oct 19, 2023 at 01:26:19PM +0200, Ulf Hansson wrote:
+> > > > On Thu, 19 Oct 2023 at 12:24, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > > >
+> > > > > On Wed, 18 Oct 2023 at 10:06, Stephan Gerhold
+> > > > > <stephan.gerhold@kernkonzept.com> wrote:
+> > > > > >
+> > > > > > The genpd core caches performance state votes from devices that are
+> > > > > > runtime suspended as of commit 3c5a272202c2 ("PM: domains: Improve
+> > > > > > runtime PM performance state handling"). They get applied once the
+> > > > > > device becomes active again.
+> > > > > >
+> > > > > > To attach the power domains needed by qcom-cpufreq-nvmem the OPP core
+> > > > > > calls genpd_dev_pm_attach_by_id(). This results in "virtual" dummy
+> > > > > > devices that use runtime PM only to control the enable and performance
+> > > > > > state for the attached power domain.
+> > > > > >
+> > > > > > However, at the moment nothing ever resumes the virtual devices created
+> > > > > > for qcom-cpufreq-nvmem. They remain permanently runtime suspended. This
+> > > > > > means that performance state votes made during cpufreq scaling get
+> > > > > > always cached and never applied to the hardware.
+> > > > > >
+> > > > > > Fix this by enabling the devices after attaching them and use
+> > > > > > dev_pm_syscore_device() to ensure the power domains also stay on when
+> > > > > > going to suspend. Since it supplies the CPU we can never turn it off
+> > > > > > from Linux. There are other mechanisms to turn it off when needed,
+> > > > > > usually in the RPM firmware (RPMPD) or the cpuidle path (CPR genpd).
+> > > > >
+> > > > > I believe we discussed using dev_pm_syscore_device() for the previous
+> > > > > version. It's not intended to be used for things like the above.
+> > > > >
+> > > > > Moreover, I was under the impression that it wasn't really needed. In
+> > > > > fact, I would think that this actually breaks things for system
+> > > > > suspend/resume, as in this case the cpr driver's genpd
+> > > > > ->power_on|off() callbacks are no longer getting called due this,
+> > > > > which means that the cpr state machine isn't going to be restored
+> > > > > properly. Or did I get this wrong?
+> > > >
+> > > > BTW, if you really need something like the above, the proper way to do
+> > > > it would instead be to call device_set_awake_path() for the device.
+> > > >
+> > >
+> > > Unfortunately this does not work correctly. When I use
+> > > device_set_awake_path() it does set dev->power.wakeup_path = true.
+> > > However, this flag is cleared again in device_prepare() when entering
+> > > suspend. To me it looks a bit like wakeup_path is not supposed to be set
+> > > directly by drivers? Before and after your commit 8512220c5782 ("PM /
+> > > core: Assign the wakeup_path status flag in __device_prepare()") it
+> > > seems to be internally bound to device_may_wakeup().
+> > >
+> > > It works if I make device_may_wakeup() return true, with
+> > >
+> > >         device_set_wakeup_capable(dev, true);
+> > >         device_wakeup_enable(dev);
+> > >
+> > > but that also allows *disabling* the wakeup from sysfs which doesn't
+> > > really make sense for the CPU.
+> > >
+> > > Any ideas?
+> >
+> > The device_set_awake_path() should be called from a system suspend
+> > callback. So you need to add that callback for the cpufreq driver.
+> >
+> > Sorry, if that wasn't clear.
+> >
+>
+> Hmm, but at the moment I'm calling this on the virtual genpd devices.
+> How would it work for them? I don't have a suspend callback for them.
+>
+> I guess could loop over the virtual devices in the cpufreq driver
+> suspend callback, but is my driver suspend callback really guaranteed to
+> run before the device_prepare() that clears "wakeup_path" on the virtual
+> devices?
 
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: devicetree@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org
+Yes, that's guaranteed. dpm_prepare() (which calls device_prepare())
+is always being executed before dpm_suspend().
 
----
+>
+> Or is this the point where we need device links to make that work?
+> A quick look suggests "wakeup_path" is just propagated to parents but
+> not device links, so I don't think that would help, either.
 
-Changes in v2:
-- none
+I don't think we need device-links for this, at least the way things
+are working currently.
 
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 0e2c7df2baa7..59e770073666 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -33,6 +33,9 @@ framebuffer: framebuffer@9d400000 {
- 			height = <2960>;
- 			stride = <(1440 * 4)>;
- 			format = "a8r8g8b8";
-+			vci-supply = <&s2dos05_ldo4>;
-+			vddr-supply = <&s2dos05_buck1>;
-+			vdd3-supply = <&s2dos05_ldo1>;
- 		};
- 	};
- 
--- 
-2.30.2
-
+Kind regards
+Uffe
