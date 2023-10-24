@@ -2,35 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 417827D4CAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 11:40:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F97D7D4CCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 11:44:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234297AbjJXJkg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 05:40:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53062 "EHLO
+        id S234030AbjJXJoC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 05:44:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234387AbjJXJk3 (ORCPT
+        with ESMTP id S234480AbjJXJeC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 05:40:29 -0400
+        Tue, 24 Oct 2023 05:34:02 -0400
 Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63E3F1BCE;
-        Tue, 24 Oct 2023 02:30:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FC6F1BE7;
+        Tue, 24 Oct 2023 02:33:24 -0700 (PDT)
 Received: from authenticated-user (box.trvn.ru [194.87.146.52])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
         (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id 71434403C2;
-        Tue, 24 Oct 2023 14:29:48 +0500 (+05)
+        by box.trvn.ru (Postfix) with ESMTPSA id 5F862403C2;
+        Tue, 24 Oct 2023 14:33:22 +0500 (+05)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1698139798; bh=r9TCrD1Taj9N39LOJkMvCUyhLxDk2EU51QorwsqEIP4=;
+        t=1698140002; bh=vvlsPglAafPbW2BKSO9r1EkmmFaEoY05iLxuBLOPVXQ=;
         h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=DyZ5ATjGay9uJdJWM3VKywt/uGPlWIMw4zPa3vJfAHCVgNTsyXnsYxSv3HVwitcsA
-         JKyxBMgNl7dTDO3ruIt8Bk+3JQdUtGwDcw0Ewi782Sy+kpdCh6mAJ5WZ5SJpBf/3EP
-         rjfhkagGp6CTTAyQK0DBYZYgg4ptRUJdrTQXnrqqpHT7VjH2egs0zOWePUEhTd0lzy
-         8w3X3D5ft3ZJCYxjzTm+sxvBDfiidtGvl3tN30vlD3QMUVl8v7SEPSGZ94S+HNbL59
-         +7Ao8SoAHoVbFxGevR9HeifBvmCdVEeYN3vaqeDvu3n6bwxEO5BtGkEgncy9WRVUY5
-         vJY1fCrCwGTxg==
+        b=XS4nY1Uep/9630q6iXI4qyhdoYuIXQ0uf8TehNa5FnUN7+O+mBS4jpRPQxQv+PkM5
+         NvVzRpvl6iio/4OVeQziKjlVLNVnJHiSJS90JJC/t4rSmQH7Dr4fvzsQxNejXogxPZ
+         9UpcnfksAZKQVIgW5tHDsD6FoaiDyBXtxZiScbW4aLLx74eMOBJX+TuHGEw8gMH7uT
+         SfBeSHwvVDjGsnR1XeBs4TjkQRdwzo4iuk1ssaQf6GNyqzx3nw2L05YR+ctfUDl4Jj
+         Qb7JfzLygNu2u9k5urZjR/rtPPlW1bpTIy0HDJ1ugYhfcLkn2HFjiLeu//AUlj/Ieb
+         yFAFteDwgtwgw==
 MIME-Version: 1.0
-Date:   Tue, 24 Oct 2023 14:29:48 +0500
+Date:   Tue, 24 Oct 2023 14:33:21 +0500
 From:   Nikita Travkin <nikita@trvn.ru>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -41,12 +41,13 @@ Cc:     Andy Gross <agross@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: pm8916: Add BMS and charger
-In-Reply-To: <3dff444b-c439-4c40-9d21-1e390f449840@linaro.org>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: msm8916-longcheer-l8150: Add
+ battery and charger
+In-Reply-To: <72a9ce0f-1bdf-4d97-a9f6-1aba532b0f18@linaro.org>
 References: <20231023-pm8916-dtsi-bms-lbc-v2-0-343e3dbf423e@trvn.ru>
- <20231023-pm8916-dtsi-bms-lbc-v2-2-343e3dbf423e@trvn.ru>
- <3dff444b-c439-4c40-9d21-1e390f449840@linaro.org>
-Message-ID: <b9c7f8662e4c02a4f9f275d27469f3be@trvn.ru>
+ <20231023-pm8916-dtsi-bms-lbc-v2-3-343e3dbf423e@trvn.ru>
+ <72a9ce0f-1bdf-4d97-a9f6-1aba532b0f18@linaro.org>
+Message-ID: <a4adb159c5afb3a16d4b181a3c9afcbc@trvn.ru>
 X-Sender: nikita@trvn.ru
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -59,59 +60,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Konrad Dybcio писал(а) 24.10.2023 13:34:
+Konrad Dybcio писал(а) 24.10.2023 13:33:
 > On 10/23/23 08:20, Nikita Travkin wrote:
->> pm8916 contains some hardware blocks for battery powered devices:
+>> Longcheer L8150 doesn't have any dedicated fuel-gauge or charger,
+>> instead making use of the pmic hardware blocks for those purposes.
 >>
->> - VM-BMS: Battery voltage monitoring block.
->> - LBC: Linear battery charger.
->>
->> Add them to the pmic dtsi so the devices that make use of those blocks
->> can enable them.
+>> Add pm8916 bms and charger, as well as the battery cell description
+>> that those blocks rely on.
 >>
 >> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 >> ---
->>   arch/arm64/boot/dts/qcom/pm8916.dtsi | 48 ++++++++++++++++++++++++++++++++++++
->>   1 file changed, 48 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
->> index f4de86787743..4b2e8fb47d2d 100644
->> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
->> @@ -41,6 +41,35 @@ watchdog {
->>   			};
->>   		};
->>   +		pm8916_charger: charger@1000 {
->> +			compatible = "qcom,pm8916-lbc";
->> +			reg = <0x1000>, <0x1200>, <0x1300>, <0x1600>;
->> +			reg-names = "chgr", "bat_if", "usb", "misc";
->> +
->> +			interrupts = <0x0 0x10 0 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x10 5 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x10 6 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x10 7 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x12 0 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x12 1 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x13 0 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x13 1 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x13 2 IRQ_TYPE_EDGE_BOTH>,
->> +				     <0x0 0x13 4 IRQ_TYPE_EDGE_BOTH>;
->> +			interrupt-names = "vbat_det",
->> +					  "fast_chg",
->> +					  "chg_fail",
->> +					  "chg_done",
->> +					  "bat_pres",
->> +					  "temp_ok",
->> +					  "coarse_det",
->> +					  "usb_vbus",
-> So, both the charger and the USBIN driver use the same irq? :/
+> Doesn't apply on next, please rebase.
 > 
 
-AFAIU the usbin extcon driver pretty much just tracks the state
-of the IRQ to report extcon. It happens to assume the same part
-of the pmic though, yes, which also means there will be no user
-that would enable both charger and vbus extcon, since charger
-driver provides this functionality as well.
+Ah, great, I guess I sent the series just a bit too early
+and the -next didn't update yet...
+
+I think at this point I might as well just wait for the -rc1,
+will probably save everyone a bit of trouble...
 
 Nikita
 
