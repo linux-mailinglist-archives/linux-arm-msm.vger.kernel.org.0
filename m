@@ -2,61 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 697067D4980
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:11:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 747177D49D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:18:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233880AbjJXILH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 04:11:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34952 "EHLO
+        id S232799AbjJXISU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 04:18:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233890AbjJXILD (ORCPT
+        with ESMTP id S232927AbjJXISP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 04:11:03 -0400
-Received: from mail.citycodes.pl (mail.citycodes.pl [158.255.215.195])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93CA910C3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 01:11:00 -0700 (PDT)
-Received: by mail.citycodes.pl (Postfix, from userid 1001)
-        id 5E12721683; Tue, 24 Oct 2023 10:10:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=citycodes.pl; s=mail;
-        t=1698135059; bh=fClkhHu/p6gIm8tbpvFwCqGX3kXIMdqjiuDdSiYGEkk=;
-        h=Date:From:To:Subject:From;
-        b=Z1hHxCsmZqJT9BXOc5aZZNCuJFF9C8O+R/nhue22/vaUSPjIyeucLaZ88Gojs3uqF
-         BHjBe948qakqYfLtxDlt9/WINXY2rHONpW0SZHNe7pX4juckPNiFLkTXYsugykEuS2
-         zNQf1yFG4Xlp9b61QlZD+/BUvSA2wGbdAT64htejYkdGy+ycst59iD5/M4iisbxY3p
-         ZU2a+uageDkj+J4Ir1A3V/ueP+iQ7sKtmi2Kikq+4MDKJxuxVlJTlS5U/7svi70CDP
-         /vD/oRjSJhVUQMfEWttfgCqaBZbtD6lKZ+iAaV/byRLhO8BQ43K7GY2nqgbNmx0VlM
-         /eDmZ+vvEYyaA==
-Received: by mail.citycodes.pl for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 08:10:35 GMT
-Message-ID: <20231024084500-0.1.8a.l8do.0.n3bxai38oo@citycodes.pl>
-Date:   Tue, 24 Oct 2023 08:10:35 GMT
-From:   "Kamil Lasek" <kamil.lasek@citycodes.pl>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: Wycena paneli fotowoltaicznych
-X-Mailer: mail.citycodes.pl
+        Tue, 24 Oct 2023 04:18:15 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C0A120
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 01:18:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698135493; x=1729671493;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7QVOr2l9IkqK5fhUb2FEMJd3ZS09lqWiYLaA5pxdWyc=;
+  b=GAnf26rY5EbowqeoSLo7eieNQGj96TMgBsT6QmqN9SAIlmVSVOcYO3dK
+   bPM2cKHANFumWepK4+0iQHNe+hsZARpW+3FQPl2CSnLuXhvR/dDUciIA8
+   NabD1sXc18xMy/6PQSSlSp9YPOcPdgr7FmDPJorq/bW4ClmZ6h9yvyOLB
+   cyCoLhTx9A0u4CCP9xnA8GZEk1gqUYxglRGpUdAnO/Ixtv8YOBrWuiXGL
+   1uzTIOIuOHDcN+j9oXfkK4RuihA+JNKID6bzVFBV7SNuR9LSOQaR01jD8
+   Jmqamfk7O53/eGz2oIFV9C76AH/WhBu+k+WIlbLKowbhrGxwCPJi4yAxE
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10872"; a="5633951"
+X-IronPort-AV: E=Sophos;i="6.03,247,1694761200"; 
+   d="scan'208";a="5633951"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2023 01:18:13 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10872"; a="824216812"
+X-IronPort-AV: E=Sophos;i="6.03,247,1694761200"; 
+   d="scan'208";a="824216812"
+Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.102.138.187])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2023 01:18:11 -0700
+Date:   Tue, 24 Oct 2023 10:17:48 +0200
+From:   Kamil Konieczny <kamil.konieczny@linux.intel.com>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, igt-dev@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [igt-dev] [PATCH igt 1/2] tools/msm_dp_compliance: Small arg
+ parsing cleanup
+Message-ID: <20231024081748.qewo6ta34cxqpcrh@kamilkon-desk.igk.intel.com>
+Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, igt-dev@lists.freedesktop.org,
+        Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20211208192216.743364-1-robdclark@gmail.com>
+ <20211208192216.743364-2-robdclark@gmail.com>
+ <08cbf1e8-89c7-c0cd-2928-589e624710b1@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <08cbf1e8-89c7-c0cd-2928-589e624710b1@quicinc.com>
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dzie=C5=84 dobry,
+Hi Rob,
 
-dostrzegam mo=C5=BCliwo=C5=9B=C4=87 wsp=C3=B3=C5=82pracy z Pa=C5=84stwa f=
-irm=C4=85.
+please add here description, for example what options
+you added and why.
 
-=C5=9Awiadczymy kompleksow=C4=85 obs=C5=82ug=C4=99 inwestycji w fotowolta=
-ik=C4=99, kt=C3=B3ra obni=C5=BCa koszty energii elektrycznej.
+On 2023-10-19 at 03:40:04 -0700, Abhinav Kumar wrote:
+> Reviving this:
+> 
+> On 12/8/2021 11:22 AM, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> > 
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> 
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> Nit: shouldnt the patch prefix be "PATCH i-g-t" ?
+> 
+> We will test this out next week and land this.
+> 
+> > ---
+> >   tools/msm_dp_compliance.c | 5 ++++-
+> >   1 file changed, 4 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/tools/msm_dp_compliance.c b/tools/msm_dp_compliance.c
+> > index 5e491c89..a15a8dd9 100644
+> > --- a/tools/msm_dp_compliance.c
+> > +++ b/tools/msm_dp_compliance.c
+> > @@ -629,7 +629,9 @@ static const char optstr[] = "hi";
+> >   static void __attribute__((noreturn)) usage(char *name, char opt)
+> >   {
+> >   	igt_info("usage: %s [-hi]\n", name);
+> > -	igt_info("\t-i\tdump info\n");
+> > +	igt_info("\t-h, --help           - print this usage message");
+> > +	igt_info("\t--help-description   - print test description");
+------------------------------------------------ ^^^^
+This is a tool, not a test, so imho s/test/tool/
 
-Czy s=C4=85 Pa=C5=84stwo zainteresowani weryfikacj=C4=85 wst=C4=99pnych p=
-ropozycji?
+Regards,
+Kamil
 
-
-Pozdrawiam,
-Kamil Lasek
+> > +	igt_info("\t-i, --info           - dump info\n");
+> >   	igt_info("\tDefault is to respond to Qd980 tests\n");
+> >   	exit((opt != 'h') ? -1 : 0);
+> >   }
+> > @@ -709,6 +711,7 @@ int main(int argc, char **argv)
+> >   	struct option long_opts[] = {
+> >   		{"help-description", 0, 0, HELP_DESCRIPTION},
+> >   		{"help", 0, 0, 'h'},
+> > +		{"info", 0, 0, 'i'},
+> >   	};
+> >   	enter_exec_path(argv);
