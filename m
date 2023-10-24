@@ -2,184 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54E127D5C88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 22:36:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 794D97D5CC4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 22:58:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234931AbjJXUgU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 16:36:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58058 "EHLO
+        id S234963AbjJXU6i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 16:58:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234920AbjJXUgU (ORCPT
+        with ESMTP id S1344278AbjJXU6f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 16:36:20 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1906FEA;
-        Tue, 24 Oct 2023 13:36:18 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39OCphuE008185;
-        Tue, 24 Oct 2023 20:36:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=eXJedUJ+ycehchtqjsnqMajH7B3wz/3cpx05+dNOyAg=;
- b=aN3ucWZZ9fLuaiVyHsLCUmvuPYNDqWICSCHxwcCMgF240Xoy9gVNmxnWE8nS3T1wfe/r
- BSa61dBRRak59IlMdhXB7r/gEd7V1EWi5Y7A4FuRcjwbayB28qUNNrlfhnBulsqTmRSw
- WzgXE98ubwBaBFlRcfQaMEFUK0c1LT4BN9AC4MB7X1AvtGimMTK8ja3XbY6jSdTANlBt
- bZeQocRhZ/s8HVYnHqCy5t661672gwdHBo58YlBr9eNBayWTHZD0QsLALWkhS9T9eVwh
- iyqxTdO0hahGvSSp/pwHWzVqkNtILtmsnCz0PasqhA/76aTCxnacbNbbDW1nTbIFqrxv Bw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3twxa0k3y4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 20:36:13 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39OKaCE1025761
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 20:36:12 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Tue, 24 Oct 2023 13:36:12 -0700
-Date:   Tue, 24 Oct 2023 13:36:10 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Tue, 24 Oct 2023 16:58:35 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE0CB10E4;
+        Tue, 24 Oct 2023 13:58:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1698181080; bh=N0PLZ2NjQzjfPEsssiVQ2t7E5m+w3JYFmXuWa41WrYY=;
+        h=From:Subject:Date:To:Cc;
+        b=TUFQXnVzD6Dni3IP7Pf15z+o0ZYyI1I1G0dxOoj7D4uNuw3nB/4C6Ss/Gh/KURqBn
+         R6cRbJFQYczrLnT3HEO6D7bO3zqver1o4GUJR/R/RKHaRc++yUfwuiEHLke1V0WrNR
+         XgkgGI02oQcnX7V6k8GyyVhAvZtATSOBdQzus54Y=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH v2 0/3] Add support for HTC One Mini 2 smartphone
+Date:   Tue, 24 Oct 2023 22:57:48 +0200
+Message-Id: <20231024-htc-memul-v2-0-8912940b6f95@z3ntu.xyz>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMwvOGUC/3XMyw6CMBCF4VchXVsz04KlrnwPwwLLIE3kkhYIl
+ /DuFuKCjct/MudbmSdnybN7tDJHo/W2bUKIS8RMlTdv4rYIzQQIiQCCV73hNdXDh6tY5GmCqhD
+ xi4X/zlFpp8N6ZqEr6/vWzQc94n79KYgnZUQOXCsjNUKZQq4fi2z64TrNy47+W6gbJSpVEjWY0
+ yLbtu0LVHyjltQAAAA=
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] usb: typec: ucsi: fix UCSI on buggy Qualcomm devices
-Message-ID: <20231024203610.GQ3553829@hu-bjorande-lv.qualcomm.com>
-References: <20231023215327.695720-1-dmitry.baryshkov@linaro.org>
- <20231023215327.695720-2-dmitry.baryshkov@linaro.org>
- <20231023224715.GN3553829@hu-bjorande-lv.qualcomm.com>
- <CAA8EJppen6Ebmv_fjdrHoUXRsFFH5TZonKck=bRDKgXTTWOxoQ@mail.gmail.com>
- <20231024164254.GP3553829@hu-bjorande-lv.qualcomm.com>
- <CAA8EJpqbxAo8kxw6RXx18dyT0X9us=2p=bNCxJNHk6aP5012Sg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqbxAo8kxw6RXx18dyT0X9us=2p=bNCxJNHk6aP5012Sg@mail.gmail.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -axzLO9-FM7kFc7wVW6ZVMLi3jRQUvBj
-X-Proofpoint-ORIG-GUID: -axzLO9-FM7kFc7wVW6ZVMLi3jRQUvBj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-24_20,2023-10-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- mlxscore=0 phishscore=0 mlxlogscore=775 impostorscore=0 clxscore=1015
- bulkscore=0 adultscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310240177
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1541; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=N0PLZ2NjQzjfPEsssiVQ2t7E5m+w3JYFmXuWa41WrYY=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBlOC/NyjsDx1WKALpi6WpjAKQmizfieMow4aOhj
+ 7QB4qGINBOJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZTgvzQAKCRBy2EO4nU3X
+ Vn0gD/9Rlb1cX26i5VZcC+j8G/B8ejbBrquzxcmivLe8iiCxR2QddAGYvOqacR+vtDG4jhHafdU
+ ZCnFUMmbnfVD2SVqkQvSZ8Fx7KQZpnv/4bR1o91X6vyXSXm06ozymmxuVPIVXAEtBwMU2Ulb8a3
+ +U8DgnN5EcnOollP0joawfHAd/GXeX6MKmB12VnetdqVKTqsremGyLcJ4KYHawGis+RRafTSWlT
+ oJ+WLqnzLhhnriLbzi2q3AabTmz0SwNFn49Yibo+VZK20dKXplA+sF4Ojfq7U4t6eaCWFVCm6+Z
+ EoG4z9A1R682yccs4YnRIcQuxP+RLEYc0VkP5bXH9zYu/bWJK1LcmYMAu6eLa80J1CHdi6JqbCn
+ Kh9k4mwlyRo/osTE0T+Yiqu5nU2MxK4tnHwM/jFTMJjvR5k//o6gfzf2/aXN8a/5oNegbxZG3q1
+ R181LFlXYQd0+nJ5n/BOEY8ub6kwbVzl3pbCFAmOFHLmxamesYnT8TwpSFoZ8FVQkDKpGC26J+Q
+ 3RJ6ctKRgN/WLpUt2aNKZeyuOl2NGot170+mlAOoL5VW6Lk7y6bfmo1x0BEpQOCzo6ddEyFmdiv
+ H2FxXKyuVBCsMI/JrXKxFn872lNde4ngqoXKPSuIFQ8p64fwfoWw6UUKvydqcAguU10hD+ciFtx
+ 7D9GGKSkliXtUMw==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 24, 2023 at 11:13:55PM +0300, Dmitry Baryshkov wrote:
-> On Tue, 24 Oct 2023 at 19:42, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> >
-> > On Tue, Oct 24, 2023 at 02:08:33AM +0300, Dmitry Baryshkov wrote:
-> > > On Tue, 24 Oct 2023 at 01:47, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
-> > > >
-> > > > On Tue, Oct 24, 2023 at 12:47:26AM +0300, Dmitry Baryshkov wrote:
-> > > > > On sevral Qualcomm platforms (SC8180X, SM8350, SC8280XP) a call to
-> > > > > UCSI_GET_PDOS for non-PD partners will cause a firmware crash with no
-> > > > > easy way to recover from it. Since we have no easy way to determine
-> > > > > whether the partner really has PD support, shortcut UCSI_GET_PDOS on
-> > > > > such platforms. This allows us to enable UCSI support on such devices.
-> > > > >
-> > > >
-> > > > Really nice to see this. Thanks.
-> > > >
-> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > ---
-> > > > >  drivers/usb/typec/ucsi/ucsi.c       | 3 +++
-> > > > >  drivers/usb/typec/ucsi/ucsi.h       | 3 +++
-> > > > >  drivers/usb/typec/ucsi/ucsi_glink.c | 3 +++
-> > > > >  3 files changed, 9 insertions(+)
-> > > > >
-> > > > > diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-> > > > > index 61b64558f96c..5392ec698959 100644
-> > > > > --- a/drivers/usb/typec/ucsi/ucsi.c
-> > > > > +++ b/drivers/usb/typec/ucsi/ucsi.c
-> > > > > @@ -578,6 +578,9 @@ static int ucsi_read_pdos(struct ucsi_connector *con,
-> > > > >       u64 command;
-> > > > >       int ret;
-> > > > >
-> > > > > +     if (ucsi->quirks & UCSI_NO_PARTNER_PDOS)
-> > > > > +             return 0;
-> > > > > +
-> > > > >       command = UCSI_COMMAND(UCSI_GET_PDOS) | UCSI_CONNECTOR_NUMBER(con->num);
-> > > > >       command |= UCSI_GET_PDOS_PARTNER_PDO(is_partner);
-> > > > >       command |= UCSI_GET_PDOS_PDO_OFFSET(offset);
-> > > > > diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-> > > > > index 474315a72c77..6478016d5cb8 100644
-> > > > > --- a/drivers/usb/typec/ucsi/ucsi.h
-> > > > > +++ b/drivers/usb/typec/ucsi/ucsi.h
-> > > > > @@ -317,6 +317,9 @@ struct ucsi {
-> > > > >  #define EVENT_PENDING        0
-> > > > >  #define COMMAND_PENDING      1
-> > > > >  #define ACK_PENDING  2
-> > > > > +
-> > > > > +     unsigned long quirks;
-> > > > > +#define UCSI_NO_PARTNER_PDOS BIT(0)  /* Don't read partner's PDOs */
-> > > > >  };
-> > > > >
-> > > > >  #define UCSI_MAX_SVID                5
-> > > > > diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > > > index db6e248f8208..5c159e7b2b65 100644
-> > > > > --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > > > +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > > > @@ -327,6 +327,8 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
-> > > > >       if (ret)
-> > > > >               return ret;
-> > > > >
-> > > > > +     ucsi->ucsi->quirks = id->driver_data;
-> > > > > +
-> > > > >       ucsi_set_drvdata(ucsi->ucsi, ucsi);
-> > > > >
-> > > > >       device_for_each_child_node(dev, fwnode) {
-> > > > > @@ -379,6 +381,7 @@ static void pmic_glink_ucsi_remove(struct auxiliary_device *adev)
-> > > > >
-> > > > >  static const struct auxiliary_device_id pmic_glink_ucsi_id_table[] = {
-> > > > >       { .name = "pmic_glink.ucsi", },
-> > > > > +     { .name = "pmic_glink.ucsi-no-pdos", .driver_data = UCSI_NO_PARTNER_PDOS, },
-> > > >
-> > > > In altmode and battmgr drivers we apply quirks based on the compatible
-> > > > of the pmic_glink of_node.
-> > >
-> > > ... and I can't say that I like that. In typical drivers we perform
-> > > driver tuning by looking at the device's data (e.g. by using
-> > > of_device_is_compatible or by of_device_get_match_data. Checking the
-> > > parent device seems like breaking the layering.
-> >
-> > It felt like it was the cleaner option of the two when I did it. I think
-> > there was some variation of quirks which made me feel this would grow
-> > large - but I might misremember things now.
-> >
-> > > But if you insist, I can follow that approach.
-> >
-> > I insist that we should use the same mechanism of dealing with the
-> > quirks across the three parts, and following the existing approach
-> > doesn't seem too unreasonable...
-> 
-> The problem with the current approach is that it adds dependency
-> between patches. We can not apply patch2 without patch1 being in
-> place, since applying will enable buggy UCSI.
-> 
+Add support for this smartphone from HTC which is based on the MSM8926
+SoC and codenamed "memul".
 
-Good point. Please describe this dependency when you respin the patches,
-and we can take them together through the USB tree.
+Depends on, runtime-only, bootloader enables watchdog so we need to pet
+it to stay alive:
+https://lore.kernel.org/linux-arm-msm/20231011-msm8226-msm8974-watchdog-v1-0-2c472818fbce@z3ntu.xyz/T/
 
-Regards,
-Bjorn
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Changes in v2:
+- Pick up tags
+- Add spaces around regulator nodes
+- Set firmware-name for adsp
+- Expand reserved memory regions to cover everything somehow reserved
+  downstream, leave no gaps. Seems to finally fix also nbd randomly
+  failing
+- Remove internal storage since somehow it has killed itself on my
+  device since last time, maybe by my random memory testing writing some
+  not-so-great commands to it. So let's be safe and remove it.
+- Link to v1: https://lore.kernel.org/r/20231011-htc-memul-v1-0-76e57873190c@z3ntu.xyz
+
+---
+Luca Weiss (3):
+      dt-bindings: vendor-prefixes: document HTC Corporation
+      dt-bindings: arm: qcom: Add HTC One Mini 2
+      ARM: dts: qcom: Add support for HTC One Mini 2
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
+ arch/arm/boot/dts/qcom/Makefile                    |   1 +
+ arch/arm/boot/dts/qcom/qcom-msm8926-htc-memul.dts  | 369 +++++++++++++++++++++
+ 4 files changed, 373 insertions(+)
+---
+base-commit: 9b969874004ff05d05e4340bacc1699f72f58686
+change-id: 20231002-htc-memul-742a8517d24b
+
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
