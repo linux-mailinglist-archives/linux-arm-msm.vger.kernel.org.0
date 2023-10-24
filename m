@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5A6C7D4A9D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:42:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED05D7D4B28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:55:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233825AbjJXImF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 04:42:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51416 "EHLO
+        id S234172AbjJXIzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 04:55:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233904AbjJXImD (ORCPT
+        with ESMTP id S234083AbjJXIyr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 04:42:03 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63ECD12C;
-        Tue, 24 Oct 2023 01:42:00 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39O7fNlc000679;
-        Tue, 24 Oct 2023 08:41:44 GMT
+        Tue, 24 Oct 2023 04:54:47 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC76610E9;
+        Tue, 24 Oct 2023 01:54:19 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39O8Y6gO025163;
+        Tue, 24 Oct 2023 08:54:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=gySDwgLbcFWjq9SutAIKJaVMTjlGX9BPGXsVpeNRcBk=;
- b=E3QhKZSUXzkkMHDq3Ss4/eN+D3oZtNXounjWCSBTOLqgIWW/RlWXTJcM2fL5wowPScaT
- YUSfvXTgn4GtAPGAD4GXvAJI67+F00zUw5KeAqPD91ixlfjemxlr4rrM+eTH0mk/pqXQ
- gw2iBC5DZIkGfiZvebMIam9pEWwYDzrUBNEVlN0Drv0hWt5bOVOi464VosOhWkRhkw7j
- gVf6+VOfMyotptBEd8CJkpRvsRG/3maKDYhq62jhKKGwNz90bUYnav/ZeBU0aaZHKU0m
- DuRYFxjff2CtYGA4oxcsuUE1zK7d2JRSDBL9yPZUAy17I7AuFMS1ypBPoxhw/N+NHZq1 cA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3twxa0hebr-1
+ bh=W6ajn5ipoxlzEj1no8f6ESzNsQM/d79ox1pO89tPgJk=;
+ b=mY75BUOxHVDp99Yn+QNle4PyXsbXIzy+EZEexKzuZSs6SLhxYGfT2KemFETwNWnnz876
+ jM78JtX3s7ZefCroPmjiwTjcKn/ab5n6rd3gFuHr7i4j1Zbqm8vcYI9ObM09GC4koxlb
+ otU8QlKbLE75+jusrvzF1te0j5Zo0qJyotOx9Lmrb0TB8iheZAkLvBUU8qJ5A/WpKOpL
+ idTV6T79sqZbfsT0Sz/Iwvy9N4JL3Nt6a51wdJRkxNZPAII5ls73R2WtTandfiidDkub
+ WgVfABgz/JD9QQuCq81cbj7DywQfJ7Acaq+5Pzpm9E5/L1yE7wsWNB7l7zAGLPb00hwS yQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tx5f58jnv-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 08:41:44 +0000
+        Tue, 24 Oct 2023 08:54:08 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39O8fhRG011642
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39O8s7Ej005073
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 08:41:43 GMT
+        Tue, 24 Oct 2023 08:54:07 GMT
 Received: from [10.249.18.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 24 Oct
- 2023 01:41:36 -0700
-Message-ID: <00044364-9a6a-4138-9c17-7b0b801e9f10@quicinc.com>
-Date:   Tue, 24 Oct 2023 14:11:31 +0530
+ 2023 01:54:00 -0700
+Message-ID: <196601cc-f8c6-4266-bfff-3fd69f0ab31c@quicinc.com>
+Date:   Tue, 24 Oct 2023 14:23:57 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 06/10] usb: dwc3: qcom: Enable wakeup for applicable
- ports of multiport
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
 Content-Language: en-US
 To:     Johan Hovold <johan@kernel.org>
 CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
@@ -63,12 +63,16 @@ CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
         <quic_shazhuss@quicinc.com>
 References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-7-quic_kriskura@quicinc.com>
- <ZTaViatsRY7LCbIX@hovoldconsulting.com>
- <7e9bdd65-35b7-43c2-810a-2cd81f736084@quicinc.com>
- <ZTdt-wyCHh3i0SlK@hovoldconsulting.com>
+ <20231007154806.605-6-quic_kriskura@quicinc.com>
+ <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
+ <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+ <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+ <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+ <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
+ <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
 From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZTdt-wyCHh3i0SlK@hovoldconsulting.com>
+In-Reply-To: <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -76,19 +80,19 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ksY2q5lXohwGC7tFx5fG0_k9SAMQS3LX
-X-Proofpoint-ORIG-GUID: ksY2q5lXohwGC7tFx5fG0_k9SAMQS3LX
+X-Proofpoint-GUID: kbMudVGa0LNV5015FDNoHqNKOSEaamK2
+X-Proofpoint-ORIG-GUID: kbMudVGa0LNV5015FDNoHqNKOSEaamK2
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-24_07,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 malwarescore=0
- mlxscore=0 phishscore=0 mlxlogscore=964 impostorscore=0 clxscore=1015
- bulkscore=0 adultscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310240073
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ lowpriorityscore=0 phishscore=0 spamscore=0 impostorscore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=999 bulkscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310240074
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -96,76 +100,51 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 10/24/2023 12:40 PM, Johan Hovold wrote:
->>>
->>> This comment no longer makes sense with your current implementation.
->>>
->> Can you help elaborate on your comment ? Do you mean that this API
->> doesn't get speed on all ports, but this has to be called in a loop to
->> get all the port speeds ? In that sense, I agree, I can change the
->> comments here.
+
+On 10/24/2023 12:26 PM, Johan Hovold wrote:
 > 
-> It does not make sense to keep only half the comment after your update
-> as it is a suggestion for how one could go about and generalise this for
-> multiport, which is what you are now doing.
->   
-
-Thanks for explanation. Will update the comments.
-
->>> But perhaps this should be done using usb_hub_for_each_child() instead
->>> as that may be more efficient. Then you use this function to read out
->>> the speed for all the ports in go (and store it in the port structures I
->>> mentioned). Please determine which alternative is best.
->>>
->> Either ways is fine. We would have qcom->num_ports to determine how many
->> speeds we can read.
+> You need to provide this information so that we can determine what the
+> binding should look like. The implementation would also be simplified if
+> we don't have to add random hacks to it just because we don't know why
+> the vendor driver you refer does not use it currently on this particular
+> platform.
 > 
-> That's not the point. I'm referring to which alternative is less
-> computationally expensive and allows for a clean implementation.
-> 
-> Please do try to figure it out yourself.
-> 
-I don't think its much of a difference:
-
-while (loop over num_ports) {
-	read_usb2_speed()
-}
-
-read_usb2_speed() {
-	while (loop over num_ports) {
-		hub api to read speed.
-	}
-}
-
-The second one would avoid calling read_usb2_speed multiple times. Will 
-take that path.
-
->>>
->>> [ I realise that the confusion around hs_phy_irq may be partly to blame
->>> for this but since that one is also a per-port interrupt, that's no
->>> longer an issue. ]
+>> Also I plan on splitting the patchset into 4 parts (essentially 4 diff
+>> series):
 >>
->> I don't want to add support for this right away [1]. I would like to
->> keep hs_phy_irq outside the loop for now.
+>> 1. Bindings update for hs_phy_irq's
+>> 2. DT patches for MP controller and platform specific files
+>> 3. Core driver update for supporting multiport
+>> 4. QCOM driver update for supporting wakeup/suspend/resume
+>>
+>> This is in accordance to [1] and that way qcom code won't block core
+>> driver changes from getting merged. Core driver changes are independent
+>> and are sufficient to get multiport working.
 > 
-> No. Stop trying to take shortcuts. Again, this is upstream, not
-> Qualcomm's vendor kernel.
+> No, you clearly did not understand [1] at all. And stop trying to game
+> the upstreaming process. Bindings and driver patches go together. The
+> devicetree changes can be sent separately in case of USB but only
+> *after* the first set has been merged.
+> 
+> If the code had been in good shape from the start it would have been
+> merged by now. Just learn from your mistakes and next time things will
+> be smoother.
 > 
 
-I don't think it is a shortcut.
+I agree that bindings should go first. My point is core bindings are 
+already approved and merged and just wanted to check if core driver 
+changes can be merged without glue blocking them. Core driver changes 
+have nothing to do with interrupt handling in glue. If we get the core 
+changes merged separately after fixing the nits mentioned, we can take 
+up this interrupt handling in glue in parallel. I am just trying to see 
+if we can start merging independent portions of code. I agree that my 
+glue driver changes are still not upto mark. But that has nothing to do 
+with core driver changes.
 
-The reason I said I would keep it out of loop is I know why we need 
-DP/DM/SS IRQ's during wakeup. The wakeup signals come in as 
-rising/falling edges in high speed on DP/DM lines and LFPS terminations 
-come on SS lines.
-
-So we need these 3 interrupts for sure in wakeup context.
-hs_phy_irq is not mandatory for wakeup. Any particular reason why it is 
-needed to add driver support for hs_phy_irq's of multiport now ? May be 
-I am missing something. If there is any reason why we need to add it 
-now, I would try to learn and see if it has any side effects (like 
-generating spurious wakeup's) and if nothing, I would add it back to 
-port structure.
+Please let me know if that is appropriate because I think functionality 
+intended by changes in core is independent of glue driver and glue 
+bindings. If anything glue is partially dependent on core changes (like 
+the MAX_PORTS macro etc., but not the other way around).
 
 Regards,
 Krishna,
