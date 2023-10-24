@@ -2,152 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E22B7D5102
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 15:07:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DFD07D51E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 15:35:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234674AbjJXNH5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 09:07:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46134 "EHLO
+        id S234597AbjJXNfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 09:35:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343862AbjJXNHq (ORCPT
+        with ESMTP id S234484AbjJXNfH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 09:07:46 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC173D79;
-        Tue, 24 Oct 2023 06:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=In-Reply-To:Content-Type:MIME-Version:References:
-        Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:Reply-To:
-        Content-ID:Content-Description;
-        bh=C0NEbr2Bu1GmyIhx8+vqJqdrFza7J7tVm5zNmo+rtEM=; b=ADmrSkg2+Vo/nMsjS9JnEWQIXA
-        qnIPxpsVa5vX7hU+d2iFiLkMCbCus5t3gQGnyi/Gna15ztciE7bHOxhxrsXZaUV/2TeSYz1WMSsYD
-        kxPy56li/HGPSAwcHTe4xw85iNjin0Zjh2I+PyE4IfCYnAXr5/pey5fxNFQ5k10fqmdKQQHZouWJL
-        91VwJaUsi1eW8Q9gNB4QAWNxAOaU4S8gF4clamZmBpWYe/3x0cQ+P9Fc0x5C2V8luReOAN9Z/4DUI
-        +MQno+CJaHqrMc2o0/48DLGBKayjODFol44/kHZYXjfhJgx5d1luLDZN+XjrVUsmLRSReydprX5iA
-        QmAY6MjQ==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
-        id 1qvH7k-000kF4-06;
-        Tue, 24 Oct 2023 15:07:07 +0200
-Date:   Tue, 24 Oct 2023 15:07:02 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain
- devices
-Message-ID: <ZTfBZqBwqskhFydZ@kernkonzept.com>
-References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
- <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
- <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
- <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
- <ZTeyhR7YY7VgWQlU@kernkonzept.com>
- <CAPDyKFrcV8iJnJ904j1jkx0E8PaOLmiTZ7CKk7EV8qQ71AZdbA@mail.gmail.com>
+        Tue, 24 Oct 2023 09:35:07 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 319083594
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 06:22:16 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-533d31a8523so6591555a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 06:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698153733; x=1698758533; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=h+l8luI5NHY4c+fzH6QLo6wJqojZbE1nL34Ixm7aS9s=;
+        b=eE2CDSZen3pJYkZUaSSSq1hCcvDmgiG848DRXtvn9kyfJRh836w9TQLejFR8sjPkuc
+         sMoupESO75rLTqdjl+KYpWHXHXQ6gqnIa3Bh++nUiagSbVb+WcyAezyHcB34dpz1r7OY
+         LPHM82LHA+U8hw791FYsnBB6aBl4JL6hzaadsirxqZLrDgC9cM1ogq2OEL23AGz8MJou
+         9676hZSWiI0f8K+L2ViZCZusyLAUfi6cfVYI643+Jpa7Wvfv7Y97pU8xzAMgtE1KxMQk
+         DZ1u3A8DILFD59yti/3utv1EEVWm0FLri/opPz1Uviz+U3yyxJ/43MIpYUQRkiqoDdOR
+         KTNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698153733; x=1698758533;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=h+l8luI5NHY4c+fzH6QLo6wJqojZbE1nL34Ixm7aS9s=;
+        b=o8e27TNbidKckp74r4M2c4RXGulysS8+Bj7BPZ4ra82ukiF7XP1l8+ioaBAIltj9O9
+         8xwhcYvEligSNGTF0w541GhYmtFbDXEjx2+HTI1jmN3mwa5grr5VI6I3Nq4lb0pnYbTc
+         iC335+x1WnriK07n+yzPk1Ix/Gd4HcreCXDfGcaUhqk5yIGByObhPf0JkpFQFRewV83I
+         pdzJTcYVKxWJfgQh+GM3kjrPsQ7tXJdJmz9TE7pKvZD+br279f5cGbl0fp7I+KviDQxt
+         mqnKylmEgt/+FNR/Pyw9e2v52p2nfoeBujGW4VVREJYqY2ImE4yNi2Jwd5OaDjFDyhz5
+         CYag==
+X-Gm-Message-State: AOJu0Yxnqyry4ASMEBxHK8A6CcQHHqGp51LWgcABgKDGdLhpkd1G3KwI
+        cITTLblr9fwJTXLgnxUwuOWbCE5mg8GkYnBBDaI=
+X-Google-Smtp-Source: AGHT+IHlVfngVoz59SJI1dPd8TOZf+tdvamGv47VbjkyU6UjhRSeRsdHkxz8vfVTS0ZeJX75dRpJ+w==
+X-Received: by 2002:a17:907:988:b0:9c4:eefa:b6aa with SMTP id bf8-20020a170907098800b009c4eefab6aamr8153445ejc.42.1698153733152;
+        Tue, 24 Oct 2023 06:22:13 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id hb13-20020a170906b88d00b009c46445fcc7sm8350880ejb.33.2023.10.24.06.22.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Oct 2023 06:22:12 -0700 (PDT)
+Message-ID: <063436ab-5946-479f-81dc-c8e835962abb@linaro.org>
+Date:   Tue, 24 Oct 2023 15:22:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPDyKFrcV8iJnJ904j1jkx0E8PaOLmiTZ7CKk7EV8qQ71AZdbA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] ARM: dts: samsung: exynos4412-midas: fix key-ok
+ event code
+Content-Language: en-US
+To:     Raymond Hackley <raymondhackley@protonmail.com>
+Cc:     alim.akhtar@samsung.com, conor+dt@kernel.org,
+        devicetree@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, robh+dt@kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20231017101402.62740-1-raymondhackley@protonmail.com>
+ <20231017101636.62755-1-raymondhackley@protonmail.com>
+ <bc5bbf47-7bcb-4fc6-a88b-b92d74803a7a@linaro.org>
+ <20231024123415.2009-1-raymondhackley@protonmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231024123415.2009-1-raymondhackley@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 24, 2023 at 02:49:32PM +0200, Ulf Hansson wrote:
-> On Tue, 24 Oct 2023 at 14:03, Stephan Gerhold
-> <stephan.gerhold@kernkonzept.com> wrote:
-> >
-> > On Thu, Oct 19, 2023 at 01:26:19PM +0200, Ulf Hansson wrote:
-> > > On Thu, 19 Oct 2023 at 12:24, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > > >
-> > > > On Wed, 18 Oct 2023 at 10:06, Stephan Gerhold
-> > > > <stephan.gerhold@kernkonzept.com> wrote:
-> > > > >
-> > > > > The genpd core caches performance state votes from devices that are
-> > > > > runtime suspended as of commit 3c5a272202c2 ("PM: domains: Improve
-> > > > > runtime PM performance state handling"). They get applied once the
-> > > > > device becomes active again.
-> > > > >
-> > > > > To attach the power domains needed by qcom-cpufreq-nvmem the OPP core
-> > > > > calls genpd_dev_pm_attach_by_id(). This results in "virtual" dummy
-> > > > > devices that use runtime PM only to control the enable and performance
-> > > > > state for the attached power domain.
-> > > > >
-> > > > > However, at the moment nothing ever resumes the virtual devices created
-> > > > > for qcom-cpufreq-nvmem. They remain permanently runtime suspended. This
-> > > > > means that performance state votes made during cpufreq scaling get
-> > > > > always cached and never applied to the hardware.
-> > > > >
-> > > > > Fix this by enabling the devices after attaching them and use
-> > > > > dev_pm_syscore_device() to ensure the power domains also stay on when
-> > > > > going to suspend. Since it supplies the CPU we can never turn it off
-> > > > > from Linux. There are other mechanisms to turn it off when needed,
-> > > > > usually in the RPM firmware (RPMPD) or the cpuidle path (CPR genpd).
-> > > >
-> > > > I believe we discussed using dev_pm_syscore_device() for the previous
-> > > > version. It's not intended to be used for things like the above.
-> > > >
-> > > > Moreover, I was under the impression that it wasn't really needed. In
-> > > > fact, I would think that this actually breaks things for system
-> > > > suspend/resume, as in this case the cpr driver's genpd
-> > > > ->power_on|off() callbacks are no longer getting called due this,
-> > > > which means that the cpr state machine isn't going to be restored
-> > > > properly. Or did I get this wrong?
-> > >
-> > > BTW, if you really need something like the above, the proper way to do
-> > > it would instead be to call device_set_awake_path() for the device.
-> > >
-> >
-> > Unfortunately this does not work correctly. When I use
-> > device_set_awake_path() it does set dev->power.wakeup_path = true.
-> > However, this flag is cleared again in device_prepare() when entering
-> > suspend. To me it looks a bit like wakeup_path is not supposed to be set
-> > directly by drivers? Before and after your commit 8512220c5782 ("PM /
-> > core: Assign the wakeup_path status flag in __device_prepare()") it
-> > seems to be internally bound to device_may_wakeup().
-> >
-> > It works if I make device_may_wakeup() return true, with
-> >
-> >         device_set_wakeup_capable(dev, true);
-> >         device_wakeup_enable(dev);
-> >
-> > but that also allows *disabling* the wakeup from sysfs which doesn't
-> > really make sense for the CPU.
-> >
-> > Any ideas?
+On 24/10/2023 14:37, Raymond Hackley wrote:
+> Hi Krzysztof,
 > 
-> The device_set_awake_path() should be called from a system suspend
-> callback. So you need to add that callback for the cpufreq driver.
-> 
-> Sorry, if that wasn't clear.
-> 
+> This key-ok is the hardware middle button on midas, and there is also
+> touchkey, which already provides <KEY_BACK KEY_MENU>, so I assume the other
+> KEY_MENU in key-ok is duplicated. Fixing it with KEY_OK as the node name
+> implies would make more sense.
 
-Hmm, but at the moment I'm calling this on the virtual genpd devices.
-How would it work for them? I don't have a suspend callback for them.
+Ah, ok, that makes sense.
 
-I guess could loop over the virtual devices in the cpufreq driver
-suspend callback, but is my driver suspend callback really guaranteed to
-run before the device_prepare() that clears "wakeup_path" on the virtual
-devices?
+Best regards,
+Krzysztof
 
-Or is this the point where we need device links to make that work?
-A quick look suggests "wakeup_path" is just propagated to parents but
-not device links, so I don't think that would help, either.
-
-Thanks,
--- 
-Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Kernkonzept GmbH at Dresden, Germany, HRB 31129, CEO Dr.-Ing. Michael Hohmuth
