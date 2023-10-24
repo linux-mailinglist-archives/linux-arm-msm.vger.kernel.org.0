@@ -2,94 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED05D7D4B28
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:55:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F3167D4B55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:57:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234172AbjJXIzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 04:55:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44176 "EHLO
+        id S233888AbjJXI5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 04:57:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234083AbjJXIyr (ORCPT
+        with ESMTP id S233903AbjJXI5x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 04:54:47 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC76610E9;
-        Tue, 24 Oct 2023 01:54:19 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39O8Y6gO025163;
-        Tue, 24 Oct 2023 08:54:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=W6ajn5ipoxlzEj1no8f6ESzNsQM/d79ox1pO89tPgJk=;
- b=mY75BUOxHVDp99Yn+QNle4PyXsbXIzy+EZEexKzuZSs6SLhxYGfT2KemFETwNWnnz876
- jM78JtX3s7ZefCroPmjiwTjcKn/ab5n6rd3gFuHr7i4j1Zbqm8vcYI9ObM09GC4koxlb
- otU8QlKbLE75+jusrvzF1te0j5Zo0qJyotOx9Lmrb0TB8iheZAkLvBUU8qJ5A/WpKOpL
- idTV6T79sqZbfsT0Sz/Iwvy9N4JL3Nt6a51wdJRkxNZPAII5ls73R2WtTandfiidDkub
- WgVfABgz/JD9QQuCq81cbj7DywQfJ7Acaq+5Pzpm9E5/L1yE7wsWNB7l7zAGLPb00hwS yQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tx5f58jnv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 08:54:08 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39O8s7Ej005073
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 08:54:07 GMT
-Received: from [10.249.18.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 24 Oct
- 2023 01:54:00 -0700
-Message-ID: <196601cc-f8c6-4266-bfff-3fd69f0ab31c@quicinc.com>
-Date:   Tue, 24 Oct 2023 14:23:57 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
+        Tue, 24 Oct 2023 04:57:53 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09CAAC;
+        Tue, 24 Oct 2023 01:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=In-Reply-To:Content-Type:MIME-Version:References:
+        Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:Reply-To:
+        Content-ID:Content-Description;
+        bh=Uk5O71GDx72WXdUblzMnR+VVcl72M4KhBs4KQ0VulsE=; b=i69p3ITxAqu1CLZFHv8iB+el7V
+        BhuDUjSZlAXc/kX4+RvjR0IBupPGEEdxj4aieR8knlCHyImJHQHuauSCEW+tnoBHyUIzJ0ItkCGsD
+        D9AIcKCtlVRclMAlBHmrleCy7cbxYeK2TMAML5GUe5m21nA4XNAMlZ1vZ3rA9O8Y8uG01tOvqa5h1
+        o6MtRe0zY1LEzGPehXSEIJ6hUxU8/DJdWwlqEkqI3lubs76hIDfP0BfaqPwgnwFYgxwaof43nQD4E
+        z3inVnOtC5UoVG12bUb/bTBJOPKnaNby3hEyslCHRV95LZ7GuRbxbbKeexuJA3raNtpwozgFYXCyj
+        IdGsUhLw==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
+        id 1qvDEN-000hTc-32;
+        Tue, 24 Oct 2023 10:57:43 +0200
+Date:   Tue, 24 Oct 2023 10:57:38 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <ahalaney@redhat.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-6-quic_kriskura@quicinc.com>
- <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
- <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
- <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
- <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
- <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
- <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
- <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kbMudVGa0LNV5015FDNoHqNKOSEaamK2
-X-Proofpoint-ORIG-GUID: kbMudVGa0LNV5015FDNoHqNKOSEaamK2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-24_07,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- lowpriorityscore=0 phishscore=0 spamscore=0 impostorscore=0 adultscore=0
- priorityscore=1501 mlxlogscore=999 bulkscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310240074
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: Re: [PATCH RFC 1/2] regulator: core: Disable unused regulators with
+ unknown status
+Message-ID: <ZTeHAqL5QB2w33RN@kernkonzept.com>
+References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
+ <20231004-reg-smd-unused-v1-1-5d682493d555@kernkonzept.com>
+ <80307316-f55e-4540-9c5f-655844c3b3f4@sirena.org.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <80307316-f55e-4540-9c5f-655844c3b3f4@sirena.org.uk>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -99,52 +57,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/24/2023 12:26 PM, Johan Hovold wrote:
+On Mon, Oct 23, 2023 at 01:09:11PM +0100, Mark Brown wrote:
+> On Wed, Oct 04, 2023 at 04:17:17PM +0200, Stephan Gerhold wrote:
 > 
-> You need to provide this information so that we can determine what the
-> binding should look like. The implementation would also be simplified if
-> we don't have to add random hacks to it just because we don't know why
-> the vendor driver you refer does not use it currently on this particular
-> platform.
+> > Instead of -EINVAL we could also use a different return code to indicate
+> > the initial status is unknown. Or maybe there is some other option that
+> > would be easier? This is working for me but I'm sending it as RFC to get
+> > more feedback. :)
 > 
->> Also I plan on splitting the patchset into 4 parts (essentially 4 diff
->> series):
->>
->> 1. Bindings update for hs_phy_irq's
->> 2. DT patches for MP controller and platform specific files
->> 3. Core driver update for supporting multiport
->> 4. QCOM driver update for supporting wakeup/suspend/resume
->>
->> This is in accordance to [1] and that way qcom code won't block core
->> driver changes from getting merged. Core driver changes are independent
->> and are sufficient to get multiport working.
-> 
-> No, you clearly did not understand [1] at all. And stop trying to game
-> the upstreaming process. Bindings and driver patches go together. The
-> devicetree changes can be sent separately in case of USB but only
-> *after* the first set has been merged.
-> 
-> If the code had been in good shape from the start it would have been
-> merged by now. Just learn from your mistakes and next time things will
-> be smoother.
-> 
+> The more normal thing here would be -EBUSY I think - -EINVAL kind of
+> indicates that the operation will never work while in reality it could
+> possibly work in future.  Though for the RPMH it's not really the case
+> that it ever supports readback, what it does is have it's own reference
+> counting in the driver.  Rather than doing this we should probably have
+> logic in the core which sees that the driver has a write operation but
+> no read operation and implements appropriate behaviour.
 
-I agree that bindings should go first. My point is core bindings are 
-already approved and merged and just wanted to check if core driver 
-changes can be merged without glue blocking them. Core driver changes 
-have nothing to do with interrupt handling in glue. If we get the core 
-changes merged separately after fixing the nits mentioned, we can take 
-up this interrupt handling in glue in parallel. I am just trying to see 
-if we can start merging independent portions of code. I agree that my 
-glue driver changes are still not upto mark. But that has nothing to do 
-with core driver changes.
+Yep, I agree that it would be nicer to handle this case in the core,
+rather than duplicating the logic in all the RPM-related drivers.
 
-Please let me know if that is appropriate because I think functionality 
-intended by changes in core is independent of glue driver and glue 
-bindings. If anything glue is partially dependent on core changes (like 
-the MAX_PORTS macro etc., but not the other way around).
+I think it does not change much for this patch, though. Even when
+implemented in the core we still need to represent this situation
+somehow for regulator_is_enabled(). Simply returning 0 (disabled) or
+1 (enabled) would be wrong. Do you think returning -EBUSY would be
+appropriate for that?
 
-Regards,
-Krishna,
+The second challenge I see on a quick look is that both
+qcom_smd-regulator.c and qcom-rpmh-regulator.c use their reference
+counter internally in other function (e.g. to decide if a voltage change
+should be sent, see "vreg->enabled" checks). I think we would also need
+to add some rdev_is_enabled() function that would expose the core
+reference counter to the driver?
+
+Tracking the enable state in the driver (the way it is right now) is not
+that much code, so I'm not entirely sure if we might actually end up
+with more code/complexity when moving this to the core.
+
+Thanks,
+-- 
+Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Kernkonzept GmbH at Dresden, Germany, HRB 31129, CEO Dr.-Ing. Michael Hohmuth
