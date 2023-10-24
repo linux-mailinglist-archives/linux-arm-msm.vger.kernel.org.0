@@ -2,64 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4734A7D5BE5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 21:54:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C004B7D5C01
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 21:59:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344320AbjJXTyL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 15:54:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33784 "EHLO
+        id S1343931AbjJXT71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 15:59:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344307AbjJXTyL (ORCPT
+        with ESMTP id S1344301AbjJXT70 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 15:54:11 -0400
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67ED110C9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 12:54:08 -0700 (PDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d9cbba16084so4200749276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 12:54:08 -0700 (PDT)
+        Tue, 24 Oct 2023 15:59:26 -0400
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE7D210D7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 12:59:24 -0700 (PDT)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d9c687f83a2so4615174276.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 12:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698177247; x=1698782047; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698177564; x=1698782364; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4ckMVj0mT1+iO70Z9g6qUdiFwwZNq+iyV8pOCG7UjtA=;
-        b=D/SM7/Rp7/K9ZtBf/92hqhDjPNnR0rp+LFd4ivQjDU+x8RdntTnl7g3WLml+/wF0iD
-         24Yo3fs/1hgwCQI3SipFyXPpDH4WVy1gkWqzS/hd+CbQCo2SxqYTVxNoOr4eP3qdDmLg
-         5fatA/M6ygRiBdvjM0vRUUh6GL9bbuyVfWkh3hHAPikAFVL+hXTH0/eQDgICAX4GJHxb
-         DR3eVqNiYYUdwNXCzx/n6MNyXElHve3NWNUC/UijMNzaZNzgjdt7DJ9YmkR//Txt+Qrc
-         p3YUVPOaU5betxw4eCkYfhHHuXuOufUlQQ21Ac8Wi45U6HhVKrBPlYiaCo5cGRX3qVvU
-         pvEg==
+        bh=X3Nt1tRk4oZwItsFbTrN6/wGS4LwWRGecYFcsIlq7X4=;
+        b=zCY6bt73oxGhskUCk9Pmpg3Fr5C0HGIzHPrzyiD02102LmKzG2+0XavVDjrSloZHlK
+         Hi0x2JXaM9fPh/boGIED52dneytai+pJJJ/yO9InBcm51VqKpzK1mU3KVMgSyPUi36w4
+         FomEShm6P4u3vy1ukzfkBLEk9SFo+jWDCjdjDPcvJqKSvcF1KRoAGIfyuqJzoM/dXwCk
+         g8DIlkQxu8Dh5H8ixbv18amksyiLNBwoQg9IAgbA/q3z/oZeycS54HiAoydQzTvj6ShM
+         QZ0qjjX3+FW42Zc5LFjsey9401CaLHDJmQkHFrvUC7l1sEBlKXf/RhDLuzPvUiB2+pcx
+         NX3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698177247; x=1698782047;
+        d=1e100.net; s=20230601; t=1698177564; x=1698782364;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4ckMVj0mT1+iO70Z9g6qUdiFwwZNq+iyV8pOCG7UjtA=;
-        b=WtC/1kwGLAYt9nrijcrC/HR2YexC+r1GHygoMHFQFZpAy6E0OtcjMDjstpiHoUhZ1l
-         flllxYapA7Vf55A8U4hj037fu/bHzA8H8W1MbFPpstXXBYJuJ8mj+6cUkUyfTv8tgTu7
-         UiljpDMo3dkvGMJ+bo0ZCvfWK7LP5Al3SJ+y9j9vJUcv9NgflBTskN0v/8aGlhlDIaa3
-         5J4P8t1gLchOG33fT/slDhjWnxqQ4gmY0iUvVHeqhLGuG9ZStzf1XGuctrlqj8YnFMpn
-         q1zx/sAiIHsXTtVHG0tYQlv3CBSH4cd0PmnXATJtBzzo5ibL3aU2pYiDoV5zefR31WPA
-         iaCA==
-X-Gm-Message-State: AOJu0YyAFC9FZjS3wfvAwKnNeYB2FE05R+ZlkOzY/2CnKGMQPabXJ+Yx
-        9c6ymG5Sbd1UfYaM9H8KvHuJ8rYjNYeqnBO3u3HqLw==
-X-Google-Smtp-Source: AGHT+IGXjUjKDx8d+81HHT/vBnb5xzK6h/5gbJXjsqz14OeQuvCkEwZguoh+oy4hPPrMTLUBAu9opwIJg9sxaojjekU=
-X-Received: by 2002:a25:2d07:0:b0:d9b:76c3:4567 with SMTP id
- t7-20020a252d07000000b00d9b76c34567mr13456231ybt.55.1698177247589; Tue, 24
- Oct 2023 12:54:07 -0700 (PDT)
+        bh=X3Nt1tRk4oZwItsFbTrN6/wGS4LwWRGecYFcsIlq7X4=;
+        b=ER5ic0pNhnKjOG4lp5d9m9Ywtlu/Wl73V7BF5dhtVu98QoeG7FR0P/iKBfU2fPQCEc
+         1tgLNayUowWIWgXsZnUrXiz3FWeCho4+34xP40RVcUKcJqG1aWr5MM1xwFyBuZoCV9IZ
+         KbQI9D2fYewkYqlXy/tlFJRELUPyDiFkMcoA0mvvW+9dbj7M1AlrkBEDp0I95Cxt0HJj
+         4SdWv1nH5K62LTck7TNVlrRz03MQn6Y7zNSkrHoyAQFl65+CNCp39uRBZZpbJ3Yj/w4a
+         S9jjHaopjZv4dHNK2zkiTxMLMbDcE00s+XAsdS8LJwrn52BsPceaaOBrIIT0EHVIoj0R
+         WGWA==
+X-Gm-Message-State: AOJu0YwbOPW5hzjeHtqt8tGANVT7q1IYxxBEw9WPluAwwNGfZI1K7EFZ
+        JsgX90DyWleJrageNQI5OsCLRUuE9yiWOUYmaSAIWw==
+X-Google-Smtp-Source: AGHT+IGIKU90txs7qDa16dt6ToUY7ImKSmv34abro4cWrTktqbf66JlzZobnbOCvfV97zA6I4eFI/43VsNo0lIy2q0k=
+X-Received: by 2002:a25:51c3:0:b0:d9b:b6:ad72 with SMTP id f186-20020a2551c3000000b00d9b00b6ad72mr13160609ybb.50.1698177564020;
+ Tue, 24 Oct 2023 12:59:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <1696440338-12561-1-git-send-email-quic_mojha@quicinc.com> <1696440338-12561-4-git-send-email-quic_mojha@quicinc.com>
-In-Reply-To: <1696440338-12561-4-git-send-email-quic_mojha@quicinc.com>
+References: <1696440338-12561-1-git-send-email-quic_mojha@quicinc.com> <1696440338-12561-2-git-send-email-quic_mojha@quicinc.com>
+In-Reply-To: <1696440338-12561-2-git-send-email-quic_mojha@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 24 Oct 2023 22:53:56 +0300
-Message-ID: <CAA8EJpoWfiwr2ADWuej8+RkNqmP-=tbNq=me_ok72iuG6m9sug@mail.gmail.com>
-Subject: Re: [PATCH v7 3/3] firmware: scm: Modify only the download bits in
- TCSR register
+Date:   Tue, 24 Oct 2023 22:59:12 +0300
+Message-ID: <CAA8EJprscPcr0pMM=fz4yGWsgprk7bAXCcbbZJQmdv0siKASow@mail.gmail.com>
+Subject: Re: [PATCH v7 1/3] firmware: qcom_scm: provide a read-modify-write function
 To:     Mukesh Ojha <quic_mojha@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         p.zabel@pengutronix.de, linus.walleij@linaro.org,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -71,78 +68,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Oct 2023 at 20:28, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+On Wed, 4 Oct 2023 at 20:26, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
 >
-> Crashdump collection is based on the DLOAD bit of TCSR register.
-> To retain other bits, we read the register and modify only the
-> DLOAD bit as the other bits have their own significance.
-
-Nit: please take a look at
-`Documentation/process/submitting-patches.rst`: `Describe your changes
-in imperative mood'.
-
-We do not read registers. Driver does. Nevertheless, this is a minor
-issue, which shouldn't prevent this patch from being applied.
-
+> It was realized by Srinivas K. that there is a need of
+> read-modify-write scm exported function so that it can
+> be used by multiple clients.
 >
-> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+> Let's introduce qcom_scm_io_update_field() which masks
+> out the bits and write the passed value to that bit-offset.
+>
+> Suggested-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
 > ---
->  drivers/firmware/qcom_scm.c | 12 ++++++++++--
->  1 file changed, 10 insertions(+), 2 deletions(-)
+>  drivers/firmware/qcom_scm.c            | 20 ++++++++++++++++++++
+>  include/linux/firmware/qcom/qcom_scm.h |  2 ++
+>  2 files changed, 22 insertions(+)
 >
 > diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index 084e4782b88d..da3d028f6451 100644
+> index 520de9b5633a..084e4782b88d 100644
 > --- a/drivers/firmware/qcom_scm.c
 > +++ b/drivers/firmware/qcom_scm.c
-> @@ -4,6 +4,8 @@
->   */
+> @@ -122,6 +122,7 @@ static const char * const qcom_scm_convention_names[] = {
+>  };
 >
->  #include <linux/arm-smccc.h>
-> +#include <linux/bitfield.h>
-> +#include <linux/bits.h>
->  #include <linux/clk.h>
->  #include <linux/completion.h>
->  #include <linux/cpumask.h>
-> @@ -27,6 +29,10 @@
->  static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
->  module_param(download_mode, bool, 0);
->
-> +#define QCOM_DLOAD_MASK                GENMASK(5, 4)
-> +#define QCOM_DLOAD_FULLDUMP    0x1
-> +#define QCOM_DLOAD_NODUMP      0x0
+>  static struct qcom_scm *__scm;
+> +static DEFINE_SPINLOCK(lock);
 
-Nit: it might be better to move these defines after all struct definitions.
+Please move the spinlock inside __scm.
 
-> +
->  struct qcom_scm {
->         struct device *dev;
->         struct clk *core_clk;
-> @@ -518,6 +524,7 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
 >
->  static void qcom_scm_set_download_mode(bool enable)
+>  static int qcom_scm_clk_enable(void)
 >  {
-> +       u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
->         bool avail;
->         int ret = 0;
+> @@ -481,6 +482,25 @@ static int qcom_scm_disable_sdi(void)
+>         return ret ? : res.result[0];
+>  }
 >
-> @@ -527,8 +534,9 @@ static void qcom_scm_set_download_mode(bool enable)
->         if (avail) {
->                 ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->         } else if (__scm->dload_mode_addr) {
-> -               ret = qcom_scm_io_writel(__scm->dload_mode_addr,
-> -                               enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
-> +               ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
-> +                                              QCOM_DLOAD_MASK,
-> +                                              FIELD_PREP(QCOM_DLOAD_MASK, val));
->         } else {
->                 dev_err(__scm->dev,
->                         "No available mechanism for setting download mode\n");
+> +int qcom_scm_io_update_field(phys_addr_t addr, unsigned int mask, unsigned int val)
+
+qcom_scm_io_rmw ? qcom_scm_io_update_bits? These might be better names
+and they follow the existing function names.
+
+> +{
+> +       unsigned int old, new;
+> +       int ret;
+> +
+> +       spin_lock(&lock);
+> +       ret = qcom_scm_io_readl(addr, &old);
+> +       if (ret)
+> +               goto unlock;
+> +
+> +       new = (old & ~mask) | (val & mask);
+> +
+> +       ret = qcom_scm_io_writel(addr, new);
+> +unlock:
+> +       spin_unlock(&lock);
+> +       return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_scm_io_update_field);
+> +
+>  static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
+>  {
+>         struct qcom_scm_desc desc = {
+> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+> index ccaf28846054..5497eaf9c7b5 100644
+> --- a/include/linux/firmware/qcom/qcom_scm.h
+> +++ b/include/linux/firmware/qcom/qcom_scm.h
+> @@ -82,6 +82,8 @@ bool qcom_scm_pas_supported(u32 peripheral);
+>
+>  int qcom_scm_io_readl(phys_addr_t addr, unsigned int *val);
+>  int qcom_scm_io_writel(phys_addr_t addr, unsigned int val);
+> +int qcom_scm_io_update_field(phys_addr_t addr, unsigned int mask,
+> +                            unsigned int val);
+>
+>  bool qcom_scm_restore_sec_cfg_available(void);
+>  int qcom_scm_restore_sec_cfg(u32 device_id, u32 spare);
 > --
 > 2.7.4
 >
