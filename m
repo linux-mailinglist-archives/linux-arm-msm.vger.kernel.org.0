@@ -2,98 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F3167D4B55
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:57:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6F737D4B7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 11:06:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233888AbjJXI5x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 04:57:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40082 "EHLO
+        id S233757AbjJXJGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 05:06:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233903AbjJXI5x (ORCPT
+        with ESMTP id S232897AbjJXJGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 04:57:53 -0400
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09CAAC;
-        Tue, 24 Oct 2023 01:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=kernkonzept.com; s=mx1; h=In-Reply-To:Content-Type:MIME-Version:References:
-        Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:Reply-To:
-        Content-ID:Content-Description;
-        bh=Uk5O71GDx72WXdUblzMnR+VVcl72M4KhBs4KQ0VulsE=; b=i69p3ITxAqu1CLZFHv8iB+el7V
-        BhuDUjSZlAXc/kX4+RvjR0IBupPGEEdxj4aieR8knlCHyImJHQHuauSCEW+tnoBHyUIzJ0ItkCGsD
-        D9AIcKCtlVRclMAlBHmrleCy7cbxYeK2TMAML5GUe5m21nA4XNAMlZ1vZ3rA9O8Y8uG01tOvqa5h1
-        o6MtRe0zY1LEzGPehXSEIJ6hUxU8/DJdWwlqEkqI3lubs76hIDfP0BfaqPwgnwFYgxwaof43nQD4E
-        z3inVnOtC5UoVG12bUb/bTBJOPKnaNby3hEyslCHRV95LZ7GuRbxbbKeexuJA3raNtpwozgFYXCyj
-        IdGsUhLw==;
-Received: from [10.22.3.24] (helo=kernkonzept.com)
-        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
-        id 1qvDEN-000hTc-32;
-        Tue, 24 Oct 2023 10:57:43 +0200
-Date:   Tue, 24 Oct 2023 10:57:38 +0200
-From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Tue, 24 Oct 2023 05:06:22 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50275C2;
+        Tue, 24 Oct 2023 02:06:20 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E790FC433C8;
+        Tue, 24 Oct 2023 09:06:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698138380;
+        bh=tw6phL3njg7Zk6Ua/WCHEM58n0W8/AyOMzwRfIKowRs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ih3HhdbX31Wkgy27F6HRxpE3Vm4JjuchCIypVYEbrbnA8YRbLzAiB7A2fiBP2wdrK
+         1S/zRb2vbKl1dnGwit5YKRJrR2u6yRSGQ5nibOzEf4mBGmmmPc5O/Q486wt99rp4JD
+         QjQCRo2/+c/UOk68hLfeaZUKbK+itH++tMsYLU+0kVQk3SXOzELtqpT5w1tZcGpptj
+         /MzFG1suRqBg6R7rCuklotyiTOhFW4oAqiMo0pA+OUtzhrl8T31ygyAoKVYbYInHEd
+         LlPlXdiR+MAvv9bi+bNAhdxjnm2qsKjz0ZysBXhCU5Lm23HR1vBoBWFANDYaE9AV6v
+         y/lB3Nd41rjTg==
+Received: from johan by xi.lan with local (Exim 4.96)
+        (envelope-from <johan@kernel.org>)
+        id 1qvDMy-0003zs-1N;
+        Tue, 24 Oct 2023 11:06:36 +0200
+Date:   Tue, 24 Oct 2023 11:06:36 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: Re: [PATCH RFC 1/2] regulator: core: Disable unused regulators with
- unknown status
-Message-ID: <ZTeHAqL5QB2w33RN@kernkonzept.com>
-References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
- <20231004-reg-smd-unused-v1-1-5d682493d555@kernkonzept.com>
- <80307316-f55e-4540-9c5f-655844c3b3f4@sirena.org.uk>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_pkondeti@quicinc.com, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com, ahalaney@redhat.com,
+        quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 06/10] usb: dwc3: qcom: Enable wakeup for applicable
+ ports of multiport
+Message-ID: <ZTeJHMJYMQWVIbI7@hovoldconsulting.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-7-quic_kriskura@quicinc.com>
+ <ZTaViatsRY7LCbIX@hovoldconsulting.com>
+ <7e9bdd65-35b7-43c2-810a-2cd81f736084@quicinc.com>
+ <ZTdt-wyCHh3i0SlK@hovoldconsulting.com>
+ <00044364-9a6a-4138-9c17-7b0b801e9f10@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <80307316-f55e-4540-9c5f-655844c3b3f4@sirena.org.uk>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <00044364-9a6a-4138-9c17-7b0b801e9f10@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 23, 2023 at 01:09:11PM +0100, Mark Brown wrote:
-> On Wed, Oct 04, 2023 at 04:17:17PM +0200, Stephan Gerhold wrote:
+On Tue, Oct 24, 2023 at 02:11:31PM +0530, Krishna Kurapati PSSNV wrote:
+> On 10/24/2023 12:40 PM, Johan Hovold wrote:
+ 
+> >>> But perhaps this should be done using usb_hub_for_each_child() instead
+> >>> as that may be more efficient. Then you use this function to read out
+> >>> the speed for all the ports in go (and store it in the port structures I
+> >>> mentioned). Please determine which alternative is best.
+> >>>
+> >> Either ways is fine. We would have qcom->num_ports to determine how many
+> >> speeds we can read.
+> > 
+> > That's not the point. I'm referring to which alternative is less
+> > computationally expensive and allows for a clean implementation.
+> > 
+> > Please do try to figure it out yourself.
+> > 
+> I don't think its much of a difference:
 > 
-> > Instead of -EINVAL we could also use a different return code to indicate
-> > the initial status is unknown. Or maybe there is some other option that
-> > would be easier? This is working for me but I'm sending it as RFC to get
-> > more feedback. :)
+> while (loop over num_ports) {
+> 	read_usb2_speed()
+> }
 > 
-> The more normal thing here would be -EBUSY I think - -EINVAL kind of
-> indicates that the operation will never work while in reality it could
-> possibly work in future.  Though for the RPMH it's not really the case
-> that it ever supports readback, what it does is have it's own reference
-> counting in the driver.  Rather than doing this we should probably have
-> logic in the core which sees that the driver has a write operation but
-> no read operation and implements appropriate behaviour.
+> read_usb2_speed() {
+> 	while (loop over num_ports) {
+> 		hub api to read speed.
+> 	}
+> }
+> 
+> The second one would avoid calling read_usb2_speed multiple times. Will 
+> take that path.
 
-Yep, I agree that it would be nicer to handle this case in the core,
-rather than duplicating the logic in all the RPM-related drivers.
+You need to look at the implementation of usb_hub_for_each_child() and
+usb_hub_find_child() to determine that, which you now forced me to
+do; and yes, you're right, this shouldn't matter from an efficiency
+standpoint.
 
-I think it does not change much for this patch, though. Even when
-implemented in the core we still need to represent this situation
-somehow for regulator_is_enabled(). Simply returning 0 (disabled) or
-1 (enabled) would be wrong. Do you think returning -EBUSY would be
-appropriate for that?
+> >>> [ I realise that the confusion around hs_phy_irq may be partly to blame
+> >>> for this but since that one is also a per-port interrupt, that's no
+> >>> longer an issue. ]
+> >>
+> >> I don't want to add support for this right away [1]. I would like to
+> >> keep hs_phy_irq outside the loop for now.
+> > 
+> > No. Stop trying to take shortcuts. Again, this is upstream, not
+> > Qualcomm's vendor kernel.
+> 
+> I don't think it is a shortcut.
+> 
+> The reason I said I would keep it out of loop is I know why we need 
+> DP/DM/SS IRQ's during wakeup. The wakeup signals come in as 
+> rising/falling edges in high speed on DP/DM lines and LFPS terminations 
+> come on SS lines.
 
-The second challenge I see on a quick look is that both
-qcom_smd-regulator.c and qcom-rpmh-regulator.c use their reference
-counter internally in other function (e.g. to decide if a voltage change
-should be sent, see "vreg->enabled" checks). I think we would also need
-to add some rdev_is_enabled() function that would expose the core
-reference counter to the driver?
+It is a shortcut as this interrupt is per-port and some SoC's already
+use it. So you're making a mess of the implementation for no good
+reason.
 
-Tracking the enable state in the driver (the way it is right now) is not
-that much code, so I'm not entirely sure if we might actually end up
-with more code/complexity when moving this to the core.
+> So we need these 3 interrupts for sure in wakeup context.
+> hs_phy_irq is not mandatory for wakeup. Any particular reason why it is 
+> needed to add driver support for hs_phy_irq's of multiport now ? May be 
+> I am missing something. If there is any reason why we need to add it 
+> now, I would try to learn and see if it has any side effects (like 
+> generating spurious wakeup's) and if nothing, I would add it back to 
+> port structure.
 
-Thanks,
--- 
-Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Kernkonzept GmbH at Dresden, Germany, HRB 31129, CEO Dr.-Ing. Michael Hohmuth
+As I've mentioned a few times now, the hs_phy_irq is already used by a
+few SoC's so you can't just pretend it doesn't exist and mess up the
+implementation for no good reason.
+
+Just find out how it is used and why only some Qualcomm SoC's use it
+currently. It appears to be used in parallel with the DP/DM interrupts,
+and it has been there from the start:
+
+	a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+
+Sure, the wakeup implementation was incomplete and broken for a long
+time, but I'm not going to let you continue this practise of pushing
+incomplete hacks upstream which someone else will eventually be forced
+to clean up. You have the documentation, just use it.
+
+Johan
