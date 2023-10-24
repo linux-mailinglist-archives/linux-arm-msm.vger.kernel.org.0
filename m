@@ -2,122 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 747177D49D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:18:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91A107D49EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 10:25:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232799AbjJXISU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 04:18:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59014 "EHLO
+        id S232927AbjJXIZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 04:25:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232927AbjJXISP (ORCPT
+        with ESMTP id S233122AbjJXIZU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 04:18:15 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0C0A120
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 01:18:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698135493; x=1729671493;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=7QVOr2l9IkqK5fhUb2FEMJd3ZS09lqWiYLaA5pxdWyc=;
-  b=GAnf26rY5EbowqeoSLo7eieNQGj96TMgBsT6QmqN9SAIlmVSVOcYO3dK
-   bPM2cKHANFumWepK4+0iQHNe+hsZARpW+3FQPl2CSnLuXhvR/dDUciIA8
-   NabD1sXc18xMy/6PQSSlSp9YPOcPdgr7FmDPJorq/bW4ClmZ6h9yvyOLB
-   cyCoLhTx9A0u4CCP9xnA8GZEk1gqUYxglRGpUdAnO/Ixtv8YOBrWuiXGL
-   1uzTIOIuOHDcN+j9oXfkK4RuihA+JNKID6bzVFBV7SNuR9LSOQaR01jD8
-   Jmqamfk7O53/eGz2oIFV9C76AH/WhBu+k+WIlbLKowbhrGxwCPJi4yAxE
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10872"; a="5633951"
-X-IronPort-AV: E=Sophos;i="6.03,247,1694761200"; 
-   d="scan'208";a="5633951"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2023 01:18:13 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10872"; a="824216812"
-X-IronPort-AV: E=Sophos;i="6.03,247,1694761200"; 
-   d="scan'208";a="824216812"
-Received: from kamilkon-desk.igk.intel.com (HELO localhost) ([10.102.138.187])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2023 01:18:11 -0700
-Date:   Tue, 24 Oct 2023 10:17:48 +0200
-From:   Kamil Konieczny <kamil.konieczny@linux.intel.com>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, igt-dev@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [igt-dev] [PATCH igt 1/2] tools/msm_dp_compliance: Small arg
- parsing cleanup
-Message-ID: <20231024081748.qewo6ta34cxqpcrh@kamilkon-desk.igk.intel.com>
-Mail-Followup-To: Kamil Konieczny <kamil.konieczny@linux.intel.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, igt-dev@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-References: <20211208192216.743364-1-robdclark@gmail.com>
- <20211208192216.743364-2-robdclark@gmail.com>
- <08cbf1e8-89c7-c0cd-2928-589e624710b1@quicinc.com>
+        Tue, 24 Oct 2023 04:25:20 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B245D99;
+        Tue, 24 Oct 2023 01:25:18 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 022F3C433CB;
+        Tue, 24 Oct 2023 08:25:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698135918;
+        bh=C59B0paKctZmmkp2VOX6y7BbpXKe0RQc3L0GlQ5MORA=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=lUHxY4dcQwVjg5SUU5gs/je41M3qZ4LMPlg1s493IHaOO2/mZWmP1bMKoDO5pdTtH
+         GqYrjvk53EzJ9EaquO/DZrQDKNWFoe4lDR0x4Qbd9ccZJgVdnheFdCrHQAzEu7cIrK
+         QalJd+FW0IhUFrxsdgG5NYDQzoZMHiL2PfQ/1QO6CFX3dAoTpZkOdwlaKVF3Cs8gVC
+         G5L/4tOyphbQQ3QSPDf5x7KowouqwsaFHMYJWJKUkgWEucYxBZV3NjgjX6qmfNG/NF
+         CtRWVjDiy+HbirSgWYkbZo6EIdG6dGK7M7mhygh0jem6tfIWNXeFkJfkzY4LgHF0Im
+         0GRg+wfyy/bWw==
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2c3e23a818bso48303191fa.0;
+        Tue, 24 Oct 2023 01:25:17 -0700 (PDT)
+X-Gm-Message-State: AOJu0YyrbbTVRXZ8lehm+X67KpSDdr8RANfLBAzBWEaLxrI17snl7bos
+        ONwUB5QoPmqpFaO8htLrRcjJQwTcyX8SH0m7T2o=
+X-Google-Smtp-Source: AGHT+IHAvdGuy4z7waKPOPuMEoCAwF5zHzeSD0m5NoFjVS0hMs2GT0fmx+h+xqhKzRRO0C4u2ghvcFuqtqiZxILlkqA=
+X-Received: by 2002:a05:651c:1308:b0:2c4:fdaf:1d62 with SMTP id
+ u8-20020a05651c130800b002c4fdaf1d62mr4901833lja.11.1698135916116; Tue, 24 Oct
+ 2023 01:25:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <08cbf1e8-89c7-c0cd-2928-589e624710b1@quicinc.com>
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+References: <20231024010954.6768-1-quic_aiquny@quicinc.com>
+In-Reply-To: <20231024010954.6768-1-quic_aiquny@quicinc.com>
+From:   Ard Biesheuvel <ardb@kernel.org>
+Date:   Tue, 24 Oct 2023 10:25:04 +0200
+X-Gmail-Original-Message-ID: <CAMj1kXENRh6mvxc1QD67G7_t_H+WWhbyHFkfof5KOHT=MM2DJQ@mail.gmail.com>
+Message-ID: <CAMj1kXENRh6mvxc1QD67G7_t_H+WWhbyHFkfof5KOHT=MM2DJQ@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: module: PLT allowed even !RANDOM_BASE
+To:     Maria Yu <quic_aiquny@quicinc.com>
+Cc:     catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On Tue, 24 Oct 2023 at 03:10, Maria Yu <quic_aiquny@quicinc.com> wrote:
+>
+> Module PLT feature can be enabled even when RANDOM_BASE is disabled.
+> Break BLT entry counts of relocation types will make module plt entry
+> allocation fail and finally exec format error for even correct and plt
+> allocation available modules.
+>
+> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
 
-please add here description, for example what options
-you added and why.
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
 
-On 2023-10-19 at 03:40:04 -0700, Abhinav Kumar wrote:
-> Reviving this:
-> 
-> On 12/8/2021 11:22 AM, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> > 
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> 
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> 
-> Nit: shouldnt the patch prefix be "PATCH i-g-t" ?
-> 
-> We will test this out next week and land this.
-> 
-> > ---
-> >   tools/msm_dp_compliance.c | 5 ++++-
-> >   1 file changed, 4 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/tools/msm_dp_compliance.c b/tools/msm_dp_compliance.c
-> > index 5e491c89..a15a8dd9 100644
-> > --- a/tools/msm_dp_compliance.c
-> > +++ b/tools/msm_dp_compliance.c
-> > @@ -629,7 +629,9 @@ static const char optstr[] = "hi";
-> >   static void __attribute__((noreturn)) usage(char *name, char opt)
-> >   {
-> >   	igt_info("usage: %s [-hi]\n", name);
-> > -	igt_info("\t-i\tdump info\n");
-> > +	igt_info("\t-h, --help           - print this usage message");
-> > +	igt_info("\t--help-description   - print test description");
------------------------------------------------- ^^^^
-This is a tool, not a test, so imho s/test/tool/
-
-Regards,
-Kamil
-
-> > +	igt_info("\t-i, --info           - dump info\n");
-> >   	igt_info("\tDefault is to respond to Qd980 tests\n");
-> >   	exit((opt != 'h') ? -1 : 0);
-> >   }
-> > @@ -709,6 +711,7 @@ int main(int argc, char **argv)
-> >   	struct option long_opts[] = {
-> >   		{"help-description", 0, 0, HELP_DESCRIPTION},
-> >   		{"help", 0, 0, 'h'},
-> > +		{"info", 0, 0, 'i'},
-> >   	};
-> >   	enter_exec_path(argv);
+> ---
+>  arch/arm64/kernel/module-plts.c | 6 ------
+>  1 file changed, 6 deletions(-)
+>
+> diff --git a/arch/arm64/kernel/module-plts.c b/arch/arm64/kernel/module-plts.c
+> index bd69a4e7cd60..79200f21e123 100644
+> --- a/arch/arm64/kernel/module-plts.c
+> +++ b/arch/arm64/kernel/module-plts.c
+> @@ -167,9 +167,6 @@ static unsigned int count_plts(Elf64_Sym *syms, Elf64_Rela *rela, int num,
+>                 switch (ELF64_R_TYPE(rela[i].r_info)) {
+>                 case R_AARCH64_JUMP26:
+>                 case R_AARCH64_CALL26:
+> -                       if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
+> -                               break;
+> -
+>                         /*
+>                          * We only have to consider branch targets that resolve
+>                          * to symbols that are defined in a different section.
+> @@ -269,9 +266,6 @@ static int partition_branch_plt_relas(Elf64_Sym *syms, Elf64_Rela *rela,
+>  {
+>         int i = 0, j = numrels - 1;
+>
+> -       if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
+> -               return 0;
+> -
+>         while (i < j) {
+>                 if (branch_rela_needs_plt(syms, &rela[i], dstidx))
+>                         i++;
+>
+> base-commit: 05d3ef8bba77c1b5f98d941d8b2d4aeab8118ef1
+> --
+> 2.17.1
+>
