@@ -2,152 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 718397D53EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 16:25:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 814FE7D53E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 16:25:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234724AbjJXOZc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 10:25:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52530 "EHLO
+        id S234603AbjJXOZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 10:25:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343742AbjJXOZb (ORCPT
+        with ESMTP id S234406AbjJXOZG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 10:25:31 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36B6910C2;
-        Tue, 24 Oct 2023 07:25:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698157527; x=1729693527;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=WwFLxwlK3z/Xf+xApxGXXQp0naSbrNazBZ+qab2Rats=;
-  b=gmHpGf89MAx2L7Vt495UY3aWAv33slfUsIkh0B7egGZ/CHcg5/mpREQ9
-   b1579gtbAv23yPC5NkKsnSC+8bbvxetAdYx0sCDm/W0lA+Njlypqk04AJ
-   qLYMRB3eMZJdQyZJk27LC21hGH3Rv0QVpz5NMBYQy/nhU7+/IDMCGX5sO
-   bBfbRf+WhjEedrIsRLeIhg5esBVJtCZLcLgcQfabz79nRc2MNGl7z2ods
-   aIM7BOic+hXzzRFEHbizFCtn8rnt3CzXdMzyNB8GIRXNO/6fxrWgWoUZz
-   ZtzGyXqNQAy0CDKx9CrorLkiWFpj8p2gNpxP6jjVehFigOQkap1SE/7e0
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10873"; a="386873937"
-X-IronPort-AV: E=Sophos;i="6.03,248,1694761200"; 
-   d="scan'208";a="386873937"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2023 07:25:26 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10873"; a="758491622"
-X-IronPort-AV: E=Sophos;i="6.03,248,1694761200"; 
-   d="scan'208";a="758491622"
-Received: from pwali-mobl.amr.corp.intel.com (HELO [10.209.188.4]) ([10.209.188.4])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2023 07:25:24 -0700
-Message-ID: <efa9cdd0-4e5b-4b54-a4ea-7ec735224f44@linux.intel.com>
-Date:   Tue, 24 Oct 2023 08:35:06 -0500
+        Tue, 24 Oct 2023 10:25:06 -0400
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C04E212C;
+        Tue, 24 Oct 2023 07:25:03 -0700 (PDT)
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-1e58a522e41so2967782fac.2;
+        Tue, 24 Oct 2023 07:25:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698157503; x=1698762303;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sTENRnFDH/MiSBA8uB23f0CHV3Zm50OBvimHwqLqTLY=;
+        b=eakaDoXDmjV8CfpH00qM2sTG9LQeJRyNZWNxcVv1Zabz0fJT11nPtNeCfSlAN21+0s
+         iGg4GVObMn5lxEZjcj1vfNHVhbiSNPViuFhLx1ibtlzr59K/VUh5AI0BOyS73gzHHWR1
+         ZwCf9e2I/cdazdbX5lxfXxEd/OMufOeF4BQqCUmueWwpAYA5LJ6zPfOxMeLr8YC8IPsx
+         gdefmWO5XRwzIAHP1JEI7D6YpLLGLYYDjTurnZ3dhTXPMB+HBBQ+2bOxL6x5USvV3QNj
+         IJ5HjXWyeoQv9tptsccsiys7lzI188RkLbQFziIbZtBGBbMu3vKLse6sCvWB31bfqTRd
+         E+2A==
+X-Gm-Message-State: AOJu0Yy9FtfmJWyPHLBFEW14JgCg5hAt/DCIX6WIYPWfO0QaWnf7gIbH
+        iZePnWJD+sbgcLYxlPAjtw==
+X-Google-Smtp-Source: AGHT+IFi+wUzpHfgZ8zfKt641YNAo4P94oG7imu28ijkctLr8rSHz5f9MF1hyEAgXwXwercbvcmRUQ==
+X-Received: by 2002:a05:6870:1f0c:b0:1e9:bbfe:6457 with SMTP id pd12-20020a0568701f0c00b001e9bbfe6457mr15080276oab.6.1698157502801;
+        Tue, 24 Oct 2023 07:25:02 -0700 (PDT)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id k7-20020a056870d38700b001e9a7280a30sm2187892oag.0.2023.10.24.07.24.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Oct 2023 07:25:02 -0700 (PDT)
+Received: (nullmailer pid 3693654 invoked by uid 1000);
+        Tue, 24 Oct 2023 14:24:57 -0000
+Date:   Tue, 24 Oct 2023 09:24:57 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Richard Weinberger <richard@nod.at>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Alessandro Zummo <a.zummo@towertech.it>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Andrew-CT Chen <andrew-ct.chen@mediatek.com>,
+        Lala Lin <lala.lin@mediatek.com>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Kumar Thella <sthella@codeaurora.org>,
+        Keiji Hayashibara <hayashibara.keiji@socionext.com>,
+        linux-mtd@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-amlogic@lists.infradead.org, asahi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        linux-rtc@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
+Subject: Re: [PATCH V2] dt-bindings: nvmem: move deprecated cells binding to
+ its own file
+Message-ID: <20231024142457.GA3684864-robh@kernel.org>
+References: <20231003064018.7502-1-zajec5@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 34/34] ASoC: usb: Rediscover USB SND devices on USB
- port add
-To:     Wesley Cheng <quic_wcheng@quicinc.com>, mathias.nyman@intel.com,
-        gregkh@linuxfoundation.org, lgirdwood@gmail.com,
-        broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, srinivas.kandagatla@linaro.org,
-        bgoswami@quicinc.com, Thinh.Nguyen@synopsys.com
-Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
- <20231017200109.11407-35-quic_wcheng@quicinc.com>
- <b503058d-e23f-4a63-99b8-f0a62b2a2557@linux.intel.com>
- <6409c486-7393-4352-489c-ecd488597c4c@quicinc.com>
-Content-Language: en-US
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <6409c486-7393-4352-489c-ecd488597c4c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20231003064018.7502-1-zajec5@gmail.com>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/23/23 16:54, Wesley Cheng wrote:
-> Hi Pierre,
+On Tue, Oct 03, 2023 at 08:40:18AM +0200, Rafał Miłecki wrote:
+> From: Rafał Miłecki <rafal@milecki.pl>
 > 
-> On 10/17/2023 4:11 PM, Pierre-Louis Bossart wrote:
->>
->>
->> On 10/17/23 15:01, Wesley Cheng wrote:
->>> In case the USB backend device has not been initialized/probed, USB SND
->>> device connections can still occur.  When the USB backend is eventually
->>> made available, previous USB SND device connections are not
->>> communicated to
->>> the USB backend.  Call snd_usb_rediscover_devices() to generate the
->>> connect
->>> callbacks for all USB SND devices connected.  This will allow for the
->>> USB
->>> backend to be updated with the current set of devices available.
->>>
->>> The chip array entries are all populated and removed while under the
->>> register_mutex, so going over potential race conditions:
->>>
->>> Thread#1:
->>>    q6usb_component_probe()
->>>      --> snd_soc_usb_add_port()
->>>        --> snd_usb_rediscover_devices()
->>>          --> mutex_lock(register_mutex)
->>>
->>> Thread#2
->>>    --> usb_audio_disconnect()
->>>      --> mutex_lock(register_mutex)
->>>
->>> So either thread#1 or thread#2 will complete first.  If
->>>
->>> Thread#1 completes before thread#2:
->>>    SOC USB will notify DPCM backend of the device connection.  Shortly
->>>    after, once thread#2 runs, we will get a disconnect event for the
->>>    connected device.
->>>
->>> Thread#2 completes before thread#1:
->>>    Then during snd_usb_rediscover_devices() it won't notify of any
->>>    connection for that particular chip index.
->> Looks like you are assuming the regular USB audio stuff is probed first?
->>
->> What if it's not the case? Have you tested with a manual 'blacklist' and
->> "modprobe" sequence long after all the DSP stuff is initialized?
->>
->> It really reminds me of audio+display issues, and the same opens apply
->> IMHO.
+> Support for old NVMEM fixed cells was deprecated in favour of
+> "fixed-layout". It's still part of the nvmem.yaml though and may be
+> unknowingly used by new bindings added without much of analyze.
 > 
-> Not necessarily...if the USB audio driver is not probed, then that is
-> the same scenario as when there is no USB audio capable device plugged
-> in, while the offload path is waiting for the connect event. I think
-> this is the standard scenario.
+> To make it more difficult to accidentally support old syntax move its
+> binding to separated file with "deprecated" in its name.
 > 
-> In the situation where the platform sound card hasn't probed yet and USB
-> audio devices are being identified, then that is basically the scenario
-> that would be more of an issue, since its USB SND that notifies of the
-> connection state (at the time of connect/disconnect).
+> Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+> ---
+> V2: Fix path to nvmem-deprecated-cells.yaml in amlogic,meson6-rtc.yaml
+> 
+>  .../devicetree/bindings/mtd/mtd.yaml          |  7 ++++-
+>  .../bindings/mtd/partitions/nvmem-cells.yaml  |  1 +
+>  .../nvmem/amlogic,meson-gxbb-efuse.yaml       |  1 +
+>  .../bindings/nvmem/amlogic,meson6-efuse.yaml  |  1 +
+>  .../bindings/nvmem/apple,efuses.yaml          |  1 +
+>  .../devicetree/bindings/nvmem/imx-ocotp.yaml  |  1 +
+>  .../bindings/nvmem/mediatek,efuse.yaml        |  1 +
+>  .../nvmem/microchip,sama7g5-otpc.yaml         |  1 +
+>  .../devicetree/bindings/nvmem/mxs-ocotp.yaml  |  1 +
+>  .../nvmem/nvmem-deprecated-cells.yaml         | 28 +++++++++++++++++++
+>  .../devicetree/bindings/nvmem/nvmem.yaml      |  9 ------
+>  .../bindings/nvmem/qcom,qfprom.yaml           |  1 +
+>  .../bindings/nvmem/qcom,sec-qfprom.yaml       |  1 +
+>  .../bindings/nvmem/qcom,spmi-sdam.yaml        |  1 +
+>  .../bindings/nvmem/rockchip,otp.yaml          |  1 +
+>  .../bindings/nvmem/rockchip-efuse.yaml        |  1 +
+>  .../nvmem/socionext,uniphier-efuse.yaml       |  1 +
+>  .../bindings/nvmem/sunplus,sp7021-ocotp.yaml  |  1 +
+>  .../bindings/rtc/amlogic,meson6-rtc.yaml      |  1 +
+>  19 files changed, 50 insertions(+), 10 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/nvmem/nvmem-deprecated-cells.yaml
 
-Not following if this scenario is covered?
+You missed allwinner,sun4i-a10-sid.yaml and at24.yaml 
+(arch/arm/boot/dts/broadcom/bcm53016-meraki-mr32.dts). Maybe we want to 
+fix the latter case because at24 will continually have new users.
 
-> I've tried with building these drivers as modules and probing them at
-> different times/sequences, and I haven't seen an issue so far.
-
-The scenario I have in mind is this:
-
-the platform driver is on the deny list, the USB driver detects a
-device. When the platform driver probes at a later time (with a manual
-modprobe to make delays really long), how would the notification be handled?
-
-Between audio and display, we use the 'drm_audio_component' layer to
-model these sort of run-time binding between independent driver stacks.
-It's not used here but we need a moral equivalent, don't we?
-
-It would really help if you documented a bit more the dependencies or
-timing assumptions, to make sure we have a stable solution to build on.
-
+Rob
