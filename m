@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B3F87D5361
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 15:57:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7D917D5379
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 15:58:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234801AbjJXN5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 09:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40132 "EHLO
+        id S1343531AbjJXN60 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 09:58:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234778AbjJXN45 (ORCPT
+        with ESMTP id S234748AbjJXN6U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 09:56:57 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8939C10E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 06:55:08 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40906fc54fdso13277685e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 06:55:08 -0700 (PDT)
+        Tue, 24 Oct 2023 09:58:20 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9081F10CE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 06:58:18 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-32d8c2c6dfdso2893207f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 06:58:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698155707; x=1698760507; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698155897; x=1698760697; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WVvJSmKdB8QA7XXk5oVO214x0d/SCNFjFOhZkbU5BcQ=;
-        b=SXwLnCrPcCsca80qHPN2Qzi+8XRPdQHsQBGSiTqFaPi0NDGeGUdJSrWXkXqBlUBSin
-         S20+EdvS7GWrRXg7AwVcvcqy+7O1jDvZi8VceAjXM4K+7vENOvxXsI6ntWVZmzlHar8W
-         pSES6UAY9oZJGFbPf1G6Wt4XnmydEXx7GMyGt0gQ3DnCVGQUYW+0mlqVwR9I9uV3ui3j
-         7fPA6Xd85nXHEoxkRXa1+/s5zqP/9VHpns5DJ15hAeH0Y++4wmuYUmQxrywBubb5hG4Z
-         dyhtGbCToUMFIp8d+ulfs4sfUIk6jx2UwiQ2SVMQ1+hD0vidJ3zmky6RukMIXNonkKs0
-         VCTg==
+        bh=xwuYd5sYrMCGsWOHHrwWAyZKh6dV4sRNYK3tgcSb8O0=;
+        b=v+LZCGfneTsqFTMx0lrYKqKHDCLdEvdIJTiHgCv4+IRILA5PSBS3UZ43YZet8AKbni
+         km5vmeE+RObUAvaqBfOo/0t22BeebN9jWJIUtxCjR6QmWC2RVlk5QoDiVj7BEf18DxSC
+         S8E677JvHlxzVmMhm3l51Ul/znAgaaIj/xA9JcC1hCXix6hDnwhFlvGw7MzCXAKzI0sb
+         tvkNxbirBFYdV7VCkRy1qMGVCLKIcG9twuabht+y+XaxHKTKuVTKD443JAh9iyXSNtCQ
+         PM/NC9AUDf8UUAbU/abO5rDeHW10CrCOmH6G/pK37Cb/350h2ocApI3tNLJJcBZzMNIn
+         GL0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698155707; x=1698760507;
+        d=1e100.net; s=20230601; t=1698155897; x=1698760697;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WVvJSmKdB8QA7XXk5oVO214x0d/SCNFjFOhZkbU5BcQ=;
-        b=hySP604Bsccm3qgexu8QjU4lVNJ9F5RtCyA9hkAAvSzzQ773tjrQwm9BmGepieTwbQ
-         F9MQv8a4lCuj7RPQSDL7wefBszFrUuBByOV+TYsr1iaEr2xMkh7v/b3i3OggzpWrUslr
-         6+wjtd/W7qJU4PF6gkDrWRTqhFCFH6H/aWlohoEzlLS2fQAEu/UtsNrfXhW2GJDi2hZ/
-         yKyB+wVA8rk3oMPJ2iMIMmjVXMBj8oujHRP5rkDNdE8ZuwyEG/H4ZwEacN6tjQEoUPc/
-         /B06x5TH9T1nkJ3SmWByuL5vI5yla2dwIT9tjq+QV5E2Wf80s/JrF68ru20uGA4A2Swe
-         ckYg==
-X-Gm-Message-State: AOJu0YzSxKAktC/RdV+4WewTxiLmMA/sQzoO/n7S70Y8rS8OPk+sFG9b
-        9rHeASzi4XgWiDVsY5EgTr7+zQ==
-X-Google-Smtp-Source: AGHT+IGXC4b4EMmGnTiggsj6T5p3sDh8hvZ8EFQSQ6SPShTMk26zqe+tdz3pHiTyyTCkr3sPazCTJg==
-X-Received: by 2002:adf:ed8e:0:b0:32d:9d99:d0a5 with SMTP id c14-20020adfed8e000000b0032d9d99d0a5mr9757772wro.5.1698155706981;
-        Tue, 24 Oct 2023 06:55:06 -0700 (PDT)
+        bh=xwuYd5sYrMCGsWOHHrwWAyZKh6dV4sRNYK3tgcSb8O0=;
+        b=dHcEBzUZGmK714mPFubSAvJttMxMWW1QdvD39/XHHNE72+eqWybs8B2TlOsiecxSCA
+         4MNssBxl9pgBIwat0UayeLY24LrfWz+sW863ffwNtpi8J9hREVYCtBLeZ2ffpPFanP22
+         WX7nExgeF8ReMwFycYx1u6B39REleorV8XIE31KrxeWYcBQxKmr+dtgHIqxTf4E13aYt
+         eDhdtkHwUukdfV1P1AFywa+PlRsFxkokHq31gbmzrGArUnpIH1MfmZnLcu7J6sAuJnvY
+         /cNNPzfz+Kob4jWX95yp0uZSGtpuRyApyi0dvXmY1V7r171SedM0symhbe0MHOWJLDHW
+         QsIA==
+X-Gm-Message-State: AOJu0Yweulgc9fqRB/NBHBe28kZ24g5w6mvOp5dQIMnXP3V71LYS5vo7
+        5CaxncS5U6X5Vjs7M7cS01ArBA==
+X-Google-Smtp-Source: AGHT+IGJdl9cKzbwXnJAfc0hRScMwyMEHh50lfh1sPnwlVr8K6h23xvi3T/kr/TyLFJ1rg8KAMl5CQ==
+X-Received: by 2002:adf:e7d2:0:b0:32d:9541:b1e3 with SMTP id e18-20020adfe7d2000000b0032d9541b1e3mr8791941wrn.26.1698155896855;
+        Tue, 24 Oct 2023 06:58:16 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id e23-20020adf9bd7000000b0032d893d8dc8sm10075487wrc.2.2023.10.24.06.55.05
+        by smtp.gmail.com with ESMTPSA id p17-20020a5d68d1000000b0032d687fd9d0sm9991972wrw.19.2023.10.24.06.58.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Oct 2023 06:55:06 -0700 (PDT)
-Message-ID: <424de835-0b9b-49d5-a0d8-dc74c58ff5a1@linaro.org>
-Date:   Tue, 24 Oct 2023 15:55:04 +0200
+        Tue, 24 Oct 2023 06:58:16 -0700 (PDT)
+Message-ID: <3431a8aa-714d-4abe-b9a7-cde26615d8d5@linaro.org>
+Date:   Tue, 24 Oct 2023 15:58:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/5] dt-bindings: soc: qcom: Add memory_dump driver
- bindings
+Subject: Re: [PATCH v1 3/5] soc: qcom: memory_dump: Add memory dump driver
 Content-Language: en-US
 To:     Zhenhua Huang <quic_zhenhuah@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -64,11 +63,13 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, kernel@quicinc.com,
         quic_tingweiz@quicinc.com
 References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
- <1698052857-6918-2-git-send-email-quic_zhenhuah@quicinc.com>
- <27fcdcc1-b29b-43b2-8b1a-c648dd9e696c@linaro.org>
- <d3b62002-c29c-a45e-279f-7d07c697aa77@quicinc.com>
- <38aa02c4-5b8d-4978-96a2-241fe5f94b50@linaro.org>
- <7a703504-edf1-d85c-0949-9cfcf3251b0b@quicinc.com>
+ <1698052857-6918-4-git-send-email-quic_zhenhuah@quicinc.com>
+ <5bac8188-7d27-4efe-9493-dec4393fbeb0@linaro.org>
+ <b455d4f7-0347-ac07-6d41-32b3f06c4f0a@quicinc.com>
+ <454c4267-6bb7-456e-8dc1-cba83ffd1641@linaro.org>
+ <1a5b2381-8987-2f92-d018-29fdbc23b826@quicinc.com>
+ <2c8cc463-84dd-4f28-812d-f5eea922daef@linaro.org>
+ <45b115e2-9e44-266c-e2ec-751392ce1c21@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -114,11 +115,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <7a703504-edf1-d85c-0949-9cfcf3251b0b@quicinc.com>
+In-Reply-To: <45b115e2-9e44-266c-e2ec-751392ce1c21@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -129,39 +130,20 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 24/10/2023 12:57, Zhenhua Huang wrote:
 > 
 > 
-> On 2023/10/23 20:52, Krzysztof Kozlowski wrote:
->> On 23/10/2023 13:54, Zhenhua Huang wrote:
->>>
->>>
->>> On 2023/10/23 17:27, Krzysztof Kozlowski wrote:
->>>> On 23/10/2023 11:20, Zhenhua Huang wrote:
->>>>> Add bindings for the QCOM Memory Dump driver providing debug
->>>>
->>>> Bindings are for hardware, not driver. This suggests it is not suitable
->>>> for bindings at all.
->>>>
->>>>> facilities. Firmware dumps system cache, internal memory,
->>>>> peripheral registers to reserved DDR as per the table which
->>>>> populated by the driver, after crash and warm reset.
->>>>
->>>> Again driver :/
->>>
->>> Thanks for pointing out. Qualcomm memory dump device is a reserved
->>> memory region which is used to communicate with firmware. I will update
->>> description in next version.
->>
->> I have still doubts that it is suitable for DT. I usually expect  such
->> firmware feature-drivers to be instantiated by existing firmware
->> drivers. You do not need DT for this.
+> On 2023/10/23 20:53, Krzysztof Kozlowski wrote:
+>>> It's not same as below case. Allocation is successful here, while the
+>>> driver used more than allocated size.
+>> $ man errno
+>> ENOMEM means: Not enough space/cannot allocate memory
 > 
-> Got it, as it interacts with firmware, you think it should be a firmware 
-> driver? But it seems there should not be existing suitable place to put 
-> it now(qcom_scm.c is for TZ). Shall we create one new file like 
-> *qcom_sdi.c* in drivers/firmware and put it there? Because SDI(system 
-> debug image, which is part of bootloader) is the firmware doing the things.
+> I think "Not enough space" should be applicable here?
 
-Dunno, didn't think about this. I comment here only about bindings. This
-does not look suitable for bindings. That's it.
+To me: not. This is some configuration problem, not lack of mmaped
+address space or lack of free pages. It's true that NOMEM is also used
+for limits (e.g. "The process's maximum number of mappings would have
+been exceeded.", "The process's RLIMIT_DATA limit, described in
+getrlimit(2), would have been exceeded."), but I am not sure whether
+this fits this case.
 
 Best regards,
 Krzysztof
