@@ -2,114 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 778CA7D44A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 03:10:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6314F7D4536
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 03:58:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbjJXBKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Oct 2023 21:10:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58038 "EHLO
+        id S231916AbjJXB61 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Oct 2023 21:58:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229679AbjJXBKe (ORCPT
+        with ESMTP id S230373AbjJXB60 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Oct 2023 21:10:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B597EDE;
-        Mon, 23 Oct 2023 18:10:32 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39O0rJMl025073;
-        Tue, 24 Oct 2023 01:10:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=Rm3I2nHRtdWaizFG/T8bQDHEIxz6rfk7S5/hRGdCpa8=;
- b=BGSx0EplG4nGFN/8TTT7xOOapLnkMeo6ilAc80uvvU1aUFnp5C6UYaAEQfyG4ve6SRBq
- rpa/GRg+PfcGoFZIIfbC/NdHtzXI4dcKul6oMeFMVTQFtyYwNeuI9Ro+5b2De8ukUfR8
- jiXQyTYv0XRvo0FAF7E9fEal8Fcc3xP1kMzsUZmFP49RjMWbtcwfh4wLPlEaownxm8XU
- jAlppa8pCOPJ46FLSq04xAMbEEo0OjKWlL401Xn5VhhIs6agS/p0zNFKCjGjPTkODl+R
- 5NV/9UplEJjldmQg4glkp9x5N/Wu4BoQmmFWm+rhfnM54NmfbdwpfBc+fbWFt2U3+aAY iQ== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tv5ky64n7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 01:10:14 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39O1ADaQ021290
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 01:10:13 GMT
-Received: from aiquny2-gv.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Mon, 23 Oct 2023 18:10:08 -0700
-From:   Maria Yu <quic_aiquny@quicinc.com>
-To:     <catalin.marinas@arm.com>, <will@kernel.org>, <arnd@arndb.de>
-CC:     Maria Yu <quic_aiquny@quicinc.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <ardb@kernel.org>
-Subject: [PATCH v2] arm64: module: PLT allowed even !RANDOM_BASE
-Date:   Tue, 24 Oct 2023 09:09:54 +0800
-Message-ID: <20231024010954.6768-1-quic_aiquny@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Mon, 23 Oct 2023 21:58:26 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D9910C1;
+        Mon, 23 Oct 2023 18:58:24 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6459FC433C8;
+        Tue, 24 Oct 2023 01:58:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698112704;
+        bh=0qPvKrMGMfZJEWgqaG8R72MpPExmTFSPFWOeP3WWhgw=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=IT1HXDgq0XtDq6YeFjT29pGF7O8E8r7nxnJcaci5IsJ1IujeiyK9Xhc/AUhV0mC9z
+         E/S9H3/uhM78YDxpFxzkArE8vA0NGdNdcMRaDiaMiyUw9nWUD9936+eK0vEeVjxw5e
+         KysgTUlSPcIu+SOQuHyocoJZ3APBAcG7wq0vuE153+QOKWQScETe2qplQEUiMVEfEj
+         AQMS29KHFYRL4xiEEBgsDJ4BoNO6yALbAgFC3TSLmldXD1xnlmJj2Xp96vr+/Elqv3
+         iHmGxVsLdNptw9SN9mtHMr7588b1hkzjZrda0F0fLp4SBu4Zf1CVKm+68T4lCAJnK3
+         Wp+zjVhZPxmOQ==
+Message-ID: <083fc8d9c3f7f72f05e1d668ccd553f4.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BQdT7oyjF0HUPTWRE5XC7ujirxcb2trZ
-X-Proofpoint-GUID: BQdT7oyjF0HUPTWRE5XC7ujirxcb2trZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-24_01,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- clxscore=1015 phishscore=0 mlxscore=0 mlxlogscore=382 lowpriorityscore=0
- suspectscore=0 adultscore=0 priorityscore=1501 bulkscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310240009
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20231003152927.15000-6-johan+linaro@kernel.org>
+References: <20231003152927.15000-1-johan+linaro@kernel.org> <20231003152927.15000-6-johan+linaro@kernel.org>
+Subject: Re: [PATCH 5/5] spmi: rename spmi device lookup helper
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>
+To:     Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>
+Date:   Mon, 23 Oct 2023 18:58:22 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Module PLT feature can be enabled even when RANDOM_BASE is disabled.
-Break BLT entry counts of relocation types will make module plt entry
-allocation fail and finally exec format error for even correct and plt
-allocation available modules.
+Quoting Johan Hovold (2023-10-03 08:29:27)
+> Rename the SPMI device helper which is used to lookup a device from its
+> OF node as spmi_find_device_by_of_node() so that it reflects the
+> implementation and matches how other helpers like this are named.
+>=20
+> This will specifically make it more clear that this is a lookup function
+> which returns a reference counted structure.
+>=20
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
 
-Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
----
- arch/arm64/kernel/module-plts.c | 6 ------
- 1 file changed, 6 deletions(-)
-
-diff --git a/arch/arm64/kernel/module-plts.c b/arch/arm64/kernel/module-plts.c
-index bd69a4e7cd60..79200f21e123 100644
---- a/arch/arm64/kernel/module-plts.c
-+++ b/arch/arm64/kernel/module-plts.c
-@@ -167,9 +167,6 @@ static unsigned int count_plts(Elf64_Sym *syms, Elf64_Rela *rela, int num,
- 		switch (ELF64_R_TYPE(rela[i].r_info)) {
- 		case R_AARCH64_JUMP26:
- 		case R_AARCH64_CALL26:
--			if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
--				break;
--
- 			/*
- 			 * We only have to consider branch targets that resolve
- 			 * to symbols that are defined in a different section.
-@@ -269,9 +266,6 @@ static int partition_branch_plt_relas(Elf64_Sym *syms, Elf64_Rela *rela,
- {
- 	int i = 0, j = numrels - 1;
- 
--	if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
--		return 0;
--
- 	while (i < j) {
- 		if (branch_rela_needs_plt(syms, &rela[i], dstidx))
- 			i++;
-
-base-commit: 05d3ef8bba77c1b5f98d941d8b2d4aeab8118ef1
--- 
-2.17.1
-
+Acked-by: Stephen Boyd <sboyd@kernel.org>
