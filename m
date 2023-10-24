@@ -2,113 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4656B7D4E41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 12:52:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 002897D4E61
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 12:57:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233805AbjJXKwK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 06:52:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34368 "EHLO
+        id S233435AbjJXK51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 06:57:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232042AbjJXKwJ (ORCPT
+        with ESMTP id S234431AbjJXK50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 06:52:09 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFD3EE5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 03:52:07 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-5a7fb84f6ceso41634487b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 03:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698144727; x=1698749527; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ByymKernzbt7l2A1qflNQoCJCAiaYl24vxzOmzj3yAc=;
-        b=Zd5lP/sXC75EiIvr2ffUWi6wB0HRiVU/GYXEbrKB15tS3Mp5En2zqZhFNayCkmcNPW
-         uAHNGNKsG5wdYc3yoxSJROLEqeYB4yQK9tzFU0QjUpddTexI7+ajKFZgHJbQTHjjV/ZI
-         2llVWBpqUHfgD/8fZeUD1+2RJLDEqb1N4IWYeIoL4fGF/kKdiyqp1vbMPMjw6fK/ebvv
-         i2ClR15E2AQObTTnfFU3leIhaTYFBQ6rHUPFRR1SRjy5Z8O4f+rYH8JYpZLrlGlfkjpy
-         OzY0mV315C3sMtOnm9D0OJ4Q0kNIjMubXIziLj82Tg43wFZbzn4l8V/8Mp0pjTcwYO0L
-         UZdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698144727; x=1698749527;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ByymKernzbt7l2A1qflNQoCJCAiaYl24vxzOmzj3yAc=;
-        b=YaRGLxqCgZBVd3sO91O+02J4eAF0xm3m64AFcq3TfaGOZ+hHNRuHrVzymFSAa7G9Ss
-         pgB9FcWem1PIY6F+wYYHJr+sns8qJOir+sIsrhVmSttfglIN49sk/zc+iozyUMzYWMQ9
-         rmsFgLH1mZoLtLal30f9lPmrOutwRk8XGqIYZCyI2dJW0NP70082Ao3oq0p831w9KUse
-         /1ghjUihIIMsWMFBDnH3hbq4UaMHfDYuFVhXzzECZX4wbikkbvFQeAwWkVdzd3pu2uYV
-         1NNdgCzwH+mTgGwOyRfh26CiDgMDLmRZPfLm8jCLr5hI8W1sjEkofdkSA5gzOBEQCqhk
-         CWTA==
-X-Gm-Message-State: AOJu0YzVZNYLq3FQKUaxi6ohrCHmE7K18vPTKRNQ4X1b3j7y1c1qQ5Za
-        kpy1GuQqEJREPpQEXKyUSintaWS+2etJfXg4ov7I/A==
-X-Google-Smtp-Source: AGHT+IFo/3QgV0KZOi/gmvirPkbINOiDhalcXKuhYUP+qSnmfjX/7XWUmuor40d93j1eqXJDHRoLEpe+HKTeMqXFZ7E=
-X-Received: by 2002:a05:690c:dcd:b0:59f:69ab:22f2 with SMTP id
- db13-20020a05690c0dcd00b0059f69ab22f2mr13575017ywb.40.1698144727007; Tue, 24
- Oct 2023 03:52:07 -0700 (PDT)
+        Tue, 24 Oct 2023 06:57:26 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8359D7E;
+        Tue, 24 Oct 2023 03:57:23 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39O8L5h8010988;
+        Tue, 24 Oct 2023 10:57:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pwHPbWVenOA4Gkx0pRNbSvnx9bMxQbdSR9AdgfBq/MY=;
+ b=ADNtEXnh2tW3EFyQIX3Pl77/y4B2stkM/xvl5Q9PV6ZS5GtQ4xihidXtstuGqeutrT8U
+ pzLfgQa5offZ/AVKJYxyXCbFGRq+x0uGw1wtgh59I3IhGLujdFLljmia2AHre0oS8afw
+ +5sVxNS5VrIPjIfjfZmIbK1VfMf8tL7IFcyd/HpWYSJKF15xyMS3lWTI7WuFObneMkRi
+ 6VZ7elQbIAuEV2cRXBgGm3+k8+xcnFp97mgSXXdwEPx33gqBxzkPdJliqXxyR6OlntMH
+ EYYxd7gLocTv3h877AUt3I8RJ60k4qiFnvGWvQsPreP+9MbRD6vQE1IUV5lasKyqw2oK 0Q== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3twxn41gej-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Oct 2023 10:57:12 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39OAvBaW009547
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 24 Oct 2023 10:57:11 GMT
+Received: from [10.239.132.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 24 Oct
+ 2023 03:57:06 -0700
+Message-ID: <7a703504-edf1-d85c-0949-9cfcf3251b0b@quicinc.com>
+Date:   Tue, 24 Oct 2023 18:57:04 +0800
 MIME-Version: 1.0
-References: <20231014133823.14088-1-otto.pflueger@abscue.de>
-In-Reply-To: <20231014133823.14088-1-otto.pflueger@abscue.de>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Tue, 24 Oct 2023 12:51:31 +0200
-Message-ID: <CAPDyKFpuQmyG9_Hr2XeMx2axYmNMKfr8WsXtvvq-GJPDTQ0vaw@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] pmdomain: qcom: rpmpd: Add MSM8917 and similar SoCs
-To:     =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-Cc:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v1 1/5] dt-bindings: soc: qcom: Add memory_dump driver
+ bindings
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_tingweiz@quicinc.com>
+References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
+ <1698052857-6918-2-git-send-email-quic_zhenhuah@quicinc.com>
+ <27fcdcc1-b29b-43b2-8b1a-c648dd9e696c@linaro.org>
+ <d3b62002-c29c-a45e-279f-7d07c697aa77@quicinc.com>
+ <38aa02c4-5b8d-4978-96a2-241fe5f94b50@linaro.org>
+From:   Zhenhua Huang <quic_zhenhuah@quicinc.com>
+In-Reply-To: <38aa02c4-5b8d-4978-96a2-241fe5f94b50@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4axXBYttmFH_Hg-2I1G8MiMqV40Ts9ew
+X-Proofpoint-ORIG-GUID: 4axXBYttmFH_Hg-2I1G8MiMqV40Ts9ew
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-24_10,2023-10-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ clxscore=1015 spamscore=0 mlxlogscore=769 lowpriorityscore=0 phishscore=0
+ mlxscore=0 impostorscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
+ definitions=main-2310240092
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 14 Oct 2023 at 15:38, Otto Pfl=C3=BCger <otto.pflueger@abscue.de> w=
-rote:
->
-> Add RPM power domain definitions for the Qualcomm MSM8917, MSM8937 and
-> QM215 SoCs. These SoCs all have the same power domains (VDDCX and VDDMX
-> in voltage level mode), but different regulators are needed for QM215
-> because it is used with a PM8916 PMIC instead of a PM8937 PMIC.
->
-> ---
-> Changes in v4:
-> - Rebase on latest next as of 2023-10-14 with new SM7150 compatible
-> - Add missing Reviewed-by (if there were no changes to rebase on, I
->   would have simply resent the patch)
-> Changes in v3:
-> - Sort compatibles in device tree binding documentation (suggested by
->   Krzysztof)
-> - Rebase on latest next with genpd subsystem renamed to pmdomain
-> Changes in v2:
-> - Fix typo in patch description: VDDMD -> VDDMX
-> - Split MSM8917 and QM215 changes (suggested by Konrad)
-> - Remove redundant qcom,msm8937-rpmpd entry from rpmpd_match_table
->   and use a fallback compatible instead (suggested by Konrad)
->
-> Otto Pfl=C3=BCger (3):
->   dt-bindings: power: rpmpd: Add MSM8917, MSM8937 and QM215
->   pmdomain: qcom: rpmpd: Add MSM8917 power domains
->   pmdomain: qcom: rpmpd: Add QM215 power domains
->
->  .../devicetree/bindings/power/qcom,rpmpd.yaml | 81 +++++++++--------
->  drivers/pmdomain/qcom/rpmpd.c                 | 91 +++++++++++++++++++
->  include/dt-bindings/power/qcom-rpmpd.h        | 21 +++++
->  3 files changed, 156 insertions(+), 37 deletions(-)
->
->
 
-Applied for next, thanks!
 
-Kind regards
-Uffe
+On 2023/10/23 20:52, Krzysztof Kozlowski wrote:
+> On 23/10/2023 13:54, Zhenhua Huang wrote:
+>>
+>>
+>> On 2023/10/23 17:27, Krzysztof Kozlowski wrote:
+>>> On 23/10/2023 11:20, Zhenhua Huang wrote:
+>>>> Add bindings for the QCOM Memory Dump driver providing debug
+>>>
+>>> Bindings are for hardware, not driver. This suggests it is not suitable
+>>> for bindings at all.
+>>>
+>>>> facilities. Firmware dumps system cache, internal memory,
+>>>> peripheral registers to reserved DDR as per the table which
+>>>> populated by the driver, after crash and warm reset.
+>>>
+>>> Again driver :/
+>>
+>> Thanks for pointing out. Qualcomm memory dump device is a reserved
+>> memory region which is used to communicate with firmware. I will update
+>> description in next version.
+> 
+> I have still doubts that it is suitable for DT. I usually expect  such
+> firmware feature-drivers to be instantiated by existing firmware
+> drivers. You do not need DT for this.
+
+Got it, as it interacts with firmware, you think it should be a firmware 
+driver? But it seems there should not be existing suitable place to put 
+it now(qcom_scm.c is for TZ). Shall we create one new file like 
+*qcom_sdi.c* in drivers/firmware and put it there? Because SDI(system 
+debug image, which is part of bootloader) is the firmware doing the things.
+
+> 
+> Best regards,
+> Krzysztof
+> 
