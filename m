@@ -2,158 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8A83F7D4D5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 12:11:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F6427D4D69
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 12:14:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234186AbjJXKLK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 06:11:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51610 "EHLO
+        id S234186AbjJXKOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 06:14:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234227AbjJXKLJ (ORCPT
+        with ESMTP id S233942AbjJXKOB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 06:11:09 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6969F9;
-        Tue, 24 Oct 2023 03:11:06 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39O8KD2u030309;
-        Tue, 24 Oct 2023 10:11:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=YffooxULNv7b8kk2n2L8oG5mv+aN01WiO5p6mu3vx9w=;
- b=jUogb4BX3c4RGEd3Yjfsj3z2b1YuZnJPlwJZTk7u08L5jjrIuwVcMDVJzrn9BhmfrbJh
- 4XKxkuqAcxg7UcwBdlVAqoJpMN7jNVScHJK/ZYaSo3PJTWzzvABecxJrhMfnhnifMbpf
- F7lkbbN7gudhFwiHJIXgXvvK0QZaOzrdU+5IW0epmw1GpNZfnzsQn99IaEv+oulpSqZK
- 63siRJ2f+psYyD8A6CoFU5liPVIDGF/HLVHi/jNQiRQwMAj7uPnC1nJZoMaUWo5XbSqt
- Lt7Xm97HzMVdAoS2ohBRcXPkeDexoPr/phaKm4NC+3qgbQ6oJCjgtEeFM0PjzseUr7+4 rg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tx7r80h63-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 10:11:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39OAB2NW012545
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 10:11:02 GMT
-Received: from [10.239.132.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 24 Oct
- 2023 03:10:57 -0700
-Message-ID: <ac42f27e-007d-1157-ae46-403420d9fdcb@quicinc.com>
-Date:   Tue, 24 Oct 2023 18:10:54 +0800
+        Tue, 24 Oct 2023 06:14:01 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id AFA9B118;
+        Tue, 24 Oct 2023 03:13:58 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2845F2F4;
+        Tue, 24 Oct 2023 03:14:39 -0700 (PDT)
+Received: from FVFF77S0Q05N (unknown [10.57.68.12])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A36513F64C;
+        Tue, 24 Oct 2023 03:13:56 -0700 (PDT)
+Date:   Tue, 24 Oct 2023 11:13:47 +0100
+From:   Mark Rutland <mark.rutland@arm.com>
+To:     Maria Yu <quic_aiquny@quicinc.com>
+Cc:     catalin.marinas@arm.com, will@kernel.org, arnd@arndb.de,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com, linux-arm-msm@vger.kernel.org, ardb@kernel.org
+Subject: Re: [PATCH v2] arm64: module: PLT allowed even !RANDOM_BASE
+Message-ID: <ZTeY0oBH3P22yOqA@FVFF77S0Q05N>
+References: <20231024010954.6768-1-quic_aiquny@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v1 0/5] soc/arm64: qcom: add initial version of memory
- dump
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_tingweiz@quicinc.com>
-References: <1698052857-6918-1-git-send-email-quic_zhenhuah@quicinc.com>
- <757382c1-142b-454c-b2b5-7ec97bd7328d@linaro.org>
-From:   Zhenhua Huang <quic_zhenhuah@quicinc.com>
-In-Reply-To: <757382c1-142b-454c-b2b5-7ec97bd7328d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Ci7jOvFrbEtjXvCsYpMVLQ1TMk__-oj8
-X-Proofpoint-GUID: Ci7jOvFrbEtjXvCsYpMVLQ1TMk__-oj8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-24_09,2023-10-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
- mlxlogscore=747 lowpriorityscore=0 bulkscore=0 phishscore=0 spamscore=0
- clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310240084
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231024010954.6768-1-quic_aiquny@quicinc.com>
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, Oct 24, 2023 at 09:09:54AM +0800, Maria Yu wrote:
+> Module PLT feature can be enabled even when RANDOM_BASE is disabled.
+> Break BLT entry counts of relocation types will make module plt entry
+> allocation fail and finally exec format error for even correct and plt
+> allocation available modules.
 
+The patch itself looks good; it would be better if we could make the commit
+message explicit that this is a fix. Could we please replace that with:
 
-On 2023/10/23 21:50, Konrad Dybcio wrote:
-> On 23.10.2023 11:20, Zhenhua Huang wrote:
->> Qualcomm memory dump driver is to cooperate with firmware, providing the
-> Firmware == The hypervisor? The TZ? Some uncore chip?
+| arm64: module: fix PLT counting when CONFIG_RANDOMIZE_BASE=n
+| 
+| The counting of module PLTs has been broken when CONFIG_RANDOMIZE_BASE=n
+| since commit:
+| 
+|   3e35d303ab7d22c4 ("arm64: module: rework module VA range selection")
+| 
+| Prior to that commit, when CONFIG_RANDOMIZE_BASE=n, the kernel image and
+| all modules were placed within a 128M region, and no PLTs were necessary
+| for B or BL. Hence count_plts() and partition_branch_plt_relas() skipped
+| handling B and BL when CONFIG_RANDOMIZE_BASE=n.
+| 
+| After that commit, modules can be placed anywhere within a 2G window
+| regardless of CONFIG_RANDOMIZE_BASE, and hence PLTs may be necessary for
+| B and BL even when CONFIG_RANDOMIZE_BASE=n. Unfortunately that commit
+| failed to update count_plts() and partition_branch_plt_relas()
+| accordingly.
+| 
+| Due to this, module_emit_plt_entry() may fail if an insufficient number
+| of PLT entries have been reserved, resulting in modules failing to load
+| with -ENOEXEC.
+|
+| Fix this by counting PLTs regardless of CONFIG_RANDOMIZE_BASE in 
+| count_plts() and partition_branch_plt_relas().
 
-It's part of bootloader which also needs to cooperate with TZ. After 
-system crash and warm reset, system enters debug mode which needs the 
-dump table.
+... and add a fixes tag:
 
-> 
->> hints(id and size) of storing useful debugging information into pre-allocated
->> memory. Firmware then does the real data capture. The debugging information
->> includes cache contents, internal memory, registers.
-> Exposing all of the user's data.. Is this enabled by default?
+Fixes: 3e35d303ab7d22c4 ("arm64: module: rework module VA range selection")
 
-In theory it can be controlled by static bool download_mode = 
-IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT); in driver qcom_scm.c.
-But from my local test on RB5, it can always enter into download mode seems.
+With that:
 
-> 
->>
->> The driver dynamically reserves memory and provides the hints(dump id and size)
->> following specified protocols with firmware. After crash and warm reboot,
->> firmware scans these information and stores contents into reserved memory
->> accordingly. Firmware then enters into full dump mode which dumps whole DDR
->> to host through USB.
-> Is that only something that works on engineering / prototype devices?
-> 
->> User then get full dump using PCAT and can parse out these informations.
-> Is PCAT open-source, or at least freely available?
+Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 
-I see it is introduced in doc of development-kit for RB5, but in another 
-mail Caleb mentioned it's still needing to sign up... which I need to 
-further investigate.
-
-> 
->>
->> Dump id and size are provided by bootconfig. The expected format of a
->> bootconfig file is as follows:-
-> Is it the same bootconfig that Google invented? Wasn't that just key=val?
-
-Seems not same, the author is not from google :) it's kernel XBC(extra 
-boot config): lib/bootconfig.c
+Mark.
 
 > 
->> memory_dump_config {
->> 	<node name> {
->> 		id = <id of HW component>
->> 		size = <dump size of HW component>
->> 	}
->> }
->>
->> for example:
->> memory_dump_config {
->>          c0_context_dump {
->> 		id = 0
->> 		size = 0x800
->>          }
->> }
->>
->> Test based on 6.6-rc1.
-> That's sorta ancient, especially since you're likely looking to get
-> this merged in 6.8.. -next would probably be a better target.
-
-Sure, Thanks. Will verify in -next.
-
+> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+> ---
+>  arch/arm64/kernel/module-plts.c | 6 ------
+>  1 file changed, 6 deletions(-)
 > 
-> Konrad
-
-Thanks,
-Zhenhua
+> diff --git a/arch/arm64/kernel/module-plts.c b/arch/arm64/kernel/module-plts.c
+> index bd69a4e7cd60..79200f21e123 100644
+> --- a/arch/arm64/kernel/module-plts.c
+> +++ b/arch/arm64/kernel/module-plts.c
+> @@ -167,9 +167,6 @@ static unsigned int count_plts(Elf64_Sym *syms, Elf64_Rela *rela, int num,
+>  		switch (ELF64_R_TYPE(rela[i].r_info)) {
+>  		case R_AARCH64_JUMP26:
+>  		case R_AARCH64_CALL26:
+> -			if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
+> -				break;
+> -
+>  			/*
+>  			 * We only have to consider branch targets that resolve
+>  			 * to symbols that are defined in a different section.
+> @@ -269,9 +266,6 @@ static int partition_branch_plt_relas(Elf64_Sym *syms, Elf64_Rela *rela,
+>  {
+>  	int i = 0, j = numrels - 1;
+>  
+> -	if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
+> -		return 0;
+> -
+>  	while (i < j) {
+>  		if (branch_rela_needs_plt(syms, &rela[i], dstidx))
+>  			i++;
+> 
+> base-commit: 05d3ef8bba77c1b5f98d941d8b2d4aeab8118ef1
+> -- 
+> 2.17.1
+> 
