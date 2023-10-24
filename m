@@ -2,129 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD2CF7D4E9A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 13:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F9027D4F5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Oct 2023 14:03:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229487AbjJXLLC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 07:11:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59908 "EHLO
+        id S233434AbjJXMDc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 08:03:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229583AbjJXLLB (ORCPT
+        with ESMTP id S232469AbjJXMDc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 07:11:01 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 924A112C;
-        Tue, 24 Oct 2023 04:10:59 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39OAt7ex002437;
-        Tue, 24 Oct 2023 11:10:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=RKHcsUwcj/5VoPnr1a/q9B/c3g3rMYfwfHimA7AV0TU=;
- b=iIyNnwZwuSuO1rZcsbUFcDlgKaXoY0Zz3id476HMsRmPfqW1ZaXujpUyIoCC0epjl+Yq
- STSeSJahQu/LcWg8ZbZtU49njGpVtwXtNUH/QF2zaj/cLqvLwAhip4N7fUgriJiSUast
- WB288vOmCebGINfWWcRvEbhQHIzxjtEr0zy6hCwQH1smGZduJlTAUvc5LKM0SbUlMs3o
- 6DaR5oPrLQfihHiGNY6FruY3nqICLTJ9xFQIlFMZcktfg/JAw++Q2ocp4mOm4jqYX5NJ
- 3CZaF8KlmXwP6bYErDASiZidoYypmxly40RfLqNQvSFIFTkfCSu7xcnBWINjmQq9Tq9m vw== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3twsnntf6k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 24 Oct 2023 11:10:24 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 39OBAMnu017209;
-        Tue, 24 Oct 2023 11:10:22 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3tv7qkedch-1;
-        Tue, 24 Oct 2023 11:10:22 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39OBAMcQ017204;
-        Tue, 24 Oct 2023 11:10:22 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 39OBALoG017203;
-        Tue, 24 Oct 2023 11:10:22 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
-        id D6F6E533A; Tue, 24 Oct 2023 19:10:20 +0800 (CST)
-From:   Ziqi Chen <quic_ziqichen@quicinc.com>
-To:     quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
-        avri.altman@wdc.com, junwoo80.lee@samsung.com,
-        martin.petersen@oracle.com, quic_ziqichen@quicinc.com,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_rampraka@quicinc.com
-Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Tue, 24 Oct 2023 08:03:32 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 352D3F9;
+        Tue, 24 Oct 2023 05:03:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=In-Reply-To:Content-Type:MIME-Version:References:
+        Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:Reply-To:
+        Content-ID:Content-Description;
+        bh=zRIi9/LubZwPopqf6kr3BLpCYi15YnR3163PaROLkPc=; b=mTYVwfkdKLTHhanJB6iXTcGdRN
+        B4MGvwjKxtEHB9ISxJYLjUPkavsTwTRNUl+/dYaX8yIOwuQxB7l9Np7qR13iLSaKKHdBO0cJGkzd1
+        z6+PwxU6TURDYTmHgLz9xsIBJxXlfBQgwSXCjAnQCaj8RjJi041unbBCCgvcs1T7TkzE9Wz6bzxHq
+        5A9yH8mOT1hmHimnZy+WkCoU6cMmRgZ7sQtnjBzlPfMGk/4pXLyTnc+pcMVGqBAVPL2M/8TqlOFup
+        z99GPSxcLYXAtUlrlJtsa3F9kVjgZilmYOJEo5yezpZXCs/tExSS3HRS4iPEy1l70zpPHHtUetTZu
+        SMl1I8Mg==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
+        id 1qvG83-000jUo-0O;
+        Tue, 24 Oct 2023 14:03:22 +0200
+Date:   Tue, 24 Oct 2023 14:03:17 +0200
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] scsi: ufs: qcom: move ufs_qcom_host_reset() to ufs_qcom_device_reset()
-Date:   Tue, 24 Oct 2023 19:10:15 +0800
-Message-Id: <1698145815-17396-1-git-send-email-quic_ziqichen@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: EoyL9d-JVNstofh06Y_xquhU9LlSo8ih
-X-Proofpoint-GUID: EoyL9d-JVNstofh06Y_xquhU9LlSo8ih
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-24_11,2023-10-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- malwarescore=0 adultscore=0 clxscore=1011 suspectscore=0
- priorityscore=1501 mlxlogscore=999 impostorscore=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310240094
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
-        autolearn_force=no version=3.4.6
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain
+ devices
+Message-ID: <ZTeyhR7YY7VgWQlU@kernkonzept.com>
+References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
+ <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
+ <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
+ <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-During PISI test, we found the issue that host Tx still bursting after
-H/W reset. Move ufs_qcom_host_reset() to ufs_qcom_device_reset() and
-reset host before device reset to stop tx burst.
+On Thu, Oct 19, 2023 at 01:26:19PM +0200, Ulf Hansson wrote:
+> On Thu, 19 Oct 2023 at 12:24, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> >
+> > On Wed, 18 Oct 2023 at 10:06, Stephan Gerhold
+> > <stephan.gerhold@kernkonzept.com> wrote:
+> > >
+> > > The genpd core caches performance state votes from devices that are
+> > > runtime suspended as of commit 3c5a272202c2 ("PM: domains: Improve
+> > > runtime PM performance state handling"). They get applied once the
+> > > device becomes active again.
+> > >
+> > > To attach the power domains needed by qcom-cpufreq-nvmem the OPP core
+> > > calls genpd_dev_pm_attach_by_id(). This results in "virtual" dummy
+> > > devices that use runtime PM only to control the enable and performance
+> > > state for the attached power domain.
+> > >
+> > > However, at the moment nothing ever resumes the virtual devices created
+> > > for qcom-cpufreq-nvmem. They remain permanently runtime suspended. This
+> > > means that performance state votes made during cpufreq scaling get
+> > > always cached and never applied to the hardware.
+> > >
+> > > Fix this by enabling the devices after attaching them and use
+> > > dev_pm_syscore_device() to ensure the power domains also stay on when
+> > > going to suspend. Since it supplies the CPU we can never turn it off
+> > > from Linux. There are other mechanisms to turn it off when needed,
+> > > usually in the RPM firmware (RPMPD) or the cpuidle path (CPR genpd).
+> >
+> > I believe we discussed using dev_pm_syscore_device() for the previous
+> > version. It's not intended to be used for things like the above.
+> >
+> > Moreover, I was under the impression that it wasn't really needed. In
+> > fact, I would think that this actually breaks things for system
+> > suspend/resume, as in this case the cpr driver's genpd
+> > ->power_on|off() callbacks are no longer getting called due this,
+> > which means that the cpr state machine isn't going to be restored
+> > properly. Or did I get this wrong?
+> 
+> BTW, if you really need something like the above, the proper way to do
+> it would instead be to call device_set_awake_path() for the device.
+> 
 
-Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+Unfortunately this does not work correctly. When I use
+device_set_awake_path() it does set dev->power.wakeup_path = true.
+However, this flag is cleared again in device_prepare() when entering
+suspend. To me it looks a bit like wakeup_path is not supposed to be set
+directly by drivers? Before and after your commit 8512220c5782 ("PM /
+core: Assign the wakeup_path status flag in __device_prepare()") it
+seems to be internally bound to device_may_wakeup().
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 96cb8b5..43163d3 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -445,12 +445,6 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 	struct phy *phy = host->generic_phy;
- 	int ret;
- 
--	/* Reset UFS Host Controller and PHY */
--	ret = ufs_qcom_host_reset(hba);
--	if (ret)
--		dev_warn(hba->dev, "%s: host reset returned %d\n",
--				  __func__, ret);
--
- 	/* phy initialization - calibrate the phy */
- 	ret = phy_init(phy);
- 	if (ret) {
-@@ -1709,6 +1703,13 @@ static void ufs_qcom_dump_dbg_regs(struct ufs_hba *hba)
- static int ufs_qcom_device_reset(struct ufs_hba *hba)
- {
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	int ret = 0;
-+
-+	/* Reset UFS Host Controller and PHY */
-+	ret = ufs_qcom_host_reset(hba);
-+	if (ret)
-+		dev_warn(hba->dev, "%s: host reset returned %d\n",
-+				  __func__, ret);
- 
- 	/* reset gpio is optional */
- 	if (!host->device_reset)
--- 
-2.7.4
+It works if I make device_may_wakeup() return true, with
 
+	device_set_wakeup_capable(dev, true);
+	device_wakeup_enable(dev);
+
+but that also allows *disabling* the wakeup from sysfs which doesn't
+really make sense for the CPU.
+
+Any ideas?
+
+Thanks!
+--
+Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Kernkonzept GmbH at Dresden, Germany, HRB 31129, CEO Dr.-Ing. Michael Hohmuth
