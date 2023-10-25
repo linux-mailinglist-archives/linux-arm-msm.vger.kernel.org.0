@@ -2,194 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA3C27D77E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 00:30:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD5977D7800
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 00:32:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbjJYWal (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 18:30:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49118 "EHLO
+        id S229677AbjJYWcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 18:32:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbjJYWal (ORCPT
+        with ESMTP id S229576AbjJYWcW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 18:30:41 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 016FD93
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 15:30:38 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c595f5dc84so16198721fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 15:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698273037; x=1698877837; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RMc9DJrhHFukjQ0QSTQddBGYIHrkhtn026KunSVyHrs=;
-        b=tSRZEtGrenQs9n8o26Ay9+k5JPQEequyFL+E2G6eCsQzVFOrBOZnDRaMpDvJnyXsyD
-         1mmWXW82PFx8oaxBOjcXa+cijIm5PMcpACBU3hcZjG+A5KxND2Z+2Red4R+MYN9Ko1kj
-         IPFJn6G3oYaMWpyOt6SRvvY7Ekbo/Eb9GA4r1Q9drOaaCCUkGvEWSw+gILJQPDauMNOk
-         d1HtyR/tQZXJpAFvFOtVR3SgolUmpY9h4v+jDgSXa+RNOfFyY73U4LD/aLxQty+Sy2NF
-         cizrPyhgQUop0eAWPBlUIpzgu2arPJqyIuVVfWAr2Rg4FR4dtqTP+Pw19WvC/d1UGV4s
-         8EJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698273037; x=1698877837;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RMc9DJrhHFukjQ0QSTQddBGYIHrkhtn026KunSVyHrs=;
-        b=DnjRGxWcuFyHZNAHAp0WBPxd+L4tigSKiEjukCT3ANd3uMw5JMP8u0mn2YD2jzPoU4
-         IL2ehdJv8bgLgs4zIxXsT1Bt5R310PNsqoKqc6bvRemoKX+Sh005XKTZmOU1mq1losyP
-         USlFOgmXjWjXtsrKMVf8LGXSe1o2q13Bez6w0zPFFy4zsKf5BfICJXWYnFhmgzfkdXcU
-         z2Ecza3PYijHKGn/tUqZYx8hISMfcYVxDONs4OzTGN2uVt4nTrHMXKJfMbNQpV/l7/P9
-         AOewXGoOyimg56dZzq9km4ZwPqpig+zAYA91Lx2IsUJNEgcQfkz0AqkuzRt7ElzBhvjc
-         UuQw==
-X-Gm-Message-State: AOJu0YxsS4AZn9QpqVOeozdfC1nDfUxzfI9Vv1k5yY2sGIf7439A/beK
-        uOorEHo83ELpMVvq363pzO5EPhwdX9buudti3FS/7w==
-X-Google-Smtp-Source: AGHT+IG0q4O9zZGFVgid9pyyJD2trDydpM4NoY89vGAulK1c/jtaw7eVVV4MrxSewpkgrRJTzf3/oA==
-X-Received: by 2002:a2e:894d:0:b0:2c5:a41:2250 with SMTP id b13-20020a2e894d000000b002c50a412250mr286617ljk.19.1698273037373;
-        Wed, 25 Oct 2023 15:30:37 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id a36-20020a05651c212400b002bcbae4c21fsm2612543ljq.50.2023.10.25.15.30.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 15:30:36 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v5 6/6] usb: typec: qcom-pmic-typec: switch to DRM_AUX_HPD_BRIDGE
-Date:   Thu, 26 Oct 2023 01:28:07 +0300
-Message-ID: <20231025223027.943563-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231025223027.943563-1-dmitry.baryshkov@linaro.org>
-References: <20231025223027.943563-1-dmitry.baryshkov@linaro.org>
+        Wed, 25 Oct 2023 18:32:22 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99C1890;
+        Wed, 25 Oct 2023 15:32:20 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PMRckh018217;
+        Wed, 25 Oct 2023 22:31:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0bQFa/OqIcYnNhxbQluyp0FpYS66aD/rqg1j1yF4XKw=;
+ b=ijeFRrAL554HbPROVtgWMr342xAc9G3Hb0rAtbzazIeiS1eg43uNeJ5NNvthovYmO1bC
+ PbwBEMKg8RwEfBd4KRmSynJ6HsadqSD0aP6JRwG41tKmTEPkLWN07zpX90f5OC/1iVc8
+ AuQjJZYAYakQJru8MAWTjJPPSKMr+zN+QfpdTNMneESElujSicMhcJTYobkPp1qKPymj
+ VQm+TYJ3AAzEOiKQXMJPDw6HXPHSoOiOSXts2wv4QLyq950/WmSY89YWpssdS2GFWX/A
+ bxyLjkgkjbbyWhdodpk4n7LuczyQGKSPtkCtE7tp+/lGrmcWN8ctgfQLXgB8WDj20mRx eA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txwjphvea-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Oct 2023 22:31:55 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PMVsJe024992
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Oct 2023 22:31:54 GMT
+Received: from [10.71.114.19] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 25 Oct
+ 2023 15:31:53 -0700
+Message-ID: <dc14cce6-7967-9992-c552-00fd043b0445@quicinc.com>
+Date:   Wed, 25 Oct 2023 15:31:52 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v9 34/34] ASoC: usb: Rediscover USB SND devices on USB
+ port add
+Content-Language: en-US
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        <mathias.nyman@intel.com>, <gregkh@linuxfoundation.org>,
+        <lgirdwood@gmail.com>, <broonie@kernel.org>, <perex@perex.cz>,
+        <tiwai@suse.com>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <srinivas.kandagatla@linaro.org>, <bgoswami@quicinc.com>,
+        <Thinh.Nguyen@synopsys.com>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20231017200109.11407-1-quic_wcheng@quicinc.com>
+ <20231017200109.11407-35-quic_wcheng@quicinc.com>
+ <b503058d-e23f-4a63-99b8-f0a62b2a2557@linux.intel.com>
+ <6409c486-7393-4352-489c-ecd488597c4c@quicinc.com>
+ <efa9cdd0-4e5b-4b54-a4ea-7ec735224f44@linux.intel.com>
+From:   Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <efa9cdd0-4e5b-4b54-a4ea-7ec735224f44@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 14nEvn4zNDoYq68xWCflDzpsII9GKJ3J
+X-Proofpoint-GUID: 14nEvn4zNDoYq68xWCflDzpsII9GKJ3J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-25_12,2023-10-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ phishscore=0 mlxlogscore=999 priorityscore=1501 malwarescore=0
+ suspectscore=0 impostorscore=0 adultscore=0 clxscore=1015 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310250193
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the freshly defined DRM_AUX_HPD_BRIDGE instead of open-coding the
-same functionality for the DRM bridge chain termination.
+Hi Pierre,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/usb/typec/tcpm/Kconfig                |  1 +
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 41 +++----------------
- 2 files changed, 7 insertions(+), 35 deletions(-)
+On 10/24/2023 6:35 AM, Pierre-Louis Bossart wrote:
+> 
+> 
+> On 10/23/23 16:54, Wesley Cheng wrote:
+>> Hi Pierre,
+>>
+>> On 10/17/2023 4:11 PM, Pierre-Louis Bossart wrote:
+>>>
+>>>
+>>> On 10/17/23 15:01, Wesley Cheng wrote:
+>>>> In case the USB backend device has not been initialized/probed, USB SND
+>>>> device connections can still occur.  When the USB backend is eventually
+>>>> made available, previous USB SND device connections are not
+>>>> communicated to
+>>>> the USB backend.  Call snd_usb_rediscover_devices() to generate the
+>>>> connect
+>>>> callbacks for all USB SND devices connected.  This will allow for the
+>>>> USB
+>>>> backend to be updated with the current set of devices available.
+>>>>
+>>>> The chip array entries are all populated and removed while under the
+>>>> register_mutex, so going over potential race conditions:
+>>>>
+>>>> Thread#1:
+>>>>     q6usb_component_probe()
+>>>>       --> snd_soc_usb_add_port()
+>>>>         --> snd_usb_rediscover_devices()
+>>>>           --> mutex_lock(register_mutex)
+>>>>
+>>>> Thread#2
+>>>>     --> usb_audio_disconnect()
+>>>>       --> mutex_lock(register_mutex)
+>>>>
+>>>> So either thread#1 or thread#2 will complete first.  If
+>>>>
+>>>> Thread#1 completes before thread#2:
+>>>>     SOC USB will notify DPCM backend of the device connection.  Shortly
+>>>>     after, once thread#2 runs, we will get a disconnect event for the
+>>>>     connected device.
+>>>>
+>>>> Thread#2 completes before thread#1:
+>>>>     Then during snd_usb_rediscover_devices() it won't notify of any
+>>>>     connection for that particular chip index.
+>>> Looks like you are assuming the regular USB audio stuff is probed first?
+>>>
+>>> What if it's not the case? Have you tested with a manual 'blacklist' and
+>>> "modprobe" sequence long after all the DSP stuff is initialized?
+>>>
+>>> It really reminds me of audio+display issues, and the same opens apply
+>>> IMHO.
+>>
+>> Not necessarily...if the USB audio driver is not probed, then that is
+>> the same scenario as when there is no USB audio capable device plugged
+>> in, while the offload path is waiting for the connect event. I think
+>> this is the standard scenario.
+>>
+>> In the situation where the platform sound card hasn't probed yet and USB
+>> audio devices are being identified, then that is basically the scenario
+>> that would be more of an issue, since its USB SND that notifies of the
+>> connection state (at the time of connect/disconnect).
+> 
+> Not following if this scenario is covered?
+> 
 
-diff --git a/drivers/usb/typec/tcpm/Kconfig b/drivers/usb/typec/tcpm/Kconfig
-index 0b2993fef564..64d5421c69e6 100644
---- a/drivers/usb/typec/tcpm/Kconfig
-+++ b/drivers/usb/typec/tcpm/Kconfig
-@@ -80,6 +80,7 @@ config TYPEC_QCOM_PMIC
- 	tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
- 	depends on ARCH_QCOM || COMPILE_TEST
- 	depends on DRM || DRM=n
-+	select DRM_AUX_HPD_BRIDGE if DRM_BRIDGE
- 	help
- 	  A Type-C port and Power Delivery driver which aggregates two
- 	  discrete pieces of silicon in the PM8150b PMIC block: the
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-index 581199d37b49..1a2b4bddaa97 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-@@ -18,7 +18,7 @@
- #include <linux/usb/tcpm.h>
- #include <linux/usb/typec_mux.h>
- 
--#include <drm/drm_bridge.h>
-+#include <drm/bridge/aux-bridge.h>
- 
- #include "qcom_pmic_typec_pdphy.h"
- #include "qcom_pmic_typec_port.h"
-@@ -36,7 +36,6 @@ struct pmic_typec {
- 	struct pmic_typec_port	*pmic_typec_port;
- 	bool			vbus_enabled;
- 	struct mutex		lock;		/* VBUS state serialization */
--	struct drm_bridge	bridge;
- };
- 
- #define tcpc_to_tcpm(_tcpc_) container_of(_tcpc_, struct pmic_typec, tcpc)
-@@ -150,35 +149,6 @@ static int qcom_pmic_typec_init(struct tcpc_dev *tcpc)
- 	return 0;
- }
- 
--#if IS_ENABLED(CONFIG_DRM)
--static int qcom_pmic_typec_attach(struct drm_bridge *bridge,
--				     enum drm_bridge_attach_flags flags)
--{
--	return flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR ? 0 : -EINVAL;
--}
--
--static const struct drm_bridge_funcs qcom_pmic_typec_bridge_funcs = {
--	.attach = qcom_pmic_typec_attach,
--};
--
--static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
--{
--	tcpm->bridge.funcs = &qcom_pmic_typec_bridge_funcs;
--#ifdef CONFIG_OF
--	tcpm->bridge.of_node = of_get_child_by_name(tcpm->dev->of_node, "connector");
--#endif
--	tcpm->bridge.ops = DRM_BRIDGE_OP_HPD;
--	tcpm->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
--
--	return devm_drm_bridge_add(tcpm->dev, &tcpm->bridge);
--}
--#else
--static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
--{
--	return 0;
--}
--#endif
--
- static int qcom_pmic_typec_probe(struct platform_device *pdev)
- {
- 	struct pmic_typec *tcpm;
-@@ -186,6 +156,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 	struct device_node *np = dev->of_node;
- 	const struct pmic_typec_resources *res;
- 	struct regmap *regmap;
-+	struct device *bridge_dev;
- 	u32 base[2];
- 	int ret;
- 
-@@ -241,14 +212,14 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
- 	mutex_init(&tcpm->lock);
- 	platform_set_drvdata(pdev, tcpm);
- 
--	ret = qcom_pmic_typec_init_drm(tcpm);
--	if (ret)
--		return ret;
--
- 	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
- 	if (!tcpm->tcpc.fwnode)
- 		return -EINVAL;
- 
-+	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
-+	if (IS_ERR(bridge_dev))
-+		return PTR_ERR(bridge_dev);
-+
- 	tcpm->tcpm_port = tcpm_register_port(tcpm->dev, &tcpm->tcpc);
- 	if (IS_ERR(tcpm->tcpm_port)) {
- 		ret = PTR_ERR(tcpm->tcpm_port);
--- 
-2.42.0
+Yes, this is covered.  For example, if there are already devices 
+connected, but the platform sound card is still unbound.  Then this 
+rediscover API will be called to traverse through the list of connected 
+USB sound devices, so that the USB DPCM dai can know about their 
+existence when it is probed.
 
+>> I've tried with building these drivers as modules and probing them at
+>> different times/sequences, and I haven't seen an issue so far.
+> 
+> The scenario I have in mind is this:
+> 
+> the platform driver is on the deny list, the USB driver detects a
+> device. When the platform driver probes at a later time (with a manual
+> modprobe to make delays really long), how would the notification be handled?
+> 
+
+So that is essentially the same scenario as when there is no USB device 
+connected, ie no USB class driver is bounded to anything.  Since the 
+notifications are all handled within USB SND (USB class driver) then if 
+the module isn't loaded yet, no notification is sent to the DPCM USB 
+backend.  Once you say...modprobe the USB SND driver, then the USB 
+interface probe occurs, and that would issue the connect callback from 
+the USB SND probe routine. (keep in mind these are not platform devices, 
+we're working with devices under the usb bus)
+
+> Between audio and display, we use the 'drm_audio_component' layer to
+> model these sort of run-time binding between independent driver stacks.
+> It's not used here but we need a moral equivalent, don't we?
+> 
+> It would really help if you documented a bit more the dependencies or
+> timing assumptions, to make sure we have a stable solution to build on.
+> 
+
+I can add this to the RST that I'll make in detail, and add a summary 
+here in the commit message.
+
+Thanks
+Wesley Cheng
