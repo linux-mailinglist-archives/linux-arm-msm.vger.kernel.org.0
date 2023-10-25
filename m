@@ -2,93 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC8597D71E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 18:50:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 022FC7D720B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 19:07:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232431AbjJYQu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 12:50:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57046 "EHLO
+        id S231648AbjJYRHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 13:07:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232897AbjJYQu5 (ORCPT
+        with ESMTP id S229743AbjJYRHN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 12:50:57 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8FE2132
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 09:50:53 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-32dcd3e5f3fso4062262f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 09:50:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698252652; x=1698857452; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CZYImk/mXSSi+o4l71ADu1/FnBpFWcH0X2+sMWjIFRg=;
-        b=fqU0ebeOVrFibfPJP3j0RdJ+BWZ9RpRksNhJXIkjJi5xdbeGxAAaZBMokHGiTIl129
-         c6XXHHC2crBd0H/qbVKCvH7Y7wxWLu+6ek/IPrIU4+/oFZdhvdhZX3U68VdQGSiwS4Cl
-         7TNcaFlp5FNs8aWD2XTxDbPCugGUZaMXe2ujJnxvHWJ4XEEzDiMFA1Q2ymsQRS5sMbug
-         u85Vitqbm3mTodoLZ8qyVdCqcsUB2WLu7wsFl/+SkvY6huv5FLLXvggY7W8GXkYZbHf+
-         7tYA06jY97v1X+GjSVxdcRH5p61780TupB7cj/6DmWzANmCLvkaZRbzDVfe8bJgFiriE
-         p9KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698252652; x=1698857452;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CZYImk/mXSSi+o4l71ADu1/FnBpFWcH0X2+sMWjIFRg=;
-        b=LjP8a+Kuptd3ANTvPxsw3qkuD/pgfmnzBImBjEQSDYEgdxCqjSDbJLZgMKdkZPgmQx
-         SmeuF0S+9UGn/hBWQPvUkwITtdGHjg4cQav8fC4V/1Q6jf9Cns7kuQmSlmJvGKuz0GyL
-         zNelPJ5lVxXWjW3jM0saORhPqlfuAEZoiRWLlvGDmUgo8iJSeVxcvuSjXby1TWZCNXLy
-         2Po4vcEd7AmDLiwgjE1PYbH6+ez3gmCskxYN9dJy1iQsaFcPoq5oQwmJwm6qqkWQSDYb
-         Gja9XZ11OhwgHhLnC3OgGIC/kGkUePMDkpWKa2+MxfgY3XDW/0oCgmYOvIXV5Hw8RhUJ
-         W+sg==
-X-Gm-Message-State: AOJu0Yyu/PJEGtxEKfUSkgA2WOtcBV+0731NMpAfWQcdaKRz7Dltm2Pi
-        6jO/yrxRIn5bcnI4gxRe5JxyzQoz3BIAOEfMoBVcjA==
-X-Google-Smtp-Source: AGHT+IEQCFBk5Dxw5dhzmiY5H20nvQe5QOzfRpA8EQpGFtUhVqOtnnudYdGdu3Qw92qf1Qf1whdYXg==
-X-Received: by 2002:adf:e58f:0:b0:31f:a0ab:26b5 with SMTP id l15-20020adfe58f000000b0031fa0ab26b5mr12193613wrm.8.1698252652187;
-        Wed, 25 Oct 2023 09:50:52 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id a3-20020a5d4d43000000b003196b1bb528sm12374109wru.64.2023.10.25.09.50.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 09:50:51 -0700 (PDT)
-Message-ID: <03f6d583-8324-4ea2-ac6d-5e20987133e9@linaro.org>
-Date:   Wed, 25 Oct 2023 17:50:50 +0100
+        Wed, 25 Oct 2023 13:07:13 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B826133;
+        Wed, 25 Oct 2023 10:07:12 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PFhfRa006993;
+        Wed, 25 Oct 2023 17:07:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=/GbdsTHcBTeMdk2nrGkNsicVUpEdodOMhaqnSIBEsaQ=;
+ b=VXcyZ1btG1S808V8K6edoARSvXeprYuyl1A3e3aSXJTX0CmOgwAT53dri9HGRTT5Q8wo
+ Hw2bSB9DGgBXZoB16tiwptddwlCC1X3eP0NGSKoDyVbEr2Xye2p/d09eOzB3p7iFNJo8
+ 8oqYA/7bdaajppygk7Y2fUe1VG7Mv3SmjbYaHUi93xmmGviO6s06kww6l86c+383MSnQ
+ IUN2aaaj0h2o7RD516bkR19w/f5/DTXCU6DhInb0be1nAjwNXNqFfYZcXA1fah37n/Sf
+ FID59FvvuFC4pYrpMMK9NavDurrzSitv1rrLQAKUH+7TBi4o01vsCKq1sXH/dGpZjv+d bQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ty5wdr8ap-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Oct 2023 17:07:07 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PH76Sd017720
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Oct 2023 17:07:06 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Wed, 25 Oct 2023 10:07:03 -0700
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [PATCH v2 1/4] dt-bindings: mfd: qcom,tcsr: Add compatible for sm8250/sm8350
+Date:   Wed, 25 Oct 2023 22:36:38 +0530
+Message-ID: <1698253601-11957-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] soc: qcom: llcc: Add configuration data for SC8380XP
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     agross@kernel.org, conor+dt@kernel.org, quic_rjendra@quicinc.com,
-        abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_tsoni@quicinc.com, neil.armstrong@linaro.org
-References: <20231025134632.10363-1-quic_sibis@quicinc.com>
- <20231025134632.10363-3-quic_sibis@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20231025134632.10363-3-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vygGjcVFlcHL_e-Kg8whwgCYYE48I4hf
+X-Proofpoint-ORIG-GUID: vygGjcVFlcHL_e-Kg8whwgCYYE48I4hf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-25_05,2023-10-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 spamscore=0 mlxscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=689 phishscore=0
+ malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2310170001 definitions=main-2310250149
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 14:46, Sibi Sankar wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
-> 
-> Add LLCC configuration data for SC8380XP SoC.
-> 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
+Document the compatible for both sm8250 and sm8350 SoCs.
 
-LGTM
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+---
+Changes in v2:
+ - Removed sm8550.
+ - Removed regular expression from commit text/subject.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+index 33c3d023a106..798705ab6a46 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -29,6 +29,8 @@ properties:
+           - qcom,sdx65-tcsr
+           - qcom,sm4450-tcsr
+           - qcom,sm8150-tcsr
++          - qcom,sm8250-tcsr
++          - qcom,sm8350-tcsr
+           - qcom,sm8450-tcsr
+           - qcom,tcsr-apq8064
+           - qcom,tcsr-apq8084
+-- 
+2.7.4
 
