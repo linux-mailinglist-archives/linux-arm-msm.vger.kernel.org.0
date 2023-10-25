@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DFC07D7484
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 21:40:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16DA37D74B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 21:49:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229576AbjJYTkn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 15:40:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39452 "EHLO
+        id S229557AbjJYTtr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 15:49:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229733AbjJYTkm (ORCPT
+        with ESMTP id S229441AbjJYTtq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 15:40:42 -0400
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA22793;
-        Wed, 25 Oct 2023 12:40:40 -0700 (PDT)
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-6ce2de8da87so69574a34.1;
-        Wed, 25 Oct 2023 12:40:40 -0700 (PDT)
+        Wed, 25 Oct 2023 15:49:46 -0400
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1DC193;
+        Wed, 25 Oct 2023 12:49:44 -0700 (PDT)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-1dceb2b8823so49781fac.1;
+        Wed, 25 Oct 2023 12:49:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698262840; x=1698867640;
+        d=1e100.net; s=20230601; t=1698263384; x=1698868184;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+7MAwKpUzwgGAIVoiREv1kIxax6UFmWki8e8KL5W6jo=;
-        b=SVe2jvw8i6/4cszuGs5cJ8qU/3Vw4qzSyReXyOV1XYw+GwcXV5jKCqp6axjPcMBDje
-         NkAIwPcpoPWUOWqWE1L8p0XfOmr62uSsivsi2aI3mV/oExMcMdZqZDyZh6/ac07d58Up
-         m9xkPUfiU9q49HwzBQND/BeOcUK112EeQak2RgtY93ivFwXWgn+RFevBaPr2A27+rEhY
-         23328X4VMirfqYse+icI0oCD2um6J/UA7iHWr+UqtsLbMN5eKXLZ90ILJ2C4coZ0Du67
-         u3MRexBSqLl8CK0wPn9NApSYUoZh6bN3wRMIfwt5lxiiKv9G9oFBPM/T94EzZM8OnBHB
-         Q2Nw==
-X-Gm-Message-State: AOJu0Yw7Cxk+L9vOdVKbKFtYh8buC9xKXULBwYXNx4EzwohQQtuSiWmP
-        iXQIznTDMFrkrdvYk5YTVQ==
-X-Google-Smtp-Source: AGHT+IFcxU6mqudgZMrEKBzvcu7nowVTZw5K+NHrR50t+qC3ehsoBRlv3lsYw/T2o5QFSBYYgrSKzA==
-X-Received: by 2002:a05:6830:4412:b0:6ce:29cd:b69e with SMTP id q18-20020a056830441200b006ce29cdb69emr21421396otv.6.1698262839991;
-        Wed, 25 Oct 2023 12:40:39 -0700 (PDT)
+        bh=KlpnZS6vHRIFnFbC0pQo/A91UW+0pz54vArEwjVrVww=;
+        b=LUyc8PU+GNTKhltVRNVptyX0JC3ROB1lDqdbTQvZ/Lhn9VUeUsL+gZIMnI+bUd01xC
+         xXW7s3BYZS/NLL2oBLgIWlrgwyQDwGAjxdu0G7oOLJD2ZWHA+E6STkcf2AHFBrTGBsN4
+         RTm7GeDskvW2QDy8363BCIY6d9FktI8/HwR460bU2nxjX+Nq8bLZJBLwjae/sjTzsu1Z
+         oQbbyR+2A1QVIHq59kCYXKg3AWBnGitxyRZwHAP3dzMo3gENk1tnS6pEeSzAY4ydvM1/
+         ab6v0HTyQH2m1Ef5x8wTim1vmxApe+8FcxjJoE6Rb/oqDag/GZ7LcvN7jXnLqX3ZEdKD
+         gSiw==
+X-Gm-Message-State: AOJu0YwjVSmHGNdLEftN8pK8dgISfZMO4nWTMLp/9ZZDtMCTUvHpAC2/
+        V9ivHJkbh4VdPihLAmYnxw==
+X-Google-Smtp-Source: AGHT+IGBHca4D69sq5SUb+4A1BYOlPKyV6+DnZxSCW2CC4ONvq8/C5HyP20X+NVQ6jOPYr1M+S+tgA==
+X-Received: by 2002:a05:6871:34a1:b0:1e9:e413:b9d with SMTP id ni33-20020a05687134a100b001e9e4130b9dmr368135oac.2.1698263384044;
+        Wed, 25 Oct 2023 12:49:44 -0700 (PDT)
 Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id r24-20020a05683001d800b006ce1f9c62a1sm2329537ota.39.2023.10.25.12.40.38
+        by smtp.gmail.com with ESMTPSA id t1-20020a4aadc1000000b00581fc1af0a7sm124913oon.28.2023.10.25.12.49.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 12:40:39 -0700 (PDT)
-Received: (nullmailer pid 1038207 invoked by uid 1000);
-        Wed, 25 Oct 2023 19:40:38 -0000
-Date:   Wed, 25 Oct 2023 14:40:38 -0500
+        Wed, 25 Oct 2023 12:49:43 -0700 (PDT)
+Received: (nullmailer pid 1048139 invoked by uid 1000);
+        Wed, 25 Oct 2023 19:49:42 -0000
+Date:   Wed, 25 Oct 2023 14:49:42 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Subject: Re: [PATCH 04/10] dt-bindings: clock: qcom: document the SM8650 GPU
- Clock Controller
-Message-ID: <169826283738.1038135.10919191785530268283.robh@kernel.org>
+        Taniya Das <quic_tdas@quicinc.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 03/10] dt-bindings: clock: qcom: document the SM8650
+ Display Clock Controller
+Message-ID: <20231025194942.GA1038327-robh@kernel.org>
 References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
- <20231025-topic-sm8650-upstream-clocks-v1-4-c89b59594caf@linaro.org>
+ <20231025-topic-sm8650-upstream-clocks-v1-3-c89b59594caf@linaro.org>
+ <169824516120.243773.546101172844888564.robh@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-4-c89b59594caf@linaro.org>
+In-Reply-To: <169824516120.243773.546101172844888564.robh@kernel.org>
 X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
         HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,
@@ -74,17 +75,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Wed, 25 Oct 2023 09:32:41 +0200, Neil Armstrong wrote:
-> Add bindings documentation for the SM8650 Graphics Clock Controller.
+On Wed, Oct 25, 2023 at 09:47:33AM -0500, Rob Herring wrote:
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  .../bindings/clock/qcom,sm8450-gpucc.yaml          |  2 +
->  include/dt-bindings/clock/qcom,sm8650-gpucc.h      | 43 ++++++++++++++++++++++
->  include/dt-bindings/reset/qcom,sm8650-gpucc.h      | 20 ++++++++++
->  3 files changed, 65 insertions(+)
+> On Wed, 25 Oct 2023 09:32:40 +0200, Neil Armstrong wrote:
+> > Add bindings documentation for the SM8650 Display Clock Controller.
+> > 
+> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > ---
+> >  .../bindings/clock/qcom,sm8650-dispcc.yaml         | 106 +++++++++++++++++++++
+> >  include/dt-bindings/clock/qcom,sm8650-dispcc.h     | 101 ++++++++++++++++++++
+> >  2 files changed, 207 insertions(+)
+> > 
 > 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/clock/qcom,sm8650-dispcc.example.dts:18:18: fatal error: dt-bindings/clock/qcom,sm8650-gcc.h: No such file or directory
+>    18 |         #include <dt-bindings/clock/qcom,sm8650-gcc.h>
+>       |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> compilation terminated.
+> make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/clock/qcom,sm8650-dispcc.example.dtb] Error 1
+> make[2]: *** Waiting for unfinished jobs....
+> make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1427: dt_binding_check] Error 2
+> make: *** [Makefile:234: __sub-make] Error 2
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Looks like the series got split up in the delivery causing this.
 
+Rob
