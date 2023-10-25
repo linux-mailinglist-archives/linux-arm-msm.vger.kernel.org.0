@@ -2,51 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4540D7D6AF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 14:14:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 480157D6B0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 14:17:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234479AbjJYMNF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 08:13:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54830 "EHLO
+        id S232076AbjJYMRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 08:17:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232789AbjJYMNE (ORCPT
+        with ESMTP id S234856AbjJYMRK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 08:13:04 -0400
+        Wed, 25 Oct 2023 08:17:10 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BCD4B0;
-        Wed, 25 Oct 2023 05:13:03 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98D37C433C8;
-        Wed, 25 Oct 2023 12:12:58 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45F07184;
+        Wed, 25 Oct 2023 05:17:08 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0B6C433C7;
+        Wed, 25 Oct 2023 12:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698235982;
-        bh=4+xwe367k3YeGIMrExzUgwgVoVE6QX1MvS5Q6KetWyQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=emXY/bJnZ6TI8CxNbrMekyo38I5pF6dXpoLNZxXDhO21G9HLiHXpB8Kql49N6+aDZ
-         nHsPyJkrXdoZNYfiOoMkPipCiO++hdtS5yfcbQKrcFdlEiNDMZHtNzs/UyS7n/yWHQ
-         Pxy/OVIGSSPfFxZO0vGjr/3MV/Z9jKYo6fHFG4Oag1nqS4xW4ylaMr6nfbD1lZCi5q
-         SJqS6zGjboPBgEFuIzBzTokukJn8HePbfKgBVFm8LkbFloKzNWZhmd6C0uuAK0X607
-         9uaKapWvKiAyNk6/my4ZtbAmoDj9yuAumCAks15RpaYiiL2DR0b7Ul6WhttlnqYtTc
-         D/WDMWLfVgUnA==
-Date:   Wed, 25 Oct 2023 13:12:55 +0100
+        s=k20201202; t=1698236227;
+        bh=eomEepdMdt0TCy17x4G8Gl1XMsjx8AJpR54YD2G0zP8=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=mzeLCCD5RWgGr3w4wP5Gn40L/gBRUVKXFJRg7/aocUDZwaw7vWae/accwsX3bHv4E
+         p75DFAM1IifwwnLYWUwTefXFmVR4Mp97Gcrn+TxuthcOqfbgDzJzUb90m+HQmKWjyj
+         31XE597tGZ7g01PfpQjNywm9LehJOL1qt/NPW3bNuFbmzCmjTJyiirCZ77jkxeDiZo
+         gFonFqdxZ69Mgj8O0Bk5wDlil5Sj3PUi8xBylVQshHEu8duFgn4a8b+laQHEUp8O4I
+         +rtLFofc16W0j7PnX9TrOsfpaXklI6yMD2+Ddh6zLrH3IRAoIKiHO2nImAT2c1KFBU
+         GYDN9619n1Mhw==
 From:   Lee Jones <lee@kernel.org>
-To:     Anjelique Melendez <quic_amelende@quicinc.com>
-Cc:     pavel@ucw.cz, thierry.reding@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, luca.weiss@fairphone.com,
-        konrad.dybcio@linaro.org, u.kleine-koenig@pengutronix.de,
-        quic_subbaram@quicinc.com, quic_gurus@quicinc.com,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org
-Subject: Re: [PATCH v6 3/7] soc: qcom: add QCOM PBS driver
-Message-ID: <20231025121255.GM8909@google.com>
-References: <20231020182218.22217-1-quic_amelende@quicinc.com>
- <20231020182218.22217-4-quic_amelende@quicinc.com>
+To:     Lee Jones <lee@kernel.org>, Johan Hovold <johan+linaro@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+In-Reply-To: <20231003152927.15000-1-johan+linaro@kernel.org>
+References: <20231003152927.15000-1-johan+linaro@kernel.org>
+Subject: Re: (subset) [PATCH 0/5] mfd: qcom-spmi-pmic: fix revid
+ implementation
+Message-Id: <169823622555.724579.17090745891924053957.b4-ty@kernel.org>
+Date:   Wed, 25 Oct 2023 13:17:05 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231020182218.22217-4-quic_amelende@quicinc.com>
+X-Mailer: b4 0.12.2
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -56,28 +54,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 20 Oct 2023, Anjelique Melendez wrote:
-
-> Add the Qualcomm PBS (Programmable Boot Sequencer) driver. The QCOM PBS
-> driver supports configuring software PBS trigger events through PBS RAM
-> on Qualcomm Technologies, Inc (QTI) PMICs.
+On Tue, 03 Oct 2023 17:29:22 +0200, Johan Hovold wrote:
+> The Qualcomm SPMI PMIC revid implementation is broken in multiple ways
+> that can lead to resource leaks and crashes. This series reworks the
+> implementation so that can be used safely.
 > 
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-> ---
->  drivers/soc/qcom/Kconfig          |   9 ++
->  drivers/soc/qcom/Makefile         |   1 +
->  drivers/soc/qcom/qcom-pbs.c       | 243 ++++++++++++++++++++++++++++++
->  include/linux/soc/qcom/qcom-pbs.h |  30 ++++
->  4 files changed, 283 insertions(+)
->  create mode 100644 drivers/soc/qcom/qcom-pbs.c
->  create mode 100644 include/linux/soc/qcom/qcom-pbs.h
+> Included is also a rename of the SPMI device lookup helper which can
+> hopefully help prevent similar leaks from being reintroduced.
+> 
+> [...]
 
-The LED patches look good to go.
+Applied, thanks!
 
-What's the plan for the SoC driver?
+[4/5] spmi: document spmi_device_from_of() refcounting
+      commit: 7db72c01ae2359dbab29f4a60cda49757cf84516
+[5/5] spmi: rename spmi device lookup helper
+      (no commit info)
 
-  * Who will review it?
-  * Shall I take it via LED with an Ack?
-
--- 
+--
 Lee Jones [李琼斯]
+
