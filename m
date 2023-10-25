@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C9467D631B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:34:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DC547D6319
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:34:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232870AbjJYHeB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:34:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55840 "EHLO
+        id S233022AbjJYHeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:34:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232470AbjJYHdc (ORCPT
+        with ESMTP id S233762AbjJYHde (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:33:32 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 909731BC7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:32:53 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2c594196344so23429231fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:32:53 -0700 (PDT)
+        Wed, 25 Oct 2023 03:33:34 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A35951FD7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:32:54 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-5079f6efd64so7428549e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:32:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698219171; x=1698823971; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698219172; x=1698823972; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eiRNgEPxJAmJoraHhnwenmBIXG4wtj0VsldV/xv1+vA=;
-        b=ZC3p6K9tefuvoCMy2JH8UWn0IaKG+c+C4dwh3Opn67UjF7tcDztqkO4nuailLpgGZF
-         WwJbWm/YBPNQE5i049mpxaDQlteXt5J7HFc2KLo1Ri+z75GGJMkrXhN5kh8oFyD01Ulg
-         7jCjKFZZ7Pvx/B59gq0EtKlspIidIdejaGg85Pzi0Fo3DNSinueESxha3P5XMmNHwxI4
-         TYjfi2j6TU4he/2pXnS61rNF+E7gtkZo7SVhVOtYM4islxvf40MdfmQSjoQYq8mQVieC
-         BR2GzMMRrdQxBeuItamrqotDV3K2Mi/12XwXx8MKLJlu1TI2m2aGHXw6GmbqJBja/D5r
-         i/uQ==
+        bh=SAdZv2SpCyzhhWzoipryKQ5g0HDkgSjJCxK1Y1vCQuY=;
+        b=jaVMwG581hiWsNtLUmU2hbvnwQTtOECkjOmsdi6Swq0IcJ6EMK742RvP0d/Ygc7C8Z
+         K0glSoWfkwRW7zsEaxZnZOObYX3SuL3fSeJZkoC9KTlVHreKpoI2kWS3RQY38RdsqHNc
+         zx6WLq/IqAIF9/RDsbiGaLFYkiMOMeYen/mXwxcYUNQshEsXFx2JG7eBn3TC2owqVIGB
+         dO7zXY25ND2YmyNJPC9Dx66L6iccRqCjMG/wCNmbA5VUmrE4pc5amXGBWFKfgV3vCvhc
+         lEtUxA3H3moxntpMhIn16N9aBi01MmRJ3Bx6NLhRoTFrFlb0PSd6nES6hpF/ksHE3x5k
+         8Gng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698219171; x=1698823971;
+        d=1e100.net; s=20230601; t=1698219172; x=1698823972;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eiRNgEPxJAmJoraHhnwenmBIXG4wtj0VsldV/xv1+vA=;
-        b=SPkPmx+Quf8QDeUB8R+ANvzhGkqSqujQoqXkt1aoD/9b0FagIO1vXTwyNh76SI1cAr
-         AmChXaeZ1gvqan1v2MNRkRWzWemKnqhhc5ipl/dDK0bmNhdQdfgmw0sJWft3Xi1yG+U3
-         imQRxYoHIoGPdHfOveYL9s5PY9sGYbfMOwROKfb5XjpGo7EC4Uu6dpf8AsBXCE4Tbpqa
-         Inpv1P6c7g0eOMp5xM82xqmO3wqyKzKndA8Ttzjpso+VZEwgyIKq0RERfVv2W3KBn6a6
-         fHutC7I5KuuptlPFsR4z7Fq7sbH0BgTghEG/iFN22CHAlq6SbzkS130sjOUQpeGbuJhi
-         8rZQ==
-X-Gm-Message-State: AOJu0YzXCZYeACwAIvlLl+9FQaKBfIC7QAfmrMA+gs4nvgzKIdtXv6wm
-        eabIcBjLc4H/8lVAv2uB9OtqUw==
-X-Google-Smtp-Source: AGHT+IGzcLanhahv53YV+bro8JTOlBawINyfr7DobPd7zf4ELg6HasZCk6hkKfMs5gFfGgcMJsf/Kg==
-X-Received: by 2002:a05:651c:1545:b0:2c5:5ab0:2e58 with SMTP id y5-20020a05651c154500b002c55ab02e58mr15300903ljp.1.1698219171412;
-        Wed, 25 Oct 2023 00:32:51 -0700 (PDT)
+        bh=SAdZv2SpCyzhhWzoipryKQ5g0HDkgSjJCxK1Y1vCQuY=;
+        b=vHoJAaMMouE21eqyHqJj4585vQRU/+w6Vl7lP7L87kcL3CDMFBp30HPkaIzbCqE8ST
+         4wSd99+zQNMwp8D6NAGZzGJt6q9M4/o5fajI8EC5vq268VVPkUgc7jKNyNjg8uXB43gq
+         0a9vG/EbU0Kj2dirCA97gYKqzDmIh+a29xw52rG7f5+d3XXSJshrNFvjOij+U5zPS9zs
+         wcnn/YBo2uw50FosG20cQeZlpHSBnZKQNXZW+ksPAWMMYSt1YOsIjVX57PBPoDYZDtl+
+         rSbHKRM0d1iNe1cjw/jNumqa/5iPKSXK18k7X60p8tYJ2st+JeKsx4TVFrXEvcakzVlm
+         rj4Q==
+X-Gm-Message-State: AOJu0YytIJQBriWBjKLqOczVu4UrQxn35O1ROirCGICh7/7w2pgrrGwC
+        omL5bL3Rl/2Sdc6FCmE0A+s5Ow==
+X-Google-Smtp-Source: AGHT+IGHD1W7vjiQU54eg3KVUr8VSLyTUYuqFlv1U1LcSpHKC+tEaMFtrRL0PTqxPoHB88kgvbjJfQ==
+X-Received: by 2002:ac2:5104:0:b0:507:b17a:709e with SMTP id q4-20020ac25104000000b00507b17a709emr10639931lfb.1.1698219172476;
+        Wed, 25 Oct 2023 00:32:52 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id v18-20020a05600c15d200b004063d8b43e7sm18422239wmf.48.2023.10.25.00.32.50
+        by smtp.gmail.com with ESMTPSA id v18-20020a05600c15d200b004063d8b43e7sm18422239wmf.48.2023.10.25.00.32.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 00:32:50 -0700 (PDT)
+        Wed, 25 Oct 2023 00:32:52 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 09:32:41 +0200
-Subject: [PATCH 04/10] dt-bindings: clock: qcom: document the SM8650 GPU
- Clock Controller
+Date:   Wed, 25 Oct 2023 09:32:42 +0200
+Subject: [PATCH 05/10] dt-bindings: clock: qcom-rpmhcc: document the SM8650
+ RPMH Clock Controller
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-clocks-v1-4-c89b59594caf@linaro.org>
+Message-Id: <20231025-topic-sm8650-upstream-clocks-v1-5-c89b59594caf@linaro.org>
 References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
 In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -74,135 +74,50 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3562;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=734;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=ScNFnwb5srCiyE10UVgidhVGXgJVS/xG1ukEEAMMBG8=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMSamzHTCcMR9pWWTMfy9TT0FJM+dwl80Ajz0hXy
- Z8MG5r+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjEmgAKCRB33NvayMhJ0Ud8D/
- 0VfmqhL/lp11GySFAgjPGbSnqjk7FyIONCHwacmvTjIDrqQglXQ8/gynVs5lcRZWuN0+CYexSpMTkK
- SdWuHxMkedM9TBy+m8vC2zns6H7S/cE+sdn5KBkLWUy7i8e1riL8SbwGDy/cNl1PtFNLVb8M7sm1wA
- MMz56/jTLg0bFyY8bUnB0U/5cOb8Zmebj7rGvMpVUPtTrI4HzUA1TBUowem5KnXAKJ2mILpKX2gmkX
- eFBfiTA+OYi6/g4Ce5ehKJZn0emILqSUQxvFfv7T0njaV4etXwW9r+iR/utCOfqJsbO4hUMsdyaRB+
- Pz+tKaOCjXNIVUw2PReUCSbt8VD481MrY9U70Bfvb45AkdcadpGi2Izz7HabFTh1pino/JZTA62fLa
- 7lwPRC3blHe0djkxzcHtI38USlL1ne86HzkKoFZXTpZ8n0i/sh/aJo7/+xy4EO9sVoeBnv4emcce7b
- MOuFTt42uBbHThiC4JLO5IsPOu6PI/HxiDC99bpk76282D5uPwsIlq6YogyHCDRhxkoU883nu8IyZ3
- DHiVJfFbL+cyc7dIA8sp6SjFGPA55rNT7jN084ABgw+UWeF2i+GBtkh/+uhnPc12N7iYeVjbsEsZMB
- 5XRWWrul5+643lSHQElPsfPquWCNdy3XHUGeQy19p7aDwSIiQ/VM1CvQVG6g==
+ bh=j1GD0rlTsJFErsDQaYor/hl8ccBoX2v6m+5EFQWT1x8=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMSb2IUsGyJoovWCtAqceyCCBOl43zgOiBLnc73C
+ fTFY61GJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjEmwAKCRB33NvayMhJ0Wj4EA
+ CJKK6JOgBAVAhXBo65/nggjbUu+uzQeWaTfwvFbIf4CwK0riW29y5fbqqadxBF0a6nt9mG2y+j0fOp
+ epXpwDO3F3BHsm3zL0/fmak75KnLF12/oWdkynYb7yyNgxFaaAa/drCv2wzKjpKD5p2GUzyd+9d/v4
+ VRUm4UetZ7mCebFxjhkuarKC2Qa8FJ+Cq9HWbCSx7+W+9ax11C0aO89hv6OdHeK4qU67yH7WSU0GcA
+ sZ3OpGo9lNcEkPJ9kldrhxJWM6r2tf7+ZXSGRU2MyLn6Uv4WUCTcCTlSmawiPm+TTmf2f+w/J3svxP
+ ooqJsd3MyAyAxrnQb2EZA86fMjRe9CYvHQd00VO8knOukeh2eCLNN3MQnUzHUSaYCH4Hh40iG4v0Kj
+ GyWEV32GOGrWonH0rHd265Mp8BymhdIOYPOofWyA6+IWoraZ88myaUJb8c7Sjgqk7Vl+XAWSnGnmpT
+ nmFTckE+pxqPBUk03lEYskkFYD//774BS2Igb43svplhGleia/NUWaR+ZVf3E11A/7oRK4ZP0qBU22
+ TQ8R+88kWg0J2hR5ArP2yxJia5JBi/EU771gkG6v5R4z03kd2r/u+U8OSDfsGJdBIigvcY3ksnofje
+ Jkvefl1fBsermRDv4mEsavV1kKUj2eRm3B/8kUqjXk4rhNzm4to8UUtaZ3YQ==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings documentation for the SM8650 Graphics Clock Controller.
+Add bindings documentation for the SM8650 RPMH Clock Controller.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- .../bindings/clock/qcom,sm8450-gpucc.yaml          |  2 +
- include/dt-bindings/clock/qcom,sm8650-gpucc.h      | 43 ++++++++++++++++++++++
- include/dt-bindings/reset/qcom,sm8650-gpucc.h      | 20 ++++++++++
- 3 files changed, 65 insertions(+)
+ Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-index 2320be920a5f..1a384e8532a5 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-@@ -17,12 +17,14 @@ description: |
-     include/dt-bindings/clock/qcom,sm8450-gpucc.h
-     include/dt-bindings/clock/qcom,sm8550-gpucc.h
-     include/dt-bindings/reset/qcom,sm8450-gpucc.h
-+    include/dt-bindings/reset/qcom,sm8650-gpucc.h
- 
- properties:
-   compatible:
-     enum:
-       - qcom,sm8450-gpucc
-       - qcom,sm8550-gpucc
-+      - qcom,sm8650-gpucc
+diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+index 4eb5e59f6772..9be952a5a227 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml
+@@ -35,6 +35,7 @@ properties:
+       - qcom,sm8350-rpmh-clk
+       - qcom,sm8450-rpmh-clk
+       - qcom,sm8550-rpmh-clk
++      - qcom,sm8650-rpmh-clk
  
    clocks:
-     items:
-diff --git a/include/dt-bindings/clock/qcom,sm8650-gpucc.h b/include/dt-bindings/clock/qcom,sm8650-gpucc.h
-new file mode 100644
-index 000000000000..103bb4487333
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,sm8650-gpucc.h
-@@ -0,0 +1,43 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+#ifndef _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8650_H
-+#define _DT_BINDINGS_CLK_QCOM_GPU_CC_SM8650_H
-+
-+/* GPU_CC clocks */
-+#define GPU_CC_AHB_CLK				0
-+#define GPU_CC_CRC_AHB_CLK			1
-+#define GPU_CC_CX_ACCU_SHIFT_CLK		2
-+#define GPU_CC_CX_FF_CLK			3
-+#define GPU_CC_CX_GMU_CLK			4
-+#define GPU_CC_CXO_AON_CLK			5
-+#define GPU_CC_CXO_CLK				6
-+#define GPU_CC_DEMET_CLK			7
-+#define GPU_CC_DPM_CLK				8
-+#define GPU_CC_FF_CLK_SRC			9
-+#define GPU_CC_FREQ_MEASURE_CLK			10
-+#define GPU_CC_GMU_CLK_SRC			11
-+#define GPU_CC_GX_ACCU_SHIFT_CLK		12
-+#define GPU_CC_GX_FF_CLK			13
-+#define GPU_CC_GX_GFX3D_CLK			14
-+#define GPU_CC_GX_GFX3D_RDVM_CLK		15
-+#define GPU_CC_GX_GMU_CLK			16
-+#define GPU_CC_GX_VSENSE_CLK			17
-+#define GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK		18
-+#define GPU_CC_HUB_AON_CLK			19
-+#define GPU_CC_HUB_CLK_SRC			20
-+#define GPU_CC_HUB_CX_INT_CLK			21
-+#define GPU_CC_HUB_DIV_CLK_SRC			22
-+#define GPU_CC_MEMNOC_GFX_CLK			23
-+#define GPU_CC_PLL0				24
-+#define GPU_CC_PLL1				25
-+#define GPU_CC_SLEEP_CLK			26
-+
-+/* GDSCs */
-+#define GPU_GX_GDSC				0
-+#define GPU_CX_GDSC				1
-+
-+#endif
-diff --git a/include/dt-bindings/reset/qcom,sm8650-gpucc.h b/include/dt-bindings/reset/qcom,sm8650-gpucc.h
-new file mode 100644
-index 000000000000..f021a6cccc66
---- /dev/null
-+++ b/include/dt-bindings/reset/qcom,sm8650-gpucc.h
-@@ -0,0 +1,20 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+#ifndef _DT_BINDINGS_RESET_QCOM_GPU_CC_SM8650_H
-+#define _DT_BINDINGS_RESET_QCOM_GPU_CC_SM8650_H
-+
-+#define GPUCC_GPU_CC_ACD_BCR			0
-+#define GPUCC_GPU_CC_CX_BCR			1
-+#define GPUCC_GPU_CC_FAST_HUB_BCR		2
-+#define GPUCC_GPU_CC_FF_BCR			3
-+#define GPUCC_GPU_CC_GFX3D_AON_BCR		4
-+#define GPUCC_GPU_CC_GMU_BCR			5
-+#define GPUCC_GPU_CC_GX_BCR			6
-+#define GPUCC_GPU_CC_XO_BCR			7
-+#define GPUCC_GPU_CC_GX_ACD_IROOT_BCR		8
-+
-+#endif
+     maxItems: 1
 
 -- 
 2.34.1
