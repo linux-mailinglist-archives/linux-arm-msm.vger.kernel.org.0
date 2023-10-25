@@ -2,85 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C11A7D6D4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 15:32:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B48587D6D65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 15:35:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235061AbjJYNci (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 09:32:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54066 "EHLO
+        id S234790AbjJYNeY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 09:34:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48448 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235063AbjJYNcY (ORCPT
+        with ESMTP id S234778AbjJYNeX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 09:32:24 -0400
+        Wed, 25 Oct 2023 09:34:23 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143BC1BE8;
-        Wed, 25 Oct 2023 06:31:47 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PBgNuk004664;
-        Wed, 25 Oct 2023 13:31:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : to : cc; s=qcppdkim1;
- bh=dYFl+B4guL/E227cT3dgqKN0vH60AC+11t3BFbj39iQ=;
- b=BfRBHG4Cbrvby8H4DK6f5tYDtecQHsH9bcegMZCDvQVMp4nbXYoO0NpIotJ1PmebaMGo
- G98owfGIE1no9sThgcDv3IdF1jc9RiHP2C37mNxMISIcBThK/77nWXr7TiQxweqHU31w
- Noa6QwAoTNdvCIIidgZMD1NzxEpLmDE4RnTp8+Ej8NWGZhTEog5MmgBamW0c7Tj7D+Da
- fTO3hWdCzzhHxwwl4bkssNZcBKuCvvfVMrn0+S4bz9u72e+/DnIspVd5Ji/DlIDANL5Y
- js+YScyPulhax7WG287evVSD6BeEeuAlMZObUL2F/oFOXMKdL1NFbMOrKKnsooTBnVXU MQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ty0tu0ces-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A0CA138;
+        Wed, 25 Oct 2023 06:34:21 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PCoixf031789;
+        Wed, 25 Oct 2023 13:34:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=jwDPbpSVbcPqvdBlNUpUiQ+j5CT511wjOh2N2JAIA+8=;
+ b=Ie8PN6HKcQJXI6XxPbplV58Nr+AFP1sBOA3PjQjTKlG1SudEL0PlAnjP/4UxVSHIIaF0
+ Fdutt/58XP7dq0yi9I2cFRz58coKD00UjJc8UcOaxX6I27I4KkYsX1jyY4JfFcNk6GXx
+ kBmXUjRDovdV6hEb1ZDx+9o0DuHb4WDWvLYLxkNGsqxmRnLE/KLMLBRmza2Vbsg4uaKh
+ SSKqZ6w0Glu8kwN2dv2tyzbHXXT2HR+Kmw+GZvcMQ5wPp5zVpiQZBcpDVGItdP3XsUfG
+ +W1Ug9V9ttiWvTvqd4I7gNcIrldDiP08vuDXi1s5DhhfIYP1gmMWb7pO49eOdPg0geTG zw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txmhx9r90-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 13:31:43 +0000
+        Wed, 25 Oct 2023 13:34:17 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PDVgFa029999
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PDY4r6029801
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 13:31:42 GMT
-Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
+        Wed, 25 Oct 2023 13:34:04 GMT
+Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Wed, 25 Oct 2023 06:31:39 -0700
-From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Date:   Wed, 25 Oct 2023 19:01:25 +0530
-Subject: [PATCH v2] arm64: dts: qcom: ipq9574: enable GPIO based LED
+ 15.2.1118.39; Wed, 25 Oct 2023 06:33:59 -0700
+From:   Sibi Sankar <quic_sibis@quicinc.com>
+To:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
+CC:     <agross@kernel.org>, <conor+dt@kernel.org>,
+        <quic_tdas@quicinc.com>, <quic_rjendra@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <neil.armstrong@linaro.org>, <abel.vesa@linaro.org>,
+        <quic_tsoni@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH 0/4] clk: qcom: Introduce clocks drivers for SC8380XP
+Date:   Wed, 25 Oct 2023 19:03:16 +0530
+Message-ID: <20231025133320.4720-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20231025-ipq9574-led-v2-1-59b2725697ad@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAKwYOWUC/23MQQ6CMBCF4auQWTuGVrCUlfcwLGg7yCTaQqtEQ
- 7i7lbXL/yXvWyFRZErQFitEWjhx8DnkoQA79v5GyC43yFKeRClr5GnWtarwTg4b4/reVFbb4Qz
- 5MUUa+L1r1y73yOkZ4mfHF/Fb/zuLQIGmkUKR1soN5jK/2LK3Rxse0G3b9gUek1LMqAAAAA==
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1698240699; l=1708;
- i=quic_kathirav@quicinc.com; s=20230906; h=from:subject:message-id;
- bh=aIf7ByeUVJVDW+2FK1qW8kZw2tJ1PyFbxMhu/7J7pLw=;
- b=H/67hhcc74lreQWLQGLzBYtiiDMucz+L3qkKqZxGyo489SZGBOU2MA8uy/Fe72cG86Vw0o9TH
- bcUWL1eReYBBD2ud2vFg2yI3X2vZYMqIpZ2amSQhgrr3lWUzZpj+FG4
-X-Developer-Key: i=quic_kathirav@quicinc.com; a=ed25519;
- pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3Hppbjaa49XBBSzXjMArpPD-4vbuZGt7
-X-Proofpoint-GUID: 3Hppbjaa49XBBSzXjMArpPD-4vbuZGt7
+X-Proofpoint-ORIG-GUID: eu4pHySoNVB25NuPW-GIGigO-pxPe1w4
+X-Proofpoint-GUID: eu4pHySoNVB25NuPW-GIGigO-pxPe1w4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-25_02,2023-10-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 mlxlogscore=769
- suspectscore=0 bulkscore=0 mlxscore=0 phishscore=0 impostorscore=0
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2310170001 definitions=main-2310250117
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ phishscore=0 malwarescore=0 spamscore=0 adultscore=0 mlxscore=0
+ priorityscore=1501 mlxlogscore=491 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310250118
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -90,70 +78,29 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for wlan-2g LED on GPIO64.
+This series adds initial clock support for the Qualcomm SC8380XP platform, aka Snapdragon X Elite.
 
-Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
----
-Changes in v2:
-- Added function and color property
-- Link to v1: https://lore.kernel.org/r/20231025-ipq9574-led-v1-1-b8217e997dfb@quicinc.com
----
- arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Dependencies: None
+Release Link: https://www.qualcomm.com/news/releases/2023/10/qualcomm-unleashes-snapdragon-x-elite--the-ai-super-charged-plat
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-index 49c9b6478357..91e104b0f865 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-@@ -10,6 +10,7 @@
- 
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/input.h>
-+#include <dt-bindings/leds/common.h>
- #include "ipq9574.dtsi"
- 
- / {
-@@ -51,6 +52,20 @@ button-wps {
- 			debounce-interval = <60>;
- 		};
- 	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		pinctrl-0 = <&gpio_leds_default>;
-+		pinctrl-names = "default";
-+
-+		led-0 {
-+			color = <LED_COLOR_ID_GREEN>;
-+			function = LED_FUNCTION_WLAN;
-+			gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-+			linux,default-trigger = "phy0tx";
-+			default-state = "off";
-+		};
-+	};
- };
- 
- &blsp1_spi0 {
-@@ -117,6 +132,13 @@ gpio_keys_default: gpio-keys-default-state {
- 		drive-strength = <8>;
- 		bias-pull-up;
- 	};
-+
-+	gpio_leds_default: gpio-leds-default-state {
-+		pins = "gpio64";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
- };
- 
- &usb_0_dwc3 {
+Rajendra Nayak (4):
+  dt-bindings: clock: qcom: Add SC8380XP GCC clocks
+  clk: qcom: Add Global Clock controller (GCC) driver for SC8380XP
+  dt-bindings: clock: qcom-rpmhcc: Add RPMHCC bindings for SC8380XP
+  clk: qcom: rpmh: Add support for SC8380XP rpmh clocks
 
----
-base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
-change-id: 20231025-ipq9574-led-8bdaab4c9cf6
+ .../bindings/clock/qcom,rpmhcc.yaml           |    1 +
+ .../bindings/clock/qcom,sc8380xp-gcc.yaml     |   72 +
+ drivers/clk/qcom/Kconfig                      |   10 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/clk-rpmh.c                   |   26 +
+ drivers/clk/qcom/gcc-sc8380xp.c               | 6812 +++++++++++++++++
+ include/dt-bindings/clock/qcom,sc8380xp-gcc.h |  485 ++
+ 7 files changed, 7407 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc8380xp-gcc.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sc8380xp.c
+ create mode 100644 include/dt-bindings/clock/qcom,sc8380xp-gcc.h
 
-Best regards,
 -- 
-Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+2.17.1
 
