@@ -2,165 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 648127D679E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 11:54:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79B4F7D67D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 12:06:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232985AbjJYJy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 05:54:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38614 "EHLO
+        id S234336AbjJYKGb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 06:06:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233736AbjJYJyY (ORCPT
+        with ESMTP id S233303AbjJYKGa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 05:54:24 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5369128;
-        Wed, 25 Oct 2023 02:54:21 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39P8s1gt005815;
-        Wed, 25 Oct 2023 09:54:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7wMO74w/KQMo+4s9Z0A2HrX+bIjpx9iGlyOA0PG/ad4=;
- b=fDalulYI2WuDlOyjB/RfQhy53FS3TMA6/rGNwiUHXMmV2ZeSdnzVb57XHSDLBioB1ixx
- SFYaywyg3BGuYEctknE3SWmjKk8gNAVER/SfyW7wvu0KvfHMzFNv9/RtmeDGZX4li9np
- mwzO9FbzM3rbzCHslVRLD2VOenErwtLWIyjVGb4/ts2ow6tB6MIqVVIgKgcFN8njtGif
- SQUZz5kWt2lb95TOaA2Apsm821JxRFIs87+ZBU1GKS/o0LxP0EWB+a0scaH7iYcJGfJP
- zF+GxaPP25tRSdCKZ70+qNMOHt2HI+RUlHndwahzd6H0woVFipMz6M5xA1fxh+dJY3vw +w== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txuj7gkrr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 09:54:16 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39P9sFC7019754
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 09:54:15 GMT
-Received: from [10.233.19.96] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 25 Oct
- 2023 02:54:12 -0700
-Message-ID: <060e80b9-e403-45b7-8627-e7b33b223688@quicinc.com>
-Date:   Wed, 25 Oct 2023 17:54:10 +0800
+        Wed, 25 Oct 2023 06:06:30 -0400
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B347B128
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 03:06:27 -0700 (PDT)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5a7d9d357faso54028277b3.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 03:06:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698228387; x=1698833187; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=q9wXtrZXCK+13JkLhq9pSaIeP3nLGHw9GpelTWB58cI=;
+        b=LdCBsroYTUKhoWeSTC6as9+pv8NW82IaXT4Gnif8NBEGVs3bP5sbbMKcTGNsih+/Rq
+         I5VfXVOmirNUzq+SH3u9def5xMFWiQ94xBZzRnr5xv8iEkKz4mw4NKNmaNAtBiEyAo4i
+         F9gRp06cbbeDNhnaPyRvX2XWR1URQ58xB/iw8oqgK3hTOQEXKQCf93NkCOoT2uuyNlsq
+         0lJNvHYNrU5iK6OvxoG8KTZjCVSN5dZZY/ABARe7kqjmcI1Q0Nd/I/hZbrb4zBr/QyGK
+         X73yKeWMOTiZ/qlkHk0hHHzMMBh0a3WZdIi+fnrN/ZlyGNU2bVR7/8O0IJX+RH5cYegJ
+         joXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698228387; x=1698833187;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q9wXtrZXCK+13JkLhq9pSaIeP3nLGHw9GpelTWB58cI=;
+        b=Owinq3L3QitbgS7WeJH7segeEvg+E2bQ9pdhvrEf/Pk0lktyy5mvoU/6pehtiiYSEw
+         gALL3Yo5aT0e85oe0wMMtn8AVzo4yotrHmQ+A5BadxU1rCZEF+ju0v4zjS0GD756KYDG
+         JPOAurtnAZRft+8u96WGGYbW+DuqitHINoF8818Z6jt9UN0eKjOq6CbKmqAwix/U4gAD
+         CSNRjfRW8ts6cN75mM4tURiLAPbpbfNuoXu1AWhwWKiuLrWa8p4MS11U0tIf+U4x4kzS
+         OOkCTSAFoJXIHZFWNAtb93rbU0isXzjvHk38l6f+QdCI83DVZTzLKavK8uPnPBKVr7Ui
+         JGvQ==
+X-Gm-Message-State: AOJu0YxVmq/GQE9UdEDQZtUBC8i7Jcr2lFjskYytoRxA47tWu5Qw8YmX
+        clu7PdkPSD5XIYWBXIv7O9QHmbxMSv47YH+HP9+LcQ==
+X-Google-Smtp-Source: AGHT+IEulIKu5K+XkQLWBzrf2lHWc+yXcrbptuf3RzpTO2ez6RMQ5O+8XbGz9VCo7WdlKXwSrNqxi77C9q4BZM7tS8o=
+X-Received: by 2002:a0d:e84c:0:b0:5a8:277f:b378 with SMTP id
+ r73-20020a0de84c000000b005a8277fb378mr14113574ywe.1.1698228386871; Wed, 25
+ Oct 2023 03:06:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND PATCH v6 3/3] input: pm8xxx-vibrator: add new SPMI
- vibrator support
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
-CC:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <robh+dt@kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
+References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
+ <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
+ <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
+ <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
+ <ZTeyhR7YY7VgWQlU@kernkonzept.com> <CAPDyKFrcV8iJnJ904j1jkx0E8PaOLmiTZ7CKk7EV8qQ71AZdbA@mail.gmail.com>
+ <ZTfBZqBwqskhFydZ@kernkonzept.com> <CAPDyKFooPLCmJeqjhiMm7HRdW5UrEw0yHvGF9fgLvOigsgbWxg@mail.gmail.com>
+ <ZTfv-Dea693UqLXB@gerhold.net>
+In-Reply-To: <ZTfv-Dea693UqLXB@gerhold.net>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 25 Oct 2023 12:05:49 +0200
+Message-ID: <CAPDyKFpFJd+ipv6kb77MgnDtXtFPa3=BX2RgaKq5i5r6WpVmJQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain devices
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-input@vger.kernel.org>, <quic_collinsd@quicinc.com>,
-        <quic_subbaram@quicinc.com>, <quic_kamalw@quicinc.com>,
-        <jestar@qti.qualcomm.com>, Luca Weiss <luca.weiss@fairphone.com>
-References: <20230922083801.3056724-1-quic_fenglinw@quicinc.com>
- <20230922083801.3056724-4-quic_fenglinw@quicinc.com>
- <CAA8EJpoW8DJOTVHBu9_+BQs5DtxyJu3xrCfDNyYHn2MeHZHV4w@mail.gmail.com>
- <12887370-0ada-359b-8a4f-18a28495c69a@quicinc.com>
- <ZRhKAWYBLcBZHc73@google.com>
- <8697d115-9aa7-2a1c-4d96-25b15adb5cca@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <8697d115-9aa7-2a1c-4d96-25b15adb5cca@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1q0bmqWI62j_b-3zaFjdSuN-lMjk9_TQ
-X-Proofpoint-GUID: 1q0bmqWI62j_b-3zaFjdSuN-lMjk9_TQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-25_01,2023-10-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- spamscore=0 malwarescore=0 clxscore=1011 suspectscore=0 lowpriorityscore=0
- impostorscore=0 priorityscore=1501 mlxscore=0 adultscore=0 mlxlogscore=714
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310250084
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 24 Oct 2023 at 18:25, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Tue, Oct 24, 2023 at 06:11:34PM +0200, Ulf Hansson wrote:
+> > On Tue, 24 Oct 2023 at 15:07, Stephan Gerhold
+> > <stephan.gerhold@kernkonzept.com> wrote:
+> > >
+> > > On Tue, Oct 24, 2023 at 02:49:32PM +0200, Ulf Hansson wrote:
+> > > > On Tue, 24 Oct 2023 at 14:03, Stephan Gerhold
+> > > > <stephan.gerhold@kernkonzept.com> wrote:
+> > > > >
+> > > > > On Thu, Oct 19, 2023 at 01:26:19PM +0200, Ulf Hansson wrote:
+> > > > > > On Thu, 19 Oct 2023 at 12:24, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > > > > >
+> > > > > > > On Wed, 18 Oct 2023 at 10:06, Stephan Gerhold
+> > > > > > > <stephan.gerhold@kernkonzept.com> wrote:
+> > > > > > > >
+> > > > > > > > The genpd core caches performance state votes from devices that are
+> > > > > > > > runtime suspended as of commit 3c5a272202c2 ("PM: domains: Improve
+> > > > > > > > runtime PM performance state handling"). They get applied once the
+> > > > > > > > device becomes active again.
+> > > > > > > >
+> > > > > > > > To attach the power domains needed by qcom-cpufreq-nvmem the OPP core
+> > > > > > > > calls genpd_dev_pm_attach_by_id(). This results in "virtual" dummy
+> > > > > > > > devices that use runtime PM only to control the enable and performance
+> > > > > > > > state for the attached power domain.
+> > > > > > > >
+> > > > > > > > However, at the moment nothing ever resumes the virtual devices created
+> > > > > > > > for qcom-cpufreq-nvmem. They remain permanently runtime suspended. This
+> > > > > > > > means that performance state votes made during cpufreq scaling get
+> > > > > > > > always cached and never applied to the hardware.
+> > > > > > > >
+> > > > > > > > Fix this by enabling the devices after attaching them and use
+> > > > > > > > dev_pm_syscore_device() to ensure the power domains also stay on when
+> > > > > > > > going to suspend. Since it supplies the CPU we can never turn it off
+> > > > > > > > from Linux. There are other mechanisms to turn it off when needed,
+> > > > > > > > usually in the RPM firmware (RPMPD) or the cpuidle path (CPR genpd).
+> > > > > > >
+> > > > > > > I believe we discussed using dev_pm_syscore_device() for the previous
+> > > > > > > version. It's not intended to be used for things like the above.
+> > > > > > >
+> > > > > > > Moreover, I was under the impression that it wasn't really needed. In
+> > > > > > > fact, I would think that this actually breaks things for system
+> > > > > > > suspend/resume, as in this case the cpr driver's genpd
+> > > > > > > ->power_on|off() callbacks are no longer getting called due this,
+> > > > > > > which means that the cpr state machine isn't going to be restored
+> > > > > > > properly. Or did I get this wrong?
+> > > > > >
+> > > > > > BTW, if you really need something like the above, the proper way to do
+> > > > > > it would instead be to call device_set_awake_path() for the device.
+> > > > > >
+> > > > >
+> > > > > Unfortunately this does not work correctly. When I use
+> > > > > device_set_awake_path() it does set dev->power.wakeup_path = true.
+> > > > > However, this flag is cleared again in device_prepare() when entering
+> > > > > suspend. To me it looks a bit like wakeup_path is not supposed to be set
+> > > > > directly by drivers? Before and after your commit 8512220c5782 ("PM /
+> > > > > core: Assign the wakeup_path status flag in __device_prepare()") it
+> > > > > seems to be internally bound to device_may_wakeup().
+> > > > >
+> > > > > It works if I make device_may_wakeup() return true, with
+> > > > >
+> > > > >         device_set_wakeup_capable(dev, true);
+> > > > >         device_wakeup_enable(dev);
+> > > > >
+> > > > > but that also allows *disabling* the wakeup from sysfs which doesn't
+> > > > > really make sense for the CPU.
+> > > > >
+> > > > > Any ideas?
+> > > >
+> > > > The device_set_awake_path() should be called from a system suspend
+> > > > callback. So you need to add that callback for the cpufreq driver.
+> > > >
+> > > > Sorry, if that wasn't clear.
+> > > >
+> > >
+> > > Hmm, but at the moment I'm calling this on the virtual genpd devices.
+> > > How would it work for them? I don't have a suspend callback for them.
+> > >
+> > > I guess could loop over the virtual devices in the cpufreq driver
+> > > suspend callback, but is my driver suspend callback really guaranteed to
+> > > run before the device_prepare() that clears "wakeup_path" on the virtual
+> > > devices?
+> >
+> > Yes, that's guaranteed. dpm_prepare() (which calls device_prepare())
+> > is always being executed before dpm_suspend().
+> >
+>
+> Thanks, I think I understand. Maybe. :-)
+>
+> Just to confirm, I should call device_set_awake_path() for the virtual
+> genpd devices as part of the PM ->suspend() callback? And this will be
+> guaranteed to run after the "prepare" phase but before the
+> "suspend_noirq" phase where the genpd core will check the wakeup flag?
 
+Correct!
 
-On 10/9/2023 12:01 PM, Fenglin Wu wrote:
-> 
-> 
-> On 10/1/2023 12:17 AM, Dmitry Torokhov wrote:
->> On Mon, Sep 25, 2023 at 10:54:45AM +0800, Fenglin Wu wrote:
->>>
->>>
->>> On 9/24/2023 3:07 AM, Dmitry Baryshkov wrote:
->>>>> +
->>>>> +       switch (vib->data->hw_type) {
->>>>> +       case SSBI_VIB:
->>>>>                   mask = SSBI_VIB_DRV_LEVEL_MASK;
->>>>>                   shift = SSBI_VIB_DRV_SHIFT;
->>>>> +               break;
->>>>> +       case SPMI_VIB:
->>>>> +               mask = SPMI_VIB_DRV_LEVEL_MASK;
->>>>> +               shift = SPMI_VIB_DRV_SHIFT;
->>>>> +               break;
->>>>> +       case SPMI_VIB_GEN2:
->>>>> +               mask = SPMI_VIB_GEN2_DRV_MASK;
->>>>> +               shift = SPMI_VIB_GEN2_DRV_SHIFT;
->>>>> +               break;
->>>>> +       default:
->>>>> +               return -EINVAL;
->>>> Could you please move the switch to the previous patch? Then it would
->>>> be more obvious that you are just adding the SPMI_VIB_GEN2 here.
->>>>
->>>> Other than that LGTM.
->>>
->>> Sure, I can move the switch to the previous refactoring patch.
->>
->> Actually, the idea of having a const "reg" or "chip", etc. structure is
->> to avoid this kind of runtime checks based on hardware type and instead
->> use common computation. I believe you need to move mask and shift into
->> the chip-specific structure and avoid defining hw_type.
->>
-> 
-> Actually, the main motivation for adding 'hw_type' is to avoid reading 
-> 'reg_base' from DT for SSBI_VIB. It can also help to simplify the 
-> 'pm8xxx_vib_data' structure and make following code logic more 
-> straightforward and easier to understand(check hw_type instead of 
-> checking specific constant reg/mask value), it has been used in 
-> following places:
-> 
->    1) Avoid reading 'reg_base' from DT for SSBI_VIB.
->    2) Only do manual-mode-mask-write for SSBI_VIB. Previously, it was 
-> achieved by giving a valid 'drv_en_manual_mask' value only for SSBI_VIB, 
-> having hw_type make it more straightforward.
->    3) Not writing VIB_EN register for SSBI_VIB. A similar strategy was 
-> used previously, only write VIB_EN register when 'enable_mask' is valid, 
->   checking hw_type make it more straightforward.
->    4) To achieve different drive step size for SPMI_VIB （100mV per 
-> step) and SPMI_VIB_GEN2 (1mV per step).
->    5) Do different VIB_DRV mask and shift assignment for SPMI_VIB and 
-> SPMI_VIB_GEN2
->    6) Only write VIB_DRV2 for SPMI_VIB_GEN2.
-> 
-
-Hi Dmitry,
-
-Can you please help to comment if this looks good for you?
-I actually have pushed a V7 to address your last comment before you made 
-this one.
-V7 change: 
-https://lore.kernel.org/linux-arm-msm/20230927-pm8xxx-vibrator-v7-1-b5d8c92ce818@quicinc.com/, 
-just want to know how to move forward.
-Thanks
-
-Fenglin
-
-> 
->> Thanks.
->>
+Kind regards
+Uffe
