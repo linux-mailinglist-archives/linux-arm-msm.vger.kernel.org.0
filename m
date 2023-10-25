@@ -2,97 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4DBC17D75DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 22:38:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABAEA7D7704
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 23:46:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230043AbjJYUiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 16:38:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50328 "EHLO
+        id S229573AbjJYVqC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 17:46:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229867AbjJYUiJ (ORCPT
+        with ESMTP id S229649AbjJYVqB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 16:38:09 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AAC8186
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 13:38:06 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b9338e4695so1971901fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 13:38:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698266285; x=1698871085; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bkNNejbCmL/k7pWRnrsJGwZqih1Jcn9nw5isK0ZcLhI=;
-        b=BqFf2MHxH8RheMmwKqkJvx6gQAkizRpw+qnQqERHcsX8hjnF0eMrGg/5S0z1V5f7Dp
-         mS5G+ZEcT3GDbiC5U7PvMZp2Fe6+T6ETsN2fNvz7XXSH+HTOsyy3xSv0EvzvI71FteF9
-         QJZSJeVGkmq6aZVucENJgTZ7KFmm59YtZkiVPM34VvsIOeOhZrxCW5RMY1SdmZsDC86j
-         pyU7b3eUsrhGVCgyYPvCDV+/kMWE+6PLAqcpMtd+ntEyP56O8qBDk9NRvrlPZyKXpnRb
-         X1wgeNtQg6epvPnpGIJQ5vlG6SK7/wY9kLDhYWqKUSd1WEN2TlzmW53HbQMmlQVQKsjD
-         zhHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698266285; x=1698871085;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bkNNejbCmL/k7pWRnrsJGwZqih1Jcn9nw5isK0ZcLhI=;
-        b=Ortu/Ugq7sayPQJsY9QT3JD4gYQDi01B8eqBb9EwiZv5VCUXF7SAd901S52RnlLRCq
-         j5gy2p0cUs5N0ynygPhg88pBvVHEKYa2ZZrV6zdTf+u30PRCcAXX22L88BxGxKcePVJK
-         OxOkdoL0v+ce302dPOKotDuLgIIhCDs9VfzO3ghM3unIVjgI9Z6IRY+niXFbuBfa9Fkw
-         3lJB/wsmMl4F+bObdyQeXRhl2BlehqFgOwbJJ/WMRfbwjX8fqN8pp/y1s2HwcQCJBCuv
-         DT+3KurpyanMgq4wjt6zVFeFvurmjZ4x+1nGqbjTVwoDVKAvHpCUdGkR6g0mRPotpKVl
-         NIZA==
-X-Gm-Message-State: AOJu0YzkjuaWeh0QOvY/C61zGdK3fIIUnsVWc7AWrfd35qkzVJMDvr8E
-        MdIK2F3U/ju+JiGDmu10aDB+Dg==
-X-Google-Smtp-Source: AGHT+IFEsNWUEVHLgy9no9zt5n/oSi9ff1FZksTxjp/VP/wDM1Yxxc6Zxk7YI/vaALGIt3FYIrQlCQ==
-X-Received: by 2002:a2e:bb12:0:b0:2bf:6852:9339 with SMTP id v18-20020a2ebb12000000b002bf68529339mr10819527lje.3.1698266284776;
-        Wed, 25 Oct 2023 13:38:04 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id c18-20020a05600c0a5200b0040770ec2c19sm669758wmq.10.2023.10.25.13.38.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 13:38:04 -0700 (PDT)
-Message-ID: <c9c6b20e-cac2-43a1-a026-ea01b0e245bd@linaro.org>
-Date:   Wed, 25 Oct 2023 21:38:02 +0100
+        Wed, 25 Oct 2023 17:46:01 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D436133;
+        Wed, 25 Oct 2023 14:46:00 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB8DC433C7;
+        Wed, 25 Oct 2023 21:45:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698270359;
+        bh=D7K9D5FkQxgI+SxQC2ZWcKW+hmigiiDTP+3F/4Ccoos=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=jwAbudX9bC9v0VbbXMfuHgmVqzQuXUqOLU4dWO87PvFwb66c9JF6EgyOGqeih7bFH
+         q2p1WxFlZKTO+rZjt6AbBHWETd6deW6TIHCCwSAmXK1kRu8Z8d9vKc57NVM1RFD0nI
+         L5uSZMNQyxs4/aZBM+y7/J0HixEBFgODVTU8C9b72h5GFif1AK+AMT9KfNvldB9eWr
+         e2PgGWY/WL9bdWHOfmbOlzzGxTQoo1V3sLhkU9fnF/uwSjHIkx6ewHc4Y3znTDQcrB
+         yEbKCuKGrzhc17pwd0MoFyzRx/LpCBR5+iWCJNqlZsbJBPSTo3mscgBR/vRo6YVXA6
+         z0PblSkximmiw==
+Message-ID: <a939ef1a4c2cad763fe484cc943f44d5.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] clk: qcom: rpmh: Add support for SC8380XP rpmh clocks
-Content-Language: en-US
-To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
-        konrad.dybcio@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     agross@kernel.org, conor+dt@kernel.org, quic_tdas@quicinc.com,
-        quic_rjendra@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, neil.armstrong@linaro.org,
-        abel.vesa@linaro.org, quic_tsoni@quicinc.com
-References: <20231025133320.4720-1-quic_sibis@quicinc.com>
- <20231025133320.4720-5-quic_sibis@quicinc.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20231025133320.4720-5-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-8-c89b59594caf@linaro.org>
+References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org> <20231025-topic-sm8650-upstream-clocks-v1-8-c89b59594caf@linaro.org>
+Subject: Re: [PATCH 08/10] clk: qcom: add the SM8650 Display Clock Controller driver
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+Date:   Wed, 25 Oct 2023 14:45:57 -0700
+User-Agent: alot/0.10
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 14:33, Sibi Sankar wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
-> 
-> Adds the RPMH clocks present in SC8380XP SoC
-> 
-> Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
+Quoting Neil Armstrong (2023-10-25 00:32:45)
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index c04b6526f4f3..5bf25e8d033c 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -842,6 +842,15 @@ config SM_DISPCC_8550
+>           Say Y if you want to support display devices and functionality =
+such as
+>           splash screen.
+> =20
+> +config SM_DISPCC_8650
+> +       tristate "SM8650 Display Clock Controller"
+> +       depends on SM_GCC_8650
 
-This looks pretty straight forward.
+selects?
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+We use selects instead of depends so that the driver can be built-in or
+modular regardless of parent clks that provide clks to this device.
+Orphan clk handling resolves issues with the driver registering clks
+before parents. And with fw_devlink the driver isn't even attempted to
+probe before the GCC driver is probed so there's no build dependency
+between these drivers.
 
+> +       help
+> +         Support for the display clock controller on Qualcomm Technologi=
+es, Inc
+> +         SM8650 devices.
+> +         Say Y if you want to support display devices and functionality =
+such as
+> +         splash screen.
+> +
+>  config SM_GCC_4450
+>         tristate "SM4450 Global Clock Controller"
+>         depends on ARM64 || COMPILE_TEST
+> diff --git a/drivers/clk/qcom/dispcc-sm8650.c b/drivers/clk/qcom/dispcc-s=
+m8650.c
+> new file mode 100644
+> index 000000000000..7cb91306e895
+> --- /dev/null
+> +++ b/drivers/clk/qcom/dispcc-sm8650.c
+> @@ -0,0 +1,1806 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023, Linaro Ltd.
+> + */
+> +
+> +#include <linux/clk.h>
+
+Is this include used?
+
+> +#include <linux/clk-provider.h>
+> +#include <linux/err.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+
+Is this mod_devicetable.h?
+
+> +#include <linux/of.h>
+
+Is this include used?
+
+> +#include <linux/regmap.h>
+> +#include <linux/pm_runtime.h>
+> +
+> +#include <dt-bindings/clock/qcom,sm8650-dispcc.h>
+> +
+> +#include "common.h"
+> +#include "clk-alpha-pll.h"
+> +#include "clk-branch.h"
+> +#include "clk-pll.h"
+> +#include "clk-rcg.h"
+> +#include "clk-regmap.h"
+> +#include "clk-regmap-divider.h"
+> +#include "clk-regmap-mux.h"
+
+Is this include used?
+
+> +#include "reset.h"
+> +#include "gdsc.h"
+> +
