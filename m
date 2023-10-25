@@ -2,50 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 902E57D6B28
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 14:18:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBAB07D6B38
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 14:21:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234817AbjJYMSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 08:18:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
+        id S234851AbjJYMVe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 08:21:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234852AbjJYMSf (ORCPT
+        with ESMTP id S234852AbjJYMVd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 08:18:35 -0400
+        Wed, 25 Oct 2023 08:21:33 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BD75129;
-        Wed, 25 Oct 2023 05:18:33 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6FAC433C7;
-        Wed, 25 Oct 2023 12:18:30 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F84137;
+        Wed, 25 Oct 2023 05:21:30 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F330C433C8;
+        Wed, 25 Oct 2023 12:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698236313;
-        bh=Ja5Kf9ILXH67ciGA8XKkZ45ZaownkYfTkf4M+tF4fwg=;
+        s=k20201202; t=1698236490;
+        bh=Okz7c5dGviB2uHQSZqH4cKSK6Sowbf5t1NKnOKrQ7hw=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T8opZJxrHmoHIhEuCHc4hlUVv/7ok9DqWVfxi+ZvwP/JJpyt7xzpgh7FgJD6bxhwU
-         pjgH+76BKUczmlRX9sTrCt15AEq68Foy3tLHUjqW3z0cIQjf9betdjorsPdA5bN5Kn
-         ErNJJCxXoHewX+JaAs5ZADDs44IJu1s/eK19LoJSShKzeGItWp2wZYfv2PtLMGJlBH
-         +JWxUUXDDeZx/nZd5gtkZAZh3PyKLEzgdDrZ1f46HPyQjBpRF7xa6kbhhofm+xBP8T
-         Fh4NCqLRIJv7yUcH9CanzgPL7Gu7vOvUSVfMKlFiJLtg+fYMEjRipYHOPmeznE8ctG
-         AfPG9wa4f20ug==
-Date:   Wed, 25 Oct 2023 13:18:27 +0100
+        b=IkXkYfyS3NZWmbxzxm3uLKvX7SCxiEwxnoMdBNTx2FFRQ3GvZxLWZ6Kpd/1+VlSdT
+         giw07NoUWUHq03K3+USdePtGfOarLh0Gp3E264Q/6f9x2QCBuLAX6nEBymy6EGY3JE
+         LzyLVlHq7LSQQWIhfHTDVSp7wUy/pGubLjuoCiTVGYZj6rl5cwE+vs0gkW8Mt42GHB
+         Z/59EbxnQYi5UMB66yOUtPmTEv295OnXWzGYbKs70pRM6GP/nrXDoPxecLB5wY1v6B
+         B0OFBGEdRtX+3q8SUHv0687Dp5PBEd+GeaPWDkKNOPBJGBn1AG1PHFlM/YgpR9Y2R3
+         wvw+0QwNv/Blw==
+Date:   Wed, 25 Oct 2023 13:21:24 +0100
 From:   Lee Jones <lee@kernel.org>
-To:     Johan Hovold <johan+linaro@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+To:     Nikita Travkin <nikita@trvn.ru>
+Cc:     Rob Herring <robh@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/5] mfd: qcom-spmi-pmic: fix revid
- implementation
-Message-ID: <20231025121827.GN8909@google.com>
-References: <20231003152927.15000-1-johan+linaro@kernel.org>
- <169823622555.724579.17090745891924053957.b4-ty@kernel.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: Add pm8916
+ vm-bms and lbc
+Message-ID: <20231025122124.GO8909@google.com>
+References: <20231023-pm8916-dtsi-bms-lbc-v2-0-343e3dbf423e@trvn.ru>
+ <20231023-pm8916-dtsi-bms-lbc-v2-1-343e3dbf423e@trvn.ru>
+ <169808265626.861066.13083505051202182067.robh@kernel.org>
+ <53474576e3c860a1bb93f811cfe3964a@trvn.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <169823622555.724579.17090745891924053957.b4-ty@kernel.org>
+In-Reply-To: <53474576e3c860a1bb93f811cfe3964a@trvn.ru>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -55,28 +60,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 25 Oct 2023, Lee Jones wrote:
+On Tue, 24 Oct 2023, Nikita Travkin wrote:
 
-> On Tue, 03 Oct 2023 17:29:22 +0200, Johan Hovold wrote:
-> > The Qualcomm SPMI PMIC revid implementation is broken in multiple ways
-> > that can lead to resource leaks and crashes. This series reworks the
-> > implementation so that can be used safely.
+> Rob Herring писал(а) 23.10.2023 22:40:
+> > On Mon, 23 Oct 2023 11:20:32 +0500, Nikita Travkin wrote:
+> >> PM8916 (and probably some other similar pmics) have hardware blocks for
+> >> battery monitoring and charging. Add patterns for respecive nodes so the
+> >> devicetree for those blocks can be validated properly.
+> >>
+> >> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> >> ---
+> >>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 6 ++++++
+> >>  1 file changed, 6 insertions(+)
+> >>
 > > 
-> > Included is also a rename of the SPMI device lookup helper which can
-> > hopefully help prevent similar leaks from being reintroduced.
+> > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
 > > 
-> > [...]
+> > yamllint warnings/errors:
+> > 
+> > dtschema/dtc warnings/errors:
+> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml:
+> > Error in referenced schema matching $id: http://devicetree.org/schemas/power/supply/qcom,pm8916-bms-vm.yaml
+> > 
+> > doc reference errors (make refcheckdocs):
+> > 
+> > See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231023-pm8916-dtsi-bms-lbc-v2-1-343e3dbf423e@trvn.ru
+> > 
+> > The base for the series is generally the latest rc1. A different dependency
+> > should be noted in *this* patch.
+> > 
 > 
-> Applied, thanks!
+> Somehow I missed the memo and thought it tracks -next...
 > 
-> [4/5] spmi: document spmi_device_from_of() refcounting
->       commit: 7db72c01ae2359dbab29f4a60cda49757cf84516
-> [5/5] spmi: rename spmi device lookup helper
->       (no commit info)
+> This patch depends on 7f590e3831 and 5cee843d56 in linux-next.git
+> They were applied in [1].
+> 
+> I'm wondering if the bot just bails out when the "depend" is present
+> or there is some more sophisticated logic to suggest the base to it?
 
-Not entirely sure why B4 is sending out these separately!
-
-Still, both applied, thanks.
+So is this good to go, or not?
 
 -- 
 Lee Jones [李琼斯]
