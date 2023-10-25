@@ -2,86 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 879657D6C70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 14:56:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB7BC7D6C77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 14:57:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234920AbjJYMzM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 08:55:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45628 "EHLO
+        id S234911AbjJYM52 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 08:57:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234938AbjJYMzL (ORCPT
+        with ESMTP id S229583AbjJYM52 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 08:55:11 -0400
-Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE46AC;
-        Wed, 25 Oct 2023 05:55:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=emersion.fr;
-        s=protonmail2; t=1698238507; x=1698497707;
-        bh=6lMF1JifW5huSVXWVFOd0HhrR0SzxrcAOage3NSxPW4=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=UfETWEAZXEqJ4NovRWp4g+BBGNogT8gEA8DtuV9/dEn6wU8I+JggfcnlWb1AgUC27
-         kETCGEIyFXKjSvFEjOz9hj8k7YL9vut8PlQUmOS/RvGI/FyoyfcvKkwlwcunYrQVPO
-         eKLFhndpUvabDu0ZvE3rMISjptWkhBOX6yCNHXa62j7ic7SZOsy8Wjfg7ywuBk3NRE
-         9foDObui7X5onbh1XygKlzNqpUUnqXfzZ2aS28L0U+2mYrIX8UhB34LMOC8Dp71dYR
-         7/D5zqnO7b0I0msfWBIeB7N6ViMB35MF0969HegLSU0URVGoz5bpLQNQjGU0I7DSuK
-         FiSVV8cRZdtQw==
-Date:   Wed, 25 Oct 2023 12:54:44 +0000
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-From:   Simon Ser <contact@emersion.fr>
-Cc:     Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] soc: qcom: pmic_glink: fix connector type to be DisplayPort
-Message-ID: <EeTPIPMpLMJf5ZaAnmfLL8a1MUy4DRxST6oU_-N44pa3XfyglLs_sWXdnOvjJLTzahjZhkRqWIO9TwXj4bhSKwBIUYkuIufXms2UjZ7MJjA=@emersion.fr>
-In-Reply-To: <65f841ba-5b70-4cbe-98e0-3d53e5b7944c@linaro.org>
-References: <20231010225229.77027-1-dmitry.baryshkov@linaro.org> <ZTkIpMWpxKzSE7gQ@hovoldconsulting.com> <NDl6Ye92jJDp3fm20AwcuUKWuP8tzQ9CyWGGRltZ_DxYgxep2DO8Wil0Nmsfmhp1j4vAp9Yu1duiHeQkjBG-bcAdFoW3ZbWxvVqrCEpQe_4=@emersion.fr> <65f841ba-5b70-4cbe-98e0-3d53e5b7944c@linaro.org>
-Feedback-ID: 1358184:user:proton
+        Wed, 25 Oct 2023 08:57:28 -0400
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7A2C8F;
+        Wed, 25 Oct 2023 05:57:25 -0700 (PDT)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        by box.trvn.ru (Postfix) with ESMTPSA id EC8D0401B5;
+        Wed, 25 Oct 2023 17:57:17 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+        t=1698238638; bh=JzCgUGweZjRuxxNU1g3eIRDVzT4P0AzRXtHxoGPZHgY=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=BJxvSeoPB8gqOmJj4wyYR8fTLT5fJgrw2rumFOHlm2mWm1D9LBquF40UE68tag0e0
+         gE13ZzabJCcd75kUGBBR5qhITZha5c4Hq6RlCJTRKGo7nqWxUQqSxHMLTFkpZZsieK
+         qIM+RGw7wGqCwAzCNecDRCeU+Iq8HBmN/0WmoZCIcMDoCnD1DIgdkCZyA1ofEX5G8l
+         1Lu37MoYZnlpeYiXwZ6swUTQUL3rpx4RGT54u19+40Fl6KpdIf4AzqC1aZNj05T6lE
+         jftmKGyBPlBN36GUnxri26i5VWxxQ8L1ScmsPhmEpmLX0ehuPzxMgpVlV7LfKcO/zc
+         qTz8Kf1+buwug==
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Date:   Wed, 25 Oct 2023 17:57:17 +0500
+From:   Nikita Travkin <nikita@trvn.ru>
+To:     Lee Jones <lee@kernel.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: Add pm8916
+ vm-bms and lbc
+In-Reply-To: <20231025122124.GO8909@google.com>
+References: <20231023-pm8916-dtsi-bms-lbc-v2-0-343e3dbf423e@trvn.ru>
+ <20231023-pm8916-dtsi-bms-lbc-v2-1-343e3dbf423e@trvn.ru>
+ <169808265626.861066.13083505051202182067.robh@kernel.org>
+ <53474576e3c860a1bb93f811cfe3964a@trvn.ru>
+ <20231025122124.GO8909@google.com>
+Message-ID: <eaa4a6e2d8539a0a772286f7f13ccc2c@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wednesday, October 25th, 2023 at 14:45, Dmitry Baryshkov <dmitry.baryshk=
-ov@linaro.org> wrote:
+Lee Jones писал(а) 25.10.2023 17:21:
+> On Tue, 24 Oct 2023, Nikita Travkin wrote:
+> 
+>> Rob Herring писал(а) 23.10.2023 22:40:
+>> > On Mon, 23 Oct 2023 11:20:32 +0500, Nikita Travkin wrote:
+>> >> PM8916 (and probably some other similar pmics) have hardware blocks for
+>> >> battery monitoring and charging. Add patterns for respecive nodes so the
+>> >> devicetree for those blocks can be validated properly.
+>> >>
+>> >> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>> >> ---
+>> >>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 6 ++++++
+>> >>  1 file changed, 6 insertions(+)
+>> >>
+>> >
+>> > My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+>> > on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>> >
+>> > yamllint warnings/errors:
+>> >
+>> > dtschema/dtc warnings/errors:
+>> > /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml:
+>> > Error in referenced schema matching $id: http://devicetree.org/schemas/power/supply/qcom,pm8916-bms-vm.yaml
+>> >
+>> > doc reference errors (make refcheckdocs):
+>> >
+>> > See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231023-pm8916-dtsi-bms-lbc-v2-1-343e3dbf423e@trvn.ru
+>> >
+>> > The base for the series is generally the latest rc1. A different dependency
+>> > should be noted in *this* patch.
+>> >
+>>
+>> Somehow I missed the memo and thought it tracks -next...
+>>
+>> This patch depends on 7f590e3831 and 5cee843d56 in linux-next.git
+>> They were applied in [1].
+>>
+>> I'm wondering if the bot just bails out when the "depend" is present
+>> or there is some more sophisticated logic to suggest the base to it?
+> 
+> So is this good to go, or not?
 
-> On 25/10/2023 15:29, Simon Ser wrote:
->=20
-> > On Wednesday, October 25th, 2023 at 14:22, Johan Hovold johan@kernel.or=
-g wrote:
-> >=20
-> > > I was just going to post a patch fixing this after finally investigat=
-ing
-> > > why the DisplayPort outputs on the X13s were annoyingly identified as
-> > > "Unknown20-1" and "Unknown20-2" instead of the expected "DP-1" and
-> > > "DP-2".
-> >=20
-> > Note, ideally userspace should use drmModeGetConnectorTypeName() from
-> > libdrm to figure out the proper name for a connector type. That way we
-> > only need to update a single spot when adding a new connector type,
-> > instead of patching a whole bunch of programs.
->=20
-> X11 does its own thing. It further "renames" DP MST connectors. So on my
-> laptop I end up with DP-1-1 in xrandr, but DP-3 in kernel.
+IMO this patch should be good, it passes the check on today's linux-next
+on my end.
 
-Right. But that function only takes in a connector type enum as input,
-and returns a string for the type only. It doesn't include the suffix
-with the number.
+The only concern might be that if someone runs dt_binding_check on
+for-mfd-next, it would skip that file with an error since there is no
+dependency yet.
 
-IOW: xserver could use drmModeGetConnectorTypeName() and then append
-"-2" or "-1-1" or whatever.
+If this is critical to you, I was going to respin this after the -rc1,
+but if you can pick the schema now, I can respin the remainder earlier.
 
-But with the current appetite for xserver development this is probably
-not going to happen (and doesn't matter very much).
+Nikita
