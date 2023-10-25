@@ -2,88 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BFEF7D72C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 19:59:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 575637D747C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 21:40:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233862AbjJYR7v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 13:59:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36484 "EHLO
+        id S229583AbjJYTkS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 15:40:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229842AbjJYR7u (ORCPT
+        with ESMTP id S229576AbjJYTkR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 13:59:50 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E82F182
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 10:59:49 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id 5614622812f47-3b2b1ae4c21so4126853b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 10:59:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698256788; x=1698861588; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+X2BcGs+yr5ozuWWWHgMfFUYNfIzqQVUuDmFrK+H+k8=;
-        b=N2ZfGEhkHwAxCnUSg5U6gOYoKiM9IYBJZgUvpug8JRt+N8fGqcWVKLgMRLHW1yZGkm
-         yLrgmTZMH6CGru7H/nRWIdutHNUGrepmLtX8EF4dTL5kEsN6eJcFZ+uBwSYtCe15onYA
-         cMq4GkT48ihaJof3WB9Mk+Wo4b37mmHzBWNMA2u+kk9msGo+BJq9UiEvicm7S+hY3D1r
-         D1aav9omocOVPbNopaui2wyxPP1bkFCLYlBND80uGGuvQXpWsy6Fottc7aQbMJAdr2TS
-         oReZrVl5+JKkXFdwotYeFI7nrbQNq9/UmCAxIwUMBV+g9wnKgLsZkV2qUev51+NRlWHd
-         yFIQ==
+        Wed, 25 Oct 2023 15:40:17 -0400
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF0193;
+        Wed, 25 Oct 2023 12:40:15 -0700 (PDT)
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3b2d9ac9926so40052b6e.2;
+        Wed, 25 Oct 2023 12:40:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698256788; x=1698861588;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+X2BcGs+yr5ozuWWWHgMfFUYNfIzqQVUuDmFrK+H+k8=;
-        b=S8jUvEVGYkv1LxEA441WfKfQ+ZEbamBLUE5u7t0QB7CjmVTwynmxgNk6IZbTmdkrUV
-         DS7alOfS/CvG0B3TKVL124M1WGTiJ2VECKgjc/Sv0nmSvR748CHcJXQG0NroOAQc8dkE
-         2oR9nBBRVtdOqA7nQdf+oAyA84T8zeU9jOnwjJW+aEIfUWi2UYREHHaLSeXh+2n9DkXw
-         Z3DfVC/0Yz7BiIsdDUqsQ4+dwaYA0KDVDBFVCslc+O17TYPl/Q2Eaqs5tRmu6/PROdkD
-         amtuF2p9IebIZE9YvK9wpgh3gOBAGHVJ+XUvEfzoTUKX3hbaeZtzcf6DBxmn5KODJFqB
-         1fdg==
-X-Gm-Message-State: AOJu0Yz7+ciE5vbiBUr3rZD3gI1VMFVK9wufyi31pGxmRVr+NzMUCI+6
-        Nd54CkxoG+ag4ywKFICQiDU90KasfSdDAVs4YRFcvA==
-X-Google-Smtp-Source: AGHT+IHt0K3a3YxmMMAXLMGE/SLHxoNsrcnDOTH2dLfGGsktR/apcQTUfBYmn31LK8udeC2DVR6+WlimdKhWd044Rt0=
-X-Received: by 2002:a54:4090:0:b0:3a3:ed41:5ab with SMTP id
- i16-20020a544090000000b003a3ed4105abmr16867919oii.9.1698256788382; Wed, 25
- Oct 2023 10:59:48 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698262815; x=1698867615;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bgzWQGUF2R94XSvaqGsE9kf71dMgnkeRT2bUDQQ5vCg=;
+        b=r2MkOu+rsW9gBavov31SG31pajrP1jmAvR+6VS9fziwkUAC4YonD9e4GTHqQjKnh4a
+         W2H5TyHxB7eRS8HTWiOs7G7vrWjJ7vgmqH5iwiS8j3/M4eOhHFuRZVq5K/Bcv17FCzvp
+         XOCDJxnss2s5Wlla7auD3jHH2/kyYayR34VMiIYPnfpYEtlzS0yzaBm80C3kdCcwxfai
+         bgS1cOVojBU52KGyfRiJ5vZArEKB9kOPvb2Y8aK/AuDZtBEmXICnYX8abyUR+o11n19k
+         BPXQGJ5zeFIHLDh6M5IG/1SFHFoy32VVp6ujRWWM6dBaNEUro0b/DUbOaww73eHODj25
+         qKQQ==
+X-Gm-Message-State: AOJu0Yz2aOI87dhrK1XjlzhGSifYXrPVRlmBXLc++Ie0ULpiOnxE1T4X
+        giOdawarmuactQT0lVUPTw==
+X-Google-Smtp-Source: AGHT+IFeJP7N/L5R+uMmYJroNwQpvnXY+ul54ClclPvR8XWk7eVljdarNhM7eS8z/FAvzyX6wsoIOw==
+X-Received: by 2002:a05:6808:2201:b0:3a4:ccf:6a63 with SMTP id bd1-20020a056808220100b003a40ccf6a63mr23179813oib.55.1698262815183;
+        Wed, 25 Oct 2023 12:40:15 -0700 (PDT)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id b25-20020aca1b19000000b003a99bb60815sm2485395oib.22.2023.10.25.12.40.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Oct 2023 12:40:14 -0700 (PDT)
+Received: (nullmailer pid 1037636 invoked by uid 1000);
+        Wed, 25 Oct 2023 19:40:13 -0000
+Date:   Wed, 25 Oct 2023 14:40:13 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     linux-kernel@vger.kernel.org,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 03/10] dt-bindings: clock: qcom: document the SM8650
+ Display Clock Controller
+Message-ID: <169826281293.1037580.4025547355263346758.robh@kernel.org>
+References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
+ <20231025-topic-sm8650-upstream-clocks-v1-3-c89b59594caf@linaro.org>
 MIME-Version: 1.0
-References: <1698253601-11957-1-git-send-email-quic_mojha@quicinc.com> <1698253601-11957-3-git-send-email-quic_mojha@quicinc.com>
-In-Reply-To: <1698253601-11957-3-git-send-email-quic_mojha@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 25 Oct 2023 20:59:37 +0300
-Message-ID: <CAA8EJpoYTXwdrwEUnRLtpeFY=xC_wYdE_pW1W4kM=JkRmR=mNQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: sm8350: Add TCSR halt register space
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lee@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-3-c89b59594caf@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 25 Oct 2023 at 20:07, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
->
-> Enable download mode for sm8350 which can help collect
-> ramdump for this SoC.
->
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+
+On Wed, 25 Oct 2023 09:32:40 +0200, Neil Armstrong wrote:
+> Add bindings documentation for the SM8650 Display Clock Controller.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
-> Changes in v2:
->  - Improved commit text.
->
->  arch/arm64/boot/dts/qcom/sm8350.dtsi | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  .../bindings/clock/qcom,sm8650-dispcc.yaml         | 106 +++++++++++++++++++++
+>  include/dt-bindings/clock/qcom,sm8650-dispcc.h     | 101 ++++++++++++++++++++
+>  2 files changed, 207 insertions(+)
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 
--- 
-With best wishes
-Dmitry
