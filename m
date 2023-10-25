@@ -2,51 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 716CB7D66BC
+	by mail.lfdr.de (Postfix) with ESMTP id CA1BF7D66BD
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 11:27:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233692AbjJYJ1R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 05:27:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44008 "EHLO
+        id S231794AbjJYJ1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 05:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231794AbjJYJ1Q (ORCPT
+        with ESMTP id S233435AbjJYJ1R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 05:27:16 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66751DC
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 02:27:14 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-507d7b73b74so7845253e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 02:27:14 -0700 (PDT)
+        Wed, 25 Oct 2023 05:27:17 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ED81DE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 02:27:15 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-507d1cc0538so7848171e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 02:27:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698226032; x=1698830832; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=i8USfd2cXtMS5J3mM9vTi2tspxUYy+b4DZDSMhYADls=;
-        b=RDyEXD2qoraul842vdpKNun+9bxHv5oCyVdL9+mK0lVGrlwhXP7CzFo/3jkH0v2wF5
-         fhZEMgwrtt9blZCkbILjANc+7RzAqyiE1y3XvY+VWuqm5AT/Ki0xWx74fh+qxsTAa+m4
-         +FMM+zcGgL45k2qDKjLa5N5IQQQ/YqcaWn7BTwbocQKDOOvl7PnDeMOrZ8rvvj1CmTpY
-         pv83GXas52zpZE6PUUxcGpVnOXTLv+mKZk/kArY4mzqD7ojKnSFFB1kBcBND9mevOlBq
-         GYh/2xGr0sds8P5qZR7xIixxqx5UpWskg79OAhDPLcrdnK0tceZWVMk+0zyJzBKAw3ZI
-         LlSQ==
+        d=linaro.org; s=google; t=1698226033; x=1698830833; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QtUxpS9LHBTz7P4AH4M/bkhlO9UpvXLDxTXKsW01TMA=;
+        b=LsVeriTE1ON+evhd06QXYdRyxhdXLQirh7bMVMtM/X9KPTO5Wh2M522myMmVoFK9EU
+         wxcYwz0FfbJ+HxFZuILxZBvZ8+G71NaERmp2H/MqdUTBxE3y0HFcQCUmYhM8XhlO3IaQ
+         U7uQWlqwcpvYOYw4aHoT5zB40nXje4QMgCbi09221rtUYeGYVHD7B5mOzcY+QT+6LVS8
+         6TuhTpuGIpHDSPp3bvhIom+jhHSxnpYCjcAzjVSlwz3jM/LUgRWXLlst7P3mHiRi1i1b
+         HPILDilNeG/O7Mjch/cjtleMK998a4IpKU3x1A1dk0lc5raIzL5I6D81VKtMkDGE++at
+         c6LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698226032; x=1698830832;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i8USfd2cXtMS5J3mM9vTi2tspxUYy+b4DZDSMhYADls=;
-        b=IlLOqjHq/RcGOg+KX+W9FGHFTOhlFlBu5sBX7dHBNpCMV1jdOae1IKM7doVNw6mMjM
-         M3gwzc5kY37fct2H8v+iDHJ4beIy/zBT5DPuFEABvVkeZk4bPa4bijsGEpcY6C2BHENZ
-         Id5ufTvOrC+A8+AOb9DBFHKKLhJXlpVlURdwsKGTxFpwPg294PrlqMgsFvHmGe5UvfoL
-         F0HTDEAFDVNdL7qmRt6EutVojpx8bb6hE65otYZtcGQOPpotvs4XEFukNZ35Mqn++Vwf
-         FJQkaHbVrcdP3l/PQsYYXALpnjeqnHn+cvc+d3nW+858uyN6bxYrqfK2900hJZZ4AiL/
-         wHMg==
-X-Gm-Message-State: AOJu0YzhWf+7GYxxAwmFJxeknfj8PLAz0OXrLQUTZuTPLyjq9sGjZJQ2
-        VHaQY33xZhseviAaMNN+76dmXA==
-X-Google-Smtp-Source: AGHT+IHTmUTCmb8MZXEisS6oCGCWvEuXG58i+0LOySJCTSTxUc7vXiT2YUaa5P7vgH3I4IZPYTsNqQ==
-X-Received: by 2002:a19:655d:0:b0:507:9d70:b297 with SMTP id c29-20020a19655d000000b005079d70b297mr9607031lfj.60.1698226032561;
-        Wed, 25 Oct 2023 02:27:12 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698226033; x=1698830833;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QtUxpS9LHBTz7P4AH4M/bkhlO9UpvXLDxTXKsW01TMA=;
+        b=sqdPtWGNAHekFIs783b8Z4jZUUVvU6TRbD1vTvN3T+eN/0jtm38Ht3kA6xzAA0IE9p
+         JBVWaEBHl4FyG63LwcrUXHYstwMy3JZ4RclUFwPwSS+Xln4BRT2Ajsm2p9L0kz7UsccI
+         20/qlNmJdeFRXfwoZ259WQcTktZXnXX+8X42sr3UuHRkKbD1ATbA2bwwdKPPRki1gGWV
+         Wbs2yLNy7mT5w+nI9tjudayJAQEVhOO6W4KMZsxHqCQmyMPkea2hL1+LQDfARBS0bN5/
+         jYBpFeG81YiiEu3GlLcPC/zn6bMxuYWNFGN/D2K63qwl3ILjk+FpmUWytAvH5eo4h2oo
+         nt1Q==
+X-Gm-Message-State: AOJu0YwRwELn49s4qKo2mrh2mgkl9ogOyjATr4X8N7xMSruguFF8VQq3
+        rEQS8oh14SnuTw5c1BEcheaeMg==
+X-Google-Smtp-Source: AGHT+IF4JyODsy/R7n9MpWLVJ6X92eTxeIIQaPwvTPjpfhaAGvY2yEMuYrSSE8O5MrNacMcr1we5Ww==
+X-Received: by 2002:a05:6512:3b87:b0:507:974d:80f9 with SMTP id g7-20020a0565123b8700b00507974d80f9mr12978498lfv.34.1698226033609;
+        Wed, 25 Oct 2023 02:27:13 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id eq25-20020a056512489900b005079fff83d2sm2470377lfb.3.2023.10.25.02.27.11
+        by smtp.gmail.com with ESMTPSA id eq25-20020a056512489900b005079fff83d2sm2470377lfb.3.2023.10.25.02.27.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 25 Oct 2023 02:27:12 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -59,10 +60,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@linaro.org>
-Subject: [PATCH v2 0/2] drm/msm/dp: fix DP subconnector handling
-Date:   Wed, 25 Oct 2023 12:23:08 +0300
-Message-ID: <20231025092711.851168-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/2] drm/msm/dp: don't touch DP subconnector property in eDP case
+Date:   Wed, 25 Oct 2023 12:23:09 +0300
+Message-ID: <20231025092711.851168-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231025092711.851168-1-dmitry.baryshkov@linaro.org>
+References: <20231025092711.851168-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -74,23 +77,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix two failovers in the DP subconnector's patch. I didn't notice that I
-had another patch adding the property in my tree and later Abel pointed
-out that we shouldn't use subconnector type for eDP panels.
+From: Abel Vesa <abel.vesa@linaro.org>
 
-Fixes since v1:
- - Add Abel's patch.
+In case of the eDP connection there is no subconnetor and as such no
+subconnector property. Put drm_dp_set_subconnector_property() calls
+under the !is_edp condition.
 
-Abel Vesa (1):
-  drm/msm/dp: don't touch DP subconnector property in eDP case
-
-Dmitry Baryshkov (1):
-  drm/msm/dp: attach the DP subconnector property
-
+Fixes: bfcc3d8f94f4 ("drm/msm/dp: support setting the DP subconnector type")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
  drivers/gpu/drm/msm/dp/dp_display.c | 15 ++++++++++-----
- drivers/gpu/drm/msm/dp/dp_drm.c     |  3 +++
- 2 files changed, 13 insertions(+), 5 deletions(-)
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index e329e03e068d..1b88fb52726f 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -365,9 +365,11 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 	/* reset video pattern flag on disconnect */
+ 	if (!hpd) {
+ 		dp->panel->video_test = false;
+-		drm_dp_set_subconnector_property(dp->dp_display.connector,
+-						 connector_status_disconnected,
+-						 dp->panel->dpcd, dp->panel->downstream_ports);
++		if (!dp->dp_display.is_edp)
++			drm_dp_set_subconnector_property(dp->dp_display.connector,
++							 connector_status_disconnected,
++							 dp->panel->dpcd,
++							 dp->panel->downstream_ports);
+ 	}
+ 
+ 	dp->dp_display.is_connected = hpd;
+@@ -396,8 +398,11 @@ static int dp_display_process_hpd_high(struct dp_display_private *dp)
+ 
+ 	dp_link_process_request(dp->link);
+ 
+-	drm_dp_set_subconnector_property(dp->dp_display.connector, connector_status_connected,
+-					 dp->panel->dpcd, dp->panel->downstream_ports);
++	if (!dp->dp_display.is_edp)
++		drm_dp_set_subconnector_property(dp->dp_display.connector,
++						 connector_status_connected,
++						 dp->panel->dpcd,
++						 dp->panel->downstream_ports);
+ 
+ 	edid = dp->panel->edid;
+ 
 -- 
 2.42.0
 
