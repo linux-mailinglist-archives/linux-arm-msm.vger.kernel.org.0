@@ -2,76 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A8D07D63FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:50:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE5837D6409
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:51:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232825AbjJYHt7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:49:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42078 "EHLO
+        id S233479AbjJYHvF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:51:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232807AbjJYHtw (ORCPT
+        with ESMTP id S234022AbjJYHvA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:49:52 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2D56D4D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:49:49 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-d9caf5cc948so4875974276.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:49:49 -0700 (PDT)
+        Wed, 25 Oct 2023 03:51:00 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6009BD4D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:50:57 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-4081ccf69dcso2994775e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698220189; x=1698824989; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1mPZL+BmecJLI1raShNlD/spbj5/yWrHF1o5a2NHN48=;
-        b=F41nMFxQCLRlb1zFJ9QolQyWwfV78A4YMpbFgLf4BJSWaOTwhcRCxQ+E9xw3pmjnm1
-         TfoKNWZV1SHjsDM9B/iHumGYe1gQqZlT5G8RXi02qOJKhCwALBjeqY7rl3Ih+XHoaCRp
-         C0Lkix7vcmf3LEeuTqW7TTHymsnaKANs5D6IvNmb0nwe3lPAMkScdC106wH1nGqNjNan
-         ovabrbGT1pv58aToeGO1d8CSFnGFFWNz0bd52Y7rdkTvi3R3Ao8qr4ZhjfhCymtUZjMt
-         VxFZQ0B2ZWx9kcj/Q2bRK6S91RA3dFL9PO4yQcNkc6C7A16ZyCLNkUyA0j+5CPLHU49p
-         LRzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698220189; x=1698824989;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1698220256; x=1698825056; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1mPZL+BmecJLI1raShNlD/spbj5/yWrHF1o5a2NHN48=;
-        b=th/RYQSU07NrFuf3/cHq8eFaYuuN+pqkNlwEepFcQiWi9d6SfVQwACPXUz/hETMXy3
-         tepw6Oi2b4CeinbHMLVCeHB8VY6MVjiLnIGhFxFYclAUzWRgcwjroFnnJLY+r3ga7o5F
-         gTZua+VCNWDRO3VPxT9f5W157+urdSQ0MkP/ofvW9vvcotHI/9EV9RBNfo0SUOFHGEQF
-         TbhApX2wR4AyQC9Lh3WJRYMdBB8EVvlxh2JfxCcap8+p0IeXFuc7ExyLpnA9F2yLXK5H
-         I1Jcn1alLH32W8o+8Y+BO2EMzn9hUuwWz4ZyHxMtshCkuX9g6IDI3a66CzfB47VmhjUF
-         PD8A==
-X-Gm-Message-State: AOJu0YyzySPZkcL9gaK7vAJFWFrM6+Yz9hIlcsjEzGxKPnRklPEZ42FQ
-        xEzw2js2i2rfmnA65DLd6EEzmaa/VPvUNHw4X2nCow==
-X-Google-Smtp-Source: AGHT+IFkibsCTPletgNIKgRFCG8zEbKtKhuMRGWu9dJ/Z2gpcZTNPiloV3NsJSBSfNWJPl9BX6pmshk2fW6iQLs8Y18=
-X-Received: by 2002:a25:dc04:0:b0:da0:4576:3689 with SMTP id
- y4-20020a25dc04000000b00da045763689mr3713196ybe.25.1698220189116; Wed, 25 Oct
- 2023 00:49:49 -0700 (PDT)
+        bh=fHCbt3oIyBZTNzG0a6SA3gqBM3qic8b1PW/OzYT0hTY=;
+        b=yG8oqy0jJsqkMHIHnQ5LVSHcF2PXJvrJ1rX41nQ8q/vRrXDy+7EUGGB2z9GVQpXtcX
+         zeFSo9SHCZazLALnxrghDqJ0RLW1c4dT69fGDgNdVR9ctJzz50qFau5ZJ38yLYfdzeBw
+         WNyF6Zi2Lq1g7MM+fhfujMDkpjnNb5Z9ojd8v2TzaJtXrA3UaZ/Mva6NOUGZdYgTPp5V
+         vrJ0ZIK9jGPC3vNIovvCxh8GRcnt4vfuqIS+up7EPdlYU/KHnMs0/LbcerZt+KvvUPGN
+         gIyaUISHvpNU1ru9dN7nF7/JN9eWw/xPRcvuYAzIEOlRPJBorH6T/0YhG0RS0r3UdsAj
+         kTHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698220256; x=1698825056;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fHCbt3oIyBZTNzG0a6SA3gqBM3qic8b1PW/OzYT0hTY=;
+        b=vSkMg6M5Bh2uB6wls2n1rXRCIPs1xLB56CW+7lzA7UAAPU9uSGWN4v9Lfu73euEaq1
+         Og6uFocvVslFAXG0HKWTGkaNsYtOErQDWG2Ki2TMY7Yg/SBri6SycXxft2qH8iuhkFpb
+         vZnUlS/ZnFS7DvIN+Qj6Rwcs2G+IZb1+qdLdNjgpuw8fdiLrtroXK4IGlf41+ssCcpV4
+         aVbstJIUK0PbrM37agB++FUZVLcHHWY9x0r4PFTaPOJHLfk4VCfb6TUKLP5RAlyHRaLM
+         v0pGek+v7dc/5OxlsI2Qi3lYLo0kaIshAXGdnFcNZLRYlPGePwkO1PPgyboW11XmhAM2
+         LGXA==
+X-Gm-Message-State: AOJu0YxwkWK+h2od3c64xFv2vTniTFwfEimgYiBRAFB998WwmMeRrKgZ
+        hafCiwrRmOecTjbuMuS3XC31eQ==
+X-Google-Smtp-Source: AGHT+IHkFgkIyncR5qpiPGCBrd1mZZZPQhI0m/zUCrlGiixh6mKna/bq06QxEiecV1w1LIBTsixxow==
+X-Received: by 2002:a7b:c4d8:0:b0:408:36bb:5b0c with SMTP id g24-20020a7bc4d8000000b0040836bb5b0cmr16035281wmk.7.1698220255693;
+        Wed, 25 Oct 2023 00:50:55 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:4b03:ec74:6374:5430? ([2a01:e0a:982:cbb0:4b03:ec74:6374:5430])
+        by smtp.gmail.com with ESMTPSA id i1-20020a05600011c100b0032dcb08bf94sm11538347wrx.60.2023.10.25.00.50.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Oct 2023 00:50:55 -0700 (PDT)
+Message-ID: <22441cdc-33d3-4303-9deb-cb91e43594e6@linaro.org>
+Date:   Wed, 25 Oct 2023 09:50:54 +0200
 MIME-Version: 1.0
-References: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org> <20231025-topic-sm8650-upstream-mdss-v1-6-bb219b8c7a51@linaro.org>
-In-Reply-To: <20231025-topic-sm8650-upstream-mdss-v1-6-bb219b8c7a51@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 25 Oct 2023 10:49:38 +0300
-Message-ID: <CAA8EJpqSuX=BL3x7p3SUaRQ8JLtVOQNM4Cf6LojYKV66OyOJqA@mail.gmail.com>
-Subject: Re: [PATCH 6/8] drm/msm: mdss: add support for SM8650
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
+User-Agent: Mozilla Thunderbird
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH] dt-bindings: dma: qcom,gpi: document the SM8560 GPI DMA
+ Engine
+Content-Language: en-US, fr
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-bindings-gpi-v1-1-3e8824ae480c@linaro.org>
+ <CWHCDVXDDU74.3U8VFCO1HHIDU@fairphone.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <CWHCDVXDDU74.3U8VFCO1HHIDU@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -82,36 +111,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 25 Oct 2023 at 10:35, Neil Armstrong <neil.armstrong@linaro.org> wrote:
->
-> Add Mobile Display Subsystem (MDSS) support for the SM8650 platform.
->
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Hi,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 25/10/2023 09:29, Luca Weiss wrote:
+> On Wed Oct 25, 2023 at 9:25 AM CEST, Neil Armstrong wrote:
+>> Document the GPI DMA Engine on the SM8650 Platform.
+> 
+> Hi Neil,
+> 
+> The subject of this patch and a few others refer to 8560 instead of
+> 8650. Please fix :)
+> 
+> * dt-bindings: dma: qcom,gpi: document the SM8560 GPI DMA Engine
+> * dt-bindings: usb: qcom,dwc3: document the SM8560 SuperSpeed DWC3 USB controller
+> * dt-bindings: soc: qcom,aoss-qmp: document the SM8560 Always-On Subsystem side channel
 
-> ---
->  drivers/gpu/drm/msm/msm_mdss.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index 6865db1e3ce8..33947a2e313c 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -621,6 +621,7 @@ static const struct of_device_id mdss_dt_match[] = {
->         { .compatible = "qcom,sm8350-mdss", .data = &sm8250_data },
->         { .compatible = "qcom,sm8450-mdss", .data = &sm8250_data },
->         { .compatible = "qcom,sm8550-mdss", .data = &sm8550_data },
-> +       { .compatible = "qcom,sm8650-mdss", .data = &sm8550_data},
->         {}
->  };
->  MODULE_DEVICE_TABLE(of, mdss_dt_match);
->
-> --
-> 2.34.1
->
+Thanks for noticing :-)
 
+I'll wait some time before sending v2, a burst of patches is enough for a day !
 
--- 
-With best wishes
-Dmitry
+Neil
+
+> 
+> Regards
+> Luca
+> 
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>> For convenience, a regularly refreshed linux-next based git tree containing
+>> all the SM8650 related work is available at:
+>> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
+>> ---
+>>   Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> index 88d0de3d1b46..0985b039e6d5 100644
+>> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+>> @@ -32,6 +32,7 @@ properties:
+>>                 - qcom,sm8350-gpi-dma
+>>                 - qcom,sm8450-gpi-dma
+>>                 - qcom,sm8550-gpi-dma
+>> +              - qcom,sm8650-gpi-dma
+>>             - const: qcom,sm6350-gpi-dma
+>>         - items:
+>>             - enum:
+>>
+>> ---
+>> base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
+>> change-id: 20231016-topic-sm8650-upstream-bindings-gpi-29a256168e2f
+>>
+>> Best regards,
+> 
+
