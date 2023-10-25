@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 893EB7D648B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:07:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8D487D6496
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:10:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232985AbjJYIH3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 04:07:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39086 "EHLO
+        id S233846AbjJYIKb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 04:10:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbjJYIH1 (ORCPT
+        with ESMTP id S233835AbjJYIK0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 04:07:27 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9EA4BC1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:07:25 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-53e2dc8fa02so8278256a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:07:25 -0700 (PDT)
+        Wed, 25 Oct 2023 04:10:26 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36E3B189
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:10:19 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9ba1eb73c27so837065566b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:10:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698221244; x=1698826044; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698221415; x=1698826215; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=c/AOdQZgavn1DzommVB0mNqq6IBX1DcLKts/xA0l/YQ=;
-        b=HdcWldZS9It327qg/QOWINVodE4rCo5XwgzZauxhnPHXMctVkiot/7j2hiUbfBnL25
-         6msedfv+ii4Cm6Z/iX8KC0e+Q9u3015UTHVf/Y/DU+GtSC+QFDDm35mDz3jOcqElGJWM
-         aptgjIsoxwePS3Nazdu2zMqsv0ZIVI42G5rkjnpg971cq9mhuTv/jmQfvsZ9MYw/4YCJ
-         SjIyfnrVb/fdLzt4xIBBELfTq+/4c+Irt0OSKU4hgWTEZn8oWABoT3HMpcJaJScfogaD
-         1jL16HoEgfAisCVjojo9C1CXKZnBYbsyHkZkX7FkmLm2tYL8QK586D6iGooUxeNOQVQr
-         UzXA==
+        bh=e4W3FzdBdmgcqLq3CYAVEQg20wE8TpJO/Jt0nqAq+mI=;
+        b=Z//HFD563Id1kD0AUwbP7b1BPWjP/UH0lGL7Km1J/CQKPulMxD3RqQxIQf9smiWnSh
+         KGBLESmJUbJIvlpuJODqX9uvvJ3DI87fDRc+qdL1uWGhbo8TrIECDmgG6E/a8zZOb26S
+         OxWr2R0dyTqfzHW445msiKZvyJRdhw7fn63BxNmImgxdx1x/hocOG/GaM2hx5dpgvBiX
+         RxGD6FKHUH0jxs3+inWtEocVtOfMSUUTx9Zg0ygUhhiFxYW0lM6nEeelyI+Magw9oRrP
+         RUIbM7M+7eSjNPRIeZh+TGbI4VG41GX3F+z9smOy7DDqdSFTSmrX4BMcfIHAU60sMiVx
+         h0WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698221244; x=1698826044;
+        d=1e100.net; s=20230601; t=1698221415; x=1698826215;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c/AOdQZgavn1DzommVB0mNqq6IBX1DcLKts/xA0l/YQ=;
-        b=PxzFMe4NYCeLiI/5Sk7AmVuaOSYOD+IzCFUi2xwLLtXlspbP9582a0QWgU4h6w1C5i
-         WckucaWNZgKXEAro80aCR7Oe0a/f+dUCG8TJflbuTszBWf4iCdz53aFeOeJ0A71WGXr+
-         cVG0tGLR/N7C7i1Hb17vAM2UTbzlgCep+plxEXqFn4YopdW6HGrqf0yNmYagZ8gaq3/V
-         iyLvtZsKpX7ecQNKoI4lenBr7VacOpiqdC7NLPO42suUOzCFqRi9loJcWKiYr99hh0X8
-         wWjsQbY7fuVQe0FLzGyeE5ytDfcHD59ohkxTDt34PMCnhvipqgvO2RAv82SQVkpWbsmX
-         bXjQ==
-X-Gm-Message-State: AOJu0YxqlMAnbaBcoGyJLnJV0+CMJst0uT46oj0bNb3y5f20QIWkZbYC
-        p3FB+z+V2ROBP6nYPagD7u3jhA==
-X-Google-Smtp-Source: AGHT+IH0fJEpJZDz30qg1+837xwCEjzpabEXNHMwKwS7hTvhcQzRwz0S2Ooc3yiWv0S5ZUJJA3pRFA==
-X-Received: by 2002:a50:d09c:0:b0:53e:7a2d:a4a2 with SMTP id v28-20020a50d09c000000b0053e7a2da4a2mr9688698edd.39.1698221244094;
-        Wed, 25 Oct 2023 01:07:24 -0700 (PDT)
+        bh=e4W3FzdBdmgcqLq3CYAVEQg20wE8TpJO/Jt0nqAq+mI=;
+        b=oyPIvp89RasOFygMWjGAqLtrrCZct1WVHthIrodxZiPSK7RacUxH3uu5zQoVQm7B9O
+         eDUultVxx/77DJEUGVXQWJLQelHzqa56q7h9YJXvdl7xgaHKC3e30zpF14God6DbPMMQ
+         awXblpXCurFVvL5hD9LNjy4S3+9Gd18BuCyicfm2WApbUfHB5jgO1fNdEc4fk4Y/Sz+h
+         inwmUvN/+7omNVVZgx+P2pNtbqfKT9631xrD3YMOPv8d+E2exCpulOXoDIt4qaLtcqst
+         2v0Vo6Ry0t5euBzng0qlyho+Hk3tYNbHyBO/CpDSfFxPE+l2I7gVNh+7KXuSt0+KM+18
+         asRA==
+X-Gm-Message-State: AOJu0YyejD4XMcnTyoUiOeXkmCZ3kHjQjf7I0e/PMs35E812vc5HcRJ+
+        LSH+RiaPYkV3OEhR9xTBIQNaQA==
+X-Google-Smtp-Source: AGHT+IGVp+R025TInRQwYI6q7PbMS8fVsQj7ICyrdzm2FIiV9UmwrF/SDyNcy8E1FiLQ0fvBnSPBEg==
+X-Received: by 2002:a17:907:8e89:b0:9c7:dc4e:1a22 with SMTP id tx9-20020a1709078e8900b009c7dc4e1a22mr8529234ejc.48.1698221414978;
+        Wed, 25 Oct 2023 01:10:14 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id q8-20020a50c348000000b005407ac82f4csm3500508edb.97.2023.10.25.01.07.21
+        by smtp.gmail.com with ESMTPSA id pj19-20020a170906d79300b009ad829ed144sm9378723ejb.130.2023.10.25.01.10.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 01:07:23 -0700 (PDT)
-Message-ID: <a2b5a0df-e3dc-4a95-8517-ff92dc9a500f@linaro.org>
-Date:   Wed, 25 Oct 2023 10:07:21 +0200
+        Wed, 25 Oct 2023 01:10:14 -0700 (PDT)
+Message-ID: <213d8b75-93b5-40d5-bf4c-11690b05553f@linaro.org>
+Date:   Wed, 25 Oct 2023 10:10:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: usb: qcom,dwc3: document the SM8560
- SuperSpeed DWC3 USB controller
+Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: document the SM8650 Top Level
+ Mode Multiplexer
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-bindings-dwc3-v1-1-fdd447e99865@linaro.org>
+References: <20231025-topic-sm8650-upstream-tlmm-v1-0-4e3d84a3a46b@linaro.org>
+ <20231025-topic-sm8650-upstream-tlmm-v1-1-4e3d84a3a46b@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -114,7 +114,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025-topic-sm8650-upstream-bindings-dwc3-v1-1-fdd447e99865@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-tlmm-v1-1-4e3d84a3a46b@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -127,31 +127,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 09:25, Neil Armstrong wrote:
-> Document the SuperSpeed DWC3 USB controller on the SM8650 Platform.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-> For convenience, a regularly refreshed linux-next based git tree containing
-> all the SM8650 related work is available at:
-> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
-> ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> index e889158ca205..ea2c663ddc52 100644
-> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
-> @@ -46,6 +46,7 @@ properties:
->            - qcom,sm8350-dwc3
->            - qcom,sm8450-dwc3
->            - qcom,sm8550-dwc3
-> +          - qcom,sm8650-dwc3
->        - const: qcom,dwc3
+On 25/10/2023 09:33, Neil Armstrong wrote:
 
-I think you miss two dedicated entries in allOf:if:then for clocks and
-interrupts.
+Thank you for your patch. There is something to discuss/improve.
+
+> +$defs:
+> +  qcom-sm8650-tlmm-state:
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this
+> +          subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-9])$"
+> +            - enum: [ ufs_reset, sdc2_clk, sdc2_cmd, sdc2_data ]
+> +        minItems: 1
+> +        maxItems: 36
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins.
+> +        enum: [ gpio, aoss_cti, atest_char, atest_usb, audio_ext_mclk0,
+> +                audio_ext_mclk1, audio_ref_clk, cam_aon_mclk2, cam_aon_mclk4,
+> +                cam_mclk, cci_async_in, cci_i2c_scl, cci_i2c_sda, cci_timer,
+> +                cmu_rng, coex_uart1_rx, coex_uart1_tx, coex_uart2_rx,
+> +                coex_uart2_tx, cri_trng, dbg_out_clk, ddr_bist_complete,
+> +                ddr_bist_fail, ddr_bist_start, ddr_bist_stop, ddr_pxi0,
+> +                ddr_pxi1, ddr_pxi2, ddr_pxi3, do_not, dp_hot, gcc_gp1,
+> +                gcc_gp2, gcc_gp3, gnss_adc0, gnss_adc1, i2chub0_se0,
+> +                i2chub0_se1, i2chub0_se2, i2chub0_se3, i2chub0_se4,
+> +                i2chub0_se5, i2chub0_se6, i2chub0_se7, i2chub0_se8,
+> +                i2chub0_se9, i2s0_data0, i2s0_data1, i2s0_sck, i2s0_ws,
+> +                i2s1_data0, i2s1_data1, i2s1_sck, i2s1_ws, ibi_i3c,
+> +                jitter_bist, mdp_vsync, mdp_vsync0_out, mdp_vsync1_out,
+> +                mdp_vsync2_out, mdp_vsync3_out, mdp_vsync_e, nav_gpio0,
+> +                nav_gpio1, nav_gpio2, nav_gpio3, pcie0_clk_req_n,
+> +                pcie1_clk_req_n, phase_flag, pll_bist_sync, pll_clk_aux,
+> +                prng_rosc0, prng_rosc1, prng_rosc2, prng_rosc3, qdss_cti,
+> +                qdss_gpio, qlink_big_enable, qlink_big_request,
+> +                qlink_little_enable, qlink_little_request, qlink_wmss,
+> +                qspi0, qspi1, qspi2, qspi3, qspi_clk, qspi_cs, qup1_se0,
+> +                qup1_se1, qup1_se2, qup1_se3, qup1_se4, qup1_se5, qup1_se6,
+> +                qup1_se7, qup2_se0, qup2_se1, qup2_se2, qup2_se3, qup2_se4,
+> +                qup2_se5, qup2_se6, qup2_se7, sd_write_protect, sdc40, sdc41,
+> +                sdc42, sdc43, sdc4_clk, sdc4_cmd, tb_trig_sdc2, tb_trig_sdc4,
+> +                tgu_ch0_trigout, tgu_ch1_trigout, tgu_ch2_trigout,
+> +                tgu_ch3_trigout, tmess_prng0, tmess_prng1, tmess_prng2,
+> +                tmess_prng3, tsense_pwm1, tsense_pwm2, tsense_pwm3, uim0_clk,
+> +                uim0_data, uim0_present, uim0_reset, uim1_clk, uim1_data,
+> +                uim1_present, uim1_reset, usb1_hs, usb_phy, vfr_0, vfr_1,
+> +                vsense_trigger_mirnat ]
+> +
+> +      bias-disable: true
+> +      bias-pull-down: true
+> +      bias-pull-up: true
+> +      drive-strength: true
+> +      input-enable: true
+> +      output-disable: true
+> +      output-high: true
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +
+> +    additionalProperties: false
+
+We changed the syntax here:
+1. Use unevaluatedProperties: false (and put it after $ref:
+qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state)
+2. Drop all these ": true" properties.
+
+Take a look at sm8550 for an example.
 
 Best regards,
 Krzysztof
