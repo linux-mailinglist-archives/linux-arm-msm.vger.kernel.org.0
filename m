@@ -2,96 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CCA27D6928
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 12:42:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E16B67D6940
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 12:44:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343566AbjJYKmO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 06:42:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55596 "EHLO
+        id S234618AbjJYKoV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 06:44:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234952AbjJYKlt (ORCPT
+        with ESMTP id S234854AbjJYKnv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 06:41:49 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2453A2133
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 03:41:06 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32db8924201so3640980f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 03:41:06 -0700 (PDT)
+        Wed, 25 Oct 2023 06:43:51 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB9921FC3;
+        Wed, 25 Oct 2023 03:42:58 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1c9fa869a63so36375985ad.0;
+        Wed, 25 Oct 2023 03:42:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698230464; x=1698835264; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uqLHQAQrHM/M2kTrKhBh9HGRbsUA7pR4vaPa6cf8SFI=;
-        b=nujG/Npmy9RCh3WBxRUfIOxpj8VHpT+UpKjx3Z5dwV49d+tOsBoKlFWHQkai7jIlZ9
-         Mc5LA5OvTBEtZiiSXgrxeS3OtsmZrLbUf9ru+ULOWxforehaVHuoJame+TrvLtBTCLj6
-         QA0aQYwlI2Q9PfVIWsW3QmA0BvtdTp2beMKpMIKfXxMJIvdPWh9GBvrWRpjXlMRa1w4h
-         YM0TDzBsvyXxK/bILqnwwyPd+V1nKfjJRV4atTX5hUg4qBydzlQnADifl9Y4Yt81Kiaz
-         ym1fWfhmSs9Tpx+Z7VpzZ9PJVUZKCS2voY+iEZfCaiQXVCUbXeIhbylp78IHidZRFH77
-         MF5g==
+        d=gmail.com; s=20230601; t=1698230578; x=1698835378; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=56h1JpcHvZsCRQ9iJdOKAqTAwTON7/OrDuQGdot/+iA=;
+        b=dkz9kz8ExE1YIjnXAlKwhxJ1VbCSWPRXN1QRWJZGGLN6T01hJWx5Uy6LCMBAe2zNMs
+         XIwysCDWy0qUOjO/06kxASDSMsoTREs4v9aJgLF2i65KPgrv+PuAYGH3L+X7IGRfBt+Y
+         0eLY70Ju0JWd6IpQSs5jS4yBw+Yi1uY3tqkCMhZNhOrWwkH95tVA4V6/k6LGVv1vLM1y
+         o5bVsbBFSAxpWXC7LabyvEkhrw5BqOR2TFdhQ9U3t2xBwfWankuL1bsw6f/DQU6w3aqk
+         Fv0w73ldp+nLi52HAQ0uG7/fNZMvkPb2Ntl5Wo3nfGTb3WZa3aFdvzFxCbyA8sA307ZH
+         uuKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698230464; x=1698835264;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uqLHQAQrHM/M2kTrKhBh9HGRbsUA7pR4vaPa6cf8SFI=;
-        b=BssEMghC1/a4X38pmzCpitMI19rnjRaxDj+ztmchJs277BgZ9c9PzoNFH0rFh3YwaW
-         5jI3dyLkQMZJMVyCbAXcInwm4Z0642si0GZWHMfn6mXMZ4nqTshQLQMsxCGAVuhrznxs
-         GnX7IYTbz4yf2GP74Lcvx/tYGgLB1vbCmEWkDkFS5iQzvJ8fr1cA3W4DmZf3Fo3j195I
-         F2y5UYKlFOk3mdmIqEsjEa0ZnNXbgTAkez55iZiDMSacjRXZ8PHV2JtBllQp/cNOhbW8
-         bjHmXd+jenR94XemXRGr/Z5fZQTKH6giujPHxsKvnLjxZNDEy9PUNHsNXpgTWrueYW2J
-         8duA==
-X-Gm-Message-State: AOJu0Yylzl6QALHkQVplD6NunqjHfxsV/0VQ7CicmGJh/O+zWKMmYyZt
-        pBED32pDuvUoaZJv45p+hoJBEg==
-X-Google-Smtp-Source: AGHT+IGbgihuQ/EiX8V6PwAWankvS1PFInq14SxWoRxwUzvZJhd0hVtY4eL2KwcWTqI5fiUn+cOJTA==
-X-Received: by 2002:adf:fc09:0:b0:323:10b8:543e with SMTP id i9-20020adffc09000000b0032310b8543emr10450680wrr.49.1698230464478;
-        Wed, 25 Oct 2023 03:41:04 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id f7-20020adff587000000b0031fb91f23e9sm11788220wro.43.2023.10.25.03.41.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 03:41:04 -0700 (PDT)
-Message-ID: <532572c1-c4ed-4b46-8d30-32698bcd930f@linaro.org>
-Date:   Wed, 25 Oct 2023 11:41:03 +0100
+        d=1e100.net; s=20230601; t=1698230578; x=1698835378;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=56h1JpcHvZsCRQ9iJdOKAqTAwTON7/OrDuQGdot/+iA=;
+        b=u2lAtMM3Enk+OXqIHPskJx25JvBCoI2X6kwQxXufvLn1oZGbgv6SNvdpdnEYpsXX5l
+         pbYQzvfxkl0ltN6dN7tc9SbtYkpQIz2oUrojuVzZ+jM+5RJg/4L9jgBBFy26aokpNDs/
+         4KQbrhJ4svaJoSJArTwkIgBEQw9KqTtq5TBb7JCy/GqwRq6dSJqAZVXgPK/Q1I3c/JaA
+         3cRXWYuSa+vS5Vy5JXmaITwQ3LkF1vcUtELt7wgXAuV/jkuP4PXGZLe7I+O7hcbLJJO5
+         d3rKZqBQJbodv5HQI08memJ0HFwXqg5g0atPV/3l5BKlvaE7crGGagtRVkUfk3jaCzBD
+         ph6w==
+X-Gm-Message-State: AOJu0YxWopUcTeWUqw24/UzIbxak2xSXqih6bM5R4cBm+WAM9QHsO8+w
+        09n9UDyrwGEwqdWwVkaOBv5YhjP8vcgVEqxgvuw=
+X-Google-Smtp-Source: AGHT+IGu6RadKqlaivUp1Agx0JAVTkBz0ox2q7y+J3UsKXFtZj1ToELfyUv5XsBOmBBv+Yk1JjwNb5rp81iLFbNlIcM=
+X-Received: by 2002:a17:903:6c4:b0:1bd:ca80:6fe6 with SMTP id
+ kj4-20020a17090306c400b001bdca806fe6mr9659343plb.41.1698230577913; Wed, 25
+ Oct 2023 03:42:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] media: qcom: camss: Convert to per-VFE pointer for
- power-domain linkages
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, rfoss@kernel.org,
-        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
-        mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+References: <20231015162114.976202-1-robimarko@gmail.com> <f27ff251-58b1-4fc5-8ad5-cd365b7eb976@linaro.org>
+ <8dce62b2-562c-4e00-840b-68e1cc865972@quicinc.com> <CAOX2RU4n8caVL33KkqgYK1_mTZv-oZtd0p=_dzPh-ntBBfH1zA@mail.gmail.com>
+ <b4ce1fdf-0a05-479d-90f8-3a2a2e40b07f@quicinc.com> <CAOX2RU7Z1BS0u_k=cx58oq8RODPV=a3kV26OsbYpkDaN1atixg@mail.gmail.com>
+ <444ef41e-632c-4402-849d-80e8876b6e72@quicinc.com>
+In-Reply-To: <444ef41e-632c-4402-849d-80e8876b6e72@quicinc.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Wed, 25 Oct 2023 12:42:46 +0200
+Message-ID: <CAOX2RU5DfuOTr-pzU=mSaz_bxX9VOB1oAC6000PzS5OqmZsFEg@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: gcc-ipq6018: add QUP6 I2C clock
+To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>, agross@kernel.org,
+        andersson@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20231024224255.754779-1-bryan.odonoghue@linaro.org>
- <20231024224255.754779-2-bryan.odonoghue@linaro.org>
- <75c4a105-b925-4d6a-8c42-38f3ab32a7ca@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <75c4a105-b925-4d6a-8c42-38f3ab32a7ca@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 10:16, Konrad Dybcio wrote:
->> @@ -653,11 +653,11 @@ static int vfe_pm_domain_on(struct vfe_device *vfe)
->>       if (id >= camss->res->vfe_num)
->>           return 0;
->> -    camss->genpd_link[id] = device_link_add(camss->dev, 
->> camss->genpd[id],
->> -                        DL_FLAG_STATELESS |
->> -                        DL_FLAG_PM_RUNTIME |
->> -                        DL_FLAG_RPM_ACTIVE);
-> Good opportunity to inilne vfe->id and get rid of a local var!
+On Wed, 25 Oct 2023 at 10:42, Kathiravan Thirumoorthy
+<quic_kathirav@quicinc.com> wrote:
+>
+>
+>
+> On 10/21/2023 5:27 PM, Robert Marko wrote:
+> > On Fri, 20 Oct 2023 at 08:40, Kathiravan Thirumoorthy
+> > <quic_kathirav@quicinc.com> wrote:
+> >>
+> >>
+> >> On 10/19/2023 7:53 PM, Robert Marko wrote:
+> >>> On Thu, 19 Oct 2023 at 08:46, Kathiravan Thirumoorthy
+> >>> <quic_kathirav@quicinc.com> wrote:
+> >>>>
+> >>>> On 10/19/2023 1:59 AM, Konrad Dybcio wrote:
+> >>>>>
+> >>>>> On 10/15/23 18:20, Robert Marko wrote:
+> >>>>>> QUP6 I2C clock is listed in the dt bindings but it was never included in
+> >>>>>> the GCC driver.
+> >>>>>> So lets add support for it, its intentionally marked to never be
+> >>>>>> disabled
+> >>>>>> as its somehow affecting DVFS and if disabled it sometimes crashes the
+> >>>>>> board.
+> >>>>>>
+> >>>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >>>>>> ---
+> >>>>> Bjorn, would you be able to get an idea of what could be sitting
+> >>>>> on that bus?
+> >>>>>
+> >>>>> Or maybe the IPQ folks could know?
+> >>>>>
+> >>>> Konrad / Robert,
+> >>>>
+> >>>> Similar to IPQ9574, RPM needs this clock to communicate with PMIC over
+> >>>> I2C interface. Discussion happened here[1] is pretty much applicable to
+> >>>> IPQ6018 as well. Based on previous experience, we may need to document
+> >>>> the reason for CLK_IGNORE_UNUSED in driver as well. Nevertheless,
+> >>>>
+> >>>> Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> >>> Thanks for the explanation, it makes sense as I used to control the
+> >>> MP5496 directly
+> >>> via I2C.
+> >>>
+> >>> Is it possible to disable RPM so it doesn't conflict and just use the
+> >>> full MP5496 driver instead?
+> >>> I find the RPM quite limiting as there is no way to actually retrieve
+> >>> the current-voltage.
+> >>
+> >>
+> >> Robert, checked with the team and currently we don't have any option to
+> >> disable the RPM as such.
+> >
+> > Thanks for checking.
+> >
+> > BTW, is there any information you could share on the USB GDSC-s?
+> > I tried converting them to GDSC-s like IPQ8074 has, but it seems that
+> > they have different features.
+> > It would be great to use proper GSDC support instead of manually
+> > setting bits during GCC probe.
+>
+>
+> Could you please explain the issue which you are facing? Based on quick
+> look at the HW documentation, seems there is no difference between
+> IPQ8074 and IPQ6018 GDSC-s.
 
-Yeah no objection to that, this is a progressive patchset so the index 
-goes away in 1 or 2 patches later in the series anyway.
+Thanks for checking, it seems I hit a buggy kernel version last time I tried to
+convert the driver to use proper GDSC-s and now it seems to work fine,
+I will send patches to add GDSC-s.
 
----
-bod
+Regards,
+Robert
+>
+> Thanks,
