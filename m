@@ -2,147 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 033C07D6096
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 05:50:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D4F97D61A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 08:25:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231732AbjJYDuL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 23:50:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54380 "EHLO
+        id S232176AbjJYGZQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 02:25:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230093AbjJYDuK (ORCPT
+        with ESMTP id S231984AbjJYGZP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 23:50:10 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C372F90;
-        Tue, 24 Oct 2023 20:50:08 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39P30CMx011193;
-        Wed, 25 Oct 2023 03:50:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=rZmYiKo8tWy9GaB0AD6lA01FHY8CzNZxdNsmy7s2JBw=;
- b=eiqMjyIDKU7AFdZoq1B6XT2MjhmC9qk6Z2Uk2AI7f4kzKq6CnPBV9RC9YPu6JVPnhabx
- SXrUcYifr+kqSAk73Jg0aEn1VU91/uLdeZpPKL+cWA0zMxVF6Dsvkjs1gGLQWy+1N1Ok
- u5x8kI8BJzl9r4IDP7mGxrpeDSCflFFULGnO4XDoa+pP3A53t/oh+fuES4XvqjrHYftg
- NPh9Fnv6EV+JxDg2QCpKxuwekTLjoO60NUsG2ZzSd0M6veAwwd6pI26EZmt8jhhvCjoB
- TJxK0vTO5+p6FlDpALor5lRFwM3IW3V2Gwz5J61dSbLQVkBx2PxqcV615qX2kxEBTh2d Sg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txngvgm30-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 03:50:01 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39P3o00X008552
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 03:50:00 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 24 Oct
- 2023 20:49:56 -0700
-Message-ID: <0fa6630b-ca9f-4441-b698-f983ed8b9748@quicinc.com>
-Date:   Wed, 25 Oct 2023 09:19:52 +0530
+        Wed, 25 Oct 2023 02:25:15 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42BF312D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 23:25:12 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1cacde97002so32457445ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 23:25:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698215111; x=1698819911; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YRNx4/VhgJBUmPLhfW0nzhO+j+HC6thHIfSQat4cc5Q=;
+        b=E2TrS5twCMhJnRkIHOMNNqcEgDS2AEsF0M3m9s/HaI9gY729q04tRAq/7QNZ7+cBOU
+         Ba3IzzbiUn1t9ozMz5lMCVCxxV04VZsgGe7Mef8ndh2b3IbF9I90FaV3B6AIbdmEendN
+         7V6BQMSzkID7eUnXBxSTDFx30/8UNfiT6V0slAQzrxjyddUaNQXMC/r1hhKmpZjRa9BL
+         1RcKEPoEXeWiwUNaknv0M6FSUYhkpcaq760kb502SEUH4C9ycryn4f5cmCVnW9PKqalD
+         OSx8eu6mq9eDvN3qx/UaZ2be5KHJqA1ebie6Or7IrZ3otksLjy9AanbrLfstZjfBjCUr
+         xImw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698215111; x=1698819911;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YRNx4/VhgJBUmPLhfW0nzhO+j+HC6thHIfSQat4cc5Q=;
+        b=rDrVNxCzZFlP6/X0DoYYGwS2dLtXuAp4rchHrNgJQtl9XtbdiHjLv2k5trMhwK+VIB
+         xD9J16VdC3G8xa3jTn4wAl29oWGc2H3f2NIVvg4TnzzRQmv9n7XU0Xzxqoq4aEVFnR6f
+         kkOz140aWORqbub4LpCvuKgpHdl9YUgfqM1gidnR6C2QbPrX+n4Fezl0g3txsKIIctAT
+         wYPQ26ShvlYXpVvYI5wKt+ueIResbczcnfHJE6VjRHYA9pwJd693iUqJRj3Vvug6fiUx
+         WNnbXI2sew/9e6W1qYSctm2oUcxgOECCckBjJJLmDzZy2qjocWGd96LAR/sq++48VNzf
+         bHhA==
+X-Gm-Message-State: AOJu0Yw+HAOZOZt+Xo+tGdw82/w3QLcTRb9hx5mvcG6FxvxG/oo+Ut4s
+        9Cx6iSIR57CGI0vnH2kz9a1/Lw==
+X-Google-Smtp-Source: AGHT+IGohNcTFzm2Bh0bFriQkaNYjeD1yBiORs4U/Gyp7N7O3RPbMKBRyGUEMkF90cJRpigxhPHV9Q==
+X-Received: by 2002:a17:903:11cd:b0:1c7:29fd:33b6 with SMTP id q13-20020a17090311cd00b001c729fd33b6mr13396486plh.40.1698215111463;
+        Tue, 24 Oct 2023 23:25:11 -0700 (PDT)
+Received: from localhost ([122.172.80.14])
+        by smtp.gmail.com with ESMTPSA id u17-20020a170902e5d100b001b89a6164desm8371393plf.118.2023.10.24.23.25.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Oct 2023 23:25:10 -0700 (PDT)
+Date:   Wed, 25 Oct 2023 11:55:08 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        rafael@kernel.org, ilia.lin@kernel.org, sivaprak@codeaurora.org,
+        quic_kathirav@quicinc.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v5 0/9] Enable cpufreq for IPQ5332 & IPQ9574
+Message-ID: <20231025062508.vccrmkem45p3fnwe@vireshk-i7>
+References: <cover.1697781921.git.quic_varada@quicinc.com>
+ <20231020070947.cwigtaa2haij56hz@vireshk-i7>
+ <20231020080339.GA6197@varda-linux.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3 v7] Misc SCM changes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Mukesh Ojha <quic_mojha@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <p.zabel@pengutronix.de>, <linus.walleij@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1696440338-12561-1-git-send-email-quic_mojha@quicinc.com>
- <f3a4c114-b430-47ce-a746-4a840994dc58@quicinc.com>
- <CAA8EJpr0Nnn5Tr=2CBAADYfNU6cnKuq==x5L5YQoko9C=3q2tg@mail.gmail.com>
- <d6f48748-22c4-4e4c-a1e9-7a6940b9b432@quicinc.com>
- <CAA8EJpqd-1=sFd3Hm-XbAq8WJfY+hL2Hd5mc23RnCimMbQM69w@mail.gmail.com>
-From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <CAA8EJpqd-1=sFd3Hm-XbAq8WJfY+hL2Hd5mc23RnCimMbQM69w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9MB8euq6kkXIVYVe34pFj1iGcjGIdNJF
-X-Proofpoint-ORIG-GUID: 9MB8euq6kkXIVYVe34pFj1iGcjGIdNJF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-25_01,2023-10-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 malwarescore=0 clxscore=1015 adultscore=0 spamscore=0
- bulkscore=0 mlxlogscore=895 impostorscore=0 mlxscore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310250031
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231020080339.GA6197@varda-linux.qualcomm.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/25/2023 1:34 AM, Dmitry Baryshkov wrote:
-> On Tue, 24 Oct 2023 at 19:00, Kathiravan Thirumoorthy
-> <quic_kathirav@quicinc.com> wrote:
->>
->>
->> On 10/24/2023 8:38 PM, Dmitry Baryshkov wrote:
->>
->> On Tue, 24 Oct 2023 at 16:31, Kathiravan Thirumoorthy
->> <quic_kathirav@quicinc.com> wrote:
->>
->> On 10/4/2023 10:55 PM, Mukesh Ojha wrote:
->>
->> I have given version to this series as v7 as it has already
->> gone through v6 and later got added to minidump patch series
->> However, these 3 patches can go independently and has no
->> relation with minidump hence, separated it from minidump series.
->>
->> Mukesh, Can you rebase this series on top of linux-next, since there is
->> a conflict?
->>
->>
->> Bjorn, after rebase is done, will you able to pick it up for v6.7 if
->> there is a time? These patches(#1  and #3) are required for the crash
->> dump collection on IPQ9574 and IPQ5332 SoCs.
->>
->> It is not obvious that they are fixes for the crash. You did not add
->> Fixes tags, you didn't follow
->> Documentation/process/stable-kernel-rules.rst. Cover letter is
->> useless. How can we guess that they are urgent / important?
->>
->>
->> Dmitry,
+On 20-10-23, 13:33, Varadarajan Narayanan wrote:
+> On Fri, Oct 20, 2023 at 12:39:47PM +0530, Viresh Kumar wrote:
+> > On 20-10-23, 11:49, Varadarajan Narayanan wrote:
+> > > Varadarajan Narayanan (9):
+> > >   cpufreq: qti: Enable cpufreq for ipq53xx
+> > >   cpufreq: qti: Introduce cpufreq for ipq95xx
+> >
+> > Can I pick just these two ?
 > 
-> Could you please turn off HTML message composition. For example your
-> message completely messed up the quoting in the text above.
-
-
-My bad. After the mail client update, HTML message composition is enabled.
-
+> ipq53xx patch is dependent on the previous safe source switching
+> patch, hence not safe to pick that.
 > 
->> These patches are not the *fixes* for the existing crashes, these are required to *enable* the crash dump / ram dump collection by boot loader when qcom_scm.download_mode is set to 1 on IPQ9574 and IPQ5332 SoCs.
-> 
-> Please excuse me, I misread your message, mea culpa. Indeed, they are
-> not a fix for the existing error...
+> 	No -> cpufreq: qti: Enable cpufreq for ipq53xx
+> 	Yes -> cpufreq: qti: Introduce cpufreq for ipq95xx
 
+The patches don't apply cleanly. Please resend.
 
-Yeah, no problem at all.
-
-
-> 
->>
->> Reason why I *requested* to pick it up for 6.7 if possible is, initial version is submitted in Jan 2023 by Poovendhan[1] and then later Mukesh integrated the initial series into his minidump series. Then I separated out these patches[2] from mindump series since there is no dependency for these patches to be part of minidump series but unfortunately again integrated back into the minidump series. Finally Mukesh again separated out these patches now.
->>
->> Since there are no active comments to be addressed, I was hoping this series to be picked for 6.7. As long as these patches doesn't go out of the radar, I'm fine :)
->>
-> 
-> 
-> --
-> With best wishes
-> Dmitry
+-- 
+viresh
