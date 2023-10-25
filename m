@@ -2,105 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B0997D7212
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 19:07:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 757F27D7249
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 19:32:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233808AbjJYRH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 13:07:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36586 "EHLO
+        id S229854AbjJYRce (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 13:32:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233876AbjJYRHY (ORCPT
+        with ESMTP id S229453AbjJYRcd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 13:07:24 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE327184;
-        Wed, 25 Oct 2023 10:07:20 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PGc26p003495;
-        Wed, 25 Oct 2023 17:07:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=dxlgvP4r2k28dxZ441zOMp4EadG+6OYj1Kk99bhk3Dk=;
- b=JlkNUeiLQLrQ60wGcYGl6W5eGrgxlgH01eQeY7q14F0vG0SdKb2FbQuB57NXmS3+aIZ0
- qdUr0eyn4ebLXSAcAUE386pWVsXVbJunMNWuz0QP7yQ+9aUAdhXs37mWU+WhjRBkew/E
- vy2lzsskq6lsHv8qDiwNTsKbr5EPvd5bAZf1ahrYncnP0ncKMGcK0YWs6SxCbA+tZiLi
- qpZg/ESVYkZ881K7qHzy6ysrontM37Wh4AwSPmObFX3WFp0pPCSpIZnRoOiD3ixrzYwc
- zd4aGDb7bifz6e30bOiC5QqdJgdtOri589zAZdh9Voa2JkkZnCNzDJ9k+PN4e55n49HC 8w== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ty5wdr8ay-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 17:07:17 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PH7HhV011583
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 17:07:17 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Wed, 25 Oct 2023 10:07:14 -0700
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sm8550: Enable download mode register write
-Date:   Wed, 25 Oct 2023 22:36:41 +0530
-Message-ID: <1698253601-11957-4-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1698253601-11957-1-git-send-email-quic_mojha@quicinc.com>
-References: <1698253601-11957-1-git-send-email-quic_mojha@quicinc.com>
+        Wed, 25 Oct 2023 13:32:33 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1735213A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 10:32:31 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-3af609c5736so3504191b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 10:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698255150; x=1698859950; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2HVv1I+VHPYBmP2qyskHC3BNYGeZwM5VQdpXShNy2UU=;
+        b=zf5ACJgYBf0QnYXanrqJVYm+tkFt0XvZ82DuSfzFskWcUAIwsbM26e7W46k/ob7Cr8
+         jZ3wHVjD1KQtZj8S8IFhXBmNQMFG3BNwCgA3b7a5IWDASv0rVTFhO9ooqrYmLP/k9Ecf
+         kJ8hdMWlMXAq3E8NaGzUAVtGGMUmWqFWpeY1ww7pC6uSBQzCocpDInmLLMFabq7mPxy8
+         wCvxhG9G/1ELH86czQTeM7fqQQFMuCw78zXB9gWyIkay0k7XfqSZ3scfoKx14ddjLzJp
+         VgglAiuaKrlKogBp2g1BF+v8MIW9mm22zEPvLZoVV5LbRG1WvDqeU0u7vNG0MGPAB/HL
+         1WHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698255150; x=1698859950;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2HVv1I+VHPYBmP2qyskHC3BNYGeZwM5VQdpXShNy2UU=;
+        b=duUGN3mMLEqJIvccc9ws/06VB4doPpIduVXTqfl6BPEhl3Sy07SuI2CxJSAxMMWgZT
+         190pmG4JDsaupyg1s/yPX8AJ80PAVd+qbBjCTZ5gmrDiWjIyXej7GedssUrpKM60+Ckl
+         nzgf+ZafJmammZ8fyr8WOF43FaTk30vHz/gvbUWD+63n0OimctkHskeGPOiSZJCXSJPB
+         jBFXM761yJyfv6uHiaB+R3BKFFbP0gJJJ8oaRLuoqZd3faD43Z2Ufz3UTo9lS4vHjuz3
+         j94UkOx9rEYZYj8ziVk0TK/AqKKxXHw2cATVpgR5105Hj0O3ev5msgY84JxgoEmC4GRs
+         DSTw==
+X-Gm-Message-State: AOJu0YwQBesGI08zGUm+YIkoUGJiSlh6505ylICCckZ5LnULCPv6fiBP
+        IutWnSDDUe+eDk7HhrAE+ef8YzVLIb97ncLl9MF6tA==
+X-Google-Smtp-Source: AGHT+IHK3QW/LQO8x2wSrRAP38zFqCKcXAPmcxtAPrlTRDXOL59OgKdxwhV3/4We8G2bhIYvPQK38ep1jZnF3JLZbxA=
+X-Received: by 2002:a05:6808:bc1:b0:3a9:cfb5:462a with SMTP id
+ o1-20020a0568080bc100b003a9cfb5462amr17552310oik.36.1698255150350; Wed, 25
+ Oct 2023 10:32:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _JIWCogbTO5N-MURFUS46XXIvdZw8ub2
-X-Proofpoint-ORIG-GUID: _JIWCogbTO5N-MURFUS46XXIvdZw8ub2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-25_05,2023-10-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 clxscore=1015 spamscore=0 mlxscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 mlxlogscore=853 phishscore=0
- malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2310170001 definitions=main-2310250149
+References: <20231025135550.13162-1-quic_sibis@quicinc.com> <20231025135550.13162-3-quic_sibis@quicinc.com>
+In-Reply-To: <20231025135550.13162-3-quic_sibis@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 25 Oct 2023 20:32:19 +0300
+Message-ID: <CAA8EJpoRMW95hGrDCMAjVeC5Q-xvZovEr53A2UpXLppujDTFOQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] regulator: qcom-rpmh: Add regulators support for PMC8380
+To:     Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     andersson@kernel.org, konrad.dybcio@linaro.org, broonie@kernel.org,
+        lgirdwood@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
+        conor+dt@kernel.org, quic_rjendra@quicinc.com,
+        abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_tsoni@quicinc.com, neil.armstrong@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable download mode setting for sm8550 which can help collect
-ramdump for this SoC.
+On Wed, 25 Oct 2023 at 16:57, Sibi Sankar <quic_sibis@quicinc.com> wrote:
+>
+> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+>
+> Add support from RPMH regulators found in PMC8380 for SC8380XP platform.
+>
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
----
-Changes in v2:
- - Improved commit text.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+>  drivers/regulator/qcom-rpmh-regulator.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 7bafb3d88d69..c94d06a9290c 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -324,6 +324,7 @@
- 	firmware {
- 		scm: scm {
- 			compatible = "qcom,scm-sm8550", "qcom,scm";
-+			qcom,dload-mode = <&tcsr 0x13000>;
- 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
- 		};
- 	};
 -- 
-2.7.4
-
+With best wishes
+Dmitry
