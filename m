@@ -2,66 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 423957D6494
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:10:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 228AA7D646E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:04:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232270AbjJYIJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 04:09:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48528 "EHLO
+        id S231542AbjJYIEL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 04:04:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234578AbjJYHoG (ORCPT
+        with ESMTP id S234338AbjJYIEJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:44:06 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CF23860
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:12 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-32db188e254so3717365f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:12 -0700 (PDT)
+        Wed, 25 Oct 2023 04:04:09 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ADC819F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:04:06 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id af79cd13be357-778a20df8c3so367598485a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:04:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698219310; x=1698824110; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FeVaWNnyeNRSIzE+gpNieFC+q7WQJWKZkR02hpS08iA=;
-        b=JNsFAoZiFDLQX7G2YXJfrHGgV50FR5iQTffYjY2CUt+SUoQ9Yuh6qAYX0UQjoVAyPq
-         O12vmjnP932eaj5RXEbkyajDE6dPul0Zt3pPGP6UHQsgkuwb6knkRb+dOIJO/JychmhW
-         hbr517fzU0s1I2a+9ao7SMUDyeXK53k6f5lR8ycLBs9Iz7rDeK+1DJZyZ1vkSxMs8Nds
-         wLZvsybqUm9yhrC5ui7d8qtGEszyeCtBBQqaDu9BAo9e2ipLaJD5Lqxr+H8i5/ffVe7W
-         yvi99yOAEF6KwftLnpUlN7AdKdn9RF1ZhGKvA8gjMWRHUb25eE0KwJUJQ/Az1VcV0MOL
-         yN5w==
+        d=linaro.org; s=google; t=1698221045; x=1698825845; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3fwMcGLJ7nYe8SSHVZ+HO50S7Dp0i12qC/S3ZP8EfBY=;
+        b=CDiM+9dXsbvNBq3WCDpmCfSt+wkCcMLRtqFNSex86M/v+poUyKiI5q6TNrS6dvKTcT
+         CyPwr0+xE4NuSNm3WRnYdP/qib1fR77KaPezmaefiWfr9Ne1KD3Sxn61glEMI64ItfZu
+         J/ikwQ4jbJgC82LZnX4zm38sYUUIn3J2AveNg35ctYJ1pn5pJoVmhd9cMJbWV7lxKMum
+         dJAYcijmJfCvzKOQZygsdwqbcTsJrpVTVR4bhrBPZeVX7T92dthEZSzOnK7GPptMHWu9
+         TeN8C2N5IVpg99dmDvPAV4QWbTVRrO396IHP8tnuKkFFTJtO8CCGF0MCCsLxSlt9TeuN
+         mFoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698219310; x=1698824110;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FeVaWNnyeNRSIzE+gpNieFC+q7WQJWKZkR02hpS08iA=;
-        b=fvo12cVjwX1E/ovo3zTssP/1v9BVLHzPuyCi6BZuM6yRMhgaPDVVSLvOU9xfDojpje
-         IUSuHlj1fJaiN+wkT1/nUjwniqZhjnluOwH2lTK6b9E5fuc4fFwlDyd5m71Y7aD/TtBO
-         OZ3nHoEOSlVb7gmjGaL0tBomQREJH/An3B5DcImyilgL/HW0dXsrDoQvgaTk68rgrtby
-         ma0TzBpIGG3sRkafbtXx+kZR5EoGtXV+LpMKpoUj7DaqID8lMKeKt7h2ysm/mluZ61MS
-         O/9xwnqQ0agZWWf96ZOvNQHEV/SIATKYbDBmzjKlyluseAFEedcmJ83/EhyzHuiMBQ4f
-         x41A==
-X-Gm-Message-State: AOJu0YwTdpP5Hi2VrOubN6h5t42RSfUIRJxrQPyrfdJU2n6K+Oj5v291
-        tssAju337blCtUXv94CyGdb3vQ==
-X-Google-Smtp-Source: AGHT+IEoONYynpBbhg6LTU7YNc9309l0erhRMfCJ4DvMaMUvjthqw2ltUmMX7x/deOmgOiYmoeIoQA==
-X-Received: by 2002:a5d:654a:0:b0:32d:95dc:c065 with SMTP id z10-20020a5d654a000000b0032d95dcc065mr10482391wrv.19.1698219310309;
-        Wed, 25 Oct 2023 00:35:10 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id x18-20020a5d60d2000000b003248a490e3asm11449058wrt.39.2023.10.25.00.35.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 00:35:09 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 09:35:01 +0200
-Subject: [PATCH 3/8] dt-bindings: display: msm: document the SM8650 DPU
+        d=1e100.net; s=20230601; t=1698221045; x=1698825845;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3fwMcGLJ7nYe8SSHVZ+HO50S7Dp0i12qC/S3ZP8EfBY=;
+        b=j49fOLoAhLmC1yaJa3oxs1n0VFXAZi93QGCAlcJmb+nwna+BYiDCj7jqp5JwEWQOOj
+         e5XgjH1vPmC3EpAwH9ylZawu8oICGbhEph/ihCN3fmcqZzN5Qt0pODqoYzeZYZ4F+3V4
+         FnZKrsCAa2zHExm4oDNrW+sFs5uwsoI+9OG+kI7nVMO1Cj6+MvJhv1qDYWDJ60JcVhHu
+         F+XwQJy0Q6J9vhRgP5Ksq6NNLbC93u8knareCTMUPSVykz5ocgSAFztd9YifTN8ClScF
+         wZKe8SWlGuXHbStBVX27uWdNIYAG/J8SJYUmws27VO6m3+ahOcyEiwXIosm2OQt1jCYJ
+         Vhcg==
+X-Gm-Message-State: AOJu0YyPP9MoBgiKjR0SBAZ7BvwX33JXCJyCmGbwDFZU2ZgAfAIrORxA
+        NOmsiF+dMzpnYnP82UP+J8s5YO3ACK7yFKVpC/C1VA==
+X-Google-Smtp-Source: AGHT+IHGl11EIegvL/m7wJAmFPHRjo9ndjP1xqa+xYpJHUe09/aZADzdf21iKb/J6OYzZwnVFQxLUhc6iEzbpmkMiPM=
+X-Received: by 2002:a05:620a:164a:b0:778:96eb:e7d9 with SMTP id
+ c10-20020a05620a164a00b0077896ebe7d9mr14770645qko.19.1698221045386; Wed, 25
+ Oct 2023 01:04:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-mdss-v1-3-bb219b8c7a51@linaro.org>
-References: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
-In-Reply-To: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
+References: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org> <20231025-topic-sm8650-upstream-mdss-v1-7-bb219b8c7a51@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-mdss-v1-7-bb219b8c7a51@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 25 Oct 2023 11:03:54 +0300
+Message-ID: <CAA8EJpr+QGBFchG9aXJLxyhbMwMWZF6RjSVOpORkP_KFrV=P1A@mail.gmail.com>
+Subject: Re: [PATCH 7/8] drm/msm: dsi: add support for DSI-PHY on SM8650
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>,
@@ -73,28 +67,11 @@ To:     Rob Clark <robdclark@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         Jonathan Marek <jonathan@marek.ca>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3887;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=A8kBi2PrODlpOXZ493WRi1fPCLR+VF/HPHoWKYNttUE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMUmzT1vJJHda3TnDlgizA2nyQee2qiYeQfMv3gj
- b9KHq6WJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjFJgAKCRB33NvayMhJ0YmOD/
- 0Wy6xv8g7QDKWntJIJYjxPBFwl9LLdnNGSqpTiVNiq3N2NjSJqCz/6aBrvNuko5n2A1BkrPW0bkN5T
- HcBeeU6VPjvMhILDwzAgp85FVmE9UdwjKpjhJ5XLETt7Ds4Ib3orhz6jvFzEk67mtSzO0AO/U8YVob
- ZbvGRM9cuW3SJbB/LkgZAbZRf2M/Bb8EDA+zbiPtBnewMPH1El0mItaqn9t/YYgL3Dw+LwuyziSO2L
- +K3JdM90d0zBQWG3huUV8/wAUSFQtrSSTnEiLrLgRdjzg6zNnKfVe0UU80cuXJvNafb9lBn/RiwDEp
- 0NEa1JGd8nedr22ZPDJHAatQMe+gSeizmOZCgf5bGYrarFQSvO2/9Pk3xrY3eRZ6NQoPRIy8iJAwH5
- HGSTrWIsFGg6VKDMh5QT+izBqdRSV0THi4wZpxjeoYqItPLYOfqkkVcPCCaM39ol1kAXiUOd9KDNbQ
- 4XIw2ymN/fejn7/M4cGIORldAgzHP4DM49RvMXJBfjLM6CckuMmJpoy7KJzWFZ6ptpySVlSH1Ipyps
- 46xfd52NZEVQ7AIt+G7h9e3uugYgQYF/2DcmDfbGHs/wKPRCsNkfYrKcl75y/USDZxCXcyKLTd4jIE
- 4XISf78x+oEHdsTKDrJamtofLsiveiFShHPqRemtvXg/5hfW8+n/YXUstxjA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
@@ -105,147 +82,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the DPU Display Controller on the SM8650 Platform.
+On Wed, 25 Oct 2023 at 10:35, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> Add DSI PHY support for the SM8650 platform.
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |  2 ++
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 +
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 27 +++++++++++++++++++++++++++
+>  3 files changed, 30 insertions(+)
+>
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> index 05621e5e7d63..7612be6c3618 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
+> @@ -585,6 +585,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
+>           .data = &dsi_phy_5nm_8450_cfgs },
+>         { .compatible = "qcom,sm8550-dsi-phy-4nm",
+>           .data = &dsi_phy_4nm_8550_cfgs },
+> +       { .compatible = "qcom,sm8650-dsi-phy-4nm",
+> +         .data = &dsi_phy_4nm_8650_cfgs },
+>  #endif
+>         {}
+>  };
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> index 8b640d174785..e4275d3ad581 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
+> @@ -62,6 +62,7 @@ extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
+>  extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8350_cfgs;
+>  extern const struct msm_dsi_phy_cfg dsi_phy_5nm_8450_cfgs;
+>  extern const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs;
+> +extern const struct msm_dsi_phy_cfg dsi_phy_4nm_8650_cfgs;
+>
+>  struct msm_dsi_dphy_timing {
+>         u32 clk_zero;
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> index 3b1ed02f644d..c66193f2dc0d 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> @@ -1121,6 +1121,10 @@ static const struct regulator_bulk_data dsi_phy_7nm_37750uA_regulators[] = {
+>         { .supply = "vdds", .init_load_uA = 37550 },
+>  };
+>
+> +static const struct regulator_bulk_data dsi_phy_7nm_98000uA_regulators[] = {
+> +       { .supply = "vdds", .init_load_uA = 98000 },
+> +};
+> +
+>  static const struct regulator_bulk_data dsi_phy_7nm_97800uA_regulators[] = {
+>         { .supply = "vdds", .init_load_uA = 97800 },
+>  };
+> @@ -1281,3 +1285,26 @@ const struct msm_dsi_phy_cfg dsi_phy_4nm_8550_cfgs = {
+>         .num_dsi_phy = 2,
+>         .quirks = DSI_PHY_7NM_QUIRK_V5_2,
+>  };
+> +
+> +const struct msm_dsi_phy_cfg dsi_phy_4nm_8650_cfgs = {
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- .../bindings/display/msm/qcom,sm8650-dpu.yaml      | 127 +++++++++++++++++++++
- 1 file changed, 127 insertions(+)
+So, this is the same as sm8550 config, just using 400 uA less? I
+wonder if it makes sense to go for setting the regulator mode instead
+of setting the load.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml
-new file mode 100644
-index 000000000000..a01d15a03317
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml
-@@ -0,0 +1,127 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm SM8650 Display DPU
-+
-+maintainers:
-+  - Neil Armstrong <neil.armstrong@linaro.org>
-+
-+$ref: /schemas/display/msm/dpu-common.yaml#
-+
-+properties:
-+  compatible:
-+    const: qcom,sm8650-dpu
-+
-+  reg:
-+    items:
-+      - description: Address offset and size for mdp register set
-+      - description: Address offset and size for vbif register set
-+
-+  reg-names:
-+    items:
-+      - const: mdp
-+      - const: vbif
-+
-+  clocks:
-+    items:
-+      - description: Display hf axi
-+      - description: Display MDSS ahb
-+      - description: Display lut
-+      - description: Display core
-+      - description: Display vsync
-+
-+  clock-names:
-+    items:
-+      - const: nrt_bus
-+      - const: iface
-+      - const: lut
-+      - const: core
-+      - const: vsync
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - clocks
-+  - clock-names
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/power/qcom,rpmhpd.h>
-+
-+    display-controller@ae01000 {
-+        compatible = "qcom,sm8650-dpu";
-+        reg = <0x0ae01000 0x8f000>,
-+              <0x0aeb0000 0x2008>;
-+        reg-names = "mdp", "vbif";
-+
-+        clocks = <&gcc_axi_clk>,
-+                 <&dispcc_ahb_clk>,
-+                 <&dispcc_mdp_lut_clk>,
-+                 <&dispcc_mdp_clk>,
-+                 <&dispcc_vsync_clk>;
-+        clock-names = "nrt_bus",
-+                      "iface",
-+                      "lut",
-+                      "core",
-+                      "vsync";
-+
-+        assigned-clocks = <&dispcc_vsync_clk>;
-+        assigned-clock-rates = <19200000>;
-+
-+        operating-points-v2 = <&mdp_opp_table>;
-+        power-domains = <&rpmhpd RPMHPD_MMCX>;
-+
-+        interrupt-parent = <&mdss>;
-+        interrupts = <0>;
-+
-+        ports {
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            port@0 {
-+                reg = <0>;
-+                dpu_intf1_out: endpoint {
-+                    remote-endpoint = <&dsi0_in>;
-+                };
-+            };
-+
-+            port@1 {
-+                reg = <1>;
-+                dpu_intf2_out: endpoint {
-+                    remote-endpoint = <&dsi1_in>;
-+                };
-+            };
-+        };
-+
-+        mdp_opp_table: opp-table {
-+            compatible = "operating-points-v2";
-+
-+            opp-200000000 {
-+                opp-hz = /bits/ 64 <200000000>;
-+                required-opps = <&rpmhpd_opp_low_svs>;
-+            };
-+
-+            opp-325000000 {
-+                opp-hz = /bits/ 64 <325000000>;
-+                required-opps = <&rpmhpd_opp_svs>;
-+            };
-+
-+            opp-375000000 {
-+                opp-hz = /bits/ 64 <375000000>;
-+                required-opps = <&rpmhpd_opp_svs_l1>;
-+            };
-+
-+            opp-514000000 {
-+                opp-hz = /bits/ 64 <514000000>;
-+                required-opps = <&rpmhpd_opp_nom>;
-+            };
-+        };
-+    };
-+...
+Nevertheless (unless you'd like to reuse sm8550 config entry):
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> +       .has_phy_lane = true,
+> +       .regulator_data = dsi_phy_7nm_98000uA_regulators,
+> +       .num_regulators = ARRAY_SIZE(dsi_phy_7nm_98000uA_regulators),
+> +       .ops = {
+> +               .enable = dsi_7nm_phy_enable,
+> +               .disable = dsi_7nm_phy_disable,
+> +               .pll_init = dsi_pll_7nm_init,
+> +               .save_pll_state = dsi_7nm_pll_save_state,
+> +               .restore_pll_state = dsi_7nm_pll_restore_state,
+> +               .set_continuous_clock = dsi_7nm_set_continuous_clock,
+> +       },
+> +       .min_pll_rate = 600000000UL,
+> +#ifdef CONFIG_64BIT
+> +       .max_pll_rate = 5000000000UL,
+> +#else
+> +       .max_pll_rate = ULONG_MAX,
+> +#endif
+> +       .io_start = { 0xae95000, 0xae97000 },
+> +       .num_dsi_phy = 2,
+> +       .quirks = DSI_PHY_7NM_QUIRK_V5_2,
+> +};
+>
+> --
+> 2.34.1
+>
+
 
 -- 
-2.34.1
-
+With best wishes
+Dmitry
