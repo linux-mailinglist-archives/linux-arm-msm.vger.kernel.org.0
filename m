@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94AA87D6A67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 13:52:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65F0A7D6A73
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 13:54:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232688AbjJYLwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 07:52:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46840 "EHLO
+        id S234911AbjJYLyP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 07:54:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234875AbjJYLwb (ORCPT
+        with ESMTP id S234875AbjJYLyN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 07:52:31 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B89513A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:52:29 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40906fc54fdso21128595e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:52:29 -0700 (PDT)
+        Wed, 25 Oct 2023 07:54:13 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A308182
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:54:11 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-32d9552d765so4023098f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698234747; x=1698839547; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698234849; x=1698839649; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fj504wuC3Dwqo3vNkKSGcYzf/E6ixVzKhJmk91M1w1o=;
-        b=MQwwlBxwNflt+h+hTHKOfuv5vAbCZApL3ac3/JxUms0vv5sWtV1DlXEtqW93Sx2xQg
-         xtTjkUl34Rx1UcqK3SFAzz0hu3j9qJ+6/nsk3e9PPPIzPp8cR7JZbQR0TtQIQuLZTxDR
-         /ElfQMAeKVr6K7DAQMbQm+DIwfZaRLrW/Y39Z1xEvLF5CX/rJEmSneITFm4/5FXUKsnD
-         xrhQmsqS4uE8H7oqaIia+wk7y84LuDb/pwKhnn/OSYtw1RAONs9RtPCesUw1bFFJYUWh
-         SPNv2m2pbDBar5QhBSPrnQ9PAdjFOJWwgw9lyLZ04pNOpN+uqP03GmpF2qmDzVO1OZK8
-         a11A==
+        bh=+ltZJ6+Swzk+yoph3jfCx5O+AxaS4gg+n6PcWMPDR1U=;
+        b=xhQnCET61UW2n5ZKo12yldp5czbdio0pwNBWYL/ZYa0ZXXoQLqYhdllxcH+Qe33eAa
+         k5cu9DG+PrpsByQrp7ShH3D+RcpCAw7AdRp1FHCWYCAHbIVOfykrtx1x4BaRtR6NcbeO
+         zsbC6Ak/O31NSdUe5bWm8mA/L+jsp9XRYmqT7GGtEKVIvvG1BI779++Yl9kg2xiybJ1N
+         gEhBjFnFNmcFzSFiP+LbbEHuc2jY69viBPUTBkuLuP7wtRFMzVR82FKNWgiPYrKdI+5+
+         oHRFZBk6wMDeipbQx0JgUATcK30vMeNE7oYNNEwtFYQ9wyVPhVBClcJD8/CUCXqlUyhj
+         YK7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698234747; x=1698839547;
+        d=1e100.net; s=20230601; t=1698234849; x=1698839649;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=fj504wuC3Dwqo3vNkKSGcYzf/E6ixVzKhJmk91M1w1o=;
-        b=F3zlS/2qUJ919QWGTzQ0OqFR3Uk6EvQgiLSexYUT8tQIBY3WP4Vi7xOGYFLl7eM3pr
-         Lk/6sPYN6CbXAOZz/SwqkiE9Ah0qR6i/eBqjd2pXSeg/Fco9VTmY6Ga90ltQ2AeNRnC1
-         1sMI4cGO2lNrdVOZ9xZaDJL3yhLBm0ChKD9S8GJD/2diWsQZEIdP1zFCTEOi6V9g3oyl
-         MvCgbmJxpaTjGV5jPUhi4lqhRKasHlGe2jibT7ZdT4PebFLILY+2xSXIlkRNYhFebqEz
-         RwDAmkzpk6yuU01ii+r/+UzuJBL3kh56mih70ieRW1u5XwOnz/STTdpgZF9rRDUqhdKS
-         sqng==
-X-Gm-Message-State: AOJu0YxSbq6L9LKc/dwThAJV8AKscxH1GD/R5auu6vz8gcmomj02xPaY
-        NLCOqH+RwvLkR3DZw83WKFOTSQ==
-X-Google-Smtp-Source: AGHT+IHQ3Kk6NsfCOZcRhIUC6XyCzOdFpGtlLbNAI7/Gh3FcSfjFJNf5RpSzNxyecS61/Z0scYNKVw==
-X-Received: by 2002:a05:600c:4444:b0:408:4120:bab7 with SMTP id v4-20020a05600c444400b004084120bab7mr11427554wmn.15.1698234746863;
-        Wed, 25 Oct 2023 04:52:26 -0700 (PDT)
+        bh=+ltZJ6+Swzk+yoph3jfCx5O+AxaS4gg+n6PcWMPDR1U=;
+        b=YdneWnEgxBMjRf3WJJToeR1vbhPUjdqSOCNHdJ5w8tkokBSzEGeoPkBgDjvfsyvvs/
+         BdZRw7GzujFwYYc/WGEmFCmRiGIZPRejsoCk9Z4Zybrfmb0tfVBcONlW8hzmRr0sUQly
+         kHmFmD5pNDm3BNQBJiX5Gyvp0BepH0K//T9oX2poXDYOh6/E0aPpXEo7xH8vZVTrM6tM
+         OvoMem2VixkPSvRlx3vP/J/mQnS6IMxmev/N0vfInz0egxH5vrDFbm5Ya2aKMTBN5bV2
+         /ckPl1g7ly8ssuJw/rDdGpTLZC5z/8BbDcmFZsnzF7FvQeuUdaysXgYMyXR4++Pwowzj
+         PRwA==
+X-Gm-Message-State: AOJu0YzljJ1EsEORTwimuvgdJFBW4EnUGgcpDnhw2nCAgqmtafU7U8gt
+        bIvILxDKvWduABiOtNhnr9V0Rw==
+X-Google-Smtp-Source: AGHT+IGS8IxeGnw77ae04CewqnJrvLNlhqcwo7Not1TX3kus/2zqI9HEmaXRirkfvq4MiWRki24zag==
+X-Received: by 2002:a5d:664c:0:b0:32d:93aa:3d63 with SMTP id f12-20020a5d664c000000b0032d93aa3d63mr11621264wrw.69.1698234849478;
+        Wed, 25 Oct 2023 04:54:09 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:4b03:ec74:6374:5430? ([2a01:e0a:982:cbb0:4b03:ec74:6374:5430])
-        by smtp.gmail.com with ESMTPSA id u1-20020a05600c210100b004068de50c64sm14201938wml.46.2023.10.25.04.52.26
+        by smtp.gmail.com with ESMTPSA id t13-20020a5d49cd000000b003176c6e87b1sm11797593wrs.81.2023.10.25.04.54.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 04:52:26 -0700 (PDT)
-Message-ID: <48e2bebc-4f09-4a1f-a9a8-3953523146b8@linaro.org>
-Date:   Wed, 25 Oct 2023 13:52:26 +0200
+        Wed, 25 Oct 2023 04:54:09 -0700 (PDT)
+Message-ID: <03630289-d25a-498a-9f24-ac7633b48ee7@linaro.org>
+Date:   Wed, 25 Oct 2023 13:54:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH RFC 6/8] arm64: dts: qcom: sm8650: add interconnect
+Subject: Re: [PATCH RFC 7/8] arm64: dts: qcom: sm8650-mtp: add interconnect
  dependent device nodes
 Content-Language: en-US, fr
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -70,8 +70,8 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
- <20231025-topic-sm8650-upstream-dt-v1-6-a821712af62f@linaro.org>
- <247f2ec2-c400-4d85-ac6b-2fd058989857@linaro.org>
+ <20231025-topic-sm8650-upstream-dt-v1-7-a821712af62f@linaro.org>
+ <c98a3141-13a2-4cb3-bbd0-74ff63446183@linaro.org>
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
  GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
@@ -97,55 +97,51 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro Developer Services
-In-Reply-To: <247f2ec2-c400-4d85-ac6b-2fd058989857@linaro.org>
+In-Reply-To: <c98a3141-13a2-4cb3-bbd0-74ff63446183@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 11:10, Konrad Dybcio wrote:
+On 25/10/2023 11:11, Konrad Dybcio wrote:
 > 
 > 
 > On 10/25/23 09:47, Neil Armstrong wrote:
->> Add Hardware nodes that depends on an interconnect property to
->> be valid.
->>
->> The includes:
->> - all QUP i2s/spi nodes
+>> Now interconnect dependent devices are added in sm8650 DTSI,
+>> now enable more devices for the Qualcomm SM8650 MTP board:
 >> - PCIe
->> - UFS
->> - SDHCI
 >> - Display
->> - HWMON
+>> - DSPs
+>> - SDCard
+>> - UFS
+>> - USB role switch with PMIC Glink
 >>
 >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
-> QCOM_ICC_TAG_ALWAYS would be nice.. (see sa8775p)
+> [...]
+> 
+>> +&ufs_mem_hc {
+>> +    reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
+>> +
+>> +    vcc-supply = <&vreg_l17b_2p5>;
+>> +    vcc-max-microamp = <1300000>;
+>> +    vccq-supply = <&vreg_l1c_1p2>;
+>> +    vccq-max-microamp = <1200000>;
+> You should amend these regulators' nodes with loadsetting
+> and allowed mode properties
 
-I'll add those,
+Ack will do that on both patches 7 & 8,
 
 Thanks,
 Neil
 
-> 
-> [...]
-> 
->> +            /* Forbid SDR104/SDR50 - broken hw! */
->> +            sdhci-caps-mask = <0x3 0>;
-> Have they *still* not fixed that?
-> 
-> [...]
-> 
-> There's a whole lot to digest here, but I don't see anything
-> obviously wrong..
-> 
-> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
 > Konrad
 
