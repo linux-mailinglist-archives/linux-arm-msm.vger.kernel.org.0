@@ -2,108 +2,250 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE0897D6519
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:30:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 423957D6494
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:10:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232879AbjJYIa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 04:30:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35066 "EHLO
+        id S232270AbjJYIJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 04:09:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232620AbjJYIa6 (ORCPT
+        with ESMTP id S234578AbjJYHoG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 04:30:58 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D6E123
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:30:56 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-507a55302e0so7196065e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:30:56 -0700 (PDT)
+        Wed, 25 Oct 2023 03:44:06 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CF23860
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:12 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-32db188e254so3717365f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698222654; x=1698827454; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SFHQb/vO+uSnfk86NSCkjoMtagDBPY4Ko8t4pWiqci0=;
-        b=RFWnSC2IsVDcjJzJQQcuXHV6slIbQDl1Yr2kzTouKundmbUKWkDbwAQv3JjPH/2Zma
-         cF3bJCM1WEkI1ocanOhJCowmam8UhddHfxVC01Rf95ZCulBDen/NXPtnCshYctkMCzL+
-         N5AXionTymJugudCZAgyBQkLybAYlGQkzUap/Ih56HqguEq3eBAVsN/rXbNjyQeuwkH4
-         9j/6bOdt5+eHT96gy50teFb8mwdA8o8smdlDS13ERGQIVapZYnq5OG0o3FXG7/VAqnrg
-         AyrxN/AqP0/5hS1wUPr4k+/e6P8eeJz7MrBhRS+VI36HcyalLa514Jq8sKqndqyO6rE0
-         tsDQ==
+        d=linaro.org; s=google; t=1698219310; x=1698824110; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FeVaWNnyeNRSIzE+gpNieFC+q7WQJWKZkR02hpS08iA=;
+        b=JNsFAoZiFDLQX7G2YXJfrHGgV50FR5iQTffYjY2CUt+SUoQ9Yuh6qAYX0UQjoVAyPq
+         O12vmjnP932eaj5RXEbkyajDE6dPul0Zt3pPGP6UHQsgkuwb6knkRb+dOIJO/JychmhW
+         hbr517fzU0s1I2a+9ao7SMUDyeXK53k6f5lR8ycLBs9Iz7rDeK+1DJZyZ1vkSxMs8Nds
+         wLZvsybqUm9yhrC5ui7d8qtGEszyeCtBBQqaDu9BAo9e2ipLaJD5Lqxr+H8i5/ffVe7W
+         yvi99yOAEF6KwftLnpUlN7AdKdn9RF1ZhGKvA8gjMWRHUb25eE0KwJUJQ/Az1VcV0MOL
+         yN5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698222654; x=1698827454;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SFHQb/vO+uSnfk86NSCkjoMtagDBPY4Ko8t4pWiqci0=;
-        b=ro1r/ZXQ8dzus65OzxRZHY5/g42HhtD3m+vcnSiNex86YO7g+rTW0AEaNoJ0GsT/YK
-         eZyHo6yfTEngyu+9fqhDEdkPBBRh1IS+tY0qkLATxHBFOKDMlo/ZgS1s61Goe/o7CFhQ
-         GUC2iUflIGzmoQSPldXdueLuSD3iHh3RZ7AXnn5ZfyTnkN7ZeKjUO/NegpbSAykqHLo6
-         16IncrxVlnbzUIW+Erpy4FdS+AZsHzQ8Ry5+qMqDitq2h1SWwGfSkN/bmTniEixBmmMX
-         5r9dAtRnq6C9mS1uTdxaPH0GpH6qhU+1h7ZKvFI1tAEZyh3wXWYJ19r7BspJ/29Rug7K
-         /nxA==
-X-Gm-Message-State: AOJu0YzmKVo9Npt071YxF7UqPKTQnkJZ/GuvnRNQbO7ckdb9gwQPjtrA
-        ROuK4juv9O8WtSk4hCr1ZRph2Q==
-X-Google-Smtp-Source: AGHT+IH4jA9MCNcOKVtzPMubXUdbJFA/DuGa9mz9xaE04M4QtDGfGSTgvirxZ5ubWqj/xiqYu4PdEQ==
-X-Received: by 2002:ac2:47fc:0:b0:503:3654:37bd with SMTP id b28-20020ac247fc000000b00503365437bdmr9776195lfp.45.1698222654398;
-        Wed, 25 Oct 2023 01:30:54 -0700 (PDT)
-Received: from [192.168.1.212] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id n17-20020a05651203f100b00500829f7b2bsm2450039lfq.250.2023.10.25.01.30.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 01:30:24 -0700 (PDT)
-Message-ID: <c684d0a7-3336-48e3-9d2b-5c92f9132550@linaro.org>
-Date:   Mon, 16 Oct 2023 17:32:19 +0300
+        d=1e100.net; s=20230601; t=1698219310; x=1698824110;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FeVaWNnyeNRSIzE+gpNieFC+q7WQJWKZkR02hpS08iA=;
+        b=fvo12cVjwX1E/ovo3zTssP/1v9BVLHzPuyCi6BZuM6yRMhgaPDVVSLvOU9xfDojpje
+         IUSuHlj1fJaiN+wkT1/nUjwniqZhjnluOwH2lTK6b9E5fuc4fFwlDyd5m71Y7aD/TtBO
+         OZ3nHoEOSlVb7gmjGaL0tBomQREJH/An3B5DcImyilgL/HW0dXsrDoQvgaTk68rgrtby
+         ma0TzBpIGG3sRkafbtXx+kZR5EoGtXV+LpMKpoUj7DaqID8lMKeKt7h2ysm/mluZ61MS
+         O/9xwnqQ0agZWWf96ZOvNQHEV/SIATKYbDBmzjKlyluseAFEedcmJ83/EhyzHuiMBQ4f
+         x41A==
+X-Gm-Message-State: AOJu0YwTdpP5Hi2VrOubN6h5t42RSfUIRJxrQPyrfdJU2n6K+Oj5v291
+        tssAju337blCtUXv94CyGdb3vQ==
+X-Google-Smtp-Source: AGHT+IEoONYynpBbhg6LTU7YNc9309l0erhRMfCJ4DvMaMUvjthqw2ltUmMX7x/deOmgOiYmoeIoQA==
+X-Received: by 2002:a5d:654a:0:b0:32d:95dc:c065 with SMTP id z10-20020a5d654a000000b0032d95dcc065mr10482391wrv.19.1698219310309;
+        Wed, 25 Oct 2023 00:35:10 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id x18-20020a5d60d2000000b003248a490e3asm11449058wrt.39.2023.10.25.00.35.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Oct 2023 00:35:09 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Date:   Wed, 25 Oct 2023 09:35:01 +0200
+Subject: [PATCH 3/8] dt-bindings: display: msm: document the SM8650 DPU
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] drm/msm/adreno: Add support for SM7150 SoC machine
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Danila Tikhonov <danila@jiaxyga.com>, robdclark@gmail.com,
-        quic_abhinavk@quicinc.com, sean@poorly.run,
-        marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch,
-        johan+linaro@kernel.org, andersson@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230926174243.161422-1-danila@jiaxyga.com>
- <20230926174243.161422-2-danila@jiaxyga.com>
- <42a1d0ab-4e8d-461d-bb2c-977a793e52b2@linaro.org>
- <1695755445.902336096@f165.i.mail.ru>
- <84e63b82-4fef-416b-8dbe-3838ad788824@linaro.org>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <84e63b82-4fef-416b-8dbe-3838ad788824@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=1.3 required=5.0 tests=BAYES_00,DATE_IN_PAST_96_XX,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: *
+Message-Id: <20231025-topic-sm8650-upstream-mdss-v1-3-bb219b8c7a51@linaro.org>
+References: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3887;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=A8kBi2PrODlpOXZ493WRi1fPCLR+VF/HPHoWKYNttUE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMUmzT1vJJHda3TnDlgizA2nyQee2qiYeQfMv3gj
+ b9KHq6WJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjFJgAKCRB33NvayMhJ0YmOD/
+ 0Wy6xv8g7QDKWntJIJYjxPBFwl9LLdnNGSqpTiVNiq3N2NjSJqCz/6aBrvNuko5n2A1BkrPW0bkN5T
+ HcBeeU6VPjvMhILDwzAgp85FVmE9UdwjKpjhJ5XLETt7Ds4Ib3orhz6jvFzEk67mtSzO0AO/U8YVob
+ ZbvGRM9cuW3SJbB/LkgZAbZRf2M/Bb8EDA+zbiPtBnewMPH1El0mItaqn9t/YYgL3Dw+LwuyziSO2L
+ +K3JdM90d0zBQWG3huUV8/wAUSFQtrSSTnEiLrLgRdjzg6zNnKfVe0UU80cuXJvNafb9lBn/RiwDEp
+ 0NEa1JGd8nedr22ZPDJHAatQMe+gSeizmOZCgf5bGYrarFQSvO2/9Pk3xrY3eRZ6NQoPRIy8iJAwH5
+ HGSTrWIsFGg6VKDMh5QT+izBqdRSV0THi4wZpxjeoYqItPLYOfqkkVcPCCaM39ol1kAXiUOd9KDNbQ
+ 4XIw2ymN/fejn7/M4cGIORldAgzHP4DM49RvMXJBfjLM6CckuMmJpoy7KJzWFZ6ptpySVlSH1Ipyps
+ 46xfd52NZEVQ7AIt+G7h9e3uugYgQYF/2DcmDfbGHs/wKPRCsNkfYrKcl75y/USDZxCXcyKLTd4jIE
+ 4XISf78x+oEHdsTKDrJamtofLsiveiFShHPqRemtvXg/5hfW8+n/YXUstxjA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/09/2023 23:03, Konrad Dybcio wrote:
-> On 26.09.2023 21:10, Danila Tikhonov wrote:
->>
->> I think you mean by name downstream dt - sdmmagpie-gpu.dtsi
->>
->> You can see the forked version of the mainline here:
->> https://github.com/sm7150-mainline/linux/blob/next/arch/arm64/boot/dts/qcom/sm7150.dtsi
->>
->> All fdt that we got here, if it is useful for you:
->> https://github.com/sm7150-mainline/downstream-fdt
->>
->> Best wishes, Danila
-> Taking a look at downstream, atoll.dtsi (SC7180) includes
-> sdmmagpie-gpu.dtsi.
-> 
-> Bottom line is, they share the speed bins, so it should be
-> fine to just extend the existing entry.
+Document the DPU Display Controller on the SM8650 Platform.
 
-But then atoll.dtsi rewrites speed bins and pwrlevel bins. So they are 
-not shared.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ .../bindings/display/msm/qcom,sm8650-dpu.yaml      | 127 +++++++++++++++++++++
+ 1 file changed, 127 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml
+new file mode 100644
+index 000000000000..a01d15a03317
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-dpu.yaml
+@@ -0,0 +1,127 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/qcom,sm8650-dpu.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SM8650 Display DPU
++
++maintainers:
++  - Neil Armstrong <neil.armstrong@linaro.org>
++
++$ref: /schemas/display/msm/dpu-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,sm8650-dpu
++
++  reg:
++    items:
++      - description: Address offset and size for mdp register set
++      - description: Address offset and size for vbif register set
++
++  reg-names:
++    items:
++      - const: mdp
++      - const: vbif
++
++  clocks:
++    items:
++      - description: Display hf axi
++      - description: Display MDSS ahb
++      - description: Display lut
++      - description: Display core
++      - description: Display vsync
++
++  clock-names:
++    items:
++      - const: nrt_bus
++      - const: iface
++      - const: lut
++      - const: core
++      - const: vsync
++
++required:
++  - compatible
++  - reg
++  - reg-names
++  - clocks
++  - clock-names
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/power/qcom,rpmhpd.h>
++
++    display-controller@ae01000 {
++        compatible = "qcom,sm8650-dpu";
++        reg = <0x0ae01000 0x8f000>,
++              <0x0aeb0000 0x2008>;
++        reg-names = "mdp", "vbif";
++
++        clocks = <&gcc_axi_clk>,
++                 <&dispcc_ahb_clk>,
++                 <&dispcc_mdp_lut_clk>,
++                 <&dispcc_mdp_clk>,
++                 <&dispcc_vsync_clk>;
++        clock-names = "nrt_bus",
++                      "iface",
++                      "lut",
++                      "core",
++                      "vsync";
++
++        assigned-clocks = <&dispcc_vsync_clk>;
++        assigned-clock-rates = <19200000>;
++
++        operating-points-v2 = <&mdp_opp_table>;
++        power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++        interrupt-parent = <&mdss>;
++        interrupts = <0>;
++
++        ports {
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            port@0 {
++                reg = <0>;
++                dpu_intf1_out: endpoint {
++                    remote-endpoint = <&dsi0_in>;
++                };
++            };
++
++            port@1 {
++                reg = <1>;
++                dpu_intf2_out: endpoint {
++                    remote-endpoint = <&dsi1_in>;
++                };
++            };
++        };
++
++        mdp_opp_table: opp-table {
++            compatible = "operating-points-v2";
++
++            opp-200000000 {
++                opp-hz = /bits/ 64 <200000000>;
++                required-opps = <&rpmhpd_opp_low_svs>;
++            };
++
++            opp-325000000 {
++                opp-hz = /bits/ 64 <325000000>;
++                required-opps = <&rpmhpd_opp_svs>;
++            };
++
++            opp-375000000 {
++                opp-hz = /bits/ 64 <375000000>;
++                required-opps = <&rpmhpd_opp_svs_l1>;
++            };
++
++            opp-514000000 {
++                opp-hz = /bits/ 64 <514000000>;
++                required-opps = <&rpmhpd_opp_nom>;
++            };
++        };
++    };
++...
 
 -- 
-With best wishes
-Dmitry
+2.34.1
 
