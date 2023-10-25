@@ -2,110 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C5197D6C40
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 14:46:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4B877D6C4B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 14:49:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234509AbjJYMqw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 08:46:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53234 "EHLO
+        id S234894AbjJYMtA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 08:49:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232807AbjJYMqw (ORCPT
+        with ESMTP id S234787AbjJYMs7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 08:46:52 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3687990;
-        Wed, 25 Oct 2023 05:46:50 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PCHP8x021586;
-        Wed, 25 Oct 2023 12:46:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wjjSc92I5htECHlaVs3tEF9HxPxzvbqzSuF+P/5AcNk=;
- b=UrgpKYmI+IiU4Z8zwBRdY6aAzfQpz8F+p9lh927cRnwT42NTVHfvlB7KBa7v1OY7eXcV
- OJhvjPz+0bsEzq2W4XNy2vqpQopsXfZErrgqime/PDvYulCvze2UzlnPPwzLy+R39wZM
- GGrTnuQEc057+B/zqWU9F51x+Yz58gCEmioHIEt6ST++AAqAL9TYXQsJnafjcIB8j/Ul
- Q7dipmHUQvsMP1Xv9nPSbkasxicAQ0wgEdxy4tbFiHY9anAa7iB7qRHeYTqNzgiANwMb
- 2Fj0uIHWb3dvlZEqa/vq4XhBhU2jh2/PrkLNpiIdBCmELU9yFqhSk0XBafyep+9lctY5 1Q== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txk9k9vk8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 12:46:41 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PCkftv001619
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 12:46:41 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 25 Oct
- 2023 05:46:38 -0700
-Message-ID: <be86eca9-1bdb-eae9-6d00-8349de2c6166@quicinc.com>
-Date:   Wed, 25 Oct 2023 18:16:34 +0530
+        Wed, 25 Oct 2023 08:48:59 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FA7A185
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 05:48:56 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c503dbe50dso86710741fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 05:48:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698238134; x=1698842934; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mhfK3Xbp7dGorRag1GQdAYkUAEC0Al9vXL9om2bY/oI=;
+        b=MZV3uxJLrPBAE6Y5odc5Wz6n33WPTtx8ciBWL4crzscX4d+1/GEAc/q/yIYbyUND1W
+         Xo2vwvH6KWhChQfOuC13kB8DaktvkBQr4jmnx/CPEkw0vcodH3lApyOOR5QZQxpkSm/V
+         Y0WZnMiZnP0JkTwOxMMZnUmagKUZhy+B3nf0ML5gao8RkTvONhdGva2J8C9Wd1qtBOBG
+         loOAxcsLUKoThKwn/AvhFC2U8TfUizLa713O4mW7i7JfPzaqfh5WW2tztW3bVRpZ6i64
+         aMGaDgTMv/EnynWYUBq6mcarSKVJrRmmggQOqfmA6NHeKBj6xCtE8e10x2EabiicgUWM
+         t1TA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698238134; x=1698842934;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mhfK3Xbp7dGorRag1GQdAYkUAEC0Al9vXL9om2bY/oI=;
+        b=nQ7Lem6TS6Amofli74mnGMeeshwq7oXze366REqxP1gvPJ4qYyJF80kzAM6AuO4o28
+         Gp5WTeGuQmQQfC2PXgXfAFsEJfQjUAHRMQcOljaz9GVv2BVzse3hOzDjk1dqAknSe4Ri
+         fsEwctYGTOhmIdAh0qUCud4jVR/aY3UUDT3qfFmwMhM42M3metil4+i+20sPmrIspy7j
+         GgG87pp7l3eNLIyii2mrlktdX0P7rarWTNBj5lBW+twGxLl6oLKLiEe7Y/yQlJMRm8Nb
+         KbUUrfIgFw9Jr2QY7tKu+TMPHr0hPXo/ylhqxWtpJQ0iVJURbL1+UtO/5Im9jwK6WSZa
+         nVpg==
+X-Gm-Message-State: AOJu0Yyl898K2PlKAcBeLpbCXsQtECth0gaFpGYc3qafTh6Gfc3m+VLv
+        4fx6+C1a0oodVp075OjvIctM8A==
+X-Google-Smtp-Source: AGHT+IGtGtGHKJuO0bAirx2hne0N0Y/3+/cSERvZVDPv9gjGAUiKzMFk7r5OAYKMrzB4SUepkCEJgA==
+X-Received: by 2002:a2e:86c7:0:b0:2c5:1602:53f6 with SMTP id n7-20020a2e86c7000000b002c5160253f6mr10457117ljj.34.1698238134501;
+        Wed, 25 Oct 2023 05:48:54 -0700 (PDT)
+Received: from [192.168.53.189] ([188.162.65.61])
+        by smtp.gmail.com with ESMTPSA id f7-20020a2e9187000000b002c0167edd86sm2443551ljg.122.2023.10.25.05.48.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Oct 2023 05:48:53 -0700 (PDT)
+Message-ID: <c5c233e9-a3e7-4a65-b1d5-cf11e68d0f8e@linaro.org>
+Date:   Wed, 25 Oct 2023 15:48:51 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH 0/3 v7] Misc SCM changes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <p.zabel@pengutronix.de>,
-        <linus.walleij@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <1696440338-12561-1-git-send-email-quic_mojha@quicinc.com>
- <CAA8EJprTCWevfRNdVDV5xpgNu-Fh21HGM_eS2pOUuZJesgCD6Q@mail.gmail.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <CAA8EJprTCWevfRNdVDV5xpgNu-Fh21HGM_eS2pOUuZJesgCD6Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: pmic_glink: fix connector type to be
+ DisplayPort
+Content-Language: en-GB
+To:     Johan Hovold <johan@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Simon Ser <contact@emersion.fr>, linux-kernel@vger.kernel.org
+References: <20231010225229.77027-1-dmitry.baryshkov@linaro.org>
+ <ZTkIpMWpxKzSE7gQ@hovoldconsulting.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <ZTkIpMWpxKzSE7gQ@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NYW7NGkWaH3C1u7jzM7rcJTHBIF5rPHi
-X-Proofpoint-ORIG-GUID: NYW7NGkWaH3C1u7jzM7rcJTHBIF5rPHi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-25_01,2023-10-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
- adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501 spamscore=0
- mlxlogscore=763 phishscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310250110
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/25/2023 1:37 AM, Dmitry Baryshkov wrote:
-> On Wed, 4 Oct 2023 at 20:26, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+On 25/10/2023 15:23, Johan Hovold wrote:
+> On Wed, Oct 11, 2023 at 01:52:29AM +0300, Dmitry Baryshkov wrote:
+>> As it was pointed out by Simon Ser, the DRM_MODE_CONNECTOR_USB connector
+>> is reserved for the GUD devices. Other drivers (i915, amdgpu) use
+>> DRM_MODE_CONNECTOR_DisplayPort even if the DP stream is handled by the
+>> USB-C altmode. While we are still working on implementing the proper way
+>> to let userspace know that the DP is wrapped into USB-C, change
+>> connector type to be DRM_MODE_CONNECTOR_DisplayPort.
 >>
->> I have given version to this series as v7 as it has already
->> gone through v6 and later got added to minidump patch series
->> However, these 3 patches can go independently and has no
->> relation with minidump hence, separated it from minidump series.
+>> Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
+>> Cc: Simon Ser <contact@emersion.fr>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/soc/qcom/pmic_glink_altmode.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
+>> index 9569d999391d..6f8b2f7ae3cc 100644
+>> --- a/drivers/soc/qcom/pmic_glink_altmode.c
+>> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
+>> @@ -467,7 +467,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+>>   		alt_port->bridge.funcs = &pmic_glink_altmode_bridge_funcs;
+>>   		alt_port->bridge.of_node = to_of_node(fwnode);
+>>   		alt_port->bridge.ops = DRM_BRIDGE_OP_HPD;
+>> -		alt_port->bridge.type = DRM_MODE_CONNECTOR_USB;
+>> +		alt_port->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
+>>   
+>>   		ret = devm_drm_bridge_add(dev, &alt_port->bridge);
+>>   		if (ret) {
 > 
-> Please describe the merge strategy, since these patches cross the
-> subsystem boundary. Linusw has acked patch2, which might mean that he
-> is fine for it to be merged via the arm-soc? tree. However as nothing
-> was mentioned in the cover letter, Bjorn has marked patch2 as not
-> applicable (as it is outside of the usual subsystem area).
+> I was just going to post a patch fixing this after finally investigating
+> why the DisplayPort outputs on the X13s were annoyingly identified as
+> "Unknown20-1" and "Unknown20-2" instead of the expected "DP-1" and
+> "DP-2".
 
-Thanks for your time in reviewing this series.
-
-Sent another version here after addressing the comments.
-
-https://lore.kernel.org/lkml/1698235506-16993-1-git-send-email-quic_mojha@quicinc.com/
-
--Mukesh
-
-
+Well, that depends on the userspace being updated to know about USB 
+connectors or not. But you are right, we should probably mention that in 
+the commit message.
 
 > 
+> A lore search just before posting led me to this fix from two weeks ago.
+> 
+> I think the commit message should have mentioned something about the how
+> this change affects user space. My patch also had a CC stable, but I
+> guess we can ping the stable team once it hits mainline:
+> 
+> commit e5f55bf5ad4effdd59d4d06c839a0ac553a73c7d (HEAD -> work)
+> Author: Johan Hovold <johan+linaro@kernel.org>
+> Date:   Wed Oct 25 11:54:09 2023 +0200
+> 
+>      soc: qcom: pmic_glink_altmode: fix DP alt mode connector type
+>      
+>      The PMIC glink altmode bridge connector type should be "DisplayPort"
+>      rather than "USB", which is intended for custom USB display protocols
+>      (e.g. see 40e1a70b4aed ("drm: Add GUD USB Display driver")).
+>      
+>      This specifically makes the DisplayPort outputs on the Lenovo ThinkPad
+>      X13s show up as "DP-1" and "DP-2" rather than "Unknown20-1" and
+>      "Unknown20-2" with xrandr as expected (by users and tools):
+>      
+>        Screen 0: minimum 320 x 200, current 1920 x 1200, maximum 5120 x 4096
+>        eDP-1 connected primary 1920x1200+0+0 (normal left inverted right x axis y axis) 286mm x 178mm
+>           1920x1200     60.03*+
+>           1600x1200     60.00
+>        DP-1 disconnected (normal left inverted right x axis y axis)
+>        DP-2 connected (normal left inverted right x axis y axis)
+>           1920x1200     59.95 +
+>        ...
+>      
+>      Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
+>      Cc: stable@vger.kernel.org      # 6.3
+>      Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> 
+> Johan
+
+-- 
+With best wishes
+Dmitry
+
