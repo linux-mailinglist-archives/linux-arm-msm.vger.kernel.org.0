@@ -2,90 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A17957D6278
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:26:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 054A07D6281
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:26:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232688AbjJYH0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:26:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44436 "EHLO
+        id S232589AbjJYH06 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:26:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232784AbjJYH0d (ORCPT
+        with ESMTP id S232755AbjJYH05 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:26:33 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2133185
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:26:29 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32d81864e3fso3570306f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:26:29 -0700 (PDT)
+        Wed, 25 Oct 2023 03:26:57 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BD8BAF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:26:55 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-4083f61312eso43283705e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698218788; x=1698823588; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698218813; x=1698823613; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hFZGMkXUg4RTKKDxNnBfB5PKNPaqSYkfEF3TgYKEoFE=;
-        b=PxR5KsL5G6sQqeZs/iXOJFgyShru7+b9idlmaBNMMMJNFze37Rcu7CnK5ohBGcmPvH
-         cWBvr9aLTBZCpqE0gHEaxdG/IlLhd1aJzpKdckikDOjd/jM4bJNc+kfmFlkiSR4hG6Iz
-         srdNSSSf4g6hHUfg+PyXwv0dUwfUygfpQpRUhlFUTN593VwpWiSHDJEb+ZRmpxymgH0J
-         6vfRZzWKP3/9TnlJRvmzmdh0wQF5XG8PGHv9LGSqeyG8vZ+Bd3ueLf+aUcvl+tA7upFu
-         GznmadL0WCsJ8CKLS0PXvFqnK07QhM/kY38B1zAE/YFokQbdL7W7VB30z9DwqwulrGP7
-         NjMw==
+        bh=gYlV3gflRK1IaZxI10f4j/0Ht+9sPsBAEv/yGsh0MVQ=;
+        b=sp6CNMQ2ozADgLu9BipE5EOsgJLz8mXrVXIPmkoN/A5fNIDLLoPICNkk+xDVQtIN4i
+         VIAhNKV5F9+AfFPQfx1i2R0jvqieDflRTKSAj5e+VYJkTCpvw+wJk8Gb6ZIVVENPG/Jt
+         4KKsAhBCH970JE8dUjifCkC+4exn8nJou3IO0FBNXDnNNPqHr2oW1rXDfeJPH9d4a7il
+         pEHh1wVzSez3KFfvJSJK+BKp3xv5TQ1L5jTix6B9EEd+YskYcEW8hhWypxbkX9/HLPj8
+         ZiK25sVkZo/IJxE/ut2fBFRM4yXkSzyNecPyFOz1SGkZaA/hfg1YRAelO1LZIBWJKOIP
+         w/nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698218788; x=1698823588;
+        d=1e100.net; s=20230601; t=1698218813; x=1698823613;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hFZGMkXUg4RTKKDxNnBfB5PKNPaqSYkfEF3TgYKEoFE=;
-        b=vc4Rm06EMSlqdPuA+WSGjnGTPvx3TQvnztroOOls0kQoag5EYXY8rPc0jyc1u1lePu
-         fzYi2y5AmpzTXv7AeN/Jkpe8rcZomzJFQ7OLjQ9dU9MRm08E9VZlFc+3Yklg3nmc9Wva
-         zIYpet6Yivf+SKaioxeQ1iQGkyAzRW63faizVyhVF34yV3ZlE6aAiGCLs7YECSt89oBy
-         BsTFmStjU5slkb/esy8VpIdciSN5qv5u5aCru/SJJKpIxupsKD0UCkCLDsBbE8+98A7x
-         wpPhVfsB/QfYQtQSxqRmL581riYWA58BnupeL+kDNS/1DnzcUYWo8840ZGg9xOnznqcL
-         CdWQ==
-X-Gm-Message-State: AOJu0YzuuGr6IiJJ8jmFx6QlDeGD3kRXJiDPxQ7LQ4tUI9KhygkvvhXG
-        J+Oabdhvqn0IuUNyKp1cMcwl4w==
-X-Google-Smtp-Source: AGHT+IHRO7nOAEgsVsc+r3HSZhiKCm6mKMemwUFkJ3Wjf1yZADR53GIsH6Je5vQup/knzzVMXTQ6ew==
-X-Received: by 2002:adf:f711:0:b0:32c:eeee:d438 with SMTP id r17-20020adff711000000b0032ceeeed438mr10859100wrp.54.1698218788026;
-        Wed, 25 Oct 2023 00:26:28 -0700 (PDT)
+        bh=gYlV3gflRK1IaZxI10f4j/0Ht+9sPsBAEv/yGsh0MVQ=;
+        b=pJIQG8g28/s4KV/908QhB2rQKuC+aDtV6eWJCdbB4EHUUTZ06oAIq94tAo2D1sKaSq
+         qU8aDoN6DfBbISufwiWjd21qdTbC4Li0ZcUkWjmE1n3OuMMN/16p7VrHqDCFAYvkK6/W
+         noqpCiXuSSjOXIzPFdyUf51G3dWu+psC4+4l8CFqEPKMfv3QFwPi+9b1sWPOy4dZGKGd
+         PnAp7Xmk4KDwvMvPIhTZTgpMeoTr5M3c8k9DwIjbzpdHxVFjoZEj8gQtKmKkNP+O5gPI
+         OMUZc0plXcmS/qRxbnxntF7yYmSgZSMEC0UashfUL50m9J+OJrCbe42B0LOG9d8ZoTIQ
+         UctQ==
+X-Gm-Message-State: AOJu0Yzlmq3mvHJjTf8DRhyijR7uk+YfyY+6GB06XdANdpfif9x3OwPM
+        /IK+ckjo32oxfSbq0Ccy4uLQsg==
+X-Google-Smtp-Source: AGHT+IEG0ijh8/TVPaa+deiRSUw4BbsSn4OrzlNz3qp3sHMQgEA4BXvX8+c56WSotPMylASM9h6CDQ==
+X-Received: by 2002:a5d:6892:0:b0:32d:8b21:40fc with SMTP id h18-20020a5d6892000000b0032d8b2140fcmr11362582wru.9.1698218813481;
+        Wed, 25 Oct 2023 00:26:53 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id o7-20020a056000010700b003232d122dbfsm11387445wrx.66.2023.10.25.00.26.27
+        by smtp.gmail.com with ESMTPSA id a3-20020adfe5c3000000b0032da40fd7bdsm11664844wrn.24.2023.10.25.00.26.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 00:26:27 -0700 (PDT)
+        Wed, 25 Oct 2023 00:26:52 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 09:26:26 +0200
-Subject: [PATCH] dt-bindings: crypto: qcom,inline-crypto-engine: document
- the SM8650 ICE
+Date:   Wed, 25 Oct 2023 09:26:51 +0200
+Subject: [PATCH] dt-bindings: mailbox: qcom-ipcc: document the SM8560
+ Inter-Processor Communication Controller
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-bindings-ice-v1-1-6b2bc14e71db@linaro.org>
-X-B4-Tracking: v=1; b=H4sIACHDOGUC/x3NQQ6CMBBG4auQWTtJSy2IVyEusEzxX1CaDhoTw
- t1tXH6b9w5SKRCle3NQkQ8UW6qwl4bCa0qLMOZqak3rrLEd71tGYF1vnTf8zroXmVZ+Is1IizK
- CcPR9HHrnrt4NVEO5SMT3Pxkf5/kDJ0uqSXQAAAA=
+Message-Id: <20231025-topic-sm8650-upstream-bindings-ipcc-v1-1-acca4318d06e@linaro.org>
+X-B4-Tracking: v=1; b=H4sIADrDOGUC/x3NwQ6CMBBF0V8hs3aStiJBf8W4gPLEt6A0HTQmh
+ H+3cXk29+5iKITJrdml4EPjmir8qZH4GtIM5VQtwYWzd77Tbc2MakvfXZy+s20Fw6Ij08Q0mzL
+ HqG5s4a+hBUIvtZQLnvz+L/fHcfwAKsGdhXUAAAA=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1290;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1149;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=TfbZhtTr6JCUE3rn7VVswLJ81woB8n7GnmkkjwpPq38=;
- b=owEBbAKT/ZANAwAKAXfc29rIyEnRAcsmYgBlOMMi2B1aswsPGCUOxirWk8lM3fVELV8H80Qpdy74
- 26hgTHCJAjIEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjDIgAKCRB33NvayMhJ0ZqvD/
- jr8mzxxVZY0DZIeJ55L1ONGiHuVDZlK41w46fiq5TtOw2kLtEpArHHRBp3iLg4qTC0BVxM2+2bDVjt
- FYRUuGJLLfIBirxrzbAgxjjBucsNZGbWwpoU3qBUwDizKPkOoXAH15Ys29g9FnLfqx09CTjpzjbKhH
- krkG6Ptn1zwjovWLRVJwqG5w5TWoHCE86480oudQqAh5mR9WZiuC1V1tb5xgbn9VkyoS0RNlzg+xSf
- 4UJoVismpHV5Gub+GAjDv/lgNgJvf0r9n5u6V146sn0V3BS2u1RoFrcmjv2+sARt9W/Q89uyP1lHfk
- 2Ne597Ne/UXJE7T2AIzi2vtq0dBjTFhEcE8awvX6By1gPhshliu1FW8jLC/kIw+QjppRNk+w9minU9
- fRu2gu9fBXE8jIcqJVl1egN+Z8SQjr/LzuQH3dElhAUJCQk0FhfvRXx/3itc+b775MrLUCKZV1rYrp
- z06PvgENLGUn2IsoUC5avwco5Lq6k+dG0Z/wWKfc42mNxxKf1zzOzotA6Vbf5XtHEpQv0xABP3+Lc9
- bgYyVI4hcB9o+EIUsdNj28VncgAyhPb1yg+/EVL6sRJ1FIAhmWzgCXukwLnLMfAaj8hyErj5Eqdpmd
- AMMfkcxyvYfS3N+tiUbJQbEQFVVQBMWfNhvyjJrRMYb8nGKghMTtFyDyPX
+ bh=E/tCmRhrtGk6SHSiuVG3uC1gUTwaNi7IHPFcz0ZYtMo=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMM8xoPbsKAt65jY/fIikfK3eOahvmL6hEOcRB2v
+ CcMKBtCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjDPAAKCRB33NvayMhJ0dt3EA
+ Cs/4NMtd4U1nYw3+z8XdIuO6rbLQ10T5xqon1G7ODtsf8jZ3GThsoxAtxVTwP3HdXcog5Fm3/IyRns
+ /+5HqhYIca+Fu3lPVmwHAG3dvOeHQVvNN70NQVnZ2w+oKQzWsPQAfp0Hmyz+em2ckX4oPjG+G9fwzz
+ zqhxcJxCwPkTwaMdgLGwgm77VcgQiTtM9+mLE4fdaWiIp1ASZ9NzYtA6qxSGB07cKh4sDyReZTAAQs
+ ESoqPpVIATkC6Q/L18QM5MxnJq9BvE636BknkOkDakIshwSSASB0I4hLIl3BQfQszWIkrcDYdG53Vp
+ 1JJA8YFEakpEYKlpm+RPj891gC4rOpvsiAw0mDtuSsUX4xxl64WtTr6CIyLlj9f/boADh3AhFzhwNp
+ 0mHnUPQvu6hGed2RtEb3URTuHeJ9VzSR09i80JTSClkRksZ9RihlTtmIsGab65JyWTMEazD1EiZZNP
+ +/djY1txRwVMG0z+qCQjD0lho+HZ4TbfNSgxq9fkZVgwfevnSCxFzs4KXJAM0IKZoaJHdnHcxnBQ/6
+ eVesP3D8EVbPB9us+/B2X7n+Y3VTRUC6E7Yj/sIeSAIElwNRzrZCc1K8Yzko89ntq2OfsEdiyH5yZX
+ BnvNWW1V/+4iin+aJl2EB0XV8hRCnaDhO30MRyFVhrULDHHd8sz8StwfP+/w==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -98,7 +98,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the Inline Crypto Engine (ICE) on the SM8650 Platform.
+Document the Inter-Processor Communication Controller on the SM8650 Platform.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
@@ -106,25 +106,25 @@ For convenience, a regularly refreshed linux-next based git tree containing
 all the SM8650 related work is available at:
 https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
 ---
- Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml | 1 +
+ Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-index ca4f7d1cefaa..09e43157cc71 100644
---- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-+++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
-@@ -16,6 +16,7 @@ properties:
-           - qcom,sa8775p-inline-crypto-engine
-           - qcom,sm8450-inline-crypto-engine
-           - qcom,sm8550-inline-crypto-engine
-+          - qcom,sm8650-inline-crypto-engine
-       - const: qcom,inline-crypto-engine
+diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+index cc6f66eccc84..a35f9483dc71 100644
+--- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
++++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+@@ -34,6 +34,7 @@ properties:
+           - qcom,sm8350-ipcc
+           - qcom,sm8450-ipcc
+           - qcom,sm8550-ipcc
++          - qcom,sm8650-ipcc
+       - const: qcom,ipcc
  
    reg:
 
 ---
 base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
-change-id: 20231016-topic-sm8650-upstream-bindings-ice-f57f97334539
+change-id: 20231016-topic-sm8650-upstream-bindings-ipcc-0b4e1924ee28
 
 Best regards,
 -- 
