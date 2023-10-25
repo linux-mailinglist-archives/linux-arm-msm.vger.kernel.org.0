@@ -2,117 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 642C27D65EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:57:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 851837D660D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 11:01:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234431AbjJYI5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 04:57:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47386 "EHLO
+        id S233700AbjJYJBc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 05:01:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234376AbjJYI5g (ORCPT
+        with ESMTP id S233714AbjJYJBU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 04:57:36 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3B9212D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:57:33 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-40806e40fccso39462315e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:57:33 -0700 (PDT)
+        Wed, 25 Oct 2023 05:01:20 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B24B41A2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 02:01:17 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50797cf5b69so7374949e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 02:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698224252; x=1698829052; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1698224476; x=1698829276; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=f7Yy03GuQsmjDoHfvXijhCxgPQU8qtLF3Z+QIfi1o4w=;
-        b=svwgS65WDX+fRTmq+WZ6/e3UgztlLvUc2A0JObkfLwr6VJ8bJmALWaHYhz2zOr7oZ7
-         IhNh0TMyBSI1TGWfHYPzY3Fv+SNc0CeokszH7LicEBLYXR7dnZ6G0zHhR+I7R+iGVZAV
-         NXbfpPz9p1opcmApim/bLLwO1ox3jbOn5iQpZdNvTacozyj3kNBFlVDYDrAe5yGFk8LH
-         1IHe3WfYbwLJcTu+OCQ1DzoBoxZ4+sbd9eMdirDTbQk11lgR1cbQss6BCvvEWI5jtdOy
-         Aywv9ntGPARc9NEehDqeQp5l39D4tgWPNvmQDD5kCNzS/zXzGiDAalpok1ridPetVYsr
-         1Kow==
+        bh=AvgTazU05wmbAVu8s1pewYEdDleLktThS4lYuVG5GWA=;
+        b=OimNZ9aVm7DVVVDFF1tukWaSQxopYsClRM3K7b8f4qan4CyOH0cREhf2KVe4Un2ES5
+         WcRw35fckOwoIiTqkjg5MjM+FaMpCF0+Y/+S/NutqQYLnwS8Rt6Kmh9M/Zk6DrCutn9Z
+         ysqOdiMrKIMQNXSIy/U1VxTCb5uub82OyhOAJTd75VYP3pMDjCW4EUdn0++rFk5w9UFU
+         xe1JODdIaIzKzLRtIfvgwbeiaw/jKpvgpdqrBPDoBuBTslvq7upC2ahNpvoETObWTUzj
+         +gDl2MuV455IKhbCQUpcXIO6okKn7Z+jv296wY/939HO5A+8Xnyq8TNh1EzlDSQHFRaM
+         zDEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698224252; x=1698829052;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1698224476; x=1698829276;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f7Yy03GuQsmjDoHfvXijhCxgPQU8qtLF3Z+QIfi1o4w=;
-        b=Ao9kJQI6YwoBEjtG7PfZWlZl71fxt5m0gkxjjq5bLjKvdO/lW9ikNkbtRnK3eGdbWn
-         lra+kNe7AHwnCdJAuS/YmxCPFpZx4CF6ldMnJYxZNloaz6CDlxLl2PiOCmD68hmCJSh8
-         uG6ezVDLrRwhAbRsXzkHY3p5Cuksshbl2fIVkSxtBb6ew+WzEMmOlOSScPzrW/e1nK0p
-         JDLE6R/d7a3qjuIIht1mMENFZnVcvUuibk0H21JHpmUoRttUN8mLTv4BL/LeRZCIt4C4
-         XFffUZ4wTKZRTOJXwYwbkMYUgCZ/XSPRPA8jVwIi3W8wyCt2L6Q+f99uKxvPIOFPNfZu
-         wVbQ==
-X-Gm-Message-State: AOJu0YybwPLFr2gfAVse14pZXDXzQj6FrqG9w7sAeqrgXVaLr7ikcpoF
-        iojoGClkTJzdXdUfNKhkO49Ixg==
-X-Google-Smtp-Source: AGHT+IFX5xEsl2QsDtOTc/2e/B6SzsmTU3vSnXmlpU4nl3zRihQFZ3wnV0vtOmDkgrQhu+DIGqp1bw==
-X-Received: by 2002:a05:600c:4ecc:b0:408:37d4:b5ba with SMTP id g12-20020a05600c4ecc00b0040837d4b5bamr12555776wmq.12.1698224252256;
-        Wed, 25 Oct 2023 01:57:32 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id b13-20020a05600c11cd00b0040770ec2c19sm18741509wmi.10.2023.10.25.01.57.30
+        bh=AvgTazU05wmbAVu8s1pewYEdDleLktThS4lYuVG5GWA=;
+        b=XEnDovJYTiABIQCrd3B7G0cFLc2hYJM+XKO2k1l8AAsp6KBikfNF1omhReYnbCqJOL
+         Q0Dwj4j/2A3tsEXZgJX/AahTF1hdjFuSobHtQ6HYrhCYVmfMRtF5o8aXxzcS70vKME18
+         lwpOoFlt/slfaMVQFYFBlE1Z/pGApKvH26sQN3F85o2s0RwjDGNERisR86wWexvofSXG
+         y+WUSmf6ic1lnl4DfJi1coQPU5uR15t5AWHaWNXedrrmZm509yX5bIN0F99MTqqnmVAZ
+         1tTVXdWF+wavcUi9960p1tVHQy+zf1+TejiLDW3nxIbkhE3e9i/Ehqfz9p73GPYLGwTV
+         pEDQ==
+X-Gm-Message-State: AOJu0Yxtz7NvDpyhj+kZSg2VWmOsDZGIdkqAB2J/rBP58tiSmtdRUlIX
+        rRS9DRTCIJYt9go0NChf/Q61dg==
+X-Google-Smtp-Source: AGHT+IEcHR1W3xSeqiVG6hd48eONiv2HigJ9anogPs5wH/X2HmMIp0FVAqWjrSocCI2xbJRSQd2SBQ==
+X-Received: by 2002:a19:9115:0:b0:503:1722:bf3a with SMTP id t21-20020a199115000000b005031722bf3amr10690089lfd.1.1698224475861;
+        Wed, 25 Oct 2023 02:01:15 -0700 (PDT)
+Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id k10-20020ac257ca000000b005079ab8ab19sm2458305lfo.150.2023.10.25.02.01.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 01:57:31 -0700 (PDT)
-Message-ID: <14044566-322b-4a80-bf30-a143fb152251@linaro.org>
-Date:   Wed, 25 Oct 2023 10:57:29 +0200
+        Wed, 25 Oct 2023 02:01:15 -0700 (PDT)
+Message-ID: <691f1781-906c-411f-90f6-e1cc71062253@linaro.org>
+Date:   Wed, 25 Oct 2023 11:01:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: socinfo: Add SM8650 SoC ID
+Subject: Re: [PATCH RFC 2/8] arm64: dts: qcom: add initial SM8650 dtsi
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-socinfo-v1-1-6776a5183fa0@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025-topic-sm8650-upstream-socinfo-v1-1-6776a5183fa0@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
+ <20231025-topic-sm8650-upstream-dt-v1-2-a821712af62f@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-dt-v1-2-a821712af62f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
@@ -124,18 +80,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 09:31, Neil Armstrong wrote:
-> Add SoC Info support for the SM8650 platform.
+
+
+On 10/25/23 09:47, Neil Armstrong wrote:
+> Add initial DTSI for the Qualcomm SM8650 platform,
+> only contains nodes which doesn't depend on interconnect.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-> For convenience, a regularly refreshed linux-next based git tree containing
-> all the SM8650 related work is available at:
-> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
-> ---
+> ---[...]
 
-Please split the bindings to separate patch.
+> +			CLUSTER_SLEEP_1: cluster-sleep-1 {
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x4100c344>;
+I think this parameter signals the AOSS to attempt system
+suspend and CLUSTER_SLEEP is a shallower, separate state.
 
-Best regards,
-Krzysztof
+[...]
+> +			qcom,tcs-config = <ACTIVE_TCS    3>, <SLEEP_TCS     2>,
+> +					  <WAKE_TCS      2>, <CONTROL_TCS   0>;
+Is <CONTROL_TCS 0> the correct value?
 
+I think it looks good otherwise
+
+Konrad
