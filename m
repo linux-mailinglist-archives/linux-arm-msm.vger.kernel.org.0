@@ -2,140 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E56867D6A86
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 13:56:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1B567D6A62
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 13:51:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232666AbjJYL43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 07:56:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53618 "EHLO
+        id S234902AbjJYLvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 07:51:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233317AbjJYL41 (ORCPT
+        with ESMTP id S234582AbjJYLvT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 07:56:27 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CE7F182
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:56:25 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-507cee17b00so8194697e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:56:25 -0700 (PDT)
+        Wed, 25 Oct 2023 07:51:19 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98D45132
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:51:17 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c50cf61f6dso85698241fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698234983; x=1698839783; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FwKoRn1S3grUkj3T+P+0SLhXPECqB0f/S2wVYwKKKrw=;
-        b=wywRBGAYCTFOg1YlDFolwLM4oiq53GZoYqfbmC6JTndmc7K36s/sVcAjFgLEhnrmqY
-         WAA8Lp0uU86eskDBuFP9XoEsGF6VXLwQyoDioQEnaIlG/PARMV52HDTCEsdJbIrvI5QN
-         XNk1fuN597rURYuO3qRYNYs2bxcm5Y37lXnNTkep8/7RjuoSv4ysgccqpf2yVqzLsgTG
-         ZAcUnM4WTB43Arndw550xm4GJ8bZxr+VSnhFaaM4114LJCmV4xwDur8f/5CnruTYIuo2
-         HYI3pq02Q1ban+qt2wyGV21bRW26gzEOxi04ccPUN2VGYHYkzsxW1+5jF/lgEZTcNg3/
-         jqwA==
+        d=linaro.org; s=google; t=1698234676; x=1698839476; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7Hsw0zm9eM5S+gWA6OmnIYoXsxBr0jnQpH2YM2gJKUI=;
+        b=jn/WF9ZjSk0PxjD0njkzzHJnl9cIKCVnCQTqxxbplIkDJjkFBbe2qboL2E2PkQsrnP
+         eCqYEjz3fvFkduU8692+vqQvyBNWpJAyRt8d/qFp7Mkff76X1V3vPCc7XIBVb52skyDJ
+         wMhsudkbGRes88l90i5NmIK5QrECwKCrpuLZtGhEuP+PjDeyQ9NoMTDBPeB4N5lycFTL
+         3oB9e9rNNDysjvSifMzNcJClHGLW2A4fI7ZaNL4DLFXGh+VB73qkuFFZ8qW8APipxZ8h
+         2cySGzfKS//HGQdsFT9+8jPuEkZPxETo17EN4FMWiqz/KtoiDnLpDIlc/keR/NCEgoGF
+         TJaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698234983; x=1698839783;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FwKoRn1S3grUkj3T+P+0SLhXPECqB0f/S2wVYwKKKrw=;
-        b=aR7pBws0fGB7uLkwuUBfPGGlsRRFGwgZKhR2Z9dTzi68lnhMCwB/hGqV1Q6xbyk6Nz
-         S0H5phVwhY6Rs877JFWBnX/KCrJeXszv/nUYI/R6Zzbu3b8AhNMnRDkJJMAI63Igb9k+
-         W8xlxjRCmRZ16b5KTu/+sBeH07Ju1RO3QdAwVz8nTtLVdZiMaqCtwgSwV8Vf7lx9/sLu
-         icBU0vAVkDkn1P42jzBg+9zogGmqj/cfqmk4xpNc2R4LvXBwz/EiWQXw84ORBiEyzu83
-         Dyqmu5+5m3jq6dL94C21xKFLitPedTmPici8SyJJ2FVpQT5NOfeOjzAemoEjkpsFhy00
-         LScQ==
-X-Gm-Message-State: AOJu0Yw40F45LeuDhwfSc8xGtjF3rXKJJ9vM+MHea6/UEAzii/Lm4Bn8
-        +23jc87NpBdvoSyC3objxIr+Ng==
-X-Google-Smtp-Source: AGHT+IHVl0hvJGVOtsM48MxwtP1bLdahgW8rvBkoJexq6T0r5k2WH0HRFRiy+gmOHZV2HATZeoH86g==
-X-Received: by 2002:a05:6512:3d23:b0:508:1227:5a0f with SMTP id d35-20020a0565123d2300b0050812275a0fmr2575756lfv.65.1698234983371;
-        Wed, 25 Oct 2023 04:56:23 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id 22-20020ac25f56000000b004fde41a2059sm2511751lfz.305.2023.10.25.04.56.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 04:56:22 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        d=1e100.net; s=20230601; t=1698234676; x=1698839476;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=7Hsw0zm9eM5S+gWA6OmnIYoXsxBr0jnQpH2YM2gJKUI=;
+        b=aiZgF71kWvYOWaikbAhsDwHhOWOKb3MukFGDd4V/h2K7bG0Q7MS7pYlbr1eTtFt6N6
+         kftaWhumb4/hX+0BouVFLyhd+ssetITywn1C/c+HXzkkrnWs4HYk5UfMynyz2aQU9DUy
+         aMmbCZLQTRrMjX+6tl7V5U7GCXxgc+AuyfubDlJ8ZS7F+NRMTW2w6EqyLdqcKriFk404
+         ClyQ+COOddBbC/EJnCS77D3tIfcJ3c/zNFd5cPJWHbjSK+JNNd9GcjIFIM81CQZT7KcK
+         1IN2Y3NL+QdziAdXko3PkMFx7QlQZL9lRQwZNxReNPZ+B0gWszqbl6OZxSHJNBCdtfYa
+         /Bmg==
+X-Gm-Message-State: AOJu0YwdfverdahdAMWsUt+xOQNqssaiBTDaT6iHAxKwcrRVuR8rR5I/
+        gaqKS1HFbGlP7Z3i9hlWGoLh+g==
+X-Google-Smtp-Source: AGHT+IHCNDC0+lPgS0jDJT3V4VlFbVtoiB+J4+5XT6STl1Pzc0zFjElf6UzhnnKU98eGFSk/iuorBw==
+X-Received: by 2002:a2e:b896:0:b0:2c5:488c:aedf with SMTP id r22-20020a2eb896000000b002c5488caedfmr11637843ljp.37.1698234675797;
+        Wed, 25 Oct 2023 04:51:15 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:4b03:ec74:6374:5430? ([2a01:e0a:982:cbb0:4b03:ec74:6374:5430])
+        by smtp.gmail.com with ESMTPSA id u1-20020a05600c210100b004068de50c64sm14201938wml.46.2023.10.25.04.51.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Oct 2023 04:51:15 -0700 (PDT)
+Message-ID: <85f7eb5c-29ed-417a-a741-a3e7fe773d4b@linaro.org>
+Date:   Wed, 25 Oct 2023 13:51:14 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFC 3/8] arm64: dts: qcom: pm8550ve: make PMK8550VE SID
+ configurable
+Content-Language: en-US, fr
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Rob Herring <robh@kernel.org>, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 2/2] soc: qcom: pmic_glink: enable UCSI by default
-Date:   Wed, 25 Oct 2023 14:49:30 +0300
-Message-ID: <20231025115620.905538-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
-References: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
+ <20231025-topic-sm8650-upstream-dt-v1-3-a821712af62f@linaro.org>
+ <6cedd9fe-ae5b-4173-9a77-ef4d7813a071@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <6cedd9fe-ae5b-4173-9a77-ef4d7813a071@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now as the issue with the UCSI_GET_PDOS is worked around, enable UCSI
-support for all PMIC_GLINK platforms except Qualcomm SC8180X. The
-mentioned SoC has slightly different UCSI implementation, which I would
-like be tested properly before enabling it.
+On 25/10/2023 11:17, Krzysztof Kozlowski wrote:
+> On 25/10/2023 09:47, Neil Armstrong wrote:
+>> The pm8550ve can be found with a different SID on SM8650 platforms,
+>> make it configurable.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/pm8550ve.dtsi | 11 ++++++++---
+>>   1 file changed, 8 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/pm8550ve.dtsi b/arch/arm64/boot/dts/qcom/pm8550ve.dtsi
+>> index c47646a467be..fbd8a386cef2 100644
+>> --- a/arch/arm64/boot/dts/qcom/pm8550ve.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/pm8550ve.dtsi
+>> @@ -6,6 +6,11 @@
+>>   #include <dt-bindings/interrupt-controller/irq.h>
+>>   #include <dt-bindings/spmi/spmi.h>
+>>   
+>> +/* (Sadly) this PMIC can be configured to be at different SIDs */
+>> +#ifndef PMK8550VE_SID
+>> +	#define PMK8550VE_SID 5
+>> +#endif
+> 
+> My statement is still the same - NAK, for defines depending on ifndef. I
+> believe outcome of our last discussion - including meeting in Amsterdam
+> - was only to have defines in the board without any ifndef/ifdef.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/soc/qcom/pmic_glink.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+As suggested by Dmitry, I'll add a define in all DT using the pm8550ve,
+so this would remove any #ifndef.
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index 914057331afd..71d8901a9389 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -18,9 +18,6 @@ enum {
- 	PMIC_GLINK_CLIENT_UCSI,
- };
- 
--#define PMIC_GLINK_CLIENT_DEFAULT	(BIT(PMIC_GLINK_CLIENT_BATT) |	\
--					 BIT(PMIC_GLINK_CLIENT_ALTMODE))
--
- struct pmic_glink {
- 	struct device *dev;
- 	struct pdr_handle *pdr;
-@@ -263,10 +260,10 @@ static int pmic_glink_probe(struct platform_device *pdev)
- 	mutex_init(&pg->state_lock);
- 
- 	match_data = (unsigned long *)of_device_get_match_data(&pdev->dev);
--	if (match_data)
--		pg->client_mask = *match_data;
--	else
--		pg->client_mask = PMIC_GLINK_CLIENT_DEFAULT;
-+	if (!match_data)
-+		return -EINVAL;
-+
-+	pg->client_mask = *match_data;
- 
- 	if (pg->client_mask & BIT(PMIC_GLINK_CLIENT_UCSI)) {
- 		ret = pmic_glink_add_aux_device(pg, &pg->ucsi_aux, "ucsi");
-@@ -336,14 +333,16 @@ static void pmic_glink_remove(struct platform_device *pdev)
- 	mutex_unlock(&__pmic_glink_lock);
- }
- 
-+static const unsigned long pmic_glink_sc8180x_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
-+							    BIT(PMIC_GLINK_CLIENT_ALTMODE);
-+
- static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
- 							   BIT(PMIC_GLINK_CLIENT_ALTMODE) |
- 							   BIT(PMIC_GLINK_CLIENT_UCSI);
- 
- static const struct of_device_id pmic_glink_of_match[] = {
--	{ .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
--	{ .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
--	{ .compatible = "qcom,pmic-glink" },
-+	{ .compatible = "qcom,sc8180x-pmic-glink", .data = &pmic_glink_sc8180x_client_mask },
-+	{ .compatible = "qcom,pmic-glink", .data = &pmic_glink_sm8450_client_mask },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, pmic_glink_of_match);
--- 
-2.42.0
+Neil
+
+> 
+> Best regards,
+> Krzysztof
+> 
 
