@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AB2F7D6380
+	by mail.lfdr.de (Postfix) with ESMTP id A96417D6382
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:37:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234154AbjJYHhq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:37:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46456 "EHLO
+        id S234197AbjJYHhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:37:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234186AbjJYHhY (ORCPT
+        with ESMTP id S234194AbjJYHhZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:37:24 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15EC93855
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:11 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-99de884ad25so797281966b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:10 -0700 (PDT)
+        Wed, 25 Oct 2023 03:37:25 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A51A9386B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:13 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-32dd70c5401so3565434f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698219309; x=1698824109; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698219311; x=1698824111; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Z4zOtiipUT8sw701OMgXZHG72ZF/cn8D9ojdqcZ+I6M=;
-        b=W9M+tyQRyCC37AFIud/4M80c5fpBYcDp47q1dxaceoX9cl6xjT/Ab3W3w7VRnFY5GE
-         EnQad//dZHFEjFIXSqpYYq12ZBh48/WB3WP6NpIaTJyzZXsmTPXGJvJRk7gOTZrcEcss
-         8uaIWEL31anPCRjWIc6UVCjDBuI+5otbe23P0NDj+W+v4j0QL2728PepWYB6nY3ktmm/
-         uyiXmI/p8c1mCwWLVnoiV+y94N/wXlunyAV5Pbkinjrlh5RB/R1IwGgvbgmsxQ5K2XKK
-         wdRo9uiiZb478kVkDGuOEe00ore/0uAIcWsXB04VahKu7TZT46cFTaPT9mUtP6JZWEFO
-         rdXQ==
+        bh=lH6+SKEBg2ErHK8vn7SqXE6OlEOYPGfMHpeZuULBKos=;
+        b=cXSWtd8JKGqa45eluHyocEL7mSbYNmZtYIPjQ/czGl+fgtjbe6uppBkM257qNmXTvX
+         GvUgJUguwfV5NGqFomJG6nOvWK7kG4zLWRkB7lqjDgPK5dRapWUG7fy3n/dJXqlNQM+F
+         124v5qDutPmIENsg4neMcvEkYXfXq9Te4IAOXQu3ZXJK8FfZBI/L9sH7cncWiZT5WMzT
+         l3D9EMK28slmQ5KbRM4OnTxhhGhIST6pjo0WPqkKqy7Ch60zoXlHlp0k3v9UXGnGSs5l
+         95BkuLb3XASo+xCbGl8/JnOAxhYe+dmgpv8O8TjGWsAZ3GbTEvdaVh5FfGb3PirtTC7q
+         Bn6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698219309; x=1698824109;
+        d=1e100.net; s=20230601; t=1698219311; x=1698824111;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Z4zOtiipUT8sw701OMgXZHG72ZF/cn8D9ojdqcZ+I6M=;
-        b=BUj8aBoP8uoq994w6pG91kgUeRxjoEHUWGdDtF4kl3/KrD1rdLh1TtHMzVTueTkLT+
-         8YAgJuB7js+lBTcEIkx2i830qkmwXVfoKQ5xap+3PTPhzUF2VuK8+CwrNW0ytHOzNeIF
-         Z2/ouyGqAiwsstq3D+nsLxfEvIb+tUbqqCBTwvJikQ/ilL6VzC8Akb6RJ2An6nc41+gu
-         v2bkMevKudQe6f9r/xCu9zflqhjbcN6QjH9a81R+uWyAD7TdFdevdWjsm/f7LwjxyMLu
-         JUxiHUDFvsXBWoSCJOtSwrzzkqRdSLcFx4pOSqlQU/p4Q2kK76LvdEto5sPIN79sW6fk
-         bQLA==
-X-Gm-Message-State: AOJu0YyN1CZtUJVZdKamAdZFcP2bmiYikWzfzHalQme0dIzjj5nqAAjj
-        5Dcgjb6z0hjow9ZtYYM9hkrpYQ==
-X-Google-Smtp-Source: AGHT+IEWIlRxJHjlqkDhPQzwZYLZEGQw2y+NFgK0dXdjyK25j8sEgY+p48QN/rjnemCH40nSMuXAxw==
-X-Received: by 2002:a17:907:940a:b0:9bf:2ddf:1bca with SMTP id dk10-20020a170907940a00b009bf2ddf1bcamr10284265ejc.62.1698219308901;
-        Wed, 25 Oct 2023 00:35:08 -0700 (PDT)
+        bh=lH6+SKEBg2ErHK8vn7SqXE6OlEOYPGfMHpeZuULBKos=;
+        b=ksj50c/lNyYQ4wM2fHrmI9SZj40tp7uLlf1RxRab6H2ojftKhdk1ZgAdbLdMgsQrtq
+         3GkNWpbuF+cMWm6ZoN3PT74IFZ7ASeThDIKQCWBuDpKRjZU+kph/cM3wDty2zfnx/msr
+         1MtPE9CauDsW1AQZxxgSOdh4oxMoGrAEUemwfuqg7N4ft9j8KvOYktUuB+QEAYUQvn4+
+         mr4OPxM26NmqqFxkEtMvbuNhEpvooTinZFvhkgmA0nMcVtNONyB6m68349tZJqMmh2Cr
+         wCkmxKwLY83789vyrUlq3N/Wn49pq4QnoNgD1EnSSZBczdzBlAYzg6Nxn/wWsCQxnsvY
+         jp3w==
+X-Gm-Message-State: AOJu0YwrIYdIyknhvqvXrY4wS9GCW3lBB4pgHBtW4HuUutBWRrcmwsfc
+        IfQHWRTFVbucu2dsGXd4z7A9mA==
+X-Google-Smtp-Source: AGHT+IEC4DU2PCCHDJTDYUrTMSEBm8iMhlM4zkmticDLQl4ZNfNMwHRh5+xi0EUW3N5iKlui4bfAMg==
+X-Received: by 2002:adf:e5d1:0:b0:31f:fa66:5852 with SMTP id a17-20020adfe5d1000000b0031ffa665852mr10943818wrn.21.1698219311466;
+        Wed, 25 Oct 2023 00:35:11 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id x18-20020a5d60d2000000b003248a490e3asm11449058wrt.39.2023.10.25.00.35.07
+        by smtp.gmail.com with ESMTPSA id x18-20020a5d60d2000000b003248a490e3asm11449058wrt.39.2023.10.25.00.35.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 00:35:08 -0700 (PDT)
+        Wed, 25 Oct 2023 00:35:11 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 09:35:00 +0200
-Subject: [PATCH 2/8] dt-bindings: display: msm-dsi-controller-main:
- document the SM8650 DSI Controller
+Date:   Wed, 25 Oct 2023 09:35:02 +0200
+Subject: [PATCH 4/8] dt-bindings: display: msm: document the SM8650 Mobile
+ Display Subsystem
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-mdss-v1-2-bb219b8c7a51@linaro.org>
+Message-Id: <20231025-topic-sm8650-upstream-mdss-v1-4-bb219b8c7a51@linaro.org>
 References: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
 In-Reply-To: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -80,59 +80,366 @@ Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1121;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10068;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=RmyjIW0lZguWP9hWwmPF3DabpwwT0EuPrdA5wtaVnxE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMUmE/hLSdAHnisyVX6XnsRoZy11MItZW/udDqz5
- NGspU5iJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjFJgAKCRB33NvayMhJ0T8BD/
- 4gJS5f7QwonEjarJZE7rXHRj4qWZe2gJ9BUxjXRBaFYLeFFwEBAtOyOMAiE1dRXilnJj0TUDZcKC3A
- BHhMD5VsCXzEmta/5kPIGS9OZjZvJkdVzPkp8vyiyokQfUiUdv8sjD0NwOVWNTC8xIlCYK7P6pPE+J
- UHY1JOLMIHJierdDgTpHfyM8PSR7rCb1luhfelsmTRIL3BIWULwiTfdvPBNGjluXLOPCizkxqLTWJF
- wk669lsH26PKp8pmWCDHke6OIU//IVF2fy7AwyLJLMNhhIij0w+O2Ry97rDoEcQyOshJNS1C3lvu9j
- WB6iwaBu7RtVOwde9E8BNjBtktEbR5ZTX1kLd6l0Ah/5u+NGOKMCNKmVecubQmnGGuLg+XQk+AKzPq
- 7sD8RBXk/CNJGqz0Q8YuQJN2gMP5MxiIZo+kBq20Bo3EHGHSFc97ZcakRDdM0bq4bwQAZdROJrtxvA
- vv//I9Ouq8Xzl4gCBLnKZUYXjS74zdtNRYh+cmwl/NzFuABX5PfioTJFRvb86YkMrCxP74m8lqBz94
- LfL4eMGRk2Hy2l2v13+2J5tKHzOndjb32BTfS3to35Khyt4tpf490OPG877c5TskAPKyiuiN+ueHBf
- u/G9qOnRMDygT+Y0Ltuk/YSvUH68+AoLeHTAfWaD6KQtSu4O4cfaXZSxquZg==
+ bh=R1byPdDBsex5CD78UmGLGBCsZXzyhYsUPPAR+SOJIhA=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMUnwWxYqUEtMPvBrKy8pLTzcnrxuBsrQqkvW5a9
+ k5ocgo2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjFJwAKCRB33NvayMhJ0dJnD/
+ 4oBNahnq1gzcv60wcfuXcUexoSeMvRMTks2DgKBH+FctnIRqKBS0EL2/t2r/7FpTtZ1FpvB+GC5qFH
+ mQXssPAlojZvT7V+KkMqTCIoVpBDzgTXOkweyCU9H4u2w8jbeMVm13KTJKLNSQ0150PTO5LL2HtjEr
+ HmO6EtY76JITSJz9Q24ZX2LlxRlKr3R9lfCf4syRgCV3haAf2BKoNgn1/+UyOLgQeiF9P/p/xKEUyP
+ jyIWoW+MP7g5n4RDtv4o3qvS8BmVN5NWTFWnyZ6yHpEATXiOfHeZQsxX8Iy99VPXkhphSu11WkX4xg
+ cVZ6qWCJSAf6mtLkwaZphkHgn//4nk9JFkMigbxrSe0vmM6EBt/1FGtlCppe2JeXYBU15uo1BjEQFj
+ O5VCq2x2+cZuzMj6pwMQOwHtqw3HsjfqLNOZ/+h25HKVCvScJu0/sF0QiDwDKDVvyvf+QoH5YK2rQV
+ PCMUEhnwRTaW/41Uo1Gtgbj0564YiPWUZXzVLTCjPlXrDiPITKUP/bbE+VR6PWnzF4gofngD/d8mEZ
+ 2QN/6R5wPcgIS/CTo6gBLRY7e+yGi2Wh6T+pg1IQGIPpZujgjeVGtmWGtBzHvtBiDNP7KPzUx2YWOD
+ Iwtg1HH3n/vG7wfUWxvD/m12VFSunmFRIMT7dBqlQbdQ6+Lmrtex6+g7TTjg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the DSI Controller on the SM8650 Platform.
+Document the Mobile Display Subsystem (MDSS) on the SM8650 Platform.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ .../bindings/display/msm/qcom,sm8650-mdss.yaml     | 322 +++++++++++++++++++++
+ 1 file changed, 322 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-index c6dbab65d5f7..24944979d500 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-@@ -35,6 +35,7 @@ properties:
-               - qcom,sm8350-dsi-ctrl
-               - qcom,sm8450-dsi-ctrl
-               - qcom,sm8550-dsi-ctrl
-+              - qcom,sm8650-dsi-ctrl
-           - const: qcom,mdss-dsi-ctrl
-       - enum:
-           - qcom,dsi-ctrl-6g-qcm2290
-@@ -333,6 +334,7 @@ allOf:
-               - qcom,sm8350-dsi-ctrl
-               - qcom,sm8450-dsi-ctrl
-               - qcom,sm8550-dsi-ctrl
-+              - qcom,sm8650-dsi-ctrl
-     then:
-       properties:
-         clocks:
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml
+new file mode 100644
+index 000000000000..5638c1ea692e
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8650-mdss.yaml
+@@ -0,0 +1,322 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/qcom,sm8650-mdss.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SM8650 Display MDSS
++
++maintainers:
++  - Neil Armstrong <neil.armstrong@linaro.org>
++
++description:
++  SM8650 MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
++  DPU display controller, DSI and DP interfaces etc.
++
++$ref: /schemas/display/msm/mdss-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,sm8650-mdss
++
++  clocks:
++    items:
++      - description: Display AHB
++      - description: Display hf AXI
++      - description: Display core
++
++  iommus:
++    maxItems: 1
++
++  interconnects:
++    maxItems: 2
++
++  interconnect-names:
++    maxItems: 2
++
++patternProperties:
++  "^display-controller@[0-9a-f]+$":
++    type: object
++    properties:
++      compatible:
++        const: qcom,sm8650-dpu
++
++  "^dsi@[0-9a-f]+$":
++    type: object
++    properties:
++      compatible:
++        items:
++          - const: qcom,sm8650-dsi-ctrl
++          - const: qcom,mdss-dsi-ctrl
++
++  "^phy@[0-9a-f]+$":
++    type: object
++    properties:
++      compatible:
++        const: qcom,sm8650-dsi-phy-4nm
++
++required:
++  - compatible
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/power/qcom,rpmhpd.h>
++
++    display-subsystem@ae00000 {
++        compatible = "qcom,sm8650-mdss";
++        reg = <0x0ae00000 0x1000>;
++        reg-names = "mdss";
++
++        resets = <&dispcc_core_bcr>;
++
++        power-domains = <&dispcc_gdsc>;
++
++        clocks = <&gcc_ahb_clk>,
++                 <&gcc_axi_clk>,
++                 <&dispcc_mdp_clk>;
++        clock-names = "bus", "nrt_bus", "core";
++
++        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
++        interrupt-controller;
++        #interrupt-cells = <1>;
++
++        iommus = <&apps_smmu 0x1c00 0x2>;
++
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges;
++
++        display-controller@ae01000 {
++            compatible = "qcom,sm8650-dpu";
++            reg = <0x0ae01000 0x8f000>,
++                  <0x0aeb0000 0x2008>;
++            reg-names = "mdp", "vbif";
++
++            clocks = <&gcc_axi_clk>,
++                     <&dispcc_ahb_clk>,
++                     <&dispcc_mdp_lut_clk>,
++                     <&dispcc_mdp_clk>,
++                     <&dispcc_mdp_vsync_clk>;
++            clock-names = "nrt_bus",
++                          "iface",
++                          "lut",
++                          "core",
++                          "vsync";
++
++            assigned-clocks = <&dispcc_mdp_vsync_clk>;
++            assigned-clock-rates = <19200000>;
++
++            operating-points-v2 = <&mdp_opp_table>;
++            power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++            interrupt-parent = <&mdss>;
++            interrupts = <0>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++                    dpu_intf1_out: endpoint {
++                        remote-endpoint = <&dsi0_in>;
++                    };
++                };
++
++                port@1 {
++                    reg = <1>;
++                    dpu_intf2_out: endpoint {
++                        remote-endpoint = <&dsi1_in>;
++                    };
++                };
++            };
++
++            mdp_opp_table: opp-table {
++                compatible = "operating-points-v2";
++
++                opp-200000000 {
++                    opp-hz = /bits/ 64 <200000000>;
++                    required-opps = <&rpmhpd_opp_low_svs>;
++                };
++
++                opp-325000000 {
++                    opp-hz = /bits/ 64 <325000000>;
++                    required-opps = <&rpmhpd_opp_svs>;
++                };
++
++                opp-375000000 {
++                    opp-hz = /bits/ 64 <375000000>;
++                    required-opps = <&rpmhpd_opp_svs_l1>;
++                };
++
++                opp-514000000 {
++                    opp-hz = /bits/ 64 <514000000>;
++                    required-opps = <&rpmhpd_opp_nom>;
++                };
++            };
++        };
++
++        dsi@ae94000 {
++            compatible = "qcom,sm8650-dsi-ctrl", "qcom,mdss-dsi-ctrl";
++            reg = <0x0ae94000 0x400>;
++            reg-names = "dsi_ctrl";
++
++            interrupt-parent = <&mdss>;
++            interrupts = <4>;
++
++            clocks = <&dispc_byte_clk>,
++                     <&dispcc_intf_clk>,
++                     <&dispcc_pclk>,
++                     <&dispcc_esc_clk>,
++                     <&dispcc_ahb_clk>,
++                     <&gcc_bus_clk>;
++            clock-names = "byte",
++                          "byte_intf",
++                          "pixel",
++                          "core",
++                          "iface",
++                          "bus";
++
++            assigned-clocks = <&dispcc_byte_clk>,
++                              <&dispcc_pclk>;
++            assigned-clock-parents = <&dsi0_phy 0>, <&dsi0_phy 1>;
++
++            operating-points-v2 = <&dsi_opp_table>;
++            power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++            phys = <&dsi0_phy>;
++            phy-names = "dsi";
++
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++                    dsi0_in: endpoint {
++                        remote-endpoint = <&dpu_intf1_out>;
++                    };
++                };
++
++                port@1 {
++                    reg = <1>;
++                    dsi0_out: endpoint {
++                    };
++                };
++            };
++
++            dsi_opp_table: opp-table {
++                compatible = "operating-points-v2";
++
++                opp-187500000 {
++                    opp-hz = /bits/ 64 <187500000>;
++                    required-opps = <&rpmhpd_opp_low_svs>;
++                };
++
++                opp-300000000 {
++                    opp-hz = /bits/ 64 <300000000>;
++                    required-opps = <&rpmhpd_opp_svs>;
++                };
++
++                opp-358000000 {
++                    opp-hz = /bits/ 64 <358000000>;
++                    required-opps = <&rpmhpd_opp_svs_l1>;
++                };
++            };
++        };
++
++        dsi0_phy: phy@ae94400 {
++            compatible = "qcom,sm8650-dsi-phy-4nm";
++            reg = <0x0ae95000 0x200>,
++                  <0x0ae95200 0x280>,
++                  <0x0ae95500 0x400>;
++            reg-names = "dsi_phy",
++                        "dsi_phy_lane",
++                        "dsi_pll";
++
++            #clock-cells = <1>;
++            #phy-cells = <0>;
++
++            clocks = <&dispcc_iface_clk>,
++                     <&rpmhcc_ref_clk>;
++            clock-names = "iface", "ref";
++        };
++
++        dsi@ae96000 {
++            compatible = "qcom,sm8650-dsi-ctrl", "qcom,mdss-dsi-ctrl";
++            reg = <0x0ae96000 0x400>;
++            reg-names = "dsi_ctrl";
++
++            interrupt-parent = <&mdss>;
++            interrupts = <5>;
++
++            clocks = <&dispc_byte_clk>,
++                     <&dispcc_intf_clk>,
++                     <&dispcc_pclk>,
++                     <&dispcc_esc_clk>,
++                     <&dispcc_ahb_clk>,
++                     <&gcc_bus_clk>;
++            clock-names = "byte",
++                          "byte_intf",
++                          "pixel",
++                          "core",
++                          "iface",
++                          "bus";
++
++            assigned-clocks = <&dispcc_byte_clk>,
++                              <&dispcc_pclk>;
++            assigned-clock-parents = <&dsi1_phy 0>, <&dsi1_phy 1>;
++
++            operating-points-v2 = <&dsi_opp_table>;
++            power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++            phys = <&dsi1_phy>;
++            phy-names = "dsi";
++
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++                    dsi1_in: endpoint {
++                        remote-endpoint = <&dpu_intf2_out>;
++                    };
++                };
++
++                port@1 {
++                    reg = <1>;
++                    dsi1_out: endpoint {
++                    };
++                };
++            };
++        };
++
++        dsi1_phy: phy@ae96400 {
++            compatible = "qcom,sm8650-dsi-phy-4nm";
++            reg = <0x0ae97000 0x200>,
++                  <0x0ae97200 0x280>,
++                  <0x0ae97500 0x400>;
++            reg-names = "dsi_phy",
++                        "dsi_phy_lane",
++                        "dsi_pll";
++
++            #clock-cells = <1>;
++            #phy-cells = <0>;
++
++            clocks = <&dispcc_iface_clk>,
++                     <&rpmhcc_ref_clk>;
++            clock-names = "iface", "ref";
++        };
++    };
++...
 
 -- 
 2.34.1
