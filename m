@@ -2,129 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81E9F7D707F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 17:14:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C89037D7099
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 17:16:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344462AbjJYPNR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 11:13:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45332 "EHLO
+        id S232469AbjJYPQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 11:16:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344318AbjJYPNO (ORCPT
+        with ESMTP id S234812AbjJYPQV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 11:13:14 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD4D198;
-        Wed, 25 Oct 2023 08:13:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698246793; x=1729782793;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=4AB1mlCoTUhDm9/eS/vpI2QL7TeGXM3DYMZnJsK9evs=;
-  b=H0HTiA7ttpU2W7jNNbFXTh942G9+zNehnixD2bVVmM9MzLEGxF+dJnpk
-   mAbd56UsAi0sdH9y4++2Pvx2WQale/Nd3UKcAyKOln+b+eUxaEng7OjR6
-   d2faiRexaZ50oQpe0JXTSVopeNfZ+/0rX1uBxeyaE5pOYcvbJfG03ocDb
-   10qMkiv4TRI9fZID0fNHkkcKecqaatAOR3LaGI0K7Er7x2NwLMmZxb9zp
-   vY5NIUNS8ZkjV8jaqCQG6JpY18S1nurYnrM+1aZtBL2Fgd+qySdh6isgw
-   W8aLYLHxAhJa5g0EKeV1I5TPq+Lw8cbihFPyyIuOLlq3BhkGsCD4YNKf6
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10874"; a="5943377"
-X-IronPort-AV: E=Sophos;i="6.03,250,1694761200"; 
-   d="scan'208";a="5943377"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2023 08:13:11 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10874"; a="829259475"
-X-IronPort-AV: E=Sophos;i="6.03,250,1694761200"; 
-   d="scan'208";a="829259475"
-Received: from rswenton-mobl.amr.corp.intel.com (HELO [10.212.132.169]) ([10.212.132.169])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Oct 2023 08:13:08 -0700
-Message-ID: <322002af-09e8-4d4c-bc85-81654c6b5f9d@linux.intel.com>
-Date:   Wed, 25 Oct 2023 10:12:23 -0500
+        Wed, 25 Oct 2023 11:16:21 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FE1129
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 08:16:18 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-507a98517f3so8075912e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 08:16:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698246977; x=1698851777; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Td1Qp2jEYN6EwIlzvrnD5w5N2Jcs878/iCYHd4DtvAU=;
+        b=RYTtR2L4tFlYQ3scGGElZQQQhftT4CE1noUoGJUrjhZ4szOrhlp9n0+lSXolHNH2BK
+         SD7cXuZqTDylTuVr4Qk99ZlpELLsOiiLc2XhJ+IqtMG/g/bLFuxklP2KmJkwrQUesMsQ
+         PjBWW7ZmKU9oXdGaucYTdXeFUySJp+SxJeOn68Zln4ZILSoGcKVg4JICr5N0AcEKXplG
+         T3ZF6zeLfvElI/riSwou5vp8H16BDx44LpSbqoeXLe5YnmCNerwI+b9xi6Jqltn0TKsP
+         AvFn9EaOsxaBbsIiuchU+8DOiWFEuEgzPnM+lCNf8htl/g3KTPM2aBC5RWgBpqY6fkoF
+         7wSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698246977; x=1698851777;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Td1Qp2jEYN6EwIlzvrnD5w5N2Jcs878/iCYHd4DtvAU=;
+        b=IeYDXQLeB97v6r78OUHf+WnjaqziCM9ZRj1Ao6SFLa0vANzSOPSPePrN4VhyGWGF2j
+         vuufK4IVOseYFKuTdUgui3nmq92zRab9yQemCzs1+FzBrUiVHZFJdeLPNGDVYX447e01
+         4vzVj8JOhy6k4Ob3gbhP1MfINH1PSLUMMqFB5J4T/U2O/k213ltP/aeqWIw2oO5Qzt/o
+         9X0TMcxlm0H0JEje09PClgXaTFooaZF+6VfiPjRPOAySWyaTBWBIhS+nx8oND1o9y9xX
+         dJ9gNubeQwNaoH+z20eo0Blwkw5voBdNAiBIzMt01uwZXQFkx8lVXcBIGcV0Rc4M9eUp
+         vwDQ==
+X-Gm-Message-State: AOJu0YyNemMrx/fDdUgyFsblk+jOwKHr5pvmW56PUZtrpQTvqllEebPL
+        E0riHpXf+5C8sNa3fOALceb6DA==
+X-Google-Smtp-Source: AGHT+IFU0aD6A6CHpv9y7jOR2dZ44pugJWs69QC07vhVJ3EOmVWLtgzjKARGyA2TIeyVSr1x2sn0Dw==
+X-Received: by 2002:a05:6512:71:b0:507:a6b2:c63e with SMTP id i17-20020a056512007100b00507a6b2c63emr9706041lfo.53.1698246976791;
+        Wed, 25 Oct 2023 08:16:16 -0700 (PDT)
+Received: from [192.168.1.212] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id v26-20020ac258fa000000b00507a3b8b008sm2586135lfo.112.2023.10.25.08.16.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Oct 2023 08:16:16 -0700 (PDT)
+Message-ID: <1696f131-83fb-4d0c-b4d7-0bdb61e4ae65@linaro.org>
+Date:   Wed, 25 Oct 2023 18:16:14 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] soundwire: qcom: drop unneeded DAI .set_stream
- callback
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
+ the DSI link power state
+Content-Language: en-GB
+To:     Maxime Ripard <mripard@kernel.org>
+Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-References: <20231025144601.268645-1-krzysztof.kozlowski@linaro.org>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20231025144601.268645-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
+ <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
+ <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
+ <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
+ <uj6rtlionmacnwlqxy6ejt5iaczgbbe5z54ipte5ffbixcx3p4@pps7fcr3uqhf>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <uj6rtlionmacnwlqxy6ejt5iaczgbbe5z54ipte5ffbixcx3p4@pps7fcr3uqhf>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/25/23 09:45, Krzysztof Kozlowski wrote:
-> Qualcomm Soundwire controller drivers do not support multi-link setups,
-> so DAI .set_stream() callback will not be used.  What's more, if called
-> it will overwrite the sdw_stream_runtime runtime set in DAI .startup
-> (qcom_swrm_startup()) causing issues (unsupported multi-link error) when
-> two Soundwire controllers are passed as codec DAIs.
-
-This last sentence is confusing at best.
-
-A controller can have one or more managers, each of whom can have one or
-more peripherals.
-
-only peripherals should expose codec DAIs, managers should expose CPU DAIs.
-
-Put differently, the controller is the host part while the peripheral is
-the codec part. "controllers passed as codec DAIs" is not really
-possible, or this was a typo?
-
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  drivers/soundwire/qcom.c | 11 -----------
->  1 file changed, 11 deletions(-)
+On 25/10/2023 15:44, Maxime Ripard wrote:
+> On Thu, Oct 19, 2023 at 02:19:51PM +0300, Dmitry Baryshkov wrote:
+>> On Thu, 19 Oct 2023 at 12:26, Maxime Ripard <mripard@kernel.org> wrote:
+>>>
+>>> On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wrote:
+>>>> The MIPI DSI links do not fully fall into the DRM callbacks model.
+>>>
+>>> Explaining why would help
+>>
+>> A kind of explanation comes afterwards, but probably I should change
+>> the order of the phrases and expand it:
+>>
+>> The atomic_pre_enable / atomic_enable and correspondingly
+>> atomic_disable / atomic_post_disable expect that the bridge links
+>> follow a simple paradigm: either it is off, or it is on and streaming
+>> video. Thus, it is fine to just enable the link at the enable time,
+>> doing some preparations during the pre_enable.
+>>
+>> But then it causes several issues with DSI. First, some of the DSI
+>> bridges and most of the DSI panels would like to send commands over
+>> the DSI link to setup the device.
 > 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index f1b8d6ac5140..fe65c26c5281 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -1267,16 +1267,6 @@ static int qcom_swrm_hw_free(struct snd_pcm_substream *substream,
->  	return 0;
->  }
->  
-> -static int qcom_swrm_set_sdw_stream(struct snd_soc_dai *dai,
-> -				    void *stream, int direction)
-> -{
-> -	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
-> -
-> -	ctrl->sruntime[dai->id] = stream;
-> -
-> -	return 0;
-> -}
-> -
->  static void *qcom_swrm_get_sdw_stream(struct snd_soc_dai *dai, int direction)
->  {
->  	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
-> @@ -1349,7 +1339,6 @@ static const struct snd_soc_dai_ops qcom_swrm_pdm_dai_ops = {
->  	.hw_free = qcom_swrm_hw_free,
->  	.startup = qcom_swrm_startup,
->  	.shutdown = qcom_swrm_shutdown,
-> -	.set_stream = qcom_swrm_set_sdw_stream,
->  	.get_stream = qcom_swrm_get_sdw_stream,
->  };
->  
+> What prevent them from doing it in enable when the link is enabled?
+> 
+>> Next, some of the DSI hosts have limitations on sending the commands.
+>> The proverbial sunxi DSI host can not send DSI commands after the
+>> video stream has started. Thus most of the panels have opted to send
+>> all DSI commands from pre_enable (or prepare) callback (before the
+>> video stream has started).
+> 
+> I'm not sure we should account for a single driver when designing a
+> framework. We should focus on designing something sound, and then making
+> that driver work with whatever we designed, but not the other way
+> around. And if we can't, we should get rid of that driver because it's
+> de-facto unmaintainable. And I'm saying that as the author of that
+> driver.
+
+That's not the only driver with strange peculiarities. For example, see 
+commit 8a4b2fc9c91a ("drm/bridge: tc358762: Split register programming 
+from pre-enable to enable"), which was one of the issues that actually 
+prompted me to send this this patchset (after my previous version of 
+this patch being rejected because of sunxi).
+
+> 
+>> However this leaves no good place for the DSI host to power up the DSI
+>> link. By default the host's pre_enable callback is called after the
+>> DSI bridge's pre_enable. For quite some time we were powering up the
+>> DSI link from mode_set. This doesn't look fully correct.
+> 
+> Yeah, it's not.
+> 
+>> And also we got into the issue with ps8640 bridge, which requires for
+>> the DSI link to be quiet / unpowered at the bridge's reset time.
+>>
+>> Dave has come with the idea of pre_enable_prev_first /
+>> prepare_prev_first flags, which attempt to solve the issue by
+>> reversing the order of pre_enable callbacks. This mostly solves the
+>> issue. However during this cycle it became obvious that this approach
+>> is not ideal too. There is no way for the DSI host to know whether the
+>> DSI panel / bridge has been updated to use this flag or not, see the
+>> discussion at [1].
+> 
+> Yeah. Well, that happens. I kind of disagree with Neil here though when
+> he says that "A panel driver should not depend on features of a DSI
+> controller". Panels definitely rely on particular features, like the
+> number of lanes, the modes supported, etc.
+
+In the mentioned discussion it was more about 'DSI host should not 
+assume panel driver features', like the panel sending commands in 
+pre_enable or not, or having pre_enable_prev_first.
+
+So the pre_enable_prev_first clearly lacks feature negotiation.
+
+
+> 
+> Panels shouldn't depend on a particular driver *behaviour*. But the
+> features are fine.
+> 
+> For our particular discussion, I think that that kind of discussion is a
+> dead-end, and we just shouldn't worry about it. Yes, some panels have
+> not yet been updated to take the new flags into account. However, the
+> proper thing to do is to update them if we see a problem with that (and
+> thus move forward to the ideal solution), not revert the beginning of
+> that feature enablement (thus moving away from where we want to end up
+> in).
+> 
+>> Thus comes this proposal. It allows for the panels to explicitly bring
+>> the link up and down at the correct time, it supports automatic use
+>> case, where no special handling is required. And last, but not least,
+>> it allows the DSI host to note that the bridge / panel were not
+>> updated to follow new protocol and thus the link should be powered on
+>> at the mode_set time. This leaves us with the possibility of dropping
+>> support for this workaround once all in-kernel drivers are updated.
+> 
+> I'm kind of skeptical for these kind of claims that everything will be
+> automatic and will be handled fine. What if we have conflicting
+> requirements, for example two bridges drivers that would request the
+> power up at different times?
+
+Well, we do not support DSI sublinks, do we?
+
+> 
+> Also, we would still need to update every single panel driver, which is
+> going to create a lot of boilerplate that people might get wrong.
+
+Yes, quite unfortunately. Another approach that I have in mind is to add 
+two callbacks to mipi_dsi_device. This way the DSI host will call into 
+the device to initialise it once the link has been powered up and just 
+before tearing it down. We solve a lot of problems this way, no 
+boilerplate and the panel / bridge are in control of the initialisation 
+procedure. WDYT?
+
+> I have the feeling that we should lay out the problem without talking
+> about any existing code base first. So, what does the MIPI-DSI spec
+> requires and what does panels and bridges expect?
+
+There is not that much in the DSI spec (or maybe I do not understand the 
+question). The spec is more about the power states and the commands. Our 
+problem is that this doesn't fully match kernel expectations.
+
+-- 
+With best wishes
+Dmitry
+
