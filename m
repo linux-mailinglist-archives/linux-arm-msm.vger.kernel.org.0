@@ -2,109 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC9727D64C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:20:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 511487D64CF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:22:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233951AbjJYIUa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 04:20:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44206 "EHLO
+        id S233873AbjJYIWD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 04:22:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233988AbjJYIU1 (ORCPT
+        with ESMTP id S232503AbjJYIWC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 04:20:27 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 046AB186
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:20:23 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-32d9b507b00so3873060f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:20:22 -0700 (PDT)
+        Wed, 25 Oct 2023 04:22:02 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 305D5129
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:22:00 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-408425c7c10so44288365e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698222021; x=1698826821; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698222118; x=1698826918; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NMqBSE89bG7+p2J3O4yzh6qx9zhFrZcOPoHe2cYMZhc=;
-        b=qXxda0K3EqY22wqYGJpu6zDSqpf1XjzzQ9M13h51dOx9ZUJbsiXW0hpFtRAsQM6vpV
-         /ut8hGtXBzfX3IG4xbNIKuoXcMWtqxPlr3V8c/OvDg4LOKEKvsmQYg14jZcMFXqmDWBI
-         0PmaPcq/i3GCn5lstFFBvfeLV9v61AhJmBWgkXVNLKSs5raaXw37As3wovvZSfYwTT76
-         e7yyDlCpNpUPewtAtFbcL3+ld9tF4dMDBu9uCR9aVjLDkAyr0PGiZMQ2jl1x8MmdaaMd
-         qzW4ijB9ng8c9zyEgp0vg4VRxKZqrcJnyY+lxstSqratVdr+RYL0r/X4jjW95BdqUnVO
-         MNvA==
+        bh=rf68NS6OhKdAoq7Nr2DOohFZ1XuTX3phqx5UwdSkIGU=;
+        b=bmT1mOF5ZiY1YcvM4CLuGQJhEBEdFnWqMYBLggoWhkpHHxZvrm8rIsni6GdZJeDTZL
+         UQbJsSXbMS+j6M01nmH2Gw3W5RyQZaoVxvR8N3Y6tpY5A2ARkTRS49on+JWVQNVPFFaj
+         v2mC7zRTCdWmsdEfX6zeiaUOjDxYtlWnSBSylJsTedRJMJNgI6Y1OpBrTIFACfbLzIVn
+         2Yq6YUXXmZLj+A7OBgKeKKLt2bmGKuCIEhfcAv6qvUw9F+u+2mdKxdL6dilK7Ty/2bBq
+         E4+Afo7YvssSn5tAAnDR1PEf4TGNMA6IfOL9H6d9Jnn1RtUU+3MBIqZjjAEC2knF4hy6
+         iG8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698222021; x=1698826821;
+        d=1e100.net; s=20230601; t=1698222118; x=1698826918;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NMqBSE89bG7+p2J3O4yzh6qx9zhFrZcOPoHe2cYMZhc=;
-        b=ScQmBpkAFKWME6krQZYZly2U40r8tUwNDtWVV4W6EajxKEl1ojTZOyTc+c81BU84xp
-         8Eeu3HCMhR/XKrggwq0kd808ZUnkgc1nI2rV0IwoA/563pLezH67Ur2Pc3F9BeIN+gH9
-         D1qmF65QyHZmwpkWDRhbpaSnwQWoMf6Oamk35VmCVMD2pjp/PCsDyax72TeBeSXYL2Kx
-         kEfFs/yVdUjW5mCdayF4W+kd/tM7j9B4zIpSgRY4pj0LGZ0H1/Sw9w5L4u3NjQTdZVis
-         pg6mY2LGhEx6v1RQ8Y9O/OHnsFCASMLjq8//hXWY4IFFkSA19xmotd+8FFUNVBAvPpfX
-         KlFQ==
-X-Gm-Message-State: AOJu0YxryZrvg0SRkcKrRQPE7nzqmym4tx/Ub04jqHd/q51VvO3aJgfh
-        Nf9hTyyGiYZw/QuONaynqgibP0/+Mb9NkHBYWtQb20nK
-X-Google-Smtp-Source: AGHT+IH/5NSpgBbdHJEqyZWParnMDYlqB8D76j6xi5DHlI/S7MAQ3sm+65z/7jX3R1j8V0rJTWviIA==
-X-Received: by 2002:a5d:5592:0:b0:32d:b06c:80b2 with SMTP id i18-20020a5d5592000000b0032db06c80b2mr9493121wrv.0.1698222021010;
-        Wed, 25 Oct 2023 01:20:21 -0700 (PDT)
+        bh=rf68NS6OhKdAoq7Nr2DOohFZ1XuTX3phqx5UwdSkIGU=;
+        b=ebt7K1pX1vR7dutFc2GZ6ONupG1DbRvXQPAkESJzcHNopMpwmSpOVQseiOatj36nrz
+         VtK3YKIcg5CmWbC2l+VvzxWQeyZWx3lRgEXAGArb6En04MqdX+napzASUCTKHc/fUDa3
+         y4Me8UqmMp8U/uuBY7VgUKtJ8l2n+NSq5GvRMLfqbs2VJCxSi2oFQQhmqCH24K3sg2b8
+         VH3SMSHlC9038ctSCX6lPbi92Y2XkGWLV9XF94b0vOZ4tIVQLSOCG5oanwVQ4T7gwCiA
+         LRBcjwDOv2NPt/YH8iWAN68npYjEWrqS3s5a+rdKaN0De5A/9WJiIupasSOKPnmu4gYe
+         IYRw==
+X-Gm-Message-State: AOJu0YypJL3Il9Y2Ufw/YV5NAD36TXy4jkyTM26KSzxRG3PKFYMaPQBU
+        WcINtFMamllMWDccZO2y+pp0lw==
+X-Google-Smtp-Source: AGHT+IEw8ZnCAzlQ01MU1ATBnbQEo2pvwhGTgrnAmX41IpWDQXpkNwWBetLJ/tY+gittKCOFA5ab1w==
+X-Received: by 2002:a05:600c:4f94:b0:408:404b:dc2d with SMTP id n20-20020a05600c4f9400b00408404bdc2dmr11854660wmq.30.1698222118342;
+        Wed, 25 Oct 2023 01:21:58 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id g7-20020a5d6987000000b003232380ffd7sm11556557wru.102.2023.10.25.01.20.19
+        by smtp.gmail.com with ESMTPSA id u3-20020a05600c138300b003fc0505be19sm14160601wmf.37.2023.10.25.01.21.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 01:20:20 -0700 (PDT)
+        Wed, 25 Oct 2023 01:21:57 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 10:20:18 +0200
-Subject: [PATCH v2] dt-bindings: ufs: qcom-ufs: document the SM8650 UFS
- Controller
+Date:   Wed, 25 Oct 2023 10:21:56 +0200
+Subject: [PATCH v2] dt-bindings: firmware: qcom,scm: document SM8650 SCM
+ Firmware Interface
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-bindings-ufs-v2-1-040ad1c44b46@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAMHPOGUC/42NTQ6CMBBGr2K6dkx/MmhceQ/DotICk0hLZoBoC
- He3Eg/g4lu8b/HeqiQyRVHXw6o4LiSUUwF7PKim96mLQKGwsto6o00FUx6pARkuFWqYR5k4+gE
- elAKlTmBuBYJ2TYs24DmgKqKRY0uvPXKvC/ckU+b33lzM9/3pLf6jXwwY8A4xllXozO1JyXM+Z
- e5UvW3bB3PNuG7VAAAA
+Message-Id: <20231025-topic-sm8650-upstream-bindings-scm-v2-1-68a8db7ae434@linaro.org>
+X-B4-Tracking: v=1; b=H4sIACPQOGUC/42NQQ6CMBAAv0J6dg0tFMGT/zAcStnCJtKSLhIN4
+ e9W4gM8zhxmNsEYCVlcs01EXIkp+ATqlAk7Gj8gUJ9YqFwVMpcVLGEmCzzVlc7hOfMS0UzQke/
+ JDwxsJ1BlaV3fqBqdFik0R3T0Oib3NvFIvIT4Pp6r/NpfXul/8qsECa6qL502prAN3h7kTQznE
+ AfR7vv+AY5TKgTVAAAA
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
+        Conor Dooley <conor+dt@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1424;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1764;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=bfiy79+1AeTC3eD2gpu/e3v7nDKR1WuR2ncD0BX0P+o=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOM/DCZpXl4w2Il7wAsAz/R6xDcyRAo+cdAitixPB
- 6vcmSYCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjPwwAKCRB33NvayMhJ0RXgD/
- 9cFQZrZRPh/FK7pb6g5pCNy8HUtPKGbJ3dZ3ZgJQXtaqbQm1yIcoTB6c9bfr3odNC1hqu3HNmggNDX
- 3h6quEF3md13Vsd6WfBMzPhuViWrm5DkaHNEZvcFWb4HKvss/hokr5s1ojj4aw2V6tSA3BbfIn4dDk
- Kc0RJEIX+jxLG3Wf6alSanBlwHHGCSNYWOFpMfKtQ3xh5WJYgZZgGH2J3Gza1/VVi2JZvONbWqsPgu
- vYW7WDEFL+30Maq7oy3iJriY/vKqP7iz44vHJNFEIP+23IrRlmpInjiP6CvEcQ/2qYKdnNl5eyp3IB
- 3XRwT3JvNUpI4vy7TYqRzS4eBt1tj13exnMVgOA10ORxz7kEFmyz5ewxVKHzrYDOBjh6LzTJpwBXux
- nFioL0cJl2/S1E7Ta4JDg2gcYMS18TWDLym4bE9MOguRNr0+1lPdzJ1/cdPZe679cBLsdPMM751HX2
- 0IG14UyDO5Hgh+au7sOA/Xh9JnxB9kmeAEffWa6oTG4z8bQveiYXsUvfyCyb4993ORQ37anPhevxfJ
- LluSS1tJ99/cLyY2QujFAVPhL49c7ldYZhKXe1UcZ4EXdUKcgo5gNkCEt1wrnCurtu/BSwS7ZUwrL4
- 0NOKv6ah7UEvwDCd2N1qZXT6mf4rRDm9zz8rkF6g9XBkdXsz74nzipp82H3g==
+ bh=ROMOj22FH9/6K7UKEKa6t8Zg6CvRWtXdFnoULIFUA1Q=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlONAkZRRNsP0+EY7Rav4gW0cCwoAsr6mBR7PsEsiF
+ C3wdGJGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjQJAAKCRB33NvayMhJ0dGdD/
+ 41cZ7HR3Lmcv8J/7vjvLkHCLJhUsjCBOukrxs2fseFBqhswl3XCO0LhszGQrh/gPzxe9AHWGp3vNbe
+ Zb7LfHvgtCgt2waH69274afJ4AbPa6yWpmcZL+E7f7gmidZf60Ht6WJAD7AzCLZRnSev9qR7W8XM5S
+ WFS4bRaNWU4C+/wOtdqSzSGbjxiOQVpC/DUdLxTAGGNQksw2NQditYSVwHTeSck3HxN0HaY3S6z6qe
+ pevxHrvFqHpq/a9RwwkK2fGP+9/8/JbU5oOTjhsAAUlCAOrRCk7OpI1h1F01r+qrCUtpz0C0EygM3g
+ 5cBMN+PniPCa5FlD6yfDqT0RTrF8NQajRsNPQrECt12row+xJ21CMAYHrsm3mHR3tQsGcAPhu51k4u
+ Dq6dP44IS6UBa1NwW+UIzctQosgdTCMDdU7xNXZ6lxKcCuVAAeVAt4zX3zK7aPmNG5Nuw4sXifYgRE
+ Xxxrf+ci6MCF+Is1dURCYxalakQUOITAl5PkugqK+AsslIrVOn+/wFzU+c+MOijo4QzZZe7AZvHFve
+ 5VFdh4edjpjXVQB/RCrawZOnTX9Ov0aHq2C951/Zpp9jLrmGMR0vPx73zYUv7kVkT/pOiIRsm+0e31
+ pasRHmx2MVYM4lhth7FZId+xhQB2BGQ81V2CXGYDPaoUmsaGjhLkGOLSVwDg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the UFS Controller on the SM8650 Platform.
+Document the SCM Firmware Interface on the SM8650 Platform.
 
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
 For convenience, a regularly refreshed linux-next based git tree containing
@@ -112,29 +108,44 @@ all the SM8650 related work is available at:
 https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
 ---
 Changes in v2:
-- Fixed subject
-- Collected review tags
-- Link to v1: https://lore.kernel.org/r/20231025-topic-sm8650-upstream-bindings-ufs-v1-1-a355e3556531@linaro.org
+- Fixed typo in subject
+- Link to v1: https://lore.kernel.org/r/20231025-topic-sm8650-upstream-bindings-scm-v1-1-f687b5aa3c9e@linaro.org
 ---
- Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-index 462ead5a1cec..0d136c047b8b 100644
---- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-@@ -36,6 +36,7 @@ properties:
-           - qcom,sm8350-ufshc
-           - qcom,sm8450-ufshc
-           - qcom,sm8550-ufshc
-+          - qcom,sm8650-ufshc
-       - const: qcom,ufshc
-       - const: jedec,ufs-2.0
+diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+index 0613a37a851a..3212c8b30ed9 100644
+--- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
++++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+@@ -63,6 +63,7 @@ properties:
+           - qcom,scm-sm8350
+           - qcom,scm-sm8450
+           - qcom,scm-sm8550
++          - qcom,scm-sm8650
+           - qcom,scm-qcs404
+       - const: qcom,scm
  
+@@ -189,6 +190,7 @@ allOf:
+                 - qcom,scm-sc8280xp
+                 - qcom,scm-sm8450
+                 - qcom,scm-sm8550
++                - qcom,scm-sm8650
+     then:
+       properties:
+         interconnects: false
+@@ -202,6 +204,7 @@ allOf:
+               enum:
+                 - qcom,scm-sm8450
+                 - qcom,scm-sm8550
++                - qcom,scm-sm8650
+     then:
+       properties:
+         interrupts: false
 
 ---
 base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
-change-id: 20231016-topic-sm8650-upstream-bindings-ufs-d03cf52d57d5
+change-id: 20231016-topic-sm8650-upstream-bindings-scm-244cfd928ef5
 
 Best regards,
 -- 
