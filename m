@@ -2,72 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63AD97D6E01
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 16:04:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CE937D6DFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 16:04:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232897AbjJYNrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 09:47:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59188 "EHLO
+        id S1343638AbjJYNu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 09:50:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234800AbjJYNrI (ORCPT
+        with ESMTP id S235027AbjJYNu1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 09:47:08 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A37194;
-        Wed, 25 Oct 2023 06:47:04 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PBCUXt004512;
-        Wed, 25 Oct 2023 13:47:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=TEokv3uznWZGU7axy65GsfUKxhs2MBYAt2AxLnlpSPA=;
- b=jcCcaSoWHS1LIytxPkQjD/YqGWlcKwizrgsdTwZH/jsCrn6IxTjG6+oVhYTZvIrig6Ud
- Gs6eAsd8XUknWMTcSLZj+ThxufBQjLKfZi+aa/Ki/ObNM9lRB14x3Y+/NLDkUW/uxy/2
- 8U9xMWmCRsscmH4AhGoMt6NgordRKrbalI/YuOGgv9xJaxsQ5nXGwDFFHDR+MYGNoyiI
- CK8wdLX4QF9f1c5tG/Q/jGrKKRPCT2UEto09bDcv6RjGJ3UyYCXeLbzxBLvFeKQVSWyC
- C1w1YoAHNcb491Js3THAVkJqwGhjHaBzr75aaKfoIBfp2QMyY3ozjgY0xnBDxguoq27/ Dw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txk9ka0jw-1
+        Wed, 25 Oct 2023 09:50:27 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3909B18D;
+        Wed, 25 Oct 2023 06:50:21 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PDRh49002577;
+        Wed, 25 Oct 2023 13:50:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
+ subject : mime-version : content-type : content-transfer-encoding :
+ message-id : to : cc; s=qcppdkim1;
+ bh=7cJQQLgfNtag3CM9m5goRoDk2o6+kMRbdE7ZcxpFZb0=;
+ b=YZcOdSv8QjYLm5si2grmZ/Xc9RX+H9veGLRWjYYTGj2zV6bGOnXvV5mKBLcGlowSNBRP
+ +TEBhZ9sfuWmUtIQHaorBrtYr7u5h1+04npJeL+hsIQww09drFUZ1fi91cPsYaVtFUWP
+ MH/ckSk3zPQ0m+G4/dF2rCPN3PqjQ++AK5gMEaZ9g/4keRSTHVRRHIHTlKRjwvDDcObs
+ 9ZIcnH59l++NgwYyI/8Mu4wAQxg56+zu7G0710Nhkt6rrK9uyFsijQeswdHC8yKm3Nct
+ tt5lX1daZx/vK1KVw4dMhdUIwdpBb2w2sNfXMrcUvjKqS4u6mcoDPWgKs01ywtILucf3 BQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txuj7h09h-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 13:47:01 +0000
+        Wed, 25 Oct 2023 13:50:17 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PDl0F8012194
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PDoGrf031530
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 13:47:00 GMT
-Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
+        Wed, 25 Oct 2023 13:50:16 GMT
+Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Wed, 25 Oct 2023 06:46:55 -0700
-From:   Sibi Sankar <quic_sibis@quicinc.com>
-To:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
-CC:     <agross@kernel.org>, <conor+dt@kernel.org>,
-        <quic_rjendra@quicinc.com>, <abel.vesa@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
-        <neil.armstrong@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH 2/2] soc: qcom: llcc: Add configuration data for SC8380XP
-Date:   Wed, 25 Oct 2023 19:16:32 +0530
-Message-ID: <20231025134632.10363-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231025134632.10363-1-quic_sibis@quicinc.com>
-References: <20231025134632.10363-1-quic_sibis@quicinc.com>
+ 15.2.1118.39; Wed, 25 Oct 2023 06:50:13 -0700
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Date:   Wed, 25 Oct 2023 19:20:05 +0530
+Subject: [PATCH] arm64: dts: qcom: ipq5332: add missing properties to the
+ GPIO LED node
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20231025-ipq5332-gpio-led-v1-1-0f0f52617648@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAAwdOWUC/x3MQQqAIBBA0avIrBvQESm6SrQonWog0hQiiO6et
+ HyL/x8onIUL9OqBzJcUiUeFaRT4bTpWRgnVQJqs0eRQ0umsJVyTRNw5oA/GtdyZ0M4aapYyL3L
+ /y2F83w9PyHX+YgAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1698241813; l=1154;
+ i=quic_kathirav@quicinc.com; s=20230906; h=from:subject:message-id;
+ bh=UywHMnpVYZIWimRYi5B9NXhvzfdxufXWwJsRbxvul7g=;
+ b=3Y8EUIQ8t37PcXcABwRT8FbIbx5eVw5QmEkXCCe0M6e59NKpeHm4lDL8QdCif6AiX5zcqtDjE
+ BNweoW68wx7B5zPJVUEOIIc4ilXlL/mprBMxnplDy52d0JRie43UZaj
+X-Developer-Key: i=quic_kathirav@quicinc.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mT9ErJHnEsArb6HZRWhQyyoveI0gs-6B
-X-Proofpoint-ORIG-GUID: mT9ErJHnEsArb6HZRWhQyyoveI0gs-6B
+X-Proofpoint-ORIG-GUID: 8i6CMffMReeyQs8Ot7YjpihFjUZQ6xB0
+X-Proofpoint-GUID: 8i6CMffMReeyQs8Ot7YjpihFjUZQ6xB0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-25_02,2023-10-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
- adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501 spamscore=0
- mlxlogscore=999 phishscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ spamscore=0 malwarescore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 priorityscore=1501 mlxscore=0 adultscore=0 mlxlogscore=692
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
  definitions=main-2310250119
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,87 +91,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rajendra Nayak <quic_rjendra@quicinc.com>
+Add the color and function property to the GPIO LED node, which are
+missed out in the initial submission.
 
-Add LLCC configuration data for SC8380XP SoC.
-
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 ---
- drivers/soc/qcom/llcc-qcom.c | 39 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 674abd0d6700..e232dcf382e9 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -392,6 +392,29 @@ static const struct llcc_slice_config qdu1000_data_8ch[] = {
- 	{ LLCC_WRCACHE, 31, 512,  1, 1, 0x3,   0x0, 0, 0, 0, 0, 1, 0, 0 },
- };
+diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
+index 4870cdb764d0..b37ae7749083 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp-common.dtsi
+@@ -9,6 +9,7 @@
  
-+static const struct llcc_slice_config sc8380xp_data[] = {
-+	{LLCC_CPUSS,	 1, 6144, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_VIDSC0,	 2,  512, 3, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_AUDIO,	 6, 3072, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CMPT,     10, 6144, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_GPUHTW,   11, 1024, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_GPU,       9, 4096, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_MMUHWT,   18,  512, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_AUDHW,    22, 1024, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CVP,       8,  512, 3, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_WRCACHE,  31,  512, 1, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CAMEXP1,   7, 3072, 2, 1, 0xFFF, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_LCPDARE,  30,  512, 3, 1, 0xFFF, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_AENPU,     3, 3072, 1, 1, 0xFFF, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_ISLAND1,  12,  512, 7, 1,   0x1, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_ISLAND2,  13,  512, 7, 1,   0x2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_ISLAND3,  14,  512, 7, 1,   0x3, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_ISLAND4,  15,  512, 7, 1,   0x4, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CAMEXP2,  19, 3072, 3, 1, 0xFFF, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CAMEXP3,  20, 3072, 3, 1, 0xFFF, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CAMEXP4,  21, 3072, 3, 1, 0xFFF, 0x0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+};
-+
- static const struct llcc_edac_reg_offset llcc_v1_edac_reg_offset = {
- 	.trp_ecc_error_status0 = 0x20344,
- 	.trp_ecc_error_status1 = 0x20348,
-@@ -529,6 +552,16 @@ static const struct qcom_llcc_config sc8280xp_cfg[] = {
- 	},
- };
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/input/input.h>
++#include <dt-bindings/leds/common.h>
+ #include "ipq5332.dtsi"
  
-+static const struct qcom_llcc_config sc8380xp_cfg[] = {
-+	{
-+		.sct_data	= sc8380xp_data,
-+		.size		= ARRAY_SIZE(sc8380xp_data),
-+		.need_llcc_cfg	= true,
-+		.reg_offset	= llcc_v2_1_reg_offset,
-+		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-+	},
-+};
-+
- static const struct qcom_llcc_config sdm845_cfg[] = {
- 	{
- 		.sct_data	= sdm845_data,
-@@ -635,6 +668,11 @@ static const struct qcom_sct_config sc8280xp_cfgs = {
- 	.num_config	= ARRAY_SIZE(sc8280xp_cfg),
- };
+ / {
+@@ -39,6 +40,8 @@ leds {
+ 		pinctrl-names = "default";
  
-+static const struct qcom_sct_config sc8380xp_cfgs = {
-+	.llcc_config	= sc8380xp_cfg,
-+	.num_config	= ARRAY_SIZE(sc8380xp_cfg),
-+};
-+
- static const struct qcom_sct_config sdm845_cfgs = {
- 	.llcc_config	= sdm845_cfg,
- 	.num_config	= ARRAY_SIZE(sdm845_cfg),
-@@ -1241,6 +1279,7 @@ static const struct of_device_id qcom_llcc_of_match[] = {
- 	{ .compatible = "qcom,sc7280-llcc", .data = &sc7280_cfgs },
- 	{ .compatible = "qcom,sc8180x-llcc", .data = &sc8180x_cfgs },
- 	{ .compatible = "qcom,sc8280xp-llcc", .data = &sc8280xp_cfgs },
-+	{ .compatible = "qcom,sc8380xp-llcc", .data = &sc8380xp_cfgs },
- 	{ .compatible = "qcom,sdm845-llcc", .data = &sdm845_cfgs },
- 	{ .compatible = "qcom,sm6350-llcc", .data = &sm6350_cfgs },
- 	{ .compatible = "qcom,sm7150-llcc", .data = &sm7150_cfgs },
+ 		led-0 {
++			color = <LED_COLOR_ID_GREEN>;
++			function = LED_FUNCTION_WLAN;
+ 			gpios = <&tlmm 36 GPIO_ACTIVE_HIGH>;
+ 			linux,default-trigger = "phy0tx";
+ 			default-state = "off";
+
+---
+base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
+change-id: 20231025-ipq5332-gpio-led-cd157e81d7b0
+
+Best regards,
 -- 
-2.17.1
+Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 
