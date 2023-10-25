@@ -2,164 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EF4F7D6384
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:37:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA3557D6393
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:38:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234194AbjJYHht (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:37:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34084 "EHLO
+        id S233814AbjJYHiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:38:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234220AbjJYHh0 (ORCPT
+        with ESMTP id S234032AbjJYHhn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:37:26 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B29E91735
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:19 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-32da7ac5c4fso3556155f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:19 -0700 (PDT)
+        Wed, 25 Oct 2023 03:37:43 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA6E3C1F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:49 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-32dff202b4bso1883002f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:35:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698219317; x=1698824117; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5z/V4Jmy9kuxnbn3ouk6FBjzE9CgTURmmBJt5Ad2jiY=;
-        b=AOTo+omI54EuzRgJU6FFYbmhLSP2ahHlTlBAOeMPyt82qtZj2qaz2wripmrbMFUgPw
-         MIjMB27yZQ9BCHBrSf2fkANWFyTE/2Mt+zI1fmSNEdNtJuOSuGBk5YlDLFAFg+A49z+S
-         h6C4PiGL0ihftB0/kwfztFUfbS/I+8m1ZhRkGxkhsrTdY2OMjN6Kvcp6GeIN2Jjz5uaR
-         D8Li4fAyUdyjd0P9jlYdbW/sgQpn3zzi47jSyNoTPZT6ASfumuGZ//1P6NXoS+Vcl0A0
-         OIVljZhk5pcAjhgxHSjSReafpckhJeTKZglSWrS6uBK+q20tSZ5dnzhnnkmWF5kA/rvH
-         cfDA==
+        d=linaro.org; s=google; t=1698219347; x=1698824147; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LuZMkbxv4lOoR8L5PlaX616AqvMbmm0wHfhqvqys2P8=;
+        b=d3q+ytglzxkl3BT4ew+V5ltbnyUfV/ulSXO8J8F42egYDwalMCMhpQydGHdvVCdPRg
+         R0NMtyW2r7C/0q0GzPUk52Xr1m3MhuAQQS0ZEDb0dbJ7KX8TfjgLlo7HH0w5T2Dg6Up0
+         s4x0xxICGePW4pwg+OvqG7Yom3oRf628W9BEvImaAb7GqIsAF8EQHYEHRSPqhCQqzb3I
+         6X29UYWyHPU3510hvDLmbE7nkABCtMj8wUP4cyp+495vrBw8rRC+bJgHfN8K95KsdWcK
+         tDcnKKRLK78BRkAgkFwfkYiIShGb+VGIvC/1UFkdOfOtnbqseQLyOssYhUuu5G6E4YpX
+         t3rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698219317; x=1698824117;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5z/V4Jmy9kuxnbn3ouk6FBjzE9CgTURmmBJt5Ad2jiY=;
-        b=ECcZi1WLE7sWgg0W++p1pfDh//voCyeViWnSzRSYE0N+nq1frqg8A9ZqVKNECyAbQ3
-         Ucw8NIL6/ThVjSRt3crq2X7dHu0LMHSQZdxS1nlkG4Ur5hDI3z4A8fGTyWyzXmC2HpmL
-         1C6R3aUI7yGvJSCVQ0w6yIKD229njiCsMOJl3iJKQZRuYcOTkAnGIEU7DbRwhjdjHqtb
-         mwjnsBtXo1ccrZSF79c0N4UHUmwByjaZGGRxuF+t/gBxr2Qh3WR3GRJYaS+Cby6Cr9/i
-         f6ulmcLAix2SDeP0v65Fwk9ILR3LWUuj+laOrEsW9PDA6UTf3LVZb2nE+vWyDgpW0Dx2
-         bIuA==
-X-Gm-Message-State: AOJu0YxxfgHGc5p/Q6TC/YNkRw//2B7wmHg5PTBHN2UcRZHtnIAjD2WZ
-        kKudLCiyGIQkY8k50PTb4Nn4lQ==
-X-Google-Smtp-Source: AGHT+IE5zyDvAyehklMpJ1ZEUwAbRzg6PLLJ4r41F8kakjZ1hGGNicIg9kP4MsQSpO+6DvjHlvWxgQ==
-X-Received: by 2002:a5d:67c5:0:b0:32d:b9c5:82fb with SMTP id n5-20020a5d67c5000000b0032db9c582fbmr10037908wrw.30.1698219317422;
-        Wed, 25 Oct 2023 00:35:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698219347; x=1698824147;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LuZMkbxv4lOoR8L5PlaX616AqvMbmm0wHfhqvqys2P8=;
+        b=SDKWgaxWxuf6EKthUiijZGqQDRtPnrWOI+1EVwtG02fS8nndOZc9imkJuVQF4xt8hN
+         iFUwUQKZmpEYeuMp4yQs+1JEFyLvTdkkZY8oMdvacDNMmcYgwUww8mi4IDXY4qOyL7iS
+         xK2LOpEM1Ml5sVQI5DmGSGgORO3ULN/MUA3saQYiqwDrFwALPd8eatHXFaxm0j8JmkWh
+         cTAQq7aNe6klZYlHlKgm7O5EmEq3avFdxIU2lGXnAxhyfbnm+8GPRyWfxQlBF2Br9Ik+
+         EhljB/T7kuJkD4rHJi3H6MXrXVSQOYX5zoSQe62RAcUc5CGdbjlN/k1bgietXF8ekQ2o
+         VcIA==
+X-Gm-Message-State: AOJu0YzUY47P7AxHC1SQaBrhn4jnMrCuTAdTHABPig2Dn/5XQiJOmolY
+        LFzykpmuhbK1uZRgSN2C4h6mnw==
+X-Google-Smtp-Source: AGHT+IE/jBJ78iYrm60h7+ZediUSZppT/KAya0yPIC8L6ZyljEwy3u1G6Ruj/TRjmlLHPjvUruAeCg==
+X-Received: by 2002:a5d:4043:0:b0:314:1313:c3d6 with SMTP id w3-20020a5d4043000000b003141313c3d6mr8273034wrp.33.1698219347171;
+        Wed, 25 Oct 2023 00:35:47 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id x18-20020a5d60d2000000b003248a490e3asm11449058wrt.39.2023.10.25.00.35.16
+        by smtp.gmail.com with ESMTPSA id d14-20020adffd8e000000b0031984b370f2sm11416346wrr.47.2023.10.25.00.35.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 00:35:16 -0700 (PDT)
+        Wed, 25 Oct 2023 00:35:46 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 09:35:06 +0200
-Subject: [PATCH 8/8] drm/msm: dsi: add support for DSI 2.8.0
+Subject: [PATCH 0/3] remoteproc: qcom: Introduce DSP support for SM8650
+Date:   Wed, 25 Oct 2023 09:35:43 +0200
+Message-Id: <20231025-topic-sm8650-upstream-remoteproc-v1-0-a8d20e4ce18c@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-mdss-v1-8-bb219b8c7a51@linaro.org>
-References: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
-In-Reply-To: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
+X-B4-Tracking: v=1; b=H4sIAE/FOGUC/x3NQQrCMBBG4auUWTuQtDgWryIuYvyrs0gTJlGE0
+ rs3uPw2721UYYpK12Ejw1er5rXDnwaK77C+wPrsptGNk3deuOWikWua5ez4U2ozhMSGlBuK5cg
+ iYb4AD1kA6pliWPT3X9zu+34AdvU/MnIAAAA=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2106;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1692;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=0yTTxYhVn2OwUhlFrykG9TyQLX4KleetjzQPvdPaNCE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMUoKLkNIC0plpTG8eAgW09BRrCnILlvA5niTNpw
- 8X6TYmKJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjFKAAKCRB33NvayMhJ0QDhD/
- 9PTVjrCJUYTDE+PBfqY1lyYKPJqK/UFS51fCg5PPHBX2ZHtBLT/xO+uCr9k902qMhFZYm07vODeIEN
- CbxMb6NmFMoHqfMV4Xn5r9lKSQsQzmfhwhTbZlNf+2G6s0dwmZnKde01l+jJurrq4HFPl+P15J7vp5
- UmLWGA+3AG5iRHIm+FxKhTZ1P8RGwuKm03LB8QXSdiuvVNtpofdCT7H4EdU86xDyZp/8TU9fouYC/v
- pniJ4sgVi5ESVKu5xOjEWhzK5a1P/uFenfM8Ab0q/MofAlv5lZndIKZjo84LsFcbvZof7/THY2pm2T
- V1vB3YxIeNzhkM+hhELyzcSzimR71fzY4zfinl8cljz61aggfrRRe2We8x8jofoVQXmpSLpK5X6Jum
- KJKqQ608tJ1HLyedpJ+UIzzOYZoLYTC1+ml9hg8oTddd8PIvm/mxOc3wLRsnQWRRgYApfZq6hsEJUO
- AxjhwryeBeeaBvptdtNlTZKEfjQ8DG/aWA6pFa6FUEj8fA+ubM8FrY7AnAlaC+lxtaFaYMRpGXD9M4
- gM4nQbFz7uzmtM/Cng2l8iroXuwSIWURZKNnKWU3mBTA/Nh5CCRgX+BD4LW3UwmE4rDrX3RYfQnz31
- 0E8BlRbvtcpo1WZXwJDBJnT7M+rnxQA5QQl/W6KIkp3cfiQpLaLY372wlWlQ==
+ bh=YgeLp8OwDHnCQkyYhlcUdjOeopES1tNQUXbEyCTj8Oc=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMVQ1OwV/MZ2jOQdUnfkOghpJyNe/BxAhxiT+PQm
+ kAXjk2KJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjFUAAKCRB33NvayMhJ0RDOD/
+ 9DOhccEOhJq2/GIEU3oWWYhH7xSI8VBsGHFfRXy6dS2+m6z/0GfvDcDES6KFVZIublrVIshgLHvLYo
+ SmIjrxawVa/mccex+OzEXp8SuBPFaSmrtGlp6vJgOiQkFCd3pyhL5hk0HJeqisVImKPBn6vAkg5e9w
+ 6dwvGlrOl+tVyiAjO/etMJftpEL41DYaHaPG1KMLF3ocSrMaLni6m2AmzEcogj+Ual2BXVWraZkd5i
+ 0r8VWLul4v8MRlJwwq9kOwwghD35nzvhzVvntT9PaN7TpcN9mDZeC1mZDa5vxOye86z56vQ0Ccw9/w
+ +Iu1reIXq5Te/t5uequFUHaWq1GCr94/tEVm9vIK6LMMUTmkNv+bFWKNTst5Is1D/k4oumKInN4ozh
+ PwmRZ7ROh+bNRp1IIEMj9fNC/dRiR9be61XsezBv/8Hlb67OZhJBh4QqVtGG9hOw/jVxsp21UW2irL
+ opHCsfp1RmdK7MLtXWOC9p2EEwcwY45RgJJ48V1lvt9WjBBwk47nyFd6xsZtDFZiJ6Cc+J6Y7sYZaQ
+ ZQLpYVtnzHhhDRkuDgmiW493qN0Cq0Fx2AOL43YKRzoVUo77dqo1HKOBYG5pAjA7XB9a36vRwhOWpQ
+ 70drGS4IcmIOLb7kxVwVqNZA7ba0YBO4UEMMZFX5lnVPOzSOBzMsAtDRIUDg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DSI Controller version 2.8.0 support for the SM8650 platform.
+Add the bindings and driver changes for DSP support on the
+SM8650 platform in order to enable the aDSP, cDSP and MPSS
+subsystems to boot.
+
+Compared to SM8550, where SM8650 uses the same dual firmware files,
+(dtb file and main firmware) the memory zones requirement has changed:
+- cDSP: now requires 2 memory zones to be configured as shared
+  between the cDSP and the HLOS subsystem
+- MPSS: In addition to the memory zone required for the SM8550
+  MPSS, another one is required to be configured for MPSS
+  usage only.
+
+In order to handle this and avoid code duplication, the region_assign_*
+code patch has been made more generic and is able handle multiple
+DSP-only memory zones (for MPSS) or DSP-HLOS shared memory zones (cDSP)
+in the same region_assign functions.
+
+Dependencies: None
+
+For convenience, a regularly refreshed linux-next based git tree containing
+all the SM8650 related work is available at:
+https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 17 +++++++++++++++++
- drivers/gpu/drm/msm/dsi/dsi_cfg.h |  1 +
- 2 files changed, 18 insertions(+)
+Neil Armstrong (3):
+      dt-bindings: remoteproc: qcom,sm8550-pas: document the SM8650 PAS
+      remoteproc: qcom: pas: make region assign more generic
+      remoteproc: qcom: pas: Add SM8650 remoteproc support
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-index 1f98ff74ceb0..10ba7d153d1c 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -190,6 +190,21 @@ static const struct msm_dsi_config sm8550_dsi_cfg = {
- 	},
- };
- 
-+static const struct regulator_bulk_data sm8650_dsi_regulators[] = {
-+	{ .supply = "vdda", .init_load_uA = 16600 },	/* 1.2 V */
-+};
-+
-+static const struct msm_dsi_config sm8650_dsi_cfg = {
-+	.io_offset = DSI_6G_REG_SHIFT,
-+	.regulator_data = sm8650_dsi_regulators,
-+	.num_regulators = ARRAY_SIZE(sm8650_dsi_regulators),
-+	.bus_clk_names = dsi_v2_4_clk_names,
-+	.num_bus_clks = ARRAY_SIZE(dsi_v2_4_clk_names),
-+	.io_start = {
-+		{ 0xae94000, 0xae96000 },
-+	},
-+};
-+
- static const struct regulator_bulk_data sc7280_dsi_regulators[] = {
- 	{ .supply = "vdda", .init_load_uA = 8350 },	/* 1.2 V */
- 	{ .supply = "refgen" },
-@@ -281,6 +296,8 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handlers[] = {
- 		&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- 	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_7_0,
- 		&sm8550_dsi_cfg, &msm_dsi_6g_v2_host_ops},
-+	{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_8_0,
-+		&sm8650_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- };
- 
- const struct msm_dsi_cfg_handler *msm_dsi_cfg_get(u32 major, u32 minor)
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-index 43f0dd74edb6..4c9b4b37681b 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -28,6 +28,7 @@
- #define MSM_DSI_6G_VER_MINOR_V2_5_0	0x20050000
- #define MSM_DSI_6G_VER_MINOR_V2_6_0	0x20060000
- #define MSM_DSI_6G_VER_MINOR_V2_7_0	0x20070000
-+#define MSM_DSI_6G_VER_MINOR_V2_8_0	0x20080000
- 
- #define MSM_DSI_V2_VER_MINOR_8064	0x0
- 
+ .../bindings/remoteproc/qcom,sm8550-pas.yaml       |  41 +++++-
+ drivers/remoteproc/qcom_q6v5_pas.c                 | 152 ++++++++++++++++-----
+ 2 files changed, 156 insertions(+), 37 deletions(-)
+---
+base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
+change-id: 20231016-topic-sm8650-upstream-remoteproc-66a87eeb6fee
 
+Best regards,
 -- 
-2.34.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
