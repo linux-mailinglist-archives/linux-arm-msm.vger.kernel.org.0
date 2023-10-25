@@ -2,94 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E0F527D7251
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 19:33:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AA697D72A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 19:49:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231539AbjJYRdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 13:33:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59152 "EHLO
+        id S234162AbjJYRt5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 13:49:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231283AbjJYRdJ (ORCPT
+        with ESMTP id S229854AbjJYRty (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 13:33:09 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25C2A181
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 10:33:07 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-579de633419so57971647b3.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 10:33:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698255186; x=1698859986; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XvBhZBmkny2j95CjstPK5yQ0xRcuhGsDbkOImnFtxnI=;
-        b=REsHipNJhxDpbqsKqK0/8UUA/k9MQLyoMEjWBZUsMgP4SioicgBhkMb744+z6EPlI7
-         iNWrRFhakjskfPtGpKrmXK8UvFO+Xg6c7cyc9Db3y6B1jzSUMyQgP9aHIqoa3jyJr8xV
-         CGRMIUu+nsBINcescIxn7hw0M83Kz991NBf12xh6YjdRBQAmuxFGg90YBhQmIT5yKZtz
-         9XNqjz4Jzx7P2B+7CkRvms60wnUc9XotdLrIBmFL1M3zoQbWJk3lvVjgyBifj3Deglw6
-         bFmGpgITPeCXmvLfrf3Y5i7WTtZ1J8moFL9oxsEVluilnmZHyRHnXbLn7a1/B75YiDmS
-         GGEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698255186; x=1698859986;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XvBhZBmkny2j95CjstPK5yQ0xRcuhGsDbkOImnFtxnI=;
-        b=QjmIertHwFYuzKCCbs94k4ObCQN+eniabpkSOWgRkYinuezD/lElAfFrbPRJKSDsal
-         GXeW88AqzWzLAljOZXCk35jNsZucULVkL+OQlg17m9FT4dr6+Zg3wX6SoiKkDYtT7glK
-         /nO4MiF+9d8tQm2DPexs/LUJfYgjm4SElg74++xbqHib061dLQk/U1Om7gUv/H/M9C6d
-         u9RER6BEWUCHvqDouAwpI5HOYZCzICCHbICWibBj45TkeCo397ceyX7B8vssk/XkccQq
-         WN4c7K52JTUNwPWk8cHGk5wITVvkBwh0V5/R03/scDzW4BeFwz7t5kO/OKmSLjpIF4DD
-         yknA==
-X-Gm-Message-State: AOJu0YyheT/FVqkr/aLXRiMlMR5x3KBSWPsvL8ivAJj7V6xPi4W/K9Jt
-        lta6+IplF4MHV9x3A09zvzQhijzsMZ+CXZpyD5MLyQ==
-X-Google-Smtp-Source: AGHT+IE8BcBJeQtpMzL82hUdFUv1oZgIuxkummUuwntiC5NFdCUbZrOx510qgUYWkp+wlXZSk33+4m9GJfsMdsOpQog=
-X-Received: by 2002:a0d:ddc7:0:b0:59b:bed9:9a3a with SMTP id
- g190-20020a0dddc7000000b0059bbed99a3amr16384399ywe.41.1698255186343; Wed, 25
- Oct 2023 10:33:06 -0700 (PDT)
+        Wed, 25 Oct 2023 13:49:54 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F7B137;
+        Wed, 25 Oct 2023 10:49:52 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF2EC433C7;
+        Wed, 25 Oct 2023 17:49:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698256192;
+        bh=GfTn7Xee+oCBAL1wjgkcyUybl3bF+IE0RYsaSIgCmWU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PVjQaFBLNuLj6tf0nMM9dkdTLSzQJ2nilbMLvi//5ZNnxBgCF498kCqxgeq5fD3TN
+         Q+SMDQ84yCAnOf9RSjnqhg4NJ3UNy9b5LG8biq8Snl6E9B0pi+HooxzgGXo7ZgEqim
+         rBKA79B7NH6YTf7G5Ens/K0U7uo9y0Skk6VNQkkZg6JPbUzA4LhSsP+T8EFfSd99cI
+         lhveiAZ99EFtzU2M1rudgc9xKYdXf+AsrFnshRSKjSa7cTPgA8sc4iZAlc+ixQQxQY
+         Qd5UwgADNsgp/qFmnaiPqPb1Ch6eJv9yeWGkq4JiivvSxHhcv4VB8TOUz2kZRv8OZG
+         h0MfQvqXaGdDA==
+Date:   Wed, 25 Oct 2023 18:49:47 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc:     Liam Girdwood <lgirdwood@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: Re: [PATCH RFC 1/2] regulator: core: Disable unused regulators with
+ unknown status
+Message-ID: <802e7f15-029c-4eb6-b0d8-53d16f7da37a@sirena.org.uk>
+References: <20231004-reg-smd-unused-v1-0-5d682493d555@kernkonzept.com>
+ <20231004-reg-smd-unused-v1-1-5d682493d555@kernkonzept.com>
+ <80307316-f55e-4540-9c5f-655844c3b3f4@sirena.org.uk>
+ <ZTeHAqL5QB2w33RN@kernkonzept.com>
 MIME-Version: 1.0
-References: <20231025135943.13854-1-quic_sibis@quicinc.com> <20231025135943.13854-4-quic_sibis@quicinc.com>
-In-Reply-To: <20231025135943.13854-4-quic_sibis@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 25 Oct 2023 20:32:55 +0300
-Message-ID: <CAA8EJppyoRfFat=hrRRqBDyHK9_y9VdyYm3AY+JAvotBx-RFzw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] pmdomain: qcom: rpmhpd: Add SC8380XP power domains
-To:     Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     andersson@kernel.org, konrad.dybcio@linaro.org,
-        ulf.hansson@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org,
-        conor+dt@kernel.org, quic_rjendra@quicinc.com,
-        abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_tsoni@quicinc.com,
-        neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="2sywMGf7CHfsxokJ"
+Content-Disposition: inline
+In-Reply-To: <ZTeHAqL5QB2w33RN@kernkonzept.com>
+X-Cookie: There's no time like the pleasant.
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 25 Oct 2023 at 17:01, Sibi Sankar <quic_sibis@quicinc.com> wrote:
->
-> From: Abel Vesa <abel.vesa@linaro.org>
->
-> Add the power domains exposed by RPMH in the Qualcomm SC8380XP platform.
->
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+--2sywMGf7CHfsxokJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> ---
->  drivers/pmdomain/qcom/rpmhpd.c | 28 ++++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
+On Tue, Oct 24, 2023 at 10:57:38AM +0200, Stephan Gerhold wrote:
 
--- 
-With best wishes
-Dmitry
+> I think it does not change much for this patch, though. Even when
+> implemented in the core we still need to represent this situation
+> somehow for regulator_is_enabled(). Simply returning 0 (disabled) or
+> 1 (enabled) would be wrong. Do you think returning -EBUSY would be
+> appropriate for that?
+
+In these cases where we simply can't read the expectation is that we'll
+always be using the logical state - one way of thinking about it is that
+the operation is mostly a bootstrapping helper to figure out what the
+initial state is.  A quick survey of users suggest they'll pretty much
+all be buggy if we start returning errors, and I frankly even if all the
+current users were fixed I'd expect that to continue to be a common
+error.  I suppose that the effect of ignoring the possibility of error
+is like the current behaviour though.
+
+> The second challenge I see on a quick look is that both
+> qcom_smd-regulator.c and qcom-rpmh-regulator.c use their reference
+> counter internally in other function (e.g. to decide if a voltage change
+> should be sent, see "vreg->enabled" checks). I think we would also need
+> to add some rdev_is_enabled() function that would expose the core
+> reference counter to the driver?
+
+> Tracking the enable state in the driver (the way it is right now) is not
+> that much code, so I'm not entirely sure if we might actually end up
+> with more code/complexity when moving this to the core.
+
+We have to do the reference count in the core anyway since it's a
+reference count not just a simple on/off so it doesn't really cost us
+anything to make it available to drivers.
+
+--2sywMGf7CHfsxokJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmU5VToACgkQJNaLcl1U
+h9DB4wf7BiRuxxpXWmgvX+9voz3yXyMjnGHpDT7SedjySMwy6VoNAI4SRRINPF7y
+IEMTL/lgYq89V0yfyp2HzXZJrjJ6nn+93l6fVj/0ya//0blP6du/EIsSpL2/fADl
+FqFVPo4hd7Vx6XwJGFm7H1O1iPn84xq2muca1fdOvi58KVDbLTtV/ewWKh9IhGNs
+NDCVv87dqn3QfIblJUEfOJRR5KKFb4LNdq8DzIdqAg93Pg7FsRtWpOL8/IOxpp9a
+uUGESQA7gpqtIM9bZxAaA1XH4jV+g8mxEtScpoSfLQgRZruKY1lkarGU0mUmKrbh
+h0V/GWJOTgdVf8sFflAYrBQtw8KB0w==
+=GKpo
+-----END PGP SIGNATURE-----
+
+--2sywMGf7CHfsxokJ--
