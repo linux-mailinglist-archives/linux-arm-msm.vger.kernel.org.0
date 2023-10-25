@@ -2,58 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23E037D6E47
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 16:04:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D69C17D6E0B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 16:04:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344532AbjJYN4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 09:56:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40322 "EHLO
+        id S234942AbjJYOAQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 10:00:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344429AbjJYN4a (ORCPT
+        with ESMTP id S232809AbjJYOAP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 09:56:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 341FA138;
-        Wed, 25 Oct 2023 06:56:27 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PDHC7L019594;
-        Wed, 25 Oct 2023 13:56:23 GMT
+        Wed, 25 Oct 2023 10:00:15 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5303B132;
+        Wed, 25 Oct 2023 07:00:13 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39PDPOqq011628;
+        Wed, 25 Oct 2023 14:00:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=7WlSaupKP8hCNwhw+i+KB9b8miHYOGUUUaNwKGRNWCA=;
- b=bqvskq9WxCskrAzOuucLTVGbTBWdeQKSRW2MVR/DHMYPj7SGGqzgb0cDNA7bDuJ9YylC
- oSXS6b/xy6xjJiRFIZpK9QKLO3ue/ThLaNrjI/De485zkKeBX5A1Sh/Jj6rio27e6tfP
- HbYgKsmQPzX0S/0JNWPzNa6feaGiv+ZjgZjApHNa2ApBhSVFZLtbkcg965VvfPkt+1Ss
- 1M3dSnDMXXgKWi3elxnXqlp+Oh+pwHUJHq6TksFLG//5KWwX2QWbwa9Oueq2YMwyvMU4
- 0uqUlcSwnS5JsVmNOGZBA6e+NhV2UOaQrPAs7lNEKuBJmHTfzlfnKCQvbPfmYmhGe613 Xw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txmhx9sm2-1
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=G4GgJfR9dckI432uLf8DhH6mErgC9HcrRLZOBk4jvyc=;
+ b=JeNbtQH6VlKX1hY7hPZvPIgLG7CSov/vov8RIAHnus9u/FSUHYszoIvc0l/Klkcm0XPs
+ gT274UykOtQdvZHOvZdgQs0vFPEYFs9vwQXhfawiiOcy/YLQd6mWtozSyrbB1MjwSJ3X
+ 1aQQvTROgjYveA/7/IVjzbZUpQC/ytZV9BHrwUdQntOtTQgG2QEqZyKbIx2V7c3EtTu6
+ YnietgqkmA33qAYkhwZ2Vg0T+XSpMcSH9+8tRbNPC5bIEJnUrlKrM7TlpA6s2fexjg5R
+ NZBjKdT87WW83pfatKgcHK3guCnzZmB0pDuDDX7faV9j7vUf+MuytJ85G8CIHfbzmO2Z iA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txtw1h2td-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 13:56:23 +0000
+        Wed, 25 Oct 2023 14:00:09 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PDuMlf006222
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39PE08IC028998
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 13:56:22 GMT
+        Wed, 25 Oct 2023 14:00:08 GMT
 Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Wed, 25 Oct 2023 06:56:17 -0700
+ 15.2.1118.39; Wed, 25 Oct 2023 07:00:03 -0700
 From:   Sibi Sankar <quic_sibis@quicinc.com>
 To:     <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <broonie@kernel.org>, <lgirdwood@gmail.com>, <robh+dt@kernel.org>,
+        <ulf.hansson@linaro.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>
 CC:     <agross@kernel.org>, <conor+dt@kernel.org>,
         <quic_rjendra@quicinc.com>, <abel.vesa@linaro.org>,
         <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
-        <neil.armstrong@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH 2/2] regulator: qcom-rpmh: Add regulators support for PMC8380
-Date:   Wed, 25 Oct 2023 19:25:50 +0530
-Message-ID: <20231025135550.13162-3-quic_sibis@quicinc.com>
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <quic_tsoni@quicinc.com>, <neil.armstrong@linaro.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH 0/3] pmdomain: qcom: Add power domain support for SC8380XP
+Date:   Wed, 25 Oct 2023 19:29:40 +0530
+Message-ID: <20231025135943.13854-1-quic_sibis@quicinc.com>
 X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231025135550.13162-1-quic_sibis@quicinc.com>
-References: <20231025135550.13162-1-quic_sibis@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
@@ -61,16 +59,16 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hmmEcG3mI9ZiC2fp752UJEzzzmLUFkKT
-X-Proofpoint-GUID: hmmEcG3mI9ZiC2fp752UJEzzzmLUFkKT
+X-Proofpoint-ORIG-GUID: 9kRE8W7qrrQzxiPMnQo__psX7L8DSLH7
+X-Proofpoint-GUID: 9kRE8W7qrrQzxiPMnQo__psX7L8DSLH7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-25_03,2023-10-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- phishscore=0 malwarescore=0 spamscore=0 adultscore=0 mlxscore=0
- priorityscore=1501 mlxlogscore=999 impostorscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310250120
+ definitions=2023-10-25_02,2023-10-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 bulkscore=0 mlxlogscore=782
+ lowpriorityscore=0 clxscore=1011 impostorscore=0 mlxscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
+ definitions=main-2310250120
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -80,53 +78,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rajendra Nayak <quic_rjendra@quicinc.com>
+This series adds power domain support for the Qualcomm SC8380XP platform, aka Snapdragon X Elite.
 
-Add support from RPMH regulators found in PMC8380 for SC8380XP platform.
+Dependencies: None
+Release Link: https://www.qualcomm.com/news/releases/2023/10/qualcomm-unleashes-snapdragon-x-elite--the-ai-super-charged-plat
 
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- drivers/regulator/qcom-rpmh-regulator.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+Abel Vesa (2):
+  dt-bindings: power: rpmpd: Add SC8380XP support
+  pmdomain: qcom: rpmhpd: Add SC8380XP power domains
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index b2e359ac3169..cf502eec0915 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -1106,6 +1106,21 @@ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
- 	{}
- };
- 
-+static const struct rpmh_vreg_init_data pmc8380_vreg_data[] = {
-+	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
-+	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
-+	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
-+	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_mv, "vdd-s4"),
-+	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
-+	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
-+	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
-+	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
-+	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
-+	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
-+	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
-+	{}
-+};
-+
- static const struct rpmh_vreg_init_data pm8009_vreg_data[] = {
- 	RPMH_VREG("smps1",  "smp%s1",  &pmic5_hfsmps510, "vdd-s1"),
- 	RPMH_VREG("smps2",  "smp%s2",  &pmic5_hfsmps515, "vdd-s2"),
-@@ -1511,6 +1526,10 @@ static const struct of_device_id __maybe_unused rpmh_regulator_match_table[] = {
- 		.compatible = "qcom,pmc8180c-rpmh-regulators",
- 		.data = pm8150l_vreg_data,
- 	},
-+	{
-+		.compatible = "qcom,pmc8380-rpmh-regulators",
-+		.data = pmc8380_vreg_data,
-+	},
- 	{
- 		.compatible = "qcom,pmm8155au-rpmh-regulators",
- 		.data = pmm8155au_vreg_data,
+Sibi Sankar (1):
+  dt-bindings: power: qcom,rpmhpd: Add GMXC PD index
+
+ .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
+ drivers/pmdomain/qcom/rpmhpd.c                | 28 +++++++++++++++++++
+ include/dt-bindings/power/qcom,rpmhpd.h       |  1 +
+ 3 files changed, 30 insertions(+)
+
 -- 
 2.17.1
 
