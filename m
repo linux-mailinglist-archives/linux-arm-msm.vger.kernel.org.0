@@ -2,110 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D1307D6A8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 13:56:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D57CB7D6A9C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 13:58:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234959AbjJYL4r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 07:56:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46820 "EHLO
+        id S232666AbjJYL6L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 07:58:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234946AbjJYL4q (ORCPT
+        with ESMTP id S234897AbjJYL6L (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 07:56:46 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A940A182
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:56:44 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-4084de32db5so46955585e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:56:44 -0700 (PDT)
+        Wed, 25 Oct 2023 07:58:11 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0CD6129
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:58:08 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32d9552d765so4025860f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 04:58:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698235003; x=1698839803; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ntZ1JpiCH0v861EMwiiZzKp1eCEOCRwWhzRC0rD+sjU=;
-        b=q10paYoDIv2nf/ax2UvnFmK+diqyx4zZrT5XhtLcmQt+zCX29pNxOhGnzdMESPNxO7
-         3PQ6uewYkDTmK4F5GKLrO8piIhDEXMhqPVJM6Qqv6ivSZOLUE0y5mffsyWSrVj9IGi2g
-         TovZa/NVKlHo/5cBGa9FUgndbb4v6sRCaxAM+izgaprTT55QtmdgwXOvAMV+oIE1GAfO
-         LbHcsbHHwyJfS8Ka5ljjosxAJ11T4t8KELIbsTp6H1diDkG+2aDQiixXDnLf31ip0Hmt
-         l1zZBlKe3oH21SEP74bU9mzIUFA3/UcdYwzBjucdq6EIRiXrRZiqk+FE2sAur6tT0ZoE
-         gSvg==
+        d=linaro.org; s=google; t=1698235087; x=1698839887; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vlx3leb/fOf20/ZSnP3M1ZG19ZufnWTKKnKwmqMVlX8=;
+        b=LEl6/AS0JmSlxo0OHTSaBJsqTJZtqVBAFWFfYnDU07bsqt8j7/qybqKmkCuCWJ6aZO
+         s3ZAfbGig3PJhpGAhCqn7lO3es/AH335E6ZUXdnqhD6owprSni32IqSb6/4iL6xW8k9T
+         c3q3WtG7EYgRBCqcIGdxZbp076iwwDTSLhTsUg/oKrsYcdZpq0K3lUB5qSPQYkNIAK+P
+         EPuFJDg4eQY3+jHOLkQr4SLdRpYPDxQFPvzbEkEK9/0ec/U/0HRq4NonO+hvtH+A+q+l
+         mOlDqt/eWZPleiT/H7V15r4R13AXZBdQEg98jxVadzap6pxb60J7bMdZqMqrvYPM6ABg
+         CDvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698235003; x=1698839803;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ntZ1JpiCH0v861EMwiiZzKp1eCEOCRwWhzRC0rD+sjU=;
-        b=SZnwzwyAfwjDQd4g1M5GReP5+aqy7GMx4MB1F3IZ13r5fcOH2sozAt9mZRKJJ8r9vn
-         S8sjKnP4fVEruPAyCKnStZtT9F32FJLHbjTodNKqsTyEBUrtm9G/Or5xTVmVvtNncWc5
-         oWK8ZcKU3U6D6UvrxNG80MRul8+9iRoxa8iMdRzMU1/6aYmyfa+9qI/MKlnw5M8NsCdE
-         +70qTzz5+fRYoMJqS5yNj5MgYah3hK2kvDnA8gTRiNfi0NyX+YbwzgN320vt7XwPCrbb
-         QiKC8CROmFgg+laqmU1N8QbaZ96o4gakILV7KF/mjKQ9DT1WTaQgWWXtBupFGdpzWsJY
-         crdQ==
-X-Gm-Message-State: AOJu0YwXlV+Xd8ZFiN5N6QKtikHI8UQrta8np0I1Q8YFNlfBP3l3Rw4t
-        ttHepxCeEqL8CGK9Gsi/teUOjw==
-X-Google-Smtp-Source: AGHT+IHX2FpNSPui81nBWrWZlfjK7IPn3Gl11Lt3FKEXEZcYYE4ZqQ/og+64TR5FVWtIiB6N05U0Bg==
-X-Received: by 2002:a5d:500b:0:b0:324:8239:2873 with SMTP id e11-20020a5d500b000000b0032482392873mr10403313wrt.37.1698235002980;
-        Wed, 25 Oct 2023 04:56:42 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:4b03:ec74:6374:5430? ([2a01:e0a:982:cbb0:4b03:ec74:6374:5430])
-        by smtp.gmail.com with ESMTPSA id t13-20020a5d49cd000000b003176c6e87b1sm11797593wrs.81.2023.10.25.04.56.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 04:56:42 -0700 (PDT)
-Message-ID: <7202ad7c-5568-4abd-9fde-e374428225ab@linaro.org>
-Date:   Wed, 25 Oct 2023 13:56:41 +0200
+        d=1e100.net; s=20230601; t=1698235087; x=1698839887;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Vlx3leb/fOf20/ZSnP3M1ZG19ZufnWTKKnKwmqMVlX8=;
+        b=YX2Ws0PABpJ8Fw5UXsl3C9o6688Ykch1hHiB57BnqGAtNVRX2jk0wdQ3aUGUuZZTJ4
+         o4Tp5lW/XoTHt8M33iawMEkL+VrpfV1blFhzEln6zDPF/vpnrJegVm0a3/H8RanrovzH
+         2iSj0KUiyEl11tiG+YWzHEQFVrWR9wY+jXiSEN9gfOb2A0jDg9YbBBNF9lTPGs42DPip
+         F+mTLbSDU+foLPQhoOn00z2e7kwicXH+E+qJE1miOQZebDViDtOHrCG0JPHNL3ea43bR
+         3j94Qo8f/58e9q1SUUG5IyAS+m07ifOxibiuFZvftVQu2oXxua+IPlfYDkRIZ5LOYqYT
+         a3+g==
+X-Gm-Message-State: AOJu0Yy4OXSTJKJy7Y82K40AzLLlf6e6p4TJ5+sKATY0JuMvIzeaFbqK
+        /Y6nvCY9l54LFw3Ub7wSwA21oQ==
+X-Google-Smtp-Source: AGHT+IG7RVzaj46OeaDK9gTP9047Bg8RMN0rUXMPc1LISeImHQ/gzRuxX3o/OgsmlbtdMindsmeqrg==
+X-Received: by 2002:adf:cd0e:0:b0:32d:87df:6dea with SMTP id w14-20020adfcd0e000000b0032d87df6deamr11891398wrm.45.1698235087143;
+        Wed, 25 Oct 2023 04:58:07 -0700 (PDT)
+Received: from lion.localdomain (host-2-99-112-229.as13285.net. [2.99.112.229])
+        by smtp.gmail.com with ESMTPSA id o6-20020a5d62c6000000b0032196c508e3sm11871721wrv.53.2023.10.25.04.58.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Oct 2023 04:58:06 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Date:   Wed, 25 Oct 2023 12:58:00 +0100
+Subject: [PATCH] arm64: dts: qcom: qrb2210-rb1: use USB host mode
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 07/10] clk: qcom: add the SM8650 TCSR Clock Controller
- driver
-Content-Language: en-US, fr
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231025-b4-rb1-usb-host-v1-1-522616c575ef@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAMcCOWUC/x2NSQrDMAwAvxJ0rsB2un+l9GC5Si0ITpGaEgj5e
+ 0SPMzDMCsYqbHDvVlD+icnUHOKhg1JzezPKyxlSSH0M6YR0RKWIsxHWyb54vRTuOQ35Fs7gFWV
+ jJM2tVO/aPI4uP8qDLP/N47ltOy0drnx2AAAA
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
- <20231025-topic-sm8650-upstream-clocks-v1-7-c89b59594caf@linaro.org>
- <c9aa685b-b746-4901-a374-4e9d4d5b6cfb@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <c9aa685b-b746-4901-a374-4e9d4d5b6cfb@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>
+X-Mailer: b4 0.13-dev-46309
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1061;
+ i=caleb.connolly@linaro.org; h=from:subject:message-id;
+ bh=zoiKtVHzLvhnPvwaM89PsmhcLzPbNHQwQeEPbjW6REA=;
+ b=owGbwMvMwCFYaeA6f6eBkTjjabUkhlRLprOFHvlrMkuzj2fuX7BFr1MlO0p+jVd19/zbRq0vS
+ suMV+7tKGVhEORgkBVTZBE/scyyae1le43tCy7AzGFlAhnCwMUpABOZ2MHI0NrtYRp04OKlg1vn
+ tZjNffnye4fshxuTdrae8HGU36au1cPwT4U9X9dX2D7opMFKu40z9O9e6993S9i6T6SmzdDed4J
+ 5MwA=
+X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
+ fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -113,31 +86,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 10:43, Konrad Dybcio wrote:
-> 
-> 
-> On 10/25/23 09:32, Neil Armstrong wrote:
->> Add TCSR Clock Controller support for SM8650 platform.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
-> [...]
-> 
->> +static int tcsr_cc_sm8650_probe(struct platform_device *pdev)
->> +{
->> +    struct regmap *regmap;
->> +
->> +    regmap = qcom_cc_map(pdev, &tcsr_cc_sm8650_desc);
->> +    if (IS_ERR(regmap))
->> +        return PTR_ERR(regmap);
->> +
->> +    return qcom_cc_really_probe(pdev, &tcsr_cc_sm8650_desc, regmap);
-> qcom_cc_probe?
+The default for the QCM2290 platform that this board is based on is OTG
+mode, however the role detection logic is not hooked up for this board
+and the dwc3 driver is configured to not allow role switching from
+userspace.
 
-Ack, missed this one.
+Force this board to host mode as this is the preferred usecase until we
+get role switching hooked up.
 
-Neil
+Fixes: e18771961336 ("arm64: dts: qcom: Add initial QTI RB1 device tree")
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+---
+base-commit: 05d3ef8bba77c1b5f98d941d8b2d4aeab8118ef1
 
-> 
-> Konrad
+// Caleb (they/them)
+---
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+index eadba066972e..f1961a07c9a3 100644
+--- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
++++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+@@ -366,6 +366,10 @@ &usb {
+ 	status = "okay";
+ };
+ 
++&usb_dwc3 {
++	dr_mode = "host";
++};
++
+ &usb_hsphy {
+ 	vdd-supply = <&pm2250_l12>;
+ 	vdda-pll-supply = <&pm2250_l13>;
 
