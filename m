@@ -2,70 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1D8B7D620D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:02:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB6CE7D622B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:12:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232566AbjJYHCj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:02:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41536 "EHLO
+        id S232346AbjJYHMg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:12:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232435AbjJYHCh (ORCPT
+        with ESMTP id S230009AbjJYHMg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:02:37 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4633819A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:02:31 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9a6190af24aso831869966b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:02:31 -0700 (PDT)
+        Wed, 25 Oct 2023 03:12:36 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25789DD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:12:33 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-53f9af41444so8651034a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698217349; x=1698822149; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698217951; x=1698822751; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ISa8zL6UMcVxhtYUYtsZ90GndIzLZwLMRsock1IO5nw=;
-        b=U2T6AptnIIqV1wynN1MJ9K4RpvAYXZP719JjyvInNW08Ii3lO9akLH8HyIuTDrmat3
-         2nVXrAAc8hnSp1gBNCzc/3HDy/YenqwcyEF2W3NAWfSfb2vB9YCqPNIQP7boQXmbUiLg
-         HqUQ4GtYfWhJVutawMSCmGisITXmcLut+qU/2o/S98b4Q7I02dyP+kiaFT21pKy1qHG9
-         hZUxcipC8gfuBGgPUdfYMzxJvjHrtfAz/4gW8J1iwjbc9j0y9Zhcw0l2l9dZDhflfTZJ
-         5mMqbR3qOLdbY09Or/bwwdsbInSlYqvaeewTpPl0w55MiaAkdF3jiJ83PHm9xnbrSk69
-         aXrQ==
+        bh=1p4mtYTUYkpBX6TFWvld0/O9WF1Uls0Opf9jIGP8ioA=;
+        b=P1K3cQ+sTpj58tbJYk8iEppvZJesxtXMJBZ4FC1N76NeaBjTntW0ecgXYLjnx4kJJn
+         9FTE6HPzFY3UVM9Wou9aMJaaB+y2Xfiu5Q2cmlRTp29vlJRK6heG4tl0c3NKIR766ITh
+         mnbYTqZp4kUxZ6V2AABM8l1KjpIMPqtGQ5fZKjF/VE6XvqTc/jXb4cUBztwoy1t1M1Ud
+         d9tPigsZyogyLOu6T220EHWiFW3kC/USlzozA1BmJxb56ulNKKSM4KWUJyoxYLLhW+O2
+         C1ouvoTQqzV6s/EJkNXktFP3SvsTZhshwVlW84BghyNYJiki2SZXd95XHwVE7uTiX5Zx
+         i2oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698217349; x=1698822149;
+        d=1e100.net; s=20230601; t=1698217951; x=1698822751;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ISa8zL6UMcVxhtYUYtsZ90GndIzLZwLMRsock1IO5nw=;
-        b=ZwfyncpJeFRq/76A3vaOcPCVQsfcoqK7zVvtxINlR30N5j4KTYt3s+WQcCuozHr1a8
-         BzUcHy1+NaxrGv4swTY68aBgOrKPM5XXH+A075WNlt+KQMaOuHC7OyCyjj0xv7v0EP1f
-         JvUZMieCFJnPRlu0MN4K6shfiiNMtJN5eXKYCSPaVmm58sEkJvbDJmzKXnFzinV7bh9x
-         2lyiN2w/uZXnCO72Q5l4KrKkHE4aPPFLwf4RiG+CC/shuoS6SCnBrd536pWXC5cJ5365
-         R1ZNv9FLKZ1qox3bzQjltAuiDbVNcWKVeexUceukDDuOXH3RfkFhKVcQNOZ36nseMC85
-         RyVg==
-X-Gm-Message-State: AOJu0YyyUvg7KmC3g6Vb1+bvoLRkyjRBvsFV96wCTrU8q9GH6whdYfvn
-        xDl6GKpB+A+K2L7Gh3m+IWHhuA==
-X-Google-Smtp-Source: AGHT+IFq1rm5Awxh+Wpr0IvxefH7nYNkUw4u4jWjGDDb3VxVcGrsc7FX4UTKbZejkxgRNAIWA7/LCA==
-X-Received: by 2002:a17:907:3f09:b0:9ad:c763:bc7a with SMTP id hq9-20020a1709073f0900b009adc763bc7amr13515922ejc.23.1698217349648;
-        Wed, 25 Oct 2023 00:02:29 -0700 (PDT)
+        bh=1p4mtYTUYkpBX6TFWvld0/O9WF1Uls0Opf9jIGP8ioA=;
+        b=pvVoEvqWsJ/VZSHhZ2lRV2PFZj/tdBABmODDBDtdMARz3Xd+YKc0QkYd8dM49Q86j1
+         py0uaz/ci/s1TZP6fURY1VaIX7z8YMR+hc2meUI0XswobVjEYh4EmZDj8JCTUEvUwINN
+         NRSxAPtym6tPBun/x4u9BQKwcLe70ahpX2/bvirVDetWSnkGPn6L0CKnfnRiSIBum7zu
+         Sm6GeZp2ULb2fVCM1te1Lwu4RZnv+xfcpT5llrMBnWzNabcNKwA+xt647lOfE2qeZV1W
+         DBJIPg3kmFI2NLfRIVr8ykOuWpKyAZbfH839x1hWlsmLi2MhR7H99Ie7yLZh0CEo56J/
+         Swyw==
+X-Gm-Message-State: AOJu0Yw1aQjRnm7NDPR4vYkMQZ0JLWrh19PN99PxN7B6R8e1Ezm8umTU
+        8usJQI078Xl3nsNwwKmCCLgErw==
+X-Google-Smtp-Source: AGHT+IEwFELPzNhVlT3XtcM3enGieNWkBACDFcRfSO+8l+duJ22xAitnA3psupareITnbhPs3/ULjQ==
+X-Received: by 2002:a50:d593:0:b0:53d:a0c9:dbd4 with SMTP id v19-20020a50d593000000b0053da0c9dbd4mr8980318edi.21.1698217951579;
+        Wed, 25 Oct 2023 00:12:31 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id l20-20020a1709065a9400b009786c8249d6sm9576921ejq.175.2023.10.25.00.02.28
+        by smtp.gmail.com with ESMTPSA id dm28-20020a05640222dc00b0053def18ee8bsm8943831edb.20.2023.10.25.00.12.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 00:02:29 -0700 (PDT)
-Message-ID: <2f3a4dcf-fa70-4834-9986-b5cf389f541c@linaro.org>
-Date:   Wed, 25 Oct 2023 09:02:27 +0200
+        Wed, 25 Oct 2023 00:12:31 -0700 (PDT)
+Message-ID: <e51bcca4-6664-4103-8109-3f2a7fc63fe7@linaro.org>
+Date:   Wed, 25 Oct 2023 09:12:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: enable GPIO based LED
+Subject: Re: [PATCH v2 1/4] ARM: dts: qcom: samsung-matisse-common: Add
+ initial common device tree
 Content-Language: en-US
-To:     Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+To:     Stefan Hansson <newbyte@postmarketos.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20231025-ipq9574-led-v1-1-b8217e997dfb@quicinc.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20231024204505.125813-1-newbyte@postmarketos.org>
+ <20231024204505.125813-2-newbyte@postmarketos.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,7 +114,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025-ipq9574-led-v1-1-b8217e997dfb@quicinc.com>
+In-Reply-To: <20231024204505.125813-2-newbyte@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -123,34 +126,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 08:58, Kathiravan Thirumoorthy wrote:
-> Add support for wlan-2g LED on GPIO64.
+On 24/10/2023 22:33, Stefan Hansson wrote:
+> According to the dts from the kernel source code released by Samsung,
+> matissewifi and matisselte only have minor differences in hardware, so
+> use a shared dtsi to reduce duplicated code. Additionally, this should
+> make adding support for matisse3g easier should someone want to do that
+> at a later point.
 > 
-> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+> As such, add a common device tree for all matisse devices by Samsung
+> based on the matissewifi dts. Support for matisselte will be introduced
+> in a later patch in this series and will use the common dtsi as well.
+> 
+> Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
 > ---
->  arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> index 49c9b6478357..b6f90da31778 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> @@ -51,6 +51,18 @@ button-wps {
->  			debounce-interval = <60>;
->  		};
->  	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +		pinctrl-names = "default";
-> +
-> +		led-0 {
-> +			gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
-> +			linux,default-trigger = "phy0tx";
-> +			default-state = "off";
+>  .../qcom-apq8026-samsung-matisse-wifi.dts     | 467 +----------------
+>  .../qcom-msm8226-samsung-matisse-common.dtsi  | 474 ++++++++++++++++++
+>  2 files changed, 483 insertions(+), 458 deletions(-)
 
-Missing function and color.
+It's impossible to review this change. Please use proper -B/-M/-C
+arguments to format-patch to detect code move.
 
 Best regards,
 Krzysztof
