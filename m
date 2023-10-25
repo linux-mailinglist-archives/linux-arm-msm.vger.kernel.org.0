@@ -2,77 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BE267D65AE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:48:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DD4A7D65B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:48:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234592AbjJYIsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 04:48:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36986 "EHLO
+        id S234358AbjJYIsZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 04:48:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234537AbjJYIrq (ORCPT
+        with ESMTP id S234475AbjJYIsL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 04:47:46 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F7610E6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:47:26 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c515527310so77628961fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:47:26 -0700 (PDT)
+        Wed, 25 Oct 2023 04:48:11 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8963CD43
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:48:08 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32dd70c5401so3604183f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:48:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698223644; x=1698828444; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1698223687; x=1698828487; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=AWLunRg+mdtBWttUW92XIFkEVDjp3aPObiDCT739YI8=;
-        b=fB7uULUi1pn0+9AkBACyt++CU31BzVQvbvXjRlZ2dWk0xItPqvJdqotwAQafix/U/S
-         jxU9yUtZiWlPpIZfm3hCJbon2qzbLMmgvhPA/OLelYm22CxhJuhi9WrLKWkY56Y13GIc
-         XrMH9DRNscQRdbQ6mqQ8WYvxf4iNgPaO9Shy6ktGmnS0Ym1coY3E7HO4kFyB0XBQO86Q
-         yhxbA42kO99svHyCD+cElPFuswMCVu1CV48OCOKaM+AJ1njKIWGwx6FN3n/uht3fPBH0
-         7NqnccbmfjXv2HAfMWCG3yvteYneexFz48BZb6gYvIFlH0WeaGu+k9Ug5f8ibvFqbfaE
-         3yrg==
+        bh=PmU0JSwBBTCbuAIvfPvlwQrKuSI376moyh5uECvCBNA=;
+        b=xE+0qqNuS86IseO+0dm7hKlbTzSHBIX3S+WFFdpJENnavkfvetlH6ESLIjr1ycPyle
+         9u7Etn1r5MU47n8CqlA9I13sr2FgE6naSZPKpcUuMywguwIhxDuNtSeax8LF8WH4nD+g
+         /zk/Z2YNl5qKZ1+aR/ZJe2ZVcfSEXS5GLR/ckw5qsDmGmQnm5M3lGejSA+HR0QG91Qug
+         6S5Pn+lQ7PBjQc1MPUp6e2KpzEeflEFCj+a4z+AHHmoZ1sITjnesqpSND/n+NhuRSs5M
+         ggVxHF53Qp7ce86fFDGoIN5Mctadg8Q5iraEiYH3+85bWVSwHg2EFsEgoTgjxiqTCHWH
+         TXVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698223644; x=1698828444;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1698223687; x=1698828487;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AWLunRg+mdtBWttUW92XIFkEVDjp3aPObiDCT739YI8=;
-        b=TK7u4HQ0xnQvX8brJ3DV1744LF397iwQiYZ2AJaAmBpsPXvLeQvq2V9AZ52AWRPjqu
-         skBk8CLnOcy0CE9xj+3fQ5PGYFP8EoqTBgdMRyUEgK45ogr9siCwYImGZAo3Jwy6zmJz
-         px/LUKZr90p0p0iq58yD8X0sjkUBX6wTK4odXLs3+vVTexoLTficijLm70Z4Vjw8cvzu
-         Ai9nke/rGwU2jU3P3tPLd0sc32aTNcmL93PY4rZpmJu8armJDAE7Hztzmrr20dykBWlJ
-         NYd9UMtj7cPRL8BtCAdWSqVw360I1hGE2srG2ZOXdszkjbPm145Vcz+0cDvDF5rPns8p
-         EgQQ==
-X-Gm-Message-State: AOJu0Yxo2KMD6von8NEx+FZFjjfUZQMPxtheDsYaM8sudrNDdHdV5CCP
-        l//L3CZoHe+kqV4pF666GicY+A==
-X-Google-Smtp-Source: AGHT+IEafQID4C58Vd4asshYumAJa15oxm3wsXK3dPqRvDIJ2A6H8umL7F5QWjcQQICDpZ6VpnJjKA==
-X-Received: by 2002:a2e:9882:0:b0:2c5:183d:42bf with SMTP id b2-20020a2e9882000000b002c5183d42bfmr9960635ljj.45.1698223644604;
-        Wed, 25 Oct 2023 01:47:24 -0700 (PDT)
-Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id p13-20020a2e9a8d000000b002c5122f13b8sm2320875lji.30.2023.10.25.01.47.23
+        bh=PmU0JSwBBTCbuAIvfPvlwQrKuSI376moyh5uECvCBNA=;
+        b=uosWBsPD4D75fASTN4Mpq+4Vvdoo9afcLejLYvqa3h6S055lgOigFt6fG4KfNSWeiC
+         4gKfK/p6gT3dXW7nikkt8YCn98JZh5ox/PK/kz1/n4UlcXzCfx7n5CEnmMOcamYbk5Z4
+         S4ew57VnTTP4l5SEDHGFUYxB2/UYeqwyhzgMkqp5W6BYYm40WzCwFt4RexvZlCvYY8Ey
+         YBdu1/QLMOMnHzYtZG+KDkXtsAcFTAkcnBM3CtmdizEQzl35ac1eEMdrDVW/riOaGVmA
+         kxx9UeAvzG6W+MmKGvUKY5uc3vZHW4/fVW6OGKyEjjMBVtb7OKa3c3KdM2jB0PAMJJ++
+         LNCQ==
+X-Gm-Message-State: AOJu0YwebHTO+vCTpndz1gOnMmibomYgclUvKY965i53t1yRG3jY9kDH
+        +4XlhQa+rTmtEch6S0JSBIqBaw==
+X-Google-Smtp-Source: AGHT+IGuYPayor/rtxON3pA5qwyVcx7ZIFA44YA8KYUSvbFp5oFPl7FBWsszIKelwt9ulWA6cZ7Q1Q==
+X-Received: by 2002:a05:6000:1ce:b0:32d:96dd:704d with SMTP id t14-20020a05600001ce00b0032d96dd704dmr9457920wrx.18.1698223686859;
+        Wed, 25 Oct 2023 01:48:06 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id q11-20020a056000136b00b0032dc74c093dsm11622009wrz.103.2023.10.25.01.48.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 01:47:24 -0700 (PDT)
-Message-ID: <467bc514-1cff-4bc5-a553-fd1ef0886ee5@linaro.org>
-Date:   Wed, 25 Oct 2023 10:47:23 +0200
+        Wed, 25 Oct 2023 01:48:06 -0700 (PDT)
+Message-ID: <04fae330-0866-408a-8016-b6f897f9550e@linaro.org>
+Date:   Wed, 25 Oct 2023 10:48:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/10] clk: qcom: rpmh: add clocks for SM8650
+Subject: Re: [PATCH v3 0/4] Add samsung-matisselte and common matisse dtsi
 Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
+To:     Stefan Hansson <newbyte@postmarketos.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
- <20231025-topic-sm8650-upstream-clocks-v1-10-c89b59594caf@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-10-c89b59594caf@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20231025083952.12367-1-newbyte@postmarketos.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231025083952.12367-1-newbyte@postmarketos.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -84,31 +125,26 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/25/23 09:32, Neil Armstrong wrote:
-> Add RPMH Clocks for the SM8650 platform.
+On 25/10/2023 10:37, Stefan Hansson wrote:
+> This series adds a common samsung-matisse dtsi and reworks
+> samsung-matisse-wifi to use it, and introduces samsung-matisselte. I
+> choose matisselte over matisse-lte as this is how most other devices
+> (klte, s3ve3g) do it and it is the codename that Samsung gave the
+> device. See individual commits for more information.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
-[...]
+> Changes since v1:
+> 
+>  - Rebased on latest linux-next
+>  - Added qcom,msm8226 compatible to matisselte inspired by recent Lumia
+>    830 patch. This is done as in v1, the patch was rejected because I
+>    included the msm8226 dtsi despite not marking matisselte as
+>    compatible with msm8226, and I was not sure how to resolve that. As
+>    such, I'm copying what was done in the Lumia 830 (microsoft-tesla)
+>    patch given that it was accepted.
 
-> +static struct clk_hw *sm8650_rpmh_clocks[] = {
-> +	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div2.hw,
-> +	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div2_ao.hw,
-> +	[RPMH_LN_BB_CLK1]	= &clk_rpmh_clk6_a2.hw,
-> +	[RPMH_LN_BB_CLK1_A]	= &clk_rpmh_clk6_a2_ao.hw,
-> +	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a2.hw,
-> +	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a2_ao.hw,
-> +	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a2.hw,
-> +	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a2_ao.hw,
-> +	[RPMH_RF_CLK1]		= &clk_rpmh_clk1_a1.hw,
-> +	[RPMH_RF_CLK1_A]	= &clk_rpmh_clk1_a1_ao.hw,
-> +	[RPMH_RF_CLK2]		= &clk_rpmh_clk2_a1.hw,
-> +	[RPMH_RF_CLK2_A]	= &clk_rpmh_clk2_a1_ao.hw,
-> +	/* missing RPMh resource address for clka3 */
-So, the downstream driver suggested it's there but CMD-DB disagrees?
+One version per day, so you won't ignore tags.
 
-Can we get a confirmation whether it should be there?
+Best regards,
+Krzysztof
 
-Konrad
