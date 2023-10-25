@@ -2,96 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFF577D6290
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:28:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D94887D629D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:29:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231469AbjJYH2a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:28:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37892 "EHLO
+        id S232691AbjJYH3C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232636AbjJYH23 (ORCPT
+        with ESMTP id S232602AbjJYH3B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:28:29 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7780D116
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:28:26 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-4084e49a5e5so44873295e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:28:26 -0700 (PDT)
+        Wed, 25 Oct 2023 03:29:01 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CDAC116
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:28:58 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c509d5ab43so81358511fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698218905; x=1698823705; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698218936; x=1698823736; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JJ2oRpaoJhce9I8GPs6HN/A2iLP6BscGnxopX3PgLBM=;
-        b=RMfAAfulNGvcxjip3liXEbYW6VGMPpYhK0i00RfK4zZCK2Kxo1E8L5r007nG+t43Ig
-         ZaP9QFFJ3BGlfXEEmA28ckUpebTbOvdwYb77rWLgIYywx26DaM+6hiYP+gI6LOHf7oK3
-         kYBR/ynzHFeZqoPrywRXIBgKrRn/Y37dsaGEj9LspbRdXhh0KdQGAdShtVfu+dMLnH6J
-         JJGNy8wIxtbut+BErM0XWn8E3OfOz3Hw/xfGN8NhzGzmJdSntLoPTTVXKOte6o8APvtF
-         KyVetCh5wcLze81nvSBmwnfaYs6dQgvkGHkxe7Xk7l5Z5uhwYQkzf4o8kyVdJ/RcayXr
-         em7A==
+        bh=rj2UZ1DerP02Kvz7nBD2BYMRhHfwgHO4B0bw4IzavzA=;
+        b=NrMKbWbZ77nT0GpvdIZxI+bqV6A0VHTl1ZuebjmNh/R2v5Cu66kGy2PPgOTbJ5vcDC
+         VVJLmPjcG0GrGV0cuMIGAyWfOTYulLx1TuGDg3yN3FXtnbNwu4qqyIHGAP/8i/zFXTJ3
+         QyW4OPYj+YSCgB7jY0oPWN+vePCTeaukpGWqOGQ1Ql8joEs00BrbUongeCKqIsbZbki9
+         8CvZng5Ga1Yn4yiPULCPKV8J5RzgEuSEj09R4+pOwLTimHC58Vnh2N68SAJZ5AKpFkPg
+         5Kqf2SQUFNrqJVjqcO5rfoj8GRQnSAbO9KHknmfFTcCfH153tMLQVAOrQuZxr8BpYYg2
+         +XQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698218905; x=1698823705;
+        d=1e100.net; s=20230601; t=1698218936; x=1698823736;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JJ2oRpaoJhce9I8GPs6HN/A2iLP6BscGnxopX3PgLBM=;
-        b=eJu0RHsHXwJKiHtVr2VFllEgnzGSbW1Hshnmvf0QAopCSUDlERBf1hzJZwQB8tuU3f
-         MBEMeT6wWfbnx61FIDlnRyT/XsvEvbef96qrABmMg5cRR8FEfzBzQMFTmTZzXSGlwcsJ
-         WMdLfZ1iR2ImaSwB+/2v1Xy2lb0PzWBUvJ4WAWPCaOeikSCMXhWZIfxSRcKc95DbJVWH
-         XYNfFnjdkCMFlrLbfNVOGe2hxzExr7Wch5ksWuIjcPrkLXdQPAoDX84Fyj07LxVvdZd9
-         fN4+TWWvZPnVQUrj6MJnHX70tkTyI+LMbzdEYVt2xxpwJU0w5gL/fZES3jL1D6dhew5T
-         7M5A==
-X-Gm-Message-State: AOJu0YyfDU28SQwQ9gpIWDnKRhBpgnbA8zuDRlm2u9rZ6fJP1Yjvil/y
-        Lxj8TsMMqqmxKeO5kQzVg1VroQ==
-X-Google-Smtp-Source: AGHT+IFor3h+dAr5oQsSJ1vHc/MU2j9muM4tBS5eoWssbySl5NgMcsBNmIBjd7BJk1YIpCgKCjIEkg==
-X-Received: by 2002:a05:600c:198a:b0:3fb:a0fc:1ba1 with SMTP id t10-20020a05600c198a00b003fba0fc1ba1mr11964689wmq.35.1698218904902;
-        Wed, 25 Oct 2023 00:28:24 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id r9-20020a05600c320900b0040644e699a0sm18495839wmp.45.2023.10.25.00.28.23
+        bh=rj2UZ1DerP02Kvz7nBD2BYMRhHfwgHO4B0bw4IzavzA=;
+        b=w74CmF8N6M3LLbrZOo1OVLN2E1exwDKFRCHxglwXptKGF1mNxwq/vla2UzIIyn5D2B
+         sgcqH/v4QM4LFtEP/FJUozJwbr42/hRnyVQ1zR+KqdbOsVb0ssMdU0Kz/jokfEsWYD8N
+         EyoLpBU6iO2SBvfdNmxQ4+R+XrQntdI7FFMqtA1ADCFIy8jkY1lwNe4e3vP70rx8O0Tk
+         7AxN5v/dVk5O/wf8Jdoz8XbG77d9S3xINJ6axSQEZLEiKIV+/zUYmXA09OOirZL0Prsp
+         KZg5yh5QzMHJgA8N0kP3aisVow9QzILk0/WpaMQJ22VVbnHqBiMrX7IjNRZRGpcOOJEM
+         XvoQ==
+X-Gm-Message-State: AOJu0YwWy+1OWjkX1H+YK1cRXCtcuG/3O7ZnWCITsgiPHxgmA94cwxGl
+        k/cf8ndplZ+Y+vH0BASkenUshQ==
+X-Google-Smtp-Source: AGHT+IGC4jpkT6X4I1gXb80yuzb3uOWZzg6EozqrJLlPAkboFymFgdbdJQS1JFZR4oDSSUu3HDhldg==
+X-Received: by 2002:a05:651c:1991:b0:2c5:13e8:e6dc with SMTP id bx17-20020a05651c199100b002c513e8e6dcmr12371522ljb.31.1698218936533;
+        Wed, 25 Oct 2023 00:28:56 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id h15-20020a05600c350f00b003fe1fe56202sm13947883wmq.33.2023.10.25.00.28.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 00:28:24 -0700 (PDT)
+        Wed, 25 Oct 2023 00:28:56 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 09:28:22 +0200
-Subject: [PATCH] dt-bindings: crypto: qcom-qce: document the SM8650 crypto
- engine
+Date:   Wed, 25 Oct 2023 09:28:54 +0200
+Subject: [PATCH] dt-bindings: crypto: qcom,prng: document SM8650
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-bindings-qce-v1-1-7e30dba20dbf@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAJXDOGUC/x3NMQ6DMAxA0asgz7WUUBGqXqXqYBwXPBDSGBAS4
- u6NOr7l/xNMiorBszmhyK6mS6rwtwZ4ojQKaqyG1rV373zAdcnKaPMjdA63bGsRmnHQFDWNhl8
- W5EDSS6SOB4IaykU+evwnr/d1/QCZifSUdAAAAA==
+Message-Id: <20231025-topic-sm8650-upstream-bindings-rng-v1-1-6b6a020e3441@linaro.org>
+X-B4-Tracking: v=1; b=H4sIALXDOGUC/x3NwQrCMAyA4VcZORtoNyzOVxEPtYk1h2UlmSKMv
+ bvF43f5/x2cTdjhOuxg/BGXVTviaYDyyloZhbphDOMUQ0y4rU0K+nJJ54Dv5ptxXvAhSqLV0bT
+ iTDNNnHLhSNBDzfgp3//kdj+OH1/iT5l0AAAA
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
         Herbert Xu <herbert@gondor.apana.org.au>,
         "David S. Miller" <davem@davemloft.net>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+        Vinod Koul <vkoul@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1154;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1135;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=BOUjaS/EmVt+3/Odcqx3EdTXwZy8c1+gLrnQRALTOxs=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMOXdANPwSzrGljuoM1hjjOOdVulE+eo81QTVr/y
- j+OOf0iJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjDlwAKCRB33NvayMhJ0WqgEA
- CTcnEC2yItqtgysd1O56cU5W92ZUXW86INCYQjp3ThOJ3nLtWb5K2hvzXSBW4ubWFln70So8vEh5LF
- hgZZB3TdAnmNb7NPrSoaCd3U4VpKLEwZwq7VYqMjQFxcONA5s+N1vWw1EM72aml8JRYDAAeFzJJx1c
- vzszHpHFTDRiWP3co7c8NLlSU0WBYemhNCQ+ozyQ9wZU78pVI0Pp2KNE9F3c1D5Zf1Q4XOUJ6LOnq8
- 5DmD+pPCnhRKniKxuxPgQ79jJUKJcZvd91B0ICIfvRLke4Skaut7WcBhbN7VHhx+99OXB/rcTVZiS7
- qIBx+l62bWffXp+9lhX+DrOD+3kIRwUvNPQYEl+e+182m53WXwCCgtorWdGXEPISNDAT81evKq983o
- iLkycqxxu3vIPu+Tm2iRvIfSG1PSBrboziwCCZMMANDi8/GVXC2hei9yhSKvIm9YbnzIgYsQtEN6pO
- oF9oCXN/5FL4GOkLZumbu95Np5U1roLXe0796nVvUQJ8Wlb/dXoZ6N0cbx60XiOnGF+i0cjnlbMrKF
- ozKO9GjtX21GBKIo6rWy7X4lBU9GdyISFSFH8rDZp8akS6tUVLHaLzMG+gjd/euckYDPUzbEF5eGLw
- 3yV/L+me0mhqnA5imKcj2KN7BFleyf3XTg8u8ipK2TsjFr1uprZjispQgpuw==
+ bh=Vaz65RGdAS7lWIJwTzD14uUdUy5+Qch7iLWH1bBWhzU=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMO3yaX+HJC0OAoNGGynPnC3QQcA2q5+EUpiaLLQ
+ e2wfBEeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjDtwAKCRB33NvayMhJ0W5bD/
+ 9kTl2IIbKewGtplayNMtMqODqcn6mAZuefSBY+38pZAA2SDf1CLtXvTFnK9C4d30nd/Y/+fjXqY/4V
+ eJS/wzFJtaWtsFSY8xvJXJ0JZsFWT64aE8ZI3UuOzjbqnEmQ6MZ/+bBJBOxHJicSm0cyQya1J9iRO7
+ iEPyLAmjJjc8pxBr5cf7RHwfv9IZGs7I/CPub/EHwgBrydrWD20aMUisXjDEWQYsYLzPXnlFStULit
+ OM7sXOsnjusXKADU7hhX8Bm54H2fPKZXdTdWyR0q6dQ8hyXQvWzR18QVJCY1386zUZG8RvvQ8YpSGd
+ Begg25ebmhUjQlk230yil3Y2EktpDNwyPBGVwJITQDHz3n+vYTh2+rIGbOvaa7eNBF72XlyY3Dx7HT
+ jZ8voZKmNkY/skFj8CPcd3qVB/dZxw0VF1z60rAGyhUyivl/LXoRxeKE0anRS45NrnCmX0iZ6w6HfK
+ lOVDk6LsgIPrF4ioq75byU2o6UgHrAsAiMEzL6XOQRHT6gzH/JuYhr24Omq4c9h5LNJpbCwOP/SMkO
+ 4jOgXjam7BdFWukJA2AHjr9JkZSWjpXWdU1BXT27jM33ukAaHcVU0zjG7sdymbXH3MlBoxxXTrfrlV
+ Hyd06i3Rex8kxgWo8jRxjfnjwi0f1/Kv7oypA9k3ObE2CCj9612tPuoCFb/A==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -100,7 +98,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the crypto engine on the SM8650 Platform.
+Document SM8650 compatible for the True Random Number Generator.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
@@ -108,25 +106,25 @@ For convenience, a regularly refreshed linux-next based git tree containing
 all the SM8650 related work is available at:
 https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
 ---
- Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 1 +
+ Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-index 8e665d910e6e..eeb8a956d7cb 100644
---- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-+++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-@@ -48,6 +48,7 @@ properties:
-               - qcom,sm8350-qce
-               - qcom,sm8450-qce
-               - qcom,sm8550-qce
-+              - qcom,sm8650-qce
-           - const: qcom,sm8150-qce
-           - const: qcom,qce
+diff --git a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+index 633993f801c6..fdfa61a508d2 100644
+--- a/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
++++ b/Documentation/devicetree/bindings/crypto/qcom,prng.yaml
+@@ -19,6 +19,7 @@ properties:
+           - enum:
+               - qcom,sm8450-trng
+               - qcom,sm8550-trng
++              - qcom,sm8650-trng
+           - const: qcom,trng
  
+   reg:
 
 ---
 base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
-change-id: 20231016-topic-sm8650-upstream-bindings-qce-c6ae7eda5cba
+change-id: 20231016-topic-sm8650-upstream-bindings-rng-9d9d3e6ace1d
 
 Best regards,
 -- 
