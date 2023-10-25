@@ -2,105 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D3577D7708
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 23:47:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5CD3D7D77DC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 00:30:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229719AbjJYVrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 17:47:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41838 "EHLO
+        id S229649AbjJYWaf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 18:30:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbjJYVrS (ORCPT
+        with ESMTP id S229596AbjJYWae (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 17:47:18 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E10A3;
-        Wed, 25 Oct 2023 14:47:16 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A7DC433C7;
-        Wed, 25 Oct 2023 21:47:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698270436;
-        bh=/ssGNvI3QO9S6JDuh+JSb/c1bKl9Xnjh7wD3tiPxIfs=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=MlhcRMmbtykHIDQi0aDqUZsjwUdqTZfyA9ISZJMLgAjAFFiV/KZNZAGeQLZhvvCiM
-         5dZgdIODPZ26Ct7w60rz1jJyacL4bVvvqZdKTMIJbj7tduWs6w1tuyjwtvvajKK0Y8
-         4F2uFM+lRl0ldY52WP50hWJqRH3w2eCEpTizz2n86fhsG8uviKm4HNN3U1eyX/X8Oo
-         LMXXmgUIM7Swia5UNLBd4/tn/S0lY07822+mzQPOHh3hEWdkJXC/pr2lW+11QADQO6
-         Wv/ofMhpqip+QOSD3zo6PmwyGtxXgewic8gxrkhfmDI3Hze8FDLCmhRY9DOPK/+Yfu
-         NQDpZEsHQnHMA==
-Message-ID: <5f157c65b07eee357f7682be0945d638.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <be119e71-0456-4806-8c0a-e77732553f70@linaro.org>
-References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org> <20231025-topic-sm8650-upstream-clocks-v1-10-c89b59594caf@linaro.org> <467bc514-1cff-4bc5-a553-fd1ef0886ee5@linaro.org> <be119e71-0456-4806-8c0a-e77732553f70@linaro.org>
-Subject: Re: [PATCH 10/10] clk: qcom: rpmh: add clocks for SM8650
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+        Wed, 25 Oct 2023 18:30:34 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4B6990
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 15:30:31 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c50906f941so3574221fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 15:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698273030; x=1698877830; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mzM/s3QFeCJxxTk8M20oowbvJAmjAHB6oasYtF2H1f0=;
+        b=ClcVbxOSEf4hZlWKdSWQ5rjfJ1g5Oee79jmy7r+jfTnBEyupyzW6xltKofbYhj4voA
+         MbyTNGoyuTUFaN1bU2VU/0ZBzw1vMqoYYHyjz5IoB3Fkq6lj7xQmKY0jj9enBJqMvdyZ
+         Cdi4q/Ard71oy9t9olkvAPynbsb6VcpJKl50O7h83TcLZoPTGhEECZe0cN2GZ4XFWorF
+         kvz1jyBiicniLONoloL8KObpR5iknQS50eCHJN55ThbKNlWcdqvflvKwLWVZwNxUy0ob
+         rFJPTyUwXTDcTIMfHHfZv04TWnygEeToo3NwZF8F0FaI8n1n9FZDTnbyEygbymXUxKGt
+         4+ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698273030; x=1698877830;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mzM/s3QFeCJxxTk8M20oowbvJAmjAHB6oasYtF2H1f0=;
+        b=NGkaTPHZaRF3yQ2zWq/WdVa/23yrrhrduM6DO6qCX4dtX1o0UEYyHgi3SV3QVJb11o
+         4fhc6G6+V7rH29EwD5c55TKBlByWOqwivk+t3lAP2pkAWpJgNBTFEvwIMP1dnP39fr7m
+         mbqJbRgChKTi/bTiArKq9K5CyyrC4CKuBl1kNzHszWf0zBJk9qE0iTf80CNmOe+JmPXJ
+         Sx8AwF4pYji58bQdNPsywe7qcH2NERqMt/RbNuAdlTKkNwwbwat4mJveczUfX2LXB/SG
+         ChE9PHF3dkJk5vURNIKxTKaHwVMfhxa2SVusBVHNxIWIRgCWFo5Mtm/rCNlyIfgfV4vO
+         oQxQ==
+X-Gm-Message-State: AOJu0YzntDUUYmRLs6WyCyGTDfRWSMjrYHfCVP3Qf/uWM0c7j7RIDYga
+        RXikG7nzdnPHL/LF8JP5hDJvqQ==
+X-Google-Smtp-Source: AGHT+IE80qJBvoknc8MJoPYBc+MJgH2P0PJwGZo6QC/PZct9VXHGi7xuXRbkjbNG/YWYXz51jiD1cg==
+X-Received: by 2002:a05:651c:1695:b0:2c5:1a89:41c6 with SMTP id bd21-20020a05651c169500b002c51a8941c6mr11515534ljb.33.1698273029414;
+        Wed, 25 Oct 2023 15:30:29 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id a36-20020a05651c212400b002bcbae4c21fsm2612543ljq.50.2023.10.25.15.30.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Oct 2023 15:30:28 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
         Neil Armstrong <neil.armstrong@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Date:   Wed, 25 Oct 2023 14:47:13 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v5 0/6] drm: simplify support for transparent DRM bridges
+Date:   Thu, 26 Oct 2023 01:28:01 +0300
+Message-ID: <20231025223027.943563-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.42.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Neil Armstrong (2023-10-25 05:00:54)
-> On 25/10/2023 10:47, Konrad Dybcio wrote:
-> >=20
-> >=20
-> > On 10/25/23 09:32, Neil Armstrong wrote:
-> >> Add RPMH Clocks for the SM8650 platform.
-> >>
-> >> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >> ---
-> > [...]
-> >=20
-> >> +static struct clk_hw *sm8650_rpmh_clocks[] =3D {
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_CXO_CLK]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 =3D &clk_rpmh_bi_tcxo_div2.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_CXO_CLK_A]=C2=A0=C2=A0=C2=A0 =3D &clk_rpmh_b=
-i_tcxo_div2_ao.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_LN_BB_CLK1]=C2=A0=C2=A0=C2=A0 =3D &clk_rpmh_=
-clk6_a2.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_LN_BB_CLK1_A]=C2=A0=C2=A0=C2=A0 =3D &clk_rpm=
-h_clk6_a2_ao.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_LN_BB_CLK2]=C2=A0=C2=A0=C2=A0 =3D &clk_rpmh_=
-clk7_a2.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_LN_BB_CLK2_A]=C2=A0=C2=A0=C2=A0 =3D &clk_rpm=
-h_clk7_a2_ao.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_LN_BB_CLK3]=C2=A0=C2=A0=C2=A0 =3D &clk_rpmh_=
-clk8_a2.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_LN_BB_CLK3_A]=C2=A0=C2=A0=C2=A0 =3D &clk_rpm=
-h_clk8_a2_ao.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_RF_CLK1]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 =3D &clk_rpmh_clk1_a1.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_RF_CLK1_A]=C2=A0=C2=A0=C2=A0 =3D &clk_rpmh_c=
-lk1_a1_ao.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_RF_CLK2]=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 =3D &clk_rpmh_clk2_a1.hw,
-> >> +=C2=A0=C2=A0=C2=A0 [RPMH_RF_CLK2_A]=C2=A0=C2=A0=C2=A0 =3D &clk_rpmh_c=
-lk2_a1_ao.hw,
-> >> +=C2=A0=C2=A0=C2=A0 /* missing RPMh resource address for clka3 */
-> > So, the downstream driver suggested it's there but CMD-DB disagrees?
-> >=20
-> > Can we get a confirmation whether it should be there?
->=20
-> There's a clka3 on the PMK8550, but it's undeclared in CMD-DB since
-> unused/unconnected on the MTP & QRD platforms.
 
-Can you add that comment here so we know why the resource is missing and
-not just that it is missing?
+Supporting DP/USB-C can result in a chain of several transparent
+bridges (PHY, redrivers, mux, etc). All attempts to implement DP support
+in a different way resulted either in series of hacks or in device tree
+not reflecting the actual hardware design. This results in drivers
+having similar boilerplate code for such bridges.
+
+Next, these drivers are susceptible to -EPROBE_DEFER loops: the next
+bridge can either be probed from the bridge->attach callback, when it is
+too late to return -EPROBE_DEFER, or from the probe() callback, when the
+next bridge might not yet be available, because it depends on the
+resources provided by the probing device. Device links can not fully
+solve this problem since there are mutual dependencies between adjancent
+devices.
+
+Last, but not least, this results in the the internal knowledge of DRM
+subsystem slowly diffusing into other subsystems, like PHY or USB/TYPEC.
+
+To solve all these issues, define a separate DRM helper, which creates
+separate aux device just for the bridge. During probe such aux device
+doesn't result in the EPROBE_DEFER loops. Instead it allows the device
+drivers to probe properly, according to the actual resource
+dependencies. The bridge auxdevs are then probed when the next bridge
+becomes available, sparing drivers from drm_bridge_attach() returning
+-EPROBE_DEFER.
+
+Changes since v4:
+ - Added documentation for new API (Sima)
+ - Added generic code to handle "last mile" DP bridges implementing just
+   the HPD functionality.
+ - Rebased on top of linux-next to be able to drop #ifdef's around
+   drm_bridge->of_node
+
+Changes since v3:
+ - Moved bridge driver to gpu/drm/bridge (Neil Armstrong)
+ - Renamed it to aux-bridge (since there is already a simple_bridge driver)
+ - Made CONFIG_OF mandatory for this driver (Neil Armstrong)
+ - Added missing kfree and ida_free (Dan Carpenter)
+
+Changes since v2:
+ - ifdef'ed bridge->of_node access (LKP)
+
+Changes since v1:
+ - Added EXPORT_SYMBOL_GPL / MODULE_LICENSE / etc. to drm_simple_bridge
+
+Dmitry Baryshkov (6):
+  drm/bridge: add transparent bridge helper
+  phy: qcom: qmp-combo: switch to DRM_AUX_BRIDGE
+  usb: typec: nb7vpq904m: switch to DRM_AUX_BRIDGE
+  drm/bridge: implement generic DP HPD bridge
+  soc: qcom: pmic-glink: switch to DRM_AUX_HPD_BRIDGE
+  usb: typec: qcom-pmic-typec: switch to DRM_AUX_HPD_BRIDGE
+
+ drivers/gpu/drm/bridge/Kconfig                |  17 ++
+ drivers/gpu/drm/bridge/Makefile               |   2 +
+ drivers/gpu/drm/bridge/aux-bridge.c           | 140 +++++++++++++++
+ drivers/gpu/drm/bridge/aux-hpd-bridge.c       | 164 ++++++++++++++++++
+ drivers/phy/qualcomm/Kconfig                  |   2 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |  44 +----
+ drivers/soc/qcom/Kconfig                      |   1 +
+ drivers/soc/qcom/pmic_glink_altmode.c         |  33 +---
+ drivers/usb/typec/mux/Kconfig                 |   2 +-
+ drivers/usb/typec/mux/nb7vpq904m.c            |  44 +----
+ drivers/usb/typec/tcpm/Kconfig                |   1 +
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c |  41 +----
+ include/drm/bridge/aux-bridge.h               |  37 ++++
+ 13 files changed, 383 insertions(+), 145 deletions(-)
+ create mode 100644 drivers/gpu/drm/bridge/aux-bridge.c
+ create mode 100644 drivers/gpu/drm/bridge/aux-hpd-bridge.c
+ create mode 100644 include/drm/bridge/aux-bridge.h
+
+-- 
+2.42.0
+
