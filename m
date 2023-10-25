@@ -2,352 +2,673 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 18CAC7D602D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 04:55:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 401237D6080
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 05:24:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232552AbjJYCzJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Oct 2023 22:55:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54182 "EHLO
+        id S232076AbjJYDYn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Oct 2023 23:24:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232562AbjJYCzB (ORCPT
+        with ESMTP id S230093AbjJYDYm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Oct 2023 22:55:01 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B696310DE;
-        Tue, 24 Oct 2023 19:54:41 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39P2X4NE027128;
-        Wed, 25 Oct 2023 02:54:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=T+ZWCu6a7XKroduL0X/QX3jLTP+co1NYiCaf1OZ4TbY=;
- b=a2e7/bMtlXs6+lVi01fK6njS5ynfQcdud+thrhaU/hOlVuOyrlKJXQreyeEnm/+X5T7w
- 3H+tR/ae7A/UsjIPGwzvVkr0EWhtNXbWTllvfMn1XIwZGtbT6kqo9KrsKUNGdvZfx8YL
- bLvUETDsh7/JVA5KthRHO5fx4OKxi6+kAf9Ae+T2W2jkAbNz9Ys+ZggJHqnL7z987LmU
- vM96EBbEJ0ZwnNkzcuUaHHIPxItBkunOEgR4QMdv6YS1gk7XHD9VXoHTqr44ipd6tozZ
- YWxEgATnX2oPkogcnhZtvu7rPeTp5uynJZ67S2RMSd5gbPtuIJOcndVpaSBN8eK4agNa jQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txjtngwuk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 02:54:30 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39P2sUtC009839
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Oct 2023 02:54:30 GMT
-Received: from taozha-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Tue, 24 Oct 2023 19:54:25 -0700
-From:   Tao Zhang <quic_taozha@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Tao Zhang <quic_taozha@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
-Subject: [PATCH v2 8/8] coresight-tpdm: Add msr register support for CMB
-Date:   Wed, 25 Oct 2023 10:53:28 +0800
-Message-ID: <1698202408-14608-9-git-send-email-quic_taozha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1698202408-14608-1-git-send-email-quic_taozha@quicinc.com>
-References: <1698202408-14608-1-git-send-email-quic_taozha@quicinc.com>
+        Tue, 24 Oct 2023 23:24:42 -0400
+Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com [IPv6:2607:f8b0:4864:20::f35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C290BE5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 20:24:37 -0700 (PDT)
+Received: by mail-qv1-xf35.google.com with SMTP id 6a1803df08f44-66cfd3a0e61so33541936d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 20:24:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1698204277; x=1698809077; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YyDODxdjT84M2KEksvTOCDI+X+3UmtCdx6mugrhmhJE=;
+        b=0BnubD+xUZxYhB8XaRHeWahIvutMyM26+sxQbTEu7Rs7Y6qrfzYZ5BTNEoWdeWqVX2
+         LUZ8DJbK+YNKl2HrU4pOH18x+4QZzMgPf33mBEXtd6IpAwujggR3kzfWjka+Ayroif5S
+         4qhU1CgS74YxaoHPUVoGb/ttGsESxLWF42d3JxbkLk4j4bQAmZVy8DlmQLTBnVdDkBRn
+         1OMQIsdDl/+4d/8jDSJN6P7Djn1H7NSXkHm9qPFFfyEbA+HlcbEZdn5m25AgbbHnbi0c
+         vfbHh+xkWoLNZjo+1OemqYHqG+GCXMNyCE7s3A6h1Z/DNXkSHA9OOAf5mbAxXP4g0NE8
+         T9bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698204277; x=1698809077;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YyDODxdjT84M2KEksvTOCDI+X+3UmtCdx6mugrhmhJE=;
+        b=jflpah1tsTFMk3uzhrBZ7++rduaB43Lku9HU9jlASaT5XwTOX9FYVfX7snCHa8rE0D
+         ZQmhYZFnuyoAzGdkin3a18r1L4opYuzF40I89yA7KC85+megpjHmLzusPylOapEps4UE
+         u/tpQ8jDKJ/VDmBHz1fQguyYWfZXOABIMNAdEjlxPfkZF7qBGhagooI/YI8LSeI9FbU0
+         Ci9e86JNTDqyp+T4wQiBHnUDRXdPp5x6oibAQ2YY0F5ryVigAoit5L3ih0F0QBi+mpdj
+         T9jMyMDvCj7dQhSHFqd7A1mHuZl8pfCzqfjhSwCW5V13vjsrGFxZl+e96jH5Dx5SeXSL
+         IiyA==
+X-Gm-Message-State: AOJu0YzE1RCfbAdTiLkhtToBiJZXXTbDfANZvf6DcTml6N30wYLuFNNQ
+        kHPp8QZAlORst180N22tgE67+vMfn3QyCVB5jyRIfA==
+X-Google-Smtp-Source: AGHT+IHwotWqgWqJ3sh80HIfJZMk9EK3k05Kce5JAZuwG+SqfA4L9v09W3vN29Elm16CGb5hqxQ2P/CK72Ipljv0CoY=
+X-Received: by 2002:a05:6214:c45:b0:66d:3a89:813c with SMTP id
+ r5-20020a0562140c4500b0066d3a89813cmr19252451qvj.53.1698204276447; Tue, 24
+ Oct 2023 20:24:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ddwWVNuGYVeS9DZFZZaZRSKOPR0v1V2D
-X-Proofpoint-ORIG-GUID: ddwWVNuGYVeS9DZFZZaZRSKOPR0v1V2D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-25_01,2023-10-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- impostorscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 spamscore=0
- phishscore=0 malwarescore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310170001
- definitions=main-2310250023
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20231017200109.11407-1-quic_wcheng@quicinc.com> <20231017200109.11407-5-quic_wcheng@quicinc.com>
+In-Reply-To: <20231017200109.11407-5-quic_wcheng@quicinc.com>
+From:   Albert Wang <albertccwang@google.com>
+Date:   Wed, 25 Oct 2023 11:24:23 +0800
+Message-ID: <CANqn-rjukNmj9xX8kYf6b=HvcW2wnc2RXrpcWv40zuD3J=W3Cg@mail.gmail.com>
+Subject: Re: [PATCH v9 04/34] xhci: sideband: add initial api to register a
+ sideband entity
+To:     Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     mathias.nyman@intel.com, gregkh@linuxfoundation.org,
+        lgirdwood@gmail.com, broonie@kernel.org, perex@perex.cz,
+        tiwai@suse.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        srinivas.kandagatla@linaro.org, bgoswami@quicinc.com,
+        Thinh.Nguyen@synopsys.com, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Mathias Nyman <mathias.nyman@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-15.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,HK_RANDOM_ENVFROM,HK_RANDOM_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL,
+        USER_IN_DEF_SPF_WL autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the nodes for CMB subunit MSR(mux select register) support.
-CMB MSRs(mux select registers) is to separate mux,arbitration,
-,interleaving,data packing control from stream filtering control.
+>+ * Returns the address of the endpoint buffer where xHC controller reads =
+queued
+>+ * transfer TRBs from. This is the starting address of the ringbuffer whe=
+re the
+>+ * sidband cliend should write TRBs to.
 
-Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  8 ++
- drivers/hwtracing/coresight/coresight-tpdm.c       | 86 ++++++++++++++++++++++
- drivers/hwtracing/coresight/coresight-tpdm.h       | 16 +++-
- 3 files changed, 109 insertions(+), 1 deletion(-)
+A typo here 'sideband cliend', it apparently should be 'sideband client'.
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-index d58b33ee..df0f837 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-@@ -245,3 +245,11 @@ Description:
- 		Accepts only one of the 2 values -  0 or 1.
- 		0 : Disable the timestamp of all trace packets.
- 		1 : Enable the timestamp of all trace packets.
-+
-+What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_msr/msr[0:31]
-+Date:		September 2023
-+KernelVersion	6.7
-+Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-+Description:
-+		(RW) Set/Get the MSR(mux select register) for the CMB subunit
-+		TPDM.
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-index f6cda56..7e331ea 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.c
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-@@ -86,6 +86,11 @@ static ssize_t tpdm_simple_dataset_show(struct device *dev,
- 			return -EINVAL;
- 		return sysfs_emit(buf, "0x%x\n",
- 			drvdata->cmb->patt_mask[tpdm_attr->idx]);
-+	case CMB_MSR:
-+		if (tpdm_attr->idx >= drvdata->cmb_msr_num)
-+			return -EINVAL;
-+		return sysfs_emit(buf, "0x%x\n",
-+				drvdata->cmb->msr[tpdm_attr->idx]);
- 	}
- 	return -EINVAL;
- }
-@@ -162,6 +167,12 @@ static ssize_t tpdm_simple_dataset_store(struct device *dev,
- 		else
- 			ret = -EINVAL;
- 		break;
-+	case CMB_MSR:
-+		if (tpdm_attr->idx < drvdata->cmb_msr_num)
-+			drvdata->cmb->msr[tpdm_attr->idx] = val;
-+		else
-+			ret = -EINVAL;
-+		break;
- 	default:
- 		ret = -EINVAL;
- 	}
-@@ -220,6 +231,23 @@ static umode_t tpdm_dsb_msr_is_visible(struct kobject *kobj,
- 	return 0;
- }
- 
-+static umode_t tpdm_cmb_msr_is_visible(struct kobject *kobj,
-+				       struct attribute *attr, int n)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+
-+	struct device_attribute *dev_attr =
-+		container_of(attr, struct device_attribute, attr);
-+	struct tpdm_dataset_attribute *tpdm_attr =
-+		container_of(dev_attr, struct tpdm_dataset_attribute, attr);
-+
-+	if (tpdm_attr->idx < drvdata->cmb_msr_num)
-+		return attr->mode;
-+
-+	return 0;
-+}
-+
- static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
- {
- 	if (tpdm_has_dsb_dataset(drvdata)) {
-@@ -361,6 +389,15 @@ static void set_cmb_tier(struct tpdm_drvdata *drvdata)
- 	writel_relaxed(val, drvdata->base + TPDM_CMB_TIER);
- }
- 
-+static void set_cmb_msr(struct tpdm_drvdata *drvdata)
-+{
-+	int i;
-+
-+	for (i = 0; i < drvdata->cmb_msr_num; i++)
-+		writel_relaxed(drvdata->cmb->msr[i],
-+			   drvdata->base + TPDM_CMB_MSR(i));
-+}
-+
- static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
- {
- 	u32 val, i;
-@@ -379,6 +416,8 @@ static void tpdm_enable_cmb(struct tpdm_drvdata *drvdata)
- 
- 	set_cmb_tier(drvdata);
- 
-+	set_cmb_msr(drvdata);
-+
- 	val = readl_relaxed(drvdata->base + TPDM_CMB_CR);
- 	/*
- 	 * Set to 0 for continuous CMB collection mode,
-@@ -1084,6 +1123,42 @@ static struct attribute *tpdm_cmb_patt_attrs[] = {
- 	NULL,
- };
- 
-+static struct attribute *tpdm_cmb_msr_attrs[] = {
-+	CMB_MSR_ATTR(0),
-+	CMB_MSR_ATTR(1),
-+	CMB_MSR_ATTR(2),
-+	CMB_MSR_ATTR(3),
-+	CMB_MSR_ATTR(4),
-+	CMB_MSR_ATTR(5),
-+	CMB_MSR_ATTR(6),
-+	CMB_MSR_ATTR(7),
-+	CMB_MSR_ATTR(8),
-+	CMB_MSR_ATTR(9),
-+	CMB_MSR_ATTR(10),
-+	CMB_MSR_ATTR(11),
-+	CMB_MSR_ATTR(12),
-+	CMB_MSR_ATTR(13),
-+	CMB_MSR_ATTR(14),
-+	CMB_MSR_ATTR(15),
-+	CMB_MSR_ATTR(16),
-+	CMB_MSR_ATTR(17),
-+	CMB_MSR_ATTR(18),
-+	CMB_MSR_ATTR(19),
-+	CMB_MSR_ATTR(20),
-+	CMB_MSR_ATTR(21),
-+	CMB_MSR_ATTR(22),
-+	CMB_MSR_ATTR(23),
-+	CMB_MSR_ATTR(24),
-+	CMB_MSR_ATTR(25),
-+	CMB_MSR_ATTR(26),
-+	CMB_MSR_ATTR(27),
-+	CMB_MSR_ATTR(28),
-+	CMB_MSR_ATTR(29),
-+	CMB_MSR_ATTR(30),
-+	CMB_MSR_ATTR(31),
-+	NULL,
-+};
-+
- static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_mode.attr,
- 	&dev_attr_dsb_trig_ts.attr,
-@@ -1144,6 +1219,12 @@ static struct attribute_group tpdm_cmb_patt_grp = {
- 	.name = "cmb_patt",
- };
- 
-+static struct attribute_group tpdm_cmb_msr_grp = {
-+	.attrs = tpdm_cmb_msr_attrs,
-+	.is_visible = tpdm_cmb_msr_is_visible,
-+	.name = "cmb_msr",
-+};
-+
- static const struct attribute_group *tpdm_attr_grps[] = {
- 	&tpdm_attr_grp,
- 	&tpdm_dsb_attr_grp,
-@@ -1154,6 +1235,7 @@ static const struct attribute_group *tpdm_attr_grps[] = {
- 	&tpdm_cmb_attr_grp,
- 	&tpdm_cmb_trig_patt_grp,
- 	&tpdm_cmb_patt_grp,
-+	&tpdm_cmb_msr_grp,
- 	NULL,
- };
- 
-@@ -1192,6 +1274,10 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
- 		of_property_read_u32(drvdata->dev->of_node,
- 			   "qcom,dsb-msrs-num", &drvdata->dsb_msr_num);
- 
-+	if (drvdata && tpdm_has_cmb_dataset(drvdata))
-+		of_property_read_u32(drvdata->dev->of_node,
-+			   "qcom,cmb-msrs-num", &drvdata->cmb_msr_num);
-+
- 	/* Set up coresight component description */
- 	desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
- 	if (!desc.name)
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-index 65b7ca6..255104d 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.h
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-@@ -21,6 +21,8 @@
- #define TPDM_CMB_XPR(n)		(0xA18 + (n * 4))
- /*CMB subunit trigger pattern mask registers*/
- #define TPDM_CMB_XPMR(n)	(0xA20 + (n * 4))
-+/* CMB MSR register */
-+#define TPDM_CMB_MSR(n)		(0xA80 + (n * 4))
- 
- /* Enable bit for CMB subunit */
- #define TPDM_CMB_CR_ENA		BIT(0)
-@@ -36,6 +38,9 @@
- /*Patten register number*/
- #define TPDM_CMB_MAX_PATT		2
- 
-+/* MAX number of DSB MSR */
-+#define TPDM_CMB_MAX_MSR 32
-+
- /* DSB Subunit Registers */
- #define TPDM_DSB_CR		(0x780)
- #define TPDM_DSB_TIER		(0x784)
-@@ -186,6 +191,10 @@
- 		tpdm_simple_dataset_rw(tpmr##nr,		\
- 		CMB_PATT_MASK, nr)
- 
-+#define CMB_MSR_ATTR(nr)					\
-+		tpdm_simple_dataset_rw(msr##nr,			\
-+		CMB_MSR, nr)
-+
- /**
-  * struct dsb_dataset - specifics associated to dsb dataset
-  * @mode:             DSB programming mode
-@@ -225,6 +234,7 @@ struct dsb_dataset {
-  * @patt_mask:        Save value for pattern mask
-  * @trig_patt:        Save value for trigger pattern
-  * @trig_patt_mask:   Save value for trigger pattern mask
-+ * @msr               Save value for MSR
-  * @patt_ts:          Indicates if pattern match for timestamp is enabled.
-  * @trig_ts:          Indicates if CTI trigger for timestamp is enabled.
-  * @ts_all:           Indicates if timestamp is enabled for all packets.
-@@ -235,6 +245,7 @@ struct cmb_dataset {
- 	u32			patt_mask[TPDM_CMB_MAX_PATT];
- 	u32			trig_patt[TPDM_CMB_MAX_PATT];
- 	u32			trig_patt_mask[TPDM_CMB_MAX_PATT];
-+	u32			msr[TPDM_CMB_MAX_MSR];
- 	bool			patt_ts;
- 	bool			trig_ts;
- 	bool			ts_all;
-@@ -251,6 +262,7 @@ struct cmb_dataset {
-  * @dsb         Specifics associated to TPDM DSB.
-  * @cmb         Specifics associated to TPDM CMB.
-  * @dsb_msr_num Number of MSR supported by DSB TPDM
-+ * @cmb_msr_num Number of MSR supported by CMB TPDM
-  */
- 
- struct tpdm_drvdata {
-@@ -263,6 +275,7 @@ struct tpdm_drvdata {
- 	struct dsb_dataset	*dsb;
- 	struct cmb_dataset	*cmb;
- 	u32			dsb_msr_num;
-+	u32			cmb_msr_num;
- };
- 
- /* Enumerate members of various datasets */
-@@ -277,7 +290,8 @@ enum dataset_mem {
- 	CMB_TRIG_PATT,
- 	CMB_TRIG_PATT_MASK,
- 	CMB_PATT,
--	CMB_PATT_MASK
-+	CMB_PATT_MASK,
-+	CMB_MSR
- };
- 
- /**
--- 
-2.7.4
 
+On Wed, Oct 18, 2023 at 4:03=E2=80=AFAM Wesley Cheng <quic_wcheng@quicinc.c=
+om> wrote:
+>
+> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+>
+> Introduce XHCI sideband, which manages the USB endpoints being requested =
+by
+> a client driver.  This is used for when client drivers are attempting to
+> offload USB endpoints to another entity for handling USB transfers.  XHCI
+> sideband will allow for drivers to fetch the required information about t=
+he
+> transfer ring, so the user can submit transfers independently.  Expose th=
+e
+> required APIs for drivers to register and request for a USB endpoint and =
+to
+> manage XHCI secondary interrupters.
+>
+> Multiple ring segment page linking and proper endpoint clean up added by
+> Wesley Cheng to complete original concept code by Mathias Nyman.
+>
+> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+> Co-developed-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
+>  drivers/usb/host/Kconfig          |   9 +
+>  drivers/usb/host/Makefile         |   4 +
+>  drivers/usb/host/xhci-sideband.c  | 371 ++++++++++++++++++++++++++++++
+>  drivers/usb/host/xhci.h           |   4 +
+>  include/linux/usb/xhci-sideband.h |  66 ++++++
+>  5 files changed, 454 insertions(+)
+>  create mode 100644 drivers/usb/host/xhci-sideband.c
+>  create mode 100644 include/linux/usb/xhci-sideband.h
+>
+> diff --git a/drivers/usb/host/Kconfig b/drivers/usb/host/Kconfig
+> index 4448d0ab06f0..923af11c1982 100644
+> --- a/drivers/usb/host/Kconfig
+> +++ b/drivers/usb/host/Kconfig
+> @@ -104,6 +104,15 @@ config USB_XHCI_RZV2M
+>           Say 'Y' to enable the support for the xHCI host controller
+>           found in Renesas RZ/V2M SoC.
+>
+> +config USB_XHCI_SIDEBAND
+> +       bool "xHCI support for sideband"
+> +       help
+> +         Say 'Y' to enable the support for the xHCI sideband capability.
+> +         provide a mechanism for a sideband datapath for payload associa=
+ted
+> +         with audio class endpoints. This allows for an audio DSP to use
+> +         xHCI USB endpoints directly, allowing CPU to sleep while playin=
+g
+> +         audio
+> +
+>  config USB_XHCI_TEGRA
+>         tristate "xHCI support for NVIDIA Tegra SoCs"
+>         depends on PHY_TEGRA_XUSB
+> diff --git a/drivers/usb/host/Makefile b/drivers/usb/host/Makefile
+> index be4e5245c52f..4df946c05ba0 100644
+> --- a/drivers/usb/host/Makefile
+> +++ b/drivers/usb/host/Makefile
+> @@ -32,6 +32,10 @@ endif
+>  xhci-rcar-hcd-y                                +=3D xhci-rcar.o
+>  xhci-rcar-hcd-$(CONFIG_USB_XHCI_RZV2M) +=3D xhci-rzv2m.o
+>
+> +ifneq ($(CONFIG_USB_XHCI_SIDEBAND),)
+> +       xhci-hcd-y              +=3D xhci-sideband.o
+> +endif
+> +
+>  obj-$(CONFIG_USB_PCI)  +=3D pci-quirks.o
+>
+>  obj-$(CONFIG_USB_EHCI_HCD)     +=3D ehci-hcd.o
+> diff --git a/drivers/usb/host/xhci-sideband.c b/drivers/usb/host/xhci-sid=
+eband.c
+> new file mode 100644
+> index 000000000000..cc4f90375e00
+> --- /dev/null
+> +++ b/drivers/usb/host/xhci-sideband.c
+> @@ -0,0 +1,371 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +
+> +/*
+> + * xHCI host controller sideband support
+> + *
+> + * Copyright (c) 2023, Intel Corporation.
+> + *
+> + * Author: Mathias Nyman
+> + */
+> +
+> +#include <linux/usb/xhci-sideband.h>
+> +#include <linux/dma-direct.h>
+> +
+> +#include "xhci.h"
+> +
+> +/* sideband internal helpers */
+> +static struct sg_table *
+> +xhci_ring_to_sgtable(struct xhci_sideband *sb, struct xhci_ring *ring)
+> +{
+> +       struct xhci_segment *seg;
+> +       struct sg_table *sgt;
+> +       unsigned int n_pages;
+> +       struct page **pages;
+> +       struct device *dev;
+> +       size_t sz;
+> +       int i;
+> +
+> +       dev =3D xhci_to_hcd(sb->xhci)->self.sysdev;
+> +       sz =3D ring->num_segs * TRB_SEGMENT_SIZE;
+> +       n_pages =3D PAGE_ALIGN(sz) >> PAGE_SHIFT;
+> +       pages =3D kvmalloc_array(n_pages, sizeof(struct page *), GFP_KERN=
+EL);
+> +       if (!pages)
+> +               return NULL;
+> +
+> +       sgt =3D kzalloc(sizeof(struct sg_table), GFP_KERNEL);
+> +       if (!sgt) {
+> +               kvfree(pages);
+> +               return NULL;
+> +       }
+> +
+> +       seg =3D ring->first_seg;
+> +       /*
+> +        * Rings can potentially have multiple segments, create an array =
+that
+> +        * carries page references to allocated segments.  Utilize the
+> +        * sg_alloc_table_from_pages() to create the sg table, and to ens=
+ure
+> +        * that page links are created.
+> +        */
+> +       for (i =3D 0; i < ring->num_segs; i++) {
+> +               dma_get_sgtable(dev, sgt, seg->trbs, seg->dma,
+> +                                       TRB_SEGMENT_SIZE);
+> +               pages[i] =3D sg_page(sgt->sgl);
+> +               sg_free_table(sgt);
+> +               seg =3D seg->next;
+> +       }
+> +
+> +       if (sg_alloc_table_from_pages(sgt, pages, n_pages, 0, sz, GFP_KER=
+NEL)) {
+> +               kvfree(pages);
+> +               kfree(sgt);
+> +
+> +               return NULL;
+> +       }
+> +       /*
+> +        * Save first segment dma address to sg dma_address field for the=
+ sideband
+> +        * client to have access to the IOVA of the ring.
+> +        */
+> +       sg_dma_address(sgt->sgl) =3D ring->first_seg->dma;
+> +
+> +       return sgt;
+> +}
+> +
+> +static void
+> +__xhci_sideband_remove_endpoint(struct xhci_sideband *sb, struct xhci_vi=
+rt_ep *ep)
+> +{
+> +       /*
+> +        * Issue a stop endpoint command when an endpoint is removed.
+> +        * The stop ep cmd handler will handle the ring cleanup.
+> +        */
+> +       xhci_stop_endpoint_sync(sb->xhci, ep, 0, GFP_KERNEL);
+> +
+> +       ep->sideband =3D NULL;
+> +       sb->eps[ep->ep_index] =3D NULL;
+> +}
+> +
+> +/* sideband api functions */
+> +
+> +/**
+> + * xhci_sideband_add_endpoint - add endpoint to sideband access list
+> + * @sb: sideband instance for this usb device
+> + * @host_ep: usb host endpoint
+> + *
+> + * Adds an endpoint to the list of sideband accessed endpoints for this =
+usb
+> + * device.
+> + * After an endpoint is added the sideband client can get the endpoint t=
+ransfer
+> + * ring buffer by calling xhci_sideband_endpoint_buffer()
+> + *
+> + * Return: 0 on success, negative error otherwise.
+> + */
+> +int
+> +xhci_sideband_add_endpoint(struct xhci_sideband *sb,
+> +                          struct usb_host_endpoint *host_ep)
+> +{
+> +       struct xhci_virt_ep *ep;
+> +       unsigned int ep_index;
+> +
+> +       ep_index =3D xhci_get_endpoint_index(&host_ep->desc);
+> +       ep =3D &sb->vdev->eps[ep_index];
+> +
+> +       if (ep->ep_state & EP_HAS_STREAMS)
+> +               return -EINVAL;
+> +
+> +       /*
+> +        * Note, we don't know the DMA mask of the audio DSP device, if i=
+ts
+> +        * smaller than for xhci it won't be able to access the endpoint =
+ring
+> +        * buffer. This could be solved by not allowing the audio class d=
+river
+> +        * to add the endpoint the normal way, but instead offload it imm=
+ediately,
+> +        * and let this function add the endpoint and allocate the ring b=
+uffer
+> +        * with the smallest common DMA mask
+> +        */
+> +
+> +       if (sb->eps[ep_index] || ep->sideband)
+> +               return -EBUSY;
+> +
+> +       ep->sideband =3D sb;
+> +       sb->eps[ep_index] =3D ep;
+> +
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_add_endpoint);
+> +
+> +/**
+> + * xhci_sideband_remove_endpoint - remove endpoint from sideband access =
+list
+> + * @sb: sideband instance for this usb device
+> + * @host_ep: usb host endpoint
+> + *
+> + * Removes an endpoint from the list of sideband accessed endpoints for =
+this usb
+> + * device.
+> + * sideband client should no longer touch the endpoint transfer buffer a=
+fter
+> + * calling this.
+> + *
+> + * Return: 0 on success, negative error otherwise.
+> + */
+> +int
+> +xhci_sideband_remove_endpoint(struct xhci_sideband *sb,
+> +                             struct usb_host_endpoint *host_ep)
+> +{
+> +       struct xhci_virt_ep *ep;
+> +       unsigned int ep_index;
+> +
+> +       ep_index =3D xhci_get_endpoint_index(&host_ep->desc);
+> +       ep =3D sb->eps[ep_index];
+> +
+> +       if (!ep || !ep->sideband)
+> +               return -ENODEV;
+> +
+> +       __xhci_sideband_remove_endpoint(sb, ep);
+> +       xhci_initialize_ring_info(ep->ring, 1);
+> +
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_remove_endpoint);
+> +
+> +int
+> +xhci_sideband_stop_endpoint(struct xhci_sideband *sb,
+> +                           struct usb_host_endpoint *host_ep)
+> +{
+> +       struct xhci_virt_ep *ep;
+> +       unsigned int ep_index;
+> +
+> +       ep_index =3D xhci_get_endpoint_index(&host_ep->desc);
+> +       ep =3D sb->eps[ep_index];
+> +
+> +       if (!ep || ep->sideband !=3D sb)
+> +               return -EINVAL;
+> +
+> +       return xhci_stop_endpoint_sync(sb->xhci, ep, 0);
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_stop_endpoint);
+> +
+> +/**
+> + * xhci_sideband_get_endpoint_buffer - gets the endpoint transfer buffer=
+ address
+> + * @sb: sideband instance for this usb device
+> + * @host_ep: usb host endpoint
+> + *
+> + * Returns the address of the endpoint buffer where xHC controller reads=
+ queued
+> + * transfer TRBs from. This is the starting address of the ringbuffer wh=
+ere the
+> + * sidband cliend should write TRBs to.
+> + *
+> + * Caller needs to free the returned sg_table
+> + *
+> + * Return: struct sg_table * if successful. NULL otherwise.
+> + */
+> +struct sg_table *
+> +xhci_sideband_get_endpoint_buffer(struct xhci_sideband *sb,
+> +                             struct usb_host_endpoint *host_ep)
+> +{
+> +       struct xhci_virt_ep *ep;
+> +       unsigned int ep_index;
+> +
+> +       ep_index =3D xhci_get_endpoint_index(&host_ep->desc);
+> +       ep =3D sb->eps[ep_index];
+> +
+> +       if (!ep)
+> +               return NULL;
+> +
+> +       return xhci_ring_to_sgtable(sb, ep->ring);
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_get_endpoint_buffer);
+> +
+> +/**
+> + * xhci_sideband_get_event_buffer - return the event buffer for this dev=
+ice
+> + * @sb: sideband instance for this usb device
+> + *
+> + * If a secondary xhci interupter is set up for this usb device then thi=
+s
+> + * function returns the address of the event buffer where xHC writes
+> + * the transfer completion events.
+> + *
+> + * Caller needs to free the returned sg_table
+> + *
+> + * Return: struct sg_table * if successful. NULL otherwise.
+> + */
+> +struct sg_table *
+> +xhci_sideband_get_event_buffer(struct xhci_sideband *sb)
+> +{
+> +       if (!sb->ir)
+> +               return NULL;
+> +
+> +       return xhci_ring_to_sgtable(sb, sb->ir->event_ring);
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_get_event_buffer);
+> +
+> +/**
+> + * xhci_sideband_create_interrupter - creates a new interrupter for this=
+ sideband
+> + * @sb: sideband instance for this usb device
+> + *
+> + * Sets up a xhci interrupter that can be used for this sideband accesse=
+d usb
+> + * device. Transfer events for this device can be routed to this interru=
+pters
+> + * event ring by setting the 'Interrupter Target' field correctly when q=
+ueueing
+> + * the transfer TRBs.
+> + * Once this interrupter is created the interrupter target ID can be obt=
+ained
+> + * by calling xhci_sideband_interrupter_id()
+> + *
+> + * Returns 0 on success, negative error otherwise
+> + */
+> +int
+> +xhci_sideband_create_interrupter(struct xhci_sideband *sb)
+> +{
+> +       if (sb->ir)
+> +               return -EBUSY;
+> +
+> +       sb->ir =3D xhci_create_secondary_interrupter(xhci_to_hcd(sb->xhci=
+));
+> +       if (!sb->ir)
+> +               return -ENOMEM;
+> +
+> +       return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_create_interrupter);
+> +
+> +/**
+> + * xhci_sideband_remove_interrupter - remove the interrupter from a side=
+band
+> + * @sb: sideband instance for this usb device
+> + *
+> + * Removes a registered interrupt for a sideband.  This would allow for =
+other
+> + * sideband users to utilize this interrupter.
+> + */
+> +void
+> +xhci_sideband_remove_interrupter(struct xhci_sideband *sb)
+> +{
+> +       if (!sb || !sb->ir)
+> +               return;
+> +
+> +       xhci_remove_secondary_interrupter(xhci_to_hcd(sb->xhci), sb->ir);
+> +
+> +       sb->ir =3D NULL;
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_remove_interrupter);
+> +
+> +/**
+> + * xhci_sideband_interrupter_id - return the interrupter target id
+> + * @sb: sideband instance for this usb device
+> + *
+> + * If a secondary xhci interrupter is set up for this usb device then th=
+is
+> + * function returns the ID used by the interrupter. The sideband client
+> + * needs to write this ID to the 'Interrupter Target' field of the trans=
+fer TRBs
+> + * it queues on the endpoints transfer ring to ensure transfer completio=
+n event
+> + * are written by xHC to the correct interrupter event ring.
+> + *
+> + * Returns interrupter id on success, negative error othgerwise
+> + */
+> +int
+> +xhci_sideband_interrupter_id(struct xhci_sideband *sb)
+> +{
+> +       if (!sb || !sb->ir)
+> +               return -ENODEV;
+> +
+> +       return sb->ir->intr_num;
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_interrupter_id);
+> +
+> +/**
+> + * xhci_sideband_register - register a sideband for a usb device
+> + * @udev: usb device to be accessed via sideband
+> + *
+> + * Allows for clients to utilize XHCI interrupters and fetch transfer an=
+d event
+> + * ring parameters for executing data transfers.
+> + *
+> + * Return: pointer to a new xhci_sideband instance if successful. NULL o=
+therwise.
+> + */
+> +struct xhci_sideband *
+> +xhci_sideband_register(struct usb_device *udev)
+> +{
+> +       struct usb_hcd *hcd =3D bus_to_hcd(udev->bus);
+> +       struct xhci_hcd *xhci =3D hcd_to_xhci(hcd);
+> +       struct xhci_virt_device *vdev;
+> +       struct xhci_sideband *sb;
+> +
+> +       /* make sure the usb device is connected to a xhci controller */
+> +       if (!udev->slot_id)
+> +               return NULL;
+> +
+> +       sb =3D kzalloc_node(sizeof(*sb), GFP_KERNEL, dev_to_node(hcd->sel=
+f.sysdev));
+> +       if (!sb)
+> +               return NULL;
+> +
+> +       /* check this device isn't already controlled via sideband */
+> +       spin_lock_irq(&xhci->lock);
+> +
+> +       vdev =3D xhci->devs[udev->slot_id];
+> +
+> +       if (!vdev || vdev->sideband) {
+> +               xhci_warn(xhci, "XHCI sideband for slot %d already in use=
+\n",
+> +                         udev->slot_id);
+> +               spin_unlock_irq(&xhci->lock);
+> +               kfree(sb);
+> +               return NULL;
+> +       }
+> +
+> +       sb->xhci =3D xhci;
+> +       sb->vdev =3D vdev;
+> +       vdev->sideband =3D sb;
+> +
+> +       spin_unlock_irq(&xhci->lock);
+> +
+> +       return sb;
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_register);
+> +
+> +/**
+> + * xhci_sideband_unregister - unregister sideband access to a usb device
+> + * @sb: sideband instance to be unregistered
+> + *
+> + * Unregisters sideband access to a usb device and frees the sideband
+> + * instance.
+> + * After this the endpoint and interrupter event buffers should no longe=
+r
+> + * be accessed via sideband. The xhci driver can now take over handling
+> + * the buffers.
+> + */
+> +void
+> +xhci_sideband_unregister(struct xhci_sideband *sb)
+> +{
+> +       int i;
+> +
+> +       for (i =3D 0; i < EP_CTX_PER_DEV; i++)
+> +               if (sb->eps[i])
+> +                       __xhci_sideband_remove_endpoint(sb, sb->eps[i]);
+> +
+> +       xhci_sideband_remove_interrupter(sb);
+> +
+> +       sb->vdev->sideband =3D NULL;
+> +       kfree(sb);
+> +}
+> +EXPORT_SYMBOL_GPL(xhci_sideband_unregister);
+> diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+> index 4b8caaed6f95..339d37c3a3d9 100644
+> --- a/drivers/usb/host/xhci.h
+> +++ b/drivers/usb/host/xhci.h
+> @@ -947,6 +947,8 @@ struct xhci_virt_ep {
+>         int                     next_frame_id;
+>         /* Use new Isoch TRB layout needed for extended TBC support */
+>         bool                    use_extended_tbc;
+> +       /* set if this endpoint is controlled via sideband access*/
+> +       struct xhci_sideband                    *sideband;
+>  };
+>
+>  enum xhci_overhead_type {
+> @@ -1010,6 +1012,8 @@ struct xhci_virt_device {
+>         u16                             current_mel;
+>         /* Used for the debugfs interfaces. */
+>         void                            *debugfs_private;
+> +       /* set if this device is registered for sideband access */
+> +       struct xhci_sideband                    *sideband;
+>  };
+>
+>  /*
+> diff --git a/include/linux/usb/xhci-sideband.h b/include/linux/usb/xhci-s=
+ideband.h
+> new file mode 100644
+> index 000000000000..c1457d1800f4
+> --- /dev/null
+> +++ b/include/linux/usb/xhci-sideband.h
+> @@ -0,0 +1,66 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * xHCI host controller sideband support
+> + *
+> + * Copyright (c) 2023, Intel Corporation.
+> + *
+> + * Author: Mathias Nyman <mathias.nyman@linux.intel.com>
+> + */
+> +
+> +#ifndef __LINUX_XHCI_SIDEBAND_H
+> +#define __LINUX_XHCI_SIDEBAND_H
+> +
+> +#include <linux/scatterlist.h>
+> +#include <linux/usb.h>
+> +
+> +#define        EP_CTX_PER_DEV          31      /* FIMXME defined twice, =
+from xhci.h */
+> +
+> +struct xhci_sideband;
+> +
+> +/**
+> + * struct xhci_sideband - representation of a sideband accessed usb devi=
+ce.
+> + * @xhci: The xhci host controller the usb device is connected to
+> + * @vdev: the usb device accessed via sideband
+> + * @eps: array of endpoints controlled via sideband
+> + * @ir: event handling and buffer for sideband accessed device
+> + *
+> + * FIXME usb device accessed via sideband Keeping track of sideband acce=
+ssed usb devices.
+> + */
+> +
+> +struct xhci_sideband {
+> +       struct xhci_hcd                 *xhci;
+> +       struct xhci_virt_device         *vdev;
+> +       struct xhci_virt_ep             *eps[EP_CTX_PER_DEV];
+> +       struct xhci_interrupter         *ir;
+> +};
+> +
+> +struct xhci_sideband *
+> +xhci_sideband_register(struct usb_device *udev);
+> +void
+> +xhci_sideband_unregister(struct xhci_sideband *sb);
+> +int
+> +xhci_sideband_add_endpoint(struct xhci_sideband *sb,
+> +                          struct usb_host_endpoint *host_ep);
+> +int
+> +xhci_sideband_remove_endpoint(struct xhci_sideband *sb,
+> +                             struct usb_host_endpoint *host_ep);
+> +int
+> +xhci_sideband_stop_endpoint(struct xhci_sideband *sb,
+> +                           struct usb_host_endpoint *host_ep);
+> +struct sg_table *
+> +xhci_sideband_get_endpoint_buffer(struct xhci_sideband *sb,
+> +                                 struct usb_host_endpoint *host_ep);
+> +struct sg_table *
+> +xhci_sideband_get_event_buffer(struct xhci_sideband *sb);
+> +
+> +int
+> +xhci_sideband_create_interrupter(struct xhci_sideband *sb);
+> +
+> +void
+> +xhci_sideband_remove_interrupter(struct xhci_sideband *sb);
+> +
+> +int
+> +xhci_sideband_interrupter_id(struct xhci_sideband *sb);
+> +
+> +#endif /* __LINUX_XHCI_SIDEBAND_H */
+> +
+>
