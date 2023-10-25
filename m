@@ -2,94 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D35AF7D62BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:30:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9D377D62C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:31:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233026AbjJYHak (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:30:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38542 "EHLO
+        id S232938AbjJYHbD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:31:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233019AbjJYHae (ORCPT
+        with ESMTP id S232846AbjJYHaz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:30:34 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F266BD4A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:30:29 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-31c5cac3ae2so3842052f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:30:29 -0700 (PDT)
+        Wed, 25 Oct 2023 03:30:55 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C8BAD4B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:30:52 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c5056059e0so81141571fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698219028; x=1698823828; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698219050; x=1698823850; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hh/bTIvESOCXDl4r8DcX/YhcpEstvTtw+QuFAmjiom0=;
-        b=Ry/rPElqeCBNReSIM4G6TSR0QQ9Tnbg/0OB9KYIxp9/LpWMu7dXalSn+D1zg4Qa8iR
-         FuZIfdf18sSRanE8TQLqwPq1Fv0iTHvO9WjWrNMvTe/tEzYKB9TkY4e/3Q82ch9F5sFb
-         aQc+NY/xRX1wO9whA0iccZZpV7CKuH1ZQHZMAxnpzMRqprzCVyW2R297aoB9Buddq34x
-         AGkKC0CFAua/cmzqKHXHllPx3wf7gpfKqCn2sEDHf08CAR/+sGF1q6pLl+9fIU/uIsk8
-         1ROG+Untl4v1YwbLEJmq5FNc/TEBNKPZzr/TOy6K4dycWNXjg9eW2B+Ab62I9ozM5Jlo
-         ugNQ==
+        bh=2HOUl2/zwYYWK4gK2TOvGSANbvNcIA9wpMKyZvXodu4=;
+        b=YuQhomPspkNZJuYNpj9hilE3NSD4RGqf2/QFfi0IaJMDUruf6JFm1rtyyA0ZkMd6CS
+         E9F/x7J1UV7d6bpoemOR/chmACCtUe2H2J4yiLqfK/HrA1/3c/YJNPDyaGmrXBJM++h5
+         BUS2an7i7pGrk+MG9pyTt+0fDKWNK4hoggOl8Ck6YGuV0e15iv1Zf5JdYGVqpN2a0A2e
+         JTCq7n5SPBf4isUY8obFofBHqkuGzNv+8ZKPmQaGjW+8yMMv+SI3NTJAQVKFIdmuFA/N
+         8DdIkEI5wp4DwOvKuPGPfxzP1p3CucEvbUmgD+RYqvWgI/ijCMm/54ZyzmfA+LdAzGr4
+         YBwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698219028; x=1698823828;
+        d=1e100.net; s=20230601; t=1698219050; x=1698823850;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Hh/bTIvESOCXDl4r8DcX/YhcpEstvTtw+QuFAmjiom0=;
-        b=XsdTys7dq5GnQJV/gTBfUjS3I7QOyKr2UFeTSwWHq4Jk0zbLzIB3geWUDUVSFgNbp2
-         r8dFNyFga+K1iDvbLTJ8Ggvg7MygQ1MXCT9RWnvn0FLtxpjzbAcsTyU+0d8LLiNBcSo9
-         Uneel86ldRN4Erpyn9EWbO96auDD4KBqs4RA1yoMrSMlc4K+lO9wNTsd8OCvgPRT5k9e
-         y02FfVYKTNjkTmknojpb1CuchBxLDR/9ydKi7aIFCUMCCtU8Mk2thW8QwrXL2Yyy83nY
-         qbREnfTnyffn9gxjt1hsqtbuT8x/4xRjX7lNDxQDTRaiHCW1RLhhax+HC3/v0UloSfg1
-         b3Hw==
-X-Gm-Message-State: AOJu0YzfAS3MJgj3slk8C7Rq7Ye0kb9d2VbkqqbIEbCOTU3j2/Fngr5A
-        yoU8AMS82YyeM2iZUs2WTxDjmA==
-X-Google-Smtp-Source: AGHT+IEf/Q5gbbYcLBPf+kj9CZxV06kGgbpmFyWmQncUbX/jnj0FmtG2Y3qJR8QBWZhgSbYplvtRJA==
-X-Received: by 2002:a5d:468e:0:b0:32d:87c8:b54e with SMTP id u14-20020a5d468e000000b0032d87c8b54emr10071232wrq.1.1698219028333;
-        Wed, 25 Oct 2023 00:30:28 -0700 (PDT)
+        bh=2HOUl2/zwYYWK4gK2TOvGSANbvNcIA9wpMKyZvXodu4=;
+        b=sGJ3subSROzYjb03jztiy8XxvYwfiMzrlOfjpWku1UqCtmXiZIwOx0X8LYSrONPngj
+         AquknuCvQyJeLXPphJQ0U7QrTxfAWlAc41g3ZBApQE/9CvHk3CdhJ/JhyUKqRncJ03sv
+         ZHD/LoAAEHIHvDyFUO7zjN/8MCKb7uxVje/EpqbDSHJhZaCNriQ4l/6zinA/LjR5ETcz
+         P1e0M0TTR4tfazvXuAuc4ilbYtv42hAcelqSJCa5le5a3MqBhA/tyA3y+UvgccgQrCkg
+         qx/GY3msVgojiC5TShJpkm7Gq4K6Xm3uILXjz+5huZ55FPvmI6RfgghRKjc0DHW1F6Vh
+         NGBw==
+X-Gm-Message-State: AOJu0Yzf/AZhJifrqdkCshimoRkJV7iDmvLOmp8tA0gq46AiCf6GhweN
+        YJ4oTQCd4ovpRh7ipprbKjMAuA==
+X-Google-Smtp-Source: AGHT+IFNkBpMy/8xQv6c6aZWy3fOS2p9RZYaBauIqTXCUsqk4AHB6PXZzRYeJj7NCDk6zX6p6ZYgWQ==
+X-Received: by 2002:a05:651c:1255:b0:2bc:d8cb:59fe with SMTP id h21-20020a05651c125500b002bcd8cb59femr9725408ljh.8.1698219050580;
+        Wed, 25 Oct 2023 00:30:50 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id o7-20020a056000010700b003232d122dbfsm11394222wrx.66.2023.10.25.00.30.27
+        by smtp.gmail.com with ESMTPSA id u14-20020a5d468e000000b00323330edbc7sm11490413wrq.20.2023.10.25.00.30.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 00:30:27 -0700 (PDT)
+        Wed, 25 Oct 2023 00:30:50 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 09:30:26 +0200
-Subject: [PATCH] dt-bindings: thermal: qcom-tsens: document the SM8560
- Temperature Sensor
+Date:   Wed, 25 Oct 2023 09:30:48 +0200
+Subject: [PATCH] dt-bindings: ufs: qcom-ufs: document the SM8560 UFS
+ Controller
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-bindings-tsens-v1-1-09fdd17b1116@linaro.org>
-X-B4-Tracking: v=1; b=H4sIABHEOGUC/x3NPQ6DMAxA4asgz1jKX1PKVVAHCi71gInigCoh7
- t6o47e8d4JSZlLomxMyHay8SYVtG5g+oyyEPFeDM85bYyOWLfGEunbxZnBPWjKNK75YZpZFsSi
- JYqB76B7ex+AIaiplevP3vxme1/UD+vodinYAAAA=
+Message-Id: <20231025-topic-sm8650-upstream-bindings-ufs-v1-1-a355e3556531@linaro.org>
+X-B4-Tracking: v=1; b=H4sIACfEOGUC/x3NQQqEMAxA0atI1gbaSlXmKoMLbVInC2tpdBgQ7
+ 26Z5dv8f4FyEVZ4NRcU/orKnips20D4zGllFKoGZ1xnje3x2LME1G3svcEz61F43nCRRJJWxTM
+ qkulC9I78QB5qKBeO8vtP3tN9P6di2Zl0AAAA
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Lukasz Luba <lukasz.luba@arm.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1219;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1124;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=erRAPQ5LajUF5L5ZNu5LBPh4slUjHNoEdaWVt9XE800=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMQSeAB0Aze+cZLUM1Bz3fYFR5/nQoHqRkIxoprN
- aKc/qmGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjEEgAKCRB33NvayMhJ0S+ID/
- 9a+uPvy9LUxq6wYyYedX2X4VYe2haTW0IbJ3VduQ/2b1E6YQWb/Nz1LZUC0XRqZL+QP4NNqkQoRpHi
- 1qdbYsuqk8iK8gjoV8vN2X/m+Bj0vk+yY1pOXo5Fp5+te2D1xkbcsIlsY0A50/b/O6NVWJtq+bwUwI
- kEdxSLQWwjCqLV6kbcW0ncAAoowlY3qWx5V048hndo21cZ5GK59h/cCNALO61GZRm94SXVSwjkZHdk
- Mtqq+f39eKYtM1VLWNJ+lpxpuv+CdrnrECPlKnujFZspNJ+Kqgez3XpUOllyPwF+G7M2Va2a19yoz5
- ijSah3aHmNW+nAkwoxv0AZfLxWjTG6W7BsAlxq9dMi5Zv43lpmMFkVxEaFO1s9un2SgkZNP6Tj13c6
- Vc6Y4IMbYDw9T7mqhySxomtMYmYHgnBPGaYaDUxj65zUSogeKQbim9GWRzkYaSotLAuSjql4Uq6d+s
- pGOC05v/hrGDUCbpymkBAILwvSkyvRXd3iShRJwAe45WCaVK1wjIYPRSW+NPxMQidi0bH6GxyvkROJ
- 8AtrxV71e1eiLd/p7lY7NDo4HUbYTxQOtRIJeFqz5VQXRWRRQn43irqAaX+EjwsiU+3nMzftZ9fOsE
- DI0lbbdEo4sDima9sI1wZs2/3WKwSmExOmvAo2HOVIXyR8SYzIbw2J+f0Aqg==
+ bh=+ou1lwOLPIWCMRFAU+MMfL6oc+Ki8fn5yH6Tmb27AgU=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMQp7qzh+bufmIGHRim51m6udr9NL7UiB3P4dkig
+ CysrZlCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjEKQAKCRB33NvayMhJ0ZJTD/
+ 9TRTUpDLSoewhZqE5WI8EX3oVvwZEfIwcfPuVTNbOnp3Ft8vjpkGeO4hP4afVhhF/ZIw4JFNDaXvDs
+ kRsAG6FhlTZpsJcu/8FDfCedBK7JgVyiFIxaKGanPKyI7bVdfZn+s8zgYaSrnSz7sLt1ZzDZziY5KM
+ X54ejGqMKPX2E7RyuRiPSXHSKe8T0yYNh73iS1GmTNAV0es49jcoW9D4A4AU+FHU4O4UtzQJwcLtF5
+ TNPVeQrmbFoPYnghamaO6Ot3/DAEs+vTD/SGjJs87Wzc3CFQL4PhOm8NO03D9EB0abUG04U1/rRJXt
+ fWGKJTUOTTkWamFunvCFeJ2jE2e7EIzYYAXLgRYLu56YaxEX488lA3Vh7qL8inzdVC9Kk7pJoHMjYm
+ S7KHPP2BVHaqe414BzqgfI2+b8YnAabXhq1g3xKcYRClMQkc8RsfJsvb2bBB8ehlN+uVtyMxv1x6Zg
+ hewYJRmBATBZyNw1Cuu/zDjqhJSfcmcS3FaytiqnuIvq8QAa+ObzKs/uf9XG7qYnucdB0YAhW1QgB+
+ W3yhkt/qT3dy98JmGoLW7jyUIGcg5u3uUg383V2tRJrOIoUrj5J3ZD6UDxpy1+2k4Z+WUzIEZPeob2
+ C2D3yAsJZuu+6jWmhibSSnbCSEAIjaQB8Jp4FmBvgvU+QajXnb/oVKv+A2Tg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -101,7 +99,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the Temperature Sensor (TSENS) on the SM8650 Platform.
+Document the UFS Controller on the SM8650 Platform.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
@@ -109,25 +107,25 @@ For convenience, a regularly refreshed linux-next based git tree containing
 all the SM8650 related work is available at:
 https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
 ---
- Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-index 437b74732886..99d9c526c0b6 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
-@@ -66,6 +66,7 @@ properties:
-               - qcom,sm8350-tsens
-               - qcom,sm8450-tsens
-               - qcom,sm8550-tsens
-+              - qcom,sm8650-tsens
-           - const: qcom,tsens-v2
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index 462ead5a1cec..0d136c047b8b 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -36,6 +36,7 @@ properties:
+           - qcom,sm8350-ufshc
+           - qcom,sm8450-ufshc
+           - qcom,sm8550-ufshc
++          - qcom,sm8650-ufshc
+       - const: qcom,ufshc
+       - const: jedec,ufs-2.0
  
-       - description: v2 of TSENS with combined interrupt
 
 ---
 base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
-change-id: 20231016-topic-sm8650-upstream-bindings-tsens-4e748933642e
+change-id: 20231016-topic-sm8650-upstream-bindings-ufs-d03cf52d57d5
 
 Best regards,
 -- 
