@@ -2,89 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D62217D6266
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:24:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 276E57D626C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:25:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232698AbjJYHYs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:24:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46990 "EHLO
+        id S232653AbjJYHZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:25:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232636AbjJYHYq (ORCPT
+        with ESMTP id S232768AbjJYHZi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:24:46 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0D6799
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:24:43 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2c594196344so23331541fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:24:43 -0700 (PDT)
+        Wed, 25 Oct 2023 03:25:38 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3685ADD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:25:36 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-507a0907896so7937956e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698218682; x=1698823482; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698218734; x=1698823534; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5ac9q5i+bRg4eQ6Gru0c2g4ILCIg31t/aQvKt6OAjZY=;
-        b=oREKufJokOzWE8uzXLAy+b4Va1F1HBjUiPI5X7KtqPAqqyoK8haUsFQCWwHwqtC2Kt
-         szL4b1GDMK9fTQsjjZRIkV0Y+bMxCTVG6lKYrOikY2j0VQ/Sqy05ginSoTFV1NjR8xdo
-         kmD7EeMRIRdbi8OtN76PB6lf0l6p5U5bHzCbnzA/51OswW/DIBlpMmwX3D2o/iMBKjKB
-         uhNu1WXvxnSaMr7+CVXC0xMushO1jpa/aFmEjixYzEeQVJD3YHyg5Oc/a1H5C5L4Zvxj
-         hBO2/hf2BUUSTU4J8DhitfPQD9C0Ij+PMAFGzWN5Q2tyC7G2OPw5zLGfJ4+Wi+7m070x
-         cumA==
+        bh=8UZhJQSD0Uc3f3xdHOo042gWQWkDiJjvPAwU+g19bRs=;
+        b=sqmNC0bJf4GCWLgJ/1QtejJzsUxiCtfSPDiNNFnSaHEReUpBReRKKghY7qxlHij6FS
+         npgvJ3x7fMS4QNy15y4SPOatCQ2aHuhVydptANJ39ArJ2NBsh3DA+QfW1peByqpBa+iC
+         +h8unQxL2gHXp0hJZAY9VCKTyHDWLKk13fdhdSncJgWXFW+PxvD2Ang16uz2I4pe288o
+         TqHA3cNXyNSBwpbT5WDKk84rtMopZ7Z/MxOyX++43nJOtpQmxJg75ME/nZ9mbOmCM1ZO
+         JB5EM2jwjDf7pd2q4po3Bch8JGhlypXti8LtS4xCPazY59bKf/ObZ/Fv/uEiMp/DL5lJ
+         c0Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698218682; x=1698823482;
+        d=1e100.net; s=20230601; t=1698218734; x=1698823534;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5ac9q5i+bRg4eQ6Gru0c2g4ILCIg31t/aQvKt6OAjZY=;
-        b=xUW7Bxe/HZ/LD8u05SdKkF2wjTbxCJwosQyM2J5HJaNA7fkf8Ntcxn73vlSlQJsxnG
-         clr8n/1AwLGYTHT/micryGDLPV39o5ZAEqxXNJn2Blplxp6eRQmGgVlU7cS9Q/3hLqwt
-         VFoZUbpWxsErmvBPDZQhkch/DtK+Mdd6b6m2gX01BfQJExbXdTzC5xhx1wpXtwFsd+yb
-         FXAFBCL088VYqh+KKgoyM4KoMSoCDtpvmWkCJSQhnmeDEN9ANbbbsrewzFYZjqHegqGF
-         e3lY86o94+HEG+5PNtGMcSO3PSOafzbqdvEQixeVfQsWO5VGcW3uYpx7FO49fFwg+qjV
-         Zusw==
-X-Gm-Message-State: AOJu0YzgtyY6Pzac9pkp0Pta8TOg+7hqwsMEMCm89zbs8LorNiuqNg+e
-        cipcLKUK5aA4faOjmFl8zrlLfGtoydN6+zQrZh7b7voN
-X-Google-Smtp-Source: AGHT+IEQlMSO1gYMlKxW+S+AsH15992ahXmDNkzV3J3CmeF0KWZ+MO4rk34Av20fdxIfM+aNgj9Gnw==
-X-Received: by 2002:a2e:9613:0:b0:2c2:9810:3677 with SMTP id v19-20020a2e9613000000b002c298103677mr10456563ljh.6.1698218681748;
-        Wed, 25 Oct 2023 00:24:41 -0700 (PDT)
+        bh=8UZhJQSD0Uc3f3xdHOo042gWQWkDiJjvPAwU+g19bRs=;
+        b=tszlUHXLSTvkbWlp11jZnYoUjmPIpNFrmCdN+i2e4Hv96AWWCREdNLoH/4c8HSE0y4
+         SLWPYKeq5OCBpQYtB7EuGDxujorYAgR4hHpD1t2hEUTacpAebVZNoSSksDWTZiHffF0z
+         Qgwl0YjH4FNUWR6/ig3CGKJv1x7IR6tXsfTQUT2Y5tz9oF4SpY5tG4elSu23TmgOMexl
+         oD4cu+X3Ua2tHOv3td2HMx990qNmoJHc+GkGVo2Diei0Cd2XQ/R9tT14VC6/EOJ1BZnW
+         Imyj7scljTvAsmkhmIizHkgl4d6plLAKEocAoQx8WvcXkqKKDYlWwxDgX6ef1Ticwi08
+         xyEg==
+X-Gm-Message-State: AOJu0YxlnZtuPGJcODCLqtjSEFVnCyWOGjpmKMcepf0wCQZses1FQ98l
+        VWKzsu7oeMShZZ0ed9mhNrtAhA==
+X-Google-Smtp-Source: AGHT+IEv00dbc7BJHQBIE96AgaQVZe4kY9vbKpsd0Znwe5esaLt0vb15E2rFC6uN1ffp4/9tIaouCg==
+X-Received: by 2002:a05:6512:65:b0:507:9e56:5b1c with SMTP id i5-20020a056512006500b005079e565b1cmr9300064lfo.13.1698218734417;
+        Wed, 25 Oct 2023 00:25:34 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id v3-20020a05600c428300b003fee8793911sm13572564wmc.44.2023.10.25.00.24.40
+        by smtp.gmail.com with ESMTPSA id g17-20020a5d5551000000b0032cc35c2ef7sm11462557wrw.29.2023.10.25.00.25.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 00:24:41 -0700 (PDT)
+        Wed, 25 Oct 2023 00:25:33 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Wed, 25 Oct 2023 09:24:39 +0200
-Subject: [PATCH] dt-bindings: interconnect: qcom-bwmon: document SM8650
- BWMONs
+Date:   Wed, 25 Oct 2023 09:25:31 +0200
+Subject: [PATCH] dt-bindings: usb: qcom,dwc3: document the SM8560
+ SuperSpeed DWC3 USB controller
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231025-topic-sm8650-upstream-bindings-bwmon-v1-1-11efcdd8799e@linaro.org>
-X-B4-Tracking: v=1; b=H4sIALbCOGUC/x3NPQ7CMAxA4atUnrGUtCIqXAUxpLFTPORHcQtIV
- e9OxPgt7x2g3IQV7sMBjd+iUnKHvQwQXj6vjELdMJpxssY63EqVgJpmdzW4V90a+4SLZJK8Ki6
- fVDKSj7eJYpidJ+ip2jjK9795PM/zB5u07lp2AAAA
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+Message-Id: <20231025-topic-sm8650-upstream-bindings-dwc3-v1-1-fdd447e99865@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAOrCOGUC/x3NPQ6DMAxA4asgz1iKA41Kr4I60MShHghRTH8kx
+ N2JGL/lvR2Ui7DCo9mh8FdU1lRBbQP+PaWZUUI1WGM7MuRwW7N41OXubgY/WbfC04IvSUHSrBh
+ +vkPHvaWhpzjECLWUC0f5X5fxeRwnz0d2oHUAAAA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1712;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1119;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=hHZucPj04DU1Jj0CKr8lD/Iuz06DdZDfwCz5YPj1tPk=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMK4vVhcCGv5tVX83oQt8O4rXRZ51G1S/zZrRqfo
- tIolGluJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjCuAAKCRB33NvayMhJ0eI+EA
- Co1u+PprLooljdG2wZzc9IlfNyGAUUURvCWGrmklMaUXFZq2mK8VN6H1vvyfaqS8YM5cXR9w/dj76G
- znUNFKYFjE++wnL0JlgKgtjOLjyWWwzYRcfIjxbBxHnKqn6aIXt5tRIeQlIW65naWjTuuDQikCRFoi
- KqMwSs6E3ziBHPnpoHXHkFNbmfjFF0tpp5kAVRXGtbRxOPNPQc4XDSGHu/Xz6ixLCngQlMgVhIrcu6
- Sg2TmqWA9mmp/+u07XfkPX4ijZcdxtQo4ctSauqHUdFc1YUAfaTuk7JwHZShZc7HfpapB+/ZqN7jtC
- yyctBqfoJkooiJ0iLQ+p0UK8UyGkHzbDmczT2KFP5b7Yv2tHQwBj8L0VHDUKbx2trXPbjhZ/wCKGmu
- +idTDCSTK5N48Jiib97JvCeGr8mimKbtvtYZUb+qYwnwJskLcTvjIrZqac2GfdrOEh6ZkyRJTyd9ol
- cLvgIQzGGnmQf+LzX1sQYzEVjotkLbbfJA/vr8Ut5n2/oGj5Ow/WEi+wp/oZ8WtmgzxcYY4dLagQmC
- /74KXZsAKj2MeeXOtL/HOz/AM6A0XAVRKvx7d3R8CFAzeqDUSlR5Zceo1Ixvd43r/VrreAUZ13bFqp
- 6tmZRaX2iwZibUf7N3QxCMmS8fL/TjBdR2p9aIxY5LfWqVEXeMpt6YFQDVxA==
+ bh=94slVde3c1MdIK5l3UGMWWvmzVgx8QGqBtuDrQplXMg=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlOMLtED6TIvM9aOKsOTTkKEpJ1fTNDtge5B2SpsiC
+ Q0Lp7H2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZTjC7QAKCRB33NvayMhJ0VAWEA
+ C2keWT9ubyCYrE7fyYYR+SNXUB7+iOYVpKfOiWWvYZU9Sd0yMUK82VZWDfLuXoi+n8DztcJqvmi46o
+ hiEbK7UqZqCbUPZH+PKwBtKLtPNHCBD0TlCcru72ENA4jKGN+a34U81uaTEMv6mVokHMIsmhKSkC81
+ LFUF3BC1TTDsNzhDHHbL+zKOuplUFFGSKGsSJnBKX2q3gVgbcTpObieed/sgIuHsWwQcsZBGffGDs/
+ 2dsMvvcAwW9sWndev8CuHx409T1bX1qW0R2u65CRQVroIAlQYFDN/YIyJ3pbN+90ykjBbNf/QIYHE7
+ J8plPEIB/TshABj7uN1ZMfx/2kU+LZBBWjXAJi7XRlArfr8Nklepq2DHpYCkXFHG8h0H1R1t4uFTIV
+ t4dE52DC1gFYaqWSlN0m3hEnEfijbxblN4oPsMdnSC4zdcKvM/PB8Z5lhvsubMzHma4I2A27ddiivp
+ TjfxIi1kC7FShak3aIc8c4SSM430FG/AMdigNFHZtOqyi6zKlwLOAxidsDwN1DX703yOOCnj68rGvZ
+ iyjU0EZ9CeJPJGKEzBca51vXNN/esy1b5DnaTvf6L+EI7o1L5ioyiQA45iKOJ75mHMZ9KeWBvgtenu
+ uNuYdzthiVwAeF3/zvtVO2IMiZYWMolktZ6TIxCgqtFTc98JlAp8/jDunnDg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -97,8 +98,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document SM8650 BWMONs which has - just like SM8550 - a BWMONv4 for
-CPU-LLCC and a BWMONv5 for DDR-LLCC paths.
+Document the SuperSpeed DWC3 USB controller on the SM8650 Platform.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
@@ -106,33 +106,25 @@ For convenience, a regularly refreshed linux-next based git tree containing
 all the SM8650 related work is available at:
 https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
 ---
- Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-index 73f809cdb783..7cb8df757477 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-@@ -32,6 +32,7 @@ properties:
-               - qcom,sm6350-llcc-bwmon
-               - qcom,sm8250-cpu-bwmon
-               - qcom,sm8550-cpu-bwmon
-+              - qcom,sm8650-cpu-bwmon
-           - const: qcom,sdm845-bwmon    # BWMON v4, unified register space
-       - items:
-           - enum:
-@@ -40,6 +41,7 @@ properties:
-               - qcom,sm6350-cpu-bwmon
-               - qcom,sm8250-llcc-bwmon
-               - qcom,sm8550-llcc-bwmon
-+              - qcom,sm8650-llcc-bwmon
-           - const: qcom,sc7280-llcc-bwmon
-       - const: qcom,sc7280-llcc-bwmon   # BWMON v5
-       - const: qcom,sdm845-llcc-bwmon   # BWMON v5
+diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+index e889158ca205..ea2c663ddc52 100644
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -46,6 +46,7 @@ properties:
+           - qcom,sm8350-dwc3
+           - qcom,sm8450-dwc3
+           - qcom,sm8550-dwc3
++          - qcom,sm8650-dwc3
+       - const: qcom,dwc3
+ 
+   reg:
 
 ---
 base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
-change-id: 20231016-topic-sm8650-upstream-bindings-bwmon-daf93dfc86ad
+change-id: 20231016-topic-sm8650-upstream-bindings-dwc3-6e421941f9ff
 
 Best regards,
 -- 
