@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAFBD7D65A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:46:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BE267D65AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 10:48:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234432AbjJYIql (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 04:46:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32768 "EHLO
+        id S234592AbjJYIsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 04:48:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234354AbjJYIqh (ORCPT
+        with ESMTP id S234537AbjJYIrq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 04:46:37 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56F05183
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:46:31 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c50305c5c4so82031181fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:46:31 -0700 (PDT)
+        Wed, 25 Oct 2023 04:47:46 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66F7610E6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:47:26 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c515527310so77628961fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 01:47:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698223589; x=1698828389; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698223644; x=1698828444; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2/qDJt2TktcCTAjVqQQhY9/t4tuTrwTtLlHAGkujnds=;
-        b=L0rH+BHDTRJltVtYgGHibtc2kAhZRpfQzX17xTaf3FYZUoehotgfexGZAO95Qkwgfq
-         if397bM3mt7YLJHPb9Th3IP1sbeuZsdX3XZf+kkLx4vtkpl6VfEV9fsQh2XbAMNvelsw
-         V/pCYBedExVegIoHtCxuAUWLdj/sF3a1pWr97uMFh5w8PsADJLZKUYcIAzmJ0eVmlb9W
-         i4B4iX5dUBtNbOQX+E1BpVoKcK9CXXCOoMkzDqhcjpWqnXateDLDRMTqGOyf+vRMVhJ6
-         +BSZdyfHti2XZIRpvKvSAvDVxt9sTyQr60Ys9XjWypganqFvsTgOnaIFJeNic1AmF3Po
-         2VVw==
+        bh=AWLunRg+mdtBWttUW92XIFkEVDjp3aPObiDCT739YI8=;
+        b=fB7uULUi1pn0+9AkBACyt++CU31BzVQvbvXjRlZ2dWk0xItPqvJdqotwAQafix/U/S
+         jxU9yUtZiWlPpIZfm3hCJbon2qzbLMmgvhPA/OLelYm22CxhJuhi9WrLKWkY56Y13GIc
+         XrMH9DRNscQRdbQ6mqQ8WYvxf4iNgPaO9Shy6ktGmnS0Ym1coY3E7HO4kFyB0XBQO86Q
+         yhxbA42kO99svHyCD+cElPFuswMCVu1CV48OCOKaM+AJ1njKIWGwx6FN3n/uht3fPBH0
+         7NqnccbmfjXv2HAfMWCG3yvteYneexFz48BZb6gYvIFlH0WeaGu+k9Ug5f8ibvFqbfaE
+         3yrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698223589; x=1698828389;
+        d=1e100.net; s=20230601; t=1698223644; x=1698828444;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2/qDJt2TktcCTAjVqQQhY9/t4tuTrwTtLlHAGkujnds=;
-        b=C6MYhCLup6FnQXdKhio3p0AjWMlEdmHWSUOfFMzcx+yTTwuKLb+0rIREGJTi/o9p2B
-         STWH0vhseCsQs3c5gCDGFkcdOEfIkHn7ReVQaqrp66JeF26ph978nAUHJV8euA6B27PX
-         2UPdNstxQc5InjNTvLEjOQ85IuBg64KjW3vy/ppFu2MGSfuQuxLKVX2SxDQnrQ66cktH
-         78OB+RIx3aoLmSxZdetej1TKn+ck0EYw+9iWbY73mnHOpyjsYtkkjKF5Eg67jzj4xAsc
-         3pHfmeNuiQpH+JCOn3yxCqQ77xNhGHS9cySPHwAz324U8iiu6ExEkQqnycLM7Ca+ytQh
-         f2Hg==
-X-Gm-Message-State: AOJu0YzY8fD77Vydzz/UtVMLQd84ZhtGFvgRqPudmLHxhy9PesQZnemZ
-        xm3wFAvvW7i3x9urL5fGZzulnQ==
-X-Google-Smtp-Source: AGHT+IHrkSVsX7DyHcQJ6Dgs3IFMRhs0xM2WvS141qWk0u9YzRxXAMgcw/0DND/s9rBxWOKyOBFj7A==
-X-Received: by 2002:a2e:81cc:0:b0:2c0:2ef8:9716 with SMTP id s12-20020a2e81cc000000b002c02ef89716mr10491238ljg.1.1698223589554;
-        Wed, 25 Oct 2023 01:46:29 -0700 (PDT)
+        bh=AWLunRg+mdtBWttUW92XIFkEVDjp3aPObiDCT739YI8=;
+        b=TK7u4HQ0xnQvX8brJ3DV1744LF397iwQiYZ2AJaAmBpsPXvLeQvq2V9AZ52AWRPjqu
+         skBk8CLnOcy0CE9xj+3fQ5PGYFP8EoqTBgdMRyUEgK45ogr9siCwYImGZAo3Jwy6zmJz
+         px/LUKZr90p0p0iq58yD8X0sjkUBX6wTK4odXLs3+vVTexoLTficijLm70Z4Vjw8cvzu
+         Ai9nke/rGwU2jU3P3tPLd0sc32aTNcmL93PY4rZpmJu8armJDAE7Hztzmrr20dykBWlJ
+         NYd9UMtj7cPRL8BtCAdWSqVw360I1hGE2srG2ZOXdszkjbPm145Vcz+0cDvDF5rPns8p
+         EgQQ==
+X-Gm-Message-State: AOJu0Yxo2KMD6von8NEx+FZFjjfUZQMPxtheDsYaM8sudrNDdHdV5CCP
+        l//L3CZoHe+kqV4pF666GicY+A==
+X-Google-Smtp-Source: AGHT+IEafQID4C58Vd4asshYumAJa15oxm3wsXK3dPqRvDIJ2A6H8umL7F5QWjcQQICDpZ6VpnJjKA==
+X-Received: by 2002:a2e:9882:0:b0:2c5:183d:42bf with SMTP id b2-20020a2e9882000000b002c5183d42bfmr9960635ljj.45.1698223644604;
+        Wed, 25 Oct 2023 01:47:24 -0700 (PDT)
 Received: from [172.30.204.57] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id p13-20020a2e9a8d000000b002c5122f13b8sm2320875lji.30.2023.10.25.01.46.27
+        by smtp.gmail.com with ESMTPSA id p13-20020a2e9a8d000000b002c5122f13b8sm2320875lji.30.2023.10.25.01.47.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 01:46:28 -0700 (PDT)
-Message-ID: <73409bba-b27a-4c8d-af4b-9efb4c0a5efb@linaro.org>
-Date:   Wed, 25 Oct 2023 10:46:27 +0200
+        Wed, 25 Oct 2023 01:47:24 -0700 (PDT)
+Message-ID: <467bc514-1cff-4bc5-a553-fd1ef0886ee5@linaro.org>
+Date:   Wed, 25 Oct 2023 10:47:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] clk: qcom: add the SM8650 GPU Clock Controller
- driver
+Subject: Re: [PATCH 10/10] clk: qcom: rpmh: add clocks for SM8650
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -70,9 +69,9 @@ To:     Neil Armstrong <neil.armstrong@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
- <20231025-topic-sm8650-upstream-clocks-v1-9-c89b59594caf@linaro.org>
+ <20231025-topic-sm8650-upstream-clocks-v1-10-c89b59594caf@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-9-c89b59594caf@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-10-c89b59594caf@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,10 +87,28 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 10/25/23 09:32, Neil Armstrong wrote:
-> Add Graphics Clock Controller (GPUCC) support for SM8650 platform.
+> Add RPMH Clocks for the SM8650 platform.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+[...]
+
+> +static struct clk_hw *sm8650_rpmh_clocks[] = {
+> +	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div2.hw,
+> +	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div2_ao.hw,
+> +	[RPMH_LN_BB_CLK1]	= &clk_rpmh_clk6_a2.hw,
+> +	[RPMH_LN_BB_CLK1_A]	= &clk_rpmh_clk6_a2_ao.hw,
+> +	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a2.hw,
+> +	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a2_ao.hw,
+> +	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a2.hw,
+> +	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a2_ao.hw,
+> +	[RPMH_RF_CLK1]		= &clk_rpmh_clk1_a1.hw,
+> +	[RPMH_RF_CLK1_A]	= &clk_rpmh_clk1_a1_ao.hw,
+> +	[RPMH_RF_CLK2]		= &clk_rpmh_clk2_a1.hw,
+> +	[RPMH_RF_CLK2_A]	= &clk_rpmh_clk2_a1_ao.hw,
+> +	/* missing RPMh resource address for clka3 */
+So, the downstream driver suggested it's there but CMD-DB disagrees?
+
+Can we get a confirmation whether it should be there?
 
 Konrad
