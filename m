@@ -2,167 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE5837D6409
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:51:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6B197D640D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 09:52:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233479AbjJYHvF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 03:51:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56110 "EHLO
+        id S232224AbjJYHwj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 03:52:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234022AbjJYHvA (ORCPT
+        with ESMTP id S231467AbjJYHwj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 03:51:00 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6009BD4D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:50:57 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-4081ccf69dcso2994775e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 00:50:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698220256; x=1698825056; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fHCbt3oIyBZTNzG0a6SA3gqBM3qic8b1PW/OzYT0hTY=;
-        b=yG8oqy0jJsqkMHIHnQ5LVSHcF2PXJvrJ1rX41nQ8q/vRrXDy+7EUGGB2z9GVQpXtcX
-         zeFSo9SHCZazLALnxrghDqJ0RLW1c4dT69fGDgNdVR9ctJzz50qFau5ZJ38yLYfdzeBw
-         WNyF6Zi2Lq1g7MM+fhfujMDkpjnNb5Z9ojd8v2TzaJtXrA3UaZ/Mva6NOUGZdYgTPp5V
-         vrJ0ZIK9jGPC3vNIovvCxh8GRcnt4vfuqIS+up7EPdlYU/KHnMs0/LbcerZt+KvvUPGN
-         gIyaUISHvpNU1ru9dN7nF7/JN9eWw/xPRcvuYAzIEOlRPJBorH6T/0YhG0RS0r3UdsAj
-         kTHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698220256; x=1698825056;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fHCbt3oIyBZTNzG0a6SA3gqBM3qic8b1PW/OzYT0hTY=;
-        b=vSkMg6M5Bh2uB6wls2n1rXRCIPs1xLB56CW+7lzA7UAAPU9uSGWN4v9Lfu73euEaq1
-         Og6uFocvVslFAXG0HKWTGkaNsYtOErQDWG2Ki2TMY7Yg/SBri6SycXxft2qH8iuhkFpb
-         vZnUlS/ZnFS7DvIN+Qj6Rwcs2G+IZb1+qdLdNjgpuw8fdiLrtroXK4IGlf41+ssCcpV4
-         aVbstJIUK0PbrM37agB++FUZVLcHHWY9x0r4PFTaPOJHLfk4VCfb6TUKLP5RAlyHRaLM
-         v0pGek+v7dc/5OxlsI2Qi3lYLo0kaIshAXGdnFcNZLRYlPGePwkO1PPgyboW11XmhAM2
-         LGXA==
-X-Gm-Message-State: AOJu0YxwkWK+h2od3c64xFv2vTniTFwfEimgYiBRAFB998WwmMeRrKgZ
-        hafCiwrRmOecTjbuMuS3XC31eQ==
-X-Google-Smtp-Source: AGHT+IHkFgkIyncR5qpiPGCBrd1mZZZPQhI0m/zUCrlGiixh6mKna/bq06QxEiecV1w1LIBTsixxow==
-X-Received: by 2002:a7b:c4d8:0:b0:408:36bb:5b0c with SMTP id g24-20020a7bc4d8000000b0040836bb5b0cmr16035281wmk.7.1698220255693;
-        Wed, 25 Oct 2023 00:50:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:4b03:ec74:6374:5430? ([2a01:e0a:982:cbb0:4b03:ec74:6374:5430])
-        by smtp.gmail.com with ESMTPSA id i1-20020a05600011c100b0032dcb08bf94sm11538347wrx.60.2023.10.25.00.50.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Oct 2023 00:50:55 -0700 (PDT)
-Message-ID: <22441cdc-33d3-4303-9deb-cb91e43594e6@linaro.org>
-Date:   Wed, 25 Oct 2023 09:50:54 +0200
+        Wed, 25 Oct 2023 03:52:39 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C04FDE;
+        Wed, 25 Oct 2023 00:52:36 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E63C433C7;
+        Wed, 25 Oct 2023 07:52:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698220355;
+        bh=AjvHbivfFAj4feaP3aHyTgho0kLeTTMjqn0xHKJqObY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Au1eplrqt71V0W8QiBWNe2G4Yt1Oo5Nwe1X9M5FenWXHtTYUyb207aW2LFGcyCWhS
+         zV7j5ngxfjrhePd3EDD3Jm+6rbJM4NaiyRax0zGFz4DBTz+PHXLLknRC2YjWVpJ3Oy
+         jXEp0aJZYsV8DWK0QjVwU1724Ebqkh7EtBUXSTt7FTqH4r8c7cl33Osn2PGke1fPtn
+         LXj9gnwfXVYYHR9uRm8ne146V2qe1GEJ+lrc+a5S49DyJncP47JS5D87NUURR60Mzn
+         hbNMX2JBySi4GYlW9fExrNPnywHtX69EINNWbSk+YzS7o4Tnyl81i4FMjg4bcz4fKS
+         b0ZDKaaj0dTTw==
+Date:   Wed, 25 Oct 2023 13:22:24 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, quic_shazhuss@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
+        quic_nayiluri@quicinc.com, dmitry.baryshkov@linaro.org,
+        robh@kernel.org, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sa8775p: Add ep pcie0
+ controller node
+Message-ID: <20231025075224.GB3648@thinkpad>
+References: <1697715430-30820-1-git-send-email-quic_msarkar@quicinc.com>
+ <1697715430-30820-6-git-send-email-quic_msarkar@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] dt-bindings: dma: qcom,gpi: document the SM8560 GPI DMA
- Engine
-Content-Language: en-US, fr
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-bindings-gpi-v1-1-3e8824ae480c@linaro.org>
- <CWHCDVXDDU74.3U8VFCO1HHIDU@fairphone.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <CWHCDVXDDU74.3U8VFCO1HHIDU@fairphone.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1697715430-30820-6-git-send-email-quic_msarkar@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 25/10/2023 09:29, Luca Weiss wrote:
-> On Wed Oct 25, 2023 at 9:25 AM CEST, Neil Armstrong wrote:
->> Document the GPI DMA Engine on the SM8650 Platform.
+On Thu, Oct 19, 2023 at 05:07:10PM +0530, Mrinmay Sarkar wrote:
+> Add ep pcie dtsi node for pcie0 controller found on sa8775p platform.
+> It supports gen4 and x2 link width. Due to some stability issue in
+> gen4 enabling gen3 as of now.
 > 
-> Hi Neil,
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 48 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
 > 
-> The subject of this patch and a few others refer to 8560 instead of
-> 8650. Please fix :)
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 13dd44d..2aa7383 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -3714,4 +3714,52 @@
+>  
+>  		status = "disabled";
+>  	};
+> +
+> +	pcie0_ep: pcie-ep@1c00000 {
+> +		compatible = "qcom,sa8775p-pcie-ep";
+> +		reg = <0x0 0x01c00000 0x0 0x3000>,
+> +		      <0x0 0x40000000 0x0 0xf20>,
+> +		      <0x0 0x40000f20 0x0 0xa8>,
+> +		      <0x0 0x40001000 0x0 0x4000>,
+> +		      <0x0 0x40200000 0x0 0x100000>,
+> +		      <0x0 0x01c03000 0x0 0x1000>,
+> +		      <0x0 0x40005000 0x0 0x2000>;
+
+Can we sort the reg entries?
+
+> +		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
+> +			    "mmio", "dma";
+> +
+> +		clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+> +			<&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+> +			<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+> +			<&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+> +			<&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
+> +
+> +		clock-names = "aux",
+> +			      "cfg",
+> +			      "bus_master",
+> +			      "bus_slave",
+> +			      "slave_q2a";
+> +
+> +		interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
+> +			     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
+> +			     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +		interrupt-names = "global", "doorbell", "dma";
+> +
+> +		interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
+> +				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
+> +		interconnect-names = "pcie-mem", "cpu-pcie";
+> +
+> +		iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
+> +			    <0x100 &pcie_smmu 0x0001 0x1>;
+
+I think I recommended using "iommu-map" instead of "iommus" property. But
+looking at it again, I think it is fine to use just "iommus" property as the SID
+will be associated with the EP directly.
+
+Unless you want to have different SID for each function.
+
+> +
+> +		resets = <&gcc GCC_PCIE_0_BCR>;
+> +		reset-names = "core";
+> +		power-domains = <&gcc PCIE_0_GDSC>;
+> +		phys = <&pcie0_phy>;
+> +		phy-names = "pciephy";
+> +		max-link-speed = <3>;
+
+Please add a comment here that you are limiting the Gen speed due to stability
+issues. Like,
+
+		max-link-speed = <3>; /* FIXME: Limiting the Gen speed due to stability issues */
+
+> +		num-lanes = <2>;
+
+Can you check if the controller is cache coherent? If so, we should add
+"dma-coherent" property.
+
+- Mani
+
+> +
+> +		status = "disabled";
+> +	};
+>  };
+> -- 
+> 2.7.4
 > 
-> * dt-bindings: dma: qcom,gpi: document the SM8560 GPI DMA Engine
-> * dt-bindings: usb: qcom,dwc3: document the SM8560 SuperSpeed DWC3 USB controller
-> * dt-bindings: soc: qcom,aoss-qmp: document the SM8560 Always-On Subsystem side channel
 
-Thanks for noticing :-)
-
-I'll wait some time before sending v2, a burst of patches is enough for a day !
-
-Neil
-
-> 
-> Regards
-> Luca
-> 
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->> For convenience, a regularly refreshed linux-next based git tree containing
->> all the SM8650 related work is available at:
->> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
->> ---
->>   Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
->> index 88d0de3d1b46..0985b039e6d5 100644
->> --- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
->> +++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
->> @@ -32,6 +32,7 @@ properties:
->>                 - qcom,sm8350-gpi-dma
->>                 - qcom,sm8450-gpi-dma
->>                 - qcom,sm8550-gpi-dma
->> +              - qcom,sm8650-gpi-dma
->>             - const: qcom,sm6350-gpi-dma
->>         - items:
->>             - enum:
->>
->> ---
->> base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
->> change-id: 20231016-topic-sm8650-upstream-bindings-gpi-29a256168e2f
->>
->> Best regards,
-> 
-
+-- 
+மணிவண்ணன் சதாசிவம்
