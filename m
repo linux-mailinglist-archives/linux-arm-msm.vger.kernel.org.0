@@ -2,105 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58D837D6868
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 12:27:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF5D87D690E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 12:40:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233782AbjJYK1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 06:27:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47944 "EHLO
+        id S1343668AbjJYKkX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 06:40:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232082AbjJYK1P (ORCPT
+        with ESMTP id S234772AbjJYKkO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 06:27:15 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 22DB893;
-        Wed, 25 Oct 2023 03:27:13 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 506412F4;
-        Wed, 25 Oct 2023 03:27:54 -0700 (PDT)
-Received: from [10.57.2.113] (unknown [10.57.2.113])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 337073F738;
-        Wed, 25 Oct 2023 03:27:10 -0700 (PDT)
-Message-ID: <ccb5590d-b936-435a-bbf6-3894194e8800@arm.com>
-Date:   Wed, 25 Oct 2023 11:27:08 +0100
+        Wed, 25 Oct 2023 06:40:14 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B094710E0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 03:40:08 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507a98517f3so7667672e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Oct 2023 03:40:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698230407; x=1698835207; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c6Z1p4kKtgAXkbhWcm2d+hA00mC2LWkNVOmS2pvrIIs=;
+        b=OiE+5DpllivC1t3kS6P/G9QplJqPWhgDbwtjnMg5RtU0YL++rttT2d25WEuba0H2dz
+         qSqphjuNoWC3dwpY73z5iXARaaXbO9+twD2+Hl7nyfunjxrBF5T2v8Z3lu39MNJH38FK
+         XhFUwZFdl+F4zw/12QLc7cHXjzYFk+QmJI2A32rBcF0HrQxz8L1cF/cxD7ZcKGKPyaP/
+         7NC5xcwje0Q82YgxURxn7NUBT7DkrEndRLtZiPjkVLhSllbpM1NRMG25q7DSM1zP2dap
+         6D+j9wYfx+AzMExiX29m4UgmxM+1Rwg6EkPmQzc6tbnpaYfvye7yxiGwXjh/daE72kgr
+         b2Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698230407; x=1698835207;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c6Z1p4kKtgAXkbhWcm2d+hA00mC2LWkNVOmS2pvrIIs=;
+        b=wNOHM0J1PCpoCmIU76aeu5ZJJdfNR7QXx29BR/QNHnrcLdzGhsU2xFknl/IBquwZqq
+         FQsrl9rHeCjBAVT0h2OFEdokxPT7Eb+3fMWUOwSDRhoWpqHTxLfOpeP4eYJXC9nQpR6e
+         s7f4c3ZRhmCaEWWi4Kc96jccFPhJAmsKxCwRQYr1CZzwwnzjOFfOItlJJpNQhKy6fRSg
+         aAr0+DXbHGhWPAfoJNZ4G3ujNFkcSvnhGPFbNFpBnKm1fILj+/OhLMupOkCFOk/wn4tV
+         7AQRPfI9gZb+aTJRIyJQoT+NSPE6+w7FNgqy2v7fRNWhJWy8nWBZoQYkWCPHJArOTqYM
+         q4bA==
+X-Gm-Message-State: AOJu0YxfhDj1DlZOsfCVAeRq0w2ySpO/zSVAH6+sSzRz8ibT9CeNQvQ4
+        LPf4EGW3xw8S+AqqIDSQlCcGuA==
+X-Google-Smtp-Source: AGHT+IFVRmNXMEbNQPkppWpMfxB5GZ00/ir8cT0Q4jJSneFXioGp9uwFQafN49hR/A7039iEqUXmKg==
+X-Received: by 2002:ac2:58e7:0:b0:500:b53f:fbc2 with SMTP id v7-20020ac258e7000000b00500b53ffbc2mr10374360lfo.26.1698230406696;
+        Wed, 25 Oct 2023 03:40:06 -0700 (PDT)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id f7-20020adff587000000b0031fb91f23e9sm11788220wro.43.2023.10.25.03.40.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Oct 2023 03:40:05 -0700 (PDT)
+Message-ID: <fdd775e5-1e43-4f65-b444-da6b83e3df5b@linaro.org>
+Date:   Wed, 25 Oct 2023 11:40:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] coresight-tpdm: Correct the property name of MSR
- number
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1698128353-31157-1-git-send-email-quic_taozha@quicinc.com>
-Content-Language: en-GB
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1698128353-31157-1-git-send-email-quic_taozha@quicinc.com>
+Subject: Re: [PATCH 2/4] media: qcom: camss: Use common VFE
+ pm_domain_on/pm_domain_off where applicable
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, rfoss@kernel.org,
+        todor.too@gmail.com, agross@kernel.org, andersson@kernel.org,
+        mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231024224255.754779-1-bryan.odonoghue@linaro.org>
+ <20231024224255.754779-3-bryan.odonoghue@linaro.org>
+ <d0d30b6b-3664-4531-a71f-6faec3330d2c@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <d0d30b6b-3664-4531-a71f-6faec3330d2c@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+On 25/10/2023 10:18, Konrad Dybcio wrote:
+>> educe the pattern down to a common callback. VFE 4.1 is a special case
+>> which to me also indicates that it is worthwhile maintaining an 
+>> indirection
+>> for the vfe_pm_domain_{on|off} for now.
+> Are there issues when powering it off like all the others?
 
-Please always run a checkpatch on your patch before submission.
-(And of course test your patch properly for all the functionality
-that it introduces. We don't have the hardware for testing all of
-this. So, there is only so much we could do with the eyes)
+4.1 doesn't have a VFE power-domain just a top level controller PD, 
+however I think a blank callback is neater than
 
+if (vfe->pm_domain_on) {
+     vfe->pd_domain_on();
+}
 
-On 24/10/2023 07:19, Tao Zhang wrote:
-> Correct the property name of the DSB MSR number that needs to be
-> read in TPDM driver. The right property name is
-> "qcom,dsb-msrs-num".
-> 
-> Fixes： 90a7371cb08d ("coresight-tpdm: Add nodes for dsb msr support")
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tpdm.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index b25284e..97654aa 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -892,7 +892,7 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->   
->   	if (drvdata && tpdm_has_dsb_dataset(drvdata))
->   		of_property_read_u32(drvdata->dev->of_node,
-> -			   "qcom,dsb_msr_num", &drvdata->dsb_msr_num);
-> +			   "qcom,dsb-msrs-num", &drvdata->dsb_msr_num);
->   
->   	/* Set up coresight component description */
->   	desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
+its just vfe->pm_domain_on(); at the cost of 1 or 2 instructions for 
+indirection.
 
-checkpatch complains:
-
-ERROR: Please use git commit description style 'commit <12+ chars of 
-sha1> ("<title line>")' - ie: 'commit 90a7371cb08d ("coresight-tpdm: Add 
-nodes for dsb msr support")'
-#13:
-Fixes： 90a7371cb08d ("coresight-tpdm: Add nodes for dsb msr support")
-
-total: 1 errors, 0 warnings, 8 lines checked
-
-
-Suzuki
+---
+bod
