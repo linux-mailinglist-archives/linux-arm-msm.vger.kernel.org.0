@@ -2,74 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D4F97D61A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 08:25:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 048087D61FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Oct 2023 08:59:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232176AbjJYGZQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 02:25:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41050 "EHLO
+        id S232281AbjJYG7W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 02:59:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231984AbjJYGZP (ORCPT
+        with ESMTP id S232558AbjJYG7R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 02:25:15 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42BF312D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 23:25:12 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1cacde97002so32457445ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Oct 2023 23:25:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698215111; x=1698819911; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YRNx4/VhgJBUmPLhfW0nzhO+j+HC6thHIfSQat4cc5Q=;
-        b=E2TrS5twCMhJnRkIHOMNNqcEgDS2AEsF0M3m9s/HaI9gY729q04tRAq/7QNZ7+cBOU
-         Ba3IzzbiUn1t9ozMz5lMCVCxxV04VZsgGe7Mef8ndh2b3IbF9I90FaV3B6AIbdmEendN
-         7V6BQMSzkID7eUnXBxSTDFx30/8UNfiT6V0slAQzrxjyddUaNQXMC/r1hhKmpZjRa9BL
-         1RcKEPoEXeWiwUNaknv0M6FSUYhkpcaq760kb502SEUH4C9ycryn4f5cmCVnW9PKqalD
-         OSx8eu6mq9eDvN3qx/UaZ2be5KHJqA1ebie6Or7IrZ3otksLjy9AanbrLfstZjfBjCUr
-         xImw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698215111; x=1698819911;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YRNx4/VhgJBUmPLhfW0nzhO+j+HC6thHIfSQat4cc5Q=;
-        b=rDrVNxCzZFlP6/X0DoYYGwS2dLtXuAp4rchHrNgJQtl9XtbdiHjLv2k5trMhwK+VIB
-         xD9J16VdC3G8xa3jTn4wAl29oWGc2H3f2NIVvg4TnzzRQmv9n7XU0Xzxqoq4aEVFnR6f
-         kkOz140aWORqbub4LpCvuKgpHdl9YUgfqM1gidnR6C2QbPrX+n4Fezl0g3txsKIIctAT
-         wYPQ26ShvlYXpVvYI5wKt+ueIResbczcnfHJE6VjRHYA9pwJd693iUqJRj3Vvug6fiUx
-         WNnbXI2sew/9e6W1qYSctm2oUcxgOECCckBjJJLmDzZy2qjocWGd96LAR/sq++48VNzf
-         bHhA==
-X-Gm-Message-State: AOJu0Yw+HAOZOZt+Xo+tGdw82/w3QLcTRb9hx5mvcG6FxvxG/oo+Ut4s
-        9Cx6iSIR57CGI0vnH2kz9a1/Lw==
-X-Google-Smtp-Source: AGHT+IGohNcTFzm2Bh0bFriQkaNYjeD1yBiORs4U/Gyp7N7O3RPbMKBRyGUEMkF90cJRpigxhPHV9Q==
-X-Received: by 2002:a17:903:11cd:b0:1c7:29fd:33b6 with SMTP id q13-20020a17090311cd00b001c729fd33b6mr13396486plh.40.1698215111463;
-        Tue, 24 Oct 2023 23:25:11 -0700 (PDT)
-Received: from localhost ([122.172.80.14])
-        by smtp.gmail.com with ESMTPSA id u17-20020a170902e5d100b001b89a6164desm8371393plf.118.2023.10.24.23.25.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Oct 2023 23:25:10 -0700 (PDT)
-Date:   Wed, 25 Oct 2023 11:55:08 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        rafael@kernel.org, ilia.lin@kernel.org, sivaprak@codeaurora.org,
-        quic_kathirav@quicinc.com, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v5 0/9] Enable cpufreq for IPQ5332 & IPQ9574
-Message-ID: <20231025062508.vccrmkem45p3fnwe@vireshk-i7>
-References: <cover.1697781921.git.quic_varada@quicinc.com>
- <20231020070947.cwigtaa2haij56hz@vireshk-i7>
- <20231020080339.GA6197@varda-linux.qualcomm.com>
+        Wed, 25 Oct 2023 02:59:17 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45CFD10E3;
+        Tue, 24 Oct 2023 23:59:10 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39P5RBUe028836;
+        Wed, 25 Oct 2023 06:59:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
+ subject : mime-version : content-type : content-transfer-encoding :
+ message-id : to : cc; s=qcppdkim1;
+ bh=jm0AJIxNIWSTRPzcxpYZ/riAaWPsV8BfuXd+7+yNIyg=;
+ b=p6gW9XupXl4DcoIx3suqeHfmCI7JF+7WjzJzJjsUOeOdXePdtYO1+z6mQgA+3S//lGEM
+ HdIssf0ssFopKUf8wMLGuvjYjWQZoBjh2I/M4P51cdOhKcuVyyQ2h+kpHKC5NtVMGlbk
+ tYbc3sVNOf0WhnUfw9/x22k4vb3WJcHteOrjhQU1KWJ17hfZaAax4PiQOPFtgVCBBhNO
+ cFonJMBt2jbe9PUB0HGYTTXQccHQlpkUqFljGSr0AytWRQEU5bckZ1UQBo22WmHvCxq7
+ +AhCplcX6GfPtQCG8xtThOoHOB4b+yX+v7g+ZTrXJOGjxJK7+WdC2CmZzPx3B5QP3Hs8 kA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3txngvgw0h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Oct 2023 06:59:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39P6x4tc020845
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 25 Oct 2023 06:59:04 GMT
+Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Tue, 24 Oct 2023 23:59:00 -0700
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Date:   Wed, 25 Oct 2023 12:28:52 +0530
+Subject: [PATCH] arm64: dts: qcom: ipq9574: enable GPIO based LED
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231020080339.GA6197@varda-linux.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20231025-ipq9574-led-v1-1-b8217e997dfb@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAKu8OGUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI2NDAyNT3cyCQktTcxPdnNQUXYuklMTEJJNky+Q0MyWgjoKi1LTMCrBp0bG
+ 1tQCkZF65XQAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1698217140; l=1313;
+ i=quic_kathirav@quicinc.com; s=20230906; h=from:subject:message-id;
+ bh=KUfPgtsNmQYnugjmK4hBeNKZ3ac7DYy6rwDzb4WmbB8=;
+ b=KveIsJSWyP2/SkuzdEbSBd649/FyCjcBU4vsUVHXosFeV2ILRYiueJMFpy8WpRm+BljruhRQ9
+ P980Cpt2FFCBqWOYoMTQWthHU98MOF+cVjf8Z7bA/OsuSZgQL9PkcR/
+X-Developer-Key: i=quic_kathirav@quicinc.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zJqCDf0XRVD3V8sNs2cw9SyllmTEVxBz
+X-Proofpoint-ORIG-GUID: zJqCDf0XRVD3V8sNs2cw9SyllmTEVxBz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-25_01,2023-10-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 malwarescore=0 clxscore=1015 adultscore=0 spamscore=0
+ bulkscore=0 mlxlogscore=520 impostorscore=0 mlxscore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310250059
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -77,22 +90,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-10-23, 13:33, Varadarajan Narayanan wrote:
-> On Fri, Oct 20, 2023 at 12:39:47PM +0530, Viresh Kumar wrote:
-> > On 20-10-23, 11:49, Varadarajan Narayanan wrote:
-> > > Varadarajan Narayanan (9):
-> > >   cpufreq: qti: Enable cpufreq for ipq53xx
-> > >   cpufreq: qti: Introduce cpufreq for ipq95xx
-> >
-> > Can I pick just these two ?
-> 
-> ipq53xx patch is dependent on the previous safe source switching
-> patch, hence not safe to pick that.
-> 
-> 	No -> cpufreq: qti: Enable cpufreq for ipq53xx
-> 	Yes -> cpufreq: qti: Introduce cpufreq for ipq95xx
+Add support for wlan-2g LED on GPIO64.
 
-The patches don't apply cleanly. Please resend.
+Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+index 49c9b6478357..b6f90da31778 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+@@ -51,6 +51,18 @@ button-wps {
+ 			debounce-interval = <60>;
+ 		};
+ 	};
++
++	leds {
++		compatible = "gpio-leds";
++		pinctrl-0 = <&gpio_leds_default>;
++		pinctrl-names = "default";
++
++		led-0 {
++			gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
++			linux,default-trigger = "phy0tx";
++			default-state = "off";
++		};
++	};
+ };
+ 
+ &blsp1_spi0 {
+@@ -117,6 +129,13 @@ gpio_keys_default: gpio-keys-default-state {
+ 		drive-strength = <8>;
+ 		bias-pull-up;
+ 	};
++
++	gpio_leds_default: gpio-leds-default-state {
++		pins = "gpio64";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++	};
+ };
+ 
+ &usb_0_dwc3 {
+
+---
+base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
+change-id: 20231025-ipq9574-led-8bdaab4c9cf6
+
+Best regards,
 -- 
-viresh
+Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+
