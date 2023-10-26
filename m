@@ -2,92 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B82247D83E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 15:52:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D67EA7D8431
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 16:06:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230505AbjJZNwT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 09:52:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49754 "EHLO
+        id S231180AbjJZOGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 10:06:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233035AbjJZNwS (ORCPT
+        with ESMTP id S235017AbjJZOGh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 09:52:18 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F54E1AC
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 06:52:15 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5a7af52ee31so7078777b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 06:52:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698328334; x=1698933134; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5l1pXXPojYJERfyGbdEpNZqOClr1acgIl7421/gNGH0=;
-        b=mxFdr4SC0qtnzbV6PAGMQA4W7/7r2CJPyZECw1TMM5yR41EId/0VZRHp9F6GiRkd3F
-         ZkTOKozF0IyO0eHP1YOv25Y39/6bUzZ0gutNCWxC1TzcFXZ+e3nmQQIG+DOJth/0E25N
-         TTqjHZCPjMqM/vihPdrmtWV+47nCaPuD1s02V3xk0OBFKgf+qhh1Xt/UkXYyHRJOrnwp
-         KUKiaQGcuRCn/GtLC1KdqdZP06OHjq/za2+1TV4w9VYbeKCzYMl+vu4kSUcUxhoLx2/m
-         Vk8xdgAfm7cqNisU99MfUu6ABGlTsvx9QzhUGk/ZKccpqOlcGN+F4W9Gpa6nTfW49loh
-         9XDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698328334; x=1698933134;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5l1pXXPojYJERfyGbdEpNZqOClr1acgIl7421/gNGH0=;
-        b=R/W/URO3rBBDENB++sr7NixVSDKFbYLdieaM9kecFsOWuD00WbFrH3YPc8Lo88HuGK
-         tno1F/as+TOUfOAmW7wGchYhB8gMxpgWhbv5EZIbYpZjN/f4qi4XIswapPK7OIIaJ4By
-         pVc1EiqZ5tHk4bJEiUJ3EUUl3N55/fmvoYeGH1kMGx3JR/Mnsd72mS8kVVO7owH5VqoC
-         Z7cB3eqMYTeotonA1dTOmh5+vxH37zuSo3jAXOiCpkw+ZX3q7Qph/d7bktdJeOH13EV+
-         iafQ37U3mO3NWah3DCJx37NqEmF9O1WFa2r5TsPxWsISuu+SMv850TEFRa3ZEdlAmhJp
-         5fbg==
-X-Gm-Message-State: AOJu0Yz4ACczGlaOjyjkc/PhIgHI2S78t3XO7wjAn/r01PUHXXjC0QM9
-        h9TKmSpvxAoSOiaeAma5YLZN1xpZEcnKZIlSAQZtZQ==
-X-Google-Smtp-Source: AGHT+IHfP/O7KN1EAK1myIjKq27giWPODeYiJ0sVAkgkirwOVfNgi1SOykk4KY59v73CE8NRUJB2ldzUl35zFlzaUsc=
-X-Received: by 2002:a0d:dd0c:0:b0:5a7:d11c:f0ed with SMTP id
- g12-20020a0ddd0c000000b005a7d11cf0edmr20160216ywe.33.1698328334604; Thu, 26
- Oct 2023 06:52:14 -0700 (PDT)
+        Thu, 26 Oct 2023 10:06:37 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D891B1;
+        Thu, 26 Oct 2023 07:06:34 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B39C433C7;
+        Thu, 26 Oct 2023 14:06:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698329194;
+        bh=Q4T6YNzviV/YhhhKEggjgAtYZp6sRLmfAiT+GEWyp3U=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=B075zTCHd/tWysLniMnrAMRXcPLl2UYXlI+l1xr4i5FzX9y5Sks28UYfwdbmUqOoR
+         BPEq2fwy80rE64HaHMSwat+FWzGVuRvUs5tnSvelnvE2hk8iMv5e26xjnzjXi2nVBr
+         2Ve4wm/qYcbrJbbq63Jd+7C7dhewgI23qjPLnRlHr0JaRpnfgj/He2EPzQsmfzzKM/
+         OH8p5mrRjYAZZwZu+lmxeW79yQBB/xFZbi9w3Twh2vDG3ld7pw7LbtneJrTocuBXVO
+         mHUURrsbEoGTHNOFBBYL/KvaTIOqFL7fao8IkQeXq3X+unQXUVdJFTuAuAvkhGXOim
+         ZuLW/+Dt99mXg==
+From:   Mark Brown <broonie@kernel.org>
+To:     andersson@kernel.org, konrad.dybcio@linaro.org,
+        lgirdwood@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org,
+        Sibi Sankar <quic_sibis@quicinc.com>
+Cc:     agross@kernel.org, conor+dt@kernel.org, quic_rjendra@quicinc.com,
+        abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_tsoni@quicinc.com, neil.armstrong@linaro.org
+In-Reply-To: <20231025135550.13162-1-quic_sibis@quicinc.com>
+References: <20231025135550.13162-1-quic_sibis@quicinc.com>
+Subject: Re: [PATCH 0/2] regulator: qcom-rpmh: Add regulator support for
+ SC8380XP
+Message-Id: <169832919131.118035.6543028726284946961.b4-ty@kernel.org>
+Date:   Thu, 26 Oct 2023 15:06:31 +0100
 MIME-Version: 1.0
-References: <20231018145750.429385-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20231018145750.429385-1-krzysztof.kozlowski@linaro.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 26 Oct 2023 15:52:03 +0200
-Message-ID: <CACRpkdZZhm+h-ZXy6X6xX6DE1bVbWPR3hd9EpgEDUUNX_t4S2g@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,sa8775p-tlmm: add missing wakeup-parent
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-0438c
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 18, 2023 at 4:57=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Wed, 25 Oct 2023 19:25:48 +0530, Sibi Sankar wrote:
+> This series adds regulator support for the Qualcomm SC8380XP platform, aka Snapdragon X Elite.
+> 
+> Release Link: https://www.qualcomm.com/news/releases/2023/10/qualcomm-unleashes-snapdragon-x-elite--the-ai-super-charged-plat
+> 
+> Rajendra Nayak (2):
+>   dt-bindings: regulator: qcom,rpmh: Add PMC8380 compatible
+>   regulator: qcom-rpmh: Add regulators support for PMC8380
+> 
+> [...]
 
-> Add missing wakeup-parent property, already used by DTS to indicate that
-> pins are wakeup capable:
->
->   sa8775p-ride.dtb: pinctrl@f000000: 'wakeup-parent' does not match any o=
-f the regexes: '-state$', 'pinctrl-[0-9]+'
->
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Applied to
 
-Patch applied.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-Yours,
-Linus Walleij
+Thanks!
+
+[1/2] dt-bindings: regulator: qcom,rpmh: Add PMC8380 compatible
+      commit: ae61939cdf378ae3acc5716ccb43fef3cdace36e
+[2/2] regulator: qcom-rpmh: Add regulators support for PMC8380
+      commit: afb823a5843e6790106fcfe5029cfa736e05007f
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
