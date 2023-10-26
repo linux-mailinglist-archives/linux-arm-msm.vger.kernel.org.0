@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1957B7D80DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 12:37:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 928227D80E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 12:38:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231127AbjJZKg7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 06:36:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53628 "EHLO
+        id S231328AbjJZKiX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 06:38:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjJZKg6 (ORCPT
+        with ESMTP id S230285AbjJZKiW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 06:36:58 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA87E199
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 03:36:55 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-507d7b73b74so946869e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 03:36:55 -0700 (PDT)
+        Thu, 26 Oct 2023 06:38:22 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B091B1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 03:38:19 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c515527310so9950311fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 03:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698316614; x=1698921414; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698316698; x=1698921498; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mUjNYugWXfB4iPjrQerwJC5Hgqu+kEPnTtwC5PAjmHM=;
-        b=p3pQMpwfnFqb2K5aHx3zyaRGxaEs6o/n/DLkGLJgHcmPXcGdr84CA7Sk6GPfBnYLL6
-         HzlXk28OSS9EYlgoqwEoL13lJp2184Ci52hhJsaCMTiAr957IFr4e5/YLP5N7UTDxk58
-         72dqL+KV54jXC7BBKOYa0XOliiabqsYRpndeF+d2USXrouOTcdxNsi849ZWN1ElGDTsb
-         0C0czCnIXubacTSZrwsctCz3rUTSSKHYpf3BpFTlDXVCL76t11m4JbAVDFTrtt5RLgF6
-         /GkwgEAakDoEQYLnSvuTkMsEVCcvgiqcERk5VYe5zS+X0EplWS4rmXL51dKq7XUoxIEK
-         pbKg==
+        bh=JfmsBpRttI4bG7wY3IkTMsP9d4S4e9ZlWHpBoPQs8Js=;
+        b=c+/FmvCmPBKHxp7hqB4IXfrGWCghvM5TV42YR3eGCC2evWFSk8C45TXG4xSDEtNW0l
+         9FUD1XQU7kaHoNmq3t6R35+QPClHisy23152MX/L33N0OCK0ZXEKwo8s8oHzvavoOJcE
+         4aEqusnNo9rQgUOAP9CT87nDdZeMfuaXPD0hLL6iFEvOg8w92tElrpVWslDoHW40eNRk
+         Rge0YgEyxtKvcXxO1TCIyRqFHPp1j1iux+13M37UbOXyB9yHhhgjFSRYPf9mDufKkfDI
+         uttpiR8UHuRhC9KMnqb5/mnKBrSBqsuI1wAIsBF2P3kebS8Z6CTqDR59WrHFeXEnwjJP
+         +V3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698316614; x=1698921414;
+        d=1e100.net; s=20230601; t=1698316698; x=1698921498;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mUjNYugWXfB4iPjrQerwJC5Hgqu+kEPnTtwC5PAjmHM=;
-        b=Rgvv2bZ2PmP3bTsbncBbSwxZSK/NPRWiJsValMLAZySlhgK5m3QqezECJS5H8Xugk1
-         7uZphyWJVpoDe7I0zvhDO2w9/zTExABvIcT1PafXMXWV5TCz5pRpZFkIsMx9YPtbi04U
-         daKOdTEru6DDrPTw8wBOTmDdCIjaqFDhT4tS27AcVWfKRO2dJWNp076RHnVVvTet2898
-         AY9SXFfVrgFt2lCeHtV3tw9k8RaF0It5wZpt9G1y4SO1aT7UomS6fbjnJrX1SUs3eBeX
-         DRLRWZIVtFyyT38qq2BjYIUX4TnUvvL3DbpxQETOoPEpiVNLsZf6s48vruTAmkENXoMf
-         C55w==
-X-Gm-Message-State: AOJu0Yw8n58qSdwLvoT9xcfSwcTYSfiFNf28Ww6ZqBOGEsx2IwKIGIX+
-        xsd6ZHdlsrnVnQxOgnLtx3jsPw==
-X-Google-Smtp-Source: AGHT+IFR0kYrbz9KcWn983kcAAoVAZwmsmcMvoxTT7Cvu2H6TdPX2KPUjQ3lbuBZaawGsE3WlDdQZw==
-X-Received: by 2002:a19:4f04:0:b0:507:a001:792e with SMTP id d4-20020a194f04000000b00507a001792emr12867972lfb.46.1698316613735;
-        Thu, 26 Oct 2023 03:36:53 -0700 (PDT)
+        bh=JfmsBpRttI4bG7wY3IkTMsP9d4S4e9ZlWHpBoPQs8Js=;
+        b=Ob4k5eX7IBCUe+yziRFe9KKYOlZFMHRV0IqCwdld06GPqDfaFrHfz7X/tpH8Wk+LHB
+         ++Xp4T/xlL0yihhoK1ICY4cKk6LhbsF8AeMCmSoN4lNuEddw3MYIjueNgiQe2o1zyumB
+         Hl4nQgMixp7Q7ZZECZDbk9pz5Imc1oGc3JlAmqkSQVhMJunGgSlnS8KEZP2gfuOccEPu
+         6DnvglaJ+9FtjXqxt3Esjz8SN9Tq7hmpSZn5QqaN1tQFjuVg7pQth040F3dkkvY2iqtb
+         u+ancncw0EA4ESA2zQGDcZvQN7npxn3xm/CmY/6E+372ZLQUr/m8PhZxvXGszc2bz2QA
+         eP6A==
+X-Gm-Message-State: AOJu0YwbZkVhtRzGHPBM7yqIWB6ViclYVTQMNmwa2aY7FZvc893OV7zj
+        Ep30zTiNJ30Pmz+lXq2l8ZZUwg==
+X-Google-Smtp-Source: AGHT+IFb3s99g9tdjSUdEoZkLS81bC+uDFir7+4WiZXWRXUV0iEEKdr5KFx/XN0gnEeeq3D1MwzGVw==
+X-Received: by 2002:ac2:5619:0:b0:507:9a05:1aed with SMTP id v25-20020ac25619000000b005079a051aedmr12840492lfd.4.1698316697735;
+        Thu, 26 Oct 2023 03:38:17 -0700 (PDT)
 Received: from [172.30.204.123] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id n24-20020a05651203f800b00501c8959f6asm2954228lfq.98.2023.10.26.03.36.50
+        by smtp.gmail.com with ESMTPSA id n24-20020a05651203f800b00501c8959f6asm2954228lfq.98.2023.10.26.03.38.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 03:36:53 -0700 (PDT)
-Message-ID: <f3661605-ea2f-4681-8486-b83bd042568c@linaro.org>
-Date:   Thu, 26 Oct 2023 12:36:49 +0200
+        Thu, 26 Oct 2023 03:38:17 -0700 (PDT)
+Message-ID: <5eb61cce-8b3f-43bc-8e23-a63bf6f2c772@linaro.org>
+Date:   Thu, 26 Oct 2023 12:38:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: Add base SC8380XP dtsi and the QCP
- dts
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: sc8380xp: Add Compute Reference
+ Device
 Content-Language: en-US
 To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -69,15 +69,15 @@ Cc:     agross@kernel.org, conor+dt@kernel.org, ayan.kumar.halder@amd.com,
         linux-arm-kernel@lists.infradead.org, quic_tsoni@quicinc.com,
         neil.armstrong@linaro.org
 References: <20231025142427.2661-1-quic_sibis@quicinc.com>
- <20231025142427.2661-4-quic_sibis@quicinc.com>
+ <20231025142427.2661-5-quic_sibis@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231025142427.2661-4-quic_sibis@quicinc.com>
+In-Reply-To: <20231025142427.2661-5-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,95 +87,16 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 10/25/23 16:24, Sibi Sankar wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+> From: Abel Vesa <abel.vesa@linaro.org>
 > 
-> Add base dtsi and QCP board (Qualcomm Compute Platform) dts file for
-> SC8380XP SoC, describing the CPUs, GCC and RPMHCC clock controllers,
-> geni UART, interrupt controller, TLMM, reserved memory, interconnects,
-> SMMU and LLCC nodes.
+> Add basic support for SC8380XP CRD board dts, which allows it to boot
+> to a shell.
 > 
-> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 > Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
 > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 > ---
-[...]
-
-> +&tlmm {
-> +	gpio-reserved-ranges = <33 3>, <44 4>, <238 1>;
-It would be really cool if you added an explanation on why these
-GPIOs need to be reserved, especially since you can see what's
-connected on there on schematics. So, like:
-
-gpio-reserved-ranges = <33 3>, /* something */
-		       <44 4>, /* something else (fp scanner?)
-		       <238 1>; /* UFS reset? */
-
-
-[...]
-
-> +			compatible = "qcom,oryon";
-Again, this compatible won't fly unless all of these cores
-are totally identical and Oryon is only a name for this
-generation on this SoC (which I believe not to be the case).
-
-> +			reg = <0x0 0x0>;
-> +			enable-method = "psci";
-> +			next-level-cache = <&L1_0>;
-> +
-> +			L1_0: l1-cache {
-> +				compatible = "cache";
-I'm not sure if L1 is supposed to be described in the DT,
-Krzysztof should know.
-
-> +				next-level-cache = <&L2_0>;
-> +
-> +				L2_0: l2-cache-0 {
-> +					compatible = "cache";
-cache-level?
-cache-unified?
-
-[...]
-
-> +	memory@80000000 {
-> +		device_type = "memory";
-> +		/* We expect the bootloader to fill in the size */
-> +		reg = <0 0x80000000 0 0x80000000>;
-That contradicts the comment you made above. Plus, 2 GiB seems a
-bit low for this SoC :D
-
-[...]
-
-> +		gunyah_hyp_mem: gunyah-hyp-region@80000000 {
-you can probably strip the "-region" part, as this is implied by
-being a child of /reserved-memory
-
-> +		pld_pep_mem: pld-pep-region@81f30000 {
-What's PLD?
-
-What's this region used for? PEP is a Windows invention.
-
-[...]
-
-> +		av1_encoder_mem: av1-encoder-region@8e900000 {
-Is AV1enc hardware separate from iris?
-
-[...]
-
-> +		gcc: clock-controller@100000 {
-> +			compatible = "qcom,sc8380xp-gcc";
-> +			reg = <0 0x100000 0 0x200000>;
-The address part of reg should be padded to 8 hex digits.
-
-> +
-> +				interconnects = <&clk_virt MASTER_QUP_CORE_2 0 &clk_virt SLAVE_QUP_CORE_2 0>,
-QCOM_ICC_TAG_ALWAYS would be nicer than 0 (see sa8775p)
-
-[...]
-
-> +
-> +			interrupts =	<GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
-One space after and before '='
+Pretty much same comments as previous patch (on the QCP part)
 
 Konrad
