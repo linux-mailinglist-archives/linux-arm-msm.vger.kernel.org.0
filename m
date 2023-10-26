@@ -2,74 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E6707D88B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 21:05:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C3857D88D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 21:16:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbjJZTFV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 15:05:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44524 "EHLO
+        id S230143AbjJZTQY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 15:16:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjJZTFU (ORCPT
+        with ESMTP id S229649AbjJZTQX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 15:05:20 -0400
+        Thu, 26 Oct 2023 15:16:23 -0400
 Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 405441AE
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:05:17 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507973f3b65so1961585e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:05:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D251A7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:16:21 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-508126afc88so1923905e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:16:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698347115; x=1698951915; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698347780; x=1698952580; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nTntRETti1RoGYvSAtwTh58ii6/uwBd9FpU96CIE5p0=;
-        b=pf18e7JK4/mpvuyYHCKzXPt/+NKwMJ81FfLcL9t/Rw/dBFLyC1to1BNnI82RAm+WIX
-         KuhssyxkmJMQ/onbwNizIHivW796p//y+35nkeLpdgWWZlJBjbfkbvl+DRpS2XFIlSgB
-         CMUWtlPNALS/xEXOduXXwDw8+bvR1LaMu8FYCDkkt/wbsgulXN891LQ8UaBiQlfjv0c/
-         m3GEW4LMi/ij7acYrQgXLTqcw3583+utDt02e3ailv2LzzdXkoOtb7qXfZRZWMie4XHe
-         HFPtBpVQf2cYhNJ8Fj/8UwL2NxBjpTqtJFUndsQw3/GhhrAexF3TK6nNf0M4DXfkvtOU
-         sSRg==
+        bh=MmfACo16Znzmc2tlkLC7HANA11z5OmTtfKSPsuqMXkQ=;
+        b=qELsQnqlMTAGGjktJNHhjSDa/9pxhjK3RuwRGfOf2PwOsxBIiEV/pOQax3MQAwPByN
+         ZAjxCQvTyBiMrOJf9M5v4Mw3t5Wsvl9fSbsfNaHhq+E2Pffz04iVr7morU1c0SLmS/DW
+         Z2W1WJZVdhLiyvXVwnZTIvTeoVrOFow211HCNVW6d1Nahjm1SXqvU8KcVqUaDMfCZ6F2
+         q5PRsqnlIgSq6AGai5/ueYgsKRWeJ1BT+2Z9EocYIOoxX58GfjgzA3RUr/4afkP/51Zz
+         BEr2l15DTd8QgwYu0/ymaZTnLMarW3y/GXmJ39aL2fESO6KNi+ESoqaNcdAj8J0OTKWe
+         M9LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698347115; x=1698951915;
+        d=1e100.net; s=20230601; t=1698347780; x=1698952580;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nTntRETti1RoGYvSAtwTh58ii6/uwBd9FpU96CIE5p0=;
-        b=CcwiKz7PfJboVI5aURYrwkOgomAEwx932HdHmAiCpL2SM0MckPhz1TaqoViq9APati
-         BUDsXHrXWUQIeulo3xPObgLzBh+R9K6S/pxixLUOmWSfPLDePcPrLKDYEqR4xAzglstT
-         7gx1Wl13ArxuRQZApNl83eLw5orDpwlDTWMNnh6/fVkGLb3M4aaZDF5euVbTi+zo2WOU
-         k7GSz2lKs8pIhHbaoUhpkLlNwvMYAw8A+AEFpFr101sx6ADbEtgWxgsoqoDdNnfefsff
-         DUE+R3vc7CGqoL7T+8FcijgWVj1Lb7MVhEicPA1w9TcmNU/1B8QHhWx4RnDUpySl4Ntz
-         szNA==
-X-Gm-Message-State: AOJu0YxuQbOvLFpnR3kN/cvn7cnTR9gYVa5+LjloXmKxCeV/FXmkrG0v
-        fYVxT77k5oUUyIVKQ3pzh3ikBw==
-X-Google-Smtp-Source: AGHT+IE9qurnDLHIS+QygpgjC/ebr40WbZWUAO333XfZ5Wun+jrkSwJK+77+83sCm/A/fgKxLujF3Q==
-X-Received: by 2002:ac2:4146:0:b0:503:364d:b93d with SMTP id c6-20020ac24146000000b00503364db93dmr171014lfi.20.1698347115460;
-        Thu, 26 Oct 2023 12:05:15 -0700 (PDT)
-Received: from [172.30.204.74] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id e9-20020a05651236c900b00502e0388846sm3111497lfs.244.2023.10.26.12.05.14
+        bh=MmfACo16Znzmc2tlkLC7HANA11z5OmTtfKSPsuqMXkQ=;
+        b=lZfAa5+CofSYKG4Sq3YaXH+F61XGicuEaptodCdQPwf0mNuBsqZGnPq/16K3brFsad
+         4DBJVccRTxh1flHSdlq/+1/b4PzCBn5PMesqghJpZw06dyWValmioh3Wat/c4hUWsE8N
+         VigpTk8uwpIqZ1kJeXK+taNu0Q9gwGyTh2m7+4mWvXirWdbwh07qWKylZ8nh1t7zMYgS
+         ti4z6CVQ/cBpXYHrZl5CbwRbPiWnVgALlJmPh/dBeobfMY+8aqeOBqUaJQTbn8i8gjty
+         R9AHrtBx/HtyW9yu6nFPLxkXPL0WT/hD3Ih/8DpKCHqqwAaNsTZo/Phmpoi/2JN9FeEg
+         PSBQ==
+X-Gm-Message-State: AOJu0Yxh0f6LE0Ut5afmbhpIeubqYnSliQgQ7iGmeyYm3t5OyJ0scytc
+        xyfRvYZUh5ciYQ8lPIqTHOOPCg==
+X-Google-Smtp-Source: AGHT+IG+I8IqwyM3X+sAvm1ZUN54t+CWanNfCrnKDrk6SJrmu26XlqPpUrDfvcoLvyebrtu/2Fnzew==
+X-Received: by 2002:a05:6512:1156:b0:503:7be:c85d with SMTP id m22-20020a056512115600b0050307bec85dmr246597lfg.35.1698347779684;
+        Thu, 26 Oct 2023 12:16:19 -0700 (PDT)
+Received: from [172.30.204.229] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id be43-20020a056512252b00b004f13cd61ebbsm3119078lfb.175.2023.10.26.12.16.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 12:05:14 -0700 (PDT)
-Message-ID: <ac0aea1f-5e4f-4611-951d-037a4370384c@linaro.org>
-Date:   Thu, 26 Oct 2023 21:05:13 +0200
+        Thu, 26 Oct 2023 12:16:19 -0700 (PDT)
+Message-ID: <6146cc54-b3f9-4875-851e-3d2981b23ffc@linaro.org>
+Date:   Thu, 26 Oct 2023 21:16:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qrb2210-rb1: use USB host mode
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20231025-b4-rb1-usb-host-v1-1-522616c575ef@linaro.org>
- <9439252a-4dbc-417f-99a8-fa7c5f11a3d8@linaro.org>
- <d7fcb16d-1fe8-4be4-8f20-18ddcd2c2913@linaro.org>
+Subject: Re: [PATCH] drm/msm/adreno: Drop WARN_ON from patchid lookup for new
+ GPUs
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>
+References: <20231023-topic-adreno_warn-v1-1-bb1ee9391aa2@linaro.org>
+ <CAF6AEGuS3PhNbh9Gmu1g9YpUcr3LOh1gZK-XBE+urdb5jRjorg@mail.gmail.com>
+ <6a0398d1-22f4-4eb7-ba43-c448055be323@linaro.org>
+ <CAF6AEGuqrm0pssjRDa9DK=NppU4Qq5cPZicbGfxKH2czJmjK2A@mail.gmail.com>
 Content-Language: en-US
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <d7fcb16d-1fe8-4be4-8f20-18ddcd2c2913@linaro.org>
+In-Reply-To: <CAF6AEGuqrm0pssjRDa9DK=NppU4Qq5cPZicbGfxKH2czJmjK2A@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -82,32 +87,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/26/23 21:04, Caleb Connolly wrote:
-> 
-> 
-> On 26/10/2023 19:56, Konrad Dybcio wrote:
+On 10/23/23 22:20, Rob Clark wrote:
+> On Mon, Oct 23, 2023 at 12:56 PM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >>
 >>
->> On 10/25/23 13:58, Caleb Connolly wrote:
->>> The default for the QCM2290 platform that this board is based on is OTG
->>> mode, however the role detection logic is not hooked up for this board
->>> and the dwc3 driver is configured to not allow role switching from
->>> userspace.
+>>
+>> On 10/23/23 21:42, Rob Clark wrote:
+>>> On Mon, Oct 23, 2023 at 7:29 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>>>
+>>>> New GPUs still use the lower 2 bytes of the chip id (in whatever form
+>>>> it comes) to signify silicon revision. Drop the warning that makes it
+>>>> sound as if that was unintended.
+>>>>
+>>>> Fixes: 90b593ce1c9e ("drm/msm/adreno: Switch to chip-id for identifying GPU")
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> ---
+>>>>    drivers/gpu/drm/msm/adreno/adreno_gpu.h | 5 -----
+>>>>    1 file changed, 5 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>>> index 80b3f6312116..9a1ec42155fd 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>>>> @@ -203,11 +203,6 @@ struct adreno_platform_config {
+>>>>
+>>>>    static inline uint8_t adreno_patchid(const struct adreno_gpu *gpu)
+>>>>    {
+>>>> -       /* It is probably ok to assume legacy "adreno_rev" format
+>>>> -        * for all a6xx devices, but probably best to limit this
+>>>> -        * to older things.
+>>>> -        */
+>>>> -       WARN_ON_ONCE(gpu->info->family >= ADRENO_6XX_GEN1);
 >>>
->>> Force this board to host mode as this is the preferred usecase until we
->>> get role switching hooked up.
->> Does that not kill usb internet and similar?
+>>> Maybe just change it to ADRENO_6XX_GEN4?
+>> That also applies to 700
 > 
-> like rndis gadget? yes, it does kill that. But in return you get real
-> ethernet ;P
+> Then the warn is warning about what it is supposed to ;-)
 > 
-> This is the preferred default configuration for these boards (I sent a
-> similar patch for rb2 before). The usb_role framework does have support
-> for letting userspace change the role via sysfs, but it's disabled for
-> dwc3. The plan is to enable role switching properly by reading the DIP
-> switch state in the future.
-Ok all that sounds reasonable
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> I guess this is coming from a6xx_gmu_fw_start()?  I think we need a
+> different way to construct the gmu chipid, since the point of this was
+> to not depend on the low 8b having any particular meaning.  Perhaps we
+> should just get the gmu chipid from the device table.
+Guess that could work as well..
 
 Konrad
