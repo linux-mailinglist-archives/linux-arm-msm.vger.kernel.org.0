@@ -2,81 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DBF137D8A36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 23:23:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF0317D8A38
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 23:25:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344799AbjJZVX5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 17:23:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60434 "EHLO
+        id S229680AbjJZVZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 17:25:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232171AbjJZVXv (ORCPT
+        with ESMTP id S229501AbjJZVZv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 17:23:51 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DAF61B8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:23:49 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-507962561adso2121606e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:23:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698355427; x=1698960227; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WaS1F6gxvektWaH+1uXMzK+p2rqyW26a4HQpLvHPqcE=;
-        b=JgJgEZo8z0xWPSUgdtQjadp4VGUhjXVVGvrwk55CUM/IM5LXcVAQ01hBzPFMLyU9sS
-         Nj1pVuWDj506FC6GhCbU2ZYZy78D6mZ9HPVe3BYN/sS7L7An0uL/qMX63Ao0QKe7Un4d
-         nJnJF+PUgcsLyi5aOz1MJAUW/o+g5SCTkbx0feGDsQQkxwWZ5ibVqkABBTx4krCCrvRB
-         JNHk/OXPH/yE0kMdrAc9ykkvqLdRCO2yCUXphBahgx6MCSlYWlT5/QiN4w02ylBlZNxh
-         9T8KnfqGtzbBgvhIxlumu+xOCtkMYc3rEYglqvjoumtuDfeJzHH/gvUcYoudsIjKeUht
-         zh6Q==
+        Thu, 26 Oct 2023 17:25:51 -0400
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88CF710E;
+        Thu, 26 Oct 2023 14:25:49 -0700 (PDT)
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-581fb6f53fcso819460eaf.2;
+        Thu, 26 Oct 2023 14:25:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698355427; x=1698960227;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WaS1F6gxvektWaH+1uXMzK+p2rqyW26a4HQpLvHPqcE=;
-        b=nCoYwmZ9CZcRLf6+2Q20HixNjxij6gQyxWbDe1ClpqZL/vrZDDZIKtEc9oG7L3m3zR
-         SUa6oiGNzRUsdEy3+YK4KebQ8idRuEwVOcMntEbzF1Wx4dCKITDxtlKCBGzxzpmHwCSE
-         C5ifVbC545/9XYvLhxlM3UcXl+gchk4Lei6KIJbskOvKMFBkBKenzgOK1SG2T7ukvLq6
-         7jBKsgONwJOBAHXXfPPjIm3N1w4q9T1kPR3wY+HIpNN4ihJj+eIXiI2tf/RNbW1697J0
-         QrGbfbG1b7rM1wNGltXm00WbfBtyjEAd8eKawM8HhXEeVHL0e1q03LCH1EdyZI1zOe8r
-         r3/Q==
-X-Gm-Message-State: AOJu0YzpZQbuCKdkTxNDlq7SclZgyGiPD02b/5ZaR5gonDNhrvelt7VM
-        j4HzrGoDMbeXUYvYV67X4tRORg==
-X-Google-Smtp-Source: AGHT+IG4rn72MceQOMecssoAqNoze+tcPRSKZ88w+fIaYfqgCbPe9Go1xkti6JH9We47TwImsVs2Nw==
-X-Received: by 2002:ac2:4553:0:b0:502:f2a4:152f with SMTP id j19-20020ac24553000000b00502f2a4152fmr399943lfm.10.1698355427481;
-        Thu, 26 Oct 2023 14:23:47 -0700 (PDT)
-Received: from [172.30.204.146] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id u15-20020ac248af000000b004fdd6b72bfdsm5498lfg.117.2023.10.26.14.23.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 14:23:47 -0700 (PDT)
-Message-ID: <d2c46459-0686-41ba-bf27-a62fcd00d489@linaro.org>
-Date:   Thu, 26 Oct 2023 23:23:45 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/4] ARM: dts: qcom: ipq8064: Add CPU OPP table
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        d=1e100.net; s=20230601; t=1698355549; x=1698960349;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lUGBh/P34kDvbMPaTOm6+jeZny2Y+EPf+Q7R754U1ys=;
+        b=ShiXnHecBmAyFKBzu1cKPCm6MxCRFzDcp6C8mIlrH6Jpn8BHxj9oJ4KW6FiRAoPyxh
+         m5T24wh3/JU6oP5miVAy3bvUpK1kSmdPqh0/WlswoPjCdpVbisagZAC2zYjbWja1haMk
+         i3CUH5D5bh1zqyIORB5wVI9Betk/oqrnI1/+4kKMsQZQ0mK+VPgFpLdSZgbWxaPDF3Em
+         faFQtJZ4ZFqTXlkZUZTgSo/0zeHucg6UOz9mtXtEVqK+bCv1+RKhaKFtWuSAPBVJybkX
+         El7e6JDfwzurvNBodMWyhQBdh+LZ5XJYNK7HR5W9SzEzQ8rBrF+zmkK0225T+/UIE8FE
+         UDaQ==
+X-Gm-Message-State: AOJu0YxpEjHyeWgqZ9vKSm/aKvy2CFfGNIq/PixQjR78QP6AgHhKkpjo
+        on5gLOMEFToaqcZmPnSYww==
+X-Google-Smtp-Source: AGHT+IHI1iTcIMvhAjZtXr+zeyPnQQsygc6IP8SozeSeE2ot7xjwoS8aHA4+TLWUl4d6uk2xLReD9Q==
+X-Received: by 2002:a4a:e1d4:0:b0:581:e819:cac5 with SMTP id n20-20020a4ae1d4000000b00581e819cac5mr675502oot.9.1698355548774;
+        Thu, 26 Oct 2023 14:25:48 -0700 (PDT)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id v18-20020a05683018d200b006b9cc67386fsm18867ote.66.2023.10.26.14.25.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Oct 2023 14:25:48 -0700 (PDT)
+Received: (nullmailer pid 424302 invoked by uid 1000);
+        Thu, 26 Oct 2023 21:25:46 -0000
+Date:   Thu, 26 Oct 2023 16:25:46 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Tao Zhang <quic_taozha@quicinc.com>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20231019105011.7289-1-ansuelsmth@gmail.com>
- <20231019105011.7289-5-ansuelsmth@gmail.com>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231019105011.7289-5-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+Subject: Re: [PATCH v2 1/8] dt-bindings: arm: Add support for CMB element size
+Message-ID: <20231026212546.GA420866-robh@kernel.org>
+References: <1698202408-14608-1-git-send-email-quic_taozha@quicinc.com>
+ <1698202408-14608-2-git-send-email-quic_taozha@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1698202408-14608-2-git-send-email-quic_taozha@quicinc.com>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,26 +78,67 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10/19/23 12:50, Christian Marangi wrote:
-> Add CPU OPP table for IPQ8062, IPQ8064 and IPQ8065 SoC.
-> Use opp-supported-hw binding to correctly enable and disable the
-> frequency as IPQ8062 supports up to 1.0Ghz, IPQ8064 supports up to
-> 1.4GHz with 1.2GHz as an additional frequency and IPQ8065 supports
-> 1.7GHZ but doesn't have 1.2GHZ frequency and has to be disabled.
+On Wed, Oct 25, 2023 at 10:53:21AM +0800, Tao Zhang wrote:
+> Add property "qcom,cmb-elem-size" to support CMB(Continuous
+> Multi-Bit) element for TPDM. The associated aggregator will read
+> this size before it is enabled. CMB element size currently only
+> supports 32-bit and 64-bit.
 > 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 > ---
-I didn't actually check the values against downstream, maybe we
-can prettyplease ask Dmitry as he's done that before with msm8960-class
-SoCs..
+>  .../bindings/arm/qcom,coresight-tpdm.yaml          | 27 ++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+> index 61ddc3b..f9a2025 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
+> @@ -52,6 +52,14 @@ properties:
+>      $ref: /schemas/types.yaml#/definitions/uint8
+>      enum: [32, 64]
+>  
+> +  qcom,cmb-element-size:
 
-[...]
+What are the units? Use '-bits' suffix.
 
-> +	opp_table_cpu: opp-table-cpu {
-> +		compatible = "operating-points-v2-krait-cpu";
-> +		nvmem-cells = <&speedbin_efuse>;
-Shouldn't this be opp-shared?
+> +    description:
+> +      Specifies the CMB(Continuous Multi-Bit) element size supported by
+> +      the monitor. The associated aggregator will read this size before it
+> +      is enabled. CMB element size currently only supports 32-bit and 64-bit.
 
-Konrad
+The enum says 8-bit is supported.
+
+> +    $ref: /schemas/types.yaml#/definitions/uint8
+> +    enum: [8, 32, 64]
+> +
+>    qcom,dsb-msrs-num:
+>      description:
+>        Specifies the number of DSB(Discrete Single Bit) MSR(mux select register)
+> @@ -110,4 +118,23 @@ examples:
+>        };
+>      };
+>  
+> +    tpdm@6c29000 {
+> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
+> +      reg = <0x06c29000 0x1000>;
+> +      reg-names = "tpdm-base";
+> +
+> +      qcom,cmb-element-size = /bits/ 8 <64>;
+> +
+> +      clocks = <&aoss_qmp>;
+> +      clock-names = "apb_pclk";
+> +
+> +      out-ports {
+> +        port {
+> +          tpdm_ipcc_out_funnel_center: endpoint {
+> +            remote-endpoint =
+> +              <&funnel_center_in_tpdm_ipcc>;
+> +          };
+> +        };
+> +      };
+> +    };
+>  ...
+> -- 
+> 2.7.4
+> 
