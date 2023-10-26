@@ -2,70 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68CD77D860D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 17:34:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4061E7D8633
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 17:50:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231422AbjJZPeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 11:34:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44686 "EHLO
+        id S231422AbjJZPuv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 11:50:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231280AbjJZPeM (ORCPT
+        with ESMTP id S1345479AbjJZPuu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 11:34:12 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3094A1A6;
-        Thu, 26 Oct 2023 08:34:11 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77398C433C7;
-        Thu, 26 Oct 2023 15:34:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698334450;
-        bh=WlnOzBHEslW7auiw0OQwFlM3UIEQxiB3h6xa2FYhXD8=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=XDLhyice58rh/uUv7OvhKCFL0YqZ96mVJJZ7ryrPkBzgCe8Ckc1dwVkcFt8MINDR2
-         a8fBohwsAijNXq25EoUNELjMZrV2J5pcuieu1UWPzLVCSoxLWmwYizVsyoWNjWikow
-         UgA+lVYBoRj0AcknN1FHOgwkZZUfMHKAhVPW6Rrjo7vZC921i51E6IlnSVqLzgiTVU
-         VG8ZuE9kJ5iEjm+HFcgv32oTcM4g3Gu37v7uGiz/ca0shJzGuRpbaQskQ12sT/xv7L
-         8fYF2FDSvPane+sX5uC0e3+YrQSiI0O/Py4r/GU8E5zhE9Wpoqgbex9RfodWfBTGV8
-         42xuzs5WEvfsg==
-From:   Maxime Ripard <mripard@kernel.org>
-To:     dri-devel@lists.freedesktop.org,
-        Helen Koike <helen.koike@collabora.com>
-Cc:     robdclark@gmail.com, linux-arm-msm@vger.kernel.org,
-        neil.armstrong@linaro.org, linux-amlogic@lists.infradead.org,
-        p.zabel@pengutronix.de, linux-mediatek@lists.infradead.org,
-        heiko@sntech.de, jani.nikula@linux.intel.com,
-        intel-gfx@lists.freedesktop.org, alexander.deucher@amd.com,
-        amd-gfx@lists.freedesktop.org, airlied@redhat.com, daniel@ffwll.ch,
-        michel.daenzer@mailbox.org, daniel@fooishbar.org,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <20230919182249.153499-1-helen.koike@collabora.com>
-References: <20230919182249.153499-1-helen.koike@collabora.com>
-Subject: Re: [PATCH] MAINTAINERS: drm/ci: add entries for xfail files
-Message-Id: <169833444817.1001410.15120310571741480170.b4-ty@kernel.org>
-Date:   Thu, 26 Oct 2023 17:34:08 +0200
+        Thu, 26 Oct 2023 11:50:50 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8687E196
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 08:50:47 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c515527310so14832051fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 08:50:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698335446; x=1698940246; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lSmLSLc0O5qJoQEWMuotYo96+8Yt2HHCvZl015/TvAc=;
+        b=uBrNyJMhmnINkVfyU/5ikbl+vS/4VWt9jOtsQmM4pKjRXne/hodkk65wAWkKqsz5VO
+         91mwupiBlmhqnkpGKUDhW9udDUmyZDtVFpNWmYfXRmBANhlUkKCQl/7j+660f186d/T2
+         S2gjKm8eZkMU9yLV/E9PRDKKOT5bB9NPFCwKsPW9CpfXSlvbqpGRru/AeihwxBIm5N8r
+         8DRKvrms7EEgWZ4wEM7IpcHLXEIDIPOgzqf2X6AYI7YlZ9BlsNvYs7x6qSX5cqp/bw2e
+         unmVAgIj25qcE04JBVVk1yxsNtTfQ2C9MB2jX4DDRnuYI6ajjL/+eFPmUuwQ5XGfVGoj
+         RDaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698335446; x=1698940246;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lSmLSLc0O5qJoQEWMuotYo96+8Yt2HHCvZl015/TvAc=;
+        b=WSKcx78YAFaGXLLQ/yalMq/tLJbpagOLeQNiemCAUMdLejDSTyAF/plepSB5rRUSf9
+         OAl8AvR79F5Mzfy7VVCLLkmKrYyngY1+kC4oUUqWVt+2ctmplVUaKWoNOXSM99ZOeqpt
+         JzyE/nx/db7AL05rAcGJbEd/2hKayjxHkcRukgcvofiuHa8jc3CWht3PwXQoW/NyHRDh
+         GWv5rs8TEPRRpZpk/qzk2qOUb+Qn4r3+bGbUkGwomW/5OCC3WAQIWOKfGyZjhUne8wk1
+         SEBuX4Lx9kwRP3KVRWpxrmU1W3hIRjSgTt6f89EQs35pAwwGjDPVEteHBl9cliS0rDKE
+         3Buw==
+X-Gm-Message-State: AOJu0Yymcs9Vxj3+MD95tF7cKF6Azsm4XpZSLNSDWNTBPP1T6cQ7eGhx
+        3Lk06ja/UKZW6cuS+2bB2gA7XA==
+X-Google-Smtp-Source: AGHT+IHZ+CkYUIz5F3AENNG8fu1G70dYKnAQWoKiZIN+YRHegsVbhu2ZRUF94W/RkNT/VI+LxyPdzA==
+X-Received: by 2002:a2e:3204:0:b0:2bc:b557:cee9 with SMTP id y4-20020a2e3204000000b002bcb557cee9mr12943284ljy.43.1698335445678;
+        Thu, 26 Oct 2023 08:50:45 -0700 (PDT)
+Received: from sagittarius-a.nxsw.local ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id m28-20020a05600c3b1c00b003feae747ff2sm2938289wms.35.2023.10.26.08.50.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Oct 2023 08:50:45 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
+        rfoss@kernel.org, todor.too@gmail.com, andersson@kernel.org,
+        konrad.dybcio@linaro.org, mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, bryan.odonoghue@linaro.org
+Subject: [PATCH v2 0/5] media: qcom: camss: Introduce support for named power-domains
+Date:   Thu, 26 Oct 2023 16:50:37 +0100
+Message-ID: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.3
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 19 Sep 2023 15:22:49 -0300, Helen Koike wrote:
-> DRM CI keeps track of which tests are failing, flaking or being skipped
-> by the ci in the expectations files. Add entries for those files to the
-> corresponding driver maintainer, so they can be notified when they
-> change.
-> 
-> 
+V2:
+- Incorporates Konrad's suggestion re: removing 'id'
+- Adds RB - Konrad
+- Adds in a flag to indicate if a VFE has a power domain.
+  As I rebased this series I realised we had some magic indexing for VFE v
+  VFE Lite, which isn't the root cause of my bug bear in this series but is
+  the same sin - inferring functionality from indexing.
+  Once we transition fully to named pds we won't need a 'has_pd' to flag
+  which VFEs need power-domain attachment and which don't.
+  That transition will require populating all upstream dtsi with pd-names
+  and then deprecating the old way.
+  has_pd is a far better choice than inferring from indexes so, I've added.
 
-Applied to drm/drm-misc (drm-misc-next).
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/aa45a2b58aa1e187a2698a65164d694251f08fa1
 
-Thanks!
-Maxime
+V1:
+At the moment the Qcom CAMSS driver relies on the declaration order of
+power-domains within the dtsi to determine which power-domain relates to a
+VFE and which power-domain relates to the top-level (top) CAMSS
+power-domain.
+
+VFE power-domains must be declared prior to the top power-domain. The top
+power-domain must be declared last. Early SoCs have just one top
+power-domain with later SoCs introducing VFE specific power-domains.
+
+Differentiating between the number of power-domains results in lots of code
+which is brittle and which we can mostly get rid of with named
+power-domains.
+
+The reliance on declaration ordering is in-effect magic number indexing.
+
+This series introduces named power-domains for CAMSS and refactors some of
+the code in CAMSS to support the new named power-domains. We continue to
+support the legacy indexing model with an intention to remove after a
+reasonable transition period.
+
+New SoC additions should use named power-domains from now on.
+
+Tested on x13s, rb5, db410c
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-23-camss-named-power-domains
+
+Bryan O'Donoghue (5):
+  media: qcom: camss: Flag which VFEs require a power-domain
+  media: qcom: camss: Convert to per-VFE pointer for power-domain
+    linkages
+  media: qcom: camss: Use common VFE pm_domain_on/pm_domain_off where
+    applicable
+  media: qcom: camss: Move VFE power-domain specifics into vfe.c
+  media: qcom: camss: Add support for named power-domains
+
+ .../media/platform/qcom/camss/camss-vfe-170.c | 36 --------
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |  8 +-
+ .../media/platform/qcom/camss/camss-vfe-4-7.c | 36 --------
+ .../media/platform/qcom/camss/camss-vfe-4-8.c | 31 -------
+ .../media/platform/qcom/camss/camss-vfe-480.c | 36 --------
+ drivers/media/platform/qcom/camss/camss-vfe.c | 77 ++++++++++++++++
+ drivers/media/platform/qcom/camss/camss-vfe.h | 16 ++++
+ drivers/media/platform/qcom/camss/camss.c     | 87 ++++++++++++-------
+ drivers/media/platform/qcom/camss/camss.h     |  7 +-
+ 9 files changed, 156 insertions(+), 178 deletions(-)
+
+-- 
+2.42.0
 
