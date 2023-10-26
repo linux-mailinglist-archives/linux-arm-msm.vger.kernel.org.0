@@ -2,98 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D67EA7D8431
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 16:06:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 635C47D84A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 16:27:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231180AbjJZOGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 10:06:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52836 "EHLO
+        id S1345222AbjJZO1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 10:27:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235017AbjJZOGh (ORCPT
+        with ESMTP id S1345187AbjJZO1k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 10:06:37 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D891B1;
-        Thu, 26 Oct 2023 07:06:34 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B39C433C7;
-        Thu, 26 Oct 2023 14:06:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698329194;
-        bh=Q4T6YNzviV/YhhhKEggjgAtYZp6sRLmfAiT+GEWyp3U=;
-        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-        b=B075zTCHd/tWysLniMnrAMRXcPLl2UYXlI+l1xr4i5FzX9y5Sks28UYfwdbmUqOoR
-         BPEq2fwy80rE64HaHMSwat+FWzGVuRvUs5tnSvelnvE2hk8iMv5e26xjnzjXi2nVBr
-         2Ve4wm/qYcbrJbbq63Jd+7C7dhewgI23qjPLnRlHr0JaRpnfgj/He2EPzQsmfzzKM/
-         OH8p5mrRjYAZZwZu+lmxeW79yQBB/xFZbi9w3Twh2vDG3ld7pw7LbtneJrTocuBXVO
-         mHUURrsbEoGTHNOFBBYL/KvaTIOqFL7fao8IkQeXq3X+unQXUVdJFTuAuAvkhGXOim
-         ZuLW/+Dt99mXg==
-From:   Mark Brown <broonie@kernel.org>
-To:     andersson@kernel.org, konrad.dybcio@linaro.org,
-        lgirdwood@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org,
-        Sibi Sankar <quic_sibis@quicinc.com>
-Cc:     agross@kernel.org, conor+dt@kernel.org, quic_rjendra@quicinc.com,
-        abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_tsoni@quicinc.com, neil.armstrong@linaro.org
-In-Reply-To: <20231025135550.13162-1-quic_sibis@quicinc.com>
-References: <20231025135550.13162-1-quic_sibis@quicinc.com>
-Subject: Re: [PATCH 0/2] regulator: qcom-rpmh: Add regulator support for
- SC8380XP
-Message-Id: <169832919131.118035.6543028726284946961.b4-ty@kernel.org>
-Date:   Thu, 26 Oct 2023 15:06:31 +0100
+        Thu, 26 Oct 2023 10:27:40 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AD7D1AA
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 07:27:37 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id 46e09a7af769-6cd1918afb2so508000a34.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 07:27:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698330457; x=1698935257; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GhsfFnZU92WVFFrLtVVI1l5X1Oa/Mn3OJb2wIrC8HxY=;
+        b=S8A3L/KFwrMW1qgZRTEsPZ+r1M+Gs9TSGv+0/fHkUsYmXv+SFlJVlixeTztoACBq5h
+         0niVURbFcYmck7HJoM8FOnPsYMg74H1bEoif/2fyVyavTQtEwda/xQOaBInE+k+QDAwH
+         nf7zj3atpindmcvfQAhnmhTgqQzXGgblTD/ZbFPcZiYkHIDQfHJdic8mgEY+QikyBT7i
+         d93ZmwcDJkuh79+DjPEF0dp4Ero3xMUgeTsIGobEqQqfsKhB5X6o1qOWT/HZS0t3CZhX
+         Hoj2/CmsfYjeJi9cJpqTgDTlfT4hMf2GeWV06emR+bsCqLFXisMNonUGBckeC2EUywaJ
+         5sVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698330457; x=1698935257;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GhsfFnZU92WVFFrLtVVI1l5X1Oa/Mn3OJb2wIrC8HxY=;
+        b=j1npArlYCRzBxl3VOUUZH/MFnKSZcWlUjMyULZolJPpdeXzgDsTOxMl1kWoC1RL/QU
+         zF5MekFZTxWaYxRhRlcrpKOEXO/fa0BbWnYEAXaLZo36RC4oQGAXk0KcsnJlntg9uPFV
+         2RE4cpo/I1bGqXnXzKXnj3/RDwgt5jHhNdUant4UYR5nVGZ+QDWC8+zbKc8ADkcMcvll
+         rdGORO6zZmB2tNvr0mt1SOecmBbw96AhOYw7GLivddDO0rp1t6ZvdIU/AbDm3muxTY2x
+         VYiabpfDxWUJrcOAST6ZKKMiHC+RVcsnLsSa0I7eGaV89cotmuCBbkujkOB4RkO5wgZI
+         ie3A==
+X-Gm-Message-State: AOJu0YwF87Ydn/39cWQWoFa5NYFXwttIQkW9VreAP3geEv368aaez74U
+        DAfQQBetpuG8KWxFnL7CfXmrBzfG5M7z2rsJVYYw6zYustKhHkLi
+X-Google-Smtp-Source: AGHT+IGxE2Xrpad4dfWbz2DEnioRFB5E9UqGa5TGGzFeHITk4UUxpgjyIjrhQGMQUGjqU0chVHmctgxOD1J/cdNLLec=
+X-Received: by 2002:a05:6830:910:b0:6b9:c4b1:7a86 with SMTP id
+ v16-20020a056830091000b006b9c4b17a86mr23867125ott.3.1698330456853; Thu, 26
+ Oct 2023 07:27:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-0438c
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20231025-topic-sm8650-upstream-rpmpd-v1-0-f25d313104c6@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-rpmpd-v1-0-f25d313104c6@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 26 Oct 2023 16:27:01 +0200
+Message-ID: <CAPDyKFpXURm-kE-mhgyU7bO4EeApKA6PSrmcNp4a_39Eba-Lcg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] pmdomain: qcom: rpmhpd: Introduce Power Domains
+ support for SM8650
+To:     Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 25 Oct 2023 19:25:48 +0530, Sibi Sankar wrote:
-> This series adds regulator support for the Qualcomm SC8380XP platform, aka Snapdragon X Elite.
-> 
-> Release Link: https://www.qualcomm.com/news/releases/2023/10/qualcomm-unleashes-snapdragon-x-elite--the-ai-super-charged-plat
-> 
-> Rajendra Nayak (2):
->   dt-bindings: regulator: qcom,rpmh: Add PMC8380 compatible
->   regulator: qcom-rpmh: Add regulators support for PMC8380
-> 
-> [...]
+On Wed, 25 Oct 2023 at 09:32, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> Add Power Domains and Bindings for SM8650 platform, it uses
+> a new NSP2 power domain.
+>
+> Dependencies: None
+>
+> For convenience, a regularly refreshed linux-next based git tree containing
+> all the SM8650 related work is available at:
+> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+> Neil Armstrong (2):
+>       dt-bindings: power: qcom,rpmpd: document the SM8650 RPMh Power Domains
+>       pmdomain: qcom: rpmhpd: Add SM8650 RPMh Power Domains
+>
+>  .../devicetree/bindings/power/qcom,rpmpd.yaml      |  1 +
+>  drivers/pmdomain/qcom/rpmhpd.c                     | 30 ++++++++++++++++++++++
+>  include/dt-bindings/power/qcom,rpmhpd.h            |  1 +
+>  3 files changed, 32 insertions(+)
 
-Applied to
+Applied for next, thanks!
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
-
-Thanks!
-
-[1/2] dt-bindings: regulator: qcom,rpmh: Add PMC8380 compatible
-      commit: ae61939cdf378ae3acc5716ccb43fef3cdace36e
-[2/2] regulator: qcom-rpmh: Add regulators support for PMC8380
-      commit: afb823a5843e6790106fcfe5029cfa736e05007f
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Kind regards
+Uffe
