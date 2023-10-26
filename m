@@ -2,239 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 895457D7E0B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 10:04:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 855E67D7E4A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 10:18:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231251AbjJZIE5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 04:04:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36674 "EHLO
+        id S231184AbjJZISP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 04:18:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229710AbjJZIE4 (ORCPT
+        with ESMTP id S230283AbjJZISO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 04:04:56 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82EC7B8;
-        Thu, 26 Oct 2023 01:04:52 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D14AC433C8;
-        Thu, 26 Oct 2023 08:04:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698307492;
-        bh=EAQ7g0hX/FrxSMaglusDeCTnn471+1/pfyILaNojVhU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=fgekZGHe9w5dxxPKuk6zn5H1uJjUgh68Hyyq0hVSmesw81fAlMk4TVQuV+fG/Ifi1
-         bi/OMcbGSszHDTuVCfHrQcOiYv3LTv20fvoU1SpywODggvG/p4HrkVYhfgA8G/qA1K
-         hq13Qi/F68Tl8sEwYkUI/j7oUhxsyaodVcl4/HP7yzK7y4t2wRZwYwoTFSM79ueRYJ
-         t1gpgTbHagm39EF4326A8/n1Bjl28LzBwLUXBy4K6CFtS7RkxG0Hs4hxI6M4heugEC
-         rmhGrFUtI9Er0T2HPvwVxaNJz1ohb/CzatsuXO6zXUA8YxRIjNRkVZhOVjkzn/xjKi
-         l94O/mMwJ6K+Q==
-Date:   Thu, 26 Oct 2023 10:04:48 +0200
-From:   Maxime Ripard <mripard@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
- the DSI link power state
-Message-ID: <mxtb6vymowutj7whbrygwlcupbdnfqxjralc3nwwapsbvrcmbm@sewxtdslfoen>
-References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
- <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
- <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
- <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
- <uj6rtlionmacnwlqxy6ejt5iaczgbbe5z54ipte5ffbixcx3p4@pps7fcr3uqhf>
- <1696f131-83fb-4d0c-b4d7-0bdb61e4ae65@linaro.org>
+        Thu, 26 Oct 2023 04:18:14 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59680CE;
+        Thu, 26 Oct 2023 01:18:12 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39Q5TEMK013439;
+        Thu, 26 Oct 2023 08:18:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=ifqRCltxvTbgUWdpLs0nzht25Xok/zc8SeaY70fDy6c=;
+ b=W7ckUmtjr2xFLVILRmckgUukpPzDRJO5mpZAw7fGehliNwtJ0LTok6y490c+nFx/gsZj
+ sWmcpWM0WmyQO1BQaosUrBJRr7v0+rrCGcd1v7hl6CvgZt1Z+FgRi5YtzHZShqA4vxXQ
+ B4g50m2E/dyYIoIP0mmbryzH9VE+EfFTGAL/+3SeoTp+FyCLDSRMu9rPPgJDMmRnpHQn
+ 1xNFuxwsAs4vJI0FdA3KFR97fSDQMKarcF27RoHF3frwLdmr7r2BmdQ1PmpxVbSmHkgR
+ qLX3eaqSZGRJgSl8J4HVtHge4uJlr5qiqMUOyGD+80ThYjkzNCe6WabKuZpkJwKUjrh0 mQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tyfwfrn5t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Oct 2023 08:18:08 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39Q8I8rP001665
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Oct 2023 08:18:08 GMT
+Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Thu, 26 Oct 2023 01:18:06 -0700
+From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
+To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC:     <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v6 0/5] Add multimode invoke request IOCTL support
+Date:   Thu, 26 Oct 2023 13:47:57 +0530
+Message-ID: <1698308282-8648-1-git-send-email-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="t5jjjcy33i2jy7lt"
-Content-Disposition: inline
-In-Reply-To: <1696f131-83fb-4d0c-b4d7-0bdb61e4ae65@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: mDOyyB9U6z_WDW91J8kGPlpejr9S3cp_
+X-Proofpoint-GUID: mDOyyB9U6z_WDW91J8kGPlpejr9S3cp_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-26_06,2023-10-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ malwarescore=0 phishscore=0 mlxlogscore=524 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310260068
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add changes to support multimode invocation ioctl request. This
+ioctl call facilitates multiple types of requests from user including
+CRC check, performance counters, shared context bank usage, etc.
+This series also carries patch to save and restore interrupted
+context.
 
---t5jjjcy33i2jy7lt
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ekansh Gupta (5):
+  misc: fastrpc: Add fastrpc multimode invoke request support
+  misc: fastrpc: Add CRC support for remote buffers
+  misc: fastrpc: Capture kernel and DSP performance counters
+  misc: fastrpc: Add support to save and restore interrupted
+  misc: fastrpc: Add support to allocate shared context bank
 
-On Wed, Oct 25, 2023 at 06:16:14PM +0300, Dmitry Baryshkov wrote:
-> On 25/10/2023 15:44, Maxime Ripard wrote:
-> > On Thu, Oct 19, 2023 at 02:19:51PM +0300, Dmitry Baryshkov wrote:
-> > > On Thu, 19 Oct 2023 at 12:26, Maxime Ripard <mripard@kernel.org> wrot=
-e:
-> > > >=20
-> > > > On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wrote:
-> > > > > The MIPI DSI links do not fully fall into the DRM callbacks model.
-> > > >=20
-> > > > Explaining why would help
-> > >=20
-> > > A kind of explanation comes afterwards, but probably I should change
-> > > the order of the phrases and expand it:
-> > >=20
-> > > The atomic_pre_enable / atomic_enable and correspondingly
-> > > atomic_disable / atomic_post_disable expect that the bridge links
-> > > follow a simple paradigm: either it is off, or it is on and streaming
-> > > video. Thus, it is fine to just enable the link at the enable time,
-> > > doing some preparations during the pre_enable.
-> > >=20
-> > > But then it causes several issues with DSI. First, some of the DSI
-> > > bridges and most of the DSI panels would like to send commands over
-> > > the DSI link to setup the device.
-> >=20
-> > What prevent them from doing it in enable when the link is enabled?
-> >=20
-> > > Next, some of the DSI hosts have limitations on sending the commands.
-> > > The proverbial sunxi DSI host can not send DSI commands after the
-> > > video stream has started. Thus most of the panels have opted to send
-> > > all DSI commands from pre_enable (or prepare) callback (before the
-> > > video stream has started).
-> >=20
-> > I'm not sure we should account for a single driver when designing a
-> > framework. We should focus on designing something sound, and then making
-> > that driver work with whatever we designed, but not the other way
-> > around. And if we can't, we should get rid of that driver because it's
-> > de-facto unmaintainable. And I'm saying that as the author of that
-> > driver.
->=20
-> That's not the only driver with strange peculiarities. For example, see
-> commit 8a4b2fc9c91a ("drm/bridge: tc358762: Split register programming fr=
-om
-> pre-enable to enable"), which was one of the issues that actually prompted
-> me to send this this patchset (after my previous version of this patch be=
-ing
-> rejected because of sunxi).
+ drivers/misc/fastrpc.c      | 491 ++++++++++++++++++++++++++++++++++++--------
+ include/uapi/misc/fastrpc.h |  52 +++++
+ 2 files changed, 458 insertions(+), 85 deletions(-)
 
-The datasheet for that bridge is available so at least we can try to fix
-it (and bridges are much simpler than controllers anyway). It's not
-something we can do with the sunxi driver.
+-- 
+2.7.4
 
-> > > However this leaves no good place for the DSI host to power up the DSI
-> > > link. By default the host's pre_enable callback is called after the
-> > > DSI bridge's pre_enable. For quite some time we were powering up the
-> > > DSI link from mode_set. This doesn't look fully correct.
-> >=20
-> > Yeah, it's not.
-> >=20
-> > > And also we got into the issue with ps8640 bridge, which requires for
-> > > the DSI link to be quiet / unpowered at the bridge's reset time.
-> > >=20
-> > > Dave has come with the idea of pre_enable_prev_first /
-> > > prepare_prev_first flags, which attempt to solve the issue by
-> > > reversing the order of pre_enable callbacks. This mostly solves the
-> > > issue. However during this cycle it became obvious that this approach
-> > > is not ideal too. There is no way for the DSI host to know whether the
-> > > DSI panel / bridge has been updated to use this flag or not, see the
-> > > discussion at [1].
-> >=20
-> > Yeah. Well, that happens. I kind of disagree with Neil here though when
-> > he says that "A panel driver should not depend on features of a DSI
-> > controller". Panels definitely rely on particular features, like the
-> > number of lanes, the modes supported, etc.
->=20
-> In the mentioned discussion it was more about 'DSI host should not assume
-> panel driver features', like the panel sending commands in pre_enable or
-> not, or having pre_enable_prev_first.
->=20
-> So the pre_enable_prev_first clearly lacks feature negotiation.
->=20
-> > Panels shouldn't depend on a particular driver *behaviour*. But the
-> > features are fine.
-> >=20
-> > For our particular discussion, I think that that kind of discussion is a
-> > dead-end, and we just shouldn't worry about it. Yes, some panels have
-> > not yet been updated to take the new flags into account. However, the
-> > proper thing to do is to update them if we see a problem with that (and
-> > thus move forward to the ideal solution), not revert the beginning of
-> > that feature enablement (thus moving away from where we want to end up
-> > in).
-> >=20
-> > > Thus comes this proposal. It allows for the panels to explicitly bring
-> > > the link up and down at the correct time, it supports automatic use
-> > > case, where no special handling is required. And last, but not least,
-> > > it allows the DSI host to note that the bridge / panel were not
-> > > updated to follow new protocol and thus the link should be powered on
-> > > at the mode_set time. This leaves us with the possibility of dropping
-> > > support for this workaround once all in-kernel drivers are updated.
-> >=20
-> > I'm kind of skeptical for these kind of claims that everything will be
-> > automatic and will be handled fine. What if we have conflicting
-> > requirements, for example two bridges drivers that would request the
-> > power up at different times?
->=20
-> Well, we do not support DSI sublinks, do we?
-
-No, but we start to consider adding support for muxes for example. A DSI
-mux + a DSI bridge behind it might trigger that behaviour, even if we
-don't support sublinks.
-
-> > Also, we would still need to update every single panel driver, which is
-> > going to create a lot of boilerplate that people might get wrong.
->=20
-> Yes, quite unfortunately. Another approach that I have in mind is to add =
-two
-> callbacks to mipi_dsi_device. This way the DSI host will call into the
-> device to initialise it once the link has been powered up and just before
-> tearing it down. We solve a lot of problems this way, no boilerplate and =
-the
-> panel / bridge are in control of the initialisation procedure. WDYT?
->=20
-> > I have the feeling that we should lay out the problem without talking
-> > about any existing code base first. So, what does the MIPI-DSI spec
-> > requires and what does panels and bridges expect?
->=20
-> There is not that much in the DSI spec (or maybe I do not understand the
-> question). The spec is more about the power states and the commands. Our
-> problem is that this doesn't fully match kernel expectations.
-
-You're explicitly asking for comments on that series. How can we provide
-any comment if you're dead-set on a particular implementation and not
-explain what the problem you are trying to solve is?
-
-Thinking more about it, I'm even more skeptical about the general
-approach that this should be implemented at the bridge level (or in
-KMS).
-
-It looks to me that this is very much a bus problem. USB device drivers
-also require the bus to be powered and generally available to send data
-to their device, and you don't fix that up in the HID or storage
-drivers, you make the bus behave that way.
-
-What prevents us from fixing it at the bus level?
-
-Maxime
-
---t5jjjcy33i2jy7lt
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZTodoAAKCRDj7w1vZxhR
-xXxfAP9VCXaQR2cQ7p55Qlz1ohFIbsH/qdui1vb3BqtSku+upgEAjT4JPOz2oULJ
-J5eoQVTdscVpioLNgkJXMKMNMAd0+A0=
-=lsQF
------END PGP SIGNATURE-----
-
---t5jjjcy33i2jy7lt--
