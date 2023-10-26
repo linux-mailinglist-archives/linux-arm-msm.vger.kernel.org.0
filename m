@@ -2,92 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D864E7D7D24
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 09:00:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E8887D7DC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 09:43:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344189AbjJZHAG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 03:00:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35314 "EHLO
+        id S229705AbjJZHnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 03:43:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230283AbjJZHAF (ORCPT
+        with ESMTP id S229658AbjJZHni (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 03:00:05 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FFE5192;
-        Thu, 26 Oct 2023 00:00:01 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39Q4LBEM025969;
-        Thu, 26 Oct 2023 06:59:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=RvSu2wBlTyaSD4rRdyzHdiuXKRFtHzfpvGcgmEvfdi8=;
- b=Mm3H6XKxmd5uT50Wi9fpdzKVVVedUokbzNypEo330L0LypWhAUzZ2xq2AjEFQhwL2RJV
- UN+xBSeDHTGiFpQewp5JK82LOeD1Hsolkx3gEdPjWFQjdvjWTN6ANdSl9Bx18IX7Nlex
- WYvHR+sh3hEZziS9wVvlHExJNDbmdkQDRIZK2cPKliWNurusuLiS/DhE+zmTzSbqJv94
- mNQo6S8I/rDu2rwBrR7dITH58zA4cYy4BrPIWuDZRFw661oY+fEGswtoiYQ2dFIXYN7Z
- +37BKGzR5879Ihm6nflQ9IB0/6nIkqBfo0lRyhmbkk8J40WNXFH44urFBlSn1YGb1Nhv fw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tyfwfre7h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Oct 2023 06:59:47 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39Q6xlJ0009877
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Oct 2023 06:59:47 GMT
-Received: from [10.216.45.182] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 25 Oct
- 2023 23:59:34 -0700
-Message-ID: <23f3f2a8-dcbd-6764-195b-49bcec451084@quicinc.com>
-Date:   Thu, 26 Oct 2023 12:29:30 +0530
+        Thu, 26 Oct 2023 03:43:38 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33ADC184
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 00:43:36 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-32da4ffd7e5so305931f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 00:43:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698306214; x=1698911014; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iT0pJGgpEn+Y4BTcRkM01vVuWXFxY/vEXDXIX8DeCXY=;
+        b=yRNJ4RwREo6A9AV6XW+/1GFvhRIcomSc+PJGXAIBDIi2iguZ/dwXgyhTeCFPLjir3T
+         SIjelf8+ygfDo+KHq8m+VhOR3xisR7dKOUVFznEuLBIBQnausxMYVW7FfR7vk7NUUK98
+         RqiMSWU260aGN0zBmVBUnjjLBzhoQTK0B/TlA5QQsgfxI5h7h8WFKdabDY24D5s/X/ze
+         GhIg2xGlzOe5sIZ8HObOXgi7JDgMqJhadbNHQ+HOEbi+6Hzn+Jl4KiA/v3pqDikbDTXJ
+         zB+WjaPL/9pgD1HyP1L3Xe8QflLoduecTr1TgmIU9e7HDlxSajJYlqfo6JS6UCbRPxmt
+         dzuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698306214; x=1698911014;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=iT0pJGgpEn+Y4BTcRkM01vVuWXFxY/vEXDXIX8DeCXY=;
+        b=rLtXAPPBOjHlyWyLkeGFUnr5StpnuxZZA/CALbENJvj6quvy8qbR0N5+dDhNb1XJBc
+         Xc6ep+Kj12EiB1KuQjKVLRNTjJO/GF2DUewk8QMeIJUiCAPpUlCm+MrqQF5VAfoDN/8a
+         WmBOqHdXwRrseJP97ZcpffOv5iTBV5koQ5xqraZ5UBAaP5AnhsLWVkxg0LtKee8lyDbH
+         wBdeZ6xcA+9u/QGloHZgfJfESnS9C4ncnoLzf1Y42UJEVu0quzKD0mY9JXACWfqgpzR5
+         qwy0CGUGo5XTVdMSRM+giqKQV/5gXleuqpEEJKkdQ04kxD3L4ByLaw0BwfEKtwLKJQoR
+         trWw==
+X-Gm-Message-State: AOJu0YxRgHezTUGysosgTkLG0+dnwTYU5zn87bTuqY/a4j9SQ712dYoU
+        eb+3OLS+QI/dJMgrGW8bZabyAlQiXc3Nr83p14NexOoz
+X-Google-Smtp-Source: AGHT+IH9/t6VXnuGSglyx8gmgCHAbA4Y25dbJPKrDFQ48McZAXhVPSSz9eiWcwu1AVV+0GCZP4y4Ug==
+X-Received: by 2002:adf:efc7:0:b0:32d:a366:7073 with SMTP id i7-20020adfefc7000000b0032da3667073mr1751749wrp.14.1698306214576;
+        Thu, 26 Oct 2023 00:43:34 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:f57f:eb08:d29b:8c9c? ([2a01:e0a:982:cbb0:f57f:eb08:d29b:8c9c])
+        by smtp.gmail.com with ESMTPSA id h1-20020a05600c498100b004090798d29csm1775761wmp.15.2023.10.26.00.43.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Oct 2023 00:43:34 -0700 (PDT)
+Message-ID: <95ec724e-27c1-43c0-9f2c-99934c5ca3c2@linaro.org>
+Date:   Thu, 26 Oct 2023 09:43:32 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v3 2/5] PCI: qcom-ep: Add support for SA8775P SOC
-Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <konrad.dybcio@linaro.org>, <quic_shazhuss@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_nayiluri@quicinc.com>, <dmitry.baryshkov@linaro.org>,
-        <robh@kernel.org>, <quic_krichai@quicinc.com>,
-        <quic_vbadigan@quicinc.com>, <quic_parass@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "Lorenzo Pieralisi" <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <linux-phy@lists.infradead.org>
-References: <1697715430-30820-1-git-send-email-quic_msarkar@quicinc.com>
- <1697715430-30820-3-git-send-email-quic_msarkar@quicinc.com>
- <20231025075317.GC3648@thinkpad>
- <adbca084-a74b-51be-67b5-a3b9e45da506@quicinc.com>
- <20231026061035.GA4915@thinkpad>
-From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
-In-Reply-To: <20231026061035.GA4915@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4qyOtCkhD_4PxOxnlRidLfytKY9mAn1X
-X-Proofpoint-GUID: 4qyOtCkhD_4PxOxnlRidLfytKY9mAn1X
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-26_04,2023-10-25_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- malwarescore=0 phishscore=0 mlxlogscore=999 clxscore=1015
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 spamscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310260058
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+User-Agent: Mozilla Thunderbird
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFC 0/8] arm64: dts: qcom: Introduce SM8650 platforms
+ device tree
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -96,65 +108,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 25/10/2023 09:47, Neil Armstrong wrote:
 
-On 10/26/2023 11:40 AM, Manivannan Sadhasivam wrote:
-> On Thu, Oct 26, 2023 at 11:08:03AM +0530, Mrinmay Sarkar wrote:
->> On 10/25/2023 1:23 PM, Manivannan Sadhasivam wrote:
->>> On Thu, Oct 19, 2023 at 05:07:07PM +0530, Mrinmay Sarkar wrote:
->>>> Add support for SA8775P SoC to the Qualcomm PCIe Endpoint Controller
->>>> driver. There will be some change specific to SA8775P so adding new
->>>> compatible string.
->>>>
->>> What are those specific changes?
->>>
->>> - Mani
->> Need to enable cache snooping logic for SA8775P only.
->>
-> Then you can add the compatible to the driver at that time and use the fallback
-> till then i.e., just document the SA8775P compatible in bindings and use both
-> SA8775P and SM8450 compatibles in the dts where the latter will act as a
-> fallback.
->
-> - Mani
+<snip>
 
-I am getting below error in dtb checking if I add SM8450 as fallback 
-compatible in dtsi. As both has different set of clocks.
+> 
+> For convenience, a regularly refreshed linux-next based git tree containing
+> all the SM8650 related work is available at:
+> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
 
-//local/mnt/workspace/Mrinmay/new_lemans/next-20231018/linux-next/out/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: 
-pcie-ep@1c00000: compatible: 'oneOf' conditional failed, one must be 
-fixed://
-//        ['qcom,sa8775p-pcie-ep', 'qcom,sm8450-pcie-ep'] is too long//
-//        'qcom,sdx65-pcie-ep' was expected//
-//        'qcom,sdx55-pcie-ep' was expected//
-//        from schema $id: 
-http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-///local/mnt/workspace/Mrinmay/new_lemans/next-20231018/linux-next/out/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: 
-pcie-ep@1c00000: clocks: [[31, 66], [31, 68], [31, 69], [31, 78], [31, 
-79]] is too short//
-//        from schema $id: 
-http://devicetree.org/schemas/pci/qcom,pcie-ep.yaml#//
-///local/mnt/workspace/Mrinmay/new_lemans/next-20231018/linux-next/out/arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: 
-pcie-ep@1c00000: clock-names: ['aux', 'cfg', 'bus_master', 'bus_slave', 
-'slave_q2a'] is too short/
+As it was reported off-list, there's a typo in the previous URL, like in the related cover letters,
+the correct URL is:
+https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
 
->> --Mrinmay
->>
->>>> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
->>>> ---
->>>>    drivers/pci/controller/dwc/pcie-qcom-ep.c | 1 +
->>>>    1 file changed, 1 insertion(+)
->>>>
->>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->>>> index 32c8d9e..4c01c34 100644
->>>> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
->>>> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->>>> @@ -858,6 +858,7 @@ static void qcom_pcie_ep_remove(struct platform_device *pdev)
->>>>    }
->>>>    static const struct of_device_id qcom_pcie_ep_match[] = {
->>>> +	{ .compatible = "qcom,sa8775p-pcie-ep", },
->>>>    	{ .compatible = "qcom,sdx55-pcie-ep", },
->>>>    	{ .compatible = "qcom,sm8450-pcie-ep", },
->>>>    	{ }
->>>> -- 
->>>> 2.7.4
->>>>
+I'll keep the previous URL valid to avoid broken links.
+
+Neil
+
+<snip>
+
