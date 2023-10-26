@@ -2,105 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BD7B7D8974
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 22:08:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B34127D89CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 22:46:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231975AbjJZUI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 16:08:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55516 "EHLO
+        id S229649AbjJZUqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 16:46:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231546AbjJZUIZ (ORCPT
+        with ESMTP id S229680AbjJZUqs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 16:08:25 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FC20129
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:08:23 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-507962561adso2018378e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:08:23 -0700 (PDT)
+        Thu, 26 Oct 2023 16:46:48 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B7B61AB
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:46:46 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id 46e09a7af769-6ce2fc858feso875515a34.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:46:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698350901; x=1698955701; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=in296aXKitJNMXPUX/nmqhi/sS6stnc+qHOsGfoVDJg=;
-        b=yA00fGN9pFWRgyUpzF1vKLE24uzMeaa6hfF96NVjZxHTTfxmpeqklhKVbXjcdFQdCC
-         +Q5HFPhdd/8HJaqkOi6h2J8R0C4H3nzBxL357mXs3W4PEe3tVOATHD6hwJYc8HiKigyi
-         32Z7usS8HjZLRnIORoEkePQ2yudUHRBa+NF/pd64qG8r7PSOAI8Unhf45/xEDVzMfm2N
-         4jm16yKfYHB+H4UK/HDqIYyUVEZSSv5Y3ZFUCZrrN8WJCUWx9EPDxnfKyhtHLvpspcVE
-         uMoWHSBoCGs5q+Gr2UZCgN74Fg18au70QiWC14QTgyBBarmP6wGDUyl7BG3x9NHqYNy5
-         nhog==
+        d=linaro.org; s=google; t=1698353205; x=1698958005; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=I/G02VsxhYJWjx+P8kMFTWWV+s1yYYgHb9RgEPb8krc=;
+        b=BdIfO7vxM0aySqu4uCj/FEkbITDB/UOmui6tVug/wlhfmC0e5gLXhynWO9gwKkYsP2
+         CSZskACeAOGqT34ABPLONkDunbPZkepMfSPERrY3meAF2fJ54KeynN4PkDH0K998xo8l
+         QeVEbmEgIBxodmLc2MlHPGshCtpDU9agmizTAn8kVEIS3ZAtrNNLPPz/3DMs2cqPUrkA
+         PU/qjnoeXtx52NN8nvLui2ZRDPv6dUOXNIK90I4CxBg+v+IGjSXLsq2IAimfCTi7cApE
+         x9AjozHzi8CxB8+3bR0ccXp00FV5DIJjueRDQtMMHXDEkUuKAUs/F1JV/Iil6ohQLibK
+         Tx+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698350901; x=1698955701;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=in296aXKitJNMXPUX/nmqhi/sS6stnc+qHOsGfoVDJg=;
-        b=c0xG/IOQuKVCPdWIAizKopGMlhCeb1q76CQ+pT/TiIKsrFMtikonRiJKXb5XW6iwQ1
-         0rrITUg+320w1q2tTSEIFV+hjdi0gPyRHipwSK78GG3k4/Uf3cZSFBsX539Z9ZaQ1q33
-         Lr8tH2NnKf/waTyWRRaLbO4ysF1qq9JczFe/+Ck9ZGF22QbzMsCNes6tui4w4s7PfLrO
-         nEFoZEgmrsDGe9zoXj45+3O85Bs/nh3+cuJHrf4XLETQJkn4EdY8LK4vz4m3kiWFzvMR
-         TOqjaRfKCbWkBM+QMiK5i74397ohGw9uc9VigNa7g8BB/L2ksecPEK2B6b0hiHoCej3U
-         8m5A==
-X-Gm-Message-State: AOJu0Yw3OaVq8c02bSdej8ceNbvVrMHT0UQTGEp3QDNz+x9kZr35UxDX
-        S7Serjh79XM7Njd/5yEHtf/CTg==
-X-Google-Smtp-Source: AGHT+IFicE3Na+hQ9S8OZTbwLGfd7Vgc2t3vVhEM4RVc32If6IqOEece8WLGiS6tLpA2qh+Pj8lQYg==
-X-Received: by 2002:a19:9112:0:b0:507:9ef2:fb1c with SMTP id t18-20020a199112000000b005079ef2fb1cmr338886lfd.2.1698350900853;
-        Thu, 26 Oct 2023 13:08:20 -0700 (PDT)
-Received: from [172.30.205.86] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id c14-20020a056512324e00b005079fd88326sm3110814lfr.45.2023.10.26.13.08.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 13:08:20 -0700 (PDT)
-Message-ID: <8a36e61a-5397-4513-ae0d-eb68ccd8e584@linaro.org>
-Date:   Thu, 26 Oct 2023 22:08:19 +0200
+        d=1e100.net; s=20230601; t=1698353205; x=1698958005;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=I/G02VsxhYJWjx+P8kMFTWWV+s1yYYgHb9RgEPb8krc=;
+        b=Y5cOJgI441SKFYjOmvRH+Kf1mwzSpirmbrv4+ACoWjirNIdPKZPQGjjdLNtt/gF7gq
+         FoxwhPxLIoJvnP5arkXUnCa803Wt5jIYog2Ovd0JJRXsLrUEaS0sUzivA42nODc0LFJq
+         X/WwbbZm5lisIIf6HuRWTpUnG/AylAYHpwvbNvCXvZ17qQ2CQ/THSh0QoJMfqC18y90x
+         PctYvHZ4Dlbqe2OBYk+pcJHLz5gypmkHHkF29ZHTuugaz0nRBq5FkJ9D2kVRoNy/4Cff
+         J0w0pFv0RjOaN1W1t6Vf4R77XTeIKUaA8lQz3ZYt3TTJ8idYgf88nkPUCSBgONgGfLwj
+         5MlQ==
+X-Gm-Message-State: AOJu0Yy/pmAJZWSOVmFjBl57y9Cdyh+haUIIyVZ3h3j/Vko+8XXPg6ah
+        fUKEvEeEsnljYzId4gqO4nB9FcV8ICnPKXX8Ug3FZg==
+X-Google-Smtp-Source: AGHT+IFVa6fJL5TjjQrb46JjIVUSocFW+PYDsLYQl5v/O4exSYbtWF5+eYNBjXmSZw79pzDpYDJn2OV8FuRMoqSfUoo=
+X-Received: by 2002:a9d:66ce:0:b0:6c5:233:fc28 with SMTP id
+ t14-20020a9d66ce000000b006c50233fc28mr664232otm.33.1698353205417; Thu, 26 Oct
+ 2023 13:46:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] media: qcom: camss: Convert to per-VFE pointer for
- power-domain linkages
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
-        rfoss@kernel.org, todor.too@gmail.com, andersson@kernel.org,
-        mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
- <20231026155042.551731-3-bryan.odonoghue@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231026155042.551731-3-bryan.odonoghue@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230928111630.1217419-1-dmitry.baryshkov@linaro.org>
+ <20230928111630.1217419-14-dmitry.baryshkov@linaro.org> <36d6379b-66e6-4781-b08d-ef90f6e47828@linaro.org>
+In-Reply-To: <36d6379b-66e6-4781-b08d-ef90f6e47828@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 26 Oct 2023 23:46:34 +0300
+Message-ID: <CAA8EJppa8-M8Uah+=GBhG4bHvdGUwqgh0aj8o9rLfEdZq=JUKA@mail.gmail.com>
+Subject: Re: [PATCH v3 13/15] drm/msm/hdmi: pair msm_hdmi_phy_powerup with msm_hdmi_phy_powerdown
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 26 Oct 2023 at 22:54, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 9/28/23 13:16, Dmitry Baryshkov wrote:
+> > In preparation to converting MSM HDMI driver to use PHY framework, which
+> > requires phy_power_on() calls to be paired with phy_power_off(), add a
+> > conditional call to msm_hdmi_phy_powerdown() before the call to
+> > msm_hdmi_phy_powerup().
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> Is this a conversion artifact that will be undone, or does the
+> framework actually expect that refcounting may not be enough and
+> phy resetting will have to take place?
 
+I don't remember why I did it this way. Let me check, most likely this
+patch can be completely dropped as the enable / disable operations are
+paired by the DRM core.
 
-On 10/26/23 17:50, Bryan O'Donoghue wrote:
-> Right now we use the top-level camss structure to provide pointers via
-> VFE id index back to genpd linkages.
-> 
-> In effect this hard-codes VFE indexes to power-domain indexes in the
-> dtsi and mandates a very particular ordering of power domains in the
-> dtsi, which bears no relationship to a real hardware dependency.
-> 
-> As a first step to rationalising the VFE power-domain code and breaking
-> the magic indexing in dtsi use per-VFE pointers to genpd linkages.
-> 
-> The top-level index in msm_vfe_subdev_init is still used to attain the
-> initial so no functional or logical change arises from this change.
-> 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-
-> +	if (vfe->id >= camss->res->vfe_num)
->   		return 0;
-P.S. this seems better suited for some warning, I think
+-- 
+With best wishes
+Dmitry
