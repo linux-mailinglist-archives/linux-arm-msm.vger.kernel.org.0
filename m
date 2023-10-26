@@ -2,67 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4016E7D89FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 23:03:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B99C17D8A01
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 23:04:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230271AbjJZVD5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 17:03:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52434 "EHLO
+        id S230152AbjJZVE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 17:04:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjJZVD4 (ORCPT
+        with ESMTP id S229501AbjJZVE1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 17:03:56 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AA2093
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:03:54 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40837ebba42so9550105e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:03:54 -0700 (PDT)
+        Thu, 26 Oct 2023 17:04:27 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F7C93
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:04:24 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-32daeed7771so852155f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698354233; x=1698959033; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698354263; x=1698959063; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=B/wgqf7zM8eB9vC8458/vz6gwRWY3/cTZbVdubKjZKo=;
-        b=GHb9C4IEo6THl4Eewqps1+wYKho2a//2xkTQCLnbst1ZJl+PaBCtyRBzM0XjIMf/gj
-         ROlHDQcEONdbv2GHMGKhDb+DvEO8QjLOZP5HOWChxXFqS7OSgtE5XiR9zNPNvGzOx23W
-         LCMhJipIb5ANsnX2YL29kbh633tYqwdwreeBFjFafwdVmAl5/fpq7vmzGzwBcjNMdOLg
-         z4ykkL7QB2KfIBHdY7WiDxboautxK2vrYn5KMVt2K2dlMmMxR3zNjL8x0Sw0qJjTIG8E
-         ZBhcRJbebLS+R6K4r/Ze9ByIyc4s4MNtxwYIsSYYrYLLEEmvmsv1IQ0EffcW9JNfLN7X
-         UShA==
+        bh=A+WjwVDuEjfphxivxZ019Dx0u0fobKcWgfHyoUTG59Q=;
+        b=HRTox2+FrHmeTpNdhWmMjrGLl4WCkGEMMLIQz+N6K4XnFSI9yF46EtmsQO6mRyUCFh
+         wvmGKFGG0iNT4AjQuy4b8lKQKWakwcRpWJE+/1uNaw6q3dr+6A16CDa8mW6cLBCiyPxr
+         wZC1qTSf507XOgN5ecHR/InI+Y/Y/GJ7V7BJpHzKGEMmSTg4wquScpoTIPqVxPClspMI
+         5ncWRd7P/QddM6RiNdn2AM090OlEk87Q5hEFvQoschKpGSr4F8BL5doNw+6ENYVFmdUa
+         4GswuRICOgxLiPGOmIFVLMs6zWISUPlefiqDfkhMBlgB0ropuHtd6YxKkuEeVIjDYsxS
+         gFvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698354233; x=1698959033;
+        d=1e100.net; s=20230601; t=1698354263; x=1698959063;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B/wgqf7zM8eB9vC8458/vz6gwRWY3/cTZbVdubKjZKo=;
-        b=QHGMzf1DyjTHGpXXY7OIr0G5YvyayY36QX2XBYanoQodrcIW5BKGd3PVqGvU7qh5vV
-         Uu7MQlRhBVR40sTKaClgE0O3lNTKoGSBAjCM/oQcFE2XmUvrqGupUhasfjSKjVGpycZ2
-         /ttI5XNZz9VEpfZNnqERdIqGqTLts8yaGHnVghUh4vBYhxEoMJF3jmNYEOjIo+2gTVMr
-         K9nqaIuVq0JhTxKgkfKmNNJmei0SpJT89QWib+DJjiusnuM5BSHjZqnU1WrmYJ+cClJp
-         NnEpZG+GBOEtSn/JaNgLyNJV25HVBWNzQxKIpQzav1iQfvqysRPYJScbl9GCDP4oZIvc
-         7X7g==
-X-Gm-Message-State: AOJu0YxHmSDA8RdlxKIF5cHJqSVm5sV2uK5Or2vv+4iIgm/tN7Z2JGAP
-        fQTTrlaONTlx4+FnoH9qI3CbdQ==
-X-Google-Smtp-Source: AGHT+IHCcKAcemS8hwf9I07v2oLrBnbMRG5xiXH08cWmqWS1KElMruGadt46xV+u93VTSaietpea8w==
-X-Received: by 2002:a5d:598d:0:b0:32d:827e:7bd8 with SMTP id n13-20020a5d598d000000b0032d827e7bd8mr612280wri.70.1698354232769;
-        Thu, 26 Oct 2023 14:03:52 -0700 (PDT)
+        bh=A+WjwVDuEjfphxivxZ019Dx0u0fobKcWgfHyoUTG59Q=;
+        b=vm3VrXOO05bp/cTe+FCF0NxyvL8CuGXX5DujQuworB7u+ehncCcl2htp8UM/nVsxuz
+         DKjHJJdZl8gUaxsQfxCI24BODOKFRQtESJnOtEfMfN4iKws8DdVIPesKgXKC9w659ujI
+         Ci98v3IjmRfgnWbWeg88of38hr1iMft4UjmJXDrlNg7Bj6NfS0JiqnV+njZI5YTfdkQO
+         UuynVcHO1mNWsN83AV4vFMmmYD3bjDS7eNUusQpaZSzONNxCUruejfKz7Vzy2oGA8PRs
+         r/s1nGz0BFZ7z8OLuUYX7wqaJbWR88wvU3fVaTpbK/Bz03ROtqcE+sKLQ37Q+vaQgV/d
+         EhlA==
+X-Gm-Message-State: AOJu0Yy73wV5hlW+Z0izkp1uGTffDJ546TMV/1tcEhgEVT99yxyU4pRS
+        TTym5yOOrPwq3y57KncjyGuMPg==
+X-Google-Smtp-Source: AGHT+IEDywECpnt7wzKwh/plP8K8CxNVzDQhhmdPRvs5IAb52+K0gslBi53+Q2RRbjXloa2XGGxWlg==
+X-Received: by 2002:adf:ed83:0:b0:32d:a688:8814 with SMTP id c3-20020adfed83000000b0032da6888814mr679214wro.19.1698354263261;
+        Thu, 26 Oct 2023 14:04:23 -0700 (PDT)
 Received: from [172.30.205.55] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id r16-20020a5d4950000000b0032d81837433sm256158wrs.30.2023.10.26.14.03.51
+        by smtp.gmail.com with ESMTPSA id r16-20020a5d4950000000b0032d81837433sm256158wrs.30.2023.10.26.14.04.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 14:03:52 -0700 (PDT)
-Message-ID: <e081ca54-e8a6-40da-b101-194e6a6a351b@linaro.org>
-Date:   Thu, 26 Oct 2023 23:03:50 +0200
+        Thu, 26 Oct 2023 14:04:22 -0700 (PDT)
+Message-ID: <90c8b0c3-7f42-4d35-9cf2-d5274184d8b6@linaro.org>
+Date:   Thu, 26 Oct 2023 23:04:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/15] phy: qualcomm: add QMP HDMI PHY driver
+Subject: Re: [PATCH v3 15/15] drm/msm/hdmi: drop old HDMI PHY code
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
@@ -70,9 +70,11 @@ Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
 References: <20230928111630.1217419-1-dmitry.baryshkov@linaro.org>
- <20230928111630.1217419-3-dmitry.baryshkov@linaro.org>
+ <20230928111630.1217419-16-dmitry.baryshkov@linaro.org>
+ <b779b911-dff3-420c-9bf9-5b7bef24337c@linaro.org>
+ <CAA8EJppFi6jJ=PKCdwBqM8hXdgp41XTY=QZkdiHkPPJ9KdTfTA@mail.gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230928111630.1217419-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAA8EJppFi6jJ=PKCdwBqM8hXdgp41XTY=QZkdiHkPPJ9KdTfTA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,16 +89,29 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9/28/23 13:16, Dmitry Baryshkov wrote:
-> Port Qualcomm QMP HDMI PHY to the generic PHY framework. Split the
-> generic part and the msm8996 part. When adding support for msm8992/4 and
-> msm8998 (which also employ QMP for HDMI PHY), one will have to provide
-> the PLL programming part only.
+On 10/26/23 23:03, Dmitry Baryshkov wrote:
+> On Fri, 27 Oct 2023 at 00:00, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>>
+>>
+>> On 9/28/23 13:16, Dmitry Baryshkov wrote:
+>>> Drop source files used by old HDMI PHY and HDMI PLL drivers.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/hdmi/hdmi_phy.c      | 216 -------
+>>>    drivers/gpu/drm/msm/hdmi/hdmi_phy_8960.c |  51 --
+>>>    drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c | 765 -----------------------
+>>>    drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c | 141 -----
+>>>    drivers/gpu/drm/msm/hdmi/hdmi_phy_8x74.c |  44 --
+>>>    drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c | 458 --------------
+>>>    6 files changed, 1675 deletions(-)
+>>>    delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+>>>    delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8960.c
+>>>    delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
+>> Uh-oh, is the 8996 HDMI phy accounted for somwhere else?
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Taking a quick look, my comments from v2 were not taken into account
-
-https://lore.kernel.org/linux-arm-msm/1513ea17-2807-4f7c-30f2-6158b5f3e55e@linaro.org/
+> Yes, it is the QMP PHY now.
+Right, I realized that as soon as I've seen that you replied :D
 
 Konrad
