@@ -2,81 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E183E7D8388
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 15:27:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC97E7D837B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 15:26:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345068AbjJZN1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 09:27:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60840 "EHLO
+        id S231448AbjJZN01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 09:26:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345061AbjJZN1e (ORCPT
+        with ESMTP id S1345051AbjJZN00 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 09:27:34 -0400
-Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [IPv6:2a01:4f8:a0:821d::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9D778AB;
-        Thu, 26 Oct 2023 06:27:31 -0700 (PDT)
-From:   Stefan Hansson <newbyte@postmarketos.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-        s=donut; t=1698326850;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=A1NL5+4fxymyih3wrNYOzUF9IhR1E71gJ+GvOMcH51I=;
-        b=Puis71eTWq1/N8aB9pn2mbaZNCCFIFIKu2UIfSzk4HCBx9CsW8k/DKovteSAVG0GhstSKW
-        4yhqmmlegc5uuALwWXIkJ5Bs/uXauODdPT2BHxhqSqHIEZ8nK9S/HuclNBKt/avBkJvoWJ
-        mXdLR1j46WfdOn7nMuRVVyNDrGoa6mM=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Stefan Hansson <newbyte@postmarketos.org>
-Subject: [PATCH v4 4/4] ARM: dts: qcom: samsung-matisse-common: Add UART
-Date:   Thu, 26 Oct 2023 15:24:09 +0200
-Message-ID: <20231026132521.38575-5-newbyte@postmarketos.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231026132521.38575-1-newbyte@postmarketos.org>
-References: <20231026132521.38575-1-newbyte@postmarketos.org>
+        Thu, 26 Oct 2023 09:26:26 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3BD71AC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 06:26:23 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5DFC433C7;
+        Thu, 26 Oct 2023 13:26:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698326783;
+        bh=iRn7vDIBkvqTVmnZQoeJoZ6KdPtszrHGt6CVY4MQMDc=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=R31R0WO0LMF1N+jXnuaW7wPNJHkEYjQI51xow57y4Ms4dtrziSUH8mU/kUU7YRWbe
+         BGPE8mcSwd1EfqPZITWQeq+2gSrI3TlKK6qEmJPHCqVe2+nkLWDS9AMLNbLj98Onha
+         4djo4sNWqKU9QU/jM11WEst61l3ivN/ampO2jswTyQ/R75dqeZDycP3UF8Bhke6ql9
+         JM4VX6l3qDGnS7J9U9pz5rmIRIy0NukMe0N2haIX5bcpYyEJI1x07mca7GAEdoXx3p
+         eEKlU94CfYbzvD8W8xV93gwnef2QPLS6jy+4GyU++sskRmHFh2FxY62WJC+CLgMTAj
+         h1xj3U3JhJywg==
+From:   Maxime Ripard <mripard@kernel.org>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+In-Reply-To: <20231008132320.762542-1-dmitry.baryshkov@linaro.org>
+References: <20231008132320.762542-1-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 1/2] drm/ci: pick up -external-fixes from the merge
+ target repo
+Message-Id: <169832677721.958223.13412416633186382267.b4-ty@kernel.org>
+Date:   Thu, 26 Oct 2023 15:26:17 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This was not enabled in the matisse-wifi tree. Without this, it is not
-possible to use the USB port for serial debugging via a "Carkit debug
-cable".
+On Sun, 08 Oct 2023 16:23:19 +0300, Dmitry Baryshkov wrote:
+> In case of the merge requests it might be useful to push repo-specific
+> fixes which have not yet propagated to the -external-fixes branch in the
+> main UPSTREAM_REPO. For example, in case of drm/msm development, we are
+> staging fixes locally for testing, before pushing them to the drm/drm
+> repo. Thus, if the CI run was triggered by merge request, also pick up
+> the -external fixes basing on the the CI_MERGE target repo / and branch.
+> 
+> [...]
 
-Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
----
- .../boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi    | 4 ++++
- 1 file changed, 4 insertions(+)
+Applied to drm/drm-misc (drm-misc-next).
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-index 28317ce79e97..dc63b91f94bc 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8226-samsung-matisse-common.dtsi
-@@ -219,6 +219,10 @@ muic: usb-switch@25 {
- 	};
- };
- 
-+&blsp1_uart3 {
-+	status = "okay";
-+};
-+
- &rpm_requests {
- 	regulators {
- 		compatible = "qcom,rpm-pm8226-regulators";
--- 
-2.41.0
+Thanks!
+Maxime
 
