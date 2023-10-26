@@ -2,84 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 021E87D893F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 21:54:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4078D7D8955
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 22:01:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229668AbjJZTyh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 15:54:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51254 "EHLO
+        id S232143AbjJZUBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 16:01:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjJZTyh (ORCPT
+        with ESMTP id S230406AbjJZUBm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 15:54:37 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1278A1B1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:54:34 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-507ad511315so1961755e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:54:33 -0700 (PDT)
+        Thu, 26 Oct 2023 16:01:42 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2795D1B2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:01:34 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507c91582fdso1945696e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698350072; x=1698954872; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=y+yKfel6jVKQdcczBrQhnxnhE7v6YeHb+nTnhUYvp60=;
-        b=vDh9rkfsEs5awzdLhhpi+8g9fY8s4pu0L561/zaGQm0rJmjqEd8qet0INfFwtB6VVI
-         QaPPHGv9UGrzfoOQeOpDFNQ9YMdVxz1S1pRsZKydWZtiBy1DKaO//q/T10LLWPCdP8+4
-         ppHAYW2hYoGmATvofqGQrpQOlA+cy6SPI449Ql+yUotLW8TvZ4EKAOVKPdPfYunUREjf
-         Er3gsOQcvskOlobgF5sPVj1piJRulqNjcH/RGGBdIiO9GYQwt2fPNuGTl2yxcEE3I+QG
-         3imlGnwgRHaQnDpEupnOXT7d2c/BS0UmJHP6tIYTnAl/z4mqV1CNn06FDHaf9i2K79yc
-         1E1g==
+        d=linaro.org; s=google; t=1698350492; x=1698955292; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pzGqz/duyYPElwwtqx/hjizAGVszVP9AWvS4e26Osn0=;
+        b=J0w1uwlWD3G4/I5eKcsjcmfHTeMX/UuBqnTC7R+cjHCx4xW+Ok0imZ0h5WcUWdsLsM
+         2+82/18TOZ4wSdUUVIHMZwTgBfP88Ug/LvlDnI/koBop7wa/uafvIpOVrcoV6HqMxywe
+         maEscMA1KtU/Zygw9Do42nx7vVL9YZ7IoZFRM0FAusXBkiDlQFMGspaluTCpkFAGfisp
+         T1ttwk5E3VtBN1CJ/1aNxXYyy9304f7Bp48iQtnxIJVWG3xv+JjVh4FgNTBizhypC2jT
+         i3P9tOALnObBePfdSRnsj002TJhS+Ldf0tefhzBqSRjy4SXbkWKy07hz9eRIdhbL8YUK
+         fkFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698350072; x=1698954872;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1698350492; x=1698955292;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y+yKfel6jVKQdcczBrQhnxnhE7v6YeHb+nTnhUYvp60=;
-        b=OydHLnRL8xor8s3iY8aEISEsCelgrmGTHdLCqRoaJyVAHysfyGcL9RQciarBLeFrL9
-         Qg+RaK6r3dcRiI2CYxHxw5D7S1yS8of6F53nUv7i0oXQec/NqGRpTM0HLejnJddsEdH1
-         YMsIG2r9oRSxrVEEqC483ZIMsmMw99FjcJVjwbeMeJgR6DBsb0wB56S768VmeuH3lITH
-         4ooHnLAEbBTtXiraWh8+a5ONMPJqgw9/88VZU8QNWstKRwo/Sc+YoF9QYgTcnRHaobcY
-         ytfu0io3rqDqjK6LbmCBloAL4IBgP8NykSPUp5P7TB2RN7OzmlmVqoel9/pPBH+cP/GU
-         kyag==
-X-Gm-Message-State: AOJu0Yw2GSz+KRn6eTksCw0D156Ws9LdRVI2TkMpRCh7R8iQn8cSOil9
-        +TrQI22pufyYhSehca0ruwxFNw==
-X-Google-Smtp-Source: AGHT+IFmVIu10aBZHdYkJPouHgCG0LXa+bllX/aAIu/roVR3fko0wfX0k3pHKnLEbA6KJxQWbLFmfA==
-X-Received: by 2002:a05:6512:1282:b0:505:6ede:20a9 with SMTP id u2-20020a056512128200b005056ede20a9mr331484lfs.65.1698350072248;
-        Thu, 26 Oct 2023 12:54:32 -0700 (PDT)
-Received: from [172.30.204.123] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id a24-20020a056512201800b0050096cc3ba1sm3104356lfb.255.2023.10.26.12.54.30
+        bh=pzGqz/duyYPElwwtqx/hjizAGVszVP9AWvS4e26Osn0=;
+        b=IG1zZ9HwHdJSal2qiJIpOZPdaBsnC6vlcXZxR5LfN+BLMPkPI/bqugcKg9jIHI1o/v
+         kkrCxn9ZYmJReeM0u7pyT4AzbUawbG2etQ+h/a/6vZWpmSwT2GRlwxdS3iirjrChBsVS
+         HvD///dSgItN1EDYwj99D9hkxnGxDz7MrI51iCiJpRE0W1nmrrsU0P1CFjOn35VcBEsI
+         XdVRiVmAheq3A+VMQFfsbfEZkDZKP3ZIGDpTqnRbo3hyakVClqHhze3M0c4hsqC4YHXy
+         bLRxET4KNTyrSo4oMP3MtaYFMxgFdxbgHUd2LBvhLiX6WLc0IMOTMJFMtuZRhJad7V7v
+         PN7g==
+X-Gm-Message-State: AOJu0YzRSdu1XAk+Xd8fn95rGs2mGZN/koVHbOypfumZrsuSHLCnOoVb
+        qG+JIuGZKIrfu5vnl9diDouGJA==
+X-Google-Smtp-Source: AGHT+IHhxtpFa1NlJRvaWu3AoOoyJeppQxaOVSGhWnU+RXFu75zgVS2yrEFL9xfgFkxYE9BbFWyilA==
+X-Received: by 2002:a05:6512:3d0b:b0:500:8f66:5941 with SMTP id d11-20020a0565123d0b00b005008f665941mr337184lfv.50.1698350492352;
+        Thu, 26 Oct 2023 13:01:32 -0700 (PDT)
+Received: from [172.30.205.86] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id m21-20020a194355000000b00501b9fc977csm3137765lfj.37.2023.10.26.13.01.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 12:54:31 -0700 (PDT)
-Message-ID: <36d6379b-66e6-4781-b08d-ef90f6e47828@linaro.org>
-Date:   Thu, 26 Oct 2023 21:54:30 +0200
+        Thu, 26 Oct 2023 13:01:31 -0700 (PDT)
+Message-ID: <a6cc8d55-2892-478f-ad8a-a9a4359abb7d@linaro.org>
+Date:   Thu, 26 Oct 2023 22:01:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/15] drm/msm/hdmi: pair msm_hdmi_phy_powerup with
- msm_hdmi_phy_powerdown
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+Subject: Re: [PATCH v6 3/4] cpufreq: qcom-nvmem: add support for IPQ8064
+To:     Christian Marangi <ansuelsmth@gmail.com>,
+        Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
-References: <20230928111630.1217419-1-dmitry.baryshkov@linaro.org>
- <20230928111630.1217419-14-dmitry.baryshkov@linaro.org>
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231013173854.7399-1-ansuelsmth@gmail.com>
+ <20231013173854.7399-4-ansuelsmth@gmail.com>
+Content-Language: en-US
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230928111630.1217419-14-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231013173854.7399-4-ansuelsmth@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -88,16 +86,34 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9/28/23 13:16, Dmitry Baryshkov wrote:
-> In preparation to converting MSM HDMI driver to use PHY framework, which
-> requires phy_power_on() calls to be paired with phy_power_off(), add a
-> conditional call to msm_hdmi_phy_powerdown() before the call to
-> msm_hdmi_phy_powerup().
+On 10/13/23 19:38, Christian Marangi wrote:
+> IPQ8064 comes in 3 families:
+> * IPQ8062 up to 1.0GHz
+> * IPQ8064/IPQ8066/IPQ8068 up to 1.4GHz
+> * IPQ8065/IPQ8069 up to 1.7Ghz
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> So, in order to be able to support one OPP table, add support for
+> IPQ8064 family based of SMEM SoC ID-s and correctly set the version so
+> opp-supported-hw can be correctly used.
+> 
+> Bit are set with the following logic:
+> * IPQ8062 BIT 0
+> * IPQ8064/IPQ8066/IPQ8068 BIT 1
+> * IPQ8065/IPQ8069 BIT 2
+> 
+> speed is never fused, only pvs values are fused.
+> 
+> IPQ806x SoC doesn't have pvs_version so we drop and we use the new
+> pattern:
+> opp-microvolt-speed0-pvs<PSV_VALUE>
+> 
+> Example:
+> - for ipq8062 psv2
+>    opp-microvolt-speed0-pvs2 = < 925000 878750 971250>
+> 
+> Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 > ---
-Is this a conversion artifact that will be undone, or does the
-framework actually expect that refcounting may not be enough and
-phy resetting will have to take place?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
