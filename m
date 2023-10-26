@@ -2,736 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 794BB7D8785
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 19:25:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42C687D87E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 19:58:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231442AbjJZRZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 13:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37676 "EHLO
+        id S231837AbjJZR67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 13:58:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230340AbjJZRZY (ORCPT
+        with ESMTP id S231811AbjJZR65 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 13:25:24 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09AA1B9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 10:25:20 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id 6a1803df08f44-66cfd35f595so7638796d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 10:25:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698341119; x=1698945919; darn=vger.kernel.org;
-        h=in-reply-to:autocrypt:from:references:cc:to:content-language
-         :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=EU5xFwVc6jgIe3EzY0IHSa84KhXBI4zWk3tZOedh3HU=;
-        b=jfbX7hOAL6bxmZjhPTln78u3rUJKGRSpZDLMWLvEMr3594bfi+Xj1bfakhb4b5zoDZ
-         ytc2oYlLqwyCtlMqrejgRFgGaDADB7rQgmPrQCYJEaNz3FyLCSRCxCrX+psRCJkiobZO
-         j2zYxCuC3AOsjm+C8kWI34EjwvopFJICgl7o6mJkxGu3nUzPZkN7A6HXp9yFuq68qJQh
-         NcXDZSjh/nrcEaCC798ipxc8OrFJGu6vIRlb2Z5BbVzJCA/laKXC2AlR6nLDMKV6ymFp
-         X5Yx6QlcnFg+e0zKte8/TbmnlbRNx2PlQFQxngL19ijpoQrRbnRlhVmIGW1iMB54bnoB
-         E6Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698341119; x=1698945919;
-        h=in-reply-to:autocrypt:from:references:cc:to:content-language
-         :subject:user-agent:mime-version:date:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EU5xFwVc6jgIe3EzY0IHSa84KhXBI4zWk3tZOedh3HU=;
-        b=fi9bObqeJ44caoN7s6hM+NhiIN+sRnquAIj3CbFP0YjjLRmWsjK5fMBk4Db/6xAsAX
-         gtYa5ZBDyEJVFSMIW5fkvC9tP4vIIR/Aaj6OTA7s0PzYFj/gLEML2NpPExwVhzZCP11Q
-         jzPaEf56z7S0BEMymOwm8Qg6H2YmIvB1Wo6sFZbZec3xlZyA0ePTDn+i6+WqSqf3tB0r
-         ym4o+4e5bmcMuS6di4umOhjxzW1o34gWVWa9tSfvsTZMTESDBIqFf5z3wJT3DzTAggQF
-         I7wtgyi/yPFiEDcV4TPRzA/ng86X8DQIYBS0Ppg6hQoYcKZAHr5qa5H38CRD9TTdUxSh
-         2tuw==
-X-Gm-Message-State: AOJu0YyltdxjSmc0W/i8HCTIvn7T+21bPMydYizXCAzeUC2PVjPJ4Qry
-        pzNx6MmUuz2L/dqUBq+tF0Q=
-X-Google-Smtp-Source: AGHT+IGdM2fJ3AKPSfEs/hR/K40wKj4suDvzL73g3Bysm+uhaWGRtN5Xh+3NbXOG3nquFYOVdgGN+A==
-X-Received: by 2002:a0c:aa1a:0:b0:66f:b0ca:f145 with SMTP id d26-20020a0caa1a000000b0066fb0caf145mr243856qvb.10.1698341118840;
-        Thu, 26 Oct 2023 10:25:18 -0700 (PDT)
-Received: from [192.168.2.14] ([64.231.246.137])
-        by smtp.gmail.com with ESMTPSA id df17-20020a056214081100b0064723b94a23sm5285513qvb.27.2023.10.26.10.25.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 10:25:18 -0700 (PDT)
-Message-ID: <6f3e9b93-2be5-46b2-bbd9-d61d2603c14a@gmail.com>
-Date:   Thu, 26 Oct 2023 13:25:08 -0400
+        Thu, 26 Oct 2023 13:58:57 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B66192;
+        Thu, 26 Oct 2023 10:58:54 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39QEKaYr017276;
+        Thu, 26 Oct 2023 17:58:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=k/QqVua+OhGtONEfnzazmJjYfXyO1Q3pQk/rLCM9z/0=;
+ b=e47RZrCvcW8xqs6+s4O53m4HUY2L1T0w7HLAhCMgfftv4WWFFcQetyFsE3CaSLENkgvs
+ vSTOWPoKS+YCnnGoB69aCXxhFiOZoInYMCX+M4BpLcYI2wcE380tPkzLfr6E2hVnBc3n
+ DGeNZhHVYwkMAuLTlEuzlF1/IA599g79kcpF44hwRz8MqUeMFNRN9LzuJQIO56z4X4O9
+ WZ4+ieAgqVr9XIyZZh29MoADXmkhKRXGO8uwPUw+FJ1cU+HK4xyoIeB/PWK+/NI4fLBO
+ wZM/Wj1fMz/YTcJqjRESOzvsFXTAp/Zu73y5MKGkumXudLsQKn1Rgpnjyl5lAHYNcoMk tw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tykw29f8m-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Oct 2023 17:58:31 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39QHwUwe027175
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Oct 2023 17:58:30 GMT
+Received: from [10.251.44.39] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 26 Oct
+ 2023 10:58:26 -0700
+Message-ID: <9a7f77cf-77bc-4a5a-af11-51464fbfdaf4@quicinc.com>
+Date:   Thu, 26 Oct 2023 20:58:23 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:115.0) Gecko/20100101
- Thunderbird/115.4.1
-Subject: Re: [PATCH] drm/sched: Convert the GPU scheduler to variable number
- of run-queues
-Content-Language: en-CA, en-US
-To:     Danilo Krummrich <dakr@redhat.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Direct Rendering Infrastructure - Development 
-        <dri-devel@lists.freedesktop.org>
-Cc:     Matthew Brost <matthew.brost@intel.com>,
-        lima@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
-        nouveau@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        etnaviv@lists.freedesktop.org,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Qiang Yu <yuq825@gmail.com>,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-References: <20231023032251.164775-1-luben.tuikov@amd.com>
- <8f53f7ef-7621-4f0b-bdef-d8d20bc497ff@redhat.com>
-From:   Luben Tuikov <ltuikov89@gmail.com>
-Autocrypt: addr=ltuikov89@gmail.com; keydata=
- xjMEZTohOhYJKwYBBAHaRw8BAQdAWSq76k+GsENjDTMVCy9Vr4fAO9Rb57/bPT1APnbnnRHN
- Ikx1YmVuIFR1aWtvdiA8bHR1aWtvdjg5QGdtYWlsLmNvbT7CmQQTFgoAQRYhBJkj7+VmFO9b
- eaAl10wVR5QxozSvBQJlOiE6AhsDBQkJZgGABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheA
- AAoJEEwVR5QxozSvSm4BAOwCpX53DTQhE20FBGlTMqKCOQyJqlMcIQ9SO1qPWX1iAQCv3vfy
- JwktF7REl1yt7IU2Sye1qmQMfJxdt9JMbMNNBs44BGU6IToSCisGAQQBl1UBBQEBB0BT9wSP
- cCE8uGe7FWo8C+nTSyWPXKTx9F0gpEnlqReRBwMBCAfCfgQYFgoAJhYhBJkj7+VmFO9beaAl
- 10wVR5QxozSvBQJlOiE6AhsMBQkJZgGAAAoJEEwVR5QxozSvSsYA/2LIFjbxQ2ikbU5S0pKo
- aMDzO9eGz69uNhNWJcvIKJK6AQC9228Mqc1JeZMIyjYWr2HKYHi8S2q2/zHrSZwAWYYwDA==
-In-Reply-To: <8f53f7ef-7621-4f0b-bdef-d8d20bc497ff@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------qpo00lTdqRNzQQlFP0xxWGMF"
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
-        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] dt-bindings: iommu: Add Translation Buffer Unit
+ bindings
+Content-Language: en-US
+To:     Robin Murphy <robin.murphy@arm.com>, Rob Herring <robh@kernel.org>
+CC:     <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <will@kernel.org>, <joro@8bytes.org>, <devicetree@vger.kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_cgoldswo@quicinc.com>, <quic_sukadev@quicinc.com>,
+        <quic_pdaly@quicinc.com>, <quic_sudaraja@quicinc.com>,
+        <djakov@kernel.org>
+References: <20231019021923.13939-1-quic_c_gdjako@quicinc.com>
+ <20231019021923.13939-2-quic_c_gdjako@quicinc.com>
+ <20231024184248.GA252155-robh@kernel.org>
+ <56bbb2ad-5cea-46ad-83be-d6d7fd9bbfde@arm.com>
+From:   Georgi Djakov <quic_c_gdjako@quicinc.com>
+In-Reply-To: <56bbb2ad-5cea-46ad-83be-d6d7fd9bbfde@arm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 56i69dhbWJbmVRK1hGCUmPyZkk70GDhf
+X-Proofpoint-GUID: 56i69dhbWJbmVRK1hGCUmPyZkk70GDhf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-26_15,2023-10-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 mlxlogscore=801 spamscore=0 suspectscore=0 bulkscore=0
+ phishscore=0 mlxscore=0 clxscore=1011 adultscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310170001 definitions=main-2310260154
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------qpo00lTdqRNzQQlFP0xxWGMF
-Content-Type: multipart/mixed; boundary="------------oweN29030ns5OSjFnt5KAz5X";
- protected-headers="v1"
-From: Luben Tuikov <ltuikov89@gmail.com>
-To: Danilo Krummrich <dakr@redhat.com>, Luben Tuikov <luben.tuikov@amd.com>,
- Direct Rendering Infrastructure - Development
- <dri-devel@lists.freedesktop.org>
-Cc: Matthew Brost <matthew.brost@intel.com>, lima@lists.freedesktop.org,
- Emma Anholt <emma@anholt.net>, nouveau@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- etnaviv@lists.freedesktop.org, Alex Deucher <alexander.deucher@amd.com>,
- Boris Brezillon <boris.brezillon@collabora.com>, Qiang Yu
- <yuq825@gmail.com>, Russell King <linux+etnaviv@armlinux.org.uk>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- freedreno@lists.freedesktop.org, =?UTF-8?Q?Christian_K=C3=B6nig?=
- <christian.koenig@amd.com>
-Message-ID: <6f3e9b93-2be5-46b2-bbd9-d61d2603c14a@gmail.com>
-Subject: Re: [PATCH] drm/sched: Convert the GPU scheduler to variable number
- of run-queues
-References: <20231023032251.164775-1-luben.tuikov@amd.com>
- <8f53f7ef-7621-4f0b-bdef-d8d20bc497ff@redhat.com>
-In-Reply-To: <8f53f7ef-7621-4f0b-bdef-d8d20bc497ff@redhat.com>
+Hi Robin,
 
---------------oweN29030ns5OSjFnt5KAz5X
-Content-Type: multipart/mixed; boundary="------------6je06xlWYplPpel0QqkFvRA8"
+Thanks for taking a look at this!
 
---------------6je06xlWYplPpel0QqkFvRA8
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-On 2023-10-26 12:39, Danilo Krummrich wrote:
-> On 10/23/23 05:22, Luben Tuikov wrote:
->> The GPU scheduler has now a variable number of run-queues, which are s=
-et up at
->> drm_sched_init() time. This way, each driver announces how many run-qu=
-eues it
->> requires (supports) per each GPU scheduler it creates. Note, that run-=
-queues
->> correspond to scheduler "priorities", thus if the number of run-queues=
- is set
->> to 1 at drm_sched_init(), then that scheduler supports a single run-qu=
-eue,
->> i.e. single "priority". If a driver further sets a single entity per
->> run-queue, then this creates a 1-to-1 correspondence between a schedul=
-er and
->> a scheduled entity.
->=20
-> Generally, I'm fine with this patch and how it replaces / generalizes t=
-he single
-> entity approach.
-
-Great!
-
-> However, I'm not quite sure how to properly use this. What is a driver =
-supposed to
-> do, which previously took advantage of DRM_SCHED_POLICY_SINGLE_ENTITY?
->=20
-> Is it supposed to call drm_sched_init() with num_rqs=3D1? If so, what's=
- the correct way
-
-Yes, you call drm_sched_init() with num_rqs set to 1.
-
-> to initialize the drm_sched_entity then? Calling drm_sched_entity_init(=
-) with priority=3D0?
-
-Yes, with priority set to 0.
-
-One unfortunate fact I noticed when doing this patch is that the numerica=
-l values
-assigned to enum drm_sched_priority is that the names to values are upsid=
-e down.
-Instead of min being 0, normal:1, high:2, kernel:3, it should've been ker=
-nel:0 (highest),
-high:1, normal:2, low:4, and so on.
-
-The reason for this is absolutely clear: if you had a single priority, it=
- would be
-0, the kernel, one, highest one. This is similar to how lanes in a highwa=
-y are counted:
-you always have lane 1. Similarly to nice(1) and kernel priorities...
-
-> Any other priority consequently faults in drm_sched_job_arm().
-
-drm_sched_job_arm() faults on !ENTITY, but the "priority" is just
-assigned to s_priority:
-	job->s_priority =3D entity->priority;
-
-
-> While I might sound like a broken record (sorry for that), I really thi=
-nk everything
-> related to Matt's series needs documentation, as in:
-
-Yes, I agree.
-=20
-> - What is the typical application of the single entity / variable run q=
-ueue design?
->    How do drivers make use of it?
-
-I believe most drivers in the future, would want to have a single sched_r=
-q (i.e. single
-"priority", and then would tack a single entity to this, and then do prio=
-ritization
-internally in their firmware/hardware.
-
-> - How to tear down a scheduler instance properly?
-> - Motivation and implications of the workqueue topology (default workqu=
-eue, external
->    driver workqueue, free job work, run job work, etc.).
->=20
-> But also the existing scheduler infrastructure requires more documentat=
-ion.
->=20
-> The scheduler barely has some documentation to describe its basic topol=
-ogy of
-> struct drm_gpu_scheduler, struct drm_sched_entity and struct drm_sched_=
-job.
-> Plus a few hints regarding run queue priorities, which, with this patch=
-, seem to be
-> (partially) out-dated or at least incomplete.
->=20
-> I think Sima also mentioned that we really need to put some efforts her=
-e. [1]
-
-Yes, that's true.
-
-Regards,
-Luben
-
->=20
-> - Danilo
->=20
-> [1] https://lore.kernel.org/all/20231017150958.838613-1-matthew.brost@i=
-ntel.com/T/#m330335b44bdb7ae93ac6ebdedd65706df5a0f03d
->=20
+On 10/25/2023 1:26 AM, Robin Murphy wrote:
+> On 2023-10-24 19:42, Rob Herring wrote:
+>> On Wed, Oct 18, 2023 at 07:19:18PM -0700, Georgi Djakov wrote:
+>>> The "apps_smmu" on the Qualcomm sdm845 platform is an implementation
+>>> of the ARM SMMU-500, that consists of a single TCU (Translation Control
+>>> Unit) and multiple TBUs (Translation Buffer Units). The TCU is already
+>>> being described in the ARM SMMU DT schema. Add also bindings for the
+>>> TBUs so that we can describe their properties.
 >>
->> Cc: Lucas Stach <l.stach@pengutronix.de>
->> Cc: Russell King <linux+etnaviv@armlinux.org.uk>
->> Cc: Qiang Yu <yuq825@gmail.com>
->> Cc: Rob Clark <robdclark@gmail.com>
->> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Cc: Danilo Krummrich <dakr@redhat.com>
->> Cc: Matthew Brost <matthew.brost@intel.com>
->> Cc: Boris Brezillon <boris.brezillon@collabora.com>
->> Cc: Alex Deucher <alexander.deucher@amd.com>
->> Cc: Christian K=C3=B6nig <christian.koenig@amd.com>
->> Cc: Emma Anholt <emma@anholt.net>
->> Cc: etnaviv@lists.freedesktop.org
->> Cc: lima@lists.freedesktop.org
->> Cc: linux-arm-msm@vger.kernel.org
->> Cc: freedreno@lists.freedesktop.org
->> Cc: nouveau@lists.freedesktop.org
->> Cc: dri-devel@lists.freedesktop.org
->> Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
->> ---
->>   drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |  1 +
->>   drivers/gpu/drm/amd/amdgpu/amdgpu_job.c    |  4 +-
->>   drivers/gpu/drm/etnaviv/etnaviv_sched.c    |  1 +
->>   drivers/gpu/drm/lima/lima_sched.c          |  4 +-
->>   drivers/gpu/drm/msm/msm_ringbuffer.c       |  5 +-
->>   drivers/gpu/drm/nouveau/nouveau_sched.c    |  1 +
->>   drivers/gpu/drm/panfrost/panfrost_job.c    |  1 +
->>   drivers/gpu/drm/scheduler/sched_entity.c   | 18 +++++-
->>   drivers/gpu/drm/scheduler/sched_main.c     | 74 ++++++++++++++++++--=
---
->>   drivers/gpu/drm/v3d/v3d_sched.c            |  5 ++
->>   include/drm/gpu_scheduler.h                |  9 ++-
->>   11 files changed, 98 insertions(+), 25 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/=
-drm/amd/amdgpu/amdgpu_device.c
->> index 2b8356699f235d..251995a90bbe69 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
->> @@ -2280,6 +2280,7 @@ static int amdgpu_device_init_schedulers(struct =
-amdgpu_device *adev)
->>   		}
->>  =20
->>   		r =3D drm_sched_init(&ring->sched, &amdgpu_sched_ops,
->> +				   DRM_SCHED_PRIORITY_COUNT,
->>   				   ring->num_hw_submission, 0,
->>   				   timeout, adev->reset_domain->wq,
->>   				   ring->sched_score, ring->name,
->> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm=
-/amd/amdgpu/amdgpu_job.c
->> index 78476bc75b4e1d..1f357198533f3e 100644
->> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
->> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
->> @@ -325,8 +325,8 @@ void amdgpu_job_stop_all_jobs_on_sched(struct drm_=
-gpu_scheduler *sched)
->>   	int i;
->>  =20
->>   	/* Signal all jobs not yet scheduled */
->> -	for (i =3D DRM_SCHED_PRIORITY_COUNT - 1; i >=3D DRM_SCHED_PRIORITY_M=
-IN; i--) {
->> -		struct drm_sched_rq *rq =3D &sched->sched_rq[i];
->> +	for (i =3D sched->num_rqs - 1; i >=3D DRM_SCHED_PRIORITY_MIN; i--) {=
+>> Arm SMMU-500 is an implementation, too. Is QCom's a modified
+>> implementation or you are just the first to want to control TBU
+>> resources?
+> 
+> It's very very modified. The stock MMU-500 has very few microarchitectural registers[1], they all live within the regular SMMU address space, are all Secure-only by default, and don't do anything like the shenanigans here.
+> 
+> That said, looking at patch #3, I don't really understand why we need any of this stuff upstream... AFAICS it's doing an insane amount of work to use complicated imp-def debug functionality to duplicate things that the main driver can already do far more efficiently. Sure, in general it seems like it could potentially be useful stuff for bringing up and debugging a new driver, but the Linux SMMUv2 driver is mature and frankly already closer to being obsolete than to being new...
 
->> +		struct drm_sched_rq *rq =3D sched->sched_rq[i];
->>   		spin_lock(&rq->lock);
->>   		list_for_each_entry(s_entity, &rq->entities, list) {
->>   			while ((s_job =3D to_drm_sched_job(spsc_queue_pop(&s_entity->job_=
-queue)))) {
->> diff --git a/drivers/gpu/drm/etnaviv/etnaviv_sched.c b/drivers/gpu/drm=
-/etnaviv/etnaviv_sched.c
->> index 345fec6cb1a4c1..9b79f218e21afc 100644
->> --- a/drivers/gpu/drm/etnaviv/etnaviv_sched.c
->> +++ b/drivers/gpu/drm/etnaviv/etnaviv_sched.c
->> @@ -135,6 +135,7 @@ int etnaviv_sched_init(struct etnaviv_gpu *gpu)
->>   	int ret;
->>  =20
->>   	ret =3D drm_sched_init(&gpu->sched, &etnaviv_sched_ops,
->> +			     DRM_SCHED_PRIORITY_COUNT,
->>   			     etnaviv_hw_jobs_limit, etnaviv_job_hang_limit,
->>   			     msecs_to_jiffies(500), NULL, NULL,
->>   			     dev_name(gpu->dev), gpu->dev);
->> diff --git a/drivers/gpu/drm/lima/lima_sched.c b/drivers/gpu/drm/lima/=
-lima_sched.c
->> index ffd91a5ee29901..295f0353a02e58 100644
->> --- a/drivers/gpu/drm/lima/lima_sched.c
->> +++ b/drivers/gpu/drm/lima/lima_sched.c
->> @@ -488,7 +488,9 @@ int lima_sched_pipe_init(struct lima_sched_pipe *p=
-ipe, const char *name)
->>  =20
->>   	INIT_WORK(&pipe->recover_work, lima_sched_recover_work);
->>  =20
->> -	return drm_sched_init(&pipe->base, &lima_sched_ops, 1,
->> +	return drm_sched_init(&pipe->base, &lima_sched_ops,
->> +			      DRM_SCHED_PRIORITY_COUNT,
->> +			      1,
->>   			      lima_job_hang_limit,
->>   			      msecs_to_jiffies(timeout), NULL,
->>   			      NULL, name, pipe->ldev->dev);
->> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/ms=
-m/msm_ringbuffer.c
->> index 40c0bc35a44cee..95257ab0185dc4 100644
->> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
->> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
->> @@ -95,8 +95,9 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm=
-_gpu *gpu, int id,
->>   	sched_timeout =3D MAX_SCHEDULE_TIMEOUT;
->>  =20
->>   	ret =3D drm_sched_init(&ring->sched, &msm_sched_ops,
->> -			num_hw_submissions, 0, sched_timeout,
->> -			NULL, NULL, to_msm_bo(ring->bo)->name, gpu->dev->dev);
->> +			     DRM_SCHED_PRIORITY_COUNT,
->> +			     num_hw_submissions, 0, sched_timeout,
->> +			     NULL, NULL, to_msm_bo(ring->bo)->name, gpu->dev->dev);
->>   	if (ret) {
->>   		goto fail;
->>   	}
->> diff --git a/drivers/gpu/drm/nouveau/nouveau_sched.c b/drivers/gpu/drm=
-/nouveau/nouveau_sched.c
->> index 3b7ea522122605..7c376c4ccdcf9b 100644
->> --- a/drivers/gpu/drm/nouveau/nouveau_sched.c
->> +++ b/drivers/gpu/drm/nouveau/nouveau_sched.c
->> @@ -436,6 +436,7 @@ int nouveau_sched_init(struct nouveau_drm *drm)
->>   		return -ENOMEM;
->>  =20
->>   	return drm_sched_init(sched, &nouveau_sched_ops,
->> +			      DRM_SCHED_PRIORITY_COUNT,
->>   			      NOUVEAU_SCHED_HW_SUBMISSIONS, 0, job_hang_limit,
->>   			      NULL, NULL, "nouveau_sched", drm->dev->dev);
->>   }
->> diff --git a/drivers/gpu/drm/panfrost/panfrost_job.c b/drivers/gpu/drm=
-/panfrost/panfrost_job.c
->> index a8b4827dc42586..95510d481fab3a 100644
->> --- a/drivers/gpu/drm/panfrost/panfrost_job.c
->> +++ b/drivers/gpu/drm/panfrost/panfrost_job.c
->> @@ -832,6 +832,7 @@ int panfrost_job_init(struct panfrost_device *pfde=
-v)
->>  =20
->>   		ret =3D drm_sched_init(&js->queue[j].sched,
->>   				     &panfrost_sched_ops,
->> +				     DRM_SCHED_PRIORITY_COUNT,
->>   				     nentries, 0,
->>   				     msecs_to_jiffies(JOB_TIMEOUT_MS),
->>   				     pfdev->reset.wq,
->> diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/dr=
-m/scheduler/sched_entity.c
->> index a42763e1429dc1..409e4256f6e7d6 100644
->> --- a/drivers/gpu/drm/scheduler/sched_entity.c
->> +++ b/drivers/gpu/drm/scheduler/sched_entity.c
->> @@ -75,8 +75,20 @@ int drm_sched_entity_init(struct drm_sched_entity *=
-entity,
->>   	RCU_INIT_POINTER(entity->last_scheduled, NULL);
->>   	RB_CLEAR_NODE(&entity->rb_tree_node);
->>  =20
->> -	if(num_sched_list)
->> -		entity->rq =3D &sched_list[0]->sched_rq[entity->priority];
->> +	if (!sched_list[0]->sched_rq) {
->> +		/* Warn drivers not to do this and to fix their DRM
->> +		 * calling order.
->> +		 */
->> +		pr_warn("%s: called with uninitialized scheduler\n", __func__);
->> +	} else if (num_sched_list) {
->> +		/* The "priority" of an entity cannot exceed the number
->> +		 * of run-queues of a scheduler.
->> +		 */
->> +		if (entity->priority >=3D sched_list[0]->num_rqs)
->> +			entity->priority =3D max_t(u32, sched_list[0]->num_rqs,
->> +						 DRM_SCHED_PRIORITY_MIN);
->> +		entity->rq =3D sched_list[0]->sched_rq[entity->priority];
->> +	}
->>  =20
->>   	init_completion(&entity->entity_idle);
->>  =20
->> @@ -533,7 +545,7 @@ void drm_sched_entity_select_rq(struct drm_sched_e=
-ntity *entity)
->>  =20
->>   	spin_lock(&entity->rq_lock);
->>   	sched =3D drm_sched_pick_best(entity->sched_list, entity->num_sched=
-_list);
->> -	rq =3D sched ? &sched->sched_rq[entity->priority] : NULL;
->> +	rq =3D sched ? sched->sched_rq[entity->priority] : NULL;
->>   	if (rq !=3D entity->rq) {
->>   		drm_sched_rq_remove_entity(entity->rq, entity);
->>   		entity->rq =3D rq;
->> diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/=
-scheduler/sched_main.c
->> index 5a3a622fc672f3..99797a8c836ac7 100644
->> --- a/drivers/gpu/drm/scheduler/sched_main.c
->> +++ b/drivers/gpu/drm/scheduler/sched_main.c
->> @@ -632,8 +632,14 @@ int drm_sched_job_init(struct drm_sched_job *job,=
+Yes, the arm-smmu driver already does similar stuff with the ATS feature, but this unfortunately isn't available in Qualcomm's implementation. Instead of that, there is this eCATS thing for debugging various issues including hardware issues. It supports many features, but here we use it just for hardware page table walks. And in the majority of cases it's expected that the software and hardware page table walks give the same result, but if there is a difference, it's sign of a problem. For example, it helped in the past to trace some power management issues of the SMMU. This of course is a debug feature and can enabled when needed.
 
->>   		       struct drm_sched_entity *entity,
->>   		       void *owner)
->>   {
->> -	if (!entity->rq)
->> +	if (!entity->rq) {
->> +		/* This will most likely be followed by missing frames
->> +		 * or worse--a blank screen--leave a trail in the
->> +		 * logs, so this can be debugged easier.
->> +		 */
->> +		drm_err(job->sched, "%s: entity has no rq!\n", __func__);
->>   		return -ENOENT;
->> +	}
->>  =20
->>   	job->entity =3D entity;
->>   	job->s_fence =3D drm_sched_fence_alloc(entity, owner);
->> @@ -671,7 +677,7 @@ void drm_sched_job_arm(struct drm_sched_job *job)
->>   	sched =3D entity->rq->sched;
->>  =20
->>   	job->sched =3D sched;
->> -	job->s_priority =3D entity->rq - sched->sched_rq;
->> +	job->s_priority =3D entity->priority;
->>   	job->id =3D atomic64_inc_return(&sched->job_id_count);
->>  =20
->>   	drm_sched_fence_init(job->s_fence, job->entity);
->> @@ -888,10 +894,10 @@ drm_sched_select_entity(struct drm_gpu_scheduler=
- *sched)
->>   		return NULL;
->>  =20
->>   	/* Kernel run queue has higher priority than normal run queue*/
->> -	for (i =3D DRM_SCHED_PRIORITY_COUNT - 1; i >=3D DRM_SCHED_PRIORITY_M=
-IN; i--) {
->> +	for (i =3D sched->num_rqs - 1; i >=3D DRM_SCHED_PRIORITY_MIN; i--) {=
+> [ digression since I can't be bothered to split this discussion by replying separately to patch #3: ]
+> 
+> I mean, just looking at qsmmuv500_iova_to_phys(), you do realise that that's going to be called potentially multiple times by iommu-dma for *every* dma_sync and dma_unmap call and really wants to be fast, right? This brings to mind all the work I did a couple of years back[2] because strict TLB invalidation on unmap was considered too slow for certain devices on QCom platforms by ChromeOS, yet what this achieves looks like it could easily be up to an order of magnitude slower again :(
 
->>   		entity =3D drm_sched_policy =3D=3D DRM_SCHED_POLICY_FIFO ?
->> -			drm_sched_rq_select_entity_fifo(&sched->sched_rq[i]) :
->> -			drm_sched_rq_select_entity_rr(&sched->sched_rq[i]);
->> +			drm_sched_rq_select_entity_fifo(sched->sched_rq[i]) :
->> +			drm_sched_rq_select_entity_rr(sched->sched_rq[i]);
->>   		if (entity)
->>   			break;
->>   	}
->> @@ -1071,6 +1077,7 @@ static int drm_sched_main(void *param)
->>    *
->>    * @sched: scheduler instance
->>    * @ops: backend operations for this scheduler
->> + * @num_rqs: number of runqueues, one for each priority, up to DRM_SC=
-HED_PRIORITY_COUNT
->>    * @hw_submission: number of hw submissions that can be in flight
->>    * @hang_limit: number of times to allow a job to hang before droppi=
-ng it
->>    * @timeout: timeout value in jiffies for the scheduler
->> @@ -1084,11 +1091,12 @@ static int drm_sched_main(void *param)
->>    */
->>   int drm_sched_init(struct drm_gpu_scheduler *sched,
->>   		   const struct drm_sched_backend_ops *ops,
->> -		   unsigned hw_submission, unsigned hang_limit,
->> +		   u32 num_rqs, uint32_t hw_submission, unsigned int hang_limit,
->>   		   long timeout, struct workqueue_struct *timeout_wq,
->>   		   atomic_t *score, const char *name, struct device *dev)
->>   {
->>   	int i, ret;
->> +
->>   	sched->ops =3D ops;
->>   	sched->hw_submission_limit =3D hw_submission;
->>   	sched->name =3D name;
->> @@ -1097,8 +1105,36 @@ int drm_sched_init(struct drm_gpu_scheduler *sc=
-hed,
->>   	sched->hang_limit =3D hang_limit;
->>   	sched->score =3D score ? score : &sched->_score;
->>   	sched->dev =3D dev;
->> -	for (i =3D DRM_SCHED_PRIORITY_MIN; i < DRM_SCHED_PRIORITY_COUNT; i++=
-)
->> -		drm_sched_rq_init(sched, &sched->sched_rq[i]);
->> +
->> +	if (num_rqs > DRM_SCHED_PRIORITY_COUNT) {
->> +		/* This is a gross violation--tell drivers what the  problem is.
->> +		 */
->> +		drm_err(sched, "%s: num_rqs cannot be greater than DRM_SCHED_PRIORI=
-TY_COUNT\n",
->> +			__func__);
->> +		return -EINVAL;
->> +	} else if (sched->sched_rq) {
->> +		/* Not an error, but warn anyway so drivers can
->> +		 * fine-tune their DRM calling order, and return all
->> +		 * is good.
->> +		 */
->> +		drm_warn(sched, "%s: scheduler already initialized!\n", __func__);
->> +		return 0;
->> +	}
->> +
->> +	sched->sched_rq =3D kmalloc_array(num_rqs, sizeof(*sched->sched_rq),=
+No, this is not going to be called for every dma_sync and dma_unmap. In patch 5 we register a custom context_fault handler that uses this code to get information from the TBUs. So all of this is executed only when a context fault occurs. Does this sound acceptable?
 
->> +					GFP_KERNEL | __GFP_ZERO);
->> +	if (!sched->sched_rq) {
->> +		drm_err(sched, "%s: out of memory for sched_rq\n", __func__);
->> +		return -ENOMEM;
->> +	}
->> +	sched->num_rqs =3D num_rqs;
->> +	ret =3D -ENOMEM;
->> +	for (i =3D DRM_SCHED_PRIORITY_MIN; i < sched->num_rqs; i++) {
->> +		sched->sched_rq[i] =3D kzalloc(sizeof(*sched->sched_rq[i]), GFP_KER=
-NEL);
->> +		if (!sched->sched_rq[i])
->> +			goto Out_unroll;
->> +		drm_sched_rq_init(sched, sched->sched_rq[i]);
->> +	}
->>  =20
->>   	init_waitqueue_head(&sched->wake_up_worker);
->>   	init_waitqueue_head(&sched->job_scheduled);
->> @@ -1115,11 +1151,18 @@ int drm_sched_init(struct drm_gpu_scheduler *s=
-ched,
->>   		ret =3D PTR_ERR(sched->thread);
->>   		sched->thread =3D NULL;
->>   		DRM_DEV_ERROR(sched->dev, "Failed to create scheduler for %s.\n", =
-name);
->> -		return ret;
->> +		goto Out_unroll;
->>   	}
->>  =20
->>   	sched->ready =3D true;
->>   	return 0;
->> +Out_unroll:
->> +	for (--i ; i >=3D DRM_SCHED_PRIORITY_MIN; i--)
->> +		kfree(sched->sched_rq[i]);
->> +	kfree(sched->sched_rq);
->> +	sched->sched_rq =3D NULL;
->> +	drm_err(sched, "%s: Failed to setup GPU scheduler--out of memory\n",=
- __func__);
->> +	return ret;
->>   }
->>   EXPORT_SYMBOL(drm_sched_init);
->>  =20
->> @@ -1138,8 +1181,8 @@ void drm_sched_fini(struct drm_gpu_scheduler *sc=
-hed)
->>   	if (sched->thread)
->>   		kthread_stop(sched->thread);
->>  =20
->> -	for (i =3D DRM_SCHED_PRIORITY_COUNT - 1; i >=3D DRM_SCHED_PRIORITY_M=
-IN; i--) {
->> -		struct drm_sched_rq *rq =3D &sched->sched_rq[i];
->> +	for (i =3D sched->num_rqs - 1; i >=3D DRM_SCHED_PRIORITY_MIN; i--) {=
+[..]>>> +description:
+>>> +  TBU nodes represent Translation Buffer Units in an ARM SMMU. Each TBU node
+>>> +  should be a child node of the SMMU in the device tree.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    enum:
+>>> +      - qcom,qsmmuv500-tbu
+>>> +
+>>> +  reg:
+>>> +    items:
+>>> +      - description: Address and size of the TBU's register space.
+>>> +
+>>> +  reg-names:
+>>> +    items:
+>>> +      - const: base
+>>> +
+>>> +  clocks:
+>>> +    maxItems: 1
+>>> +
+>>> +  interconnects:
+>>> +    maxItems: 1
+> 
+> What does this interconnect represent? MMU-500 TBUs don't access memory themselves[3], they only have an internal AXI Stream interface to the TCU to request translations.
 
->> +		struct drm_sched_rq *rq =3D sched->sched_rq[i];
->>  =20
->>   		spin_lock(&rq->lock);
->>   		list_for_each_entry(s_entity, &rq->entities, list)
->> @@ -1150,7 +1193,7 @@ void drm_sched_fini(struct drm_gpu_scheduler *sc=
-hed)
->>   			 */
->>   			s_entity->stopped =3D true;
->>   		spin_unlock(&rq->lock);
->> -
->> +		kfree(sched->sched_rq[i]);
->>   	}
->>  =20
->>   	/* Wakeup everyone stuck in drm_sched_entity_flush for this schedul=
-er */
->> @@ -1160,6 +1203,8 @@ void drm_sched_fini(struct drm_gpu_scheduler *sc=
-hed)
->>   	cancel_delayed_work_sync(&sched->work_tdr);
->>  =20
->>   	sched->ready =3D false;
->> +	kfree(sched->sched_rq);
->> +	sched->sched_rq =3D NULL;
->>   }
->>   EXPORT_SYMBOL(drm_sched_fini);
->>  =20
->> @@ -1186,9 +1231,10 @@ void drm_sched_increase_karma(struct drm_sched_=
-job *bad)
->>   	if (bad->s_priority !=3D DRM_SCHED_PRIORITY_KERNEL) {
->>   		atomic_inc(&bad->karma);
->>  =20
->> -		for (i =3D DRM_SCHED_PRIORITY_MIN; i < DRM_SCHED_PRIORITY_KERNEL;
->> +		for (i =3D DRM_SCHED_PRIORITY_MIN;
->> +		     i < min_t(typeof(sched->num_rqs), sched->num_rqs, DRM_SCHED_PR=
-IORITY_KERNEL);
->>   		     i++) {
->> -			struct drm_sched_rq *rq =3D &sched->sched_rq[i];
->> +			struct drm_sched_rq *rq =3D sched->sched_rq[i];
->>  =20
->>   			spin_lock(&rq->lock);
->>   			list_for_each_entry_safe(entity, tmp, &rq->entities, list) {
->> diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d=
-_sched.c
->> index 06238e6d7f5cda..038e1ae589c718 100644
->> --- a/drivers/gpu/drm/v3d/v3d_sched.c
->> +++ b/drivers/gpu/drm/v3d/v3d_sched.c
->> @@ -389,6 +389,7 @@ v3d_sched_init(struct v3d_dev *v3d)
->>  =20
->>   	ret =3D drm_sched_init(&v3d->queue[V3D_BIN].sched,
->>   			     &v3d_bin_sched_ops,
->> +			     DRM_SCHED_PRIORITY_COUNT,
->>   			     hw_jobs_limit, job_hang_limit,
->>   			     msecs_to_jiffies(hang_limit_ms), NULL,
->>   			     NULL, "v3d_bin", v3d->drm.dev);
->> @@ -397,6 +398,7 @@ v3d_sched_init(struct v3d_dev *v3d)
->>  =20
->>   	ret =3D drm_sched_init(&v3d->queue[V3D_RENDER].sched,
->>   			     &v3d_render_sched_ops,
->> +			     DRM_SCHED_PRIORITY_COUNT,
->>   			     hw_jobs_limit, job_hang_limit,
->>   			     msecs_to_jiffies(hang_limit_ms), NULL,
->>   			     NULL, "v3d_render", v3d->drm.dev);
->> @@ -405,6 +407,7 @@ v3d_sched_init(struct v3d_dev *v3d)
->>  =20
->>   	ret =3D drm_sched_init(&v3d->queue[V3D_TFU].sched,
->>   			     &v3d_tfu_sched_ops,
->> +			     DRM_SCHED_PRIORITY_COUNT,
->>   			     hw_jobs_limit, job_hang_limit,
->>   			     msecs_to_jiffies(hang_limit_ms), NULL,
->>   			     NULL, "v3d_tfu", v3d->drm.dev);
->> @@ -414,6 +417,7 @@ v3d_sched_init(struct v3d_dev *v3d)
->>   	if (v3d_has_csd(v3d)) {
->>   		ret =3D drm_sched_init(&v3d->queue[V3D_CSD].sched,
->>   				     &v3d_csd_sched_ops,
->> +				     DRM_SCHED_PRIORITY_COUNT,
->>   				     hw_jobs_limit, job_hang_limit,
->>   				     msecs_to_jiffies(hang_limit_ms), NULL,
->>   				     NULL, "v3d_csd", v3d->drm.dev);
->> @@ -422,6 +426,7 @@ v3d_sched_init(struct v3d_dev *v3d)
->>  =20
->>   		ret =3D drm_sched_init(&v3d->queue[V3D_CACHE_CLEAN].sched,
->>   				     &v3d_cache_clean_sched_ops,
->> +				     DRM_SCHED_PRIORITY_COUNT,
->>   				     hw_jobs_limit, job_hang_limit,
->>   				     msecs_to_jiffies(hang_limit_ms), NULL,
->>   				     NULL, "v3d_cache_clean", v3d->drm.dev);
->> diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h=
+It's to enable access from the CPU to the register space of the TBUs.
 
->> index ac65f0626cfc91..d2fb81e34174dc 100644
->> --- a/include/drm/gpu_scheduler.h
->> +++ b/include/drm/gpu_scheduler.h
->> @@ -471,7 +471,9 @@ struct drm_sched_backend_ops {
->>    * @hw_submission_limit: the max size of the hardware queue.
->>    * @timeout: the time after which a job is removed from the schedule=
-r.
->>    * @name: name of the ring for which this scheduler is being used.
->> - * @sched_rq: priority wise array of run queues.
->> + * @num_rqs: Number of run-queues. This is at most DRM_SCHED_PRIORITY=
-_COUNT,
->> + *           as there's usually one run-queue per priority, but could=
- be less.
->> + * @sched_rq: An allocated array of run-queues of size @num_rqs;
->>    * @wake_up_worker: the wait queue on which the scheduler sleeps unt=
-il a job
->>    *                  is ready to be scheduled.
->>    * @job_scheduled: once @drm_sched_entity_do_release is called the s=
-cheduler
->> @@ -500,7 +502,8 @@ struct drm_gpu_scheduler {
->>   	uint32_t			hw_submission_limit;
->>   	long				timeout;
->>   	const char			*name;
->> -	struct drm_sched_rq		sched_rq[DRM_SCHED_PRIORITY_COUNT];
->> +	u32                             num_rqs;
->> +	struct drm_sched_rq             **sched_rq;
->>   	wait_queue_head_t		wake_up_worker;
->>   	wait_queue_head_t		job_scheduled;
->>   	atomic_t			hw_rq_count;
->> @@ -520,7 +523,7 @@ struct drm_gpu_scheduler {
->>  =20
->>   int drm_sched_init(struct drm_gpu_scheduler *sched,
->>   		   const struct drm_sched_backend_ops *ops,
->> -		   uint32_t hw_submission, unsigned hang_limit,
->> +		   u32 num_rqs, uint32_t hw_submission, unsigned int hang_limit,
->>   		   long timeout, struct workqueue_struct *timeout_wq,
->>   		   atomic_t *score, const char *name, struct device *dev);
->>  =20
->>
->> base-commit: 05d3ef8bba77c1b5f98d941d8b2d4aeab8118ef1
->=20
-
---------------6je06xlWYplPpel0QqkFvRA8
-Content-Type: application/pgp-keys; name="OpenPGP_0x4C15479431A334AF.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x4C15479431A334AF.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-xjMEZTohOhYJKwYBBAHaRw8BAQdAWSq76k+GsENjDTMVCy9Vr4fAO9Rb57/bPT1A
-PnbnnRHNIkx1YmVuIFR1aWtvdiA8bHR1aWtvdjg5QGdtYWlsLmNvbT7CmQQTFgoA
-QRYhBJkj7+VmFO9beaAl10wVR5QxozSvBQJlOiE6AhsDBQkJZgGABQsJCAcCAiIC
-BhUKCQgLAgQWAgMBAh4HAheAAAoJEEwVR5QxozSvSm4BAOwCpX53DTQhE20FBGlT
-MqKCOQyJqlMcIQ9SO1qPWX1iAQCv3vfyJwktF7REl1yt7IU2Sye1qmQMfJxdt9JM
-bMNNBs44BGU6IToSCisGAQQBl1UBBQEBB0BT9wSPcCE8uGe7FWo8C+nTSyWPXKTx
-9F0gpEnlqReRBwMBCAfCfgQYFgoAJhYhBJkj7+VmFO9beaAl10wVR5QxozSvBQJl
-OiE6AhsMBQkJZgGAAAoJEEwVR5QxozSvSsYA/2LIFjbxQ2ikbU5S0pKoaMDzO9eG
-z69uNhNWJcvIKJK6AQC9228Mqc1JeZMIyjYWr2HKYHi8S2q2/zHrSZwAWYYwDA=3D=3D
-=3DqCaZ
------END PGP PUBLIC KEY BLOCK-----
-
---------------6je06xlWYplPpel0QqkFvRA8--
-
---------------oweN29030ns5OSjFnt5KAz5X--
-
---------------qpo00lTdqRNzQQlFP0xxWGMF
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQSZI+/lZhTvW3mgJddMFUeUMaM0rwUCZTqg9QUDAAAAAAAKCRBMFUeUMaM0ryy0
-AQCso8cbMUqTiq7aotrBM+oQBKEvM7DvFP1HPcwfUYEoYwD+NIdyP9maNmAQfTU2+PsaPAPR6nj+
-vBdjPw0NVQI2FQE=
-=vd8k
------END PGP SIGNATURE-----
-
---------------qpo00lTdqRNzQQlFP0xxWGMF--
+Thanks,
+Georgi
