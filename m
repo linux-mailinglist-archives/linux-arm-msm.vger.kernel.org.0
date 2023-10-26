@@ -2,128 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E8887D7DC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 09:43:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 895457D7E0B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 10:04:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229705AbjJZHnj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 03:43:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52268 "EHLO
+        id S231251AbjJZIE5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 04:04:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229658AbjJZHni (ORCPT
+        with ESMTP id S229710AbjJZIE4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 03:43:38 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33ADC184
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 00:43:36 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-32da4ffd7e5so305931f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 00:43:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698306214; x=1698911014; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iT0pJGgpEn+Y4BTcRkM01vVuWXFxY/vEXDXIX8DeCXY=;
-        b=yRNJ4RwREo6A9AV6XW+/1GFvhRIcomSc+PJGXAIBDIi2iguZ/dwXgyhTeCFPLjir3T
-         SIjelf8+ygfDo+KHq8m+VhOR3xisR7dKOUVFznEuLBIBQnausxMYVW7FfR7vk7NUUK98
-         RqiMSWU260aGN0zBmVBUnjjLBzhoQTK0B/TlA5QQsgfxI5h7h8WFKdabDY24D5s/X/ze
-         GhIg2xGlzOe5sIZ8HObOXgi7JDgMqJhadbNHQ+HOEbi+6Hzn+Jl4KiA/v3pqDikbDTXJ
-         zB+WjaPL/9pgD1HyP1L3Xe8QflLoduecTr1TgmIU9e7HDlxSajJYlqfo6JS6UCbRPxmt
-         dzuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698306214; x=1698911014;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=iT0pJGgpEn+Y4BTcRkM01vVuWXFxY/vEXDXIX8DeCXY=;
-        b=rLtXAPPBOjHlyWyLkeGFUnr5StpnuxZZA/CALbENJvj6quvy8qbR0N5+dDhNb1XJBc
-         Xc6ep+Kj12EiB1KuQjKVLRNTjJO/GF2DUewk8QMeIJUiCAPpUlCm+MrqQF5VAfoDN/8a
-         WmBOqHdXwRrseJP97ZcpffOv5iTBV5koQ5xqraZ5UBAaP5AnhsLWVkxg0LtKee8lyDbH
-         wBdeZ6xcA+9u/QGloHZgfJfESnS9C4ncnoLzf1Y42UJEVu0quzKD0mY9JXACWfqgpzR5
-         qwy0CGUGo5XTVdMSRM+giqKQV/5gXleuqpEEJKkdQ04kxD3L4ByLaw0BwfEKtwLKJQoR
-         trWw==
-X-Gm-Message-State: AOJu0YxRgHezTUGysosgTkLG0+dnwTYU5zn87bTuqY/a4j9SQ712dYoU
-        eb+3OLS+QI/dJMgrGW8bZabyAlQiXc3Nr83p14NexOoz
-X-Google-Smtp-Source: AGHT+IH9/t6VXnuGSglyx8gmgCHAbA4Y25dbJPKrDFQ48McZAXhVPSSz9eiWcwu1AVV+0GCZP4y4Ug==
-X-Received: by 2002:adf:efc7:0:b0:32d:a366:7073 with SMTP id i7-20020adfefc7000000b0032da3667073mr1751749wrp.14.1698306214576;
-        Thu, 26 Oct 2023 00:43:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:f57f:eb08:d29b:8c9c? ([2a01:e0a:982:cbb0:f57f:eb08:d29b:8c9c])
-        by smtp.gmail.com with ESMTPSA id h1-20020a05600c498100b004090798d29csm1775761wmp.15.2023.10.26.00.43.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 00:43:34 -0700 (PDT)
-Message-ID: <95ec724e-27c1-43c0-9f2c-99934c5ca3c2@linaro.org>
-Date:   Thu, 26 Oct 2023 09:43:32 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH RFC 0/8] arm64: dts: qcom: Introduce SM8650 platforms
- device tree
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 26 Oct 2023 04:04:56 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82EC7B8;
+        Thu, 26 Oct 2023 01:04:52 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D14AC433C8;
+        Thu, 26 Oct 2023 08:04:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698307492;
+        bh=EAQ7g0hX/FrxSMaglusDeCTnn471+1/pfyILaNojVhU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=fgekZGHe9w5dxxPKuk6zn5H1uJjUgh68Hyyq0hVSmesw81fAlMk4TVQuV+fG/Ifi1
+         bi/OMcbGSszHDTuVCfHrQcOiYv3LTv20fvoU1SpywODggvG/p4HrkVYhfgA8G/qA1K
+         hq13Qi/F68Tl8sEwYkUI/j7oUhxsyaodVcl4/HP7yzK7y4t2wRZwYwoTFSM79ueRYJ
+         t1gpgTbHagm39EF4326A8/n1Bjl28LzBwLUXBy4K6CFtS7RkxG0Hs4hxI6M4heugEC
+         rmhGrFUtI9Er0T2HPvwVxaNJz1ohb/CzatsuXO6zXUA8YxRIjNRkVZhOVjkzn/xjKi
+         l94O/mMwJ6K+Q==
+Date:   Thu, 26 Oct 2023 10:04:48 +0200
+From:   Maxime Ripard <mripard@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
+ the DSI link power state
+Message-ID: <mxtb6vymowutj7whbrygwlcupbdnfqxjralc3nwwapsbvrcmbm@sewxtdslfoen>
+References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
+ <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
+ <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
+ <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
+ <uj6rtlionmacnwlqxy6ejt5iaczgbbe5z54ipte5ffbixcx3p4@pps7fcr3uqhf>
+ <1696f131-83fb-4d0c-b4d7-0bdb61e4ae65@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="t5jjjcy33i2jy7lt"
+Content-Disposition: inline
+In-Reply-To: <1696f131-83fb-4d0c-b4d7-0bdb61e4ae65@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 09:47, Neil Armstrong wrote:
 
-<snip>
+--t5jjjcy33i2jy7lt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> For convenience, a regularly refreshed linux-next based git tree containing
-> all the SM8650 related work is available at:
-> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
+On Wed, Oct 25, 2023 at 06:16:14PM +0300, Dmitry Baryshkov wrote:
+> On 25/10/2023 15:44, Maxime Ripard wrote:
+> > On Thu, Oct 19, 2023 at 02:19:51PM +0300, Dmitry Baryshkov wrote:
+> > > On Thu, 19 Oct 2023 at 12:26, Maxime Ripard <mripard@kernel.org> wrot=
+e:
+> > > >=20
+> > > > On Mon, Oct 16, 2023 at 07:53:48PM +0300, Dmitry Baryshkov wrote:
+> > > > > The MIPI DSI links do not fully fall into the DRM callbacks model.
+> > > >=20
+> > > > Explaining why would help
+> > >=20
+> > > A kind of explanation comes afterwards, but probably I should change
+> > > the order of the phrases and expand it:
+> > >=20
+> > > The atomic_pre_enable / atomic_enable and correspondingly
+> > > atomic_disable / atomic_post_disable expect that the bridge links
+> > > follow a simple paradigm: either it is off, or it is on and streaming
+> > > video. Thus, it is fine to just enable the link at the enable time,
+> > > doing some preparations during the pre_enable.
+> > >=20
+> > > But then it causes several issues with DSI. First, some of the DSI
+> > > bridges and most of the DSI panels would like to send commands over
+> > > the DSI link to setup the device.
+> >=20
+> > What prevent them from doing it in enable when the link is enabled?
+> >=20
+> > > Next, some of the DSI hosts have limitations on sending the commands.
+> > > The proverbial sunxi DSI host can not send DSI commands after the
+> > > video stream has started. Thus most of the panels have opted to send
+> > > all DSI commands from pre_enable (or prepare) callback (before the
+> > > video stream has started).
+> >=20
+> > I'm not sure we should account for a single driver when designing a
+> > framework. We should focus on designing something sound, and then making
+> > that driver work with whatever we designed, but not the other way
+> > around. And if we can't, we should get rid of that driver because it's
+> > de-facto unmaintainable. And I'm saying that as the author of that
+> > driver.
+>=20
+> That's not the only driver with strange peculiarities. For example, see
+> commit 8a4b2fc9c91a ("drm/bridge: tc358762: Split register programming fr=
+om
+> pre-enable to enable"), which was one of the issues that actually prompted
+> me to send this this patchset (after my previous version of this patch be=
+ing
+> rejected because of sunxi).
 
-As it was reported off-list, there's a typo in the previous URL, like in the related cover letters,
-the correct URL is:
-https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
+The datasheet for that bridge is available so at least we can try to fix
+it (and bridges are much simpler than controllers anyway). It's not
+something we can do with the sunxi driver.
 
-I'll keep the previous URL valid to avoid broken links.
+> > > However this leaves no good place for the DSI host to power up the DSI
+> > > link. By default the host's pre_enable callback is called after the
+> > > DSI bridge's pre_enable. For quite some time we were powering up the
+> > > DSI link from mode_set. This doesn't look fully correct.
+> >=20
+> > Yeah, it's not.
+> >=20
+> > > And also we got into the issue with ps8640 bridge, which requires for
+> > > the DSI link to be quiet / unpowered at the bridge's reset time.
+> > >=20
+> > > Dave has come with the idea of pre_enable_prev_first /
+> > > prepare_prev_first flags, which attempt to solve the issue by
+> > > reversing the order of pre_enable callbacks. This mostly solves the
+> > > issue. However during this cycle it became obvious that this approach
+> > > is not ideal too. There is no way for the DSI host to know whether the
+> > > DSI panel / bridge has been updated to use this flag or not, see the
+> > > discussion at [1].
+> >=20
+> > Yeah. Well, that happens. I kind of disagree with Neil here though when
+> > he says that "A panel driver should not depend on features of a DSI
+> > controller". Panels definitely rely on particular features, like the
+> > number of lanes, the modes supported, etc.
+>=20
+> In the mentioned discussion it was more about 'DSI host should not assume
+> panel driver features', like the panel sending commands in pre_enable or
+> not, or having pre_enable_prev_first.
+>=20
+> So the pre_enable_prev_first clearly lacks feature negotiation.
+>=20
+> > Panels shouldn't depend on a particular driver *behaviour*. But the
+> > features are fine.
+> >=20
+> > For our particular discussion, I think that that kind of discussion is a
+> > dead-end, and we just shouldn't worry about it. Yes, some panels have
+> > not yet been updated to take the new flags into account. However, the
+> > proper thing to do is to update them if we see a problem with that (and
+> > thus move forward to the ideal solution), not revert the beginning of
+> > that feature enablement (thus moving away from where we want to end up
+> > in).
+> >=20
+> > > Thus comes this proposal. It allows for the panels to explicitly bring
+> > > the link up and down at the correct time, it supports automatic use
+> > > case, where no special handling is required. And last, but not least,
+> > > it allows the DSI host to note that the bridge / panel were not
+> > > updated to follow new protocol and thus the link should be powered on
+> > > at the mode_set time. This leaves us with the possibility of dropping
+> > > support for this workaround once all in-kernel drivers are updated.
+> >=20
+> > I'm kind of skeptical for these kind of claims that everything will be
+> > automatic and will be handled fine. What if we have conflicting
+> > requirements, for example two bridges drivers that would request the
+> > power up at different times?
+>=20
+> Well, we do not support DSI sublinks, do we?
 
-Neil
+No, but we start to consider adding support for muxes for example. A DSI
+mux + a DSI bridge behind it might trigger that behaviour, even if we
+don't support sublinks.
 
-<snip>
+> > Also, we would still need to update every single panel driver, which is
+> > going to create a lot of boilerplate that people might get wrong.
+>=20
+> Yes, quite unfortunately. Another approach that I have in mind is to add =
+two
+> callbacks to mipi_dsi_device. This way the DSI host will call into the
+> device to initialise it once the link has been powered up and just before
+> tearing it down. We solve a lot of problems this way, no boilerplate and =
+the
+> panel / bridge are in control of the initialisation procedure. WDYT?
+>=20
+> > I have the feeling that we should lay out the problem without talking
+> > about any existing code base first. So, what does the MIPI-DSI spec
+> > requires and what does panels and bridges expect?
+>=20
+> There is not that much in the DSI spec (or maybe I do not understand the
+> question). The spec is more about the power states and the commands. Our
+> problem is that this doesn't fully match kernel expectations.
 
+You're explicitly asking for comments on that series. How can we provide
+any comment if you're dead-set on a particular implementation and not
+explain what the problem you are trying to solve is?
+
+Thinking more about it, I'm even more skeptical about the general
+approach that this should be implemented at the bridge level (or in
+KMS).
+
+It looks to me that this is very much a bus problem. USB device drivers
+also require the bus to be powered and generally available to send data
+to their device, and you don't fix that up in the HID or storage
+drivers, you make the bus behave that way.
+
+What prevents us from fixing it at the bus level?
+
+Maxime
+
+--t5jjjcy33i2jy7lt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZTodoAAKCRDj7w1vZxhR
+xXxfAP9VCXaQR2cQ7p55Qlz1ohFIbsH/qdui1vb3BqtSku+upgEAjT4JPOz2oULJ
+J5eoQVTdscVpioLNgkJXMKMNMAd0+A0=
+=lsQF
+-----END PGP SIGNATURE-----
+
+--t5jjjcy33i2jy7lt--
