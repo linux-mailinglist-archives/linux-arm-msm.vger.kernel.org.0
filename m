@@ -2,203 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF0CC7D8299
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 14:27:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 532707D8380
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 15:27:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231173AbjJZM12 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 08:27:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42808 "EHLO
+        id S231180AbjJZN1a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 09:27:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230405AbjJZM11 (ORCPT
+        with ESMTP id S230177AbjJZN1a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 08:27:27 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D771192
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 05:27:25 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-507b9408c61so1125324e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 05:27:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698323244; x=1698928044; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=H0P71wVS48La4jPQi6tVCrTZ6bHsJV48oqbwPiJ0ir8=;
-        b=i0VU0Q49MxXZaymYGujsfz0vwzMVzGcYp7zWMKjmPpl4gcssfStUjjlwLvgk2CE3mB
-         10AnmZMGtP1ceYW+mv6DsQNCsepyI759cCDdHduxrZto8l8+ECpM7ckiTQJPJ4MCrPYV
-         cEIhT4yXRzPav6pI/54CfyqCTOYkEWSGzJ+oo33ksw4wvb9nkmtdNmYyc3fhOeQPt7M+
-         DCrBgrURK7bsk1fRVwp+X9SIRC9QTWdRge4o4i3l7Milhz0ZQeTFahyzQGmHNnMELM7Q
-         jhBm+o2QNcHjt05TosktuRtC60UXfnUOwSk+CRoPsXcTT6a4I5BM4A4d92KM4bozb1oR
-         A2Zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698323244; x=1698928044;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=H0P71wVS48La4jPQi6tVCrTZ6bHsJV48oqbwPiJ0ir8=;
-        b=CbJfxLo+/uy/g4am6QEvMtdTEXN0oyYvNygAuFdaMDJjM+aSfQVddLUwZLcMtv7kRQ
-         rZM69sOMB59g99N/E+gI+s6/9c6VQaS4R0QHjAbfmeUCxAsvrVZslcjYWSmn/z+CfgZv
-         /a/XXC30zYqVi/ezf3X4g/zi+fBb6k23anJ21X/rnGmCeStB4srF5/uBvPjDwQe/fAzm
-         sLoLntfZosekYkBab/frvaQTivpsfif/d/3NK3BRD+G91fIXg/WKnZa1ApsMDZ/VM4DY
-         HgtpMrdjdAWTYE/75JjmzisyCfGZYk4XRio9btAlMe73rX+XiKTvy1Tp6HNnDXOMdd8x
-         2njg==
-X-Gm-Message-State: AOJu0YyvIPJsBGhg7sSt9Kg1NYBKgYoorNw7kf8VGNk5IeygCmrCRsCB
-        w7iFtrpa+tOjg1URP6X0cvuyvA==
-X-Google-Smtp-Source: AGHT+IEEmdwW+QLsNrn6w7xcamSTlEPh/aCQ9HPZZqWMpOGzQKV/c/f1WbC/70g14sO/MG0eoyVgKQ==
-X-Received: by 2002:ac2:5337:0:b0:505:72bf:43a4 with SMTP id f23-20020ac25337000000b0050572bf43a4mr13167156lfh.39.1698323243561;
-        Thu, 26 Oct 2023 05:27:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:f57f:eb08:d29b:8c9c? ([2a01:e0a:982:cbb0:f57f:eb08:d29b:8c9c])
-        by smtp.gmail.com with ESMTPSA id e8-20020adffc48000000b0031c5e9c2ed7sm11264703wrs.92.2023.10.26.05.27.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 05:27:22 -0700 (PDT)
-Message-ID: <afb778da-ec0a-4451-b853-4b1eba14a68a@linaro.org>
-Date:   Thu, 26 Oct 2023 14:27:22 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 08/10] clk: qcom: add the SM8650 Display Clock Controller
- driver
-Content-Language: en-US, fr
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Thu, 26 Oct 2023 09:27:30 -0400
+Received: from proxmox1.postmarketos.org (proxmox1.postmarketos.org [213.239.216.189])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 05DE3AB;
+        Thu, 26 Oct 2023 06:27:27 -0700 (PDT)
+From:   Stefan Hansson <newbyte@postmarketos.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+        s=donut; t=1698326847;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=s8F4XHnf3tGxinF8AVFI1KGKOgFvNYjjrwZV1fgHERE=;
+        b=z5HDzmjQ1aqCEbNnhVBUGdvjNSpt0gSQHxF+k6HC2zbjW8e2kWD5qVaa1QZDZzckYlm0/h
+        bxbGkaEpLq6Br1xbSuogLoeIPXV7KuISIfzQ4sAFVTgnyWU0ITh76rNciqct2wM5cjVk53
+        HEdIkcMHd8uKPj5895NyI3fvU/LN9FA=
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
         Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
- <20231025-topic-sm8650-upstream-clocks-v1-8-c89b59594caf@linaro.org>
- <a939ef1a4c2cad763fe484cc943f44d5.sboyd@kernel.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <a939ef1a4c2cad763fe484cc943f44d5.sboyd@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Stefan Hansson <newbyte@postmarketos.org>
+Subject: [PATCH v4 0/4] Add samsung-matisselte and common matisse dtsi
+Date:   Thu, 26 Oct 2023 15:24:05 +0200
+Message-ID: <20231026132521.38575-1-newbyte@postmarketos.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 23:45, Stephen Boyd wrote:
-> Quoting Neil Armstrong (2023-10-25 00:32:45)
->> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
->> index c04b6526f4f3..5bf25e8d033c 100644
->> --- a/drivers/clk/qcom/Kconfig
->> +++ b/drivers/clk/qcom/Kconfig
->> @@ -842,6 +842,15 @@ config SM_DISPCC_8550
->>            Say Y if you want to support display devices and functionality such as
->>            splash screen.
->>   
->> +config SM_DISPCC_8650
->> +       tristate "SM8650 Display Clock Controller"
->> +       depends on SM_GCC_8650
-> 
-> selects?
-> 
-> We use selects instead of depends so that the driver can be built-in or
-> modular regardless of parent clks that provide clks to this device.
-> Orphan clk handling resolves issues with the driver registering clks
-> before parents. And with fw_devlink the driver isn't even attempted to
-> probe before the GCC driver is probed so there's no build dependency
-> between these drivers.
+This series adds a common samsung-matisse dtsi and reworks
+samsung-matisse-wifi to use it, and introduces samsung-matisselte. I
+choose matisselte over matisse-lte as this is how most other devices
+(klte, s3ve3g) do it and it is the codename that Samsung gave the
+device. See individual commits for more information.
 
-All current DISPCC entries uses depends, but CAM_CC doesn't,
-I'll switch to select and re-sync Kconfig for all 8650 entries.
+---
+Changes since v1:
 
-> 
->> +       help
->> +         Support for the display clock controller on Qualcomm Technologies, Inc
->> +         SM8650 devices.
->> +         Say Y if you want to support display devices and functionality such as
->> +         splash screen.
->> +
->>   config SM_GCC_4450
->>          tristate "SM4450 Global Clock Controller"
->>          depends on ARM64 || COMPILE_TEST
->> diff --git a/drivers/clk/qcom/dispcc-sm8650.c b/drivers/clk/qcom/dispcc-sm8650.c
->> new file mode 100644
->> index 000000000000..7cb91306e895
->> --- /dev/null
->> +++ b/drivers/clk/qcom/dispcc-sm8650.c
->> @@ -0,0 +1,1806 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2023, Linaro Ltd.
->> + */
->> +
->> +#include <linux/clk.h>
-> 
-> Is this include used?
-> 
->> +#include <linux/clk-provider.h>
->> +#include <linux/err.h>
->> +#include <linux/kernel.h>
->> +#include <linux/module.h>
->> +#include <linux/of_device.h>
-> 
-> Is this mod_devicetable.h?
-> 
->> +#include <linux/of.h>
-> 
-> Is this include used?
-> 
->> +#include <linux/regmap.h>
->> +#include <linux/pm_runtime.h>
->> +
->> +#include <dt-bindings/clock/qcom,sm8650-dispcc.h>
->> +
->> +#include "common.h"
->> +#include "clk-alpha-pll.h"
->> +#include "clk-branch.h"
->> +#include "clk-pll.h"
->> +#include "clk-rcg.h"
->> +#include "clk-regmap.h"
->> +#include "clk-regmap-divider.h"
->> +#include "clk-regmap-mux.h"
-> 
-> Is this include used?
-> 
->> +#include "reset.h"
->> +#include "gdsc.h"
->> +
+ - Rebased on latest linux-next
+ - Added qcom,msm8226 compatible to matisselte inspired by recent Lumia
+   830 patch. This is done as in v1, the patch was rejected because I
+   included the msm8226 dtsi despite not marking matisselte as
+   compatible with msm8226, and I was not sure how to resolve that. As
+   such, I'm copying what was done in the Lumia 830 (microsoft-tesla)
+   patch given that it was accepted.
 
-Did a include cleanup aswell on all drivers.
+Changes since v2:
 
-Thanks,
-Neil
+ - Updated commit message for UART patch to explain why it was added.
+ - Gave more flags to git to provide a hopefully more readable patch.
+
+Changes since v3:
+
+ - Collect tags.
+ - Remove spurious copyright notice.
+ - Miscellaneous fixes following review feedback.
+
+Stefan Hansson (4):
+  ARM: dts: qcom: samsung-matisse-common: Add initial common device tree
+  dt-bindings: arm: qcom: Add Samsung Galaxy Tab 4 10.1 LTE
+  ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 10.1 LTE
+    (SM-T535)
+  ARM: dts: qcom: samsung-matisse-common: Add UART
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm/boot/dts/qcom/Makefile               |   1 +
+ .../qcom-apq8026-samsung-matisse-wifi.dts     | 603 +++---------------
+ ... qcom-msm8226-samsung-matisse-common.dtsi} |  68 +-
+ .../qcom/qcom-msm8926-samsung-matisselte.dts  |  42 ++
+ 5 files changed, 131 insertions(+), 584 deletions(-)
+ rewrite arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts (85%)
+ copy arch/arm/boot/dts/qcom/{qcom-apq8026-samsung-matisse-wifi.dts => qcom-msm8226-samsung-matisse-common.dtsi} (86%)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts
+
+-- 
+2.41.0
 
