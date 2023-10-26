@@ -2,81 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B99C17D8A01
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 23:04:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 026BC7D8A09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 23:05:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230152AbjJZVE1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 17:04:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48816 "EHLO
+        id S231977AbjJZVFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 17:05:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjJZVE1 (ORCPT
+        with ESMTP id S229501AbjJZVFa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 17:04:27 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F7C93
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:04:24 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-32daeed7771so852155f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:04:24 -0700 (PDT)
+        Thu, 26 Oct 2023 17:05:30 -0400
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0061893
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:05:28 -0700 (PDT)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5a7b3d33663so11354337b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 14:05:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698354263; x=1698959063; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A+WjwVDuEjfphxivxZ019Dx0u0fobKcWgfHyoUTG59Q=;
-        b=HRTox2+FrHmeTpNdhWmMjrGLl4WCkGEMMLIQz+N6K4XnFSI9yF46EtmsQO6mRyUCFh
-         wvmGKFGG0iNT4AjQuy4b8lKQKWakwcRpWJE+/1uNaw6q3dr+6A16CDa8mW6cLBCiyPxr
-         wZC1qTSf507XOgN5ecHR/InI+Y/Y/GJ7V7BJpHzKGEMmSTg4wquScpoTIPqVxPClspMI
-         5ncWRd7P/QddM6RiNdn2AM090OlEk87Q5hEFvQoschKpGSr4F8BL5doNw+6ENYVFmdUa
-         4GswuRICOgxLiPGOmIFVLMs6zWISUPlefiqDfkhMBlgB0ropuHtd6YxKkuEeVIjDYsxS
-         gFvQ==
+        d=linaro.org; s=google; t=1698354328; x=1698959128; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7tvKP9i4A7CJ6jTg2zl2DLpBGqflQ9GIOuLSkvcrYnQ=;
+        b=U45gEWjM48uRo1inh4jCVTL10k88wPRbDD6RnEQwzB8T4abCywWIc4oMS9MCSMNzYu
+         EVD0em8anSnKethcmTJtMpF0GkqdlrlZ003CzOhnlm71Xv/ZozcZWOw6buMnYnv6LJpE
+         rK60pcY6S+qsxqeBZIHlY8fgEVhUf1KSPQvO8KtWpyhMmcmdkOuNa/Z59cRVvECWJeGK
+         o+j1oyr/x+iG9dmbT+LrA2Ah8+p0w4UkmvbcLSVhwJrKBjicrIPV7smMlI/P3daJWOaP
+         xr0Vmp0ghtLB9Oh01sWBLYeUgwXYwjDaj1Yj3DT3L8Y2kHXCU+EZ5XChf5WSFykVnXx8
+         1R1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698354263; x=1698959063;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A+WjwVDuEjfphxivxZ019Dx0u0fobKcWgfHyoUTG59Q=;
-        b=vm3VrXOO05bp/cTe+FCF0NxyvL8CuGXX5DujQuworB7u+ehncCcl2htp8UM/nVsxuz
-         DKjHJJdZl8gUaxsQfxCI24BODOKFRQtESJnOtEfMfN4iKws8DdVIPesKgXKC9w659ujI
-         Ci98v3IjmRfgnWbWeg88of38hr1iMft4UjmJXDrlNg7Bj6NfS0JiqnV+njZI5YTfdkQO
-         UuynVcHO1mNWsN83AV4vFMmmYD3bjDS7eNUusQpaZSzONNxCUruejfKz7Vzy2oGA8PRs
-         r/s1nGz0BFZ7z8OLuUYX7wqaJbWR88wvU3fVaTpbK/Bz03ROtqcE+sKLQ37Q+vaQgV/d
-         EhlA==
-X-Gm-Message-State: AOJu0Yy73wV5hlW+Z0izkp1uGTffDJ546TMV/1tcEhgEVT99yxyU4pRS
-        TTym5yOOrPwq3y57KncjyGuMPg==
-X-Google-Smtp-Source: AGHT+IEDywECpnt7wzKwh/plP8K8CxNVzDQhhmdPRvs5IAb52+K0gslBi53+Q2RRbjXloa2XGGxWlg==
-X-Received: by 2002:adf:ed83:0:b0:32d:a688:8814 with SMTP id c3-20020adfed83000000b0032da6888814mr679214wro.19.1698354263261;
-        Thu, 26 Oct 2023 14:04:23 -0700 (PDT)
-Received: from [172.30.205.55] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id r16-20020a5d4950000000b0032d81837433sm256158wrs.30.2023.10.26.14.04.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 14:04:22 -0700 (PDT)
-Message-ID: <90c8b0c3-7f42-4d35-9cf2-d5274184d8b6@linaro.org>
-Date:   Thu, 26 Oct 2023 23:04:21 +0200
+        d=1e100.net; s=20230601; t=1698354328; x=1698959128;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7tvKP9i4A7CJ6jTg2zl2DLpBGqflQ9GIOuLSkvcrYnQ=;
+        b=ELaFKKcu8RDaGvXP3Z6p9bl7+ZKVvstiAVtA2WAyagh4AAp9pT5Mz/ivt0WHI63YwL
+         gdvFkookUyvbgebhVPk+lcLSAghCUEsVTFMUdSGRqXE2IO350pklTXdEZIVmBTQySrd6
+         RrFRz/maABLy/nGEFq9EtiiaYJGnwK7+rc3Hghvca7gDitZTUisP/71SfTYdubWEnmin
+         5laKD6SIRUopcIaP68q1gTMW5LFyF4IIXBrQxZRYQbBUykxwm7faUcPZkApj64VsrTte
+         bINNLT3J9NNLsPD5I4h2YG1Lf+0Zf8s/8B1Y0PND7mp8HJJFKBf67RqjVQI/1VLGCHn5
+         +Q2g==
+X-Gm-Message-State: AOJu0YyTyn/x71Zc98ufbGqtjkF54k0PPshORlYgP/5xOh57cQZ3i5G/
+        i4IDZCuTzcIYz1yOm46kp8M/YXlhEY6hr5cvqw4N0Q==
+X-Google-Smtp-Source: AGHT+IHqztsHAMPpem0Cm24hgkWReCxLjW8B68euPJ7kMBXHdNf40CfG/Y/Nz3heXg6kPycfjXRqDbPnBKnN7HN35UI=
+X-Received: by 2002:a81:eb0a:0:b0:59f:773a:b14c with SMTP id
+ n10-20020a81eb0a000000b0059f773ab14cmr673384ywm.37.1698354328191; Thu, 26 Oct
+ 2023 14:05:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 15/15] drm/msm/hdmi: drop old HDMI PHY code
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+References: <20231004003125.2289613-1-dmitry.baryshkov@linaro.org>
+ <20231004003125.2289613-2-dmitry.baryshkov@linaro.org> <abc36c33-bfd9-4451-80ab-a631492044de@linaro.org>
+ <ed18292b-efe8-48fc-8696-79e51acf8ab4@linaro.org> <CAA8EJpo_H3-Lk1GQXGQikXiCtaEQ4C+FBW-fz9D2TbuX2HDhRA@mail.gmail.com>
+ <ac995dde-b5b3-4dd8-b704-5081cf9f9162@linaro.org>
+In-Reply-To: <ac995dde-b5b3-4dd8-b704-5081cf9f9162@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 27 Oct 2023 00:05:17 +0300
+Message-ID: <CAA8EJpoiNhJ1Cn9NDMk2OYQ4x-OyxOS2V6Z=8fDsHSyyxdhAnw@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/2] clk: qcom: implement RCG2 'parked' clock support
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
-References: <20230928111630.1217419-1-dmitry.baryshkov@linaro.org>
- <20230928111630.1217419-16-dmitry.baryshkov@linaro.org>
- <b779b911-dff3-420c-9bf9-5b7bef24337c@linaro.org>
- <CAA8EJppFi6jJ=PKCdwBqM8hXdgp41XTY=QZkdiHkPPJ9KdTfTA@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJppFi6jJ=PKCdwBqM8hXdgp41XTY=QZkdiHkPPJ9KdTfTA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
@@ -87,31 +75,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 26 Oct 2023 at 23:49, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 10/26/23 22:47, Dmitry Baryshkov wrote:
+> > On Thu, 26 Oct 2023 at 21:57, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >>
+> >>
+> >> On 10/7/23 01:43, Konrad Dybcio wrote:
+> >>> On 4.10.2023 02:31, Dmitry Baryshkov wrote:
+> >>>> clk_rcg2_shared_ops implements support for the case of the RCG which
+> >>>> must not be completely turned off. However its design has one major
+> >>>> drawback: it doesn't allow us to properly implement the is_enabled
+> >>>> callback, which causes different kinds of misbehaviour from the CCF.
+> >>>>
+> >>>> Follow the idea behind clk_regmap_phy_mux_ops and implement the new
+> >>>> clk_rcg2_parked_ops. It also targets the clocks which must not be fully
+> >>>> switched off (and shared most of the implementation with
+> >>>> clk_rcg2_shared_ops). The major difference is that it requires that the
+> >>>> parent map doesn't conain the safe (parked) clock source. Instead if the
+> >>>> CFG_REG register points to the safe source, the clock is considered to
+> >>>> be disabled.
+> >>>>
+> >>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>> ---
+> >>> Would the intention here be to replace all usages of _shared_?
+> >
+> > Yes
+> Then I suppose an immediate followup question would be: "why
+> introduce new ops instead of replacing the existing ones in the
+> patchset?".
 
+Because using this ops requires doing more than just replacing the
+name. it also requires dropping the XO source from the parent maps. So
+I'd prefer to perform this migration on a driver-by-driver basis.
+Otherwise it might be very easy to introduce a mistake somewhere.
 
-On 10/26/23 23:03, Dmitry Baryshkov wrote:
-> On Fri, 27 Oct 2023 at 00:00, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->>
->>
->> On 9/28/23 13:16, Dmitry Baryshkov wrote:
->>> Drop source files used by old HDMI PHY and HDMI PLL drivers.
->>>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>    drivers/gpu/drm/msm/hdmi/hdmi_phy.c      | 216 -------
->>>    drivers/gpu/drm/msm/hdmi/hdmi_phy_8960.c |  51 --
->>>    drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c | 765 -----------------------
->>>    drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c | 141 -----
->>>    drivers/gpu/drm/msm/hdmi/hdmi_phy_8x74.c |  44 --
->>>    drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c | 458 --------------
->>>    6 files changed, 1675 deletions(-)
->>>    delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy.c
->>>    delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8960.c
->>>    delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
->> Uh-oh, is the 8996 HDMI phy accounted for somwhere else?
-> 
-> Yes, it is the QMP PHY now.
-Right, I realized that as soon as I've seen that you replied :D
-
-Konrad
+-- 
+With best wishes
+Dmitry
