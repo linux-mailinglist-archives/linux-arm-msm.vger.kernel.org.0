@@ -2,146 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42C687D87E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 19:58:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9B627D87FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 20:06:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231837AbjJZR67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 13:58:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39326 "EHLO
+        id S230078AbjJZSGq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 14:06:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231811AbjJZR65 (ORCPT
+        with ESMTP id S230152AbjJZSGo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 13:58:57 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B66192;
-        Thu, 26 Oct 2023 10:58:54 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39QEKaYr017276;
-        Thu, 26 Oct 2023 17:58:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=k/QqVua+OhGtONEfnzazmJjYfXyO1Q3pQk/rLCM9z/0=;
- b=e47RZrCvcW8xqs6+s4O53m4HUY2L1T0w7HLAhCMgfftv4WWFFcQetyFsE3CaSLENkgvs
- vSTOWPoKS+YCnnGoB69aCXxhFiOZoInYMCX+M4BpLcYI2wcE380tPkzLfr6E2hVnBc3n
- DGeNZhHVYwkMAuLTlEuzlF1/IA599g79kcpF44hwRz8MqUeMFNRN9LzuJQIO56z4X4O9
- WZ4+ieAgqVr9XIyZZh29MoADXmkhKRXGO8uwPUw+FJ1cU+HK4xyoIeB/PWK+/NI4fLBO
- wZM/Wj1fMz/YTcJqjRESOzvsFXTAp/Zu73y5MKGkumXudLsQKn1Rgpnjyl5lAHYNcoMk tw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tykw29f8m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Oct 2023 17:58:31 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39QHwUwe027175
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 26 Oct 2023 17:58:30 GMT
-Received: from [10.251.44.39] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 26 Oct
- 2023 10:58:26 -0700
-Message-ID: <9a7f77cf-77bc-4a5a-af11-51464fbfdaf4@quicinc.com>
-Date:   Thu, 26 Oct 2023 20:58:23 +0300
+        Thu, 26 Oct 2023 14:06:44 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29D729C;
+        Thu, 26 Oct 2023 11:06:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698343602; x=1729879602;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=2Akrt3XkQC1r7qz/7YkQdobfE2+0OS3PJnwTrBQQOzk=;
+  b=PgbQWH4ltEJBFMxQ2Z7SQVYtloYGNVPuBQ3VMU44NIEK+pfYWAOBSZ+F
+   p2xlqJuNLq6E/idbLewl994ZKI/FuP3vaakEBbZvblbLEO/xLAFZJGmsc
+   fov9til0+IPB1NJbJ0cr0SRydpsgim2gmRIuJ/PbbqIAdfONkBw3YTBSm
+   kP0v1fKxhcW/4ft8LhcNOsk5dBI/HbLUxWAGFRZbqkmbJnBkIKslxpu2X
+   6iN+EziB1N55qY1kuVjQD0wjS2uee0sSm0chi15RNuI8/3tnfaKD1C/5h
+   KMVl6+AqDkYaNsKrg6bYUtaACAy6cvebHppAgy2D9x5HJ9hdC3V+HEnPw
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10875"; a="367827897"
+X-IronPort-AV: E=Sophos;i="6.03,254,1694761200"; 
+   d="scan'208";a="367827897"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2023 11:06:41 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10875"; a="788588247"
+X-IronPort-AV: E=Sophos;i="6.03,254,1694761200"; 
+   d="scan'208";a="788588247"
+Received: from lkp-server01.sh.intel.com (HELO 8917679a5d3e) ([10.239.97.150])
+  by orsmga008.jf.intel.com with ESMTP; 26 Oct 2023 11:06:35 -0700
+Received: from kbuild by 8917679a5d3e with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qw4ka-000A1B-2o;
+        Thu, 26 Oct 2023 18:06:32 +0000
+Date:   Fri, 27 Oct 2023 02:05:33 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, catalin.marinas@arm.com,
+        ulf.hansson@linaro.org
+Cc:     oe-kbuild-all@lists.linux.dev, agross@kernel.org,
+        conor+dt@kernel.org, ayan.kumar.halder@amd.com, j@jannau.net,
+        dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+        m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
+        lpieralisi@kernel.org, quic_rjendra@quicinc.com,
+        abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, quic_tsoni@quicinc.com,
+        neil.armstrong@linaro.org, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: Add base SC8380XP dtsi and the QCP
+ dts
+Message-ID: <202310270119.EeUyjyx2-lkp@intel.com>
+References: <20231025142427.2661-4-quic_sibis@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] dt-bindings: iommu: Add Translation Buffer Unit
- bindings
-Content-Language: en-US
-To:     Robin Murphy <robin.murphy@arm.com>, Rob Herring <robh@kernel.org>
-CC:     <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <will@kernel.org>, <joro@8bytes.org>, <devicetree@vger.kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_cgoldswo@quicinc.com>, <quic_sukadev@quicinc.com>,
-        <quic_pdaly@quicinc.com>, <quic_sudaraja@quicinc.com>,
-        <djakov@kernel.org>
-References: <20231019021923.13939-1-quic_c_gdjako@quicinc.com>
- <20231019021923.13939-2-quic_c_gdjako@quicinc.com>
- <20231024184248.GA252155-robh@kernel.org>
- <56bbb2ad-5cea-46ad-83be-d6d7fd9bbfde@arm.com>
-From:   Georgi Djakov <quic_c_gdjako@quicinc.com>
-In-Reply-To: <56bbb2ad-5cea-46ad-83be-d6d7fd9bbfde@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 56i69dhbWJbmVRK1hGCUmPyZkk70GDhf
-X-Proofpoint-GUID: 56i69dhbWJbmVRK1hGCUmPyZkk70GDhf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-26_15,2023-10-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 mlxlogscore=801 spamscore=0 suspectscore=0 bulkscore=0
- phishscore=0 mlxscore=0 clxscore=1011 adultscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310170001 definitions=main-2310260154
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231025142427.2661-4-quic_sibis@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Robin,
+Hi Sibi,
 
-Thanks for taking a look at this!
+kernel test robot noticed the following build errors:
 
-On 10/25/2023 1:26 AM, Robin Murphy wrote:
-> On 2023-10-24 19:42, Rob Herring wrote:
->> On Wed, Oct 18, 2023 at 07:19:18PM -0700, Georgi Djakov wrote:
->>> The "apps_smmu" on the Qualcomm sdm845 platform is an implementation
->>> of the ARM SMMU-500, that consists of a single TCU (Translation Control
->>> Unit) and multiple TBUs (Translation Buffer Units). The TCU is already
->>> being described in the ARM SMMU DT schema. Add also bindings for the
->>> TBUs so that we can describe their properties.
->>
->> Arm SMMU-500 is an implementation, too. Is QCom's a modified
->> implementation or you are just the first to want to control TBU
->> resources?
-> 
-> It's very very modified. The stock MMU-500 has very few microarchitectural registers[1], they all live within the regular SMMU address space, are all Secure-only by default, and don't do anything like the shenanigans here.
-> 
-> That said, looking at patch #3, I don't really understand why we need any of this stuff upstream... AFAICS it's doing an insane amount of work to use complicated imp-def debug functionality to duplicate things that the main driver can already do far more efficiently. Sure, in general it seems like it could potentially be useful stuff for bringing up and debugging a new driver, but the Linux SMMUv2 driver is mature and frankly already closer to being obsolete than to being new...
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on arm64/for-next/core linus/master v6.6-rc7 next-20231026]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Yes, the arm-smmu driver already does similar stuff with the ATS feature, but this unfortunately isn't available in Qualcomm's implementation. Instead of that, there is this eCATS thing for debugging various issues including hardware issues. It supports many features, but here we use it just for hardware page table walks. And in the majority of cases it's expected that the software and hardware page table walks give the same result, but if there is a difference, it's sign of a problem. For example, it helped in the past to trace some power management issues of the SMMU. This of course is a debug feature and can enabled when needed.
+url:    https://github.com/intel-lab-lkp/linux/commits/Sibi-Sankar/dt-bindings-arm-cpus-Add-qcom-oryon-compatible/20231026-001800
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20231025142427.2661-4-quic_sibis%40quicinc.com
+patch subject: [PATCH 3/5] arm64: dts: qcom: Add base SC8380XP dtsi and the QCP dts
+config: arm64-randconfig-004-20231026 (https://download.01.org/0day-ci/archive/20231027/202310270119.EeUyjyx2-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231027/202310270119.EeUyjyx2-lkp@intel.com/reproduce)
 
-> [ digression since I can't be bothered to split this discussion by replying separately to patch #3: ]
-> 
-> I mean, just looking at qsmmuv500_iova_to_phys(), you do realise that that's going to be called potentially multiple times by iommu-dma for *every* dma_sync and dma_unmap call and really wants to be fast, right? This brings to mind all the work I did a couple of years back[2] because strict TLB invalidation on unmap was considered too slow for certain devices on QCom platforms by ChromeOS, yet what this achieves looks like it could easily be up to an order of magnitude slower again :(
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202310270119.EeUyjyx2-lkp@intel.com/
 
-No, this is not going to be called for every dma_sync and dma_unmap. In patch 5 we register a custom context_fault handler that uses this code to get information from the TBUs. So all of this is executed only when a context fault occurs. Does this sound acceptable?
+All errors (new ones prefixed by >>):
 
-[..]>>> +description:
->>> +  TBU nodes represent Translation Buffer Units in an ARM SMMU. Each TBU node
->>> +  should be a child node of the SMMU in the device tree.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    enum:
->>> +      - qcom,qsmmuv500-tbu
->>> +
->>> +  reg:
->>> +    items:
->>> +      - description: Address and size of the TBU's register space.
->>> +
->>> +  reg-names:
->>> +    items:
->>> +      - const: base
->>> +
->>> +  clocks:
->>> +    maxItems: 1
->>> +
->>> +  interconnects:
->>> +    maxItems: 1
-> 
-> What does this interconnect represent? MMU-500 TBUs don't access memory themselves[3], they only have an internal AXI Stream interface to the TCU to request translations.
+   In file included from arch/arm64/boot/dts/qcom/sc8380xp-qcp.dts:10:
+>> arch/arm64/boot/dts/qcom/sc8380xp.dtsi:7:10: fatal error: dt-bindings/clock/qcom,sc8380xp-gcc.h: No such file or directory
+       7 | #include <dt-bindings/clock/qcom,sc8380xp-gcc.h>
+         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   compilation terminated.
 
-It's to enable access from the CPU to the register space of the TBUs.
 
-Thanks,
-Georgi
+vim +7 arch/arm64/boot/dts/qcom/sc8380xp.dtsi
+
+   > 7	#include <dt-bindings/clock/qcom,sc8380xp-gcc.h>
+     8	#include <dt-bindings/dma/qcom-gpi.h>
+     9	#include <dt-bindings/interconnect/qcom,sc8380xp-rpmh.h>
+    10	#include <dt-bindings/interrupt-controller/arm-gic.h>
+    11	#include <dt-bindings/power/qcom,rpmhpd.h>
+    12	#include <dt-bindings/power/qcom-rpmpd.h>
+    13	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+    14	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
