@@ -2,71 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 706667D8A5A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 23:30:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F4517D8A7C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 23:39:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234789AbjJZVaU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 17:30:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57762 "EHLO
+        id S229785AbjJZVj0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 17:39:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234816AbjJZVaR (ORCPT
+        with ESMTP id S229621AbjJZVj0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 17:30:17 -0400
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 883A11B8;
-        Thu, 26 Oct 2023 14:30:15 -0700 (PDT)
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6c496719a9aso696183a34.0;
-        Thu, 26 Oct 2023 14:30:15 -0700 (PDT)
+        Thu, 26 Oct 2023 17:39:26 -0400
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84A7210E;
+        Thu, 26 Oct 2023 14:39:24 -0700 (PDT)
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3b2f4a5ccebso869986b6e.3;
+        Thu, 26 Oct 2023 14:39:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698355815; x=1698960615;
+        d=1e100.net; s=20230601; t=1698356364; x=1698961164;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uumGThsJ2tlUaZjqU3bdbGfVUfgLKIQvS1lFDTq8c1w=;
-        b=Xf3I8DQBAiralYV1Jj+Qen1VW85y5mi+4USd2HhHhIrhRzFR2ZNBez47loA6zcuWtf
-         n+16yqsI+z8aIYoXzn2VQyCgGgIh7gz2ltxV/I//8a2oTl7iwB3VIYEzilldbKBo88Nx
-         9d+qTGnC7zNPj6Rs7sJH5t9rPe6JKu5s4Yl2WdKnSMHOeMzyHGhsBBmcOoxv/eiq2Jvi
-         esUPl3yVFp9WSSjVNLtiHhmyecFcshEwvafPw1If8PTmpUj+RNzqP9jmqad96Icr+gkz
-         O5zY3QZu89zleIjVEVIOLm9wUkbwXVYN9gFWkuC8NLYB/yhhNzAf2Ipx01+2yt4aID7Z
-         C5jA==
-X-Gm-Message-State: AOJu0Yw+C4NiJmr4V3KVTORvU0FuzCOvQoOEirqh0BR5A4PjhtdIRW4m
-        eVwVj1M+4HlpmMfvcoq2KA==
-X-Google-Smtp-Source: AGHT+IHpAIzrvCKKP9M3qSm4lSVVUNNQifVFkf7JpI2Hg+LQCSJEKd/X1+kX9BNdDutzrXnjp/OvKQ==
-X-Received: by 2002:a05:6830:349b:b0:6c7:c1b0:19f1 with SMTP id c27-20020a056830349b00b006c7c1b019f1mr2676824otu.1.1698355814815;
-        Thu, 26 Oct 2023 14:30:14 -0700 (PDT)
+        bh=owGB7B4AKx9aC9FfJUL9KzWkWR7ZglsVcL0jrgxqndE=;
+        b=Khs6ZIpM79ntX9Sb42+08eu+NbWZee7gADo0ORZtT8NKrYGFccg89T0XiCnkHBZNej
+         WAdOo+Oy8jK4TQ39opE7K2eqJ4XYzJ2Y0+Pm0y9uGgIHxGzcfxgRMd4I31K7bCQDTmSB
+         LIl0Y6KhJvPcO0hPcg+QEQ0QgZIVBw0ACBM1Fs7f5L6oF4YYMO84KCbWpgMsYzw/Fd0V
+         zJMDdEqugc1co8ewujY8zJqUkcU+QmUQ4rtipnQx07cQRqGx7I2XZFrNsAyHzJ8s2YNo
+         G+qTIksTlk/qNrgtg2FgaIBhwHFvhFHvKhPZtS56LFMkKOKHuWE1Kywgo+VYQ5WgK9h2
+         wNBQ==
+X-Gm-Message-State: AOJu0YzPOKe8tBovI5b53Ed1ebPbvFF1mFeTxIHbgzbjr+/QIp7NqPIt
+        Qogg6G1Z5LJwhOdBGouTkg==
+X-Google-Smtp-Source: AGHT+IFhQna7OtMxgkFIDFlhS0L2auquNBNgiVZqtGP36y5bCp4caQ57mkHl3frZkcZRzmA7qQ3TeA==
+X-Received: by 2002:a54:4415:0:b0:3a4:3b56:72b2 with SMTP id k21-20020a544415000000b003a43b5672b2mr722017oiw.8.1698356363730;
+        Thu, 26 Oct 2023 14:39:23 -0700 (PDT)
 Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id q20-20020a056830019400b006c631df1690sm20775ota.69.2023.10.26.14.30.13
+        by smtp.gmail.com with ESMTPSA id h24-20020a056808015800b003ae5cb55513sm39685oie.38.2023.10.26.14.39.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Oct 2023 14:30:14 -0700 (PDT)
-Received: (nullmailer pid 431241 invoked by uid 1000);
-        Thu, 26 Oct 2023 21:30:13 -0000
-Date:   Thu, 26 Oct 2023 16:30:13 -0500
+        Thu, 26 Oct 2023 14:39:23 -0700 (PDT)
+Received: (nullmailer pid 443891 invoked by uid 1000);
+        Thu, 26 Oct 2023 21:39:22 -0000
+Date:   Thu, 26 Oct 2023 16:39:22 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        linux-crypto@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH] dt-bindings: crypto: qcom,prng: document SM8650
-Message-ID: <169835581287.431203.13078545461412266189.robh@kernel.org>
-References: <20231025-topic-sm8650-upstream-bindings-rng-v1-1-6b6a020e3441@linaro.org>
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: cache: qcom,llcc: Document the SM8650
+ Last Level Cache Controller
+Message-ID: <169835636164.443852.14392766930073177451.robh@kernel.org>
+References: <20231025-topic-sm8650-upstream-llcc-v1-0-ba4566225424@linaro.org>
+ <20231025-topic-sm8650-upstream-llcc-v1-1-ba4566225424@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231025-topic-sm8650-upstream-bindings-rng-v1-1-6b6a020e3441@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+In-Reply-To: <20231025-topic-sm8650-upstream-llcc-v1-1-ba4566225424@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
         FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -74,16 +70,12 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 25 Oct 2023 09:28:54 +0200, Neil Armstrong wrote:
-> Document SM8650 compatible for the True Random Number Generator.
+On Wed, 25 Oct 2023 09:31:36 +0200, Neil Armstrong wrote:
+> Document the Last Level Cache Controller on the SM8650 platform.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
-> For convenience, a regularly refreshed linux-next based git tree containing
-> all the SM8650 related work is available at:
-> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
-> ---
->  Documentation/devicetree/bindings/crypto/qcom,prng.yaml | 1 +
+>  Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 > 
 
