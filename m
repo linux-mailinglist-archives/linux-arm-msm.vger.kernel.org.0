@@ -2,82 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4078D7D8955
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 22:01:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFF447D8964
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 22:03:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232143AbjJZUBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 16:01:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39786 "EHLO
+        id S232018AbjJZUDv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 16:03:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230406AbjJZUBm (ORCPT
+        with ESMTP id S232016AbjJZUDu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 16:01:42 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2795D1B2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:01:34 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507c91582fdso1945696e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:01:34 -0700 (PDT)
+        Thu, 26 Oct 2023 16:03:50 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3519B1B8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:03:47 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507c1936fd5so2800108e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 13:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698350492; x=1698955292; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=pzGqz/duyYPElwwtqx/hjizAGVszVP9AWvS4e26Osn0=;
-        b=J0w1uwlWD3G4/I5eKcsjcmfHTeMX/UuBqnTC7R+cjHCx4xW+Ok0imZ0h5WcUWdsLsM
-         2+82/18TOZ4wSdUUVIHMZwTgBfP88Ug/LvlDnI/koBop7wa/uafvIpOVrcoV6HqMxywe
-         maEscMA1KtU/Zygw9Do42nx7vVL9YZ7IoZFRM0FAusXBkiDlQFMGspaluTCpkFAGfisp
-         T1ttwk5E3VtBN1CJ/1aNxXYyy9304f7Bp48iQtnxIJVWG3xv+JjVh4FgNTBizhypC2jT
-         i3P9tOALnObBePfdSRnsj002TJhS+Ldf0tefhzBqSRjy4SXbkWKy07hz9eRIdhbL8YUK
-         fkFA==
+        d=linaro.org; s=google; t=1698350625; x=1698955425; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lyw5MHyHHlTKy6ei3+OUwIzekh8WpQwnC4wd1zyLdCI=;
+        b=Kwq27T8W1W+OaGoa62mYUgXjXnqd7/+7axB0JlvlYqRvWfk6wLVzW/x8ZWEXJK4Ssw
+         B65FNDJ++zlzxUbz3+LhsWTTv70/+EuDZD7WWpnKwCNGri6QofI2NUVQsAHIfxEq2AhV
+         vJPcZ0EXCeDL4NMEIGz6IAxc2k0/LkqN0sCQ+AAoaEvCRc1+peYhCbI/tDhiUyEhLGWs
+         0DzqD41GM18Tt7vlYa+aZjElzGWJKAARFHvN84kG4g/Amp4EMzAOM7HA4jXb1hp8Ova7
+         KABNwyFTmrtaqRyVEf8AY5eHHxtrL+1JcpUD2Keo/wtUOsZtjb1qbSnCty8axApcU7vC
+         7aiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698350492; x=1698955292;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1698350625; x=1698955425;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pzGqz/duyYPElwwtqx/hjizAGVszVP9AWvS4e26Osn0=;
-        b=IG1zZ9HwHdJSal2qiJIpOZPdaBsnC6vlcXZxR5LfN+BLMPkPI/bqugcKg9jIHI1o/v
-         kkrCxn9ZYmJReeM0u7pyT4AzbUawbG2etQ+h/a/6vZWpmSwT2GRlwxdS3iirjrChBsVS
-         HvD///dSgItN1EDYwj99D9hkxnGxDz7MrI51iCiJpRE0W1nmrrsU0P1CFjOn35VcBEsI
-         XdVRiVmAheq3A+VMQFfsbfEZkDZKP3ZIGDpTqnRbo3hyakVClqHhze3M0c4hsqC4YHXy
-         bLRxET4KNTyrSo4oMP3MtaYFMxgFdxbgHUd2LBvhLiX6WLc0IMOTMJFMtuZRhJad7V7v
-         PN7g==
-X-Gm-Message-State: AOJu0YzRSdu1XAk+Xd8fn95rGs2mGZN/koVHbOypfumZrsuSHLCnOoVb
-        qG+JIuGZKIrfu5vnl9diDouGJA==
-X-Google-Smtp-Source: AGHT+IHhxtpFa1NlJRvaWu3AoOoyJeppQxaOVSGhWnU+RXFu75zgVS2yrEFL9xfgFkxYE9BbFWyilA==
-X-Received: by 2002:a05:6512:3d0b:b0:500:8f66:5941 with SMTP id d11-20020a0565123d0b00b005008f665941mr337184lfv.50.1698350492352;
-        Thu, 26 Oct 2023 13:01:32 -0700 (PDT)
+        bh=lyw5MHyHHlTKy6ei3+OUwIzekh8WpQwnC4wd1zyLdCI=;
+        b=cQ4zfS1n2+V1bwJFwfXXB/AFsrHUEou1KIrPmzPOCdR8+HQZjfUVsOvhrabDicxalz
+         sWE8kQHj11JCJQXR5dL3vRrDV6NzeASJomSG4MiLO1+Oo+anuSSXQ7kj9FblltiPJo1/
+         ys5V5XEe64VF6kA7YRqFIq+Z02uqp9JvkgDt2P8wl1XQOat86yx0imatFBUU2W1JAxmo
+         AZyWLgdHl0JG6zmZiUWnkUZDKftttZgwZpXc9hBSqOHuQ+yFO3lxO6mog0uufTMjYRJz
+         Mihf9tJkB55bxfs+++LSd44xAvNMBroJnPrYeavZ1hJQC6MgohpukkELxrpuWfs7V246
+         1HTA==
+X-Gm-Message-State: AOJu0YwJ1F3iNJU8oeI8/DkARzHoVchUp2i8qWDmrz2lXia3Bovxnxtz
+        1+rdbVkccdHTgUAfsoWj+D4+Ng==
+X-Google-Smtp-Source: AGHT+IEINiksgAi2Adn8Zrtz8fdqWkxv9fCJgRe4jVpy8BNaOk/A1lCTRkLNN8ZnFvaebHR55fEHGw==
+X-Received: by 2002:a05:6512:ad5:b0:4ff:839b:5355 with SMTP id n21-20020a0565120ad500b004ff839b5355mr1236216lfu.18.1698350625274;
+        Thu, 26 Oct 2023 13:03:45 -0700 (PDT)
 Received: from [172.30.205.86] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id m21-20020a194355000000b00501b9fc977csm3137765lfj.37.2023.10.26.13.01.27
+        by smtp.gmail.com with ESMTPSA id s16-20020a056512203000b00500d1a72734sm3118696lfs.130.2023.10.26.13.03.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 13:01:31 -0700 (PDT)
-Message-ID: <a6cc8d55-2892-478f-ad8a-a9a4359abb7d@linaro.org>
-Date:   Thu, 26 Oct 2023 22:01:26 +0200
+        Thu, 26 Oct 2023 13:03:44 -0700 (PDT)
+Message-ID: <e56bec85-46be-4c88-ae88-199e7272ccdd@linaro.org>
+Date:   Thu, 26 Oct 2023 22:03:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/4] cpufreq: qcom-nvmem: add support for IPQ8064
-To:     Christian Marangi <ansuelsmth@gmail.com>,
-        Ilia Lin <ilia.lin@kernel.org>, Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: pm8916: Add BMS and charger
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231013173854.7399-1-ansuelsmth@gmail.com>
- <20231013173854.7399-4-ansuelsmth@gmail.com>
-Content-Language: en-US
+        Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20231023-pm8916-dtsi-bms-lbc-v2-0-343e3dbf423e@trvn.ru>
+ <20231023-pm8916-dtsi-bms-lbc-v2-2-343e3dbf423e@trvn.ru>
+ <3dff444b-c439-4c40-9d21-1e390f449840@linaro.org>
+ <b9c7f8662e4c02a4f9f275d27469f3be@trvn.ru>
+ <f3c215a3-579a-4b4f-92bf-092c91234180@linaro.org>
+ <ZTq7XGz4Ux8lYQho@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231013173854.7399-4-ansuelsmth@gmail.com>
+In-Reply-To: <ZTq7XGz4Ux8lYQho@gerhold.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,34 +87,82 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/13/23 19:38, Christian Marangi wrote:
-> IPQ8064 comes in 3 families:
-> * IPQ8062 up to 1.0GHz
-> * IPQ8064/IPQ8066/IPQ8068 up to 1.4GHz
-> * IPQ8065/IPQ8069 up to 1.7Ghz
+On 10/26/23 21:17, Stephan Gerhold wrote:
+> On Thu, Oct 26, 2023 at 08:54:00PM +0200, Konrad Dybcio wrote:
+>> On 10/24/23 11:29, Nikita Travkin wrote:
+>>> Konrad Dybcio писал(а) 24.10.2023 13:34:
+>>>> On 10/23/23 08:20, Nikita Travkin wrote:
+>>>>> pm8916 contains some hardware blocks for battery powered devices:
+>>>>>
+>>>>> - VM-BMS: Battery voltage monitoring block.
+>>>>> - LBC: Linear battery charger.
+>>>>>
+>>>>> Add them to the pmic dtsi so the devices that make use of those blocks
+>>>>> can enable them.
+>>>>>
+>>>>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>>>>> ---
+>>>>>     arch/arm64/boot/dts/qcom/pm8916.dtsi | 48 ++++++++++++++++++++++++++++++++++++
+>>>>>     1 file changed, 48 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+>>>>> index f4de86787743..4b2e8fb47d2d 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+>>>>> @@ -41,6 +41,35 @@ watchdog {
+>>>>>     			};
+>>>>>     		};
+>>>>>     +		pm8916_charger: charger@1000 {
+>>>>> +			compatible = "qcom,pm8916-lbc";
+>>>>> +			reg = <0x1000>, <0x1200>, <0x1300>, <0x1600>;
+>>>>> +			reg-names = "chgr", "bat_if", "usb", "misc";
+>>>>> +
+>>>>> +			interrupts = <0x0 0x10 0 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x10 5 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x10 6 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x10 7 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x12 0 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x12 1 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x13 0 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x13 1 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x13 2 IRQ_TYPE_EDGE_BOTH>,
+>>>>> +				     <0x0 0x13 4 IRQ_TYPE_EDGE_BOTH>;
+>>>>> +			interrupt-names = "vbat_det",
+>>>>> +					  "fast_chg",
+>>>>> +					  "chg_fail",
+>>>>> +					  "chg_done",
+>>>>> +					  "bat_pres",
+>>>>> +					  "temp_ok",
+>>>>> +					  "coarse_det",
+>>>>> +					  "usb_vbus",
+>>>> So, both the charger and the USBIN driver use the same irq? :/
+>>>>
+>>>
+>>> AFAIU the usbin extcon driver pretty much just tracks the state
+>>> of the IRQ to report extcon. It happens to assume the same part
+>>> of the pmic though, yes, which also means there will be no user
+>>> that would enable both charger and vbus extcon, since charger
+>>> driver provides this functionality as well.
+>> So, should USBIN be removed from PM8916 dt since it's essentially
+>> a part of the charger block?
+>>
 > 
-> So, in order to be able to support one OPP table, add support for
-> IPQ8064 family based of SMEM SoC ID-s and correctly set the version so
-> opp-supported-hw can be correctly used.
+> The "USB_IN" pad of the PM8916 seems to be connected on pretty much all
+> devices, even if they are using external chargers and the charging
+> functionality of PM8916 is completely disabled. For those devices, the
+> &pm8916_usbin device provides a convenient way to detect the USB state,
+> even without a working charger driver.
 > 
-> Bit are set with the following logic:
-> * IPQ8062 BIT 0
-> * IPQ8064/IPQ8066/IPQ8068 BIT 1
-> * IPQ8065/IPQ8069 BIT 2
-> 
-> speed is never fused, only pvs values are fused.
-> 
-> IPQ806x SoC doesn't have pvs_version so we drop and we use the new
-> pattern:
-> opp-microvolt-speed0-pvs<PSV_VALUE>
-> 
-> Example:
-> - for ipq8062 psv2
->    opp-microvolt-speed0-pvs2 = < 925000 878750 971250>
-> 
-> Fixes: a8811ec764f9 ("cpufreq: qcom: Add support for krait based socs")
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> While we could modify the PM8916 charger driver and DT node to have some
+> special mode where charging and battery monitoring is completely
+> disabled and only the USBIN extcon is provided, I'm not sure if that
+> would provide a significant advantage compared to just keeping the
+> simple &pm8916_usbin node with the existing driver.
+Hmm okay I see..
+
+Generally it's rather "no bueno" to have two DT nodes consuming the
+same register space.. What happens when you enable BMS on a device
+with a non-PM8916 charger? Does it correctly recognize "no battery"
+etc.?
 
 Konrad
