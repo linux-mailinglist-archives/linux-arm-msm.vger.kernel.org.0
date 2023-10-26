@@ -2,72 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3CCD7D88E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 21:26:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D98917D88F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 21:31:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229501AbjJZT0a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 15:26:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56432 "EHLO
+        id S231596AbjJZTbm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 15:31:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbjJZT03 (ORCPT
+        with ESMTP id S230143AbjJZTbl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 15:26:29 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36FC7187
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:26:27 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c50fbc218bso17742471fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:26:27 -0700 (PDT)
+        Thu, 26 Oct 2023 15:31:41 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BA071AC
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:31:38 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507ac66a969so1579888e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 12:31:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698348385; x=1698953185; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1698348696; x=1698953496; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7cjXfkkkCl3s1zBhz3qj8DHb0D3ngX7M03neCeWeD+0=;
-        b=BJNI2MON63PJV4D/zyQBMDXi2/BK78mzDsrpuEKVeKDHAjdF0t6GfnLqUyoqdoTsNr
-         hOvvsGzLqWl2RvqxtNGJYKkbvnVGm43vQRzZMzOqfYXhM7g4vJgdZQR5XCDCz2a0Ennn
-         lcfbvou1XU62XpvfmxiOj3i/VZ3aXgimjH9sUOmQd/TwZE87s/Kr0w3v9OvoFFIehA4J
-         Iaai8Q5t2KuZ33nHEdaGt6mOPw9dgfP7wRqew32gYbYVzUhJh/3m1RbQn36PYHc0Yzbo
-         /7Sl7w6WtboMajRRcoDC2QmQjAMpJSpKHFD5c1kY+cSBbKV2dCR6Q2/r3ay4WHIMzfjU
-         C6YA==
+        bh=Ywy6fWVLvmJZckMh0b8tqYAFdaL2mApdB/loN0g2f0E=;
+        b=jy3P1kNY8nvwnGdsS33FAuuv9IH6Phd6MVXSvNePNuZonbZOVIfG5XECi7VFkiNgVl
+         qtf8tnEIuETTGTG6QQU1mYDLg1Y+M8QYF4T5FsyO+xFGs/8yS4oJQujREnK4CP7KDUuR
+         ifSGc8NIVC6mLZdNeGBLsp6VCHXYdL5hbFQD4XeDgSDkIkN/0P+GSU210Rb5tjBZfBEy
+         bUrDczpNRAKfBptS8E/1/c6ygUsBeKh1r5GkC8HD6mDk2k3v9DZcruB5NT1z8usZwzB6
+         bXrSL9Z4nEW8mEucO6kJpAhwPeKaaIr4UPc4Iq8WHVjAznFrCnulCIeSSx1mjuY1yDtn
+         hG9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698348385; x=1698953185;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1698348696; x=1698953496;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7cjXfkkkCl3s1zBhz3qj8DHb0D3ngX7M03neCeWeD+0=;
-        b=DUGgOCqLul10+SRF5O5Pn5lHRFamAa/WhM0SxXt6eZnISSf5/p68k8tNMMzGVEr/Dx
-         LqYUThLl0OUzMQN5ZjNDKBNWYmyQvAV2g/9+lO7T0MityDf7jV9cP9diaLERie6QiFwU
-         BuaET60+TlCnZ7KJmMQ7uMAfwKCwV3sUvUvI0ywOdhgk1Oy+7JVNZLWFrscAg3G0Hqxj
-         /e9l7fE11lxhieVeOOkrHID1bgT4V9823vuWTJuUJA2DFzBP/gh6LY3vuYJd8x5XnIYy
-         RDRwEUZgctYnpawXgVwlRax5NKRi5ESzooJ3z1Z4TcNX3cJvRRsOSMYdgaHHjljTCZiF
-         QQ8g==
-X-Gm-Message-State: AOJu0Yx6vJN2olPQw8D41hR5sVzcPzz9x3G+FPV99prDWIOde2Bogw6s
-        7VnmRI5uVBmBZpjkCAenrhtJXg==
-X-Google-Smtp-Source: AGHT+IEXgc8T300bKYED2kMH96v9+ujZxBr8Js9yL/0eEdNxFUeYLKxp6QsAg+IUBTU9bUpe7WGd3Q==
-X-Received: by 2002:a2e:9a91:0:b0:2c0:a99:68e7 with SMTP id p17-20020a2e9a91000000b002c00a9968e7mr471878lji.19.1698348385238;
-        Thu, 26 Oct 2023 12:26:25 -0700 (PDT)
-Received: from [172.30.204.229] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id j10-20020a2e3c0a000000b002b657f10b78sm2958829lja.58.2023.10.26.12.26.24
+        bh=Ywy6fWVLvmJZckMh0b8tqYAFdaL2mApdB/loN0g2f0E=;
+        b=q5fmyJ8epkbSw3osRtGF/jaS19j8HVY83u2yexdBAk2nGdQSAgpeCHwl8jqeYu84RL
+         R4PdNoyfuxXDvSYToLb+lmMY9wEcOMy0bsu5V2NObKIeqiPImfG01T3zI4scW7TiG7gd
+         8TYHpOWB4fRYmNVDMMdC6cTzpERr1Csg0Eo1wKT8WY5otFGop2tJT0gltSs32nJkjUDz
+         3BTHDCESZhYzLf469sQhUf5OERH1iLFUX6GE6Vjgm7Dke5U0Ohkio/XHRes8jKYtGzY8
+         pm3gp4LGLd0LGvj68LRd2GuktW4mxWuhbbHUHBSZSxK82kMJbaifGqshWDMpYu/lYpoL
+         Rj4g==
+X-Gm-Message-State: AOJu0YzdFBbaQSeRhpFsVoeielPlX7Q9FPZAmlx/tmZu7IsdRLoTXWkI
+        QKhmQoXmY9MXi/Bmm1iroUi4/Q==
+X-Google-Smtp-Source: AGHT+IFWDZS34rvspUgwbDHXK7kc9utTg6aVksJEARy6vQoLFoqbqsEj13cqR6sg0rLi/wgb+XBc2A==
+X-Received: by 2002:ac2:52b0:0:b0:507:a86d:89bb with SMTP id r16-20020ac252b0000000b00507a86d89bbmr226981lfm.23.1698348696571;
+        Thu, 26 Oct 2023 12:31:36 -0700 (PDT)
+Received: from [172.30.204.84] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id j19-20020a056512345300b0050336e38735sm3107145lfr.92.2023.10.26.12.31.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Oct 2023 12:26:24 -0700 (PDT)
-Message-ID: <af9f75e3-0b64-41b5-9854-c7edf544c9a0@linaro.org>
-Date:   Thu, 26 Oct 2023 21:26:23 +0200
+        Thu, 26 Oct 2023 12:31:36 -0700 (PDT)
+Message-ID: <3109efe2-120b-447b-ae7d-16f03e3dc3a6@linaro.org>
+Date:   Thu, 26 Oct 2023 21:31:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: starqltechn: enable more
- features
-Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
+ version detection
+To:     Manivannan Sadhasivam <manivannanece23@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Can Guo <quic_cang@quicinc.com>, quic_nguyenb@quicinc.com,
+        quic_nitirawa@quicinc.com, martin.petersen@oracle.com,
+        linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20231024154338.407191-1-dsankouski@gmail.com>
- <20231024154338.407191-5-dsankouski@gmail.com>
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+ <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
+ <6055cd57-4de7-4b7e-a4f3-68a7de1aef28@linaro.org>
+ <6225a132-4b7f-bbb4-e863-4e62b99dd79d@quicinc.com>
+ <31823dc4-6f50-435b-9a20-66471209ec31@linaro.org>
+ <d34242f8-6e21-1549-b87d-3db2e825b7d5@quicinc.com>
+ <1413119B-8B9C-4DE4-A086-476B2BAA60AD@linaro.org>
+ <20230919120829.GB4732@thinkpad>
+ <CAA8EJppwjzNDsPHZqUdmgQy3fAbP+AFnOo4+FTDCdpBEZp5S_w@mail.gmail.com>
+ <20230920102327.GH4732@thinkpad> <20231018124741.GA47321@thinkpad>
+Content-Language: en-US
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231024154338.407191-5-dsankouski@gmail.com>
+In-Reply-To: <20231018124741.GA47321@thinkpad>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,310 +94,148 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 10/24/23 17:43, Dzmitry Sankouski wrote:
-> - enable usb 2.0
-> - enable debug uart (uart9)
-> - enable touchscreen
-> - enable ipa so that we can bring up mobile data
+On 10/18/23 14:47, Manivannan Sadhasivam wrote:
+> On Wed, Sep 20, 2023 at 12:23:27PM +0200, Manivannan Sadhasivam wrote:
+>> On Wed, Sep 20, 2023 at 01:27:59AM +0300, Dmitry Baryshkov wrote:
+>>> On Tue, 19 Sept 2023 at 15:08, Manivannan Sadhasivam <mani@kernel.org> wrote:
+>>>>
+>>>> On Fri, Sep 15, 2023 at 05:31:45AM +0300, Dmitry Baryshkov wrote:
+>>>>> On 11 September 2023 13:02:50 GMT+03:00, Can Guo <quic_cang@quicinc.com> wrote:
+>>>>>>
+>>>>>> On 9/11/2023 5:46 PM, Konrad Dybcio wrote:
+>>>>>>> On 11.09.2023 11:42, Can Guo wrote:
+>>>>>>>> Hi Konrad,
+>>>>>>>>
+>>>>>>>> On 9/11/2023 5:17 PM, Konrad Dybcio wrote:
+>>>>>>>>> On 11.09.2023 07:59, Can Guo wrote:
+>>>>>>>>>> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+>>>>>>>>>>
+>>>>>>>>>> Retrieve UFS device version from UFS host controller's spare register
+>>>>>>>>>> which is populated by bootloader, and use the UFS device version together
+>>>>>>>>>> with host controller's HW version to decide the proper power modes which
+>>>>>>>>>> should be used to configure the UFS PHY.
+>>>>>>>>> That sounds a bit fishy.. is there no bootloader-independent
+>>>>>>>>> solution to that? Can't we bring in the code that the bootloader
+>>>>>>>>> uses to determine these values?
+>>>>>>>>>
+>>>>>>>>> Konrad
+>>>>>>>>
+>>>>>>>> Agree, it is.
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> All these complexities come from one request from PHY design team - power saving.
+>>>>>>>>
+>>>>>>>> And to achieve power saving, Qualcomm UFS developers are requested to use the
+>>>>>>>>
+>>>>>>>> lowest hanging PHY settings which can sustain the Max agreed HS Gear (btw host
+>>>>>>>>
+>>>>>>>> and UFS device) during UFS's lifecycle in High Level OS,  whereas the power saving
+>>>>>>>>
+>>>>>>>> request does not apply to bootloader, which works for only a few seconds during
+>>>>>>>>
+>>>>>>>> bootup. Hence, there is no such version detect code in bootloader -  it just uses the
+>>>>>>>>
+>>>>>>>> highest PHY settings to configure PHY, boot up UFS and put UFS device version in this
+>>>>>>>>
+>>>>>>>> register.
+>>>>>>> First of all, your email client seems to be inserting 2 newlines
+>>>>>>> instead of 1. If you're using thunderbird, you may want to edit:
+>>>>>>>
+>>>>>>> mail.identity.(default or your mail identity idx).default.compose_html
+>>>>>>>
+>>>>>>> to `false`
+>>>>>>>
+>>>>>>> and add that to your internal wiki page, as I see many @quic folks having
+>>>>>>> this issue.
+>>>>>>>
+>>>>>>>
+>>>>>>> Going back to the main topic, I don't think we understood each other.
+>>>>>>> The commit message states:
+>>>>>>>
+>>>>>>>
+>>>>>>> "Retrieve UFS device version from UFS host controller's spare register
+>>>>>>> which is populated by bootloader"
+>>>>>>>
+>>>>>>>
+>>>>>>> Which means the bootloader is able to somehow determine the value
+>>>>>>> that's in the spare register and write it there.
+>>>>>>>
+>>>>>>> I'm asking whether we can take the logic behind this value and
+>>>>>>> move it to Linux so that we don't depend on the bootloader to
+>>>>>>> guarantee it (e.g. Chrome or some other devices with more exotic
+>>>>>>> fw may not work this way).
+>>>>>>>
+>>>>>>>
+>>>>>>> Konrad
+>>>>>>
+>>>>>>
+>>>>>> There is no logic behind this value at all in bootloader, as I explained, after bootloader
+>>>>>>
+>>>>>> initializes UFS, bootloader simply reads UFS's device version (the value you are referring)
+>>>>>>
+>>>>>> and write it to the register. But in Linux kernel, we need (or want to know) this value
+>>>>>>
+>>>>>> BEFORE we initialize UFS host controller (and UFS device).
+>>>>>
+>>>>> Depending on the bootloader behaviour is not an option. For example the kernel might be started via kexec. Or via u-boot. Or grub. Or any other bootloader. So please duplicate the logic to read the UFS version instead.
+>>>>>
+>>>>
+>>>> As Can said, there is no logic in the bootloader. What it does it, after doing
+>>>> the UFS initialization, it writes the agreed gear (between host and the device)
+>>>> to this register. And in linux, we use that value to initialize the device
+>>>> (i.e., not doing init based on the min gear).
+>>>>
+>>>> But the important factor here is that, we use this gear value to program the PHY
+>>>> init sequence. So if there is no hint from the bootloader, linux will program
+>>>> the min phy sequence (G3/G4) and then once the gear scaling happens, it will
+>>>> program the max phy sequence (G4/G5).
+>>>>
+>>>> Now on recent platforms, the init sequences are not compatible with each other
+>>>> i.e., once the min seq. is programmed, then before programming max seq. the
+>>>> registers not common to both seq. should be programmed to default value. In
+>>>> other words, min seq. specific registers should be reset to the default value.
+>>>> Otherwise, there will be stability issues in the PHY.
+>>>
+>>> I see nothing wrong with adding 'default' register programming to the
+>>> gear tables. If we have to reset them to the default values to switch
+>>> the PHY settings, these writes must be a part of the corresponding
+>>> tables.
+>>>
+>>
+>> Yep, that's what I initially proposed. But Qcom wanted to avoid the cost of
+>> programming the reset tables in the PHY driver.
+>>
+>> Can, could you please check if programming the additional sequence doesn't cause
+>> any power/performance effect?
+>>
 > 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Conor Dooley <conor+dt@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-> Cc: Rob Herring <robh+dt@kernel.org>
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
+> I'd like to simplify this conversion as there has been some misunderstanding.
 > 
-> ---
+> First of all in linux, while probing the UFS device by the host controller, it
+> needs to use _some_ gear. So far we were using HS_G2 as that gear and using the
+> PHY init sequence of G3/G4 depending on the SoC. We do not need to use G2 init
+> sequence because, there are only 2 init sequences available for any SoC and
+> since the init sequences are backwards compatible, we mostly use the min init
+> sequence, G3/G4. Even though this incurs slight power consumption during boot,
+> the ufs host controller after probing the device will switch to max gear
+> supported by both entities. If that max is G4/G5, then the respective init
+> sequence will be programmed again.
 > 
-> Changes in v2:
-> - hex to decimal in regulator values
-> - fix dtb_check warnings
+> Now the issue is, for the automotive usecases, switching the gears 2 times
+> during boot is affecting the boot KPI (Key Performance Inidicator). So the UFS
+> team came with the idea of populating a spare register in the bootloader with
+> the max gear info that the bootloader has already found out and using the same
+> in the linux for first time itself. This helps linux in using a single gear
+> during probe time.
 > 
->   .../dts/qcom/sdm845-samsung-starqltechn.dts   | 173 +++++++++++++++++-
->   1 file changed, 171 insertions(+), 2 deletions(-)
+> This is what this patch is doing. If for some reason, that register is not
+> populated, then we default to the existing G2 gear and do init twice as the
+> driver is doing currently.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> index 6fc30fd1262b..f2bc3c412a2f 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> @@ -11,11 +11,17 @@
->   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->   #include "sdm845.dtsi"
->   
-> +/delete-node/ &rmtfs_mem;
-> +
->   / {
->   	chassis-type = "handset";
->   	model = "Samsung Galaxy S9 SM-G9600";
->   	compatible = "samsung,starqltechn", "qcom,sdm845";
->   
-> +	aliases {
-> +		serial0 = &uart9;
-> +	};
-> +
->   	chosen {
->   		#address-cells = <2>;
->   		#size-cells = <2>;
-> @@ -68,6 +74,93 @@ memory@a1300000 {
->   			ftrace-size = <0x40000>;
->   			pmsg-size = <0x40000>;
->   		};
-> +
-> +		/* The rmtfs_mem needs to be guarded due to "XPU limitations"
-> +		 * it is otherwise possible for an allocation adjacent to the
-> +		 * rmtfs_mem region to trigger an XPU violation, causing a crash.
-> +		 */
-> +		rmtfs_lower_guard: memory@fde00000 {
-> +			no-map;
-> +			reg = <0 0xfde00000 0 0x1000>;
-> +		};
-> +
-> +		rmtfs_mem: rmtfs-mem@fde01000 {
-> +			compatible = "qcom,rmtfs-mem";
-> +			reg = <0 0xfde01000 0 0x200000>;
-> +			no-map;
-> +
-> +			qcom,client-id = <1>;
-> +			qcom,vmid = <15>;
-> +		};
-> +
-> +		rmtfs_upper_guard: rmtfs-upper-guard@fe001000 {
-> +			no-map;
-> +			reg = <0 0xfe001000 0 0x1000>;
-> +		};
-> +
-> +		/*
-> +		 * It seems like reserving the old rmtfs_mem region is also needed to prevent
-> +		 * random crashes which are most likely modem related, more testing needed.
-> +		 */
-> +		removed_region: removed-region@88f00000 {
-> +			no-map;
-> +			reg = <0 0x88f00000 0 0x1c00000>;
-> +		};
-> +	};
-> +
-> +	i2c@21 {
-> +		compatible = "i2c-gpio";
-> +		sda-gpios = <&tlmm 127 0x0>;
-GPIO_ACTIVE_HIGH
-> +		scl-gpios = <&tlmm 128 0x0>;
-GPIO_ACTIVE_HIGH
-
-> +		i2c-gpio,delay-us = <0x2>;
-> +		#address-cells = <0x1>;
-1
-
-> +		#size-cells = <0x0>;
-0
-
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&i2c21_sda_state &i2c21_scl_state>;
-pinctrl-n
-pinctrl-names
-
-is prefered
-
-and address/size-cells usually come as the last pair of properties
-
-> +
-> +		regulator@60 {
-> +			compatible = "samsung,s2dos05";
-> +			reg = <0x60>;
-> +
-> +			regulators {
-> +				s2dos05_ldo1: s2dos05-ldo1 {
-> +					regulator-name = "s2dos05-ldo1";
-> +					regulator-min-microvolt = <1500000>;
-> +					regulator-max-microvolt = <2000000>;
-> +					regulator-active-discharge = <0x1>;
-1
-
-> +				};
-> +
-> +				s2dos05_ldo2: s2dos05-ldo2 {
-> +					regulator-name = "s2dos05-ldo2";
-> +					regulator-min-microvolt = <1800000>;
-> +					regulator-max-microvolt = <1800000>;
-> +					regulator-active-discharge = <0x1>;
-1
-
-> +					regulator-boot-on;
-> +				};
-> +
-> +				s2dos05_ldo3: s2dos05-ldo3 {
-> +					regulator-name = "s2dos05-ldo3";
-> +					regulator-min-microvolt = <3000000>;
-> +					regulator-max-microvolt = <3000000>;
-> +					regulator-active-discharge = <0x1>;
-1
-
-> +					regulator-boot-on;
-> +				};
-> +
-> +				s2dos05_ldo4: s2dos05-ldo4 {
-> +					regulator-name = "s2dos05-ldo4";
-> +					regulator-min-microvolt = <2700000>;
-> +					regulator-max-microvolt = <3775000>;
-> +					regulator-active-discharge = <0x1>;
-1
-
-> +				};
-> +
-> +				s2dos05_buck1: s2dos05-buck1 {
-> +					regulator-name = "s2dos05-buck1";
-> +					regulator-min-microvolt = <850000>;
-> +					regulator-max-microvolt = <2100000>;
-> +					regulator-active-discharge = <0x1>;
-1
-
-> +				};
-> +			};
-> +		};
->   	};
->   };
->   
-> @@ -135,8 +228,6 @@ vdda_pll_cc_ebi23:
->   		vdda_sp_sensor:
->   		vdda_ufs1_core:
->   		vdda_ufs2_core:
-> -		vdda_usb1_ss_core:
-> -		vdda_usb2_ss_core:
->   		vreg_l1a_0p875: ldo1 {
->   			regulator-min-microvolt = <880000>;
->   			regulator-max-microvolt = <880000>;
-> @@ -157,6 +248,7 @@ vreg_l3a_1p0: ldo3 {
->   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->   		};
->   
-> +		vdda_usb1_ss_core:
->   		vdd_wcss_cx:
->   		vdd_wcss_mx:
->   		vdda_wcss_pll:
-> @@ -365,6 +457,10 @@ &qupv3_id_1 {
->   	status = "okay";
->   };
->   
-> +&gpi_dma1 {
-> +	status = "okay";
-> +};
-> +
->   &uart9 {
->   	status = "okay";
->   };
-> @@ -391,13 +487,50 @@ &sdhc_2 {
->   	status = "okay";
->   };
->   
-> +&i2c11 {
-> +	status = "okay";
-> +	clock-frequency = <400000>;
-status is preferred to come last
-
-> +
-> +	touchscreen@48 {
-> +		compatible = "samsung,s6sy761";
-> +		reg = <0x48>;
-> +		interrupt-parent = <&tlmm>;
-> +		interrupts = <120 0x0>;
-interrupts-extended with a fixed irq type (not _NONE)
-
-> +		vdd-supply = <&s2dos05_ldo2>;
-> +		avdd-supply = <&s2dos05_ldo3>;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&touch_irq_state>;
-ditto
-
-> +	};
-> +};
-> +
-> +/* Modem/wifi*/
-missing space before */
-
-> +&mss_pil {
-> +	status = "okay";
-> +	firmware-name = "qcom/sdm845/starqltechn/mba.mbn", "qcom/sdm845/starqltechn/modem.mbn";
-Can you split these into two lines?
-
-> +};
-> +
-> +&ipa {
-> +	qcom,gsi-loader = "self";
-> +	memory-region = <&ipa_fw_mem>;
-> +	firmware-name = "qcom/sdm845/starqltechn/ipa_fws.mbn";
-> +	status = "okay";
-> +};
-> +
->   &usb_1 {
->   	status = "okay";
-> +	/*
-> +	 * disable USB3 clock requirement as the device only supports
-> +	 * USB2.
-> +	 */
-Can this comment fit into a /* single line */?
-> +	qcom,select-utmi-as-pipe-clk;
-status is supposed to be last
-
->   };
->   
->   &usb_1_dwc3 {
->   	/* Until we have Type C hooked up we'll force this as peripheral. */
->   	dr_mode = "peripheral";
-> +
-> +	maximum-speed = "high-speed";
->   };
->   
->   &usb_1_hsphy {
-> @@ -449,4 +582,40 @@ sd_card_det_n_state: sd-card-det-n-state {
->   		function = "gpio";
->   		bias-pull-up;
->   	};
-> +
-> +	i2c21_sda_state: i2c-sda-state {
-> +		pins = "gpio127";
-> +		function = "gpio";
-> +		drive-strength = <0x2>;
-2
-
-> +		bias-disable;
-> +	};
-> +
-> +	i2c21_scl_state: i2c-scl-state {
-> +		pins = "gpio128";
-> +		function = "gpio";
-> +		drive-strength = <0x2>;
-2
-
-> +		bias-disable;
-> +	};
-> +
-> +	touch_irq_state: touch-irq-state {
-> +		pins = "gpio120";
-> +		function = "gpio";
-> +		bias-disable;
-> +		output-disable;
-> +	};
-> +};
-> +
-> +&qup_uart9_tx {
-> +	drive-strength = <0x2>;
-2
-
-> +	bias-pull-up;
-> +};
-> +
-> +&qup_uart9_rx {
-> +	drive-strength = <0x2>;
-2
-
-> +	bias-pull-up;
-> +};
-> +
-> +&qup_i2c11_default {
-> +	drive-strength = <2>;
-like here
+> I hope this clarifies the intention of this patch.
+Yes I understand this, but I am not sure if such tricks should make
+it upstream.. They depend on specific firmware (unrelated to the hw
+block itself) and only exist to improve boot times. If the firmware
+requirement was not at play, I would have no issues with this.
 
 Konrad
