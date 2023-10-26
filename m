@@ -2,168 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71E447D7C8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 07:54:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 018887D7CAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 08:07:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343915AbjJZFyN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 01:54:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51752 "EHLO
+        id S230478AbjJZGHi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 02:07:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233203AbjJZFyM (ORCPT
+        with ESMTP id S229638AbjJZGHh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 01:54:12 -0400
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A808184;
-        Wed, 25 Oct 2023 22:54:10 -0700 (PDT)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id 32A5943024;
-        Thu, 26 Oct 2023 10:54:06 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1698299646; bh=m2R8nwNx74fi7ZyA9GViMO/2RFQPpiuD8601klTAY8Y=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-        b=uA1oWc/i6nHNB1eoaqz/5EtSoqhREpX4vYPINveJWPSxDrgsKvPtfWXb28ZDAYUCY
-         jKrX+s0JK2wF8xrnxGs3p5KfKbVmMxkKFdYuox+6rgSjE25tKuJ8GOJf3Ft1O2IBmm
-         oPTB3jKPRKgPG9WLI9AYmNobwTjVPfYL7yHzOxEF4cBKR+My1ZtmHw0RCZ1cePPeaf
-         82SKsG7wTimH6yY1IEkyVDC4VVxG7S0wq94QutIRPJM14Ee/NGUU3cHrJKMKDLLrpj
-         7DtMldlY+TXZyZMGzs1AT52vPHZOgBuz9sYGcuCH5rhtNuKGZTCnX5ETp7YOclNL2J
-         8Fa1Q/MkSa8JQ==
-From:   Nikita Travkin <nikita@trvn.ru>
-Date:   Thu, 26 Oct 2023 10:53:45 +0500
-Subject: [PATCH v3 2/2] arm64: dts: qcom: msm8916-longcheer-l8150: Add
- battery and charger
+        Thu, 26 Oct 2023 02:07:37 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E9FB115;
+        Wed, 25 Oct 2023 23:07:35 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39Q5eRr0031318;
+        Thu, 26 Oct 2023 06:07:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KDM71q8BiVPqtYksL9m1q2Fw8IvCWeWBl16ry1SsfxY=;
+ b=gNfjQFnFPePfSlmWez4c7MYbNmHGOejf0t4uNYmr/cTWS4wBaD7RjO7wnxyAjCyWEOFs
+ Y4fGb85ihOjpLP4b0tqjbVBS40aXAUZA8v0GqZOUn3jbTzECPJKfPCjC+gaTMAaSPcA8
+ KBBtSpNmdxgc8ssZDR9TEkpHXMp640xOH0hoZh+hUtEAkHG3MdnOpncdntmFP/IFeBdt
+ esY+kM7UAbl1qEiZEphliHmKH2j+FTmz27ZkPTQqcfduDOdoliXvBTXuHDXK8o3elOJa
+ 1FkAc+LSJ+GQjWa1fi80UkpNt25wMvEZhzCcWczO9Jd5++JhKq9EbAh2t4mjIlATvZBz jg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ty5wdsjj2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Oct 2023 06:07:23 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39Q67Mel007246
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 26 Oct 2023 06:07:22 GMT
+Received: from [10.216.45.182] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 25 Oct
+ 2023 23:07:14 -0700
+Message-ID: <f961166d-a6ab-82f9-b5ed-113b81a1d709@quicinc.com>
+Date:   Thu, 26 Oct 2023 11:37:11 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: sa8775p: Add ep pcie0 controller
+ node
+Content-Language: en-US
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, <quic_shazhuss@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <quic_nayiluri@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <robh@kernel.org>, <quic_krichai@quicinc.com>,
+        <quic_vbadigan@quicinc.com>, <quic_parass@quicinc.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
+        <linux-phy@lists.infradead.org>
+References: <1697715430-30820-1-git-send-email-quic_msarkar@quicinc.com>
+ <1697715430-30820-6-git-send-email-quic_msarkar@quicinc.com>
+ <20231025075224.GB3648@thinkpad>
+From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
+In-Reply-To: <20231025075224.GB3648@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231026-pm8916-dtsi-bms-lbc-v3-2-fad1ff22306e@trvn.ru>
-References: <20231026-pm8916-dtsi-bms-lbc-v3-0-fad1ff22306e@trvn.ru>
-In-Reply-To: <20231026-pm8916-dtsi-bms-lbc-v3-0-fad1ff22306e@trvn.ru>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2477; i=nikita@trvn.ru;
- h=from:subject:message-id; bh=m2R8nwNx74fi7ZyA9GViMO/2RFQPpiuD8601klTAY8Y=;
- b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBlOf78t9B+W4YKSvV7oqzbkAguV9xEVdI3quokP
- D9+7iU1IMaJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZTn+/AAKCRBDHOzuKBm/
- dYJqD/9Ch+W0ZvItovOMaQrb2cwtSEVbcTdGK789rKwTb1y/Zsa1mr9o7b4U9JvS5mWJMrovhHd
- R6w8RtZm2lcVbVfhg0LAPjZXmwXz1RnuM5QI0wfvbKAvuLRqNZ+kZYXzJXXBK7JoEES08bN/8oO
- dHTEff4cK+dTW1rJ4c9d0h/43jLBNW0Zun/gzGARzpTnPLMbFaj8Ml8hIFbf0DO3PCXgD87COD8
- 9fDz2p4/qu98Ez2cKKIPmhTOtVC7brLPEmNpPMAZw1AsdrqGy5HI5uZVlSLX7gZshDy79dSXBJa
- EcUXd8d/8bMLpIgBooRwS6eDHesKkJxSF5HnHAOM5T8ikUMB2tXOPAxZwpYcAwdQn7mrGTEL/nz
- Lem83BVLSknGbOhd9ZyiiFh84hhaRfvmA/1Ijj21xEHZe3ilCsJWwhJpcnT5ZXAOocxjQ07+TD3
- jIRQ3e9lr8jy6k9oh/Dtet7/0l0VIwkhPQ0eyCimQ2o6rrMSrC6IGgfvhW9czjRwj0wNfDSmZ2r
- pWwWZ0ymK9KywbXP/hTMCANpDK2K4AIlcgWbasQYQVFZ4569t//Mz8bDvEdiHcWCJgr3erKdNUE
- WBiEnDQu4gYckusPB7+/R/A/kVYG+uI/Mb/s/3TT6htrwr+/VmpJDzwq20jI/Kwhgmpo5LIFygD
- JbfGh4D7qDdtkVw==
-X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
- fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zBrtP00kc42ipvz1QcTqSLtmkt5Qg9mb
+X-Proofpoint-ORIG-GUID: zBrtP00kc42ipvz1QcTqSLtmkt5Qg9mb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-26_03,2023-10-25_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 spamscore=0 mlxscore=0 bulkscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
+ malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2310170001 definitions=main-2310260049
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Longcheer L8150 doesn't have any dedicated fuel-gauge or charger,
-instead making use of the pmic hardware blocks for those purposes.
 
-Add pm8916 bms and charger, as well as the battery cell description
-that those blocks rely on.
+On 10/25/2023 1:22 PM, Manivannan Sadhasivam wrote:
+> On Thu, Oct 19, 2023 at 05:07:10PM +0530, Mrinmay Sarkar wrote:
+>> Add ep pcie dtsi node for pcie0 controller found on sa8775p platform.
+>> It supports gen4 and x2 link width. Due to some stability issue in
+>> gen4 enabling gen3 as of now.
+>>
+>> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sa8775p.dtsi | 48 +++++++++++++++++++++++++++++++++++
+>>   1 file changed, 48 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> index 13dd44d..2aa7383 100644
+>> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+>> @@ -3714,4 +3714,52 @@
+>>   
+>>   		status = "disabled";
+>>   	};
+>> +
+>> +	pcie0_ep: pcie-ep@1c00000 {
+>> +		compatible = "qcom,sa8775p-pcie-ep";
+>> +		reg = <0x0 0x01c00000 0x0 0x3000>,
+>> +		      <0x0 0x40000000 0x0 0xf20>,
+>> +		      <0x0 0x40000f20 0x0 0xa8>,
+>> +		      <0x0 0x40001000 0x0 0x4000>,
+>> +		      <0x0 0x40200000 0x0 0x100000>,
+>> +		      <0x0 0x01c03000 0x0 0x1000>,
+>> +		      <0x0 0x40005000 0x0 0x2000>;
+> Can we sort the reg entries?
 
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
----
- .../boot/dts/qcom/msm8916-longcheer-l8150.dts      | 43 +++++++++++++++++++---
- 1 file changed, 37 insertions(+), 6 deletions(-)
+Sort based on reg address? I think we are following the same sequence 
+for other target as well.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index 37fa55166918..8e4c77003109 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -49,6 +49,25 @@ mpss_mem: mpss@8e800000 {
- 		};
- 	};
- 
-+	battery: battery {
-+		compatible = "simple-battery";
-+		voltage-min-design-microvolt = <3400000>;
-+		voltage-max-design-microvolt = <4350000>;
-+		energy-full-design-microwatt-hours = <9500000>;
-+		charge-full-design-microamp-hours = <2500000>;
-+
-+		ocv-capacity-celsius = <25>;
-+		ocv-capacity-table-0 = <4330000 100>, <4265000 95>,
-+			<4208000 90>, <4153000 85>, <4100000 80>, <4049000 75>,
-+			<4001000 70>, <3962000 65>, <3919000 60>, <3872000 55>,
-+			<3839000 50>, <3817000 45>, <3798000 40>, <3783000 35>,
-+			<3767000 30>, <3747000 25>, <3729000 20>, <3709000 16>,
-+			<3688000 13>, <3681000 11>, <3680000 10>, <3679000 9>,
-+			<3677000 8>, <3674000 7>, <3666000 6>, <3641000 5>,
-+			<3597000 4>, <3537000 3>, <3457000 2>, <3336000 1>,
-+			<3000000 0>;
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -236,6 +255,22 @@ &blsp_uart2 {
- 	status = "okay";
- };
- 
-+&pm8916_bms {
-+	status = "okay";
-+
-+	monitored-battery = <&battery>;
-+	power-supplies = <&pm8916_charger>;
-+};
-+
-+&pm8916_charger {
-+	status = "okay";
-+
-+	monitored-battery = <&battery>;
-+
-+	qcom,fast-charge-safe-current = <900000>;
-+	qcom,fast-charge-safe-voltage = <4300000>;
-+};
-+
- &pm8916_codec {
- 	qcom,micbias-lvl = <2800>;
- 	qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
-@@ -255,10 +290,6 @@ pm8916_l17: l17 {
- 	};
- };
- 
--&pm8916_usbin {
--	status = "okay";
--};
--
- &pm8916_vib {
- 	status = "okay";
- };
-@@ -282,11 +313,11 @@ &sound {
- &usb {
- 	status = "okay";
- 	dr_mode = "peripheral";
--	extcon = <&pm8916_usbin>;
-+	extcon = <&pm8916_charger>;
- };
- 
- &usb_hs_phy {
--	extcon = <&pm8916_usbin>;
-+	extcon = <&pm8916_charger>;
- };
- 
- &venus {
+--Mrinmay
 
--- 
-2.41.0
-
+>> +		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
+>> +			    "mmio", "dma";
+>> +
+>> +		clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
+>> +			<&gcc GCC_PCIE_0_CFG_AHB_CLK>,
+>> +			<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
+>> +			<&gcc GCC_PCIE_0_SLV_AXI_CLK>,
+>> +			<&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
+>> +
+>> +		clock-names = "aux",
+>> +			      "cfg",
+>> +			      "bus_master",
+>> +			      "bus_slave",
+>> +			      "slave_q2a";
+>> +
+>> +		interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
+>> +			     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
+>> +			     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
+>> +
+>> +		interrupt-names = "global", "doorbell", "dma";
+>> +
+>> +		interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
+>> +				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
+>> +		interconnect-names = "pcie-mem", "cpu-pcie";
+>> +
+>> +		iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
+>> +			    <0x100 &pcie_smmu 0x0001 0x1>;
+> I think I recommended using "iommu-map" instead of "iommus" property. But
+> looking at it again, I think it is fine to use just "iommus" property as the SID
+> will be associated with the EP directly.
+>
+> Unless you want to have different SID for each function.
+>
+>> +
+>> +		resets = <&gcc GCC_PCIE_0_BCR>;
+>> +		reset-names = "core";
+>> +		power-domains = <&gcc PCIE_0_GDSC>;
+>> +		phys = <&pcie0_phy>;
+>> +		phy-names = "pciephy";
+>> +		max-link-speed = <3>;
+> Please add a comment here that you are limiting the Gen speed due to stability
+> issues. Like,
+>
+> 		max-link-speed = <3>; /* FIXME: Limiting the Gen speed due to stability issues */
+>
+>> +		num-lanes = <2>;
+> Can you check if the controller is cache coherent? If so, we should add
+> "dma-coherent" property.
+>
+> - Mani
+>
+>> +
+>> +		status = "disabled";
+>> +	};
+>>   };
+>> -- 
+>> 2.7.4
+>>
