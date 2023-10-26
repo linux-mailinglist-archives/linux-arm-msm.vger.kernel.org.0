@@ -2,51 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D6CF7D7AAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 04:05:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81B1A7D7AB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Oct 2023 04:11:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232431AbjJZCFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Oct 2023 22:05:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44352 "EHLO
+        id S232431AbjJZCLH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Oct 2023 22:11:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232946AbjJZCFu (ORCPT
+        with ESMTP id S229518AbjJZCLG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Oct 2023 22:05:50 -0400
+        Wed, 25 Oct 2023 22:11:06 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBB6B194;
-        Wed, 25 Oct 2023 19:05:47 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77420C433C7;
-        Thu, 26 Oct 2023 02:05:46 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4DD5132;
+        Wed, 25 Oct 2023 19:11:04 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2941BC433C7;
+        Thu, 26 Oct 2023 02:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698285947;
-        bh=wdYiEIeuPkKdvgg6KAstrOuZq1wQmLMrxjIDacgycTo=;
+        s=k20201202; t=1698286264;
+        bh=R2ZbMNpdOpfJaB62Jul1L9JZ9xwhe/4teAKNNVrfx28=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=q2HzjdfIB2JR79TKCvENv+dnDPOLofWHhaYzzZqKI1gg/f+gPD+YZHQv7l3KuqM8i
-         dRO5XB4RwIC5rbIcT8TfcnRQ7AFywresCW+ZkL1duWxzhIPl0fjcq1HKpCm1SYH+t/
-         Ln+YXk8DCKziltY+V8/GOq1Am8e3RzZL9QmtsPssRZ4UYcvATsYXO2MqVYafZmMcgf
-         bD7YtT2SMURo4oJIKrbaoJy9PTUDyY3XUwz0RnwNGybXdTWpvwxmL2cTgGGg6zWFV1
-         cYlPI2tUYnh7z2bxyy675Zy0R71zn1b4VTKqcvUmUNbIaWSUlQyNo3OVaS4ZAzkjwB
-         NRjABYoOT5lFA==
-Date:   Wed, 25 Oct 2023 19:10:03 -0700
+        b=OyAHD95fdOd+HAODdk/x8mwrujgZx5m6WQ0k89PXxYbVg26EbQKU22QMamEBa+EES
+         EBYIVRCNxyEPKUGhy7VIB8VEvQ89wGVylsl4exapIO2q+2zmDfDFrEAVnV79jpmZ2a
+         zT3OxtWlNZ05dvR6MmyVfwfkNlwdPpnQVnE4s16bMo39M1/ulQSXjNnJBffcWDX5iV
+         V1lwX0dU26CjhMSDm4jdlqyEIyHCpsXW+CphcaTEPnB0ElzkZykAD6WCwA/eUUADRT
+         5uSddfKca0f1NMh6OOJZYBiwl/T/1wClk1pkTFJqZr9AWiTRbDDZF8vrNsWLTd+Mw0
+         wgNdX1Pk0FkWA==
+Date:   Wed, 25 Oct 2023 19:15:21 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] pinctrl: qcom: handle intr_target_reg
- wakeup_present/enable bits
-Message-ID: <vtr3s7fyrionospnmzvm2xl2plsue2jlrc3tjifqua3ihucxao@6hxi3i22bwxs>
-References: <20231025-topic-sm8650-upstream-tlmm-v1-0-4e3d84a3a46b@linaro.org>
- <20231025-topic-sm8650-upstream-tlmm-v1-2-4e3d84a3a46b@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, agross@kernel.org,
+        conor+dt@kernel.org, dmitry.baryshkov@linaro.org,
+        jonathan@marek.ca, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
+        quic_tdas@quicinc.com, robh+dt@kernel.org,
+        vladimir.zapolskiy@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3.1 3/4] clk: qcom: camcc-sc8280xp: Add sc8280xp CAMCC
+Message-ID: <htdwp25oqvy6vmp6ff2z7ycmckvem2ejhitqonjgfzinqv5nds@rlfuary2ouc3>
+References: <20231023153821.189331-1-bryan.odonoghue@linaro.org>
+ <20231023153821.189331-4-bryan.odonoghue@linaro.org>
+ <aef93a48cf270d5078ccdc39d95113a4.sboyd@kernel.org>
+ <866d5582-a4e2-4b98-a291-6e41939bd9f3@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231025-topic-sm8650-upstream-tlmm-v1-2-4e3d84a3a46b@linaro.org>
+In-Reply-To: <866d5582-a4e2-4b98-a291-6e41939bd9f3@linaro.org>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -56,120 +57,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 25, 2023 at 09:33:52AM +0200, Neil Armstrong wrote:
-> New platforms uses a new set of bits to control the wakeirq
-> delivery to the PDC block.
+On Tue, Oct 24, 2023 at 10:40:04AM +0100, Bryan O'Donoghue wrote:
+> On 24/10/2023 01:34, Stephen Boyd wrote:
+> > Quoting Bryan O'Donoghue (2023-10-23 08:38:20)
+> > > diff --git a/drivers/clk/qcom/camcc-sc8280xp.c b/drivers/clk/qcom/camcc-sc8280xp.c
+> > > new file mode 100644
+> > > index 000000000000..0631bd5fad57
+> > > --- /dev/null
+> > > +++ b/drivers/clk/qcom/camcc-sc8280xp.c
+> > > @@ -0,0 +1,3048 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > +/*
+> > > + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> > > + * Copyright (c) 2023, Linaro Ltd.
+> > > + */
+> > > +
+> > > +#include <linux/clk-provider.h>
+> > > +#include <linux/err.h>
+> > 
+> > Is this include used?
+> > 
+> > > +#include <linux/kernel.h>
+> > > +#include <linux/module.h>
+> > > +#include <linux/of_device.h>
+> > 
+> > Should be mod_devicetable.h instead?
+> > 
+> > > +#include <linux/of.h>
+> > 
+> > Is this include used?
+> > 
+> > > +#include <linux/pm_clock.h>
+> > > +#include <linux/pm_runtime.h>
+> > > +#include <linux/regmap.h>
+> > > +#include <linux/pm_runtime.h>
+> > 
+> > This got included twice.
+> > 
+> > > +
+> > > +#include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
+> > > +
+> > > +#include "clk-alpha-pll.h"
 > 
-> The intr_wakeup_present_bit indicates if the GPIO supports
-> wakeirq and intr_wakeup_enable_bit enables wakeirq delivery
-> to the PDC block.
+> You're right, I didn't scrub the autogen headers.
 > 
-> While the name seems to imply this only enables wakeup events,
-> it is required to allow interrupts events to the PDC block.
+> Update sent as v3.2.
 > 
-> Enable this bit in the irq resource request/free if:
-> - gpio is in wakeirq map
-> - has the intr_wakeup_present_bit
-> - the intr_wakeup_enable_bit is set
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/pinctrl/qcom/pinctrl-msm.c | 32 ++++++++++++++++++++++++++++++++
->  drivers/pinctrl/qcom/pinctrl-msm.h |  5 +++++
->  2 files changed, 37 insertions(+)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 395040346d0f..2489a9ac8455 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -1196,6 +1196,7 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
->  {
->  	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->  	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-> +	const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
->  	int ret;
->  
->  	if (!try_module_get(gc->owner))
-> @@ -1221,6 +1222,24 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
->  	 */
->  	irq_set_status_flags(d->irq, IRQ_DISABLE_UNLAZY);
->  
-> +	/*
-> +	 * If the wakeup_enable bit is present and marked as available for the
-> +	 * requested GPIO, it should be enabled when the GPIO is marked as
-> +	 * wake irq in order to allow the interrupt event to be transfered to
-> +	 * the PDC HW.
-> +	 * While the name implies only the wakeup event, it's also required for
-> +	 * the interrupt event.
-> +	 */
-> +	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
-> +		u32 intr_cfg;
-> +
-> +		intr_cfg = msm_readl_intr_cfg(pctrl, g);
-> +		if (intr_cfg & BIT(g->intr_wakeup_present_bit)) {
-> +			intr_cfg |= BIT(g->intr_wakeup_enable_bit);
-> +			msm_writel_intr_cfg(intr_cfg, pctrl, g);
 
-If I understand correctly, the two modified functions are hooked
-straight into the irq_chip, which would imply that nothing prevent
-concurrent execution of this and the other accessors of intr_cfg.
-
-If I'm reading this correctly, I think we should perform this
-read-modify-write under the spinlock.
+Resubmitting one of the four patches as 3.2 confuses both me and the
+tools. Please send a v4 of all 4 patches instead.
 
 Regards,
 Bjorn
-
-> +		}
-> +	}
-> +
->  	return 0;
->  out:
->  	module_put(gc->owner);
-> @@ -1230,6 +1249,19 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
->  static void msm_gpio_irq_relres(struct irq_data *d)
->  {
->  	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-> +	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
-> +	const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
-> +
-> +	/* Disable the wakeup_enable bit if it has been set in msm_gpio_irq_reqres() */
-> +	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
-> +		u32 intr_cfg;
-> +
-> +		intr_cfg = msm_readl_intr_cfg(pctrl, g);
-> +		if (intr_cfg & BIT(g->intr_wakeup_present_bit)) {
-> +			intr_cfg &= ~BIT(g->intr_wakeup_enable_bit);
-> +			msm_writel_intr_cfg(intr_cfg, pctrl, g);
-> +		}
-> +	}
->  
->  	gpiochip_unlock_as_irq(gc, d->hwirq);
->  	module_put(gc->owner);
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
-> index 4968d08a384d..63852ed70295 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
-> @@ -58,6 +58,9 @@ struct pinctrl_pin_desc;
->   * @intr_enable_bit:      Offset in @intr_cfg_reg for enabling the interrupt for this group.
->   * @intr_status_bit:      Offset in @intr_status_reg for reading and acking the interrupt
->   *                        status.
-> + * @intr_wakeup_present_bit: Offset in @intr_target_reg specifying the GPIO can generate
-> + *			  wakeup events.
-> + * @intr_wakeup_enable_bit: Offset in @intr_target_reg to enable wakeup events for the GPIO.
->   * @intr_target_bit:      Offset in @intr_target_reg for configuring the interrupt routing.
->   * @intr_target_width:    Number of bits used for specifying interrupt routing target.
->   * @intr_target_kpss_val: Value in @intr_target_bit for specifying that the interrupt from
-> @@ -100,6 +103,8 @@ struct msm_pingroup {
->  	unsigned intr_status_bit:5;
->  	unsigned intr_ack_high:1;
->  
-> +	unsigned intr_wakeup_present_bit:5;
-> +	unsigned intr_wakeup_enable_bit:5;
->  	unsigned intr_target_bit:5;
->  	unsigned intr_target_width:5;
->  	unsigned intr_target_kpss_val:5;
-> 
-> -- 
-> 2.34.1
-> 
