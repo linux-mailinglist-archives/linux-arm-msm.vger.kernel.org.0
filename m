@@ -2,218 +2,285 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 297297D9C8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 17:06:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 871467D9CF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 17:30:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231799AbjJ0PGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 11:06:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57276 "EHLO
+        id S1346269AbjJ0PaN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 11:30:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231791AbjJ0PGx (ORCPT
+        with ESMTP id S1346167AbjJ0PaN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 11:06:53 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4709C4;
-        Fri, 27 Oct 2023 08:06:50 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24953C433C8;
-        Fri, 27 Oct 2023 15:06:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698419210;
-        bh=5rAHE74JaUW9j0fLiUG3QJe6u4QlvCh1VJ4REx3NAps=;
-        h=From:To:Cc:Subject:Date:From;
-        b=YEFBUD4vfgp5xAXI8W540+rOY+wCOLiNfx0C+/1eUCTnaBy8ThoRJvpM9YCERvFF+
-         NAUjdcoW36SJ5C9lo+/0Sg/eB0k/oLVan+iLcLygzw45wtVkF5BjZzwgrRfQalCrDB
-         BEe8qQp6Atbc//xPWmh34kI/w6Mu5Eo2mfy+TW/0otq5ofq5vEDcRMwzdst8lLrd5c
-         9IOB1Wly4xyXwsim5KHDKjBIsPk1+gwPAd1L8WnSORsJkz3neW0FNDZTKtq0nOq2gx
-         e250CNRDAJmZyAlaKrzWAAVHUcYvaCTelHHMbHqGgfeW9PM42RlftUdUxJVf/MLU5m
-         9Xf2T//uvSaVw==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>,
-        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-        Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Danila Tikhonov <danila@jiaxyga.com>,
-        Devi Priya <quic_devipriy@quicinc.com>,
-        Luca Weiss <luca@z3ntu.xyz>, Rob Herring <robh@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-Subject: [GIT PULL] Qualcomm clock updates for v6.7
-Date:   Fri, 27 Oct 2023 08:11:04 -0700
-Message-ID: <20231027151105.1317488-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.42.0
+        Fri, 27 Oct 2023 11:30:13 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28691AF;
+        Fri, 27 Oct 2023 08:30:10 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39REugfc015711;
+        Fri, 27 Oct 2023 15:29:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=y+U9W/JHLYARpBMFCoQXnpc1aJF1e4944L+Jfilc+OI=;
+ b=ppuZ1DbsyatG7wa0NCR/vZr/u7R5Ce4ete3lOaUVzR0iDBDlN/9qhULTHjJZi92OotPu
+ Uu02B6kyC0VNKGkyEQPdoHr4zR6rFBBJDJZdYYDF6AJGYU/Ms1d2JxDLxAZcHUmgQBQ2
+ m2c0fxELx19ejWNwBq1C0YA2d//fm+Jeze9bYK4oXgGGtyQUepGpyox6tlBEN7t3sgnl
+ wsBD2/DKRqY7Q79EBpKfMoR3xDwiKSnrUjcd73ELDeGIcVdrh4HURTaf7E4b0Gll03uQ
+ O+Nsglw7zNcchCyer/57V8FyueHHH4Eq8xraI5/9Q7EXFmf8/QXVGz0si760oZGka9s4 mw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tyxbvadmt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Oct 2023 15:29:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39RFT8Xw002309
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Oct 2023 15:29:08 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 27 Oct
+ 2023 08:29:07 -0700
+Message-ID: <baf17652-e2e8-0083-459e-a6ea4372466b@quicinc.com>
+Date:   Fri, 27 Oct 2023 09:29:06 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2] bus: mhi: host: Add tracing support
+Content-Language: en-US
+To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+        "Manivannan Sadhasivam" <mani@kernel.org>,
+        Steven Rostedt <rostedt@goodmis.org>,
+        "Masami Hiramatsu" <mhiramat@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-trace-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>
+References: <20231013-ftrace_support-v2-1-6e893ce010b5@quicinc.com>
+ <9216f694-cce0-2b95-df34-e5b60538644a@quicinc.com>
+ <ab9367fa-53e7-36d1-cac5-a3c1e28df4b3@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <ab9367fa-53e7-36d1-cac5-a3c1e28df4b3@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kt-Z5ZEX-BG9MnBBUiS0qE6Tk0gpb4ik
+X-Proofpoint-GUID: kt-Z5ZEX-BG9MnBBUiS0qE6Tk0gpb4ik
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-27_12,2023-10-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 impostorscore=0 mlxlogscore=999
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310270133
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 10/23/2023 1:11 AM, Krishna Chaitanya Chundru wrote:
+> 
+> On 10/20/2023 8:33 PM, Jeffrey Hugo wrote:
+>> On 10/13/2023 3:52 AM, Krishna chaitanya chundru wrote:
+>>> This change adds ftrace support for following functions which
+>>> helps in debugging the issues when there is Channel state & MHI
+>>> state change and also when we receive data and control events:
+>>> 1. mhi_intvec_threaded_handler
+>>> 2. mhi_process_data_event_ring
+>>> 3. mhi_process_ctrl_ev_ring
+>>> 4. mhi_gen_tre
+>>> 5. mhi_update_channel_state
+>>> 6. mhi_tryset_pm_state
+>>> 7. mhi_pm_st_worker
+>>>
+>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>> ---
+>>> Changes in v2:
+>>> - Passing the raw state into the trace event and using 
+>>> __print_symbolic() as suggested by bjorn.
+>>> - Change mhi_pm_st_worker to mhi_pm_st_transition as suggested by bjorn.
+>>> - Fixed the kernel test rebot issues.
+>>> - Link to v1: 
+>>> https://lore.kernel.org/r/20231005-ftrace_support-v1-1-23a2f394fa49@quicinc.com 
+>>>
+>>> ---
+>>>   MAINTAINERS                     |   1 +
+>>>   drivers/bus/mhi/host/init.c     |   3 +
+>>>   drivers/bus/mhi/host/internal.h |   1 +
+>>>   drivers/bus/mhi/host/main.c     |  32 +++--
+>>>   drivers/bus/mhi/host/pm.c       |   6 +-
+>>>   include/trace/events/mhi_host.h | 287 
+>>> ++++++++++++++++++++++++++++++++++++++++
+>>>   6 files changed, 317 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 35977b269d5e..4339c668a6ab 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -13862,6 +13862,7 @@ F:    Documentation/mhi/
+>>>   F:    drivers/bus/mhi/
+>>>   F:    drivers/pci/endpoint/functions/pci-epf-mhi.c
+>>>   F:    include/linux/mhi.h
+>>> +F:    include/trace/events/mhi_host.h
+>>>     MICROBLAZE ARCHITECTURE
+>>>   M:    Michal Simek <monstr@monstr.eu>
+>>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+>>> index f78aefd2d7a3..3afa90a204fd 100644
+>>> --- a/drivers/bus/mhi/host/init.c
+>>> +++ b/drivers/bus/mhi/host/init.c
+>>> @@ -20,6 +20,9 @@
+>>>   #include <linux/wait.h>
+>>>   #include "internal.h"
+>>>   +#define CREATE_TRACE_POINTS
+>>> +#include <trace/events/mhi_host.h>
+>>
+>> This feels redundant to me.  A few lines ago we included internal.h, 
+>> and internal.h includes trace/events/mhi_host.h
+> 
+> As Steve mentioned, this is mandatory step for creating trace points & 
+> trace events.
 
-The following changes since commit 0bb80ecc33a8fb5a682236443c1e740d5c917d1d:
+I understand this creates the trace points, and that needs to be done in 
+C code.  It dtill seems redundant because we are including the header 
+twice (and I am aware trace has the special multi-header read 
+functionality for this).
 
-  Linux 6.6-rc1 (2023-09-10 16:28:41 -0700)
+The duplicate include still feels weird, but I have not come up with a 
+better way to structure this.
 
-are available in the Git repository at:
+> 
+>>
+>>> +
+>>>   static DEFINE_IDA(mhi_controller_ida);
+>>>     const char * const mhi_ee_str[MHI_EE_MAX] = {
+>>> diff --git a/drivers/bus/mhi/host/internal.h 
+>>> b/drivers/bus/mhi/host/internal.h
+>>> index 2e139e76de4c..a80a317a59a9 100644
+>>> --- a/drivers/bus/mhi/host/internal.h
+>>> +++ b/drivers/bus/mhi/host/internal.h
+>>> @@ -7,6 +7,7 @@
+>>>   #ifndef _MHI_INT_H
+>>>   #define _MHI_INT_H
+>>>   +#include <trace/events/mhi_host.h>
+>>>   #include "../common.h"
+>>>     extern struct bus_type mhi_bus_type;
+>>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+>>> index dcf627b36e82..fcdb728ba49f 100644
+>>> --- a/drivers/bus/mhi/host/main.c
+>>> +++ b/drivers/bus/mhi/host/main.c
+>>> @@ -246,6 +246,11 @@ static void *mhi_to_virtual(struct mhi_ring 
+>>> *ring, dma_addr_t addr)
+>>>       return (addr - ring->iommu_base) + ring->base;
+>>>   }
+>>>   +dma_addr_t mhi_to_physical(struct mhi_ring *ring, void *addr)
+>>> +{
+>>> +    return (addr - ring->base) + ring->iommu_base;
+>>> +}
+>>
+>> This seems to be poorly named since we are using the iommu_base which 
+>> suggests we are converting to an IOVA.
+>>
+>> Why do we need this though?  This seems like it might be a security 
+>> issue, or at the very least, not preferred, and I'm struggling to 
+>> figure out what value this provides to you are I when looking at the log.
+>>
+> I will rename the function to reflect it is converting to IOVA.
+> 
+> We MHI TRE we write the IOVA address, to correlate between TRE events in 
+> the MHI ring and event we are processing  we want to log the IOVA address.
+> 
+> As we are logging only IOVA address which is provided in the devicetree 
+> and not the original physical address we are not expecting any security 
+> issues here.
+> 
+> Correct me if I was wrong.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-for-6.7
+The IOVA is not provided by DT, it is a runtime allocated value provided 
+by the IOMMU, if present.  If not present, then it is a physical address.
 
-for you to fetch changes up to e0e6373d653b7707bf042ecf1538884597c5d0da:
+Remember, x86 does not use devicetree.
 
-  clk: qcom: apss-ipq6018: add the GPLL0 clock also as clock provider (2023-10-21 12:59:13 -0700)
+While the IOVA (with an iommu) is not technically a physical address, 
+but is treated as such by the device.  I can imagine an attacker doing 
+bad things if they get a hold of the value.
 
-----------------------------------------------------------------
-Qualcomm clock updates for v6.7
+Still, you haven't indicated why this is useful.
 
-Initial support for the SM4450 platform is introduced, with the Global
-Clock Controller and RPMh clock controller additions.
+> 
+>>> +
+>>>   static void mhi_add_ring_element(struct mhi_controller *mhi_cntrl,
+>>>                    struct mhi_ring *ring)
+>>>   {
+>>> @@ -491,11 +496,9 @@ irqreturn_t mhi_intvec_threaded_handler(int 
+>>> irq_number, void *priv)
+>>>         state = mhi_get_mhi_state(mhi_cntrl);
+>>>       ee = mhi_get_exec_env(mhi_cntrl);
+>>> -    dev_dbg(dev, "local ee: %s state: %s device ee: %s state: %s\n",
+>>> -        TO_MHI_EXEC_STR(mhi_cntrl->ee),
+>>> -        mhi_state_str(mhi_cntrl->dev_state),
+>>> -        TO_MHI_EXEC_STR(ee), mhi_state_str(state));
+>>>   + trace_mhi_intvec_threaded_handler(mhi_cntrl->mhi_dev->name, 
+>>> mhi_cntrl->ee,
+>>> +                      mhi_cntrl->dev_state, ee, state);
+>>
+>> Why are we removing the debug message when adding this trace?  The 
+>> commit text doesn't say.  (Looks like you do this several times, 
+>> assume this comment applies to all isntances)
+> 
+> I will add this in the commit text in my next patch.
+> 
+> Just a query is recommended to keep both debug message and trace events. 
+> If yes we will not remove the debug messages.
 
-CLK_SET_RATE_PARENT is dropped for clocks with fixed-rate GPLLs, across
-a variety of IPQ platforms. On IPQ6018, GPLL0 is a missing parent of
-APCS PLL, so this is corrected.
+I think it would be preferred to have one mechanism or the other, not 
+both.  It seems like you are doing an incomplete conversion.
 
-For IPQ6018 the I2C clock for QUP6 was previously omitted, as disabling
-it is reported to cause problems for RPM. It's now added, but marked as
-critical.
+> 
+>>
+>>>       if (state == MHI_STATE_SYS_ERR) {
+>>>           dev_dbg(dev, "System error detected\n");
+>>>           pm_state = mhi_tryset_pm_state(mhi_cntrl,
+>>> @@ -832,6 +835,12 @@ int mhi_process_ctrl_ev_ring(struct 
+>>> mhi_controller *mhi_cntrl,
+>>>       while (dev_rp != local_rp) {
+>>>           enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
+>>>   + trace_mhi_process_ctrl_ev_ring(mhi_cntrl->mhi_dev->name,
+>>> +                           mhi_to_physical(ev_ring, local_rp),
+>>> +                           local_rp->ptr, local_rp->dword[0],
+>>> +                           local_rp->dword[1],
+>>> +                           MHI_TRE_GET_EV_STATE(local_rp));
+>>
+>> Why not just pass in the local_rp as a single parameter and have the 
+>> trace implementation decode it?  (Looks like you do this several 
+>> times, assume this comment applies to all isntances)
+> 
+> MHI_TRE_GET_EV_STATE definition is present in drivers/bus/mhi/common.h 
+> which is common for both EP & MHI driver.
+> 
+> If we keep this macro definition again in mhi_host.h it will be 
+> redundant one.
 
-Stromer Plus is introduced, and safe source switching of the a53pll in
-IPQ5332 is introduced.
+What is wrong with including the right header over in the trace to get 
+the definition?  I didn't ask for it to be redefined.
 
-SM8550 Video and GPU clock controllers are switched to use the OLE PLL
-configure method, instead of manually specifying additional components
-of the l-value.
+If the struct definition for local_rp changes, it will probably break 
+this, which will require changes to the definition and use of 
+trace_mhi_process_ctrl_ev_ring().  If trace_mhi_process_ctrl_ev_ring() 
+just takes the struct and decodes it, the decode logic just needs to be 
+updated (in one place) when the struct definition changes.
 
-A couple of fixes related to halt bit checks and SMMU GDSC are
-introduced for MSM8998.
+> 
+> And we are only using this way only for this trace log. So we are using 
+> the macro to get the state information.
 
-A possible integer overflow in the frequency calculation in the RCG code
-is addressed.
+No, you do the same thing for trace_mhi_process_data_event_ring() and 
+trace_mhi_gen_tre().
 
-Clocked managed through RPM are removed from the MSM8996 Global Clock
-Controller.
-
-Support for the Camera Clock Controller on SM8550 is added.
-
-PLL configuration for the three HFPLLs in MSM8976 are added.
-
-The MSM8996 CBF clock driver's remove function is transitioned to the
-void-returning variant.
-
-----------------------------------------------------------------
-Adam Skladowski (4):
-      clk: qcom: clk-hfpll: Configure l_val in init when required
-      clk: qcom: hfpll: Allow matching pdata
-      dt-bindings: clock: qcom,hfpll: Document MSM8976 compatibles
-      clk: qcom: hfpll: Add MSM8976 PLL data
-
-Ajit Pandey (4):
-      dt-bindings: clock: qcom: Add RPMHCC for SM4450
-      clk: qcom: rpmh: Add RPMH clocks support for SM4450
-      dt-bindings: clock: qcom: Add GCC clocks for SM4450
-      clk: qcom: Add GCC driver support for SM4450
-
-Bjorn Andersson (2):
-      Merge branch '20230707035744.22245-2-quic_jkona@quicinc.com' into clk-for-6.7
-      Merge branch '20230909123431.1725728-1-quic_ajipan@quicinc.com' into clk-for-6.7
-
-Danila Tikhonov (1):
-      clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
-
-Devi Priya (1):
-      clk: qcom: clk-rcg2: Fix clock rate overflow for high parent frequencies
-
-Dmitry Baryshkov (2):
-      clk: qcom: gpucc-sm8550: switch to clk_lucid_ole_pll_configure
-      clk: qcom: videocc-sm8550: switch to clk_lucid_ole_pll_configure
-
-Jagadeesh Kona (4):
-      dt-bindings: clock: qcom: Add SM8550 camera clock controller
-      clk: qcom: clk-alpha-pll: Add support for lucid ole pll configure
-      clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550
-      clk: qcom: camcc-sm8550: Add support for qdss, sleep and xo clocks
-
-Kathiravan Thirumoorthy (6):
-      clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
-      clk: qcom: ipq6018: drop the CLK_SET_RATE_PARENT flag from PLL clocks
-      clk: qcom: ipq5018: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
-      clk: qcom: ipq9574: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
-      clk: qcom: ipq5332: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
-      clk: qcom: apss-ipq6018: add the GPLL0 clock also as clock provider
-
-Konrad Dybcio (4):
-      clk: qcom: gcc-msm8996: Remove RPM bus clocks
-      clk: qcom: mmcc-msm8998: Don't check halt bit on some branch clks
-      clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
-      clk: qcom: smd-rpm: Move CPUSS_GNoC clock to interconnect
-
-Luca Weiss (1):
-      clk: qcom: mmcc-msm8974: remove ocmemcx_ahb_clk
-
-Rob Herring (1):
-      clk: qcom: Replace of_device.h with explicit includes
-
-Robert Marko (1):
-      clk: qcom: gcc-ipq6018: add QUP6 I2C clock
-
-Uwe Kleine-König (1):
-      clk: qcom: cbf-msm8996: Convert to platform remove callback returning void
-
-Varadarajan Narayanan (6):
-      clk: qcom: ipq5332: Drop set rate parent from gpll0 dependent clocks
-      clk: qcom: config IPQ_APSS_6018 should depend on QCOM_SMEM
-      clk: qcom: clk-alpha-pll: introduce stromer plus ops
-      clk: qcom: apss-ipq-pll: Use stromer plus ops for stromer plus pll
-      clk: qcom: apss-ipq-pll: Fix 'l' value for ipq5332_pll_config
-      clk: qcom: apss-ipq6018: ipq5332: add safe source switch for a53pll
-
- .../devicetree/bindings/clock/qcom,hfpll.txt       |    3 +
- .../devicetree/bindings/clock/qcom,rpmhcc.yaml     |    1 +
- .../devicetree/bindings/clock/qcom,sm4450-gcc.yaml |   55 +
- .../bindings/clock/qcom,sm8450-camcc.yaml          |    8 +-
- drivers/clk/qcom/Kconfig                           |   17 +
- drivers/clk/qcom/Makefile                          |    2 +
- drivers/clk/qcom/apss-ipq-pll.c                    |    4 +-
- drivers/clk/qcom/apss-ipq6018.c                    |   61 +-
- drivers/clk/qcom/camcc-sm8550.c                    | 3565 ++++++++++++++++++++
- drivers/clk/qcom/clk-alpha-pll.c                   |   92 +
- drivers/clk/qcom/clk-alpha-pll.h                   |    3 +
- drivers/clk/qcom/clk-cbf-8996.c                    |   12 +-
- drivers/clk/qcom/clk-hfpll.c                       |    4 +
- drivers/clk/qcom/clk-hfpll.h                       |    1 +
- drivers/clk/qcom/clk-rcg2.c                        |   14 +-
- drivers/clk/qcom/clk-rpmh.c                        |   21 +
- drivers/clk/qcom/clk-smd-rpm.c                     |   16 +-
- drivers/clk/qcom/gcc-ipq5018.c                     |    6 +-
- drivers/clk/qcom/gcc-ipq5332.c                     |    4 -
- drivers/clk/qcom/gcc-ipq6018.c                     |   27 +-
- drivers/clk/qcom/gcc-ipq8074.c                     |    6 -
- drivers/clk/qcom/gcc-ipq9574.c                     |    4 -
- drivers/clk/qcom/gcc-msm8996.c                     |  237 +-
- drivers/clk/qcom/gcc-sm4450.c                      | 2898 ++++++++++++++++
- drivers/clk/qcom/gcc-sm8150.c                      |    2 +-
- drivers/clk/qcom/gpucc-sm8550.c                    |   10 +-
- drivers/clk/qcom/hfpll.c                           |   59 +-
- drivers/clk/qcom/mmcc-msm8974.c                    |   18 -
- drivers/clk/qcom/mmcc-msm8998.c                    |    7 +-
- drivers/clk/qcom/videocc-sm8550.c                  |   10 +-
- include/dt-bindings/clock/qcom,mmcc-msm8974.h      |    1 -
- include/dt-bindings/clock/qcom,sm4450-gcc.h        |  197 ++
- include/dt-bindings/clock/qcom,sm8550-camcc.h      |  187 +
- 33 files changed, 7235 insertions(+), 317 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm4450-gcc.yaml
- create mode 100644 drivers/clk/qcom/camcc-sm8550.c
- create mode 100644 drivers/clk/qcom/gcc-sm4450.c
- create mode 100644 include/dt-bindings/clock/qcom,sm4450-gcc.h
- create mode 100644 include/dt-bindings/clock/qcom,sm8550-camcc.h
