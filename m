@@ -2,72 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 854817D9022
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 09:44:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB2A57D9033
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 09:47:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345491AbjJ0How (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 03:44:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39192 "EHLO
+        id S234983AbjJ0HrU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 03:47:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345492AbjJ0Hot (ORCPT
+        with ESMTP id S1345491AbjJ0HrT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 03:44:49 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6769D49
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:44:46 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-507a55302e0so2207634e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:44:46 -0700 (PDT)
+        Fri, 27 Oct 2023 03:47:19 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F4108B0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:47:16 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-507d1cc0538so2441795e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:47:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698392685; x=1698997485; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1698392835; x=1698997635; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YdE2y1aby0BQdk8xrlCB8Kqg1DOQ9KmpAl5ECSr9stg=;
-        b=A1MYE0MsgHqTu8Z5Bh+1Ul2+0tzIfgvERSdztGzd7Iioy0+hT743DXVyHTvLCOxSTs
-         dmUWtmQIWSn4K2yZznL3UUxwDudacttXVYpNUdY4mJ484WrREOIgptzzFYzAEJDKu30E
-         2BNHergGbRDeItrFmLoAhYHCkrmFC+lRAXlUXbdKOktnKhcwKphiIuWtpRu/Y6tvkH5G
-         w+dg4Uh4vx6aE79QvLmNZFr0w4sWzc9En3TEau0UTavWC0XehAuMUQFo1D5nbD/4OHn4
-         Xf8tgd/WrwojeQjrJzTsChEH7jzP1hSb+9jaZUsn41cdnYAu5In9hEsrbM84CptqHagN
-         dSVg==
+        bh=fdPoPykwVMD9RZG4snFdAmpNaz4E+pHELiVqG6ZVCtk=;
+        b=SovH/3oaWDvWyl0okRY5ZRxDYVlMovAHxsSZk9WImv11mamiVbfgOumv7KqGQocJHa
+         yTolE6C6mquZxc47Ue81sk33oqw89oynMAcEv6i94H4H5kHIfMQSTD/SS9Xq7Llx/KtF
+         oZCozS3K5X7l/Ks4nMQZpy6lN2Q9Iip/lyCbOf07q1MCVidtqznEFLG9rko7rzdx2Pnr
+         q+FjJWiER5qkLu1v/8iwVVM34OkaVwLkzAAh0+GRNAazfe9xeB6H+k8zq993B5H3vUfM
+         z4giSsGRAeemGH/YmPKTCkiBYI62Hj9wI/OAtLBxv+IVVcn3awscL/1EWpVYlNI/Jr11
+         Izkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698392685; x=1698997485;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1698392835; x=1698997635;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YdE2y1aby0BQdk8xrlCB8Kqg1DOQ9KmpAl5ECSr9stg=;
-        b=qLz1p+x1iqU3TLWbsQcOEGfQ4xSiFCKmnc+QlKzkPE/GMU30+opmEGXm8O6zD+usyR
-         y/qlQDsYGo0fWhhCMFJ1bdGWeinVGPzqdLx/dc/4RlmP+uMafYGybTqlYZjsgm5ENAr/
-         pHZ07vunuA7w5ZWGMwMZtbEu3L4ROxJyMVI+NtAfaWVnkV8t8ayUjTY7mdz1PKk12i84
-         dByfgHV5YyUIWzxR07ZahwQlgPiJh/yoV/76rdfbKZd3I7kZ9xo1k8k92/pF4wO7c5pr
-         K+DY0kzWgcV4NtSXZf5YzeuXaieNkBPiKNDDGneKh06TbbRntASqz5o0DmSMnzNmFm3h
-         lnnw==
-X-Gm-Message-State: AOJu0Yw2j1qnsyNmwmstgl2R/fqV2PP7JUb2brPerc//p7nXaFSNJjNV
-        F4o7eEwgkWEo6GmCdYnEZMCpHw==
-X-Google-Smtp-Source: AGHT+IGItjKvsvGv6rSiLZu71/SwupAPTEFcgbaC8DVtntISnzBvw+nuVsrRemUBOTuJ+4+Rq3012Q==
-X-Received: by 2002:a05:6512:6d1:b0:508:19be:fb2e with SMTP id u17-20020a05651206d100b0050819befb2emr1366026lff.58.1698392684898;
-        Fri, 27 Oct 2023 00:44:44 -0700 (PDT)
+        bh=fdPoPykwVMD9RZG4snFdAmpNaz4E+pHELiVqG6ZVCtk=;
+        b=AytKOCHJ1ywRcTazgk8IVOHExtEQf1DCrrLTXQDeXUME7Sn6tI29Vt6uqR8vizesUA
+         rWVpqfW6Mpw7tmTmeyRM4Zn/L9uVcbP3qKjbEt6XCuwJWN4/tqEbrO6TLkCbsws5D39w
+         Sg6Q3lsHoqxvUKDO41sSC4WCQVZdmN4bWZLI3sKvEXOkpnHmif2tcuo/umzPjzSfO6t+
+         kNDP7SuxzC4maiwgydBvWfCfdKHrEC9IJXAmRmyslS5FRsK34S6IHa4A0iJklHe5myl6
+         PA2pYoZqDokBYhWmvVies3N8DTZa1gCyFE4UzcFZkfnbMN3uy6eA3ME1L9iP8SNJ4glp
+         1Tlw==
+X-Gm-Message-State: AOJu0YwbANBKv17t8PjRUI+0iSb+Lac6PDdDxxCXor3UFz87VXHBWnHF
+        32P+og6zPtluHJjStCiCdG0O2w==
+X-Google-Smtp-Source: AGHT+IGuA7AynijTmGBZmQHcC28fXB76OvPh+wKhEQqg7mAx4aesCy3ptC2gcex9SVq5c3DZT9We5Q==
+X-Received: by 2002:ac2:5e86:0:b0:507:9702:c11d with SMTP id b6-20020ac25e86000000b005079702c11dmr1127936lfq.64.1698392835202;
+        Fri, 27 Oct 2023 00:47:15 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id u28-20020a19791c000000b005079fd88326sm170716lfc.45.2023.10.27.00.44.43
+        by smtp.gmail.com with ESMTPSA id i18-20020a056512341200b004fdde1db756sm176358lfr.26.2023.10.27.00.47.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 00:44:44 -0700 (PDT)
-Message-ID: <35489fb7-9272-40dc-a2e1-45326b964e75@linaro.org>
-Date:   Fri, 27 Oct 2023 09:44:43 +0200
+        Fri, 27 Oct 2023 00:47:14 -0700 (PDT)
+Message-ID: <6e01468f-9023-47ed-b5f9-afaef58b03de@linaro.org>
+Date:   Fri, 27 Oct 2023 09:47:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] ARM: dts: qcom: samsung-matisse-common: Add UART
+Subject: Re: [PATCH] dt-bindings: clock: qcom,gcc-ipq6018: split to separate
+ schema
 Content-Language: en-US
-To:     Stefan Hansson <newbyte@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Robert Marko <robimarko@gmail.com>, andersson@kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        quic_tdas@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-References: <20231026132521.38575-1-newbyte@postmarketos.org>
- <20231026132521.38575-5-newbyte@postmarketos.org>
+References: <20231026101931.695497-1-robimarko@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -113,26 +110,27 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231026132521.38575-5-newbyte@postmarketos.org>
+In-Reply-To: <20231026101931.695497-1-robimarko@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/10/2023 15:24, Stefan Hansson wrote:
-> This was not enabled in the matisse-wifi tree. Without this, it is not
-> possible to use the USB port for serial debugging via a "Carkit debug
-> cable".
+On 26/10/2023 12:18, Robert Marko wrote:
+> The Qualcomm IPQ6018 GCC clock controller has clock inputs, thus existing
+> gcc-other.yaml was not describing it fully so move it to a separate schema.
 > 
-> Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
-
+> Fully document the allowed and required XO and sleep clock inputs, as well
+> as update the provided example.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
