@@ -2,278 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA4727D9BD8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 16:43:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 297297D9C8B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 17:06:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345960AbjJ0Onl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 10:43:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49952 "EHLO
+        id S231799AbjJ0PGx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 11:06:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231678AbjJ0Oni (ORCPT
+        with ESMTP id S231791AbjJ0PGx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 10:43:38 -0400
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EB33E3;
-        Fri, 27 Oct 2023 07:43:36 -0700 (PDT)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id 4343240557;
-        Fri, 27 Oct 2023 19:42:50 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1698417770; bh=OHLRJC/diPfVFt8XwpnQvHWosIsHUiivbV6zXKO3qc0=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-        b=vjhEzfNBqX2jogZExWJu9smjWlNjalqWufxvt6mPBlLmiofTQKr+n1gW/qZ2fmxX9
-         ibhUnclb0yuzOXkbupuJw4kfzorN8n/8R6udUv9vc1jZPVksm+k/9QNXR9RVv6Yyki
-         TdoGbRHCtmdy9aqDBx7aufN+Es/Y3lIIWrBelFJhD25vXt9jvpUtzZ1wqhEXPonTFD
-         +sYtXon6jSnNy1JZ6zbQ5wgQM1qn9Fo45MaHapNjKrJkLbX5kIxXNJQdxNQSeB4Jhs
-         2lGOaXfrCAEk5+Nm5kzcoeb8+K89RCgd6Ww9p30nCtrLJbZYddWCJwUVDGBqz/PMjD
-         GPMFDOJJZR1bg==
-From:   Nikita Travkin <nikita@trvn.ru>
-Date:   Fri, 27 Oct 2023 19:42:23 +0500
-Subject: [PATCH 3/3] arm64: dts: qcom: acer-aspire1: Add sound
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231027-aspire1-sound-v1-3-5ff3cf8b5701@trvn.ru>
-References: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
-In-Reply-To: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
-To:     cros-qcom-dts-watchers@chromium.org,
+        Fri, 27 Oct 2023 11:06:53 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4709C4;
+        Fri, 27 Oct 2023 08:06:50 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24953C433C8;
+        Fri, 27 Oct 2023 15:06:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698419210;
+        bh=5rAHE74JaUW9j0fLiUG3QJe6u4QlvCh1VJ4REx3NAps=;
+        h=From:To:Cc:Subject:Date:From;
+        b=YEFBUD4vfgp5xAXI8W540+rOY+wCOLiNfx0C+/1eUCTnaBy8ThoRJvpM9YCERvFF+
+         NAUjdcoW36SJ5C9lo+/0Sg/eB0k/oLVan+iLcLygzw45wtVkF5BjZzwgrRfQalCrDB
+         BEe8qQp6Atbc//xPWmh34kI/w6Mu5Eo2mfy+TW/0otq5ofq5vEDcRMwzdst8lLrd5c
+         9IOB1Wly4xyXwsim5KHDKjBIsPk1+gwPAd1L8WnSORsJkz3neW0FNDZTKtq0nOq2gx
+         e250CNRDAJmZyAlaKrzWAAVHUcYvaCTelHHMbHqGgfeW9PM42RlftUdUxJVf/MLU5m
+         9Xf2T//uvSaVw==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Stephen Boyd <sboyd@kernel.org>, linux-clk@vger.kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+        Varadarajan Narayanan <quic_varada@quicinc.com>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4201; i=nikita@trvn.ru;
- h=from:subject:message-id; bh=OHLRJC/diPfVFt8XwpnQvHWosIsHUiivbV6zXKO3qc0=;
- b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBlO8xc30z+MrENqgfLgqVSE+q+ra7RoCnWdyiz1
- 6GhE6uWXmGJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZTvMXAAKCRBDHOzuKBm/
- dd67D/4pT2ycHdMwd/6ryVt9JVDg9rTTP+IYgpuMiDCjwy/JQbSkqPqigfGqMOwdFhI9L4h6fqt
- gYa6wqXhCXxADwSfKrvXLSJsszBm5Btrm71ZnhWp+E5gDGYCoO4hjfH3L4Nv9FWJ4rkJe5WQL7Z
- 3Ya+y6IW5jrKlAQhkr+zdTFhc3cgPKdbvB45jvxncQ5zEXPVQv5rDZ6m+orp42Pft9QWajLr5E5
- EOrN61xy36EwCz0zEj5irEOPUQXicR08uheUN/DlJIPppxOVnmfLku0/fO5SIjIQOEe0D20pSf0
- IA+VWyXrcE/+dAieOEBT+jN9f2IE25r5urMUMLv9jSjfcUvBufLRya6kRJ97bLOMu1sSW2OWnA4
- ZWu27d+nhxE+ux11DeQAvl+9Hs4iKT5cibvCieGVX0OLLjRWl1sFgVRAgc7lFMEyC89YYzTBmOt
- kaBR56+mNmr+MVA46wlhySWo5phGSniQA9iK6g/XqYREephKV64kJfDK2VysZrf4yfDyJXPS//3
- sB7h6sL81NHZkJR1MJ5vlGDWFaDbQ33V2N2rBn6VfcPaoMYCVYA2n/QGo/yWlsrey5E/G42nQ5P
- UMKEqwzUDkw+V/t66xTROfIN2I/UmtMPnRl1P1VNe9FVihLxSIyeZnIwM0SLCOC7RW4aCu2sA1U
- z0aJPfUusk+QCPw==
-X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
- fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Danila Tikhonov <danila@jiaxyga.com>,
+        Devi Priya <quic_devipriy@quicinc.com>,
+        Luca Weiss <luca@z3ntu.xyz>, Rob Herring <robh@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Subject: [GIT PULL] Qualcomm clock updates for v6.7
+Date:   Fri, 27 Oct 2023 08:11:04 -0700
+Message-ID: <20231027151105.1317488-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.42.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This laptop has two i2s speakers; an i2s audio codec for the headset
-jack; two DMIC microphones in the lid and the displayport audio channel.
 
-This commit adds the audio node that describes all of the above with the
-exception of the DMICs that require in-SoC digital codec to be brought
-up, which will be done later.
+The following changes since commit 0bb80ecc33a8fb5a682236443c1e740d5c917d1d:
 
-Note that the displayport channel is connected here for completeness,
-but the displayport can't be used yet since the HPD signal is created by
-the embedded controller, which will be added later.
+  Linux 6.6-rc1 (2023-09-10 16:28:41 -0700)
 
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
----
- arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts | 153 +++++++++++++++++++++++
- 1 file changed, 153 insertions(+)
+are available in the Git repository at:
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-index 00b442696618..5afcb8212f49 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-@@ -3,6 +3,7 @@
- /dts-v1/;
- 
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/sound/qcom,q6asm.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
- #include "sc7180.dtsi"
-@@ -129,6 +130,113 @@ reg_lcm_3p3: panel-regulator {
- 		pinctrl-names = "default";
- 	};
- 
-+	sound: sound {
-+		compatible = "qcom,sc7180-qdsp6-sndcard";
-+		pinctrl-0 = <&pri_mi2s_active>, <&pri_mi2s_mclk_active>, <&ter_mi2s_active>;
-+		pinctrl-names = "default";
-+		model = "Acer-Aspire-1";
-+
-+		audio-routing =
-+			"Headphone Jack", "HPOL",
-+			"Headphone Jack", "HPOR";
-+
-+		multimedia1-dai-link {
-+			link-name = "MultiMedia1";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+			};
-+		};
-+
-+		multimedia2-dai-link {
-+			link-name = "MultiMedia2";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+			};
-+		};
-+
-+		multimedia3-dai-link {
-+			link-name = "MultiMedia3";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+			};
-+		};
-+
-+		multimedia4-dai-link {
-+			link-name = "MultiMedia4";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA4>;
-+			};
-+		};
-+
-+		primary-rx-dai-link {
-+			link-name = "Primary MI2S Playback";
-+
-+			cpu {
-+				sound-dai = <&q6afedai PRIMARY_MI2S_RX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&alc5682 0>;
-+			};
-+		};
-+
-+		primary-tx-dai-link {
-+			link-name = "Primary MI2S Capture";
-+
-+			cpu {
-+				sound-dai = <&q6afedai PRIMARY_MI2S_TX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&alc5682 0>;
-+			};
-+		};
-+
-+		tertiary-rx-dai-link {
-+			link-name = "Tertiary MI2S Playback";
-+
-+			cpu {
-+				sound-dai = <&q6afedai TERTIARY_MI2S_RX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&max98357a>;
-+			};
-+		};
-+
-+		displayport-rx-dai-link {
-+			link-name = "DisplayPort Playback";
-+
-+			cpu {
-+				sound-dai = <&q6afedai DISPLAY_PORT_RX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+
-+			codec {
-+				sound-dai = <&mdss_dp>;
-+			};
-+		};
-+	};
-+
- 	reg_tp_3p3: touchpad-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "tp_3p3";
-@@ -368,6 +476,45 @@ &pm6150_rtc {
- 	status = "okay";
- };
- 
-+&q6afedai {
-+	dai@16 {
-+		reg = <PRIMARY_MI2S_RX>;
-+		qcom,sd-lines = <1>;
-+	};
-+
-+	dai@17 {
-+		reg = <PRIMARY_MI2S_TX>;
-+		qcom,sd-lines = <0>;
-+	};
-+
-+	dai@20 {
-+		reg = <TERTIARY_MI2S_RX>;
-+		qcom,sd-lines = <0>;
-+	};
-+
-+	dai@104 {
-+		reg = <DISPLAY_PORT_RX>;
-+	};
-+};
-+
-+&q6asmdai {
-+	dai@0 {
-+		reg = <0>;
-+	};
-+
-+	dai@1 {
-+		reg = <1>;
-+	};
-+
-+	dai@2 {
-+		reg = <2>;
-+	};
-+
-+	dai@3 {
-+		reg = <3>;
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -376,6 +523,12 @@ &qupv3_id_1 {
- 	status = "okay";
- };
- 
-+&remoteproc_adsp {
-+	memory-region = <&adsp_mem>;
-+	firmware-name = "qcom/sc7180/acer/aspire1/qcadsp7180.mbn";
-+	status = "okay";
-+};
-+
- &remoteproc_mpss {
- 	firmware-name = "qcom/sc7180/acer/aspire1/qcmpss7180_nm.mbn";
- 	status = "okay";
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-for-6.7
 
--- 
-2.41.0
+for you to fetch changes up to e0e6373d653b7707bf042ecf1538884597c5d0da:
 
+  clk: qcom: apss-ipq6018: add the GPLL0 clock also as clock provider (2023-10-21 12:59:13 -0700)
+
+----------------------------------------------------------------
+Qualcomm clock updates for v6.7
+
+Initial support for the SM4450 platform is introduced, with the Global
+Clock Controller and RPMh clock controller additions.
+
+CLK_SET_RATE_PARENT is dropped for clocks with fixed-rate GPLLs, across
+a variety of IPQ platforms. On IPQ6018, GPLL0 is a missing parent of
+APCS PLL, so this is corrected.
+
+For IPQ6018 the I2C clock for QUP6 was previously omitted, as disabling
+it is reported to cause problems for RPM. It's now added, but marked as
+critical.
+
+Stromer Plus is introduced, and safe source switching of the a53pll in
+IPQ5332 is introduced.
+
+SM8550 Video and GPU clock controllers are switched to use the OLE PLL
+configure method, instead of manually specifying additional components
+of the l-value.
+
+A couple of fixes related to halt bit checks and SMMU GDSC are
+introduced for MSM8998.
+
+A possible integer overflow in the frequency calculation in the RCG code
+is addressed.
+
+Clocked managed through RPM are removed from the MSM8996 Global Clock
+Controller.
+
+Support for the Camera Clock Controller on SM8550 is added.
+
+PLL configuration for the three HFPLLs in MSM8976 are added.
+
+The MSM8996 CBF clock driver's remove function is transitioned to the
+void-returning variant.
+
+----------------------------------------------------------------
+Adam Skladowski (4):
+      clk: qcom: clk-hfpll: Configure l_val in init when required
+      clk: qcom: hfpll: Allow matching pdata
+      dt-bindings: clock: qcom,hfpll: Document MSM8976 compatibles
+      clk: qcom: hfpll: Add MSM8976 PLL data
+
+Ajit Pandey (4):
+      dt-bindings: clock: qcom: Add RPMHCC for SM4450
+      clk: qcom: rpmh: Add RPMH clocks support for SM4450
+      dt-bindings: clock: qcom: Add GCC clocks for SM4450
+      clk: qcom: Add GCC driver support for SM4450
+
+Bjorn Andersson (2):
+      Merge branch '20230707035744.22245-2-quic_jkona@quicinc.com' into clk-for-6.7
+      Merge branch '20230909123431.1725728-1-quic_ajipan@quicinc.com' into clk-for-6.7
+
+Danila Tikhonov (1):
+      clk: qcom: gcc-sm8150: Fix gcc_sdcc2_apps_clk_src
+
+Devi Priya (1):
+      clk: qcom: clk-rcg2: Fix clock rate overflow for high parent frequencies
+
+Dmitry Baryshkov (2):
+      clk: qcom: gpucc-sm8550: switch to clk_lucid_ole_pll_configure
+      clk: qcom: videocc-sm8550: switch to clk_lucid_ole_pll_configure
+
+Jagadeesh Kona (4):
+      dt-bindings: clock: qcom: Add SM8550 camera clock controller
+      clk: qcom: clk-alpha-pll: Add support for lucid ole pll configure
+      clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550
+      clk: qcom: camcc-sm8550: Add support for qdss, sleep and xo clocks
+
+Kathiravan Thirumoorthy (6):
+      clk: qcom: ipq8074: drop the CLK_SET_RATE_PARENT flag from PLL clocks
+      clk: qcom: ipq6018: drop the CLK_SET_RATE_PARENT flag from PLL clocks
+      clk: qcom: ipq5018: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+      clk: qcom: ipq9574: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+      clk: qcom: ipq5332: drop the CLK_SET_RATE_PARENT flag from GPLL clocks
+      clk: qcom: apss-ipq6018: add the GPLL0 clock also as clock provider
+
+Konrad Dybcio (4):
+      clk: qcom: gcc-msm8996: Remove RPM bus clocks
+      clk: qcom: mmcc-msm8998: Don't check halt bit on some branch clks
+      clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
+      clk: qcom: smd-rpm: Move CPUSS_GNoC clock to interconnect
+
+Luca Weiss (1):
+      clk: qcom: mmcc-msm8974: remove ocmemcx_ahb_clk
+
+Rob Herring (1):
+      clk: qcom: Replace of_device.h with explicit includes
+
+Robert Marko (1):
+      clk: qcom: gcc-ipq6018: add QUP6 I2C clock
+
+Uwe Kleine-König (1):
+      clk: qcom: cbf-msm8996: Convert to platform remove callback returning void
+
+Varadarajan Narayanan (6):
+      clk: qcom: ipq5332: Drop set rate parent from gpll0 dependent clocks
+      clk: qcom: config IPQ_APSS_6018 should depend on QCOM_SMEM
+      clk: qcom: clk-alpha-pll: introduce stromer plus ops
+      clk: qcom: apss-ipq-pll: Use stromer plus ops for stromer plus pll
+      clk: qcom: apss-ipq-pll: Fix 'l' value for ipq5332_pll_config
+      clk: qcom: apss-ipq6018: ipq5332: add safe source switch for a53pll
+
+ .../devicetree/bindings/clock/qcom,hfpll.txt       |    3 +
+ .../devicetree/bindings/clock/qcom,rpmhcc.yaml     |    1 +
+ .../devicetree/bindings/clock/qcom,sm4450-gcc.yaml |   55 +
+ .../bindings/clock/qcom,sm8450-camcc.yaml          |    8 +-
+ drivers/clk/qcom/Kconfig                           |   17 +
+ drivers/clk/qcom/Makefile                          |    2 +
+ drivers/clk/qcom/apss-ipq-pll.c                    |    4 +-
+ drivers/clk/qcom/apss-ipq6018.c                    |   61 +-
+ drivers/clk/qcom/camcc-sm8550.c                    | 3565 ++++++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.c                   |   92 +
+ drivers/clk/qcom/clk-alpha-pll.h                   |    3 +
+ drivers/clk/qcom/clk-cbf-8996.c                    |   12 +-
+ drivers/clk/qcom/clk-hfpll.c                       |    4 +
+ drivers/clk/qcom/clk-hfpll.h                       |    1 +
+ drivers/clk/qcom/clk-rcg2.c                        |   14 +-
+ drivers/clk/qcom/clk-rpmh.c                        |   21 +
+ drivers/clk/qcom/clk-smd-rpm.c                     |   16 +-
+ drivers/clk/qcom/gcc-ipq5018.c                     |    6 +-
+ drivers/clk/qcom/gcc-ipq5332.c                     |    4 -
+ drivers/clk/qcom/gcc-ipq6018.c                     |   27 +-
+ drivers/clk/qcom/gcc-ipq8074.c                     |    6 -
+ drivers/clk/qcom/gcc-ipq9574.c                     |    4 -
+ drivers/clk/qcom/gcc-msm8996.c                     |  237 +-
+ drivers/clk/qcom/gcc-sm4450.c                      | 2898 ++++++++++++++++
+ drivers/clk/qcom/gcc-sm8150.c                      |    2 +-
+ drivers/clk/qcom/gpucc-sm8550.c                    |   10 +-
+ drivers/clk/qcom/hfpll.c                           |   59 +-
+ drivers/clk/qcom/mmcc-msm8974.c                    |   18 -
+ drivers/clk/qcom/mmcc-msm8998.c                    |    7 +-
+ drivers/clk/qcom/videocc-sm8550.c                  |   10 +-
+ include/dt-bindings/clock/qcom,mmcc-msm8974.h      |    1 -
+ include/dt-bindings/clock/qcom,sm4450-gcc.h        |  197 ++
+ include/dt-bindings/clock/qcom,sm8550-camcc.h      |  187 +
+ 33 files changed, 7235 insertions(+), 317 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm4450-gcc.yaml
+ create mode 100644 drivers/clk/qcom/camcc-sm8550.c
+ create mode 100644 drivers/clk/qcom/gcc-sm4450.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm4450-gcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8550-camcc.h
