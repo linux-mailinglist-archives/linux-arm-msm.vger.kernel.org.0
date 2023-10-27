@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C25A7D8FEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 09:34:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB8157D8FF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 09:36:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345405AbjJ0HeM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 03:34:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42342 "EHLO
+        id S1345405AbjJ0Hgb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 03:36:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59466 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234999AbjJ0HeK (ORCPT
+        with ESMTP id S1345420AbjJ0Hg3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 03:34:10 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35EEC1BF
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:34:07 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c518a1d83fso28772041fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:34:07 -0700 (PDT)
+        Fri, 27 Oct 2023 03:36:29 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB710192
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:36:25 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-507a62d4788so2736457e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:36:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698392045; x=1698996845; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698392184; x=1698996984; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=r5OL44wu8qZTjsH8VVdfA2ui2+NwRncjqsuQ4wHOYdo=;
-        b=UoTDc19Pxmd2TbnrasFSr9lcGq96/ISROBkT0WJTFaW71JwdKwx+tDXklhtX15aqgs
-         jfXUbvePr2weV7bLidPD9UbZWF//cB50lwcuGMcdYR+RXwhT2o8IkzqTq7SoV6c8V5qh
-         IZw40NOUuIyKF5rwaDPYeJmeBFQmYPTu8+d2m7xTor6OAXnmyB+I0o2Aa/4s9UnLMsbr
-         y172zigWGhgK+6bJTYRgSn6ehvbxqedPREaX2ReQ9cdDOc0f55vyvJaxFex4JL0e7vRY
-         73i+5tPhScuP47kFMK7f/2SIFDOwdPjyWpkS4VBJgwLmmWbPVab8wei8d5uoo7fNxFa6
-         xfEw==
+        bh=FKgxwW12cXvJbbJyaE54dQi3HeFLiwxHnNrbqUscsyw=;
+        b=goG8P1A6H2ypq5vqm5Ei3c75UdWfo8F0g8RvmWTSZGrH6HBIRNrfuI3rFfWO5v5sMM
+         bCyDiMj/jqdjy+9qXyac0N+XfIUrTkWC5CegtooR5gieOyOfbZnW1AjdhTYoh/bJajEs
+         x8Xwep1tGwF3ZKqF0wz7M1UYZmaOtIsjBcdr/ZRRIbnr0YBQTf7oh/k5Z4RpDQg4Mn8Y
+         F0YeiDJnOAhyleXN9FkUNuKcMt5agCPRRifig2QyapJtCRZT+BlayGLAKwawPBdH1LBT
+         jOBM4FOvj03DcnTjO8LYr9CgLcES13SSSSs8gFqdpjYekIBVO+r+OJeQhw8rr3T7heXE
+         mxjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698392045; x=1698996845;
+        d=1e100.net; s=20230601; t=1698392184; x=1698996984;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r5OL44wu8qZTjsH8VVdfA2ui2+NwRncjqsuQ4wHOYdo=;
-        b=m0pH7jfTd9dLVHUERyo6USZhfIaYDt4W3ama9IqdQTT/lTok5iKIXqlZjrwjppGDlU
-         3W0kGyeYXaMQthqCmTBneW2bh3jsYf9r7guWzPwAscYX8gXCVAdcOTpYk8qhcK6lqeYy
-         L7HkwcAtyfSWyHOhj6ot7Ae5ss8b7nRpRzvIiKcwC5jrr2iWH+Ud7lydsD4EqLTy2sw0
-         bxQZFldhf5nyCL2Qgjxo/90LBtZxlvObnhV6uKzNrrTuBDzabiKITzmWX4OaEScAkI1U
-         dTLjUzgMAoWXdHfiEP+ARdfCFpmvzlW+6ruYmzkkHR1gdZDCADZs1TN83feG6nDUDigZ
-         pD8w==
-X-Gm-Message-State: AOJu0YxVfv5ghUCzzgsQjuJeKNDhtca7vA4V38yrOMrbPb9Ei3a7pPSa
-        GdQ3ahdH5/ySsxtKiWRRWbSR+A==
-X-Google-Smtp-Source: AGHT+IGZN5QI569t4YCaqntNGtklJpxrXqnfdYsVPxlQ6GnrD2C2DOr6TcKE+z0UvH4Lq49xgi5aLw==
-X-Received: by 2002:a2e:a7d2:0:b0:2c5:247d:581 with SMTP id x18-20020a2ea7d2000000b002c5247d0581mr1583593ljp.22.1698392045395;
-        Fri, 27 Oct 2023 00:34:05 -0700 (PDT)
+        bh=FKgxwW12cXvJbbJyaE54dQi3HeFLiwxHnNrbqUscsyw=;
+        b=L0uOGtWuRP4zbUSnWRuNkLeJFdocuFDZZ5BGF102xbC6iCzxEcJedn2y/NcuYXFClw
+         SLQfLqbLtFT1xV87dnvWxfCHaeew5TDPKrHFcuYK/oF0VhiXrELJijMoUfvjZ6BwquJr
+         AsQ0LZS18t9gJLByuMggbrUBwTWuVC1SngbUKbjYJ71GVOvQBIxXMU6IChWR15YAue6D
+         nFoQG+EsxZ5wRXRtACpPUYWVBK5ZScM/UdCaFWcjiPnKAwELakodhp4cqraGTaoqVrqi
+         RTW5FGEb6KS1IAl7e072fpPMpEcwlTs85Ap1aERnkKgNZEOyu1wobx/BsG+/NkrWNkrx
+         urCQ==
+X-Gm-Message-State: AOJu0YwnM7048YvYuXOLwsCCjaQmCo/UhabPYMA4uK3LNzAz0JQFx+XR
+        5zix4NtQWZTwYjqX2lIOE4RqIw==
+X-Google-Smtp-Source: AGHT+IFqagUd0m8zM5GEs/QvCP49dXETv0iPLFRVr7vsc8eyNYMZsLQ/8t/1txgYTkEGuOrjv46TKA==
+X-Received: by 2002:a05:6512:3b89:b0:503:36cb:5438 with SMTP id g9-20020a0565123b8900b0050336cb5438mr1484365lfv.21.1698392183994;
+        Fri, 27 Oct 2023 00:36:23 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id bj12-20020a2eaa8c000000b002c0336f0f27sm173659ljb.119.2023.10.27.00.34.04
+        by smtp.gmail.com with ESMTPSA id a14-20020a194f4e000000b00505a20d070asm170385lfk.78.2023.10.27.00.36.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 00:34:04 -0700 (PDT)
-Message-ID: <0bc67582-34e7-4812-9a11-5fec4f2a11dc@linaro.org>
-Date:   Fri, 27 Oct 2023 09:34:03 +0200
+        Fri, 27 Oct 2023 00:36:23 -0700 (PDT)
+Message-ID: <a1895327-b520-4f3a-a427-0947ac46495c@linaro.org>
+Date:   Fri, 27 Oct 2023 09:36:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dt-bindings: firmware: qcom,scm: document SM8650 SCM
- Firmware Interface
+Subject: Re: [PATCH 1/3] dt-bindings: remoteproc: qcom,sm8550-pas: document
+ the SM8650 PAS
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-bindings-scm-v2-1-68a8db7ae434@linaro.org>
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-remoteproc-v1-0-a8d20e4ce18c@linaro.org>
+ <20231025-topic-sm8650-upstream-remoteproc-v1-1-a8d20e4ce18c@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -114,7 +115,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025-topic-sm8650-upstream-bindings-scm-v2-1-68a8db7ae434@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-remoteproc-v1-1-a8d20e4ce18c@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -127,14 +128,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 10:21, Neil Armstrong wrote:
-> Document the SCM Firmware Interface on the SM8650 Platform.
+On 25/10/2023 09:35, Neil Armstrong wrote:
+> Document the DSP Peripheral Authentication Service on the SM8650 Platform.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
+>  .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 41 +++++++++++++++++++++-
+>  1 file changed, 40 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> index 58120829fb06..316371c8ee6e 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> @@ -19,6 +19,9 @@ properties:
+>        - qcom,sm8550-adsp-pas
+>        - qcom,sm8550-cdsp-pas
+>        - qcom,sm8550-mpss-pas
+> +      - qcom,sm8650-adsp-pas
+> +      - qcom,sm8650-cdsp-pas
+> +      - qcom,sm8650-mpss-pas
+>  
+>    reg:
+>      maxItems: 1
+> @@ -49,6 +52,7 @@ properties:
+>        - description: Memory region for main Firmware authentication
+>        - description: Memory region for Devicetree Firmware authentication
+>        - description: DSM Memory region
+> +      - description: DSM Memory region 2
+>  
+>  required:
+>    - compatible
+> @@ -63,6 +67,7 @@ allOf:
+>            enum:
+>              - qcom,sm8550-adsp-pas
+>              - qcom,sm8550-cdsp-pas
+> +            - qcom,sm8650-adsp-pas
+>      then:
+>        properties:
+>          interrupts:
+> @@ -71,7 +76,25 @@ allOf:
+>            maxItems: 5
+>          memory-region:
+>            maxItems: 2
+> -    else:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,sm8650-cdsp-pas
+> +    then:
+> +      properties:
+> +        interrupts:
+> +          minItems: 5
+
+maxItems
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +        interrupt-names:
+> +          minItems: 5
+
+maxItems
+
+> +        memory-region:
+> +          minItems: 3
+
+maxItems: 3
+
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,sm8550-mpss-pas
+> +    then:
+>        properties:
+>          interrupts:
+>            minItems: 6
+> @@ -79,12 +102,26 @@ allOf:
+>            minItems: 6
+>          memory-region:
+>            minItems: 3
+
+You need to add here maxItems.
+
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,sm8650-mpss-pas
+> +    then:
+
+I am not sure if keeping it in the same binding as sm8550 avoids that
+much duplication.
 
 Best regards,
 Krzysztof
