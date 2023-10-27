@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D2177D917B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 10:28:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 73BEB7D9183
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 10:29:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345404AbjJ0I2j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 04:28:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58106 "EHLO
+        id S1345523AbjJ0I33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 04:29:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38180 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235079AbjJ0I2j (ORCPT
+        with ESMTP id S1345533AbjJ0I32 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 04:28:39 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E2E41AC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 01:28:36 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-5079f6efd64so2444001e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 01:28:36 -0700 (PDT)
+        Fri, 27 Oct 2023 04:29:28 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69101B4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 01:29:25 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507a55302e0so2258685e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 01:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698395314; x=1699000114; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698395364; x=1699000164; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LcMlteiqyP+3VxtwJC6BsZU2OpQMRBZIHtS76WSCVj0=;
-        b=YY8mZKe6BHtKCSTu1DMQG3FqdSLUg6BJWBwrcRsPJ9CYBHC/xv3S5dVJ4DXFrd/hQY
-         cJTaM+QpM59XjKyMTKOQQL4wgOQM3EeS4a1i5u1EIt7wMvQISTNQOpnEt77qqDK+EqPP
-         c+pImBgwiYBTwUC3euqduKBc3+XVdYU6eO8XwZj2zuht8WMOUNxQ+gtfZH/fHok8mjVS
-         X6rgJLedKf4aPrC+d02Hw1c+0haoTatlk6uAo2vLsnOW1CX5GeN656S/gGBBehBfOafZ
-         K4geremK13ThDf7WfVJRhl5VmW2iCz8pqG5pXF+Yz2Q4sgBJySXyA4yJ3xSAuOSYZwoK
-         ShMg==
+        bh=sa7k+kRCObLaUmV2GRBfkKq0wj93V4tnf7QBOCyvDGM=;
+        b=nI56LBR1B8Cgi5fttdo8ZSrLhEq5xMB1wO75N9vGCW2gW027zLgPp1VHRwUvXBRwfz
+         2EIjWimQ0M9KpeEHzgeE+P5NtGyfe9BlAgadSDqNTRijv/urx6Uk/Ke8XpiefF/uCExz
+         ho+euuMx+kPXxVP/uvVsMxA41/Or+mxWYzEKx8m+FCj/OFmouXLGPUW+eDxFHSd9FGpN
+         vq81UE7meG8OblXt5/S0Cu4PG2ljn05DgDtO5Wo0dGmzvMFUMVsA7GLY632KEdPyhxtZ
+         xEiNVCbxjFvTAxMCrubmML5h6nHdiDgqYjcJ+1kIH63KsOVp4C2Vl0UkN80umE35s8+S
+         /U8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698395314; x=1699000114;
+        d=1e100.net; s=20230601; t=1698395364; x=1699000164;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LcMlteiqyP+3VxtwJC6BsZU2OpQMRBZIHtS76WSCVj0=;
-        b=X+E+Z0UuULFfObb2Y7yNIQTmSZTGYO4f9ZmwdrY6cFJlG9AzJ8EHCVsb3DXlBYTqE3
-         ULu/7aYs20GNs5HY4rHZMUrk9Td5EE3addiIn0O0/1txNtLmxcGJ6VoJJH8nmb+kuP08
-         ph8nJXW1pASUuxCgbTxHbTcRN04FsfPEYEcjZ969UuM3fH8DfFxwAFXcvQkI9FrKSXSf
-         ER1MVOsACys8RrUyNpQEUWuhaw7rzNKxgXmtx70FuWI889cewSZYkD7xb4rclGIGhn5i
-         +KssITArQhtW4E0MpY8y6n+zS/pK2QcILdSeIrnvX/+lXzBWI+l7v77XsKWoUBQBB3Mz
-         dhxQ==
-X-Gm-Message-State: AOJu0YxKzS03Xz7ceyhtq0K/hp6N4Bs/E9PbpObmRGVVAvAIZbg8RWWz
-        y+kUEfI/Vzv75w2ZXB6tIYE24w==
-X-Google-Smtp-Source: AGHT+IEsqujoz+JZsbJ/VnqIWfFqNlaxSDTvzvfGgXggATrnLJJGTYETFKkAzu0XhzcFRu2Lss3EUg==
-X-Received: by 2002:a05:6512:1388:b0:500:b53f:fbc2 with SMTP id fc8-20020a056512138800b00500b53ffbc2mr1455503lfb.26.1698395314249;
-        Fri, 27 Oct 2023 01:28:34 -0700 (PDT)
+        bh=sa7k+kRCObLaUmV2GRBfkKq0wj93V4tnf7QBOCyvDGM=;
+        b=iSwJiA48AhjyNfA9/5/rFC8P2AdmrIlo0CfAkm8sXw8Sfc5Vk0mG8/LaY/VafSkFDw
+         0IzB7tMwvsqM1TVxgn/CUI/+FaGiDqg+vlyIySwib7mUKvaOb0W6CUz28pvCpfDShCSV
+         TsRENzN1cYdRxfRDpVlXjtO44n67tFVZDewKVljD6WPG8fGvgsL6NiRHA5TFhsijxPfI
+         q7ZBa3xZ3IkPIhp+LkTibokE5wIesrN0yZz6nOwqO/Vj/xi+m9IoSeROQWmIbm95cqoN
+         4mlKgbk8YuU0FnIgKhZ7mVJlqSPqET7fUL1BNTjDb1fE4FHVs3PCBOBsS0A391ElpFTy
+         NENw==
+X-Gm-Message-State: AOJu0Yww8BqB6hRdnqHxsZwjPzn7op76/JdWvD5Xz5s72+RZqdsDF1s/
+        H9FDapDqTO65uCHJFZReS7CouQ==
+X-Google-Smtp-Source: AGHT+IE6DL3pZfPbJeyGKttk+fT9vqmgjTIjmq5QUoR6thhZhPiMEBObwYge9KxzSGFqnOnUeJAAlQ==
+X-Received: by 2002:ac2:414a:0:b0:507:a9b7:f071 with SMTP id c10-20020ac2414a000000b00507a9b7f071mr1094121lfi.1.1698395364198;
+        Fri, 27 Oct 2023 01:29:24 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id i14-20020a056512340e00b00502ae64f46asm184429lfr.126.2023.10.27.01.28.31
+        by smtp.gmail.com with ESMTPSA id i14-20020a056512340e00b00502ae64f46asm184429lfr.126.2023.10.27.01.29.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 01:28:32 -0700 (PDT)
-Message-ID: <b1440bdb-664d-477d-9e24-ba9d2c1c7ca7@linaro.org>
-Date:   Fri, 27 Oct 2023 10:28:31 +0200
+        Fri, 27 Oct 2023 01:29:23 -0700 (PDT)
+Message-ID: <e09e122e-712f-4c07-8fec-0c39452677a8@linaro.org>
+Date:   Fri, 27 Oct 2023 10:29:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] dt-bindings: dma: qcom: gpi: add compatible for
- SC8380XP
+Subject: Re: [PATCH 3/3] dt-bindings: firmware: qcom,scm: document SCM on
+ SC8380XP SoCs
 Content-Language: en-US
 To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
         konrad.dybcio@linaro.org, will@kernel.org, robin.murphy@arm.com,
@@ -68,7 +68,7 @@ Cc:     agross@kernel.org, vkoul@kernel.org, quic_gurus@quicinc.com,
         dmaengine@vger.kernel.org, iommu@lists.linux.dev,
         quic_tsoni@quicinc.com, neil.armstrong@linaro.org
 References: <20231025140640.22601-1-quic_sibis@quicinc.com>
- <20231025140640.22601-3-quic_sibis@quicinc.com>
+ <20231025140640.22601-4-quic_sibis@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -114,7 +114,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025140640.22601-3-quic_sibis@quicinc.com>
+In-Reply-To: <20231025140640.22601-4-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -128,15 +128,15 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 25/10/2023 16:06, Sibi Sankar wrote:
-> The Qualcomm SC8380XP uses GPI DMA for its GENI interface. Add a compatible
-> string for it in the documentation by using the SM6350 as fallback.
+> Document scm compatible for SC8380XP SoCs.
 > 
 > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+No interconnects?
 
 Best regards,
 Krzysztof
