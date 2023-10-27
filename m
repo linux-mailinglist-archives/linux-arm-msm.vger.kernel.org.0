@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD0F67D9132
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 10:21:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17EEC7D913A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 10:22:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235187AbjJ0IVr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 04:21:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59410 "EHLO
+        id S235243AbjJ0IWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 04:22:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235233AbjJ0IV3 (ORCPT
+        with ESMTP id S235085AbjJ0IVw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 04:21:29 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 646012726
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 01:20:32 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-507a0907896so2597473e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 01:20:32 -0700 (PDT)
+        Fri, 27 Oct 2023 04:21:52 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90DE119BF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 01:20:53 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-507b96095abso2604126e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 01:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698394830; x=1698999630; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698394851; x=1698999651; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2qieB7KCwp712m7O/c1DR0bYhYsy/++QuIY78B/AcMs=;
-        b=EyJtff9i6Wuk5bt4Zpx8dbc98l2b6n16KkXp90Mbo3MpyptuHWEyrl4XcGvjFIZJQ7
-         jOiVEXdVAYBl9UjMecyFjDrK+YQ7X1QgtS9dbvBHABZiGUdl5JaWX2nRO4W6PCq487Pg
-         OMggAC6iRsIowzX4OpSbrCngyyYCeJtYLjbT4ZaR+xtPWhWaZsK3BLuKbf6+rvK9VrJK
-         QfvZsmLrbP+vUcm8NPR/dvfHmv/qKvtjvyvBDNuzB0+jbH3CnvGKaPz8+6yfogTvc/eb
-         AHARfaT++3o3GBy6HJSsFvDU59AfMkWnrrFlL2Z/uDj+r8V9O+xKYRtDcfU7anfpcQ2d
-         t3Xw==
+        bh=iQr1TTUP0SdNC3AUISzkLfmzm40bCnn1CgPFw9SobZE=;
+        b=RJqpeOhZi+tEuRBRNNWEH49I+wfISXyKtqXhem38npQS24UBq/qFufeoazmKz3xUaW
+         oqiOMMA8Qs9cOYV125yqhhZiMj63X06zkpUwJjPC9tWWxvrpNuOINQruKJPKWkJd3LBB
+         zdV04fBrDcuFSWr2nd1WA3mUgM9sEkhXXkrxB8iBvHC5dmYNf0Lp8AMXITmCC06ydLFQ
+         rQg3B6W8UJPfMjxq/wQhh2Tg30w54s71JivXKTvsKkg3+4fuEXCtmmBNlLq5G/Kw8ybD
+         wJtUCjcoSg3jFvaWrq/59sM/9ti3rh5ieWB7b+xqUr7ES5iieLVxk4XoS0aHf7OZbxGB
+         FfkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698394830; x=1698999630;
+        d=1e100.net; s=20230601; t=1698394851; x=1698999651;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2qieB7KCwp712m7O/c1DR0bYhYsy/++QuIY78B/AcMs=;
-        b=ZIjKsG+tN18Sxh+t9Iyo1Z7eein6tVxCkDGWLSstPBgsQMekMbvmUxNaks1b5mkMKN
-         F1xawb58Ctqz7EncV7Idnk7Ei87hm2Ydx341vQt6bpkdnZaRalj5c3qPp1PqdsuLhJCG
-         xnjgmtYaTvQXsvRpXxpFgt8G8mGykqOP/6ZxwAZS3qGfca3QlATFSgEzRM/NBm9ew2NR
-         xBDE534NSUQmBwn7VW8VeKVV1/B8SpNc5+2lzKsMDrfIZ1Mt9r4xVUwNV7OHtSSGkFgC
-         wLVcljHD4lqJyQs8BjH76mUcaRTu7AiatOCMUWeCcoZBOQhpqVK7Is3wtH+9u6Q8FIRM
-         QNDg==
-X-Gm-Message-State: AOJu0YwLLp8iZ932WfS1YxtxpqUrR6ThiilaGKMggTSoHRt8zirnstdR
-        hooeUAAZxWKwp4d9rmN8yO06VQ==
-X-Google-Smtp-Source: AGHT+IF4Kx6xH+xkOcgQZ7ae0EF5IBj/Q04eCP/go6wRQpE3bdRWuW61CDQzHDQ9pGS7hLR0EXZUfA==
-X-Received: by 2002:a05:6512:3b2c:b0:507:cd2e:5ed8 with SMTP id f44-20020a0565123b2c00b00507cd2e5ed8mr1602042lfv.0.1698394830556;
-        Fri, 27 Oct 2023 01:20:30 -0700 (PDT)
+        bh=iQr1TTUP0SdNC3AUISzkLfmzm40bCnn1CgPFw9SobZE=;
+        b=pn5juH62xOQ5LK361Y4Bkd8I6qO8roEFgJqSdtbplqtE+kGN0TescbhsNPGlsQpviX
+         ZNWull3J9HaZrQZ5d2Iu98Vjx5/sQvARQynGAKNdcv7w+WKe0xiG7WnXbSg/k6WETbf6
+         JcdibVvFNP3k5CGSdpfNJurbN3s6S4UBP6iEWpAigVRvl8TQWUwWabV0O6JZdcZEeo5X
+         WK/ztsiZ+E4OjMN6NOnUyk505e/Dzaq9d3ZQpt/KJBBxtUWpRpI4i7kts6p5HmZPocYp
+         5jwOImI7pAHYmdZgZLSr1UGtoXFwWjHHgZdT6IxsRxqNpNUNntZgr6CRYTgMZ0gZo00X
+         6+ag==
+X-Gm-Message-State: AOJu0Yw/qzVqn8USrdp7Rco3Qirfrwt3pa1RCcRoObQDWBTJKxjwwBEM
+        +6CkFYXJCUeWjHKRaCCJz+wRBw==
+X-Google-Smtp-Source: AGHT+IEfzBFaH2tUzcD6wy7hWU4RwIp7xCMTRkoSH0sBfWRowl7Dcy3ez8Jqqj6N0GiCN6QRZvGJjQ==
+X-Received: by 2002:a19:710f:0:b0:504:7cc6:1ad7 with SMTP id m15-20020a19710f000000b005047cc61ad7mr1275136lfc.1.1698394851237;
+        Fri, 27 Oct 2023 01:20:51 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id v19-20020a05651203b300b00507a96d17b3sm181433lfp.237.2023.10.27.01.20.29
+        by smtp.gmail.com with ESMTPSA id v19-20020a05651203b300b00507a96d17b3sm181433lfp.237.2023.10.27.01.20.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 01:20:30 -0700 (PDT)
-Message-ID: <8f3c9418-0d5c-4769-9ef7-19cd91454130@linaro.org>
-Date:   Fri, 27 Oct 2023 10:20:29 +0200
+        Fri, 27 Oct 2023 01:20:50 -0700 (PDT)
+Message-ID: <26805722-9026-4205-8978-97d66f65a5a0@linaro.org>
+Date:   Fri, 27 Oct 2023 10:20:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: clock: qcom: Add SC8380XP GCC clocks
+Subject: Re: [PATCH 3/4] dt-bindings: clock: qcom-rpmhcc: Add RPMHCC bindings
+ for SC8380XP
 Content-Language: en-US
 To:     Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
         konrad.dybcio@linaro.org, mturquette@baylibre.com,
@@ -66,7 +67,7 @@ Cc:     agross@kernel.org, conor+dt@kernel.org, quic_tdas@quicinc.com,
         linux-kernel@vger.kernel.org, neil.armstrong@linaro.org,
         abel.vesa@linaro.org, quic_tsoni@quicinc.com
 References: <20231025133320.4720-1-quic_sibis@quicinc.com>
- <20231025133320.4720-2-quic_sibis@quicinc.com>
+ <20231025133320.4720-4-quic_sibis@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -112,11 +113,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025133320.4720-2-quic_sibis@quicinc.com>
+In-Reply-To: <20231025133320.4720-4-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -128,14 +129,30 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 25/10/2023 15:33, Sibi Sankar wrote:
 > From: Rajendra Nayak <quic_rjendra@quicinc.com>
 > 
-> Add device tree bindings for global clock controller on SC8380XP SoCs.
+> Add bindings and update documentation for clock rpmh driver on SC8380XP
+> SoCs.
 > 
 > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
 > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+
+---
+
+This is an automated instruction, just in case, because many review tags
+are being ignored. If you know the process, you can skip it (please do
+not feel offended by me posting it here - no bad intentions intended).
+If you do not know the process, here is a short explanation:
+
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
 
 Best regards,
 Krzysztof
