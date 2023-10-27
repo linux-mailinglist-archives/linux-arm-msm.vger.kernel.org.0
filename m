@@ -2,72 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 96AED7D8FFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 09:38:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A1F27D9002
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 09:38:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345433AbjJ0HiH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 03:38:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50768 "EHLO
+        id S1345470AbjJ0HiY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 03:38:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234902AbjJ0HiG (ORCPT
+        with ESMTP id S235003AbjJ0HiW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 03:38:06 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 561A6192
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:38:03 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-5079f9ec8d9so1973949e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:38:03 -0700 (PDT)
+        Fri, 27 Oct 2023 03:38:22 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C9C194
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:38:18 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2c595f5dc84so32818421fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698392281; x=1698997081; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698392297; x=1698997097; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kvLefYjDOH/NWQ5JdDi1TXOayZ7Fqy4fXxBwUzlM+i8=;
-        b=PK7o0A6bIojbCDOBcv8TBoK2dBXMa0+lShUtKWkZ7hbvZlVeejbm0TVbM5NDHmWAXA
-         zQKz+ePxmJOCReWdrRNsN+OTXJKZNXPEJNaoKnAgc7IIgGRlu6/wIvNcB8AV9k4/xCm9
-         wi8LRHbnv36Q0bv67D3zzB6GMkst2TNg0+qIBLTgrAdxCi8XQzVpqpichdlamKLxEXzl
-         GLPPDN1kfRZkO6Q5reHb4caQEBoLP4Vh7CZ8iGHnhqUa6ARBzC5FqURRunI2zr8HMNe0
-         nSBYzhKNqgP465V5k3yDFZPibrMXxQ/lObE+j4WPN4YS3VMybC1b8NBbKnrLM/eo2J++
-         gElg==
+        bh=Ug4oL0P0dxpuMr1ZsobO6+n+VMVz3naU+HAaJ2ewYts=;
+        b=Cp5vubHDzpqz1BvrZZqKLO7n90ocn4pr0PYMRDOvmWkUZ4ydni8WF6GXLjr+JDB9Qy
+         rQQqj/U+Ou3HVSKpsSndnsVO/eoFiFGLy+jmqIcZE0R8sy/DEN64KHAAobpxIZ+W5l8n
+         EjiTuGZeiL8iLbzF7lr8NxjMGAjI1DWxeOrUs/Z7DgPCfWQYF3DmJ8RO0DF+Botv8mPO
+         PowDwsEVvNqc/Pifu2M8XZFYB5DsNvXGCWenJUO4z4GqxayLR8H/JmFA7ab2VQzuTLPg
+         NWIt4vsuJOQlSdEL4dVIg+rqh7OkkOwESgSTH7qNpHysjcxnmg6Cwm/g9EWZa657qevB
+         Ep/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698392281; x=1698997081;
+        d=1e100.net; s=20230601; t=1698392297; x=1698997097;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kvLefYjDOH/NWQ5JdDi1TXOayZ7Fqy4fXxBwUzlM+i8=;
-        b=kSidaqq7vUA/PwB92hoQ6o8sj2abNKWu9lCmHt4mkGpkhLQGju7hLMZaVpdlSKlPJa
-         pCm8vrWa1ANo4AaNNENyTZeGSD7XstxqHtaA68bQ5xtqGVKmfTp8mf6m0uwa4VGmsDFt
-         aP5OeFwqnTp99xxLGsyeAMT8iK9/Z7koEprETcaGlUBjzqDlNSE+hzxsUDf69thivezL
-         NnCH1cC17LQ7j5Es58lwadKnGg1J4CE8DOBiu0fRPjS/sNhCNlHNnrcGX2EJSpXF9sfu
-         okBqwnlbrl3O+V+mVBsulBgoH1uPsaUvuy0rrrzMVpmNL+xAPaA12Gi4kPZ2sjrr5QJJ
-         Tfjg==
-X-Gm-Message-State: AOJu0YwFYyw7eVk6bWaj9WKkYqsxl+FVb3ksv/x13GfJWbCE3eF20MNJ
-        SA/ngUTRyv4VVRQTuj8+IT6coA==
-X-Google-Smtp-Source: AGHT+IF9nrLJ4wN3Bfdl+IOennWMi3oF/Vcq7Ig75iYZPFNxZ/BRWnO6tM1iKD0pTmY/W3GE5mLL4w==
-X-Received: by 2002:a05:6512:3986:b0:504:3464:b4a1 with SMTP id j6-20020a056512398600b005043464b4a1mr1615776lfu.22.1698392281542;
-        Fri, 27 Oct 2023 00:38:01 -0700 (PDT)
+        bh=Ug4oL0P0dxpuMr1ZsobO6+n+VMVz3naU+HAaJ2ewYts=;
+        b=HuYNOmldM4lKjV91f6KLxjleMyNRWeJjYfFsRrZY3pHFctEi6K/SAnI+0jSMIEXsLW
+         hb4wLS7oquWyzKhIrxchJOVm13WjwNvsJo8o+sKjXA9SdLuMbhWEviqaWaBv2ZHLpXXm
+         4N7rV1lRJgixv4flebVE9XS4m0FP/J+8yQAOqHP0BC3Gmm5h2Ib0r49DdZXsawlT1m4C
+         xcvBgpcOHRqIwflsKWYh37uxmpx9Av8XNM93U+fQVTEp8qJFS44SMGmX9i2Lg22Mn5jE
+         mQkicezBfYz3QevFfMYvX53YkC+JYVUqzd8MuKdGdHXIMivVDXgVn9mdJ8RTFLlJXLPK
+         SRWg==
+X-Gm-Message-State: AOJu0YxwKcMcZiR77mbaN37OLLfU4NPysmHKZNRryc0sYPosvkKg8EvC
+        UdS4wSosC7l9FYjWN1MynrPN2Q==
+X-Google-Smtp-Source: AGHT+IEWYMj+AZaSotV46VBY/IAq6qUYuKjSAnzZgHKFDpR+fd+tHqUlnvRWYsYl20g1g3/h8ZgUzw==
+X-Received: by 2002:a19:675a:0:b0:503:7f6:ac20 with SMTP id e26-20020a19675a000000b0050307f6ac20mr670095lfj.5.1698392296922;
+        Fri, 27 Oct 2023 00:38:16 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id a14-20020a194f4e000000b00505a20d070asm170385lfk.78.2023.10.27.00.38.00
+        by smtp.gmail.com with ESMTPSA id a14-20020a194f4e000000b00505a20d070asm170385lfk.78.2023.10.27.00.38.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 00:38:00 -0700 (PDT)
-Message-ID: <bffdf71b-3423-405f-b338-e3f08a633d39@linaro.org>
-Date:   Fri, 27 Oct 2023 09:38:00 +0200
+        Fri, 27 Oct 2023 00:38:16 -0700 (PDT)
+Message-ID: <ea569ce9-ebe6-479b-9e9b-7a7b65e6cc02@linaro.org>
+Date:   Fri, 27 Oct 2023 09:38:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dt-bindings: dma: qcom,gpi: document the SM8650 GPI
- DMA Engine
+Subject: Re: [PATCH v2] dt-bindings: mailbox: qcom-ipcc: document the SM8650
+ Inter-Processor Communication Controller
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-bindings-gpi-v2-1-4de85293d730@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-bindings-ipcc-v2-1-b1a4670ed6fa@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -113,26 +114,24 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025-topic-sm8650-upstream-bindings-gpi-v2-1-4de85293d730@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-bindings-ipcc-v2-1-b1a4670ed6fa@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 10:23, Neil Armstrong wrote:
-> Document the GPI DMA Engine on the SM8650 Platform.
+On 25/10/2023 10:25, Neil Armstrong wrote:
+> Document the Inter-Processor Communication Controller on the SM8650 Platform.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
-> For convenience, a regularly refreshed linux-next based git tree containing
-> all the SM8650 related work is available at:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
