@@ -2,81 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0CDA7D92F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 11:03:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A19D7D9329
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 11:10:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231233AbjJ0JDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 05:03:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54210 "EHLO
+        id S1345488AbjJ0JKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 05:10:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230101AbjJ0JDs (ORCPT
+        with ESMTP id S1345559AbjJ0JKc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 05:03:48 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 144A4191;
-        Fri, 27 Oct 2023 02:03:46 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39R8EY6h005282;
-        Fri, 27 Oct 2023 09:03:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=QIF4haLHnJoHI7/jtt1OSlXGkYPIeGzdyJdLiwq4lGA=;
- b=dP4WUOYsvHPe36JcnUd6OKBKZaa8AgJB6wbq/BCDoFznx5v7k2FI2lqrBe5Qgh7NK2wy
- 8j8YVrOIyWwdlPmwoyc1RyNf837CtV5BXPChtASCeBo/Noo40uc4vQNz2eStuNVv6wAo
- lRCLaEYzs2sxQlJb1RyFMEYgctwIIQLxtNOZHzu6T72Lxc9cb496iF7JsywV4mEkS+1a
- oNOnCt0hAb4qH+uL5t5Zp/IUKSfMYT8YyW+KRknnszpi7iILm08sqFmD4GR8HHsnWSF2
- 48tiij+gXvHLQcWeWYYRSphNiw8tRKFexW21yxRy1dh5s84UlzQKUvP6qn0OFEKVeuV3 Uw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tyxas1h1v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Oct 2023 09:03:42 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39R93flv028162
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Oct 2023 09:03:41 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 27 Oct
- 2023 02:03:38 -0700
-Message-ID: <bc090d9e-9f3e-3e0e-3cc3-147d2d5bea55@quicinc.com>
-Date:   Fri, 27 Oct 2023 14:33:32 +0530
+        Fri, 27 Oct 2023 05:10:32 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8603B191
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 02:10:26 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-4084b0223ccso14285295e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 02:10:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698397825; x=1699002625; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GuqStbbcE98g0Qsufd7xFmYWScwY7cbL2ixdMjl3DG0=;
+        b=ilQhxrmDoYfEmWuABHo0qqhMgCt8o9EfCk2zcr1vAVtFlkv6mJkdypvwsbo6nRVcRB
+         PUC63XCQR1KfGDc1bs6SEWDDCKVLOQvwpd6SlrsYUFyUduixYjGgSZFswDIzuCZMVY6P
+         IUQXyMN1XV8zK7EQmQrXqoJSQ0m9587NwywYkzGJGfQRZFA9+CnvXy7LiaYpxokEBq2m
+         JxErPEOfH37igV9GCWyR7D+Pan1wregv4JDW0cCFMa8kl0a/rXhpp57g2M1VbqE2euSy
+         ANUYkoKjne1FQEx09HCJ9qaL1aRq8GdoIT0fMQ+IwnGB0GtGJihOyGseF1yhNvm/K541
+         8oew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698397825; x=1699002625;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GuqStbbcE98g0Qsufd7xFmYWScwY7cbL2ixdMjl3DG0=;
+        b=RCDlMI3aP52YOuLKPjUB6Dzm4ynuThqpgk4b+Xknizmp+ZMOrasFWsTQSlaFVlz4jb
+         lMDLQDOwi5jHMSXWOsrz1XIxpwHc2Y0WdzJWeigkaTyQqZL743+XOl3Fb1t8wxl4MfEw
+         PoC20EEHmIgDwR9O2YPHaLSdPXJmGA9kGFviUSc5B78UB8EC0CxejwZy9iFwjjxfWZI5
+         LPsNbT1ogl/ZCuc66oKkzvVrdfEHv1YHLZx6RIj0a3yPhY+YvzALHDo5ryXRas3l4Pe7
+         3NyEvzRoqfYCkl32moQWnuIStKgyoCfrtVQ89Aqs/8WjnxRaxEg0NkSUCYp/mlGTMsXx
+         hkkg==
+X-Gm-Message-State: AOJu0YySvtD6xYxSywqH6pO2BckfQk4AXT901KgDCD62Fv68Ll/kAGYf
+        ozbgIHySicEEFZyD+ce19trtjA==
+X-Google-Smtp-Source: AGHT+IGI7FPB/kli90gdnpa/qqhlm2HWGrOwpxkcIW2HjaeY9UEfdlauSJHS2Y4k+g69ULN6tYOd/Q==
+X-Received: by 2002:a05:600c:4454:b0:407:7e5f:ffb9 with SMTP id v20-20020a05600c445400b004077e5fffb9mr1768819wmn.9.1698397824819;
+        Fri, 27 Oct 2023 02:10:24 -0700 (PDT)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id t3-20020a1c7703000000b004042dbb8925sm4544384wmi.38.2023.10.27.02.10.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Oct 2023 02:10:24 -0700 (PDT)
+Message-ID: <9fec3a90-b3dd-4b2e-bb7f-27890ad2b4e0@linaro.org>
+Date:   Fri, 27 Oct 2023 10:10:23 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v8 2/3] firmware: scm: Modify only the download bits in
- TCSR register
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/5] media: qcom: camss: Convert to per-VFE pointer for
+ power-domain linkages
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linus.walleij@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        Poovendhan Selvaraj <quic_poovendh@quicinc.com>
-References: <1698235506-16993-1-git-send-email-quic_mojha@quicinc.com>
- <1698235506-16993-3-git-send-email-quic_mojha@quicinc.com>
- <8b0d1ab1-e4e6-4152-bcb6-c83909060652@quicinc.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <8b0d1ab1-e4e6-4152-bcb6-c83909060652@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: oY6rameKF6HFdd0wF7MyA-ePk-Ze_6q3
-X-Proofpoint-ORIG-GUID: oY6rameKF6HFdd0wF7MyA-ePk-Ze_6q3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-27_06,2023-10-26_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 malwarescore=0 priorityscore=1501
- phishscore=0 suspectscore=0 clxscore=1015 spamscore=0 mlxscore=0
- mlxlogscore=999 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2310240000 definitions=main-2310270077
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
+        laurent.pinchart@ideasonboard.com, rfoss@kernel.org,
+        todor.too@gmail.com, andersson@kernel.org, mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
+ <20231026155042.551731-3-bryan.odonoghue@linaro.org>
+ <8a36e61a-5397-4513-ae0d-eb68ccd8e584@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <8a36e61a-5397-4513-ae0d-eb68ccd8e584@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,96 +79,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 26/10/2023 21:08, Konrad Dybcio wrote:
+>> +    if (vfe->id >= camss->res->vfe_num)
+>>           return 0;
+> P.S. this seems better suited for some warning, I think
 
+Noo this indicates VFE lite !
 
-On 10/26/2023 5:23 AM, Elliot Berman wrote:
-> 
-> 
-> On 10/25/2023 5:05 AM, Mukesh Ojha wrote:
->> Crashdump collection is done based on DLOAD bits of TCSR register.
->> To retain other bits, scm driver need to read the register and
->> modify only the DLOAD bits, as other bits in TCSR may have their
->> own significance.
->>
->> Co-developed-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
->> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
->> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->> Tested-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com> # IPQ9574 and IPQ5332
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/firmware/qcom/qcom_scm.c | 12 ++++++++++--
->>   1 file changed, 10 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index 25549178a30f..f1c4a9f9a53f 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -4,6 +4,8 @@
->>    */
->>   
->>   #include <linux/arm-smccc.h>
->> +#include <linux/bitfield.h>
->> +#include <linux/bits.h>
->>   #include <linux/clk.h>
->>   #include <linux/completion.h>
->>   #include <linux/cpumask.h>
->> @@ -117,6 +119,10 @@ static const u8 qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
->>   #define QCOM_SMC_WAITQ_FLAG_WAKE_ONE	BIT(0)
->>   #define QCOM_SMC_WAITQ_FLAG_WAKE_ALL	BIT(1)
->>   
->> +#define QCOM_DLOAD_MASK		GENMASK(5, 4)
->> +#define QCOM_DLOAD_FULLDUMP	0x1
->> +#define QCOM_DLOAD_NODUMP	0x0
->> +
-> 
-> 
-> Enum would be better here for related constants.
-> 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index f1c4a9f9a53f..95f73a8c51d7 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -122,4 +122,6 @@ static const u8 qcom_scm_cpu_warm_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
->   #define QCOM_DLOAD_MASK                GENMASK(5, 4)
-> -#define QCOM_DLOAD_FULLDUMP    0x1
-> -#define QCOM_DLOAD_NODUMP      0x0
-> +enum qcom_dload_mode {
-> +       QCOM_DLOAD_NODUMP       = 0,
-> +       QCOM_DLOAD_FULLDUMP     = 1,
-> +};
+power-domains = <VFE_0>,
+                 <VFE_1>,
+                 <TITAN_TOP>; // the controller pd
 
-Would it be fine, if i do it during when i add some more modes with
-minidump ?
+vfe-set = <VFE_0>, // has its own PD vfe->id = 0
+           <VFE_1>, // has its own PD vfe->id = 1
+           <VFE_LITE_N>; // has no PD vfe->id = 2
 
-Please ack, otherwise, will send another version.
+The basic problem this series fixes is magic indexing.
 
--Mukesh
+In the first instance, using named power-domains so that the ordering of 
+declaration doesn't matter and we don't have funky code inferring if a 
+power-domain belongs to the TOP or not.
 
->   
-> 
-> 
->>   static const char * const qcom_scm_convention_names[] = {
->>   	[SMC_CONVENTION_UNKNOWN] = "unknown",
->>   	[SMC_CONVENTION_ARM_32] = "smc arm 32",
->> @@ -523,6 +529,7 @@ static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->>   
->>   static void qcom_scm_set_download_mode(bool enable)
->>   {
->> +	u32 val = enable ? QCOM_DLOAD_FULLDUMP : QCOM_DLOAD_NODUMP;
->>   	bool avail;
->>   	int ret = 0;
->>   
->> @@ -532,8 +539,9 @@ static void qcom_scm_set_download_mode(bool enable)
->>   	if (avail) {
->>   		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
->>   	} else if (__scm->dload_mode_addr) {
->> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
->> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
->> +		ret = qcom_scm_io_rmw(__scm->dload_mode_addr,
->> +					       QCOM_DLOAD_MASK,
->> +					       FIELD_PREP(QCOM_DLOAD_MASK, val));
->>   	} else {
->>   		dev_err(__scm->dev,
->>   			"No available mechanism for setting download mode\n");
-> 
-> - Elliot
+Secondly though, which is what the first patch in the series does - is 
+as I rebased I realised the VFE/VFE Lite thing was still there.
+
+what vfe->id >= camss->res->vfe_num does is checks to see if the vfe->id 
+<= a VFE not a VFE Lite id.
+
+in other words we have yet another magic indexing problem requiring 
+VFE_LITE_N to always be declared after VFE.
+
+The solution here is
+
+1. Make the driver support not caring about indexes any more
+    This series.
+2. Name the power-domains in the various dtsis
+    Populating the struct resources in CAMSS to match
+    Next series
+3. Gate new SoCs to _require_ named pds
+    Deprecate the legacy indexing support of 'n' kernel releases
+4. Profit
+
+So yeah the check above is I'm sorry to say not an error at all it 
+implies VFE Lite...
+
+---
+bod
