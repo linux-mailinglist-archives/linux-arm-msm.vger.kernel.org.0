@@ -2,71 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 948C97D9F63
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 20:08:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A6F67DA14B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 21:31:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231833AbjJ0SIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 14:08:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53310 "EHLO
+        id S232608AbjJ0TbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 15:31:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231360AbjJ0SIb (ORCPT
+        with ESMTP id S231351AbjJ0TbK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 14:08:31 -0400
+        Fri, 27 Oct 2023 15:31:10 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5633AC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 11:08:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F13DD1A1;
+        Fri, 27 Oct 2023 12:31:07 -0700 (PDT)
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39RGktYU024380;
-        Fri, 27 Oct 2023 18:08:26 GMT
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39RIdX4Q003871;
+        Fri, 27 Oct 2023 19:30:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=vQHgFLsDhvHc1yLB/Z58MInVBJaCFYk0E6obW490TQI=;
- b=C8oiAlG4+x2yHIvxorxlEsWwNt0F2cCUPiqR14BlKuq3LaCX9+G8VpM8Tlb7+UDHzTh+
- WkC7Lxxez/0A13lK+XyJBC+xc1VrJG5N36EcYeIFVg9Op765W008fetnU2DdjpE2xgcD
- Oa1LIc/8s1DpH0Vq9izG7pgX2k+gZujWG5uGSWc0jfMB8XLmRZE8cNvtbgDmpGRQ1qtJ
- tCxSlXXbDfH3wLQ69bZsxzPflh4QS6Tr7BAz/0B0M5EVTDJ4cQoON8l9K7HPwvsMJj6e
- RIj1E7dlBB+ZXif1hVsEns//X7DVVaxsR8FMVs4bAexY5LSGqVPNXUfrhr/hPDu6VNK1 rw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tyww72sny-1
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=ItvClyjMB8L/p4AE5umpCbZyCJ10SEmY05g80Zcee8s=;
+ b=BLC8llJqpU8EtO0M2IvUJ++pOLkkpHYMfZ739vI+DuiOAzV0yBFWJkIJ1mSQWsiFCzjX
+ XYlTczzljSKdRAS1ym43e8r+c0S3BiWi4Z31PSUt9FrrN/wwCJ7qe+7GQSOilNaHfBg5
+ fHbcfeC7euWQwJP8Micip+bI9NF5x70P8JT9eC4MGlZIY02gowVriis+z2CJsBj4LjHw
+ 5IWizoMgL3ObhujCM1Ehvqr/tvRCqv8bXSmpVDgn0lQjJsFdR8B6p+S3ElaeOx+sp0XE
+ aU+p6wgd1ySsLRHGU6ET8usTseuDXix0Cactxl2Ndk3edc+LXddrbD+MftiLGEzIqr8N Eg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tyww72ynx-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Oct 2023 18:08:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39RI8PBl012355
+        Fri, 27 Oct 2023 19:30:37 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39RJUa8p019817
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 27 Oct 2023 18:08:25 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+        Fri, 27 Oct 2023 19:30:36 GMT
+Received: from hu-johmoo-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Fri, 27 Oct 2023 11:08:24 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <stanislaw.gruszka@linux.intel.com>, <ogabbay@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        "kernel test robot" <lkp@intel.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH] accel/qaic: Quiet array bounds check on DMA abort message
-Date:   Fri, 27 Oct 2023 12:08:10 -0600
-Message-ID: <20231027180810.4873-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.40.1
+ 15.2.1118.39; Fri, 27 Oct 2023 12:30:34 -0700
+From:   John Moon <quic_johmoo@quicinc.com>
+To:     Masahiro Yamada <masahiroy@kernel.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "Nicolas Schier" <nicolas@fjasle.eu>,
+        Jonathan Corbet <corbet@lwn.net>
+CC:     John Moon <quic_johmoo@quicinc.com>,
+        <linux-kbuild@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        "Arnd Bergmann" <arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Todd Kjos <tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida <gprocida@google.com>,
+        <kernel-team@android.com>, <libabigail@sourceware.org>,
+        Dodji Seketeli <dodji@redhat.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Jordan Crouse <jorcrous@amazon.com>
+Subject: [PATCH v6 0/3] Validating UAPI backwards compatibility
+Date:   Fri, 27 Oct 2023 12:30:13 -0700
+Message-ID: <20231027193016.27516-1-quic_johmoo@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xSXeBkP95iNwJpPMkS6LFK2ubNvNAAFG
-X-Proofpoint-GUID: xSXeBkP95iNwJpPMkS6LFK2ubNvNAAFG
+X-Proofpoint-ORIG-GUID: 6yv5s9wwUnZ92wTiCEbL017xmpNgKZV5
+X-Proofpoint-GUID: 6yv5s9wwUnZ92wTiCEbL017xmpNgKZV5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-27_17,2023-10-27_01,2023-05-22_02
+ definitions=2023-10-27_18,2023-10-27_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=999 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 mlxlogscore=925 priorityscore=1501
  bulkscore=0 clxscore=1011 phishscore=0 adultscore=0 malwarescore=0
  spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2310270157
+ engine=8.12.0-2310240000 definitions=main-2310270169
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
@@ -76,45 +90,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Carl Vanderlip <quic_carlv@quicinc.com>
+The kernel community has rigorously enforced a policy of backwards
+compatibility in its userspace interfaces for a long time. This has
+allowed user applications to enjoy stability across kernel upgrades
+without recompiling. Our goal is to add tooling and documentation to
+help kernel developers maintain this stability.
 
-Current wrapper is right-sized to the message being transferred;
-however, this is smaller than the structure defining message wrappers
-since the trailing element is a union of message/transfer headers of
-various sizes (8 and 32 bytes on 32-bit system where issue was
-reported). Using the smaller header with a small message
-(wire_trans_dma_xfer is 24 bytes including header) ends up being smaller
-than a wrapper with the larger header. There are no accesses outside of
-the defined size, however they are possible if the larger union member
-is referenced.
+In terms of tooling, I've attached a couple of shell scripts we've been
+internally to validate backwards compatibility of our UAPI headers.
 
-Abort messages are outside of hot-path and changing the wrapper struct
-would require a larger rewrite, so having the memory allocated to the
-message be 8 bytes too big is acceptable.
+The check-uapi.sh script uses libabigail's[1] tool abidiff[2] to compare a
+modified header's ABI before and after a patch is applied. If an existing
+UAPI is modified in a way that's not backwards compatibile, the script
+exits non-zero. We use this script in our continuous integration system
+to block changes that fail the check.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202310182253.bcb9JcyJ-lkp@intel.com/
-Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- drivers/accel/qaic/qaic_control.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It generates output like this when a backwards incompatible change is
+made to a UAPI header:
 
-diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-index 388abd40024b..84915824be54 100644
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -1138,7 +1138,7 @@ static int abort_dma_cont(struct qaic_device *qdev, struct wrapper_list *wrapper
- 		if (!list_is_first(&wrapper->list, &wrappers->list))
- 			kref_put(&wrapper->ref_count, free_wrapper);
- 
--	wrapper = add_wrapper(wrappers, offsetof(struct wrapper_msg, trans) + sizeof(*out_trans));
-+	wrapper = add_wrapper(wrappers, sizeof(*wrapper));
- 
- 	if (!wrapper)
- 		return -ENOMEM;
--- 
-2.40.1
+ABI differences detected in include/uapi/linux/bpf.h from HEAD~1 -> HEAD
+    [C] 'struct bpf_insn' changed:
+      type size hasn't changed
+      2 data member changes:
+        '__u8 dst_reg' offset changed from 8 to 12 (in bits) (by +4 bits)
+        '__u8 src_reg' offset changed from 12 to 8 (in bits) (by -4 bits)
+
+The check-module-params.sh script is quite a bit simpler. It basically
+greps for module_param.* calls and compares their arguments before/after
+a change is applied.
+
+We wanted to share these scripts with the community and hopefully also
+receive general feedback when it comes to tooling/policy surrounding
+UAPI stability.
+
+In the previous version of this patchset, we received feedback that there
+were too many false positives flagged by the check-uapi.sh script. To
+improve the situation, we've been working with Dodji Seketeli from
+the libabigail team to add additional suppressions which filter out
+many of the flags which were raised before. To take advantage of these
+suppressions, we've raised the minimum abidiff version requirement to
+2.4 which was recently released[3].
+
+Big thanks to Dodji and the libabigail team for working on this use case
+with us!
+
+Previous discussion on v5 of this patch can be found here[4].
+
+[1] https://sourceware.org/libabigail/manual/libabigail-overview.html
+[2] https://sourceware.org/libabigail/manual/abidiff.html
+[3] http://mirrors.kernel.org/sourceware/libabigail/libabigail-2.4.tar.xz
+[4] https://lore.kernel.org/lkml/20230407203456.27141-1-quic_johmoo@quicinc.com/
+
+P.S. While at Qualcomm, Jordan Crouse <jorcrous@amazon.com> authored the
+original version of the UAPI checker script. Thanks Jordan!
+
+John Moon (3):
+  check-uapi: Introduce check-uapi.sh
+  docs: dev-tools: Add UAPI checker documentation
+  check-module-params: Introduce check-module-params.sh
+
+ Documentation/dev-tools/checkuapi.rst | 477 +++++++++++++++++++++
+ Documentation/dev-tools/index.rst     |   1 +
+ scripts/check-module-params.sh        | 295 +++++++++++++
+ scripts/check-uapi.sh                 | 585 ++++++++++++++++++++++++++
+ 4 files changed, 1358 insertions(+)
+ create mode 100644 Documentation/dev-tools/checkuapi.rst
+ create mode 100755 scripts/check-module-params.sh
+ create mode 100755 scripts/check-uapi.sh
+
+
+base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
+--
+2.17.1
 
