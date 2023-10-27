@@ -2,213 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A0597D98F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 14:51:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C589C7D995E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 15:09:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229503AbjJ0Mvr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 08:51:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45456 "EHLO
+        id S1345458AbjJ0NJ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 09:09:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbjJ0Mvq (ORCPT
+        with ESMTP id S1345780AbjJ0NJ5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 08:51:46 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D5AB9C
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 05:51:44 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-40837ebba42so14256005e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 05:51:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698411102; x=1699015902; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:from:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AaC3Tst7u/+sfV3eqRZ7QDIrge5vEY2rhdCtJxg0roU=;
-        b=LbX/sRyxLx0vbQFnQy5xztxQ4KZsEI4mTtSgH4CCOOU9CSYgM+T+hNTjhZcf09aI2i
-         mdHQH7Zv5RLGmhQaONAscWgDLoEeIXq3uz0l586Vk6jOb2p3Wie5R+CKqZy9fCaRqznN
-         mwFGcHU5kGm3IJiVq0GAMKcekFDl/7KgrH6GJyl1kNstxKrolk617L9a25IluIYyZdOc
-         Ekh6cD/eHwmsZmoc7BwZfcTSHz3WPuuFY9Ao1kjUk5D/+KfuHlN22Uc3Jq4m/UM8m6Wb
-         TyFhrlDCtuj3VyAayjZJ2FnwgMGEmWLp8JHEP/b0xYBGAZItLMaGrZT+Nr5xORzblMwJ
-         BDiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698411102; x=1699015902;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:from:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=AaC3Tst7u/+sfV3eqRZ7QDIrge5vEY2rhdCtJxg0roU=;
-        b=NW/XUhElZKFk7gqnEpuNGEphntyLdDjZacq150ra6dcQ+fvu37+UL3W8lguRC0+Eff
-         97TfIFuaAaSvjAKM4qkLvfiGF/PAyuLjR2Gmvj1ksc+HkR0wcjPXECw+14TVqJ8QlgKl
-         /smoDMOceXc4jR8/NtK/pv/qeUuYx+/pit1/Dm+AJUZ3kKPv9ypf/MY0oWovqdgIVcns
-         uHILgkZi/xIYjZpZ0vPMiSx07AbXttC2n5LvbcI+JGq1+1P8aYQnBmICJUMwr93ez1KV
-         cQSjcgfVfNwCf5tt2YeYZ69M5jVGKXiqom/TyfhZP4R//JbXrNpVQuZ8g+50guqHwYtg
-         wzlg==
-X-Gm-Message-State: AOJu0YxvsYXcW9bB4RYCB1Hk9QqFT05DsVq6oRutc1OgxazuBywWmsTP
-        KU9nv1V2H97X6+MqRHQRVN1Qdg==
-X-Google-Smtp-Source: AGHT+IH8hagq+WbAKMvfNgSyoiEk62mu6RFvdQDX+6GMr0u3AOSp8GkSpVsqN50DlZNICMdZHODWow==
-X-Received: by 2002:a5d:4dcd:0:b0:32d:87df:6dea with SMTP id f13-20020a5d4dcd000000b0032d87df6deamr1946689wru.45.1698411102373;
-        Fri, 27 Oct 2023 05:51:42 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:bba7:4e7d:4d42:af62? ([2a01:e0a:982:cbb0:bba7:4e7d:4d42:af62])
-        by smtp.gmail.com with ESMTPSA id j13-20020a5d564d000000b0032ddf2804ccsm1692158wrw.83.2023.10.27.05.51.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 05:51:41 -0700 (PDT)
-Message-ID: <059cc112-7fb6-4da4-bc25-4eede0252f0e@linaro.org>
-Date:   Fri, 27 Oct 2023 14:51:37 +0200
+        Fri, 27 Oct 2023 09:09:57 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEBAC2;
+        Fri, 27 Oct 2023 06:09:55 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CF2C433C8;
+        Fri, 27 Oct 2023 13:09:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698412195;
+        bh=ZA9QL0wYMLCYEhOsjcHlvzJu91FPv2hS+uVz87gy3KM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=G25oaFNa5d0RlVB326zTSZmQveUM9k9rlxLyOJzowBX/Pk2zKwMy/37KjYoFKaTmN
+         Nbd+y7Zhxw7kyKVYQMz4QTpybNh3JHeq+At24+qPvqLNjk9mLL7ix5HswnJjyIjKH/
+         qRl4ydtqaASZVKrBQzhLKjz57QMYi/s+/fE5jrelFPgeCxIzaGGNWHSjkgbGfm5HF3
+         XVD9+AEyg2dmWz29aq4OXwXgMJMm4jma09jMc6bbIBwfFqVTaldhvFXnwlGdJtpNPM
+         S8/e61cX9swx6N+tu8GbYp5+6NKlNHZjZkp0+Jfh3U4K+N0Q+gzKeDVp/RL+p1Rw9a
+         9p87fc5yLVw3A==
+Date:   Fri, 27 Oct 2023 18:39:47 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_ramkri@quicinc.com, quic_skananth@quicinc.com,
+        quic_parass@quicinc.com
+Subject: Re: [PATCH] bus: mhi: host: Add alignment check for event ring read
+ pointer
+Message-ID: <20231027130947.GD17527@thinkpad>
+References: <20231023-alignment_check-v1-1-2ca5716d5c15@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/6] scsi: ufs: ufs-qcom: Add support for UFS device
- version detection
-Content-Language: en-US, fr
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-To:     Can Guo <quic_cang@quicinc.com>, mani@kernel.org,
-        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        martin.petersen@oracle.com
-Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
- <1694411968-14413-3-git-send-email-quic_cang@quicinc.com>
- <ccf40aed-3acc-474e-b456-031669b4a895@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <ccf40aed-3acc-474e-b456-031669b4a895@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20231023-alignment_check-v1-1-2ca5716d5c15@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/10/2023 16:02, Neil Armstrong wrote:
-> On 11/09/2023 07:59, Can Guo wrote:
->> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
->>
->> Retrieve UFS device version from UFS host controller's spare register
->> which is populated by bootloader, and use the UFS device version together
->> with host controller's HW version to decide the proper power modes which
->> should be used to configure the UFS PHY.
->>
->> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
->> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->> ---
->>   drivers/ufs/host/ufs-qcom.c | 30 +++++++++++++++++++++++-------
->>   drivers/ufs/host/ufs-qcom.h |  2 ++
->>   2 files changed, 25 insertions(+), 7 deletions(-)
->>
->> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->> index 710f079..8a9d54f 100644
->> --- a/drivers/ufs/host/ufs-qcom.c
->> +++ b/drivers/ufs/host/ufs-qcom.c
->> @@ -1030,7 +1030,7 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
->>                   | UFSHCD_QUIRK_BROKEN_PA_RXHSUNTERMCAP);
->>       }
->> -    if (host->hw_ver.major > 0x3)
->> +    if (host->hw_ver.major > 0x3 && host->hw_ver.major < 0x5)
->>           hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
->>   }
->> @@ -1038,11 +1038,33 @@ static void ufs_qcom_set_pwr_mode_limits(struct ufs_hba *hba)
->>   {
->>       struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->>       struct ufs_dev_params *host_pwr_cap = &host->host_pwr_cap;
->> +    u32 val, dev_major = 0;
->>       ufshcd_init_pwr_dev_param(host_pwr_cap);
->>       /* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
->>       host_pwr_cap->hs_tx_gear = host_pwr_cap->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
->> +    host->phy_gear = host_pwr_cap->hs_rx_gear;
->> +
->> +    if (host->hw_ver.major < 0x5) {
-> 
-> Here you set G2 for < 0x5
-> 
->> +        /*
->> +         * Power up the PHY using the minimum supported gear (UFS_HS_G2).
->> +         * Switching to max gear will be performed during reinit if supported.
->> +         */
->> +        host->phy_gear = UFS_HS_G2;
->> +    } else {
-> 
-> So here is for >= 0x5
-> 
->> +        val = ufshcd_readl(host->hba, REG_UFS_DEBUG_SPARE_CFG);
->> +        dev_major = FIELD_GET(GENMASK(7, 4), val);
->> +
->> +        if (host->hw_ver.major == 0x5 && (dev_major >= 0x4 ||
->> +                          dev_major == 0)) {
->> +            /* For UFS 4.0 and newer, or dev version is not populated */
->> +            host_pwr_cap->hs_rate = PA_HS_MODE_A;
->> +        } else if (dev_major < 0x4 && dev_major > 0) {
->> +            /* For UFS 3.1 and older, apply HS-G4 PHY settings to save power */
->> +            host->phy_gear = UFS_HS_G4;
->> +        }
-> 
-> But behavior of > 0x5 is not clear here, could you clarify it in v2 ?
+On Mon, Oct 23, 2023 at 03:13:06PM +0530, Krishna chaitanya chundru wrote:
+> Though we do check the event ring read pointer by "is_valid_ring_ptr"
+> to make sure it is in the buffer range, but there is another risk the
+> pointer may be not aligned.  Since we are expecting event ring elements
+> are 128 bits(struct mhi_tre) aligned, an unaligned read pointer could lead
 
-Now SM8650 is public, could you update it for v2 ?
+"mhi_tre" got renamed to "mhi_ring_element"
 
-Thanks,
-Neil
-
+> to multiple issues like DoS or ring buffer memory corruption.
 > 
-> Thanks,
-> Neil
-> 
->> +    }
->>   }
->>   static void ufs_qcom_set_caps(struct ufs_hba *hba)
->> @@ -1287,12 +1309,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->>           dev_warn(dev, "%s: failed to configure the testbus %d\n",
->>                   __func__, err);
->> -    /*
->> -     * Power up the PHY using the minimum supported gear (UFS_HS_G2).
->> -     * Switching to max gear will be performed during reinit if supported.
->> -     */
->> -    host->phy_gear = UFS_HS_G2;
->> -
->>       return 0;
->>   out_variant_clear:
->> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
->> index 4db64d9..e10889f 100644
->> --- a/drivers/ufs/host/ufs-qcom.h
->> +++ b/drivers/ufs/host/ufs-qcom.h
->> @@ -56,6 +56,8 @@ enum {
->>       UFS_AH8_CFG                = 0xFC,
->>       REG_UFS_CFG3                = 0x271C,
->> +
->> +    REG_UFS_DEBUG_SPARE_CFG            = 0x284C,
->>   };
->>   /* QCOM UFS host controller vendor specific debug registers */
+> So add a alignment check for event ring read pointer.
 > 
 
+Since this is a potential fix, you should add the fixes tag and CC stable.
+
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/bus/mhi/host/main.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index 499590437e9b..c907bbb67fb2 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -268,7 +268,7 @@ static void mhi_del_ring_element(struct mhi_controller *mhi_cntrl,
+>  
+>  static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
+>  {
+> -	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
+> +	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len && addr % 16 == 0;
+
+How about,
+
+!(addr % 16)
+
+- Mani
+
+>  }
+>  
+>  int mhi_destroy_device(struct device *dev, void *data)
+> 
+> ---
+> base-commit: 71e68e182e382e951d6248bccc3c960dcec5a718
+> change-id: 20231013-alignment_check-c013f509d24a
+> 
+> Best regards,
+> -- 
+> Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
