@@ -2,126 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A19D7D9329
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 11:10:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 073E97D93D9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 11:37:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345488AbjJ0JKf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 05:10:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49918 "EHLO
+        id S1345581AbjJ0Jha (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 05:37:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345559AbjJ0JKc (ORCPT
+        with ESMTP id S1345592AbjJ0Jh3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 05:10:32 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8603B191
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 02:10:26 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-4084b0223ccso14285295e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 02:10:26 -0700 (PDT)
+        Fri, 27 Oct 2023 05:37:29 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D1A1D6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 02:37:24 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-507973f3b65so2858860e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 02:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698397825; x=1699002625; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GuqStbbcE98g0Qsufd7xFmYWScwY7cbL2ixdMjl3DG0=;
-        b=ilQhxrmDoYfEmWuABHo0qqhMgCt8o9EfCk2zcr1vAVtFlkv6mJkdypvwsbo6nRVcRB
-         PUC63XCQR1KfGDc1bs6SEWDDCKVLOQvwpd6SlrsYUFyUduixYjGgSZFswDIzuCZMVY6P
-         IUQXyMN1XV8zK7EQmQrXqoJSQ0m9587NwywYkzGJGfQRZFA9+CnvXy7LiaYpxokEBq2m
-         JxErPEOfH37igV9GCWyR7D+Pan1wregv4JDW0cCFMa8kl0a/rXhpp57g2M1VbqE2euSy
-         ANUYkoKjne1FQEx09HCJ9qaL1aRq8GdoIT0fMQ+IwnGB0GtGJihOyGseF1yhNvm/K541
-         8oew==
+        d=linaro.org; s=google; t=1698399442; x=1699004242; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bxAhGTRk8WbWkwB+dTuwh9bEQbrCU7H1RI+9l+q0K90=;
+        b=CaYEmVjIgu/fK1yY7wGa2klX283fs7FTn5YX4C5x57qDRx2YjZqfNL9pznt4iwdzSm
+         E6EsfY0Mhf8tG5188WbUeFXtB/VLMIdh1WoFeZrs85LD4v5gGz2aMEBoGrhiOB+g7RLP
+         rdKPr9owAgCMjXufL0hJ7PawKfgW1BydwFkbbKDnWVUldw09rcCLgQvH+UreKmTlyrVw
+         LcQX2NjEoTxhMpzrgl40DreWsvVIggSP8xVDN1yZapbqBNVSwfP/If+/vxm5NwKvloYr
+         /CSNfM8zNFLwI44hmZQoU80TCbOELgW0f/jEunSBuGelZChZON2jQQ/mzENUU2xBthHQ
+         nLHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698397825; x=1699002625;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GuqStbbcE98g0Qsufd7xFmYWScwY7cbL2ixdMjl3DG0=;
-        b=RCDlMI3aP52YOuLKPjUB6Dzm4ynuThqpgk4b+Xknizmp+ZMOrasFWsTQSlaFVlz4jb
-         lMDLQDOwi5jHMSXWOsrz1XIxpwHc2Y0WdzJWeigkaTyQqZL743+XOl3Fb1t8wxl4MfEw
-         PoC20EEHmIgDwR9O2YPHaLSdPXJmGA9kGFviUSc5B78UB8EC0CxejwZy9iFwjjxfWZI5
-         LPsNbT1ogl/ZCuc66oKkzvVrdfEHv1YHLZx6RIj0a3yPhY+YvzALHDo5ryXRas3l4Pe7
-         3NyEvzRoqfYCkl32moQWnuIStKgyoCfrtVQ89Aqs/8WjnxRaxEg0NkSUCYp/mlGTMsXx
-         hkkg==
-X-Gm-Message-State: AOJu0YySvtD6xYxSywqH6pO2BckfQk4AXT901KgDCD62Fv68Ll/kAGYf
-        ozbgIHySicEEFZyD+ce19trtjA==
-X-Google-Smtp-Source: AGHT+IGI7FPB/kli90gdnpa/qqhlm2HWGrOwpxkcIW2HjaeY9UEfdlauSJHS2Y4k+g69ULN6tYOd/Q==
-X-Received: by 2002:a05:600c:4454:b0:407:7e5f:ffb9 with SMTP id v20-20020a05600c445400b004077e5fffb9mr1768819wmn.9.1698397824819;
-        Fri, 27 Oct 2023 02:10:24 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id t3-20020a1c7703000000b004042dbb8925sm4544384wmi.38.2023.10.27.02.10.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 02:10:24 -0700 (PDT)
-Message-ID: <9fec3a90-b3dd-4b2e-bb7f-27890ad2b4e0@linaro.org>
-Date:   Fri, 27 Oct 2023 10:10:23 +0100
+        d=1e100.net; s=20230601; t=1698399442; x=1699004242;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bxAhGTRk8WbWkwB+dTuwh9bEQbrCU7H1RI+9l+q0K90=;
+        b=KPUxM+qs9fwc0mBzJqd84jzfMIhZlKIaqL0Q7WCDcNDW7c/ckJpmJIoOFGzl1DaWRO
+         ECrdOfCAQdJnEfdQAePKGds/4igJCDzlxWhjttZzyviiyqzEmWlBDtP2q9diydC01bqk
+         YbIMyaCwCu+snvx1rGxez7A6TuMtwk3Lpr50+B332lPDHgtV62b9TLBaDUYYQ7OUSTXo
+         5IPxM0YuWcdC++74eKT62eAWWauHfV8HxCBUv3oK3gyzmTC93z1ANSRWcrkiwX6FD+9r
+         JmK3BYjp/WbJMTw90q7Op5rpk3NyP9kopcrpUAaWbpF9mJFvo4C08WXs7j19IzrsRtP7
+         3kiw==
+X-Gm-Message-State: AOJu0YyOECQxPihIecZrCB9J682Fet7OSOJnb0H4lgLoOhGk1HAsEr9M
+        FkXdDSHX474CMeoQoMTuAWceag==
+X-Google-Smtp-Source: AGHT+IFQw7hIScOFSzvtLz9DA9eBVKE2Jz65xnKksveBucyHsbC6nhpEUWiEVVT/vo9qDs+HweEaXw==
+X-Received: by 2002:a05:651c:42:b0:2bf:f32a:1f64 with SMTP id d2-20020a05651c004200b002bff32a1f64mr1718197ljd.18.1698399442460;
+        Fri, 27 Oct 2023 02:37:22 -0700 (PDT)
+Received: from krzk-bin.. ([78.10.206.168])
+        by smtp.gmail.com with ESMTPSA id s26-20020a2e151a000000b002c12c2094e4sm223341ljd.74.2023.10.27.02.37.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Oct 2023 02:37:22 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 0/2] pinctrl: qcom: add sm8650 lpass-lpi
+Date:   Fri, 27 Oct 2023 11:36:13 +0200
+Message-Id: <20231027093615.140656-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] media: qcom: camss: Convert to per-VFE pointer for
- power-domain linkages
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, rfoss@kernel.org,
-        todor.too@gmail.com, andersson@kernel.org, mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
- <20231026155042.551731-3-bryan.odonoghue@linaro.org>
- <8a36e61a-5397-4513-ae0d-eb68ccd8e584@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <8a36e61a-5397-4513-ae0d-eb68ccd8e584@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/10/2023 21:08, Konrad Dybcio wrote:
->> +    if (vfe->id >= camss->res->vfe_num)
->>           return 0;
-> P.S. this seems better suited for some warning, I think
+Hi,
 
-Noo this indicates VFE lite !
+Dependency
+==========
+This patchset depends on v2 of:
+https://lore.kernel.org/all/CACRpkdYzhEJhN9BFdbZkJ7LurtT+dFMg97SLY-q91SNCZ8bikw@mail.gmail.com/
 
-power-domains = <VFE_0>,
-                 <VFE_1>,
-                 <TITAN_TOP>; // the controller pd
+Due to conflicts with current fixes, the v2 above was postponed for v6.8, thus
+this should wait as well.  Review can happen anyway now.
 
-vfe-set = <VFE_0>, // has its own PD vfe->id = 0
-           <VFE_1>, // has its own PD vfe->id = 1
-           <VFE_LITE_N>; // has no PD vfe->id = 2
+Best regards,
+Krzysztof
 
-The basic problem this series fixes is magic indexing.
+Krzysztof Kozlowski (2):
+  dt-bindings: pinctrl: qcom,sm8650-lpass-lpi-pinctrl: add SM8650 LPASS
+  pinctrl: qcom: sm8650-lpass-lpi: add SM8650 LPASS
 
-In the first instance, using named power-domains so that the ordering of 
-declaration doesn't matter and we don't have funky code inferring if a 
-power-domain belongs to the TOP or not.
+ .../qcom,sm8650-lpass-lpi-pinctrl.yaml        | 148 ++++++++++
+ drivers/pinctrl/qcom/Kconfig                  |  10 +
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ .../pinctrl/qcom/pinctrl-sm8650-lpass-lpi.c   | 255 ++++++++++++++++++
+ 4 files changed, 414 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm8650-lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sm8650-lpass-lpi.c
 
-Secondly though, which is what the first patch in the series does - is 
-as I rebased I realised the VFE/VFE Lite thing was still there.
+-- 
+2.34.1
 
-what vfe->id >= camss->res->vfe_num does is checks to see if the vfe->id 
-<= a VFE not a VFE Lite id.
-
-in other words we have yet another magic indexing problem requiring 
-VFE_LITE_N to always be declared after VFE.
-
-The solution here is
-
-1. Make the driver support not caring about indexes any more
-    This series.
-2. Name the power-domains in the various dtsis
-    Populating the struct resources in CAMSS to match
-    Next series
-3. Gate new SoCs to _require_ named pds
-    Deprecate the legacy indexing support of 'n' kernel releases
-4. Profit
-
-So yeah the check above is I'm sorry to say not an error at all it 
-implies VFE Lite...
-
----
-bod
