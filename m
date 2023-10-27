@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F4517D8FB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 09:25:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F5967D8FBE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 09:25:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345351AbjJ0HZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 03:25:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48536 "EHLO
+        id S1345413AbjJ0HZg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 03:25:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345407AbjJ0HZG (ORCPT
+        with ESMTP id S1345363AbjJ0HZe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 03:25:06 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AAB51AC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:25:03 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507be298d2aso2567007e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:25:03 -0700 (PDT)
+        Fri, 27 Oct 2023 03:25:34 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B7D7194
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:25:32 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-508126afc88so2623429e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 00:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698391501; x=1698996301; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698391530; x=1698996330; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=P9fvUaB2Opl2l/zkthY4woGKn/bqV/+8DrH2/XQMtfU=;
-        b=lDW/+QpZi/i+By+DLF+voGi2U5BgjyTYsNUBA08AzOKwn6ZiYbMshwu7Xbt78Kwcyd
-         fYTVfAYOfYIXJNIM07wjBsULVoICJYOs8wa3HO3An3LVE43Hdeyl5ELTROlnyn3JJB9V
-         QjJUuwaq5ZEU0Jo627SoUrkLrXhn5tbBHM88fF89F/34KUb9ZdYX7VznMy66hauDpvAU
-         VTHP/e6OKlkYkwCcb9Py3BN5+4t0/12F5fV15AO0eTF7ZIrq5BKO70dgief+v3Uth3Er
-         y2F7/AH8ERAEwJDmQ9eqjNyECSEK321Kyp+RpOnY0YPZTAIGMQIN3pCGNyGRegDv7knA
-         tAfw==
+        bh=w+DVE0+nL1fm/FxiO5ZLkUtU+qwRnvmWo90tk6/KM9I=;
+        b=HgIxSRKn8F60sA/7R1InT7cIWbUfF2362Av/Yv4ejc8gfFE0kRmLEq5a3UoKgw3aYA
+         ADfuGfwwmm9J75nWdmhWCbMM1tJvSaR1tgLVClgYG2tLLRXabwu8XH13CKjaBUos7/Jr
+         +jh5X71nqSKGzf2HG5GGgTvqWbWwSa23QDApF4iD5cPsaBn1I6pIX7zBr1s0pzXWmRZY
+         ILvJCjvEmLYhSkd5RXCz0JR9uYdFHuaoXr1PQKof7OgiaW1XWWwofrB/vtbBAAE1iMzr
+         JVaZTjLMpO+jljD4Crwyf7FSoSW6trVuzyBAlZdlj21zzoPQ4xoAu+uKD0CGiedvFuJW
+         sQhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698391501; x=1698996301;
+        d=1e100.net; s=20230601; t=1698391530; x=1698996330;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P9fvUaB2Opl2l/zkthY4woGKn/bqV/+8DrH2/XQMtfU=;
-        b=OKutYXGp3PWiMwDYvPoEfnVUs0RrTW3T2U7E+5Sd6rnDruo/u8LeyJAltk/XIe6feD
-         EO4/rZkzbjUjqjPAKwFgOYuJWVU45bNQO3N5PGlxlgo4+zboUerPksUbHsxpPz0BYY9Q
-         FdstdbhQq843KCBir9ic3BpzXh/yEikvnn72PidAm6HV+VWJ9BYtmmX+/xx+f6q3W6jv
-         dCi79BjzUUJ3+VXkxV9R+ihvUk0gaUMw70RAB4kuo1S2lM3em2LJr8nbEENQsTM5Yzwq
-         2E02inwHrI04niX5LPKwxuafuuXiBdOrwWoJBu0rcsxs3FLTnJ3y3Yk67ck9ikv4pmh/
-         Exhw==
-X-Gm-Message-State: AOJu0YwPgNoNBNYs3950U2DNnpKetNFCkCSeGYuaQxR19UO5yAQ7N87d
-        P86Ug3JbLi4yH2X94jP3m+woHA==
-X-Google-Smtp-Source: AGHT+IESgSLtlGr9MVzZ3FacAeppRiumgBV/tymSj+K33/qZy1tVFAzXYZRMjvHZDMuXgkgskQBBOQ==
-X-Received: by 2002:ac2:4a79:0:b0:500:b2f6:592 with SMTP id q25-20020ac24a79000000b00500b2f60592mr1217202lfp.50.1698391501342;
-        Fri, 27 Oct 2023 00:25:01 -0700 (PDT)
+        bh=w+DVE0+nL1fm/FxiO5ZLkUtU+qwRnvmWo90tk6/KM9I=;
+        b=hOgfZHzX2XbmbJP2UmLNP4LFuHVE5K6IW/gzXQb/3Zc2gJoJKGDWgAZmku1+Yqd+dF
+         29WKtZ/TvxBOwj+rYKUW8fw6RdVjCDs8TxkOsTPe2vrk4J/cYeIkA6KYLjVCN9K2ckUZ
+         Xf+2vRv3POEFMFQiaDJ2c9T6a29isy+ZH68/WFNZGAPhdUP71kT4CFrpw6q/uU+7oXai
+         O5ZsM82ZT884pmgcDmTNwnkC6jyy+tPQ1g1p6kdZAjfhT0TnkndPHZgOvcfRIsq86gfD
+         H491STCf/EROr9/nbNiMkGD33WbH4gSI/WNMcaRvrnPrcmMihzrzWPXcVxEiO5qVpWF+
+         vj9g==
+X-Gm-Message-State: AOJu0YxFsqN7RJuMrw1obL3D0Sk4GBt85hXvF9tgGDdn9fwzflGMH8ih
+        G+BvyzL83SBuo/uMw0/0JJfPiA==
+X-Google-Smtp-Source: AGHT+IGsH1kz5PTV8xos+8gQID+MiFkvhOe9ff/NjyexBxI8lXmqU/jz7qP0q7XvsEEMPnOs5BPjaQ==
+X-Received: by 2002:a05:6512:48d0:b0:503:15a5:b368 with SMTP id er16-20020a05651248d000b0050315a5b368mr1302286lfb.16.1698391530515;
+        Fri, 27 Oct 2023 00:25:30 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id k4-20020ac24f04000000b00507b0b9145fsm164790lfr.177.2023.10.27.00.25.00
+        by smtp.gmail.com with ESMTPSA id k4-20020ac24f04000000b00507b0b9145fsm164790lfr.177.2023.10.27.00.25.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 00:25:00 -0700 (PDT)
-Message-ID: <a3f6b16c-13f3-4db2-ac48-9c113afa519f@linaro.org>
-Date:   Fri, 27 Oct 2023 09:24:59 +0200
+        Fri, 27 Oct 2023 00:25:30 -0700 (PDT)
+Message-ID: <e650c612-44f2-43f2-88ce-2b88a1815621@linaro.org>
+Date:   Fri, 27 Oct 2023 09:25:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] dt-bindings: clock: qcom: document the SM8650 TCSR
- Clock Controller
+Subject: Re: [PATCH 02/10] dt-bindings: clock: qcom: document the SM8650
+ General Clock Controller
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -71,7 +71,7 @@ To:     Neil Armstrong <neil.armstrong@linaro.org>,
 Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20231025-topic-sm8650-upstream-clocks-v1-0-c89b59594caf@linaro.org>
- <20231025-topic-sm8650-upstream-clocks-v1-1-c89b59594caf@linaro.org>
+ <20231025-topic-sm8650-upstream-clocks-v1-2-c89b59594caf@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -117,7 +117,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-1-c89b59594caf@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-clocks-v1-2-c89b59594caf@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -131,30 +131,16 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 25/10/2023 09:32, Neil Armstrong wrote:
-> Add bindings documentation for the SM8650 TCSR Clock Controller.
+> Add bindings documentation for the SM8650 General Clock Controller.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->  .../bindings/clock/qcom,sm8650-tcsr.yaml           | 55 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,sm8650-tcsr.h       | 18 +++++++
->  2 files changed, 73 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8650-tcsr.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8650-tcsr.yaml
-> new file mode 100644
-> index 000000000000..1df8c29fc1a2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8650-tcsr.yaml
-> @@ -0,0 +1,55 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sm8650-tcsr.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm TCSR Clock Controller on SM8650
+>  .../devicetree/bindings/clock/qcom,sm8650-gcc.yaml |  65 ++++++
+>  include/dt-bindings/clock/qcom,sm8650-gcc.h        | 257 +++++++++++++++++++++
+>  2 files changed, 322 insertions(+)
 
-Binding is exactly the same as sm8550 TCSR, so please add it to existing
-one.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
