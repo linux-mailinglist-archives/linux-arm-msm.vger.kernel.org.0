@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B9FF7D9B11
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 16:20:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E10CC7D9B17
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 16:20:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346128AbjJ0OUo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 10:20:44 -0400
+        id S1346165AbjJ0OUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 10:20:46 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346135AbjJ0OUm (ORCPT
+        with ESMTP id S1346140AbjJ0OUn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 10:20:42 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1052D42
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 07:20:34 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9c2a0725825so344280666b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 07:20:34 -0700 (PDT)
+        Fri, 27 Oct 2023 10:20:43 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7E5D4D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 07:20:35 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9c3aec5f326so685207666b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 07:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=fairphone.com; s=fair; t=1698416433; x=1699021233; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=y41N6IDBFdrpsca1M24XemdQ8eJbWVhCq1jwXxRCbP4=;
-        b=ejFFbh4H6iLRxVOpQqElDfQ4vMTIKJKNN+ivtQ83qlOUPvxbhJTyUkxg5IReVhlk0Q
-         QhbwSFsu40zsxVMQO4WJLHjvJhq53o+Y8ex8lY5oPK5gBiqj2PihjAl7PsU9CVrix1As
-         9jESVN3Meenb3yrtGK1cr8h+yysqQtlE3P8QNd5C1CkCnFoSDZTw0QabpL78Edckl31D
-         7WYbZegknW0GnDOLi0JWhCT97cyd7SGXvi5aMuE6Sb7TD16cgGJQqT0FNLDghpw2AJ9F
-         3VAEA8R+votlP0ZCy3zX+i+NkxBtQHydm+VZ8dOkDyMy0KMSrDnylnD3fiNayckogFYM
-         J4oQ==
+        bh=UvBWoApEQzNJmT0WsCerSguC4HxFjJesB2HE5zPn1Xg=;
+        b=Dm6rL11oZgIsq6e66PJBxsIOdGIK/AXVpqZkxAtXZze/h6nHcoBmE1nLtX3bgcjySn
+         3TQqNYwR6/YhAMkWm1fHgdp+iIRRBA5jcIRBqS+vq/RNhDIP2JGxihkK9TGFvjoIYNUw
+         o1kglfljt2rR1xDJpFL3qmtG1nlEEvrIF4oSg+Z+MdfWii+0MBEVwjpz0paNfwFafp27
+         z0cR4vXdomq3K4irIH141uHjIx5axfIO9Q5YqFEv9q7FO5GlGhWabneh+18FMPHWbIvI
+         aIQwHTxithku7upt8gf+nWVJHDuTvCKwxfXlo66p0QtxRZlEs5ycUg6MX/Vc7LcFW8uO
+         6SLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698416433; x=1699021233;
+        d=1e100.net; s=20230601; t=1698416434; x=1699021234;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=y41N6IDBFdrpsca1M24XemdQ8eJbWVhCq1jwXxRCbP4=;
-        b=L9beCsXWxZa80rIayOyXeM8lfD8iRCanty7N3+9mIE0u3Z97DkTJgbhAcP5wMuP9ko
-         a+mzAjb4e6Nzq0cFwMImNPFUDuplxqm7wIMPm96blDcuNSWZ5q1YzFSWlpnXpmxoknhx
-         kagNoNf64w0RGXM3LtHVgzVsZptTtrcXYTCqrC2bIGslfwrQ/L2sGzF3n/mnYuH/lmU4
-         G+D+v3T6SFKO8deJAy5Ye+uN/pmnFAgMOK7m+t5UJ8mo0T6lRBLFiHG/7vfA86zEuDv6
-         DyRFlz5KOu0yrdVX2pDo56smX4uF3gRU9Q4vXOJ8dZA0rQSgZzUHApVvTHEEfbsJ72ci
-         IV0g==
-X-Gm-Message-State: AOJu0YyhxBBCiGBnPHmgJUtE9sva4+cxvzBDFTuwzNOY97GOpbhX+BNs
-        oHdcrJLQijilppdVpdw7AMq5IQ==
-X-Google-Smtp-Source: AGHT+IEAJuC/YctdTElHl9hJgRic+lp7n6TOITFQHxv3vNsqWiuOEJZ72mySMQ37ns3EEV+tTPGdNg==
-X-Received: by 2002:a17:907:c0d:b0:9bf:4915:22c8 with SMTP id ga13-20020a1709070c0d00b009bf491522c8mr2039660ejc.5.1698416433161;
+        bh=UvBWoApEQzNJmT0WsCerSguC4HxFjJesB2HE5zPn1Xg=;
+        b=ShksOFZ0z+scfhiRfquYba0raHSfHfL9tyGkwHw84bVa6upj4DtyJFIRf6tl0XCZ0k
+         KdVvCbBA/p2bi7Wovoxhw6ZZ2YWxM6cOaGXE+dk1v8KGJjGDWTT00PKvlOcK+/6Q15op
+         x41mMHvKR9RhgEhd8IRlSRO8WVwNsGdQDU5Ofn0Us3EWYGSYze3SkvLteOQrA3WPCiEI
+         pzh2ny83gVa12kDC5qyZL04gBwMgN8E7OQtHKKr772aZuqlSp+uuAE/CYkmOvTd70qQs
+         s7vn9psi6ekX5a/rxq4UlSf+nE9Rla2K1iai9ASP7inC8Vojgl3fb2cUlDNKyAYeiSQh
+         9Anw==
+X-Gm-Message-State: AOJu0Yzc1Io3GAb9xdVy5EyscaPK2SGn3TQwCJ+jTm+LXzOhUjRIanlK
+        rv+LQuEGABhPVKnjoMeYcSVUCw==
+X-Google-Smtp-Source: AGHT+IEhloj5oWSExt+QUqfNz3AnM72oA3FY49T71d2fGgkRPzfdtt4XnFPyylBwbLRJuE4AcCCznw==
+X-Received: by 2002:a17:907:8687:b0:9ad:e3fd:d46c with SMTP id qa7-20020a170907868700b009ade3fdd46cmr6206576ejc.10.1698416433790;
         Fri, 27 Oct 2023 07:20:33 -0700 (PDT)
 Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id z23-20020a170906075700b0099cc36c4681sm1254076ejb.157.2023.10.27.07.20.32
+        by smtp.gmail.com with ESMTPSA id z23-20020a170906075700b0099cc36c4681sm1254076ejb.157.2023.10.27.07.20.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Oct 2023 07:20:32 -0700 (PDT)
+        Fri, 27 Oct 2023 07:20:33 -0700 (PDT)
 From:   Luca Weiss <luca.weiss@fairphone.com>
-Date:   Fri, 27 Oct 2023 16:20:26 +0200
-Subject: [PATCH 4/9] remoteproc: qcom_q6v5_pas: Add SC7280 ADSP, CDSP &
- WPSS
+Date:   Fri, 27 Oct 2023 16:20:27 +0200
+Subject: [PATCH 5/9] arm64: dts: qcom: sc7280: Use WPSS PAS instead of PIL
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231027-sc7280-remoteprocs-v1-4-05ce95d9315a@fairphone.com>
+Message-Id: <20231027-sc7280-remoteprocs-v1-5-05ce95d9315a@fairphone.com>
 References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
 In-Reply-To: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
 To:     Andy Gross <agross@kernel.org>,
@@ -87,56 +86,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for the ADSP, CDSP and WPSS remoteprocs found on the SC7280
-SoC using the q6v5-pas driver.
+The wpss-pil driver wants to manage too many resources that cannot be
+touched with standard Qualcomm firmware.
 
-This driver can be used on regular LA ("Linux Android") based releases,
-however the SC7280 ChromeOS devices need different driver support due to
-firmware differences.
+Use the compatible from the PAS driver and move the ChromeOS-specific
+bits to sc7280-chrome-common.dtsi.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 19 ++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 15 +++------------
+ 2 files changed, 21 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 913a5d2068e8..a9dd58608052 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1165,6 +1165,22 @@ static const struct adsp_data sm8550_mpss_resource = {
- 	.region_assign_idx = 2,
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+index cd491e46666d..eb55616e0892 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+@@ -95,8 +95,25 @@ spi_flash: flash@0 {
  };
  
-+static const struct adsp_data sc7280_wpss_resource = {
-+	.crash_reason_smem = 626,
-+	.firmware_name = "wpss.mdt",
-+	.pas_id = 6,
-+	.auto_boot = true,
-+	.proxy_pd_names = (char*[]){
-+		"cx",
-+		"mx",
-+		NULL
-+	},
-+	.load_state = "wpss",
-+	.ssr_name = "wpss",
-+	.sysmon_name = "wpss",
-+	.ssctl_id = 0x19,
-+};
+ &remoteproc_wpss {
+-	status = "okay";
++	compatible = "qcom,sc7280-wpss-pil";
++	clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
++		 <&gcc GCC_WPSS_AHB_CLK>,
++		 <&gcc GCC_WPSS_RSCP_CLK>,
++		 <&rpmhcc RPMH_CXO_CLK>;
++	clock-names = "ahb_bdg",
++		      "ahb",
++		      "rscp",
++		      "xo";
 +
- static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,msm8226-adsp-pil", .data = &adsp_resource_init},
- 	{ .compatible = "qcom,msm8953-adsp-pil", .data = &msm8996_adsp_resource},
-@@ -1178,7 +1194,10 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,qcs404-wcss-pas", .data = &wcss_resource_init },
- 	{ .compatible = "qcom,sc7180-adsp-pas", .data = &sm8250_adsp_resource},
- 	{ .compatible = "qcom,sc7180-mpss-pas", .data = &mpss_resource_init},
-+	{ .compatible = "qcom,sc7280-adsp-pas", .data = &sm8350_adsp_resource},
-+	{ .compatible = "qcom,sc7280-cdsp-pas", .data = &sm6350_cdsp_resource},
- 	{ .compatible = "qcom,sc7280-mpss-pas", .data = &mpss_resource_init},
-+	{ .compatible = "qcom,sc7280-wpss-pas", .data = &sc7280_wpss_resource},
- 	{ .compatible = "qcom,sc8180x-adsp-pas", .data = &sm8150_adsp_resource},
- 	{ .compatible = "qcom,sc8180x-cdsp-pas", .data = &sm8150_cdsp_resource},
- 	{ .compatible = "qcom,sc8180x-mpss-pas", .data = &sc8180x_mpss_resource},
++	resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
++		 <&pdc_reset PDC_WPSS_SYNC_RESET>;
++	reset-names = "restart", "pdc_sync";
++
++	qcom,halt-regs = <&tcsr_1 0x17000>;
++
+ 	firmware-name = "ath11k/WCN6750/hw1.0/wpss.mdt";
++
++	status = "okay";
+ };
+ 
+ &scm {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 0d9cc44066ce..23bb6c41fca3 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3579,7 +3579,7 @@ qspi: spi@88dc000 {
+ 		};
+ 
+ 		remoteproc_wpss: remoteproc@8a00000 {
+-			compatible = "qcom,sc7280-wpss-pil";
++			compatible = "qcom,sc7280-wpss-pas";
+ 			reg = <0 0x08a00000 0 0x10000>;
+ 
+ 			interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
+@@ -3591,12 +3591,8 @@ remoteproc_wpss: remoteproc@8a00000 {
+ 			interrupt-names = "wdog", "fatal", "ready", "handover",
+ 					  "stop-ack", "shutdown-ack";
+ 
+-			clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
+-				 <&gcc GCC_WPSS_AHB_CLK>,
+-				 <&gcc GCC_WPSS_RSCP_CLK>,
+-				 <&rpmhcc RPMH_CXO_CLK>;
+-			clock-names = "ahb_bdg", "ahb",
+-				      "rscp", "xo";
++			clocks = <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "xo";
+ 
+ 			power-domains = <&rpmhpd SC7280_CX>,
+ 					<&rpmhpd SC7280_MX>;
+@@ -3609,11 +3605,6 @@ remoteproc_wpss: remoteproc@8a00000 {
+ 			qcom,smem-states = <&wpss_smp2p_out 0>;
+ 			qcom,smem-state-names = "stop";
+ 
+-			resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
+-				 <&pdc_reset PDC_WPSS_SYNC_RESET>;
+-			reset-names = "restart", "pdc_sync";
+-
+-			qcom,halt-regs = <&tcsr_1 0x17000>;
+ 
+ 			status = "disabled";
+ 
 
 -- 
 2.42.0
