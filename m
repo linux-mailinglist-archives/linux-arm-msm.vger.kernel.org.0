@@ -2,236 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9187F7D99CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 15:28:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C177F7D99E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 15:34:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345958AbjJ0N2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 09:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47886 "EHLO
+        id S1345927AbjJ0Ne1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 09:34:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345937AbjJ0N2a (ORCPT
+        with ESMTP id S231555AbjJ0Ne0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 09:28:30 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D483CA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 06:28:27 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-32d849cc152so1431091f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 06:28:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698413305; x=1699018105; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+0NlxUt01xoDUM68uUAmSCgMLEqGDv0Czy1rYZIZs8k=;
-        b=RYq4t/OtjpcnhJ7nvatwi6XWunrU7+ltC0mejQ4vbEIaSkNeOMfc5TbkTlFzfUWyNb
-         TKUroIxKknLXNmN2uWN2b/DYwdfIkVdgpuXG1luE1p0yG5tAELxs2iDSCawCnAbiR7uG
-         C67WK52VM4DNobBmhMzVzcwJZSUDt3JVje7MQTii3zJZCYnHfxxbs0agia8nC5EVifg6
-         fvom5/1ov4ftAQwHZD5PjMLBCB2fXSOLIwHFLrMjlfxh/EzVfG/UyVUzHAAz+E5m0z49
-         /Fk+FwCnepU092B5TB15AzLXln/d1QndQ2DKCrSRgEmO3KgAZ4L7Ge/NPWnDbojdtUUb
-         hmqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698413305; x=1699018105;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+0NlxUt01xoDUM68uUAmSCgMLEqGDv0Czy1rYZIZs8k=;
-        b=hkyNYHFjRKdHOO/hcjZFb1guTLtd4YC0a5ArUj/8tgwXQQugsrtAMmFd43UWXj5xYt
-         riaTVR9cBY2ytLBTL6lZTiYdDesA+RNX225AymbQLYpGF1AcQeCZ/Lwz5Om1YlTUm5IS
-         kOzkePcaTGDbH/cC4MORSOH4+5+afChIwGMWnUhs1rvQ57+itMfWOCxQ7UfVHTr1NDjt
-         H9rRAWD8bpBqfElr3DbULnN9ipjAlztUoNirJxfTaB6BCtLoqACdoOK1m6ZnQYjteVMK
-         w1QmW48NOPIllVLLDBxzu4ImZHs4nlTefKOQCYtZa0D+rjS7AQz2zvtu8dFU3VSWt6cz
-         vpBA==
-X-Gm-Message-State: AOJu0Yy2+7CNeRY42QK/vqp4wH95gOY3pSa0eHrJLiIojB/olNq6t0Zg
-        6Ycu83UqXxUaIDOrVeSElp6Vdw==
-X-Google-Smtp-Source: AGHT+IG6NK1Rh7HLaXTjKt7lln3TdQMWNPp78NlU0dyomBEcFLajh2wIyo8PyRUjYJ8ipbOM/k5xig==
-X-Received: by 2002:a5d:6145:0:b0:32d:9579:94e3 with SMTP id y5-20020a5d6145000000b0032d957994e3mr1720098wrt.6.1698413305254;
-        Fri, 27 Oct 2023 06:28:25 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:bba7:4e7d:4d42:af62? ([2a01:e0a:982:cbb0:bba7:4e7d:4d42:af62])
-        by smtp.gmail.com with ESMTPSA id u9-20020a5d6ac9000000b0032d687fd9d0sm1761313wrw.19.2023.10.27.06.28.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 06:28:24 -0700 (PDT)
-Message-ID: <85b5ea04-a0d8-4c31-abb6-8778dcb8a9be@linaro.org>
-Date:   Fri, 27 Oct 2023 15:28:23 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/3] pinctrl: qcom: handle intr_target_reg
- wakeup_present/enable bits
-Content-Language: en-US, fr
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231025-topic-sm8650-upstream-tlmm-v1-0-4e3d84a3a46b@linaro.org>
- <20231025-topic-sm8650-upstream-tlmm-v1-2-4e3d84a3a46b@linaro.org>
- <vtr3s7fyrionospnmzvm2xl2plsue2jlrc3tjifqua3ihucxao@6hxi3i22bwxs>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <vtr3s7fyrionospnmzvm2xl2plsue2jlrc3tjifqua3ihucxao@6hxi3i22bwxs>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Fri, 27 Oct 2023 09:34:26 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1E8BD6;
+        Fri, 27 Oct 2023 06:34:23 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39RCqAA3001415;
+        Fri, 27 Oct 2023 13:33:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=RZRsq6NSc8v50RtGhhXOa3FDVL7OuBZ8+GKl30Gtyzs=;
+ b=RWvLfLJ0NXzGH4T0xui4L0WE54PDTrv0sTrKvQJrdrmA3rKcJ7S8pJ9k1zp8V3P+dQ7B
+ ADH/w3Jue6FHzQeP14WXKrS40653cCZXTExbUdM2ho0OdZ44QVnpInTaFMio2u6ujb+Q
+ UCZ4m2hRhxZGuU9hlm0RHVPsQ5KcjyHPv0Z4UbgFrICw6P/KPIFz58xS/vUg6rGgsPet
+ oOZHcfWQ3lz27MExDOBOCBDLwumuM22DEjczR77hBHbzlVj+utOXH3Edh6FY6q+NcF0j
+ ju/yeTQqCjQviVp3HtOqChgsK3CY+Sd/elwD+Yo+RI4amoZLfFC6HtDyglyPyLeh49qK NA== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tyws9a8tj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Oct 2023 13:33:20 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 39RDXHN1026021;
+        Fri, 27 Oct 2023 13:33:17 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3tv7qmaape-1;
+        Fri, 27 Oct 2023 13:33:17 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39RDXGhL026015;
+        Fri, 27 Oct 2023 13:33:16 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 39RDXFSJ026014;
+        Fri, 27 Oct 2023 13:33:16 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+        id 31BE4481E; Fri, 27 Oct 2023 19:03:15 +0530 (+0530)
+From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, mani@kernel.org
+Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        dmitry.baryshkov@linaro.org, robh@kernel.org,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_parass@quicinc.com, quic_schintav@quicinc.com,
+        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mhi@lists.linux.dev
+Subject: [PATCH v4 0/4] arm64: qcom: sa8775p: add support for EP PCIe
+Date:   Fri, 27 Oct 2023 19:03:08 +0530
+Message-Id: <1698413592-26523-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: gGNF1ox1zsnyPE4Hp4jLZNIU78BBbxQh
+X-Proofpoint-GUID: gGNF1ox1zsnyPE4Hp4jLZNIU78BBbxQh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-27_11,2023-10-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ mlxlogscore=347 spamscore=0 impostorscore=0 mlxscore=0 bulkscore=0
+ clxscore=1015 lowpriorityscore=0 phishscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310270117
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/10/2023 04:10, Bjorn Andersson wrote:
-> On Wed, Oct 25, 2023 at 09:33:52AM +0200, Neil Armstrong wrote:
->> New platforms uses a new set of bits to control the wakeirq
->> delivery to the PDC block.
->>
->> The intr_wakeup_present_bit indicates if the GPIO supports
->> wakeirq and intr_wakeup_enable_bit enables wakeirq delivery
->> to the PDC block.
->>
->> While the name seems to imply this only enables wakeup events,
->> it is required to allow interrupts events to the PDC block.
->>
->> Enable this bit in the irq resource request/free if:
->> - gpio is in wakeirq map
->> - has the intr_wakeup_present_bit
->> - the intr_wakeup_enable_bit is set
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/pinctrl/qcom/pinctrl-msm.c | 32 ++++++++++++++++++++++++++++++++
->>   drivers/pinctrl/qcom/pinctrl-msm.h |  5 +++++
->>   2 files changed, 37 insertions(+)
->>
->> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
->> index 395040346d0f..2489a9ac8455 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
->> @@ -1196,6 +1196,7 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
->>   {
->>   	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->>   	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
->> +	const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
->>   	int ret;
->>   
->>   	if (!try_module_get(gc->owner))
->> @@ -1221,6 +1222,24 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
->>   	 */
->>   	irq_set_status_flags(d->irq, IRQ_DISABLE_UNLAZY);
->>   
->> +	/*
->> +	 * If the wakeup_enable bit is present and marked as available for the
->> +	 * requested GPIO, it should be enabled when the GPIO is marked as
->> +	 * wake irq in order to allow the interrupt event to be transfered to
->> +	 * the PDC HW.
->> +	 * While the name implies only the wakeup event, it's also required for
->> +	 * the interrupt event.
->> +	 */
->> +	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
->> +		u32 intr_cfg;
->> +
->> +		intr_cfg = msm_readl_intr_cfg(pctrl, g);
->> +		if (intr_cfg & BIT(g->intr_wakeup_present_bit)) {
->> +			intr_cfg |= BIT(g->intr_wakeup_enable_bit);
->> +			msm_writel_intr_cfg(intr_cfg, pctrl, g);
-> 
-> If I understand correctly, the two modified functions are hooked
-> straight into the irq_chip, which would imply that nothing prevent
-> concurrent execution of this and the other accessors of intr_cfg.
-> 
-> If I'm reading this correctly, I think we should perform this
-> read-modify-write under the spinlock.
+This series adds the relavent DT bindings, new compatible string,
+add support to EPF driver and add EP PCIe node in dtsi file for
+ep pcie0 controller.
 
-Yes exact, thanks for pointing this.
+v3 -> v4:
+- add maxItems field in dt bindings
+- update comment in patch2
+- dropped PHY driver patch as it is already applied [1]
+- update comment in EPF driver patch
+- update commect in dtsi and add iommus instead of iommu-map
 
-Neil
+[1] https://lore.kernel.org/all/169804254205.383714.18423881810869732517.b4-ty@kernel.org/
 
-> 
-> Regards,
-> Bjorn
-> 
->> +		}
->> +	}
->> +
->>   	return 0;
->>   out:
->>   	module_put(gc->owner);
->> @@ -1230,6 +1249,19 @@ static int msm_gpio_irq_reqres(struct irq_data *d)
->>   static void msm_gpio_irq_relres(struct irq_data *d)
->>   {
->>   	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
->> +	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
->> +	const struct msm_pingroup *g = &pctrl->soc->groups[d->hwirq];
->> +
->> +	/* Disable the wakeup_enable bit if it has been set in msm_gpio_irq_reqres() */
->> +	if (test_bit(d->hwirq, pctrl->skip_wake_irqs) && g->intr_wakeup_present_bit) {
->> +		u32 intr_cfg;
->> +
->> +		intr_cfg = msm_readl_intr_cfg(pctrl, g);
->> +		if (intr_cfg & BIT(g->intr_wakeup_present_bit)) {
->> +			intr_cfg &= ~BIT(g->intr_wakeup_enable_bit);
->> +			msm_writel_intr_cfg(intr_cfg, pctrl, g);
->> +		}
->> +	}
->>   
->>   	gpiochip_unlock_as_irq(gc, d->hwirq);
->>   	module_put(gc->owner);
->> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
->> index 4968d08a384d..63852ed70295 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
->> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
->> @@ -58,6 +58,9 @@ struct pinctrl_pin_desc;
->>    * @intr_enable_bit:      Offset in @intr_cfg_reg for enabling the interrupt for this group.
->>    * @intr_status_bit:      Offset in @intr_status_reg for reading and acking the interrupt
->>    *                        status.
->> + * @intr_wakeup_present_bit: Offset in @intr_target_reg specifying the GPIO can generate
->> + *			  wakeup events.
->> + * @intr_wakeup_enable_bit: Offset in @intr_target_reg to enable wakeup events for the GPIO.
->>    * @intr_target_bit:      Offset in @intr_target_reg for configuring the interrupt routing.
->>    * @intr_target_width:    Number of bits used for specifying interrupt routing target.
->>    * @intr_target_kpss_val: Value in @intr_target_bit for specifying that the interrupt from
->> @@ -100,6 +103,8 @@ struct msm_pingroup {
->>   	unsigned intr_status_bit:5;
->>   	unsigned intr_ack_high:1;
->>   
->> +	unsigned intr_wakeup_present_bit:5;
->> +	unsigned intr_wakeup_enable_bit:5;
->>   	unsigned intr_target_bit:5;
->>   	unsigned intr_target_width:5;
->>   	unsigned intr_target_kpss_val:5;
->>
->> -- 
->> 2.34.1
->>
+v2 -> v3:
+- removed if/then schemas, added minItems for reg,
+  reg-bnames, interrupt and interrupt-names instead.
+- adding qcom,sa8775p-pcie-ep compitable for sa8775p
+  as we have some specific change to add.
+- reusing sm8450's pcs_misc num table as it is same as sa8775p.
+  used appropriate namespace for pcs.
+- remove const from sa8775p_header as kernel test robot
+  throwing some warnings due to this.
+- remove fallback compatiable as we are adding compatiable for sa8775p.
+
+v1 -> v2:
+- update description for dma
+- Reusing qcom,sdx55-pcie-ep compatibe so remove compaitable
+  for sa8775p
+- sort the defines in phy header file and remove extra defines
+- add const in return type pci_epf_header and remove MHI_EPF_USE_DMA
+  flag as hdma patch is not ready
+- add fallback compatiable as qcom,sdx55-pcie-ep, add iommu property
+
+
+Mrinmay Sarkar (4):
+  dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
+  PCI: qcom-ep: Add support for SA8775P SOC
+  PCI: epf-mhi: Add support for SA8775P
+  arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
+
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 48 +++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 46 +++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          |  1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c       | 17 ++++++++
+ 4 files changed, 110 insertions(+), 2 deletions(-)
+
+-- 
+2.7.4
 
