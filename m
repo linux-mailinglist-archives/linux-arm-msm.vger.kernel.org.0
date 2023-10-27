@@ -2,59 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DCBDC7D98C5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 14:44:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1B147D98CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 14:45:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345897AbjJ0Mo7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 08:44:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54798 "EHLO
+        id S1345887AbjJ0Mpf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 08:45:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345885AbjJ0Mo6 (ORCPT
+        with ESMTP id S1345890AbjJ0Mpd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 08:44:58 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6649C1BB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 05:44:55 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c504a5e1deso32713881fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 05:44:55 -0700 (PDT)
+        Fri, 27 Oct 2023 08:45:33 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A601F1B9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 05:45:30 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2c594196344so30204111fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 05:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698410693; x=1699015493; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698410729; x=1699015529; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZS9PS+CF/4xZ1zqno7t5BWpuYg3372vzFkNwrPm7LPc=;
-        b=KxrTfut21otVadIuShVbkG3XMv3nth6ovEMKs0qE01mS130j13NlEM9REW9ac1jydm
-         1A87UUguEw1N+ugzFQwwYPCwIMf6249nZ8lOoaV5waESzfjRR2DZWRqwBhPMcfEomj4k
-         KQmcMg1T/4fNollKaRRWFv2K1ulP0pGFoA4CxjASEWMonfDZgG8u6hn6GsmI2JNmYuCM
-         qhi3cixfz2LjEz0yi4rm3kJA/Lgz7IMYdEYamLY0k7/A0i4tauK5iegkEQcj7UZyKaCa
-         yEAEqCf6dbO4ywCHWXORhe0XaVpwXhbIFBapnq4/xrfYV/+1x1NtF13fZYCW0kbaPryK
-         ypDA==
+        bh=t19R5BIrFfEuSBm/TM6rpzKrgSm7TvLjTJR3URDOKek=;
+        b=nbAamSJH4DS9c77PWmgMdbPsSEzLI+2HmfNmfe2pkEo13izf8FPpVE0+AOF314ttyc
+         40uqoKs9BAIr7htkKF28QhabEkvpgkW4eM6niG+C64uSJUR1P2+gUDQD6DFySM7lB6c1
+         +m6kz740RAqPxYu8I1Qwi5+QUxYC+n2AMmwxQPlIjixccQwveFzeEIFDo5TMey0OPEyP
+         CFmAC5xauyuYI5dNOb0mkzb6EkUcd3KfqYWOv7Dx8TDx0SP+dC9ccZe8jpkCE4Y/aHdr
+         wyP4LthMlGxBgl3eXmgGh+y/hrLNB8q5n51cC7AtPQvC85LyNzc8YNT1327gA9yXrG2T
+         F5zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698410693; x=1699015493;
+        d=1e100.net; s=20230601; t=1698410729; x=1699015529;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZS9PS+CF/4xZ1zqno7t5BWpuYg3372vzFkNwrPm7LPc=;
-        b=FwJ1zOGRw0bfvXRv70Rb6a+M38Q0tT5JkgwedUYBtUXRaQdWGtd/IcgEyjCQCCFyab
-         fw1tMuYwoqXqhGp4FsOWPAS0HL2Z2j9dPk9iQuF70T1ZIQ5yn7S03uSVwyfVHWxfAmXx
-         IWygKRJwGplskak7GxwcLRcL4C3IfJHDtbsEOWfegB0ArQTs33laRk661wUSyXDajFh7
-         ZI2Dj7chuuQNZHF6iRWvE/79/59i7ZtkEbo2e71VKFEVCDeRLFUGK5YjpIuGk7uAWx0d
-         muG3V/nuwDXtO1YfGP2qiLaUpo5KGm0MJlxucNON8JWOvXUbNOqVyrgE72lEa4M1lAta
-         Qizw==
-X-Gm-Message-State: AOJu0YygLE5osFKFmC0nOkXpBVRl1fEZS7xWDL6+Xcw6mvJnJpwEMlz8
-        ocoN8mbYJzUfB9gCZDejXV6Ykg==
-X-Google-Smtp-Source: AGHT+IEtIHMYMr499Pz6qTmz8fDASvhs3CzdDBLFRf/FaIWBcVv4jmXzAkxmQhhC6RUbWx+Vprh7Ig==
-X-Received: by 2002:a2e:988e:0:b0:2c5:38d:f80b with SMTP id b14-20020a2e988e000000b002c5038df80bmr1964583ljj.6.1698410693742;
-        Fri, 27 Oct 2023 05:44:53 -0700 (PDT)
+        bh=t19R5BIrFfEuSBm/TM6rpzKrgSm7TvLjTJR3URDOKek=;
+        b=JShAoqLDsndhSSJJQOc35mZdWe13I9YZKQIKgFH6y5RjX+kHwWzaVSHGRTbwY3XOdO
+         5wLccqJsslRPt+YIVDLVF5cEZZRaLXZwvm1jpbQH/cQeRe1MnjwCpVM9l9t2DZLT3YTN
+         jYsv5aNVXGoajxAVmPxux+GPaTM+QoxahQzT9tII+MEv1Ka2ejdcd1aLdqkeZYqAfrbT
+         FEAlOYct5ANI2FixxM8n6aERTE1D7iiqPWH3NmVzDowbzuM6blro99fxhnUesDQLdPCS
+         XrmQBF/y/zpMUmbYnPsAQU/LCXo2PzmBs3pC+dpBoRV7Y/W3JmdI+Vi2wE7i/J+ZPwKH
+         EzQw==
+X-Gm-Message-State: AOJu0YwTCRaVz1XxJJWZ3co7o9b/orrJNuqgnTKjFQdfysw8Y4u160R9
+        XX9LvwGqePFgCpR+eRGZx3rZs8QEcnxzqCotQEg=
+X-Google-Smtp-Source: AGHT+IG0wyGmtwyIhwE796DUEK3liXFePPMqlC38wYl5W63bHntqesWmsF1/fLKgScwTqNmyR/GWGw==
+X-Received: by 2002:a2e:b889:0:b0:2c5:22b4:b573 with SMTP id r9-20020a2eb889000000b002c522b4b573mr1994804ljp.36.1698410728845;
+        Fri, 27 Oct 2023 05:45:28 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id z24-20020a2e3518000000b002bc3fbe9fd5sm267914ljz.55.2023.10.27.05.44.52
+        by smtp.gmail.com with ESMTPSA id z24-20020a2e3518000000b002bc3fbe9fd5sm267914ljz.55.2023.10.27.05.45.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Oct 2023 05:44:53 -0700 (PDT)
-Message-ID: <eaae79e5-b8d4-4ae3-bd17-08be86a4a328@linaro.org>
-Date:   Fri, 27 Oct 2023 14:44:51 +0200
+        Fri, 27 Oct 2023 05:45:28 -0700 (PDT)
+Message-ID: <8ffc7747-646a-4113-95b2-7be4816c072d@linaro.org>
+Date:   Fri, 27 Oct 2023 14:45:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] dt-bindings: display: msm: document the SM8650 DPU
+Subject: Re: [PATCH 4/8] dt-bindings: display: msm: document the SM8650 Mobile
+ Display Subsystem
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Rob Clark <robdclark@gmail.com>,
@@ -76,7 +77,7 @@ Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20231025-topic-sm8650-upstream-mdss-v1-0-bb219b8c7a51@linaro.org>
- <20231025-topic-sm8650-upstream-mdss-v1-3-bb219b8c7a51@linaro.org>
+ <20231025-topic-sm8650-upstream-mdss-v1-4-bb219b8c7a51@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -122,7 +123,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231025-topic-sm8650-upstream-mdss-v1-3-bb219b8c7a51@linaro.org>
+In-Reply-To: <20231025-topic-sm8650-upstream-mdss-v1-4-bb219b8c7a51@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -136,10 +137,13 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 25/10/2023 09:35, Neil Armstrong wrote:
-> Document the DPU Display Controller on the SM8650 Platform.
+> Document the Mobile Display Subsystem (MDSS) on the SM8650 Platform.
 > 
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
+>  .../bindings/display/msm/qcom,sm8650-mdss.yaml     | 322 +++++++++++++++++++++
+>  1 file changed, 322 insertions(+)
+> 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
