@@ -2,103 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01EE97D8EBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 08:30:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AC087D8F05
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 08:57:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232306AbjJ0Gaf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 02:30:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49196 "EHLO
+        id S235012AbjJ0G50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Oct 2023 02:57:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230178AbjJ0Gaf (ORCPT
+        with ESMTP id S231233AbjJ0G5Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 02:30:35 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9983E1A1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 23:30:28 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id 98e67ed59e1d1-2800c221af2so298162a91.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 23:30:28 -0700 (PDT)
+        Fri, 27 Oct 2023 02:57:25 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760981B4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 23:57:22 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9a6190af24aso271933366b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 23:57:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698388228; x=1698993028; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mGYSjaVIi+S19qrE4s4MYXS+G84vQOs9Sy34/mU//c0=;
-        b=bFZHmpxEwHzuoJlLkhY9PgPAAoafJHpx+EDJYSEcsSJc6RuanWseWxQ96sxit4+ZYf
-         kymp894dw3CRnTKEZVsaZBV68Rv/qGWqCfl4gPjAtP1JiyHj416uPi1Z3Xak6yQdu51h
-         W/gz2+vJvpHmka6QJiPVHYDIWJJqtWDnBCkTcldAEgYnOIGh9A3rlqcUGhtHiTRZhFKy
-         jCJbrZftQjcduLCEFa1c8tbJgsbuRWho1XcfrosrKWGywurI4bO0flk7W3p7sUU3criy
-         QSNxjVqKCO1+280KpOi5P0gC2HOSRlumwVCU57RAI3QWvG1Qlq5tLBUD2pDC/qylgX1P
-         dtEQ==
+        d=fairphone.com; s=fair; t=1698389841; x=1698994641; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kj3Zu6WMlpxQr17sM16EXcoz5cOx2Zq8aggknXeJGWY=;
+        b=JN948EZBExUcOWDWNBCyXB7eXJTLvHeQgvMLPe7NICB1+aIqkhHu6x1TNOtsCaOnLB
+         Mk1VsZcik65aIEirET+Dbu2FICYmMvkPeZqiEkZgRaxEGeBsRqPSrCe207P31kxxqPDr
+         7tA2Zc+dMs1FEQ6LuvYR5p02u6yUeWxFRLEGNnpMC51HEU3VcWuqnZGibuHpUpUlf4L9
+         dSfWQa2ccNjJHwSud8X4e/qTjYhdy6W1spdy1aCj/bzoeR7cr2AIez7kg3BsXz7xQy8j
+         9Z+ixaXR4OtTAwn9GFgFacH/terwG40qJs7DUWIM5HDHLSVkV1faUiZ8sUw18cWoQ66c
+         PRGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698388228; x=1698993028;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mGYSjaVIi+S19qrE4s4MYXS+G84vQOs9Sy34/mU//c0=;
-        b=eZJr/pZX5QvZUKznjCdF3IdA+pTPZWU57MZW6fnmO3Ad0Liud6bBLfTyXO33gTS8sg
-         QOvJyyd6M7Yk9UyImZuTiK09IbNVMBgUighMUp2xaXw0+/EV5Xn/bMrkhJNGTTE706Y4
-         fnC0ed8dn+JTCoDsfmrd6NmRLZA3tP1vkSt8NjZYCvCSEpflL24mLpZbbTypLMmpcItl
-         Q9b4StJboW4WdbvUT5lXHRPz/WNw6D382z4ic1c1BHzX9rPaNjf2guAW5PYgRSZCJNl7
-         pCo6KFuoaU7MSpLOx6lNVbMjmio4UtUO3PL6sPYWzEW7lvXG510Cj1PX5IWF6M9eDdiG
-         HI/Q==
-X-Gm-Message-State: AOJu0YwrN+vWmZJtIYx/LTdE0WcO7Prkx/fXt3MYSM9z9qFYhZp1KkkE
-        +mjaWW2v40fGYlhRn5qTYfelJSk+Av0SS1k/SOs=
-X-Google-Smtp-Source: AGHT+IEWybXcFWlGJx0QRug9sc8AtOqjSCFZ4gIYgGNoxLQzq/O7GCMPcypQ3OdoXgPHs0MOdCOqphKgLx1fNgUSgH4=
-X-Received: by 2002:a17:90b:1946:b0:27d:8fbd:be8c with SMTP id
- nk6-20020a17090b194600b0027d8fbdbe8cmr1730329pjb.28.1698388228015; Thu, 26
- Oct 2023 23:30:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698389841; x=1698994641;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kj3Zu6WMlpxQr17sM16EXcoz5cOx2Zq8aggknXeJGWY=;
+        b=J3nIzsuYAgWD077nzuu8TLvJDws2KKykWOeL7sEVc9WfT9l1347qwYEpLW/fiDw9Ho
+         OrNExS50/1QspWCudlyGyt9e+LlvLqnX3HmD5WO5q4OsIoSSlPjCEQQsNmF2fZWv/2uk
+         2vhQ4b1KfPcthbSq0nX5NFBttg+9QGNQq9NhkUNM3mvOPUag8lY7xbEnJMVhOD+Ew/iG
+         TOxCalzu90Nf5TE7QpS2sZNLuwgfuQC1mFoKISQTGhFA1taVPdMlqmpN9k+3ph36V80/
+         LKtgxfWAYgkNmlJ6+TEFXEogMupHOtxcH7/0hYwdAItknbIS3ZR/wG3oYUAgheoRjpZO
+         OIDg==
+X-Gm-Message-State: AOJu0YyiRrw5kgfJry8ciMrPhqcyjEFHbV4Ih1V5iSWebDITvyqN6NRR
+        GgCzCJu4izQ3S1OYu5kjXixfUA==
+X-Google-Smtp-Source: AGHT+IHq5doa0BQX+kMaVEeO5/zwweZM2r10RQCthE0JiUtVHXqbkVYblKtKbVO/w75KYeXdp21e6Q==
+X-Received: by 2002:a17:907:9718:b0:9be:6395:6b0f with SMTP id jg24-20020a170907971800b009be63956b0fmr1436632ejc.29.1698389840852;
+        Thu, 26 Oct 2023 23:57:20 -0700 (PDT)
+Received: from otso.luca.vpn.lucaweiss.eu (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id rp28-20020a170906d97c00b009b296ce13a3sm731381ejb.18.2023.10.26.23.57.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Oct 2023 23:57:20 -0700 (PDT)
+From:   Luca Weiss <luca.weiss@fairphone.com>
+Date:   Fri, 27 Oct 2023 08:57:18 +0200
+Subject: [PATCH] wifi: ath11k: Defer on rproc_get failure
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:b744:b0:4d9:e5c1:1a1b with HTTP; Thu, 26 Oct 2023
- 23:30:27 -0700 (PDT)
-Reply-To: ch4781.r@proton.me
-From:   Mrs madina <mrschantalr@gmail.com>
-Date:   Fri, 27 Oct 2023 08:30:27 +0200
-Message-ID: <CADKofQPKrsP9aLkbBf4MBC4MKs4Go5G0w4Cc-baoQRz-7LEr6w@mail.gmail.com>
-Subject: For easy communication send me your whatsapp number .
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=7.2 required=5.0 tests=ADVANCE_FEE_3_NEW_MONEY,
-        BAYES_50,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        FREEMAIL_FROM,HK_NAME_FM_MR_MRS,LOTS_OF_MONEY,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,UNDISC_MONEY autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: *  0.0 RCVD_IN_DNSWL_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
-        *      DNSWL was blocked.  See
-        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
-        *      for more information.
-        *      [2607:f8b0:4864:20:0:0:0:1029 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [mrschantalr[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  1.5 HK_NAME_FM_MR_MRS No description available.
-        *  0.0 LOTS_OF_MONEY Huge... sums of money
-        *  2.7 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-        *  2.4 ADVANCE_FEE_3_NEW_MONEY Advance Fee fraud and lots of money
-X-Spam-Level: *******
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231027-ath11k-rproc-defer-v1-1-f6b6a812cd18@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAE1fO2UC/x3MMQqAMAxA0atIZgNNBYteRRxKm2oQVFIRQXp3i
+ +Mb/n8hswpnGJsXlG/JcuwV1DYQVr8vjBKrwRrbkbEO/bUSbainHgEjJ1aM1PfODckTdVDDUzn
+ J80+nuZQPzjDaZmQAAAA=
+To:     Kalle Valo <kvalo@kernel.org>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.12.3
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+If we already have gotten the rproc_handle (meaning the "qcom,rproc"
+property is defined in the devicetree), it's a valid state that the
+remoteproc module hasn't probed yet so we should defer probing instead
+of just failing to probe.
 
-I have a personal Project in which i need your assistance I would like
-to be sure of your willingness, trustworthiness and commitment to
-execute this transaction with me. I seek your partnership in
-transferring  this fund {$US6,000,000}. If interested
-(mrs.madina2541@gmx.com ) for more details about the fund.
+This resolves a race condition when the ath11k driver probes and fails
+before the wpss remoteproc driver has probed, like the following:
 
-thank you.
+  [    6.232360] ath11k 17a10040.wifi: failed to get rproc
+  [    6.232366] ath11k 17a10040.wifi: failed to get rproc: -22
+  [    6.232478] ath11k: probe of 17a10040.wifi failed with error -22
+       ...
+  [    6.252415] remoteproc remoteproc2: 8a00000.remoteproc is available
+  [    6.252776] remoteproc remoteproc2: powering up 8a00000.remoteproc
+  [    6.252781] remoteproc remoteproc2: Booting fw image qcom/qcm6490/fairphone5/wpss.mdt, size 7188
 
-Mrs madina
+So, defer the probe if we hit that so we can retry later once the wpss
+remoteproc is available.
+
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ drivers/net/wireless/ath/ath11k/ahb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
+index 235336ef2a7a..f8f5e653cd03 100644
+--- a/drivers/net/wireless/ath/ath11k/ahb.c
++++ b/drivers/net/wireless/ath/ath11k/ahb.c
+@@ -803,8 +803,8 @@ static int ath11k_core_get_rproc(struct ath11k_base *ab)
+ 
+ 	prproc = rproc_get_by_phandle(rproc_phandle);
+ 	if (!prproc) {
+-		ath11k_err(ab, "failed to get rproc\n");
+-		return -EINVAL;
++		ath11k_dbg(ab, ATH11K_DBG_AHB, "failed to get rproc, deferring\n");
++		return -EPROBE_DEFER;
+ 	}
+ 	ab_ahb->tgt_rproc = prproc;
+ 
+
+---
+base-commit: 2ef7141596eed0b4b45ef18b3626f428a6b0a822
+change-id: 20231027-ath11k-rproc-defer-d166779fa113
+
+Best regards,
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
+
