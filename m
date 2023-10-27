@@ -2,182 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F2107D8C98
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 02:36:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F3487D8D6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Oct 2023 05:31:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234917AbjJ0AgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Oct 2023 20:36:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37116 "EHLO
+        id S229784AbjJ0DbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Oct 2023 23:31:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbjJ0AgB (ORCPT
+        with ESMTP id S233035AbjJ0DbJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Oct 2023 20:36:01 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 045C31B5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 17:35:55 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id 006d021491bc7-586753b0ab0so845943eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Oct 2023 17:35:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698366954; x=1698971754; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=F80iHno91JCv1Uj52E9vutPeUGQGB84uBRbdzpgvxfY=;
-        b=SK7PZAym90wWs513+oR25dOXgCMWUIcqNwctSiJ1el5uMYcS2+No7nAW3KcdTrrfxU
-         V2/yjKfO10Yupr+OkpfocNRdL0srjNZRETo5NO2h4lk9mRvUOmsjw7vCK8ICJMaxs2w2
-         5b4X2JcJJUWwV9035S1EOXToEWGVFjG3w32ljC71nM1BJslvkcmhsdvyVXdBU7aPC5gE
-         rxBp80Yl6FrTWR4XHECoFN05bTPtMl8mJ1YCN78mRQVpLW0eSjgjkVBQc2T+H9KVwIVb
-         aUWR0cBahCUP74mQWkeKPTupkh2K20NqDdiJIQIZ9qmzeXddSBERwKt4r53fNHh8ISKV
-         Lb9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698366954; x=1698971754;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F80iHno91JCv1Uj52E9vutPeUGQGB84uBRbdzpgvxfY=;
-        b=vkdmGQkohpmwlbUFJQmj4vsC16hWSKveHYoSRcQ+0S2t+pDr+wcIl55yV+Ud6Ov1KJ
-         fywkgnDNhuWxcKzG90iMPfq5tynqIQb2oYR5WBSIavtLfPeQla42RKsjmC0+Cznq56Vv
-         CttqaAWoR7fdHN9YJzXi/y5ER074yOi2iBe/X/hspu7Cx7Z1YGMeF9pBGFtZKlshprR0
-         bFoHZWFG4Kk5BSef0NOq8e2zsza7HqJYIGYhWOkYZgRSoJPkN0wqF4FOsMiUa0qLr3NW
-         PUyngQnTAlkwlTf57aIEZYamV9Aqy6gXTDwwGbLLb28cs1prNS2e95JDSuOykGXixP3t
-         Zwow==
-X-Gm-Message-State: AOJu0YybSVldLuyShSek4N8dh1i9X20wFj16wjUycSdAp4u4dIO4WciN
-        vH7Xzk87Jkt9OCb2GgQ6tfJZHf3UbOsb02Q5g3Qm2Q==
-X-Google-Smtp-Source: AGHT+IEcUzbPOkOWvjp/fe5w7R1pKSB7pe+4Z7WOc6Z7tCpLWBp758kcYR8l2Wn8zbZmVR88yiUuEXQOI6d+Oe8PUJs=
-X-Received: by 2002:aca:1907:0:b0:3b2:df83:3aec with SMTP id
- l7-20020aca1907000000b003b2df833aecmr950492oii.54.1698366954184; Thu, 26 Oct
- 2023 17:35:54 -0700 (PDT)
+        Thu, 26 Oct 2023 23:31:09 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C8D9FA;
+        Thu, 26 Oct 2023 20:31:06 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39R2m0oh018108;
+        Fri, 27 Oct 2023 03:30:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=eA+4m9BmAzgsT7qVo/Hpcl7NxxBTDV/IxifAscaxspg=;
+ b=AVgA+Ky2T2NXZCP+Mw7ceRu+RaWr+qnjvBKKXWeoMU71AvH4kG6ioZ8B46FNkv6+kBfi
+ /crr3ljvtFVc1NkrFgSxSZ6kvyYMAc8mF0oAp/x5KWaf8K+mX+fCuDwQu4aJifQqnjaL
+ +B0N80AFHzFaOpRFS0FClk5GGlTSSUVGqNePT1Lud1GA+bO/HJaucB8BIh8qBk9MeYXs
+ KDiDE2aLsFbUbFyeo3IL1i2ln79l9cqmdAhD0w02CGeIee02FqCTJIJfyEH3lSfr4GH6
+ uK8xh4x7MzBe7NPdLEk07KPZAZM9ihEe9Rw2kStyGMPEFgyPRPNktT5qHh+3N86fxOfz ow== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3tyx3u8wy3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Oct 2023 03:30:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39R3Us0q022324
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 27 Oct 2023 03:30:55 GMT
+Received: from [10.249.29.6] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 26 Oct
+ 2023 20:30:49 -0700
+Message-ID: <75890f37-6d71-45b3-a68a-86d64fe1649a@quicinc.com>
+Date:   Fri, 27 Oct 2023 09:00:46 +0530
 MIME-Version: 1.0
-References: <20231004003125.2289613-1-dmitry.baryshkov@linaro.org>
- <20231004003125.2289613-2-dmitry.baryshkov@linaro.org> <20231026225622.GT3553829@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <20231026225622.GT3553829@hu-bjorande-lv.qualcomm.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 27 Oct 2023 03:35:42 +0300
-Message-ID: <CAA8EJpr3VZiyCHCDPh6uhYKOPruLGF=WbOHdGYNZWiZBxU9UMA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] clk: qcom: implement RCG2 'parked' clock support
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 6/8] arm: dts: qcom: Add pmic glink support for sm8450-qrd
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
+        <quic_wcheng@quicinc.com>, Conor Dooley <conor+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-6-quic_kriskura@quicinc.com>
+ <c1929d63-93a4-4425-bdd1-d76a696b528e@linaro.org>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <c1929d63-93a4-4425-bdd1-d76a696b528e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2SUW2Ob2UFprIsV8INYpVMJYB6t3tRb1
+X-Proofpoint-GUID: 2SUW2Ob2UFprIsV8INYpVMJYB6t3tRb1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-26_22,2023-10-26_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ mlxlogscore=498 suspectscore=0 spamscore=0 mlxscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310270029
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 27 Oct 2023 at 01:56, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->
-> On Wed, Oct 04, 2023 at 03:31:24AM +0300, Dmitry Baryshkov wrote:
-> > clk_rcg2_shared_ops implements support for the case of the RCG which
-> > must not be completely turned off. However its design has one major
-> > drawback: it doesn't allow us to properly implement the is_enabled
-> > callback, which causes different kinds of misbehaviour from the CCF.
->
-> I have some behaviors in mind when reading this, others might not.
-> Please give some specific behavior(s) here.
-
-Bjorn (and other interested parties). At this RFC stage it would be
-really nice to check whether the patch idea is worth the trouble and
-if it fixes the issue.
-
->
-> Thanks,
-> Bjorn
->
-> >
-> > Follow the idea behind clk_regmap_phy_mux_ops and implement the new
-> > clk_rcg2_parked_ops. It also targets the clocks which must not be fully
-> > switched off (and shared most of the implementation with
-> > clk_rcg2_shared_ops). The major difference is that it requires that the
-> > parent map doesn't conain the safe (parked) clock source. Instead if the
-> > CFG_REG register points to the safe source, the clock is considered to
-> > be disabled.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/clk/qcom/clk-rcg.h  |  1 +
-> >  drivers/clk/qcom/clk-rcg2.c | 34 ++++++++++++++++++++++++++++++++++
-> >  2 files changed, 35 insertions(+)
-> >
-> > diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> > index e6d84c8c7989..9fbbf1251564 100644
-> > --- a/drivers/clk/qcom/clk-rcg.h
-> > +++ b/drivers/clk/qcom/clk-rcg.h
-> > @@ -176,6 +176,7 @@ extern const struct clk_ops clk_byte2_ops;
-> >  extern const struct clk_ops clk_pixel_ops;
-> >  extern const struct clk_ops clk_gfx3d_ops;
-> >  extern const struct clk_ops clk_rcg2_shared_ops;
-> > +extern const struct clk_ops clk_rcg2_parked_ops;
-> >  extern const struct clk_ops clk_dp_ops;
-> >
-> >  struct clk_rcg_dfs_data {
-> > diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> > index 5183c74b074f..3f52abf0025e 100644
-> > --- a/drivers/clk/qcom/clk-rcg2.c
-> > +++ b/drivers/clk/qcom/clk-rcg2.c
-> > @@ -5,6 +5,7 @@
-> >
-> >  #include <linux/kernel.h>
-> >  #include <linux/bitops.h>
-> > +#include <linux/bitfield.h>
-> >  #include <linux/err.h>
-> >  #include <linux/bug.h>
-> >  #include <linux/export.h>
-> > @@ -1150,6 +1151,39 @@ const struct clk_ops clk_rcg2_shared_ops = {
-> >  };
-> >  EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
-> >
-> > +static int clk_rcg2_park_is_enabled(struct clk_hw *hw)
-> > +{
-> > +     struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> > +     u32 cfg;
-> > +     int ret;
-> > +
-> > +     if (!clk_rcg2_is_enabled(hw))
-> > +             return false;
-> > +
-> > +     ret = regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &cfg);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     return FIELD_GET(CFG_SRC_SEL_MASK, cfg) != rcg->safe_src_index;
-> > +}
-> > +
-> > +/*
-> > + * Unlike clk_rcg2_shared_ops, the safe_src_index aka XO must NOT be present in
-> > + * parent_map. This allows us to implement proper is_enabled callback.
-> > + */
-> > +const struct clk_ops clk_rcg2_parked_ops = {
-> > +     .is_enabled = clk_rcg2_park_is_enabled,
-> > +     .enable = clk_rcg2_shared_enable,
-> > +     .disable = clk_rcg2_shared_disable,
-> > +     .get_parent = clk_rcg2_shared_get_parent,
-> > +     .set_parent = clk_rcg2_shared_set_parent,
-> > +     .recalc_rate = clk_rcg2_shared_recalc_rate,
-> > +     .determine_rate = clk_rcg2_determine_rate,
-> > +     .set_rate = clk_rcg2_shared_set_rate,
-> > +     .set_rate_and_parent = clk_rcg2_shared_set_rate_and_parent,
-> > +};
-> > +EXPORT_SYMBOL_GPL(clk_rcg2_parked_ops);
-> > +
-> >  /* Common APIs to be used for DFS based RCGR */
-> >  static void clk_rcg2_dfs_populate_freq(struct clk_hw *hw, unsigned int l,
-> >                                      struct freq_tbl *f)
-> > --
-> > 2.39.2
-> >
 
 
+On 10/27/2023 1:11 AM, Konrad Dybcio wrote:
+> 
+> 
+> On 10/17/23 15:18, Krishna Kurapati wrote:
+>> Add Pmic Glink support for sm8450-qrd to facilitate passing
+>> of roe switch notifications generated by ADSP to dwc3 core
+>> via ucsi and pmic glink's.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+> No phy+redriver+dp configuration?
+> 
+Hi Konrad,
 
--- 
-With best wishes
-Dmitry
+  Did you mean adding the following node:
+
+         typec-mux@42 {
+                 compatible = "fcs,fsa4480";
+                 reg = <0x42>;
+
+                 interrupts-extended = <&tlmm 2 IRQ_TYPE_LEVEL_LOW>;
+
+                 vcc-supply = <&vreg_bob>;
+                 mode-switch;
+                 orientation-switch;
+
+                 port {
+                         fsa4480_sbu_mux: endpoint {
+                                 remote-endpoint = <&pmic_glink_sbu>;
+                         };
+                 };
+         };
+
+
+and then adding port-2 for pmic_glink ?
+
+Usually for role-switch the port-0/1 defined in this patch are 
+sufficient. Also if I added it, I don't have a way to currently test it. 
+So skipped this node. I will try and see if I can test it and add it if 
+possible.
+
+Regards,
+Krishna,
