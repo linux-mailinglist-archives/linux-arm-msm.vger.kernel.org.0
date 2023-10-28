@@ -2,73 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F8007DA70E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 15:05:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C4717DA712
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 15:06:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229651AbjJ1NFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Oct 2023 09:05:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40572 "EHLO
+        id S229945AbjJ1NGm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Oct 2023 09:06:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjJ1NF3 (ORCPT
+        with ESMTP id S229572AbjJ1NGl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Oct 2023 09:05:29 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E63ECDE
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 06:05:25 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c59a4dcdacso45896271fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 06:05:25 -0700 (PDT)
+        Sat, 28 Oct 2023 09:06:41 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627CCE3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 06:06:38 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2c5071165d5so5131381fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 06:06:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698498324; x=1699103124; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q7REDLfQsAJ7SndjWElaiqS1d/sO15e1fwlkWpCSSgw=;
-        b=BifJbxzZaHymXPjwPjLh1ve4DxlSJA2V7NuNHazcXuy74j7I6jMT02rm9eCQF+wuHW
-         /dCEhHKdSKOZJ5B+JwDGVmKf8xcNtbqGEgie+I/sVUYoxtVFIeN3ntKHkkE/oHtS5OxI
-         OHnk47HLT+nDRQY6goIKyYM5yLQC18OMgCmwveXjKbdh8iOVZj5q6v8SFDNT6J2K9HIk
-         DC+6G6p8JqnLkPe+uvA+iR+AAXk7BiFAZLEIDM4qL0d/U+Z4/eznnDrotbnXdgLsR5bf
-         XaQhvesybQ8FX5VCKQ7e5CaUF6WbpPfZgIkU2U3960YG4UDXmWailYfakZhKCfQ/qhdj
-         Bb8g==
+        d=linaro.org; s=google; t=1698498396; x=1699103196; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nEJnk1mY1BYpzs+s+eajZKkTegA51coEw5OM/X1PGos=;
+        b=BIFtZzJ+pF0nEBZWK/sXQdVbx0VShfU4k3OswHflU+vcd8zbvSAuVS+M5M1TOUIHUA
+         AZ+/nCwEgGQewfWoks/mo8Ju42QES9oHcBLXgNo0EflBM+B3MBb/w0HOUxckoWDbhtvJ
+         K2tnJmQt45yuubQFoQNlyI2zlhVu8iD+fmk19w3E5gTCeTPbwM6UOkgLlEa4/Pn7LfDM
+         fh4RfY6m2X2lW9AsEKgekCQzFliPT2uP3IKmNbZffryRpZ5/rc7L8mthceMHdA2P7eia
+         chntQO+I6T/6uY/adXwOQsxVPcuZuj2uBwiZQjYP/jgFQdxyCRRezPiRumWM5Gw3qVOp
+         oFvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698498324; x=1699103124;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q7REDLfQsAJ7SndjWElaiqS1d/sO15e1fwlkWpCSSgw=;
-        b=s3vQe9SbEEhgtgyOW4uyqIW4ePdzzdvVA65khC5cQHZUY1T+SeNf30b7/01hWB0sgN
-         I6/Gm4p9QM9cdQ79f89Pqc3UiFHsOugE3aY+NthkwhcAyeOGcnTJmkmO1q1Tt0J0vYmG
-         K+QnGbZldaDR4HVSuL1i8W0lHmhoLlWawpfQ6zL5XL2ghXGP4rbr+S6qWN+2UUCu6zM4
-         QvsTDf1QugwtCIssVuADwGWqtuZ+TzfYSRrcugyhNIWaoILpOt4kvpSlIv61ONWa6AO6
-         8VM5bvbNy69slVVeqflX45VpggiqtSEPcwaQYMV6qi92vg6wpXRAk0D0jc73hH8av9hi
-         pyFQ==
-X-Gm-Message-State: AOJu0Yx/pPGuJjK2O6V3u7XOG1IlSCDCj4/6wzHUtNRZdvR+koVQFHWz
-        /E4lTywkRnahdMwu7dYeIkNNHQuJy9UvORetNqE=
-X-Google-Smtp-Source: AGHT+IEff08NZ+taaIxvODn3ijskDQen0I7LF1xmT9yvVdzmz0sGH6Mjy906q4wa1YMvfHtWuelFLQ==
-X-Received: by 2002:a2e:a70f:0:b0:2c0:293c:ad12 with SMTP id s15-20020a2ea70f000000b002c0293cad12mr3226120lje.17.1698498323978;
-        Sat, 28 Oct 2023 06:05:23 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698498396; x=1699103196;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nEJnk1mY1BYpzs+s+eajZKkTegA51coEw5OM/X1PGos=;
+        b=fuubTWHVPGVgRYcFJwy/t182Sxtw7nzBu9JoLNeGbeUXRAvC/j0K2jFa/1V9d++o4e
+         NUG4MxNA770D+gEPI6ElxCBCRqAuJnkTLckr36P6kqP6NYBeNYMkWu1dICvIAkOG1SI8
+         yaIVd5sbD3nXHo9XNc4ZduSuBFknO2b+DZhnnE54TS/a3JthjfHXNi2ZIk8J3wpQVRPX
+         6nFbXSwYWZYCxHV69dN9EYqDOJlDlLa7g+16dy9EOb1h4aIWD12NSwGP5KlrJB7HAUgR
+         0+kLOzMnKa1O0FdcLnm+kdqxV/WKeFoU91+fTf8+M43ZvxA+AziIdSmI32marV2H87N1
+         bCJQ==
+X-Gm-Message-State: AOJu0YzxUp/DrZm/j7pXpXLozTEuZZ5Gaiolg7YoMCaZ1Iq64k7VjHep
+        Aq882qnaTmJ9g71Gk+t99/bGxg==
+X-Google-Smtp-Source: AGHT+IGguaRgN4UqqIPRwe20wpwSRSo/M+SCxM/3uc39zLsAzkNVAY4Tr7oBmpFypqAlyqKOlyRklw==
+X-Received: by 2002:a2e:bc81:0:b0:2bf:f32a:1f68 with SMTP id h1-20020a2ebc81000000b002bff32a1f68mr4550182ljf.19.1698498396559;
+        Sat, 28 Oct 2023 06:06:36 -0700 (PDT)
 Received: from [192.168.130.123] (178235177183.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.183])
-        by smtp.gmail.com with ESMTPSA id z21-20020a2e8415000000b002b6ce8b0dd6sm618828ljg.75.2023.10.28.06.05.22
+        by smtp.gmail.com with ESMTPSA id z21-20020a2e8415000000b002b6ce8b0dd6sm618828ljg.75.2023.10.28.06.06.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Oct 2023 06:05:23 -0700 (PDT)
-Message-ID: <42fa773d-b58a-4bd9-b12d-3e9931d2ae6c@linaro.org>
-Date:   Sat, 28 Oct 2023 15:05:21 +0200
+        Sat, 28 Oct 2023 06:06:36 -0700 (PDT)
+Message-ID: <2f8672a3-1ce4-4f8c-a472-3a1ad09e9214@linaro.org>
+Date:   Sat, 28 Oct 2023 15:06:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] pinctrl: qcom: sm8650-lpass-lpi: add SM8650 LPASS
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231027093615.140656-1-krzysztof.kozlowski@linaro.org>
- <20231027093615.140656-3-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] clk: qcom: gcc-msm8939: Fix mclk0 & mclk1 for 24 MHz
 Content-Language: en-US
+To:     Vincent Knecht <vincent.knecht@mailoo.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Stephan Gerhold <stephan@gerhold.net>
+References: <20231028120756.316574-1-vincent.knecht@mailoo.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -105,7 +103,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231027093615.140656-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231028120756.316574-1-vincent.knecht@mailoo.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -118,20 +116,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.10.2023 11:36, Krzysztof Kozlowski wrote:
-> Add driver for the pin controller in Low Power Audio SubSystem (LPASS)
-> of Qualcomm SM8650 SoC.
+On 28.10.2023 14:07, Vincent Knecht wrote:
+> Fix mclk0 & mclk1 parent map to use correct GPLL6 configuration and
+> freq_tbl to use GPLL6 instead of GPLL0 so that they tick at 24 MHz.
 > 
-> Notable differences against SM8550 LPASS pin controller:
-> 1. Additional address space for slew rate thus driver uses
->    LPI_FLAG_SLEW_RATE_SAME_REG and sets slew rate via different
->    register.
-> 
-> 2. Two new pin mux functions: qca_swr_clk and qca_swr_data
-Hmmm so slimbus is entirely removed on 8650?
+> Fixes: 1664014e4679 ("clk: qcom: gcc-msm8939: Add MSM8939 Generic Clock Controller")
+> Suggested-by: Stephan Gerhold <stephan@gerhold.net>
+Reported-by?
 
-Diffing it against 8550, looks sane
 
+> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+> ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
