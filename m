@@ -2,77 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C8D077DA5BA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 10:06:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84A867DA61C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 11:19:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233170AbjJ1IGZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Oct 2023 04:06:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56926 "EHLO
+        id S229483AbjJ1JTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Oct 2023 05:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233190AbjJ1IGY (ORCPT
+        with ESMTP id S229469AbjJ1JTl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Oct 2023 04:06:24 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A03F121
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 01:06:21 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50797cf5b69so3860515e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 01:06:21 -0700 (PDT)
+        Sat, 28 Oct 2023 05:19:41 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081DFF2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 02:19:36 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-507f1c29f25so3916722e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 02:19:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698480380; x=1699085180; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698484774; x=1699089574; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wefxII02gAtHMYcJTuAHCcFkJplYb6i79G6DCLTeYuQ=;
-        b=ZQPWagkSyY4oLPkojhDJaDcAEFyoFl/lRIhbTFXZWp619wA2KZgpnIh3Y2QGOWb7oH
-         RUk3hhnJEZWR6HKEQcFD//P3cdk9k5zHPBdVSmvK/mtEl4EMIur6TQyINxjGSCr3ltP4
-         VpOZqvGvjfyY/QkBmKOu9ZOT6jnfhpm3tWRCnLodqmpW48DgMbpHcqXeJU+1abhVdouL
-         G0xRt2nAArLFn7MGfrfNnj44TZN73ECskkHlh8j666qYVqeCuONFbH8DOMMx4DPyDj1P
-         bYesjaGcukxKyxx8VRGwaI/F+ASg2wVPYWA2foFPc5hY98bM0B/uu9gxOnvg2Y38pURp
-         dEeA==
+        bh=r14PfVQZJtRhRFTTat1MXNc44OC5b+RVhDdh07xZHtI=;
+        b=OPAw5rZr9vEQ5/lxzHthulqdbfv2TorebimVXCSxnb758W5CGdeEZ6yJ61x3sqOVf/
+         M/mI2uqh+ndpDq/IzqXatN2JngZUfNv3QPW8RWN9IVMhYCoWG4K69G8UcoHpldYLYiMv
+         wDjm7N9cm+3tWgJA2f26+zR/3xjuc/WsjFgEgyYuSD6mCdXNOBYsKHO1fRGONlKUwPf3
+         cpxzy/LaavRIqSkoHhTlEJNMEvsfqE3J79vYKbdZqqFMFm5CvXyuoa0Cy13KN8xQsxxS
+         4lhS1sIFtp3ro8kB6SLgNDbTPeTu4r1qBl2H6llc/i39igcMVQ5E5gTdJ3ugFWhzDGRH
+         RkTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698480380; x=1699085180;
+        d=1e100.net; s=20230601; t=1698484774; x=1699089574;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wefxII02gAtHMYcJTuAHCcFkJplYb6i79G6DCLTeYuQ=;
-        b=AZYDHU3V80ZV3v+VEECjMfEzeXqtWl4X4yDiss10M9NAeWcPBDM2YJIefDzdhKTR+z
-         EmUkLJAhA3QafUtweR9WHAU2JmVx5BaG0jiRm4bOpeGKoWnXJHyMXp829xEoLwBMHk3V
-         NI21D5ymrAhlI5UlUgP2zv1XLF+0mgaOq3jt03Sl9JYMXncgWLCMiJ9PKQO9AbqVuv+Z
-         jTNNhisFAwE/LD0BxciC2kLVnaBms45+G03CG72ov5Oc6/Qbzw0brsi/FOMVTRZXNKJS
-         znmPCIeFWOFCtv6DNYJArgJK2cTEfVelwgi/kSFhG5o/RW0KKLdquVOs0xX9sKOf9kDa
-         +TBg==
-X-Gm-Message-State: AOJu0YwQyGb11ghgYiG86aD5hbmZZi4GM4uXXl+wGNp7NEaTCAgu5D65
-        kfxOvMhrHkPHXlCPnTwkgJkPvQ==
-X-Google-Smtp-Source: AGHT+IGGycbusJVRpq6CtgGmCnAVfe/aVlJSDuGnxMp7KASqDGw+Y635kgHjaj/axFR+EArobvm2bw==
-X-Received: by 2002:a05:6512:21c2:b0:507:a9e1:5a3b with SMTP id d2-20020a05651221c200b00507a9e15a3bmr3133176lft.0.1698480379816;
-        Sat, 28 Oct 2023 01:06:19 -0700 (PDT)
+        bh=r14PfVQZJtRhRFTTat1MXNc44OC5b+RVhDdh07xZHtI=;
+        b=oFV/BicqP1HQevrWBbgMb+ejmM+MuM20lyqkOpdue3GYGvMUlkpM2jMexOBjW+uxvV
+         jy88fjVZdsYeS8bR9CWJ0EPvw2nTtw7ouHBgyf/xLpEXLPwvSer/Kix7HrefXdwhlltB
+         P87Cyhf+k8ZUipvTWLgkpkMXl76OK3itp0vCq0xnfdrtUmKKdRukpw5L+UbLDuvGnZ/T
+         FJE+QuIxlHYYMkbzPiswPupnJCzThSlKyCGFqxy2rIP1g0oXAX1DJppz4pPeIRlgTXNS
+         Vj0qNJat+1YKYAPjuGD3QYWpQjgaV3GSaAILVr4LN+FXN8F+O/8um/oqaioIIWrisMuB
+         Dn4w==
+X-Gm-Message-State: AOJu0YzsGaygdM5knNUWnVo826lchzceCBwZYlj4s2hHZLS4iLmZE6XR
+        GnMP/lUPVvTF9reCdhdkNsVzcA==
+X-Google-Smtp-Source: AGHT+IHdivAjMdcLyeZCLEu4k12Sh11mbR8gaVjFac4gymHWhOppE9NVQVIzv75qN+CrPKfLwuRVhA==
+X-Received: by 2002:a05:6512:2f4:b0:500:a6c1:36f7 with SMTP id m20-20020a05651202f400b00500a6c136f7mr3367170lfq.3.1698484774202;
+        Sat, 28 Oct 2023 02:19:34 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id c9-20020a056512238900b004fbc82dd1a5sm570985lfv.13.2023.10.28.01.06.18
+        by smtp.gmail.com with ESMTPSA id t8-20020a056512068800b004ff6fa3f038sm582464lfe.144.2023.10.28.02.19.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Oct 2023 01:06:19 -0700 (PDT)
-Message-ID: <fac4e966-5322-4da8-94b9-e2e1a895a88a@linaro.org>
-Date:   Sat, 28 Oct 2023 10:06:18 +0200
+        Sat, 28 Oct 2023 02:19:33 -0700 (PDT)
+Message-ID: <131fd0c0-0a53-4c2f-9f2a-688b1e53b1aa@linaro.org>
+Date:   Sat, 28 Oct 2023 11:19:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] arm64: dts: qcom: sc7280: Add CDSP node
+Subject: Re: [PATCH v2 1/4] dt-bindings: mfd: qcom,tcsr: Add compatible for
+ sm8250/sm8350
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
- <20231027-sc7280-remoteprocs-v1-7-05ce95d9315a@fairphone.com>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, lee@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1698253601-11957-1-git-send-email-quic_mojha@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -118,11 +109,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231027-sc7280-remoteprocs-v1-7-05ce95d9315a@fairphone.com>
+In-Reply-To: <1698253601-11957-1-git-send-email-quic_mojha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -131,19 +122,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/10/2023 16:20, Luca Weiss wrote:
-> Add the node for the ADSP found on the SC7280 SoC, using standard
-> Qualcomm firmware.
+On 25/10/2023 19:06, Mukesh Ojha wrote:
+> Document the compatible for both sm8250 and sm8350 SoCs.
 > 
-> The memory region for sc7280-chrome-common.dtsi is taken from msm-5.4
-> yupik.dtsi since the other areas also seem to match that file there,
-> though I cannot be sure there.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |   5 +
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 138 +++++++++++++++++++++
->  2 files changed, 143 insertions(+)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
