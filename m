@@ -2,74 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84C497DA731
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 15:21:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2E467DA75F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 15:43:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229698AbjJ1NVs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Oct 2023 09:21:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51830 "EHLO
+        id S229994AbjJ1Nny (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Oct 2023 09:43:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbjJ1NVr (ORCPT
+        with ESMTP id S230075AbjJ1NWV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Oct 2023 09:21:47 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB921E3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 06:21:44 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-507bd19eac8so4327084e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 06:21:44 -0700 (PDT)
+        Sat, 28 Oct 2023 09:22:21 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C277FFC
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 06:22:18 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-5082a932bdeso2127347e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 06:22:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698499303; x=1699104103; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qUL3TIWraIjLoBjR/tSpsWt5Ij1jmFrNh8eAkT0CWUs=;
-        b=jqVn5Kt8cK3LR3L/YoJfGvL6TvnbUous1DcIvPHJQeSAXWBOXlKGCVeIdSaegk9SAK
-         6zTpa2zUIAnxHo0Eo12wIT0NIKj34vAoou2PZpZ+9YAUuhOextGB8wpBFzrzuY8aCmPn
-         nPLmsC0Ixh24313TLfz1Mn2peyMHgNo70INZTkFe83NBbVuy0NlS6KwxUeMOdxHpU5bX
-         txK6fgCR0zpXyRMQglLvpwxLbTvmpDMa7eVyTzQaBo+a+gxnmTPTRvAUY9Ps4GIVFreC
-         o6Gj0j++CfrKShdecIFy/kAnfBZabJ6j45vEOdIL3ha9xjVhONbS7E3yLG1yird58n3c
-         Xo/A==
+        d=linaro.org; s=google; t=1698499337; x=1699104137; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E6pdZ2aO7b/DBuGDGSOI5y96/5iv9R+X1Oz+3eai3ok=;
+        b=hS/3xj0C1OacD/bsuv3/FLrDLxotoWEw9Ef0PbZn6O0ixBSS62V99OCS+Cm5jPWXWw
+         1kgEjkgsokMdA01V8EL/IfLha9hh1u1HPtWNCt8FC8JmU4Fnn30IJ6+PDS1SpXp/yaw4
+         Lkc8sEQSYPhUAfb4Vqd4rcoksTk+4+qPI9FYYT9EfOePcs+0C7/14kkCPOqV2TcJVl8j
+         D9ZAeckrkbtOyFTg8GJ5J0KiI/Zj/w1FSm6PSozdTjX2uW13JvMs8dfAOKvf0rHWg6zf
+         UlKLoL2deZaoYY/s4tOYW7Pejn90y55DUfwt1/QgOmxTCKwYy92LzigVCfbvl9P39is1
+         J5Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698499303; x=1699104103;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qUL3TIWraIjLoBjR/tSpsWt5Ij1jmFrNh8eAkT0CWUs=;
-        b=S6LRHkz1KDoTnwuBuqP10g15Y/jiX9OO6IkxTTIshrE/JFX5Rvnhqir1uzeJV5B7Xn
-         GPU+J3OeBi3YrfG1LBIDq0D2jbRdJvIESAHr5RNklGo9LtlQQcGX9xxsnHIQfeoXvQw5
-         0erfNcAQjbMiOwUlHgefeeWqTXHUyToWtr/v78FdY4tkFKHij9yYU6prYbETXafdZzkj
-         CrZ5DPp2Ekqvi5mZSwYN8IYu4kCKKTHChEZbvuUtwixBl7gqhieEyTBMOWB0H0VdZGJx
-         4slfWH1x2sBeBMx2/vLpXCVFyGX2lFnqhPsm16SwcpYWJYcR0LjjELKfwm6ZdoXgLfhq
-         h/Qg==
-X-Gm-Message-State: AOJu0YyirSYK2adZrF4oIp8LJPxtCgT8fHB4egjoHQANBfiB3QDNCmpS
-        GJJyT/1kygi1ns3+LthSGLW6Yw==
-X-Google-Smtp-Source: AGHT+IFximgdu9cWb6GQAT2cvaFkzJf9ISTkl6lf/ejtSGazROb1hN3Jzw+WHlP6dUwkDAwAaT5G7A==
-X-Received: by 2002:a05:6512:2106:b0:507:a28e:f3b5 with SMTP id q6-20020a056512210600b00507a28ef3b5mr3412346lfr.12.1698499302859;
-        Sat, 28 Oct 2023 06:21:42 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698499337; x=1699104137;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E6pdZ2aO7b/DBuGDGSOI5y96/5iv9R+X1Oz+3eai3ok=;
+        b=UrGVlQycGHmRUeIKaxsBowo4Yg7sLp3RbBta6gxoyXUbC0S6YwFQiSZdSi6Ea7Is5I
+         mzBzxwit+oM14Z92xewectJwk9BOXn3vKHWKM5t3daF/9Z6aNwc8NtCZShTaEahOUBeo
+         lHAhaGmMvgbXtJuLs0e4/aDqbMA0E2/BK91FD9ybqQC+ASYXznsMqLomocx9F9/5D+dQ
+         e/L4tb1SGWnpnAOg3fD7FnTbcrK6Lex7lxfwPJzTNkg07ihBuCRlccCzm0kCcvMLfokw
+         GlwyfvJEproupSB+WXl0B8huWM6RGaxVXukctjnkf+r7XrdRc7okA5TwbifXxp934o9E
+         FL3Q==
+X-Gm-Message-State: AOJu0YxLiPsqatU2qwR9+uhNt+ulLG2WfPk3Gkyj/lOmEyFC7OoftYME
+        QhfCMgdQOyB2fFIPGPu18K/BhA==
+X-Google-Smtp-Source: AGHT+IE0R3d+X38ySMp+r2Oc1WdHuTCVp+cuogvftVJkW1ddwVa5XisoXzYmVnWm4VN29UV31jKb8w==
+X-Received: by 2002:a19:8c0f:0:b0:503:1783:d5a9 with SMTP id o15-20020a198c0f000000b005031783d5a9mr3214741lfd.3.1698499337060;
+        Sat, 28 Oct 2023 06:22:17 -0700 (PDT)
 Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id z12-20020a19504c000000b00507b869b068sm662877lfj.302.2023.10.28.06.21.41
+        by smtp.gmail.com with ESMTPSA id z12-20020a19504c000000b00507b869b068sm662877lfj.302.2023.10.28.06.22.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Oct 2023 06:21:42 -0700 (PDT)
-Message-ID: <b1dc63d2-277b-47b0-8df4-bd3c2926fa31@linaro.org>
-Date:   Sat, 28 Oct 2023 15:21:41 +0200
+        Sat, 28 Oct 2023 06:22:16 -0700 (PDT)
+Message-ID: <ff0577a5-a46a-4f0c-ad7d-5db8e61cae70@linaro.org>
+Date:   Sat, 28 Oct 2023 15:22:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-msm8939: Add missing CSI2 related clocks
-To:     Vincent Knecht <vincent.knecht@mailoo.org>,
+Subject: Re: [PATCH 2/2] pinctrl: qcom: sm8650-lpass-lpi: add SM8650 LPASS
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20231028121047.317550-1-vincent.knecht@mailoo.org>
-Content-Language: en-US
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231027093615.140656-1-krzysztof.kozlowski@linaro.org>
+ <20231027093615.140656-3-krzysztof.kozlowski@linaro.org>
+ <42fa773d-b58a-4bd9-b12d-3e9931d2ae6c@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -115,7 +114,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231028121047.317550-1-vincent.knecht@mailoo.org>
+In-Reply-To: <42fa773d-b58a-4bd9-b12d-3e9931d2ae6c@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -128,28 +127,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/10/2023 14:10, Vincent Knecht wrote:
-> When adding in the indexes for this clock-controller we missed
-> GCC_CAMSS_CSI2_AHB_CLK, GCC_CAMSS_CSI2_CLK, GCC_CAMSS_CSI2PHY_CLK,
-> GCC_CAMSS_CSI2PIX_CLK and GCC_CAMSS_CSI2RDI_CLK.
+On 28/10/2023 15:05, Konrad Dybcio wrote:
+> On 27.10.2023 11:36, Krzysztof Kozlowski wrote:
+>> Add driver for the pin controller in Low Power Audio SubSystem (LPASS)
+>> of Qualcomm SM8650 SoC.
+>>
+>> Notable differences against SM8550 LPASS pin controller:
+>> 1. Additional address space for slew rate thus driver uses
+>>    LPI_FLAG_SLEW_RATE_SAME_REG and sets slew rate via different
+>>    register.
+>>
+>> 2. Two new pin mux functions: qca_swr_clk and qca_swr_data
+> Hmmm so slimbus is entirely removed on 8650?
 > 
-> Add them in now.
-> 
-> Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> ---
-> No fixes tag because camss is a not-yet-enabled feature for msm8939.
-> 
-> Also didn't rename ftbl_gcc_camss_csi0_1_clk now that csi2 uses it
-> to avoid not-required-churn... should it be done anyway ?
-> ---
->  drivers/clk/qcom/gcc-msm8939.c               | 104 +++++++++++++++++++
->  include/dt-bindings/clock/qcom,gcc-msm8939.h |   6 ++
+> Diffing it against 8550, looks sane
 
-Bindings must be a separate patch.
-
-Please run scripts/checkpatch.pl and fix reported warnings. Some
-warnings can be ignored, but the code here looks like it needs a fix.
-Feel free to get in touch if the warning is not clear.
+No, the slimbus functions were there as well.
 
 Best regards,
 Krzysztof
