@@ -2,232 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 455A07DA493
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 03:16:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F8347DA5A8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 10:01:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232518AbjJ1BQ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Oct 2023 21:16:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43460 "EHLO
+        id S233099AbjJ1IBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Oct 2023 04:01:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232898AbjJ1BQz (ORCPT
+        with ESMTP id S229500AbjJ1IBj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Oct 2023 21:16:55 -0400
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B23F4128
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 18:16:52 -0700 (PDT)
-Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d9cbba16084so1832563276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Oct 2023 18:16:52 -0700 (PDT)
+        Sat, 28 Oct 2023 04:01:39 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D23D0ED
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 01:01:35 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507be298d2aso4087695e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 01:01:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698455812; x=1699060612; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YYOGSzc5gVhC61nl8UkhLbfPjbeXVie5I0ZyNVFICnw=;
-        b=VJObLTGZFxNsFNB0LRGkl1SdDfJDrzDvOoWCrM81x5wKJq4yt/MRVR/h3OWalHwu85
-         y4hzLeuCti7O6BrSFJAJ4l6EiRZDz18UNvCt4haApaJMhG99tJh+FFshGtlS6g1QevYz
-         ec9vC3SDc6WWIiqqtS8pEzwZ1153/8vKtjPnEKsJyTccG/VgSsNchdsfqCcdi604zyxs
-         LKCDSNQ8wY8H+izPa1tG6ugshBdu9pFYSUj6u+KyDHYNvdF8YnnsIMmvm+/tALnggjWf
-         0epJ7sSg+qZf23Cpi4SIsgMJ/ZXIwNNGKO9Oan4q8/pTPVkLe9zrqLdRxItKwluD/L9F
-         NGlA==
+        d=linaro.org; s=google; t=1698480094; x=1699084894; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fKMQucF/uLZCGIr/BFMo7BXVL6Ys3Ai9lA63eq4X32E=;
+        b=QfIeN1AZUwtZvPEJnoQmAIGLRB9/cc2oIlMgGg71mCWMOT9rwaaxv2Of0gpn4r9o1L
+         RAK/WJNUiNDwyF2VkfpcMXlJEcgkPa6Tqq4AgiVNC2J2g1z5vX/alkRpmbRYZ1XrLWlO
+         tCTI2OzK1xk47UAr7YFO/dnGjuoo5EvuTbsDz1nBS4HqUI1ocs2efAbKY+Qv+awvLUec
+         zTJPnrGfAtXtpnXR1sHdBWXoMjlBgmbsrYnAtD/wK7P05MmdajWtx+bPiQa5SHkTQDa8
+         0UoBno9YdA5l2A8AkFRjjKJDTGp1d3pnJuHso1lC5Z1Sx3cdp3ZgZUrrj4vK7s/9YqQU
+         u/aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698455812; x=1699060612;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YYOGSzc5gVhC61nl8UkhLbfPjbeXVie5I0ZyNVFICnw=;
-        b=NKOESLyeowAT6qY9GCS5sCKzLrwjmF9h7ea3h448pxECeNMb3GERoQAoLXymW8HrZt
-         S908C2fWCePLvzjSVzz4FGGkvdDkTeVz2ZrLY+nmSd0RszPGfABfDU7g37zuAjsk21+G
-         rmUpfNr8ZxalIgG8eAc6oxjNx/TIgdRvFazoUP0rIdKpsja4QbdiT2mEIq+mSNi7zn/g
-         YNV8BbAyjnNV6U2JaX+6e3/90qzxb1pE62x5b17YPnCPwq5HdpsvPzN4gV0NbYagKIGi
-         RtZZ5ifr3jXUPmmK2r89qD8dKuJ9H54crGkRPfB0tYI/ymJX2snZEVW0y+uuW+VfGY27
-         YwoQ==
-X-Gm-Message-State: AOJu0Yw9dUTExQZ2GMul90C/lDSMG78K3W4lVH133rQrrKPzbeEeSU4Q
-        zs6USSFncQLb1DRyH1VR8N9fF6mcfZFNHVhdNNo4Dw==
-X-Google-Smtp-Source: AGHT+IEB3TSQlXZiiMkMFKwFsa+wSKRdof4CP2GWjs5xlZAPeKKsclBTSDJH5mSHR1MJbJSXDKE/F6VBpGTFf3auWrs=
-X-Received: by 2002:a25:a292:0:b0:da0:5775:fd77 with SMTP id
- c18-20020a25a292000000b00da05775fd77mr3817290ybi.63.1698455811663; Fri, 27
- Oct 2023 18:16:51 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698480094; x=1699084894;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fKMQucF/uLZCGIr/BFMo7BXVL6Ys3Ai9lA63eq4X32E=;
+        b=ILEK9jPurvpUyoPHC7Bqpvs0O5lv9fqhnldP3/ZY/qFUcNb3I+2tq2TPRl6hBz33/g
+         G8YEYS4GrDj1TEEwm1RIhpdXS4DL0ADyXDOotOa+cq3tNJNxutt9ZwYWJpgLdwF95UrH
+         uZ72kk5qHKuaZBlxy7glWnKwdvDm0mUKfmWdyNftrQWcKVMBqi7Jaj1zXEiFAU1yQ7IA
+         O0VoN/Q8fanQIMwjdrmSc0Hn4ippFkshHoXUkmBGZ2V8ji6d4SlVvmyz+vAG8tDohQ8S
+         4yP6n9yOAqGWR85ucXpIfoboDZpryNRr6qOizdpZgK0S8um5eh0jWD7BjuJ+K6e+pBgB
+         SCrQ==
+X-Gm-Message-State: AOJu0YzVkqXozHeuA3LQRDFnhiVQf5lWgvjlteaek7eGLMvXBry+cslk
+        LZr3NwwrEbfXSLdsMyRjFAWzDg==
+X-Google-Smtp-Source: AGHT+IEgVcEcjNrcWyZn1TIa7/8oqWiy8EQyZr4FifWxeAVPZLegawcvYu73ChfKtaUICj+kGYnzNQ==
+X-Received: by 2002:a19:4f42:0:b0:507:a40e:d8bf with SMTP id a2-20020a194f42000000b00507a40ed8bfmr3365332lfk.7.1698480093991;
+        Sat, 28 Oct 2023 01:01:33 -0700 (PDT)
+Received: from [192.168.0.22] ([78.10.206.168])
+        by smtp.gmail.com with ESMTPSA id l3-20020ac24a83000000b0050804a97f01sm570067lfp.160.2023.10.28.01.01.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 28 Oct 2023 01:01:33 -0700 (PDT)
+Message-ID: <b00177e6-9b2b-4bdf-9774-bdaefab50d02@linaro.org>
+Date:   Sat, 28 Oct 2023 10:01:32 +0200
 MIME-Version: 1.0
-References: <20231027194537.408922-1-robdclark@gmail.com>
-In-Reply-To: <20231027194537.408922-1-robdclark@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 28 Oct 2023 04:16:40 +0300
-Message-ID: <CAA8EJpoOHqzQBESqjxCh4DHztJrsBQ5gKtkj++jYTAYEds9Ocg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/gem: Add metadata
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/9] dt-bindings: remoteproc: qcom: sc7180-pas: Fix SC7280
+ MPSS PD-names
+Content-Language: en-US
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
+ <20231027-sc7280-remoteprocs-v1-1-05ce95d9315a@fairphone.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231027-sc7280-remoteprocs-v1-1-05ce95d9315a@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 27 Oct 2023 at 22:45, Rob Clark <robdclark@gmail.com> wrote:
->
-> From: Rob Clark <robdclark@chromium.org>
->
-> The EXT_external_objects extension is a bit awkward as it doesn't pass
-> explicit modifiers, leaving the importer to guess with incomplete
-> information.  In the case of vk (turnip) exporting and gl (freedreno)
-> importing, the "OPTIMAL_TILING_EXT" layout depends on VkImageCreateInfo
-> flags (among other things), which the importer does not know.  Which
-> unfortunately leaves us with the need for a metadata back-channel.
->
-> The contents of the metadata are defined by userspace.  The
-> EXT_external_objects extension is only required to work between
-> compatible versions of gl and vk drivers, as defined by device and
-> driver UUIDs.
->
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+On 27/10/2023 16:20, Luca Weiss wrote:
+> The power domains for MPSS on SC7280 are actually named CX and MSS, and
+> not CX and MX. Adjust the name which also aligns the bindings with the
+> dts and fixes validation.
+> 
+> Fixes: 8bb92d6fd0b3 ("dt-bindings: remoteproc: qcom,sc7180-pas: split into separate file")
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  drivers/gpu/drm/msm/msm_drv.c | 59 +++++++++++++++++++++++++++++++++--
->  drivers/gpu/drm/msm/msm_gem.h |  4 +++
->  include/uapi/drm/msm_drm.h    |  2 ++
->  3 files changed, 63 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> index b61ccea05327..8fe2677ea37a 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.c
-> +++ b/drivers/gpu/drm/msm/msm_drv.c
-> @@ -37,9 +37,10 @@
->   * - 1.9.0 - Add MSM_SUBMIT_FENCE_SN_IN
->   * - 1.10.0 - Add MSM_SUBMIT_BO_NO_IMPLICIT
->   * - 1.11.0 - Add wait boost (MSM_WAIT_FENCE_BOOST, MSM_PREP_BOOST)
-> + * - 1.12.0 - Add MSM_INFO_SET_METADATA and MSM_INFO_GET_METADATA
->   */
->  #define MSM_VERSION_MAJOR      1
-> -#define MSM_VERSION_MINOR      10
-> +#define MSM_VERSION_MINOR      12
->  #define MSM_VERSION_PATCHLEVEL 0
->
->  static void msm_deinit_vram(struct drm_device *ddev);
-> @@ -566,6 +567,8 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
->                 break;
->         case MSM_INFO_SET_NAME:
->         case MSM_INFO_GET_NAME:
-> +       case MSM_INFO_SET_METADATA:
-> +       case MSM_INFO_GET_METADATA:
->                 break;
->         default:
->                 return -EINVAL;
-> @@ -618,7 +621,7 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
->                 break;
->         case MSM_INFO_GET_NAME:
->                 if (args->value && (args->len < strlen(msm_obj->name))) {
-> -                       ret = -EINVAL;
-> +                       ret = -ETOOSMALL;
+>  Documentation/devicetree/bindings/remoteproc/qcom,sc7180-pas.yaml | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
 
-This is unrelated and it also slightly changes user interface, so it
-IMO should come as a separate commit/
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
->                         break;
->                 }
->                 args->len = strlen(msm_obj->name);
-> @@ -627,6 +630,58 @@ static int msm_ioctl_gem_info(struct drm_device *dev, void *data,
->                                          msm_obj->name, args->len))
->                                 ret = -EFAULT;
->                 }
-> +               break;
-> +       case MSM_INFO_SET_METADATA:
-> +               /* Impose a moderate upper bound on metadata size: */
-> +               if (args->len > 128) {
-> +                       ret = -EOVERFLOW;
-> +                       break;
-> +               }
-> +
-> +               ret = msm_gem_lock_interruptible(obj);
-> +               if (ret)
-> +                       break;
-> +
-> +               msm_obj->metadata =
-> +                       krealloc(msm_obj->metadata, args->len, GFP_KERNEL);
-> +               msm_obj->metadata_size = args->len;
-> +
-> +               if (copy_from_user(msm_obj->metadata, u64_to_user_ptr(args->value),
-> +                                  args->len)) {
-> +                       msm_obj->metadata_size = 0;
-> +                       ret = -EFAULT;
-> +               }
-> +
-> +               msm_gem_unlock(obj);
-> +
-> +               break;
-> +       case MSM_INFO_GET_METADATA:
-> +               if (!args->value) {
-> +                       /*
-> +                        * Querying the size is inherently racey, but
-> +                        * EXT_external_objects expects the app to confirm
-> +                        * via device and driver UUIDs that the exporter and
-> +                        * importer versions match.  All we can do from the
-> +                        * kernel side is check the length under obj lock
-> +                        * when userspace tries to retrieve the metadata
-> +                        */
-> +                       args->len = msm_obj->metadata_size;
-> +                       break;
-> +               }
-> +
-> +               ret = msm_gem_lock_interruptible(obj);
-> +               if (ret)
-> +                       break;
-> +
-> +               if (args->len < msm_obj->metadata_size) {
-> +                       ret = -ETOOSMALL;
-> +               } else if (copy_to_user(u64_to_user_ptr(args->value),
-> +                                       msm_obj->metadata, args->len)) {
-> +                       ret = -EFAULT;
-> +               }
+Best regards,
+Krzysztof
 
-Doesn't checkpwatch warn here about extra curly brackets?
-
-> +
-> +               msm_gem_unlock(obj);
-> +
->                 break;
->         }
->
-> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-> index 7f34263048a3..8d414b072c29 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.h
-> +++ b/drivers/gpu/drm/msm/msm_gem.h
-> @@ -109,6 +109,10 @@ struct msm_gem_object {
->
->         char name[32]; /* Identifier to print for the debugfs files */
->
-> +       /* userspace metadata backchannel */
-> +       void *metadata;
-> +       u32 metadata_size;
-> +
->         /**
->          * pin_count: Number of times the pages are pinned
->          *
-> diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> index 6c34272a13fd..6f2a7ad04aa4 100644
-> --- a/include/uapi/drm/msm_drm.h
-> +++ b/include/uapi/drm/msm_drm.h
-> @@ -139,6 +139,8 @@ struct drm_msm_gem_new {
->  #define MSM_INFO_GET_NAME      0x03   /* get debug name, returned by pointer */
->  #define MSM_INFO_SET_IOVA      0x04   /* set the iova, passed by value */
->  #define MSM_INFO_GET_FLAGS     0x05   /* get the MSM_BO_x flags */
-> +#define MSM_INFO_SET_METADATA  0x06   /* set userspace metadata */
-> +#define MSM_INFO_GET_METADATA  0x07   /* get userspace metadata */
->
->  struct drm_msm_gem_info {
->         __u32 handle;         /* in */
-> --
-> 2.41.0
->
-
-
--- 
-With best wishes
-Dmitry
