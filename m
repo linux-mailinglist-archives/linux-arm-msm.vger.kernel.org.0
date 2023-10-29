@@ -2,151 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A5227DA93D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Oct 2023 22:19:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA8257DAA80
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Oct 2023 03:29:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229447AbjJ1UTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Oct 2023 16:19:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50804 "EHLO
+        id S229450AbjJ2C3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Oct 2023 22:29:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjJ1UTD (ORCPT
+        with ESMTP id S229446AbjJ2C3f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Oct 2023 16:19:03 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B46BCC
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 13:19:01 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-507a62d4788so4928748e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Oct 2023 13:19:01 -0700 (PDT)
+        Sat, 28 Oct 2023 22:29:35 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB3EC6;
+        Sat, 28 Oct 2023 19:29:33 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-41cd1fe4645so21714301cf.0;
+        Sat, 28 Oct 2023 19:29:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698524339; x=1699129139; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5+6Qv3uNsNnOQBiLEQQyT3pfgGCEa0rPmQ4TKwACdWw=;
-        b=McCDP+tUz+6Sk219PLQtPJUoHmLiT8uTR4644CL/5ZT2HKaME9gSsDeDeZi/WvI3sE
-         lFqWXOsETM1uuDWSdwjAbTpvuEvrQu/MFGbqz61Y3wxJsEKblaLUwhbG7f0kXVfSA9W6
-         trHDzZPIGyQKwIIUV4+/K6arf2+c7bfoH7zGxDPlaWikQOk2Fki7T94PscurgqCVvU1q
-         jFeA4mei7X6W0SA8eLHAwp88+1H5dO1ubCLe51YQTj5qLMk1azBdDKj7CReLY7JbYs5C
-         C7Ew46HNxsyHmraEJ56UxpjBlo1pxSpAkXuVPQKphtSd4TFfa69jXuQH/77gre2S6hEM
-         ymEg==
+        d=gmail.com; s=20230601; t=1698546573; x=1699151373; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8gWNO3l8fpnpIPgxgpu5uSSqh1fHCKLMt8L2nodlFyk=;
+        b=Esxab5uaDgCZOe7KWZ3GkozbuE8uTMi6OM2kmk1Cy477megLYrBP+lbE3KxfvKhP3A
+         Jirrqj1sXZB7SPPnsfTAjjHHvzW3cFhvG2xYu+hrIiU3b2qHWBi+LVzDedcAWXx7hr+i
+         W2eNKoJtoGNEwIYi/KCQue3/uId3M8T1ghrMHEne63VbJmKXwRJPlF0FECIaaxKiTN8Q
+         le9EY4+co4Wjz19hmvWoUK1wZ8P3/kASyZXi49uJ7CzMhPHof5N+SG5ePk/YEFsTeS5I
+         Ue/4S2B9kr/86mdqf7kuCd11Vhpdlgo6Rwoddh0P0TvkWOijpwSJZns0BZQvOixBvvsg
+         nneQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698524339; x=1699129139;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5+6Qv3uNsNnOQBiLEQQyT3pfgGCEa0rPmQ4TKwACdWw=;
-        b=SCq6ha9QxY4YilOYhc+mFAqvxDkYukaY+3i7Z6VmUfYAI58RnZOTfBYqlM/yOpLW5x
-         pID6YAOoSnXsBofDc0bMTz/T6p1/76dmcLKAsFZhnluRZBm9K40Bg2VQDI0n99U8iN2g
-         iKzFFTHwdmspFf+ZiFS8uSZkHyNNQDycsJ1Ly62ObcVMNCoqe7DSQlsF3tSMiZDKw1aC
-         8i0s6AdMVvAtaTqoco5iO7l8ZWncnQW8F6P+uTC2tKMxMfBCiEk4YhBpBosUg4fcfyEC
-         HJqErCZLUqVbmoyOsE43pOZsM7ag8U5nCHKrXt0leNR3knbsJeqOPXGPIZCp3jU2TEpF
-         5UxQ==
-X-Gm-Message-State: AOJu0Yzu0W3XQH2qPCHpOgmOap9lq1hVRUcK3A1Fw5p1wvY1yCwpQzA9
-        /rNICboYrZXsuoF32Z4B2ghoQg==
-X-Google-Smtp-Source: AGHT+IH12qUEffScnKauTO4A7h6hW8k0eIU1hh1aNldQG/PgewhLnir5yWyvzlYCmI9uCHP829fVNA==
-X-Received: by 2002:a05:6512:201c:b0:508:266a:e85f with SMTP id a28-20020a056512201c00b00508266ae85fmr4433322lfb.1.1698524339149;
-        Sat, 28 Oct 2023 13:18:59 -0700 (PDT)
-Received: from [192.168.0.22] ([78.10.206.168])
-        by smtp.gmail.com with ESMTPSA id j12-20020ac2454c000000b0050797480457sm753687lfm.278.2023.10.28.13.18.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 28 Oct 2023 13:18:58 -0700 (PDT)
-Message-ID: <d26b9c61-00ae-4149-aae8-ab528007d96b@linaro.org>
-Date:   Sat, 28 Oct 2023 22:18:57 +0200
+        d=1e100.net; s=20230601; t=1698546573; x=1699151373;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8gWNO3l8fpnpIPgxgpu5uSSqh1fHCKLMt8L2nodlFyk=;
+        b=lhArqEDsviAyWdCvKB6uWYEpt+jPWBVRo1kl94kXoeZMSsPs7J7gu8ggPKAFNYHUuG
+         FU/oyCEAH2HRaekM81QD8n+cf9WQbCKr8iWJ6twRPJX3QKM3BNYZfscInPTlJBQxsT8B
+         bD4di0BcR3EJ+Nz+MjQceiuwtPC8V7JrCMBE7uiuR9qbbYkHyvl/iwyW9XQp0Ds86jtC
+         lUusN9uBhmJdQ4NVKiR+IllO4r370xU0nHpB7d+U1WnnLqwSN3D96ohdz/rSBU0vWzw1
+         qqAtJUNnJxwloQO4Xbm08mFNh/5Cewej28UQ11zKkBlI3nnUulgGw7NekCOzaIv0aoOM
+         UQ7A==
+X-Gm-Message-State: AOJu0Yz8Bf0dffUAbhkE0/+huTmtvJ2ReSfAVOHRpfXqDUejjSa+xpU+
+        OLY0iJFVuS7Bfc5YyAC1ix4=
+X-Google-Smtp-Source: AGHT+IErpMIDGlNs7xe4F7SkYsIWBgQIXur/8MlOHteENWqs1PiDVQ5rzCKOA9AAhWycHof+33p9rA==
+X-Received: by 2002:ac8:5c96:0:b0:41b:806e:81c7 with SMTP id r22-20020ac85c96000000b0041b806e81c7mr7553608qta.32.1698546572867;
+        Sat, 28 Oct 2023 19:29:32 -0700 (PDT)
+Received: from google.com ([205.220.129.30])
+        by smtp.gmail.com with ESMTPSA id d5-20020a056a0010c500b006bfb903599esm3549848pfu.139.2023.10.28.19.29.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Oct 2023 19:29:31 -0700 (PDT)
+Date:   Sun, 29 Oct 2023 02:29:02 +0000
+From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com, Henrik Rydberg <rydberg@bitmath.org>
+Subject: Re: [PATCH v13 33/56] touchscreen: sur40: Stop direct calls to queue
+ num_buffers field
+Message-ID: <ZT3DbkmurIzBp7_p@google.com>
+References: <20231019125222.21370-1-benjamin.gaignard@collabora.com>
+ <20231019125222.21370-34-benjamin.gaignard@collabora.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] arm64: dts: qcom: starqltechn: enable more
- features
-Content-Language: en-US
-To:     Dzmitry Sankouski <dsankouski@gmail.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20231024154338.407191-1-dsankouski@gmail.com>
- <20231024154338.407191-5-dsankouski@gmail.com>
- <af9f75e3-0b64-41b5-9854-c7edf544c9a0@linaro.org>
- <CABTCjFA4Y5o8S+JUh=9h3zHo2VCRJCejabs_UAkn=n1WUnYK3A@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CABTCjFA4Y5o8S+JUh=9h3zHo2VCRJCejabs_UAkn=n1WUnYK3A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231019125222.21370-34-benjamin.gaignard@collabora.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/10/2023 19:13, Dzmitry Sankouski wrote:
-> ...
->>> +
->>> +     touchscreen@48 {
->>> +             compatible = "samsung,s6sy761";
->>> +             reg = <0x48>;
->>> +             interrupt-parent = <&tlmm>;
->>> +             interrupts = <120 0x0>;
->> interrupts-extended with a fixed irq type (not _NONE)
->>
-> Can you please explain why not _NONE?
-> Documentation/devicetree/bindings/input/touchscreen/samsung,s6sy761.txt example
-> says it should be IRQ_TYPE_NONE.
+On Thu, Oct 19, 2023 at 02:51:59PM +0200, Benjamin Gaignard wrote:
+> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
+> This allows us to change how the number of buffers is computed in the
+> future.
+> 
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> CC: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+> CC: Henrik Rydberg <rydberg@bitmath.org>
 
-I don't see the binding saying this And just to be clear: example,
-especially incorrect example, means nothing.
+Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-There are no hardware interrupts of type NONE. That's why you should not
-use it, It just does not exist.
+Feel free to merge with the rest of the series.
 
+Thanks.
 
-Best regards,
-Krzysztof
-
+-- 
+Dmitry
