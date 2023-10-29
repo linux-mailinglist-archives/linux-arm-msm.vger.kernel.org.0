@@ -2,22 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2216C7DAD51
+	by mail.lfdr.de (Postfix) with ESMTP id D18307DAD53
 	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Oct 2023 17:58:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbjJ2Q6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Oct 2023 12:58:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37180 "EHLO
+        id S229778AbjJ2Q6F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Oct 2023 12:58:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjJ2Q6C (ORCPT
+        with ESMTP id S229795AbjJ2Q6C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 29 Oct 2023 12:58:02 -0400
 Received: from srv01.abscue.de (abscue.de [IPv6:2a03:4000:63:bf5:4817:8eff:feeb:8ac7])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AABEC2
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7EBCC1
         for <linux-arm-msm@vger.kernel.org>; Sun, 29 Oct 2023 09:57:54 -0700 (PDT)
 Received: from srv01.abscue.de (localhost [127.0.0.1])
-        by spamfilter.srv.local (Postfix) with ESMTP id 9CE301C258E;
-        Sun, 29 Oct 2023 17:57:51 +0100 (CET)
+        by spamfilter.srv.local (Postfix) with ESMTP id 9F2C01C2591;
+        Sun, 29 Oct 2023 17:57:52 +0100 (CET)
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 X-Spam-Level: 
@@ -25,8 +25,8 @@ X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 Received: from fluffy-mammal.fritz.box (dslb-088-078-198-137.088.078.pools.vodafone-ip.de [88.78.198.137])
-        by srv01.abscue.de (Postfix) with ESMTPSA id 3E6821C2590;
-        Sun, 29 Oct 2023 17:57:51 +0100 (CET)
+        by srv01.abscue.de (Postfix) with ESMTPSA id 524F61C2590;
+        Sun, 29 Oct 2023 17:57:52 +0100 (CET)
 From:   =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
@@ -35,9 +35,9 @@ Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Mark Brown <broonie@kernel.org>, linux-sound@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht,
         =?UTF-8?q?Otto=20Pfl=C3=BCger?= <otto.pflueger@abscue.de>
-Subject: [PATCH v2 1/4] ASoC: qcom: q6core: expose ADSP core firmware version
-Date:   Sun, 29 Oct 2023 17:57:13 +0100
-Message-Id: <20231029165716.69878-2-otto.pflueger@abscue.de>
+Subject: [PATCH v2 2/4] ASoC: qcom: q6afe: provide fallback for digital codec clock
+Date:   Sun, 29 Oct 2023 17:57:14 +0100
+Message-Id: <20231029165716.69878-3-otto.pflueger@abscue.de>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231029165716.69878-1-otto.pflueger@abscue.de>
 References: <20231029165716.69878-1-otto.pflueger@abscue.de>
@@ -48,158 +48,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a q6core_get_adsp_version() function that returns the version of the
-ADSP firmware (2.6, 2.7 or 2.8), also known as the AVS version (see [1]
-in downstream kernel).
+When q6afe is used as a clock provider through q6afe-clocks.c, it uses
+an interface for setting clocks that is not present in older firmware
+versions. However, using Q6AFE_LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE
+as the codec MCLK in the device tree can be useful on older platforms
+too. Provide a fallback that sets this clock using the old method when
+an old firmware version is detected.
 
-Some APIs differ between these versions, e.g. the AFE clock APIs.
-
-[1]: https://github.com/msm8916-mainline/linux-downstream/blob/LA.BR.1.2.9.1_rb1.5/sound/soc/msm/qdsp6v2/q6core.c#L193
+MSM8916 did not need this because of a workaround that controls this
+clock directly through the GCC driver, but newer SoCs do not have this
+clock in their GCC drivers because it is meant to be controlled by the
+DSP.
 
 Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
 ---
- sound/soc/qcom/qdsp6/q6core.c | 65 +++++++++++++++++++++++++++++++++++
- sound/soc/qcom/qdsp6/q6core.h |  9 +++++
- 2 files changed, 74 insertions(+)
+ sound/soc/qcom/qdsp6/q6afe.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/sound/soc/qcom/qdsp6/q6core.c b/sound/soc/qcom/qdsp6/q6core.c
-index 49cfb32cd209..855ab4ff1e59 100644
---- a/sound/soc/qcom/qdsp6/q6core.c
-+++ b/sound/soc/qcom/qdsp6/q6core.c
-@@ -20,6 +20,9 @@
- #define AVCS_CMDRSP_ADSP_EVENT_GET_STATE	0x0001290D
- #define AVCS_GET_VERSIONS       0x00012905
- #define AVCS_GET_VERSIONS_RSP   0x00012906
-+#define AVCS_CMDRSP_Q6_ID_2_6	0x00040000
-+#define AVCS_CMDRSP_Q6_ID_2_7	0x00040001
-+#define AVCS_CMDRSP_Q6_ID_2_8	0x00040002
- #define AVCS_CMD_GET_FWK_VERSION	0x001292c
- #define AVCS_CMDRSP_GET_FWK_VERSION	0x001292d
+diff --git a/sound/soc/qcom/qdsp6/q6afe.c b/sound/soc/qcom/qdsp6/q6afe.c
+index 91d39f6ad0bd..f14d3b366aa4 100644
+--- a/sound/soc/qcom/qdsp6/q6afe.c
++++ b/sound/soc/qcom/qdsp6/q6afe.c
+@@ -1111,6 +1111,32 @@ int q6afe_set_lpass_clock(struct device *dev, int clk_id, int attri,
+ 	struct q6afe *afe = dev_get_drvdata(dev->parent);
+ 	struct afe_clk_set cset = {0,};
  
-@@ -63,6 +66,7 @@ struct q6core {
- 	bool get_state_supported;
- 	bool get_version_supported;
- 	bool is_version_requested;
-+	enum q6core_version adsp_version;
- };
- 
- static struct q6core *g_core;
-@@ -108,6 +112,14 @@ static int q6core_callback(struct apr_device *adev, struct apr_resp_pkt *data)
- 		if (!core->fwk_version)
- 			return -ENOMEM;
- 
-+		/*
-+		 * Since GET_VERSIONS is not called when GET_FWK_VERSION
-+		 * is successful and these commands may return completely
-+		 * different versions, assume that the version is 2.8 here.
-+		 * Older versions do not support GET_FWK_VERSION and we do
-+		 * not care if the version is newer than 2.8.
-+		 */
-+		core->adsp_version = Q6_ADSP_VERSION_2_8;
- 		core->fwk_version_supported = true;
- 		core->resp_received = true;
- 
-@@ -115,6 +127,7 @@ static int q6core_callback(struct apr_device *adev, struct apr_resp_pkt *data)
- 	}
- 	case AVCS_GET_VERSIONS_RSP: {
- 		struct avcs_cmdrsp_get_version *v;
-+		int i;
- 
- 		v = data->payload;
- 
-@@ -125,6 +138,32 @@ static int q6core_callback(struct apr_device *adev, struct apr_resp_pkt *data)
- 		if (!core->svc_version)
- 			return -ENOMEM;
- 
-+		for (i = 0; i < g_core->svc_version->num_services; i++) {
-+			struct avcs_svc_info *info;
++	/*
++	 * v2 clocks specified in the device tree may not be supported by the
++	 * firmware. If this is the digital codec core clock, fall back to the
++	 * old method for setting it.
++	 */
++	if (q6core_get_adsp_version() < Q6_ADSP_VERSION_2_7) {
++		struct q6afe_port *port;
++		struct afe_digital_clk_cfg dcfg = {0,};
++		int ret;
 +
-+			info = &g_core->svc_version->svc_api_info[i];
-+			if (info->service_id != APR_SVC_ADSP_CORE)
-+				continue;
++		if (clk_id != Q6AFE_LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE)
++			return -EINVAL;
 +
-+			switch (info->version) {
-+			case AVCS_CMDRSP_Q6_ID_2_6:
-+				core->adsp_version = Q6_ADSP_VERSION_2_6;
-+				break;
-+			case AVCS_CMDRSP_Q6_ID_2_7:
-+				core->adsp_version = Q6_ADSP_VERSION_2_7;
-+				break;
-+			case AVCS_CMDRSP_Q6_ID_2_8:
-+				core->adsp_version = Q6_ADSP_VERSION_2_8;
-+				break;
-+			default:
-+				dev_err(&adev->dev, "Unknown AVS version 0x%08x\n",
-+					info->version);
-+				break;
-+			}
++		port = q6afe_port_get_from_id(dev, PRIMARY_MI2S_RX);
++		if (IS_ERR(port))
++			return PTR_ERR(port);
 +
-+			break;
-+		}
++		dcfg.i2s_cfg_minor_version = AFE_API_VERSION_I2S_CONFIG;
++		dcfg.clk_val = freq;
++		dcfg.clk_root = 5;
++		ret = q6afe_set_digital_codec_core_clock(port, &dcfg);
 +
- 		core->get_version_supported = true;
- 		core->resp_received = true;
- 
-@@ -293,6 +332,31 @@ int q6core_get_svc_api_info(int svc_id, struct q6core_svc_api_info *ainfo)
- }
- EXPORT_SYMBOL_GPL(q6core_get_svc_api_info);
- 
-+/**
-+ * q6core_get_adsp_version() - Get the core version number.
-+ *
-+ * Return: version code or Q6_ADSP_VERSION_UNKNOWN on failure
-+ */
-+enum q6core_version q6core_get_adsp_version(void)
-+{
-+	int ret;
-+
-+	if (!g_core)
-+		return Q6_ADSP_VERSION_UNKNOWN;
-+
-+	mutex_lock(&g_core->lock);
-+	if (!g_core->is_version_requested) {
-+		if (q6core_get_fwk_versions(g_core) == -ENOTSUPP)
-+			q6core_get_svc_versions(g_core);
-+		g_core->is_version_requested = true;
++		q6afe_port_put(port);
++		return ret;
 +	}
-+	ret = g_core->adsp_version;
-+	mutex_unlock(&g_core->lock);
 +
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(q6core_get_adsp_version);
-+
- /**
-  * q6core_is_adsp_ready() - Get status of adsp
-  *
-@@ -334,6 +398,7 @@ static int q6core_probe(struct apr_device *adev)
- 	dev_set_drvdata(&adev->dev, g_core);
- 
- 	mutex_init(&g_core->lock);
-+	g_core->adsp_version = Q6_ADSP_VERSION_UNKNOWN;
- 	g_core->adev = adev;
- 	init_waitqueue_head(&g_core->wait);
- 	return 0;
-diff --git a/sound/soc/qcom/qdsp6/q6core.h b/sound/soc/qcom/qdsp6/q6core.h
-index 4105b1d730be..472e06bf8efc 100644
---- a/sound/soc/qcom/qdsp6/q6core.h
-+++ b/sound/soc/qcom/qdsp6/q6core.h
-@@ -9,7 +9,16 @@ struct q6core_svc_api_info {
- 	uint32_t api_branch_version;
- };
- 
-+/* Versions must be in order! */
-+enum q6core_version {
-+	Q6_ADSP_VERSION_UNKNOWN,
-+	Q6_ADSP_VERSION_2_6,
-+	Q6_ADSP_VERSION_2_7,
-+	Q6_ADSP_VERSION_2_8,
-+};
-+
- bool q6core_is_adsp_ready(void);
-+enum q6core_version q6core_get_adsp_version(void);
- int q6core_get_svc_api_info(int svc_id, struct q6core_svc_api_info *ainfo);
- 
- #endif /* __Q6CORE_H__ */
+ 	cset.clk_set_minor_version = AFE_API_VERSION_CLOCK_SET;
+ 	cset.clk_id = clk_id;
+ 	cset.clk_freq_in_hz = freq;
 -- 
 2.39.2
