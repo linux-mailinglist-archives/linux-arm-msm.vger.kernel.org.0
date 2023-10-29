@@ -2,98 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA8257DAA80
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Oct 2023 03:29:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DC347DAB2C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Oct 2023 07:20:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229450AbjJ2C3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Oct 2023 22:29:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46798 "EHLO
+        id S229900AbjJ2GUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Oct 2023 02:20:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbjJ2C3f (ORCPT
+        with ESMTP id S229486AbjJ2GUg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Oct 2023 22:29:35 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB3EC6;
-        Sat, 28 Oct 2023 19:29:33 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-41cd1fe4645so21714301cf.0;
-        Sat, 28 Oct 2023 19:29:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698546573; x=1699151373; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8gWNO3l8fpnpIPgxgpu5uSSqh1fHCKLMt8L2nodlFyk=;
-        b=Esxab5uaDgCZOe7KWZ3GkozbuE8uTMi6OM2kmk1Cy477megLYrBP+lbE3KxfvKhP3A
-         Jirrqj1sXZB7SPPnsfTAjjHHvzW3cFhvG2xYu+hrIiU3b2qHWBi+LVzDedcAWXx7hr+i
-         W2eNKoJtoGNEwIYi/KCQue3/uId3M8T1ghrMHEne63VbJmKXwRJPlF0FECIaaxKiTN8Q
-         le9EY4+co4Wjz19hmvWoUK1wZ8P3/kASyZXi49uJ7CzMhPHof5N+SG5ePk/YEFsTeS5I
-         Ue/4S2B9kr/86mdqf7kuCd11Vhpdlgo6Rwoddh0P0TvkWOijpwSJZns0BZQvOixBvvsg
-         nneQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698546573; x=1699151373;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8gWNO3l8fpnpIPgxgpu5uSSqh1fHCKLMt8L2nodlFyk=;
-        b=lhArqEDsviAyWdCvKB6uWYEpt+jPWBVRo1kl94kXoeZMSsPs7J7gu8ggPKAFNYHUuG
-         FU/oyCEAH2HRaekM81QD8n+cf9WQbCKr8iWJ6twRPJX3QKM3BNYZfscInPTlJBQxsT8B
-         bD4di0BcR3EJ+Nz+MjQceiuwtPC8V7JrCMBE7uiuR9qbbYkHyvl/iwyW9XQp0Ds86jtC
-         lUusN9uBhmJdQ4NVKiR+IllO4r370xU0nHpB7d+U1WnnLqwSN3D96ohdz/rSBU0vWzw1
-         qqAtJUNnJxwloQO4Xbm08mFNh/5Cewej28UQ11zKkBlI3nnUulgGw7NekCOzaIv0aoOM
-         UQ7A==
-X-Gm-Message-State: AOJu0Yz8Bf0dffUAbhkE0/+huTmtvJ2ReSfAVOHRpfXqDUejjSa+xpU+
-        OLY0iJFVuS7Bfc5YyAC1ix4=
-X-Google-Smtp-Source: AGHT+IErpMIDGlNs7xe4F7SkYsIWBgQIXur/8MlOHteENWqs1PiDVQ5rzCKOA9AAhWycHof+33p9rA==
-X-Received: by 2002:ac8:5c96:0:b0:41b:806e:81c7 with SMTP id r22-20020ac85c96000000b0041b806e81c7mr7553608qta.32.1698546572867;
-        Sat, 28 Oct 2023 19:29:32 -0700 (PDT)
-Received: from google.com ([205.220.129.30])
-        by smtp.gmail.com with ESMTPSA id d5-20020a056a0010c500b006bfb903599esm3549848pfu.139.2023.10.28.19.29.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Oct 2023 19:29:31 -0700 (PDT)
-Date:   Sun, 29 Oct 2023 02:29:02 +0000
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com, Henrik Rydberg <rydberg@bitmath.org>
-Subject: Re: [PATCH v13 33/56] touchscreen: sur40: Stop direct calls to queue
- num_buffers field
-Message-ID: <ZT3DbkmurIzBp7_p@google.com>
-References: <20231019125222.21370-1-benjamin.gaignard@collabora.com>
- <20231019125222.21370-34-benjamin.gaignard@collabora.com>
+        Sun, 29 Oct 2023 02:20:36 -0400
+Received: from mailo.com (msg-1.mailo.com [213.182.54.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04587D3;
+        Sat, 28 Oct 2023 23:20:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mailoo.org; s=mailo;
+        t=1698560417; bh=37Y1s8lOgp7BfOpW5RNDm5P6kGc37j2oLnElaeTQcQ4=;
+        h=X-EA-Auth:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+         MIME-Version:Content-Transfer-Encoding;
+        b=UPBLWjm05o6GLNivdWIB7kTg7lqA0udjjG46xUvl8axET24MmP5Ttmlw8i8qiD6UY
+         pfPAB1ZCgG5TRZKW1TjqxQ4H7gfwoX74poiYDFxZgiOIoDxIbsO5ZB2eOXffKEEkVw
+         iN1ugrbnageit7suGVFiCE1Zzr8cCtozwx6xYXZs=
+Received: by b221-4.in.mailobj.net [192.168.90.24] with ESMTP
+        via ip-22.mailoo.org [213.182.54.22]
+        Sun, 29 Oct 2023 07:20:17 +0100 (CET)
+X-EA-Auth: ilAzNe3xxBlE7UdNOUkNEwLBi0hCH6Pw4KM8ysivRuPK1pcxww1VsQ3/z76sIM7TbMpp92rON9AdLxCA8b1mVyokeylgrljR56X03DLU1gk=
+From:   Vincent Knecht <vincent.knecht@mailoo.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     Vincent Knecht <vincent.knecht@mailoo.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 1/2] dt-bindings: clock: qcom,gcc-msm8939: Add CSI2 related clocks
+Date:   Sun, 29 Oct 2023 07:19:47 +0100
+Message-ID: <20231029061948.505883-1-vincent.knecht@mailoo.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231019125222.21370-34-benjamin.gaignard@collabora.com>
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 19, 2023 at 02:51:59PM +0200, Benjamin Gaignard wrote:
-> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
-> This allows us to change how the number of buffers is computed in the
-> future.
-> 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> CC: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> CC: Henrik Rydberg <rydberg@bitmath.org>
+When adding in the indexes for this clock-controller we missed
+GCC_CAMSS_CSI2_AHB_CLK, GCC_CAMSS_CSI2_CLK, GCC_CAMSS_CSI2PHY_CLK,
+GCC_CAMSS_CSI2PIX_CLK and GCC_CAMSS_CSI2RDI_CLK.
 
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Add them in now.
 
-Feel free to merge with the rest of the series.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
+---
+v2: split bindings change to a distinct patch (Krzysztof)
+v1: https://lore.kernel.org/linux-arm-msm/e44c751a-f0f5-42d8-aa99-743b349fdf9b@linaro.org/T/
+---
+ include/dt-bindings/clock/qcom,gcc-msm8939.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Thanks.
-
+diff --git a/include/dt-bindings/clock/qcom,gcc-msm8939.h b/include/dt-bindings/clock/qcom,gcc-msm8939.h
+index 2d545ed0d35a..9a9bc55b49af 100644
+--- a/include/dt-bindings/clock/qcom,gcc-msm8939.h
++++ b/include/dt-bindings/clock/qcom,gcc-msm8939.h
+@@ -193,6 +193,12 @@
+ #define GCC_VENUS0_CORE1_VCODEC0_CLK		184
+ #define GCC_OXILI_TIMER_CLK			185
+ #define SYSTEM_MM_NOC_BFDCD_CLK_SRC		186
++#define CSI2_CLK_SRC				187
++#define GCC_CAMSS_CSI2_AHB_CLK			188
++#define GCC_CAMSS_CSI2_CLK			189
++#define GCC_CAMSS_CSI2PHY_CLK			190
++#define GCC_CAMSS_CSI2PIX_CLK			191
++#define GCC_CAMSS_CSI2RDI_CLK			192
+ 
+ /* Indexes for GDSCs */
+ #define BIMC_GDSC				0
 -- 
-Dmitry
+2.41.0
+
+
+
