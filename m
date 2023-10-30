@@ -2,86 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFB507DB5E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 10:12:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2CA327DB624
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 10:31:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232375AbjJ3JMV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 05:12:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33436 "EHLO
+        id S232212AbjJ3JbK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 05:31:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48210 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232384AbjJ3JMU (ORCPT
+        with ESMTP id S230477AbjJ3JbJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 05:12:20 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4644BC2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:12:17 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9d216597f64so224790766b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:12:17 -0700 (PDT)
+        Mon, 30 Oct 2023 05:31:09 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0E98C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:31:06 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9d2e7726d5bso160036566b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1698657136; x=1699261936; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uOzvxojt5IkzpqEC6kgmrbNp7izwwxbXp+yu+D9sdwU=;
-        b=r+COnjRVjsVaPVs3t2VmGwM9JcaxQmUquAaehCCG3y/Q2MNtYYfglNtAnzp5uOE7cP
-         WHtgDezQZyORRRyp+YGdKZuUl71+C7SiBGLhv58uQq0PqTvSPEyLFhF+Y9ouYSXjq9/q
-         8ACX1d1PpFATjAJ4TT6qxiTmIt6+X3JV3INp+Ck4LSy1RzVgnS1JtCK1OIxIGGqy+Blx
-         sd9j5ZK9xhUZALqzaMTVQWcTDXSNu6b7/AguOm/ejV8VeEdqtPzy0gLCWO5btK0ktuzB
-         6f+jTxQ5DcAKoD9Ds4UUzQ6EpEGd+zwvbPkMT8otXMfDr2p1kc4903Fcakkqp74M8J5r
-         ysSQ==
+        d=linaro.org; s=google; t=1698658265; x=1699263065; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hfWZX897m6cyRTYM7yqVqYOvURk+nMGkRzonxSunirk=;
+        b=k0/R4t2xIbbHj3Cz5HAdsGAlynBJeYBDzlDyaFUVvYA0isc9BXJoivv7oo+g2D/4LK
+         YNFIfoccnrIs81+A6TMUwbLU+TlEGWPzMF9iGNQFviL5tHS391hE9iKr99959zcSWx1p
+         IXcFBXqF52RY6gRPYe1yugoopvY8iyplc9bLgDJdKJjX1scBELeZLOu0zNPyDxLj4oos
+         7SWVLXMV8MW0/brOljWHIL29Sb1kw9u/LNQsY+Xh/Najg/DkeRPU7qQkORjRM5S3Ye4K
+         akp9bie66laqbWIgXE465yy198Zghboyej4xHAK0sLCe/N+j255cY//bOOEOeg/9U5Zq
+         W5uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698657136; x=1699261936;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uOzvxojt5IkzpqEC6kgmrbNp7izwwxbXp+yu+D9sdwU=;
-        b=kjui4/kHPbAl//JBkFAKkUDYbQqqbxRFmh/6knwVsHq/o1DANXl6+o0QX9BLNZiAex
-         Z3QKzYqA21N0chCZoLDBJ2Qc1eOOjxPqg73juC4JGnCDlat9nwkXWrbm9OgMIydztPbo
-         I41Dh8Gf5TIZgVGT3+xx9tkuHkEat/0HjHVtoWS0RjU/hqIn9z+afVgh05rkHpExIFGo
-         fTJNbg2Kb+ADP6cXQ2EmPY/MJu8pA+/NXHKEYmQsUhEyLz8p+x+qJTYuetV4t/vemRQf
-         Q00ZoGOs6gH/hmkHJ878eUlTVhRu2swVtVLFgCDh8SMTskR6yygXUnERc2fNokxE7/Ux
-         bnYQ==
-X-Gm-Message-State: AOJu0Yy0dj62dtxjTYUyT4S4FV8mRWBZ+Bdxkj/wR7dq6jdr0lFCEnhJ
-        X84gX0faVok7U6re5sU6qjvVjQ==
-X-Google-Smtp-Source: AGHT+IEYCma+GOM6jY6YkxKwhHrk/iK/ziLsvGWwcdC/cvUPp8XZUvhRvI0SwFwRhd8Hweyrf/evGA==
-X-Received: by 2002:a17:907:360a:b0:9c7:dc4e:1a22 with SMTP id bk10-20020a170907360a00b009c7dc4e1a22mr8483803ejc.48.1698657135700;
-        Mon, 30 Oct 2023 02:12:15 -0700 (PDT)
-Received: from localhost (k10064.upc-k.chello.nl. [62.108.10.64])
-        by smtp.gmail.com with ESMTPSA id v6-20020a1709067d8600b0099bcf1c07c6sm5660388ejo.138.2023.10.30.02.12.14
+        d=1e100.net; s=20230601; t=1698658265; x=1699263065;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hfWZX897m6cyRTYM7yqVqYOvURk+nMGkRzonxSunirk=;
+        b=O4PXWMCjehNdcQhVEoxfDs6xzDJb2bocyAXiOAzD8FpQI9QJfXctSY6HOgu6gAqMyi
+         U6FX+h+qPLWGqUqhn2UUZgMOdw+bG5aLJajHyW8Ha3kAROQ9kxp3tHhnizUuRQ+nOCXJ
+         9cfWAtSltT+UrY/BsjBROR894gXLu529x/vlL8A685spvtd0a2RxAp8C6YkWelOUFjW7
+         6xlpAssUxDWVD0YZsm8iK4QqruTQ3nc6H/tUY2RgdvAAJVueuOzC543mfid56Q0xHcf3
+         6VNBc4v/omB32OIRhRn/T/eYTPtQEFlQlMIbNmlaR3iaJg9k3fIbT3kl7RdD8/EVVIzF
+         Y4zA==
+X-Gm-Message-State: AOJu0YwAT1yQs6DxHJpa+jrogI3+pyLbSWmtyLerG+d+7ZygmXnIrSXt
+        hQ8zVLv+IR9j3L47r7UDRRLiSA==
+X-Google-Smtp-Source: AGHT+IGvk7valQTmGN0mxdJ92Ke+7CXv1Ggjokr4IYYZUWkGu8bXr/qE74yumAc3Zvz0yGH29bkS+w==
+X-Received: by 2002:a17:907:6d23:b0:9ae:59c9:b831 with SMTP id sa35-20020a1709076d2300b009ae59c9b831mr7775117ejc.49.1698658265144;
+        Mon, 30 Oct 2023 02:31:05 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id si25-20020a170906ced900b009ae587ce128sm5648385ejb.216.2023.10.30.02.31.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 02:12:15 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+        Mon, 30 Oct 2023 02:31:04 -0700 (PDT)
+Message-ID: <5e8b3ef3-441e-4d0e-94b4-6a6658ba67d9@linaro.org>
+Date:   Mon, 30 Oct 2023 10:31:03 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] dt-bindings: remoteproc: qcom,sm8550-pas: document
+ the SM8650 PAS
+To:     neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-remoteproc-v1-0-a8d20e4ce18c@linaro.org>
+ <20231025-topic-sm8650-upstream-remoteproc-v1-1-a8d20e4ce18c@linaro.org>
+ <a1895327-b520-4f3a-a427-0947ac46495c@linaro.org>
+ <469f2249-5f7b-4136-9f65-b58c9baf537c@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <469f2249-5f7b-4136-9f65-b58c9baf537c@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 30 Oct 2023 10:12:14 +0100
-Message-Id: <CWLNP6QNUXN1.SNVACF2IEGI8@fairphone.com>
-Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Rob Herring" <robh@kernel.org>,
-        =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 7/9] arm64: dts: qcom: sc7280: Add CDSP node
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Mukesh Ojha" <quic_mojha@quicinc.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>
-X-Mailer: aerc 0.15.2
-References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
- <20231027-sc7280-remoteprocs-v1-7-05ce95d9315a@fairphone.com>
- <7934a36a-9438-719a-2ed0-4a78757b044b@quicinc.com>
-In-Reply-To: <7934a36a-9438-719a-2ed0-4a78757b044b@quicinc.com>
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,212 +129,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon Oct 30, 2023 at 10:04 AM CET, Mukesh Ojha wrote:
->
->
-> On 10/27/2023 7:50 PM, Luca Weiss wrote:
-> > Add the node for the ADSP found on the SC7280 SoC, using standard
-> > Qualcomm firmware.
-> >=20
-> > The memory region for sc7280-chrome-common.dtsi is taken from msm-5.4
-> > yupik.dtsi since the other areas also seem to match that file there,
-> > though I cannot be sure there.
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> >   arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |   5 +
-> >   arch/arm64/boot/dts/qcom/sc7280.dtsi               | 138 ++++++++++++=
-+++++++++
-> >   2 files changed, 143 insertions(+)
-> >=20
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/=
-arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > index eb55616e0892..6e5a9d4c1fda 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > @@ -29,6 +29,11 @@ adsp_mem: memory@86700000 {
-> >   			no-map;
-> >   		};
-> >  =20
-> > +		cdsp_mem: memory@88f00000 {
-> > +			reg =3D <0x0 0x88f00000 0x0 0x1e00000>;
-> > +			no-map;
-> > +		};
-> > +
->
-> Just a question, why to do it here, if chrome does not use this ?
+On 30/10/2023 09:29, Neil Armstrong wrote:
+> Ok, I fixed all that
+> 
+>>
+>>> +  - if:
+>>> +      properties:
+>>> +        compatible:
+>>> +          enum:
+>>> +            - qcom,sm8650-mpss-pas
+>>> +    then:
+>>
+>> I am not sure if keeping it in the same binding as sm8550 avoids that
+>> much duplication.
+> 
+> Yes it does, 70% is the bindings would be the same, still if it's still preferable I can duplicate.
+> 
 
-Other memory regions in sc7280.dtsi also get referenced but not actually
-defined in that file, like mpss_mem and wpss_mem. Alternatively we can
-also try and solve this differently, but then we should probably also
-adjust mpss and wpss to be consistent.
+Then let's keep how you propose - in one binding.
 
-Apart from either declaring cdsp_mem in sc7280.dtsi or
-"/delete-property/ memory-region;" for CDSP I don't really have better
-ideas though.
-
-I also imagine these ChromeOS devices will want to enable cdsp at some
-point but I don't know any plans there.
-
-Regards
-Luca
-
->
-> -Mukesh
->
-> >   		camera_mem: memory@8ad00000 {
-> >   			reg =3D <0x0 0x8ad00000 0x0 0x500000>;
-> >   			no-map;
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts=
-/qcom/sc7280.dtsi
-> > index cc153f4e6979..e15646289bf7 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > @@ -3815,6 +3815,144 @@ nsp_noc: interconnect@a0c0000 {
-> >   			qcom,bcm-voters =3D <&apps_bcm_voter>;
-> >   		};
-> >  =20
-> > +		remoteproc_cdsp: remoteproc@a300000 {
-> > +			compatible =3D "qcom,sc7280-cdsp-pas";
-> > +			reg =3D <0 0x0a300000 0 0x10000>;
-> > +
-> > +			interrupts-extended =3D <&intc GIC_SPI 578 IRQ_TYPE_LEVEL_HIGH>,
-> > +					      <&cdsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-> > +					      <&cdsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-> > +					      <&cdsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-> > +					      <&cdsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-> > +					      <&cdsp_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-> > +			interrupt-names =3D "wdog", "fatal", "ready", "handover",
-> > +					  "stop-ack", "shutdown-ack";
-> > +
-> > +			clocks =3D <&rpmhcc RPMH_CXO_CLK>;
-> > +			clock-names =3D "xo";
-> > +
-> > +			power-domains =3D <&rpmhpd SC7280_CX>,
-> > +					<&rpmhpd SC7280_MX>;
-> > +			power-domain-names =3D "cx", "mx";
-> > +
-> > +			interconnects =3D <&nsp_noc MASTER_CDSP_PROC 0 &mc_virt SLAVE_EBI1 =
-0>;
-> > +
-> > +			memory-region =3D <&cdsp_mem>;
-> > +
-> > +			qcom,qmp =3D <&aoss_qmp>;
-> > +
-> > +			qcom,smem-states =3D <&cdsp_smp2p_out 0>;
-> > +			qcom,smem-state-names =3D "stop";
-> > +
-> > +			status =3D "disabled";
-> > +
-> > +			glink-edge {
-> > +				interrupts-extended =3D <&ipcc IPCC_CLIENT_CDSP
-> > +							     IPCC_MPROC_SIGNAL_GLINK_QMP
-> > +							     IRQ_TYPE_EDGE_RISING>;
-> > +				mboxes =3D <&ipcc IPCC_CLIENT_CDSP
-> > +						IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> > +
-> > +				label =3D "cdsp";
-> > +				qcom,remote-pid =3D <5>;
-> > +
-> > +				fastrpc {
-> > +					compatible =3D "qcom,fastrpc";
-> > +					qcom,glink-channels =3D "fastrpcglink-apps-dsp";
-> > +					label =3D "cdsp";
-> > +					qcom,non-secure-domain;
-> > +					#address-cells =3D <1>;
-> > +					#size-cells =3D <0>;
-> > +
-> > +					compute-cb@1 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <1>;
-> > +						iommus =3D <&apps_smmu 0x11a1 0x0420>,
-> > +							 <&apps_smmu 0x1181 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@2 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <2>;
-> > +						iommus =3D <&apps_smmu 0x11a2 0x0420>,
-> > +							 <&apps_smmu 0x1182 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@3 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <3>;
-> > +						iommus =3D <&apps_smmu 0x11a3 0x0420>,
-> > +							 <&apps_smmu 0x1183 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@4 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <4>;
-> > +						iommus =3D <&apps_smmu 0x11a4 0x0420>,
-> > +							 <&apps_smmu 0x1184 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@5 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <5>;
-> > +						iommus =3D <&apps_smmu 0x11a5 0x0420>,
-> > +							 <&apps_smmu 0x1185 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@6 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <6>;
-> > +						iommus =3D <&apps_smmu 0x11a6 0x0420>,
-> > +							 <&apps_smmu 0x1186 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@7 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <7>;
-> > +						iommus =3D <&apps_smmu 0x11a7 0x0420>,
-> > +							 <&apps_smmu 0x1187 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@8 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <8>;
-> > +						iommus =3D <&apps_smmu 0x11a8 0x0420>,
-> > +							 <&apps_smmu 0x1188 0x0420>;
-> > +					};
-> > +
-> > +					/* note: secure cb9 in downstream */
-> > +
-> > +					compute-cb@11 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <11>;
-> > +						iommus =3D <&apps_smmu 0x11ab 0x0420>,
-> > +							 <&apps_smmu 0x118b 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@12 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <12>;
-> > +						iommus =3D <&apps_smmu 0x11ac 0x0420>,
-> > +							 <&apps_smmu 0x118c 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@13 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <13>;
-> > +						iommus =3D <&apps_smmu 0x11ad 0x0420>,
-> > +							 <&apps_smmu 0x118d 0x0420>;
-> > +					};
-> > +
-> > +					compute-cb@14 {
-> > +						compatible =3D "qcom,fastrpc-compute-cb";
-> > +						reg =3D <14>;
-> > +						iommus =3D <&apps_smmu 0x11ae 0x0420>,
-> > +							 <&apps_smmu 0x118e 0x0420>;
-> > +					};
-> > +				};
-> > +			};
-> > +		};
-> > +
-> >   		usb_1: usb@a6f8800 {
-> >   			compatible =3D "qcom,sc7280-dwc3", "qcom,dwc3";
-> >   			reg =3D <0 0x0a6f8800 0 0x400>;
-> >=20
+Best regards,
+Krzysztof
 
