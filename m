@@ -2,92 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51ECC7DB6A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 10:49:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F37C7DB894
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 11:58:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232632AbjJ3Jtw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 05:49:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47928 "EHLO
+        id S232555AbjJ3K6q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 06:58:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232752AbjJ3JtK (ORCPT
+        with ESMTP id S232535AbjJ3K6o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 05:49:10 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 218901718
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:48:31 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c6b48cb2b6so20523591fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:48:30 -0700 (PDT)
+        Mon, 30 Oct 2023 06:58:44 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28C58D5E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:50:19 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2c50ec238aeso59004781fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698659309; x=1699264109; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wQM5616W4VpYt3Uuf+LKbgadEdoylnFckH0iKGfwQfw=;
-        b=qpHTHyFAal77nlLPDw61N+AAY2Kkbf9mTQqm0GWF+fLcyF2pLKE01W0Rmk82CYVeK7
-         rjCRUvgeLXL4kyVfvJLOTpedGJqVLiUgo2ak1toUG1vj0uclwm7Kp9ibK5BxEGhJnnB1
-         RKHbPUP3+kD2zSk9jwro+Geanm3EjUQ6PAsHbWjEQNKNNnVxhtWsEofW7TSI3570CqeE
-         zDkOU4T06+4UfCx+l5iEoazcANmWmYQvK3777xg+9kTqgnnW+vO3M1iHKVvfcQARbZLP
-         ET+DAuKAXEZoew8NS1NhxV5x6QAOPWiqt/MCcugI+Vbykc95XVI/ahOgIXO6MfgJvIfi
-         31dw==
+        d=linaro.org; s=google; t=1698659417; x=1699264217; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1BIXjvXDntxem7mZ7Qq/m56h8knZQL7orEKUL9eU4jc=;
+        b=e6GrC9u2n0GlUjx9CkfmjVnarEmr9GDrGU1c+nur6JsZaAKbmNblnsEO67eLCcTbMe
+         vydxawSM5Ar+eBz5NJuCZaqPPkxl/DiY65un4dp4ApIR8pGFsYd7C4DK/ZpCu1VHfhkD
+         yE1vWnEiPzSAjhYHJlnsB+4FxwrgDIB0+sfmagKhWMwx+pBMcXGp3CwFbeIDGVaHICq3
+         zIYinLbLbbm1H9SK2TbO23CB8oJMYm3O3poL5JEadOQ8Ph6TeuF+liJZTdAKDW8Ac35/
+         ELjoq10srYC1vt60HwWRli8gbGmJoq9h83BREXNMS6bd1AgKV8FzOq7UC7TnEB6YPiI9
+         s0xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698659309; x=1699264109;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wQM5616W4VpYt3Uuf+LKbgadEdoylnFckH0iKGfwQfw=;
-        b=M0g/jHk81iWcgpugR26meRYkbqx9fg2qFmLcFGeVWXgx+ZAvk53E8vmLfUNbvaYXXc
-         xdhyce1336aKBulQ09XM4H+7SpOOeWA88IVgwBDZtKcLy2+yOB144c1Fiu4ubVrt7/k+
-         PfyNiR7K8BmeuAaatGIVndV7enNAoNrKck2rSNRt1K4z5m+Jpn5w5y7Wwzlxj/759trL
-         gyyCcqOgfBb6JYZh6EgrC9+xnSFm1th/hc3KzeyTNLlKUjLf6treoi2mXOzhe5djyZwL
-         Raw+o1CDAad/yZVtuOcYXPOgZ7QXazJVyMyRDsZ++o52xGhi1ojXes8NHx1TGOlG14cC
-         gAGA==
-X-Gm-Message-State: AOJu0YzvvPIVNxIY+MHW0VNxB4rnhrpgpCnVCRrQ2OgNhLF9WMSskuuS
-        YGwteGQdiJIFRemB5blTqAHCpJwMvKfgSbJWxQu5Tw==
-X-Google-Smtp-Source: AGHT+IEwwsBExwDoPhElKWqXZ5jo2UJT+EbWVeyrD2yKAaZbvCmWwcsGRiRieS0xTn3OYYsWmp7tzw==
-X-Received: by 2002:a2e:86c3:0:b0:2c5:94a:ac96 with SMTP id n3-20020a2e86c3000000b002c5094aac96mr7794942ljj.9.1698659309336;
-        Mon, 30 Oct 2023 02:48:29 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698659417; x=1699264217;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1BIXjvXDntxem7mZ7Qq/m56h8knZQL7orEKUL9eU4jc=;
+        b=DGczvlvCIEIp6gem48oPyZzKU3WNStNVac17N9qFLz2fjiwRM8hw4VJi4f3Z3v+8FC
+         bwOki6mw+h4VwyfXHvfUlRhDYdse+Y6QI6gJTwKO1EVTs9+3bDmim1vp5DQOx+P0Rg7W
+         jXRId0aGxarp3qCf18I1s2E4UE3q04qPi4mk78b2mKL+3w1MMuIUzsLnJSynUTgvFAoB
+         sUuNfKNxHTw5rYiK0qvqQe+ey7hqh4whzZUu6Sd/v1LH699HEBTWRnHTkOYqKcJi6oJR
+         u++G56AhVW2J/8i8xxkIf//pJ+NVDl+VutxrGFKPKAGLVPBgtVNgPClO0a+SmDDs9/DH
+         2MJA==
+X-Gm-Message-State: AOJu0YxYDaS20LdhTB9NYPKFkIZbTxcK2bVnO+mH7Ej46V0ocX0+VMsV
+        DCxWnlZ++NbHjEueHrE9Dmg9jw==
+X-Google-Smtp-Source: AGHT+IH0k2pg+UfjZUCUXy6B3GSaQZKNSoPwEplAwxPZZ8su+HMEjHXGyHj/OtwhoTzIJ0m1HbC6SQ==
+X-Received: by 2002:a2e:9a86:0:b0:2bd:180d:67b1 with SMTP id p6-20020a2e9a86000000b002bd180d67b1mr7224708lji.51.1698659417143;
+        Mon, 30 Oct 2023 02:50:17 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id x14-20020a5d444e000000b0031980294e9fsm7854256wrr.116.2023.10.30.02.48.28
+        by smtp.gmail.com with ESMTPSA id hj19-20020a05600c529300b0040841e79715sm8625242wmb.27.2023.10.30.02.50.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Oct 2023 02:48:28 -0700 (PDT)
+        Mon, 30 Oct 2023 02:50:16 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 30 Oct 2023 10:48:23 +0100
-Subject: [PATCH v2 7/7] phy: qcom: qmp-combo: add QMP USB3/DP PHY tables
- for SM8650
+Subject: [PATCH v2 0/4] pinctrl: qcom: Introduce Pinctrl/GPIO for SM8650
+Date:   Mon, 30 Oct 2023 10:50:12 +0100
+Message-Id: <20231030-topic-sm8650-upstream-tlmm-v2-0-9d4d4386452d@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231030-topic-sm8650-upstream-phy-v2-7-a543a4c4b491@linaro.org>
-References: <20231030-topic-sm8650-upstream-phy-v2-0-a543a4c4b491@linaro.org>
-In-Reply-To: <20231030-topic-sm8650-upstream-phy-v2-0-a543a4c4b491@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAFR8P2UC/33Nyw6CMBCF4Vchs7amNwi68j0MiwoDTEIpmVaiI
+ by7lbh2+Z/FdzaIyIQRrsUGjCtFCnMOfSqgHd08oKAuN2ipjZKqEiks1Iro66qU4rnExOi8SJP
+ 3wmKLprTYG3WBDCyMPb0O/N7kHimmwO/ja1Xf9cfq8h+7KiGzbbraOuNs9bhNNDsO58ADNPu+f
+ wBokGQKxQAAAA==
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=868;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1941;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=Za5suk8CkzX7Dik/mXEOJCOXHPTYwiAgMf2jppXrNEE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlP3vkgmrXVXmBDf3YHDwYcAoiOGICGmldBybhSgCm
- bxpZpPqJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZT975AAKCRB33NvayMhJ0SR5EA
- Ckn/nIBO8v0WhjeI9FXREPxSrtrxC85E/pZ+D9lqmjrXgVZAs8qNlI2bwcg6zLCTE0gsOwKCM1iWUY
- HBnHGSyx4kTc0LGJo2GOc/h41fF0xs/O0soEuM2tq7TTHeA5hgZNvAFGmHBi9lbeTZ7TYpNApda+N5
- VaLG3jFZQjY/ovdvExCIl2T1fUfn122kMu15Up5h3xjRAUMwbQ++bGqaghY+02i9uI27ZJcONMdEyA
- QHYN2/KsApsmDb8d7+i7WoOndBLsz62LWDo7hMmfP4onPe5uCPRuZFccgzDYUmLY4awjwygzOtpg6W
- +SC4Oy1fRc5oGHY7WlSsPvcr2pShnVWvSXxBstCKY/qqIfb/Zfg8vRuxnTIKJpYImhT+aLMw/meWus
- Ub5CBGxWU2KHlgfMMk1wdOt9UUMdp4V6iTF6ZG52AIm7PoQlrhA8rQavz8x9nSrkiEWl+k8jaMIkmj
- dQt+htF/Vt9bUKNISDnUgOx9NC/KPv7YOeLfQL4LqZLHj9owy2aJxeUDlxwMXjHplt+iCMSgvU7+Qu
- itLZjXlaLaOBLWb0WMq/5xOa0VovwLDs2DEPlfwS741it/XGEnJ4bd86XRSs821HyQELobiPtIhoXl
- gT1J++3T5q4BlzzP2RUW+Y8R0to3+lin5M4xc2g1Lf1EExOx0T8ENoOM94oQ==
+ bh=oRmTu7gK9K+qp4774LfBnE/qKXVBzCm9HZuGwjD1V2E=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlP3xVKMP93L8Ik6k9FgnT2pKfBoyprYkBE8Q/YKiN
+ 1C72pdmJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZT98VQAKCRB33NvayMhJ0QVGEA
+ Czph8LyxHExNGquxpwUXmAm4pbMBqELha45Rw1xjjF3SqyDUqRtI+lb172SOccKH1XIegPG/KcjOsX
+ ntQf/l8vFjzEwX98/B7N1vZbci+SsaC8Att41MSQLUvs9YwpWokhL2Lk9+vn5VJzkiBmayaorgtwA7
+ qCF24lSBqtJTBJ67qGZxjidq48pasnmSrXh5xJk+5tNscIMfT6znmo3bxaI5GkggY/rUMYII0ZbKR4
+ n9ew618rMzjogMqKikNrXLkvbPIukI6FQ7o6F/qYMWAql1qsJScCesDMkrWYbMF1R7y97FnUFymjAD
+ D9OEAtVB4i2INsB1mKDw7i5aXWSfVywyH9VO31bhSuPM++vC/WA8pFLl4U1ux6HAWemPPV6TPl/BlW
+ Y8+VPoE4KxgQD44clmL68kSM7XrBgXA6EaUCztQ0qXkSGgKspxOfI0GgVyGJfg80YgKl8HFxapon2s
+ FuDkFSb8LAtzQltjWMkg8Hhf7LEZd91QABRswctZqTe5yPg7SmMflrtZQcJNO18nCoJsHe0hP5ESK/
+ WHdtWJFS3Yyb0uGFuJzJNIoDQRJk4vaSGZkEXJUXtKaEwl+kfkkFL2cKpqdf0E8N61ZyXCusORMQpf
+ 7hBEpg6vqDtqShC+9T++gBQvuKDR4ivC/wUBcYM0wIwCvK9Kp4Jph+ngX2Mg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -100,30 +98,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add QMP USB3/DP Combo PHY support for the SM8650 platform.
+The SM8650 Top Level Mode Multiplexer supports 211 GPIOs,
+and the usual UFS Reset, SDC Clk/Cmd/Data special pins.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+An handful of pins can have their IRQ generated by the PDC
+module, and for this support for the new wakeup_present &
+wakeup_enable_bit is required to allow the "wakeup" event
+to be passed to PDC and generate an interrupt or a wakeup
+system event.
+
+As SM8550, it also supports the i2c_pull_bit bit to enable the
+on-SoC load resistor for I2C busses.
+
+Dependencies: None
+
+For convenience, a regularly refreshed linux-next based git tree containing
+all the SM8650 related work is available at:
+https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
+
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Changes in v2:
+- Collect reviewed-bys
+- Fixed unevaluatedProperties handling, and dropped the true properties
+- Link to v1: https://lore.kernel.org/r/20231025-topic-sm8650-upstream-tlmm-v1-0-4e3d84a3a46b@linaro.org
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 9c87845c78ec..0417856b8e7b 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -3558,6 +3558,10 @@ static const struct of_device_id qmp_combo_of_match_table[] = {
- 		.compatible = "qcom,sm8550-qmp-usb3-dp-phy",
- 		.data = &sm8550_usb3dpphy_cfg,
- 	},
-+	{
-+		.compatible = "qcom,sm8650-qmp-usb3-dp-phy",
-+		.data = &sm8550_usb3dpphy_cfg,
-+	},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qmp_combo_of_match_table);
+---
+Neil Armstrong (4):
+      dt-bindings: pinctrl: document the SM8650 Top Level Mode Multiplexer
+      pinctrl: qcom: handle intr_target_reg wakeup_present/enable bits
+      pinctrl: qcom: Introduce the SM8650 Top Level Mode Multiplexer driver
+      fixup! pinctrl: qcom: handle intr_target_reg wakeup_present/enable bits
 
+ .../bindings/pinctrl/qcom,sm8650-tlmm.yaml         |  147 ++
+ drivers/pinctrl/qcom/Kconfig.msm                   |    8 +
+ drivers/pinctrl/qcom/Makefile                      |    1 +
+ drivers/pinctrl/qcom/pinctrl-msm.c                 |   42 +
+ drivers/pinctrl/qcom/pinctrl-msm.h                 |    5 +
+ drivers/pinctrl/qcom/pinctrl-sm8650.c              | 1762 ++++++++++++++++++++
+ 6 files changed, 1965 insertions(+)
+---
+base-commit: ed75ce58b3a55d2cd95b68a06fdb010e1e18d825
+change-id: 20231016-topic-sm8650-upstream-tlmm-4ece354ef319
+
+Best regards,
 -- 
-2.34.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
