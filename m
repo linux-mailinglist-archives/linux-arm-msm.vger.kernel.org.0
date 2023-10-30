@@ -2,121 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A7957DB3B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 07:56:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AAF767DB3BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 07:57:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231868AbjJ3G4g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 02:56:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52882 "EHLO
+        id S231919AbjJ3G5K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 02:57:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231849AbjJ3G4d (ORCPT
+        with ESMTP id S231839AbjJ3G5C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 02:56:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF9C6AB;
-        Sun, 29 Oct 2023 23:56:31 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39U5M5pt012822;
-        Mon, 30 Oct 2023 06:56:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=o8EiwvG5EpeclZ0ydgq4Pl+Rn+5NagwHWfLIAQpsoFI=;
- b=DGop2fkS/UGNuGqOMNm8n/6TI7MMz9UY8SJcl88lYv6zG5W/11FUG0bqlaBwK9nQbIb3
- Su7uBtGEfBWnbJiy5fYdVTAx1dv9h923pPzWToe9CZtnwFcW4Y7uzJ9q7SNSOSCGlQxU
- 9lSrIGIEFrJ7ub92UwJwTefou58Z1W4eHrIHYck/lDIVk3BwsEl+ohAOdYq44Jn2B2jy
- mJat4NfqSbpK1/gvPUV7EB6u5fd53IyDpssiTcQ74PbDWAyjXBiV2Qk/CDEwCmXh5/Er
- gwVMjuk76Lqsfy+Yc0wyTlw61RszoF7V2f0Mi42AYW3Rk3RQI95IEq0ThikhVltqT0IW yg== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u0ukeayqk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Oct 2023 06:56:28 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39U6uSLT003364
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Oct 2023 06:56:28 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Sun, 29 Oct 2023 23:56:25 -0700
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Mukesh Ojha" <quic_mojha@quicinc.com>
-Subject: [PATCH v9 3/3] pinctrl: qcom: Use qcom_scm_io_rmw() function
-Date:   Mon, 30 Oct 2023 12:26:07 +0530
-Message-ID: <1698648967-974-4-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1698648967-974-1-git-send-email-quic_mojha@quicinc.com>
-References: <1698648967-974-1-git-send-email-quic_mojha@quicinc.com>
+        Mon, 30 Oct 2023 02:57:02 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF535F7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Oct 2023 23:56:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698649009; x=1730185009;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4R0bw78ePjfdbCkBh/GEc997L05R9Y4a7R9w23auL3Q=;
+  b=iAQpyCtrWeqIq5nAbmxWt/UDuUyyX4y61cgyLU05QiU/PYTWQ5L6rKSu
+   oikbLMxsV0ftGREGmgewtlW9RF1hdl731Hkk9F5RE1gXTbA/KvFmkjTaq
+   sWuylAmamz/aXkAnlzYcfQqYIXwOBRLy3pw39SQlJ3xUWT7N5wAX9iJBA
+   Ehas1tAGrF10n2+APG8eryrVvepjyG7WuHj2jzdKqMRzHrZSHe6OxMazM
+   qvDdtnXWHQuinziYkccle75IVJqRUvstHpsttLbJ7SWVe3W8gvsq/CHhX
+   OGAwN9h21qSxoz+wa1dDBM3kOne0Hv9ZdPVINvCguoN0sTMZJ9ExPPZsW
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10878"; a="390879452"
+X-IronPort-AV: E=Sophos;i="6.03,262,1694761200"; 
+   d="scan'208";a="390879452"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2023 23:56:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10878"; a="789377566"
+X-IronPort-AV: E=Sophos;i="6.03,262,1694761200"; 
+   d="scan'208";a="789377566"
+Received: from sgruszka-mobl.ger.corp.intel.com (HELO localhost) ([10.252.51.19])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2023 23:56:42 -0700
+Date:   Mon, 30 Oct 2023 07:56:40 +0100
+From:   Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     quic_carlv@quicinc.com, quic_pkanojiy@quicinc.com,
+        ogabbay@kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] accel/qaic: Support for 0 resize slice execution in BO
+Message-ID: <ZT9TqJIZ07i9ZTmO@linux.intel.com>
+References: <20231027164330.11978-1-quic_jhugo@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3fRKeXH-PllePD_LSLm8YH6bSFS4pqNA
-X-Proofpoint-ORIG-GUID: 3fRKeXH-PllePD_LSLm8YH6bSFS4pqNA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-30_05,2023-10-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=708
- priorityscore=1501 malwarescore=0 bulkscore=0 impostorscore=0 phishscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 clxscore=1015 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2310300051
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231027164330.11978-1-quic_jhugo@quicinc.com>
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use qcom_scm_io_rmw() exported function in pinctrl-msm
-driver.
-
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-msm.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 395040346d0f..9323b916cd7c 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1078,22 +1078,20 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 	if (g->intr_target_width)
- 		intr_target_mask = GENMASK(g->intr_target_width - 1, 0);
- 
-+	intr_target_mask <<= g->intr_target_bit;
- 	if (pctrl->intr_target_use_scm) {
- 		u32 addr = pctrl->phys_base[0] + g->intr_target_reg;
- 		int ret;
- 
--		qcom_scm_io_readl(addr, &val);
--		val &= ~(intr_target_mask << g->intr_target_bit);
--		val |= g->intr_target_kpss_val << g->intr_target_bit;
--
--		ret = qcom_scm_io_writel(addr, val);
-+		val = g->intr_target_kpss_val << g->intr_target_bit;
-+		ret = qcom_scm_io_rmw(addr, intr_target_mask, val);
- 		if (ret)
- 			dev_err(pctrl->dev,
- 				"Failed routing %lu interrupt to Apps proc",
- 				d->hwirq);
- 	} else {
- 		val = msm_readl_intr_target(pctrl, g);
--		val &= ~(intr_target_mask << g->intr_target_bit);
-+		val &= ~intr_target_mask;
- 		val |= g->intr_target_kpss_val << g->intr_target_bit;
- 		msm_writel_intr_target(val, pctrl, g);
- 	}
--- 
-2.7.4
-
+On Fri, Oct 27, 2023 at 10:43:30AM -0600, Jeffrey Hugo wrote:
+> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> 
+> Add support to partially execute a slice which is resized to zero.
+> Executing a zero size slice in a BO should mean that there is no DMA
+> transfers involved but you should still configure doorbell and semaphores.
+> 
+> For example consider a BO of size 18K and it is sliced into 3 6K slices
+> and user calls partial execute ioctl with resize as 10K.
+> slice 0 - size is 6k and offset is 0, so resize of 10K will not cut short
+>           this slice hence we send the entire slice for execution.
+> slice 1 - size is 6k and offset is 6k, so resize of 10K will cut short this
+>           slice and only the first 4k should be DMA along with configuring
+>           doorbell and semaphores.
+> slice 2 - size is 6k and offset is 12k, so resize of 10k will cut short
+>           this slice and no DMA transfer would be involved but we should
+>           would configure doorbell and semaphores.
+> 
+> This change begs to change the behavior of 0 resize. Currently, 0 resize
+> partial execute ioctl behaves exactly like execute ioctl i.e. no resize.
+> After this patch all the slice in BO should behave exactly like slice 2 in
+> above example.
+> 
+> Refactor copy_partial_exec_reqs() to make it more readable and less
+> complex.
+> 
+> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
