@@ -2,86 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C64457DBA49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 14:10:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E10567DBAF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 14:38:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233092AbjJ3NKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 09:10:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46880 "EHLO
+        id S229537AbjJ3Nio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 09:38:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232176AbjJ3NKo (ORCPT
+        with ESMTP id S229510AbjJ3Nin (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 09:10:44 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BB60C2;
-        Mon, 30 Oct 2023 06:10:41 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39UCx4Le021054;
-        Mon, 30 Oct 2023 13:10:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ZGVaDD0HKRLneTlS3qIB8qJbLOoGXG1WMf7xR/2jYXs=;
- b=l7ol7r347IEKHHQkzuDvT/skV03ZGkFHiOK6J/iR3lHPERVZAxfV3ISe7vlZxmfVPzvM
- JZP3taWLt6H/XaCd/z7YPePYjdU7L6YxyP3Hn7yby4Lx0MDmA4u4FSJ5Hmg4sFA8/2Dj
- kkt5eMi0Tg+0D5ZnlfRs5C9/thyWs4k/e9BKuao37RuMab9wZytyHTjbQunvzgV+PZXZ
- ek96nGRtSVZ+QiIj38VzktC2BJ7VzcRLIF7f/uzIDx9wC6ca+tJTrlRvfVHD0TYgJ7LO
- 9OJJbLxhIUfkmZ8yN9oDID9ESrItLa3VlhHXEs/CgvFaxHTAFT8KHRklhNz8BlxdFSkH Cw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u0smrkx3v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Oct 2023 13:10:36 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39UDAZc3007783
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Oct 2023 13:10:35 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 30 Oct
- 2023 06:10:31 -0700
-Message-ID: <8e71ba02-5d6a-4c7e-4a55-f9ef79c2f928@quicinc.com>
-Date:   Mon, 30 Oct 2023 18:40:28 +0530
+        Mon, 30 Oct 2023 09:38:43 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB84897;
+        Mon, 30 Oct 2023 06:38:40 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507c91582fdso6449342e87.2;
+        Mon, 30 Oct 2023 06:38:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698673119; x=1699277919; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+XTY7Ceg2W761HSG7aGBRMEokR6cgjVhFDn1Z8HE4To=;
+        b=EOtLr2Mm76cyiN8E6XAE9qiemSkaFmbDle9gDNUFvd9GJ8Uk9sMHlyDPmOoh01XUxt
+         EfEF4PV08SF+dztRjGLzjGkb6fJCIK/1NqXL+L417GYoJ3yqLXc8pn6T2aU0ZxhswADC
+         QeBCM1lFpP9Si07YG412VePYF0d8DIhYhVxZKUPU/JSX6sXvD5etgWpvv2OGAikDrlQ7
+         xwg8xoDCLnwFxopTyziHM5YJggsWVW8hSJ90/aDgrGSEUl89LGpie2+5J0w9wDHQk2lP
+         Kt9Loq3o+QrLA7ZyEKpBtQuYNTeDfHfCHvyyV8kY8ULxn8/ne50i34XMUx1vw3LXVtLG
+         1tBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698673119; x=1699277919;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+XTY7Ceg2W761HSG7aGBRMEokR6cgjVhFDn1Z8HE4To=;
+        b=rXWvU2oIwL+CRUXkMUmL+Q948JUOa8L+MSP92QoGdSYEWQRynBbZVOUmjmakPJ1KN1
+         spS40qNMIM5prqAa9dT+ELi3kgw+kH+PxwUu9RvUOd5LGn6QRYYho4CDE4IGHxL2n4jA
+         0puZXhCP9vGrvT9fL288Qji3rqCwT4U8PbLZ4AtOQnM19VXwKBCbzGEBG0DzTV/Tsp8a
+         qJmM/yT2sTM/0RZmECo0+BNasPPV609RmFJZCi1mFLBownSqIxgQnFP0SEgbOBbdutt6
+         O/yjVBbZUXF0wlEzcG+EdkyfhKBcZXFrKQJi3BLI1eZhk+baVxAjHkqgkXpnp7jRwzQt
+         ClZw==
+X-Gm-Message-State: AOJu0YzyxGMDhMK/SVZl9HJkd/lstAow1L4aFxDfNiGqjnSl3pNCkWDS
+        7OmX6bJAYvt6ORDXhJzvtgIs8bIMK7F3aRpY89c=
+X-Google-Smtp-Source: AGHT+IHdElXWFmKYD1j9eSX3y4FD/cwV2Kl6WssGkJK7frmORyS1HkzDxkdhTKCzAef0BSodpHk6yj3z/NEtX5b7xY4=
+X-Received: by 2002:a19:5513:0:b0:507:a8d1:6e57 with SMTP id
+ n19-20020a195513000000b00507a8d16e57mr6903381lfe.40.1698673118796; Mon, 30
+ Oct 2023 06:38:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 2/3] remoteproc: qcom: pas: make region assign more
- generic
-Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20231030-topic-sm8650-upstream-remoteproc-v2-0-609ee572e0a2@linaro.org>
- <20231030-topic-sm8650-upstream-remoteproc-v2-2-609ee572e0a2@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20231030-topic-sm8650-upstream-remoteproc-v2-2-609ee572e0a2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: nA-BXhFm7yncA_vZaVjCjj4MSI_SGpvW
-X-Proofpoint-GUID: nA-BXhFm7yncA_vZaVjCjj4MSI_SGpvW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-30_10,2023-10-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 suspectscore=0 clxscore=1015 adultscore=0 impostorscore=0
- spamscore=0 phishscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
- definitions=main-2310300100
-X-Spam-Status: No, score=-6.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+References: <20231027165859.395638-1-robdclark@gmail.com> <20231027165859.395638-7-robdclark@gmail.com>
+ <597b5bb3-ca75-4662-9904-12c4d8e9101a@amd.com>
+In-Reply-To: <597b5bb3-ca75-4662-9904-12c4d8e9101a@amd.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 30 Oct 2023 06:38:26 -0700
+Message-ID: <CAF6AEGu1Z1k0bKrMZw4-RJSC-nbO=tuDOjQiPmi61_m_1nRCgA@mail.gmail.com>
+Subject: Re: [PATCH 6/7] drm/exec: Pass in initial # of objects
+To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Karol Herbst <kherbst@redhat.com>,
+        Lyude Paul <lyude@redhat.com>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Guchun Chen <guchun.chen@amd.com>,
+        Felix Kuehling <Felix.Kuehling@amd.com>,
+        Dong Chenchen <dongchenchen2@huawei.com>,
+        Philip Yang <Philip.Yang@amd.com>, Lang Yu <Lang.Yu@amd.com>,
+        Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Kefeng Wang <wangkefeng.wang@huawei.com>,
+        Suren Baghdasaryan <surenb@google.com>,
+        Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+        Jonathan Kim <jonathan.kim@amd.com>,
+        Jack Xiao <Jack.Xiao@amd.com>,
+        Shashank Sharma <shashank.sharma@amd.com>,
+        Mario Limonciello <mario.limonciello@amd.com>,
+        "open list:RADEON and AMDGPU DRM DRIVERS" 
+        <amd-gfx@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS" 
+        <nouveau@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,215 +99,223 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Oct 30, 2023 at 1:05=E2=80=AFAM Christian K=C3=B6nig
+<christian.koenig@amd.com> wrote:
+>
+> Am 27.10.23 um 18:58 schrieb Rob Clark:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > In cases where the # is known ahead of time, it is silly to do the tabl=
+e
+> > resize dance.
+>
+> Ah, yes that was my initial implementation as well, but I ditched that
+> because nobody actually used it.
+>
+> One comment below.
+>
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >   drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c  |  2 +-
+> >   drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |  4 ++--
+> >   drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |  4 ++--
+> >   drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |  4 ++--
+> >   drivers/gpu/drm/drm_exec.c              | 15 ++++++++++++---
+> >   drivers/gpu/drm/nouveau/nouveau_exec.c  |  2 +-
+> >   drivers/gpu/drm/nouveau/nouveau_uvmm.c  |  2 +-
+> >   include/drm/drm_exec.h                  |  2 +-
+> >   8 files changed, 22 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/a=
+md/amdgpu/amdgpu_cs.c
+> > index efdb1c48f431..d27ca8f61929 100644
+> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+> > @@ -65,7 +65,7 @@ static int amdgpu_cs_parser_init(struct amdgpu_cs_par=
+ser *p,
+> >       }
+> >
+> >       amdgpu_sync_create(&p->sync);
+> > -     drm_exec_init(&p->exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
+> > +     drm_exec_init(&p->exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
+> >       return 0;
+> >   }
+> >
+> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c b/drivers/gpu/drm/=
+amd/amdgpu/amdgpu_csa.c
+> > index 720011019741..796fa6f1420b 100644
+> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+> > @@ -70,7 +70,7 @@ int amdgpu_map_static_csa(struct amdgpu_device *adev,=
+ struct amdgpu_vm *vm,
+> >       struct drm_exec exec;
+> >       int r;
+> >
+> > -     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
+> > +     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
+> >       drm_exec_until_all_locked(&exec) {
+> >               r =3D amdgpu_vm_lock_pd(vm, &exec, 0);
+> >               if (likely(!r))
+> > @@ -110,7 +110,7 @@ int amdgpu_unmap_static_csa(struct amdgpu_device *a=
+dev, struct amdgpu_vm *vm,
+> >       struct drm_exec exec;
+> >       int r;
+> >
+> > -     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
+> > +     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
+> >       drm_exec_until_all_locked(&exec) {
+> >               r =3D amdgpu_vm_lock_pd(vm, &exec, 0);
+> >               if (likely(!r))
+> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/drm/=
+amd/amdgpu/amdgpu_gem.c
+> > index ca4d2d430e28..16f1715148ad 100644
+> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+> > @@ -203,7 +203,7 @@ static void amdgpu_gem_object_close(struct drm_gem_=
+object *obj,
+> >       struct drm_exec exec;
+> >       long r;
+> >
+> > -     drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES);
+> > +     drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES, 0);
+> >       drm_exec_until_all_locked(&exec) {
+> >               r =3D drm_exec_prepare_obj(&exec, &bo->tbo.base, 1);
+> >               drm_exec_retry_on_contention(&exec);
+> > @@ -739,7 +739,7 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, voi=
+d *data,
+> >       }
+> >
+> >       drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
+> > -                   DRM_EXEC_IGNORE_DUPLICATES);
+> > +                   DRM_EXEC_IGNORE_DUPLICATES, 0);
+> >       drm_exec_until_all_locked(&exec) {
+> >               if (gobj) {
+> >                       r =3D drm_exec_lock_obj(&exec, gobj);
+> > diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/=
+amd/amdgpu/amdgpu_mes.c
+> > index b6015157763a..3c351941701e 100644
+> > --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+> > +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+> > @@ -1105,7 +1105,7 @@ int amdgpu_mes_ctx_map_meta_data(struct amdgpu_de=
+vice *adev,
+> >
+> >       amdgpu_sync_create(&sync);
+> >
+> > -     drm_exec_init(&exec, 0);
+> > +     drm_exec_init(&exec, 0, 0);
+> >       drm_exec_until_all_locked(&exec) {
+> >               r =3D drm_exec_lock_obj(&exec,
+> >                                     &ctx_data->meta_data_obj->tbo.base)=
+;
+> > @@ -1176,7 +1176,7 @@ int amdgpu_mes_ctx_unmap_meta_data(struct amdgpu_=
+device *adev,
+> >       struct drm_exec exec;
+> >       long r;
+> >
+> > -     drm_exec_init(&exec, 0);
+> > +     drm_exec_init(&exec, 0, 0);
+> >       drm_exec_until_all_locked(&exec) {
+> >               r =3D drm_exec_lock_obj(&exec,
+> >                                     &ctx_data->meta_data_obj->tbo.base)=
+;
+> > diff --git a/drivers/gpu/drm/drm_exec.c b/drivers/gpu/drm/drm_exec.c
+> > index 5d2809de4517..27d11c20d148 100644
+> > --- a/drivers/gpu/drm/drm_exec.c
+> > +++ b/drivers/gpu/drm/drm_exec.c
+> > @@ -69,16 +69,25 @@ static void drm_exec_unlock_all(struct drm_exec *ex=
+ec)
+> >    * drm_exec_init - initialize a drm_exec object
+> >    * @exec: the drm_exec object to initialize
+> >    * @flags: controls locking behavior, see DRM_EXEC_* defines
+> > + * @nr: the initial # of objects
+> >    *
+> >    * Initialize the object and make sure that we can track locked objec=
+ts.
+> > + *
+> > + * If nr is non-zero then it is used as the initial objects table size=
+.
+> > + * In either case, the table will grow (be re-allocated) on demand.
+> >    */
+> > -void drm_exec_init(struct drm_exec *exec, uint32_t flags)
+> > +void drm_exec_init(struct drm_exec *exec, uint32_t flags, unsigned nr)
+> >   {
+> > +     size_t sz =3D PAGE_SIZE;
+> > +
+> > +     if (nr)
+> > +             sz =3D (size_t)nr * sizeof(void *);
+> > +
+> >       exec->flags =3D flags;
+> > -     exec->objects =3D kmalloc(PAGE_SIZE, GFP_KERNEL);
+> > +     exec->objects =3D kmalloc(sz, GFP_KERNEL);
+>
+> Please use k*v*malloc() here since we can't predict how large that will b=
+e.
 
+or __GFP_NOWARN?  If userspace (or kasan) is cheeky and asks for ~0
+objects, we should probably just fail?
 
-On 10/30/2023 3:33 PM, Neil Armstrong wrote:
-> The current memory region assign only supports a single
-> memory region.
-> 
-> But new platforms introduces more regions to make the
-> memory requirements more flexible for various use cases.
-> Those new platforms also shares the memory region between the
-> DSP and HLOS.
-> 
-> To handle this, make the region assign more generic in order
-> to support more than a single memory region and also permit
-> setting the regions permissions as shared.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   drivers/remoteproc/qcom_q6v5_pas.c | 102 ++++++++++++++++++++++++-------------
->   1 file changed, 66 insertions(+), 36 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 913a5d2068e8..4829fd26e17d 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -33,6 +33,8 @@
->   
->   #define ADSP_DECRYPT_SHUTDOWN_DELAY_MS	100
->   
-> +#define MAX_ASSIGN_COUNT 2
-> +
->   struct adsp_data {
->   	int crash_reason_smem;
->   	const char *firmware_name;
-> @@ -51,6 +53,9 @@ struct adsp_data {
->   	int ssctl_id;
->   
->   	int region_assign_idx;
-> +	int region_assign_count;
-> +	bool region_assign_shared;
-> +	int region_assign_vmid;
->   };
->   
->   struct qcom_adsp {
-> @@ -87,15 +92,18 @@ struct qcom_adsp {
->   	phys_addr_t dtb_mem_phys;
->   	phys_addr_t mem_reloc;
->   	phys_addr_t dtb_mem_reloc;
-> -	phys_addr_t region_assign_phys;
-> +	phys_addr_t region_assign_phys[MAX_ASSIGN_COUNT];
->   	void *mem_region;
->   	void *dtb_mem_region;
->   	size_t mem_size;
->   	size_t dtb_mem_size;
-> -	size_t region_assign_size;
-> +	size_t region_assign_size[MAX_ASSIGN_COUNT];
->   
->   	int region_assign_idx;
-> -	u64 region_assign_perms;
-> +	int region_assign_count;
-> +	bool region_assign_shared;
-> +	int region_assign_vmid;
-> +	u64 region_assign_perms[MAX_ASSIGN_COUNT];
->   
->   	struct qcom_rproc_glink glink_subdev;
->   	struct qcom_rproc_subdev smd_subdev;
-> @@ -590,37 +598,52 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
->   
->   static int adsp_assign_memory_region(struct qcom_adsp *adsp)
->   {
-> -	struct reserved_mem *rmem = NULL;
-> -	struct qcom_scm_vmperm perm;
-> +	struct qcom_scm_vmperm perm[MAX_ASSIGN_COUNT];
-> +	unsigned int perm_size = 1;
+BR,
+-R
 
-AFAICS, not need of initialization.
-
->   	struct device_node *node;
-> -	int ret;
-> +	int offset, ret;
-
-Nit: one variable per line.
-
->   
->   	if (!adsp->region_assign_idx)
-
-Not related to this patch..
-Should not this be valid only for > 1 ?
-
-
->   		return 0;
->   
-> -	node = of_parse_phandle(adsp->dev->of_node, "memory-region", adsp->region_assign_idx);
-> -	if (node)
-> -		rmem = of_reserved_mem_lookup(node);
-> -	of_node_put(node);
-> -	if (!rmem) {
-> -		dev_err(adsp->dev, "unable to resolve shareable memory-region\n");
-> -		return -EINVAL;
-> -	}
-> +	for (offset = 0; offset < adsp->region_assign_count; ++offset) {
-> +		struct reserved_mem *rmem = NULL;
-> +
-> +		node = of_parse_phandle(adsp->dev->of_node, "memory-region",
-> +					adsp->region_assign_idx + offset);
-> +		if (node)
-> +			rmem = of_reserved_mem_lookup(node);
-> +		of_node_put(node);
-> +		if (!rmem) {
-> +			dev_err(adsp->dev, "unable to resolve shareable memory-region index %d\n",
-> +				offset);
-> +			return -EINVAL; > +		}
-
-
->   
-> -	perm.vmid = QCOM_SCM_VMID_MSS_MSA;
-> -	perm.perm = QCOM_SCM_PERM_RW;
-> +		if (adsp->region_assign_shared)  {
-> +			perm[0].vmid = QCOM_SCM_VMID_HLOS;
-> +			perm[0].perm = QCOM_SCM_PERM_RW;
-> +			perm[1].vmid = adsp->region_assign_vmid;
-> +			perm[1].perm = QCOM_SCM_PERM_RW;
-> +			perm_size = 2;
-> +		} else {
-> +			perm[0].vmid = adsp->region_assign_vmid;
-> +			perm[0].perm = QCOM_SCM_PERM_RW;
-> +			perm_size = 1;
-> +		}
->   
-> -	adsp->region_assign_phys = rmem->base;
-> -	adsp->region_assign_size = rmem->size;
-> -	adsp->region_assign_perms = BIT(QCOM_SCM_VMID_HLOS);
-> +		adsp->region_assign_phys[offset] = rmem->base;
-> +		adsp->region_assign_size[offset] = rmem->size;
-> +		adsp->region_assign_perms[offset] = BIT(QCOM_SCM_VMID_HLOS);
-
-Do we need array for this, is this changing ?
-
->   
-> -	ret = qcom_scm_assign_mem(adsp->region_assign_phys,
-> -				  adsp->region_assign_size,
-> -				  &adsp->region_assign_perms,
-> -				  &perm, 1);
-> -	if (ret < 0) {
-> -		dev_err(adsp->dev, "assign memory failed\n");
-> -		return ret;
-> +		ret = qcom_scm_assign_mem(adsp->region_assign_phys[offset],
-> +					  adsp->region_assign_size[offset],
-> +					  &adsp->region_assign_perms[offset],
-> +					  perm, perm_size);
-> +		if (ret < 0) {
-> +			dev_err(adsp->dev, "assign memory %d failed\n", offset);
-> +			return ret;
-> +		}
->   	}
->   
->   	return 0;
-> @@ -629,20 +652,22 @@ static int adsp_assign_memory_region(struct qcom_adsp *adsp)
->   static void adsp_unassign_memory_region(struct qcom_adsp *adsp)
->   {
->   	struct qcom_scm_vmperm perm;
-> -	int ret;
-> +	int offset, ret;
->   
-> -	if (!adsp->region_assign_idx)
-> +	if (!adsp->region_assign_idx || adsp->region_assign_shared)
->   		return;
->   
-> -	perm.vmid = QCOM_SCM_VMID_HLOS;
-> -	perm.perm = QCOM_SCM_PERM_RW;
-> +	for (offset = 0; offset < adsp->region_assign_count; ++offset) {
-> +		perm.vmid = QCOM_SCM_VMID_HLOS;
-> +		perm.perm = QCOM_SCM_PERM_RW;
-
->   
-> -	ret = qcom_scm_assign_mem(adsp->region_assign_phys,
-> -				  adsp->region_assign_size,
-> -				  &adsp->region_assign_perms,
-> -				  &perm, 1);
-> -	if (ret < 0)
-> -		dev_err(adsp->dev, "unassign memory failed\n");
-> +		ret = qcom_scm_assign_mem(adsp->region_assign_phys[offset],
-> +					  adsp->region_assign_size[offset],
-> +					  &adsp->region_assign_perms[offset],
-> +					  &perm, 1);
-> +		if (ret < 0)
-> +			dev_err(adsp->dev, "unassign memory failed\n");
-> +	}
->   }
->   
->   static int adsp_probe(struct platform_device *pdev)
-> @@ -696,6 +721,9 @@ static int adsp_probe(struct platform_device *pdev)
->   	adsp->info_name = desc->sysmon_name;
->   	adsp->decrypt_shutdown = desc->decrypt_shutdown;
->   	adsp->region_assign_idx = desc->region_assign_idx;
-> +	adsp->region_assign_count = min_t(int, MAX_ASSIGN_COUNT, desc->region_assign_count);
-> +	adsp->region_assign_vmid = desc->region_assign_vmid;
-> +	adsp->region_assign_shared = desc->region_assign_shared;
->   	if (dtb_fw_name) {
->   		adsp->dtb_firmware_name = dtb_fw_name;
->   		adsp->dtb_pas_id = desc->dtb_pas_id;
-> @@ -1163,6 +1191,8 @@ static const struct adsp_data sm8550_mpss_resource = {
->   	.sysmon_name = "modem",
->   	.ssctl_id = 0x12,
->   	.region_assign_idx = 2,
-> +	.region_assign_count = 1,
-> +	.region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
->   };
->   
->   static const struct of_device_id adsp_of_match[] = {
-> 
-
--Mukesh
+> With that fixed the patch is Reviewed-by: Christian K=C3=B6nig
+> <christian.koenig@amd.com>.
+>
+> Regards,
+> Christian.
+>
+> >
+> >       /* If allocation here fails, just delay that till the first use *=
+/
+> > -     exec->max_objects =3D exec->objects ? PAGE_SIZE / sizeof(void *) =
+: 0;
+> > +     exec->max_objects =3D exec->objects ? sz / sizeof(void *) : 0;
+> >       exec->num_objects =3D 0;
+> >       exec->contended =3D DRM_EXEC_DUMMY;
+> >       exec->prelocked =3D NULL;
+> > diff --git a/drivers/gpu/drm/nouveau/nouveau_exec.c b/drivers/gpu/drm/n=
+ouveau/nouveau_exec.c
+> > index 19024ce21fbb..f5930cc0b3fb 100644
+> > --- a/drivers/gpu/drm/nouveau/nouveau_exec.c
+> > +++ b/drivers/gpu/drm/nouveau/nouveau_exec.c
+> > @@ -103,7 +103,7 @@ nouveau_exec_job_submit(struct nouveau_job *job)
+> >
+> >       nouveau_uvmm_lock(uvmm);
+> >       drm_exec_init(exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
+> > -                         DRM_EXEC_IGNORE_DUPLICATES);
+> > +                         DRM_EXEC_IGNORE_DUPLICATES, 0);
+> >       drm_exec_until_all_locked(exec) {
+> >               struct drm_gpuva *va;
+> >
+> > diff --git a/drivers/gpu/drm/nouveau/nouveau_uvmm.c b/drivers/gpu/drm/n=
+ouveau/nouveau_uvmm.c
+> > index aae780e4a4aa..3a9331a1c830 100644
+> > --- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+> > +++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+> > @@ -1288,7 +1288,7 @@ nouveau_uvmm_bind_job_submit(struct nouveau_job *=
+job)
+> >       }
+> >
+> >       drm_exec_init(exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
+> > -                         DRM_EXEC_IGNORE_DUPLICATES);
+> > +                         DRM_EXEC_IGNORE_DUPLICATES, 0);
+> >       drm_exec_until_all_locked(exec) {
+> >               list_for_each_op(op, &bind_job->ops) {
+> >                       struct drm_gpuva_op *va_op;
+> > diff --git a/include/drm/drm_exec.h b/include/drm/drm_exec.h
+> > index b5bf0b6da791..f1a66c048721 100644
+> > --- a/include/drm/drm_exec.h
+> > +++ b/include/drm/drm_exec.h
+> > @@ -135,7 +135,7 @@ static inline bool drm_exec_is_contended(struct drm=
+_exec *exec)
+> >       return !!exec->contended;
+> >   }
+> >
+> > -void drm_exec_init(struct drm_exec *exec, uint32_t flags);
+> > +void drm_exec_init(struct drm_exec *exec, uint32_t flags, unsigned nr)=
+;
+> >   void drm_exec_fini(struct drm_exec *exec);
+> >   bool drm_exec_cleanup(struct drm_exec *exec);
+> >   int drm_exec_lock_obj(struct drm_exec *exec, struct drm_gem_object *o=
+bj);
+>
