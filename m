@@ -2,77 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 431377DC06F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 20:27:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACC117DC0AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 20:38:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231307AbjJ3T1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 15:27:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50188 "EHLO
+        id S230033AbjJ3TiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 15:38:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231222AbjJ3T1D (ORCPT
+        with ESMTP id S231150AbjJ3Th4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 15:27:03 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188AFE1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 12:26:59 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-507bd19eac8so7021687e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 12:26:59 -0700 (PDT)
+        Mon, 30 Oct 2023 15:37:56 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71B2A1A8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 12:37:39 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-5079f9ec8d9so5449891e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 12:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698694017; x=1699298817; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1698694657; x=1699299457; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vhu9zeLbvU2DseeR7qeZ4fP8Dx7nMwSPHUsFVgOkD5c=;
-        b=rBB3jKNFusHM5mL4/+yen84c9O2TPFLwDjktoxSlRwrxjToQgVRSk4lDSeDFGxPh3S
-         z1ek1RrvXZEhNFjsqPQm5nZ6CmLoElxvJihcclbvTMOaeL2sp5nc0ReXJGp4EIt6XjM/
-         FrVexc1GqTrVfT8Ea+Aw1FLIfBiaMcAvXidwcJkK3vQTcNyatgh6g2yY4dt+i9MfpjkT
-         Kvuxg4GzG2CVwMOapB46xsn2szQrR9DcpuutWvKHhpKkMKAGBXGYe33jhFQ21nshPFbE
-         NQQUvHwB8MedXMFZkrspMn4J45mtq7gQQR9pHLPYK7H/BJ9ypGdT3DwUaBcfDodhuN0u
-         v/NQ==
+        bh=5WjIZeZiRK/z4GlDs2YMFbJYgUfec8FrdI9S/Un71yg=;
+        b=KP41biw0rZ+rU1hv7rperYPy6yj7/LDCgqF5V/RP9KG0i4oMWlDbrgUHHiFRx0G9yT
+         LIF6bM6G+Cby/bIlAhx2QvcK9/YHSsE/MYN/+86rMerAzeX/oNjzMGmxYuO4UezM4Ucl
+         e0yXb6pNGs8mXTKJ3ZzgcUNqjnnvMBBIDeA/pcfmWqCkFz6UWsIyyghjqp+vEnOU08L2
+         Soo9y8LOWzilIfSdD0C9CQSVN/YOjLk5E+fK395kfW1AtO8U14TB8woIz2B9dbCejScb
+         BIcEoKXGXFY1dXRt+NZGUUlrzj+9tO/dmi/PP6lLXzORv7Ph3cUYQQ41pgUQ0UBMpbuQ
+         9mMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698694017; x=1699298817;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1698694657; x=1699299457;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vhu9zeLbvU2DseeR7qeZ4fP8Dx7nMwSPHUsFVgOkD5c=;
-        b=Pt5IwCZFsdFXeOUfKJVV7IwZ5FURHMHrZwNRJnI6KNzOFeZMTydnO42TxbSFrzIqI8
-         4haGAtrDujEszZ5CIfZI/L4LKjsWcYewQegZBOmq1pWSM+95gscF8Gm/GmDPHKBjiBri
-         ZzpLMXKWJPTwATpo+SJKBooj6HrYE3Pt6fdXWIZzHAALYaDMSH35OHb1Cp/f24GrXVh2
-         HDxFfuX1h+mxVA5ndrw2Xf0nI8K7OR7e4JFsm5/kOGwveQNNFSjoi71/4pmd3d3FS0k7
-         rfzMBjeQ4DEV6Z8AvTP4J/1MeqBPOWBZFkPUfOsDv7qMvHNR9XJUD7gnxjJ8wxdFLw6I
-         XbHw==
-X-Gm-Message-State: AOJu0YxOsyF7eMcq5hR/ldRPeM2swRoVmnO1xMLc/R7FQnwPgZcWxyyL
-        PF1jrgh0UWRQCzN8wyV6gIhfxQ==
-X-Google-Smtp-Source: AGHT+IE+6piiOQh0wVaer65NGxl0+llczzkNaCZdzOvQHiQ4BSUGQXrP6vZCqJ9lraWI/+07uNKRCQ==
-X-Received: by 2002:a05:6512:128b:b0:508:126a:751e with SMTP id u11-20020a056512128b00b00508126a751emr10988897lfs.36.1698694017155;
-        Mon, 30 Oct 2023 12:26:57 -0700 (PDT)
+        bh=5WjIZeZiRK/z4GlDs2YMFbJYgUfec8FrdI9S/Un71yg=;
+        b=W7XHIjWrKYf5hV/UKcP2TNDxR/OfiAGbc2Hoxp/r3AMWhcHCUErgILPN0UfouXtoAc
+         nFTXbHqS87VpEFxcxtnFJ628ZR+Z8+aoQ1MaV/ExHHtQcghiWOZyPyN+LuxydimAJ+pW
+         N9qh7ShDTW5WfGnjnAiYME0JKUZ4CiQ2ELM38UHIYqSACraW+CWYHTbowF7dRdezXfDY
+         dI3by/2zX6zpR1L5Pnq9zIfO080O3ZQmi/LPqsSv4uDEmAeMTxBLWMhhqMhcAoOEzq5S
+         oo6ssNvk0oD1267Dt3RM//hrILoBONZzq0c+JCnnEDh0Kl7wNyAi9A5KxapfcWkeARYe
+         AAbg==
+X-Gm-Message-State: AOJu0Yxkr/u0+MWalSJrSvCYZFDlB4ZL/aWfizTOTkFsaMT6eboGisBy
+        pLQKo9osRGun/KnZDhRYg5mBqg==
+X-Google-Smtp-Source: AGHT+IG80wylw9+1wld4AovcvTqPBgE6+B22P6jiNYJbR+er85JG4Yued9PR/mpEeid8e8eXMaV76w==
+X-Received: by 2002:a19:ca50:0:b0:501:b929:48af with SMTP id h16-20020a19ca50000000b00501b92948afmr176551lfj.34.1698694657568;
+        Mon, 30 Oct 2023 12:37:37 -0700 (PDT)
 Received: from [192.168.133.160] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id a20-20020a056512201400b00507a0098421sm1538610lfb.181.2023.10.30.12.26.54
+        by smtp.gmail.com with ESMTPSA id x15-20020a056512046f00b005091665b83asm904778lfd.28.2023.10.30.12.37.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 12:26:56 -0700 (PDT)
-Message-ID: <12ea48bd-5022-4820-815a-89ef23ec9385@linaro.org>
-Date:   Mon, 30 Oct 2023 20:26:54 +0100
+        Mon, 30 Oct 2023 12:37:37 -0700 (PDT)
+Message-ID: <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org>
+Date:   Mon, 30 Oct 2023 20:37:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable WiFi
+Subject: Re: [PATCH 2/3] clk: qcom: ipq6018: add USB GDSCs
 Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
- <20231027-sc7280-remoteprocs-v1-9-05ce95d9315a@fairphone.com>
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+References: <20231025104457.628109-1-robimarko@gmail.com>
+ <20231025104457.628109-2-robimarko@gmail.com>
+ <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -109,38 +102,37 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231027-sc7280-remoteprocs-v1-9-05ce95d9315a@fairphone.com>
+In-Reply-To: <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27.10.2023 16:20, Luca Weiss wrote:
-> Now that the WPSS remoteproc is enabled, enable wifi so we can use it.
+On 29.10.2023 12:04, Robert Marko wrote:
+> On Wed, 25 Oct 2023 at 12:45, Robert Marko <robimarko@gmail.com> wrote:
+>>
+>> IPQ6018 has GDSC-s for each of the USB ports, so lets define them as such
+>> and drop the curent code that is de-asserting the USB GDSC-s as part of
+>> the GCC probe.
+>>
+>> Signed-off-by: Robert Marko <robimarko@gmail.com>
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> index d65eef30091b..e7e20f73cbe6 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> @@ -713,3 +713,7 @@ &venus {
->  	firmware-name = "qcom/qcm6490/fairphone5/venus.mbn";
->  	status = "okay";
->  };
-> +
-> +&wifi {
-> +	status = "okay";
-qcom,ath11k-calibration-variant?
+> Unfortunately, after testing on multiple devices I hit the same GDSC
+> issue I had a long time ago
+> that was the reason I did not send this upstream.
+> It seems that USB3 port GDSC (USB0 GDSC in code) works just fine,
+> however the USB2 one
+> (USB1 GDSC in code) it is stuck off and USB2 port will fail due to this:
+>     1.607531] ------------[ cut here ]------------
+> [    1.607559] usb1_gdsc status stuck at 'off'
+> [    1.607592] WARNING: CPU: 0 PID: 35 at gdsc_toggle_logic+0x16c/0x174
+> [    1.615120] Modules linked in:
+Can you dump GDSCR (the entire 32-bit register) at boot and when toggling?
 
 Konrad
