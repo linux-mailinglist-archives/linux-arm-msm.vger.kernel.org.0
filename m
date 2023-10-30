@@ -2,345 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E47B7DBFDB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 19:27:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C7DB7DBFEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 19:35:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230299AbjJ3S1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 14:27:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57618 "EHLO
+        id S229969AbjJ3SfQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 14:35:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229897AbjJ3S1R (ORCPT
+        with ESMTP id S229537AbjJ3SfP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 14:27:17 -0400
+        Mon, 30 Oct 2023 14:35:15 -0400
 Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6898C1;
-        Mon, 30 Oct 2023 11:27:13 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-507b96095abso6915436e87.3;
-        Mon, 30 Oct 2023 11:27:13 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F830CC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 11:35:12 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-5079f3f3d7aso7300656e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 11:35:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698690432; x=1699295232; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=68ru9uL7QOJiXYVvDv7F1f/kURJOj/MVfTQISNyePXw=;
-        b=nRdhnSawsq3CpRMZ4XLDDIgcrm7lpywKrnfv/dhbq6Myr+yUTEet6YfPt/H0mhD0bl
-         LpmAq3oZ9ffiZcaS2LkesuhgoA8ByrFqjoG6Cj6/75JRhUNTFOPYZExgdi+7pEWHVsAJ
-         fjja6ecCD2m2cPFvjNKTCjadgsx1ANhALMKh3CnHkc6HfK0mIdMaCDcufu5jU+/DSkXu
-         9HFadnJp2xI2RFbFAX+cCzIYY71SLON7/fQkdzN1qE11dMiM4EGcvz+tO3NZE6NbUSdN
-         1aguXvPDfVPg/B0RUbXdagF/eKueungn7fCfZLJZAG3NiMxVq2bt4e1sqWrsVXnu3rkN
-         rRYA==
+        d=linaro.org; s=google; t=1698690910; x=1699295710; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=KbISI+V/Kk/FbRO+GwqIV5VSlGPBOPxdhGkcTRWNkfI=;
+        b=oH+cd1lDP5GBhTXhVd4PZF7E1kqGQ4SxMmfdwLmhKJ+zicTM3FeeyQdBoGft6zkxJ6
+         9r8Thjwor6+VuOuTvqpK48p+yndnfcbMpsXbO0YhzQ+ZrXppDCzg9B+gCOoOtcIqoWim
+         eyTAx41QkmWp6LnstfLfu3C/YvnPqWsQneYpSPk3/joklz3rkoYBJI302vLToH0sn6Zl
+         +nPuU2JkGp6pv3QmUo3JFfTX63VSUvOpfvxihxLtZ4oRGgt0444iz0yTrDew4xnMb8OW
+         eqpaXXNWSXi3dyYKDj4gpGwCcQob2BmTQwL5WTzQtkjl0TYkyPv9EOvobm2UzQSqIhoy
+         7Wsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698690432; x=1699295232;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=68ru9uL7QOJiXYVvDv7F1f/kURJOj/MVfTQISNyePXw=;
-        b=gC05pC3cdee8mwr8ByVLHPoyS7yCNLTPPildih/lv0LXPOJ/1l8PwEn36Q6ZknmWJy
-         dNMGR9BbAWW6sufl+tYpqbqsiZa2+KfuaZZblTg3gdSapHl9LnUnp/dI46qafjYrfFlt
-         kmoRZc8xBbo1No5rHmwdbVbCA5Oyzjkb/E6q5klb0cK66Li/PETXmzN3zftPRKIMEBsU
-         7oqWVyAWrZOsbz+saw6taCcxR9KvgTAVLNtqpO6GJzVwbaVTHDjd0W/xnsmE9zo8m4h9
-         CVfG5kysY7RaTfhta5Ofm95jo1nOgB13rZ3HmbhMEOoEx8zr+YCf5Hz5w7IZSY1KuDVA
-         QhXw==
-X-Gm-Message-State: AOJu0Yz0zzDL1gk883Ai6tgbMmcYwHZp66U0VldzLFWX7groOLYYyDJg
-        vJDqCJyhAwRc1dPaM25XBauqJh6KOHz1Onfi60MMSMQx
-X-Google-Smtp-Source: AGHT+IHYr1b1vlP+xjU2P6kzEETyjPXpEnHyblf9hzTh9kwbBkX03iDZkkdZd+RgmmfoxDH0tVEbBXblpMLqhuFLLSA=
-X-Received: by 2002:a05:6512:1107:b0:508:1178:efa4 with SMTP id
- l7-20020a056512110700b005081178efa4mr9236721lfg.55.1698690431567; Mon, 30 Oct
- 2023 11:27:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698690910; x=1699295710;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KbISI+V/Kk/FbRO+GwqIV5VSlGPBOPxdhGkcTRWNkfI=;
+        b=jmjZULaXWL0/aJ18kMi30ZArIeF4bXXA7JXKuS4fxEdBScIADD6F7nSVvypKfoe20W
+         Xj6kA1Tq2McXozC7GkmXWjql7lXZoNE64+6UH4D6EtKTVjYmDxIPJRG2JtdAULTJ9X4B
+         FP00bj9yNKb94d687UaifCW+HAcM4CMd9nVzI1MxJzUi9t6A+pm0mH7CGQFiWBaSRUXA
+         ieUwt4A21hymTgYCQglGZc/arldMCY7ubc0EdrL8YiixLfJ9hnCkER/9z125f0bEXb8C
+         iBSqXX1x8TNCZwuvz2I+ab+sfFjriU1/Dx7xfn3nY9wLquz/1enVpCCK7aPqMTtHdf+4
+         y7gQ==
+X-Gm-Message-State: AOJu0Yy3jJo0g/W/fj7QZ98AsqUntbFWbFZ6isfohPOyFtl1qXDiDuTi
+        HFxZuVkWCbJrYPQyclOpV8Pk1Q==
+X-Google-Smtp-Source: AGHT+IE8Pg6gJViUCk0hMf/OJlgUDr/E6BIT8Sf2d351E2omEA0yE4x9VVUqaszfrc69eX1lN/802w==
+X-Received: by 2002:a05:6512:536:b0:507:9787:6776 with SMTP id o22-20020a056512053600b0050797876776mr8116960lfc.5.1698690910368;
+        Mon, 30 Oct 2023 11:35:10 -0700 (PDT)
+Received: from [192.168.133.160] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
+        by smtp.gmail.com with ESMTPSA id x18-20020a056512047200b004fb9c625b4asm1496892lfd.210.2023.10.30.11.35.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Oct 2023 11:35:09 -0700 (PDT)
+Message-ID: <b6d045ba-6017-491d-b06f-ae701fe50d96@linaro.org>
+Date:   Mon, 30 Oct 2023 19:35:06 +0100
 MIME-Version: 1.0
-References: <20231027165859.395638-1-robdclark@gmail.com> <20231027165859.395638-7-robdclark@gmail.com>
- <597b5bb3-ca75-4662-9904-12c4d8e9101a@amd.com> <CAF6AEGu1Z1k0bKrMZw4-RJSC-nbO=tuDOjQiPmi61_m_1nRCgA@mail.gmail.com>
- <836a6052-ad23-4a5f-9eb5-a7b5361b568c@gmail.com>
-In-Reply-To: <836a6052-ad23-4a5f-9eb5-a7b5361b568c@gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Mon, 30 Oct 2023 11:26:59 -0700
-Message-ID: <CAF6AEGsq+LApqQQA9z9p+ce4CN-eant==y5hcOzNZ0PccHFCnQ@mail.gmail.com>
-Subject: Re: [PATCH 6/7] drm/exec: Pass in initial # of objects
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
-Cc:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Kefeng Wang <wangkefeng.wang@huawei.com>,
-        Karol Herbst <kherbst@redhat.com>,
-        "open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS" 
-        <nouveau@lists.freedesktop.org>, dri-devel@lists.freedesktop.org,
-        Mario Limonciello <mario.limonciello@amd.com>,
-        Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-        David Airlie <airlied@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Guchun Chen <guchun.chen@amd.com>,
-        Shashank Sharma <shashank.sharma@amd.com>,
-        "open list:RADEON and AMDGPU DRM DRIVERS" 
-        <amd-gfx@lists.freedesktop.org>,
-        Dong Chenchen <dongchenchen2@huawei.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Philip Yang <Philip.Yang@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-        linux-arm-msm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Suren Baghdasaryan <surenb@google.com>,
-        Jack Xiao <Jack.Xiao@amd.com>,
-        Jonathan Kim <jonathan.kim@amd.com>,
-        freedreno@lists.freedesktop.org,
-        Felix Kuehling <Felix.Kuehling@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Lang Yu <Lang.Yu@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/10] clk: qcom: add the SM8650 TCSR Clock Controller
+ driver
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20231030-topic-sm8650-upstream-clocks-v2-0-144333e086a2@linaro.org>
+ <20231030-topic-sm8650-upstream-clocks-v2-7-144333e086a2@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231030-topic-sm8650-upstream-clocks-v2-7-144333e086a2@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 30, 2023 at 9:01=E2=80=AFAM Christian K=C3=B6nig
-<ckoenig.leichtzumerken@gmail.com> wrote:
->
-> Am 30.10.23 um 14:38 schrieb Rob Clark:
-> > On Mon, Oct 30, 2023 at 1:05=E2=80=AFAM Christian K=C3=B6nig
-> > <christian.koenig@amd.com> wrote:
-> >> Am 27.10.23 um 18:58 schrieb Rob Clark:
-> >>> From: Rob Clark <robdclark@chromium.org>
-> >>>
-> >>> In cases where the # is known ahead of time, it is silly to do the ta=
-ble
-> >>> resize dance.
-> >> Ah, yes that was my initial implementation as well, but I ditched that
-> >> because nobody actually used it.
-> >>
-> >> One comment below.
-> >>
-> >>> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> >>> ---
-> >>>    drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c  |  2 +-
-> >>>    drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |  4 ++--
-> >>>    drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |  4 ++--
-> >>>    drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |  4 ++--
-> >>>    drivers/gpu/drm/drm_exec.c              | 15 ++++++++++++---
-> >>>    drivers/gpu/drm/nouveau/nouveau_exec.c  |  2 +-
-> >>>    drivers/gpu/drm/nouveau/nouveau_uvmm.c  |  2 +-
-> >>>    include/drm/drm_exec.h                  |  2 +-
-> >>>    8 files changed, 22 insertions(+), 13 deletions(-)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm=
-/amd/amdgpu/amdgpu_cs.c
-> >>> index efdb1c48f431..d27ca8f61929 100644
-> >>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-> >>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-> >>> @@ -65,7 +65,7 @@ static int amdgpu_cs_parser_init(struct amdgpu_cs_p=
-arser *p,
-> >>>        }
-> >>>
-> >>>        amdgpu_sync_create(&p->sync);
-> >>> -     drm_exec_init(&p->exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
-> >>> +     drm_exec_init(&p->exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
-> >>>        return 0;
-> >>>    }
-> >>>
-> >>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c b/drivers/gpu/dr=
-m/amd/amdgpu/amdgpu_csa.c
-> >>> index 720011019741..796fa6f1420b 100644
-> >>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-> >>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-> >>> @@ -70,7 +70,7 @@ int amdgpu_map_static_csa(struct amdgpu_device *ade=
-v, struct amdgpu_vm *vm,
-> >>>        struct drm_exec exec;
-> >>>        int r;
-> >>>
-> >>> -     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
-> >>> +     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
-> >>>        drm_exec_until_all_locked(&exec) {
-> >>>                r =3D amdgpu_vm_lock_pd(vm, &exec, 0);
-> >>>                if (likely(!r))
-> >>> @@ -110,7 +110,7 @@ int amdgpu_unmap_static_csa(struct amdgpu_device =
-*adev, struct amdgpu_vm *vm,
-> >>>        struct drm_exec exec;
-> >>>        int r;
-> >>>
-> >>> -     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
-> >>> +     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
-> >>>        drm_exec_until_all_locked(&exec) {
-> >>>                r =3D amdgpu_vm_lock_pd(vm, &exec, 0);
-> >>>                if (likely(!r))
-> >>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/dr=
-m/amd/amdgpu/amdgpu_gem.c
-> >>> index ca4d2d430e28..16f1715148ad 100644
-> >>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-> >>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
-> >>> @@ -203,7 +203,7 @@ static void amdgpu_gem_object_close(struct drm_ge=
-m_object *obj,
-> >>>        struct drm_exec exec;
-> >>>        long r;
-> >>>
-> >>> -     drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES);
-> >>> +     drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES, 0);
-> >>>        drm_exec_until_all_locked(&exec) {
-> >>>                r =3D drm_exec_prepare_obj(&exec, &bo->tbo.base, 1);
-> >>>                drm_exec_retry_on_contention(&exec);
-> >>> @@ -739,7 +739,7 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, v=
-oid *data,
-> >>>        }
-> >>>
-> >>>        drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
-> >>> -                   DRM_EXEC_IGNORE_DUPLICATES);
-> >>> +                   DRM_EXEC_IGNORE_DUPLICATES, 0);
-> >>>        drm_exec_until_all_locked(&exec) {
-> >>>                if (gobj) {
-> >>>                        r =3D drm_exec_lock_obj(&exec, gobj);
-> >>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/dr=
-m/amd/amdgpu/amdgpu_mes.c
-> >>> index b6015157763a..3c351941701e 100644
-> >>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-> >>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-> >>> @@ -1105,7 +1105,7 @@ int amdgpu_mes_ctx_map_meta_data(struct amdgpu_=
-device *adev,
-> >>>
-> >>>        amdgpu_sync_create(&sync);
-> >>>
-> >>> -     drm_exec_init(&exec, 0);
-> >>> +     drm_exec_init(&exec, 0, 0);
-> >>>        drm_exec_until_all_locked(&exec) {
-> >>>                r =3D drm_exec_lock_obj(&exec,
-> >>>                                      &ctx_data->meta_data_obj->tbo.ba=
-se);
-> >>> @@ -1176,7 +1176,7 @@ int amdgpu_mes_ctx_unmap_meta_data(struct amdgp=
-u_device *adev,
-> >>>        struct drm_exec exec;
-> >>>        long r;
-> >>>
-> >>> -     drm_exec_init(&exec, 0);
-> >>> +     drm_exec_init(&exec, 0, 0);
-> >>>        drm_exec_until_all_locked(&exec) {
-> >>>                r =3D drm_exec_lock_obj(&exec,
-> >>>                                      &ctx_data->meta_data_obj->tbo.ba=
-se);
-> >>> diff --git a/drivers/gpu/drm/drm_exec.c b/drivers/gpu/drm/drm_exec.c
-> >>> index 5d2809de4517..27d11c20d148 100644
-> >>> --- a/drivers/gpu/drm/drm_exec.c
-> >>> +++ b/drivers/gpu/drm/drm_exec.c
-> >>> @@ -69,16 +69,25 @@ static void drm_exec_unlock_all(struct drm_exec *=
-exec)
-> >>>     * drm_exec_init - initialize a drm_exec object
-> >>>     * @exec: the drm_exec object to initialize
-> >>>     * @flags: controls locking behavior, see DRM_EXEC_* defines
-> >>> + * @nr: the initial # of objects
-> >>>     *
-> >>>     * Initialize the object and make sure that we can track locked ob=
-jects.
-> >>> + *
-> >>> + * If nr is non-zero then it is used as the initial objects table si=
-ze.
-> >>> + * In either case, the table will grow (be re-allocated) on demand.
-> >>>     */
-> >>> -void drm_exec_init(struct drm_exec *exec, uint32_t flags)
-> >>> +void drm_exec_init(struct drm_exec *exec, uint32_t flags, unsigned n=
-r)
-> >>>    {
-> >>> +     size_t sz =3D PAGE_SIZE;
-> >>> +
-> >>> +     if (nr)
-> >>> +             sz =3D (size_t)nr * sizeof(void *);
-> >>> +
-> >>>        exec->flags =3D flags;
-> >>> -     exec->objects =3D kmalloc(PAGE_SIZE, GFP_KERNEL);
-> >>> +     exec->objects =3D kmalloc(sz, GFP_KERNEL);
-> >> Please use k*v*malloc() here since we can't predict how large that wil=
-l be.
-> > or __GFP_NOWARN?  If userspace (or kasan) is cheeky and asks for ~0
-> > objects, we should probably just fail?
->
-> Oh, good point! If this value is controlled by userspace we must be much
-> more careful.
->
-> Instead of __GFP_NOWARN or any other workaround we should use
-> kvmalloc_array() here.
->
-> Maybe turn the code upside down, in other words something like this here:
->
-> if (!nr)
->      nr =3D PAGE_SIZE / sizeof(void *);
->
-> exec->objects =3D kvmalloc_array(nr, sizeof(void *), GFP_KERNEL);
-> exec->max_objects =3D exec->objects ? nr : 0;
+On 30.10.2023 10:57, Neil Armstrong wrote:
+> Add TCSR Clock Controller support for SM8650 platform.
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-oh, good point
-
-BR,
--R
-
->
-> Regards,
-> Christian.
->
-> >
-> > BR,
-> > -R
-> >
-> >> With that fixed the patch is Reviewed-by: Christian K=C3=B6nig
-> >> <christian.koenig@amd.com>.
-> >>
-> >> Regards,
-> >> Christian.
-> >>
-> >>>        /* If allocation here fails, just delay that till the first us=
-e */
-> >>> -     exec->max_objects =3D exec->objects ? PAGE_SIZE / sizeof(void *=
-) : 0;
-> >>> +     exec->max_objects =3D exec->objects ? sz / sizeof(void *) : 0;
-> >>>        exec->num_objects =3D 0;
-> >>>        exec->contended =3D DRM_EXEC_DUMMY;
-> >>>        exec->prelocked =3D NULL;
-> >>> diff --git a/drivers/gpu/drm/nouveau/nouveau_exec.c b/drivers/gpu/drm=
-/nouveau/nouveau_exec.c
-> >>> index 19024ce21fbb..f5930cc0b3fb 100644
-> >>> --- a/drivers/gpu/drm/nouveau/nouveau_exec.c
-> >>> +++ b/drivers/gpu/drm/nouveau/nouveau_exec.c
-> >>> @@ -103,7 +103,7 @@ nouveau_exec_job_submit(struct nouveau_job *job)
-> >>>
-> >>>        nouveau_uvmm_lock(uvmm);
-> >>>        drm_exec_init(exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
-> >>> -                         DRM_EXEC_IGNORE_DUPLICATES);
-> >>> +                         DRM_EXEC_IGNORE_DUPLICATES, 0);
-> >>>        drm_exec_until_all_locked(exec) {
-> >>>                struct drm_gpuva *va;
-> >>>
-> >>> diff --git a/drivers/gpu/drm/nouveau/nouveau_uvmm.c b/drivers/gpu/drm=
-/nouveau/nouveau_uvmm.c
-> >>> index aae780e4a4aa..3a9331a1c830 100644
-> >>> --- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-> >>> +++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-> >>> @@ -1288,7 +1288,7 @@ nouveau_uvmm_bind_job_submit(struct nouveau_job=
- *job)
-> >>>        }
-> >>>
-> >>>        drm_exec_init(exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
-> >>> -                         DRM_EXEC_IGNORE_DUPLICATES);
-> >>> +                         DRM_EXEC_IGNORE_DUPLICATES, 0);
-> >>>        drm_exec_until_all_locked(exec) {
-> >>>                list_for_each_op(op, &bind_job->ops) {
-> >>>                        struct drm_gpuva_op *va_op;
-> >>> diff --git a/include/drm/drm_exec.h b/include/drm/drm_exec.h
-> >>> index b5bf0b6da791..f1a66c048721 100644
-> >>> --- a/include/drm/drm_exec.h
-> >>> +++ b/include/drm/drm_exec.h
-> >>> @@ -135,7 +135,7 @@ static inline bool drm_exec_is_contended(struct d=
-rm_exec *exec)
-> >>>        return !!exec->contended;
-> >>>    }
-> >>>
-> >>> -void drm_exec_init(struct drm_exec *exec, uint32_t flags);
-> >>> +void drm_exec_init(struct drm_exec *exec, uint32_t flags, unsigned n=
-r);
-> >>>    void drm_exec_fini(struct drm_exec *exec);
-> >>>    bool drm_exec_cleanup(struct drm_exec *exec);
-> >>>    int drm_exec_lock_obj(struct drm_exec *exec, struct drm_gem_object=
- *obj);
->
+Konrad
