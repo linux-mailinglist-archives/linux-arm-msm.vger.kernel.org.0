@@ -2,154 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 165AF7DC220
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 22:51:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A5E037DC22C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 22:55:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232184AbjJ3VvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 17:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56950 "EHLO
+        id S232031AbjJ3Vz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 17:55:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232131AbjJ3VvN (ORCPT
+        with ESMTP id S230390AbjJ3Vz1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 17:51:13 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD05E10D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:51:09 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-507973f3b65so7574822e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:51:09 -0700 (PDT)
+        Mon, 30 Oct 2023 17:55:27 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1327F7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:55:23 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9d2e7726d5bso277879466b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698702668; x=1699307468; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=+i0ZPrNW1oXlJv0V43Xxb3tYdTNJ/c4Q2gcMWYRfwq4=;
-        b=EcTJxrAoJopW9AmKYK+IlnIRlIdG+0emgd2KkWh36ZOgnYy+K5Ts/+VGRhJ6l+o7ih
-         Cro7XeKXZJNSWu/wm6n9fz5EhfVsQ9RfbBFGf9kLdMIHvdmXBoQCpAn+G2VJC/HrAeSd
-         XfR6/wtfZi3PoSxEli8uvDWM3yXhrHwVXc9Xl9UeuTQ+kG+JJs7G/tPtRs29g/l8fzTG
-         Cw/A05ouMYaz2YJMz8rOGi6ZFocD4AihIsh2VoDW2ocuMOxHjlVYy9QLko7Aj3OlFjp6
-         7HpCHgzb8qVaqwwgklv9HfJO/JA3lgROwtC638L5N5Q696+oKKAEhDX9XAiBaUZQIHiy
-         vPZA==
+        d=chromium.org; s=google; t=1698702921; x=1699307721; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XqyNfPUEzQcC86GGtCQWWD8Oa22hZLdjLYhI8L84gmY=;
+        b=Z+TZIdGnee1piytDqsY41R1RIdmPMgLYRTVpjoSsCrtHnILekgQ4N15jH0Urqd9LJF
+         SDTlTCKZP1ODgjqNn2XZP2rVabzDu27CHMM+TXPWTTprByzOcfvxS64LA70As498Wm/3
+         O2KqVj4n6rUfVFBtwnEn+9uFpUtqn+audgbCE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698702668; x=1699307468;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+i0ZPrNW1oXlJv0V43Xxb3tYdTNJ/c4Q2gcMWYRfwq4=;
-        b=C8rTOsTGfjNDvrFdTgaAA7mcEQoohPpKjqhtOhA3ECMpFU2OVsCMPONnAohgW5H36N
-         3s1AkzXrDPnjJEQUl9y6ss54bPfzKE6FNycorKFXnkhtwWJnvXWQDSIeehwa74crnmYI
-         ZSYc2flKdGSDehZSzwN/AIJVqBtNxFqCS10Esv+rs6rlaBe2mM3R856Av7XndR9MUcrL
-         rm/g/axdKNYc/xp9TGITKezFiLR9aBa41EE2y8lKxob7oMoQXiwygAW4KsxAYm7N1Ctp
-         NBuXml/C3TQDvITqhGD0Ffqc9WNTsO50mskVp4GEEYGbGQgFdM8rd4cIk+ICqAEj8mia
-         8HnQ==
-X-Gm-Message-State: AOJu0YxrCh6yaAo/WAk/WnRPAN1gdrcVrXZGvpC/WZSvW8mhs5l3bUps
-        LJIxbUFGHxkfx8m2iDHPuqgFeUW+O49QbyXu+NY=
-X-Google-Smtp-Source: AGHT+IFmE6ztU2Q6zdkf1gJY8NFYriow0ELTB1pszbg8s2vqp3M0zhuSbTLIyoyXRVcM1bqTSGcHzQ==
-X-Received: by 2002:a19:6746:0:b0:509:dd0:941a with SMTP id e6-20020a196746000000b005090dd0941amr5060062lfj.11.1698702668031;
-        Mon, 30 Oct 2023 14:51:08 -0700 (PDT)
-Received: from [192.168.133.160] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id s2-20020a19ad42000000b0050794b05c8asm1560841lfd.42.2023.10.30.14.51.06
+        d=1e100.net; s=20230601; t=1698702921; x=1699307721;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XqyNfPUEzQcC86GGtCQWWD8Oa22hZLdjLYhI8L84gmY=;
+        b=NOvb+/WVL/P4ucu7uvqYBUHrhoAaHaTr+6CtYFNs0ppjX/iHyRe56G/YHWmdnOQ3As
+         pD5UA7RP9zeMYI/gLX2Q28j+ESBkXh/i6MBPtYfvW3d/gmH4yPVLp2jNlFRdc5L/PQOq
+         Jcr2JO7Rmpp+rP2vd0XEMGST7M6zCpnNcX/62arpy6KG7lJVpPv17TI+TjW5zPmYqAZZ
+         +mJajonoj9Q2HGmIr6h11bTZjPes6acERKEjDUrWFKUW9w34bFFTTLWp69i39hddio1x
+         RX5bjGk9p4hIsRKBM/QKT9qW9BjPJPVUYMPDGuByunR9qxmlqdlUfyCBZgivjjl5LjZ6
+         CT7Q==
+X-Gm-Message-State: AOJu0YzMC1wFdX6hDeiO1c3694bfiSvtbSqgcqHl0ZqyMhx5RNpv3WXD
+        otyA15rayPrXei7NqBBBPBcUndWu5w7N9GoHb4wPjfce
+X-Google-Smtp-Source: AGHT+IFgQsWFTA3oJdM9aPPzKAlW/qscPToyH6vO84niKw86iRE57FoR1mCEo0VTqDW+ZvBTVMenVg==
+X-Received: by 2002:a17:907:783:b0:9ae:5253:175b with SMTP id xd3-20020a170907078300b009ae5253175bmr10187038ejb.34.1698702921509;
+        Mon, 30 Oct 2023 14:55:21 -0700 (PDT)
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com. [209.85.128.43])
+        by smtp.gmail.com with ESMTPSA id d24-20020a170906041800b009adc7733f98sm6590077eja.97.2023.10.30.14.55.20
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 14:51:07 -0700 (PDT)
-Message-ID: <db624c01-a48c-4a8f-b9ea-548b25aa3091@linaro.org>
-Date:   Mon, 30 Oct 2023 22:51:06 +0100
+        Mon, 30 Oct 2023 14:55:20 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40853f2e93eso8935e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:55:20 -0700 (PDT)
+X-Received: by 2002:a05:600c:3c9b:b0:3f7:3e85:36a with SMTP id
+ bg27-20020a05600c3c9b00b003f73e85036amr20721wmb.7.1698702920586; Mon, 30 Oct
+ 2023 14:55:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: acer-aspire1: Add sound
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Nikita Travkin <nikita@trvn.ru>,
+References: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
+ <20231027-aspire1-sound-v1-1-5ff3cf8b5701@trvn.ru> <d6b63a3c-d171-4b6b-b222-8c619d90f51b@linaro.org>
+In-Reply-To: <d6b63a3c-d171-4b6b-b222-8c619d90f51b@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 30 Oct 2023 14:55:04 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UigovpD_s89j6V7MhCXOVHVVXLRtH3XGEHtcHKbwVgBA@mail.gmail.com>
+Message-ID: <CAD=FV=UigovpD_s89j6V7MhCXOVHVVXLRtH3XGEHtcHKbwVgBA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: acer-aspire1: Enable RTC
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Nikita Travkin <nikita@trvn.ru>,
         cros-qcom-dts-watchers@chromium.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
- <20231027-aspire1-sound-v1-3-5ff3cf8b5701@trvn.ru>
- <c2ad06fd-805f-44b9-bf4d-806ef20f272a@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <c2ad06fd-805f-44b9-bf4d-806ef20f272a@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.10.2023 22:50, Konrad Dybcio wrote:
+Hi,
+
+On Mon, Oct 30, 2023 at 2:47=E2=80=AFPM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
 > On 27.10.2023 16:42, Nikita Travkin wrote:
->> This laptop has two i2s speakers; an i2s audio codec for the headset
->> jack; two DMIC microphones in the lid and the displayport audio channel.
->>
->> This commit adds the audio node that describes all of the above with the
->> exception of the DMICs that require in-SoC digital codec to be brought
->> up, which will be done later.
->>
->> Note that the displayport channel is connected here for completeness,
->> but the displayport can't be used yet since the HPD signal is created by
->> the embedded controller, which will be added later.
->>
->> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->> ---
-> [...]
-> 
-> 
->> +		primary-tx-dai-link {
->> +			link-name = "Primary MI2S Capture";
->> +
->> +			cpu {
->> +				sound-dai = <&q6afedai PRIMARY_MI2S_TX>;
->> +			};
->> +
->> +			platform {
->> +				sound-dai = <&q6routing>;
->> +			};
->> +
->> +			codec {
->> +				sound-dai = <&alc5682 0>;
-> Both RX and TX going to 5862 interface?
-interface1*
-> 
+> > pm6150 has a read-only RTC that can be used to keep the time with some
+> > extra userspace tools. Enable it.
+> >
+> > Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> > ---
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>
+> kinda unsure why it'd ever be disabled
+>
 > Konrad
+
+FWIW we don't use the PMIC RTC in Chrome boards. I can't quite
+remember why, but I _think_ that the power lines aren't hooked up to
+the PMIC to keep power on for the board's lowest power states.
+Instead we use the RTC that's on the EC (Embedded Controller).
+
+-Doug
