@@ -2,182 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D6D87DB651
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 10:45:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8766C7DB65E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 10:47:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232503AbjJ3JpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 05:45:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35648 "EHLO
+        id S231741AbjJ3Jrq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 05:47:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232496AbjJ3JpY (ORCPT
+        with ESMTP id S231467AbjJ3Jrq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 05:45:24 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E91DC6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:45:21 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-32f78dcf036so1040475f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:45:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698659120; x=1699263920; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XXYjILCjl8eqmKwACuqBhWbhVJPplnAoksQobZQDc5M=;
-        b=Dq1WGBMF1Lk0wOmkZBLpjiiOwqUT+89JFefscR8QXGycWKySY7qqI+O2dJGgSpoO/A
-         Q3HRD7rRN8FkfiSUaSnggBjZX6LreJ1hdFAg165RgowmGKk2SFxQLWAyJ3w+01k5QSVe
-         1hxhxLevwIizBRcEqi4SxQ+B6IOrkMevRkWU4Yghlr2nZnpPUpoCNo6Ww2Hy2g6iliRh
-         jfGEADQKEhXccAkQ/B2/b+y1WzXcsJqRFm8A06mibsPcRU77zso6FuJjMBn8fcYBgpWk
-         BUxeI00ylaY9uJ1xqCv5suL4fd9Dvt+YOz2PHRiNK4Smz0SByVpgebxqBBpTv0SxcEca
-         cvJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698659120; x=1699263920;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XXYjILCjl8eqmKwACuqBhWbhVJPplnAoksQobZQDc5M=;
-        b=rWWtq1fUjlIP9eBcoBOudqL+H3xSDZi8Xt/wLWu5bg7mzRwxODT0omJbvTj+TWP/iy
-         IvdsAobiV9H1kVa0KgCAqoeuTi/y1Qi27cTzUPec5T3AitbemDUgYwfhvFrWiVmoW3cT
-         nCszia/kQS+4m+jv8In4P66W9OPq3baa+JAS5j26amfm4XmIdiG9wwWrdIqcMrPwsKY/
-         BaDSfGkc2xib2RK0Uuk4BIWBAohNdbxwRkciofzP3pI8ZKVdTxtvZHqILTroieUj16Ql
-         SAMpB19OG4gSb93OFSA6vrMlvLra4MjgP+E7W9pQE4b2j67gW50V9Mvduw35aELU9skT
-         uaGQ==
-X-Gm-Message-State: AOJu0YxD4f45IWXvINtjApYzoTRiT7Izc1dv/OhyIfLt/KsoLZrRMysB
-        zNBdJ5ABC0I61uh2v/sexpiEVw==
-X-Google-Smtp-Source: AGHT+IEk8pSpXfBaA3FkLCzNlWVEoHf1wXDfYctNX39ftL6oJp+P1Gswk+ftGJTiclQUwpkLUY0U2Q==
-X-Received: by 2002:a5d:54c5:0:b0:32f:64f2:815 with SMTP id x5-20020a5d54c5000000b0032f64f20815mr8706764wrv.33.1698659119783;
-        Mon, 30 Oct 2023 02:45:19 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id a10-20020adfe5ca000000b0032f7cfac0fesm5069446wrn.51.2023.10.30.02.45.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Oct 2023 02:45:19 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 30 Oct 2023 10:45:15 +0100
-Subject: [PATCH v2 2/2] soc: qcom: llcc: Add configuration data for SM8650
+        Mon, 30 Oct 2023 05:47:46 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6266B3;
+        Mon, 30 Oct 2023 02:47:43 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39U9F9Mr031836;
+        Mon, 30 Oct 2023 09:47:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=aDLuPNmwH3qDsJ5tX0K+aUJmJTHPeIZoarRXhkJcGLM=;
+ b=fcuDq4jtIA4WZUDx9Xb1zWFo5nmz93aqLhdty6PxCKPCVpnW/14gnJv/51/Zqc2TDU9w
+ iRTcuoMidvfLoSLbhISlheZ9nTYSEJIT831YqlIUoVBkni/mpnmHG4n5mt2lj1eCmjTd
+ LoPdwDavW1Vn4N5pAwiw7h1gOXEOweMDWytIWt5rTTzVN21PF82W7kfttlTWRRj99AFg
+ UyByPBMedZEummW2zHC03b7DBVQRkZ5gfdCxWDmzfpJ2dKvyYTuJGFLaMEEYgB7EGhVq
+ eO7bTDyz+YdDFME0BZpEhkraaTItb75/iTQGb71kc9TUtfc8oybo+yCVoHElu0R5ekX5 9Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u0u2qkank-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Oct 2023 09:47:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39U9lTOM006327
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Oct 2023 09:47:29 GMT
+Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Mon, 30 Oct 2023 02:47:24 -0700
+From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Subject: [PATCH 0/8] Add NSS clock controller support for IPQ5332
+Date:   Mon, 30 Oct 2023 15:17:15 +0530
+Message-ID: <20231030-ipq5332-nsscc-v1-0-6162a2c65f0a@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231030-topic-sm8650-upstream-llcc-v2-2-f281cec608e2@linaro.org>
-References: <20231030-topic-sm8650-upstream-llcc-v2-0-f281cec608e2@linaro.org>
-In-Reply-To: <20231030-topic-sm8650-upstream-llcc-v2-0-f281cec608e2@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+X-B4-Tracking: v=1; b=H4sIAKN7P2UC/x3MQQqAIBBA0avIrBPUyUVdJVqITTUbMwciEO+et
+ HyL/ysIFSaBWVUo9LDwlTrsoCCeIR2keesGZxxag0Zzvj2i00kkRh0oxImsRzN66E0utPP7/5a
+ 1tQ9Y0EenXwAAAA==
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        "Kathiravan Thirumoorthy" <quic_kathirav@quicinc.com>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4593;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=ix5W4mqHtsLudqtcMaJsM3/eoQtEfT0ZMiit2cMREHE=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlP3ssr1tVUY10KfKLxZryJpRWUcIA5UPRwsvnRKFQ
- KLa77/KJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZT97LAAKCRB33NvayMhJ0bGkD/
- 4rlVPtkiQ5TGLe8v32h2iuhv4FZ4lhg5lERqOo49mcXp4PiUZtaTUTK/GzHeCDDaLmwXlHSfYEIUg/
- RN2yo2wNLaPXuq4iywC03T77MMIwyVTNbFTbedP5LZfUfzTNbgOpIzOmasXob6WUZiyJcNtM3zQ2xY
- 4o+HFNNHwfTBpL0g7691mtgt22tl6Vtb/thcP3qrlicGr6e5JgX5NZiANWKN6VXHGgvJQ7JFQc3oOf
- hZxbPCeGR7g2mifPEgdsUOUT3XKCElrxGxymqyKGq0Jeug++RWBGUtCUk0fe+MyJNRasSHUIb/7V3c
- P297b9MqTHeKHZp6TlkklgPOibJDzxzboG+CvPwvkRNBsbPqKzlatiGZQgCEGzpmvOCIIyr8S4pWF9
- Joc26FlHb9GInjrtXViwpiOmUcOo6Koc86ckwUe0y6bq0fuMA15bNDRLLp5o34Y8Eea8+1A+2TqNKT
- VSGxwj7gm6GhcRI0HZdGE1aqHXjfJT9VdQfubWCl/ElVkeGeI2gOXemv++Le27AaYXT+oUbT7RnUeB
- lsIJ2lLLT1hjP0y6mKSiEoQONMs5cgazgMuOfRoDu4uTnLVu2zi6XSOEA9VqyQAoQ2djPAElS+vOeQ
- x2szNs6jmAFuLXrN0Rrg8g98dbW1XpxN9aIuw/EBTK3g765dS9WijFV7/tZg==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1698659244; l=1910;
+ i=quic_kathirav@quicinc.com; s=20230906; h=from:subject:message-id;
+ bh=i7HQID1yleIY4kaaaihCohVzkhgNE60JyznG8qgF+qI=;
+ b=bIZzwg28QrD9cib5cZVLQyWnG1PgX9EULd3REkbp3oU2G9kZY0NOjxSOW/cXOK1EjmZnVayim
+ BJrFU6OaJr4C5qkMPzEkMsqy2VXViqvrkV0RBFJnQLoEwhEtah2vqjq
+X-Developer-Key: i=quic_kathirav@quicinc.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7TvSXoqjlaa0_yEg0GnkNJstyIpUaaHa
+X-Proofpoint-GUID: 7TvSXoqjlaa0_yEg0GnkNJstyIpUaaHa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-30_08,2023-10-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ clxscore=1011 malwarescore=0 suspectscore=0 mlxlogscore=838
+ priorityscore=1501 bulkscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310300074
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Last Level Cache Controller support for the SM8650 platform.
+Add bindings, driver and devicetree node for networking sub system clock
+controller on IPQ5332. Some of the nssnoc clocks present in GCC driver is
+enabled by default and its RCG is configured by bootloaders, so drop
+those clocks from GCC driver.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+The NSS clock controller driver depends on the below patchset which adds
+support for multiple configurations for same frequency.
+https://lore.kernel.org/linux-arm-msm/20230531222654.25475-1-ansuelsmth@gmail.com/
+
+Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 ---
- drivers/soc/qcom/llcc-qcom.c | 43 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+Kathiravan Thirumoorthy (8):
+      clk: qcom: ipq5332: drop the few nssnoc clocks
+      dt-bindings: clock: ipq5332: drop the few nss clocks definition
+      dt-bindings: clock: ipq5332: add definition for GPLL0_OUT_AUX clock
+      clk: qcom: ipq5332: add gpll0_out_aux clock
+      dt-bindings: clock: add IPQ5332 NSSCC clock and reset definitions
+      clk: qcom: add NSS clock Controller driver for IPQ5332
+      arm64: dts: qcom: ipq5332: add support for the NSSCC
+      arm64: defconfig: build NSS Clock Controller driver for IPQ5332
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 674abd0d6700..e92b950c2a9c 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -362,6 +362,33 @@ static const struct llcc_slice_config sm8550_data[] =  {
- 	{LLCC_VIDVSP,   28,  256, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
- };
- 
-+static const struct llcc_slice_config sm8650_data[] = {
-+	{LLCC_CPUSS,     1, 5120, 1, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_VIDSC0,    2,  512, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_AUDIO,     6,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_MDMHPGRW, 25, 1024, 3, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_MODHW,    26, 1024, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CMPT,     10, 4096, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_GPUHTW,   11,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_GPU,       9, 3096, 1, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_MMUHWT,   18,  768, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_DISP,     16, 6144, 1, 1, 0xFFFFFF, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_MDMHPFX,  24, 1024, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_MDMPNG,   27, 1024, 0, 1, 0x000000, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_AUDHW,    22, 1024, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CVP,       8,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_MODPE,    29,  128, 1, 1, 0xF00000, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-+	{LLCC_WRCACHE,  31,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CAMEXP0,   4,  256, 3, 1,      0xF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CAMEXP1,   7, 3200, 3, 1, 0xFFFFF0, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_CMPTHCP,  17,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_LCPDARE,  30,  128, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-+	{LLCC_AENPU,     3, 3072, 1, 1, 0xFFFFFF, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_ISLAND1,  12, 5888, 7, 1,      0x0, 0x7FFFFF, 0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_DISP_WB,  23, 1024, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+	{LLCC_VIDVSP,   28,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-+};
-+
- static const struct llcc_slice_config qdu1000_data_2ch[] = {
- 	{ LLCC_MDMHPGRW, 7, 512, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
- 	{ LLCC_MODHW,    9, 256, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
-@@ -610,6 +637,16 @@ static const struct qcom_llcc_config sm8550_cfg[] = {
- 	},
- };
- 
-+static const struct qcom_llcc_config sm8650_cfg[] = {
-+	{
-+		.sct_data       = sm8650_data,
-+		.size           = ARRAY_SIZE(sm8650_data),
-+		.need_llcc_cfg	= true,
-+		.reg_offset	= llcc_v2_1_reg_offset,
-+		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-+	},
-+};
-+
- static const struct qcom_sct_config qdu1000_cfgs = {
- 	.llcc_config	= qdu1000_cfg,
- 	.num_config	= ARRAY_SIZE(qdu1000_cfg),
-@@ -675,6 +712,11 @@ static const struct qcom_sct_config sm8550_cfgs = {
- 	.num_config	= ARRAY_SIZE(sm8550_cfg),
- };
- 
-+static const struct qcom_sct_config sm8650_cfgs = {
-+	.llcc_config	= sm8650_cfg,
-+	.num_config	= ARRAY_SIZE(sm8650_cfg),
-+};
-+
- static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
- 
- /**
-@@ -1249,6 +1291,7 @@ static const struct of_device_id qcom_llcc_of_match[] = {
- 	{ .compatible = "qcom,sm8350-llcc", .data = &sm8350_cfgs },
- 	{ .compatible = "qcom,sm8450-llcc", .data = &sm8450_cfgs },
- 	{ .compatible = "qcom,sm8550-llcc", .data = &sm8550_cfgs },
-+	{ .compatible = "qcom,sm8650-llcc", .data = &sm8650_cfgs },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qcom_llcc_of_match);
+ .../bindings/clock/qcom,ipq5332-nsscc.yaml         |   60 ++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi              |   28 +
+ arch/arm64/configs/defconfig                       |    1 +
+ drivers/clk/qcom/Kconfig                           |    7 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/gcc-ipq5332.c                     |   71 +-
+ drivers/clk/qcom/nsscc-ipq5332.c                   | 1035 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,ipq5332-gcc.h       |    4 +-
+ include/dt-bindings/clock/qcom,ipq5332-nsscc.h     |   86 ++
+ 9 files changed, 1233 insertions(+), 60 deletions(-)
+---
+base-commit: c503e3eec382ac708ee7adf874add37b77c5d312
+change-id: 20231030-ipq5332-nsscc-aeac9e153045
 
+Best regards,
 -- 
-2.34.1
+Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 
