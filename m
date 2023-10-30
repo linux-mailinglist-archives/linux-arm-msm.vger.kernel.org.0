@@ -2,72 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6BB0F7DC1A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 22:12:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F2867DC20F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 22:47:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231867AbjJ3VML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 17:12:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51684 "EHLO
+        id S230127AbjJ3VrN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 17:47:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230249AbjJ3VMK (ORCPT
+        with ESMTP id S230106AbjJ3VrM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 17:12:10 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A46EF9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:12:07 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c50d1b9f22so65522561fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:12:07 -0700 (PDT)
+        Mon, 30 Oct 2023 17:47:12 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDD7FA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:47:10 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-507d1cc0538so6901043e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 14:47:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698700326; x=1699305126; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698702428; x=1699307228; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yvz7j0aXwqHtGtC2njMkTn9rIFOlYhohzHXfNXUViPE=;
-        b=d5VXwZWbSgGSTUyYSrZIthmO+UpD7rbH6yFErYn/B9/CAn56iLKVXf5rwIENLy80dV
-         LoqJrK/pdTEmC+VBcJcYTitmGRCqGWPwptjzBfTmMtRJTGLvuxrx3JgcmWBJDwIBeWUe
-         ZwvPkLjYUMvC/w1MqNCD17kIoQeYFmTnx+vTCw1c95bY3jhps065yCI1lfuka0/31xku
-         k9ljy+UmINUA8VXWSxOTBWsjuXcdCObWa/kCxp6H5wgs+1dcIjQ383V9kdwdrjV1ie9e
-         igr694XbS58xiDXxUK39aQl2tdUhR16wAEF7nPG+fzXIlqRqJXAHIhxEG5MmNEr25Dfp
-         7DhA==
+        bh=Dv1A6zRVtWjITncFEynfH6q7DmHK59zb3ejZomKVK5I=;
+        b=ofRbc3+Se4iGaRyAnXEn8MCKVUtk1vr4WGbh94ppvslTPUZHf1mfiv0T6zy/vUjhaZ
+         mm3lRERFmZMr1HyRu5/1BfitNcBA8A1aVm1cI6mOrNin7Oye1ngmSeMl5dPhLxVCf5mT
+         ilXOevHpsWvrEx9YW17gXNNHOiGRk/6U46g1J4IoyXy+qcVzngCk+8cN3z0OXvQ9Iyqy
+         ghT4wB942/BLdf4MvoN0wYAY5Q3g5M3TCQTOTLT+vZQIgHrHpQouZnuspwUw3sntk24e
+         0hNyWKgHO0e2Dizts9rZoe4acV4wsN4N+22LWkAL3Is1+KIiRdnJYpboqxyasBvZDhhH
+         le0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698700326; x=1699305126;
+        d=1e100.net; s=20230601; t=1698702428; x=1699307228;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yvz7j0aXwqHtGtC2njMkTn9rIFOlYhohzHXfNXUViPE=;
-        b=hW/i9uKN8f8xKwRZffW2s75RtR1TpUeTD3rC0DFDWW1WxI9XbAQT7MKfkc5dQxe/0I
-         sA0vsaSFsDwiC86eOT1fAY8VqQ9oogjaHtjJBwje6eKmzhm2qiv/5B4J7Di58tXp3Cpj
-         8jY8CDjFcg1BVTihexDG5laqdWgCGu8M1XO4dQ7Bom7Ci1wNvbzMaloiDkmzBTdAu23p
-         POAFUvZGNvgkvFhNqLBwhLvA+OYgXdXOTEFujye1ipC8zjncH1MuBub+meqU+INOrER2
-         FWdwDiQp0Y54/iZcdm3OF3CItasmufQKzVABEWc54TSH6K59Xg93pxkk+go7hhFr3zT1
-         acxw==
-X-Gm-Message-State: AOJu0Yz5iMI5wznbiZM9tp1O9MlnAf1B3xXoeh5ngZHVFKPmfa7fcR6g
-        Jz4nfOMqZPgThdKHYh/ysZ+xXA==
-X-Google-Smtp-Source: AGHT+IEFbR+mfA4lDi7HYqrqs0Modr8JJ8FBQsQt31RkeWuPoQM8n7kICsNoPWw23UhK+fBo8ALDfQ==
-X-Received: by 2002:a05:651c:333:b0:2c5:1542:57e4 with SMTP id b19-20020a05651c033300b002c5154257e4mr8145853ljp.31.1698700325178;
-        Mon, 30 Oct 2023 14:12:05 -0700 (PDT)
+        bh=Dv1A6zRVtWjITncFEynfH6q7DmHK59zb3ejZomKVK5I=;
+        b=qBDgTMgI2dufwIQUiywweaXevuHbBq9ztU5EPmk9oO+knGqboqBHWsaRTtHypxRRoN
+         7/6st1uP1H19mwQ/G5Dc6IIJVnH/9AoBlYSdGAGTxqMGQ5XaEr+g5wcHUHt7IpP8dwUw
+         E1rP27RRLYU9/36YgiYxMW0a6dQmHj0oK4wOsJsHwykriR9gjXGWJksew7BUiQEvtuOH
+         kWgueqp2LpVrKJ3plzLe08dD4JDFzdwOks3qADbK+fmQLYWP2Yu9LDPHsZXGROsOVs0z
+         YHeb9N65XFWpxdQNHe77nltT2brYw71u9q56O2X71FYQvIvOM4H9LIOtL1UCf3yyme7r
+         YzNg==
+X-Gm-Message-State: AOJu0YwZkl5RGM697KwJkkctiYCeh1vN+RvPbOaSlSM34RhC+NLhVFr3
+        Y6fD9qU9hoOcdT2B32YUDyo8sA==
+X-Google-Smtp-Source: AGHT+IHmRDlszl8xXIE1W9t6Pw63BxnEfMvhLkP9f+p8IeQs8mTiLMc10wVlxB2OuvHWtxzfX3B9Zg==
+X-Received: by 2002:a05:6512:4026:b0:507:a16d:cf55 with SMTP id br38-20020a056512402600b00507a16dcf55mr10250215lfb.68.1698702428634;
+        Mon, 30 Oct 2023 14:47:08 -0700 (PDT)
 Received: from [192.168.133.160] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id z4-20020a2eb524000000b002c5a1d45e95sm1432930ljm.0.2023.10.30.14.12.03
+        by smtp.gmail.com with ESMTPSA id bp42-20020a05651215aa00b00509133c05aesm1053784lfb.306.2023.10.30.14.47.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 14:12:04 -0700 (PDT)
-Message-ID: <ef377506-4132-4805-a76e-18f241afe319@linaro.org>
-Date:   Mon, 30 Oct 2023 22:12:02 +0100
+        Mon, 30 Oct 2023 14:47:08 -0700 (PDT)
+Message-ID: <d6b63a3c-d171-4b6b-b222-8c619d90f51b@linaro.org>
+Date:   Mon, 30 Oct 2023 22:47:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] clk: qcom: ipq6018: add USB GDSCs
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: acer-aspire1: Enable RTC
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-References: <20231025104457.628109-1-robimarko@gmail.com>
- <20231025104457.628109-2-robimarko@gmail.com>
- <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com>
- <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org>
- <CAOX2RU5-XFZhGzjigNtu-qFnPWDd2XkpGpY=HXWigRa5SXw4TA@mail.gmail.com>
+To:     Nikita Travkin <nikita@trvn.ru>,
+        cros-qcom-dts-watchers@chromium.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
+ <20231027-aspire1-sound-v1-1-5ff3cf8b5701@trvn.ru>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -104,58 +103,26 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <CAOX2RU5-XFZhGzjigNtu-qFnPWDd2XkpGpY=HXWigRa5SXw4TA@mail.gmail.com>
+In-Reply-To: <20231027-aspire1-sound-v1-1-5ff3cf8b5701@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30.10.2023 21:37, Robert Marko wrote:
-> On Mon, 30 Oct 2023 at 20:37, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> On 29.10.2023 12:04, Robert Marko wrote:
->>> On Wed, 25 Oct 2023 at 12:45, Robert Marko <robimarko@gmail.com> wrote:
->>>>
->>>> IPQ6018 has GDSC-s for each of the USB ports, so lets define them as such
->>>> and drop the curent code that is de-asserting the USB GDSC-s as part of
->>>> the GCC probe.
->>>>
->>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>>
->>> Unfortunately, after testing on multiple devices I hit the same GDSC
->>> issue I had a long time ago
->>> that was the reason I did not send this upstream.
->>> It seems that USB3 port GDSC (USB0 GDSC in code) works just fine,
->>> however the USB2 one
->>> (USB1 GDSC in code) it is stuck off and USB2 port will fail due to this:
->>>     1.607531] ------------[ cut here ]------------
->>> [    1.607559] usb1_gdsc status stuck at 'off'
->>> [    1.607592] WARNING: CPU: 0 PID: 35 at gdsc_toggle_logic+0x16c/0x174
->>> [    1.615120] Modules linked in:
->> Can you dump GDSCR (the entire 32-bit register) at boot and when toggling?
+On 27.10.2023 16:42, Nikita Travkin wrote:
+> pm6150 has a read-only RTC that can be used to keep the time with some
+> extra userspace tools. Enable it.
 > 
-> Sure, here it is:
-> [    0.023760] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val: 0x8222004 init
-> [    0.023782] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val: 0x8222004 init
-> [    0.988626] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-> 0x8282000 before toggle
-> [    1.202506] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-> 0x8282000 after toggle
-> [    1.207208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
-> 0xa0282000 before toggle
-Any chance
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-.en_few_wait_val = 0x2
-
-(turning BIT(19) into BIT(17))
-
-will make a difference?
+kinda unsure why it'd ever be disabled
 
 Konrad
