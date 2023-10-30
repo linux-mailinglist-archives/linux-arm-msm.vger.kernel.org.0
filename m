@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D3617DB64E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 10:45:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D6D87DB651
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 10:45:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232491AbjJ3JpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 05:45:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35618 "EHLO
+        id S232503AbjJ3JpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 05:45:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232484AbjJ3JpW (ORCPT
+        with ESMTP id S232496AbjJ3JpY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 05:45:22 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E90BC4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:45:20 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507bd644a96so6115625e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:45:20 -0700 (PDT)
+        Mon, 30 Oct 2023 05:45:24 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E91DC6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:45:21 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-32f78dcf036so1040475f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 02:45:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698659119; x=1699263919; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698659120; x=1699263920; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UNThzkno/tA8gx4YDIL0XR1cAqXysXZOv8m+VhoO3R4=;
-        b=X/8eF8Re7RWynGrRJwEQPRM6aXycq9dYnOWd4of+wjPfks8och01IwIpvo2wpsEws0
-         TWUPgpjccipo4LjIgTKoAK4lfKqiZv2afR7ZO6QTrRi6k8LYQ7nxfAZecOol+KVXg9xh
-         EvL2++0gm6ziKN3LmbpRheLgPfsWfMlguOmw4hANB1maLhrWeI3AVLq5tywWTC6RT+mD
-         KCjA+V2xivHqnuF6eLg8kLgWgVhXe2xUZCj655yytN6TdZAyfII7/Y8sfMN7U2OQOCCT
-         rChaHkd9b9iWOsFj9EBZorOEyhW4Dki0OzRQv2jJX3bgnpnsWcANWbWVCg/ybOuv7DIQ
-         BtuQ==
+        bh=XXYjILCjl8eqmKwACuqBhWbhVJPplnAoksQobZQDc5M=;
+        b=Dq1WGBMF1Lk0wOmkZBLpjiiOwqUT+89JFefscR8QXGycWKySY7qqI+O2dJGgSpoO/A
+         Q3HRD7rRN8FkfiSUaSnggBjZX6LreJ1hdFAg165RgowmGKk2SFxQLWAyJ3w+01k5QSVe
+         1hxhxLevwIizBRcEqi4SxQ+B6IOrkMevRkWU4Yghlr2nZnpPUpoCNo6Ww2Hy2g6iliRh
+         jfGEADQKEhXccAkQ/B2/b+y1WzXcsJqRFm8A06mibsPcRU77zso6FuJjMBn8fcYBgpWk
+         BUxeI00ylaY9uJ1xqCv5suL4fd9Dvt+YOz2PHRiNK4Smz0SByVpgebxqBBpTv0SxcEca
+         cvJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698659119; x=1699263919;
+        d=1e100.net; s=20230601; t=1698659120; x=1699263920;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UNThzkno/tA8gx4YDIL0XR1cAqXysXZOv8m+VhoO3R4=;
-        b=gcTgc4RtbieunDwbdczlkQMQBC8IejugbPe+GKkAO65Z3/397gq85u9muwUUD2DzNQ
-         Kz6mP+kTOwiXsyi3VKrjmgi39XgrijnwgNpYZefZhUvSptOlp9b7FbFJzzOvvgeoOrNp
-         dGjZCT4euKp6iUfHMCRw5Cr4O6SdqZVlpi7diHcciXr27vt44NI9hHwbfek9Xt/Yq+jv
-         kLm6hdaLvArq+cpbUUkGq2uBDTzfkLSLo+hEfOGv9Xh0lIn/KLfIItgTB3VHnvhKFP3P
-         jqHIIwbmVbs5GihUNovnYKspUhjI7//9Ph7kms3+8jQlGd9mM+0gK+iW7UPGgrfag4rl
-         8mqw==
-X-Gm-Message-State: AOJu0Yy0pfcQ8Un3KqkwdKd7VORqijWw64m2xJ2GKOFNcsgyFjkIyvhN
-        v3SQHDwzH9nYjF6aKkjjOsI8Ow==
-X-Google-Smtp-Source: AGHT+IGVqoYBYMy56KrphfcbYH/RLyiBlAjz+81fsWZI8SZ8xt+RgVK1ENtkGf3wvx4LVFm8wdpTxQ==
-X-Received: by 2002:ac2:55b7:0:b0:4ff:ae42:19e2 with SMTP id y23-20020ac255b7000000b004ffae4219e2mr6654721lfg.58.1698659118805;
-        Mon, 30 Oct 2023 02:45:18 -0700 (PDT)
+        bh=XXYjILCjl8eqmKwACuqBhWbhVJPplnAoksQobZQDc5M=;
+        b=rWWtq1fUjlIP9eBcoBOudqL+H3xSDZi8Xt/wLWu5bg7mzRwxODT0omJbvTj+TWP/iy
+         IvdsAobiV9H1kVa0KgCAqoeuTi/y1Qi27cTzUPec5T3AitbemDUgYwfhvFrWiVmoW3cT
+         nCszia/kQS+4m+jv8In4P66W9OPq3baa+JAS5j26amfm4XmIdiG9wwWrdIqcMrPwsKY/
+         BaDSfGkc2xib2RK0Uuk4BIWBAohNdbxwRkciofzP3pI8ZKVdTxtvZHqILTroieUj16Ql
+         SAMpB19OG4gSb93OFSA6vrMlvLra4MjgP+E7W9pQE4b2j67gW50V9Mvduw35aELU9skT
+         uaGQ==
+X-Gm-Message-State: AOJu0YxD4f45IWXvINtjApYzoTRiT7Izc1dv/OhyIfLt/KsoLZrRMysB
+        zNBdJ5ABC0I61uh2v/sexpiEVw==
+X-Google-Smtp-Source: AGHT+IEk8pSpXfBaA3FkLCzNlWVEoHf1wXDfYctNX39ftL6oJp+P1Gswk+ftGJTiclQUwpkLUY0U2Q==
+X-Received: by 2002:a5d:54c5:0:b0:32f:64f2:815 with SMTP id x5-20020a5d54c5000000b0032f64f20815mr8706764wrv.33.1698659119783;
+        Mon, 30 Oct 2023 02:45:19 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id a10-20020adfe5ca000000b0032f7cfac0fesm5069446wrn.51.2023.10.30.02.45.17
+        by smtp.gmail.com with ESMTPSA id a10-20020adfe5ca000000b0032f7cfac0fesm5069446wrn.51.2023.10.30.02.45.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Oct 2023 02:45:18 -0700 (PDT)
+        Mon, 30 Oct 2023 02:45:19 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 30 Oct 2023 10:45:14 +0100
-Subject: [PATCH v2 1/2] dt-bindings: cache: qcom,llcc: Document the SM8650
- Last Level Cache Controller
+Date:   Mon, 30 Oct 2023 10:45:15 +0100
+Subject: [PATCH v2 2/2] soc: qcom: llcc: Add configuration data for SM8650
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231030-topic-sm8650-upstream-llcc-v2-1-f281cec608e2@linaro.org>
+Message-Id: <20231030-topic-sm8650-upstream-llcc-v2-2-f281cec608e2@linaro.org>
 References: <20231030-topic-sm8650-upstream-llcc-v2-0-f281cec608e2@linaro.org>
 In-Reply-To: <20231030-topic-sm8650-upstream-llcc-v2-0-f281cec608e2@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -68,23 +67,22 @@ To:     Andy Gross <agross@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Rob Herring <robh@kernel.org>
+        Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=746;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4593;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=9t+7uRPAjXQpmVyEoYE97yTfubZ8aUYnCpovDrgVtVg=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlP3ss8VCmKwb+4Y3OIqEt4sK8kykpedFWcHZIFs0W
- GY9PKoqJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZT97LAAKCRB33NvayMhJ0ebVD/
- wKCmio+QYC0rHtr+a7+B4sfcoxAC0KtaNkUc3e+R8ZcUCBcLQkKgMzAmlM9C4xQYvrRbVCSs8uDPAD
- WOtDQ6WHWQpjdV4VIhwDh5sjIaUqMhODlRVcqPkYhvXgSxuh9SJtzqzRrgv8waJPmIJAgMVOpWvwbc
- yjq1XrjEHGo/UZUzhl7+ZJ21xtaiYXO3+63aS7AEVI8jcDtk1+3kxNUD2EZ+HfXjAs+WQxoVOAawL/
- oyfOs5C4Flk6+il5go2+ajalW+8mO9cYGGGGx4iLqqBCmKtUGrKlJOB5WOUwg2HiMPEJOizDlK2Wnb
- G1VP+nYRQxlbSdJ6fHqAq8EAbCd0yJYpsjwbQlKovLc6V1mgF99ftCO5a0SnllOnAl0vKmxI5ruBQr
- 37w1n6u5/JyzKWCQ+txtNlnbWvgOicj/SGoREm5DV2rIY4EqR2rYVI3Dpj3u6ozSnq8df/qZDBlMoz
- b+fYGiE4KKTw7I7/3iwwmVDfSwf/3yMoQgziVtjS85mLLe6wJ0Ad1qUBAgr0CM0J/b9NQZNwEzMXkN
- 70rmfIyWGRYag4VY3YP1Xk+el6pLcXJgiV9XbUcKq0W6asps3PI8g01CrTIgNSStcP10AA7rEjacqU
- KKx5XDT0IMqoHyyBedxr4cYxO/yL3z+U5EiU/VmMOVeLYYD9WVDxShXeXX+w==
+ bh=ix5W4mqHtsLudqtcMaJsM3/eoQtEfT0ZMiit2cMREHE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlP3ssr1tVUY10KfKLxZryJpRWUcIA5UPRwsvnRKFQ
+ KLa77/KJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZT97LAAKCRB33NvayMhJ0bGkD/
+ 4rlVPtkiQ5TGLe8v32h2iuhv4FZ4lhg5lERqOo49mcXp4PiUZtaTUTK/GzHeCDDaLmwXlHSfYEIUg/
+ RN2yo2wNLaPXuq4iywC03T77MMIwyVTNbFTbedP5LZfUfzTNbgOpIzOmasXob6WUZiyJcNtM3zQ2xY
+ 4o+HFNNHwfTBpL0g7691mtgt22tl6Vtb/thcP3qrlicGr6e5JgX5NZiANWKN6VXHGgvJQ7JFQc3oOf
+ hZxbPCeGR7g2mifPEgdsUOUT3XKCElrxGxymqyKGq0Jeug++RWBGUtCUk0fe+MyJNRasSHUIb/7V3c
+ P297b9MqTHeKHZp6TlkklgPOibJDzxzboG+CvPwvkRNBsbPqKzlatiGZQgCEGzpmvOCIIyr8S4pWF9
+ Joc26FlHb9GInjrtXViwpiOmUcOo6Koc86ckwUe0y6bq0fuMA15bNDRLLp5o34Y8Eea8+1A+2TqNKT
+ VSGxwj7gm6GhcRI0HZdGE1aqHXjfJT9VdQfubWCl/ElVkeGeI2gOXemv++Le27AaYXT+oUbT7RnUeB
+ lsIJ2lLLT1hjP0y6mKSiEoQONMs5cgazgMuOfRoDu4uTnLVu2zi6XSOEA9VqyQAoQ2djPAElS+vOeQ
+ x2szNs6jmAFuLXrN0Rrg8g98dbW1XpxN9aIuw/EBTK3g765dS9WijFV7/tZg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -97,26 +95,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document the Last Level Cache Controller on the SM8650 platform.
+Add Last Level Cache Controller support for the SM8650 platform.
 
-Acked-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/llcc-qcom.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-index 580f9a97ddf7..7a211e35e166 100644
---- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-+++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-@@ -33,6 +33,7 @@ properties:
-       - qcom,sm8350-llcc
-       - qcom,sm8450-llcc
-       - qcom,sm8550-llcc
-+      - qcom,sm8650-llcc
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 674abd0d6700..e92b950c2a9c 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -362,6 +362,33 @@ static const struct llcc_slice_config sm8550_data[] =  {
+ 	{LLCC_VIDVSP,   28,  256, 4, 1, 0xFFFFFF, 0x0,   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+ };
  
-   reg:
-     minItems: 2
++static const struct llcc_slice_config sm8650_data[] = {
++	{LLCC_CPUSS,     1, 5120, 1, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_VIDSC0,    2,  512, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_AUDIO,     6,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_MDMHPGRW, 25, 1024, 3, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_MODHW,    26, 1024, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_CMPT,     10, 4096, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_GPUHTW,   11,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_GPU,       9, 3096, 1, 0, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_MMUHWT,   18,  768, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_DISP,     16, 6144, 1, 1, 0xFFFFFF, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_MDMHPFX,  24, 1024, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_MDMPNG,   27, 1024, 0, 1, 0x000000, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_AUDHW,    22, 1024, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_CVP,       8,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_MODPE,    29,  128, 1, 1, 0xF00000, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
++	{LLCC_WRCACHE,  31,  512, 1, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_CAMEXP0,   4,  256, 3, 1,      0xF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_CAMEXP1,   7, 3200, 3, 1, 0xFFFFF0, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_CMPTHCP,  17,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_LCPDARE,  30,  128, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
++	{LLCC_AENPU,     3, 3072, 1, 1, 0xFFFFFF, 0x0,      2, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_ISLAND1,  12, 5888, 7, 1,      0x0, 0x7FFFFF, 0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_DISP_WB,  23, 1024, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++	{LLCC_VIDVSP,   28,  256, 3, 1, 0xFFFFFF, 0x0,      0, 0x0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
++};
++
+ static const struct llcc_slice_config qdu1000_data_2ch[] = {
+ 	{ LLCC_MDMHPGRW, 7, 512, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+ 	{ LLCC_MODHW,    9, 256, 1, 1, 0xfff, 0x0, 0, 0, 0, 1, 0, 0, 0 },
+@@ -610,6 +637,16 @@ static const struct qcom_llcc_config sm8550_cfg[] = {
+ 	},
+ };
+ 
++static const struct qcom_llcc_config sm8650_cfg[] = {
++	{
++		.sct_data       = sm8650_data,
++		.size           = ARRAY_SIZE(sm8650_data),
++		.need_llcc_cfg	= true,
++		.reg_offset	= llcc_v2_1_reg_offset,
++		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
++	},
++};
++
+ static const struct qcom_sct_config qdu1000_cfgs = {
+ 	.llcc_config	= qdu1000_cfg,
+ 	.num_config	= ARRAY_SIZE(qdu1000_cfg),
+@@ -675,6 +712,11 @@ static const struct qcom_sct_config sm8550_cfgs = {
+ 	.num_config	= ARRAY_SIZE(sm8550_cfg),
+ };
+ 
++static const struct qcom_sct_config sm8650_cfgs = {
++	.llcc_config	= sm8650_cfg,
++	.num_config	= ARRAY_SIZE(sm8650_cfg),
++};
++
+ static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
+ 
+ /**
+@@ -1249,6 +1291,7 @@ static const struct of_device_id qcom_llcc_of_match[] = {
+ 	{ .compatible = "qcom,sm8350-llcc", .data = &sm8350_cfgs },
+ 	{ .compatible = "qcom,sm8450-llcc", .data = &sm8450_cfgs },
+ 	{ .compatible = "qcom,sm8550-llcc", .data = &sm8550_cfgs },
++	{ .compatible = "qcom,sm8650-llcc", .data = &sm8650_cfgs },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, qcom_llcc_of_match);
 
 -- 
 2.34.1
