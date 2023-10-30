@@ -2,144 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2437D7DC155
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 21:37:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 243A77DC17B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 22:02:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231713AbjJ3Uh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 16:37:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56090 "EHLO
+        id S229867AbjJ3VCo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 17:02:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54610 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231761AbjJ3Uh0 (ORCPT
+        with ESMTP id S229764AbjJ3VCn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 16:37:26 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68FB109;
-        Mon, 30 Oct 2023 13:37:22 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id 98e67ed59e1d1-280137f1a1bso2265902a91.1;
-        Mon, 30 Oct 2023 13:37:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698698242; x=1699303042; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9/tyopkMDgCBg9IJqpFJkPLn4LWq8TVkMh2MToeKQVk=;
-        b=LPyVbDBnDyiXR6fmcUxWjGRvG4LKTOMKx/febS/f5/SlWuGl2OjEfeXOWI4BPwZaBw
-         caKmCaixtxEN3EuUZH1G5AtAGX6McEUrknmkaKazet98AvyUe+yTZ0a3S5CSHMG/6Jj0
-         NsweWys0uJ+ZjeISFydIdaEt226on1hkGrLaX3ksabV1P3CbiaFe5r2O8hT8fsNzlqUC
-         rPZTrxUpoTX90Owb6pV8di4LCIvZhZuBGOP7Ig5Zidd2WgHo8nRluErFXnoGUR4GlXgP
-         WUOOAbs0ePuJJgbXm2u29VpiaqepXGoDDWrWaaaM97A1XLbdVw9k6UB4Eik4L4olbmNx
-         0KVg==
+        Mon, 30 Oct 2023 17:02:43 -0400
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59D6EDD;
+        Mon, 30 Oct 2023 14:02:41 -0700 (PDT)
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3b3e7f56ca4so2750357b6e.0;
+        Mon, 30 Oct 2023 14:02:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698698242; x=1699303042;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9/tyopkMDgCBg9IJqpFJkPLn4LWq8TVkMh2MToeKQVk=;
-        b=YXAgxN4s1LQ5GRLFcAhYVOBeFmGxHNGaEaFRItA45CmnHLP7kvt8lilTULJTxOXwiN
-         6857IFPXzZbbeMk26S/hAlasjhKHHpjPPqd0w+C9y4RdMxJIdERn+LLSxxUbw5lsB2Qe
-         7nsjpQl8VbtGdtBJZxxQ62nh0V8pKXUMkj6Dxcal8AH60XpIKUHCn3RO2uIOGxudXuVi
-         VKmVenw9kQfj0Wt0kdqy4FJM94SlYO+PyGfhY3DKkTm+n+M8En0SudrujhaThnxxrT5x
-         4tB2mpwgynGRM/kIJczEhxN+Mo5zKhh/KMOS8O6ahoKA3J02zZ1zTULCUFD/SQNBL0m5
-         R8xA==
-X-Gm-Message-State: AOJu0YwszRARL0uewqzhfK3EY1LOb9q9n+YHIXd0PGoUgouLzDPebWwc
-        9zHsj9q82JdQqWFuWlnrQv2W8ru/up4jSJ7b3qU=
-X-Google-Smtp-Source: AGHT+IEyszwTBuUXM69NzRLrKZXAPOrNdGf4XC40IKbRok1aPdBnufwVvWTsRcO2sjDNUapfvR7C1s6EocKux2iwN+w=
-X-Received: by 2002:a17:90b:111:b0:27d:c95:b0ad with SMTP id
- p17-20020a17090b011100b0027d0c95b0admr7633906pjz.21.1698698242060; Mon, 30
- Oct 2023 13:37:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698699760; x=1699304560;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d7f1xtNDZ2uDSqBxTL8RZj3B3UCu3G/3InhqrWq5zmE=;
+        b=EHN889V/7iU1eJNrtj8FEdvl0+Oun6scFR4S6u0gLSj2athWAKZamWJClvcqdC0tZY
+         4f9L3pW0Gdu07Cg8lMRvUngLAAGVNAuE5owrFfMn4yVRZ5PyVfu1ftylJa7vK30oxW7F
+         1gwWKvt9P17SPExvhSCQse/GB2kgEPAS+Y7iDwGefc/Wx8kutn5bdaUi0WMu+M6Xt3iE
+         AGQzp1kMAy6uvTpT5rLvQkV8RToEhrjXGTkE7KADGKM3BupCN3NQ4HCVsBRSdHuxtbeT
+         3awYiB2phlg1BFJD11655q+xqbWrEy5yeklw4arQL4+rqFIFgH+G1j5IC0I02FfNy6hz
+         HrcQ==
+X-Gm-Message-State: AOJu0YyqLl90bsuPILWDIzzBlOLhu14ghO+SlagrqfyoLvSH2Vvc1/7m
+        2e53B2V7OXVM/B4jy9HG3j7AIbrMJg==
+X-Google-Smtp-Source: AGHT+IEIAyLxg6HwrCzx3hlGBX4hCgvdOO1NyX+dV0BfyIjLzSLOUFRLFUBIowlOSbqHK1sdnH83zQ==
+X-Received: by 2002:a05:6808:1526:b0:3a7:4878:235a with SMTP id u38-20020a056808152600b003a74878235amr11894866oiw.29.1698699760623;
+        Mon, 30 Oct 2023 14:02:40 -0700 (PDT)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id bk28-20020a0568081a1c00b003b274008e46sm1524847oib.0.2023.10.30.14.02.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Oct 2023 14:02:39 -0700 (PDT)
+Received: (nullmailer pid 2457362 invoked by uid 1000);
+        Mon, 30 Oct 2023 21:02:38 -0000
+Date:   Mon, 30 Oct 2023 16:02:38 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Rao Mandadapu <quic_srivasam@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH] dt-bindings: soundwire: Add reference to
+ soundwire-controller.yaml schema
+Message-ID: <169869975649.2457261.10866906758422041610.robh@kernel.org>
+References: <20231016155537.2973625-1-robh@kernel.org>
 MIME-Version: 1.0
-References: <20231025104457.628109-1-robimarko@gmail.com> <20231025104457.628109-2-robimarko@gmail.com>
- <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com> <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org>
-In-Reply-To: <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 30 Oct 2023 21:37:10 +0100
-Message-ID: <CAOX2RU5-XFZhGzjigNtu-qFnPWDd2XkpGpY=HXWigRa5SXw4TA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] clk: qcom: ipq6018: add USB GDSCs
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231016155537.2973625-1-robh@kernel.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 30 Oct 2023 at 20:37, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 29.10.2023 12:04, Robert Marko wrote:
-> > On Wed, 25 Oct 2023 at 12:45, Robert Marko <robimarko@gmail.com> wrote:
-> >>
-> >> IPQ6018 has GDSC-s for each of the USB ports, so lets define them as such
-> >> and drop the curent code that is de-asserting the USB GDSC-s as part of
-> >> the GCC probe.
-> >>
-> >> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >
-> > Unfortunately, after testing on multiple devices I hit the same GDSC
-> > issue I had a long time ago
-> > that was the reason I did not send this upstream.
-> > It seems that USB3 port GDSC (USB0 GDSC in code) works just fine,
-> > however the USB2 one
-> > (USB1 GDSC in code) it is stuck off and USB2 port will fail due to this:
-> >     1.607531] ------------[ cut here ]------------
-> > [    1.607559] usb1_gdsc status stuck at 'off'
-> > [    1.607592] WARNING: CPU: 0 PID: 35 at gdsc_toggle_logic+0x16c/0x174
-> > [    1.615120] Modules linked in:
-> Can you dump GDSCR (the entire 32-bit register) at boot and when toggling?
 
-Sure, here it is:
-[    0.023760] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val: 0x8222004 init
-[    0.023782] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val: 0x8222004 init
-[    0.988626] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 before toggle
-[    1.202506] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 after toggle
-[    1.207208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
-0xa0282000 before toggle
-[    1.216208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
-0xa0282000 after toggle
-[    1.648261] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 before toggle
-[    1.865867] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 after toggle
-[    1.880638] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 before toggle
-[    2.108643] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 after toggle
-[    2.113495] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 before toggle
-[    2.340844] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 after toggle
-[   10.588698] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 before toggle
-[   10.815257] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 after toggle
-[   11.554561] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 before toggle
-[   11.774515] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 after toggle
-[   11.781652] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 before toggle
-[   12.039619] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 after toggle
-[   22.233021] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 before toggle
-[   22.452907] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-0x8282000 after toggle
+On Mon, 16 Oct 2023 10:55:37 -0500, Rob Herring wrote:
+> The soundwire-controller.yaml schema already defines the form for devices
+> in child nodes, so there's no need to do the same in the QCom controller
+> binding. Add a $ref to the soundwire-controller.yaml schema and drop the
+> child node schema.
+> 
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>  .../bindings/soundwire/qcom,soundwire.yaml       | 16 ++++------------
+>  1 file changed, 4 insertions(+), 12 deletions(-)
+> 
 
-BTW, earlier I tried manually setting BIT(2) to 1 and that will allow
-the USB1 master clock to
-come up.
+Applied, thanks!
 
-Regards,
-Robert
->
-> Konrad
