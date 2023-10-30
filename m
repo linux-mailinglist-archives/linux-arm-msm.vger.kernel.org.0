@@ -2,155 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DA887DB4FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 09:19:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CF9937DB525
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 09:30:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232036AbjJ3ITU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 04:19:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51572 "EHLO
+        id S232084AbjJ3IaG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 04:30:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232022AbjJ3ITT (ORCPT
+        with ESMTP id S232085AbjJ3IaA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 04:19:19 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 872C8A7;
-        Mon, 30 Oct 2023 01:19:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698653957; x=1730189957;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=AcMF9VjShgicwfllFdfbQHLrf8Zoz2LK1NqqErPLinU=;
-  b=RTDhkre3+QR0eOJngUiQl+yjiVULYaVysaOwCaQGCTga+eMLi8vBpSIQ
-   V40GW8uUgsgJPLXMfKRT7LwR4BmEULjvsRkAoK2JS4mnN5IhM5SJALZ1q
-   p7GXWeEHjWtJl96lNrpqc+r0W/i6aiInoEAjXR6QB3KorO1PTkAnvLRsy
-   /ILk38yodkjV0VyQziYFU8y9ypML5iJ2F1BB+jnxiikqBIyKu/Q25fWlO
-   sb91FvBPRmEzUSLICj3HHqcrcSFWLShfvq3TL9zu02EqTwcE1M5UAQML9
-   wxktCNPwxCGeZYOjdsaIHtiFLtCD+xlMlMCMqImd1/lCqGPNXWk7Jh2wu
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10878"; a="871673"
-X-IronPort-AV: E=Sophos;i="6.03,263,1694761200"; 
-   d="scan'208";a="871673"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2023 01:19:17 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10878"; a="753716240"
-X-IronPort-AV: E=Sophos;i="6.03,263,1694761200"; 
-   d="scan'208";a="753716240"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by orsmga007.jf.intel.com with SMTP; 30 Oct 2023 01:19:09 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 30 Oct 2023 10:19:08 +0200
-Date:   Mon, 30 Oct 2023 10:19:08 +0200
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Guenter Roeck <linux@roeck-us.net>,
-        Janne Grunau <j@jannau.net>, Simon Ser <contact@emersion.fr>,
+        Mon, 30 Oct 2023 04:30:00 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17D41B6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 01:29:57 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-507b9408c61so5795544e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 01:29:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698654595; x=1699259395; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rnpIzjbYLIpmyoln4TxTiMzbHo5KIuPiksSLMxx86Kw=;
+        b=SypD02QpGbCY8EuPcxe25cw59pDZFne7kZN9d/b8oXtPYo+Ry72i1cb2kCa1yp1p3v
+         7EmRCkkc4l9YrvCOaJyjRr8LDVxF95PieIBrYE5OyfHFQE6Mp7QYSeYOgzCfSXykvTHY
+         aONuaxzQF5foAT+4a7xTjTuKu3kBBWCtmd+AOlVaUOpGg70QaFhx5BPvo8iKt82hyvjY
+         Bry7tL7aiqYOrgmlczzOZA99eMN+PtgERkkOJHZrw+RQD8o1g3roReaJdct98EaL/I4I
+         Adj6kRG2QMKuQ8n+9TrQqPjw1iLHnX/zsEqxZImkcbtSVmhy7vCkdbkX38+Zsl6aKeh5
+         I/Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698654595; x=1699259395;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rnpIzjbYLIpmyoln4TxTiMzbHo5KIuPiksSLMxx86Kw=;
+        b=PCs6WlHvL+uzqbw9qLwxeo6O+9TFDE4PXrmShT1oix/ogLN+IjkiQK7eiZ56EXm92p
+         gIZclOF2+p/NWVvMtjcBdioZ8aGIth7LpZ1/VWADqM6YTOh5fZkqcdxIgaIHP2IsEd4y
+         ORmKa+n/8OLosvev9/HMgWn87kjBhInqWYVfhu6jo6hOGdPEkK9BNBy2cwudRDGzqszS
+         299biCQcBHnrqGO+LCyZDKsfN1IWmWO4YY44IgqJbLmJd15SB5+e+ucNZTxUha/6gNPF
+         qFfXul0qrrEcZmIwKE4s/RVoazj4F9rS05fNpEhlwfjc3vrmgdpEJozFQek9nnZOp3FF
+         BABQ==
+X-Gm-Message-State: AOJu0YyECg626Pli72ihN2F+rZBbZIYh04z4X0J5KzzqOcLM7m2taxOS
+        BMifyHTiJIgNRZpHloyLPvqZGw==
+X-Google-Smtp-Source: AGHT+IEcRMWXLNodTV6mQug71yQCCf+gJGD/OjbqlrKiQem+EyurncoOmzl+I70Jm3gUJApsoX3nng==
+X-Received: by 2002:a19:5516:0:b0:503:2dce:4544 with SMTP id n22-20020a195516000000b005032dce4544mr6869632lfe.59.1698654595117;
+        Mon, 30 Oct 2023 01:29:55 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:a05f:dffd:3e08:6b03? ([2a01:e0a:982:cbb0:a05f:dffd:3e08:6b03])
+        by smtp.gmail.com with ESMTPSA id z8-20020adfe548000000b0031c52e81490sm7729674wrm.72.2023.10.30.01.29.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Oct 2023 01:29:54 -0700 (PDT)
+Message-ID: <469f2249-5f7b-4136-9f65-b58c9baf537c@linaro.org>
+Date:   Mon, 30 Oct 2023 09:29:53 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/3] dt-bindings: remoteproc: qcom,sm8550-pas: document
+ the SM8650 PAS
+Content-Language: en-US, fr
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [RFC PATCH v1 12/12] usb: typec: qcom: define the bridge's path
-Message-ID: <ZT9m/OoFUiZaWy9s@kuha.fi.intel.com>
-References: <20230903214150.2877023-1-dmitry.baryshkov@linaro.org>
- <20230903214150.2877023-13-dmitry.baryshkov@linaro.org>
- <ZQRKq7K8jKlH/Y4X@kuha.fi.intel.com>
- <0F1BE090-92C4-4233-A77A-9B4C653DA1A7@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0F1BE090-92C4-4233-A77A-9B4C653DA1A7@linaro.org>
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-remoteproc-v1-0-a8d20e4ce18c@linaro.org>
+ <20231025-topic-sm8650-upstream-remoteproc-v1-1-a8d20e4ce18c@linaro.org>
+ <a1895327-b520-4f3a-a427-0947ac46495c@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <a1895327-b520-4f3a-a427-0947ac46495c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 23, 2023 at 09:24:33PM +0300, Dmitry Baryshkov wrote:
-> On 15 September 2023 15:14:35 EEST, Heikki Krogerus <heikki.krogerus@linux.intel.com> wrote:
-> >Hi Dmitry,
-> >
-> >On Mon, Sep 04, 2023 at 12:41:50AM +0300, Dmitry Baryshkov wrote:
-> >> In order to notify the userspace about the DRM connector's USB-C port,
-> >> export the corresponding port's name as the bridge's path field.
-> >> 
-> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> ---
-> >>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c     | 11 +++++++----
-> >>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_drm.c |  4 +++-
-> >>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_drm.h |  6 ++++--
-> >>  3 files changed, 14 insertions(+), 7 deletions(-)
-> >> 
-> >> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> >> index b9d4856101c7..452dc6437861 100644
-> >> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> >> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> >> @@ -156,6 +156,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
-> >>  	struct device_node *np = dev->of_node;
-> >>  	const struct pmic_typec_resources *res;
-> >>  	struct regmap *regmap;
-> >> +	char *tcpm_name;
-> >>  	u32 base[2];
-> >>  	int ret;
-> >>  
-> >> @@ -211,10 +212,6 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
-> >>  	mutex_init(&tcpm->lock);
-> >>  	platform_set_drvdata(pdev, tcpm);
-> >>  
-> >> -	tcpm->pmic_typec_drm = qcom_pmic_typec_init_drm(dev);
-> >> -	if (IS_ERR(tcpm->pmic_typec_drm))
-> >> -		return PTR_ERR(tcpm->pmic_typec_drm);
-> >> -
-> >>  	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
-> >>  	if (!tcpm->tcpc.fwnode)
-> >>  		return -EINVAL;
-> >> @@ -225,6 +222,12 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
-> >>  		goto fwnode_remove;
-> >>  	}
-> >>  
-> >> +	tcpm_name = tcpm_port_get_name(tcpm->tcpm_port);
-> >> +	tcpm->pmic_typec_drm = qcom_pmic_typec_init_drm(dev, tcpm_name);
-> >
-> >So I got some questions and concerns off-list. This was one of the
-> >concerns. That tcpm_name is now the actual port device name, so I'm
-> >afraid this is not acceptable.
-> >
-> >You can't use device name as a reference, ever. There is no way to
-> >guarantee that a device with a specific name is what you meant it to
-> >be by the time it's accessed.
+On 27/10/2023 09:36, Krzysztof Kozlowski wrote:
+> On 25/10/2023 09:35, Neil Armstrong wrote:
+>> Document the DSP Peripheral Authentication Service on the SM8650 Platform.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 41 +++++++++++++++++++++-
+>>   1 file changed, 40 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+>> index 58120829fb06..316371c8ee6e 100644
+>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+>> @@ -19,6 +19,9 @@ properties:
+>>         - qcom,sm8550-adsp-pas
+>>         - qcom,sm8550-cdsp-pas
+>>         - qcom,sm8550-mpss-pas
+>> +      - qcom,sm8650-adsp-pas
+>> +      - qcom,sm8650-cdsp-pas
+>> +      - qcom,sm8650-mpss-pas
+>>   
+>>     reg:
+>>       maxItems: 1
+>> @@ -49,6 +52,7 @@ properties:
+>>         - description: Memory region for main Firmware authentication
+>>         - description: Memory region for Devicetree Firmware authentication
+>>         - description: DSM Memory region
+>> +      - description: DSM Memory region 2
+>>   
+>>   required:
+>>     - compatible
+>> @@ -63,6 +67,7 @@ allOf:
+>>             enum:
+>>               - qcom,sm8550-adsp-pas
+>>               - qcom,sm8550-cdsp-pas
+>> +            - qcom,sm8650-adsp-pas
+>>       then:
+>>         properties:
+>>           interrupts:
+>> @@ -71,7 +76,25 @@ allOf:
+>>             maxItems: 5
+>>           memory-region:
+>>             maxItems: 2
+>> -    else:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          enum:
+>> +            - qcom,sm8650-cdsp-pas
+>> +    then:
+>> +      properties:
+>> +        interrupts:
+>> +          minItems: 5
 > 
-> Hmm, could you please be more specific, why? I mean, class devices are not
-> that easy to be renamed in sysfs, are they? Or are you concerned about the
-> device being destroyed behind userspace's back? At least for MSM this will be
-> a huge problem already, with the bridge driver suddenly being removed.
+> maxItems
+> 
+> 
+>> +        interrupt-names:
+>> +          minItems: 5
+> 
+> maxItems
+> 
+>> +        memory-region:
+>> +          minItems: 3
+> 
+> maxItems: 3
+> 
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          enum:
+>> +            - qcom,sm8550-mpss-pas
+>> +    then:
+>>         properties:
+>>           interrupts:
+>>             minItems: 6
+>> @@ -79,12 +102,26 @@ allOf:
+>>             minItems: 6
+>>           memory-region:
+>>             minItems: 3
+> 
+> You need to add here maxItems.
 
-The race exists even in your case, but please do not look at this as a
-solution for only your platform.
+Ok, I fixed all that
 
-This is about showing the user space a link between two device
-instances (struct device), and the way you do that is by creating a
-symlink. That way the kernel can take care of reference counting and
-guarantee that the link always points to the correct device. That way
-the link will also be always visible in user space without requirement
-for any specific ABI like it should.
+> 
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          enum:
+>> +            - qcom,sm8650-mpss-pas
+>> +    then:
+> 
+> I am not sure if keeping it in the same binding as sm8550 avoids that
+> much duplication.
 
-thanks,
+Yes it does, 70% is the bindings would be the same, still if it's still preferable I can duplicate.
 
--- 
-heikki
+Thanks,
+Neil
+
+> 
+> Best regards,
+> Krzysztof
+> 
+
