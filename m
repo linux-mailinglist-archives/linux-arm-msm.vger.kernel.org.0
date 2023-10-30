@@ -2,83 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EB1C7DC125
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 21:24:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2437D7DC155
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 21:37:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229743AbjJ3UYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 16:24:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44006 "EHLO
+        id S231713AbjJ3Uh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 16:37:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229763AbjJ3UYf (ORCPT
+        with ESMTP id S231761AbjJ3Uh0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 16:24:35 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36EE7AB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 13:24:33 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39UJccM5001717;
-        Mon, 30 Oct 2023 20:24:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8/IXR+VYH9jBgS7uk0V1hyfyZIQcMPYL0rNFFCg0wpQ=;
- b=ZJnim/B3SNYHc/Bxif5DMNbuIiH4cFJLQ0i6FMKP5Cj1PmqDzjAHm3n55HDXhiZwZ/vd
- w8xwAFLwvV0JwQorC99jI5F5KPa0037CYN8nv7E8VOWFz/RwSmRiB71xR8A4eyH32gmQ
- kLY1FcUQsbSMjyxCGgZOItsZGgGuHFBp1grR3DDC3I2BbWQGpHJx33146jI7LOBi4ovD
- d6wEJ8rtLvS5vxk7CuOccqFvPqdIiuaIX0mTT9JQ65AdNxDb6vgRARNdBXo9gL7GdFJm
- AoCz3eGBN1e+dWlE2aPWdgz/fEVnnU/JKXVbHDSaw+cIm2tfkjlvGuzcNP0r7SiHLEJ5 4A== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u2c4rs5ak-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Oct 2023 20:24:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39UKO3tI019400
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Oct 2023 20:24:03 GMT
-Received: from [10.110.97.66] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 30 Oct
- 2023 13:24:02 -0700
-Message-ID: <c2f7733b-bfa3-a8a6-6909-5da26cd513af@quicinc.com>
-Date:   Mon, 30 Oct 2023 13:24:01 -0700
+        Mon, 30 Oct 2023 16:37:26 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A68FB109;
+        Mon, 30 Oct 2023 13:37:22 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id 98e67ed59e1d1-280137f1a1bso2265902a91.1;
+        Mon, 30 Oct 2023 13:37:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698698242; x=1699303042; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9/tyopkMDgCBg9IJqpFJkPLn4LWq8TVkMh2MToeKQVk=;
+        b=LPyVbDBnDyiXR6fmcUxWjGRvG4LKTOMKx/febS/f5/SlWuGl2OjEfeXOWI4BPwZaBw
+         caKmCaixtxEN3EuUZH1G5AtAGX6McEUrknmkaKazet98AvyUe+yTZ0a3S5CSHMG/6Jj0
+         NsweWys0uJ+ZjeISFydIdaEt226on1hkGrLaX3ksabV1P3CbiaFe5r2O8hT8fsNzlqUC
+         rPZTrxUpoTX90Owb6pV8di4LCIvZhZuBGOP7Ig5Zidd2WgHo8nRluErFXnoGUR4GlXgP
+         WUOOAbs0ePuJJgbXm2u29VpiaqepXGoDDWrWaaaM97A1XLbdVw9k6UB4Eik4L4olbmNx
+         0KVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698698242; x=1699303042;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9/tyopkMDgCBg9IJqpFJkPLn4LWq8TVkMh2MToeKQVk=;
+        b=YXAgxN4s1LQ5GRLFcAhYVOBeFmGxHNGaEaFRItA45CmnHLP7kvt8lilTULJTxOXwiN
+         6857IFPXzZbbeMk26S/hAlasjhKHHpjPPqd0w+C9y4RdMxJIdERn+LLSxxUbw5lsB2Qe
+         7nsjpQl8VbtGdtBJZxxQ62nh0V8pKXUMkj6Dxcal8AH60XpIKUHCn3RO2uIOGxudXuVi
+         VKmVenw9kQfj0Wt0kdqy4FJM94SlYO+PyGfhY3DKkTm+n+M8En0SudrujhaThnxxrT5x
+         4tB2mpwgynGRM/kIJczEhxN+Mo5zKhh/KMOS8O6ahoKA3J02zZ1zTULCUFD/SQNBL0m5
+         R8xA==
+X-Gm-Message-State: AOJu0YwszRARL0uewqzhfK3EY1LOb9q9n+YHIXd0PGoUgouLzDPebWwc
+        9zHsj9q82JdQqWFuWlnrQv2W8ru/up4jSJ7b3qU=
+X-Google-Smtp-Source: AGHT+IEyszwTBuUXM69NzRLrKZXAPOrNdGf4XC40IKbRok1aPdBnufwVvWTsRcO2sjDNUapfvR7C1s6EocKux2iwN+w=
+X-Received: by 2002:a17:90b:111:b0:27d:c95:b0ad with SMTP id
+ p17-20020a17090b011100b0027d0c95b0admr7633906pjz.21.1698698242060; Mon, 30
+ Oct 2023 13:37:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v6 09/10] drm/msm/dpu: merge DPU_SSPP_SCALER_QSEED3,
- QSEED3LITE, QSEED4
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20231006131450.2436688-1-dmitry.baryshkov@linaro.org>
- <20231006131450.2436688-10-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231006131450.2436688-10-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: miEcOsHpLciahJEJP2ARMpXzwpZS6yTp
-X-Proofpoint-GUID: miEcOsHpLciahJEJP2ARMpXzwpZS6yTp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-30_13,2023-10-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- phishscore=0 adultscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999
- malwarescore=0 mlxscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2310300162
-X-Spam-Status: No, score=-6.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+References: <20231025104457.628109-1-robimarko@gmail.com> <20231025104457.628109-2-robimarko@gmail.com>
+ <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com> <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org>
+In-Reply-To: <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Mon, 30 Oct 2023 21:37:10 +0100
+Message-ID: <CAOX2RU5-XFZhGzjigNtu-qFnPWDd2XkpGpY=HXWigRa5SXw4TA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] clk: qcom: ipq6018: add USB GDSCs
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,115 +72,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 30 Oct 2023 at 20:37, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+> On 29.10.2023 12:04, Robert Marko wrote:
+> > On Wed, 25 Oct 2023 at 12:45, Robert Marko <robimarko@gmail.com> wrote:
+> >>
+> >> IPQ6018 has GDSC-s for each of the USB ports, so lets define them as such
+> >> and drop the curent code that is de-asserting the USB GDSC-s as part of
+> >> the GCC probe.
+> >>
+> >> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >
+> > Unfortunately, after testing on multiple devices I hit the same GDSC
+> > issue I had a long time ago
+> > that was the reason I did not send this upstream.
+> > It seems that USB3 port GDSC (USB0 GDSC in code) works just fine,
+> > however the USB2 one
+> > (USB1 GDSC in code) it is stuck off and USB2 port will fail due to this:
+> >     1.607531] ------------[ cut here ]------------
+> > [    1.607559] usb1_gdsc status stuck at 'off'
+> > [    1.607592] WARNING: CPU: 0 PID: 35 at gdsc_toggle_logic+0x16c/0x174
+> > [    1.615120] Modules linked in:
+> Can you dump GDSCR (the entire 32-bit register) at boot and when toggling?
 
+Sure, here it is:
+[    0.023760] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val: 0x8222004 init
+[    0.023782] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val: 0x8222004 init
+[    0.988626] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 before toggle
+[    1.202506] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 after toggle
+[    1.207208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
+0xa0282000 before toggle
+[    1.216208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
+0xa0282000 after toggle
+[    1.648261] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 before toggle
+[    1.865867] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 after toggle
+[    1.880638] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 before toggle
+[    2.108643] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 after toggle
+[    2.113495] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 before toggle
+[    2.340844] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 after toggle
+[   10.588698] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 before toggle
+[   10.815257] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 after toggle
+[   11.554561] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 before toggle
+[   11.774515] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 after toggle
+[   11.781652] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 before toggle
+[   12.039619] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 after toggle
+[   22.233021] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 before toggle
+[   22.452907] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+0x8282000 after toggle
 
-On 10/6/2023 6:14 AM, Dmitry Baryshkov wrote:
-> Three different features, DPU_SSPP_SCALER_QSEED3, QSEED3LITE and QSEED4
-> are all related to different versions of the same HW scaling block.
-> Corresponding driver parts use scaler_blk.version to identify the
-> correct way to program the hardware. In order to simplify the driver
-> codepath, merge these three feature bits.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 6 +-----
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 9 ++-------
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 3 +--
->   4 files changed, 6 insertions(+), 16 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 32c396abf877..eb867c8123d7 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -31,10 +31,10 @@
->   	(VIG_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
->   
->   #define VIG_SC7180_MASK \
-> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
-> +	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
->   
->   #define VIG_SM6125_MASK \
-> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
-> +	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
->   
+BTW, earlier I tried manually setting BIT(2) to 1 and that will allow
+the USB1 master clock to
+come up.
 
-This merging is coming at a cost of inaccuracy. We are marking sc7180 
-and sm6125 as scaler_qseed3. But they are not. Let me know what you 
-think of below idea instead.
-
->   #define VIG_SC7180_MASK_SDMA \
->   	(VIG_SC7180_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index fc5027b0123a..ba262b3f0bdc 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -51,9 +51,7 @@ enum {
->   /**
->    * SSPP sub-blocks/features
->    * @DPU_SSPP_SCALER_QSEED2,  QSEED2 algorithm support
-> - * @DPU_SSPP_SCALER_QSEED3,  QSEED3 alogorithm support
-> - * @DPU_SSPP_SCALER_QSEED3LITE,  QSEED3 Lite alogorithm support
-> - * @DPU_SSPP_SCALER_QSEED4,  QSEED4 algorithm support
-> + * @DPU_SSPP_SCALER_QSEED3,  QSEED3 alogorithm support (also QSEED3LITE and QSEED4)
->    * @DPU_SSPP_SCALER_RGB,     RGB Scaler, supported by RGB pipes
->    * @DPU_SSPP_CSC,            Support of Color space converion
->    * @DPU_SSPP_CSC_10BIT,      Support of 10-bit Color space conversion
-> @@ -72,8 +70,6 @@ enum {
->   enum {
->   	DPU_SSPP_SCALER_QSEED2 = 0x1,
->   	DPU_SSPP_SCALER_QSEED3,
-> -	DPU_SSPP_SCALER_QSEED3LITE,
-> -	DPU_SSPP_SCALER_QSEED4,
->   	DPU_SSPP_SCALER_RGB,
->   	DPU_SSPP_CSC,
->   	DPU_SSPP_CSC_10BIT,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> index 7e9c87088e17..d1b70cf72eef 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> @@ -594,9 +594,7 @@ static void _setup_layer_ops(struct dpu_hw_sspp *c,
->   		test_bit(DPU_SSPP_SMART_DMA_V2, &c->cap->features))
->   		c->ops.setup_multirect = dpu_hw_sspp_setup_multirect;
->   
-> -	if (test_bit(DPU_SSPP_SCALER_QSEED3, &features) ||
-> -			test_bit(DPU_SSPP_SCALER_QSEED3LITE, &features) ||
-> -			test_bit(DPU_SSPP_SCALER_QSEED4, &features))
-> +	if (test_bit(DPU_SSPP_SCALER_QSEED3, &features))
->   		c->ops.setup_scaler = _dpu_hw_sspp_setup_scaler3;
-
-Can we just do sblk->scaler_blk.version >= 0x3000 instead of this 
-merging? That way you can still drop those enums without inaccuracy.
-
->   
->   	if (test_bit(DPU_SSPP_CDP, &features))
-> @@ -629,10 +627,7 @@ int _dpu_hw_sspp_init_debugfs(struct dpu_hw_sspp *hw_pipe, struct dpu_kms *kms,
->   			cfg->len,
->   			kms);
->   
-> -	if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
-> -			cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
-> -			cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
-> -			cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
-> +	if (sblk->scaler_blk.len)
-
-This part seems fine.
-
->   		dpu_debugfs_create_regset32("scaler_blk", 0400,
->   				debugfs_root,
->   				sblk->scaler_blk.base + cfg->base,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 43135894263c..ba3ee4ba25b3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -438,8 +438,7 @@ static void _dpu_plane_setup_scaler3(struct dpu_hw_sspp *pipe_hw,
->   			scale_cfg->src_height[i] /= chroma_subsmpl_v;
->   		}
->   
-> -		if (pipe_hw->cap->features &
-> -			BIT(DPU_SSPP_SCALER_QSEED4)) {
-> +		if (pipe_hw->cap->sblk->scaler_blk.version >= 0x3000) {
-This is fine too.
->   			scale_cfg->preload_x[i] = DPU_QSEED4_DEFAULT_PRELOAD_H;
->   			scale_cfg->preload_y[i] = DPU_QSEED4_DEFAULT_PRELOAD_V;
->   		} else {
+Regards,
+Robert
+>
+> Konrad
