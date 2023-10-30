@@ -2,93 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F8C77DC0EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 21:04:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EB1C7DC125
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 21:24:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229456AbjJ3UEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 16:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44886 "EHLO
+        id S229743AbjJ3UYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 16:24:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjJ3UEL (ORCPT
+        with ESMTP id S229763AbjJ3UYf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 16:04:11 -0400
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48C62CC;
-        Mon, 30 Oct 2023 13:04:09 -0700 (PDT)
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5a7b91faf40so45861517b3.1;
-        Mon, 30 Oct 2023 13:04:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698696248; x=1699301048;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l7EFaII1QqA4dlCF/XdXqD8XAo5yEqLk3DjmlDXGLSA=;
-        b=W1CnuJ0ybQuEBVxxmC71nxz84JuITpjJzKBbgoSmS1UQj+GdXzruW0DFD5XsKXziBL
-         PqZgXLryw6BpixCzUHY/vSuIZFfbv3gtIA89+FIjR4e5TQGVM/HjpeU3uMb3z4PAh2CR
-         FEgTfap8vbDSheVsrapgQ5mv7BDWrBsMgzIn5OZPOOa5rHPSwA32coKcgiTKENTPjE8+
-         XJbCeCWaywB/UQUCikXPeIrfs0CgsEIVgX4PT9oPHS+Yanhot0XkCdOf8gG4GiUWjDcx
-         9SCuk78ZiWsHiL8fWO71LTjL/SC26is1DDX8aHvSWUX4D4OPgfmkwxgLgARX9P9UzO34
-         Nvow==
-X-Gm-Message-State: AOJu0Yzfi4KCFLkdQhlf7tMKjqoUY79lMSun5lyRNQsVVBKgCELTovTd
-        n45U3mAwnLnqe7MVlPMc1Q==
-X-Google-Smtp-Source: AGHT+IG+1LMHYbwiDtlkh/ITWj/85Pq+zk/em6iekZavfHE3PtV8B/dlLxt+UZmjy90VEIH+5aPDZQ==
-X-Received: by 2002:a05:690c:fd5:b0:5a7:fc84:4314 with SMTP id dg21-20020a05690c0fd500b005a7fc844314mr11939752ywb.40.1698696248383;
-        Mon, 30 Oct 2023 13:04:08 -0700 (PDT)
-Received: from herring.priv ([2607:fb91:e6c7:c3eb:a6fd:69b4:aba3:6929])
-        by smtp.gmail.com with ESMTPSA id u141-20020a817993000000b005a7f676f305sm81621ywc.106.2023.10.30.13.04.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Oct 2023 13:04:07 -0700 (PDT)
-Received: (nullmailer pid 2221667 invoked by uid 1000);
-        Mon, 30 Oct 2023 20:04:05 -0000
-Date:   Mon, 30 Oct 2023 15:04:05 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-input@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v6 01/36] dt-bindings: input: qcom,pm8921-keypad: convert
- to YAML format
-Message-ID: <20231030200405.GA2216664-robh@kernel.org>
-References: <20230928110309.1212221-1-dmitry.baryshkov@linaro.org>
- <20230928110309.1212221-2-dmitry.baryshkov@linaro.org>
+        Mon, 30 Oct 2023 16:24:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36EE7AB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 13:24:33 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39UJccM5001717;
+        Mon, 30 Oct 2023 20:24:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8/IXR+VYH9jBgS7uk0V1hyfyZIQcMPYL0rNFFCg0wpQ=;
+ b=ZJnim/B3SNYHc/Bxif5DMNbuIiH4cFJLQ0i6FMKP5Cj1PmqDzjAHm3n55HDXhiZwZ/vd
+ w8xwAFLwvV0JwQorC99jI5F5KPa0037CYN8nv7E8VOWFz/RwSmRiB71xR8A4eyH32gmQ
+ kLY1FcUQsbSMjyxCGgZOItsZGgGuHFBp1grR3DDC3I2BbWQGpHJx33146jI7LOBi4ovD
+ d6wEJ8rtLvS5vxk7CuOccqFvPqdIiuaIX0mTT9JQ65AdNxDb6vgRARNdBXo9gL7GdFJm
+ AoCz3eGBN1e+dWlE2aPWdgz/fEVnnU/JKXVbHDSaw+cIm2tfkjlvGuzcNP0r7SiHLEJ5 4A== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u2c4rs5ak-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Oct 2023 20:24:22 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39UKO3tI019400
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 30 Oct 2023 20:24:03 GMT
+Received: from [10.110.97.66] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 30 Oct
+ 2023 13:24:02 -0700
+Message-ID: <c2f7733b-bfa3-a8a6-6909-5da26cd513af@quicinc.com>
+Date:   Mon, 30 Oct 2023 13:24:01 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230928110309.1212221-2-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v6 09/10] drm/msm/dpu: merge DPU_SSPP_SCALER_QSEED3,
+ QSEED3LITE, QSEED4
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231006131450.2436688-1-dmitry.baryshkov@linaro.org>
+ <20231006131450.2436688-10-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231006131450.2436688-10-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: miEcOsHpLciahJEJP2ARMpXzwpZS6yTp
+X-Proofpoint-GUID: miEcOsHpLciahJEJP2ARMpXzwpZS6yTp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-30_13,2023-10-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ phishscore=0 adultscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999
+ malwarescore=0 mlxscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310300162
+X-Spam-Status: No, score=-6.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 28, 2023 at 02:02:34PM +0300, Dmitry Baryshkov wrote:
-> Convert the bindings for the keypad subdevices of Qualcomm PM8921 and
-> PM8058 PMICs from text to YAML format.
+
+
+On 10/6/2023 6:14 AM, Dmitry Baryshkov wrote:
+> Three different features, DPU_SSPP_SCALER_QSEED3, QSEED3LITE and QSEED4
+> are all related to different versions of the same HW scaling block.
+> Corresponding driver parts use scaler_blk.version to identify the
+> correct way to program the hardware. In order to simplify the driver
+> codepath, merge these three feature bits.
 > 
-> While doing the conversion also drop the linux,keypad-no-autorepeat
-> The property was never used by DT files. Both input and DT binding
-> maintainers consider that bindings should switch to assertive
-> (linux,autorepeat) instead of negating (no-autorepeat) property.
-> 
-> Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../bindings/input/qcom,pm8921-keypad.yaml    | 89 ++++++++++++++++++
->  .../bindings/input/qcom,pm8xxx-keypad.txt     | 90 -------------------
->  2 files changed, 89 insertions(+), 90 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/input/qcom,pm8921-keypad.yaml
->  delete mode 100644 Documentation/devicetree/bindings/input/qcom,pm8xxx-keypad.txt
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 4 ++--
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 6 +-----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    | 9 ++-------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 3 +--
+>   4 files changed, 6 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 32c396abf877..eb867c8123d7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -31,10 +31,10 @@
+>   	(VIG_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+>   
+>   #define VIG_SC7180_MASK \
+> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
+> +	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+>   
+>   #define VIG_SM6125_MASK \
+> -	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3LITE))
+> +	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
+>   
 
-As this is still warning in linux-next, applied.
+This merging is coming at a cost of inaccuracy. We are marking sc7180 
+and sm6125 as scaler_qseed3. But they are not. Let me know what you 
+think of below idea instead.
 
-Rob
+>   #define VIG_SC7180_MASK_SDMA \
+>   	(VIG_SC7180_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index fc5027b0123a..ba262b3f0bdc 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -51,9 +51,7 @@ enum {
+>   /**
+>    * SSPP sub-blocks/features
+>    * @DPU_SSPP_SCALER_QSEED2,  QSEED2 algorithm support
+> - * @DPU_SSPP_SCALER_QSEED3,  QSEED3 alogorithm support
+> - * @DPU_SSPP_SCALER_QSEED3LITE,  QSEED3 Lite alogorithm support
+> - * @DPU_SSPP_SCALER_QSEED4,  QSEED4 algorithm support
+> + * @DPU_SSPP_SCALER_QSEED3,  QSEED3 alogorithm support (also QSEED3LITE and QSEED4)
+>    * @DPU_SSPP_SCALER_RGB,     RGB Scaler, supported by RGB pipes
+>    * @DPU_SSPP_CSC,            Support of Color space converion
+>    * @DPU_SSPP_CSC_10BIT,      Support of 10-bit Color space conversion
+> @@ -72,8 +70,6 @@ enum {
+>   enum {
+>   	DPU_SSPP_SCALER_QSEED2 = 0x1,
+>   	DPU_SSPP_SCALER_QSEED3,
+> -	DPU_SSPP_SCALER_QSEED3LITE,
+> -	DPU_SSPP_SCALER_QSEED4,
+>   	DPU_SSPP_SCALER_RGB,
+>   	DPU_SSPP_CSC,
+>   	DPU_SSPP_CSC_10BIT,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> index 7e9c87088e17..d1b70cf72eef 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> @@ -594,9 +594,7 @@ static void _setup_layer_ops(struct dpu_hw_sspp *c,
+>   		test_bit(DPU_SSPP_SMART_DMA_V2, &c->cap->features))
+>   		c->ops.setup_multirect = dpu_hw_sspp_setup_multirect;
+>   
+> -	if (test_bit(DPU_SSPP_SCALER_QSEED3, &features) ||
+> -			test_bit(DPU_SSPP_SCALER_QSEED3LITE, &features) ||
+> -			test_bit(DPU_SSPP_SCALER_QSEED4, &features))
+> +	if (test_bit(DPU_SSPP_SCALER_QSEED3, &features))
+>   		c->ops.setup_scaler = _dpu_hw_sspp_setup_scaler3;
+
+Can we just do sblk->scaler_blk.version >= 0x3000 instead of this 
+merging? That way you can still drop those enums without inaccuracy.
+
+>   
+>   	if (test_bit(DPU_SSPP_CDP, &features))
+> @@ -629,10 +627,7 @@ int _dpu_hw_sspp_init_debugfs(struct dpu_hw_sspp *hw_pipe, struct dpu_kms *kms,
+>   			cfg->len,
+>   			kms);
+>   
+> -	if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
+> -			cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
+> -			cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
+> -			cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
+> +	if (sblk->scaler_blk.len)
+
+This part seems fine.
+
+>   		dpu_debugfs_create_regset32("scaler_blk", 0400,
+>   				debugfs_root,
+>   				sblk->scaler_blk.base + cfg->base,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 43135894263c..ba3ee4ba25b3 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -438,8 +438,7 @@ static void _dpu_plane_setup_scaler3(struct dpu_hw_sspp *pipe_hw,
+>   			scale_cfg->src_height[i] /= chroma_subsmpl_v;
+>   		}
+>   
+> -		if (pipe_hw->cap->features &
+> -			BIT(DPU_SSPP_SCALER_QSEED4)) {
+> +		if (pipe_hw->cap->sblk->scaler_blk.version >= 0x3000) {
+This is fine too.
+>   			scale_cfg->preload_x[i] = DPU_QSEED4_DEFAULT_PRELOAD_H;
+>   			scale_cfg->preload_y[i] = DPU_QSEED4_DEFAULT_PRELOAD_V;
+>   		} else {
