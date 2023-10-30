@@ -2,311 +2,339 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AFA47DB3DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 08:19:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BFE387DB4BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 09:05:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231641AbjJ3HTW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 03:19:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36196 "EHLO
+        id S231944AbjJ3IFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 04:05:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbjJ3HTV (ORCPT
+        with ESMTP id S231741AbjJ3IFZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 03:19:21 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2AE6BD;
-        Mon, 30 Oct 2023 00:19:18 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39U6dEql015840;
-        Mon, 30 Oct 2023 07:19:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vXc+weUqzzCt9tNSctgE/5jPnd/LdyFH3/tydVcgjb0=;
- b=Tq5F8sMceib/1+dIK0WhTOz4w30Gb1L47JnmTcbDXyhIznL5xCcRBmQTtC3cWP7eQIWR
- imA59R7VfeMzvTK9LGpL8bsqiqt1O/BT8rMhbZ3SOwdauQYWvIocY0CpjugT7cOmvKXD
- uwicA8cWx4aovUflnONGkambWMz9eQN35cG4azNwPrmbNVyKY2wPjiXbd1Gf2CfKiaFq
- wxSUAXCuH4RYe0r+tyrq+PIW4z4rSdhFtc2NS4gz8TL9WqR04/h/DqYXufvhdI/DVMSk
- A2TFK+ylT+Ft6jUGiaiYD6Puf2eNf7zmUO/inypZsiDRZLQNsAHWbROqXjYSj2hS/Z4x Zg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u0samb96m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Oct 2023 07:19:04 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39U7J3uP009255
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 30 Oct 2023 07:19:03 GMT
-Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 30 Oct
- 2023 00:18:59 -0700
-Message-ID: <f0d4df5b-9c84-03e0-dcd5-67c285527387@quicinc.com>
-Date:   Mon, 30 Oct 2023 12:48:56 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v2] bus: mhi: host: Add tracing support
+        Mon, 30 Oct 2023 04:05:25 -0400
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2057.outbound.protection.outlook.com [40.107.223.57])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FAFEA2;
+        Mon, 30 Oct 2023 01:05:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=n//XW07f7iUX4B1pLde5vFcH5M3Qvc3Zxlt0bT8GvpaHcVkyVRSFVO6bnFRlKVTNZus0p3bHxs67LHxoTFLhjtUO+nQUuHNCoXdxL585pcnbfX5hgxFy317zBTWuc6aRpyO8Y6PQEKC1DHIhiUqj4VnKrH/6yWgCAIeMER0DkX4y/F8+OXp1oSgwz73VJhRUCzT9SXtZ0PQVz2Jr1BrEXKaFI/7aCqB9KNNiXCxgqQhOvXFY8qUcYnYYCbgD4x0qCJCAgtGrX04l1bYK6UoyfR+S9/ssY8/ufTgPlEAAo30mVOM++y2bmBKuQCn1xt4K//QZJQ3qEACzKfoK7fnWGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wSvDIqxXLDWcgwOwQAFuTTdBKn8/lzzszP9EexDU66g=;
+ b=hvJkU4djWSUWATdzB5MbRvlNMRGlNzVBGCJgy6J8bbToOD232o1bX9TZjuUM75b2V4EGQChXCavbO99E7VeQ7zSxOMspU7vi2bzNwhZKWMPhyemct9TAdPEPxj8bfmgaR2e+gMULFZXpGF121beLUewaGkmRcrNGch+cBOHyEKb1EFB0//YEIgkI7ZLjh0N4XisfFtQdCN0LfpbI0dtscSGhQFCHCFY+9qj6JWBKHp6ijBnDuUYGclY944WKO7RhTLoW6SupAXrfuTrV2GwgJazg0j1BRNPN78CLekhwMWDDKOAS8UxItNby52bK/YIBf7c5sw7uxTQLF/8ttkRQbQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wSvDIqxXLDWcgwOwQAFuTTdBKn8/lzzszP9EexDU66g=;
+ b=ULzyE5SHxGclOOn3sySSOv+hE2ERHzzaMzsKfRxyi8xedJ8YZIqSdOio0jmka0NV6G6sTI4r6tdQX8zbYajxpxqtyl9FbGfxKuDoV4LQlcch7SIjhrRcn28HvBaa/tfX6623m1JhNMm0gzyyz3aYblALz3I1A0hG8X9q6LwDd4I=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by SJ2PR12MB8883.namprd12.prod.outlook.com (2603:10b6:a03:538::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6933.26; Mon, 30 Oct
+ 2023 08:05:16 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::ca80:8f1c:c11:ded3]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::ca80:8f1c:c11:ded3%6]) with mapi id 15.20.6933.026; Mon, 30 Oct 2023
+ 08:05:16 +0000
+Message-ID: <597b5bb3-ca75-4662-9904-12c4d8e9101a@amd.com>
+Date:   Mon, 30 Oct 2023 09:05:08 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6/7] drm/exec: Pass in initial # of objects
 Content-Language: en-US
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Steven Rostedt <rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-CC:     <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-trace-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_parass@quicinc.com>
-References: <20231013-ftrace_support-v2-1-6e893ce010b5@quicinc.com>
- <9216f694-cce0-2b95-df34-e5b60538644a@quicinc.com>
- <ab9367fa-53e7-36d1-cac5-a3c1e28df4b3@quicinc.com>
- <baf17652-e2e8-0083-459e-a6ea4372466b@quicinc.com>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <baf17652-e2e8-0083-459e-a6ea4372466b@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Ben Skeggs <bskeggs@redhat.com>,
+        Karol Herbst <kherbst@redhat.com>,
+        Lyude Paul <lyude@redhat.com>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Guchun Chen <guchun.chen@amd.com>,
+        Felix Kuehling <Felix.Kuehling@amd.com>,
+        Dong Chenchen <dongchenchen2@huawei.com>,
+        Philip Yang <Philip.Yang@amd.com>, Lang Yu <Lang.Yu@amd.com>,
+        Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Kefeng Wang <wangkefeng.wang@huawei.com>,
+        Suren Baghdasaryan <surenb@google.com>,
+        Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+        Jonathan Kim <jonathan.kim@amd.com>,
+        Jack Xiao <Jack.Xiao@amd.com>,
+        Shashank Sharma <shashank.sharma@amd.com>,
+        Mario Limonciello <mario.limonciello@amd.com>,
+        "open list:RADEON and AMDGPU DRM DRIVERS" 
+        <amd-gfx@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS" 
+        <nouveau@lists.freedesktop.org>
+References: <20231027165859.395638-1-robdclark@gmail.com>
+ <20231027165859.395638-7-robdclark@gmail.com>
+From:   =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+In-Reply-To: <20231027165859.395638-7-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: w9svGWX5iQkhbROXPT8ciIFEeDu7sw3I
-X-Proofpoint-ORIG-GUID: w9svGWX5iQkhbROXPT8ciIFEeDu7sw3I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-30_05,2023-10-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 bulkscore=0 spamscore=0 mlxscore=0 phishscore=0
- suspectscore=0 adultscore=0 clxscore=1011 mlxlogscore=999 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2310300053
-X-Spam-Status: No, score=-5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-ClientProxiedBy: FR4P281CA0398.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:cf::16) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|SJ2PR12MB8883:EE_
+X-MS-Office365-Filtering-Correlation-Id: b933451c-b439-4780-22eb-08dbd91ef3bf
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: G67RrMaQShjFy93iJ0zZqN7kM3J5eJJugpRgkiMyLumTMImdiJbaQ7SA+k+zboqc7uuFZ6B7hUBBNb3fkB+JF7fHNLHFN5RdYt3EfZRU2Q6POVFbwHUrxYtS07EE9wEAn0HNaKJXTBVq8uFttArGfWkYxFeAjIWFXH/VHM7h1ZMt+tWFBk5JBSj5X0pEGNuBEWzUrRJArjWIhDd8HdYHNb+Uzl6mlYjh85oyiFZ4xFhNRv1VVtUW83nFdP3FlDBMvTbbhgx6k4u20+AmC07B47YGg7qebNMnsQWfBB8JbpWiVCFuLDcZSOC+GYpcr2COV6I5a+5lioUVrcSrczss15wjnXg/EQLVyliVx5b2QjZPauyCzt3WDHvwzM9dy8Gsw/5tdoxoru+ZW/UjbmzzqHF11dRgg2squKLz3L7tDlNELbdjv7sQ4M25fp+1Zeep+3Gm6++JfpgbIwEbFy32/mg3limPzRBoYvlgaulaj0H8HuMJUzyyhOyI357EBb+7Kx41ikqtx9OV49YNZoHCm7gFqnNgQyRu1gkVB4JObQk6graOzzsJpq69CTCWxiY5DDTKpdjdbpfLH4HWWyrhaBsoiYFZArFXC4vswl2nTnBux6YoKOyHfsGq1Qpe3OGNgUQq41lyKnMr/8mEDyez7WFQU7UpliKzc1dqop4Nq40elmn5gfO6H/U0Wh8psvjm
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(136003)(396003)(39860400002)(346002)(366004)(230922051799003)(451199024)(186009)(1800799009)(64100799003)(6512007)(6666004)(6506007)(38100700002)(478600001)(31686004)(6486002)(36756003)(26005)(66946007)(2616005)(83380400001)(66476007)(66556008)(316002)(54906003)(66574015)(5660300002)(8936002)(7416002)(4326008)(8676002)(31696002)(86362001)(2906002)(41300700001)(45980500001)(43740500002)(309714004);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UnJObW5ROGJLMk5XOWFpZzVvNVh6Y0crcDBSWGZleERwQzJKckxtQzNLUVZr?=
+ =?utf-8?B?UzhQcm9RYmRmcm9zMzZhaVhQOElWTVJ0YlFtTHJyZ1ZwY2RmdWxLRHdzSUVs?=
+ =?utf-8?B?T0xyNFZJdXl4T2MzNGV3ajB3TGlzSnJxREJ6dU5JekpiaG9PSDFPOEhuYy9M?=
+ =?utf-8?B?TEpabFV2RmFjZVlDd2V5YTJLWTFoZUdVL2pRK3VIV3lmYml1SXJDbTRrTlF1?=
+ =?utf-8?B?TmZERVNGSm9uM0J2YThNREMrQjdpK1dmZWxPTkJjQUtOeGxYTlF3bVhOazR2?=
+ =?utf-8?B?UUtzdFkrWjFCQkthYzYydFYxM2tuNVRxQkVVNjZwa2gvSlRUYzZuaVA0UWV6?=
+ =?utf-8?B?c0tQUit6TnBCSTZyZVBsRWJHWEcvbW5IZkhHbG5Fb2tWN2NabkQ0Ynl6Ti85?=
+ =?utf-8?B?a2ZiUzR2S0JxVzM4c1NIZjI2eUdsRzRXUWhROFlSVVIveXNQblRESCtzcW5O?=
+ =?utf-8?B?YTV5NWh2Yi9VUXRGcXNaQUx1cjE2aWFXRGdZbFNSRkNrbTJPT0w3QTgvOFR1?=
+ =?utf-8?B?S3NXQlB4aHo4azIveXJDbVJOVWFmS2RNQzFuc2JGcFlMYnZIM2JwbHdhTnRZ?=
+ =?utf-8?B?ZnkwVEhDRmVrQWdjUWQvMU5lYmtLSlM2dS9FRTNHOGx1ZHprRVhnSHl0ZWJB?=
+ =?utf-8?B?SGNXamp5aSt1b3JXN2VnajB3cEFYckFIQ0hDb0dDRldPZnU3OUhvMzBYczJ0?=
+ =?utf-8?B?RHNyVUJHWkVYeTRuZURoWXJNdHJzZ0tBR3A5TXM1dWdRR1p4cGxKb09RN0JG?=
+ =?utf-8?B?OFpJWlZIdnE3ZVRhYUU5T2lzcm5CbURrMlhnUDA3TC80emVPVWl4RkF2TDF5?=
+ =?utf-8?B?Ym9tdG9KeE9JNGRzRlNTNkE1VUZtamxOelNkT2YyREsxa0ZzVzNaZWEvNHNI?=
+ =?utf-8?B?NGJ3NC95WW9BWWxHU0N1OTQ3QnBwVUhySmZtM1pQRXo2S25JSE9sbWtqYjFi?=
+ =?utf-8?B?dkR3bUM3ZFdUYnRZclRoRG9JVWJGd0I4M0dCblhHeWpsU0RpMHNZNXY2akJk?=
+ =?utf-8?B?cDJPb204NmZkcERvZmJXMkV5UGdKZ3VGc2VteTNUeldWdDAyQlhWZXlmaHh3?=
+ =?utf-8?B?QmppR3NOaGZjSGZnaFlOalMwb2s5TnEzL1M5WEM4VS9aVDBmWkpsOEd1TWJ5?=
+ =?utf-8?B?OGVvNCtpTHhFcXpobCt4VTVEdmpUbGxZVXI4UnNySTBVclV4UGwxQUZpcUF0?=
+ =?utf-8?B?ZGpLSzVlbndZZjdUSnBpUGNJeXhnam44dmFhQWY4Z0x4bWsvV3pmKzhENENH?=
+ =?utf-8?B?dEdESzRGQW01K01TL25CNkppK05pRVRueVlvOHhJckM4ZHVEZWdHWXJ5STZJ?=
+ =?utf-8?B?eGwwRWNLR0VMR0hDMFhTUU5YZzFxZitGNnF5OTNqbXRqQU9YbzZKdFZiVFN4?=
+ =?utf-8?B?Y1liUTNSY3lpSFZVM3BTRzNuNHJLN1lSSWpDY0p2eVRaZFora0tvU01RR2FD?=
+ =?utf-8?B?MDhrVXBXdEs3VlFoTWdjWDhJL0g5Z25mU0dMSndzMG05eTNPd05GTUhBSFpw?=
+ =?utf-8?B?U3kxZkt2WENZem8vd1ZJcmJrNXl3S1crTzgwdERaNndKT3lUby9vOFlIdFY4?=
+ =?utf-8?B?c3JrSnZ1cDV3d3pxUkFHYVl6ZXB5ZU5EdC9QTURQT3hWaFJ5M2RLYVR2MHNU?=
+ =?utf-8?B?ZWJQMGE1eElwSXliM243SUNHdnVpMW1vditFTEhkN2xnTFdlVGpvelZEdjVZ?=
+ =?utf-8?B?a3B1SFRqcm9tOHNsbDl3YTN4YkdxLzVNWDEvVXV4QWM5NXlBMDVTTFE1cXB1?=
+ =?utf-8?B?QVAwVmg3VHpKM2ZqajRUU0orc3A0QnZXRCtIZ0FsenJ2UFZFQzMreTdBTzNu?=
+ =?utf-8?B?bE1YTUo4VkVnN3NvSFJuVDB0SkY2enVFZ2Ntc1oySXdqNEtrSU5sRi92eTR6?=
+ =?utf-8?B?ZU9CT1Q3bWtZUkRZeGtsNmgvNlNFSXBHaGRYWElaLy91cW81RE1vazErUXRu?=
+ =?utf-8?B?bWdLZTJPeGFCL2RPOWdMWW5XMmJtVXgzU3U4dUFQQXVmMXNlRzVvc0VCV2FH?=
+ =?utf-8?B?bUkrWHVVOE5DSEVwRDNBcVZBWEZkN2NTTDAzOWwyMldTYTQzUU9ONDF4bnho?=
+ =?utf-8?B?b3BsTC92emJHZ0I1TXRORVBXRk8wWjc1UTFQNm8raUJMeEM0NVAvdE5HVVpo?=
+ =?utf-8?Q?4De8=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b933451c-b439-4780-22eb-08dbd91ef3bf
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Oct 2023 08:05:16.7248
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9hph7ThLNRKglZsQ024KZDOW0WZbnE+aAEokb1YXDFcGQmQ03rItG/gR7QZF36A8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8883
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Am 27.10.23 um 18:58 schrieb Rob Clark:
+> From: Rob Clark <robdclark@chromium.org>
+>
+> In cases where the # is known ahead of time, it is silly to do the table
+> resize dance.
 
-On 10/27/2023 8:59 PM, Jeffrey Hugo wrote:
-> On 10/23/2023 1:11 AM, Krishna Chaitanya Chundru wrote:
->>
->> On 10/20/2023 8:33 PM, Jeffrey Hugo wrote:
->>> On 10/13/2023 3:52 AM, Krishna chaitanya chundru wrote:
->>>> This change adds ftrace support for following functions which
->>>> helps in debugging the issues when there is Channel state & MHI
->>>> state change and also when we receive data and control events:
->>>> 1. mhi_intvec_threaded_handler
->>>> 2. mhi_process_data_event_ring
->>>> 3. mhi_process_ctrl_ev_ring
->>>> 4. mhi_gen_tre
->>>> 5. mhi_update_channel_state
->>>> 6. mhi_tryset_pm_state
->>>> 7. mhi_pm_st_worker
->>>>
->>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>> ---
->>>> Changes in v2:
->>>> - Passing the raw state into the trace event and using 
->>>> __print_symbolic() as suggested by bjorn.
->>>> - Change mhi_pm_st_worker to mhi_pm_st_transition as suggested by 
->>>> bjorn.
->>>> - Fixed the kernel test rebot issues.
->>>> - Link to v1: 
->>>> https://lore.kernel.org/r/20231005-ftrace_support-v1-1-23a2f394fa49@quicinc.com 
->>>>
->>>> ---
->>>>   MAINTAINERS                     |   1 +
->>>>   drivers/bus/mhi/host/init.c     |   3 +
->>>>   drivers/bus/mhi/host/internal.h |   1 +
->>>>   drivers/bus/mhi/host/main.c     |  32 +++--
->>>>   drivers/bus/mhi/host/pm.c       |   6 +-
->>>>   include/trace/events/mhi_host.h | 287 
->>>> ++++++++++++++++++++++++++++++++++++++++
->>>>   6 files changed, 317 insertions(+), 13 deletions(-)
->>>>
->>>> diff --git a/MAINTAINERS b/MAINTAINERS
->>>> index 35977b269d5e..4339c668a6ab 100644
->>>> --- a/MAINTAINERS
->>>> +++ b/MAINTAINERS
->>>> @@ -13862,6 +13862,7 @@ F:    Documentation/mhi/
->>>>   F:    drivers/bus/mhi/
->>>>   F:    drivers/pci/endpoint/functions/pci-epf-mhi.c
->>>>   F:    include/linux/mhi.h
->>>> +F:    include/trace/events/mhi_host.h
->>>>     MICROBLAZE ARCHITECTURE
->>>>   M:    Michal Simek <monstr@monstr.eu>
->>>> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
->>>> index f78aefd2d7a3..3afa90a204fd 100644
->>>> --- a/drivers/bus/mhi/host/init.c
->>>> +++ b/drivers/bus/mhi/host/init.c
->>>> @@ -20,6 +20,9 @@
->>>>   #include <linux/wait.h>
->>>>   #include "internal.h"
->>>>   +#define CREATE_TRACE_POINTS
->>>> +#include <trace/events/mhi_host.h>
->>>
->>> This feels redundant to me.  A few lines ago we included internal.h, 
->>> and internal.h includes trace/events/mhi_host.h
->>
->> As Steve mentioned, this is mandatory step for creating trace points 
->> & trace events.
->
-> I understand this creates the trace points, and that needs to be done 
-> in C code.  It dtill seems redundant because we are including the 
-> header twice (and I am aware trace has the special multi-header read 
-> functionality for this).
->
-> The duplicate include still feels weird, but I have not come up with a 
-> better way to structure this.
-We will use this way for now then, we will check in parallel if there 
-is  a way to avoid this and change it in the future.
->
->>
->>>
->>>> +
->>>>   static DEFINE_IDA(mhi_controller_ida);
->>>>     const char * const mhi_ee_str[MHI_EE_MAX] = {
->>>> diff --git a/drivers/bus/mhi/host/internal.h 
->>>> b/drivers/bus/mhi/host/internal.h
->>>> index 2e139e76de4c..a80a317a59a9 100644
->>>> --- a/drivers/bus/mhi/host/internal.h
->>>> +++ b/drivers/bus/mhi/host/internal.h
->>>> @@ -7,6 +7,7 @@
->>>>   #ifndef _MHI_INT_H
->>>>   #define _MHI_INT_H
->>>>   +#include <trace/events/mhi_host.h>
->>>>   #include "../common.h"
->>>>     extern struct bus_type mhi_bus_type;
->>>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
->>>> index dcf627b36e82..fcdb728ba49f 100644
->>>> --- a/drivers/bus/mhi/host/main.c
->>>> +++ b/drivers/bus/mhi/host/main.c
->>>> @@ -246,6 +246,11 @@ static void *mhi_to_virtual(struct mhi_ring 
->>>> *ring, dma_addr_t addr)
->>>>       return (addr - ring->iommu_base) + ring->base;
->>>>   }
->>>>   +dma_addr_t mhi_to_physical(struct mhi_ring *ring, void *addr)
->>>> +{
->>>> +    return (addr - ring->base) + ring->iommu_base;
->>>> +}
->>>
->>> This seems to be poorly named since we are using the iommu_base 
->>> which suggests we are converting to an IOVA.
->>>
->>> Why do we need this though?  This seems like it might be a security 
->>> issue, or at the very least, not preferred, and I'm struggling to 
->>> figure out what value this provides to you are I when looking at the 
->>> log.
->>>
->> I will rename the function to reflect it is converting to IOVA.
->>
->> We MHI TRE we write the IOVA address, to correlate between TRE events 
->> in the MHI ring and event we are processing  we want to log the IOVA 
->> address.
->>
->> As we are logging only IOVA address which is provided in the 
->> devicetree and not the original physical address we are not expecting 
->> any security issues here.
->>
->> Correct me if I was wrong.
->
-> The IOVA is not provided by DT, it is a runtime allocated value 
-> provided by the IOMMU, if present.  If not present, then it is a 
-> physical address.
->
-> Remember, x86 does not use devicetree.
->
-> While the IOVA (with an iommu) is not technically a physical address, 
-> but is treated as such by the device.  I can imagine an attacker doing 
-> bad things if they get a hold of the value.
-Sure we will remove it.
->
-> Still, you haven't indicated why this is useful.
+Ah, yes that was my initial implementation as well, but I ditched that 
+because nobody actually used it.
 
-The TRE ring elements has address in the IOVA format when we want to 
-correlate the address with the TRE elements in the dumps it will easier 
-with this way.
-
-Anyway we will not expose this as you suggested as it might expose 
-physical address in some platforms.
+One comment below.
 
 >
->>
->>>> +
->>>>   static void mhi_add_ring_element(struct mhi_controller *mhi_cntrl,
->>>>                    struct mhi_ring *ring)
->>>>   {
->>>> @@ -491,11 +496,9 @@ irqreturn_t mhi_intvec_threaded_handler(int 
->>>> irq_number, void *priv)
->>>>         state = mhi_get_mhi_state(mhi_cntrl);
->>>>       ee = mhi_get_exec_env(mhi_cntrl);
->>>> -    dev_dbg(dev, "local ee: %s state: %s device ee: %s state: %s\n",
->>>> -        TO_MHI_EXEC_STR(mhi_cntrl->ee),
->>>> -        mhi_state_str(mhi_cntrl->dev_state),
->>>> -        TO_MHI_EXEC_STR(ee), mhi_state_str(state));
->>>>   + trace_mhi_intvec_threaded_handler(mhi_cntrl->mhi_dev->name, 
->>>> mhi_cntrl->ee,
->>>> +                      mhi_cntrl->dev_state, ee, state);
->>>
->>> Why are we removing the debug message when adding this trace? The 
->>> commit text doesn't say.  (Looks like you do this several times, 
->>> assume this comment applies to all isntances)
->>
->> I will add this in the commit text in my next patch.
->>
->> Just a query is recommended to keep both debug message and trace 
->> events. If yes we will not remove the debug messages.
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c  |  2 +-
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |  4 ++--
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |  4 ++--
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |  4 ++--
+>   drivers/gpu/drm/drm_exec.c              | 15 ++++++++++++---
+>   drivers/gpu/drm/nouveau/nouveau_exec.c  |  2 +-
+>   drivers/gpu/drm/nouveau/nouveau_uvmm.c  |  2 +-
+>   include/drm/drm_exec.h                  |  2 +-
+>   8 files changed, 22 insertions(+), 13 deletions(-)
 >
-> I think it would be preferred to have one mechanism or the other, not 
-> both.  It seems like you are doing an incomplete conversion.
->
-For now we will remove the dbg message where we added the traces and 
-will mention that in the commit.
->>
->>>
->>>>       if (state == MHI_STATE_SYS_ERR) {
->>>>           dev_dbg(dev, "System error detected\n");
->>>>           pm_state = mhi_tryset_pm_state(mhi_cntrl,
->>>> @@ -832,6 +835,12 @@ int mhi_process_ctrl_ev_ring(struct 
->>>> mhi_controller *mhi_cntrl,
->>>>       while (dev_rp != local_rp) {
->>>>           enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
->>>>   + trace_mhi_process_ctrl_ev_ring(mhi_cntrl->mhi_dev->name,
->>>> +                           mhi_to_physical(ev_ring, local_rp),
->>>> +                           local_rp->ptr, local_rp->dword[0],
->>>> +                           local_rp->dword[1],
->>>> +                           MHI_TRE_GET_EV_STATE(local_rp));
->>>
->>> Why not just pass in the local_rp as a single parameter and have the 
->>> trace implementation decode it?  (Looks like you do this several 
->>> times, assume this comment applies to all isntances)
->>
->> MHI_TRE_GET_EV_STATE definition is present in 
->> drivers/bus/mhi/common.h which is common for both EP & MHI driver.
->>
->> If we keep this macro definition again in mhi_host.h it will be 
->> redundant one.
->
-> What is wrong with including the right header over in the trace to get 
-> the definition?  I didn't ask for it to be redefined.
->
-> If the struct definition for local_rp changes, it will probably break 
-> this, which will require changes to the definition and use of 
-> trace_mhi_process_ctrl_ev_ring().  If trace_mhi_process_ctrl_ev_ring() 
-> just takes the struct and decodes it, the decode logic just needs to 
-> be updated (in one place) when the struct definition changes.
->
->>
->> And we are only using this way only for this trace log. So we are 
->> using the macro to get the state information.
->
-> No, you do the same thing for trace_mhi_process_data_event_ring() and 
-> trace_mhi_gen_tre().
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+> index efdb1c48f431..d27ca8f61929 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+> @@ -65,7 +65,7 @@ static int amdgpu_cs_parser_init(struct amdgpu_cs_parser *p,
+>   	}
+>   
+>   	amdgpu_sync_create(&p->sync);
+> -	drm_exec_init(&p->exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
+> +	drm_exec_init(&p->exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
+>   	return 0;
+>   }
+>   
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+> index 720011019741..796fa6f1420b 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+> @@ -70,7 +70,7 @@ int amdgpu_map_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+>   	struct drm_exec exec;
+>   	int r;
+>   
+> -	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
+> +	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
+>   	drm_exec_until_all_locked(&exec) {
+>   		r = amdgpu_vm_lock_pd(vm, &exec, 0);
+>   		if (likely(!r))
+> @@ -110,7 +110,7 @@ int amdgpu_unmap_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
+>   	struct drm_exec exec;
+>   	int r;
+>   
+> -	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
+> +	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
+>   	drm_exec_until_all_locked(&exec) {
+>   		r = amdgpu_vm_lock_pd(vm, &exec, 0);
+>   		if (likely(!r))
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+> index ca4d2d430e28..16f1715148ad 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
+> @@ -203,7 +203,7 @@ static void amdgpu_gem_object_close(struct drm_gem_object *obj,
+>   	struct drm_exec exec;
+>   	long r;
+>   
+> -	drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES);
+> +	drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES, 0);
+>   	drm_exec_until_all_locked(&exec) {
+>   		r = drm_exec_prepare_obj(&exec, &bo->tbo.base, 1);
+>   		drm_exec_retry_on_contention(&exec);
+> @@ -739,7 +739,7 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, void *data,
+>   	}
+>   
+>   	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
+> -		      DRM_EXEC_IGNORE_DUPLICATES);
+> +		      DRM_EXEC_IGNORE_DUPLICATES, 0);
+>   	drm_exec_until_all_locked(&exec) {
+>   		if (gobj) {
+>   			r = drm_exec_lock_obj(&exec, gobj);
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+> index b6015157763a..3c351941701e 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+> @@ -1105,7 +1105,7 @@ int amdgpu_mes_ctx_map_meta_data(struct amdgpu_device *adev,
+>   
+>   	amdgpu_sync_create(&sync);
+>   
+> -	drm_exec_init(&exec, 0);
+> +	drm_exec_init(&exec, 0, 0);
+>   	drm_exec_until_all_locked(&exec) {
+>   		r = drm_exec_lock_obj(&exec,
+>   				      &ctx_data->meta_data_obj->tbo.base);
+> @@ -1176,7 +1176,7 @@ int amdgpu_mes_ctx_unmap_meta_data(struct amdgpu_device *adev,
+>   	struct drm_exec exec;
+>   	long r;
+>   
+> -	drm_exec_init(&exec, 0);
+> +	drm_exec_init(&exec, 0, 0);
+>   	drm_exec_until_all_locked(&exec) {
+>   		r = drm_exec_lock_obj(&exec,
+>   				      &ctx_data->meta_data_obj->tbo.base);
+> diff --git a/drivers/gpu/drm/drm_exec.c b/drivers/gpu/drm/drm_exec.c
+> index 5d2809de4517..27d11c20d148 100644
+> --- a/drivers/gpu/drm/drm_exec.c
+> +++ b/drivers/gpu/drm/drm_exec.c
+> @@ -69,16 +69,25 @@ static void drm_exec_unlock_all(struct drm_exec *exec)
+>    * drm_exec_init - initialize a drm_exec object
+>    * @exec: the drm_exec object to initialize
+>    * @flags: controls locking behavior, see DRM_EXEC_* defines
+> + * @nr: the initial # of objects
+>    *
+>    * Initialize the object and make sure that we can track locked objects.
+> + *
+> + * If nr is non-zero then it is used as the initial objects table size.
+> + * In either case, the table will grow (be re-allocated) on demand.
+>    */
+> -void drm_exec_init(struct drm_exec *exec, uint32_t flags)
+> +void drm_exec_init(struct drm_exec *exec, uint32_t flags, unsigned nr)
+>   {
+> +	size_t sz = PAGE_SIZE;
+> +
+> +	if (nr)
+> +		sz = (size_t)nr * sizeof(void *);
+> +
+>   	exec->flags = flags;
+> -	exec->objects = kmalloc(PAGE_SIZE, GFP_KERNEL);
+> +	exec->objects = kmalloc(sz, GFP_KERNEL);
 
-Mani, can we move common.h to include  folder from the drivers folder so 
-that we can include that file in the mhi_host.h for trace events?
+Please use k*v*malloc() here since we can't predict how large that will be.
 
-- Krishna Chaitanya.
+With that fixed the patch is Reviewed-by: Christian König 
+<christian.koenig@amd.com>.
+
+Regards,
+Christian.
+
+>   
+>   	/* If allocation here fails, just delay that till the first use */
+> -	exec->max_objects = exec->objects ? PAGE_SIZE / sizeof(void *) : 0;
+> +	exec->max_objects = exec->objects ? sz / sizeof(void *) : 0;
+>   	exec->num_objects = 0;
+>   	exec->contended = DRM_EXEC_DUMMY;
+>   	exec->prelocked = NULL;
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_exec.c b/drivers/gpu/drm/nouveau/nouveau_exec.c
+> index 19024ce21fbb..f5930cc0b3fb 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_exec.c
+> +++ b/drivers/gpu/drm/nouveau/nouveau_exec.c
+> @@ -103,7 +103,7 @@ nouveau_exec_job_submit(struct nouveau_job *job)
+>   
+>   	nouveau_uvmm_lock(uvmm);
+>   	drm_exec_init(exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
+> -			    DRM_EXEC_IGNORE_DUPLICATES);
+> +			    DRM_EXEC_IGNORE_DUPLICATES, 0);
+>   	drm_exec_until_all_locked(exec) {
+>   		struct drm_gpuva *va;
+>   
+> diff --git a/drivers/gpu/drm/nouveau/nouveau_uvmm.c b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+> index aae780e4a4aa..3a9331a1c830 100644
+> --- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+> +++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
+> @@ -1288,7 +1288,7 @@ nouveau_uvmm_bind_job_submit(struct nouveau_job *job)
+>   	}
+>   
+>   	drm_exec_init(exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
+> -			    DRM_EXEC_IGNORE_DUPLICATES);
+> +			    DRM_EXEC_IGNORE_DUPLICATES, 0);
+>   	drm_exec_until_all_locked(exec) {
+>   		list_for_each_op(op, &bind_job->ops) {
+>   			struct drm_gpuva_op *va_op;
+> diff --git a/include/drm/drm_exec.h b/include/drm/drm_exec.h
+> index b5bf0b6da791..f1a66c048721 100644
+> --- a/include/drm/drm_exec.h
+> +++ b/include/drm/drm_exec.h
+> @@ -135,7 +135,7 @@ static inline bool drm_exec_is_contended(struct drm_exec *exec)
+>   	return !!exec->contended;
+>   }
+>   
+> -void drm_exec_init(struct drm_exec *exec, uint32_t flags);
+> +void drm_exec_init(struct drm_exec *exec, uint32_t flags, unsigned nr);
+>   void drm_exec_fini(struct drm_exec *exec);
+>   bool drm_exec_cleanup(struct drm_exec *exec);
+>   int drm_exec_lock_obj(struct drm_exec *exec, struct drm_gem_object *obj);
 
