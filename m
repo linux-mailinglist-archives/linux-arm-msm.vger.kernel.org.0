@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F15877DBEEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 18:30:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D01AA7DBEF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 18:31:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbjJ3Ra5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 13:30:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53700 "EHLO
+        id S233016AbjJ3RbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 13:31:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233016AbjJ3Ra4 (ORCPT
+        with ESMTP id S233857AbjJ3RbQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 13:30:56 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BB2FB4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 10:30:53 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9c41e95efcbso673222666b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 10:30:53 -0700 (PDT)
+        Mon, 30 Oct 2023 13:31:16 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C088E8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 10:31:12 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9c603e235d1so766174066b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 10:31:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698687051; x=1699291851; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698687071; x=1699291871; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eOLlsgufeisiZVpQvZj7sbmDdJI9qhZ5kNSYnqpmQvg=;
-        b=a6Wded+SERomePuH3jdYCq95yqzYvteFZC2sVFZqBbG2gHX9JgeBR03xWAFuDnscC8
-         uFH8q+JWqAytDPBg040L1htlLqOugX4N7GlLBOS9g1xMFiBx9ukq1uEuFLWuKnrgW8/r
-         Yc24UZj7iOQGxSeUjmuTTM57lFB/JPlfNUtDl0LHT9grPdm/A/iZYFTkHb5GoxaIQSYT
-         cgWXb4Aty4VNQdXWzj4bNU3FkQVpHdEuKUw0ZL+qqSuQ3FLjjgc7lADh85B5Y3gKJJ6g
-         nsekcM66LYJIinH+lURzj3rc8X9ueTkWfXoJ90d45oAKkugMPX0OK8i8ltXuQ7afgoIq
-         1j+g==
+        bh=4yh87nqX34rgMeMuTYK+i8Tf0KhI2kiawic9y2ljRvY=;
+        b=pYFzpk5rjWiQwuuYOpaLUzlQL5QzNybiKei8LCQmitlEKWB8I3YjeQhESiC9n2CIca
+         /qXZ5dO2fvyol/8CwehK2dSN5TLf3I9fMIKYcpjwCaYh6KTIIuKY7Xyuxuq884kp5mou
+         oiJhdi/h9Wq8hhgKz7CLta+t2e4wbEjX0r5/zjuoO98cKtwhvX8zOtQH+KwzdXPSt1I/
+         pVXDLY2gOjL3EgH4RFwMZUkzAxuKaDMWRj2J2+MSqsTxkPTGo6sJRUKwuPE68bJpuFbU
+         DQzCv4+NKu57+xyllzbgBWCthMwt+yX21zgEmnanF82n68AnWPWb7mDcgIFM00fOC7dl
+         mu4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698687051; x=1699291851;
+        d=1e100.net; s=20230601; t=1698687071; x=1699291871;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eOLlsgufeisiZVpQvZj7sbmDdJI9qhZ5kNSYnqpmQvg=;
-        b=AWzQ3Ace0aWZ3Lz74mNSDaceAKFnjUz/E7rOr41uix4P32GIBbbUzurQ5GgkUXKYmY
-         AjAAJOGPDJJXojNr72pKIcESGsfCa+a7mckFsqIcTd+ky+f9zoM8lmBe6WQySe4fL+x1
-         cvwxsX1pRsl2YLNk4lh2/lrkJurpTf94Q6W5BOifVOuBKCfiCn1k0ZPB/E8sJ0kt7Ptm
-         GhyDf1tqRTdy402ssrlWiuCczP3+tmMxwfQXoV1xNwVt/BHtcQvoItW8fj/FVAdX2gkJ
-         14OnWbpgaWjKH/dFlJkWYzdRft4F2IZPiN2hktxebLVmYO5yMaIXr5dbDIVeu+Jqd0Jq
-         3ZRQ==
-X-Gm-Message-State: AOJu0Yy7O+zDpFz8MnC5sJ8Hbi5Px83Gt7NxRUHi25pux84aQ5Sb2jIg
-        8dCltrECHokni9G37l3SBufH7Q==
-X-Google-Smtp-Source: AGHT+IEgUgrHI5ei8jzZ+40Q4nhuYT5gXLpM0CGH6h1fmxIifi1v5whMADvTq6/9CDb2Zs+FhEnoeQ==
-X-Received: by 2002:a17:906:344c:b0:9d2:fe04:b19a with SMTP id d12-20020a170906344c00b009d2fe04b19amr2993917ejb.27.1698687051642;
-        Mon, 30 Oct 2023 10:30:51 -0700 (PDT)
+        bh=4yh87nqX34rgMeMuTYK+i8Tf0KhI2kiawic9y2ljRvY=;
+        b=cONrlP/AjiT/c9XzI8gE4Gp6slU3mQPk2S0Gh0LhykSvGtjlcZD52Z6aUkE+dzprRv
+         0L0iLbzvyXWW43Gic/DnXoWrT1Tkwwaq+aeSK0cm1+TRKb8LR+GDYKuMObjco5KxfpkC
+         aOCLb/HLR41uG07V5flvujoF25gRVIXrTjNocTnfEn0MaVJBN7eV1xLFrJbL30HQVMGf
+         pR6rKPgEqthtIFDBffFaf3k4mOAf0BgPwEDE5AXA1Kt/WOjy3JbE1oQ1CX5innLvC0fw
+         OVvm8nMFCyjQX+n6GZoV+LtuLZgLsZ5y9d+7p2CQE469Fr5JePKjDEIe+lahGovw4E20
+         +I5g==
+X-Gm-Message-State: AOJu0YwkHBmYBgvfoeomyYxsjGkz4zxatvGiwXxkgfgwmHPaEoZqBGdQ
+        BZp01m1PJ2l1luEOYPpSS0N1rg==
+X-Google-Smtp-Source: AGHT+IHf5igWzsoOq6zZvKhqiU5niEfNIVzY6869ZoswHxJn1FyvDQs/c6tYRY3sTmyIKMVIsi8GPw==
+X-Received: by 2002:a17:907:26c4:b0:9b2:82d2:a2db with SMTP id bp4-20020a17090726c400b009b282d2a2dbmr8100772ejc.28.1698687070965;
+        Mon, 30 Oct 2023 10:31:10 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id rn20-20020a170906d93400b009930308425csm6295467ejb.31.2023.10.30.10.30.50
+        by smtp.gmail.com with ESMTPSA id rn20-20020a170906d93400b009930308425csm6295467ejb.31.2023.10.30.10.31.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 10:30:51 -0700 (PDT)
-Message-ID: <81039823-3a0e-4ae9-993c-463aefe1e2a2@linaro.org>
-Date:   Mon, 30 Oct 2023 18:30:50 +0100
+        Mon, 30 Oct 2023 10:31:10 -0700 (PDT)
+Message-ID: <4d4a6a1c-2f2e-4f01-b2ef-acf8050d12cb@linaro.org>
+Date:   Mon, 30 Oct 2023 18:31:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] dt-bindings: ufs: qcom-ufs: document the SM8650 UFS
- Controller
+Subject: Re: [PATCH v2] dt-bindings: usb: qcom,dwc3: document the SM8560
+ SuperSpeed DWC3 USB controller
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231030-topic-sm8650-upstream-bindings-ufs-v3-1-a96364463fd5@linaro.org>
+References: <20231030-topic-sm8650-upstream-bindings-dwc3-v2-1-60c0824fb835@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -116,7 +114,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231030-topic-sm8650-upstream-bindings-ufs-v3-1-a96364463fd5@linaro.org>
+In-Reply-To: <20231030-topic-sm8650-upstream-bindings-dwc3-v2-1-60c0824fb835@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -129,19 +127,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/10/2023 10:43, Neil Armstrong wrote:
-> Document the UFS Controller on the SM8650 Platform.
+On 30/10/2023 10:41, Neil Armstrong wrote:
+> Document the SuperSpeed DWC3 USB controller on the SM8650 Platform.
 > 
-> Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
-> For convenience, a regularly refreshed linux-next based git tree containing
-> all the SM8650 related work is available at:
-> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
-> ---
-> Changes in v3:
-
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
