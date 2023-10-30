@@ -2,316 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADF5D7DBD4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 17:01:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6362F7DBE9F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 18:17:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231845AbjJ3QB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 12:01:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49176 "EHLO
+        id S232864AbjJ3RRA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 13:17:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233631AbjJ3QB1 (ORCPT
+        with ESMTP id S229883AbjJ3RQ7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 12:01:27 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC9EC5;
-        Mon, 30 Oct 2023 09:01:24 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c59a4dd14cso65276891fa.2;
-        Mon, 30 Oct 2023 09:01:24 -0700 (PDT)
+        Mon, 30 Oct 2023 13:16:59 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDAC19F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 10:16:56 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40806e4106dso28219095e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 10:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698681682; x=1699286482; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i171CPazjUp4MNk6P3+jEOtLNJ0at3DXnR3w7sZGchw=;
-        b=DvZuUHKXVDaMqg7toYJ0EluLcTJKSuQz621I8mXbAgVna49fv/7gwOmwnYaJg3CKTi
-         NKxGFTw2cevIi97uBR19T3mWnY5ftd4n/Cw5rqAs+n5atQ64jCILNW1TZEMQAC1d2ng6
-         cnGdth3PmC/B4pirxAhb4I4MqRkFRF+/d/jniVtwH1j7ydWIF207rb24l/5bUrPOhT0D
-         viCzBO2U6cUG+ldye8eIU2yg+Jg3iR3qaawjbLTmJMEYcc2tb4uD8WD6fzEhRopzIftP
-         JveHtGFD3aPn6jFIi9pQVYQ856lU5wZ/emtGDEduIdE9WX9CiEtdU7/MUcopsiKZQikT
-         aUuA==
+        d=linaro.org; s=google; t=1698686215; x=1699291015; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pqs2Yts2N/SHo3ul34/NdF6CuG70VroDUS/ZJZABsCM=;
+        b=e5p8AlKtmTzpgVpBi21ppyG29NthOtXVdt9JeyxlZGk+nS19YpInqMIHcGCR+o7T9k
+         +gD0jJi2IiIUphfjLEIBcmpoQ6zHdYmqGBJNq/f2SUvH4Y7Jyr0/Q8iiexGf2AU2IvPn
+         TisYieuM9pYyrwrYJIduKK1vy3Za9bIBrB/Rq7xNiF/RgRb9WFRYueUBipnGAmpzLEV8
+         UsV+uyHV4lHy21PONnpFKlqAvaRxfcxyHCsbdQvJOux4UcfQ209Kj7q0+QI//4+m2Fgl
+         KSWnW8/Q/XRldZeP6leYKyjDizYMe6sJCYY15secIshfCVhCpXE1Mw1jVS1oeZviKoEA
+         AEcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698681682; x=1699286482;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i171CPazjUp4MNk6P3+jEOtLNJ0at3DXnR3w7sZGchw=;
-        b=Ma7z6EyZo7SeY0+yMFJPRbTs5Y1y6o3VGGUKnLTb8bUDjnf9jIPkFmdXmSbXkhZJcM
-         te/XGb/0bGXQNdgeCv1PHFE2/xjdxBzpXLBMM3th67Y8EmIaguQyBkV5aSte1WYYGO5L
-         y60B7hsiH54kJ7nzGzMvgyRgVhWL60CjDJUoRtVAQZaJRpxTkCuD7ZmrTUilrSacWLNs
-         CrhO6NJ1Ts4F+tZpAVNyV7Dcba3+v2237J/R15iB4CgnATow9Y/KaLPDO8HSeuZeVN1C
-         /Bwi3Mi6DjDc/PxUPqMidTlqCbzGwz9Wh+RLDM/0K/m67pRZbsan+ApyIMy3RmeFv+7e
-         BKaA==
-X-Gm-Message-State: AOJu0YzaVL98TDirIVeW5L+6kY1hisX8EEU8H8zcMkvacxEVu8e0EJ9H
-        xfxm62YcZh+wZEKpLBuKXJA=
-X-Google-Smtp-Source: AGHT+IHT8OuTnl2cKAtI40MBwtuDih7dKb+Dx2mHXuQnFTSJGDBs9FJNtZRtvliIHMaC70JvAy0A1g==
-X-Received: by 2002:a2e:5056:0:b0:2c5:1640:3c97 with SMTP id v22-20020a2e5056000000b002c516403c97mr8600044ljd.22.1698681682133;
-        Mon, 30 Oct 2023 09:01:22 -0700 (PDT)
-Received: from [10.254.108.81] (munvpn.amd.com. [165.204.72.6])
-        by smtp.gmail.com with ESMTPSA id t3-20020a1c7703000000b004042dbb8925sm12906628wmi.38.2023.10.30.09.01.20
+        d=1e100.net; s=20230601; t=1698686215; x=1699291015;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pqs2Yts2N/SHo3ul34/NdF6CuG70VroDUS/ZJZABsCM=;
+        b=MhigWOcvwbBkuiwefK2M5K/x28Q6YyA4eRaFsxQtPYNcnhNBuxYYiEcGaDiJdSDNGx
+         W8oxdG3eu4fiDsAeBRJzavSc7CuvoV5GIGctha8evR0LcBv3nSJ/UwkdFhLZijFKBfRv
+         1Oy514N+fhzhJmeRsl4+Du5wxoyXHQ27iV0hmLt1eJvfFjO5JTh4q9qYxRP2CCb35whK
+         sRFYeZJYLoib+0fagTLanPQUQYfTwKB9jyNEQtoiZY/uVXnrp4I43ckvkGA7wV/gMGHn
+         d/avWO4yuaKVP8VG9iOOJUyBBLs+uanzDWqPkyFFlPl1U+czuYN/+c6Pard5BDplxNev
+         u7Wg==
+X-Gm-Message-State: AOJu0YzD0GmSD/vkZgIemkz5asnpB/u+/CWpjHsuShtVI/0aVUHuTaeS
+        5MAhAAqmaGAScbkX7MYqCR/m+A==
+X-Google-Smtp-Source: AGHT+IGykD/sa9z4jkVSRgnQ6OnP1DUfwzO730uc6QtMJ4Oo8R0VI7LMVNA77HLa9LAg4/nR3tSv0g==
+X-Received: by 2002:a05:600c:45cd:b0:407:4701:f9e with SMTP id s13-20020a05600c45cd00b0040747010f9emr279390wmo.17.1698686215285;
+        Mon, 30 Oct 2023 10:16:55 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id y9-20020a7bcd89000000b00407efbc4361sm13095334wmj.9.2023.10.30.10.16.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 09:01:21 -0700 (PDT)
-Message-ID: <836a6052-ad23-4a5f-9eb5-a7b5361b568c@gmail.com>
-Date:   Mon, 30 Oct 2023 17:01:16 +0100
+        Mon, 30 Oct 2023 10:16:54 -0700 (PDT)
+Message-ID: <a2d4ea02-4b27-4d17-8219-36a6fe0d1d82@linaro.org>
+Date:   Mon, 30 Oct 2023 18:16:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] drm/exec: Pass in initial # of objects
+Subject: Re: [PATCH v2 1/3] dt-bindings: remoteproc: qcom,sm8550-pas: document
+ the SM8650 PAS
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231030-topic-sm8650-upstream-remoteproc-v2-0-609ee572e0a2@linaro.org>
+ <20231030-topic-sm8650-upstream-remoteproc-v2-1-609ee572e0a2@linaro.org>
 Content-Language: en-US
-To:     Rob Clark <robdclark@gmail.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     Kefeng Wang <wangkefeng.wang@huawei.com>,
-        Karol Herbst <kherbst@redhat.com>,
-        "open list:DRM DRIVER FOR NVIDIA GEFORCE/QUADRO GPUS" 
-        <nouveau@lists.freedesktop.org>, dri-devel@lists.freedesktop.org,
-        Mario Limonciello <mario.limonciello@amd.com>,
-        Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-        David Airlie <airlied@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Guchun Chen <guchun.chen@amd.com>,
-        Shashank Sharma <shashank.sharma@amd.com>,
-        "open list:RADEON and AMDGPU DRM DRIVERS" 
-        <amd-gfx@lists.freedesktop.org>,
-        Dong Chenchen <dongchenchen2@huawei.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Philip Yang <Philip.Yang@amd.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-        linux-arm-msm@vger.kernel.org,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Suren Baghdasaryan <surenb@google.com>,
-        Jack Xiao <Jack.Xiao@amd.com>,
-        Jonathan Kim <jonathan.kim@amd.com>,
-        freedreno@lists.freedesktop.org,
-        Felix Kuehling <Felix.Kuehling@amd.com>,
-        "Pan, Xinhui" <Xinhui.Pan@amd.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Lang Yu <Lang.Yu@amd.com>
-References: <20231027165859.395638-1-robdclark@gmail.com>
- <20231027165859.395638-7-robdclark@gmail.com>
- <597b5bb3-ca75-4662-9904-12c4d8e9101a@amd.com>
- <CAF6AEGu1Z1k0bKrMZw4-RJSC-nbO=tuDOjQiPmi61_m_1nRCgA@mail.gmail.com>
-From:   =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
-In-Reply-To: <CAF6AEGu1Z1k0bKrMZw4-RJSC-nbO=tuDOjQiPmi61_m_1nRCgA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231030-topic-sm8650-upstream-remoteproc-v2-1-609ee572e0a2@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 30.10.23 um 14:38 schrieb Rob Clark:
-> On Mon, Oct 30, 2023 at 1:05 AM Christian König
-> <christian.koenig@amd.com> wrote:
->> Am 27.10.23 um 18:58 schrieb Rob Clark:
->>> From: Rob Clark <robdclark@chromium.org>
->>>
->>> In cases where the # is known ahead of time, it is silly to do the table
->>> resize dance.
->> Ah, yes that was my initial implementation as well, but I ditched that
->> because nobody actually used it.
->>
->> One comment below.
->>
->>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>> ---
->>>    drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c  |  2 +-
->>>    drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |  4 ++--
->>>    drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c |  4 ++--
->>>    drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |  4 ++--
->>>    drivers/gpu/drm/drm_exec.c              | 15 ++++++++++++---
->>>    drivers/gpu/drm/nouveau/nouveau_exec.c  |  2 +-
->>>    drivers/gpu/drm/nouveau/nouveau_uvmm.c  |  2 +-
->>>    include/drm/drm_exec.h                  |  2 +-
->>>    8 files changed, 22 insertions(+), 13 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
->>> index efdb1c48f431..d27ca8f61929 100644
->>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
->>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
->>> @@ -65,7 +65,7 @@ static int amdgpu_cs_parser_init(struct amdgpu_cs_parser *p,
->>>        }
->>>
->>>        amdgpu_sync_create(&p->sync);
->>> -     drm_exec_init(&p->exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
->>> +     drm_exec_init(&p->exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
->>>        return 0;
->>>    }
->>>
->>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
->>> index 720011019741..796fa6f1420b 100644
->>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
->>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
->>> @@ -70,7 +70,7 @@ int amdgpu_map_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
->>>        struct drm_exec exec;
->>>        int r;
->>>
->>> -     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
->>> +     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
->>>        drm_exec_until_all_locked(&exec) {
->>>                r = amdgpu_vm_lock_pd(vm, &exec, 0);
->>>                if (likely(!r))
->>> @@ -110,7 +110,7 @@ int amdgpu_unmap_static_csa(struct amdgpu_device *adev, struct amdgpu_vm *vm,
->>>        struct drm_exec exec;
->>>        int r;
->>>
->>> -     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
->>> +     drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT, 0);
->>>        drm_exec_until_all_locked(&exec) {
->>>                r = amdgpu_vm_lock_pd(vm, &exec, 0);
->>>                if (likely(!r))
->>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
->>> index ca4d2d430e28..16f1715148ad 100644
->>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
->>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gem.c
->>> @@ -203,7 +203,7 @@ static void amdgpu_gem_object_close(struct drm_gem_object *obj,
->>>        struct drm_exec exec;
->>>        long r;
->>>
->>> -     drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES);
->>> +     drm_exec_init(&exec, DRM_EXEC_IGNORE_DUPLICATES, 0);
->>>        drm_exec_until_all_locked(&exec) {
->>>                r = drm_exec_prepare_obj(&exec, &bo->tbo.base, 1);
->>>                drm_exec_retry_on_contention(&exec);
->>> @@ -739,7 +739,7 @@ int amdgpu_gem_va_ioctl(struct drm_device *dev, void *data,
->>>        }
->>>
->>>        drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
->>> -                   DRM_EXEC_IGNORE_DUPLICATES);
->>> +                   DRM_EXEC_IGNORE_DUPLICATES, 0);
->>>        drm_exec_until_all_locked(&exec) {
->>>                if (gobj) {
->>>                        r = drm_exec_lock_obj(&exec, gobj);
->>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
->>> index b6015157763a..3c351941701e 100644
->>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
->>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
->>> @@ -1105,7 +1105,7 @@ int amdgpu_mes_ctx_map_meta_data(struct amdgpu_device *adev,
->>>
->>>        amdgpu_sync_create(&sync);
->>>
->>> -     drm_exec_init(&exec, 0);
->>> +     drm_exec_init(&exec, 0, 0);
->>>        drm_exec_until_all_locked(&exec) {
->>>                r = drm_exec_lock_obj(&exec,
->>>                                      &ctx_data->meta_data_obj->tbo.base);
->>> @@ -1176,7 +1176,7 @@ int amdgpu_mes_ctx_unmap_meta_data(struct amdgpu_device *adev,
->>>        struct drm_exec exec;
->>>        long r;
->>>
->>> -     drm_exec_init(&exec, 0);
->>> +     drm_exec_init(&exec, 0, 0);
->>>        drm_exec_until_all_locked(&exec) {
->>>                r = drm_exec_lock_obj(&exec,
->>>                                      &ctx_data->meta_data_obj->tbo.base);
->>> diff --git a/drivers/gpu/drm/drm_exec.c b/drivers/gpu/drm/drm_exec.c
->>> index 5d2809de4517..27d11c20d148 100644
->>> --- a/drivers/gpu/drm/drm_exec.c
->>> +++ b/drivers/gpu/drm/drm_exec.c
->>> @@ -69,16 +69,25 @@ static void drm_exec_unlock_all(struct drm_exec *exec)
->>>     * drm_exec_init - initialize a drm_exec object
->>>     * @exec: the drm_exec object to initialize
->>>     * @flags: controls locking behavior, see DRM_EXEC_* defines
->>> + * @nr: the initial # of objects
->>>     *
->>>     * Initialize the object and make sure that we can track locked objects.
->>> + *
->>> + * If nr is non-zero then it is used as the initial objects table size.
->>> + * In either case, the table will grow (be re-allocated) on demand.
->>>     */
->>> -void drm_exec_init(struct drm_exec *exec, uint32_t flags)
->>> +void drm_exec_init(struct drm_exec *exec, uint32_t flags, unsigned nr)
->>>    {
->>> +     size_t sz = PAGE_SIZE;
->>> +
->>> +     if (nr)
->>> +             sz = (size_t)nr * sizeof(void *);
->>> +
->>>        exec->flags = flags;
->>> -     exec->objects = kmalloc(PAGE_SIZE, GFP_KERNEL);
->>> +     exec->objects = kmalloc(sz, GFP_KERNEL);
->> Please use k*v*malloc() here since we can't predict how large that will be.
-> or __GFP_NOWARN?  If userspace (or kasan) is cheeky and asks for ~0
-> objects, we should probably just fail?
+On 30/10/2023 11:03, Neil Armstrong wrote:
+> Document the DSP Peripheral Authentication Service on the SM8650 Platform.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  .../bindings/remoteproc/qcom,sm8550-pas.yaml       | 44 +++++++++++++++++++++-
+>  1 file changed, 43 insertions(+), 1 deletion(-)'
 
-Oh, good point! If this value is controlled by userspace we must be much 
-more careful.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Instead of __GFP_NOWARN or any other workaround we should use 
-kvmalloc_array() here.
-
-Maybe turn the code upside down, in other words something like this here:
-
-if (!nr)
-     nr = PAGE_SIZE / sizeof(void *);
-
-exec->objects = kvmalloc_array(nr, sizeof(void *), GFP_KERNEL);
-exec->max_objects = exec->objects ? nr : 0;
-
-
-Regards,
-Christian.
-
->
-> BR,
-> -R
->
->> With that fixed the patch is Reviewed-by: Christian König
->> <christian.koenig@amd.com>.
->>
->> Regards,
->> Christian.
->>
->>>        /* If allocation here fails, just delay that till the first use */
->>> -     exec->max_objects = exec->objects ? PAGE_SIZE / sizeof(void *) : 0;
->>> +     exec->max_objects = exec->objects ? sz / sizeof(void *) : 0;
->>>        exec->num_objects = 0;
->>>        exec->contended = DRM_EXEC_DUMMY;
->>>        exec->prelocked = NULL;
->>> diff --git a/drivers/gpu/drm/nouveau/nouveau_exec.c b/drivers/gpu/drm/nouveau/nouveau_exec.c
->>> index 19024ce21fbb..f5930cc0b3fb 100644
->>> --- a/drivers/gpu/drm/nouveau/nouveau_exec.c
->>> +++ b/drivers/gpu/drm/nouveau/nouveau_exec.c
->>> @@ -103,7 +103,7 @@ nouveau_exec_job_submit(struct nouveau_job *job)
->>>
->>>        nouveau_uvmm_lock(uvmm);
->>>        drm_exec_init(exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
->>> -                         DRM_EXEC_IGNORE_DUPLICATES);
->>> +                         DRM_EXEC_IGNORE_DUPLICATES, 0);
->>>        drm_exec_until_all_locked(exec) {
->>>                struct drm_gpuva *va;
->>>
->>> diff --git a/drivers/gpu/drm/nouveau/nouveau_uvmm.c b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
->>> index aae780e4a4aa..3a9331a1c830 100644
->>> --- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
->>> +++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
->>> @@ -1288,7 +1288,7 @@ nouveau_uvmm_bind_job_submit(struct nouveau_job *job)
->>>        }
->>>
->>>        drm_exec_init(exec, DRM_EXEC_INTERRUPTIBLE_WAIT |
->>> -                         DRM_EXEC_IGNORE_DUPLICATES);
->>> +                         DRM_EXEC_IGNORE_DUPLICATES, 0);
->>>        drm_exec_until_all_locked(exec) {
->>>                list_for_each_op(op, &bind_job->ops) {
->>>                        struct drm_gpuva_op *va_op;
->>> diff --git a/include/drm/drm_exec.h b/include/drm/drm_exec.h
->>> index b5bf0b6da791..f1a66c048721 100644
->>> --- a/include/drm/drm_exec.h
->>> +++ b/include/drm/drm_exec.h
->>> @@ -135,7 +135,7 @@ static inline bool drm_exec_is_contended(struct drm_exec *exec)
->>>        return !!exec->contended;
->>>    }
->>>
->>> -void drm_exec_init(struct drm_exec *exec, uint32_t flags);
->>> +void drm_exec_init(struct drm_exec *exec, uint32_t flags, unsigned nr);
->>>    void drm_exec_fini(struct drm_exec *exec);
->>>    bool drm_exec_cleanup(struct drm_exec *exec);
->>>    int drm_exec_lock_obj(struct drm_exec *exec, struct drm_gem_object *obj);
+Best regards,
+Krzysztof
 
