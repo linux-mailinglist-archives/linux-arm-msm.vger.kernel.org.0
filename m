@@ -2,95 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E01D7E0DDB
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 05:58:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0575A7DB59B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 10:02:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232749AbjKDE6D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Nov 2023 00:58:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40650 "EHLO
+        id S232296AbjJ3JCc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 05:02:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233666AbjKDE6D (ORCPT
+        with ESMTP id S230477AbjJ3JCb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Nov 2023 00:58:03 -0400
-X-Greylist: delayed 4263 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 03 Nov 2023 21:58:00 PDT
-Received: from mail.profitpathwaygo.com (mail.profitpathwaygo.com [141.94.21.238])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFFAB123
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 21:58:00 -0700 (PDT)
-Received: by mail.profitpathwaygo.com (Postfix, from userid 1002)
-        id 8FCA653EF6; Mon, 30 Oct 2023 08:31:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=profitpathwaygo.com;
-        s=mail; t=1698654990;
-        bh=qp3Ofokho6Ql+WtI8ZPVilyHYhskXL7fod7u9CWs8W4=;
-        h=Date:From:To:Subject:From;
-        b=Jv9hDZJ6p2AVKV9QJB87tdkSwugGtETFR7fcxTFKcHEw7Z0bvI/g6ZLVwYP1HskoH
-         p301jfvFr/xTIB8BOdZCHszlOn6rjwlT0bLGmEwJH8aUSxsc+xjAXGNRJa2jtgqDrB
-         vlsZ+t/rRBGQHxgRLn9zpsic3c/uajIzPFo3dTbakrvhQNVGwH4QGLQSpfy+7U1PdD
-         tehENanl7EbU7VlnmLyRI2DEG+xKjZo6EPdFFljk49s0Qg/F/Qgfbyl2nqXUDs1vD7
-         fY2otsxnbw/1+w+qqB+3DmZViR+1A+aPSzBDriTG8Ea6tznc7uPdrgGx0tReBfaDfN
-         ggmqsbPvOSrjg==
-Received: by mail.profitpathwaygo.com for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 08:30:28 GMT
-Message-ID: <20231030074500-0.1.2s.155dr.0.37jefffo59@profitpathwaygo.com>
-Date:   Mon, 30 Oct 2023 08:30:28 GMT
-From:   "Adam Charachuta" <adam.charachuta@profitpathwaygo.com>
-To:     <linux-arm-msm@vger.kernel.org>
-Subject: =?UTF-8?Q?S=C5=82owa_kluczowe_do_wypozycjonowania_?=
-X-Mailer: mail.profitpathwaygo.com
+        Mon, 30 Oct 2023 05:02:31 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3140B4;
+        Mon, 30 Oct 2023 02:02:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1698656548; x=1730192548;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=i8w9x7dxltFrnpCuSRUPcPt133FkZLGMti/aX/HuhEE=;
+  b=WqbSJhz3R3Jxap63rcMr+CHjmZZADHuKPFujS0W4Aqwxar1ApZSQzJjf
+   8MC5f0SeYmz5/TCmQ6asAWlaHZAFY9wSJkE5oVQHEWNZM0OXzHkp8qrz+
+   /vvICiC1UmkGIDNeGlDrIEScZNaDJ0JlumNVbkstkd66nL3TLMlBfKu2I
+   PmdJkh/cFshwfEdspml7qLEDp3rcrIrnENucfva1m9LeGV6oS8kvkr0p6
+   lhPRRyEvsTtrhLLriOja/Y3T7LCdtYaGMlgSu14prM/W+ynlim78SBoVf
+   qtXIevgrBbgLY1IaNPCdEBmH6mV5VNXd4hfmUejYsAy1v6KzD+QG4di85
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10878"; a="367383147"
+X-IronPort-AV: E=Sophos;i="6.03,263,1694761200"; 
+   d="scan'208";a="367383147"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Oct 2023 02:02:28 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10878"; a="795210656"
+X-IronPort-AV: E=Sophos;i="6.03,263,1694761200"; 
+   d="scan'208";a="795210656"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by orsmga001.jf.intel.com with SMTP; 30 Oct 2023 02:02:24 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 30 Oct 2023 11:02:23 +0200
+Date:   Mon, 30 Oct 2023 11:02:23 +0200
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] usb: typec: fsa4480: Add support to swap SBU
+ orientation
+Message-ID: <ZT9xH7Rz1+oScLKW@kuha.fi.intel.com>
+References: <20231020-fsa4480-swap-v2-0-9a7f9bb59873@fairphone.com>
+ <20231020-fsa4480-swap-v2-2-9a7f9bb59873@fairphone.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=5.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_SBL_CSS,
-        RCVD_IN_VALIDITY_RPBL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED,URIBL_CSS_A,URIBL_DBL_SPAM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was
-        *      blocked.  See
-        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
-        *      for more information.
-        *      [URIs: profitpathwaygo.com]
-        *  2.5 URIBL_DBL_SPAM Contains a spam URL listed in the Spamhaus DBL
-        *      blocklist
-        *      [URIs: profitpathwaygo.com]
-        *  1.3 RCVD_IN_VALIDITY_RPBL RBL: Relay in Validity RPBL,
-        *      https://senderscore.org/blocklistlookup/
-        *      [141.94.21.238 listed in bl.score.senderscore.com]
-        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
-        *      [141.94.21.238 listed in zen.spamhaus.org]
-        *  0.1 URIBL_CSS_A Contains URL's A record listed in the Spamhaus CSS
-        *      blocklist
-        *      [URIs: profitpathwaygo.com]
-        * -1.9 BAYES_00 BODY: Bayes spam probability is 0 to 1%
-        *      [score: 0.0021]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-X-Spam-Level: *****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231020-fsa4480-swap-v2-2-9a7f9bb59873@fairphone.com>
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dzie=C5=84 dobry,
+On Fri, Oct 20, 2023 at 11:33:19AM +0200, Luca Weiss wrote:
+> On some hardware designs the AUX+/- lanes are connected reversed to
+> SBU1/2 compared to the expected design by FSA4480.
+> 
+> Made more complicated, the otherwise compatible Orient-Chip OCP96011
+> expects the lanes to be connected reversed compared to FSA4480.
+> 
+> * FSA4480 block diagram shows AUX+ connected to SBU2 and AUX- to SBU1.
+> * OCP96011 block diagram shows AUX+ connected to SBU1 and AUX- to SBU2.
+> 
+> So if OCP96011 is used as drop-in for FSA4480 then the orientation
+> handling in the driver needs to be reversed to match the expectation of
+> the OCP96011 hardware.
+> 
+> Support parsing the data-lanes parameter in the endpoint node to swap
+> this in the driver.
+> 
+> The parse_data_lanes_mapping function is mostly taken from nb7vpq904m.c.
+> 
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 
-zapozna=C5=82em si=C4=99 z Pa=C5=84stwa ofert=C4=85 i z przyjemno=C5=9Bci=
-=C4=85 przyznaj=C4=99, =C5=BCe przyci=C4=85ga uwag=C4=99 i zach=C4=99ca d=
-o dalszych rozm=C3=B3w.=20
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-Pomy=C5=9Bla=C5=82em, =C5=BCe mo=C5=BCe m=C3=B3g=C5=82bym mie=C4=87 sw=C3=
-=B3j wk=C5=82ad w Pa=C5=84stwa rozw=C3=B3j i pom=C3=B3c dotrze=C4=87 z t=C4=
-=85 ofert=C4=85 do wi=C4=99kszego grona odbiorc=C3=B3w. Pozycjonuj=C4=99 =
-strony www, dzi=C4=99ki czemu generuj=C4=85 =C5=9Bwietny ruch w sieci.
+> ---
+>  drivers/usb/typec/mux/fsa4480.c | 71 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 71 insertions(+)
+> 
+> diff --git a/drivers/usb/typec/mux/fsa4480.c b/drivers/usb/typec/mux/fsa4480.c
+> index e0ee1f621abb..cb7cdf90cb0a 100644
+> --- a/drivers/usb/typec/mux/fsa4480.c
+> +++ b/drivers/usb/typec/mux/fsa4480.c
+> @@ -60,6 +60,7 @@ struct fsa4480 {
+>  	unsigned int svid;
+>  
+>  	u8 cur_enable;
+> +	bool swap_sbu_lanes;
+>  };
+>  
+>  static const struct regmap_config fsa4480_regmap_config = {
+> @@ -76,6 +77,9 @@ static int fsa4480_set(struct fsa4480 *fsa)
+>  	u8 enable = FSA4480_ENABLE_DEVICE;
+>  	u8 sel = 0;
+>  
+> +	if (fsa->swap_sbu_lanes)
+> +		reverse = !reverse;
+> +
+>  	/* USB Mode */
+>  	if (fsa->mode < TYPEC_STATE_MODAL ||
+>  	    (!fsa->svid && (fsa->mode == TYPEC_MODE_USB2 ||
+> @@ -179,12 +183,75 @@ static int fsa4480_mux_set(struct typec_mux_dev *mux, struct typec_mux_state *st
+>  	return ret;
+>  }
+>  
+> +enum {
+> +	NORMAL_LANE_MAPPING,
+> +	INVERT_LANE_MAPPING,
+> +};
+> +
+> +#define DATA_LANES_COUNT	2
+> +
+> +static const int supported_data_lane_mapping[][DATA_LANES_COUNT] = {
+> +	[NORMAL_LANE_MAPPING] = { 0, 1 },
+> +	[INVERT_LANE_MAPPING] = { 1, 0 },
+> +};
+> +
+> +static int fsa4480_parse_data_lanes_mapping(struct fsa4480 *fsa)
+> +{
+> +	struct fwnode_handle *ep;
+> +	u32 data_lanes[DATA_LANES_COUNT];
+> +	int ret, i, j;
+> +
+> +	ep = fwnode_graph_get_next_endpoint(dev_fwnode(&fsa->client->dev), NULL);
+> +	if (!ep)
+> +		return 0;
+> +
+> +	ret = fwnode_property_read_u32_array(ep, "data-lanes", data_lanes, DATA_LANES_COUNT);
+> +	if (ret == -EINVAL)
+> +		/* Property isn't here, consider default mapping */
+> +		goto out_done;
+> +	if (ret) {
+> +		dev_err(&fsa->client->dev, "invalid data-lanes property: %d\n", ret);
+> +		goto out_error;
+> +	}
+> +
+> +	for (i = 0; i < ARRAY_SIZE(supported_data_lane_mapping); i++) {
+> +		for (j = 0; j < DATA_LANES_COUNT; j++) {
+> +			if (data_lanes[j] != supported_data_lane_mapping[i][j])
+> +				break;
+> +		}
+> +
+> +		if (j == DATA_LANES_COUNT)
+> +			break;
+> +	}
+> +
+> +	switch (i) {
+> +	case NORMAL_LANE_MAPPING:
+> +		break;
+> +	case INVERT_LANE_MAPPING:
+> +		fsa->swap_sbu_lanes = true;
+> +		break;
+> +	default:
+> +		dev_err(&fsa->client->dev, "invalid data-lanes mapping\n");
+> +		ret = -EINVAL;
+> +		goto out_error;
+> +	}
+> +
+> +out_done:
+> +	ret = 0;
+> +
+> +out_error:
+> +	fwnode_handle_put(ep);
+> +
+> +	return ret;
+> +}
+> +
+>  static int fsa4480_probe(struct i2c_client *client)
+>  {
+>  	struct device *dev = &client->dev;
+>  	struct typec_switch_desc sw_desc = { };
+>  	struct typec_mux_desc mux_desc = { };
+>  	struct fsa4480 *fsa;
+> +	int ret;
+>  
+>  	fsa = devm_kzalloc(dev, sizeof(*fsa), GFP_KERNEL);
+>  	if (!fsa)
+> @@ -193,6 +260,10 @@ static int fsa4480_probe(struct i2c_client *client)
+>  	fsa->client = client;
+>  	mutex_init(&fsa->lock);
+>  
+> +	ret = fsa4480_parse_data_lanes_mapping(fsa);
+> +	if (ret)
+> +		return ret;
+> +
+>  	fsa->regmap = devm_regmap_init_i2c(client, &fsa4480_regmap_config);
+>  	if (IS_ERR(fsa->regmap))
+>  		return dev_err_probe(dev, PTR_ERR(fsa->regmap), "failed to initialize regmap\n");
+> 
+> -- 
+> 2.42.0
 
-Mo=C5=BCemy porozmawia=C4=87 w najbli=C5=BCszym czasie?
-
-
-Pozdrawiam serdecznie
-Adam Charachuta
+-- 
+heikki
