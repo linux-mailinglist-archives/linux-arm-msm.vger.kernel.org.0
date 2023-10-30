@@ -2,60 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D9F67DC063
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 20:26:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 431377DC06F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Oct 2023 20:27:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbjJ3T01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Oct 2023 15:26:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54950 "EHLO
+        id S231307AbjJ3T1F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Oct 2023 15:27:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbjJ3T00 (ORCPT
+        with ESMTP id S231222AbjJ3T1D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Oct 2023 15:26:26 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DE24CC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 12:26:24 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-507c8316abcso6887679e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 12:26:23 -0700 (PDT)
+        Mon, 30 Oct 2023 15:27:03 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188AFE1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 12:26:59 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-507bd19eac8so7021687e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 12:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698693982; x=1699298782; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698694017; x=1699298817; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9psATwBWmW+HWlHMJ1Br1I84UHK88mVqrK11rMxknlU=;
-        b=vaowyk1jUUILDnh5wqC8Lrxh9dhcCcXv8c8H4Ipg1V6fkx2BgV8tKP/HcVRutxUJBP
-         zlK62ospRuBxM5n5QbZWAmfOsE+PMR4lUEWJpL67tYkmf01NulxsKDj2xOC5ZYsA2hw9
-         OvUiKA6PLMkkweATURC938wCMBbzcCsW28+tvrk45AulTEqQec04vB/iCdkYRRKBoB3y
-         D/Oc7o4DOMGKSHwuroNFjhPvawrg2xws0UBfn3l/pi1dN8Z25HRzanxewnbCvZGcszlW
-         frCCE9GB1iMbdvLIucUBozurxytUDRl3ZxIG6zMMnSZIKzVdzz6/GILC+nS/vHqeEnOn
-         EcSA==
+        bh=vhu9zeLbvU2DseeR7qeZ4fP8Dx7nMwSPHUsFVgOkD5c=;
+        b=rBB3jKNFusHM5mL4/+yen84c9O2TPFLwDjktoxSlRwrxjToQgVRSk4lDSeDFGxPh3S
+         z1ek1RrvXZEhNFjsqPQm5nZ6CmLoElxvJihcclbvTMOaeL2sp5nc0ReXJGp4EIt6XjM/
+         FrVexc1GqTrVfT8Ea+Aw1FLIfBiaMcAvXidwcJkK3vQTcNyatgh6g2yY4dt+i9MfpjkT
+         Kvuxg4GzG2CVwMOapB46xsn2szQrR9DcpuutWvKHhpKkMKAGBXGYe33jhFQ21nshPFbE
+         NQQUvHwB8MedXMFZkrspMn4J45mtq7gQQR9pHLPYK7H/BJ9ypGdT3DwUaBcfDodhuN0u
+         v/NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698693982; x=1699298782;
+        d=1e100.net; s=20230601; t=1698694017; x=1699298817;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9psATwBWmW+HWlHMJ1Br1I84UHK88mVqrK11rMxknlU=;
-        b=fPpYtyywchpbgIxCE+bn2B3HVV1LpPvZmAE3c8p3w0pRl/mxXIcm9Y3FLDmUqHMSbi
-         OXM547mMcV4XHbK4U7YY0KnRMI42/N5yupyLBGFTn4FQsfKCUVUIchRViT1yaipXjJVt
-         9tDk9brO96oevEJyLiv4VTyUsdtxUitHp7+2STYSxrIW9s21lWNvvgOF+7G7VkCH5cz2
-         BSPg1qMTZ7DBai9HYwMOUznUWa+82sQ/DlQ+To1M9z+Jd/I9D6HpfYzUaEVR/0lj7Z2E
-         SRsYhUaJNMFrCDC2YsNQogmBIvzwfk2bB6RzHcFQHWIDP6OzprWEFXw/haAtOhBTIgDC
-         NEoA==
-X-Gm-Message-State: AOJu0Yw4uqKbArb/lJqIoiAdZ68i9WPAPh/EXzXbJIBjAcW30oNFiOP7
-        +W94YPT2UDlor/ClCfCPNer8sw==
-X-Google-Smtp-Source: AGHT+IEbYncTmSYYVIfiXMAcINNFJCE5io5Ni7UoIn2eLrzuUPU3AX3KChBsGX1GweruuxkJGn7Xkw==
-X-Received: by 2002:a19:ca42:0:b0:4fb:caed:95c3 with SMTP id h2-20020a19ca42000000b004fbcaed95c3mr6559306lfj.53.1698693982191;
-        Mon, 30 Oct 2023 12:26:22 -0700 (PDT)
+        bh=vhu9zeLbvU2DseeR7qeZ4fP8Dx7nMwSPHUsFVgOkD5c=;
+        b=Pt5IwCZFsdFXeOUfKJVV7IwZ5FURHMHrZwNRJnI6KNzOFeZMTydnO42TxbSFrzIqI8
+         4haGAtrDujEszZ5CIfZI/L4LKjsWcYewQegZBOmq1pWSM+95gscF8Gm/GmDPHKBjiBri
+         ZzpLMXKWJPTwATpo+SJKBooj6HrYE3Pt6fdXWIZzHAALYaDMSH35OHb1Cp/f24GrXVh2
+         HDxFfuX1h+mxVA5ndrw2Xf0nI8K7OR7e4JFsm5/kOGwveQNNFSjoi71/4pmd3d3FS0k7
+         rfzMBjeQ4DEV6Z8AvTP4J/1MeqBPOWBZFkPUfOsDv7qMvHNR9XJUD7gnxjJ8wxdFLw6I
+         XbHw==
+X-Gm-Message-State: AOJu0YxOsyF7eMcq5hR/ldRPeM2swRoVmnO1xMLc/R7FQnwPgZcWxyyL
+        PF1jrgh0UWRQCzN8wyV6gIhfxQ==
+X-Google-Smtp-Source: AGHT+IE+6piiOQh0wVaer65NGxl0+llczzkNaCZdzOvQHiQ4BSUGQXrP6vZCqJ9lraWI/+07uNKRCQ==
+X-Received: by 2002:a05:6512:128b:b0:508:126a:751e with SMTP id u11-20020a056512128b00b00508126a751emr10988897lfs.36.1698694017155;
+        Mon, 30 Oct 2023 12:26:57 -0700 (PDT)
 Received: from [192.168.133.160] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id a20-20020a056512201400b00507a0098421sm1538610lfb.181.2023.10.30.12.26.20
+        by smtp.gmail.com with ESMTPSA id a20-20020a056512201400b00507a0098421sm1538610lfb.181.2023.10.30.12.26.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 12:26:21 -0700 (PDT)
-Message-ID: <4dfe793e-4d70-427e-bce5-8191c6a42cf9@linaro.org>
-Date:   Mon, 30 Oct 2023 20:26:20 +0100
+        Mon, 30 Oct 2023 12:26:56 -0700 (PDT)
+Message-ID: <12ea48bd-5022-4820-815a-89ef23ec9385@linaro.org>
+Date:   Mon, 30 Oct 2023 20:26:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable
- various remoteprocs
+Subject: Re: [PATCH 9/9] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable WiFi
 Content-Language: en-US
 To:     Luca Weiss <luca.weiss@fairphone.com>,
         Andy Gross <agross@kernel.org>,
@@ -73,7 +72,7 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
- <20231027-sc7280-remoteprocs-v1-8-05ce95d9315a@fairphone.com>
+ <20231027-sc7280-remoteprocs-v1-9-05ce95d9315a@fairphone.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,11 +109,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231027-sc7280-remoteprocs-v1-8-05ce95d9315a@fairphone.com>
+In-Reply-To: <20231027-sc7280-remoteprocs-v1-9-05ce95d9315a@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -124,38 +123,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 27.10.2023 16:20, Luca Weiss wrote:
-> Enable the ADSP, CDSP, MPSS and WPSS that are found on the SoC.
+> Now that the WPSS remoteproc is enabled, enable wifi so we can use it.
 > 
 > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
+>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> index cc092735ce17..d65eef30091b 100644
+> index d65eef30091b..e7e20f73cbe6 100644
 > --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
 > +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> @@ -490,6 +490,26 @@ &qupv3_id_1 {
+> @@ -713,3 +713,7 @@ &venus {
+>  	firmware-name = "qcom/qcm6490/fairphone5/venus.mbn";
 >  	status = "okay";
 >  };
->  
-> +&remoteproc_adsp {
-> +	firmware-name = "qcom/qcm6490/fairphone5/adsp.mdt";
-> +	status = "okay";
-> +};
 > +
-> +&remoteproc_cdsp {
-> +	firmware-name = "qcom/qcm6490/fairphone5/cdsp.mdt";
+> +&wifi {
 > +	status = "okay";
-> +};
-> +
-> +&remoteproc_mpss {
-> +	firmware-name = "qcom/qcm6490/fairphone5/modem.mdt";
-> +	status = "okay";
-> +};
-> +
-> +&remoteproc_wpss {
-> +	firmware-name = "qcom/qcm6490/fairphone5/wpss.mdt";
-mbn?
+qcom,ath11k-calibration-variant?
 
 Konrad
