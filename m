@@ -2,108 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 011FD7DC744
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 08:27:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36AE17DC797
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 08:51:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343598AbjJaH1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 03:27:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47160 "EHLO
+        id S236654AbjJaHvJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 03:51:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343673AbjJaH0z (ORCPT
+        with ESMTP id S236663AbjJaHvI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 03:26:55 -0400
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26E37102;
-        Tue, 31 Oct 2023 00:26:53 -0700 (PDT)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id B088940533;
-        Tue, 31 Oct 2023 12:26:50 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1698737211; bh=WJxb7W6rboneHUIuZlHpAeADGZktYloPmkRPQUiY27s=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=rYSirMVWXHH2P3Ra+u+X0pTHw8ZjSJE3OAncpHPKKMCRwXyuosvBfw4dDLs/YfFaL
-         dJkvEUryIlvyw1ymKfAGubp7kMs1u3sPzGIzpea5sk9TmH2l1G73V9PjmEE+r8kXIW
-         W/jjbWWK9XRWnlhznlHpPlpcLsGGMATLNXvcJvkKD+WwGenpdlJQhmT/RbyWNMaVaO
-         c+URFL7hFZv5/X++fsgqAw7IfHpNvwzxB3Dikh2d9KrpTxWZZB/cujew3VZW4gg2uF
-         e9tcxa1jJTaK8/mMyZI7jtB0YJEP3Kk4NWK4dfrEIqlNRR5xdFIpn7/C1eHIaBiWay
-         AX1bZjWr0s+8w==
+        Tue, 31 Oct 2023 03:51:08 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20D83DE;
+        Tue, 31 Oct 2023 00:51:02 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39V6GtCo028034;
+        Tue, 31 Oct 2023 07:50:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=K6chD/shS+2nuxb3muBTcToPEHVuKnDqJk9aUOjQttg=;
+ b=LdbzxT5B7TqIuCEglJ5U+wWpSKlqjIHo0riAMzonKdv2nGwn6TXv6FOxAn+4LSBWiBBB
+ hotSKSrh51ATMLUoyWa7AUusJ/1sttjlQwqSU28mqVxTPGaI85dPKF0kZr+mAlW2tFUF
+ jwAE+NXhoyxYGZPE69uvN/ROO+TyFu74KG+GhQn+byiIBIS/Jj5h8i+Lb42f4bA7BtkB
+ JiWD1dpUJoqquNF/y5hYoS46Wz2TsODpwZzWUN6G0KMZUj8soMvqgINEt3JCapQLCgvk
+ 9eovsNJbhr0gEOZ2FfHCBLINybMA7QeZtNxIcOR7axGvyzV18VgCMk8Vsi/0kGivpKx7 lA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u29fetnxx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 07:50:36 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39V7oZuR013205
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 07:50:35 GMT
+Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Tue, 31 Oct 2023 00:50:27 -0700
+From:   Tengfei Fan <quic_tengfan@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>
+CC:     <geert+renesas@glider.be>, <arnd@arndb.de>,
+        <neil.armstrong@linaro.org>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <m.szyprowski@samsung.com>,
+        <u-kumar1@ti.com>, <peng.fan@nxp.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <quic_shashim@quicinc.com>, <quic_kaushalk@quicinc.com>,
+        <quic_tdas@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <kernel@quicinc.com>,
+        Tengfei Fan <quic_tengfan@quicinc.com>
+Subject: [PATCH v6 0/6] soc: qcom: Add uart console support for SM4450
+Date:   Tue, 31 Oct 2023 15:49:58 +0800
+Message-ID: <20231031075004.3850-1-quic_tengfan@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Date:   Tue, 31 Oct 2023 12:26:50 +0500
-From:   Nikita Travkin <nikita@trvn.ru>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: acer-aspire1: Add sound
-In-Reply-To: <db624c01-a48c-4a8f-b9ea-548b25aa3091@linaro.org>
-References: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
- <20231027-aspire1-sound-v1-3-5ff3cf8b5701@trvn.ru>
- <c2ad06fd-805f-44b9-bf4d-806ef20f272a@linaro.org>
- <db624c01-a48c-4a8f-b9ea-548b25aa3091@linaro.org>
-Message-ID: <8b13ec027d960a09aee9434055a12e15@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,DOS_RCVD_IP_TWICE_B,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_PASS,SPF_PASS autolearn=no
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _9hEAuE4e9-GFilZ6tRnVsBR31lbOvl5
+X-Proofpoint-ORIG-GUID: _9hEAuE4e9-GFilZ6tRnVsBR31lbOvl5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-30_13,2023-10-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 impostorscore=0 spamscore=0 suspectscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1011 bulkscore=0 mlxlogscore=582 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310310060
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Konrad Dybcio писал(а) 31.10.2023 02:51:
-> On 30.10.2023 22:50, Konrad Dybcio wrote:
->> On 27.10.2023 16:42, Nikita Travkin wrote:
->>> This laptop has two i2s speakers; an i2s audio codec for the headset
->>> jack; two DMIC microphones in the lid and the displayport audio channel.
->>>
->>> This commit adds the audio node that describes all of the above with the
->>> exception of the DMICs that require in-SoC digital codec to be brought
->>> up, which will be done later.
->>>
->>> Note that the displayport channel is connected here for completeness,
->>> but the displayport can't be used yet since the HPD signal is created by
->>> the embedded controller, which will be added later.
->>>
->>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->>> ---
->> [...]
->>
->>
->>> +		primary-tx-dai-link {
->>> +			link-name = "Primary MI2S Capture";
->>> +
->>> +			cpu {
->>> +				sound-dai = <&q6afedai PRIMARY_MI2S_TX>;
->>> +			};
->>> +
->>> +			platform {
->>> +				sound-dai = <&q6routing>;
->>> +			};
->>> +
->>> +			codec {
->>> +				sound-dai = <&alc5682 0>;
->> Both RX and TX going to 5862 interface?
-> interface1*
+This series add base description of UART, TLMM, RPMHCC, GCC and RPMh PD
+nodes which helps SM4450 boot to shell with console on boards with this
+SoC.
 
-Yes, indeed. The codec has a single i2s with rx and tx, and
-shared i2s clocks. They are connected to the prim i2s.
+Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+---
+"[PATCH v4 0/2] pinctl: qcom: Add SM4450 pinctrl driver"
+https://lore.kernel.org/linux-arm-msm/20230920082102.5744-1-quic_tengfan@quicinc.com/
 
-Codec playback is headphone jack, and capture is headset
-mic. It could have also been the lid dmics, like on trogdor
-but 2/3 describes that sad story...
+v5 -> v6:
+  - remove link that depend on clock patch from cover letter
+  - remove patch which already mainline
 
-Nikita
+v4 -> v5:
+  - separate reserved gpios setting from enable UART console patch
 
->>
->> Konrad
+v3 -> v4:
+  - adjustment the sequence of property and property-names
+  - update 0 to 0x0 for reg params
+  - remove unrelated change
+  - separate SoC change and board change
+
+v2 -> v3:
+  - fix dtbs_check warning
+  - remove interconnect, iommu, scm and tcsr related code
+  - rearrangement dt node
+  - remove smmu, scm and tcsr related documentation update
+  - enable CONFIG_SM_GCC_4450 in defconfig related patch
+
+v1 -> v2:
+  - setting "qcom,rpmh-rsc" compatible to the first property
+  - keep order by unit address
+  - move tlmm node into soc node
+  - update arm,smmu.yaml
+  - add enable pinctrl and interconnect defconfig patches
+  - remove blank line
+  - redo dtbs_check check
+
+previous discussion here:
+[1] v5: https://lore.kernel.org/linux-arm-msm/20231011031415.3360-1-quic_tengfan@quicinc.com
+[2] v4: https://lore.kernel.org/linux-arm-msm/20230922081026.2799-1-quic_tengfan@quicinc.com
+[3] v3: https://lore.kernel.org/linux-arm-msm/20230920082102.5744-1-quic_tengfan@quicinc.com
+[4] v2: https://lore.kernel.org/linux-arm-msm/20230915021509.25773-1-quic_tengfan@quicinc.com
+[4] v1: https://lore.kernel.org/linux-arm-msm/20230908065847.28382-1-quic_tengfan@quicinc.com
+
+Ajit Pandey (1):
+  arm64: dts: qcom: sm4450: Add apps_rsc and cmd_db node
+
+Tengfei Fan (5):
+  arm64: dts: qcom: sm4450: Add RPMH and Global clock
+  arm64: dts: qcom: add uart console support for SM4450
+  arm64: dts: qcom: sm4450-qrd: add QRD4450 uart support
+  arm64: dts: qcom: sm4450-qrd: mark QRD4450 reserved gpios
+  arm64: defconfig: enable clock controller and pinctrl
+
+ arch/arm64/boot/dts/qcom/sm4450-qrd.dts |  19 ++++-
+ arch/arm64/boot/dts/qcom/sm4450.dtsi    | 107 ++++++++++++++++++++++++
+ arch/arm64/configs/defconfig            |   2 +
+ 3 files changed, 126 insertions(+), 2 deletions(-)
+
+
+base-commit: c503e3eec382ac708ee7adf874add37b77c5d312
+-- 
+2.17.1
+
