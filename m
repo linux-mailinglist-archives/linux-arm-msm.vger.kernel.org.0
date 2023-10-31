@@ -2,76 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BE297DCD3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 13:50:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D13B7DCEB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 15:06:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344341AbjJaMsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 08:48:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57668 "EHLO
+        id S232129AbjJaOF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 10:05:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344332AbjJaMsH (ORCPT
+        with ESMTP id S1344503AbjJaNOg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 08:48:07 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1FCBD;
-        Tue, 31 Oct 2023 05:48:04 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-5435336ab0bso2581587a12.1;
-        Tue, 31 Oct 2023 05:48:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698756482; x=1699361282; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8cNqw8Df0KTWoMURhaCAzAC8cx2hHKx+9toGPqfTnvo=;
-        b=ZNVm2DjvbWKoyNpEFKYUK5n4Kq8TVaypWsa5de0flpq0bHsN+mBftHvYfLdsjBOTG5
-         QA32kZ8vV8Q8CNBQC9pU+aGsgd4hDQwpAvPf0LzHkcV0Tu3kx633hVj6Uq/ODvZAEKTY
-         czkD5Jc7uxe87BqtESCMvyafTHULHxJOyBbMfEsMqLArKfWRNFrLv6tsQDW4goZ97uJb
-         35RSQYr9n/l1asMfohboSEnJltr5f/Ak0iSJjrUIU+Z/N4y9faXaw5DiRIZfMml2i5yL
-         MVMUJj37pavBbqmOB1VRKE2XpSWOtMv3uWy/+Ff1spfMaa6SmPL41a3FDL2LRWDxnKFl
-         UBig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698756482; x=1699361282;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8cNqw8Df0KTWoMURhaCAzAC8cx2hHKx+9toGPqfTnvo=;
-        b=NSS9+EBspEkH+k5r+5eNEdCNM0PYChlWptC5jMAUXb9k1EZ7XqSF6lnvnxySTkCgv8
-         4aYqPd/ZLkSeAkMa4Nw1wQXcgqC3ag6dwDtfvzErFhoN0OJhrMmTWSbcaxVoXAEdPD0c
-         2bKh8bb7PzfIuS75U3YNrb43iqPjbC9y7a/OJ570Vj4Ov++Wn78DxjdEMArUyTjbVl/g
-         7Jq+5PTFLWHARoEX1oGX78FXQLD+DrMv6OyPFW2ZFJixNiq47UBY+DFSrRl11dIqBQF1
-         iMJLWTIR1CRB2JGuBhD7Z+2I6qvGUPj7p8qov5pozhiZHmgbjp9xeDvA47mwEnHjvOnl
-         Y+Rw==
-X-Gm-Message-State: AOJu0YyVhfiWY/paojfYqhBjppJY1hEdGVv1QrJfOM0i3flrz5tB+dui
-        zowfbjxfqHoywh615RZf4VK6AUTwYUS/biI5CdI=
-X-Google-Smtp-Source: AGHT+IGVYTmlrcy3cyujyUR5gC38iHICEwPtr+8Fv7clqc1AJi3ujCuVZwvc9Nwklhufs/zB+XLxdEfC0RHj5wlrdBo=
-X-Received: by 2002:a17:906:4784:b0:9ba:65e:7529 with SMTP id
- cw4-20020a170906478400b009ba065e7529mr11702882ejc.68.1698756482355; Tue, 31
- Oct 2023 05:48:02 -0700 (PDT)
+        Tue, 31 Oct 2023 09:14:36 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB4B4F4;
+        Tue, 31 Oct 2023 06:14:30 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39VA9Qnh028229;
+        Tue, 31 Oct 2023 13:10:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=QZDiUQ6Gd5tCZvX8du+TNXmzhX9TFsug2LQGOoCKTUs=;
+ b=j7N9op6P/rBREnEuVkZb90tTrccWL+efPxZ49RcqzLe3Ntb2KpHrWSc5kqY3hmdp/AcV
+ zgOqNctzsq8PNpSFvYZoV+YlinZs7lwLSgBmJuZ2Ra0Xj4Gs7wdEf6UpBJylrkEJ01iN
+ qQoQamlYXVQNUY5xtVYQl/YwHgT3t1pWT9MVayvDv66zx+gQk8D0hJLMsTeOAKl+GM6K
+ 3C/nUHsqMUG3ySnzuDFYqRpdEI43Wyb0jc7M24kI1F2IiI3cxdED4h3Dj4A8rex2nwu2
+ ur/vhkr+4FaJeglmNiJC9gxd5o1qkCszx9WdMZy3wfZzWu1+ynpHF1SdlkigKNsWrqkD 2A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u2mcyhwun-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 13:10:07 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39VDA6j4013727
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 13:10:06 GMT
+Received: from [10.253.76.255] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 31 Oct
+ 2023 06:10:02 -0700
+Message-ID: <09c030d5-05b7-5f92-94e3-5ea5afbbed40@quicinc.com>
+Date:   Tue, 31 Oct 2023 21:09:59 +0800
 MIME-Version: 1.0
-References: <20231030-sc8280xp-dpu-safe-lut-v1-1-6d485d7b428f@quicinc.com> <ZUD0lhStirf8IN8-@hovoldconsulting.com>
-In-Reply-To: <ZUD0lhStirf8IN8-@hovoldconsulting.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 31 Oct 2023 05:47:50 -0700
-Message-ID: <CAF6AEGs9PLiCZdJ-g42-bE6f9yMR6cMyKRdWOY5m799vF9o4SQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: Add missing safe_lut_tbl in sc8280xp catalog
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.0
+Subject: Re: [PATCH 1/6] scsi: ufs: ufs-qcom: Setup host power mode during
+ init
+Content-Language: en-US
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org, Doug Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1694411968-14413-1-git-send-email-quic_cang@quicinc.com>
+ <1694411968-14413-2-git-send-email-quic_cang@quicinc.com>
+ <20230919103607.GA4732@thinkpad>
+From:   Can Guo <quic_cang@quicinc.com>
+In-Reply-To: <20230919103607.GA4732@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YJ31Ri0TDqdbyv77AAjQt6sc-MgtZ-dS
+X-Proofpoint-ORIG-GUID: YJ31Ri0TDqdbyv77AAjQt6sc-MgtZ-dS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-31_01,2023-10-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 mlxscore=0 impostorscore=0 mlxlogscore=999 phishscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310310104
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,50 +89,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 31, 2023 at 5:35=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
-te:
->
-> On Mon, Oct 30, 2023 at 04:23:20PM -0700, Bjorn Andersson wrote:
-> > During USB transfers on the SC8280XP __arm_smmu_tlb_sync() is seen to
-> > typically take 1-2ms to complete. As expected this results in poor
-> > performance, something that has been mitigated by proposing running the
-> > iommu in non-strict mode (boot with iommu.strict=3D0).
-> >
-> > This turns out to be related to the SAFE logic, and programming the QOS
-> > SAFE values in the DPU (per suggestion from Rob and Doug) reduces the
-> > TLB sync time to below 10us, which means significant less time spent
-> > with interrupts disabled and a significant boost in throughput.
->
-> I ran some tests with a gigabit ethernet adapter to get an idea of how
-> this performs in comparison to using lazy iommu mode ("non-strict"):
->
->                 6.6     6.6-lazy        6.6-dpu         6.6-dpu-lazy
-> iperf3 recv     114     941             941             941             M=
-Bit/s
-> iperf3 send     124     891             703             940             M=
-Bit/s
->
-> scp recv        14.6    110             110             111             M=
-B/s
-> scp send        12.5    98.9            91.5            110             M=
-B/s
->
-> This patch in itself indeed improves things quite a bit, but there is
-> still some performance that can be gained by using lazy iommu mode.
->
-> Notably, lazy mode with this patch applied appears to saturate the link
-> in both directions.
+Hi Mani,
 
-Maybe there is still room for SoC specific udev rules so dma masters
-without firmware can be configured as "lazy", ie. like:
-
-https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/refs=
-/heads/main/baseboard-trogdor/chromeos-base/chromeos-bsp-baseboard-trogdor/=
-files/98-qcom-nonstrict-iommu.rules
-
-BR,
--R
-
-> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+On 9/19/2023 6:36 PM, Manivannan Sadhasivam wrote:
+> On Sun, Sep 10, 2023 at 10:59:22PM -0700, Can Guo wrote:
+>> Setup host power mode and its limitations during UFS host driver init to
+>> avoid repetitive work during every power mode change.
+>>
+>> Co-developed-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+>> ---
+>>   drivers/ufs/host/ufs-qcom.c | 27 ++++++++++++++++++---------
+>>   drivers/ufs/host/ufs-qcom.h |  1 +
+>>   2 files changed, 19 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>> index c3215d3..710f079 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -443,7 +443,11 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
+>>   static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>>   {
+>>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> +	struct ufs_dev_params *host_pwr_cap = &host->host_pwr_cap;
+>>   	struct phy *phy = host->generic_phy;
+>> +	enum phy_mode mode = host_pwr_cap->hs_rate == PA_HS_MODE_B ?
+>> +							PHY_MODE_UFS_HS_B :
+>> +							PHY_MODE_UFS_HS_A;
+> I do not see anyone passing PA_HS_MODE_A in this patch, so this change is not
+> required now. If you are doing this as a preparatory work, please do it in a
+> separate patch.
+Sure.
 >
-> Johan
+>>   	int ret;
+>>   
+>>   	/* Reset UFS Host Controller and PHY */
+>> @@ -460,7 +464,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>>   		return ret;
+>>   	}
+>>   
+>> -	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);
+>> +	phy_set_mode_ext(phy, mode, host->phy_gear);
+> Same as above.
+Sure.
+>
+>>   
+>>   	/* power on phy - start serdes and phy's power and clocks */
+>>   	ret = phy_power_on(phy);
+>> @@ -884,7 +888,6 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>>   				struct ufs_pa_layer_attr *dev_req_params)
+>>   {
+>>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> -	struct ufs_dev_params ufs_qcom_cap;
+>>   	int ret = 0;
+>>   
+>>   	if (!dev_req_params) {
+>> @@ -894,13 +897,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>>   
+>>   	switch (status) {
+>>   	case PRE_CHANGE:
+>> -		ufshcd_init_pwr_dev_param(&ufs_qcom_cap);
+>> -		ufs_qcom_cap.hs_rate = UFS_QCOM_LIMIT_HS_RATE;
+>> -
+>> -		/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
+>> -		ufs_qcom_cap.hs_tx_gear = ufs_qcom_cap.hs_rx_gear = ufs_qcom_get_hs_gear(hba);
+>> -
+>> -		ret = ufshcd_get_pwr_dev_param(&ufs_qcom_cap,
+>> +		ret = ufshcd_get_pwr_dev_param(&host->host_pwr_cap,
+>>   					       dev_max_params,
+>>   					       dev_req_params);
+>>   		if (ret) {
+>> @@ -1037,6 +1034,17 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
+>>   		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
+>>   }
+>>   
+>> +static void ufs_qcom_set_pwr_mode_limits(struct ufs_hba *hba)
+> It's good that you are moving the setting to init() as they are static, but I'm
+> worried about the different naming conventions used all over the place.
+>
+> The intention here is to set host parameters and then get the agreed one between
+> host and the device. But different names are being used. The structure itself is
+> named as "ufs_dev_params" even though it targets host and the vendor drivers are
+> naming it as "ufs_<vendor>_cap" or "host_cap". And now you've given a new name,
+> "host_pwr_cap", which makes things even worse.
+>
+> So we should rename the struct itself as "ufs_host_params" and all the vendor
+> drivers should stick to "host_params".
+
+I like the name 'ufs_host_params', will unify the declaration of it in 
+all vendor drivers in next version.
+
+
+Thanks,
+
+Can Guo.
+
