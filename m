@@ -2,220 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 091D67DC6B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 07:51:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B36C7DC6F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 08:12:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236533AbjJaGv0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 02:51:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53828 "EHLO
+        id S1343538AbjJaHMt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 03:12:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229954AbjJaGvZ (ORCPT
+        with ESMTP id S1343497AbjJaHMs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 02:51:25 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58130C1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 23:51:13 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-32dbbf3c782so3792197f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Oct 2023 23:51:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1698735072; x=1699339872; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z03tBAD7kulHLciz+wyaNXrh/TRCLRTdw+sLgMToEro=;
-        b=auV/mghXFpoG33l9D7LeTCjJCsVLEGGVBDAHMEwpP87UyENpwPIpYHqSUGK3zfcsh/
-         6CoXjVlVIWPu1MOtbgKsAt62Cg0g8p99eX8xjqCQe9AN9OURF6dhslJU6jDOiqDxco2f
-         6U3RZyJJW+oKrDaOs0Vl/+SYC2963DCDsrQefFnDj/5kLZU7xO6LPujJqpqCg7nY4Pfb
-         jxX2rf/n/ZB82hYTTEilYGVEtew9S2xo636zcJ1+9XpHl0BezoquAv0x/xSs7rfNThKx
-         N+JbbWMwNKixvwdvv0D6X/APKWBUvBgz0fMhWLD1hE3K0gH7QaNNwmPOQO+iU/DND221
-         EeOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698735072; x=1699339872;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z03tBAD7kulHLciz+wyaNXrh/TRCLRTdw+sLgMToEro=;
-        b=p2Kt23ucJbyl40e7ok+ldhFuIHqe3vR8PxC7f0wwULsCCvtkWgNN738+aWiIqL2lSg
-         R5XuIavM2gNK5xCi5VKnQwtNCcBpPBVh0q+cDhMt6PdZq9xULY5BrsLNETOxnnnRkj8t
-         9x/qBZMOJ1RPHvhYxQx3ZvDPf/L+VOQCnoYxshGYhmkKFVKyv4KW4b96pIkZLUFeHF+O
-         4rPTEPNq/Fy5VJGUNy9ePLPUgwHeBVbb4G2imlGIkU6KSr3i5GmSKoGoXxV7Q/P1rc5k
-         wtFF/DQD3yP8JvGoLDQI70gCqHewnEHMKpGRmIYPVFVPYkhCEN6ukb1g1NMIfp0Ra0US
-         tNgQ==
-X-Gm-Message-State: AOJu0Ywxz5Bu6LomeW9lfGpDHYE279Am7PFigSoyN+EpYgJBOmHjcOpl
-        vHpRHGz2Ea/MM/Y7YEOPLThaHw==
-X-Google-Smtp-Source: AGHT+IEzHyPRQE2zZhzDDa2oTzBfGeHjRLaOTVFZzI5RlRHxHNoXR6ODtgZmff9pqdm1ZlEPaclxXg==
-X-Received: by 2002:a05:6000:2a2:b0:32f:803e:3a06 with SMTP id l2-20020a05600002a200b0032f803e3a06mr1821538wry.7.1698735071261;
-        Mon, 30 Oct 2023 23:51:11 -0700 (PDT)
-Received: from localhost (mobiledyn-62-240-134-103.mrsn.at. [62.240.134.103])
-        by smtp.gmail.com with ESMTPSA id e13-20020a5d594d000000b00327bf4f2f14sm725497wri.88.2023.10.30.23.51.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 23:51:10 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Tue, 31 Oct 2023 07:51:08 +0100
-Message-Id: <CWMFBOXZ8IIL.3PDP1L7ZMG3MO@fairphone.com>
-Cc:     "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Rob Herring" <robh@kernel.org>,
-        =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 7/9] arm64: dts: qcom: sc7280: Add CDSP node
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Mukesh Ojha" <quic_mojha@quicinc.com>,
-        "Doug Anderson" <dianders@chromium.org>
-X-Mailer: aerc 0.15.2
-References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
- <20231027-sc7280-remoteprocs-v1-7-05ce95d9315a@fairphone.com>
- <7934a36a-9438-719a-2ed0-4a78757b044b@quicinc.com>
- <CWLNP6QNUXN1.SNVACF2IEGI8@fairphone.com>
- <CAD=FV=U6mi0h0MBFMC+ba4oq-te6_+WR6fj1XjAq7tmUu64bUA@mail.gmail.com>
- <CWLUQWPZNAS5.3F4Y5W13OD08M@fairphone.com>
- <CAD=FV=XbwbjFgMjq-y_L-9EO+xfxwGo6RYV8Wh6P5oBR=oDf_g@mail.gmail.com>
- <d5d53346-ca3b-986a-e104-d87c37115b62@quicinc.com>
-In-Reply-To: <d5d53346-ca3b-986a-e104-d87c37115b62@quicinc.com>
+        Tue, 31 Oct 2023 03:12:48 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44C9BBB;
+        Tue, 31 Oct 2023 00:12:46 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39V2doOx007914;
+        Tue, 31 Oct 2023 07:12:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=DGc89/LkVBj7LFjVtuq1SQIPGuwD8Fsui9aN/ARipZo=;
+ b=pOssUApblMfgM6s8T/Qohb6V2EYwLE3RBQFa4hXO/JvL54Z4w9sS+63BteLI5gYIxymn
+ 4bGJ5zIrYMs8GfS9uzJ0U0rimm4azFiQ8wZTndp6gpORk64gr/kt6BiWUF4CYTeowvg3
+ GY4HXPClbYn0ejPWOsiwqL2NWrsMzvWPex/Xru7iQeoS7QfqWW8YJPpX5ZGImMCfj7u9
+ aYCeB4ulKfAVkMLcPQo6aJjXMqa+FvoHqSPd160eRkotOVE1L/wSP9DcycV+UJnedqBT
+ tUdGhzwcgLdvYW5uiAGdhS6GNy4hL0ZUUsRKE38F2W37c1KtOhruC+MlTAT89VFJbSzx gA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u2fuvhkhm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 07:12:12 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39V7CAcI004048
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 07:12:10 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Tue, 31 Oct 2023 00:12:04 -0700
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <ilia.lin@kernel.org>,
+        <sivaprak@codeaurora.org>, <quic_kathirav@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH v6 0/2] Enable cpufreq for IPQ5332 & IPQ9574
+Date:   Tue, 31 Oct 2023 12:41:37 +0530
+Message-ID: <cover.1698735972.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HYfTC8sYS48ABBb2_FJWDb7disZEA_wR
+X-Proofpoint-GUID: HYfTC8sYS48ABBb2_FJWDb7disZEA_wR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-30_13,2023-10-31_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ spamscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1011 mlxscore=0
+ priorityscore=1501 phishscore=0 mlxlogscore=962 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310310054
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue Oct 31, 2023 at 7:44 AM CET, Mukesh Ojha wrote:
->
->
-> On 10/30/2023 8:33 PM, Doug Anderson wrote:
-> > Hi,
-> >=20
-> > On Mon, Oct 30, 2023 at 7:43=E2=80=AFAM Luca Weiss <luca.weiss@fairphon=
-e.com> wrote:
-> >>
-> >> On Mon Oct 30, 2023 at 3:11 PM CET, Doug Anderson wrote:
-> >>> Hi,
-> >>>
-> >>> On Mon, Oct 30, 2023 at 2:12=E2=80=AFAM Luca Weiss <luca.weiss@fairph=
-one.com> wrote:
-> >>>>
-> >>>> On Mon Oct 30, 2023 at 10:04 AM CET, Mukesh Ojha wrote:
-> >>>>>
-> >>>>>
-> >>>>> On 10/27/2023 7:50 PM, Luca Weiss wrote:
-> >>>>>> Add the node for the ADSP found on the SC7280 SoC, using standard
-> >>>>>> Qualcomm firmware.
-> >>>>>>
-> >>>>>> The memory region for sc7280-chrome-common.dtsi is taken from msm-=
-5.4
-> >>>>>> yupik.dtsi since the other areas also seem to match that file ther=
-e,
-> >>>>>> though I cannot be sure there.
-> >>>>>>
-> >>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>>>>> ---
-> >>>>>>    arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi |   5 +
-> >>>>>>    arch/arm64/boot/dts/qcom/sc7280.dtsi               | 138 ++++++=
-+++++++++++++++
-> >>>>>>    2 files changed, 143 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/=
-arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>>>>> index eb55616e0892..6e5a9d4c1fda 100644
-> >>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>>>>> @@ -29,6 +29,11 @@ adsp_mem: memory@86700000 {
-> >>>>>>                      no-map;
-> >>>>>>              };
-> >>>>>>
-> >>>>>> +           cdsp_mem: memory@88f00000 {
-> >>>>>> +                   reg =3D <0x0 0x88f00000 0x0 0x1e00000>;
-> >>>>>> +                   no-map;
-> >>>>>> +           };
-> >>>>>> +
-> >>>>>
-> >>>>> Just a question, why to do it here, if chrome does not use this ?
-> >>>>
-> >>>> Other memory regions in sc7280.dtsi also get referenced but not actu=
-ally
-> >>>> defined in that file, like mpss_mem and wpss_mem. Alternatively we c=
-an
-> >>>> also try and solve this differently, but then we should probably als=
-o
-> >>>> adjust mpss and wpss to be consistent.
-> >>>>
-> >>>> Apart from either declaring cdsp_mem in sc7280.dtsi or
-> >>>> "/delete-property/ memory-region;" for CDSP I don't really have bett=
-er
-> >>>> ideas though.
-> >>>>
-> >>>> I also imagine these ChromeOS devices will want to enable cdsp at so=
-me
-> >>>> point but I don't know any plans there.
-> >>>
-> >>> Given that "remoteproc_cdsp" has status "disabled" in the dtsi, it
-> >>> feels like the dtsi shouldn't be reserving memory. I guess maybe
-> >>> memory regions can't be status "disabled"?
-> >>
-> >> Hi Doug,
-> >>
-> >> That's how it works in really any qcom dtsi though. I think in most/al=
-l
-> >> cases normally the reserved-memory is already declared in the SoC dtsi
-> >> file and also used with the memory-region property.
-> >>
-> >> I wouldn't be against adjusting sc7280.dtsi to match the way it's done
-> >> in the other dtsi files though, so to have all the required labels
-> >> already defined in the dtsi so it doesn't rely on these labels being
-> >> defined in the device dts.
-> >>
-> >> In other words, currently if you include sc7280.dtsi and try to build,
-> >> you first have to define the labels mpss_mem and wpss_mem (after this
-> >> patch series also cdsp_mem and adsp_mem) for it to build.
-> >>
-> >> I'm quite neutral either way, let me know :)
-> >=20
-> > I haven't done a ton of thinking about this, so if I'm spouting
-> > gibberish then feel free to ignore me. :-P It just feels weird that
-> > when all the "dtsi" files are combined and you look at what you end up
-> > on a sc7280 Chrome board that you'll be reserving 32MB of memory for a
-> > device that's set (in the same device tree) to be "disabled", right?
-> > ...the 32MB is completely wasted, I think. If we wanted to enable the
-> > CDSP we'd have to modify the device tree anyway, so it seems like that
-> > same modification would set the CDSP to "okay" and also reserve the
-> > memory...
-> >=20
-> > In that vein, it seems like maybe you could move the "cdsp_mem" to the
-> > SoC .dsti file with a status of "disabled". . I guess we don't do that
-> > elsewhere, but maybe we should be? As far as I can tell without
-> > testing it (just looking at fdt_scan_reserved_mem()) this should
-> > work...
->
-> What do you think about moving present reserve memory block from
-> sc7280-chrome-common to sc7280.dtsi and delete the stuff which
-> chrome does not need it sc7280-chrome-common ?
+This patch series aims to enable cpufreq for IPQ5332 and IPQ9574.
+For IPQ5332, a minor enhancement to Stromer Plus ops and a safe
+source switch is needed before cpu freq can be enabled.
 
-Hi Mukesh,
+These are also included in this series. Posting this as a single
+series. Please let me know if this is not correct, will split in
+the subsequent revisions.
 
-I'll do that in v2, thanks!
+Passed the following DT related validations
+make W=1 ARCH=arm64 -j16 DT_CHECKER_FLAGS='-v -m' dt_binding_check DT_SCHEMA_FILES=qcom
+make W=1 ARCH=arm64 -j16 CHECK_DTBS=y DT_SCHEMA_FILES=qcom dtbs_check
 
-Regards
-Luca
+For IPQ5332:
+~~~~~~~~~~~
+	* This patch series introduces stromer plus ops which
+	  builds on stromer ops and implements a different
+	  set_rate and determine_rate.
 
->
-> -Mukesh
-> >=20
-> > -Doug
+	  A different set_rate is needed since stromer plus PLLs
+	  do not support dynamic frequency scaling. To switch
+	  between frequencies, we have to shut down the PLL,
+	  configure the L and ALPHA values and turn on again. So
+	  introduce the separate set of ops for Stromer Plus PLL.
+
+	* Update ipq_pll_stromer_plus to use clk_alpha_pll_stromer_plus_ops
+	  instead of clk_alpha_pll_stromer_ops.
+
+	* Set 'l' value to a value that is supported on all SKUs.
+
+	* Provide safe source switch for a53pll
+
+	* Include IPQ5332 in cpufreq nvmem framework
+
+	* Add OPP details to device tree
+
+For IPQ9574:
+~~~~~~~~~~~
+	* Include IPQ9574 in cpufreq nvmem framework
+
+	* Add OPP details to device tree
+
+Removed 2 patches from V1 as they have been merged
+	* dt-bindings: cpufreq: qcom-cpufreq-nvmem: document IPQ5332
+	* dt-bindings: cpufreq: qcom-cpufreq-nvmem: document IPQ9574
+
+v4:	Included a patch to fix 'kernel test robot' build error --
+	https://lore.kernel.org/r/202310181650.g8THtfsm-lkp@intel.com/
+
+v5:	Use devm_clk_notifier_register
+	Merge IPQ53xx and IPQ95xx cases with APQ8096 for speed bin selection
+	Add reviewed by tags
+
+v6:	Except these 2 patches, rest have been merged...
+	Rebased these to latest top as they don't apply cleanly
+	(https://lore.kernel.org/linux-arm-msm/20231025062508.vccrmkem45p3fnwe@vireshk-i7/)
+
+Varadarajan Narayanan (2):
+  cpufreq: qti: Enable cpufreq for ipq53xx
+  cpufreq: qti: Introduce cpufreq for ipq95xx
+
+ drivers/cpufreq/cpufreq-dt-platdev.c |  2 ++
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 12 ++++++++++++
+ 2 files changed, 14 insertions(+)
+
+-- 
+2.7.4
 
