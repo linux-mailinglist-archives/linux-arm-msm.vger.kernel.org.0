@@ -2,75 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 492C97DCB9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 12:17:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2FA67DCBA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 12:19:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233640AbjJaLRi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 07:17:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59190 "EHLO
+        id S233790AbjJaLTw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 07:19:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230457AbjJaLRh (ORCPT
+        with ESMTP id S230154AbjJaLTv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 07:17:37 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E406F3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 04:17:34 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507f1c29f25so7655136e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 04:17:34 -0700 (PDT)
+        Tue, 31 Oct 2023 07:19:51 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97C57EA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 04:19:48 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c5028e5b88so76785901fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 04:19:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698751053; x=1699355853; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698751187; x=1699355987; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PbO/SJMgbSYC0KZVuF9ouObuyktOrD1BDzymUqZmreY=;
-        b=PpRnk7ALgtS1CJ+qp0T0e/5Aq0PfVQB3sQmlRQs2AyDMKnoQk6c5wIlqN8hgNNU+2T
-         jUVSmDvfGTtH0l2u8qCPAK7G//pNjuPl+EQyJOc5kAljknD1NsVq7dIH3537tISGDzSg
-         MwCBJRAzOm4yzHdkkFRfCOl9eru31Dlg2IVoFE7URUHWIYKD9eisMCy+CsiAiehMG9pB
-         RiN67ux6Q9EOHE8P5C5wGJJa9hMfoM8nVZGp3GdUc4Uk/wneA7HXV+rjMgzIt6nYzqUU
-         a4dNZ/JdWAdxYHMYwFRn8VUIOwjeRyoiOYVQOWlprnGEDm8qDjUwp8yqA4+IIlUH/mta
-         +CCw==
+        bh=p0wv1CNf4pIC8JH8A9qrOsWYETdmr/x+H6mQ899o7Mg=;
+        b=mg//n+3NXYHzv1lmjiNC3SLC3ZLy6xYvyOQIGGSe1ftC+0Pg0ED6p+RRAFu/8ZWVfT
+         bXygcUSnpS07g5bqlFBwmN2zOVAkJEKUjFNKYIRM8aaPqPa8UBLKoNFc6Mrt1aaF9ZN/
+         JKmuUHC14shVugoi7dk6mlX9f37WYrqnYarZFp0En3HRMv81bjk8Qowq42ovPIySB4Rd
+         3sWx6GPoxCe7XhMCXqhipgReCoJnG3Gp4GbUf8KZsYnmXqpowDm+fXlF27XhtXWTfPqg
+         P8yUxgiI2OfR77WkYH/qrDwxnu5Qc+QdjsGFghy5uo3R6pWQlSVGhmnGvCz2ZRR1qvIY
+         SjKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698751053; x=1699355853;
+        d=1e100.net; s=20230601; t=1698751187; x=1699355987;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PbO/SJMgbSYC0KZVuF9ouObuyktOrD1BDzymUqZmreY=;
-        b=PIeEmX+/98KluugtcZn1QMecL24csLSHaLRFAvg7ir1yLf4kNOceUMeCftVX3x0eOs
-         LUymt6w1Ts4JhKXg7oAcgdiBvpxorNPufSldpaWyy8eZfXPCfW9q7v/uVUZsk2eI5oFX
-         Od4luJFfq+o0oouVu3oqwphbPfkCvHKkaXkAN4uqFaEGbTxguCW1Y7+x7YlZb8isSvNw
-         f02aqTgh3zlrPgTfY4QZCImMro7wcOgh0jfMHddg30vGxYsi1MiQfn1uyMgsuI25IniQ
-         c2UysaQQPOhBMLsH3Uy6eP9AaYmEzrPplr0iCUaVAp5LimJ6GZY2pxMK5ntP9EtKpp0H
-         mRyw==
-X-Gm-Message-State: AOJu0Yzj28dUT5I5txDWFivoB+fRm6fPUNii1YiZTwi/C4wYhWgjIZDN
-        PgoBsO3SNmumMLRhA8fwL1tRXLyVF+NGUiEURvU=
-X-Google-Smtp-Source: AGHT+IHXNYRv2AT3XhUelDzTPoBiXNz1tD5ww21sCa6PrACDWAigV2GQEcBbj5XtsasA4AssPAthiA==
-X-Received: by 2002:a05:6512:709:b0:500:ac0b:8d58 with SMTP id b9-20020a056512070900b00500ac0b8d58mr9124924lfs.18.1698751052006;
-        Tue, 31 Oct 2023 04:17:32 -0700 (PDT)
+        bh=p0wv1CNf4pIC8JH8A9qrOsWYETdmr/x+H6mQ899o7Mg=;
+        b=ObNrJOsuSt1qt8B29RSowimUOwOKv9VXcsiKyiFr0YG9035kULA2T7FjbMNsAHsZAy
+         9zLLFOY2FMoLPZHZYzK8dwFIyIZ7JU/twWqp4/SKGbjeDKG1EbAi/iktmJhvOVzQTgYB
+         xtQGSQtTOK51DWIIyF1G27eOWlfcyRnAcHz1sQBjzhrGLF6K+AO1ShgKVOeiuWA3W3mB
+         ZRjDbRebnqrWPAVWpcwHzgn/2Idnbhp7sOWeJV86LpT7F+kaPXalopM8MabEfHZPQC54
+         zbWrUkc9ERDBSvymM+oBa52BxOnfrzrts+9fDBqkAQGmXwWjhpUcSrrj8YgKmpm8AuVB
+         4a5w==
+X-Gm-Message-State: AOJu0YzJHFblwprcfLs3wN2RTGjUfhZszT6ID1Nj+Rx5jhZAYju1u4OI
+        9qvYbtY56ceA1dDhrFCzOjzcFQ==
+X-Google-Smtp-Source: AGHT+IEoBGQmWvBpre2DXxzzL9S807IoohiNirLfxpbSqvh9U1DQz+4r3ZFeED533r6dl+3n4aMp0w==
+X-Received: by 2002:a2e:b53c:0:b0:2bf:b133:dd65 with SMTP id z28-20020a2eb53c000000b002bfb133dd65mr8946555ljm.38.1698751186817;
+        Tue, 31 Oct 2023 04:19:46 -0700 (PDT)
 Received: from [192.168.143.96] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id g20-20020a056512119400b0050318bdad45sm181224lfr.64.2023.10.31.04.17.30
+        by smtp.gmail.com with ESMTPSA id a11-20020a2eb54b000000b002c128e4524dsm166291ljn.116.2023.10.31.04.19.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 04:17:31 -0700 (PDT)
-Message-ID: <ca3a0d84-befc-4426-8cdb-ea9d55e7fac9@linaro.org>
-Date:   Tue, 31 Oct 2023 12:17:30 +0100
+        Tue, 31 Oct 2023 04:19:46 -0700 (PDT)
+Message-ID: <501944ed-a4e6-49e9-9109-60899eba0e21@linaro.org>
+Date:   Tue, 31 Oct 2023 12:19:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/15] phy: qualcomm: add MSM8x60 HDMI PHY support
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: msm8916-longcheer-l8150: Add
+ battery and charger
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
-References: <20230928111630.1217419-1-dmitry.baryshkov@linaro.org>
- <20230928111630.1217419-8-dmitry.baryshkov@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231026-pm8916-dtsi-bms-lbc-v3-0-fad1ff22306e@trvn.ru>
+ <20231026-pm8916-dtsi-bms-lbc-v3-2-fad1ff22306e@trvn.ru>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -107,7 +103,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20230928111630.1217419-8-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231026-pm8916-dtsi-bms-lbc-v3-2-fad1ff22306e@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -120,11 +116,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28.09.2023 13:16, Dmitry Baryshkov wrote:
-> Add support for HDMI PHY on Qualcomm MSM8x60 / APQ8060 platforms.
+On 26.10.2023 07:53, Nikita Travkin wrote:
+> Longcheer L8150 doesn't have any dedicated fuel-gauge or charger,
+> instead making use of the pmic hardware blocks for those purposes.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Add pm8916 bms and charger, as well as the battery cell description
+> that those blocks rely on.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
 > ---
-Do you have the PLL working locally? Would it make sense to ship them both?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
