@@ -2,71 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 142687DCFDE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 16:05:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 36B0D7DD071
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 16:23:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344597AbjJaPFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 11:05:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37390 "EHLO
+        id S1344667AbjJaPX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 11:23:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344514AbjJaPFC (ORCPT
+        with ESMTP id S235748AbjJaPX1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 11:05:02 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94B43E8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 08:04:58 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-50939d39d0fso181674e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 08:04:58 -0700 (PDT)
+        Tue, 31 Oct 2023 11:23:27 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BBAAE6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 08:23:24 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-507a55302e0so8224485e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 08:23:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698764697; x=1699369497; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1698765803; x=1699370603; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=REiTgH5WwuPmwXllJPHbDqLpOC27shpburgBYONAZcc=;
-        b=UEqhwQg1zfcavHW/b+pgHXJVsry89+i/bODYDtbgSaU239jVov+fOqrkC93Kg5nfCn
-         vZOJksyya6OjW31sjwEfJuMFp6mtBzH9KO8bHjf/18db+TyXi4qmzn7Ix0QFRhPL6i/r
-         qdf+S4/LK53eVYtgn4wGZaKD3mtgqf3Mce9pElliU7O73Fa/g+YkIvtKUgwVE+9sygRj
-         SGUtOGdp1BvInpXtPELcbZTomx76WXMmiZQSJjVpJwVxE9s7gPkiVOOvT2bcC3sDL8BL
-         zcgtofA81Q10P4L2Q4eorDtMMXBuO0lpPxCiSW02DTG67pykDH2NPg3dLal8+s6VSXfG
-         zlQw==
+        bh=ATYS9nanviadzb566KV+seOqWKaS5f1isvxWfQD8QqA=;
+        b=GwzTkYnH4mqGBRxnnAYE++19bpnmNtwq0NHjE1zs0PZ5o0l6PoqKV0H3SPvsWPoTBw
+         HLlrFCVL46zkKquAeueyMT4EuiRsKJGQt1q6NBJ47SsFT65iUORBswGdZygrgmyjikqi
+         Azdx5APvK2o9lLaMlvif/Db4qxEtT70D7/DQJb5cRIWrxXfug/h4FhE3LnJW7DCvcsIP
+         m6wwnsrvS4K0bTfAb0QLPLSmYCcEkX8ZBdZCzWSGvbe4DFPt9NR2vdbw3T7tZ9in4goR
+         i2RvzXlqkQHAr4m5DhVMQRG0IBSsRRShUIgtx9hVnjEnJfeGnwVBsa2uEmT/7wuFtO+w
+         ZOig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698764697; x=1699369497;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1698765803; x=1699370603;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=REiTgH5WwuPmwXllJPHbDqLpOC27shpburgBYONAZcc=;
-        b=h67I4zGX3ROXDJR2NYRMfV/c7FV2FII+y/Styrnt6pyBHO4htD7Zq/2MNZGGSmiyEi
-         QN8i0JfS6krn4rxz3LuLkkKPX68GB+M8xqXDMBD9l4JRcOBwOG+6EyLRk+AnE7EQKvwY
-         R3HK7KI/u14vRuAhAVoee+PVMylZ3PE4DIemg1YpJSK49WHTKVcJAEMCz8B6cdG+QORV
-         g/UZmGguX9Iofc4Gg/LpP9sNlgTx3kSNJ2A4IqBRAAX9CJwElCJTtXzYHLLg7leT+psd
-         AeJe7D9EU5EF6oyBg289y2FSi64DIffZ6YIfCzWzw9yjsO/kzUqfrRcGVwxHs65S6qC1
-         nlKQ==
-X-Gm-Message-State: AOJu0YwLlcgpAQa1Yuk4OGqcabfcTXLqLaUlKd+G4p9IJt1kDv4U0QAb
-        Nr5M+5qJ++o+/Ywx+wjOTc1SPw==
-X-Google-Smtp-Source: AGHT+IFC6NKWYWsaMn2jSE5MOtnrPNs14l8MVs9DaRLJq2q/JK+VWxx/nUSFV+CLD15vXksxCIxKmA==
-X-Received: by 2002:ac2:4843:0:b0:507:a823:fac5 with SMTP id 3-20020ac24843000000b00507a823fac5mr9428155lfy.8.1698764696613;
-        Tue, 31 Oct 2023 08:04:56 -0700 (PDT)
+        bh=ATYS9nanviadzb566KV+seOqWKaS5f1isvxWfQD8QqA=;
+        b=PrvC1waEm+NhR7EFN+7+IfTw9WQsPRDk3ZmmAO7xlQLOymTSD4r84hyMceOZdWeeVF
+         b4QpA/h3+mPGWaK+my7/Kjnt97MOwmFvu1+HQz19i8cfXrtnXu8Yhf1z0IORHjmhqIoq
+         /6eibXfYe7qxDcq7aL8f3IEarL16Idvs23kGAeTVkNe9y1xab8oMqAJYe+c2GRTWDIOM
+         SH3VRqN6T7lKy1ksU3ZIm7Y051wH7WlOmVQmSdGtt3P24Wp1UOcxN5dSxHM5ZqKZw1zQ
+         0V221Jo0Itg8GJH2bL6+xrrncydkFkIdtvJBSDrfSjN/d/QOTtNJ7J3zceGcXU/9Eyw/
+         7sRg==
+X-Gm-Message-State: AOJu0YxZ0BBp+9IHsus0cyei8CYaAboxKyOfh7QGASpEyjZX/vaCA2ne
+        8XgQs19rSvUiP2vPQgaU9e9kGg==
+X-Google-Smtp-Source: AGHT+IGb7omjnf0GkAFWUjhV7orO4W8kGX5+o4ozOOQdo5MzuuZDwFymNSCMD7ksBcg5ZYsq4MNoCw==
+X-Received: by 2002:ac2:4546:0:b0:507:9fe7:f321 with SMTP id j6-20020ac24546000000b005079fe7f321mr9092874lfm.54.1698765802622;
+        Tue, 31 Oct 2023 08:23:22 -0700 (PDT)
 Received: from [192.168.143.96] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id g24-20020a0565123b9800b00503555aa934sm231156lfv.11.2023.10.31.08.04.55
+        by smtp.gmail.com with ESMTPSA id v17-20020ac25591000000b00503189d8b8csm233610lfg.198.2023.10.31.08.23.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 08:04:56 -0700 (PDT)
-Message-ID: <a3f3cc0e-59c0-42d9-847e-7fd818cb9a9d@linaro.org>
-Date:   Tue, 31 Oct 2023 16:04:53 +0100
+        Tue, 31 Oct 2023 08:23:22 -0700 (PDT)
+Message-ID: <873c1b14-5b7c-4fb1-8f09-6344a4bf901b@linaro.org>
+Date:   Tue, 31 Oct 2023 16:23:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] media: qcom: camss: Move VFE power-domain
- specifics into vfe.c
+Subject: Re: [RFC PATCH 2/5] arm64: dts: qcom: ipq9574: Add ecc engine support
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
-        rfoss@kernel.org, todor.too@gmail.com, andersson@kernel.org,
-        mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
- <20231026155042.551731-5-bryan.odonoghue@linaro.org>
- <d3faea2a-cc28-434c-ac10-3dd55561674f@linaro.org>
- <180d9180-2b1c-43ac-8e5d-20f0ee92b762@linaro.org>
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org, conor+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, miquel.raynal@bootlin.com,
+        richard@nod.at, vigneshr@ti.com, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-spi@vger.kernel.org, quic_srichara@quicinc.com,
+        qpic_varada@quicinc.com
+References: <20231031120307.1600689-1-quic_mdalam@quicinc.com>
+ <20231031120307.1600689-3-quic_mdalam@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -103,9 +102,9 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <180d9180-2b1c-43ac-8e5d-20f0ee92b762@linaro.org>
+In-Reply-To: <20231031120307.1600689-3-quic_mdalam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -116,15 +115,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31.10.2023 12:51, Bryan O'Donoghue wrote:
-> On 31/10/2023 10:54, Konrad Dybcio wrote:
->>> +    /*
->>> +     * If the number of power-domains is greather than the number of VFEs
->> greater
-> 
-> Nice.
-> 
-> I just found codepsell
-I think checkpatch catches some of that too
+On 31.10.2023 13:03, Md Sadre Alam wrote:
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+> ---
+Hello,
+
+you're missing:
+
+- dt-bindings (make dtbs_check is unhappy)
+- a commit message
+- Co-developed-by for Sricharan
+
+
+status should read "okay" instead, but in this case it's unnecessary
+as you're defining the node and lack of the status property also means
+that device is enabled
+
+however
+
+this ECC engine seems to be a part of the NAND controller, so it's
+unlikely that the DT maintainers will agree for it to have a separate
+node
 
 Konrad
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 5f83ee42a719..b44acb1fac74 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -336,6 +336,11 @@ sdhc_1: mmc@7804000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		bch: qpic_ecc {
+> +			compatible = "qcom,ipq9574-ecc";
+> +			status = "ok";
+> +		}
+> +
+>  		blsp_dma: dma-controller@7884000 {
+>  			compatible = "qcom,bam-v1.7.0";
+>  			reg = <0x07884000 0x2b000>;
