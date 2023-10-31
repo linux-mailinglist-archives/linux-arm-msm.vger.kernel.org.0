@@ -2,129 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ABD07DD5DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 19:13:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68D4E7DD6BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 20:46:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376637AbjJaSNR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 14:13:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36604 "EHLO
+        id S235192AbjJaTqv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 15:46:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376614AbjJaSNQ (ORCPT
+        with ESMTP id S231253AbjJaTqv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 14:13:16 -0400
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF970A6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 11:13:10 -0700 (PDT)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-5230a22cfd1so10379229a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 11:13:10 -0700 (PDT)
+        Tue, 31 Oct 2023 15:46:51 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8341C83;
+        Tue, 31 Oct 2023 12:46:48 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c518a1d83fso85530641fa.3;
+        Tue, 31 Oct 2023 12:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1698775989; x=1699380789; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8+bea9ITYj3fJA+5jITbAwFJxHRR8ST9gfKocB/HsD0=;
-        b=EMZvVnzCWRRUkxQ2KFbrmlwpIBb3uFTImWw99scyZczKIQPa1p0NQiu/qJQcQd52r8
-         3bIcEO7ETyT8Phi+8I4Di1n8lgwXn32g3XhbClyaYTdtNHi+E02Lpvd7ew+WLSv+whX3
-         vNm95MZSav2D8kDmRIgLmCCwxe1sZ33VY6qcWtA2YPARYOaipMH2QHE44MNspMQqRzj7
-         Dgsit7Ps8YJLxWb2olOdghIo+OAPGG2Fv1joSCRXBvqLLelNmYMIKkEK+vS0cGhCpOG2
-         ksc/hFUVx1ECnomcf0Zd+GyubUzkgH9BOM+sGf3uoJpdYQlkfsaBDuSNO01/3cdRz3Lx
-         ZwfQ==
+        d=gmail.com; s=20230601; t=1698781607; x=1699386407; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=purwZ105GsEhgtQHpkdP9umavsYHSc4ApWwflAbtrrc=;
+        b=EHc4OcE56l85l0RGlsWNTcov1sWKT63o3L/Of/LUVeBPCFjuo5SPXQ/7Rbd0U/3NmD
+         wsm81iz/kxwbKU6ZzRlIlC0UcPjjc2akCn221EPsk0aM0XE+8eJKNVGdsIRJoZ7LVWaO
+         rO3JhfHNFaDAswKuuPnm9wFZ0jElgeQOvaO7p6B7X0yxgeyfRUGHD02rf+KYJM9H+tiG
+         /INcKvOKyIUD3p0RU5tcZcbXDrBmm1bphMc6Ll3kBJmokqVwO1b+mpDsfcJW7uoaf7LR
+         tOJZDdvaHSi18gwxAXz6V+WHhhYh7y4WSfAfArx9/zmTBjX7JeAEm2irPeTa4ySTPh1Z
+         qkYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698775989; x=1699380789;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8+bea9ITYj3fJA+5jITbAwFJxHRR8ST9gfKocB/HsD0=;
-        b=WeOsMZg/F+09dGPaaQoH5FsgExeSKKIdVsaSED0eM5SRNpmLzlnbfYk6eHHPZ6wWry
-         hbPU/JN3IdWTK0N81fCReUW6topNRMVHivP3setZRPLVnfyiaH7rJ6mdFEqSXzvhz3xY
-         nvdjbkeBmIrgAMEWr1a6/jvwfBiYpAYO6jdvkEZVPVLEWrm9BHn/Joh6X6ZjLucV/AcP
-         aC7yhlvMK9O2aV8aHd8yS+Q8Dd8M5fsnCeNISd663vWPxmNvLiNUeC0eTwlCDNHtnvZN
-         oQg0OngQsm12hxPC0bHD/w9tyBmEYAWuJWlHPKXqLRavZ1vsMp4X9qUpwhyJJopMVdoB
-         Et+Q==
-X-Gm-Message-State: AOJu0YywsdVEaPYXhUlHo2rzZ29kTko0g3uvJRFppNw++vwdKIYTLj+3
-        gXqjpX2CJrajAsHV16K41XVJnLT4ZDIyfeLsviUUqg==
-X-Google-Smtp-Source: AGHT+IHOErAN6Yr+37GaYVtwYv6CCUvnz472fiM/ktmi4ZHD8GdEwbhKFuq6ML6dHXHRBNlRuocIcZl449adkK5ZjGw=
-X-Received: by 2002:aa7:d156:0:b0:533:c55f:5830 with SMTP id
- r22-20020aa7d156000000b00533c55f5830mr10614603edo.28.1698775988981; Tue, 31
- Oct 2023 11:13:08 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1698781607; x=1699386407;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=purwZ105GsEhgtQHpkdP9umavsYHSc4ApWwflAbtrrc=;
+        b=UKojw2NaElWuJAFqAQ7TEyzuD3J+VFlsTHUeuZX241gp/Orkv6L565QS83/YGUyhTN
+         3x4aGBp6uO52Tt1Uy1xKYuGfGlpjXLmuALkKVXk/kiUPyzcGDvTdB2/AdEWkcw1qXth2
+         Dw0rextBrqA483qrRcMyUpy6z3DbugrW5mfjBfGwX1TXa1TzETaraf9qhSbYV6V6hOXz
+         Ao8rHXMh9YV9MjvI5QEyWVXUti+4EXVPUbuu71YVIOHiAirfIGOlN5DPqPKxy64BgLrZ
+         ksGGjZzMNJgbXCqogpG1M8b7haw6gtxavnKVPbQZfWGedfGeauqOkjMLtDG4BM1cQELZ
+         WgAQ==
+X-Gm-Message-State: AOJu0Yx678i6I8abs+jAVd93dATUO8eS3oRDBUa78y8j5wRgC5ZgSnLX
+        SnMqpFUmUdfoLbACcYGPJI0=
+X-Google-Smtp-Source: AGHT+IEOLRiyG9O+qr6AzZRS5vIZx/36cYDoFO/IMWC9eGiCVgGOswCJxAHnc67RSaD+pLKgSCkFgQ==
+X-Received: by 2002:a05:651c:1a20:b0:2c5:1808:4aa4 with SMTP id by32-20020a05651c1a2000b002c518084aa4mr12208174ljb.12.1698781606309;
+        Tue, 31 Oct 2023 12:46:46 -0700 (PDT)
+Received: from [192.168.3.32] (cpezg-94-253-131-198-cbl.xnet.hr. [94.253.131.198])
+        by smtp.gmail.com with ESMTPSA id 9-20020a2e0f09000000b002b6cd89a3fcsm7524ljp.118.2023.10.31.12.46.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Oct 2023 12:46:45 -0700 (PDT)
+Message-ID: <65cc630c-1d71-48e1-b639-b92221a8d7b1@gmail.com>
+Date:   Tue, 31 Oct 2023 20:46:42 +0100
 MIME-Version: 1.0
-References: <20231030-sc8280xp-dpu-safe-lut-v1-1-6d485d7b428f@quicinc.com>
-In-Reply-To: <20231030-sc8280xp-dpu-safe-lut-v1-1-6d485d7b428f@quicinc.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Date:   Tue, 31 Oct 2023 13:12:57 -0500
-Message-ID: <CAKXuJqhrjUwhqb6SK65zAd3nfLTOm8_zfoYNKU5EMbWnPjPQ-Q@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: Add missing safe_lut_tbl in sc8280xp catalog
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: ipq6018: add SDHCI node
+To:     Mantas Pucka <mantas@8devices.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     Abhishek Sahu <absahu@codeaurora.org>,
+        Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>,
+        Sricharan R <sricharan@codeaurora.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+References: <1682338412-15420-1-git-send-email-mantas@8devices.com>
+ <1682338412-15420-3-git-send-email-mantas@8devices.com>
+Content-Language: en-US
+From:   Robert Marko <robimarko@gmail.com>
+In-Reply-To: <1682338412-15420-3-git-send-email-mantas@8devices.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 30, 2023 at 6:23=E2=80=AFPM Bjorn Andersson
-<quic_bjorande@quicinc.com> wrote:
->
-> During USB transfers on the SC8280XP __arm_smmu_tlb_sync() is seen to
-> typically take 1-2ms to complete. As expected this results in poor
-> performance, something that has been mitigated by proposing running the
-> iommu in non-strict mode (boot with iommu.strict=3D0).
->
-> This turns out to be related to the SAFE logic, and programming the QOS
-> SAFE values in the DPU (per suggestion from Rob and Doug) reduces the
-> TLB sync time to below 10us, which means significant less time spent
-> with interrupts disabled and a significant boost in throughput.
->
-> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
-> Cc: stable@vger.kernel.org
-> Suggested-by: Doug Anderson <dianders@chromium.org>
-> Suggested-by: Rob Clark <robdclark@chromium.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/d=
-rivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index 1ccd1edd693c..4c0528794e7a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -406,6 +406,7 @@ static const struct dpu_perf_cfg sc8280xp_perf_data =
-=3D {
->         .min_llcc_ib =3D 0,
->         .min_dram_ib =3D 800000,
->         .danger_lut_tbl =3D {0xf, 0xffff, 0x0},
-> +       .safe_lut_tbl =3D {0xfe00, 0xfe00, 0xffff},
->         .qos_lut_tbl =3D {
->                 {.nentry =3D ARRAY_SIZE(sc8180x_qos_linear),
->                 .entries =3D sc8180x_qos_linear
->
-> ---
-> base-commit: c503e3eec382ac708ee7adf874add37b77c5d312
-> change-id: 20231030-sc8280xp-dpu-safe-lut-9769027b8452
->
-> Best regards,
-> --
-> Bjorn Andersson <quic_bjorande@quicinc.com>
->
 
-Tested-by: Steev Klimaszewski <steev@kali.org>
+On 24. 04. 2023. 14:13, Mantas Pucka wrote:
+> IPQ6018 has one SD/eMMC controller, add node for it.
+>
+> Signed-off-by: Mantas Pucka <mantas@8devices.com>
+
+Tested-by: Robert Marko <robimarko@gmail.com>
+
+> ---
+>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 23 +++++++++++++++++++++++
+>   1 file changed, 23 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> index 9ff4e9d45065..b129b23d68b1 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> @@ -414,6 +414,29 @@
+>   			};
+>   		};
+>   
+> +		sdhc_1: mmc@7804000 {
+> +			compatible = "qcom,ipq6018-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0x0 0x07804000 0x0 0x1000>,
+> +			      <0x0 0x07805000 0x0 0x1000>,
+> +			      <0x0 0x07808000 0x0 0x2000>;
+> +			reg-names = "hc", "cqhci", "ice";
+> +
+> +			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hc_irq", "pwr_irq";
+> +
+> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+> +				 <&gcc GCC_SDCC1_APPS_CLK>,
+> +				 <&xo>,
+> +				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
+> +			clock-names = "iface", "core", "xo", "ice";
+> +
+> +			resets = <&gcc GCC_SDCC1_BCR>;
+> +			supports-cqe;
+> +			bus-width = <8>;
+> +			status = "disabled";
+> +		};
+> +
+>   		blsp_dma: dma-controller@7884000 {
+>   			compatible = "qcom,bam-v1.7.0";
+>   			reg = <0x0 0x07884000 0x0 0x2b000>;
