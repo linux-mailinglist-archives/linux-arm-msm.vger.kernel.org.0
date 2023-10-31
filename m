@@ -2,122 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 332AB7DD47A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 18:17:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4ABD07DD5DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 19:13:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235835AbjJaRRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 13:17:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33888 "EHLO
+        id S1376637AbjJaSNR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 14:13:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233426AbjJaRRK (ORCPT
+        with ESMTP id S1376614AbjJaSNQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 13:17:10 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C3692
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:17:07 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40806e4106dso199265e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:17:07 -0700 (PDT)
+        Tue, 31 Oct 2023 14:13:16 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF970A6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 11:13:10 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-5230a22cfd1so10379229a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 11:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698772626; x=1699377426; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=H1FS6T6JcOn8zGVyFOJ/mVRDweHgiixRXGwY1HImzFA=;
-        b=amC79fPX8D7Gff3dErjKYo6FaFxx81M0Xd0l/HJ2vW7HlKmJ6tZSm0vtiPrzQg2pv7
-         QomJVKDIoQfzPCKfI5wCGkk7QJVIfzZ/TIx3R6znAyh70stzk6Kfh4Q61LqMt2xtUf8P
-         EHkRGETS8kV6AKIv5lg2Hlp4eSTTXWiKOapA5KLMUB3vNEQSXz8f+049aNp26w/w1Oat
-         Le7BlFxtABFazk4k/GZLYh53+E5uVzInaZE8wd/q+Z04cGJxmoawgnkmeTXMvF83XQT/
-         /Uw8kj3j9Rt/tNxKpf02eKy6Ryg4RSL6IteJGcVQ54PdAboF7wNqANq+bYWPwfAaZYVI
-         H0Ww==
+        d=kali.org; s=google; t=1698775989; x=1699380789; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8+bea9ITYj3fJA+5jITbAwFJxHRR8ST9gfKocB/HsD0=;
+        b=EMZvVnzCWRRUkxQ2KFbrmlwpIBb3uFTImWw99scyZczKIQPa1p0NQiu/qJQcQd52r8
+         3bIcEO7ETyT8Phi+8I4Di1n8lgwXn32g3XhbClyaYTdtNHi+E02Lpvd7ew+WLSv+whX3
+         vNm95MZSav2D8kDmRIgLmCCwxe1sZ33VY6qcWtA2YPARYOaipMH2QHE44MNspMQqRzj7
+         Dgsit7Ps8YJLxWb2olOdghIo+OAPGG2Fv1joSCRXBvqLLelNmYMIKkEK+vS0cGhCpOG2
+         ksc/hFUVx1ECnomcf0Zd+GyubUzkgH9BOM+sGf3uoJpdYQlkfsaBDuSNO01/3cdRz3Lx
+         ZwfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698772626; x=1699377426;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H1FS6T6JcOn8zGVyFOJ/mVRDweHgiixRXGwY1HImzFA=;
-        b=xP8/NEzwb20bPEm3c6ydrsN9cmF96y7IZ8iRXhWHdq5STLybuOHOAX5/aI/XD0FPXu
-         KZWTSEVXGjhdCLcA1h21pKogsWJLg9l959BD4DXVmyFihuZ6T44YRuXar28HoO0iufCV
-         faNZ4bKCg8SJxc+WBw8ZJsSK282d/lA5vHYi76NkpttnAPBDfWkuVFDJnGXq/lha+cIS
-         0GrrtI0l1yhVEW1PTvwVbXB8P54SN18GuU/2MDA7owmHRPBs3GU7iAQZy3e6WhLu3jt8
-         I/2X4iBs7UGK8jrACkGCutJyBejs146aAiwoGTZiwyOyO0cBHpqJcc71vnKlHVLjJiIs
-         /TQg==
-X-Gm-Message-State: AOJu0YxX8PcZFSN5geuD13z7cjXvO08aAtYARg75vXpbxxy6f5/YHhBe
-        Lf0bPc6l5giXXZpBLN7u+BT5sQ==
-X-Google-Smtp-Source: AGHT+IF/bWL98PTDWUCakM20W/GD3Sh4u8HG0zteoaBtvt3R3loTGpifO7TwcA4W2Tiz6MzOo8v42g==
-X-Received: by 2002:a05:600c:3b96:b0:405:409e:1fcb with SMTP id n22-20020a05600c3b9600b00405409e1fcbmr3933421wms.5.1698772625688;
-        Tue, 31 Oct 2023 10:17:05 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id t3-20020a5d49c3000000b0032dc2110d01sm1940289wrs.61.2023.10.31.10.17.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 10:17:04 -0700 (PDT)
-Message-ID: <43fec656-8fda-49ad-a117-1ada0c2b7a79@linaro.org>
-Date:   Tue, 31 Oct 2023 18:17:01 +0100
+        d=1e100.net; s=20230601; t=1698775989; x=1699380789;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8+bea9ITYj3fJA+5jITbAwFJxHRR8ST9gfKocB/HsD0=;
+        b=WeOsMZg/F+09dGPaaQoH5FsgExeSKKIdVsaSED0eM5SRNpmLzlnbfYk6eHHPZ6wWry
+         hbPU/JN3IdWTK0N81fCReUW6topNRMVHivP3setZRPLVnfyiaH7rJ6mdFEqSXzvhz3xY
+         nvdjbkeBmIrgAMEWr1a6/jvwfBiYpAYO6jdvkEZVPVLEWrm9BHn/Joh6X6ZjLucV/AcP
+         aC7yhlvMK9O2aV8aHd8yS+Q8Dd8M5fsnCeNISd663vWPxmNvLiNUeC0eTwlCDNHtnvZN
+         oQg0OngQsm12hxPC0bHD/w9tyBmEYAWuJWlHPKXqLRavZ1vsMp4X9qUpwhyJJopMVdoB
+         Et+Q==
+X-Gm-Message-State: AOJu0YywsdVEaPYXhUlHo2rzZ29kTko0g3uvJRFppNw++vwdKIYTLj+3
+        gXqjpX2CJrajAsHV16K41XVJnLT4ZDIyfeLsviUUqg==
+X-Google-Smtp-Source: AGHT+IHOErAN6Yr+37GaYVtwYv6CCUvnz472fiM/ktmi4ZHD8GdEwbhKFuq6ML6dHXHRBNlRuocIcZl449adkK5ZjGw=
+X-Received: by 2002:aa7:d156:0:b0:533:c55f:5830 with SMTP id
+ r22-20020aa7d156000000b00533c55f5830mr10614603edo.28.1698775988981; Tue, 31
+ Oct 2023 11:13:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 5/5] arm64: dts: qcom: ipq9574: Add support for SPI
- nand
-Content-Language: en-US
-To:     Md Sadre Alam <quic_mdalam@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mtd@lists.infradead.org, linux-spi@vger.kernel.org,
-        quic_srichara@quicinc.com, qpic_varada@quicinc.com
-References: <20231031120307.1600689-1-quic_mdalam@quicinc.com>
- <20231031120307.1600689-6-quic_mdalam@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231031120307.1600689-6-quic_mdalam@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20231030-sc8280xp-dpu-safe-lut-v1-1-6d485d7b428f@quicinc.com>
+In-Reply-To: <20231030-sc8280xp-dpu-safe-lut-v1-1-6d485d7b428f@quicinc.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Date:   Tue, 31 Oct 2023 13:12:57 -0500
+Message-ID: <CAKXuJqhrjUwhqb6SK65zAd3nfLTOm8_zfoYNKU5EMbWnPjPQ-Q@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: Add missing safe_lut_tbl in sc8280xp catalog
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -125,83 +81,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/10/2023 13:03, Md Sadre Alam wrote:
-> Add support for QPIC SPI NAND for IPQ9574
-> 
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+On Mon, Oct 30, 2023 at 6:23=E2=80=AFPM Bjorn Andersson
+<quic_bjorande@quicinc.com> wrote:
+>
+> During USB transfers on the SC8280XP __arm_smmu_tlb_sync() is seen to
+> typically take 1-2ms to complete. As expected this results in poor
+> performance, something that has been mitigated by proposing running the
+> iommu in non-strict mode (boot with iommu.strict=3D0).
+>
+> This turns out to be related to the SAFE logic, and programming the QOS
+> SAFE values in the DPU (per suggestion from Rob and Doug) reduces the
+> TLB sync time to below 10us, which means significant less time spent
+> with interrupts disabled and a significant boost in throughput.
+>
+> Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
+> Cc: stable@vger.kernel.org
+> Suggested-by: Doug Anderson <dianders@chromium.org>
+> Suggested-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 56 ++++++++++-----------
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi       | 30 ++++++++++-
->  2 files changed, 57 insertions(+), 29 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> index 1bb8d96c9a82..5e4200edb873 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> @@ -15,48 +15,48 @@ / {
->  	compatible = "qcom,ipq9574-ap-al02-c7", "qcom,ipq9574";
->  };
->  
-> -&sdhc_1 {
-> -	pinctrl-0 = <&sdc_default_state>;
-> -	pinctrl-names = "default";
-> -	mmc-ddr-1_8v;
-> -	mmc-hs200-1_8v;
-> -	mmc-hs400-1_8v;
-> -	mmc-hs400-enhanced-strobe;
-> -	max-frequency = <384000000>;
-> -	bus-width = <8>;
-> -	status = "okay";
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/d=
+rivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> index 1ccd1edd693c..4c0528794e7a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> @@ -406,6 +406,7 @@ static const struct dpu_perf_cfg sc8280xp_perf_data =
+=3D {
+>         .min_llcc_ib =3D 0,
+>         .min_dram_ib =3D 800000,
+>         .danger_lut_tbl =3D {0xf, 0xffff, 0x0},
+> +       .safe_lut_tbl =3D {0xfe00, 0xfe00, 0xffff},
+>         .qos_lut_tbl =3D {
+>                 {.nentry =3D ARRAY_SIZE(sc8180x_qos_linear),
+>                 .entries =3D sc8180x_qos_linear
+>
+> ---
+> base-commit: c503e3eec382ac708ee7adf874add37b77c5d312
+> change-id: 20231030-sc8280xp-dpu-safe-lut-9769027b8452
+>
+> Best regards,
+> --
+> Bjorn Andersson <quic_bjorande@quicinc.com>
+>
 
-Why? This is not explained in commit msg.
-
-> -};
-> -
->  &tlmm {
-> -	sdc_default_state: sdc-default-state {
-> -		clk-pins {
-> +	qspi_nand_pins: qspi_nand_pins {
-> +		spi_clock {
->  			pins = "gpio5";
-> -			function = "sdc_clk";
-> +			function = "qspi_clk";
-
-Why?
-
->  			drive-strength = <8>;
->  			bias-disable;
->  		};
->  
-> -		cmd-pins {
-> +		qspi_cs {
-
-No, come one. Code was good and you replace it to incorrect one. Please
-stop bringing more issues to fix.
-
->  			pins = "gpio4";
-> -			function = "sdc_cmd";
-> +			function = "qspi_cs";
->  			drive-strength = <8>;
->  			bias-pull-up;
->  		};
->  
-
-...
-
-> +
->  		bch: qpic_ecc {
->  			compatible = "qcom,ipq9574-ecc";
->  			status = "ok";
-> -		}
-> +		};
-
-This is the saddest part of the entire patchset...
-
->  
->  		blsp_dma: dma-controller@7884000 {
->  			compatible = "qcom,bam-v1.7.0";
-
-Best regards,
-Krzysztof
-
+Tested-by: Steev Klimaszewski <steev@kali.org>
