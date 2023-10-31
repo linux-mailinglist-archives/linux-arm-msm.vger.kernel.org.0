@@ -2,133 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F4C07DC558
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 05:25:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 947547DC56B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 05:41:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236011AbjJaEZJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 00:25:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39512 "EHLO
+        id S233179AbjJaElt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 00:41:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231201AbjJaEZI (ORCPT
+        with ESMTP id S229504AbjJaElt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 00:25:08 -0400
+        Tue, 31 Oct 2023 00:41:49 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BDDBA9;
-        Mon, 30 Oct 2023 21:25:06 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39V3ScT5031400;
-        Tue, 31 Oct 2023 04:24:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vAYy4D4qjOtcU60l74QA9ANtlKZOwFC4NyU3Mci+YF0=;
- b=esjKO9ryV3rvZzOXEVt6qJDWNx2nDI82bOgH6w2DRvqpCzBSU3/UuLZyCForPBIUMftj
- uep+AFhOxYhYjmPQ39VsdmBWy5AgPblDDysR1B4lu8Pin5dCleOc+/QoswhSWtqYAq4g
- AJIs/CjKvtIhpuzi/qMU7mrAn7m2U682UgokAgjUgF1kx3OKs2Mv6YduOaxFexnef6YV
- j47AunfzefCIHzUa1v0/jx2pro5QwAAGAnIDcBP78YNnecayn6aiYseasbkvVv5714jI
- /drc7npSXEQ878u/9UkMQAanhFf8BHTTkb1905/sfYtMV8IfMjg9QfUBPxGKSlC/CxLm YA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u0sw7wmsh-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87D6E98;
+        Mon, 30 Oct 2023 21:41:46 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39V4IeYQ008323;
+        Tue, 31 Oct 2023 04:41:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=tNUOQlsdhJItx2egS2k34uo+5/T/8mE36Mww34hX4dY=;
+ b=NcDbubAMuFuDPEmcn0kQLrblxOmElo2m/fCWnZbpxZ0Ksetrz0dUy7jVPHGgvxqhvOkW
+ jcL3E18v6QMrzXeeyozL9G+0eoHzE14QkPfZJYifX5Qq9/prIo8u22D0LmlXJisfnMw+
+ 6t/2BoJNVEX+6zAZ8ZqbbRKj/nqksNDeX+K0FU5AfPACTsReF1rvjjHxGa26jEcliCeJ
+ BxEOtuLFG0Sctol39PEr1dbepx7UWvz7KPpB9TwXekCP3Wz8nSPa5kKLBjRe1Gqx566H
+ OQvxQ0bEFn1/DytabtUsCoIO5rQez0N35EpVFO9smTAtnxb8jPfp/Wvu+IeOH4mvg4ss EQ== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u2fuvhad5-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 31 Oct 2023 04:24:56 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39V4OtZk017242
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 31 Oct 2023 04:24:55 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 30 Oct
- 2023 21:24:50 -0700
-Message-ID: <04680b40-9d2d-403c-93af-9e91a491a053@quicinc.com>
-Date:   Tue, 31 Oct 2023 09:54:46 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] clk: qcom: ipq5332: add gpll0_out_aux clock
-Content-Language: en-US
-To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, Will Deacon <will@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20231030-ipq5332-nsscc-v1-0-6162a2c65f0a@quicinc.com>
- <20231030-ipq5332-nsscc-v1-4-6162a2c65f0a@quicinc.com>
- <ac223f97efea0d5077a4e3e4dbd805b4.sboyd@kernel.org>
-From:   Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <ac223f97efea0d5077a4e3e4dbd805b4.sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        Tue, 31 Oct 2023 04:41:15 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 39V4fBqY012148;
+        Tue, 31 Oct 2023 04:41:11 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3u0ucktta7-1;
+        Tue, 31 Oct 2023 04:41:11 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39V4fBiC012143;
+        Tue, 31 Oct 2023 04:41:11 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 39V4fBnB012139;
+        Tue, 31 Oct 2023 04:41:11 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+        id 1B048449C; Tue, 31 Oct 2023 10:11:10 +0530 (+0530)
+From:   Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        konrad.dybcio@linaro.org, mani@kernel.org
+Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        dmitry.baryshkov@linaro.org, robh@kernel.org,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_parass@quicinc.com, quic_schintav@quicinc.com,
+        quic_shijose@quicinc.com,
+        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        mhi@lists.linux.dev
+Subject: [PATCH v5 0/4] arm64: qcom: sa8775p: add cache coherency support for SA8775P
+Date:   Tue, 31 Oct 2023 10:11:02 +0530
+Message-Id: <1698727267-22131-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1mwe49ikGPIjr72wVEXYuhyG2YPSFk0D
-X-Proofpoint-GUID: 1mwe49ikGPIjr72wVEXYuhyG2YPSFk0D
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tIhiVGtan5dR5IH_9eAPNmz2Dz4brPnF
+X-Proofpoint-GUID: tIhiVGtan5dR5IH_9eAPNmz2Dz4brPnF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-10-30_13,2023-10-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
- phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 bulkscore=0 impostorscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2310310032
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ spamscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1015 mlxscore=0
+ priorityscore=1501 phishscore=0 mlxlogscore=372 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310310034
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series is to enable cache snooping logic in both RC and EP
+driver and add the "dma-coherent" property in dtsi to support
+cache coherency in SA8775P.
 
 
-On 10/31/2023 12:27 AM, Stephen Boyd wrote:
-> Quoting Kathiravan Thirumoorthy (2023-10-30 02:47:19)
->> Add support for gpll0_out_aux clock which acts as the parent for
->> certain networking subsystem (NSS) clocks.
->>
->> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
->> ---
->>   drivers/clk/qcom/gcc-ipq5332.c | 14 ++++++++++++++
->>   1 file changed, 14 insertions(+)
->>
->> diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
->> index 235849876a9a..966bb7ca8854 100644
->> --- a/drivers/clk/qcom/gcc-ipq5332.c
->> +++ b/drivers/clk/qcom/gcc-ipq5332.c
->> @@ -87,6 +87,19 @@ static struct clk_alpha_pll_postdiv gpll0 = {
->>          },
->>   };
->>   
->> +static struct clk_alpha_pll_postdiv gpll0_out_aux = {
->> +       .offset = 0x20000,
->> +       .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
->> +       .width = 4,
->> +       .clkr.hw.init = &(struct clk_init_data) {
-> 
-> const initdata
+This series adds the relavent DT bindings, new compatible string,
+add support to EPF driver and add EP PCIe node in dtsi file for
+ep pcie0 controller.
+
+v4 -> v5:
+- add maxItems to the respective field to constrain io space and
+  interrupt in all variants.
+
+v3 -> v4:
+- add maxItems field in dt bindings
+- update comment in patch2
+- dropped PHY driver patch as it is already applied [1]
+- update comment in EPF driver patch
+- update commect in dtsi and add iommus instead of iommu-map
+
+[1] https://lore.kernel.org/all/169804254205.383714.18423881810869732517.b4-ty@kernel.org/
+
+v2 -> v3:
+- removed if/then schemas, added minItems for reg,
+  reg-bnames, interrupt and interrupt-names instead.
+- adding qcom,sa8775p-pcie-ep compitable for sa8775p
+  as we have some specific change to add.
+- reusing sm8450's pcs_misc num table as it is same as sa8775p.
+  used appropriate namespace for pcs.
+- remove const from sa8775p_header as kernel test robot
+  throwing some warnings due to this.
+- remove fallback compatiable as we are adding compatiable for sa8775p.
+
+v1 -> v2:
+- update description for dma
+- Reusing qcom,sdx55-pcie-ep compatibe so remove compaitable
+  for sa8775p
+- sort the defines in phy header file and remove extra defines
+- add const in return type pci_epf_header and remove MHI_EPF_USE_DMA
+  flag as hdma patch is not ready
+- add fallback compatiable as qcom,sdx55-pcie-ep, add iommu property
 
 
-Thanks for pointing it out. Some of the clock structure doesn't have the 
-"const" qualifier. Will fix all those in V2.
+Mrinmay Sarkar (4):
+  dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
+  PCI: qcom-ep: Add support for SA8775P SOC
+  PCI: epf-mhi: Add support for SA8775P
+  arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
 
-> 
->> +               .name = "gpll0_out_aux",
->> +               .parent_hws = (const struct clk_hw *[]) {
->> +                               &gpll0_main.clkr.hw },
->> +               .num_parents = 1,
->> +               .ops = &clk_alpha_pll_postdiv_ro_ops,
->> +       },
->> +};
->> +
->>   static struct clk_alpha_pll gpll2_main = {
->>          .offset = 0x21000,
->>          .regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_STROMER_PLUS],
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 64 +++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 46 ++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          |  1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c       | 17 ++++++
+ 4 files changed, 126 insertions(+), 2 deletions(-)
+
+-- 
+2.7.4
+
