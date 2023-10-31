@@ -2,100 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8B857DCC25
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 12:51:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F102F7DCC7D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 13:04:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344085AbjJaLvb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 07:51:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43658 "EHLO
+        id S1344017AbjJaMEG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 08:04:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344073AbjJaLv3 (ORCPT
+        with ESMTP id S1344182AbjJaMEA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 07:51:29 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76F4DA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 04:51:26 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2c5039d4e88so80211461fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 04:51:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698753085; x=1699357885; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xoj9/ij8m858XjrbOdMB2crd33LEaY3jn3If3kUbcVs=;
-        b=fi+aVKRgaMaF3UTLh5ISVRHZpOxOCbZ6efH1tb2NEqB62Mc3vCUgY43jBgkx8jYTI7
-         mK95RnfFBIDT8CNvY8iqf5QI7+KBMBAAEdTEt/hoXI76zQV1FPhyT55JvpMYdp9GYG4b
-         BgB55DjAyaiykl1wTReSHoFCcLaRjusLwulDMndHMnh+4yMy5bT127jqKXg0qaseLuJR
-         hqPRxA5MfuIcFArGg3YvtT3wvOFh9S8P79zcPY3og9C1OuihqR9wpxlw/5LiJuAGn0FF
-         xbF8ngT5XP2sBOxjd7uO3fH4PRpPR+Gqp3aijtiPzy96B2g0lcmwTk5HOAm25k4dGvuO
-         8j2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698753085; x=1699357885;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xoj9/ij8m858XjrbOdMB2crd33LEaY3jn3If3kUbcVs=;
-        b=ve1RLE9IyaeefPyeRFbKGfd3KLBvDKT4lDS+0u5JH2FQoO1F2YOS8/cRIWak8iehi9
-         wvZzR6A1Mt6N2nqbJ68RGR60yfW+6NzAQFwHRub4ycsPZ3kkRMs1kOlzU1gKGu/zJtmX
-         FlBS9sNhA305ChNG4BwdD9Hm1Uol20gjvslnBJf5k1ihMIx+I8Sy/uih5EWIxtGjHuMh
-         Bg+pYsNfWfUsXcvwt9fxYaPnlHSmhSUE5Bdm4c7NyzSZryAXUrvOYD4YY/n/QaYrBY5E
-         aU6C3YldB2t0H47KZ4wGv7om5iFWZWC0QmI3CmhHbS9v8lJqizVviaIJlV1SwgRsOqcQ
-         Wj3w==
-X-Gm-Message-State: AOJu0Yya2Wod7jRXx7k3zrM79mkHKun4nZEWq+PtblmkaOujo0CueDuv
-        xBYXKYiFXbYMktzVs5Q5TiKvAg==
-X-Google-Smtp-Source: AGHT+IHJ7EFZOihOlaPo2qU0G4n9/e621K7RIjJs3vOMXyjdMR/1KhhfTxs1sTlY1MqS7Elnc7NFjA==
-X-Received: by 2002:a2e:998a:0:b0:2c5:1602:53f6 with SMTP id w10-20020a2e998a000000b002c5160253f6mr9966933lji.34.1698753085110;
-        Tue, 31 Oct 2023 04:51:25 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id h12-20020a5d688c000000b00323287186aasm1345282wru.32.2023.10.31.04.51.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 04:51:24 -0700 (PDT)
-Message-ID: <180d9180-2b1c-43ac-8e5d-20f0ee92b762@linaro.org>
-Date:   Tue, 31 Oct 2023 11:51:23 +0000
+        Tue, 31 Oct 2023 08:04:00 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294235585;
+        Tue, 31 Oct 2023 05:03:58 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39VAAe1l025386;
+        Tue, 31 Oct 2023 12:03:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding;
+ s=qcppdkim1; bh=llA1mruceqzWtsjBtNGzppf1koFXpqBRTnaDNw4knRg=;
+ b=GhrB0fHEC/PZ/L8bqR8tq8xVgkueOy0nhxBuy4KPHqGicHPplHyQe3pycNYhpTADvHSH
+ Gond4VZiym8qJIhmGODCQprETjWkMJDK90PlPj/hIsoNEQomDFgPv01InUwUlrO8FbCO
+ L5k6Ch4w6vwgwqIs/cpjpSowQyW5yLafJ7pdw+hxwYtyrBtf3q+fWuvvyDv7G+1O6348
+ 230SRviKRXHvL+401d5rYj7hBBE1DsUzFoKcvejxL0kICMo1NK3d5dJG/tEVTMIT3p19
+ 2cHkEubJ0BjHOcEBB837bnreA2/OWa5AH/xhFM5ryZ6aOhhU+GqUyqsEudH1jhmCH6UP Ew== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u2fuvjc1m-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 12:03:13 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 39VC395s005243;
+        Tue, 31 Oct 2023 12:03:09 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3u0uckvvnw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 12:03:09 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 39VC39uW005238;
+        Tue, 31 Oct 2023 12:03:09 GMT
+Received: from hu-devc-blr-u22-a.qualcomm.com (hu-mdalam-blr.qualcomm.com [10.131.36.157])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 39VC39iF005237
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 12:03:09 +0000
+Received: by hu-devc-blr-u22-a.qualcomm.com (Postfix, from userid 466583)
+        id D1F82414B1; Tue, 31 Oct 2023 17:33:08 +0530 (+0530)
+From:   Md Sadre Alam <quic_mdalam@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, conor+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, miquel.raynal@bootlin.com,
+        richard@nod.at, vigneshr@ti.com, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-spi@vger.kernel.org, quic_srichara@quicinc.com,
+        qpic_varada@quicinc.com
+Cc:     quic_mdalam@quicinc.com
+Subject: [RFC PATCH 0/5] Add QPIC SPI NAND driver support
+Date:   Tue, 31 Oct 2023 17:33:02 +0530
+Message-Id: <20231031120307.1600689-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] media: qcom: camss: Move VFE power-domain
- specifics into vfe.c
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
-        laurent.pinchart@ideasonboard.com, rfoss@kernel.org,
-        todor.too@gmail.com, andersson@kernel.org, mchehab@kernel.org
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
- <20231026155042.551731-5-bryan.odonoghue@linaro.org>
- <d3faea2a-cc28-434c-ac10-3dd55561674f@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <d3faea2a-cc28-434c-ac10-3dd55561674f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7JBJdyffZDxCCJL6xqn39Pao-CvL2emj
+X-Proofpoint-GUID: 7JBJdyffZDxCCJL6xqn39Pao-CvL2emj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-31_01,2023-10-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ spamscore=0 suspectscore=0 lowpriorityscore=0 clxscore=1011 mlxscore=0
+ priorityscore=1501 phishscore=0 mlxlogscore=607 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310310094
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/10/2023 10:54, Konrad Dybcio wrote:
->> +	/*
->> +	 * If the number of power-domains is greather than the number of VFEs
-> greater
+Hi Miquel,
 
-Nice.
+This series is RFC for QPIC NAND driver design for
+both SPI NAND and RAW NAND.
 
-I just found codepsell
+We have already discuss this design in the below link
 
-codespell /tmp/somedir/*
-/tmp/somedir/0004-media-qcom-camss-move-vfe-power-domain-specifics-into-vfe-c.eml:29: 
-Embeddeding ==> Embedding
-/tmp/somedir/0004-media-qcom-camss-move-vfe-power-domain-specifics-into-vfe-c.eml:133: 
-greather ==> greater
-/tmp/somedir/0005-media-qcom-camss-add-support-for-named-power-domains.eml:28: 
-declration ==> declaration
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1602307902-16761-3-git-send-email-mdalam@codeaurora.org/#25270814
 
+Since QPIC controller support both raw and as wel as
+serial nand, In these patch series I am trying to write
+these driver as per above discussion.
 
----
-bod
+As per this design we are having new drivrs for:
+
+1) SPI-NAND Driver
+2) RAW-NAND Driver
+3) QPIC-COMMON-API Driver
+4) ECC ENGINE Driver
+
+Could you plese review these RFC patches and let me know
+if i am doing as per design and my code are proper so that
+i can proceed further.
+
+I have testd SPI NAND enumeration with this new design.
+
+Command supported currently by spi nand driver
+1) RESET
+2) READ ID
+3) GET FEATURE
+4) SET FEATURE
+
+Currently READ_PAGE, WRITE_PAGE are dummy API. Will write
+this later on after your review.
+
+One more thisng wanted to add here Since for QPIC ECC engine
+its not a separte HW IP, and only one register is there to control ECC
+enable/disable. So for just for one register writing a separte driver
+is fine or not?
+In dt I have added like as below 
+
+ bch: qpic_ecc {
+                      compatible = "qcom,ipq9574-ecc";
+                      status = "ok";
+              };
+
+Is this ok ?
+
+Thanks,
+Alam.
+
+Md Sadre Alam (5):
+  mtd: nand: ecc-qcom: Add support for ECC Engine Driver
+  arm64: dts: qcom: ipq9574: Add ecc engine support
+  mtd: nand: qpic_common: Add support for qpic common API
+  spi: qpic: Add support for qpic spi nand driver
+  arm64: dts: qcom: ipq9574: Add support for SPI nand
+
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts |  56 +-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi       |  33 +
+ drivers/mtd/nand/Kconfig                    |   7 +
+ drivers/mtd/nand/Makefile                   |   1 +
+ drivers/mtd/nand/ecc-qcom.c                 | 198 +++++
+ drivers/mtd/nand/qpic_common.c              | 840 ++++++++++++++++++++
+ drivers/spi/Kconfig                         |   7 +
+ drivers/spi/Makefile                        |   1 +
+ drivers/spi/spi-qpic-snand.c                | 604 ++++++++++++++
+ include/linux/mtd/nand-qpic-common.h        | 641 +++++++++++++++
+ 10 files changed, 2360 insertions(+), 28 deletions(-)
+ create mode 100644 drivers/mtd/nand/ecc-qcom.c
+ create mode 100644 drivers/mtd/nand/qpic_common.c
+ create mode 100644 drivers/spi/spi-qpic-snand.c
+ create mode 100644 include/linux/mtd/nand-qpic-common.h
+
+-- 
+2.34.1
+
