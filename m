@@ -2,63 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0C897DCB40
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 11:58:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 68B1F7DCB6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 12:08:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233631AbjJaK63 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 06:58:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53176 "EHLO
+        id S1344004AbjJaLIb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 07:08:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjJaK6Y (ORCPT
+        with ESMTP id S1343997AbjJaLI3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 06:58:24 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CA8DA6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:58:18 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c5b7764016so60777061fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:58:18 -0700 (PDT)
+        Tue, 31 Oct 2023 07:08:29 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 925C1BB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 04:08:25 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c504a5e1deso78079301fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 04:08:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698749896; x=1699354696; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698750504; x=1699355304; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+wskmTZLs/ovy4+9y4GREQnYyb7qMPFdwIaMr9ijmM0=;
-        b=zN63c5XdQVAqaphpCEP33pZ3tSgOfKFoIqatdrfy2rjIjKTKkv+z4KX/FHzgwRVLYy
-         ozdJtIeXEXvlPtoqsxTkAHSb23nGN+zufZ6JXXrPMS3Ku+fsYIIgo7eGhag9YfJEWFix
-         4Tfvdru7Us03tLDi25hlOdOG5z5CSu4PUMudVzqMOLg70+COWHy/FOH9Nxuczr0/dAsi
-         rRQTNZLjQOK/eXn4FNxnEM3+HZ3bwcDbUU4bhKiK169TATGreNRz4z2ylwORZSjQdm8l
-         i9xWZEcZk9raZHU0+lf8YS0GRpjMWZ/H3vms+KXtIAFy0DaY9C7gbMQB8TdzZmCEs8Vl
-         pwVQ==
+        bh=ekMRq7N8w87yosvVmWX+qXyXBeNazRpHmYnMqCG6Xwk=;
+        b=s3T8lMb7RtHvevrV12lEenexMl7bzPpYoHBlODflkm7/lj95/7M2MRiIWK8RW7LD/e
+         V/z9I7yIO1hbGRCbTVacqCGHMEXrPOKnX8exNuFDVu2nQXRUhCyPpoY3j/2iViUAFKoB
+         BnKSNXfl4m9EnvXLiiWSYcqGqq8jEtTR21Adf8FwLk1Rb4CsIVr5W8T8hywEEchPD0lI
+         gma5aVsjl+CpBwvrGjn+rcQ5KQCgI4Z32bAwXzO0SdbzlepTMskUN07/3eWzr+dqTCbS
+         1wpKUdWsruyx0jmpUt+rxDCLQWpJV96Ion76ZGzCvMAGUHKCOe4GEYdH5pZh8murrkAI
+         +vcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698749896; x=1699354696;
+        d=1e100.net; s=20230601; t=1698750504; x=1699355304;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+wskmTZLs/ovy4+9y4GREQnYyb7qMPFdwIaMr9ijmM0=;
-        b=Kx2OZWdp06aroFMNbpueMSUKH7sGOjm891hqM0ZX/wBf6HOJo6NorYhqx4K1kYwnLR
-         fhfXcgiUsgQGexsUb8DsuJdj1KAhOMZ+ds3GdI5cef96W1Wlrf5JtRGSqNHMzRAZFn+1
-         0Pk5s44jZ02WcAZIeB7Bunars15YMJ1/yw3IQW/pKNuMbuDL6HOB9e1TKcDyk3J7QFe5
-         /Gz/Gc6iP/9fzBnTdeGSlLgkaXTyMXephhhrtU9Dx0k2i3jYK1eS5mVz44nONB6/QHhn
-         T5X3QLKSPTKky8zwTGC1YQjUkNy026WyZ2X7m1dFszJITvmaAGwh1bVk3vp19W/slRg+
-         y5Dw==
-X-Gm-Message-State: AOJu0YzbeYtjQGA2gVI1tps5EN9s4VDpHpDXTZTVHQWufUmDbPuo1XUo
-        OBvaPmA1Jjs4LmAbnbXMQI81Jg==
-X-Google-Smtp-Source: AGHT+IHIvA8ZGe/Uu8b5tTVmLU0wRZeyrtcYXyj8tzOxI33AZaOIoZp6/tOOEDj4hWSrBZ/q3i8qsg==
-X-Received: by 2002:a2e:731a:0:b0:2c5:6d8:8dfc with SMTP id o26-20020a2e731a000000b002c506d88dfcmr9015199ljc.13.1698749896219;
-        Tue, 31 Oct 2023 03:58:16 -0700 (PDT)
+        bh=ekMRq7N8w87yosvVmWX+qXyXBeNazRpHmYnMqCG6Xwk=;
+        b=h15cGEtrFiVAypNhDaQeEjLbrooUM0Oae8tiPfcilH6wHmlnzmILp0Pjkl8iR+fJjk
+         /UYUV1qRrF1oCx59aqN0qECCyuH6rTWojz92mJfqglzOm8tCWbrsO06mK4MsANhUSW0n
+         0YUsnRNnRh5YRHtLpHtN5IukonTTkq/YFtTIAhpeRY62f3lrvizw8voG3vfQGYGrp8BV
+         CpPw+ZqePl468OHrUQ6HXn2o7T1ckTqJJuj4HJwGsr4AhcBuxXhhpvkpoK46utRhnLUR
+         vJSblLhoFUpvhnMYp6OAUuH6yVewvz6t00hSjCOKvtHD/bnpNkdNHTpcnmbfhWoxtppQ
+         /JBQ==
+X-Gm-Message-State: AOJu0YzAvMHmyExIRUaIhD8IGZg3/qFukwTU9TCdFnfnv9dKtesYyW+f
+        8tPke9oDYHNfHIv4Z4Bhh8FvcQ==
+X-Google-Smtp-Source: AGHT+IEr4Af+f59IpW84BOUzXVXar4DKFPz29mDOCa0G9Fwid3R6xyGj4uxuobxvGBTf08kEvQxYIw==
+X-Received: by 2002:a05:651c:1208:b0:2c5:1a40:f26a with SMTP id i8-20020a05651c120800b002c51a40f26amr9332346lja.13.1698750503858;
+        Tue, 31 Oct 2023 04:08:23 -0700 (PDT)
 Received: from [192.168.143.96] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id 25-20020a2e1319000000b002b6e77e87fcsm167127ljt.68.2023.10.31.03.58.15
+        by smtp.gmail.com with ESMTPSA id 9-20020a2e0e09000000b002c12c2094e4sm174289ljo.74.2023.10.31.04.08.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 03:58:15 -0700 (PDT)
-Message-ID: <2e5517e9-71b5-461c-9576-0f1e52c40fc2@linaro.org>
-Date:   Tue, 31 Oct 2023 11:58:14 +0100
+        Tue, 31 Oct 2023 04:08:23 -0700 (PDT)
+Message-ID: <a3162513-c4d0-4db6-9ff9-447f4249fc67@linaro.org>
+Date:   Tue, 31 Oct 2023 12:08:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: acer-aspire1: Correct audio codec
- definition
+Subject: Re: [PATCH v3 3/4] ARM: dts: qcom: Add support for Samsung Galaxy Tab
+ 4 10.1 LTE (SM-T535)
 Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>
-Cc:     cros-qcom-dts-watchers@chromium.org,
+To:     Stefan Hansson <newbyte@postmarketos.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -66,12 +65,9 @@ Cc:     cros-qcom-dts-watchers@chromium.org,
         Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
- <20231027-aspire1-sound-v1-2-5ff3cf8b5701@trvn.ru>
- <3a423cb7-cdf1-433a-a848-8636917640bb@linaro.org>
- <eda1c91bd2dce76e633dd82ad3105355@trvn.ru>
- <7d4140bb-9cc6-4686-8794-9388c7ab0792@linaro.org>
- <66fa9aff9a7c4b3bbd980f90aed5a62e@trvn.ru>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20231025083952.12367-1-newbyte@postmarketos.org>
+ <20231025083952.12367-4-newbyte@postmarketos.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -108,11 +104,11 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <66fa9aff9a7c4b3bbd980f90aed5a62e@trvn.ru>
+In-Reply-To: <20231025083952.12367-4-newbyte@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -121,89 +117,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31.10.2023 11:48, Nikita Travkin wrote:
-> Konrad Dybcio писал(а) 31.10.2023 15:06:
->> On 31.10.2023 08:20, Nikita Travkin wrote:
->>> Konrad Dybcio писал(а) 31.10.2023 02:48:
->>>> On 27.10.2023 16:42, Nikita Travkin wrote:
->>>>> When initially added, a mistake was made in the definition of the codec.
->>>>>
->>>>> Despite the fact that the DMIC line is connected on the side of the
->>>>> codec chip, and relevant passive components, including 0-ohm resistors
->>>>> connecting the dmics, are present, the dmic line is still cut in
->>>>> another place on the board, which was overlooked.
->>>>>
->>>>> Correct this by replacing the dmic configuration with a comment
->>>>> describing this hardware detail.
->>>>>
->>>>> While at it, also add missing regulators definitions. This is not a
->>>>> functional change as all the relevant regulators were already added via
->>>>> the other rail supplies.
->>>>>
->>>>> Fixes: 4a9f8f8f2ada ("arm64: dts: qcom: Add Acer Aspire 1")
->>>>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->>>>> ---
->>>>>  arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts | 17 +++++++++++++++--
->>>>>  1 file changed, 15 insertions(+), 2 deletions(-)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
->>>>> index cfde8cd47107..00b442696618 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
->>>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
->>>>> @@ -209,9 +209,22 @@ alc5682: codec@1a {
->>>>>  		AVDD-supply = <&vreg_l15a_1p8>;
->>>>>  		MICVDD-supply = <&reg_codec_3p3>;
->>>>>  		VBAT-supply = <&reg_codec_3p3>;
->>>>> +		DBVDD-supply = <&vreg_l15a_1p8>;
->>>>> +		LDO1-IN-supply = <&vreg_l15a_1p8>;
->>>>> +
->>>>> +		/*
->>>>> +		 * NOTE: The board has a path from this codec to the
->>>>> +		 * DMIC microphones in the lid, however some of the option
->>>>> +		 * resistors are absent and the microphones are connected
->>>>> +		 * to the SoC instead.
->>>> Would that not also require more DT changes and maybe UCM?
->>>
->>> I don't think I had any other descriptions to support the dmic in
->>> the initial set (first audio support for this board is 3/3 here)
->>> and there is no upstream UCM yet - I will probably hold it off until
->>> I get vamacro and dmic on it working.
->> I was told that VAMACRO is "the easiest thing possible to get going"
->> (paraphrasing), did you go through something like this sequence [1]?
->>
+On 25.10.2023 10:37, Stefan Hansson wrote:
+> Add a device tree for the Samsung Galaxy Tab 4 10.1 (SM-T535) LTE tablet
+> based on the MSM8926 platform.
 > 
-> The problem is that no one introduced it for sc7180 - it's not
-> in the dtsi. And so isn't the lpass-tlmm I'd need...
+> Signed-off-by: Stefan Hansson <newbyte@postmarketos.org>
+> ---
+>  arch/arm/boot/dts/qcom/Makefile               |  1 +
+>  .../qcom/qcom-msm8926-samsung-matisselte.dts  | 36 +++++++++++++++++++
+>  2 files changed, 37 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts
 > 
-> So the set of due changes per my understanding is like:
-> 
->  - Add va-macro to sc7180 (need new compatible/fallback)
->  - Add relevant clocks for it (seems to be firmware backed, so easy?)
-yes
-
->  - Add lpass-tlmm (it seems like we add a new driver for each soc
->    even if they are same? Are they same?)
-there are rare cases when it's identical
-
->  - Add va macro dma dais to the asoc boardfile (trivial)
-y
-
->  - Finally, add the dmic to the board dts and enable in the UCM
->    (also trivial)
-y
-
-> So I decided to follow the "release early, release often" and
-> only introduce partial sound for now, following it up with
-> all above later.
-Sure that makes sense, just wanted to make sure you know about this
+> diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
+> index a3d293e40820..cab35eeb30f6 100644
+> --- a/arch/arm/boot/dts/qcom/Makefile
+> +++ b/arch/arm/boot/dts/qcom/Makefile
+> @@ -34,6 +34,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+>  	qcom-msm8916-samsung-serranove.dtb \
+>  	qcom-msm8926-microsoft-superman-lte.dtb \
+>  	qcom-msm8926-microsoft-tesla.dtb \
+> +	qcom-msm8926-samsung-matisselte.dtb \
+>  	qcom-msm8960-cdp.dtb \
+>  	qcom-msm8960-samsung-expressatt.dtb \
+>  	qcom-msm8974-lge-nexus5-hammerhead.dtb \
+> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts b/arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts
+> new file mode 100644
+> index 000000000000..6e25b1a74ce5
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/qcom/qcom-msm8926-samsung-matisselte.dts
+> @@ -0,0 +1,36 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2022, Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> + * Copyright (c) 2023, Stefan Hansson <newbyte@postmarketos.org>
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "qcom-msm8226-samsung-matisse-common.dtsi"
+> +
+> +/ {
+> +	model = "Samsung Galaxy Tab 4 10.1 LTE";
+> +	compatible = "samsung,matisselte", "qcom,msm8926", "qcom,msm8226";
+> +	chassis-type = "tablet";
+> +};
+> +
+> +&pm8226_l3 {
+> +	regulator-max-microvolt = <1350000>;
+> +};
+> +
+> +&pm8226_s4 {
+> +	regulator-max-microvolt = <2200000>;
+> +};
+> +
+> +&reg_tsp_3p3v {
+> +	gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
+> +};
+> +
+> +&sdhc_2 {
+> +	/* SD card fails to probe with error -110 */
+> +	status = "disabled";
+Can you give us some logs?
 
 Konrad
-
-> 
->> https://git.linaro.org/people/srinivas.kandagatla/alsa-ucm-conf.git/tree/ucm2/codecs/qcom-lpass/va-macro/DMIC0EnableSeq.conf?h=x13s&id=244979b03f5b9284e6a68eae6f9995f6ac735be8
-> 
-> Thanks, this is useful to have, I was indeed looking at
-> x13s for dmic/vamacro example after I realized my board
-> tricked me and it's not how trogdor does it...
-> 
-> Nikita
