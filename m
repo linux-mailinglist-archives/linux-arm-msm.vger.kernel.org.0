@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09D137DCB29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 11:53:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A3287DCB31
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 11:54:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343999AbjJaKxN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 06:53:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44256 "EHLO
+        id S233599AbjJaKyx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 06:54:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343984AbjJaKxN (ORCPT
+        with ESMTP id S231283AbjJaKyw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 06:53:13 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA7DDF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:53:09 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c594196344so80570891fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:53:09 -0700 (PDT)
+        Tue, 31 Oct 2023 06:54:52 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1895BB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:54:49 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c5720a321aso71727701fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:54:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698749588; x=1699354388; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698749688; x=1699354488; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PZEtEH4BVMdZ/99eBNfi6obYrRNvQ11tTN1yHiXWSCY=;
-        b=tCQUs/CQGX7qkZl7sK+pzKlRD4ZGlwLE3kpQZXv1T3liztiwAalv159qhT9vkG7ziF
-         +VgtWAUACeNLw8rEp40q49lhFPEAWKH0xpGC1RudYamHcyHsOwbraI7Mqdz3NfvQiB0J
-         RJfmFo4tox+R6zAsH3nkrP3RsHdfB/ZyrRfWzk3QH6k2K5vltKNo9rNFfOM4KTARmpd+
-         rxAisoiSLxSpJRhqiCER+hhQSUOPB6DgGfKjs4MBjizT9pWVsMRruQCK6hnkPz/xhnXu
-         K8mQXI4vd36swduRJ2VbSoAnO7jqf2gKvmqoBKdl671uoa9InUX5WNLpzx5d0m8usIZG
-         guFQ==
+        bh=iDr/ctWm67YzYt+g3CfNgFL6LyK61BEbr92Hq7GOoZw=;
+        b=KU11823kHT3KzZVZA61zZYeDr3DMqb31zw5h0bLDQTQWvXRt3jBWYCPTJ+y9dP157+
+         cX02OYXu4J14d4NEPe+ks1kNqG4DOZmhd8qF/C3gHCe/ZcUL1Q7XqZcHL4MBNLs1uLKu
+         F9uQ1DxELx/GxsLswGly0uEuseZubO5pqNSTEWkYYBidFumJDG+a4T2RwBo1HjkRzGsv
+         uRkH6Xsshm6An3f9m6wHv9/93lmwUwtji8H+9ygdZo3zLLp5oI6X+Xn4JW2rCig4CpHt
+         6yqlmsQ3SURwpoU9YCS15jIPQpgxvd/e4XbX+rJ044KOiRnLkucRxqhd++GJ6ZgyuVA2
+         IlWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698749588; x=1699354388;
+        d=1e100.net; s=20230601; t=1698749688; x=1699354488;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PZEtEH4BVMdZ/99eBNfi6obYrRNvQ11tTN1yHiXWSCY=;
-        b=K7DSX3rdVgHxw3zuGNEYiGReuirzyPDRXM4/ObP6qKddD6yfsVbOcOubX5WNvoQyw7
-         9jFlfCXgbG+FikLCozooXntMZMWAMV4UCiK/QFljv3/Cu6mtyJRaQRhGWUzJD86EoLkE
-         y35iBZ7w++YNuC6rTOGtA022zUJUUIHYS4UAouYnim7+A8jaDn7TmB47ssUpJe9iijiE
-         skT7fpSih5xbC78awhzlnx1YTn2Rg0zTfI95xLTGyJJt8u5Jv7PKc7NzARonxMaJBiZZ
-         gZjpUgNJaEOheZWXgYA7r0UPM1Uk3KsSqJdsvsFYyC2ZUGLYyEDMpEwe2rO22G1takAa
-         BmpA==
-X-Gm-Message-State: AOJu0YwgEcj4/jPofWjySA3s37F1egHSGbllLqFkbGE+OyyOpcNJ/GMg
-        BhzDrEkMjpD2gUDxIMwp4s9Jiw==
-X-Google-Smtp-Source: AGHT+IE/4NcbCWkfWopCUzcLV1PIteWoizdtaq9MoRTs0ZR3E0yz8Qs2V6DGhEbRFqBd4zpnlxZZHw==
-X-Received: by 2002:a2e:2c11:0:b0:2c5:1e3f:7379 with SMTP id s17-20020a2e2c11000000b002c51e3f7379mr9581736ljs.48.1698749587617;
-        Tue, 31 Oct 2023 03:53:07 -0700 (PDT)
+        bh=iDr/ctWm67YzYt+g3CfNgFL6LyK61BEbr92Hq7GOoZw=;
+        b=t54k5tp5Ydi+GuDnMHwyObVxLcb1pVVmnRXhPBgLlAare+sYfh6608XQ7m+If5dVHT
+         hmaz8B+cquN82Yi+Qoy+g84/bm6D/ikbDomiDEKxqrvKlg/aBYliwLptbxBYNYNFCINm
+         YNZpdQxHlsTwdMhLVHD635ullEgv3lNQcNsVgUcfTTHafa4taEoK6djwIMLCCA53Cemp
+         NHR+ypPL14R6ckgR0R+3KTxCUD8PwTzT9ZvO8/hPsB/8RJryUeSMuJbc/eWe1/KqqRiN
+         cGh/k6YC0cC8qVuUJwZ9sNpkMs9HujGu4SvVbX/7wykLjV8iSxijx0m+WOlc95buJCcT
+         qUMw==
+X-Gm-Message-State: AOJu0YxmoF7fs5uQ4BS2hmbQgAcgsWnkJneFYSJVyvAVktIn/nTzLI+8
+        jvGZ/zhp955dYhLEnPQwl34Hfg==
+X-Google-Smtp-Source: AGHT+IFxP40ZBOhfC0u9rUTuCiT2FZXVkMontbekT7AGAEjyoMyZWKkWCbJSe8BYNrGQVY1xiEWRrw==
+X-Received: by 2002:a05:651c:b06:b0:2c5:1867:b0bc with SMTP id b6-20020a05651c0b0600b002c51867b0bcmr10596557ljr.51.1698749687854;
+        Tue, 31 Oct 2023 03:54:47 -0700 (PDT)
 Received: from [192.168.143.96] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id x12-20020a2ea98c000000b002c0055834b3sm160671ljq.4.2023.10.31.03.53.06
+        by smtp.gmail.com with ESMTPSA id x12-20020a2ea98c000000b002c0055834b3sm160671ljq.4.2023.10.31.03.54.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 03:53:07 -0700 (PDT)
-Message-ID: <d411e561-b0d0-48db-959e-3347006bce77@linaro.org>
-Date:   Tue, 31 Oct 2023 11:53:05 +0100
+        Tue, 31 Oct 2023 03:54:47 -0700 (PDT)
+Message-ID: <d3faea2a-cc28-434c-ac10-3dd55561674f@linaro.org>
+Date:   Tue, 31 Oct 2023 11:54:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] media: qcom: camss: Add support for named
- power-domains
+Subject: Re: [PATCH v2 4/5] media: qcom: camss: Move VFE power-domain
+ specifics into vfe.c
 Content-Language: en-US
 To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
@@ -64,7 +64,7 @@ To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
- <20231026155042.551731-6-bryan.odonoghue@linaro.org>
+ <20231026155042.551731-5-bryan.odonoghue@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -101,7 +101,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231026155042.551731-6-bryan.odonoghue@linaro.org>
+In-Reply-To: <20231026155042.551731-5-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -115,55 +115,33 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 26.10.2023 17:50, Bryan O'Donoghue wrote:
-> Right now we use fixed indexes to assign power-domains, with a
-> requirement for the TOP GDSC to come last in the list.
+> Moving the location of the hooks to VFE power domains has several
+> advantages.
 > 
-> Adding support for named power-domains means the declaration in the dtsi
-> can come in any order.
+> 1. Separation of concerns and functional decomposition.
+>    vfe.c should be responsible for and know best how manage
+>    power-domains for a VFE, excising from camss.c follows this
+>    principle.
 > 
-> After this change we continue to support the old indexing - if a SoC
-> resource declration or the in-use dtb doesn't declare power-domain names
-> we fall back to the default legacy indexing.
+> 2. Embeddeding a pointer to genpd in struct camss_vfe{} meas that we can
+>    dispense with a bunch of kmalloc array inside of camss.c.
 > 
-> From this point on though new SoC additions should contain named
-> power-domains, eventually we will drop support for legacy indexing.
+> 3. Splitting up titan top gdsc from vfe/ife gdsc provides a base for
+>    breaking up magic indexes in dtsi.
 > 
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > ---
->  drivers/media/platform/qcom/camss/camss-vfe.c | 24 ++++++++++++++++-
->  drivers/media/platform/qcom/camss/camss.c     | 26 +++++++++++++++----
->  drivers/media/platform/qcom/camss/camss.h     |  2 ++
->  3 files changed, 46 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index ebd5da6ad3f2f..cb48723efd8a0 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -1381,7 +1381,29 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
->  	if (!res->line_num)
->  		return -EINVAL;
->  
-> -	if (res->has_pd) {
-> +	/* Power domain */
-Unnecessary, I think
-
-> +
-> +	if (res->pd_name) {
-No need to nullcheck, dev_pm_domain_attach_by_name seems to return
-NULL when the name is NULL
-
 [...]
-> -	if (IS_ERR(camss->genpd)) {
-> +	if (camss->res->pd_name) {
-ditto
-> +		camss->genpd = dev_pm_domain_attach_by_name(camss->dev,
-> +							    camss->res->pd_name);
-> +		if (IS_ERR(camss->genpd)) {
-> +			ret = PTR_ERR(camss->genpd);
-> +			goto fail_pm;
-> +		}
-> +	}
-> +
-Looks good otherwise, I think
 
+
+> +	/*
+> +	 * If the number of power-domains is greather than the number of VFEs
+greater
+
+> +	 * then the additional power-domain is for the entire CAMSS block the
+> +	 * 'top' power-domain.
+> +	 */
+> +	if (camss->genpd_num <= camss->res->vfe_num)
+> +		return 0;
+>  
 Konrad
