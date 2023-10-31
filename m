@@ -2,60 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D90C57DCB1F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 11:48:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 09D137DCB29
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 11:53:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236328AbjJaKsV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 06:48:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57392 "EHLO
+        id S1343999AbjJaKxN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 06:53:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235071AbjJaKsU (ORCPT
+        with ESMTP id S1343984AbjJaKxN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 06:48:20 -0400
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF541E6;
-        Tue, 31 Oct 2023 03:48:17 -0700 (PDT)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (No client certificate requested)
-        by box.trvn.ru (Postfix) with ESMTPSA id C881E4055E;
-        Tue, 31 Oct 2023 15:48:14 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-        t=1698749294; bh=Mkhz0SblRAMbcKfkHKYfn8ake4BUqbVzbi0S7Q0czu0=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=f6/qD/SBZZrjFgFEk40CRRYUmbDXV2jbdG+qypw+PWJ5bJBXyLXu/guSEMne0zgX8
-         9oNE3DL+mP1+xu1mJGjD3l6c7pu1JgfffTC6jyURpVHFtzAEY7YasvzIooBIWhneBt
-         mE76zKxrFlk4ONk1D/eKgpEk2k5aNpmp5XVV36SHehwX5Ixlg/C4foia4RYvdJVh9l
-         0ZAE5Ix+U87QmNo5jinYe6V6s1alaO5f3ov5suNAjcVyrXc14InClY+h3B674L6Pzg
-         Y0neFqooRI1HSjx0e6jtNpTGSzWyfIaYx1LBZOn43/jMtc5uxcxD+wohXXB8gRfpmZ
-         0w7zNS0MPVTBA==
+        Tue, 31 Oct 2023 06:53:13 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA7DDF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:53:09 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c594196344so80570891fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:53:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698749588; x=1699354388; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PZEtEH4BVMdZ/99eBNfi6obYrRNvQ11tTN1yHiXWSCY=;
+        b=tCQUs/CQGX7qkZl7sK+pzKlRD4ZGlwLE3kpQZXv1T3liztiwAalv159qhT9vkG7ziF
+         +VgtWAUACeNLw8rEp40q49lhFPEAWKH0xpGC1RudYamHcyHsOwbraI7Mqdz3NfvQiB0J
+         RJfmFo4tox+R6zAsH3nkrP3RsHdfB/ZyrRfWzk3QH6k2K5vltKNo9rNFfOM4KTARmpd+
+         rxAisoiSLxSpJRhqiCER+hhQSUOPB6DgGfKjs4MBjizT9pWVsMRruQCK6hnkPz/xhnXu
+         K8mQXI4vd36swduRJ2VbSoAnO7jqf2gKvmqoBKdl671uoa9InUX5WNLpzx5d0m8usIZG
+         guFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698749588; x=1699354388;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PZEtEH4BVMdZ/99eBNfi6obYrRNvQ11tTN1yHiXWSCY=;
+        b=K7DSX3rdVgHxw3zuGNEYiGReuirzyPDRXM4/ObP6qKddD6yfsVbOcOubX5WNvoQyw7
+         9jFlfCXgbG+FikLCozooXntMZMWAMV4UCiK/QFljv3/Cu6mtyJRaQRhGWUzJD86EoLkE
+         y35iBZ7w++YNuC6rTOGtA022zUJUUIHYS4UAouYnim7+A8jaDn7TmB47ssUpJe9iijiE
+         skT7fpSih5xbC78awhzlnx1YTn2Rg0zTfI95xLTGyJJt8u5Jv7PKc7NzARonxMaJBiZZ
+         gZjpUgNJaEOheZWXgYA7r0UPM1Uk3KsSqJdsvsFYyC2ZUGLYyEDMpEwe2rO22G1takAa
+         BmpA==
+X-Gm-Message-State: AOJu0YwgEcj4/jPofWjySA3s37F1egHSGbllLqFkbGE+OyyOpcNJ/GMg
+        BhzDrEkMjpD2gUDxIMwp4s9Jiw==
+X-Google-Smtp-Source: AGHT+IE/4NcbCWkfWopCUzcLV1PIteWoizdtaq9MoRTs0ZR3E0yz8Qs2V6DGhEbRFqBd4zpnlxZZHw==
+X-Received: by 2002:a2e:2c11:0:b0:2c5:1e3f:7379 with SMTP id s17-20020a2e2c11000000b002c51e3f7379mr9581736ljs.48.1698749587617;
+        Tue, 31 Oct 2023 03:53:07 -0700 (PDT)
+Received: from [192.168.143.96] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
+        by smtp.gmail.com with ESMTPSA id x12-20020a2ea98c000000b002c0055834b3sm160671ljq.4.2023.10.31.03.53.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Oct 2023 03:53:07 -0700 (PDT)
+Message-ID: <d411e561-b0d0-48db-959e-3347006bce77@linaro.org>
+Date:   Tue, 31 Oct 2023 11:53:05 +0100
 MIME-Version: 1.0
-Date:   Tue, 31 Oct 2023 15:48:14 +0500
-From:   Nikita Travkin <nikita@trvn.ru>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] media: qcom: camss: Add support for named
+ power-domains
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
+        rfoss@kernel.org, todor.too@gmail.com, andersson@kernel.org,
+        mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: acer-aspire1: Correct audio codec
- definition
-In-Reply-To: <7d4140bb-9cc6-4686-8794-9388c7ab0792@linaro.org>
-References: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
- <20231027-aspire1-sound-v1-2-5ff3cf8b5701@trvn.ru>
- <3a423cb7-cdf1-433a-a848-8636917640bb@linaro.org>
- <eda1c91bd2dce76e633dd82ad3105355@trvn.ru>
- <7d4140bb-9cc6-4686-8794-9388c7ab0792@linaro.org>
-Message-ID: <66fa9aff9a7c4b3bbd980f90aed5a62e@trvn.ru>
-X-Sender: nikita@trvn.ru
+References: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
+ <20231026155042.551731-6-bryan.odonoghue@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231026155042.551731-6-bryan.odonoghue@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,77 +114,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Konrad Dybcio писал(а) 31.10.2023 15:06:
-> On 31.10.2023 08:20, Nikita Travkin wrote:
->> Konrad Dybcio писал(а) 31.10.2023 02:48:
->>> On 27.10.2023 16:42, Nikita Travkin wrote:
->>>> When initially added, a mistake was made in the definition of the codec.
->>>>
->>>> Despite the fact that the DMIC line is connected on the side of the
->>>> codec chip, and relevant passive components, including 0-ohm resistors
->>>> connecting the dmics, are present, the dmic line is still cut in
->>>> another place on the board, which was overlooked.
->>>>
->>>> Correct this by replacing the dmic configuration with a comment
->>>> describing this hardware detail.
->>>>
->>>> While at it, also add missing regulators definitions. This is not a
->>>> functional change as all the relevant regulators were already added via
->>>> the other rail supplies.
->>>>
->>>> Fixes: 4a9f8f8f2ada ("arm64: dts: qcom: Add Acer Aspire 1")
->>>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts | 17 +++++++++++++++--
->>>>  1 file changed, 15 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
->>>> index cfde8cd47107..00b442696618 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
->>>> +++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
->>>> @@ -209,9 +209,22 @@ alc5682: codec@1a {
->>>>  		AVDD-supply = <&vreg_l15a_1p8>;
->>>>  		MICVDD-supply = <&reg_codec_3p3>;
->>>>  		VBAT-supply = <&reg_codec_3p3>;
->>>> +		DBVDD-supply = <&vreg_l15a_1p8>;
->>>> +		LDO1-IN-supply = <&vreg_l15a_1p8>;
->>>> +
->>>> +		/*
->>>> +		 * NOTE: The board has a path from this codec to the
->>>> +		 * DMIC microphones in the lid, however some of the option
->>>> +		 * resistors are absent and the microphones are connected
->>>> +		 * to the SoC instead.
->>> Would that not also require more DT changes and maybe UCM?
->>
->> I don't think I had any other descriptions to support the dmic in
->> the initial set (first audio support for this board is 3/3 here)
->> and there is no upstream UCM yet - I will probably hold it off until
->> I get vamacro and dmic on it working.
-> I was told that VAMACRO is "the easiest thing possible to get going"
-> (paraphrasing), did you go through something like this sequence [1]?
+On 26.10.2023 17:50, Bryan O'Donoghue wrote:
+> Right now we use fixed indexes to assign power-domains, with a
+> requirement for the TOP GDSC to come last in the list.
 > 
+> Adding support for named power-domains means the declaration in the dtsi
+> can come in any order.
+> 
+> After this change we continue to support the old indexing - if a SoC
+> resource declration or the in-use dtb doesn't declare power-domain names
+> we fall back to the default legacy indexing.
+> 
+> From this point on though new SoC additions should contain named
+> power-domains, eventually we will drop support for legacy indexing.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  drivers/media/platform/qcom/camss/camss-vfe.c | 24 ++++++++++++++++-
+>  drivers/media/platform/qcom/camss/camss.c     | 26 +++++++++++++++----
+>  drivers/media/platform/qcom/camss/camss.h     |  2 ++
+>  3 files changed, 46 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index ebd5da6ad3f2f..cb48723efd8a0 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -1381,7 +1381,29 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+>  	if (!res->line_num)
+>  		return -EINVAL;
+>  
+> -	if (res->has_pd) {
+> +	/* Power domain */
+Unnecessary, I think
 
-The problem is that no one introduced it for sc7180 - it's not
-in the dtsi. And so isn't the lpass-tlmm I'd need...
+> +
+> +	if (res->pd_name) {
+No need to nullcheck, dev_pm_domain_attach_by_name seems to return
+NULL when the name is NULL
 
-So the set of due changes per my understanding is like:
+[...]
+> -	if (IS_ERR(camss->genpd)) {
+> +	if (camss->res->pd_name) {
+ditto
+> +		camss->genpd = dev_pm_domain_attach_by_name(camss->dev,
+> +							    camss->res->pd_name);
+> +		if (IS_ERR(camss->genpd)) {
+> +			ret = PTR_ERR(camss->genpd);
+> +			goto fail_pm;
+> +		}
+> +	}
+> +
+Looks good otherwise, I think
 
- - Add va-macro to sc7180 (need new compatible/fallback)
- - Add relevant clocks for it (seems to be firmware backed, so easy?)
- - Add lpass-tlmm (it seems like we add a new driver for each soc
-   even if they are same? Are they same?)
- - Add va macro dma dais to the asoc boardfile (trivial)
- - Finally, add the dmic to the board dts and enable in the UCM
-   (also trivial)
-
-So I decided to follow the "release early, release often" and
-only introduce partial sound for now, following it up with
-all above later.
-
-> https://git.linaro.org/people/srinivas.kandagatla/alsa-ucm-conf.git/tree/ucm2/codecs/qcom-lpass/va-macro/DMIC0EnableSeq.conf?h=x13s&id=244979b03f5b9284e6a68eae6f9995f6ac735be8
-
-Thanks, this is useful to have, I was indeed looking at
-x13s for dmic/vamacro example after I realized my board
-tricked me and it's not how trogdor does it...
-
-Nikita
+Konrad
