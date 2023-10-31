@@ -2,110 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89ED97DD43F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 18:08:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1AF1D7DD456
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 18:11:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233286AbjJaRHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 13:07:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34000 "EHLO
+        id S233735AbjJaRLG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 13:11:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235834AbjJaRH0 (ORCPT
+        with ESMTP id S235820AbjJaRLD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 13:07:26 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B422D44
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:06:50 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-507bd19eac8so8454336e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:06:50 -0700 (PDT)
+        Tue, 31 Oct 2023 13:11:03 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ACD4C1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:11:00 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-4083dbc43cfso38972645e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:11:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698772008; x=1699376808; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OYTMv8X3U5FI7ySCLoXYmLFVJr1LqDHNIhuGjQPgB7E=;
-        b=gTqUAMRhypIKmTAln9+WC/d7LDxmcLqq0wLN45BsvlVBt7ReFZ/zEtf6bO1zuLL/Ih
-         Br5cY3Jv5kE3cBf8AN+F+HW4UtjT/PfeAq3NbiTlT7c5wnwlVDQHSh5uGBdMhszsTnyg
-         dJjkWGb5lcrzmLYuxuSVsblr1p1vC8ZHVaNvj2e2FY9uiIgWtAkTB+3qsswcnfQ8F7n7
-         TkEGx2OKcPNfQwLhG87nhIQOwAOIl9BJDQjOx1nmIqClFkawjGgxvuoLtj17WGIPTyJz
-         jizNGeQZNwaTD01M5OT14a6yJ2wBmkZhdkps2qMx/FINCpH0iLaRQCSR1iIuKfJenIcj
-         doRQ==
+        d=linaro.org; s=google; t=1698772258; x=1699377058; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+hG5ETkTuNrf6KK1bB0ZgfqAbszVVBfmdYME5EdmIhg=;
+        b=PQOos9T4qPCO/8KJbW//TCGUI17gYbbPEPO+q5pC+3WDAyYgBZvG8FzlKunqrLG1Zi
+         Du5k+f/4ewcZCMn2IHcWcXWSExmnF4olXBaaDsVO+lkm3YFcMkz8+UWzSvihQKANMSMa
+         h5AZVX/OT1HuViXVdNUCFh7ROROHTOiZ9khC24FnSLICjC61Jd1SoYafGKTT6S5ZzQES
+         EWnqwmFMrbCfv61fV+e69VXvjsl+SkO/0O4ZiApKXl9YZyAi9qRA6/Z6rgk0/oqJKpvW
+         Md03qu2Di5AfLYacolbMB98Hg305/kb8uZh9iws6TtNQZrRPYKPDJ7BkYVZ/Ej+Tjjwj
+         npYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698772008; x=1699376808;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=OYTMv8X3U5FI7ySCLoXYmLFVJr1LqDHNIhuGjQPgB7E=;
-        b=JB9McAlIIpC6NdxHnuGHoFhxvObVf5R/BGbUjLnfCcJO3FjAseuEiHLoaetYrKUYWu
-         JTAiF4fiMZU88E8n/2+EkzQqBvFUGK734rbHFC2vKqJyVsU+bcE0n/ZfWkqaPJ4x3HJr
-         zZzQVZYMcdWsFHl1Mn8hVV03ITT77PSJzXYIYxIjuhLzdJUi/X66d8gZ0hcO7j7tRqXk
-         OomMeqAfjv6iUNUo8TiELbNqZ2I9fAcJQXSsQ5VAAKGDUhKhf8QYyLELh/cadp2E9aP6
-         M4C+lubtvCikv5NPvQF/s/5IP2j75sUhymG/6pf6p9OSLHisX7xZbtNJgQgyC1D0vpQt
-         CNnA==
-X-Gm-Message-State: AOJu0YwmroFg56HgBFxoVwcO9mGRhxdE5x6lnbJ//3wX6769qKHPjGnR
-        nre29iuIVgn16x6FwmqNUz93Ig==
-X-Google-Smtp-Source: AGHT+IHdbC76RrPmrObHCE9qXDnMZP5mg4FLxeHHnRQmER4pwL5yggT4juXMRirmPc0bFcflcC8HIg==
-X-Received: by 2002:ac2:511a:0:b0:507:984e:9f17 with SMTP id q26-20020ac2511a000000b00507984e9f17mr9305155lfb.34.1698772008298;
-        Tue, 31 Oct 2023 10:06:48 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:4d69:3958:c5b9:5f3e? ([2a01:e0a:982:cbb0:4d69:3958:c5b9:5f3e])
-        by smtp.gmail.com with ESMTPSA id g8-20020a056000118800b0032db8cccd3asm1916388wrx.114.2023.10.31.10.06.47
+        d=1e100.net; s=20230601; t=1698772258; x=1699377058;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+hG5ETkTuNrf6KK1bB0ZgfqAbszVVBfmdYME5EdmIhg=;
+        b=tNd/J7GYdq0AUhyiWcb3XDD77BGnRkClh0ZYK8D0qdwHXqEqs9zYYGeCguD+ds9ptj
+         OALeLtMoJpdvg3TWxLARJZBV5YeltF0+cbxEpKxmEjtF4hr20klx6u6WQufF54N/rB76
+         n31saP10UvLTJAc2SBRacRS9Kb+Gqu7pP8XUwTGGo8wCOA5VUbYmTABim3SH9wpTtq9O
+         wmJLdH7aUCr8PKOQobZJF8x52jaD0imq0t/U0gATgQJUbZWc6jI/i5I/kXQJtnfNnssA
+         dYkmJFdxS1/21P+qsmUZs7a6petzyTT6SV7590Q6OJ+8q8N6PhosWj2htQM2lFsPIYtf
+         fmLA==
+X-Gm-Message-State: AOJu0YwtP1Jqi88mbIECW3mjy5Dc2grpx+xGfu6jPOA2dcxEnEL4dppz
+        t9RL+kYyGcwujxAdWE5z1iuPAw==
+X-Google-Smtp-Source: AGHT+IGWkOX2KWxdhnPOaVhZDYxwxShGQt4+bSCz+3ner/geP+bqBZF/CZeQGL2ly06Ea34s9R+Pgg==
+X-Received: by 2002:a05:600c:1d95:b0:409:375:5a44 with SMTP id p21-20020a05600c1d9500b0040903755a44mr10948586wms.24.1698772258547;
+        Tue, 31 Oct 2023 10:10:58 -0700 (PDT)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id q2-20020a05600c2e4200b004064e3b94afsm2230179wmf.4.2023.10.31.10.10.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 10:06:47 -0700 (PDT)
-Message-ID: <65dcdd9c-a75b-4fe7-bdcf-471a5602db20@linaro.org>
-Date:   Tue, 31 Oct 2023 18:06:46 +0100
+        Tue, 31 Oct 2023 10:10:58 -0700 (PDT)
+Message-ID: <4d30de97-597a-47c3-a58f-7034f2e91439@linaro.org>
+Date:   Tue, 31 Oct 2023 17:10:57 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 2/3] remoteproc: qcom: pas: make region assign more
- generic
-Content-Language: en-US, fr
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231030-topic-sm8650-upstream-remoteproc-v2-0-609ee572e0a2@linaro.org>
- <20231030-topic-sm8650-upstream-remoteproc-v2-2-609ee572e0a2@linaro.org>
- <8e71ba02-5d6a-4c7e-4a55-f9ef79c2f928@quicinc.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <8e71ba02-5d6a-4c7e-4a55-f9ef79c2f928@quicinc.com>
+Subject: Re: [PATCH v2 5/5] media: qcom: camss: Add support for named
+ power-domains
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
+        rfoss@kernel.org, todor.too@gmail.com, andersson@kernel.org,
+        mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231026155042.551731-1-bryan.odonoghue@linaro.org>
+ <20231026155042.551731-6-bryan.odonoghue@linaro.org>
+ <d411e561-b0d0-48db-959e-3347006bce77@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <d411e561-b0d0-48db-959e-3347006bce77@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -113,220 +81,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 30/10/2023 14:10, Mukesh Ojha wrote:
-> 
-> 
-> On 10/30/2023 3:33 PM, Neil Armstrong wrote:
->> The current memory region assign only supports a single
->> memory region.
->>
->> But new platforms introduces more regions to make the
->> memory requirements more flexible for various use cases.
->> Those new platforms also shares the memory region between the
->> DSP and HLOS.
->>
->> To handle this, make the region assign more generic in order
->> to support more than a single memory region and also permit
->> setting the regions permissions as shared.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/remoteproc/qcom_q6v5_pas.c | 102 ++++++++++++++++++++++++-------------
->>   1 file changed, 66 insertions(+), 36 deletions(-)
->>
->> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
->> index 913a5d2068e8..4829fd26e17d 100644
->> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->> @@ -33,6 +33,8 @@
->>   #define ADSP_DECRYPT_SHUTDOWN_DELAY_MS    100
->> +#define MAX_ASSIGN_COUNT 2
+On 31/10/2023 10:53, Konrad Dybcio wrote:
 >> +
->>   struct adsp_data {
->>       int crash_reason_smem;
->>       const char *firmware_name;
->> @@ -51,6 +53,9 @@ struct adsp_data {
->>       int ssctl_id;
->>       int region_assign_idx;
->> +    int region_assign_count;
->> +    bool region_assign_shared;
->> +    int region_assign_vmid;
->>   };
->>   struct qcom_adsp {
->> @@ -87,15 +92,18 @@ struct qcom_adsp {
->>       phys_addr_t dtb_mem_phys;
->>       phys_addr_t mem_reloc;
->>       phys_addr_t dtb_mem_reloc;
->> -    phys_addr_t region_assign_phys;
->> +    phys_addr_t region_assign_phys[MAX_ASSIGN_COUNT];
->>       void *mem_region;
->>       void *dtb_mem_region;
->>       size_t mem_size;
->>       size_t dtb_mem_size;
->> -    size_t region_assign_size;
->> +    size_t region_assign_size[MAX_ASSIGN_COUNT];
->>       int region_assign_idx;
->> -    u64 region_assign_perms;
->> +    int region_assign_count;
->> +    bool region_assign_shared;
->> +    int region_assign_vmid;
->> +    u64 region_assign_perms[MAX_ASSIGN_COUNT];
->>       struct qcom_rproc_glink glink_subdev;
->>       struct qcom_rproc_subdev smd_subdev;
->> @@ -590,37 +598,52 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
->>   static int adsp_assign_memory_region(struct qcom_adsp *adsp)
->>   {
->> -    struct reserved_mem *rmem = NULL;
->> -    struct qcom_scm_vmperm perm;
->> +    struct qcom_scm_vmperm perm[MAX_ASSIGN_COUNT];
->> +    unsigned int perm_size = 1;
-> 
-> AFAICS, not need of initialization.
+>> +	if (res->pd_name) {
+> No need to nullcheck, dev_pm_domain_attach_by_name seems to return
+> NULL when the name is NULL
 
-Indeed, removed
+So I tried removing the NULL check and of_property_match_string chokes
 
-> 
->>       struct device_node *node;
->> -    int ret;
->> +    int offset, ret;
-> 
-> Nit: one variable per line.
+[    9.303798] msm_vfe_subdev_init/1386 camss->dev 000000004c790a88 
+res->pd_name ife0
+[    9.317650] msm_vfe_subdev_init/1386 camss->dev 000000004c790a88 
+res->pd_name ife1
+[    9.328085] msm_vfe_subdev_init/1386 camss->dev 000000004c790a88 
+res->pd_name (null)
+[    9.330602] lt9611uxc 5-002b: LT9611 revision: 0x17.04.93
+[    9.336128] Unable to handle kernel NULL pointer dereference at 
+virtual address 0000000000000000
+[    9.350861] Mem abort info:
+[    9.353751]   ESR = 0x0000000096000004
+[    9.357617]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    9.363083]   SET = 0, FnV = 0
+[    9.366231]   EA = 0, S1PTW = 0
+[    9.368917] remoteproc remoteproc1: powering up 17300000.remoteproc
+[    9.369463]   FSC = 0x04: level 0 translation fault
+[    9.380922] Data abort info:
+[    9.383919]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    9.389579]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    9.394775]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    9.395986] remoteproc remoteproc1: Booting fw image 
+qcom/sm8250/adsp.mbn, size 15515796
+[    9.400187] ax88179_178a 2-1.1:1.0 eth0: register 'ax88179_178a' at 
+usb-xhci-hcd.0.auto-1.1, ASIX AX88179 USB 3.0 Gigabit Ethernet, 
+00:0e:c6:81:79:01
+[    9.400237] user pgtable: 4k pages, 48-bit VAs, pgdp=00000001067b2000
+[    9.400239] [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
+[    9.400242] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[    9.400243] Modules linked in: venus_enc venus_dec 
+videobuf2_dma_contig qcom_camss(+) fastrpc qrtr_smd venus_core imx412 
+videobuf2_dma_sg mcp251xfd msm v4l2_fwnode v4l2_mem2mem videc
+[    9.409624] lt9611uxc 5-002b: LT9611 version: 0x43
+[    9.422292]  snd_soc_sm8250 qcom_spmi_adc_tm5 qcom_spmi_adc5 
+videobuf2_common xhci_plat_hcd drm_dp_aux_bus snd_soc_qcom_sdw xhci_hcd 
+crct10dif_ce qrtr rtc_pm8xxx qcom_vadc_common qcs
+[    9.492865] lt9611uxc 5-002b: failed to find dsi host
+[    9.529472] CPU: 7 PID: 205 Comm: (udev-worker) Not tainted 
+6.6.0-rc3-00380-g7b823ffc4ec0-dirty #1
+[    9.529474] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+[    9.529475] pstate: 40400005 (nZcv daif +PAN -UAO -TCO -DIT -SSBS 
+BTYPE=--)
+[    9.529477] pc : __pi_strcmp+0x24/0x140
+[    9.529482] lr : of_property_match_string+0x6c/0x130
+[    9.536672] msm_dsi ae94000.dsi: supply refgen not found, using dummy 
+regulator
+[    9.543865] sp : ffff800080d8b6d0
+[    9.543866] x29: ffff800080d8b6d0 x28: ffffd06ec3419ef8 x27: 
+ffff12a54b8660a0
+[    9.543868] x26: 0000000000000000 x25: ffffd06f3cca22b0 x24: 
+ffffd06f3d8e2798
+[    9.543870] x23: 0000000000000000 x22: 0000000000000000 x21: 
+fffffbfffde0e590
+[    9.599837] x20: fffffbfffde0e59e x19: fffffbfffde0e595 x18: 
+ffffffffffffffff
+[    9.607171] x17: 6d616e5f64703e2d x16: ffffd06f3bc66bc4 x15: 
+3937633430303030
+[    9.614503] x14: ffffffffffffffff x13: 0000000000000020 x12: 
+0101010101010101
+[    9.621839] x11: 7f7f7f7f7f7f7f7f x10: fffffbfffde0e590 x9 : 
+7f7f7f7f7f7f7f7f
+[    9.629174] x8 : 0101010101010101 x7 : 0000000080000000 x6 : 
+0000000000000000
+[    9.636507] x5 : 6f63710000000000 x4 : 000000706f740031 x3 : 
+6566760030656676
+[    9.643840] x2 : fffffbfffde0e5a0 x1 : fffffbfffde0e590 x0 : 
+0000000000000000
+[    9.651174] Call trace:
+[    9.653698]  __pi_strcmp+0x24/0x140
+[    9.657285]  genpd_dev_pm_attach_by_name+0x2c/0x64
+[    9.662217]  dev_pm_domain_attach_by_name+0x20/0x2c
+[    9.667231]  msm_vfe_subdev_init+0x78/0x50c [qcom_camss]
+[    9.672704]  camss_probe+0x288/0xc8c [qcom_camss]
+[    9.677542]  platform_probe+0x68/0xc0
+[    9.681311]  really_probe+0x184/0x3c8
+[    9.685081]  __driver_probe_device+0x7c/0x16c
+[    9.689562]  driver_probe_device+0x3c/0x110
+[    9.693862]  __driver_attach+0xf4/0x1fc
+[    9.697811]  bus_for_each_dev+0x74/0xd4
+[    9.701762]  driver_attach+0x24/0x30
+[    9.705446]  bus_add_driver+0x110/0x214
+[    9.709397]  driver_register+0x60/0x128
+[    9.713348]  __platform_driver_register+0x28/0x34
+[    9.718180]  qcom_camss_driver_init+0x20/0x1000 [qcom_camss]
+[    9.723998]  do_one_initcall+0x6c/0x1b0
+[    9.727950]  do_init_module+0x58/0x1e4
+[    9.731804]  load_module+0x1df4/0x1ee0
+[    9.735656]  init_module_from_file+0x84/0xc4
+[    9.740041]  __arm64_sys_finit_module+0x1f4/0x300
+[    9.744871]  invoke_syscall+0x48/0x114
+[    9.748724]  el0_svc_common.constprop.0+0xc0/0xe0
+[    9.753555]  do_el0_svc+0x1c/0x28
+[    9.756962]  el0_svc+0x40/0xe8
+[    9.760102]  el0t_64_sync_handler+0x100/0x12c
+[    9.764583]  el0t_64_sync+0x190/0x194
+[    9.768352] Code: 54000401 b50002c6 d503201f f86a6803 (f8408402)
+[    9.774609] ---[ end trace 0000000000000000 ]---
 
-Done
-
-> 
->>       if (!adsp->region_assign_idx)
-> 
-> Not related to this patch..
-> Should not this be valid only for > 1 ?
-
-I don't understand, only region_assign_idx > 1 triggers a memory_assign,
-and this check discards configurations with region_assign_idx == 0 as
-expected.
-
-> 
-> 
->>           return 0;
->> -    node = of_parse_phandle(adsp->dev->of_node, "memory-region", adsp->region_assign_idx);
->> -    if (node)
->> -        rmem = of_reserved_mem_lookup(node);
->> -    of_node_put(node);
->> -    if (!rmem) {
->> -        dev_err(adsp->dev, "unable to resolve shareable memory-region\n");
->> -        return -EINVAL;
->> -    }
->> +    for (offset = 0; offset < adsp->region_assign_count; ++offset) {
->> +        struct reserved_mem *rmem = NULL;
->> +
->> +        node = of_parse_phandle(adsp->dev->of_node, "memory-region",
->> +                    adsp->region_assign_idx + offset);
->> +        if (node)
->> +            rmem = of_reserved_mem_lookup(node);
->> +        of_node_put(node);
->> +        if (!rmem) {
->> +            dev_err(adsp->dev, "unable to resolve shareable memory-region index %d\n",
->> +                offset);
->> +            return -EINVAL; > +        }
-> 
-> 
->> -    perm.vmid = QCOM_SCM_VMID_MSS_MSA;
->> -    perm.perm = QCOM_SCM_PERM_RW;
->> +        if (adsp->region_assign_shared)  {
->> +            perm[0].vmid = QCOM_SCM_VMID_HLOS;
->> +            perm[0].perm = QCOM_SCM_PERM_RW;
->> +            perm[1].vmid = adsp->region_assign_vmid;
->> +            perm[1].perm = QCOM_SCM_PERM_RW;
->> +            perm_size = 2;
->> +        } else {
->> +            perm[0].vmid = adsp->region_assign_vmid;
->> +            perm[0].perm = QCOM_SCM_PERM_RW;
->> +            perm_size = 1;
->> +        }
->> -    adsp->region_assign_phys = rmem->base;
->> -    adsp->region_assign_size = rmem->size;
->> -    adsp->region_assign_perms = BIT(QCOM_SCM_VMID_HLOS);
->> +        adsp->region_assign_phys[offset] = rmem->base;
->> +        adsp->region_assign_size[offset] = rmem->size;
->> +        adsp->region_assign_perms[offset] = BIT(QCOM_SCM_VMID_HLOS);
-> 
-> Do we need array for this, is this changing ?
-
-We need to keep region_assign_perms for unassign, but for the other 2 we would
-need to duplicate the code from adsp_assign_memory_region into
-adsp_unassign_memory_region.
-
-> 
->> -    ret = qcom_scm_assign_mem(adsp->region_assign_phys,
->> -                  adsp->region_assign_size,
->> -                  &adsp->region_assign_perms,
->> -                  &perm, 1);
->> -    if (ret < 0) {
->> -        dev_err(adsp->dev, "assign memory failed\n");
->> -        return ret;
->> +        ret = qcom_scm_assign_mem(adsp->region_assign_phys[offset],
->> +                      adsp->region_assign_size[offset],
->> +                      &adsp->region_assign_perms[offset],
->> +                      perm, perm_size);
->> +        if (ret < 0) {
->> +            dev_err(adsp->dev, "assign memory %d failed\n", offset);
->> +            return ret;
->> +        }
->>       }
->>       return 0;
->> @@ -629,20 +652,22 @@ static int adsp_assign_memory_region(struct qcom_adsp *adsp)
->>   static void adsp_unassign_memory_region(struct qcom_adsp *adsp)
->>   {
->>       struct qcom_scm_vmperm perm;
->> -    int ret;
->> +    int offset, ret;
->> -    if (!adsp->region_assign_idx)
->> +    if (!adsp->region_assign_idx || adsp->region_assign_shared)
->>           return;
->> -    perm.vmid = QCOM_SCM_VMID_HLOS;
->> -    perm.perm = QCOM_SCM_PERM_RW;
->> +    for (offset = 0; offset < adsp->region_assign_count; ++offset) {
->> +        perm.vmid = QCOM_SCM_VMID_HLOS;
->> +        perm.perm = QCOM_SCM_PERM_RW;
-> 
->> -    ret = qcom_scm_assign_mem(adsp->region_assign_phys,
->> -                  adsp->region_assign_size,
->> -                  &adsp->region_assign_perms,
->> -                  &perm, 1);
->> -    if (ret < 0)
->> -        dev_err(adsp->dev, "unassign memory failed\n");
->> +        ret = qcom_scm_assign_mem(adsp->region_assign_phys[offset],
->> +                      adsp->region_assign_size[offset],
->> +                      &adsp->region_assign_perms[offset],
->> +                      &perm, 1);
->> +        if (ret < 0)
->> +            dev_err(adsp->dev, "unassign memory failed\n");
->> +    }
->>   }
->>   static int adsp_probe(struct platform_device *pdev)
->> @@ -696,6 +721,9 @@ static int adsp_probe(struct platform_device *pdev)
->>       adsp->info_name = desc->sysmon_name;
->>       adsp->decrypt_shutdown = desc->decrypt_shutdown;
->>       adsp->region_assign_idx = desc->region_assign_idx;
->> +    adsp->region_assign_count = min_t(int, MAX_ASSIGN_COUNT, desc->region_assign_count);
->> +    adsp->region_assign_vmid = desc->region_assign_vmid;
->> +    adsp->region_assign_shared = desc->region_assign_shared;
->>       if (dtb_fw_name) {
->>           adsp->dtb_firmware_name = dtb_fw_name;
->>           adsp->dtb_pas_id = desc->dtb_pas_id;
->> @@ -1163,6 +1191,8 @@ static const struct adsp_data sm8550_mpss_resource = {
->>       .sysmon_name = "modem",
->>       .ssctl_id = 0x12,
->>       .region_assign_idx = 2,
->> +    .region_assign_count = 1,
->> +    .region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
->>   };
->>   static const struct of_device_id adsp_of_match[] = {
->>
-> 
-> -Mukesh
-
-Thanks,
-Neil
-
+---
+bod
