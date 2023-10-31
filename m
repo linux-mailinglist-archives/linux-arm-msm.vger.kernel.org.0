@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E17EA7DCD39
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 13:50:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BE297DCD3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 13:50:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344339AbjJaMqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 08:46:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54776 "EHLO
+        id S1344341AbjJaMsI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 08:48:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344332AbjJaMqs (ORCPT
+        with ESMTP id S1344332AbjJaMsH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 08:46:48 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7703AE4;
-        Tue, 31 Oct 2023 05:46:42 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-53dd3f169d8so8691793a12.3;
-        Tue, 31 Oct 2023 05:46:42 -0700 (PDT)
+        Tue, 31 Oct 2023 08:48:07 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1FCBD;
+        Tue, 31 Oct 2023 05:48:04 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-5435336ab0bso2581587a12.1;
+        Tue, 31 Oct 2023 05:48:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698756401; x=1699361201; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1698756482; x=1699361282; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jKZa5dSJEe2OFosspYgbHn2/m1CBCfZ471gmM0Ox3Zg=;
-        b=OOIkpkI4N2odesJOMYc8GQALS1g0BJRJTdJqhwR9KIB5l98JoSRzFw17n8WNh524Wp
-         YF8r2VFcHaGG8cJOYoNsmPee7vhr5p0uvxqplboDTtCDuNYEx7ZtT145t1YMO5T+8pPX
-         S45CQr9q3rxMSGOrWCooDaS1vHLvpIhZaxKMGx8AAJTEtYnWdvEAFDzOOw4F4Sza9uwh
-         iluyv7cRGezh7+E7lOPvCXLRqD7tFvq4Iw1XWbl4eLtp+q1GVzZqjftKr6jfLbhe+Sc6
-         IdfeVJyoLtu1tc+G5CXu/duperhVzBAwVHffSoXYg8O3xc8+ydCQRziSbGnD5YQZLTgT
-         k1xg==
+        bh=8cNqw8Df0KTWoMURhaCAzAC8cx2hHKx+9toGPqfTnvo=;
+        b=ZNVm2DjvbWKoyNpEFKYUK5n4Kq8TVaypWsa5de0flpq0bHsN+mBftHvYfLdsjBOTG5
+         QA32kZ8vV8Q8CNBQC9pU+aGsgd4hDQwpAvPf0LzHkcV0Tu3kx633hVj6Uq/ODvZAEKTY
+         czkD5Jc7uxe87BqtESCMvyafTHULHxJOyBbMfEsMqLArKfWRNFrLv6tsQDW4goZ97uJb
+         35RSQYr9n/l1asMfohboSEnJltr5f/Ak0iSJjrUIU+Z/N4y9faXaw5DiRIZfMml2i5yL
+         MVMUJj37pavBbqmOB1VRKE2XpSWOtMv3uWy/+Ff1spfMaa6SmPL41a3FDL2LRWDxnKFl
+         UBig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698756401; x=1699361201;
+        d=1e100.net; s=20230601; t=1698756482; x=1699361282;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jKZa5dSJEe2OFosspYgbHn2/m1CBCfZ471gmM0Ox3Zg=;
-        b=gq/7JxhnFTg3tIy8xuV3D+GM1bgzDrbLenkRsB+x7bENH/Na19lNB9RZ9jZJjnpoV4
-         fh1nzmFxUoQAKt/7PfAu3oTetUDl0+9mxOjMWo3P3luGswtQfUclTyW9RgLNzQdpSjnd
-         SL6Pbb8BvNxqxIPwTUZmk+dIIcaRPigo4BXlBZKwOn/7xU0po+d6k49D/28y1lHOxtle
-         U/9hicug+ZASddZtViuZJCdG2mxyPvgrz/9ugv2QLY8fcRZGjhJuIFog/gHiqdnbbvzy
-         5jfqZzW8aa3SzowXkoXPxIyYxbCzXaQvxb8ZBy29HKnzjEDHcba2+xGH0w7uPaBy7U0B
-         +JzA==
-X-Gm-Message-State: AOJu0YyyvQLNJUr3QXKpCzA6cnaFo+38WyyoOwTBy5Y4qYroFRbcdNbb
-        r/TLtO5PejCcGGMIqJiieHF7ZdGrzJyH9N42OxM=
-X-Google-Smtp-Source: AGHT+IFgPFGHLLpf2/dBd95JgtG0UZj1klCPTGGWfafBuQ68PFpBgQ0Bbk2zw5laV2W44PGxbqXvObQrh8RUIMJRs9g=
-X-Received: by 2002:aa7:d3c1:0:b0:53f:bd95:d963 with SMTP id
- o1-20020aa7d3c1000000b0053fbd95d963mr9235785edr.32.1698756400670; Tue, 31 Oct
- 2023 05:46:40 -0700 (PDT)
+        bh=8cNqw8Df0KTWoMURhaCAzAC8cx2hHKx+9toGPqfTnvo=;
+        b=NSS9+EBspEkH+k5r+5eNEdCNM0PYChlWptC5jMAUXb9k1EZ7XqSF6lnvnxySTkCgv8
+         4aYqPd/ZLkSeAkMa4Nw1wQXcgqC3ag6dwDtfvzErFhoN0OJhrMmTWSbcaxVoXAEdPD0c
+         2bKh8bb7PzfIuS75U3YNrb43iqPjbC9y7a/OJ570Vj4Ov++Wn78DxjdEMArUyTjbVl/g
+         7Jq+5PTFLWHARoEX1oGX78FXQLD+DrMv6OyPFW2ZFJixNiq47UBY+DFSrRl11dIqBQF1
+         iMJLWTIR1CRB2JGuBhD7Z+2I6qvGUPj7p8qov5pozhiZHmgbjp9xeDvA47mwEnHjvOnl
+         Y+Rw==
+X-Gm-Message-State: AOJu0YyVhfiWY/paojfYqhBjppJY1hEdGVv1QrJfOM0i3flrz5tB+dui
+        zowfbjxfqHoywh615RZf4VK6AUTwYUS/biI5CdI=
+X-Google-Smtp-Source: AGHT+IGVYTmlrcy3cyujyUR5gC38iHICEwPtr+8Fv7clqc1AJi3ujCuVZwvc9Nwklhufs/zB+XLxdEfC0RHj5wlrdBo=
+X-Received: by 2002:a17:906:4784:b0:9ba:65e:7529 with SMTP id
+ cw4-20020a170906478400b009ba065e7529mr11702882ejc.68.1698756482355; Tue, 31
+ Oct 2023 05:48:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231030-sc8280xp-dpu-safe-lut-v1-1-6d485d7b428f@quicinc.com> <20231031081931.GC11778@thinkpad>
-In-Reply-To: <20231031081931.GC11778@thinkpad>
+References: <20231030-sc8280xp-dpu-safe-lut-v1-1-6d485d7b428f@quicinc.com> <ZUD0lhStirf8IN8-@hovoldconsulting.com>
+In-Reply-To: <ZUD0lhStirf8IN8-@hovoldconsulting.com>
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 31 Oct 2023 05:46:28 -0700
-Message-ID: <CAF6AEGv4w=a8kpkM63OU8DJ_nND5acG6nNuz8r4qnAT8Acyw+g@mail.gmail.com>
+Date:   Tue, 31 Oct 2023 05:47:50 -0700
+Message-ID: <CAF6AEGs9PLiCZdJ-g42-bE6f9yMR6cMyKRdWOY5m799vF9o4SQ@mail.gmail.com>
 Subject: Re: [PATCH] drm/msm/dpu: Add missing safe_lut_tbl in sc8280xp catalog
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Johan Hovold <johan@kernel.org>
 Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -64,10 +64,9 @@ Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org, Doug Anderson <dianders@chromium.org>,
         Rob Clark <robdclark@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -81,8 +80,8 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 31, 2023 at 1:19=E2=80=AFAM Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
+On Tue, Oct 31, 2023 at 5:35=E2=80=AFAM Johan Hovold <johan@kernel.org> wro=
+te:
 >
 > On Mon, Oct 30, 2023 at 04:23:20PM -0700, Bjorn Andersson wrote:
 > > During USB transfers on the SC8280XP __arm_smmu_tlb_sync() is seen to
@@ -94,60 +93,37 @@ On Tue, Oct 31, 2023 at 1:19=E2=80=AFAM Manivannan Sadhasivam
 > > SAFE values in the DPU (per suggestion from Rob and Doug) reduces the
 > > TLB sync time to below 10us, which means significant less time spent
 > > with interrupts disabled and a significant boost in throughput.
-> >
-> > Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
-> > Cc: stable@vger.kernel.org
-> > Suggested-by: Doug Anderson <dianders@chromium.org>
-> > Suggested-by: Rob Clark <robdclark@chromium.org>
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b=
-/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> > index 1ccd1edd693c..4c0528794e7a 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> > @@ -406,6 +406,7 @@ static const struct dpu_perf_cfg sc8280xp_perf_data=
- =3D {
-> >       .min_llcc_ib =3D 0,
-> >       .min_dram_ib =3D 800000,
-> >       .danger_lut_tbl =3D {0xf, 0xffff, 0x0},
-> > +     .safe_lut_tbl =3D {0xfe00, 0xfe00, 0xffff},
 >
-> What does these values represent? And how SAFE is to override the default=
- QoS
-> values?
+> I ran some tests with a gigabit ethernet adapter to get an idea of how
+> this performs in comparison to using lazy iommu mode ("non-strict"):
 >
-> I'm not too familiar with the MSM DRM driver, so please excuse my ignoran=
-ce.
+>                 6.6     6.6-lazy        6.6-dpu         6.6-dpu-lazy
+> iperf3 recv     114     941             941             941             M=
+Bit/s
+> iperf3 send     124     891             703             940             M=
+Bit/s
+>
+> scp recv        14.6    110             110             111             M=
+B/s
+> scp send        12.5    98.9            91.5            110             M=
+B/s
+>
+> This patch in itself indeed improves things quite a bit, but there is
+> still some performance that can be gained by using lazy iommu mode.
+>
+> Notably, lazy mode with this patch applied appears to saturate the link
+> in both directions.
 
-for realtime dma (like scanout) there is a sort of "safe" signal from
-the dma master to the smmu to indicate when it has enough data
-buffered for it to be safe to do tlbinv without risking underflow.
-When things aren't "safe" the smmu will stall tlbinv.  This is just
-configuring the thresholds for the "safe" signal.
+Maybe there is still room for SoC specific udev rules so dma masters
+without firmware can be configured as "lazy", ie. like:
+
+https://chromium.googlesource.com/chromiumos/overlays/board-overlays/+/refs=
+/heads/main/baseboard-trogdor/chromeos-base/chromeos-bsp-baseboard-trogdor/=
+files/98-qcom-nonstrict-iommu.rules
 
 BR,
 -R
 
-> - Mani
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
 >
-> >       .qos_lut_tbl =3D {
-> >               {.nentry =3D ARRAY_SIZE(sc8180x_qos_linear),
-> >               .entries =3D sc8180x_qos_linear
-> >
-> > ---
-> > base-commit: c503e3eec382ac708ee7adf874add37b77c5d312
-> > change-id: 20231030-sc8280xp-dpu-safe-lut-9769027b8452
-> >
-> > Best regards,
-> > --
-> > Bjorn Andersson <quic_bjorande@quicinc.com>
-> >
->
-> --
-> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
-=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
-=E0=AF=8D
+> Johan
