@@ -2,59 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B3DF7DD463
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 18:12:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C8357DD46A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 18:13:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344436AbjJaRMI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 13:12:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37650 "EHLO
+        id S1344694AbjJaRNp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 13:13:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39122 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343647AbjJaRMH (ORCPT
+        with ESMTP id S1343647AbjJaRNo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 13:12:07 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7C6E4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:12:04 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-9c2a0725825so942648666b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:12:04 -0700 (PDT)
+        Tue, 31 Oct 2023 13:13:44 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACFBD83
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:13:41 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-53e3b8f906fso9785217a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 10:13:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698772323; x=1699377123; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698772420; x=1699377220; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3gy2DoXe7zvEWgTN6cmYSFYz8OjUKBBawRLe2BiuPrI=;
-        b=MbQgH7tuFfyVZFOqb3DywR3MnoPlr7LMsfjQSXpFgPYHMFKH8LwnZprQEfLDtOF4wY
-         n+SfYATK6C0uWNG2DZ4Fjstsbr+EiLziYuBcp9U9BaiVW0pA245Ddt3m46TRw5aW/6j8
-         QmRjXEOwxR53e6Ies36ksqfs6IFkkRpU115PKj9Eb5CxY9GKDheY+r0hiHNkXBY9AtEg
-         RNZCIcBN1bdE/xLaGRQDwKPZcSaH+lSxr5VM4qvS2cxZPt7SlmdW+zP8x9972pseiXdB
-         M4iGlKPTJygCwka3JYjg/XUDfhq08/G2HiwK5r0BRz647blMC9xkX8iq7ce1vO8jZ0hX
-         Xjtw==
+        bh=aQTUNx4Mt1V3Xbfj6nADMIG97fP/+CR083uBLNeQZTs=;
+        b=zzEO0jzjGQNejRbWmDXqVcFOIWK24WxLRgs92lnoOsZ3XER+anhE+RGJGRsbsWHa2a
+         eu5JJwDg1M61e7qYxOZYLXoDtMf1zT3BUk68UEjxEv4vONFDAj5cAjvYop7dHw8pZhJk
+         /re0pkMTS18chGaX0uDAQuhwNNpuzPav3SCFukW/HWgar9m6J7t6NajLN7lAq7QZt9Hu
+         31NUuHAyOZMBNpbkq6hrjghA8gJllkWaRJ6snlYvECOD+ZcX8iC499+RjMkQru7Dfvug
+         KS9r9ZngQHUctcvlLsf/yvvMkBdPTheSObYFuWFBlPgQMAvr6q+ESoyVF1404yuBhJ6R
+         ZSSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698772323; x=1699377123;
+        d=1e100.net; s=20230601; t=1698772420; x=1699377220;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3gy2DoXe7zvEWgTN6cmYSFYz8OjUKBBawRLe2BiuPrI=;
-        b=UO8vIoJ0AqUxs30YjDXGN4bFBGmUIHMfWyaHAj72pRzpefYRQcX3b7Xxv2Z/BykXDm
-         jDGCB67/Jk2AaH2pvmrcKcljfnILj33WYaCkDKGzf6ZBSqAZmUNoSfLbUYkqMLpq2bGY
-         +Nh8NNqe2RhxdDnos7n+Jddv7PST9cpki34Fhbh9UN0MGIReMzcSJqgBoLykoYtcmGzI
-         KKwCrkGobKlz5rwtWwYmyLJpjCo+Bl20t7jXm1rbJaWOpjTgBhnx7lC5bbOorroEcjM9
-         Gxfme2MFTgwDtdhDJjABvLI2zWFHAfdYrbjOcG6aOUi89veHbvjFzMwMKOxp6m7jqrGE
-         HBKQ==
-X-Gm-Message-State: AOJu0YyUIWIdhjJheQkv9UnIhUhQMnM3kdy4k/OQXsY0Tc35H3ScumpH
-        D2ObbqYVAzPDj6X8qAXq9c9F4g==
-X-Google-Smtp-Source: AGHT+IGEL4ucCTHZwLV51PO1qj/dTChkWJAA2ttTP0kXd0AtrR7VSrTuRrEgYvu0TJHdYWdsSFjY6A==
-X-Received: by 2002:a17:907:2d87:b0:9c4:b8c9:1bf2 with SMTP id gt7-20020a1709072d8700b009c4b8c91bf2mr12238581ejc.60.1698772323126;
-        Tue, 31 Oct 2023 10:12:03 -0700 (PDT)
+        bh=aQTUNx4Mt1V3Xbfj6nADMIG97fP/+CR083uBLNeQZTs=;
+        b=gcXztoMl3NlOtuY030i2JDNOJhYRJZYadCQPAMyA4h1yfDuBfGGuVx5rnT3rs7hfpE
+         rm+PjfWQ4t7TcRRn6Jn1Hx4bAZHPy308/lH9fLFiOlLVUoQGk2Ra5tkqW4wZ6Q2rZAlS
+         5LTkUZNikqoTFNFfqXgdvkL2lDuZNTPpBKPYf8GMuraALQ6h7ARbRCvLq3QhYvELIlZG
+         +X5xUzR/r+l5aFmEX96yOUaMDqwlXz+bnC0afnc6cWJWpqzJobLmZHliXVlMYXs5DOlD
+         xrFgO+sRsHm9aSkWc2vW416a0hefhvt8qR0GpfKHrJPhXwzgyYLaWnSycsTD8BGC/dHc
+         +vwQ==
+X-Gm-Message-State: AOJu0YzRDC5t3js3hPmgSr5rEPA+5MDT44JfMIcT95xcIlU+EHcB/6+S
+        P70TWbXNzkYmvBiMCg204ynpQA==
+X-Google-Smtp-Source: AGHT+IFd/RH1t48DNmOvCXOwpJg2eBZTRP2U2+y6MkWFB/zxtr99u8vS60Bx5qQ3jlzGC1NNMIywBA==
+X-Received: by 2002:a17:907:7f26:b0:9be:fc31:8cd3 with SMTP id qf38-20020a1709077f2600b009befc318cd3mr10801150ejc.17.1698772420090;
+        Tue, 31 Oct 2023 10:13:40 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id pj17-20020a170906d79100b0099bc8bd9066sm1268384ejb.150.2023.10.31.10.12.01
+        by smtp.gmail.com with ESMTPSA id pj17-20020a170906d79100b0099bc8bd9066sm1268384ejb.150.2023.10.31.10.13.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 10:12:02 -0700 (PDT)
-Message-ID: <47cf6dd2-dcfa-468b-9bcb-3af32f6d9c4b@linaro.org>
-Date:   Tue, 31 Oct 2023 18:12:01 +0100
+        Tue, 31 Oct 2023 10:13:39 -0700 (PDT)
+Message-ID: <691607ce-ed05-4fd8-9989-ebd58f2e1664@linaro.org>
+Date:   Tue, 31 Oct 2023 18:13:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/5] arm64: dts: qcom: ipq9574: Add ecc engine support
+Subject: Re: [RFC PATCH 4/5] spi: qpic: Add support for qpic spi nand driver
 Content-Language: en-US
 To:     Md Sadre Alam <quic_mdalam@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -65,7 +65,7 @@ To:     Md Sadre Alam <quic_mdalam@quicinc.com>, agross@kernel.org,
         linux-mtd@lists.infradead.org, linux-spi@vger.kernel.org,
         quic_srichara@quicinc.com, qpic_varada@quicinc.com
 References: <20231031120307.1600689-1-quic_mdalam@quicinc.com>
- <20231031120307.1600689-3-quic_mdalam@quicinc.com>
+ <20231031120307.1600689-5-quic_mdalam@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -111,12 +111,12 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231031120307.1600689-3-quic_mdalam@quicinc.com>
+In-Reply-To: <20231031120307.1600689-5-quic_mdalam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -125,32 +125,45 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 31/10/2023 13:03, Md Sadre Alam wrote:
+> Add qpic spi nand driver support for qcom soc.
+
+What is "qcom soc"? Did you mean Qualcomm and SoC?
+
+> 
 > Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 > Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 5 +++++
->  1 file changed, 5 insertions(+)
+>  drivers/spi/Kconfig          |   7 +
+>  drivers/spi/Makefile         |   1 +
+>  drivers/spi/spi-qpic-snand.c | 604 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 612 insertions(+)
+>  create mode 100644 drivers/spi/spi-qpic-snand.c
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 5f83ee42a719..b44acb1fac74 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -336,6 +336,11 @@ sdhc_1: mmc@7804000 {
->  			status = "disabled";
->  		};
->  
-> +		bch: qpic_ecc {
-> +			compatible = "qcom,ipq9574-ecc";
 
-NAK. There are so many wrong things with it... Let's start with missing
-checkpatch. Then with unndeeded label. Then with not allowed underscores
-in node names.
-Finally:
-> +			status = "ok";
+...
 
-Drop.
+> +
+> +static int qcom_snand_remove(struct platform_device *pdev)
+> +{
+> +	struct spi_controller *ctlr = platform_get_drvdata(pdev);
+> +	spi_unregister_master(ctlr);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct qcom_nandc_props ipq9574_snandc_props = {
+> +	.dev_cmd_reg_start = 0x7000,
+> +	.is_bam = true,
+> +	.qpic_v2 = true,
+> +};
+> +
+> +static const struct of_device_id qcom_snandc_of_match[] = {
+> +	{
+> +		.compatible = "qcom,ipq9574-nand",
 
-
+Please run scripts/checkpatch.pl and fix reported warnings. Some
+warnings can be ignored, but the code here looks like it needs a fix.
+Feel free to get in touch if the warning is not clear.
 
 Best regards,
 Krzysztof
