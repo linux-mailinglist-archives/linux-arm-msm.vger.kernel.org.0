@@ -2,125 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC5117DC8DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 10:02:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01F797DC8F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 10:05:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235461AbjJaJCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 05:02:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52698 "EHLO
+        id S1343577AbjJaJFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 05:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235459AbjJaJCB (ORCPT
+        with ESMTP id S229658AbjJaJFC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 05:02:01 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D674091;
-        Tue, 31 Oct 2023 02:01:58 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id 98e67ed59e1d1-2809414efa9so869705a91.1;
-        Tue, 31 Oct 2023 02:01:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698742918; x=1699347718; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zqxJQ8Ni/MPYlzrYNW/kZynf7izc43entk4fRBk4nkQ=;
-        b=Ap2o7LUdBk4Ir+9f3/pkTeWJzgcX5bFRs6qpTpE8B0UVhvIFFO4ZqBTLmQ3Vfuk2EO
-         nk5s5OM0pguUKYBRcJdDzq1so2VJQjIl+w1HBVp37vebxYg15cFyYWc+lTCfKI5PAfOS
-         SAnrN5c04RmRVEvAdS9UceQRXMHAdcjrlX0g6BxL0A4X75n+0p/BJ50Djw5yIKqq3u5V
-         Tjq+y2cDezebL8573ecNgTCi2iBl2JDAgFCkXEY6PfBW04L4UnIKHAmwzE5Y8jSQ+U25
-         37tJSOI59SeWLeaVFLKI3+l5oGlO6Ni1vTCxcIHpRSzUO9GcJ/t25lNHCIGWMkinBuQn
-         XbhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698742918; x=1699347718;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zqxJQ8Ni/MPYlzrYNW/kZynf7izc43entk4fRBk4nkQ=;
-        b=Ibp08OH0E1VeT1+dcMjdMqDNMIv23pORMykay9p+MLNvG1yMFngqv1AQ7sMz4kwHsr
-         nwe9RPxST2swP+7RXYpBLVmLPNNky16TSTyoiD7hXplku7L+qBl56nRCY51z+Amtv8ma
-         XuNHKztFGtXXIWkajBX0GFr9tOO7Z0PL0CrXA5qncsoCQ8w84hkZGPCCEuVCto5xfG7B
-         HSS69U0ORwP66ygrFup6zk/anTr8D3eQEQJknuj6r4wXfzbg7CheofeYSX9oD1S4hexW
-         7ZkaoQFRH8PoZ38MKqXWzJARfFqD5qfVWcBaWUumfl7JPJCL+Vc57VA+kn8EkvVGi5tq
-         ORFw==
-X-Gm-Message-State: AOJu0YwiIOGhXw+jXht93ViGgDFaYsJlo/kq2NTTSJ/6ppZzsSf4c36G
-        NirHG0vE67huxSEkDy60QE50HK3Bvzcyjo772m4=
-X-Google-Smtp-Source: AGHT+IFwrWvxotSFyxfI1rxiJRHMU2JaY4pHGXA3/eAAFwJFmrZc2zszEFL7FLs8uar8EfcStUpR3JRApPolKxCi/t4=
-X-Received: by 2002:a17:90b:4c88:b0:280:8356:10b2 with SMTP id
- my8-20020a17090b4c8800b00280835610b2mr3199047pjb.5.1698742918210; Tue, 31 Oct
- 2023 02:01:58 -0700 (PDT)
+        Tue, 31 Oct 2023 05:05:02 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD21A9;
+        Tue, 31 Oct 2023 02:04:59 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2102C433C7;
+        Tue, 31 Oct 2023 09:04:55 +0000 (UTC)
+Message-ID: <ab9fa763-2329-4696-8903-2dd28bcbea0e@xs4all.nl>
+Date:   Tue, 31 Oct 2023 10:04:53 +0100
 MIME-Version: 1.0
-References: <20231025104457.628109-1-robimarko@gmail.com> <20231025104457.628109-2-robimarko@gmail.com>
- <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com>
- <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org> <CAOX2RU5-XFZhGzjigNtu-qFnPWDd2XkpGpY=HXWigRa5SXw4TA@mail.gmail.com>
- <ef377506-4132-4805-a76e-18f241afe319@linaro.org>
-In-Reply-To: <ef377506-4132-4805-a76e-18f241afe319@linaro.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Tue, 31 Oct 2023 10:01:47 +0100
-Message-ID: <CAOX2RU4K67evm10giQvF1rcfqTfR+e--KQT3ZePoHQoqASv_fg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] clk: qcom: ipq6018: add USB GDSCs
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 00/56] Add DELETE_BUF ioctl
+Content-Language: en-US, nl
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
+        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20231019125222.21370-1-benjamin.gaignard@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20231019125222.21370-1-benjamin.gaignard@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 30 Oct 2023 at 22:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
-> On 30.10.2023 21:37, Robert Marko wrote:
-> > On Mon, 30 Oct 2023 at 20:37, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>
-> >> On 29.10.2023 12:04, Robert Marko wrote:
-> >>> On Wed, 25 Oct 2023 at 12:45, Robert Marko <robimarko@gmail.com> wrote:
-> >>>>
-> >>>> IPQ6018 has GDSC-s for each of the USB ports, so lets define them as such
-> >>>> and drop the curent code that is de-asserting the USB GDSC-s as part of
-> >>>> the GCC probe.
-> >>>>
-> >>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >>>
-> >>> Unfortunately, after testing on multiple devices I hit the same GDSC
-> >>> issue I had a long time ago
-> >>> that was the reason I did not send this upstream.
-> >>> It seems that USB3 port GDSC (USB0 GDSC in code) works just fine,
-> >>> however the USB2 one
-> >>> (USB1 GDSC in code) it is stuck off and USB2 port will fail due to this:
-> >>>     1.607531] ------------[ cut here ]------------
-> >>> [    1.607559] usb1_gdsc status stuck at 'off'
-> >>> [    1.607592] WARNING: CPU: 0 PID: 35 at gdsc_toggle_logic+0x16c/0x174
-> >>> [    1.615120] Modules linked in:
-> >> Can you dump GDSCR (the entire 32-bit register) at boot and when toggling?
-> >
-> > Sure, here it is:
-> > [    0.023760] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val: 0x8222004 init
-> > [    0.023782] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val: 0x8222004 init
-> > [    0.988626] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-> > 0x8282000 before toggle
-> > [    1.202506] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-> > 0x8282000 after toggle
-> > [    1.207208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
-> > 0xa0282000 before toggle
-> Any chance
->
-> .en_few_wait_val = 0x2
->
-> (turning BIT(19) into BIT(17))
->
-> will make a difference?
+Hi Benjamin,
 
-Sadly, it makes no difference and GDSC status bit newer comes up which is
-rather weird as USB0 one seems to work just fine.
+On 19/10/2023 14:51, Benjamin Gaignard wrote:
+> Unlike when resolution change on keyframes, dynamic resolution change
+> on inter frames doesn't allow to do a stream off/on sequence because
+> it is need to keep all previous references alive to decode inter frames.
+> This constraint have two main problems:
+> - more memory consumption.
+> - more buffers in use.
+> To solve these issue this series introduce DELETE_BUFS ioctl and remove
+> the 32 buffers limit per queue.
+> 
+> VP9 conformance tests using fluster give a score of 210/305.
+> The 20 resize inter tests (vp90-2-21-resize_inter_* files) are ok
+> but require to use postprocessor.
+> 
+> Kernel branch is available here:
+> https://gitlab.collabora.com/benjamin.gaignard/for-upstream/-/commits/remove_vb2_queue_limit_v13
+> 
+> GStreamer branch to use DELETE_BUF ioctl and testing dynamic resolution
+> change is here:
+> https://gitlab.freedesktop.org/benjamin.gaignard1/gstreamer/-/commits/VP9_drc
+> 
+
+I'll just write the comments here since I never received patch 44 in my mailbox.
+The messages are sent too quickly and my provider just throws some away if that
+happens for a long series like this, very annoying. You can configure git to
+slow down sending emails, if you can look into that, then that would be great.
+It seems to happen whenever more than approx. 30-35 patches are sent off very
+quickly.
+
+In any case, a v14 is needed: when testing with -virtme and the patched v4l2-compliance
+it fails the 32 bit test. You need to add max_num_buffers support to
+drivers/media/v4l2-core/v4l2-compat-ioctl32.c.
+
+And since a v14 is needed because of that it would be nice if you can also
+make two small changes to patch 44/56:
+
+The commit log still refers to V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS (the old
+name). And in v4l_print_create_buffers() you log the value as "max buffers",
+just make that "max num buffers" for consistency.
 
 Regards,
-Robert
->
-> Konrad
+
+	Hans
+
+> changes in version 13:
+> - Fix typo and wording in commits messages.
+> - Only apply V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS on createbufs ioctl
+> - Fix queue setup test in test-drivers
+> 
+> changes in version 12:
+> - Change flag name to V4L2_BUF_CAP_SUPPORTS_SET_MAX_BUFS.
+> - Rework some commits message.
+> - Change vb2_queue_or_prepare_buf() prototype.
+> - Rework patches where 'min_buffers_needed' was badly used.
+> 
+> changes in version 11:
+> - Patches ordering:
+>   1 to 3: clean up
+>   3 to 42: use vb2_get_buffer() and vb2_get_num_buffers()
+>   43 to 46: allow to use more than 32 buffers per queue
+>   47 to 50: allow verisilicon driver to do VP9 dynamic resolution change
+>             (which was the main purpose of this work)
+>   51 to 56: prepare and introduce delete buffers feature.
+> - Add a patch to rename 'off' to offset.
+> - Add maintainers CC to drivers patches
+> 
+> changes in version 10:
+> - Make BUFFER_INDEX_MASK definition more readable
+> - Rebase on media_stage/master branch and add a patch for nuvoton
+>   driver.
+> - Fix issue on patch 13
+> 
+> changes in version 9:
+> - BUFFER_INDEX_MASK now depends on PAGE_SHIFT value to match
+>   architectures requirements.
+> - Correctly initialize max_num_buffers in vb2_core_queue_init()
+> - run 'test-media -kmemleak mc' on top of the series and on patches 1 to 47 without failures.
+> - fix compilation issue in patch 50
+> 
+> 
+> 
+>  
+> Benjamin Gaignard (56):
+>   media: videobuf2: Rename offset parameter
+>   media: videobuf2: Rework offset 'cookie' encoding pattern
+>   media: videobuf2: Stop spamming kernel log with all queue counter
+>   media: videobuf2: Use vb2_buffer instead of index
+>   media: videobuf2: Access vb2_queue bufs array through helper functions
+>   media: videobuf2: Remove duplicated index vs q->num_buffers check
+>   media: videobuf2: Add helper to get queue number of buffers
+>   media: videobuf2: Use vb2_get_num_buffers() helper
+>   media: amphion: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: amphion: Stop direct calls to queue num_buffers field
+>   media: mediatek: jpeg: Use vb2_get_buffer() instead of directly access
+>     to buffers array
+>   media: mediatek: vdec: Remove useless loop
+>   media: mediatek: vcodec: Stop direct calls to queue num_buffers field
+>   media: sti: hva: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: visl: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: atomisp: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: atomisp: Stop direct calls to queue num_buffers field
+>   media: dvb-core: Use vb2_get_buffer() instead of directly access to
+>     buffers array
+>   media: dvb-core: Do not initialize twice queue num_buffer field
+>   media: dvb-frontends: rtl2832: Stop direct calls to queue num_buffers
+>     field
+>   media: pci: dt3155: Remove useless check
+>   media: pci: tw686x: Stop direct calls to queue num_buffers field
+>   media: pci: cx18: Stop direct calls to queue num_buffers field
+>   media: pci: netup_unidvb: Stop direct calls to queue num_buffers field
+>   media: pci: tw68: Stop direct calls to queue num_buffers field
+>   media: i2c: video-i2c: Stop direct calls to queue num_buffers field
+>   media: coda: Stop direct calls to queue num_buffers field
+>   media: nxp: Stop direct calls to queue num_buffers field
+>   media: verisilicon: Stop direct calls to queue num_buffers field
+>   media: test-drivers: Stop direct calls to queue num_buffers field
+>   media: imx: Stop direct calls to queue num_buffers field
+>   media: meson: vdec: Stop direct calls to queue num_buffers field
+>   touchscreen: sur40: Stop direct calls to queue num_buffers field
+>   sample: v4l: Stop direct calls to queue num_buffers field
+>   media: cedrus: Stop direct calls to queue num_buffers field
+>   media: nuvoton: Stop direct calls to queue num_buffers field
+>   media: renesas: Stop direct calls to queue num_buffers field
+>   media: ti: Stop direct calls to queue num_buffers field
+>   media: usb: airspy: Stop direct calls to queue num_buffers field
+>   media: usb: cx231xx: Stop direct calls to queue num_buffers field
+>   media: usb: hackrf: Stop direct calls to queue num_buffers field
+>   media: usb: usbtv: Stop direct calls to queue num_buffers field
+>   media: videobuf2: Be more flexible on the number of queue stored
+>     buffers
+>   media: core: Report the maximum possible number of buffers for the
+>     queue
+>   media: test-drivers: vivid: Increase max supported buffers for capture
+>     queues
+>   media: test-drivers: vicodec: Increase max supported capture queue
+>     buffers
+>   media: verisilicon: Refactor postprocessor to store more buffers
+>   media: verisilicon: Store chroma and motion vectors offset
+>   media: verisilicon: g2: Use common helpers to compute chroma and mv
+>     offsets
+>   media: verisilicon: vp9: Allow to change resolution while streaming
+>   media: core: Rework how create_buf index returned value is computed
+>   media: core: Add bitmap manage bufs array entries
+>   media: core: Free range of buffers
+>   media: v4l2: Add DELETE_BUFS ioctl
+>   media: v4l2: Add mem2mem helpers for DELETE_BUFS ioctl
+>   media: test-drivers: Use helper for DELETE_BUFS ioctl
+> 
+>  .../userspace-api/media/v4l/user-func.rst     |   1 +
+>  .../media/v4l/vidioc-create-bufs.rst          |   8 +-
+>  .../media/v4l/vidioc-delete-bufs.rst          |  80 +++
+>  .../media/v4l/vidioc-reqbufs.rst              |   2 +
+>  drivers/input/touchscreen/sur40.c             |   5 +-
+>  .../media/common/videobuf2/videobuf2-core.c   | 569 +++++++++++-------
+>  .../media/common/videobuf2/videobuf2-v4l2.c   | 125 ++--
+>  drivers/media/dvb-core/dvb_vb2.c              |  17 +-
+>  drivers/media/dvb-frontends/rtl2832_sdr.c     |   5 +-
+>  drivers/media/i2c/video-i2c.c                 |   5 +-
+>  drivers/media/pci/cx18/cx18-streams.c         |   5 +-
+>  drivers/media/pci/dt3155/dt3155.c             |   2 -
+>  .../pci/netup_unidvb/netup_unidvb_core.c      |   5 +-
+>  drivers/media/pci/tw68/tw68-video.c           |   4 +-
+>  drivers/media/pci/tw686x/tw686x-video.c       |   5 +-
+>  drivers/media/platform/amphion/vpu_dbg.c      |  30 +-
+>  drivers/media/platform/amphion/vpu_v4l2.c     |   4 +-
+>  .../media/platform/chips-media/coda-common.c  |   2 +-
+>  .../platform/mediatek/jpeg/mtk_jpeg_core.c    |   7 +-
+>  .../vcodec/decoder/vdec/vdec_vp9_req_lat_if.c |   9 +-
+>  .../mediatek/vcodec/encoder/mtk_vcodec_enc.c  |   2 +-
+>  drivers/media/platform/nuvoton/npcm-video.c   |   2 +-
+>  drivers/media/platform/nxp/imx7-media-csi.c   |   7 +-
+>  drivers/media/platform/renesas/rcar_drif.c    |   5 +-
+>  drivers/media/platform/st/sti/hva/hva-v4l2.c  |   9 +-
+>  .../media/platform/ti/am437x/am437x-vpfe.c    |   5 +-
+>  drivers/media/platform/ti/cal/cal-video.c     |   5 +-
+>  .../media/platform/ti/davinci/vpif_capture.c  |   5 +-
+>  .../media/platform/ti/davinci/vpif_display.c  |   5 +-
+>  drivers/media/platform/ti/omap/omap_vout.c    |   5 +-
+>  drivers/media/platform/verisilicon/hantro.h   |   9 +-
+>  .../media/platform/verisilicon/hantro_drv.c   |   5 +-
+>  .../media/platform/verisilicon/hantro_g2.c    |  14 +
+>  .../platform/verisilicon/hantro_g2_hevc_dec.c |  18 +-
+>  .../platform/verisilicon/hantro_g2_vp9_dec.c  |  28 +-
+>  .../media/platform/verisilicon/hantro_hw.h    |   7 +-
+>  .../platform/verisilicon/hantro_postproc.c    |  93 ++-
+>  .../media/platform/verisilicon/hantro_v4l2.c  |  27 +-
+>  .../media/test-drivers/vicodec/vicodec-core.c |   3 +
+>  drivers/media/test-drivers/vim2m.c            |   2 +
+>  .../media/test-drivers/vimc/vimc-capture.c    |   2 +
+>  drivers/media/test-drivers/visl/visl-dec.c    |  32 +-
+>  drivers/media/test-drivers/visl/visl-video.c  |   2 +
+>  drivers/media/test-drivers/vivid/vivid-core.c |  21 +
+>  .../media/test-drivers/vivid/vivid-meta-cap.c |   3 -
+>  .../media/test-drivers/vivid/vivid-meta-out.c |   5 +-
+>  .../test-drivers/vivid/vivid-touch-cap.c      |   5 +-
+>  .../media/test-drivers/vivid/vivid-vbi-cap.c  |   3 -
+>  .../media/test-drivers/vivid/vivid-vbi-out.c  |   3 -
+>  .../media/test-drivers/vivid/vivid-vid-cap.c  |   3 -
+>  .../media/test-drivers/vivid/vivid-vid-out.c  |   5 +-
+>  drivers/media/usb/airspy/airspy.c             |   5 +-
+>  drivers/media/usb/cx231xx/cx231xx-417.c       |   5 +-
+>  drivers/media/usb/cx231xx/cx231xx-video.c     |   5 +-
+>  drivers/media/usb/hackrf/hackrf.c             |   5 +-
+>  drivers/media/usb/usbtv/usbtv-video.c         |   5 +-
+>  drivers/media/v4l2-core/v4l2-dev.c            |   1 +
+>  drivers/media/v4l2-core/v4l2-ioctl.c          |  21 +-
+>  drivers/media/v4l2-core/v4l2-mem2mem.c        |  20 +
+>  .../staging/media/atomisp/pci/atomisp_ioctl.c |   4 +-
+>  drivers/staging/media/imx/imx-media-capture.c |   7 +-
+>  drivers/staging/media/meson/vdec/vdec.c       |  13 +-
+>  .../staging/media/sunxi/cedrus/cedrus_h264.c  |   9 +-
+>  .../staging/media/sunxi/cedrus/cedrus_h265.c  |   9 +-
+>  include/media/v4l2-ioctl.h                    |   4 +
+>  include/media/v4l2-mem2mem.h                  |  12 +
+>  include/media/videobuf2-core.h                |  65 +-
+>  include/media/videobuf2-v4l2.h                |  13 +
+>  include/uapi/linux/videodev2.h                |  24 +-
+>  samples/v4l/v4l2-pci-skeleton.c               |   5 +-
+>  70 files changed, 990 insertions(+), 472 deletions(-)
+>  create mode 100644 Documentation/userspace-api/media/v4l/vidioc-delete-bufs.rst
+> 
+
