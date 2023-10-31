@@ -2,87 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68D4E7DD6BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 20:46:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 48B7B7DD824
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 23:19:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235192AbjJaTqv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 15:46:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48328 "EHLO
+        id S1346390AbjJaWTZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 18:19:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231253AbjJaTqv (ORCPT
+        with ESMTP id S1344925AbjJaWTY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 15:46:51 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8341C83;
-        Tue, 31 Oct 2023 12:46:48 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c518a1d83fso85530641fa.3;
-        Tue, 31 Oct 2023 12:46:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698781607; x=1699386407; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=purwZ105GsEhgtQHpkdP9umavsYHSc4ApWwflAbtrrc=;
-        b=EHc4OcE56l85l0RGlsWNTcov1sWKT63o3L/Of/LUVeBPCFjuo5SPXQ/7Rbd0U/3NmD
-         wsm81iz/kxwbKU6ZzRlIlC0UcPjjc2akCn221EPsk0aM0XE+8eJKNVGdsIRJoZ7LVWaO
-         rO3JhfHNFaDAswKuuPnm9wFZ0jElgeQOvaO7p6B7X0yxgeyfRUGHD02rf+KYJM9H+tiG
-         /INcKvOKyIUD3p0RU5tcZcbXDrBmm1bphMc6Ll3kBJmokqVwO1b+mpDsfcJW7uoaf7LR
-         tOJZDdvaHSi18gwxAXz6V+WHhhYh7y4WSfAfArx9/zmTBjX7JeAEm2irPeTa4ySTPh1Z
-         qkYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698781607; x=1699386407;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=purwZ105GsEhgtQHpkdP9umavsYHSc4ApWwflAbtrrc=;
-        b=UKojw2NaElWuJAFqAQ7TEyzuD3J+VFlsTHUeuZX241gp/Orkv6L565QS83/YGUyhTN
-         3x4aGBp6uO52Tt1Uy1xKYuGfGlpjXLmuALkKVXk/kiUPyzcGDvTdB2/AdEWkcw1qXth2
-         Dw0rextBrqA483qrRcMyUpy6z3DbugrW5mfjBfGwX1TXa1TzETaraf9qhSbYV6V6hOXz
-         Ao8rHXMh9YV9MjvI5QEyWVXUti+4EXVPUbuu71YVIOHiAirfIGOlN5DPqPKxy64BgLrZ
-         ksGGjZzMNJgbXCqogpG1M8b7haw6gtxavnKVPbQZfWGedfGeauqOkjMLtDG4BM1cQELZ
-         WgAQ==
-X-Gm-Message-State: AOJu0Yx678i6I8abs+jAVd93dATUO8eS3oRDBUa78y8j5wRgC5ZgSnLX
-        SnMqpFUmUdfoLbACcYGPJI0=
-X-Google-Smtp-Source: AGHT+IEOLRiyG9O+qr6AzZRS5vIZx/36cYDoFO/IMWC9eGiCVgGOswCJxAHnc67RSaD+pLKgSCkFgQ==
-X-Received: by 2002:a05:651c:1a20:b0:2c5:1808:4aa4 with SMTP id by32-20020a05651c1a2000b002c518084aa4mr12208174ljb.12.1698781606309;
-        Tue, 31 Oct 2023 12:46:46 -0700 (PDT)
-Received: from [192.168.3.32] (cpezg-94-253-131-198-cbl.xnet.hr. [94.253.131.198])
-        by smtp.gmail.com with ESMTPSA id 9-20020a2e0f09000000b002b6cd89a3fcsm7524ljp.118.2023.10.31.12.46.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 12:46:45 -0700 (PDT)
-Message-ID: <65cc630c-1d71-48e1-b639-b92221a8d7b1@gmail.com>
-Date:   Tue, 31 Oct 2023 20:46:42 +0100
+        Tue, 31 Oct 2023 18:19:24 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 792CCFE;
+        Tue, 31 Oct 2023 15:19:21 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 39VJOBuL029799;
+        Tue, 31 Oct 2023 22:19:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Aphlc6s8NtUMz0AnqPtvlfqApJgy5j7VA/4sgYsahRU=;
+ b=a+TcgrrRXjpCN5SqROM/bvVf8A6ELksisLPxyrzPnKzvxS5+/JmhvJmvNvEXcXrdcJ87
+ O7zUFbzID42C88I7t5x5Ci6H20sTRkMhmvgY5kpy4pnaQuAcviHKWf1fG8E6Ul8V2O16
+ SquzGStAoaq5vWx6Mm1yZAxvMv/TKH3UANC8NINeUwAbYe7vDV0zPTRb7cke/jG9o6d/
+ hbmsLITZJQ2/NYldQmEsVdgJBls1qkSanPpq7ZeKRbv5QpLS1U4eLkE61e4VfwR+pm75
+ wMe/CNyCCGv3UkY/2wZDht21WkwoFA/JBMdS/he6p9a14VkhHLeb47fjdQMc2SIKSnbM IQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u34sc0v4c-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 22:19:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 39VMJ8dP020242
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 31 Oct 2023 22:19:08 GMT
+Received: from [10.110.20.112] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 31 Oct
+ 2023 15:19:07 -0700
+Message-ID: <7b074eaf-ab65-c03b-dcb6-92a0848c2291@quicinc.com>
+Date:   Tue, 31 Oct 2023 15:18:59 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: ipq6018: add SDHCI node
-To:     Mantas Pucka <mantas@8devices.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Abhishek Sahu <absahu@codeaurora.org>,
-        Anusha Canchi Ramachandra Rao <anusharao@codeaurora.org>,
-        Sricharan R <sricharan@codeaurora.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org
-References: <1682338412-15420-1-git-send-email-mantas@8devices.com>
- <1682338412-15420-3-git-send-email-mantas@8devices.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v6 3/7] soc: qcom: add QCOM PBS driver
 Content-Language: en-US
-From:   Robert Marko <robimarko@gmail.com>
-In-Reply-To: <1682338412-15420-3-git-send-email-mantas@8devices.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Lee Jones <lee@kernel.org>
+CC:     <pavel@ucw.cz>, <thierry.reding@gmail.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <luca.weiss@fairphone.com>, <konrad.dybcio@linaro.org>,
+        <u.kleine-koenig@pengutronix.de>, <quic_subbaram@quicinc.com>,
+        <quic_gurus@quicinc.com>, <linux-leds@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pwm@vger.kernel.org>
+References: <20231020182218.22217-1-quic_amelende@quicinc.com>
+ <20231020182218.22217-4-quic_amelende@quicinc.com>
+ <20231025121255.GM8909@google.com>
+From:   Anjelique Melendez <quic_amelende@quicinc.com>
+In-Reply-To: <20231025121255.GM8909@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6iHWD_z0aisOaV3YVZEc3yd2VvNJ9BrR
+X-Proofpoint-GUID: 6iHWD_z0aisOaV3YVZEc3yd2VvNJ9BrR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-31_09,2023-10-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=749 bulkscore=0 phishscore=0 priorityscore=1501
+ mlxscore=0 spamscore=0 clxscore=1011 adultscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2310310184
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,48 +88,31 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 24. 04. 2023. 14:13, Mantas Pucka wrote:
-> IPQ6018 has one SD/eMMC controller, add node for it.
->
-> Signed-off-by: Mantas Pucka <mantas@8devices.com>
 
-Tested-by: Robert Marko <robimarko@gmail.com>
-
-> ---
->   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 23 +++++++++++++++++++++++
->   1 file changed, 23 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> index 9ff4e9d45065..b129b23d68b1 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> @@ -414,6 +414,29 @@
->   			};
->   		};
->   
-> +		sdhc_1: mmc@7804000 {
-> +			compatible = "qcom,ipq6018-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0x0 0x07804000 0x0 0x1000>,
-> +			      <0x0 0x07805000 0x0 0x1000>,
-> +			      <0x0 0x07808000 0x0 0x2000>;
-> +			reg-names = "hc", "cqhci", "ice";
-> +
-> +			interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq", "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> +				 <&gcc GCC_SDCC1_APPS_CLK>,
-> +				 <&xo>,
-> +				 <&gcc GCC_SDCC1_ICE_CORE_CLK>;
-> +			clock-names = "iface", "core", "xo", "ice";
-> +
-> +			resets = <&gcc GCC_SDCC1_BCR>;
-> +			supports-cqe;
-> +			bus-width = <8>;
-> +			status = "disabled";
-> +		};
-> +
->   		blsp_dma: dma-controller@7884000 {
->   			compatible = "qcom,bam-v1.7.0";
->   			reg = <0x0 0x07884000 0x0 0x2b000>;
+On 10/25/2023 5:12 AM, Lee Jones wrote:
+> On Fri, 20 Oct 2023, Anjelique Melendez wrote:
+> 
+>> Add the Qualcomm PBS (Programmable Boot Sequencer) driver. The QCOM PBS
+>> driver supports configuring software PBS trigger events through PBS RAM
+>> on Qualcomm Technologies, Inc (QTI) PMICs.
+>>
+>> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+>> ---
+>>  drivers/soc/qcom/Kconfig          |   9 ++
+>>  drivers/soc/qcom/Makefile         |   1 +
+>>  drivers/soc/qcom/qcom-pbs.c       | 243 ++++++++++++++++++++++++++++++
+>>  include/linux/soc/qcom/qcom-pbs.h |  30 ++++
+>>  4 files changed, 283 insertions(+)
+>>  create mode 100644 drivers/soc/qcom/qcom-pbs.c
+>>  create mode 100644 include/linux/soc/qcom/qcom-pbs.h
+> 
+> The LED patches look good to go.
+> 
+> What's the plan for the SoC driver?
+> 
+>   * Who will review it?
+>   * Shall I take it via LED with an Ack?
+> 
+QCOM PBS driver should be reviewed by linux-arm-msm maintainers/reviewers.
+Will give them another week or so to take a look at this series before I
+resend to them.
