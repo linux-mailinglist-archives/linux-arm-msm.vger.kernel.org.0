@@ -2,113 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85A977DCA5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 11:07:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D334F7DCAE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Oct 2023 11:31:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236115AbjJaKHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 06:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36902 "EHLO
+        id S236281AbjJaKbc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Oct 2023 06:31:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235929AbjJaKHN (ORCPT
+        with ESMTP id S234974AbjJaKbb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 06:07:13 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5642E102
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:07:10 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-507d1cc0538so7507098e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:07:10 -0700 (PDT)
+        Tue, 31 Oct 2023 06:31:31 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8850DE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:31:27 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9d242846194so377868466b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 03:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698746828; x=1699351628; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=frB5O4f+1jmhgXg9FZz+gua4r9L65Q4rQrld4sMEitY=;
-        b=pcB7fw22FJaSLyx03eVAUuvWrlyrQyyiHyfCgki06y8nIZwnr1cQsgbyVXTM079hs6
-         xrLw9fFSvf0m34ni36hqHh5Fxji7GrmxypDHaT95LOrtM02r9SXCm5xGv/cFOZqFOMT9
-         Gxg51TzYR1FQr+qNuztLDs95UPjJkAwx9Rk/RBIwNa6xtcbsXSTUTqwy9q7YYlmnuNcb
-         WivqmD6VaHROfkIMBNsEqYxAoTqzPnWS3odSzA6c1m+mFKAbzwvrwq1F1mSadKxarao5
-         cXPh5BjRDb/V+vNK/XWdRqrP5rEoMbgVQgQ4+5daUWfCuVXFjL1PEXZYheta3BKslY6C
-         f/dw==
+        d=fairphone.com; s=fair; t=1698748286; x=1699353086; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LwcpAw93f8EcOvzGZFcG9/r02PfDebZGVqeB4dh3eQo=;
+        b=sDppNOCPXHUEBhOfx8IlTeuaB0d620dH/TqHK564vPCVsYrtAeM6xU8MKWHNtHbp3g
+         VTQsp2XlAL5KTvYomxN7Z/dVSPOp5GWq5ajqd8mM0YPsfFo9bZlxrB013VWpKolgm0mk
+         fA+0P5o/3NYP33s6hcbI1NB7kMG3odT6UYUobaD1sgJ1pby8Hxma5Yc+Z5vHbGwS3MWG
+         BdE0tjBXMhONnvkM0SuVdv7rRosERjDfGkerYF9f/+zhPgs9IPobv1AbE3UmuhULZzL0
+         mBiGoerQ1G3qWGaeFa5HyHpumGEzqF9/wXejZhYOKUvFPltJ+YjyqfuYZRN5xfUlQrBz
+         uKww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698746828; x=1699351628;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=frB5O4f+1jmhgXg9FZz+gua4r9L65Q4rQrld4sMEitY=;
-        b=tTXjYKqcfDPz4IecBGyqcvtqUzM5AN8TVXAkm05coqE+FyWHTguS3rm6uAXgpaKHgP
-         vITmRMaWnCwb86iieXWzcg00gh09en4tAY6G11BkScLjMtzxfuICoLS0qeAfNFFHVfel
-         i/KQuznADODGWzzfWH7XllSTj3JuqxnuuTL9pfncmhAX5VBCb51br9JMSIT2Jk4xnnqM
-         zLJ2VQ4Em1NwY8SIJK3u3Udse0HOhui1WN4SQStcmcL5bmEp/goN8BFZkb6gQX7qtxqg
-         23UXYbUkOZ6P876TlHjB/UHWQ9xvaCnDw+BsZJJMHOxJaQ3WF+jRNZN75K4zhTA/pW4O
-         5Y9A==
-X-Gm-Message-State: AOJu0YzSAtUbJREGan+wTBKMc08MqpKMhr1wMm1jPwt1pHgOdGB0FeA2
-        6HdSmf2x/LuVaoTLtbteDyEkXw==
-X-Google-Smtp-Source: AGHT+IFJIfZHmdJoZZSuYGIOVo3i11fy4J+qIsHqkuYJObXFihYc7LKxcPSeCgn0p+xklx1OhU1QBA==
-X-Received: by 2002:a05:6512:618:b0:507:b15d:2ff1 with SMTP id b24-20020a056512061800b00507b15d2ff1mr7502828lfe.38.1698746828460;
-        Tue, 31 Oct 2023 03:07:08 -0700 (PDT)
-Received: from [192.168.143.96] (178235177091.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.91])
-        by smtp.gmail.com with ESMTPSA id i21-20020a056512341500b00507a0098421sm165357lfr.181.2023.10.31.03.07.06
+        d=1e100.net; s=20230601; t=1698748286; x=1699353086;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=LwcpAw93f8EcOvzGZFcG9/r02PfDebZGVqeB4dh3eQo=;
+        b=wlKa1ezDsZRlNQe0bTqoSXuPjOjPOD0tn/ukHK7hrBN1R91imQ89RDH+bjem/5GpIV
+         8DUZhnJYGGqiN0L51RIEdooejP9STRpUolyPeKVvDpV8LNmcHhgl5E3Etxvd94L6MALU
+         nqqimXgPUI06jPFvuuL8znfurvvoI2tnYljjbM73QKZ0trks5ontJTicURkZHKONHEqm
+         oxnMm1HETbrlnI07XaUA1X60tBgRSlNvO56F3DyMv4DPETDSuG+3S8iclhmTkM5L72uV
+         rHcLvo+WLEzM/rQihePR9Wr4UIQ1BcsK9GiiDOi/POhky2MltuZRBB/WgxYGCfOHD6ij
+         7xDQ==
+X-Gm-Message-State: AOJu0Yy7kQDpmTxEsJkisa8FZF9X/WAKILEl5Oe/j8JFsJIaPjzOIvvZ
+        leXgJiN/8TLTU852dDFVvn1nJw==
+X-Google-Smtp-Source: AGHT+IEK2nbNqEftFgCQaEKTK6oP+JGRn2+Pt4iMlF4vWkb9BS+YeoAi2iIM0BIkp3QaBbb1bZ+L0Q==
+X-Received: by 2002:a17:907:e88:b0:9c5:64f2:eaba with SMTP id ho8-20020a1709070e8800b009c564f2eabamr11912495ejc.53.1698748285858;
+        Tue, 31 Oct 2023 03:31:25 -0700 (PDT)
+Received: from localhost (mobiledyn-62-240-134-77.mrsn.at. [62.240.134.77])
+        by smtp.gmail.com with ESMTPSA id l11-20020a170906414b00b009b2ca104988sm739894ejk.98.2023.10.31.03.31.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Oct 2023 03:07:08 -0700 (PDT)
-Message-ID: <6048a2a3-cf0a-4f20-b96a-1855d69648ef@linaro.org>
-Date:   Tue, 31 Oct 2023 11:07:06 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: acer-aspire1: Add sound
-Content-Language: en-US
-To:     Nikita Travkin <nikita@trvn.ru>
-Cc:     cros-qcom-dts-watchers@chromium.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231027-aspire1-sound-v1-0-5ff3cf8b5701@trvn.ru>
- <20231027-aspire1-sound-v1-3-5ff3cf8b5701@trvn.ru>
- <c2ad06fd-805f-44b9-bf4d-806ef20f272a@linaro.org>
- <db624c01-a48c-4a8f-b9ea-548b25aa3091@linaro.org>
- <8b13ec027d960a09aee9434055a12e15@trvn.ru>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <8b13ec027d960a09aee9434055a12e15@trvn.ru>
+        Tue, 31 Oct 2023 03:31:25 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date:   Tue, 31 Oct 2023 11:31:20 +0100
+Message-Id: <CWMK0AQRL87L.1F9MIDVQ4J439@fairphone.com>
+Subject: Re: [PATCH 9/9] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable
+ WiFi
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Mathieu Poirier" <mathieu.poirier@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Manivannan Sadhasivam" <mani@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>
+Cc:     <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Rob Herring" <robh@kernel.org>,
+        =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
+ <20231027-sc7280-remoteprocs-v1-9-05ce95d9315a@fairphone.com>
+ <12ea48bd-5022-4820-815a-89ef23ec9385@linaro.org>
+In-Reply-To: <12ea48bd-5022-4820-815a-89ef23ec9385@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -119,48 +90,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31.10.2023 08:26, Nikita Travkin wrote:
-> Konrad Dybcio писал(а) 31.10.2023 02:51:
->> On 30.10.2023 22:50, Konrad Dybcio wrote:
->>> On 27.10.2023 16:42, Nikita Travkin wrote:
->>>> This laptop has two i2s speakers; an i2s audio codec for the headset
->>>> jack; two DMIC microphones in the lid and the displayport audio channel.
->>>>
->>>> This commit adds the audio node that describes all of the above with the
->>>> exception of the DMICs that require in-SoC digital codec to be brought
->>>> up, which will be done later.
->>>>
->>>> Note that the displayport channel is connected here for completeness,
->>>> but the displayport can't be used yet since the HPD signal is created by
->>>> the embedded controller, which will be added later.
->>>>
->>>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->>>> ---
->>> [...]
->>>
->>>
->>>> +		primary-tx-dai-link {
->>>> +			link-name = "Primary MI2S Capture";
->>>> +
->>>> +			cpu {
->>>> +				sound-dai = <&q6afedai PRIMARY_MI2S_TX>;
->>>> +			};
->>>> +
->>>> +			platform {
->>>> +				sound-dai = <&q6routing>;
->>>> +			};
->>>> +
->>>> +			codec {
->>>> +				sound-dai = <&alc5682 0>;
->>> Both RX and TX going to 5862 interface?
->> interface1*
-> 
-> Yes, indeed. The codec has a single i2s with rx and tx, and
-> shared i2s clocks. They are connected to the prim i2s.
-> 
-> Codec playback is headphone jack, and capture is headset
-> mic. It could have also been the lid dmics, like on trogdor
-> but 2/3 describes that sad story...
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Mon Oct 30, 2023 at 8:26 PM CET, Konrad Dybcio wrote:
+> On 27.10.2023 16:20, Luca Weiss wrote:
+> > Now that the WPSS remoteproc is enabled, enable wifi so we can use it.
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >=20
+> > diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/=
+arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> > index d65eef30091b..e7e20f73cbe6 100644
+> > --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> > +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> > @@ -713,3 +713,7 @@ &venus {
+> >  	firmware-name =3D "qcom/qcm6490/fairphone5/venus.mbn";
+> >  	status =3D "okay";
+> >  };
+> > +
+> > +&wifi {
+> > +	status =3D "okay";
+> qcom,ath11k-calibration-variant?
 
-Konrad
+What value would I put there for my device? Based on existing usages
+(mostly for ath10k) I'd say "Fairphone_5"?
+
+And you mean I should add this property in dts before even looking into
+the firmware/calibration side of it?
+
+Regards
+Luca
+
+>
+> Konrad
+
