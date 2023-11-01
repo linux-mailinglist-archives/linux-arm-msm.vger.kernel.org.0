@@ -2,335 +2,257 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B135E7DE338
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 16:36:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3437B7DE31F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 16:36:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229854AbjKAOnC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Nov 2023 10:43:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37426 "EHLO
+        id S230152AbjKAO4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Nov 2023 10:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbjKAOnC (ORCPT
+        with ESMTP id S229567AbjKAO4c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Nov 2023 10:43:02 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1B8DDE;
-        Wed,  1 Nov 2023 07:42:56 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A1D4lw1000533;
-        Wed, 1 Nov 2023 14:42:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=bRMFsgkBN/ZRzcBmg+JK7b2dtXW72QV0EGjP9MpjG08=;
- b=h3RnaN7F9HBPYTul+NjsDk9aZlDGpLDzu2WliCtDTNRr4qks76Tl0pJ0V8Jhug+o4Mxv
- l6cOlwRLpj0PTHsT+eBtqcHHPW9G5L7z0gczxv+0G9osP+LiRGRppraEJeADwBqiL84X
- MFjTYTUkWBjkEHLTlVbZbR5X2v8GUSOnzHACUpK/F/6GQeglKyvXF3EK9lvG5BacAApZ
- YOyRfec2auJAK2a/kYuCn2lPmp+Ekou78XJAyaLxCw6sxxqlLis7hKaNSYW+1ZbMzaCC
- /vzye9mklaMiouKwUlI52XYNMorphPkrZNiW5fRxPUy5j5GaGbLnmYs3qEMgrasnCItT lg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u30xecd7v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 01 Nov 2023 14:42:51 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A1EgoxT026228
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 1 Nov 2023 14:42:50 GMT
-Received: from [10.216.63.119] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 1 Nov
- 2023 07:42:45 -0700
-Message-ID: <a6bffac4-8c9c-6b85-290e-c991e8ab319a@quicinc.com>
-Date:   Wed, 1 Nov 2023 20:12:40 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 2/3] remoteproc: qcom: pas: make region assign more
- generic
-Content-Language: en-US
-To:     <neil.armstrong@linaro.org>, Andy Gross <agross@kernel.org>,
+        Wed, 1 Nov 2023 10:56:32 -0400
+Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD10110C;
+        Wed,  1 Nov 2023 07:56:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=kernkonzept.com; s=mx1; h=In-Reply-To:Content-Type:MIME-Version:References:
+        Message-ID:Subject:Cc:To:From:Date:Content-Transfer-Encoding:Reply-To:
+        Content-ID:Content-Description;
+        bh=2OitxQ/ndqBrxlaO/t3PZApPqvhNvUnxSmmdj8bUi1o=; b=TLMz5jcMPUMHKCqqaVE2eDGCv6
+        MfEjncZPQ6PZTjZWqBM8qgKjGVkodYTXB1l8EMkOoI/4V8yhDIYbEJggi/F4IsYEX1sa3XqHs0BWI
+        mfXampdWmXkN3jz7WN7oO+c2LGGqhNF5MCIFLT1PzMmHh+t3y81Ubj/gO6kLW2PcFz9J3e8G08To/
+        tf+Mv+5PVtTuEb64H6Mg5a0J2WQ5brAWlL4XQBZHfK69qy3KiNKNcPkVDjbdK0oa7Bks201XuaKPW
+        c3gkrapt/cK3IA4iFn069hEgDcghFVqeZ2Mt4I/1w+vCeFbOjWDQMF9spozzcjVwQAwTDwV0EPRDf
+        adeP5T7w==;
+Received: from [10.22.3.24] (helo=kernkonzept.com)
+        by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
+        id 1qyCdn-002MbQ-2q;
+        Wed, 01 Nov 2023 15:56:19 +0100
+Date:   Wed, 1 Nov 2023 15:56:13 +0100
+From:   Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20231030-topic-sm8650-upstream-remoteproc-v2-0-609ee572e0a2@linaro.org>
- <20231030-topic-sm8650-upstream-remoteproc-v2-2-609ee572e0a2@linaro.org>
- <8e71ba02-5d6a-4c7e-4a55-f9ef79c2f928@quicinc.com>
- <65dcdd9c-a75b-4fe7-bdcf-471a5602db20@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <65dcdd9c-a75b-4fe7-bdcf-471a5602db20@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cpQItXIuv7P23BUkRLaoMPIpz_Q1Wx5s
-X-Proofpoint-ORIG-GUID: cpQItXIuv7P23BUkRLaoMPIpz_Q1Wx5s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-01_12,2023-11-01_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 malwarescore=0
- adultscore=0 impostorscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311010123
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] cpufreq: qcom-nvmem: Enable virtual power domain
+ devices
+Message-ID: <ZUJm-r43cj0E-vBP@kernkonzept.com>
+References: <20231018-msm8909-cpufreq-v2-0-0962df95f654@kernkonzept.com>
+ <20231018-msm8909-cpufreq-v2-2-0962df95f654@kernkonzept.com>
+ <CAPDyKFot9=M1ooP_Q1AOgG5o_4DTQ2qsyai1ZdXAzBwf89W4uA@mail.gmail.com>
+ <CAPDyKFr5A-P=UhWs4rUMBWup3pH75WAhcZ56Y2_Sfk3=WfxRCQ@mail.gmail.com>
+ <ZTeyhR7YY7VgWQlU@kernkonzept.com>
+ <CAPDyKFrcV8iJnJ904j1jkx0E8PaOLmiTZ7CKk7EV8qQ71AZdbA@mail.gmail.com>
+ <ZTfBZqBwqskhFydZ@kernkonzept.com>
+ <CAPDyKFooPLCmJeqjhiMm7HRdW5UrEw0yHvGF9fgLvOigsgbWxg@mail.gmail.com>
+ <ZTfv-Dea693UqLXB@gerhold.net>
+ <CAPDyKFpFJd+ipv6kb77MgnDtXtFPa3=BX2RgaKq5i5r6WpVmJQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPDyKFpFJd+ipv6kb77MgnDtXtFPa3=BX2RgaKq5i5r6WpVmJQ@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Oct 25, 2023 at 12:05:49PM +0200, Ulf Hansson wrote:
+> On Tue, 24 Oct 2023 at 18:25, Stephan Gerhold <stephan@gerhold.net> wrote:
+> > On Tue, Oct 24, 2023 at 06:11:34PM +0200, Ulf Hansson wrote:
+> > > On Tue, 24 Oct 2023 at 15:07, Stephan Gerhold
+> > > <stephan.gerhold@kernkonzept.com> wrote:
+> > > > On Tue, Oct 24, 2023 at 02:49:32PM +0200, Ulf Hansson wrote:
+> > > > > On Tue, 24 Oct 2023 at 14:03, Stephan Gerhold
+> > > > > <stephan.gerhold@kernkonzept.com> wrote:
+> > > > > > On Thu, Oct 19, 2023 at 01:26:19PM +0200, Ulf Hansson wrote:
+> > > > > > > On Thu, 19 Oct 2023 at 12:24, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > > > > > > On Wed, 18 Oct 2023 at 10:06, Stephan Gerhold
+> > > > > > > > <stephan.gerhold@kernkonzept.com> wrote:
+> > > > > > > > >
+> > > > > > > > > The genpd core caches performance state votes from devices that are
+> > > > > > > > > runtime suspended as of commit 3c5a272202c2 ("PM: domains: Improve
+> > > > > > > > > runtime PM performance state handling"). They get applied once the
+> > > > > > > > > device becomes active again.
+> > > > > > > > >
+> > > > > > > > > To attach the power domains needed by qcom-cpufreq-nvmem the OPP core
+> > > > > > > > > calls genpd_dev_pm_attach_by_id(). This results in "virtual" dummy
+> > > > > > > > > devices that use runtime PM only to control the enable and performance
+> > > > > > > > > state for the attached power domain.
+> > > > > > > > >
+> > > > > > > > > However, at the moment nothing ever resumes the virtual devices created
+> > > > > > > > > for qcom-cpufreq-nvmem. They remain permanently runtime suspended. This
+> > > > > > > > > means that performance state votes made during cpufreq scaling get
+> > > > > > > > > always cached and never applied to the hardware.
+> > > > > > > > >
+> > > > > > > > > Fix this by enabling the devices after attaching them and use
+> > > > > > > > > dev_pm_syscore_device() to ensure the power domains also stay on when
+> > > > > > > > > going to suspend. Since it supplies the CPU we can never turn it off
+> > > > > > > > > from Linux. There are other mechanisms to turn it off when needed,
+> > > > > > > > > usually in the RPM firmware (RPMPD) or the cpuidle path (CPR genpd).
+> > > > > > > >
+> > > > > > > > I believe we discussed using dev_pm_syscore_device() for the previous
+> > > > > > > > version. It's not intended to be used for things like the above.
+> > > > > > > >
+> > > > > > > > Moreover, I was under the impression that it wasn't really needed. In
+> > > > > > > > fact, I would think that this actually breaks things for system
+> > > > > > > > suspend/resume, as in this case the cpr driver's genpd
+> > > > > > > > ->power_on|off() callbacks are no longer getting called due this,
+> > > > > > > > which means that the cpr state machine isn't going to be restored
+> > > > > > > > properly. Or did I get this wrong?
+> > > > > > >
+> > > > > > > BTW, if you really need something like the above, the proper way to do
+> > > > > > > it would instead be to call device_set_awake_path() for the device.
+> > > > > > >
+> > > > > >
+> > > > > > Unfortunately this does not work correctly. When I use
+> > > > > > device_set_awake_path() it does set dev->power.wakeup_path = true.
+> > > > > > However, this flag is cleared again in device_prepare() when entering
+> > > > > > suspend. To me it looks a bit like wakeup_path is not supposed to be set
+> > > > > > directly by drivers? Before and after your commit 8512220c5782 ("PM /
+> > > > > > core: Assign the wakeup_path status flag in __device_prepare()") it
+> > > > > > seems to be internally bound to device_may_wakeup().
+> > > > > >
+> > > > > > It works if I make device_may_wakeup() return true, with
+> > > > > >
+> > > > > >         device_set_wakeup_capable(dev, true);
+> > > > > >         device_wakeup_enable(dev);
+> > > > > >
+> > > > > > but that also allows *disabling* the wakeup from sysfs which doesn't
+> > > > > > really make sense for the CPU.
+> > > > > >
+> > > > > > Any ideas?
+> > > > >
+> > > > > The device_set_awake_path() should be called from a system suspend
+> > > > > callback. So you need to add that callback for the cpufreq driver.
+> > > > >
+> > > > > Sorry, if that wasn't clear.
+> > > > >
+> > > >
+> > > > Hmm, but at the moment I'm calling this on the virtual genpd devices.
+> > > > How would it work for them? I don't have a suspend callback for them.
+> > > >
+> > > > I guess could loop over the virtual devices in the cpufreq driver
+> > > > suspend callback, but is my driver suspend callback really guaranteed to
+> > > > run before the device_prepare() that clears "wakeup_path" on the virtual
+> > > > devices?
+> > >
+> > > Yes, that's guaranteed. dpm_prepare() (which calls device_prepare())
+> > > is always being executed before dpm_suspend().
+> > >
+> >
+> > Thanks, I think I understand. Maybe. :-)
+> >
+> > Just to confirm, I should call device_set_awake_path() for the virtual
+> > genpd devices as part of the PM ->suspend() callback? And this will be
+> > guaranteed to run after the "prepare" phase but before the
+> > "suspend_noirq" phase where the genpd core will check the wakeup flag?
+> 
+> Correct!
+> 
 
+Thanks, this seems to works as intended! The diff I tested is below, in
+case you already have some comments.
 
-On 10/31/2023 10:36 PM, Neil Armstrong wrote:
-> Hi,
-> 
-> On 30/10/2023 14:10, Mukesh Ojha wrote:
->>
->>
->> On 10/30/2023 3:33 PM, Neil Armstrong wrote:
->>> The current memory region assign only supports a single
->>> memory region.
->>>
->>> But new platforms introduces more regions to make the
->>> memory requirements more flexible for various use cases.
->>> Those new platforms also shares the memory region between the
->>> DSP and HLOS.
->>>
->>> To handle this, make the region assign more generic in order
->>> to support more than a single memory region and also permit
->>> setting the regions permissions as shared.
->>>
->>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>> ---
->>>   drivers/remoteproc/qcom_q6v5_pas.c | 102 
->>> ++++++++++++++++++++++++-------------
->>>   1 file changed, 66 insertions(+), 36 deletions(-)
->>>
->>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c 
->>> b/drivers/remoteproc/qcom_q6v5_pas.c
->>> index 913a5d2068e8..4829fd26e17d 100644
->>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->>> @@ -33,6 +33,8 @@
->>>   #define ADSP_DECRYPT_SHUTDOWN_DELAY_MS    100
->>> +#define MAX_ASSIGN_COUNT 2
->>> +
->>>   struct adsp_data {
->>>       int crash_reason_smem;
->>>       const char *firmware_name;
->>> @@ -51,6 +53,9 @@ struct adsp_data {
->>>       int ssctl_id;
->>>       int region_assign_idx;
->>> +    int region_assign_count;
->>> +    bool region_assign_shared;
->>> +    int region_assign_vmid;
->>>   };
->>>   struct qcom_adsp {
->>> @@ -87,15 +92,18 @@ struct qcom_adsp {
->>>       phys_addr_t dtb_mem_phys;
->>>       phys_addr_t mem_reloc;
->>>       phys_addr_t dtb_mem_reloc;
->>> -    phys_addr_t region_assign_phys;
->>> +    phys_addr_t region_assign_phys[MAX_ASSIGN_COUNT];
->>>       void *mem_region;
->>>       void *dtb_mem_region;
->>>       size_t mem_size;
->>>       size_t dtb_mem_size;
->>> -    size_t region_assign_size;
->>> +    size_t region_assign_size[MAX_ASSIGN_COUNT];
->>>       int region_assign_idx;
->>> -    u64 region_assign_perms;
->>> +    int region_assign_count;
->>> +    bool region_assign_shared;
->>> +    int region_assign_vmid;
->>> +    u64 region_assign_perms[MAX_ASSIGN_COUNT];
->>>       struct qcom_rproc_glink glink_subdev;
->>>       struct qcom_rproc_subdev smd_subdev;
->>> @@ -590,37 +598,52 @@ static int adsp_alloc_memory_region(struct 
->>> qcom_adsp *adsp)
->>>   static int adsp_assign_memory_region(struct qcom_adsp *adsp)
->>>   {
->>> -    struct reserved_mem *rmem = NULL;
->>> -    struct qcom_scm_vmperm perm;
->>> +    struct qcom_scm_vmperm perm[MAX_ASSIGN_COUNT];
->>> +    unsigned int perm_size = 1;
->>
->> AFAICS, not need of initialization.
-> 
-> Indeed, removed
-> 
->>
->>>       struct device_node *node;
->>> -    int ret;
->>> +    int offset, ret;
->>
->> Nit: one variable per line.
-> 
-> Done
-> 
->>
->>>       if (!adsp->region_assign_idx)
->>
->> Not related to this patch..
->> Should not this be valid only for > 1 ?
-> 
-> I don't understand, only region_assign_idx > 1 triggers a memory_assign,
-> and this check discards configurations with region_assign_idx == 0 as
-> expected.
+I'll put this into proper patches and will send a v3 after the merge
+window.
 
-Ah, you can ignore the comments, I got the intention after commenting
-here ..
+Stephan
 
-> 
->>
->>
->>>           return 0;
->>> -    node = of_parse_phandle(adsp->dev->of_node, "memory-region", 
->>> adsp->region_assign_idx);
->>> -    if (node)
->>> -        rmem = of_reserved_mem_lookup(node);
->>> -    of_node_put(node);
->>> -    if (!rmem) {
->>> -        dev_err(adsp->dev, "unable to resolve shareable 
->>> memory-region\n");
->>> -        return -EINVAL;
->>> -    }
->>> +    for (offset = 0; offset < adsp->region_assign_count; ++offset) {
->>> +        struct reserved_mem *rmem = NULL;
->>> +
->>> +        node = of_parse_phandle(adsp->dev->of_node, "memory-region",
->>> +                    adsp->region_assign_idx + offset);
->>> +        if (node)
->>> +            rmem = of_reserved_mem_lookup(node);
->>> +        of_node_put(node);
->>> +        if (!rmem) {
->>> +            dev_err(adsp->dev, "unable to resolve shareable 
->>> memory-region index %d\n",
->>> +                offset);
->>> +            return -EINVAL; > +        }
->>
->>
->>> -    perm.vmid = QCOM_SCM_VMID_MSS_MSA;
->>> -    perm.perm = QCOM_SCM_PERM_RW;
->>> +        if (adsp->region_assign_shared)  {
->>> +            perm[0].vmid = QCOM_SCM_VMID_HLOS;
->>> +            perm[0].perm = QCOM_SCM_PERM_RW;
->>> +            perm[1].vmid = adsp->region_assign_vmid;
->>> +            perm[1].perm = QCOM_SCM_PERM_RW;
->>> +            perm_size = 2;
->>> +        } else {
->>> +            perm[0].vmid = adsp->region_assign_vmid;
->>> +            perm[0].perm = QCOM_SCM_PERM_RW;
->>> +            perm_size = 1;
->>> +        }
->>> -    adsp->region_assign_phys = rmem->base;
->>> -    adsp->region_assign_size = rmem->size;
->>> -    adsp->region_assign_perms = BIT(QCOM_SCM_VMID_HLOS);
->>> +        adsp->region_assign_phys[offset] = rmem->base;
->>> +        adsp->region_assign_size[offset] = rmem->size;
->>> +        adsp->region_assign_perms[offset] = BIT(QCOM_SCM_VMID_HLOS);
->>
->> Do we need array for this, is this changing ?
-> 
-> We need to keep region_assign_perms for unassign, but for the other 2 we 
-> would
-> need to duplicate the code from adsp_assign_memory_region into
-> adsp_unassign_memory_region.
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index 7e9202080c98..e0c82c958018 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -23,6 +23,7 @@
+ #include <linux/nvmem-consumer.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
++#include <linux/pm.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_opp.h>
+ #include <linux/pm_runtime.h>
+@@ -426,6 +427,18 @@ static const struct qcom_cpufreq_match_data match_data_ipq8074 = {
+ 	.get_version = qcom_cpufreq_ipq8074_name_version,
+ };
+ 
++static void qcom_cpufreq_suspend_virt_devs(struct qcom_cpufreq_drv *drv, unsigned cpu)
++{
++	const char * const *name = drv->data->genpd_names;
++	int i;
++
++	if (!drv->cpus[cpu].virt_devs)
++		return;
++
++	for (i = 0; *name; i++, name++)
++		device_set_awake_path(drv->cpus[cpu].virt_devs[i]);
++}
++
+ static void qcom_cpufreq_put_virt_devs(struct qcom_cpufreq_drv *drv, unsigned cpu)
+ {
+ 	const char * const *name = drv->data->genpd_names;
+@@ -542,9 +555,6 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 
+ 					goto free_opp;
+ 				}
+-
+-				/* Keep CPU power domain always-on */
+-				dev_pm_syscore_device(virt_devs[i], true);
+ 			}
+ 			drv->cpus[cpu].virt_devs = virt_devs;
+ 		}
+@@ -581,11 +591,25 @@ static void qcom_cpufreq_remove(struct platform_device *pdev)
+ 	}
+ }
+ 
++static int qcom_cpufreq_suspend(struct device *dev)
++{
++	struct qcom_cpufreq_drv *drv = dev_get_drvdata(dev);
++	unsigned int cpu;
++
++	for_each_possible_cpu(cpu)
++		qcom_cpufreq_suspend_virt_devs(drv, cpu);
++
++	return 0;
++}
++
++static DEFINE_SIMPLE_DEV_PM_OPS(qcom_cpufreq_pm_ops, qcom_cpufreq_suspend, NULL);
++
+ static struct platform_driver qcom_cpufreq_driver = {
+ 	.probe = qcom_cpufreq_probe,
+ 	.remove_new = qcom_cpufreq_remove,
+ 	.driver = {
+ 		.name = "qcom-cpufreq-nvmem",
++		.pm = pm_sleep_ptr(&qcom_cpufreq_pm_ops),
+ 	},
+ };
+ 
+diff --git a/drivers/pmdomain/qcom/rpmpd.c b/drivers/pmdomain/qcom/rpmpd.c
+index abb62e4a2bdf..0f91e00b5909 100644
+--- a/drivers/pmdomain/qcom/rpmpd.c
++++ b/drivers/pmdomain/qcom/rpmpd.c
+@@ -1050,6 +1050,7 @@ static int rpmpd_probe(struct platform_device *pdev)
+ 		rpmpds[i]->pd.power_off = rpmpd_power_off;
+ 		rpmpds[i]->pd.power_on = rpmpd_power_on;
+ 		rpmpds[i]->pd.set_performance_state = rpmpd_set_performance;
++		rpmpds[i]->pd.flags = GENPD_FLAG_ACTIVE_WAKEUP;
+ 		pm_genpd_init(&rpmpds[i]->pd, NULL, true);
+ 
+ 		data->domains[i] = &rpmpds[i]->pd;
 
-Thanks got it.
-
-> 
->>
->>> -    ret = qcom_scm_assign_mem(adsp->region_assign_phys,
->>> -                  adsp->region_assign_size,
->>> -                  &adsp->region_assign_perms,
->>> -                  &perm, 1);
->>> -    if (ret < 0) {
->>> -        dev_err(adsp->dev, "assign memory failed\n");
->>> -        return ret;
->>> +        ret = qcom_scm_assign_mem(adsp->region_assign_phys[offset],
->>> +                      adsp->region_assign_size[offset],
->>> +                      &adsp->region_assign_perms[offset],
->>> +                      perm, perm_size);
->>> +        if (ret < 0) {
->>> +            dev_err(adsp->dev, "assign memory %d failed\n", offset);
->>> +            return ret;
->>> +        }
->>>       }
->>>       return 0;
->>> @@ -629,20 +652,22 @@ static int adsp_assign_memory_region(struct 
->>> qcom_adsp *adsp)
->>>   static void adsp_unassign_memory_region(struct qcom_adsp *adsp)
->>>   {
->>>       struct qcom_scm_vmperm perm;
->>> -    int ret;
->>> +    int offset, ret;
->>> -    if (!adsp->region_assign_idx)
->>> +    if (!adsp->region_assign_idx || adsp->region_assign_shared)
->>>           return;
->>> -    perm.vmid = QCOM_SCM_VMID_HLOS;
->>> -    perm.perm = QCOM_SCM_PERM_RW;
->>> +    for (offset = 0; offset < adsp->region_assign_count; ++offset) {
->>> +        perm.vmid = QCOM_SCM_VMID_HLOS;
->>> +        perm.perm = QCOM_SCM_PERM_RW;
->>
->>> -    ret = qcom_scm_assign_mem(adsp->region_assign_phys,
->>> -                  adsp->region_assign_size,
->>> -                  &adsp->region_assign_perms,
->>> -                  &perm, 1);
->>> -    if (ret < 0)
->>> -        dev_err(adsp->dev, "unassign memory failed\n");
->>> +        ret = qcom_scm_assign_mem(adsp->region_assign_phys[offset],
->>> +                      adsp->region_assign_size[offset],
->>> +                      &adsp->region_assign_perms[offset],
->>> +                      &perm, 1);
->>> +        if (ret < 0)
->>> +            dev_err(adsp->dev, "unassign memory failed\n");
->>> +    }
->>>   }
->>>   static int adsp_probe(struct platform_device *pdev)
->>> @@ -696,6 +721,9 @@ static int adsp_probe(struct platform_device *pdev)
->>>       adsp->info_name = desc->sysmon_name;
->>>       adsp->decrypt_shutdown = desc->decrypt_shutdown;
->>>       adsp->region_assign_idx = desc->region_assign_idx;
-
-Should this also need
-min_t(int, MAX_ASSIGN_COUNT - 1, desc->region_assign_idx);
-as no where boundary check is being done.
-
--Mukesh
->>> +    adsp->region_assign_count = min_t(int, MAX_ASSIGN_COUNT, 
->>> desc->region_assign_count);
->>> +    adsp->region_assign_vmid = desc->region_assign_vmid;
->>> +    adsp->region_assign_shared = desc->region_assign_shared;
->>>       if (dtb_fw_name) {
->>>           adsp->dtb_firmware_name = dtb_fw_name;
->>>           adsp->dtb_pas_id = desc->dtb_pas_id;
->>> @@ -1163,6 +1191,8 @@ static const struct adsp_data 
->>> sm8550_mpss_resource = {
->>>       .sysmon_name = "modem",
->>>       .ssctl_id = 0x12,
->>>       .region_assign_idx = 2,
->>> +    .region_assign_count = 1,
->>> +    .region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
->>>   };
->>>   static const struct of_device_id adsp_of_match[] = {
->>>
->>
->> -Mukesh
-> 
-> Thanks,
-> Neil
-> 
+-- 
+Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Kernkonzept GmbH at Dresden, Germany, HRB 31129, CEO Dr.-Ing. Michael Hohmuth
