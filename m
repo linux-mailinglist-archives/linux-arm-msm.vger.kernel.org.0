@@ -2,92 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D54F7DDE1F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 10:07:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 86A927DDEB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 10:52:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232743AbjKAJH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Nov 2023 05:07:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57576 "EHLO
+        id S230164AbjKAJwK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Nov 2023 05:52:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233120AbjKAJHY (ORCPT
+        with ESMTP id S229490AbjKAJwK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Nov 2023 05:07:24 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5636E102;
-        Wed,  1 Nov 2023 02:07:16 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A11vm1Q006624;
-        Wed, 1 Nov 2023 09:07:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=IOlBThydEMhGc7QoFRuOa4ssmZqQYyjeSpWiLRMWaiM=;
- b=pb+S8+C1C0ENS8wkTfcjzxWma+/yfLMhd+mytUpxMF7lzk1fLQBdVf98V07DCQbh7DFz
- a7vAHQTnBPiNqfLHbzYTJluLcl4XLI1x64134aYbMSuADkegLgQgO3NHOdkpoQhxCuWo
- bmHkN+2xO33ExB8Pfq36X8th1CT65BDeulPfNQ70TBm1SYmQ9uxSjA8+QHrlXEV6WOR/
- v3fB3WqlqtWCywjfF+iTdfLWt2XrCu92bXG5JBGQA3IjiiJDYTZ3oToFBWHuiA2rikEl
- gKkpb0S82ZhV8XkDH2+u5bp41WF/A38rO7fbAPvf3RZ1+P0gU/pLBjDCucPZHsKnRgaf YQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u34sc2mhc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 01 Nov 2023 09:06:59 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A196vBK030531
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 1 Nov 2023 09:06:57 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 1 Nov
- 2023 02:06:53 -0700
-Message-ID: <7389a1de-feed-4fe5-9aaf-75e3f11bc1ec@quicinc.com>
-Date:   Wed, 1 Nov 2023 17:06:51 +0800
+        Wed, 1 Nov 2023 05:52:10 -0400
+Received: from mail-vk1-xa30.google.com (mail-vk1-xa30.google.com [IPv6:2607:f8b0:4864:20::a30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D1BADA;
+        Wed,  1 Nov 2023 02:52:06 -0700 (PDT)
+Received: by mail-vk1-xa30.google.com with SMTP id 71dfb90a1353d-4abc8169a76so39628e0c.1;
+        Wed, 01 Nov 2023 02:52:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698832325; x=1699437125; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wWuT16dEYI2em+YmuUc3qnNCMbwI4QJwMAUEgh2RO0E=;
+        b=QyMEBEnnkP+Ua6qXMvRsxm1nQkCS+qTZ+Umi+0qx+rHkVME/Q9UJp8YwTwnJ3eSXd5
+         lz/UAulIQfyV24NDUnUjvTnt68NWjA1g6RSV1qAiiSpWJCLno1y0bO3HylM2b/iPdBid
+         flKx/iHOnMt7s0IB1tO6IFVDHUw5Y92Ei8FNq6v7D0NJHJOynqOBpQLvLHWqjdwK1nvF
+         xNKvzxgqpxi2XfAvEGtoxONUAY+Ds+bPNf4GYGiyz2Kd4kHQs13LBPCBo5rH6DW0FRiX
+         HvLYAQd1U2Dt2mPoYNHM0JNW1HNh8P1i82nKYdKYPv2zWhmAm8Ln6ADhG4e9e5TbVS54
+         OZhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698832325; x=1699437125;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wWuT16dEYI2em+YmuUc3qnNCMbwI4QJwMAUEgh2RO0E=;
+        b=wx+0o30lM0aN7Y6R0+VkZccbt5wWG48GrKbeVaUzgbbHwmvF8NRbod28fYfc7IYOj/
+         vaXPgBDeqduKucnuinYT9NDVx3NOvGRSmN19oMfnRVfiFaCATnX0VG/bU7K0LkMXybco
+         q2j30UbmsNWCX9Mhyj1Q+bfSUit9nDWcQymAQ1kXKWY1IJZQON13JcQNkLZ2YBUGn7ty
+         G/qSbDzvdLSD+RreilXs9LjdQr6FwYTM+AEMF0wSEXo6hYGsehaAJ6tWtd5U5PwiwdJg
+         Fv4We0Ti0c/0QJwDjLf8IgW9Nx5Ng7oceA2BTCea1KcMf4donG1XIZ9etrOpQXwvl6/7
+         6TdQ==
+X-Gm-Message-State: AOJu0Ywpye6fJBWJU/Vo+SanWs07nSwPI1qR2gljNgYGoi1kuBo9p8Qh
+        L4Dp0ge65asoRMZ6f+PEvi8ZR++PLGN5HeTdEGOwNBpJaJk=
+X-Google-Smtp-Source: AGHT+IF2Lf3Zu2RtWbqFEOeM6cN2EPTc2dInEVWrp6WdEt5trxlhuTcQopt29hG6je9ZWoqMkR081+5+8F8Nu9Mr9Ow=
+X-Received: by 2002:a1f:9cd0:0:b0:495:dcd2:d12a with SMTP id
+ f199-20020a1f9cd0000000b00495dcd2d12amr13880505vke.9.1698832325423; Wed, 01
+ Nov 2023 02:52:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] coresight-tpdm: Add support to configure CMB
-To:     James Clark <james.clark@arm.com>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <1698202408-14608-1-git-send-email-quic_taozha@quicinc.com>
- <1698202408-14608-5-git-send-email-quic_taozha@quicinc.com>
- <288bcd70-ee12-e4f7-2381-8d18e6fc0c1b@arm.com>
-Content-Language: en-US
-From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <288bcd70-ee12-e4f7-2381-8d18e6fc0c1b@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iCQJHJmpYoZrRR5KAkYUZp-fQELYwrrU
-X-Proofpoint-GUID: iCQJHJmpYoZrRR5KAkYUZp-fQELYwrrU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-01_06,2023-10-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 mlxlogscore=502 bulkscore=0 phishscore=0 priorityscore=1501
- mlxscore=0 spamscore=0 clxscore=1015 adultscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311010076
+References: <1678979666-551-1-git-send-email-quic_mojha@quicinc.com>
+ <76943268-3982-deaf-9736-429dd51e01b0@gmail.com> <0e645486-f0be-4468-18ad-9e49088dee0b@quicinc.com>
+ <CAOX2RU4xPNq4-OHUoMZtfZu05QEdpk1UtawZb1xQMrtc5ao84Q@mail.gmail.com>
+ <a6c48095-179a-7e72-a282-fbc28af374cb@quicinc.com> <CAOX2RU6S-x-KrQ-qQLW-qxu4bph79d+Yq9Vj=PQwWW4o-yG2xA@mail.gmail.com>
+ <CAOX2RU6rv0jcnTRAa=kiWHPk1A=DW=smS72df_t+tufOZ9XGfA@mail.gmail.com>
+ <cd2c808c-bcb8-85fe-2c56-7accd4853160@quicinc.com> <CAOX2RU50+iR0jfyQqzRoTLn0Jydd_c+Ue88rDdhL6PbOKPDMVA@mail.gmail.com>
+ <00b49050-5b9b-c16d-bd8f-8604ea993a26@quicinc.com>
+In-Reply-To: <00b49050-5b9b-c16d-bd8f-8604ea993a26@quicinc.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Wed, 1 Nov 2023 10:51:54 +0100
+Message-ID: <CAOX2RU6EtRVmezcHhvTJF6Kc69_9dvzUHeoXQ1F1=ctnqhkmrw@mail.gmail.com>
+Subject: Re: [PATCH v3] firmware: qcom_scm: Clear download bit during reboot
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -95,65 +73,206 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 10/30/2023 7:29 PM, James Clark wrote:
+On Thu, 26 Oct 2023 at 17:16, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
 >
-> On 25/10/2023 03:53, Tao Zhang wrote:
->> TPDM CMB subunits support two forms of CMB data set element creation:
->> continuous and trace-on-change collection mode. Continuous change
->> creates CMB data set elements on every CMBCLK edge. Trace-on-change
->> creates CMB data set elements only when a new data set element differs
->> in value from the previous element in a CMB data set. Set CMB_CR.MODE
->> to 0 for continuous CMB collection mode. Set CMB_CR.MODE to 1 for
->> trace-on-change CMB collection mode
->>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> Signed-off-by: Jinlong Mao <quic_jinlmao@quicinc.com>
->> ---
->>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 10 +++
->>   drivers/hwtracing/coresight/coresight-tpdm.c       | 71 ++++++++++++++++++++++
->>   drivers/hwtracing/coresight/coresight-tpdm.h       | 12 ++++
->>   3 files changed, 93 insertions(+)
->>
->> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> index f07218e..ace7231 100644
->> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
->> @@ -170,3 +170,13 @@ Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_t
->>   Description:
->>   		(RW) Set/Get the MSR(mux select register) for the DSB subunit
->>   		TPDM.
->> +
->> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_mode
->> +Date:		March 2023
->> +KernelVersion	6.7
->> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
->> +Description:	(Write) Set the data collection mode of CMB tpdm.
-> I know it's expanded elsewhere, but it's probably worth expanding the
-> CMB abbreviation here as well so people reading the docs don't have to
-> go into the code.
-
-Sure, I will update in the next patch series.
-
-
-Best,
-
-Tao
-
+> Hey Robert,
 >
-> Otherwise:
+> Just remembered this thread again,
 >
-> Reviewed-by: James Clark <james.clark@arm.com>
+> is this issue got fixed with
 >
->> +
->> +		Accepts only one of the 2 values -  0 or 1.
->> +		0 : Continuous CMB collection mode.
->> +		1 : Trace-on-change CMB collection mode.
->> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
->> index c8bb388..efb376e 100644
->> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
->> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
->> @@ -148,6 +148,18 @@ static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
->>   	return 0;
->>   }
-> [...]
+> https://lore.kernel.org/lkml/20230816164641.3371878-1-robimarko@gmail.com/
+
+Sadly no, as this issue is affecting all IPQ4019 boards and not just
+the ones that have SDI enabled.
+
+Regards,
+Robert
+>
+>
+> -Mukesh
+>
+> On 5/26/2023 3:13 AM, Robert Marko wrote:
+> > On Tue, 23 May 2023 at 11:42, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 5/22/2023 3:34 PM, Robert Marko wrote:
+> >>> On Mon, 22 May 2023 at 11:26, Robert Marko <robimarko@gmail.com> wrote:
+> >>>>
+> >>>> On Mon, 22 May 2023 at 11:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+> >>>>>
+> >>>>>
+> >>>>>
+> >>>>> On 5/22/2023 2:29 PM, Robert Marko wrote:
+> >>>>>> On Mon, 22 May 2023 at 08:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+> >>>>>>>
+> >>>>>>>
+> >>>>>>>
+> >>>>>>> On 5/18/2023 3:45 PM, Robert Marko wrote:
+> >>>>>>>>
+> >>>>>>>> On 16. 03. 2023. 16:14, Mukesh Ojha wrote:
+> >>>>>>>>> During normal restart of a system download bit should
+> >>>>>>>>> be cleared irrespective of whether download mode is
+> >>>>>>>>> set or not.
+> >>>>>>>>>
+> >>>>>>>>> Fixes: 8c1b7dc9ba22 ("firmware: qcom: scm: Expose download-mode control")
+> >>>>>>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> >>>>>>>>
+> >>>>>>>> Hi, this has been backported to 5.15.111, however it seems to be
+> >>>>>>>> breaking reboot
+> >>>>>>>> on IPQ4019 by causing the board to then hang in SBL with:
+> >>>>>>>> root@OpenWrt:/# reboot
+> >>>>>>>> root@OpenWrt:/# [   76.473541] device lan1 left promiscuous mode
+> >>>>>>>> [   76.474204] br-lan: port 1(lan1) entered disabled state
+> >>>>>>>> [   76.527975] device lan2 left promiscuous mode
+> >>>>>>>> [   76.530301] br-lan: port 2(lan2) entered disabled state
+> >>>>>>>> [   76.579376] device lan3 left promiscuous mode
+> >>>>>>>> [   76.581698] br-lan: port 3(lan3) entered disabled state
+> >>>>>>>> [   76.638434] device lan4 left promiscuous mode
+> >>>>>>>> [   76.638777] br-lan: port 4(lan4) entered disabled state
+> >>>>>>>> [   76.978489] qca8k-ipq4019 c000000.switch wan: Link is Down
+> >>>>>>>> [   76.978883] device eth0 left promiscuous mode
+> >>>>>>>> [   76.987077] ipqess-edma c080000.ethernet eth0: Link is Down
+> >>>>>>>> [
+> >>>>>>>> Format: Log Type - Time(microsec) - Message - Optional Info
+> >>>>>>>> Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> >>>>>>>> S - QC_IMAGE_VERSION_STRING=BOOT.BF.3.1.1-00123
+> >>>>>>>> S - IMAGE_VARIANT_STRING=DAABANAZA
+> >>>>>>>> S - OEM_IMAGE_VERSION_STRING=CRM
+> >>>>>>>> S - Boot Config, 0x00000021
+> >>>>>>>> S - Reset status Config, 0x00000010
+> >>>>>>>> S - Core 0 Frequency, 0 MHz
+> >>>>>>>> B -       261 - PBL, Start
+> >>>>>>>> B -      1339 - bootable_media_detect_entry, Start
+> >>>>>>>> B -      1679 - bootable_media_detect_success, Start
+> >>>>>>>> B -      1693 - elf_loader_entry, Start
+> >>>>>>>> B -      5076 - auth_hash_seg_entry, Start
+> >>>>>>>> B -      7223 - auth_hash_seg_exit, Start
+> >>>>>>>> B -    578349 - elf_segs_hash_verify_entry, Start
+> >>>>>>>> B -    696356 - PBL, End
+> >>>>>>>> B -    696380 - SBL1, Start
+> >>>>>>>> B -    787236 - pm_device_init, Start
+> >>>>>>>> D -         7 - pm_device_init, Delta
+> >>>>>>>> B -    788701 - boot_flash_init, Start
+> >>>>>>>> D -     52782 - boot_flash_init, Delta
+> >>>>>>>> B -    845625 - boot_config_data_table_init, Start
+> >>>>>>>> D -      3836 - boot_config_data_table_init, Delta - (419 Bytes)
+> >>>>>>>> B -    852841 - clock_init, Start
+> >>>>>>>> D -      7566 - clock_init, Delta
+> >>>>>>>> B -    864883 - CDT version:2,Platform ID:9,Major ID:0,Minor
+> >>>>>>>> ID:0,Subtype:64
+> >>>>>>>> B -    868413 - sbl1_ddr_set_params, Start
+> >>>>>>>> B -    873402 - cpr_init, Start
+> >>>>>>>> D -         2 - cpr_init, Delta
+> >>>>>>>> B -    877842 - Pre_DDR_clock_init, Start
+> >>>>>>>> D -         4 - Pre_DDR_clock_init, Delta
+> >>>>>>>> D -     13234 - sbl1_ddr_set_params, Delta
+> >>>>>>>> B -    891155 - pm_driver_init, Start
+> >>>>>>>> D -         2 - pm_driver_init, Delta
+> >>>>>>>> B -    909105 - Image Load, Start
+> >>>>>>>> B -   1030210 - Boot error ocuured!. Error code: 303d
+> >>>>>>>>
+> >>>>>>>> Reverting the commit fixes rebooting.
+> >>>>>>>
+> >>>>>>> Hi Robert,
+> >>>>>>>
+> >>>>>>> Can you check if disable SDI [1] works with this issue
+> >>>>>>>
+> >>>>>>> https://lore.kernel.org/linux-arm-msm/20230518140224.2248782-1-robimarko@gmail.com/
+> >>>>>>>
+> >>>>>>> [1]
+> >>>>>>>
+> >>>>>>>
+> >>>>>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> >>>>>>> index fde33acd46b7..01496ceb7136 100644
+> >>>>>>> --- a/drivers/firmware/qcom_scm.c
+> >>>>>>> +++ b/drivers/firmware/qcom_scm.c
+> >>>>>>> @@ -1508,6 +1508,7 @@ static int qcom_scm_probe(struct platform_device
+> >>>>>>> *pdev)
+> >>>>>>>      static void qcom_scm_shutdown(struct platform_device *pdev)
+> >>>>>>>      {
+> >>>>>>>             /* Clean shutdown, disable download mode to allow normal restart */
+> >>>>>>> +       qcom_scm_disable_sdi();
+> >>>>>>>             qcom_scm_set_download_mode(false);
+> >>>>>>>      }
+> >>>>>>
+> >>>>>> Hi,
+> >>>>>> I can confirm reboot works this way as well.
+> >>>>>
+> >>>>> That's great, So, i don't need to revert the patch and you can
+> >>>>> add this in your patch without target specific check ?
+> >>>>
+> >>>> Oh, you mean IPQ4019 not rebooting?
+> >>>> I haven't tested that, give me couple of minutes to try that out.
+> >>>> Cause, the link was just back to the SDI patchset.
+> >>>
+> >>> And, I can confirm that IPQ4019 does not reboot even with SDI disabled if dload
+> >>> mode was set so it still needs a revert.
+> >>
+> >> Ok, So, before we go for revert of the change.
+> >>
+> >> - How do you generally collect the ram dump on your device on crash ?
+> >>     did you check if you get any error when qcom_scm_set_download_mode()
+> >>     get called.
+> >
+> > Hi,
+> > Unfortunately, I dont have a way to collect the RAM dump in this case.
+> >
+> > I checked and __qcom_scm_set_dload_mode returns 0 and there are no
+> > errors.
+> >
+> > Regards,
+> > Robert
+> >>
+> >>
+> >> -- Mukesh
+> >>
+> >>>
+> >>> Regards,
+> >>> Robert
+> >>>>
+> >>>> Regards,
+> >>>> Robert
+> >>>>>
+> >>>>> -- Mukesh
+> >>>>>
+> >>>>>>
+> >>>>>> Regards,
+> >>>>>> Robert
+> >>>>>>>
+> >>>>>>>
+> >>>>>>> -- Mukesh
+> >>>>>>>
+> >>>>>>>>
+> >>>>>>>> Regards,
+> >>>>>>>> Robert
+> >>>>>>>>
+> >>>>>>>>> ---
+> >>>>>>>>> Changes in v3:
+> >>>>>>>>>       - Added Fixes tag.
+> >>>>>>>>>       - Removed it from below patch series, as it makes sense to go this
+> >>>>>>>>> independently.
+> >>>>>>>>>
+> >>>>>>>>> https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+> >>>>>>>>>
+> >>>>>>>>> Changes in v2:
+> >>>>>>>>>       - No change.
+> >>>>>>>>>
+> >>>>>>>>>      drivers/firmware/qcom_scm.c | 3 +--
+> >>>>>>>>>      1 file changed, 1 insertion(+), 2 deletions(-)
+> >>>>>>>>>
+> >>>>>>>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> >>>>>>>>> index 468d4d5..3e020d1 100644
+> >>>>>>>>> --- a/drivers/firmware/qcom_scm.c
+> >>>>>>>>> +++ b/drivers/firmware/qcom_scm.c
+> >>>>>>>>> @@ -1506,8 +1506,7 @@ static int qcom_scm_probe(struct platform_device
+> >>>>>>>>> *pdev)
+> >>>>>>>>>      static void qcom_scm_shutdown(struct platform_device *pdev)
+> >>>>>>>>>      {
+> >>>>>>>>>          /* Clean shutdown, disable download mode to allow normal restart */
+> >>>>>>>>> -    if (download_mode)
+> >>>>>>>>> -        qcom_scm_set_download_mode(false);
+> >>>>>>>>> +    qcom_scm_set_download_mode(false);
+> >>>>>>>>>      }
+> >>>>>>>>>      static const struct of_device_id qcom_scm_dt_match[] = {
