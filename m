@@ -2,86 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 243AE7DDBBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 05:02:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B17007DDC1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 06:14:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231434AbjKAECL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Nov 2023 00:02:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39410 "EHLO
+        id S1347370AbjKAFBl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Nov 2023 01:01:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbjKAECK (ORCPT
+        with ESMTP id S1346907AbjKAFBj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Nov 2023 00:02:10 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9367ADF;
-        Tue, 31 Oct 2023 21:02:04 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A11vpbZ031127;
-        Wed, 1 Nov 2023 04:01:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=7hxHgKStLp4kLx/Vn0TFARVQ9iOgMIJxkdR3hYP1PNk=;
- b=VVJxvFz7FP6tXhettQd5y8Zm93H/W+8iJfM8lbzo5LXNSSQSpG6j6DXv69qFw7CV3KrM
- d5PifuQG7cAY9GoJMb9sxbt3sZ/nhXESGVAP7sx6OQqItk99OHe+3VOCStW6Ox0CFuvH
- vaM50Z8J75vliCowf37YDpW/nTH5DNi+j1W/YlSGQOUa1F1teyWDHIIjT/51UXpjC4kg
- ygWJ8wH3C2pocXVk8RoWKQM3DjAyfUX136T3cwXPYCPGYyAwf3bq2+mgjLaQSon3TzVI
- V5mF0h0s/YD1tbR28cm9BjHXvXsZadNomDzw5vP5ZzSOZVZYMz8lxLFTKB7y65RZQHtE hg== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u3ayvrkkb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 01 Nov 2023 04:01:21 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3A141IIT013366;
-        Wed, 1 Nov 2023 04:01:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3u0ucma7sr-1;
-        Wed, 01 Nov 2023 04:01:18 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3A141IP5013361;
-        Wed, 1 Nov 2023 04:01:18 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3A141HUt013360;
-        Wed, 01 Nov 2023 04:01:18 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
-        id DBB4853F5; Wed,  1 Nov 2023 12:01:16 +0800 (CST)
-From:   Ziqi Chen <quic_ziqichen@quicinc.com>
-To:     quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
-        bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
-        avri.altman@wdc.com, junwoo80.lee@samsung.com,
-        martin.petersen@oracle.com, quic_ziqichen@quicinc.com,
+        Wed, 1 Nov 2023 01:01:39 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07CACF4;
+        Tue, 31 Oct 2023 22:01:37 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF60C433C8;
+        Wed,  1 Nov 2023 05:01:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698814896;
+        bh=XGnCho/WGyMRfp4cQpFyBldzXv2oODVRS9OoFwEpSlk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=D0FMlpxGrIAc0jGl0ETFQ1uumpZhEZvEAl47B0/QOohrkFiourQbVflAh2kmU2OR8
+         Ak3r5iESSQSjkvLDoAcQYDpqFd2AX6ST58tWOSRjLyHMTHc7HzNyRQ0B0gpo3nNnd3
+         GxEei54OjT5fVbJ+bDh9xn7qWMVHWdR185q747IohRlbivNPLej7ETrZSStB92ywcz
+         fY4+VlkwdFMAPh5ZNr5EmHA9OA8FEX9Tmuf4JA2tNVpTMF5I6sB2ldXRZf6bJHTKND
+         oEO31OAQXZ9Mltskjlcy/hRcPP1UakdJuUkHRywtKgGPbI3Kc9ysN2Cngv/xp98hLE
+         a8vGsNA1if+TA==
+Date:   Wed, 1 Nov 2023 10:31:16 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Ziqi Chen <quic_ziqichen@quicinc.com>
+Cc:     quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        bvanassche@acm.org, beanhuo@micron.com, avri.altman@wdc.com,
+        junwoo80.lee@samsung.com, martin.petersen@oracle.com,
         quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
-        quic_rampraka@quicinc.com
-Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        quic_rampraka@quicinc.com, linux-scsi@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Alim Akhtar <alim.akhtar@samsung.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] dt-bindings: ufs: qcom: Add msi-parent for UFS MCQ
-Date:   Wed,  1 Nov 2023 12:01:09 +0800
-Message-Id: <1698811270-76312-1-git-send-email-quic_ziqichen@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Y0Ppfrsa43hIFi2NT0_LbgRnd-ns4l8x
-X-Proofpoint-ORIG-GUID: Y0Ppfrsa43hIFi2NT0_LbgRnd-ns4l8x
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-31_10,2023-10-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- lowpriorityscore=0 spamscore=0 impostorscore=0 malwarescore=0
- clxscore=1011 mlxscore=0 phishscore=0 priorityscore=1501 mlxlogscore=736
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311010032
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add msi-parent for UFS MCQ
+Message-ID: <20231101050116.GB2897@thinkpad>
+References: <1698811270-76312-1-git-send-email-quic_ziqichen@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1698811270-76312-1-git-send-email-quic_ziqichen@quicinc.com>
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,37 +64,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Message Signaled Interrupt (MSI) has been used
-by UFS driver since the MCQ be enabled. Hence in UFS
-DT node, we need to give the msi-parent property that
-point to the hardware entity that serves as the MSI
-controller for this UFS controller.
+On Wed, Nov 01, 2023 at 12:01:09PM +0800, Ziqi Chen wrote:
+> The Message Signaled Interrupt (MSI) has been used
+> by UFS driver since the MCQ be enabled. Hence in UFS
+> DT node, we need to give the msi-parent property that
+> point to the hardware entity that serves as the MSI
+> controller for this UFS controller.
+> 
+> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> index 462ead5..d2f505a 100644
+> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+> @@ -103,6 +103,8 @@ properties:
+>      description:
+>        GPIO connected to the RESET pin of the UFS memory device.
+>  
+> +  msi-parent: true
+> +
 
-Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
----
- Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+This property is not Qcom specific. So this should be part of ufs-common.yaml.
 
-diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-index 462ead5..d2f505a 100644
---- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-+++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-@@ -103,6 +103,8 @@ properties:
-     description:
-       GPIO connected to the RESET pin of the UFS memory device.
- 
-+  msi-parent: true
-+
- required:
-   - compatible
-   - reg
-@@ -318,5 +320,6 @@ examples:
-                             <0 0>,
-                             <0 0>;
-             qcom,ice = <&ice>;
-+            msi-parent = <&gic_its 0x60>;
-         };
-     };
+- Mani
+
+>  required:
+>    - compatible
+>    - reg
+> @@ -318,5 +320,6 @@ examples:
+>                              <0 0>,
+>                              <0 0>;
+>              qcom,ice = <&ice>;
+> +            msi-parent = <&gic_its 0x60>;
+>          };
+>      };
+> -- 
+> 2.7.4
+> 
+
 -- 
-2.7.4
-
+மணிவண்ணன் சதாசிவம்
