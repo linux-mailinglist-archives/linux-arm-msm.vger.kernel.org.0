@@ -2,248 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B77A17DDE08
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 10:05:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D54F7DDE1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 10:07:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233463AbjKAJEl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Nov 2023 05:04:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36466 "EHLO
+        id S232743AbjKAJH0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Nov 2023 05:07:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233794AbjKAJEi (ORCPT
+        with ESMTP id S233120AbjKAJHY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Nov 2023 05:04:38 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 389A012F
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Nov 2023 02:04:32 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-53dd752685fso10827129a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Nov 2023 02:04:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698829470; x=1699434270; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=deorSarSbR1QxtZLSCW9XETCm3ns93gkolRiX/6H0K0=;
-        b=Br+uhlUFxpobLPEu7czSyczscaBiZSU1xQAhp49eoHMqpoGGs/+49aIgeOzLFeX2mN
-         kJtzaGHUDGj8X6s+QQoljjkuSh6TRZvGrKZO7fRbGPh+1PRtXrQPaxFs1IUNE4LFyGX8
-         PJ25JR5mm0pCH7c2jBnBrj53prE0YMzQiaqvwuMw8ATmTD4nK16AdwZ34BhzG7S7+s9R
-         bU/dkwX8QMPjWHkNSKdL1cM4XFKvjyvVZSNg/F0TrsldEVVvx3xKoPKbkEdCbmBo2GXn
-         7UKFrNpSVS2n5Y3JighwAQnyhuzh+8jX/iHmu6c5nSdnUatmL5KtCsFxfx5P7sR9KOod
-         G5XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698829470; x=1699434270;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=deorSarSbR1QxtZLSCW9XETCm3ns93gkolRiX/6H0K0=;
-        b=kJ+7h4CpgBaKze2GPnW2Lljauew0RyuNq71MLiDNn9g5xGW0LgaPfKScTJ7VYDuF+T
-         0zTekNIdNauceneq4u/HmCd1yKv1NCStoyUhiJlNlIW1CDsCX2kaTRoyTc4ioIlhAQHR
-         2TD1Rwx/LKw5UdXhup6huxx13mG4uNao6DJMktfUkbQEoaf2qsbMaezbFv6bR81DQtvO
-         fhio/ivw2OWKErIt9/xvsu5heOyHw63YRFQfGp9qFMZWWCTpsGdAxDScY864lE4xJtH2
-         U4R0KCk7ria8Gsiis1yAKW+cqR+s/kgzu3ILHftIThxUhLoPTheqM4ZEQjzgoX6waSXV
-         fS8Q==
-X-Gm-Message-State: AOJu0YzGhhZZyrs7TftYnkpTBeRCgjPj28zIuY0cZk4DDK72Ixb3Ulro
-        NBq4pHRmZeB4+6E4Y3ibkQz6aA==
-X-Google-Smtp-Source: AGHT+IEPolrieRML2v8bbaODfnES9U9NNN2M+epaLneHTikCZ7+r522LapRxt0TJ49vjNuLy6Z8wAA==
-X-Received: by 2002:a17:907:2d2a:b0:9be:e278:4d45 with SMTP id gs42-20020a1709072d2a00b009bee2784d45mr1421982ejc.15.1698829470695;
-        Wed, 01 Nov 2023 02:04:30 -0700 (PDT)
-Received: from [127.0.1.1] ([86.122.213.220])
-        by smtp.gmail.com with ESMTPSA id l25-20020a170906a41900b0099cd1c0cb21sm2152781ejz.129.2023.11.01.02.04.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Nov 2023 02:04:30 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-Date:   Wed, 01 Nov 2023 11:04:11 +0200
-Subject: [PATCH RESEND v3 5/5] venus: pm_helpers: Use
- dev_pm_genpd_set_hwmode to switch GDSC mode
+        Wed, 1 Nov 2023 05:07:24 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5636E102;
+        Wed,  1 Nov 2023 02:07:16 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A11vm1Q006624;
+        Wed, 1 Nov 2023 09:07:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=IOlBThydEMhGc7QoFRuOa4ssmZqQYyjeSpWiLRMWaiM=;
+ b=pb+S8+C1C0ENS8wkTfcjzxWma+/yfLMhd+mytUpxMF7lzk1fLQBdVf98V07DCQbh7DFz
+ a7vAHQTnBPiNqfLHbzYTJluLcl4XLI1x64134aYbMSuADkegLgQgO3NHOdkpoQhxCuWo
+ bmHkN+2xO33ExB8Pfq36X8th1CT65BDeulPfNQ70TBm1SYmQ9uxSjA8+QHrlXEV6WOR/
+ v3fB3WqlqtWCywjfF+iTdfLWt2XrCu92bXG5JBGQA3IjiiJDYTZ3oToFBWHuiA2rikEl
+ gKkpb0S82ZhV8XkDH2+u5bp41WF/A38rO7fbAPvf3RZ1+P0gU/pLBjDCucPZHsKnRgaf YQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u34sc2mhc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 01 Nov 2023 09:06:59 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A196vBK030531
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 1 Nov 2023 09:06:57 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 1 Nov
+ 2023 02:06:53 -0700
+Message-ID: <7389a1de-feed-4fe5-9aaf-75e3f11bc1ec@quicinc.com>
+Date:   Wed, 1 Nov 2023 17:06:51 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231101-gdsc-hwctrl-v3-5-0740ae6b2b04@linaro.org>
-References: <20231101-gdsc-hwctrl-v3-0-0740ae6b2b04@linaro.org>
-In-Reply-To: <20231101-gdsc-hwctrl-v3-0-0740ae6b2b04@linaro.org>
-To:     "Rafael J. Wysocki" <rafael@kernel.org>,
-        Kevin Hilman <khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/8] coresight-tpdm: Add support to configure CMB
+To:     James Clark <james.clark@arm.com>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-media@vger.kernel.org,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5363; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=xnuOTf2Kr8/935lTdlMi0E5z4E2laKtVSwUNwYdMNTI=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlQhSSEptyMNL/Gg49IXQ+Hqq6akfRm5iPC6mWP
- HczQT3IiZ+JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZUIUkgAKCRAbX0TJAJUV
- VmMRD/4snqQ3+O/zco8zeG9Unkij03wDt5uoYcOCpOObJGrXgStVICT9LJ/DJNmFqHKYHSJIyII
- A55qGK3uRQC828E5uxiy42Mi6yJF9jYOla7SuLXqcY47Db8gYdovM3TMe7ghOmjA8t2PvX/rKYV
- EM7qZS/EDCoilLDMbuSAPuPkGB1pWcDCJJwliisHGpJEutojPRWuZp//wZTZL0IKyiqz/cn5rl5
- 1dmUQRixMsQjkofhyR+I3kV/eLkTsaJFglnoLVJ9AA+aHjEcrcWkIup7Li0T96vhBlIQaZbDjBt
- 71Za0JkJNj5fDf889sQpOZeBUieV1r3xSdMdCnZD14r1zO0HSCa2Lx1yLZGQHiGN6e3soCD/9Dq
- 30TxHg+OlMRuPUe/Mgl8deUthFweJCojsf1j6azqpFtT8UAmknuRwO1NKrtsDHGudJNhF/0vAlX
- MVvESARLuSr4tDHkoxijD4vsP9H9RH8qWnkiShhVwS4zFDo4qGzUyFcsaZXdzmrvJABV744nziI
- HQitBcAYzyfFME5GNAYiXiuyX9efIOe1BX3x29m+nNdslnBGZhBwRUEyUcC4aOhkTsY0THdIDEj
- c/hJoRQDZ/DTuIgcDcb/gnbTS5A03LrrEFO0/t3CIaaly7IJI1rn/uU+AlPBV9hT+AsjaTnWbX4
- PkhllUF+q2xDghw==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+References: <1698202408-14608-1-git-send-email-quic_taozha@quicinc.com>
+ <1698202408-14608-5-git-send-email-quic_taozha@quicinc.com>
+ <288bcd70-ee12-e4f7-2381-8d18e6fc0c1b@arm.com>
+Content-Language: en-US
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <288bcd70-ee12-e4f7-2381-8d18e6fc0c1b@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: iCQJHJmpYoZrRR5KAkYUZp-fQELYwrrU
+X-Proofpoint-GUID: iCQJHJmpYoZrRR5KAkYUZp-fQELYwrrU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-01_06,2023-10-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 mlxlogscore=502 bulkscore=0 phishscore=0 priorityscore=1501
+ mlxscore=0 spamscore=0 clxscore=1015 adultscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311010076
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
 
-This change demonstrates the use of dev_pm_genpd_set_hwmode API from
-video driver to switch the video mvs0 gdsc to SW/HW modes at runtime
-based on requirement.
+On 10/30/2023 7:29 PM, James Clark wrote:
+>
+> On 25/10/2023 03:53, Tao Zhang wrote:
+>> TPDM CMB subunits support two forms of CMB data set element creation:
+>> continuous and trace-on-change collection mode. Continuous change
+>> creates CMB data set elements on every CMBCLK edge. Trace-on-change
+>> creates CMB data set elements only when a new data set element differs
+>> in value from the previous element in a CMB data set. Set CMB_CR.MODE
+>> to 0 for continuous CMB collection mode. Set CMB_CR.MODE to 1 for
+>> trace-on-change CMB collection mode
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> Signed-off-by: Jinlong Mao <quic_jinlmao@quicinc.com>
+>> ---
+>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 10 +++
+>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 71 ++++++++++++++++++++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.h       | 12 ++++
+>>   3 files changed, 93 insertions(+)
+>>
+>> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> index f07218e..ace7231 100644
+>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> @@ -170,3 +170,13 @@ Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_t
+>>   Description:
+>>   		(RW) Set/Get the MSR(mux select register) for the DSB subunit
+>>   		TPDM.
+>> +
+>> +What:		/sys/bus/coresight/devices/<tpdm-name>/cmb_mode
+>> +Date:		March 2023
+>> +KernelVersion	6.7
+>> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+>> +Description:	(Write) Set the data collection mode of CMB tpdm.
+> I know it's expanded elsewhere, but it's probably worth expanding the
+> CMB abbreviation here as well so people reading the docs don't have to
+> go into the code.
 
-This change adds a new boolean array member vcodec_pmdomains_hwctrl in
-venus_resources structure to indicate if GDSC's have HW control support
-or not. This data is used in vcodec_control_v4() to check if GDSC has
-support to switch to HW control mode and then call dev_pm_genpd_set_hwmode
-to switch the GDSC mode.
+Sure, I will update in the next patch series.
 
-Before the GDSC HWCTL was available to the consumer, the venus driver
-needed to somehow keep the power from collapsing while under the driver
-control. The only way to do that was to clear the CORE_PWR_DISABLE bit
-(in wrapper POWER_CONTROL register) and, respectively, set it back after
-the driver control was completed.
 
-Now, that there is a way to switch the GDSC HW/SW control back and
-forth, the CORE_PWR_DISABLE toggling can be dropped.
+Best,
 
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/media/platform/qcom/venus/core.c       |  4 +++
- drivers/media/platform/qcom/venus/core.h       |  1 +
- drivers/media/platform/qcom/venus/pm_helpers.c | 47 +++++++++++---------------
- 3 files changed, 25 insertions(+), 27 deletions(-)
+Tao
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index 054b8e74ba4f..8145062ab6f7 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -706,6 +706,7 @@ static const struct venus_resources sdm845_res_v2 = {
- 	.vcodec1_clks = { "vcodec1_core", "vcodec1_bus" },
- 	.vcodec_clks_num = 2,
- 	.vcodec_pmdomains = { "venus", "vcodec0", "vcodec1" },
-+	.vcodec_pmdomains_hwctrl = { false, true, true },
- 	.vcodec_pmdomains_num = 3,
- 	.opp_pmdomain = (const char *[]) { "cx", NULL },
- 	.vcodec_num = 2,
-@@ -755,6 +756,7 @@ static const struct venus_resources sc7180_res = {
- 	.vcodec0_clks = { "vcodec0_core", "vcodec0_bus" },
- 	.vcodec_clks_num = 2,
- 	.vcodec_pmdomains = { "venus", "vcodec0" },
-+	.vcodec_pmdomains_hwctrl = { false, true },
- 	.vcodec_pmdomains_num = 2,
- 	.opp_pmdomain = (const char *[]) { "cx", NULL },
- 	.vcodec_num = 1,
-@@ -812,6 +814,7 @@ static const struct venus_resources sm8250_res = {
- 	.vcodec0_clks = { "vcodec0_core" },
- 	.vcodec_clks_num = 1,
- 	.vcodec_pmdomains = { "venus", "vcodec0" },
-+	.vcodec_pmdomains_hwctrl = { false, true },
- 	.vcodec_pmdomains_num = 2,
- 	.opp_pmdomain = (const char *[]) { "mx", NULL },
- 	.vcodec_num = 1,
-@@ -871,6 +874,7 @@ static const struct venus_resources sc7280_res = {
- 	.vcodec0_clks = {"vcodec_core", "vcodec_bus"},
- 	.vcodec_clks_num = 2,
- 	.vcodec_pmdomains = { "venus", "vcodec0" },
-+	.vcodec_pmdomains_hwctrl = { false, true },
- 	.vcodec_pmdomains_num = 2,
- 	.opp_pmdomain = (const char *[]) { "cx", NULL },
- 	.vcodec_num = 1,
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 4a633261ece4..6d591ecad482 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -73,6 +73,7 @@ struct venus_resources {
- 	const char * const vcodec1_clks[VIDC_VCODEC_CLKS_NUM_MAX];
- 	unsigned int vcodec_clks_num;
- 	const char * const vcodec_pmdomains[VIDC_PMDOMAINS_NUM_MAX];
-+	bool vcodec_pmdomains_hwctrl[VIDC_PMDOMAINS_NUM_MAX];
- 	unsigned int vcodec_pmdomains_num;
- 	const char **opp_pmdomain;
- 	unsigned int vcodec_num;
-diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
-index a1b127caa90a..9d1dc8366ab0 100644
---- a/drivers/media/platform/qcom/venus/pm_helpers.c
-+++ b/drivers/media/platform/qcom/venus/pm_helpers.c
-@@ -408,35 +408,28 @@ static const struct venus_pm_ops pm_ops_v3 = {
- 
- static int vcodec_control_v4(struct venus_core *core, u32 coreid, bool enable)
- {
--	void __iomem *ctrl, *stat;
--	u32 val;
--	int ret;
--
--	if (IS_V6(core)) {
--		ctrl = core->wrapper_base + WRAPPER_CORE_POWER_CONTROL_V6;
--		stat = core->wrapper_base + WRAPPER_CORE_POWER_STATUS_V6;
--	} else if (coreid == VIDC_CORE_ID_1) {
--		ctrl = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_CONTROL;
--		stat = core->wrapper_base + WRAPPER_VCODEC0_MMCC_POWER_STATUS;
--	} else {
--		ctrl = core->wrapper_base + WRAPPER_VCODEC1_MMCC_POWER_CONTROL;
--		stat = core->wrapper_base + WRAPPER_VCODEC1_MMCC_POWER_STATUS;
--	}
--
--	if (enable) {
--		writel(0, ctrl);
--
--		ret = readl_poll_timeout(stat, val, val & BIT(1), 1, 100);
--		if (ret)
--			return ret;
--	} else {
--		writel(1, ctrl);
-+	int i, ret = 0;
-+	struct device *dev = core->dev;
-+	const struct venus_resources *res = core->res;
- 
--		ret = readl_poll_timeout(stat, val, !(val & BIT(1)), 1, 100);
--		if (ret)
--			return ret;
-+	for (i = 0; i < res->vcodec_pmdomains_num; i++) {
-+		if (res->vcodec_pmdomains_hwctrl[i]) {
-+
-+			if (!core->pmdomains[i])
-+				return -ENODEV;
-+
-+			/*
-+			 * enable( true ), switch the gdsc to SW mode
-+			 * enable( false), switch the gdsc to HW mode
-+			 */
-+			ret = dev_pm_genpd_set_hwmode(core->pmdomains[i], !enable);
-+			if (ret) {
-+				dev_err(dev, "Failed to switch power-domain:%d to %s mode\n",
-+					i, enable ? "SW" : "HW");
-+				return ret;
-+			}
-+		}
- 	}
--
- 	return 0;
- }
- 
-
--- 
-2.34.1
-
+>
+> Otherwise:
+>
+> Reviewed-by: James Clark <james.clark@arm.com>
+>
+>> +
+>> +		Accepts only one of the 2 values -  0 or 1.
+>> +		0 : Continuous CMB collection mode.
+>> +		1 : Trace-on-change CMB collection mode.
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> index c8bb388..efb376e 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> @@ -148,6 +148,18 @@ static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+>>   	return 0;
+>>   }
+> [...]
