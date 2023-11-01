@@ -2,220 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BEA77DDCFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 08:12:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD38D7DDD67
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 08:48:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229653AbjKAHM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Nov 2023 03:12:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38198 "EHLO
+        id S231364AbjKAHsu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Nov 2023 03:48:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbjKAHM0 (ORCPT
+        with ESMTP id S231294AbjKAHst (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Nov 2023 03:12:26 -0400
+        Wed, 1 Nov 2023 03:48:49 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07517C2;
-        Wed,  1 Nov 2023 00:12:21 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A10v8t5017611;
-        Wed, 1 Nov 2023 07:12:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=u0WiOcWNHfMwWfRqvPP6nsbv0vXbk1NskG9lSHmbs30=;
- b=Gji5+oFhVwtSn+I11P2XtxhlfPc4dq7L0JuDqrsZ/ux628fETuhQVRfdWM25e1LRd8l9
- Cb/cKbVmE3Nn7+CAsoOZRSPeRtEl4tmwGOw+Md3bvfy8hCjAZgZgOyQbEyI41C7unIs6
- K4dx/+/6NYo43iRdM3z66kdW/DwL4WKEIGFRbEpSUeaxrilJYFmgQG5ZEZrnzxYAkUNS
- VBFfzbPrzjkNI60/D0teP+r3jAL8tXtTqwN3aR/b+dBukPQ00rBlqt6DNvyfdnvcPhYY
- nKhr8Qz9oRcLCi8amAgz6+pKnN3U7wkGXBkXkmBBhZccU1daFLhb8gpc5k/CYMfvxYYB Jw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u3382jfsf-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0CB010A;
+        Wed,  1 Nov 2023 00:48:43 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A15xZaA005874;
+        Wed, 1 Nov 2023 07:48:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KRFrtO4kssHKHeqoPSDqQC9Dhp30rMg3dm5Abqs1GX0=;
+ b=nSS91YSv9QqumndNrJYSTtNf32gojkhgnBc+lzI6TR4exsW1I066WcT5O0IWAtGUdcmP
+ xlSBZlmBxAXMpapSLFulpwAPdr5Lpq4Da/d7jpLUaI8h4X2mFKua2eZ2v/F5Qmm2gwcN
+ +s08CTPWdJpXZezOoKsTkYo0H7E4FuCNYJQR/at1ASXf6vXAjuI9mmPoTUD4lm2oR77Z
+ ouPpGRQapADSFLvAgIKbm7aZ/QBW8engQTjxZVdBB7FPT48OT3r78jxnKy8eABD8+odH
+ mvIp/mPq5xtqtKMpVybeyYqyixV8PaRS7bsEQch1FugU8cFub2hSpWM9fJRc6Rz1614m 2Q== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u30xeb6sp-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 01 Nov 2023 07:12:05 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A17C4fb014825
+        Wed, 01 Nov 2023 07:48:16 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A17mFI5028726
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 1 Nov 2023 07:12:04 GMT
-Received: from hu-gkohli-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Wed, 1 Nov 2023 00:12:01 -0700
-From:   Gaurav Kohli <quic_gkohli@quicinc.com>
-To:     <will@kernel.org>, <robin.murphy@arm.com>,
-        <quic_bjorande@quicinc.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <boris.brezillon@collabora.com>, <iommu@lists.linux.dev>,
-        <steven.price@arm.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Gaurav Kohli" <quic_gkohli@quicinc.com>
-Subject: [RFC 1/1] arm-smmu: Add iommu support to share pgtable
-Date:   Wed, 1 Nov 2023 12:41:44 +0530
-Message-ID: <20231101071144.16309-2-quic_gkohli@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231101071144.16309-1-quic_gkohli@quicinc.com>
-References: <20231101071144.16309-1-quic_gkohli@quicinc.com>
+        Wed, 1 Nov 2023 07:48:15 GMT
+Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 1 Nov
+ 2023 00:48:10 -0700
+Message-ID: <5799c6dd-e9ae-ce9f-b9a6-096d03916584@quicinc.com>
+Date:   Wed, 1 Nov 2023 15:48:08 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] dt-bindings: ufs: qcom: Add msi-parent for UFS MCQ
+Content-Language: en-US
+To:     Manivannan Sadhasivam <mani@kernel.org>
+CC:     <quic_asutoshd@quicinc.com>, <quic_cang@quicinc.com>,
+        <bvanassche@acm.org>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
+        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
+        <quic_nguyenb@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_rampraka@quicinc.com>, <linux-scsi@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1698811270-76312-1-git-send-email-quic_ziqichen@quicinc.com>
+ <20231101050116.GB2897@thinkpad>
+From:   Ziqi Chen <quic_ziqichen@quicinc.com>
+In-Reply-To: <20231101050116.GB2897@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ADVeq-RnhZAFjOWzLz0vuLgJYABnnj_6
-X-Proofpoint-ORIG-GUID: ADVeq-RnhZAFjOWzLz0vuLgJYABnnj_6
+X-Proofpoint-GUID: fKYPe1GBJrDCZgPZMiZtf4iOlU-bTmg3
+X-Proofpoint-ORIG-GUID: fKYPe1GBJrDCZgPZMiZtf4iOlU-bTmg3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-01_04,2023-10-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0 spamscore=0
- impostorscore=0 malwarescore=0 mlxscore=0 adultscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311010059
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-11-01_05,2023-10-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 clxscore=1015 mlxscore=0 priorityscore=1501 malwarescore=0
+ adultscore=0 impostorscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311010064
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-HLOS can create s1 pagetable and request firmware to share the same
-pgtable to different entity(vmid).
 
-Use arm-smmu vendor implementation call to define custom
-alloc/free pgtable callback, And use these callbacks to share
-pgtable to different entity while creating pgtable.
 
-Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 81 ++++++++++++++++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu.h      |  8 +++
- 2 files changed, 89 insertions(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index c71afda79d64..e04079988787 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -4,6 +4,7 @@
-  */
- 
- #include <linux/acpi.h>
-+#include <linux/dev_printk.h>
- #include <linux/adreno-smmu-priv.h>
- #include <linux/delay.h>
- #include <linux/of_device.h>
-@@ -258,11 +259,91 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ }
- };
- 
-+static void *qcom_alloc_pages(void *cookie, size_t size, gfp_t gfp)
-+{
-+	struct page *p;
-+	struct qcom_scm_vmperm perms[2];
-+	u64 src  = BIT(QCOM_SCM_VMID_HLOS);
-+	int ret;
-+
-+	struct arm_smmu_domain *domain = (void *)cookie;
-+	/*
-+	 * qcom_scm_assign_mem call during atomic allocation can sleep, Using GFP flags
-+	 * to detect allocation path and return failure for atomic allocations.
-+	 */
-+	if (!gfpflags_allow_blocking(gfp)) {
-+		dev_err(domain->smmu->dev,
-+			"qcom_scm_assign_mem call are not allowed during atomic allocations\n");
-+		return NULL;
-+	}
-+	p = alloc_page(gfp);
-+	if (!p)
-+		return NULL;
-+
-+	perms[0].vmid = QCOM_SCM_VMID_HLOS;
-+	perms[0].perm = QCOM_SCM_PERM_RW;
-+	perms[1].vmid = domain->secure_vmid;
-+	perms[1].perm = QCOM_SCM_PERM_READ;
-+	ret = qcom_scm_assign_mem(page_to_phys(p), PAGE_SIZE,
-+				  &src, perms, 2);
-+	if (ret < 0) {
-+		dev_err(domain->smmu->dev,
-+			"assign memory failed for vmid=%x ret=%d\n",
-+			domain->secure_vmid, ret);
-+		__free_page(p);
-+		return NULL;
-+	}
-+
-+	return page_address(p);
-+}
-+
-+static void qcom_free_pages(void *cookie, void *pages, size_t size)
-+{
-+	struct qcom_scm_vmperm perms;
-+	struct page *p;
-+	u64 src;
-+	int ret;
-+
-+	struct arm_smmu_domain *domain = (void *)cookie;
-+
-+	p = virt_to_page(pages);
-+
-+	perms.vmid = QCOM_SCM_VMID_HLOS;
-+	perms.perm = QCOM_SCM_PERM_RWX;
-+	src = BIT(domain->secure_vmid) | BIT(QCOM_SCM_VMID_HLOS);
-+	ret = qcom_scm_assign_mem(page_to_phys(p), PAGE_SIZE,
-+				  &src, &perms, 1);
-+	/*
-+	 * For assign failure scenario, it is not safe to use these pages by HLOS.
-+	 * So returning from here instead of freeing the page.
-+	 */
-+	if (ret < 0) {
-+		dev_err(domain->smmu->dev,
-+			"assign memory failed to HLOS for vmid=%x ret=%d\n",
-+			domain->secure_vmid, ret);
-+		return;
-+	}
-+
-+	__free_page(p);
-+}
-+
- static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
- 		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
- {
-+	u32 val;
-+
- 	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
- 
-+	/*
-+	 * For those client where qcom,iommu-vmid is not defined, default arm-smmu pgtable
-+	 * alloc/free handler will be used.
-+	 */
-+	if (of_property_read_u32(dev->of_node, "qcom,iommu-vmid", &val) == 0) {
-+		smmu_domain->secure_vmid = val;
-+		pgtbl_cfg->alloc = qcom_alloc_pages;
-+		pgtbl_cfg->free = qcom_free_pages;
-+	}
-+
- 	return 0;
- }
- 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-index 703fd5817ec1..98e1c5369e58 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -374,6 +374,14 @@ struct arm_smmu_domain {
- 	struct mutex			init_mutex; /* Protects smmu pointer */
- 	spinlock_t			cb_lock; /* Serialises ATS1* ops and TLB syncs */
- 	struct iommu_domain		domain;
-+	/*
-+	 * Use to store parse vmid value for those clients which want HLOS
-+	 * to share pgtable to different entity(VMID).
-+	 * Fix Me: Ideally this should be implemented on arm-smmu vendor implementation
-+	 * driver, but as per current design of arm_smmu_domain_alloc there is no way
-+	 * to call implementation callbacks.
-+	 */
-+	u32				secure_vmid;
- };
- 
- struct arm_smmu_master_cfg {
--- 
-2.17.1
-
+On 11/1/2023 1:01 PM, Manivannan Sadhasivam wrote:
+> On Wed, Nov 01, 2023 at 12:01:09PM +0800, Ziqi Chen wrote:
+>> The Message Signaled Interrupt (MSI) has been used
+>> by UFS driver since the MCQ be enabled. Hence in UFS
+>> DT node, we need to give the msi-parent property that
+>> point to the hardware entity that serves as the MSI
+>> controller for this UFS controller.
+>>
+>> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>> index 462ead5..d2f505a 100644
+>> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+>> @@ -103,6 +103,8 @@ properties:
+>>       description:
+>>         GPIO connected to the RESET pin of the UFS memory device.
+>>   
+>> +  msi-parent: true
+>> +
+> 
+> This property is not Qcom specific. So this should be part of ufs-common.yaml.
+Make sense, thanks for review, I will update to ufs-common.yam.
+> 
+> - Mani
+> 
+>>   required:
+>>     - compatible
+>>     - reg
+>> @@ -318,5 +320,6 @@ examples:
+>>                               <0 0>,
+>>                               <0 0>;
+>>               qcom,ice = <&ice>;
+>> +            msi-parent = <&gic_its 0x60>;
+>>           };
+>>       };
+>> -- 
+>> 2.7.4
+>>
+> 
