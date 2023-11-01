@@ -2,158 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A09287DDB12
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 03:40:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 243AE7DDBBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Nov 2023 05:02:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344604AbjKAChf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Oct 2023 22:37:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37246 "EHLO
+        id S231434AbjKAECL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Nov 2023 00:02:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344638AbjKAChe (ORCPT
+        with ESMTP id S229437AbjKAECK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Oct 2023 22:37:34 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36F1AC2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 19:37:32 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-507c78d258fso9121692e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Oct 2023 19:37:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698806250; x=1699411050; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RhToUgDGewUPgf6OgyTbPtKvOyKo7IWG8IUQAlqOJOY=;
-        b=m+XUEFGpeVIe2QrxQGFsFsLQ7UsDiRCFDQEdb8G7E1oneV7fSRivqOCqf7zCiaqVjz
-         z2W5Xk3t+xMWOTSd2P1Lo5gfSJabgSOsxfnt1xYxjF/vSCq0vOTEMwooU1PSS0q0hDmq
-         MmKwBtP0hokMsvnLOiNsZFfl+X6tK9KFYiE/kaJCm7Awn5qIfPbbN2ytdZJ6GH5Sn1Y1
-         EbW+ENLuXOYcs2pEE4iDw79VhmXan+0JXOoUxUmQ9wVn1xC3ru3GyT1SXEN1oKurkKtt
-         yuX0Q9fe67drzz/qUcA3uIjlC/iktP8a8/PtyvIY/sTRQMnU4jDYr+VJ9Ee2Hkf3yi4V
-         PhPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698806250; x=1699411050;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RhToUgDGewUPgf6OgyTbPtKvOyKo7IWG8IUQAlqOJOY=;
-        b=c6k89/wyfWLbm7xI44DazhjvGrslNjLAhMQNzUNaFbfDRgl2aCOmxOFI9O0GPJulmo
-         JObf0jS4tSOFk9x+eyypyC7C4Y1rDUBlPJrWc3bZbwqQm9izJQQNdJdTzS3BE37vk2N9
-         B42GVHN5Bgum5KVfQePihpUvHwK3Xwrs3sc9SOaD0/YMuKxg7Ck8bCkSiKpXNWVBqS5I
-         2nDbJeAxOMZk3N9DqJebftHfVkedXuq2QvolpOPsN9iMgV2iwDD+aaYtorX79M3+5ZI6
-         SomMXPfiwy0D9oct1w0MlGcoCwJQqn1gR7rXpGJ+w58fVn3ztcn9Fbs9KC5a3iZE5VXn
-         +DUQ==
-X-Gm-Message-State: AOJu0YxKyvLTOyyXKasTKUBr0RdW1aPlUhMGnG5N5Ro0eUGotW5M79dY
-        zYxBpN45g30Gigf7Es5mXsoDpsmn5ehVP4afuqQ=
-X-Google-Smtp-Source: AGHT+IFeh9ikxIDnkDlTHkH1PXpR/kgi5gze/lZYbODyZgaDnbprmcGirGJlGwiGQ95RhKrHlfaYPFytDVNE91zQ2Q8=
-X-Received: by 2002:a05:6512:4845:b0:500:acf1:b432 with SMTP id
- ep5-20020a056512484500b00500acf1b432mr11708881lfb.63.1698806250074; Tue, 31
- Oct 2023 19:37:30 -0700 (PDT)
-MIME-Version: 1.0
-References: <20231023032251.164775-1-luben.tuikov@amd.com> <8f53f7ef-7621-4f0b-bdef-d8d20bc497ff@redhat.com>
- <6f3e9b93-2be5-46b2-bbd9-d61d2603c14a@gmail.com> <c57c7217-bfb9-4770-b17e-587f3b8a038c@redhat.com>
- <bef15942-9543-4118-89c9-62c63c6215d4@gmail.com>
-In-Reply-To: <bef15942-9543-4118-89c9-62c63c6215d4@gmail.com>
-From:   Dave Airlie <airlied@gmail.com>
-Date:   Wed, 1 Nov 2023 12:37:18 +1000
-Message-ID: <CAPM=9ty3X6ods9e9g47PNEZO0Kr35a36ffq+o4b0wNg6B+zsyQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/sched: Convert the GPU scheduler to variable number
- of run-queues
-To:     Luben Tuikov <ltuikov89@gmail.com>
-Cc:     Danilo Krummrich <dakr@redhat.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Direct Rendering Infrastructure - Development 
-        <dri-devel@lists.freedesktop.org>,
-        Matthew Brost <matthew.brost@intel.com>,
-        lima@lists.freedesktop.org, Emma Anholt <emma@anholt.net>,
-        nouveau@lists.freedesktop.org,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        etnaviv@lists.freedesktop.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Qiang Yu <yuq825@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Alex Deucher <alexander.deucher@amd.com>,
-        freedreno@lists.freedesktop.org,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Wed, 1 Nov 2023 00:02:10 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9367ADF;
+        Tue, 31 Oct 2023 21:02:04 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A11vpbZ031127;
+        Wed, 1 Nov 2023 04:01:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=7hxHgKStLp4kLx/Vn0TFARVQ9iOgMIJxkdR3hYP1PNk=;
+ b=VVJxvFz7FP6tXhettQd5y8Zm93H/W+8iJfM8lbzo5LXNSSQSpG6j6DXv69qFw7CV3KrM
+ d5PifuQG7cAY9GoJMb9sxbt3sZ/nhXESGVAP7sx6OQqItk99OHe+3VOCStW6Ox0CFuvH
+ vaM50Z8J75vliCowf37YDpW/nTH5DNi+j1W/YlSGQOUa1F1teyWDHIIjT/51UXpjC4kg
+ ygWJ8wH3C2pocXVk8RoWKQM3DjAyfUX136T3cwXPYCPGYyAwf3bq2+mgjLaQSon3TzVI
+ V5mF0h0s/YD1tbR28cm9BjHXvXsZadNomDzw5vP5ZzSOZVZYMz8lxLFTKB7y65RZQHtE hg== 
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u3ayvrkkb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 01 Nov 2023 04:01:21 +0000
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3A141IIT013366;
+        Wed, 1 Nov 2023 04:01:18 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3u0ucma7sr-1;
+        Wed, 01 Nov 2023 04:01:18 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3A141IP5013361;
+        Wed, 1 Nov 2023 04:01:18 GMT
+Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3A141HUt013360;
+        Wed, 01 Nov 2023 04:01:18 +0000
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 393357)
+        id DBB4853F5; Wed,  1 Nov 2023 12:01:16 +0800 (CST)
+From:   Ziqi Chen <quic_ziqichen@quicinc.com>
+To:     quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+        bvanassche@acm.org, mani@kernel.org, beanhuo@micron.com,
+        avri.altman@wdc.com, junwoo80.lee@samsung.com,
+        martin.petersen@oracle.com, quic_ziqichen@quicinc.com,
+        quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+        quic_rampraka@quicinc.com
+Cc:     linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] dt-bindings: ufs: qcom: Add msi-parent for UFS MCQ
+Date:   Wed,  1 Nov 2023 12:01:09 +0800
+Message-Id: <1698811270-76312-1-git-send-email-quic_ziqichen@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Y0Ppfrsa43hIFi2NT0_LbgRnd-ns4l8x
+X-Proofpoint-ORIG-GUID: Y0Ppfrsa43hIFi2NT0_LbgRnd-ns4l8x
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-31_10,2023-10-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 spamscore=0 impostorscore=0 malwarescore=0
+ clxscore=1011 mlxscore=0 phishscore=0 priorityscore=1501 mlxlogscore=736
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311010032
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 1 Nov 2023 at 11:46, Luben Tuikov <ltuikov89@gmail.com> wrote:
->
-> On 2023-10-31 09:33, Danilo Krummrich wrote:
-> >
-> > On 10/26/23 19:25, Luben Tuikov wrote:
-> >> On 2023-10-26 12:39, Danilo Krummrich wrote:
-> >>> On 10/23/23 05:22, Luben Tuikov wrote:
-> >>>> The GPU scheduler has now a variable number of run-queues, which are set up at
-> >>>> drm_sched_init() time. This way, each driver announces how many run-queues it
-> >>>> requires (supports) per each GPU scheduler it creates. Note, that run-queues
-> >>>> correspond to scheduler "priorities", thus if the number of run-queues is set
-> >>>> to 1 at drm_sched_init(), then that scheduler supports a single run-queue,
-> >>>> i.e. single "priority". If a driver further sets a single entity per
-> >>>> run-queue, then this creates a 1-to-1 correspondence between a scheduler and
-> >>>> a scheduled entity.
-> >>>
-> >>> Generally, I'm fine with this patch and how it replaces / generalizes the single
-> >>> entity approach.
-> >>
-> >> Great!
-> >>
-> >>> However, I'm not quite sure how to properly use this. What is a driver supposed to
-> >>> do, which previously took advantage of DRM_SCHED_POLICY_SINGLE_ENTITY?
-> >>>
-> >>> Is it supposed to call drm_sched_init() with num_rqs=1? If so, what's the correct way
-> >>
-> >> Yes, you call drm_sched_init() with num_rqs set to 1.
-> >>
-> >>> to initialize the drm_sched_entity then? Calling drm_sched_entity_init() with priority=0?
-> >>
-> >> Yes, with priority set to 0.
-> >>
-> >> One unfortunate fact I noticed when doing this patch is that the numerical values
-> >> assigned to enum drm_sched_priority is that the names to values are upside down.
-> >> Instead of min being 0, normal:1, high:2, kernel:3, it should've been kernel:0 (highest),
-> >> high:1, normal:2, low:4, and so on.
-> >>
-> >> The reason for this is absolutely clear: if you had a single priority, it would be
-> >> 0, the kernel, one, highest one. This is similar to how lanes in a highway are counted:
-> >> you always have lane 1. Similarly to nice(1) and kernel priorities...
-> >>
-> >>> Any other priority consequently faults in drm_sched_job_arm().
-> >>
-> >> drm_sched_job_arm() faults on !ENTITY, but the "priority" is just
-> >> assigned to s_priority:
-> >>      job->s_priority = entity->priority;
-> >>
-> >>
-> >>> While I might sound like a broken record (sorry for that), I really think everything
-> >>> related to Matt's series needs documentation, as in:
-> >>
-> >> Yes, I agree.
-> >
-> > Great! Do you plan to send a subsequent patch adding some documentation for this one? I
-> > think it'd be good to get all the above documented.
->
-> A lot of this would be the magic sauce of drivers and hardware--as we've seen with Xe,
-> and it would be presumptuous of me to write down to the detail of what and how this
-> and that should be used.
+The Message Signaled Interrupt (MSI) has been used
+by UFS driver since the MCQ be enabled. Hence in UFS
+DT node, we need to give the msi-parent property that
+point to the hardware entity that serves as the MSI
+controller for this UFS controller.
 
-Nope it wouldn't be. Please feel free to persume how drivers might
-work in the form of documentation.
+Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+---
+ Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 3 +++
+ 1 file changed, 3 insertions(+)
 
-At some point the scheduler needs to be documented and so far two
-maintainers have avoided doing so, and it's causing no end of
-problems.
+diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+index 462ead5..d2f505a 100644
+--- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
++++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
+@@ -103,6 +103,8 @@ properties:
+     description:
+       GPIO connected to the RESET pin of the UFS memory device.
+ 
++  msi-parent: true
++
+ required:
+   - compatible
+   - reg
+@@ -318,5 +320,6 @@ examples:
+                             <0 0>,
+                             <0 0>;
+             qcom,ice = <&ice>;
++            msi-parent = <&gic_its 0x60>;
+         };
+     };
+-- 
+2.7.4
 
-Write documentation, this goes for Xe scheduler patches, Danilo's work.
-
-When someone asks you for docs, consider it a blocker on getting stuff
-merged, because this stuff isn't obvious.
-
-Dave.
