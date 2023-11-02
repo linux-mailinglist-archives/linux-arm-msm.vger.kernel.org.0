@@ -2,81 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 19D277DEFE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 11:28:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B8287DF030
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 11:35:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346257AbjKBK1P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Nov 2023 06:27:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44496 "EHLO
+        id S1347075AbjKBKc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Nov 2023 06:32:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345942AbjKBK1O (ORCPT
+        with ESMTP id S1346880AbjKBKc1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Nov 2023 06:27:14 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1987112
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 03:27:07 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-507b96095abso850409e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 03:27:07 -0700 (PDT)
+        Thu, 2 Nov 2023 06:32:27 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE5F713E
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 03:32:18 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-32deb2809daso435124f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 03:32:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698920826; x=1699525626; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698921137; x=1699525937; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=AtXX2GNvCLq3+F9/6sY6g0DBtOlged3yDJV/slMhkqM=;
-        b=NX42xWPvjdmHRyPqLit26cuSVMlmOzc/7DytZBr1vm1MOp+wvDAw7RJy1XHEtpgYSx
-         7H3BWLWg4XUlgn6Xo2EdxFqW9HE8rhESiOnxhyLXbncxYoS88jGHRVzEA1Ue5RN0WEbf
-         d7k8ApdFMaRIPkQUS3o0JzH3aGqzoywqftufW5o3jhNuMLPjKTdU2Zw72GID5qKXyG/C
-         HmWpM2GYJjECgyal1Jcl1F7pq8TFsk3Cat8wQ+C1vp+O4BecEydJiOszHwOKUaiL3T6B
-         SLBFl0E7J+BOOre7OjZVwFm/gsMGtuOyiNnLt/viXTNqejvQqyYwHxOCItlWmJpPFGvT
-         JkcA==
+        bh=hL5GAkNYX5lf5Xnnqavo6wfZxNcky+vNwT6ydKIiCK0=;
+        b=WEzbl58iLKcndODZjAdZophctyQu2r9oOt3DuwJGGxJUQCltuFXJ0iYytUTcgpfFte
+         xYQy7bgKHO+eGYTa+tp7+LKQ+8fgug9kN/ploet0ZFkefynsVWVsPw2+tJcttGOyhXwj
+         bhA0Rm99IJ/+4NzLDmd6b3gFSsff/ugQM5Ec8Ty8Lfi3Am74CLBXhj7MGcmJ+8f0eRKw
+         xAx8qEyhmW5D6Hbnqj3FIJyFLJkt5666RLfYzRR302aOC2Lx2zsDKtse70iA+QFmMjWD
+         rinDi9eXvXooe5wqfwg+yJc2ZaGLuMJhgEzICbToy4OdaArFFV5cVZXdgvgjQ0NWx3Hb
+         oLHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698920826; x=1699525626;
+        d=1e100.net; s=20230601; t=1698921137; x=1699525937;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=AtXX2GNvCLq3+F9/6sY6g0DBtOlged3yDJV/slMhkqM=;
-        b=VebzKsCQdU5mVobF12GHEiJlIsiDnV2AsCkDzNR0CeKlsy7WG1AT/gxjlZZO/2Ekob
-         NnWsEfrlkfLX/ijuoqLlQgg5YpL9mPAlrChtkC/byE34XscS9jLUSCRfWEFrWR9QFvWU
-         A4RHBBZlHOoxUf3Lm+JJNkZnJc1hR7GbfrSQe4MzclbByyQe+itZQnjzLjxJQ8+ccWL0
-         fiHlNrQ1ihCCoiUlcKNTqser7C7UXmKg3R0t/EPOmuaEoIogmM4upCQFIgr3Wa71iByW
-         QgFHa2PxpVrBGGp9ksb/M8wSHu8w9bHhrvEQInY3dlQq01J+L+XypDKKtMpXOJwQUcTN
-         SaVg==
-X-Gm-Message-State: AOJu0YwmLmRV4zwjZZPMXIRrrXy6LyFjZnAIrUnHfwpQP0c5F4j1LzfJ
-        MvAxtl0bKJsKl9kH2y25ztxkvObtXznpUmExn0yQjA==
-X-Google-Smtp-Source: AGHT+IGBkpYYwVXGy15meWSLZYzbfHT6mypM3bkyNbbeKLW+q3qobY2cfgtnhB+vhnP9N5ojeuN5qw==
-X-Received: by 2002:a05:6000:178c:b0:32f:8442:8f34 with SMTP id e12-20020a056000178c00b0032f84428f34mr10021060wrg.25.1698920805618;
-        Thu, 02 Nov 2023 03:26:45 -0700 (PDT)
+        bh=hL5GAkNYX5lf5Xnnqavo6wfZxNcky+vNwT6ydKIiCK0=;
+        b=rtOYgkq3yHAKTMgH6rK0AP0vKRF+hJ5PkVPsEG2PibJjUMT/YaqymOFSZe9JheZnOX
+         9i4WQr1QeyJjESdVfbwzz1/eqdY4IPlfPh5OL21HYIUTcT4JySwbCnQRSy93OVx/f0rP
+         VDlG9soVIH/2nwK4ECG5ncNKBvGPzVKKhT61Ey8DlmxYKzdLAusrBAILCm6HcTwmcJgD
+         1JMyF9nmXYFPUfqaEWFDwfFGomNzA7tRsNUH3Vi883LDh97lD3HINwIFyakTr+zbU3rI
+         FAQPJMHxGl5KzEy8aRRXliHPgD7rLdYH1Es8i9V9ioJuAu0Mk77A4hYCZgcoCxKrhgL4
+         e6uw==
+X-Gm-Message-State: AOJu0YxsJHSKOZWVJUcFoRE9h4XOkF194MaiLUbOBX0/qwZ2Da2F7N57
+        e+KZRxCHpgUR98rGKEYKBzOCqw==
+X-Google-Smtp-Source: AGHT+IFPxwdfmh35qsrDuZo1uOZ2JxX6Pr4ET8SmzWDoqC5BsYtR7YOjn4l0q9vCDunbUwW0/3h7uw==
+X-Received: by 2002:a5d:46c7:0:b0:32f:b1f2:1f99 with SMTP id g7-20020a5d46c7000000b0032fb1f21f99mr18289wrs.9.1698921135424;
+        Thu, 02 Nov 2023 03:32:15 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:4ac1:f109:811c:51be? ([2a01:e0a:982:cbb0:4ac1:f109:811c:51be])
-        by smtp.gmail.com with ESMTPSA id e16-20020adff350000000b0032daf848f68sm2092996wrp.59.2023.11.02.03.26.44
+        by smtp.gmail.com with ESMTPSA id bk28-20020a0560001d9c00b0032dab20e773sm2081738wrb.69.2023.11.02.03.32.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Nov 2023 03:26:45 -0700 (PDT)
-Message-ID: <c654555d-f50f-411c-b61d-190da598d5e1@linaro.org>
-Date:   Thu, 2 Nov 2023 11:26:44 +0100
+        Thu, 02 Nov 2023 03:32:14 -0700 (PDT)
+Message-ID: <0126493b-6735-42a6-b346-dfabdf23bcaf@linaro.org>
+Date:   Thu, 2 Nov 2023 11:32:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From:   neil.armstrong@linaro.org
+From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 2/3] remoteproc: qcom: pas: make region assign more
- generic
+Subject: Re: [PATCH v10 2/4] Input: add core support for Goodix Berlin
+ Touchscreen IC
 Content-Language: en-US, fr
-To:     Mukesh Ojha <quic_mojha@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Jeff LaBundy <jeff@labundy.com>
+Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231030-topic-sm8650-upstream-remoteproc-v2-0-609ee572e0a2@linaro.org>
- <20231030-topic-sm8650-upstream-remoteproc-v2-2-609ee572e0a2@linaro.org>
- <8e71ba02-5d6a-4c7e-4a55-f9ef79c2f928@quicinc.com>
- <65dcdd9c-a75b-4fe7-bdcf-471a5602db20@linaro.org>
- <a6bffac4-8c9c-6b85-290e-c991e8ab319a@quicinc.com>
+        Bastien Nocera <hadess@hadess.net>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231023-topic-goodix-berlin-upstream-initial-v10-0-88eec2e51c0b@linaro.org>
+ <20231023-topic-goodix-berlin-upstream-initial-v10-2-88eec2e51c0b@linaro.org>
+ <ZTnzorJ4h1zva1AZ@nixie71>
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
  GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
@@ -102,281 +99,139 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro Developer Services
-In-Reply-To: <a6bffac4-8c9c-6b85-290e-c991e8ab319a@quicinc.com>
+In-Reply-To: <ZTnzorJ4h1zva1AZ@nixie71>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/11/2023 15:42, Mukesh Ojha wrote:
-> 
-> 
-> On 10/31/2023 10:36 PM, Neil Armstrong wrote:
->> Hi,
->>
->> On 30/10/2023 14:10, Mukesh Ojha wrote:
->>>
->>>
->>> On 10/30/2023 3:33 PM, Neil Armstrong wrote:
->>>> The current memory region assign only supports a single
->>>> memory region.
->>>>
->>>> But new platforms introduces more regions to make the
->>>> memory requirements more flexible for various use cases.
->>>> Those new platforms also shares the memory region between the
->>>> DSP and HLOS.
->>>>
->>>> To handle this, make the region assign more generic in order
->>>> to support more than a single memory region and also permit
->>>> setting the regions permissions as shared.
->>>>
->>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>> ---
->>>>   drivers/remoteproc/qcom_q6v5_pas.c | 102 ++++++++++++++++++++++++-------------
->>>>   1 file changed, 66 insertions(+), 36 deletions(-)
->>>>
->>>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
->>>> index 913a5d2068e8..4829fd26e17d 100644
->>>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->>>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->>>> @@ -33,6 +33,8 @@
->>>>   #define ADSP_DECRYPT_SHUTDOWN_DELAY_MS    100
->>>> +#define MAX_ASSIGN_COUNT 2
->>>> +
->>>>   struct adsp_data {
->>>>       int crash_reason_smem;
->>>>       const char *firmware_name;
->>>> @@ -51,6 +53,9 @@ struct adsp_data {
->>>>       int ssctl_id;
->>>>       int region_assign_idx;
->>>> +    int region_assign_count;
->>>> +    bool region_assign_shared;
->>>> +    int region_assign_vmid;
->>>>   };
->>>>   struct qcom_adsp {
->>>> @@ -87,15 +92,18 @@ struct qcom_adsp {
->>>>       phys_addr_t dtb_mem_phys;
->>>>       phys_addr_t mem_reloc;
->>>>       phys_addr_t dtb_mem_reloc;
->>>> -    phys_addr_t region_assign_phys;
->>>> +    phys_addr_t region_assign_phys[MAX_ASSIGN_COUNT];
->>>>       void *mem_region;
->>>>       void *dtb_mem_region;
->>>>       size_t mem_size;
->>>>       size_t dtb_mem_size;
->>>> -    size_t region_assign_size;
->>>> +    size_t region_assign_size[MAX_ASSIGN_COUNT];
->>>>       int region_assign_idx;
->>>> -    u64 region_assign_perms;
->>>> +    int region_assign_count;
->>>> +    bool region_assign_shared;
->>>> +    int region_assign_vmid;
->>>> +    u64 region_assign_perms[MAX_ASSIGN_COUNT];
->>>>       struct qcom_rproc_glink glink_subdev;
->>>>       struct qcom_rproc_subdev smd_subdev;
->>>> @@ -590,37 +598,52 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
->>>>   static int adsp_assign_memory_region(struct qcom_adsp *adsp)
->>>>   {
->>>> -    struct reserved_mem *rmem = NULL;
->>>> -    struct qcom_scm_vmperm perm;
->>>> +    struct qcom_scm_vmperm perm[MAX_ASSIGN_COUNT];
->>>> +    unsigned int perm_size = 1;
->>>
->>> AFAICS, not need of initialization.
->>
->> Indeed, removed
->>
->>>
->>>>       struct device_node *node;
->>>> -    int ret;
->>>> +    int offset, ret;
->>>
->>> Nit: one variable per line.
->>
->> Done
->>
->>>
->>>>       if (!adsp->region_assign_idx)
->>>
->>> Not related to this patch..
->>> Should not this be valid only for > 1 ?
->>
->> I don't understand, only region_assign_idx > 1 triggers a memory_assign,
->> and this check discards configurations with region_assign_idx == 0 as
->> expected.
-> 
-> Ah, you can ignore the comments, I got the intention after commenting
-> here ..
-> 
->>
->>>
->>>
->>>>           return 0;
->>>> -    node = of_parse_phandle(adsp->dev->of_node, "memory-region", adsp->region_assign_idx);
->>>> -    if (node)
->>>> -        rmem = of_reserved_mem_lookup(node);
->>>> -    of_node_put(node);
->>>> -    if (!rmem) {
->>>> -        dev_err(adsp->dev, "unable to resolve shareable memory-region\n");
->>>> -        return -EINVAL;
->>>> -    }
->>>> +    for (offset = 0; offset < adsp->region_assign_count; ++offset) {
->>>> +        struct reserved_mem *rmem = NULL;
->>>> +
->>>> +        node = of_parse_phandle(adsp->dev->of_node, "memory-region",
->>>> +                    adsp->region_assign_idx + offset);
->>>> +        if (node)
->>>> +            rmem = of_reserved_mem_lookup(node);
->>>> +        of_node_put(node);
->>>> +        if (!rmem) {
->>>> +            dev_err(adsp->dev, "unable to resolve shareable memory-region index %d\n",
->>>> +                offset);
->>>> +            return -EINVAL; > +        }
->>>
->>>
->>>> -    perm.vmid = QCOM_SCM_VMID_MSS_MSA;
->>>> -    perm.perm = QCOM_SCM_PERM_RW;
->>>> +        if (adsp->region_assign_shared)  {
->>>> +            perm[0].vmid = QCOM_SCM_VMID_HLOS;
->>>> +            perm[0].perm = QCOM_SCM_PERM_RW;
->>>> +            perm[1].vmid = adsp->region_assign_vmid;
->>>> +            perm[1].perm = QCOM_SCM_PERM_RW;
->>>> +            perm_size = 2;
->>>> +        } else {
->>>> +            perm[0].vmid = adsp->region_assign_vmid;
->>>> +            perm[0].perm = QCOM_SCM_PERM_RW;
->>>> +            perm_size = 1;
->>>> +        }
->>>> -    adsp->region_assign_phys = rmem->base;
->>>> -    adsp->region_assign_size = rmem->size;
->>>> -    adsp->region_assign_perms = BIT(QCOM_SCM_VMID_HLOS);
->>>> +        adsp->region_assign_phys[offset] = rmem->base;
->>>> +        adsp->region_assign_size[offset] = rmem->size;
->>>> +        adsp->region_assign_perms[offset] = BIT(QCOM_SCM_VMID_HLOS);
->>>
->>> Do we need array for this, is this changing ?
->>
->> We need to keep region_assign_perms for unassign, but for the other 2 we would
->> need to duplicate the code from adsp_assign_memory_region into
->> adsp_unassign_memory_region.
-> 
-> Thanks got it.
-> 
->>
->>>
->>>> -    ret = qcom_scm_assign_mem(adsp->region_assign_phys,
->>>> -                  adsp->region_assign_size,
->>>> -                  &adsp->region_assign_perms,
->>>> -                  &perm, 1);
->>>> -    if (ret < 0) {
->>>> -        dev_err(adsp->dev, "assign memory failed\n");
->>>> -        return ret;
->>>> +        ret = qcom_scm_assign_mem(adsp->region_assign_phys[offset],
->>>> +                      adsp->region_assign_size[offset],
->>>> +                      &adsp->region_assign_perms[offset],
->>>> +                      perm, perm_size);
->>>> +        if (ret < 0) {
->>>> +            dev_err(adsp->dev, "assign memory %d failed\n", offset);
->>>> +            return ret;
->>>> +        }
->>>>       }
->>>>       return 0;
->>>> @@ -629,20 +652,22 @@ static int adsp_assign_memory_region(struct qcom_adsp *adsp)
->>>>   static void adsp_unassign_memory_region(struct qcom_adsp *adsp)
->>>>   {
->>>>       struct qcom_scm_vmperm perm;
->>>> -    int ret;
->>>> +    int offset, ret;
->>>> -    if (!adsp->region_assign_idx)
->>>> +    if (!adsp->region_assign_idx || adsp->region_assign_shared)
->>>>           return;
->>>> -    perm.vmid = QCOM_SCM_VMID_HLOS;
->>>> -    perm.perm = QCOM_SCM_PERM_RW;
->>>> +    for (offset = 0; offset < adsp->region_assign_count; ++offset) {
->>>> +        perm.vmid = QCOM_SCM_VMID_HLOS;
->>>> +        perm.perm = QCOM_SCM_PERM_RW;
->>>
->>>> -    ret = qcom_scm_assign_mem(adsp->region_assign_phys,
->>>> -                  adsp->region_assign_size,
->>>> -                  &adsp->region_assign_perms,
->>>> -                  &perm, 1);
->>>> -    if (ret < 0)
->>>> -        dev_err(adsp->dev, "unassign memory failed\n");
->>>> +        ret = qcom_scm_assign_mem(adsp->region_assign_phys[offset],
->>>> +                      adsp->region_assign_size[offset],
->>>> +                      &adsp->region_assign_perms[offset],
->>>> +                      &perm, 1);
->>>> +        if (ret < 0)
->>>> +            dev_err(adsp->dev, "unassign memory failed\n");
->>>> +    }
->>>>   }
->>>>   static int adsp_probe(struct platform_device *pdev)
->>>> @@ -696,6 +721,9 @@ static int adsp_probe(struct platform_device *pdev)
->>>>       adsp->info_name = desc->sysmon_name;
->>>>       adsp->decrypt_shutdown = desc->decrypt_shutdown;
->>>>       adsp->region_assign_idx = desc->region_assign_idx;
-> 
-> Should this also need
-> min_t(int, MAX_ASSIGN_COUNT - 1, desc->region_assign_idx);
-> as no where boundary check is being done.
+Hi Jeff,
 
-region_idx is the offset in the memory-region DT property where assigned memory starts,
-so for example there's 2 memory regions on SM8650 CDSP, but only a single shared memory region
-so we have the following:
-  - region_assign_idx = 2
-  - region_assign_count = 1
-and in DT:
-  memory-region = <&cdsp_mem>, <&q6_cdsp_dtb_mem>, <&global_sync_mem>;
--------------------------------------------------/\
-                                        region_assign_idx
-------------------------------------------------[                    ]
-                                        region_assign_count
+On 26/10/2023 07:05, Jeff LaBundy wrote:
+> Hi Neil,
+> 
+> On Mon, Oct 23, 2023 at 05:03:46PM +0200, Neil Armstrong wrote:
+> 
+> [...]
+> 
+>> +static int goodix_berlin_get_ic_info(struct goodix_berlin_core *cd)
+>> +{
+>> +	__le16 length_raw;
+>> +	u8 *afe_data;
+>> +	u16 length;
+>> +	int error;
+>> +
+>> +	afe_data = kzalloc(GOODIX_BERLIN_IC_INFO_MAX_LEN, GFP_KERNEL);
+>> +	if (!afe_data)
+>> +		return -ENOMEM;
+>> +
+>> +	error = regmap_raw_read(cd->regmap, GOODIX_BERLIN_IC_INFO_ADDR,
+>> +				&length_raw, sizeof(length_raw));
+>> +	if (error) {
+>> +		dev_info(cd->dev, "failed get ic info length, %d\n", error);
+> 
+> This should be dev_err().
 
-and for MPSS, there's 2 of both:
-  - region_assign_idx = 2
-  - region_assign_count = 2
-and in DT:
-memory-region = <&mpss_mem>, <&q6_mpss_dtb_mem>, <&mpss_dsm_mem>, <&mpss_dsm_mem_2>;
--------------------------------------------------/\
-                                        region_assign_idx
+Ack
 
-------------------------------------------------[                                   ]
-                                        region_assign_count
+> 
+>> +		goto free_afe_data;
+>> +	}
+>> +
+>> +	length = le16_to_cpu(length_raw);
+>> +	if (length >= GOODIX_BERLIN_IC_INFO_MAX_LEN) {
+>> +		dev_info(cd->dev, "invalid ic info length %d\n", length);
+> 
+> And here.
 
-so we cannot add a bounday check.
+Ack
 
-In any case of_parse_phandle() will do the boundary check if DT has less phandles than expected.
+> 
+>> +		error = -EINVAL;
+>> +		goto free_afe_data;
+>> +	}
+>> +
+>> +	error = regmap_raw_read(cd->regmap, GOODIX_BERLIN_IC_INFO_ADDR,
+>> +				afe_data, length);
+>> +	if (error) {
+>> +		dev_info(cd->dev, "failed get ic info data, %d\n", error);
+>> +		return error;
+>> +		goto free_afe_data;
+>> +	}
+> 
+> This return statement is left over from v9; the print should also be dev_err().
 
+Ack
+
+> 
+>> +
+>> +	/* check whether the data is valid (ex. bus default values) */
+>> +	if (goodix_berlin_is_dummy_data(cd, afe_data, length)) {
+>> +		dev_err(cd->dev, "fw info data invalid\n");
+>> +		error = -EINVAL;
+>> +		goto free_afe_data;
+>> +	}
+>> +
+>> +	if (!goodix_berlin_checksum_valid(afe_data, length)) {
+>> +		dev_info(cd->dev, "fw info checksum error\n");
+> 
+> And here.
+
+Ack
+
+> 
+>> +		error = -EINVAL;
+>> +		goto free_afe_data;
+>> +	}
+>> +
+>> +	error = goodix_berlin_convert_ic_info(cd, afe_data, length);
+>> +	if (error)
+>> +		goto free_afe_data;
+>> +
+>> +	/* check some key info */
+>> +	if (!cd->touch_data_addr) {
+>> +		dev_err(cd->dev, "touch_data_addr is null\n");
+>> +		error = -EINVAL;
+>> +		goto free_afe_data;
+>> +	}
+>> +
+>> +	return 0;
+>> +
+>> +free_afe_data:
+>> +	kfree(afe_data);
+>> +
+>> +	return error;
+>> +}
+> 
+> [...]
+> 
+>> +static int goodix_berlin_request_handle_reset(struct goodix_berlin_core *cd)
+>> +{
+>> +	gpiod_set_value(cd->reset_gpio, 1);
+>> +	usleep_range(2000, 2100);
+>> +	gpiod_set_value(cd->reset_gpio, 0);
+> 
+> I see that now, this function is only called if the reset GPIO is defined,
+> but there used to be another msleep() here that has since been dropped. Is
+> that intentional?
+
+Indeed, it was dropped, I'll add it back thx for noticing !
+
+> 
+>> +
+>> +	return 0;
+>> +}
+> 
+> Kind regards,
+> Jeff LaBundy
+
+Thanks,
 Neil
-
-> 
-> -Mukesh
->>>> +    adsp->region_assign_count = min_t(int, MAX_ASSIGN_COUNT, desc->region_assign_count);
->>>> +    adsp->region_assign_vmid = desc->region_assign_vmid;
->>>> +    adsp->region_assign_shared = desc->region_assign_shared;
->>>>       if (dtb_fw_name) {
->>>>           adsp->dtb_firmware_name = dtb_fw_name;
->>>>           adsp->dtb_pas_id = desc->dtb_pas_id;
->>>> @@ -1163,6 +1191,8 @@ static const struct adsp_data sm8550_mpss_resource = {
->>>>       .sysmon_name = "modem",
->>>>       .ssctl_id = 0x12,
->>>>       .region_assign_idx = 2,
->>>> +    .region_assign_count = 1,
->>>> +    .region_assign_vmid = QCOM_SCM_VMID_MSS_MSA,
->>>>   };
->>>>   static const struct of_device_id adsp_of_match[] = {
->>>>
->>>
->>> -Mukesh
->>
->> Thanks,
->> Neil
->>
 
