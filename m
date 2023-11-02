@@ -2,121 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 040277DF881
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 18:16:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 85EF57DFA20
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 19:41:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377174AbjKBRPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Nov 2023 13:15:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
+        id S229765AbjKBSlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Nov 2023 14:41:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235593AbjKBRPH (ORCPT
+        with ESMTP id S234446AbjKBSlJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Nov 2023 13:15:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 397F3B7;
-        Thu,  2 Nov 2023 10:15:01 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A2FxSXG015665;
-        Thu, 2 Nov 2023 17:14:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=o8EiwvG5EpeclZ0ydgq4Pl+Rn+5NagwHWfLIAQpsoFI=;
- b=iC2/D3J1rkIELoH3FssNx0Zej4Od/7RRWyyxZWmJ8z8uYFT1VikW6DOIg26NpokMUso4
- nz+Ob9sFdkI6vKMDyK794HnfxZyq4MyEpUe33B03PXqzkTkdiOnQ3vgRJNFNWUZy00gq
- U/AOo2zXxX+J/KQaI0GkAHaiMFCJxGd785L2aNOHdjCtfFHOSmfaPp2lfd3Ncz93+1M2
- ks5bM5jGxmc/ssglj4gntVgkBqVmHDtGtOxQ8YNJW59FZG5KdmObEAAaYfp6oNeD7Jy8
- 43zfnT39/forWs0pq7vX5zD4Do8z1yVIEcK3MmwDmoekZhD32dbq2v5ar1ffGrlMRCRF RQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u3mbf3px8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 02 Nov 2023 17:14:53 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A2HErbB013007
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 2 Nov 2023 17:14:53 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Thu, 2 Nov 2023 10:14:50 -0700
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linus.walleij@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Mukesh Ojha" <quic_mojha@quicinc.com>
-Subject: [PATCH v10 4/4] pinctrl: qcom: Use qcom_scm_io_rmw() function
-Date:   Thu, 2 Nov 2023 22:44:07 +0530
-Message-ID: <1698945247-16033-5-git-send-email-quic_mojha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1698945247-16033-1-git-send-email-quic_mojha@quicinc.com>
-References: <1698945247-16033-1-git-send-email-quic_mojha@quicinc.com>
+        Thu, 2 Nov 2023 14:41:09 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE559136
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 11:41:01 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c509d5ab43so18204321fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 11:41:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698950460; x=1699555260; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IEpZhe0N2sN6GVcRg3szCztdEpMXAkzbYdbkv3mYVKg=;
+        b=ulnjtFJnhHlwKCyC1/AZ1zSE6jmTjNnGl+1gPQ9y5WwhoY2j3Zz9bYXPidm0rIx7QQ
+         nW8jd00MIhV0SCLK5tPh33JCTPsPEgqkXjhZ/k+iAKRGweTzwac/BhJhrLKrXLcJnXqB
+         AMekWuvy9ntZniv+v6b/i1k8kcwUQYbR6ri1CCeiqeTVlLoQWTJDVasEWqot/hEZVKzp
+         Eh0OdoOqIm3YkU5E6efCiE2W5FNKctZZEiE/0nFPrBDUoiAhShEwLIZGubrQ2Ab7WVXX
+         +Hd7GS+j688NSzCG6Quf2788tdHucq+L1mofbLXSx/z//aDwpgPTmKMzwj5iBWNMHI6E
+         HiTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698950460; x=1699555260;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IEpZhe0N2sN6GVcRg3szCztdEpMXAkzbYdbkv3mYVKg=;
+        b=gNENtZ1b0iPjTD6D/aVi9SH3sD+tDVHCFNv7sEEJeRNNDUuFGW2VR/0qiKwEUqw8vF
+         nwnCeqpzbnG3xwRcdsmiE54lOtNdUt1rQNhCP1Hcy4zcaAI5L0y7o0nmoUDImdkh9S1d
+         f4ZTZR+cB1DwAgU0hyIzpqwHZmNA/DzskeUn1Uh7GLsbfwkRclWvqrotDvalY8uG6jhl
+         //DQRC3nvNkyrFCYBeCnAJybSEtOCjmObvhxWdpXYNbqp+f4yWuo/5/DDf4HBvKGOMnt
+         AO6xH6VN1+/ElkeaH81OZMUepDRWD1w+5q+r7EM5PmJlss3n4P0B8Q6qzkfISVk2H2OV
+         ABww==
+X-Gm-Message-State: AOJu0Yy0ghOtngzFIpZ+9MnkovnkZWpHrriWg2efT3hWk1+FHiBulEwn
+        Kh0pDPg5pqPUKeTxmSqyvHdhJQ==
+X-Google-Smtp-Source: AGHT+IHOG6JY6QHe6uEhX0t0A0QtG2EyhAEZkQBZ47BXTPo2Tx8sm8ASqdDLXlJVbPtHx31RMFUn0w==
+X-Received: by 2002:a05:651c:336:b0:2c5:15dc:ba99 with SMTP id b22-20020a05651c033600b002c515dcba99mr12946673ljp.51.1698950460025;
+        Thu, 02 Nov 2023 11:41:00 -0700 (PDT)
+Received: from [192.168.67.140] (92.40.204.37.threembb.co.uk. [92.40.204.37])
+        by smtp.gmail.com with ESMTPSA id a11-20020a05600c2d4b00b00405c33a9a12sm1481939wmg.0.2023.11.02.11.40.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Nov 2023 11:40:59 -0700 (PDT)
+Message-ID: <dbf4a48e-c808-4611-96b1-563ece1e451a@linaro.org>
+Date:   Thu, 2 Nov 2023 18:40:57 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4l1T0D1u1rciqCJzp1jYEYvtBLHtoxYC
-X-Proofpoint-ORIG-GUID: 4l1T0D1u1rciqCJzp1jYEYvtBLHtoxYC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-02_07,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=708 suspectscore=0 lowpriorityscore=0 mlxscore=0 phishscore=0
- priorityscore=1501 clxscore=1015 adultscore=0 spamscore=0 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311020141
-X-Spam-Status: No, score=0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
+ runtime
+Content-Language: en-US
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     quic_wcheng@quicinc.com, linux-usb@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        devicetree@vger.kernel.org, quic_ppratap@quicinc.com,
+        quic_jackp@quicinc.com
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-2-quic_kriskura@quicinc.com>
+ <272a9764-1cae-4d86-88b1-00175de83333@linaro.org>
+ <960101cc-78c0-49cf-ab62-90614eeb9ee2@quicinc.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <960101cc-78c0-49cf-ab62-90614eeb9ee2@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use qcom_scm_io_rmw() exported function in pinctrl-msm
-driver.
+> Hi Caleb,
+> 
+>    There are two types of platforms, some use extcon and some use 
+> role-switch to deliver vbus/id notifications. Extcon targets already 
+> have this qscratch modifications present today in vbus and id handlers. 
+> But for role-switch based targets we don't have any way to get this 
+> notification to dwc3-qcom. In this implementation, I wanted to get those 
+> notications from core to glue and for this we implenented vendor hooks.
+> 
+> The property added has been used to do two things:
+> 
+> 1. Register glue's vendor hooks to core driver
+> 2. Do runtime_allow for glue (and by default for core as the dt is not 
+> flattened)
+> 
+> In case of extcon, we don't want to register vendor hooks as 
+> notifications are not necessary.
 
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-msm.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+Could it just be enabled when role_switch is present then?
+> 
+> For xhci, we opted to enable runtime from userspace.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 395040346d0f..9323b916cd7c 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -1078,22 +1078,20 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 	if (g->intr_target_width)
- 		intr_target_mask = GENMASK(g->intr_target_width - 1, 0);
- 
-+	intr_target_mask <<= g->intr_target_bit;
- 	if (pctrl->intr_target_use_scm) {
- 		u32 addr = pctrl->phys_base[0] + g->intr_target_reg;
- 		int ret;
- 
--		qcom_scm_io_readl(addr, &val);
--		val &= ~(intr_target_mask << g->intr_target_bit);
--		val |= g->intr_target_kpss_val << g->intr_target_bit;
--
--		ret = qcom_scm_io_writel(addr, val);
-+		val = g->intr_target_kpss_val << g->intr_target_bit;
-+		ret = qcom_scm_io_rmw(addr, intr_target_mask, val);
- 		if (ret)
- 			dev_err(pctrl->dev,
- 				"Failed routing %lu interrupt to Apps proc",
- 				d->hwirq);
- 	} else {
- 		val = msm_readl_intr_target(pctrl, g);
--		val &= ~(intr_target_mask << g->intr_target_bit);
-+		val &= ~intr_target_mask;
- 		val |= g->intr_target_kpss_val << g->intr_target_bit;
- 		msm_writel_intr_target(val, pctrl, g);
- 	}
+>>>         HS/FS/LS modes are supported.
+>>>       type: boolean
+>>> +  qcom,enable-rt:
+>>> +    description:
+>>> +      If present, register vendor hooks to facilitate runtime 
+>>> suspend/resume
+>>> +    type: boolean
+>>
+>> A Krzysztof pointed out, properties should define the hardware 
+>> behaviour, not tot the implementation details. For this case the 
+>> hardware isn't wired up to vbus, so maybe something like "qcom,no-vbus"?
+>>> +
+> 
+> On all targets, vbus is not routed to hardware. This vbus toggle 
+> indication is given to controller via qscratch only.
+> 
+> Regards,
+> Krishna,
+
 -- 
-2.7.4
-
+// Caleb (they/them)
