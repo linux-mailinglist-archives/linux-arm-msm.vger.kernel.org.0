@@ -2,133 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85EF57DFA20
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 19:41:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C2AB7DFC59
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 23:25:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229765AbjKBSlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Nov 2023 14:41:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47118 "EHLO
+        id S229448AbjKBWZs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Nov 2023 18:25:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234446AbjKBSlJ (ORCPT
+        with ESMTP id S234140AbjKBWZr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Nov 2023 14:41:09 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE559136
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 11:41:01 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c509d5ab43so18204321fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 11:41:01 -0700 (PDT)
+        Thu, 2 Nov 2023 18:25:47 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AE8BB7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 15:25:41 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-507d1cc0538so1819456e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 15:25:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698950460; x=1699555260; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IEpZhe0N2sN6GVcRg3szCztdEpMXAkzbYdbkv3mYVKg=;
-        b=ulnjtFJnhHlwKCyC1/AZ1zSE6jmTjNnGl+1gPQ9y5WwhoY2j3Zz9bYXPidm0rIx7QQ
-         nW8jd00MIhV0SCLK5tPh33JCTPsPEgqkXjhZ/k+iAKRGweTzwac/BhJhrLKrXLcJnXqB
-         AMekWuvy9ntZniv+v6b/i1k8kcwUQYbR6ri1CCeiqeTVlLoQWTJDVasEWqot/hEZVKzp
-         Eh0OdoOqIm3YkU5E6efCiE2W5FNKctZZEiE/0nFPrBDUoiAhShEwLIZGubrQ2Ab7WVXX
-         +Hd7GS+j688NSzCG6Quf2788tdHucq+L1mofbLXSx/z//aDwpgPTmKMzwj5iBWNMHI6E
-         HiTg==
+        d=linaro.org; s=google; t=1698963940; x=1699568740; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=54Wcim5fexlmc9mArCvndyoCrdtUDnHz0mDm1jI0dOs=;
+        b=DprgNULtrVXhddyAN6XzTpEO1fsbLbGVd+UmOPyBiE/ql5xUOo1DOmwFlX62Umo9A1
+         JLa3mCla+uSrsEjwMo6IiMnZCfwG//LzhqLvrXrL7DFMF6Qk5jrCcDwdJc71OYbZ25FP
+         8Pw4zh6YsWSw3y68/YEvNn17u9pykQlUK9CPAJHFsViaWPE3/qMsjXt2FrntXyxF1CLg
+         Cx3J+2pum2CK8rbWQkmSwfvxcAbHIra4GAaqmt/yeb7TarGLCTFc4CVLO+d5J5khFMBO
+         mZcoief24GbpHk79LhwDEs0PwsRZaAt5HRSuYD7n5Dt7jO4VDbusgEmgxpI/7KuLvboo
+         TYEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698950460; x=1699555260;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IEpZhe0N2sN6GVcRg3szCztdEpMXAkzbYdbkv3mYVKg=;
-        b=gNENtZ1b0iPjTD6D/aVi9SH3sD+tDVHCFNv7sEEJeRNNDUuFGW2VR/0qiKwEUqw8vF
-         nwnCeqpzbnG3xwRcdsmiE54lOtNdUt1rQNhCP1Hcy4zcaAI5L0y7o0nmoUDImdkh9S1d
-         f4ZTZR+cB1DwAgU0hyIzpqwHZmNA/DzskeUn1Uh7GLsbfwkRclWvqrotDvalY8uG6jhl
-         //DQRC3nvNkyrFCYBeCnAJybSEtOCjmObvhxWdpXYNbqp+f4yWuo/5/DDf4HBvKGOMnt
-         AO6xH6VN1+/ElkeaH81OZMUepDRWD1w+5q+r7EM5PmJlss3n4P0B8Q6qzkfISVk2H2OV
-         ABww==
-X-Gm-Message-State: AOJu0Yy0ghOtngzFIpZ+9MnkovnkZWpHrriWg2efT3hWk1+FHiBulEwn
-        Kh0pDPg5pqPUKeTxmSqyvHdhJQ==
-X-Google-Smtp-Source: AGHT+IHOG6JY6QHe6uEhX0t0A0QtG2EyhAEZkQBZ47BXTPo2Tx8sm8ASqdDLXlJVbPtHx31RMFUn0w==
-X-Received: by 2002:a05:651c:336:b0:2c5:15dc:ba99 with SMTP id b22-20020a05651c033600b002c515dcba99mr12946673ljp.51.1698950460025;
-        Thu, 02 Nov 2023 11:41:00 -0700 (PDT)
-Received: from [192.168.67.140] (92.40.204.37.threembb.co.uk. [92.40.204.37])
-        by smtp.gmail.com with ESMTPSA id a11-20020a05600c2d4b00b00405c33a9a12sm1481939wmg.0.2023.11.02.11.40.58
+        d=1e100.net; s=20230601; t=1698963940; x=1699568740;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=54Wcim5fexlmc9mArCvndyoCrdtUDnHz0mDm1jI0dOs=;
+        b=w/zmMe0wTLTr5LJaDOrVCmm3FsjjMyawBFY5LMKsNkCxiR/QFUKwlBiobukBa8H1Ij
+         8SCbRqp+IwiilErG0UEvmmltfl99xgVpdgTcNTCRgDW73e7jgWTAoyIfixJo36+j6fru
+         NasL5/hoBCBdGxjp6OpSTlvAPcdv92YlI3BVhQfF+gYGnErIRkB/YviSLveF51XAqk1x
+         p5/x9+EHvqSrkPMcxlTb9nylC0Slos74CY/2oZGdd62Gvyu7Ccji7PuEorEktopm6Rwp
+         blbTZTRVRy9N6+B0IBvEqJ32sDkE+5kIXRaE9PZ4COaTxHxLeAkAb5SGs0gMlVG0Xr2l
+         7Tnw==
+X-Gm-Message-State: AOJu0YyBgExCbmEZd2cPAmSNlCSN4WNhwfinhiE8tZHzxO0MoKGmLHUQ
+        yTsLnka6u9xqab03iRGeFHdnWA==
+X-Google-Smtp-Source: AGHT+IHSGONoIXFIAX1bln/GiI+5YVcGA5y5RhNFo1k63KHMuS/vMRjTMbsTL6geTgdsLKzwXyHA5w==
+X-Received: by 2002:ac2:4555:0:b0:509:4a55:f189 with SMTP id j21-20020ac24555000000b005094a55f189mr2343918lfm.11.1698963939548;
+        Thu, 02 Nov 2023 15:25:39 -0700 (PDT)
+Received: from [192.168.1.118] (abyj199.neoplus.adsl.tpnet.pl. [83.9.29.199])
+        by smtp.gmail.com with ESMTPSA id y93-20020a50bb66000000b0053e6e40cc1asm218128ede.86.2023.11.02.15.25.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Nov 2023 11:40:59 -0700 (PDT)
-Message-ID: <dbf4a48e-c808-4611-96b1-563ece1e451a@linaro.org>
-Date:   Thu, 2 Nov 2023 18:40:57 +0000
+        Thu, 02 Nov 2023 15:25:39 -0700 (PDT)
+Message-ID: <21dea74b-b802-2e69-af4b-07dfb68b7024@linaro.org>
+Date:   Thu, 2 Nov 2023 23:25:36 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
- runtime
-Content-Language: en-US
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     quic_wcheng@quicinc.com, linux-usb@vger.kernel.org,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com
-References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
- <20231017131851.8299-2-quic_kriskura@quicinc.com>
- <272a9764-1cae-4d86-88b1-00175de83333@linaro.org>
- <960101cc-78c0-49cf-ab62-90614eeb9ee2@quicinc.com>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <960101cc-78c0-49cf-ab62-90614eeb9ee2@quicinc.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
+Subject: Re: [PATCH v1 1/3] PCI: qcom: Enable cache coherency for SA8775P RC
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, robh+dt@kernel.org, quic_shazhuss@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
+        quic_nayiluri@quicinc.com, robh@kernel.org,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_parass@quicinc.com, quic_schintav@quicinc.com,
+        quic_shijjose@quicinc.com,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+References: <1698767186-5046-1-git-send-email-quic_msarkar@quicinc.com>
+ <1698767186-5046-2-git-send-email-quic_msarkar@quicinc.com>
+ <CAA8EJpoMoUvF8R3PjgCNijS6-8Gs5FjvC6dYerNBVBuYW3FmPA@mail.gmail.com>
+ <20231102163619.GA20943@thinkpad>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231102163619.GA20943@thinkpad>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> Hi Caleb,
-> 
->    There are two types of platforms, some use extcon and some use 
-> role-switch to deliver vbus/id notifications. Extcon targets already 
-> have this qscratch modifications present today in vbus and id handlers. 
-> But for role-switch based targets we don't have any way to get this 
-> notification to dwc3-qcom. In this implementation, I wanted to get those 
-> notications from core to glue and for this we implenented vendor hooks.
-> 
-> The property added has been used to do two things:
-> 
-> 1. Register glue's vendor hooks to core driver
-> 2. Do runtime_allow for glue (and by default for core as the dt is not 
-> flattened)
-> 
-> In case of extcon, we don't want to register vendor hooks as 
-> notifications are not necessary.
 
-Could it just be enabled when role_switch is present then?
-> 
-> For xhci, we opted to enable runtime from userspace.
 
->>>         HS/FS/LS modes are supported.
->>>       type: boolean
->>> +  qcom,enable-rt:
->>> +    description:
->>> +      If present, register vendor hooks to facilitate runtime 
->>> suspend/resume
->>> +    type: boolean
->>
->> A Krzysztof pointed out, properties should define the hardware 
->> behaviour, not tot the implementation details. For this case the 
->> hardware isn't wired up to vbus, so maybe something like "qcom,no-vbus"?
+On 02/11/2023 17:36, Manivannan Sadhasivam wrote:
+> On Thu, Nov 02, 2023 at 05:34:24PM +0200, Dmitry Baryshkov wrote:
+>> On Tue, 31 Oct 2023 at 17:46, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
+>>>
+>>> This change will enable cache snooping logic to support
+>>> cache coherency for SA8755P RC platform.
+>>>
+>>> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+>>> ---
+>>>   drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
+>>>   1 file changed, 11 insertions(+)
+>>>
+>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+>>> index 6902e97..6f240fc 100644
+>>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+>>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+>>> @@ -51,6 +51,7 @@
+>>>   #define PARF_SID_OFFSET                                0x234
+>>>   #define PARF_BDF_TRANSLATE_CFG                 0x24c
+>>>   #define PARF_SLV_ADDR_SPACE_SIZE               0x358
+>>> +#define PCIE_PARF_NO_SNOOP_OVERIDE             0x3d4
+>>>   #define PARF_DEVICE_TYPE                       0x1000
+>>>   #define PARF_BDF_TO_SID_TABLE_N                        0x2000
+>>>
+>>> @@ -117,6 +118,9 @@
+>>>   /* PARF_LTSSM register fields */
+>>>   #define LTSSM_EN                               BIT(8)
+>>>
+>>> +/* PARF_NO_SNOOP_OVERIDE register value */
+>>> +#define NO_SNOOP_OVERIDE_EN                    0xa
 >>> +
+>>>   /* PARF_DEVICE_TYPE register fields */
+>>>   #define DEVICE_TYPE_RC                         0x4
+>>>
+>>> @@ -961,6 +965,13 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>>>
+>>>   static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>>>   {
+>>> +       struct dw_pcie *pci = pcie->pci;
+>>> +       struct device *dev = pci->dev;
+>>> +
+>>> +       /* Enable cache snooping for SA8775P */
+>>> +       if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8775p"))
+>>
+>> Obviously: please populate a flag in the data structures instead of
+>> doing of_device_is_compatible(). Same applies to the patch 2.
+>>
 > 
-> On all targets, vbus is not routed to hardware. This vbus toggle 
-> indication is given to controller via qscratch only.
+> Not necessary at this point. For some unknown reasons, the HW team ended up
+> disabling cache snooping on this specific platform. Whereas on other platforms,
+> it is enabled by default. So I have low expectations that we would need this
+> setting on other platforms in the future.
 > 
-> Regards,
-> Krishna,
+> My concern with the usage of flag is that it warrants a new "qcom_pcie_cfg"
+> instance just for this quirk and it looks overkill to me.
+> 
+> So if we endup seeing this behavior on other platforms as well (unlikely) then
+> we can switch to the flag approach.
+This register reads zeroes on 8250, can we confirm it works as
+expected there? I guess some benchmarks with and without
+'dma-coherent'?
 
--- 
-// Caleb (they/them)
+Konrad
