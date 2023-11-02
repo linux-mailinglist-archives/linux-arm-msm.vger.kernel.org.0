@@ -2,70 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E4277DF209
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 13:09:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AE6D7DF3DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 14:32:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230098AbjKBMJy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Nov 2023 08:09:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36416 "EHLO
+        id S1376480AbjKBNcs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Nov 2023 09:32:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229806AbjKBMJy (ORCPT
+        with ESMTP id S1347433AbjKBNcs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Nov 2023 08:09:54 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41760128;
-        Thu,  2 Nov 2023 05:09:52 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A021FC433C7;
-        Thu,  2 Nov 2023 12:09:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698926991;
-        bh=IwE9+OvFRLx91Mib23swemUFGjVhO8KF9WcxPps/jzs=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=SRW8Tc5FZ8RxUVh+wdGHrbvjyKFIYpnUUNw2ZsH8qdEMiE0mEzoRZRaybRTTlYzDA
-         NlxH7vHPtKL0xnIFxITJPqC6pr4xMU7oFmTKcYVPm5Ze2CJf+qsbXtCyhhBgEvh00w
-         TUIsqio11IPhFjZK4IKJ6HTN2oFsZXKCxhHeRePwL2yuhU04m7c4LRsJL80RW1ETam
-         nT5l44sn4SnYmLPAT1/n9uVMPjd9ysMXaCtTS1NefKIW6AM40widFo4v2IC61Ui63R
-         PRm503pvXhyS2XsGk485oiiaq6n1PIo3xjnFWSZ4DiJFQb15aChjHPFh1Ie+6HXYzC
-         AQvxUrpbeF2Rw==
-Date:   Thu, 2 Nov 2023 07:09:50 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org, mani@kernel.org,
-        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-        bhelgaas@google.com, rafael@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-        quic_ramkri@quicinc.com, quic_parass@quicinc.com
-Subject: Re: [PATCH v5 5/5] PCI: qcom: Add OPP support to scale performance
- state of power domain
-Message-ID: <20231102120950.GA115288@bhelgaas>
+        Thu, 2 Nov 2023 09:32:48 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A35E0182
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 06:32:39 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-540c54944c4so1896641a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 06:32:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698931958; x=1699536758; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TWqG2ztO/4Kq+r8e04N5c4GPpXVKxa7YE3LsI9aATO4=;
+        b=B9VQzk4L4RKdJXGDEPgDhA7E6v9/G2StDHV4N1sYC9nil2RqE2pAS2wduP5+ILV7vf
+         X/MrBazHwDJnZHKI5KMyuIpTQEH+mtWvc6mrYyN1rjM+UcINgdsGj+4l8HEG05uGawYr
+         rptPitD0UHl/OIoTOUqGvk69MzZExkb/2bLx4XWpwUo53H+ZZ7xvrMtk4MVaXRKjdSJr
+         QAwY3io1/POj/TXrUrMu2VNNLilU10wP3Sjdlc9Nwz5tkXL87op9wwmjImlTO2jEcHxR
+         D6oLrKX77y+PRkb90rrsLl1LRJg5OPbMAezY+s99Y6+ZS3rXyjsM5AWyIhYyjSgM0NG5
+         Sk+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698931958; x=1699536758;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TWqG2ztO/4Kq+r8e04N5c4GPpXVKxa7YE3LsI9aATO4=;
+        b=HzSacRiak1Te4822DTps4kfDj7m7Y0lDyxkPMcgvjTlXhfPlKaYY3BnHd6TrNzV52i
+         nOspUWCiObz1OdrwBMWYHoZhjRdLtro88WkgsX4RgjZGdVJS65lWJEIL/g6NMpcx2JzY
+         WY5VdqGZDkM0W3+JAWkj8LBFqxokxTGCUWU9jvvTdOYue5TiOsC4fawIMTMF7Xr5B6wQ
+         GQ6Dk4gfOrzToYFD5AtKCyYXvXgIDjylmyDGbsDWW8gBUIOtzFQ+rEMlF3/Esm4VU+qw
+         e0NqkvnOXFatwQh/+l7cYFwqNlyEdrmRrS9tJOJNYg+dmtcgd0lidvmrPje9EHZnvSF5
+         /eWw==
+X-Gm-Message-State: AOJu0YwKs25qYJV4g0ry/qynxFhyb2ogN5Zm1NqqgD5GsNObwJZoLo0L
+        YB0YD+4uMFVva+IO118Utlwy04OFjwiWiLGS8gk=
+X-Google-Smtp-Source: AGHT+IEAKMfeVnCg00V7ZQjJLGjgu3S7wbNyIyAKdOYKhJZ3Aq9axcEXnT3psGJCj1/BIPzRB86pcQ==
+X-Received: by 2002:a50:aa92:0:b0:543:57dd:503 with SMTP id q18-20020a50aa92000000b0054357dd0503mr7029602edc.3.1698931958088;
+        Thu, 02 Nov 2023 06:32:38 -0700 (PDT)
+Received: from [192.168.1.118] (abyj199.neoplus.adsl.tpnet.pl. [83.9.29.199])
+        by smtp.gmail.com with ESMTPSA id j18-20020a508a92000000b0054351b5a768sm2378891edj.82.2023.11.02.06.32.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Nov 2023 06:32:37 -0700 (PDT)
+Message-ID: <30b4c424-39ee-7ae6-faf2-c5ba32dda07f@linaro.org>
+Date:   Thu, 2 Nov 2023 14:32:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231102053013.7yt7pxin5awlu7w7@vireshk-i7>
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.9.0
+Subject: Re: [PATCH RFC 2/8] arm64: dts: qcom: add initial SM8650 dtsi
+To:     neil.armstrong@linaro.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
+ <20231025-topic-sm8650-upstream-dt-v1-2-a821712af62f@linaro.org>
+ <691f1781-906c-411f-90f6-e1cc71062253@linaro.org>
+ <e86fa7b4-635c-4fd5-9b3c-ade96ddf5c0f@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <e86fa7b4-635c-4fd5-9b3c-ade96ddf5c0f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Nov 02, 2023 at 11:00:13AM +0530, Viresh Kumar wrote:
-> On 01-11-23, 17:17, Bjorn Helgaas wrote:
-> > Can you expand "OPP" somewhere so we know what it stands for?  I'm
-> > sure everybody knows except me :)
-> 
-> It is "Operating Performance Points", defined here:
-> 
-> Documentation/power/opp.rst
 
-Thanks; I meant in the subject or commit log of the next revision, of
-course.
+
+On 02/11/2023 11:54, Neil Armstrong wrote:
+> On 25/10/2023 11:01, Konrad Dybcio wrote:
+>>
+>>
+>> On 10/25/23 09:47, Neil Armstrong wrote:
+>>> Add initial DTSI for the Qualcomm SM8650 platform,
+>>> only contains nodes which doesn't depend on interconnect.
+>>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---[...]
+>>
+>>> +            CLUSTER_SLEEP_1: cluster-sleep-1 {
+>>> +                compatible = "domain-idle-state";
+>>> +                arm,psci-suspend-param = <0x4100c344>;
+>> I think this parameter signals the AOSS to attempt system
+>> suspend and CLUSTER_SLEEP is a shallower, separate state.
+> 
+> OK, so downstream call this state "APSS_OFF" and the other state
+> calling 0x41000044 "CLUSTER_PWR_DN"Well, the name APSS_OFF suggests that all clusters go offline so
+that would be a bit more complex than a simple "cut power to this
+cluster"
+
+
+> On sm8[345]0 and qdu1000/sm4450 there's both states called 
+> CLUSTER_SLEEP_0 and CLUSTER_SLEEP_1,
+> and referenced into CLUSTER_PD cluster power domain.
+> 
+> I assume this is the same as SM8550, so what's the issue ?
+It's just that we've been naming it in the most generic way possible
+and that it could be more descriptive, especially given its
+correlation with different things
+
+Konrad
