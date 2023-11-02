@@ -2,74 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42A4B7DF75D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 17:07:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C7EC7DF7C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 17:34:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235289AbjKBQHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Nov 2023 12:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59078 "EHLO
+        id S1347668AbjKBQel (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Nov 2023 12:34:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229575AbjKBQHI (ORCPT
+        with ESMTP id S1347663AbjKBQek (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Nov 2023 12:07:08 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9102812D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 09:07:00 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-507e85ebf50so1316761e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 09:07:00 -0700 (PDT)
+        Thu, 2 Nov 2023 12:34:40 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5DC8187
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 09:34:33 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-32da4ffd7e5so748799f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 09:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698941219; x=1699546019; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698942872; x=1699547672; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8E6OeBpp2Nw5yhR7KvCSLiTOkbzsJNh7XdGehlNCap0=;
-        b=w0kV1cxgdO6Q2demWTudaTzokyjn1ExUzSDzkEwkqdusoBP6MP95FESayN/+FXPN+o
-         NvQwtP8N5n9c/g6VAXa9WPkptzmVIAkIhEpr1U93wkq8//1eRAezfKghABvsQ9sWU/Xb
-         5jVmEnEwk8Gik39D46Pw7rXIzRnrF4aCb2YEz+ghgoNJ30gPx8xEqS6bY1cnCYA43keu
-         yVHPufrV5Xd8jJe3kOIpFbkgv1W0qqS64v8KVZ8AcRnb6f/4ydUkYnHY+VGk1iv1mA7M
-         FZ4w1IJFNChn/mQN+HbRilUC55qeF+av0KgnYkvJACARtqywU9B/3arNuDi3ZJ32MHpz
-         YKog==
+        bh=Pf6+egC7wEh4Nlc1mgScW1ILeruY7HuDBJxg1UYN0M8=;
+        b=wOiwZgvYjp0ReUvC7YBIm7zrAbvhsX9u6tIY88Jjbi4O+9wV7ld+3jsEQEswvqh0H9
+         zp++/Vt6Afq33RULvZujOdvwM1m40TwB8y86rMrl4wiBKUw5z8EBpeNc+arH9uLzGm90
+         +QQ9nvAtzMxA6fXxBXTClxg5IStN5tJS8bXx6zxNPAGuWqI+EbbfUGN7AZrOh4QHHcPQ
+         MFpLNxMHIXEGbgExIw35dNUXYM7m8lAjwWz1akGzeaiywwF+bmLOXdjQOfKGfBPWcTXs
+         6kii7jC9qDL1YF9hECl9Nurh3gyPTiQ6M2LihI4cmG53hZQTIIs2yp5r8Lze9moau5Mz
+         jUQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698941219; x=1699546019;
+        d=1e100.net; s=20230601; t=1698942872; x=1699547672;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8E6OeBpp2Nw5yhR7KvCSLiTOkbzsJNh7XdGehlNCap0=;
-        b=AjzKZPS+6VLFVJs7K1ih055MH6me/kiDEOs9Wu5mnS23UHWBwI0jRQDPhLR8FLTVbB
-         vU7hY+WN2zY0Cvyvcln0vsEQ2R4LrREuahUQNMbnF22BxQeG+iB7I3vSR9FuiOuPwEEp
-         nsn5tcHnA7j0yNmwZ4S9uGMSySgJkkyZ4r0xhcSHPsk5nXzLGU07fvbq8tTimV/DQH3v
-         UHRx7l0eM4Bl3Kv2WAmukKT90vgspwg0CSIcXsUs+A4wMf2vZgWurqfL5n0R2XtnAz3F
-         oJAbOTT/O0pmi8m47QdgVccfXUNkxhJf+Sqy/7dzRctWklF98pJi1DeAd5vtJ46mJRkm
-         0iDA==
-X-Gm-Message-State: AOJu0YxfTc0rPaamgPEbi9RcHkt+oo+WEV+d4C4wiYmNNNyM4JubsGxH
-        2L/Foi3EqyImYxZGBdYchIcl5A==
-X-Google-Smtp-Source: AGHT+IERusrAEl2wCCk+nZGgKzy1aZ+jO07Yst4DCgg7p/Ws1QjPmha88uJz6Mc/GI2rpyEOhAAyaQ==
-X-Received: by 2002:a05:6512:48d1:b0:500:bf33:3add with SMTP id er17-20020a05651248d100b00500bf333addmr13431425lfb.47.1698941218773;
-        Thu, 02 Nov 2023 09:06:58 -0700 (PDT)
+        bh=Pf6+egC7wEh4Nlc1mgScW1ILeruY7HuDBJxg1UYN0M8=;
+        b=wTAw49T/J26IhjdjQRzPZ4YxZlxfvIHItu8rZUhX0bpv2TIBTFrqDll1A/tpx8FObC
+         2Gxa0/6kDXEQT9/KeMGWQdswy75zygZSOu7r+ZXwpL/7umgq/QhgzS8NWHKYLl85V7PK
+         OL0LVMdV47xR068VF7JaJgC+/zUXOiozc+h8/VrP7dUS/JxtR3FrQsArJAe73VE7W280
+         aRBcFzdimQcBG/uNWmBamDf+eFF80Qwu4NmNwSMI2rY9BivUhymYehSuLBspGi+HEkzz
+         WqL3AEV3b2UMmtPzXHK6NMw0Epw3apDUtQHTA5TVdZ2l8Ji4E1OQRehEoGJwmoYB5fPy
+         YjCA==
+X-Gm-Message-State: AOJu0Ywc7kiOpfVSIMoJCoHe0X0k3Y3cfdf/JV0B9ed3+POOWpWECB0K
+        IX+VCVh0CqmfRtov6zsa44BXFQ==
+X-Google-Smtp-Source: AGHT+IGtoGUpxxIbCzigG2VX+swrGvRJcm+9x+JnerHx+hb4qtVy636oxKeC9OepR+OM/OtMm1CkVg==
+X-Received: by 2002:a5d:6d06:0:b0:32f:8b51:3708 with SMTP id e6-20020a5d6d06000000b0032f8b513708mr34589wrq.2.1698942872155;
+        Thu, 02 Nov 2023 09:34:32 -0700 (PDT)
 Received: from [192.168.67.140] (92.40.204.238.threembb.co.uk. [92.40.204.238])
-        by smtp.gmail.com with ESMTPSA id x3-20020a5d4903000000b0032d8034724esm2793705wrq.94.2023.11.02.09.06.56
+        by smtp.gmail.com with ESMTPSA id j20-20020a05600c191400b00407752bd834sm25019wmq.1.2023.11.02.09.33.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Nov 2023 09:06:57 -0700 (PDT)
-Message-ID: <ba16e523-82cf-47a3-8ed3-24ef116faf66@linaro.org>
-Date:   Thu, 2 Nov 2023 16:06:54 +0000
+        Thu, 02 Nov 2023 09:34:16 -0700 (PDT)
+Message-ID: <272a9764-1cae-4d86-88b1-00175de83333@linaro.org>
+Date:   Thu, 2 Nov 2023 16:33:19 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] usb: misc: eud: Add IRQ check for platform_get_irq()
+Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
+ runtime
 Content-Language: en-US
-To:     Chen Ni <nichen@iscas.ac.cn>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20231102075113.1043358-1-nichen@iscas.ac.cn>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-2-quic_kriskura@quicinc.com>
 From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20231102075113.1043358-1-nichen@iscas.ac.cn>
+In-Reply-To: <20231017131851.8299-2-quic_kriskura@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -78,32 +88,42 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 02/11/2023 07:51, Chen Ni wrote:
-> The function eud_probe() should check the return value of
-> platform_get_irq() for errors so as to not pass a negative value to
-> the devm_request_threaded_irq().
-> 
-> Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+On 17/10/2023 14:18, Krishna Kurapati wrote:
+> Add enable-rt binding to let the device register vendor hooks to
+> core and facilitate runtime suspend and resume.
 
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->   drivers/usb/misc/qcom_eud.c | 3 +++
->   1 file changed, 3 insertions(+)
+Hi Krishna,
+
+ From reading through these patches, it's not clear to me why this 
+behaviour should be conditional on a new devicetree property. Are there 
+some platforms where this behaviour would be undesirable? And if so then 
+would it be possible to determine this based on the QSCRATCH registers?
 > 
-> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
-> index 7f371ea1248c..26e9b8749d8a 100644
-> --- a/drivers/usb/misc/qcom_eud.c
-> +++ b/drivers/usb/misc/qcom_eud.c
-> @@ -205,6 +205,9 @@ static int eud_probe(struct platform_device *pdev)
->   		return PTR_ERR(chip->mode_mgr);
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index cb50261c6a36..788d9c510abc 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -151,6 +151,11 @@ properties:
+>         HS/FS/LS modes are supported.
+>       type: boolean
 >   
->   	chip->irq = platform_get_irq(pdev, 0);
-> +	if (chip->irq < 0)
-> +		return chip->irq;
+> +  qcom,enable-rt:
+> +    description:
+> +      If present, register vendor hooks to facilitate runtime suspend/resume
+> +    type: boolean
+
+A Krzysztof pointed out, properties should define the hardware 
+behaviour, not tot the implementation details. For this case the 
+hardware isn't wired up to vbus, so maybe something like "qcom,no-vbus"?
 > +
->   	ret = devm_request_threaded_irq(&pdev->dev, chip->irq, handle_eud_irq,
->   			handle_eud_irq_thread, IRQF_ONESHOT, NULL, chip);
->   	if (ret)
+>     wakeup-source: true
+>   
+>   # Required child node:
 
 -- 
 // Caleb (they/them)
