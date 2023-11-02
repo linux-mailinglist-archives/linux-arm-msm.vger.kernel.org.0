@@ -2,78 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B8287DF030
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 11:35:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A92867DF09F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 11:54:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347075AbjKBKc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Nov 2023 06:32:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41420 "EHLO
+        id S1345942AbjKBKyy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Nov 2023 06:54:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346880AbjKBKc1 (ORCPT
+        with ESMTP id S1346098AbjKBKyy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Nov 2023 06:32:27 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE5F713E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 03:32:18 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-32deb2809daso435124f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 03:32:18 -0700 (PDT)
+        Thu, 2 Nov 2023 06:54:54 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373EDE7
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 03:54:48 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c50906f941so11016961fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 03:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698921137; x=1699525937; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1698922486; x=1699527286; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hL5GAkNYX5lf5Xnnqavo6wfZxNcky+vNwT6ydKIiCK0=;
-        b=WEzbl58iLKcndODZjAdZophctyQu2r9oOt3DuwJGGxJUQCltuFXJ0iYytUTcgpfFte
-         xYQy7bgKHO+eGYTa+tp7+LKQ+8fgug9kN/ploet0ZFkefynsVWVsPw2+tJcttGOyhXwj
-         bhA0Rm99IJ/+4NzLDmd6b3gFSsff/ugQM5Ec8Ty8Lfi3Am74CLBXhj7MGcmJ+8f0eRKw
-         xAx8qEyhmW5D6Hbnqj3FIJyFLJkt5666RLfYzRR302aOC2Lx2zsDKtse70iA+QFmMjWD
-         rinDi9eXvXooe5wqfwg+yJc2ZaGLuMJhgEzICbToy4OdaArFFV5cVZXdgvgjQ0NWx3Hb
-         oLHA==
+        bh=piXqh6med7lV1eaz1Jju4bjZkrBzVnMssp83vd2Cu+Y=;
+        b=ViMdUV88vVbKfqvO2sbqCQdZauWcM4vG/eFkPHzj0F1ySGp0GxDdSLp4CRjSKsPdIh
+         kG1fOFHMo6z8UcOhtIc4STMJ0tOXpsXiWkxZKGp8eHG8tgtJoatmce3e+q711oxDXi18
+         X+Di/+44x7N2u7P1AMZ+FN8VbbAQ/mPwip+nWUEvL8lNbubCIIMo6oRVJUimmAUEx8ZL
+         pfAp1ImaBvgtW4LU4CAJPrtqfgLKB8EPCw5IBvphJRxFLceeHlqhubRO47A1cSxKPujN
+         tsbVooHD3OPRjyGgf8O58Z1EeAfgkBxQi6jthIAK+snG91BseV2iwQIYxz6x5RCLn7g7
+         YwZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698921137; x=1699525937;
+        d=1e100.net; s=20230601; t=1698922486; x=1699527286;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :references:cc:to:content-language:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=hL5GAkNYX5lf5Xnnqavo6wfZxNcky+vNwT6ydKIiCK0=;
-        b=rtOYgkq3yHAKTMgH6rK0AP0vKRF+hJ5PkVPsEG2PibJjUMT/YaqymOFSZe9JheZnOX
-         9i4WQr1QeyJjESdVfbwzz1/eqdY4IPlfPh5OL21HYIUTcT4JySwbCnQRSy93OVx/f0rP
-         VDlG9soVIH/2nwK4ECG5ncNKBvGPzVKKhT61Ey8DlmxYKzdLAusrBAILCm6HcTwmcJgD
-         1JMyF9nmXYFPUfqaEWFDwfFGomNzA7tRsNUH3Vi883LDh97lD3HINwIFyakTr+zbU3rI
-         FAQPJMHxGl5KzEy8aRRXliHPgD7rLdYH1Es8i9V9ioJuAu0Mk77A4hYCZgcoCxKrhgL4
-         e6uw==
-X-Gm-Message-State: AOJu0YxsJHSKOZWVJUcFoRE9h4XOkF194MaiLUbOBX0/qwZ2Da2F7N57
-        e+KZRxCHpgUR98rGKEYKBzOCqw==
-X-Google-Smtp-Source: AGHT+IFPxwdfmh35qsrDuZo1uOZ2JxX6Pr4ET8SmzWDoqC5BsYtR7YOjn4l0q9vCDunbUwW0/3h7uw==
-X-Received: by 2002:a5d:46c7:0:b0:32f:b1f2:1f99 with SMTP id g7-20020a5d46c7000000b0032fb1f21f99mr18289wrs.9.1698921135424;
-        Thu, 02 Nov 2023 03:32:15 -0700 (PDT)
+        bh=piXqh6med7lV1eaz1Jju4bjZkrBzVnMssp83vd2Cu+Y=;
+        b=l88wSpQ9bWDIEyWekwj53EA+5TxwoaGa5wo/xcz7yr5zqJqBeRX98L+30+SNplAFLr
+         W5NUWijxRZcQZdTs4UUTpioBuqh1Ohz1Q/WC99amkhom6HGfIPBPpYAJewxUtbuOPUe/
+         71mBoNqj68Dm8dUgDoZT839zweWuwEx9hUkT+Dk2103rh461AxNfJXCdyCDJ7Sz2lvy5
+         yVfsGCk/5Oh6YAt3Uoj4lNYoFuume0CjHd6gDVWm1c17V55rey1BvxmljRRkpaz6+AOK
+         yhmXg4qDYbANE03pk2hrFVOzXa1ay9Pp3RHgrCVS7+/cueDvgrzzf7gZ2h3NZsot8CxU
+         ThiA==
+X-Gm-Message-State: AOJu0YwYwESsRd19KMsV7pC07dwPJaQT6yBioY58oO89BBvF4KJY0AGQ
+        5TzGO0aWB7ZPuiaIlLWB8K9ikg==
+X-Google-Smtp-Source: AGHT+IEMHtTKlX2B6Bh7BKcLi48ztvax40b3xL24ImYFyWLI40g2EHksyHfmMYFC/HC8+aNhcn1Rfg==
+X-Received: by 2002:a05:651c:200c:b0:2c5:2d7:412 with SMTP id s12-20020a05651c200c00b002c502d70412mr12168960ljo.19.1698922486291;
+        Thu, 02 Nov 2023 03:54:46 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:4ac1:f109:811c:51be? ([2a01:e0a:982:cbb0:4ac1:f109:811c:51be])
-        by smtp.gmail.com with ESMTPSA id bk28-20020a0560001d9c00b0032dab20e773sm2081738wrb.69.2023.11.02.03.32.14
+        by smtp.gmail.com with ESMTPSA id bi26-20020a05600c3d9a00b0040596352951sm2555261wmb.5.2023.11.02.03.54.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Nov 2023 03:32:14 -0700 (PDT)
-Message-ID: <0126493b-6735-42a6-b346-dfabdf23bcaf@linaro.org>
-Date:   Thu, 2 Nov 2023 11:32:13 +0100
+        Thu, 02 Nov 2023 03:54:45 -0700 (PDT)
+Message-ID: <e86fa7b4-635c-4fd5-9b3c-ade96ddf5c0f@linaro.org>
+Date:   Thu, 2 Nov 2023 11:54:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v10 2/4] Input: add core support for Goodix Berlin
- Touchscreen IC
+Subject: Re: [PATCH RFC 2/8] arm64: dts: qcom: add initial SM8650 dtsi
 Content-Language: en-US, fr
-To:     Jeff LaBundy <jeff@labundy.com>
-Cc:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20231023-topic-goodix-berlin-upstream-initial-v10-0-88eec2e51c0b@linaro.org>
- <20231023-topic-goodix-berlin-upstream-initial-v10-2-88eec2e51c0b@linaro.org>
- <ZTnzorJ4h1zva1AZ@nixie71>
+References: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
+ <20231025-topic-sm8650-upstream-dt-v1-2-a821712af62f@linaro.org>
+ <691f1781-906c-411f-90f6-e1cc71062253@linaro.org>
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
  GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
@@ -99,138 +96,55 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro Developer Services
-In-Reply-To: <ZTnzorJ4h1zva1AZ@nixie71>
+In-Reply-To: <691f1781-906c-411f-90f6-e1cc71062253@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Jeff,
-
-On 26/10/2023 07:05, Jeff LaBundy wrote:
-> Hi Neil,
+On 25/10/2023 11:01, Konrad Dybcio wrote:
 > 
-> On Mon, Oct 23, 2023 at 05:03:46PM +0200, Neil Armstrong wrote:
+> 
+> On 10/25/23 09:47, Neil Armstrong wrote:
+>> Add initial DTSI for the Qualcomm SM8650 platform,
+>> only contains nodes which doesn't depend on interconnect.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---[...]
+> 
+>> +            CLUSTER_SLEEP_1: cluster-sleep-1 {
+>> +                compatible = "domain-idle-state";
+>> +                arm,psci-suspend-param = <0x4100c344>;
+> I think this parameter signals the AOSS to attempt system
+> suspend and CLUSTER_SLEEP is a shallower, separate state.
+
+OK, so downstream call this state "APSS_OFF" and the other state
+calling 0x41000044 "CLUSTER_PWR_DN"
+
+On sm8[345]0 and qdu1000/sm4450 there's both states called CLUSTER_SLEEP_0 and CLUSTER_SLEEP_1,
+and referenced into CLUSTER_PD cluster power domain.
+
+I assume this is the same as SM8550, so what's the issue ?
+
 > 
 > [...]
-> 
->> +static int goodix_berlin_get_ic_info(struct goodix_berlin_core *cd)
->> +{
->> +	__le16 length_raw;
->> +	u8 *afe_data;
->> +	u16 length;
->> +	int error;
->> +
->> +	afe_data = kzalloc(GOODIX_BERLIN_IC_INFO_MAX_LEN, GFP_KERNEL);
->> +	if (!afe_data)
->> +		return -ENOMEM;
->> +
->> +	error = regmap_raw_read(cd->regmap, GOODIX_BERLIN_IC_INFO_ADDR,
->> +				&length_raw, sizeof(length_raw));
->> +	if (error) {
->> +		dev_info(cd->dev, "failed get ic info length, %d\n", error);
-> 
-> This should be dev_err().
+>> +            qcom,tcs-config = <ACTIVE_TCS    3>, <SLEEP_TCS     2>,
+>> +                      <WAKE_TCS      2>, <CONTROL_TCS   0>;
+> Is <CONTROL_TCS 0> the correct value?
 
-Ack
+Yes it's the right value.
 
 > 
->> +		goto free_afe_data;
->> +	}
->> +
->> +	length = le16_to_cpu(length_raw);
->> +	if (length >= GOODIX_BERLIN_IC_INFO_MAX_LEN) {
->> +		dev_info(cd->dev, "invalid ic info length %d\n", length);
+> I think it looks good otherwise
 > 
-> And here.
-
-Ack
-
-> 
->> +		error = -EINVAL;
->> +		goto free_afe_data;
->> +	}
->> +
->> +	error = regmap_raw_read(cd->regmap, GOODIX_BERLIN_IC_INFO_ADDR,
->> +				afe_data, length);
->> +	if (error) {
->> +		dev_info(cd->dev, "failed get ic info data, %d\n", error);
->> +		return error;
->> +		goto free_afe_data;
->> +	}
-> 
-> This return statement is left over from v9; the print should also be dev_err().
-
-Ack
-
-> 
->> +
->> +	/* check whether the data is valid (ex. bus default values) */
->> +	if (goodix_berlin_is_dummy_data(cd, afe_data, length)) {
->> +		dev_err(cd->dev, "fw info data invalid\n");
->> +		error = -EINVAL;
->> +		goto free_afe_data;
->> +	}
->> +
->> +	if (!goodix_berlin_checksum_valid(afe_data, length)) {
->> +		dev_info(cd->dev, "fw info checksum error\n");
-> 
-> And here.
-
-Ack
-
-> 
->> +		error = -EINVAL;
->> +		goto free_afe_data;
->> +	}
->> +
->> +	error = goodix_berlin_convert_ic_info(cd, afe_data, length);
->> +	if (error)
->> +		goto free_afe_data;
->> +
->> +	/* check some key info */
->> +	if (!cd->touch_data_addr) {
->> +		dev_err(cd->dev, "touch_data_addr is null\n");
->> +		error = -EINVAL;
->> +		goto free_afe_data;
->> +	}
->> +
->> +	return 0;
->> +
->> +free_afe_data:
->> +	kfree(afe_data);
->> +
->> +	return error;
->> +}
-> 
-> [...]
-> 
->> +static int goodix_berlin_request_handle_reset(struct goodix_berlin_core *cd)
->> +{
->> +	gpiod_set_value(cd->reset_gpio, 1);
->> +	usleep_range(2000, 2100);
->> +	gpiod_set_value(cd->reset_gpio, 0);
-> 
-> I see that now, this function is only called if the reset GPIO is defined,
-> but there used to be another msleep() here that has since been dropped. Is
-> that intentional?
-
-Indeed, it was dropped, I'll add it back thx for noticing !
-
-> 
->> +
->> +	return 0;
->> +}
-> 
-> Kind regards,
-> Jeff LaBundy
+> Konrad
 
 Thanks,
 Neil
