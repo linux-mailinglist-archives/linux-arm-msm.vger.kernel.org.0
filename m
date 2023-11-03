@@ -2,79 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D2C27E02E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 13:29:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 019047E02F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 13:33:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1376503AbjKCM32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 08:29:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45798 "EHLO
+        id S1376355AbjKCMdU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 08:33:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1376633AbjKCM3U (ORCPT
+        with ESMTP id S1376365AbjKCMdT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 08:29:20 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91D23D52
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 05:29:11 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c503da4fd6so27206121fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 05:29:11 -0700 (PDT)
+        Fri, 3 Nov 2023 08:33:19 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6798B184
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 05:33:12 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-d9ace5370a0so1963211276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 05:33:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699014550; x=1699619350; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A5e6ystGbmI0nEkqiwKt50qKqvjyJaFKyap2sSy1xpA=;
-        b=qJu9DniQ8gCLQXeGzU4agasudpouNHUZUUvgSAvAlrjjEbXk0vF8VOnigIRhsybhyu
-         p6WMScll49ut2x8jM94GlpIEJRtdlyI0KsozOCy5kqO86UfyNpIrjqD3PJ8XW4Fk4tk6
-         p/Q6H16EErLDtSfMb4JgUtXr6dIU1KR52ah5LxVjFilxmAxHt0YvPdATPZwKqgvOczYr
-         jQVSYucUCJ9zjqz/uff9qHMQBQi9GiUz4glhJo6bCJ0bfxDkNZiRpgjwybUWszz4Xq+3
-         607pjPNepdpjULGWPp0sKy9Y0Zhm26Ouk1VaA5TtA0Zp9gVpMJI+H6NPi7lHdeFCQoG2
-         hZaw==
+        d=linaro.org; s=google; t=1699014791; x=1699619591; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0KSdt9VlChlmft/PeayCtTjiy1+VOgZbmeLdttQHlx4=;
+        b=qVavNsf6R5tGiIFh2DHtt2MHsD/PkKUwA5bXN5V+1iF7mYBPlpD+mu55qZycKQ2CbO
+         IjZMyr28OX7hQCSjUNcP+aqkqNklnHze54YOOQTYqzF48qYg2Hy/XM7Ky9U/JZgN2nAJ
+         OEjnPJ1HHYXJGpxG+gCC7RonbGRWPAx+bLjN6Ao60EYRKtgoBkx3RnmOtt5WZGhlHJX6
+         ji2lijccQnPuBjs4Nhmyr4KeFrrWxp8ltxpIGbIqAzsc76PIf/hRXLbM5Gd+dTKmFvfS
+         RH+qO17tBxZzCJKq4eN4Ts+E8N0n+cZP8Ugxk1coGOoxUCTyGZ5iDTzpGk7VaLuacCxo
+         aqFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699014550; x=1699619350;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A5e6ystGbmI0nEkqiwKt50qKqvjyJaFKyap2sSy1xpA=;
-        b=eS0ArS81L/nyJkTrOekLYAYs3uZdkz89NMB5HGMWqSmuagb9l8Iv1Q0g7goXuDUA7z
-         cnob5ENjHYsR/2nHqGq4773z8QxsuqQ9gcohuUMK5tSZ2L7vR6wt6n9Dq3In2Obv294V
-         Z0N7/myN+xbDrjZKGCsdnJv3FbwOk/7nWkkt77NQn2iBPIMPgtkBE9lnvIOg6oXvjp3u
-         YdvVTrx/BnBBVAxOhdGuV0yliOwW3j02qcqR98P865LGYQl1m2Lspn1L7lgD6r0aKlPO
-         RxYfHnq2229hH39+/OE1S0vB9BrJfNDzznnN9v0selK9wA8eG/LFKQ9LiajuHdkRTGPr
-         7FgA==
-X-Gm-Message-State: AOJu0YwACEfgYVLNU9XHTHMNlBqLIzJ1mBTal3NZFDfCS7NSiQKZasX/
-        YFWQ3rxFBHU0wDDxJ2wuWGI+XQ==
-X-Google-Smtp-Source: AGHT+IFSyzh5KwJXI4OKuLt+dl2RkcJyWFKztY+vd/mINRRKQ+5WKzfLaB1CZgR2/nY/F0Q+0hxo+A==
-X-Received: by 2002:a2e:97d1:0:b0:2c5:2eaa:5397 with SMTP id m17-20020a2e97d1000000b002c52eaa5397mr15816719ljj.11.1699014549852;
-        Fri, 03 Nov 2023 05:29:09 -0700 (PDT)
-Received: from [127.0.0.1] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id ay8-20020a05600c1e0800b0040772138bb7sm2402918wmb.2.2023.11.03.05.29.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Nov 2023 05:29:09 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date:   Fri, 03 Nov 2023 12:29:04 +0000
-Subject: [PATCH v4 7/7] media: qcom: camss: Flag CSID-lites to support more
- CSIDs
+        d=1e100.net; s=20230601; t=1699014791; x=1699619591;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0KSdt9VlChlmft/PeayCtTjiy1+VOgZbmeLdttQHlx4=;
+        b=NkLIKyoHH6H0EeQOjdTdVd6bnv5D2uYz45vQSXLgiQNCuPx2IhQops2ECTCHZQEj8y
+         +jCQGGU0Bo4gYVCtmgtNxq+e1xgV0wYZhNYdyuiPS5E/mlmgq3e7Aj/I7HnprQxW/SMV
+         V70NaDpy3jTy66bRlC3HfwS8JcoBHXUutz3rHsAe1z3TrDsbNhzjXydlSklum9XwQpNv
+         T80oa2hg/VYDh5z1O170/ZRr0A5m7aJETHL8HBLVDOie6yMqaldGh7GrlRiLB31la7tp
+         qGUnGpPwbxj6729dXizhtNZhhuLBjyrxMDcgfSatRtWpAd5FQR4MA76EkFoGN/PtUqZP
+         jPXw==
+X-Gm-Message-State: AOJu0YyKwYu7/cuDuunb22abvrWwdbIX4CXAlblZjSk3oYTGstIoKejl
+        2k97q7/PSjCF+MUW29cWijlMtOJJSGnIDKnPdA5rew==
+X-Google-Smtp-Source: AGHT+IEXP9Sio/dbsgBAJ9ZHE9EMw/w5GSOc9qOrt8FkvsM79cuDJRSXMr28R4x61MRT2ytqfIU9jf6RzHnPqpMk19A=
+X-Received: by 2002:a25:37c6:0:b0:d9c:2b72:4fa5 with SMTP id
+ e189-20020a2537c6000000b00d9c2b724fa5mr15696344yba.48.1699014791460; Fri, 03
+ Nov 2023 05:33:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20231103-b4-camss-named-power-domains-v4-7-33a905359dbc@linaro.org>
-References: <20231103-b4-camss-named-power-domains-v4-0-33a905359dbc@linaro.org>
-In-Reply-To: <20231103-b4-camss-named-power-domains-v4-0-33a905359dbc@linaro.org>
-To:     hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        matti.lehtimaki@gmail.com, quic_grosikop@quicinc.com
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-X-Mailer: b4 0.13-dev-26615
+References: <20231031120307.1600689-1-quic_mdalam@quicinc.com>
+ <20231031120307.1600689-2-quic_mdalam@quicinc.com> <b9af01d2-1a86-4b41-9bd6-3bf7a0dde1c0@linaro.org>
+ <553c1373-c9a0-b2af-2286-058824e31bad@quicinc.com>
+In-Reply-To: <553c1373-c9a0-b2af-2286-058824e31bad@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 3 Nov 2023 14:33:00 +0200
+Message-ID: <CAA8EJpp-xsP1x==a5DH8pKpy7XH75UF-L8ewKWmeL8ePtxUq-A@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/5] mtd: nand: ecc-qcom: Add support for ECC Engine Driver
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, conor+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, miquel.raynal@bootlin.com,
+        richard@nod.at, vigneshr@ti.com, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org,
+        linux-spi@vger.kernel.org, quic_srichara@quicinc.com,
+        qpic_varada@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,163 +76,107 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+On Fri, 3 Nov 2023 at 14:25, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
+>
+>
+>
+> On 10/31/2023 10:41 PM, Krzysztof Kozlowski wrote:
+> > On 31/10/2023 13:03, Md Sadre Alam wrote:
+> >
+> > Eh? Empty?
+>
+> QPIC controller has the ecc pipelined so will keep the ecc support
+> inlined in both raw nand and serial nand driver.
+>
+> Droping this driver since device node was NAK-ed
+> https://www.spinics.net/lists/linux-arm-msm/msg177596.html
 
-Some platforms such as SC7280 have 3 CSIDs and 2 CSID-lites but current
-code has hardcoded 2 as the maximum number of CSIDs. Remove the hardcoded
-maximum number of VFEs to handle all possible combinations of CSIDs and
-CSID-lites.
+It seems, we have to repeat the same thing again and again:
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- .../media/platform/qcom/camss/camss-csid-gen2.c    | 31 +++++++++++-----------
- drivers/media/platform/qcom/camss/camss-csid.c     |  5 ++++
- drivers/media/platform/qcom/camss/camss-csid.h     |  7 +++++
- drivers/media/platform/qcom/camss/camss.c          |  3 +++
- 4 files changed, 30 insertions(+), 16 deletions(-)
+It was not the device node that was NAKed. It was the patch that was
+NAKed. Please read the emails carefully.
 
-diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen2.c b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-index 05ff5fa8095a8..b11de4797ccae 100644
---- a/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid-gen2.c
-@@ -21,7 +21,6 @@
-  * interface support. As a result of that it has an
-  * alternate register layout.
-  */
--#define IS_LITE		(csid->id >= 2 ? 1 : 0)
- 
- #define CSID_HW_VERSION		0x0
- #define		HW_VERSION_STEPPING	0
-@@ -35,13 +34,13 @@
- #define	CSID_CSI2_RX_IRQ_MASK	0x24
- #define CSID_CSI2_RX_IRQ_CLEAR	0x28
- 
--#define CSID_CSI2_RDIN_IRQ_STATUS(rdi)		((IS_LITE ? 0x30 : 0x40) \
-+#define CSID_CSI2_RDIN_IRQ_STATUS(rdi)		((csid_is_lite(csid) ? 0x30 : 0x40) \
- 						 + 0x10 * (rdi))
--#define CSID_CSI2_RDIN_IRQ_MASK(rdi)		((IS_LITE ? 0x34 : 0x44) \
-+#define CSID_CSI2_RDIN_IRQ_MASK(rdi)		((csid_is_lite(csid) ? 0x34 : 0x44) \
- 						 + 0x10 * (rdi))
--#define CSID_CSI2_RDIN_IRQ_CLEAR(rdi)		((IS_LITE ? 0x38 : 0x48) \
-+#define CSID_CSI2_RDIN_IRQ_CLEAR(rdi)		((csid_is_lite(csid) ? 0x38 : 0x48) \
- 						 + 0x10 * (rdi))
--#define CSID_CSI2_RDIN_IRQ_SET(rdi)		((IS_LITE ? 0x3C : 0x4C) \
-+#define CSID_CSI2_RDIN_IRQ_SET(rdi)		((csid_is_lite(csid) ? 0x3C : 0x4C) \
- 						 + 0x10 * (rdi))
- 
- #define CSID_TOP_IRQ_STATUS	0x70
-@@ -73,7 +72,7 @@
- #define			CGC_MODE_DYNAMIC_GATING		0
- #define			CGC_MODE_ALWAYS_ON		1
- 
--#define CSID_RDI_CFG0(rdi)			((IS_LITE ? 0x200 : 0x300) \
-+#define CSID_RDI_CFG0(rdi)			((csid_is_lite(csid) ? 0x200 : 0x300) \
- 						 + 0x100 * (rdi))
- #define		RDI_CFG0_BYTE_CNTR_EN		0
- #define		RDI_CFG0_FORMAT_MEASURE_EN	1
-@@ -98,32 +97,32 @@
- #define		RDI_CFG0_PACKING_FORMAT		30
- #define		RDI_CFG0_ENABLE			31
- 
--#define CSID_RDI_CFG1(rdi)			((IS_LITE ? 0x204 : 0x304)\
-+#define CSID_RDI_CFG1(rdi)			((csid_is_lite(csid) ? 0x204 : 0x304)\
- 						+ 0x100 * (rdi))
- #define		RDI_CFG1_TIMESTAMP_STB_SEL	0
- 
--#define CSID_RDI_CTRL(rdi)			((IS_LITE ? 0x208 : 0x308)\
-+#define CSID_RDI_CTRL(rdi)			((csid_is_lite(csid) ? 0x208 : 0x308)\
- 						+ 0x100 * (rdi))
- #define		RDI_CTRL_HALT_CMD		0
- #define			HALT_CMD_HALT_AT_FRAME_BOUNDARY		0
- #define			HALT_CMD_RESUME_AT_FRAME_BOUNDARY	1
- #define		RDI_CTRL_HALT_MODE		2
- 
--#define CSID_RDI_FRM_DROP_PATTERN(rdi)			((IS_LITE ? 0x20C : 0x30C)\
-+#define CSID_RDI_FRM_DROP_PATTERN(rdi)			((csid_is_lite(csid) ? 0x20C : 0x30C)\
- 							+ 0x100 * (rdi))
--#define CSID_RDI_FRM_DROP_PERIOD(rdi)			((IS_LITE ? 0x210 : 0x310)\
-+#define CSID_RDI_FRM_DROP_PERIOD(rdi)			((csid_is_lite(csid) ? 0x210 : 0x310)\
- 							+ 0x100 * (rdi))
--#define CSID_RDI_IRQ_SUBSAMPLE_PATTERN(rdi)		((IS_LITE ? 0x214 : 0x314)\
-+#define CSID_RDI_IRQ_SUBSAMPLE_PATTERN(rdi)		((csid_is_lite(csid) ? 0x214 : 0x314)\
- 							+ 0x100 * (rdi))
--#define CSID_RDI_IRQ_SUBSAMPLE_PERIOD(rdi)		((IS_LITE ? 0x218 : 0x318)\
-+#define CSID_RDI_IRQ_SUBSAMPLE_PERIOD(rdi)		((csid_is_lite(csid) ? 0x218 : 0x318)\
- 							+ 0x100 * (rdi))
--#define CSID_RDI_RPP_PIX_DROP_PATTERN(rdi)		((IS_LITE ? 0x224 : 0x324)\
-+#define CSID_RDI_RPP_PIX_DROP_PATTERN(rdi)		((csid_is_lite(csid) ? 0x224 : 0x324)\
- 							+ 0x100 * (rdi))
--#define CSID_RDI_RPP_PIX_DROP_PERIOD(rdi)		((IS_LITE ? 0x228 : 0x328)\
-+#define CSID_RDI_RPP_PIX_DROP_PERIOD(rdi)		((csid_is_lite(csid) ? 0x228 : 0x328)\
- 							+ 0x100 * (rdi))
--#define CSID_RDI_RPP_LINE_DROP_PATTERN(rdi)		((IS_LITE ? 0x22C : 0x32C)\
-+#define CSID_RDI_RPP_LINE_DROP_PATTERN(rdi)		((csid_is_lite(csid) ? 0x22C : 0x32C)\
- 							+ 0x100 * (rdi))
--#define CSID_RDI_RPP_LINE_DROP_PERIOD(rdi)		((IS_LITE ? 0x230 : 0x330)\
-+#define CSID_RDI_RPP_LINE_DROP_PERIOD(rdi)		((csid_is_lite(csid) ? 0x230 : 0x330)\
- 							+ 0x100 * (rdi))
- 
- #define CSID_TPG_CTRL		0x600
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.c b/drivers/media/platform/qcom/camss/camss-csid.c
-index 95873f988f7e2..d393618ed54cb 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.c
-+++ b/drivers/media/platform/qcom/camss/camss-csid.c
-@@ -897,3 +897,8 @@ void msm_csid_unregister_entity(struct csid_device *csid)
- 	media_entity_cleanup(&csid->subdev.entity);
- 	v4l2_ctrl_handler_free(&csid->ctrls);
- }
-+
-+inline bool csid_is_lite(struct csid_device *csid)
-+{
-+	return csid->camss->res->csid_res[csid->id].is_lite;
-+}
-diff --git a/drivers/media/platform/qcom/camss/camss-csid.h b/drivers/media/platform/qcom/camss/camss-csid.h
-index 30d94eb2eb041..fddccb69da13a 100644
---- a/drivers/media/platform/qcom/camss/camss-csid.h
-+++ b/drivers/media/platform/qcom/camss/camss-csid.h
-@@ -215,5 +215,12 @@ extern const struct csid_hw_ops csid_ops_4_1;
- extern const struct csid_hw_ops csid_ops_4_7;
- extern const struct csid_hw_ops csid_ops_gen2;
- 
-+/*
-+ * csid_is_lite - Check if CSID is CSID lite.
-+ * @csid: CSID Device
-+ *
-+ * Return whether CSID is CSID lite
-+ */
-+bool csid_is_lite(struct csid_device *csid);
- 
- #endif /* QC_MSM_CAMSS_CSID_H */
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index f5226eb8bf4fc..51ad12f1d9d7d 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -638,6 +638,7 @@ static const struct camss_subdev_resources csid_res_845[] = {
- 				{ 384000000 } },
- 		.reg = { "csid2" },
- 		.interrupt = { "csid2" },
-+		.is_lite = true,
- 		.ops = &csid_ops_gen2
- 	}
- };
-@@ -812,6 +813,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 				{ 0 } },
- 		.reg = { "csid2" },
- 		.interrupt = { "csid2" },
-+		.is_lite = true,
- 		.ops = &csid_ops_gen2
- 	},
- 	/* CSID3 */
-@@ -824,6 +826,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 				{ 0 } },
- 		.reg = { "csid3" },
- 		.interrupt = { "csid3" },
-+		.is_lite = true,
- 		.ops = &csid_ops_gen2
- 	}
- };
+And next time please perform dtbs_check, dt_binding_check and
+checkpatch before sending the patch.
+
+It is perfectly fine to ask questions 'like we are getting we are
+getting this and that issues with the bindings, please advise'. It is
+not fine to skip that step completely.
+
+> >
+> >> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> >> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+> >> ---
+> >>   drivers/mtd/nand/Kconfig    |   7 ++
+> >>   drivers/mtd/nand/Makefile   |   1 +
+> >>   drivers/mtd/nand/ecc-qcom.c | 198 ++++++++++++++++++++++++++++++++++++
+> >>   3 files changed, 206 insertions(+)
+> >>   create mode 100644 drivers/mtd/nand/ecc-qcom.c
+> >>
+> >
+> > ...
+> >
+> >> +
+> >> +    return 0;
+> >> +}
+> >> +EXPORT_SYMBOL(qcom_ecc_config);
+> >> +
+> >> +void qcom_ecc_enable(struct qcom_ecc *ecc)
+> >> +{
+> >> +    ecc->use_ecc = true;
+> >> +}
+> >> +EXPORT_SYMBOL(qcom_ecc_enable);
+> >
+> > Drop this and all other exports. Nothing here explains the need for them.
+> >
+> >> +
+> >> +void qcom_ecc_disable(struct qcom_ecc *ecc)
+> >> +{
+> >> +    ecc->use_ecc = false;
+> >> +}
+> >> +EXPORT_SYMBOL(qcom_ecc_disable);
+> >> +
+> >> +static const struct of_device_id qpic_ecc_dt_match[] = {
+> >> +    {
+> >> +            .compatible = "qcom,ipq9574-ecc",
+> >
+> > Please run scripts/checkpatch.pl and fix reported warnings. Some
+> > warnings can be ignored, but the code here looks like it needs a fix.
+> > Feel free to get in touch if the warning is not clear.
+> >
+> > Checkpatch is preerquisite. Don't send patches which have obvious issues
+> > pointed out by checkpatch. It's a waste of reviewers time.
+> >
+> >> +    },
+> >> +    {},
+> >> +};
+> >> +
+> >> +static int qpic_ecc_probe(struct platform_device *pdev)
+> >> +{
+> >> +    struct device *dev = &pdev->dev;
+> >> +    struct qpic_ecc *ecc;
+> >> +    u32 max_eccdata_size;
+> >> +
+> >> +    ecc = devm_kzalloc(dev, sizeof(*ecc), GFP_KERNEL);
+> >> +    if (!ecc)
+> >> +            return -ENOMEM;
+> >> +
+> >> +    ecc->caps = of_device_get_match_data(dev);
+> >> +
+> >> +    ecc->dev = dev;
+> >> +    platform_set_drvdata(pdev, ecc);
+> >> +    dev_info(dev, "probed\n");
+> >
+> > No, no such messages.
+> >
+> >
+> >
+> > Best regards,
+> > Krzysztof
+> >
+
+
 
 -- 
-2.42.0
-
+With best wishes
+Dmitry
