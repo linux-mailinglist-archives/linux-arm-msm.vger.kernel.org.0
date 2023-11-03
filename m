@@ -2,83 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB3227DFD97
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 01:38:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E319F7DFEAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 06:13:32 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232203AbjKCAiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Nov 2023 20:38:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33338 "EHLO
+        id S229869AbjKCFNC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 01:13:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229605AbjKCAiV (ORCPT
+        with ESMTP id S229436AbjKCFNA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Nov 2023 20:38:21 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A068E;
-        Thu,  2 Nov 2023 17:38:15 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A2LfG2A031600;
-        Fri, 3 Nov 2023 00:38:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=PKoZbrBdKC6gVqUDvxOdh5KIEkcYsyM6kdJ9ddFOU48=;
- b=ewPG2Llxt+3GzThpcYz7AsCDxKqy/uS6NG8FCqXvOue1OMtMst001+d+0cvm+tAN0BZN
- 6YaSy9ZeAOaSTdufe769RrD65zmYHZDdiGKy5aVKuYnfFxEm3KpBlXShCrwHMv847EMT
- AEllA37JSi2V/M+krf66nD0lhh5MrC2/bI/7UAIiNhL1PJI5LS4BMA2s4C2fCQJzqJLh
- nPIK/kV0ICdp7eQRZPGnuUGngesjsp3QnX/qPy3LATZWzbu9E9VL/SlQoTyQAiWqQOqA
- jBIPa+ExikMqisM6B0Gt7+RUl1rA69gbR8Ty1mkyZ6DKtk67Wnk414M/CkZbxYgsCAI0 UA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u47dy1xh5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 00:38:11 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A30cAEv007350
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 00:38:10 GMT
-Received: from quicinc.com (10.49.16.6) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 2 Nov
- 2023 17:38:07 -0700
-Date:   Thu, 2 Nov 2023 17:38:05 -0700
-From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
-To:     Jeff Johnson <quic_jjohnson@quicinc.com>
-CC:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: Re: [PATCH] firmware: qcom-scm: Support multiple waitq contexts
-Message-ID: <ZURA7W5zGWOkkIsY@quicinc.com>
-Mail-Followup-To: Jeff Johnson <quic_jjohnson@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com
-References: <20231027-multi-wqs-v1-1-d47cd7f3590f@quicinc.com>
- <3f5f42e5-265f-40f1-af38-7057622270d2@quicinc.com>
+        Fri, 3 Nov 2023 01:13:00 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDB5E1A8
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 22:12:50 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id 98e67ed59e1d1-2806cbd43b8so1592577a91.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 22:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1698988370; x=1699593170; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OixtEquTnHR2YZhEd0MDEhswdqqqsbVAp+5RHrt7SyY=;
+        b=olZcH8W9AllPK4gFcgNwx+AWhkczLaehkgn321GTYcJk/ckcLrAFRmjOD0YQFQYNF7
+         woOMIi00GXEyUCA/8BDlxiz6JI3anxj/zzYeXw16pmkL09/TT+GnVmynHnCX0UdEZFQf
+         n23QaP0dyooFNYC0ShlkzZoUxSxEeii/4J4JkENreIVAtigByG4cLC8UuEcWw88BD64B
+         hDZu2DFVjQltO7l/EWYrfpzpdzEs6Kt7Ym1RnVV5yh01C92KZqMUP73foEU7Ey5we70X
+         bRgVI0GnG5wnHZZJrzpJyPaQ0rqlg1uR5/a6SPpLxC7JWcchODi2oR7nphd3K5cX8vAB
+         jMPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698988370; x=1699593170;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OixtEquTnHR2YZhEd0MDEhswdqqqsbVAp+5RHrt7SyY=;
+        b=Y7rFFg9laPVAxnK03FBKxR/2b0vGfmrRIojQJG4ZeZv3n+waE07WAlZPPTPB+wT13e
+         PASrHvYDkPTrCWlF7cfkjkmyF1rCblW54lHWgc7/dtoXFuMB0dh9y4RJqJKOkAjZR2j6
+         ZwVyIextO4SMM6DZ4WICeBht80KDE7FatDuzDmUv7CM6jJ5Hyr2JZqH/RaVj1K65BAKk
+         xyUaXDBEf8KUzTRB4KwWKktvoaMWh8TrNhm5m8am3ulnI3EyPtgeSFZWz3zoaixvUZuy
+         G/8+e5JwkILo4ne+D/iRMHjzgqgmKiTEe9ehCmJVGIfnnW9czoq0QKKfyqHWTgXHVRVC
+         g8/Q==
+X-Gm-Message-State: AOJu0Yz9yFOHA1sKF5xGJYzvcttAjjTabdMJsVpoc2dK0MeP++nJo1k2
+        E+bIQjRmWNzV3coUMZMINE77MQ==
+X-Google-Smtp-Source: AGHT+IFExr8ybCriMSgOLlaz6WAWaai4oOiYuReMXnpbJnZEcRwsDQDCfUwG4Y7Q7LrrQj7TnqqbKA==
+X-Received: by 2002:a17:90a:7e88:b0:280:c97:5968 with SMTP id j8-20020a17090a7e8800b002800c975968mr18934034pjl.5.1698988370217;
+        Thu, 02 Nov 2023 22:12:50 -0700 (PDT)
+Received: from localhost ([122.172.80.14])
+        by smtp.gmail.com with ESMTPSA id js4-20020a17090b148400b0027d15bd9fa2sm626409pjb.35.2023.11.02.22.12.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Nov 2023 22:12:49 -0700 (PDT)
+Date:   Fri, 3 Nov 2023 10:42:47 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        vireshk@kernel.org, nm@ti.com, sboyd@kernel.org, mani@kernel.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, rafael@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, quic_vbadigan@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_ramkri@quicinc.com, quic_parass@quicinc.com
+Subject: Re: [PATCH v5 5/5] PCI: qcom: Add OPP support to scale performance
+ state of power domain
+Message-ID: <20231103051247.u4cnckzstcvs4lf5@vireshk-i7>
+References: <20231102053013.7yt7pxin5awlu7w7@vireshk-i7>
+ <20231102120950.GA115288@bhelgaas>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3f5f42e5-265f-40f1-af38-7057622270d2@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NrMFXJsAYGlSbu0dZzI4r6rTempQHNoq
-X-Proofpoint-ORIG-GUID: NrMFXJsAYGlSbu0dZzI4r6rTempQHNoq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-02_10,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
- suspectscore=0 phishscore=0 impostorscore=0 mlxscore=0 mlxlogscore=636
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030002
+In-Reply-To: <20231102120950.GA115288@bhelgaas>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,28 +82,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Oct 27 2023 16:44, Jeff Johnson wrote:
-> On 10/27/2023 3:37 PM, Guru Das Srinagesh wrote:
-> > Currently, only a single waitqueue context is supported (zero). Firmware
-> 
-> which firmware?
-
-It's the same combination of hypervisor + ARM Trustzone software mentioned in
-the earlier commit 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling
-logic").
-> 
-> > now supports multiple waitqueue contexts, so add support to dynamically
-> > create and support as many unique waitqueue contexts as firmware returns
-> > to the driver.
+On 02-11-23, 07:09, Bjorn Helgaas wrote:
+> On Thu, Nov 02, 2023 at 11:00:13AM +0530, Viresh Kumar wrote:
+> > On 01-11-23, 17:17, Bjorn Helgaas wrote:
+> > > Can you expand "OPP" somewhere so we know what it stands for?  I'm
+> > > sure everybody knows except me :)
 > > 
-> > This is done by using the idr framework to create a hash table for
+> > It is "Operating Performance Points", defined here:
+> > 
+> > Documentation/power/opp.rst
 > 
-> why idr?
-> Per https://docs.kernel.org/core-api/idr.html
-> "The IDR interface is deprecated; please use the XArray instead."
+> Thanks; I meant in the subject or commit log of the next revision, of
+> course.
 
-Will replace idr with xarray in next patchset.
+Yeah, I understood that. Krishna shall do it in next version I believe.
 
-Thank you.
-
-Guru Das.
+-- 
+viresh
