@@ -2,113 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EDD47E0543
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 16:07:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 128467E0559
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 16:15:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232896AbjKCPHl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 11:07:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59930 "EHLO
+        id S231825AbjKCPPG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 11:15:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbjKCPHk (ORCPT
+        with ESMTP id S229491AbjKCPPC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 11:07:40 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C622D4D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 08:07:34 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A3EWQ8g012296;
-        Fri, 3 Nov 2023 15:07:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=E1Zp4ZPb3CKjcRmfc0jW2h78yWEqKXXIwNBQC22w/UU=;
- b=Bx74YZn9XPnkSTBVlBxrn0oY9+8/Gz87dWw3Rk7CO5k7PtjSfhmh0yZSTznglY1ZQ+MY
- chXZPVtbZw3FJX72RRlL5aKCuD3lULuRlVg3YPJ4YNGabHZmMAERCkaj6Utl8WetMSGL
- XBBa0jHo1ubUSXmx/WiMJ9WyrTaYjVHsZmVhIVXEFnjiLKUbh022kPX6995AHF8hsKQ4
- NRN/1fNdOilHB0rfbyl5kFeMIS57ThCwMv/L+hz2xCtKL6cYSA6BJ5M/0umvbCM14jNz
- 00+oRJwS1q+K55R+JiaP6ZNPYEC/rWucNzLSQS0mr4wbb9q89+qpVTd/Wr8nMqLF8r3s xg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u4v8mrw2r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 15:07:24 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3F7NBV006953
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 15:07:23 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 3 Nov
- 2023 08:07:22 -0700
-Message-ID: <a03dc1ab-755c-415e-da65-aff507d30546@quicinc.com>
-Date:   Fri, 3 Nov 2023 09:07:22 -0600
+        Fri, 3 Nov 2023 11:15:02 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F379D47
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 08:14:52 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-32da9ef390fso1275390f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 08:14:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699024491; x=1699629291; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JQmtajR/Lo5kWZGagJsWizBqcJuSRUlM8N3Px2Mnlzc=;
+        b=WLW0DLxhI6kNo/vp1JLsCwd5z2ctRoiSgmOMUmrtNkjrJS8ksnB6Lnr9KClsKfeR6s
+         zLs+7jabuSJYFFvMJVzKgEF9uj3trz0B868fvE33Ysywxoue0FB5HxzP4RQ5HoAC2tIJ
+         XATbApGnxbjk6HmtsQ58KIvR5Os8kzjii/IiExYsHHaot80spaquxlfVqiOrS/JU9SUb
+         U9VBacCBzWuuGy+0wt5kwf+qeHEkSJomzZUrLXU+dnwkxphzqm7EETBxDC+mVpzxr3hT
+         uZN1pW91Ys5b+etp8ISYEmrCUJCZseUxQbASPULys4blLcC2v3g05tV+OLy+9/FCJBN3
+         8vCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699024491; x=1699629291;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JQmtajR/Lo5kWZGagJsWizBqcJuSRUlM8N3Px2Mnlzc=;
+        b=aXkq6ek6kJfOrpJmAqO7ANPvrpC9BmcDWZs2AttQQb4PddyPU5AqVHc+T4OC8E1jya
+         TOILaK0/2czVszHdH/WCBzAHhdnskAWvTOy2PpMuiGmjPlFzrgszzYZ3qMOQ+IkWrZOL
+         ndwQtLPpthIlQ3lKEHuW2UtK2zW/jkgBWww9tWm3zBuhB0zSeqeTKaVfrl2YJZDIUPQ2
+         k5oNCLKuULlCxxZSePVkb9dtJFO5Y50Klr/enU/Fx98t0X40vTyhdtljITjfWs82Azh9
+         38qE3AX1hLiDTiktwMFrrwFlgOYWL4d1FJExzuG/d0Y2xF0XXBNEIqoR7eTO/hSg7Eij
+         vQaQ==
+X-Gm-Message-State: AOJu0Ywb4sssU5pifvqDO6YkGPRASs7UqJzrzb1dWz51+HNozr9D8ZZS
+        05UyuunswhLtF9GQz9yMPXS6FA==
+X-Google-Smtp-Source: AGHT+IGD/xeq7bY+n2+xagtvTANWbDHhn+sJbmaTPg5nPjbUi9qXD9HyIs80yHobXO3D3Wqg4buNJw==
+X-Received: by 2002:a5d:6f1a:0:b0:32d:b2cf:8ccd with SMTP id ay26-20020a5d6f1a000000b0032db2cf8ccdmr27222679wrb.47.1699024490887;
+        Fri, 03 Nov 2023 08:14:50 -0700 (PDT)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id k12-20020adff28c000000b0032f99801273sm2065454wro.66.2023.11.03.08.14.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Nov 2023 08:14:50 -0700 (PDT)
+Message-ID: <e700133b-58f7-4a4d-8e5c-0d04441b789b@linaro.org>
+Date:   Fri, 3 Nov 2023 15:14:49 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] accel/qaic: Support for 0 resize slice execution in BO
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 2/8] usb: dwc3: core: Register vendor hooks for dwc3-qcom
 Content-Language: en-US
-To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <stanislaw.gruszka@linux.intel.com>, <ogabbay@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
-References: <20231027164330.11978-1-quic_jhugo@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20231027164330.11978-1-quic_jhugo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-3-quic_kriskura@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20231017131851.8299-3-quic_kriskura@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WRdS453nXX9TvR4OAWn6yJg3j2CkWMd4
-X-Proofpoint-ORIG-GUID: WRdS453nXX9TvR4OAWn6yJg3j2CkWMd4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_14,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- bulkscore=0 impostorscore=0 mlxscore=0 malwarescore=0 mlxlogscore=999
- spamscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030127
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/27/2023 10:43 AM, Jeffrey Hugo wrote:
-> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+On 17/10/2023 14:18, Krishna Kurapati wrote:
+> Currently on QC targets, the conndone/disconnect events in device mode are
+> generated by controller when software writes to QSCRATCH registers in qcom
+> glue layer rather than the vbus line being routed to dwc3 core IP for it
+> to recognize and generate these events.
 > 
-> Add support to partially execute a slice which is resized to zero.
-> Executing a zero size slice in a BO should mean that there is no DMA
-> transfers involved but you should still configure doorbell and semaphores.
+> We need to write '1' to  UTMI_OTG_VBUS_VALID bit of QSCRATCH_HS_PHY_CTRL
+> register to generate a connection done event and "0" if we need to
+> generate a disconnect event during cable removal or mode switch. Exactly
+> what is done by "dwc3_qcom_vbus_override_enable" call in dwc3-qcom.
 > 
-> For example consider a BO of size 18K and it is sliced into 3 6K slices
-> and user calls partial execute ioctl with resize as 10K.
-> slice 0 - size is 6k and offset is 0, so resize of 10K will not cut short
->            this slice hence we send the entire slice for execution.
-> slice 1 - size is 6k and offset is 6k, so resize of 10K will cut short this
->            slice and only the first 4k should be DMA along with configuring
->            doorbell and semaphores.
-> slice 2 - size is 6k and offset is 12k, so resize of 10k will cut short
->            this slice and no DMA transfer would be involved but we should
->            would configure doorbell and semaphores.
+> When the disconnect is not generated upon cable removal, the connected
+> flag of dwc3 is left marked as "true" and it blocks runtime suspend.
 > 
-> This change begs to change the behavior of 0 resize. Currently, 0 resize
-> partial execute ioctl behaves exactly like execute ioctl i.e. no resize.
-> After this patch all the slice in BO should behave exactly like slice 2 in
-> above example.
+> The goal of these vendor hooks is to let the mode change and cable removal
+> notifications from core reach the  glue layers so that glue can take
+> necessary action.
 > 
-> Refactor copy_partial_exec_reqs() to make it more readable and less
-> complex.
+> Before flattening the device tree, glue driver is not sure when the core
+> probe was completed as core probe can be deferred. In this case, glue is
+> not sure when to register vendor hooks. So mandate enabling runtime only
+> for flattened device node platforms so that glue can know when to register
+> vendor hooks.
 > 
-> Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> The following are the requirements aimed in this implementation:
+> 
+> 1. When enum in device mode, Glue/core must stay active.
+> 
+> 2. When cable is connected but UDC is not written yet, then glue/core
+> must be suspended.
+> 
+> 3. Upon removing cable in device mode, the disconnect event must be
+> generated and unblock runtime suspend for dwc3 core.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-Pushed to drm-misc-next
+What happens to this code if you
 
--Jeff
+static int count;
+
+1. sleep in dwc3_probe for 10 milliseconds
+2. return -EPROBE_DEFER
+3. if count++ < 5 goto 1
+
+i.e. if we simulate say waiting on a PHY driver to probe in dwc3_probe()
+
+and what happens if we introduce a 100 millsecond sleep into 
+dwc3_qcom_probe() - and run a fake disconnect event from 
+dwc3_qcom_probe_core() directly ?
+
+In other words if make it that dwc3_probe() completes and struct 
+dwc3_glue_ops->notify_cable_disconnect() fires prior to 
+dwc3_qcom_probe_core() completing ?
+
+i.e. I don't immediately see how you've solved the probe() completion 
+race condition here.
+
+---
+bod
