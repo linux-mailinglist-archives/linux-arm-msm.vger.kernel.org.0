@@ -2,128 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF1B07DFC63
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Nov 2023 23:28:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DB3227DFD97
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 01:38:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234513AbjKBW2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Nov 2023 18:28:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35084 "EHLO
+        id S232203AbjKCAiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Nov 2023 20:38:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234452AbjKBW2O (ORCPT
+        with ESMTP id S229605AbjKCAiV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Nov 2023 18:28:14 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B11D10D5
-        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Nov 2023 15:27:35 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-507f1c29f25so1743996e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Nov 2023 15:27:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1698964053; x=1699568853; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uXoVyVp5OG84zOQkOm7IQ+UVmBcdY/iCRvS4GnsnCOM=;
-        b=hk65anI8DnLP6XYG32IVr91q+4QPdQesXNfZXu7n7Z3Oxi+hfPMVXiNp8uEYbFsrK1
-         xUy7Ph1BQygU+6QJBNRzD2ickq7d9jF9sIX8Bp9xSOONDX+iGZmvSwHVJL6f56+stO+V
-         qQjzdm4FuuZHbULaZd3vxuElst9M2ol2Jd7qJD0fGG8U/9y81xrG0qmXIY7onMetI+nk
-         sV5Yeosqvk6PuW8fwvmgNknqENNY3L958R0WjoBWSV5w+J2zBNj8BBCD73iaZ3mPm6VA
-         rMp8PxxI05rhHg1a68KVMy5Vb5h55M1o7UITCgRXr5dRqvBqmX41RXbaKcT2hloO9hhk
-         9yGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698964053; x=1699568853;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=uXoVyVp5OG84zOQkOm7IQ+UVmBcdY/iCRvS4GnsnCOM=;
-        b=qVlPg7DVLfxIJKJpNGB9Q9EshEZ30zS71gLP+OezmUg7KfTXXykm5+LKe7qxT/CeIo
-         q8E913t46/e7boy/FOO4M6rtm8C4j5kFSlvhFgHiQ0uPkFv6BLPWk+rSw/MOska/0eV5
-         Nl8C/LjNZaQeWHslXRGG+FKMZWHS95xJh+BQ4tHtaE4p7jWn3Oba52NXkgGOGWTilJ+z
-         HzLyazjKTv5x8pwbkntXoqpCUE9jwu79tbUCEIf11sX+Pudc2Jzd5XPF3BuoO8vUzTUP
-         qnk7oKT6J8uPN740tJLJ1hgXU1WSOuAIw3kqxU8HGKcU2of3S1gYdE6xFM0Kh6pzcQmb
-         HjkQ==
-X-Gm-Message-State: AOJu0YzV3ivxCb6/8D4krBKEFUR7HEqT9zi+4ShBG/lCdl+gwCIIRfLY
-        A1SUlpifFomzFFiJ67D6dt3QHQ==
-X-Google-Smtp-Source: AGHT+IGZIa4vy0H7W4820zKGuRymjso9N+Sv8D8oIyx/tITMO+jQ1LtlzKMzvKe+5sCsCU9PktUBNw==
-X-Received: by 2002:ac2:5304:0:b0:507:a650:991d with SMTP id c4-20020ac25304000000b00507a650991dmr14430457lfh.58.1698964053368;
-        Thu, 02 Nov 2023 15:27:33 -0700 (PDT)
-Received: from [192.168.1.118] (abyj199.neoplus.adsl.tpnet.pl. [83.9.29.199])
-        by smtp.gmail.com with ESMTPSA id a22-20020a509b56000000b0054037c6676esm220608edj.69.2023.11.02.15.27.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Nov 2023 15:27:33 -0700 (PDT)
-Message-ID: <1bdf3b44-8a6f-c6d4-e86b-ec4bc0fc871f@linaro.org>
-Date:   Thu, 2 Nov 2023 23:27:30 +0100
+        Thu, 2 Nov 2023 20:38:21 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2A068E;
+        Thu,  2 Nov 2023 17:38:15 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A2LfG2A031600;
+        Fri, 3 Nov 2023 00:38:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=PKoZbrBdKC6gVqUDvxOdh5KIEkcYsyM6kdJ9ddFOU48=;
+ b=ewPG2Llxt+3GzThpcYz7AsCDxKqy/uS6NG8FCqXvOue1OMtMst001+d+0cvm+tAN0BZN
+ 6YaSy9ZeAOaSTdufe769RrD65zmYHZDdiGKy5aVKuYnfFxEm3KpBlXShCrwHMv847EMT
+ AEllA37JSi2V/M+krf66nD0lhh5MrC2/bI/7UAIiNhL1PJI5LS4BMA2s4C2fCQJzqJLh
+ nPIK/kV0ICdp7eQRZPGnuUGngesjsp3QnX/qPy3LATZWzbu9E9VL/SlQoTyQAiWqQOqA
+ jBIPa+ExikMqisM6B0Gt7+RUl1rA69gbR8Ty1mkyZ6DKtk67Wnk414M/CkZbxYgsCAI0 UA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u47dy1xh5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 03 Nov 2023 00:38:11 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A30cAEv007350
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 3 Nov 2023 00:38:10 GMT
+Received: from quicinc.com (10.49.16.6) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 2 Nov
+ 2023 17:38:07 -0700
+Date:   Thu, 2 Nov 2023 17:38:05 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Jeff Johnson <quic_jjohnson@quicinc.com>
+CC:     Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+Subject: Re: [PATCH] firmware: qcom-scm: Support multiple waitq contexts
+Message-ID: <ZURA7W5zGWOkkIsY@quicinc.com>
+Mail-Followup-To: Jeff Johnson <quic_jjohnson@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel@quicinc.com
+References: <20231027-multi-wqs-v1-1-d47cd7f3590f@quicinc.com>
+ <3f5f42e5-265f-40f1-af38-7057622270d2@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.9.0
-Subject: Re: [PATCH v1 1/3] PCI: qcom: Enable cache coherency for SA8775P RC
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, mani@kernel.org, robh+dt@kernel.org
-Cc:     quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        dmitry.baryshkov@linaro.org, robh@kernel.org,
-        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-        quic_parass@quicinc.com, quic_schintav@quicinc.com,
-        quic_shijjose@quicinc.com,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
-References: <1698767186-5046-1-git-send-email-quic_msarkar@quicinc.com>
- <1698767186-5046-2-git-send-email-quic_msarkar@quicinc.com>
- <e5ee7051-d867-453f-98a7-3a8aea402607@linaro.org>
- <73a332db-14d3-a5b6-331a-d52ffb27ee63@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <73a332db-14d3-a5b6-331a-d52ffb27ee63@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <3f5f42e5-265f-40f1-af38-7057622270d2@quicinc.com>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NrMFXJsAYGlSbu0dZzI4r6rTempQHNoq
+X-Proofpoint-ORIG-GUID: NrMFXJsAYGlSbu0dZzI4r6rTempQHNoq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-02_10,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ suspectscore=0 phishscore=0 impostorscore=0 mlxscore=0 mlxlogscore=636
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311030002
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 02/11/2023 11:16, Mrinmay Sarkar wrote:
+On Oct 27 2023 16:44, Jeff Johnson wrote:
+> On 10/27/2023 3:37 PM, Guru Das Srinagesh wrote:
+> > Currently, only a single waitqueue context is supported (zero). Firmware
 > 
-> On 10/31/2023 10:20 PM, Konrad Dybcio wrote:
->> On 31.10.2023 16:46, Mrinmay Sarkar wrote:
->>> This change will enable cache snooping logic to support
->>> cache coherency for SA8755P RC platform.
->> 8775
->>
->>> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
->>> ---
->>>   drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
->>>   1 file changed, 11 insertions(+)
->>>
->>> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c 
->>> b/drivers/pci/controller/dwc/pcie-qcom.c
->>> index 6902e97..6f240fc 100644
->>> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->>> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->>> @@ -51,6 +51,7 @@
->>>   #define PARF_SID_OFFSET                0x234
->>>   #define PARF_BDF_TRANSLATE_CFG            0x24c
->>>   #define PARF_SLV_ADDR_SPACE_SIZE        0x358
->>> +#define PCIE_PARF_NO_SNOOP_OVERIDE        0x3d4
->>>   #define PARF_DEVICE_TYPE            0x1000
->>>   #define PARF_BDF_TO_SID_TABLE_N            0x2000
->>> @@ -117,6 +118,9 @@
->>>   /* PARF_LTSSM register fields */
->>>   #define LTSSM_EN                BIT(8)
->>> +/* PARF_NO_SNOOP_OVERIDE register value */
->> override
->>> +#define NO_SNOOP_OVERIDE_EN            0xa
->> is this actually some magic value and not BIT(1) | BIT(3)?
-> we need to set 1st and 3rd bit. yes, we can use BIT(1) | BIT(3).
-It would be great if you could explain what each of these bits means
-separately, #defining them instead and ORing at usage time.
+> which firmware?
 
-Konrad
+It's the same combination of hypervisor + ARM Trustzone software mentioned in
+the earlier commit 6bf325992236 ("firmware: qcom: scm: Add wait-queue handling
+logic").
+> 
+> > now supports multiple waitqueue contexts, so add support to dynamically
+> > create and support as many unique waitqueue contexts as firmware returns
+> > to the driver.
+> > 
+> > This is done by using the idr framework to create a hash table for
+> 
+> why idr?
+> Per https://docs.kernel.org/core-api/idr.html
+> "The IDR interface is deprecated; please use the XArray instead."
+
+Will replace idr with xarray in next patchset.
+
+Thank you.
+
+Guru Das.
