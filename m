@@ -2,72 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47E227E0597
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 16:33:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CD9E67E2744
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:42:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234049AbjKCPdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 11:33:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40844 "EHLO
+        id S231840AbjKFOmI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 09:42:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233679AbjKCPdu (ORCPT
+        with ESMTP id S231872AbjKFOmE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 11:33:50 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8117A123
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 08:33:44 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A3Ex4xY026323;
-        Fri, 3 Nov 2023 15:33:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=zVbZdnZwO5n4Y0Q+NvgutF2CvAxm+N/jXhIrpQVSRxA=;
- b=QPvctQ1O93r8cOg+nYL940YkMDSSvJxOAi4UPZLhvOZGqFCLNllbiBaRg/W8pmB0lqhr
- pc3E22qmqT++LzsmxLxnnAoQIwamEmFpC4yFVw/9zjMFLDgLBQYt9hbFBPU/eyPovprL
- eyJUpildTLvWcZfrJuvqCkhmVVk9Md1mOMzZuKme4G6Gc+ml6myKH2PFr8UaeVOwRezp
- x8E5nGmPSUlwfYKd7AH+umGEZ+wrP7qxF0L8XkVbiAA4UhqDppQdfq0Qvdr4PesK79c7
- K+lQQyeCZWM/lIcmVDc+/p2F6K7JoL+M26tqV0FIU8FKkJzNfjwu2a+oLZxUvJYWw52O HQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u533j830e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 15:33:29 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3FXSxW031804
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 15:33:28 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Fri, 3 Nov 2023 08:33:27 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <stanislaw.gruszka@linux.intel.com>, <ogabbay@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH] accel/qaic: Update MAX_ORDER use to be inclusive
-Date:   Fri, 3 Nov 2023 09:33:02 -0600
-Message-ID: <20231103153302.20642-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.40.1
+        Mon, 6 Nov 2023 09:42:04 -0500
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DA71D7C;
+        Mon,  6 Nov 2023 06:42:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699281720; x=1730817720;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=nX/Ie0anw1ndgN0YJjqHJnFFjUKSdxLFOe79el+klzo=;
+  b=BPUy3v1szCXzKpje8qNzXhPVASOZUo913hOaXkeeWRRkOXOMvQFGRQTK
+   NS2khE5pVM41ZP85PlYc2CeM8ig27Cf9gjicCT4cEqaGxV7psVm1TbtBt
+   XsgL3lBLKzSFBue1kOiP/nm7DTSEPAVZXIp2VH0t20bJjmscfk7MoGBYs
+   GP3ukWxgqtFOD30nWQRsE0C2ojC7ts0n3WC533AdNCBNgeGMYtwLMsvRo
+   qswpOcLMntFW1hx3LWIJPBvShJstF9gpOW1wUen9xaS98xEPMBi+rv2V+
+   ayAETlDorlvR/gsaNVY16cacNbWo5ToSg1eB2K5EEfaHjLWhGHjASsXQl
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="379677775"
+X-IronPort-AV: E=Sophos;i="6.03,281,1694761200"; 
+   d="scan'208";a="379677775"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2023 06:41:59 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="1093799396"
+X-IronPort-AV: E=Sophos;i="6.03,281,1694761200"; 
+   d="scan'208";a="1093799396"
+Received: from dpidwerb-mobl.amr.corp.intel.com (HELO [10.209.77.27]) ([10.209.77.27])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2023 06:41:58 -0800
+Message-ID: <30f0f5ef-a148-444f-924f-594f4cbd48a4@linux.intel.com>
+Date:   Fri, 3 Nov 2023 10:39:42 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rm_Q-aJC_ypkzl5OMTMciEHJAw2Ds8Tp
-X-Proofpoint-ORIG-GUID: rm_Q-aJC_ypkzl5OMTMciEHJAw2Ds8Tp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_15,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 adultscore=0 impostorscore=0 malwarescore=0 mlxscore=0
- bulkscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
- definitions=main-2311030131
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] ASoC: codecs: wsa884x: check if set_stream is called
+ for proper bus
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
+References: <20231025144601.268645-1-krzysztof.kozlowski@linaro.org>
+ <20231025144601.268645-3-krzysztof.kozlowski@linaro.org>
+ <8b9db87b-0f61-4824-acf1-6b5ebdf45e63@linux.intel.com>
+ <160752cb-7772-4b1d-9096-8be25e76213c@linaro.org>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <160752cb-7772-4b1d-9096-8be25e76213c@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
         T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,34 +78,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MAX_ORDER was redefined so that valid allocations to the page allocator
-are in the range of 0..MAX_ORDER, inclusive in the commit
-23baf831a32c ("mm, treewide: redefine MAX_ORDER sanely").
 
-We are treating MAX_ORDER as an exclusive value, and thus could be
-requesting larger allocations.  Update our use to match the redefinition
-of MAX_ORDER.
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
----
- drivers/accel/qaic/qaic_data.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index 8da81768f2ab..8998c28e566e 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -452,7 +452,7 @@ static int create_sgt(struct qaic_device *qdev, struct sg_table **sgt_out, u64 s
- 		 * later
- 		 */
- 		buf_extra = (PAGE_SIZE - size % PAGE_SIZE) % PAGE_SIZE;
--		max_order = min(MAX_ORDER - 1, get_order(size));
-+		max_order = min(MAX_ORDER, get_order(size));
- 	} else {
- 		/* allocate a single page for book keeping */
- 		nr_pages = 1;
--- 
-2.40.1
+> We have two Soundwire controllers swr0 and swr3, each with two WSA884x
+> speakers (codecs):
+> 
+> -------------
+> &swr0 {
+> 	status = "okay";
+> 
+> 	left_woofer: speaker@0,0 {
+> 		compatible = "sdw20217020400";
+> 		reg = <0 0>;
+> 		// ...
+> 	};
+> 
+> 	/* WSA8845, Left Tweeter */
+> 	left_tweeter: speaker@0,1 {
+> 		compatible = "sdw20217020400";
+> 		reg = <0 1>;
+> 		// ...
+> 	};
+> };
+> 
+> &swr3 {
+> 	status = "okay";
+> 
+> 	/* WSA8845, Right Woofer */
+> 	right_woofer: speaker@0,0 {
+> 		compatible = "sdw20217020400";
+> 		reg = <0 0>;
+> 		// ...
+> 	};
+> 
+> 	/* WSA8845, Right Tweeter */
+> 	right_tweeter: speaker@0,1 {
+> 		compatible = "sdw20217020400";
+> 		reg = <0 1>;
+> 		// ...
+> 	};
+> };
+> -------------
+> 
+> Now, for four-speaker playback, we have sound card with links like:
+> 
+> -------------
+> wsa-dai-link {
+> 	link-name = "WSA Playback";
+> 
+> 	cpu {
+> 		sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
+> 	};
+> 
+> 	codec {
+> 		sound-dai = <&left_woofer>, <&left_tweeter>,
+> 			    <&swr0 0>, <&lpass_wsamacro 0>,
+> 			    <&right_woofer>, <&right_tweeter>,
+> 			    <&swr3 0>, <&lpass_wsa2macro 0>;
+> 	};
+> 
+> 	platform {
+> 		sound-dai = <&q6apm>;
+> 	};
+> };
+> -------------
+> 
+> We need to prepare the stream for all four speakers and two soundwire
+> controllers (so two different soundwire buses), however without the
+> patches here, the stream (sdw_stream_runtime *sruntime) right
+> woofer/twitter is set to swr0 (the other bus!). But it should stay as
+> swr3 (their bus).
+> 
+> Does it help a bit? I hope I am able to properly explain it.
+
+The configuration seems fine, but the problem is the
+"sdw_stream_runtime" definition.
+
+You need *ONE* sdw_stream_runtime, and multiple m_rt contexts added in
+the linked lists of this sdw_stream_runtime. In other words, you need to
+call sdw_stream_add_master() twice, for swr0 and swr3 respectively.
+
+Put differently, a sdw_stream_runtime does not point to a specific bus,
+it provides a top-level structure which can use multiple buses.
+
+The best way to allocate the sdw_stream_runtime is to rely on the
+dailink .startup callback. From the description above that's where you
+have all the needed information, and then each DAI .startup (or
+hw_params) can call sdw_stream_add_master() to update the linked lists.
+
+
 
