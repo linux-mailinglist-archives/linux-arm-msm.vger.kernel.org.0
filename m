@@ -2,139 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 719C97E0139
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 11:31:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C2CA7E00B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 11:30:26 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235335AbjKCILs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 04:11:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48464 "EHLO
+        id S1347316AbjKCJyU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 05:54:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235098AbjKCILr (ORCPT
+        with ESMTP id S229679AbjKCJyU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 04:11:47 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E29701A8;
-        Fri,  3 Nov 2023 01:11:41 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A359R76014714;
-        Fri, 3 Nov 2023 08:11:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=u3JwXlcRcYPnxvK4HEmxg7Tn23cs0JQWAl1lXbwAKV0=;
- b=C2ssioIo2o3NeAxVbkPngBn48yRuC9fY5RUWjUHzkmB/RKMa1uv1MpH6/G9kCM9p3GSv
- GVeMaHq9RuAUzlAFddNsBKDEXBELfYHdc34Kbtln/z+3xg8lAJ4FXxNYrP65j9C+Ujd8
- KAR245B0IDRgbBLOe8yPmeshctzMT9e0omuMKrQwl2vEy5dZqHnkS7SEySHgziXPDDoZ
- 90p8K+zM4Ld4NlJpNZA4YRrO1qdkwy1f028gIbKEb/aS8a+3uyh9umJslu7dsryXReeO
- X5nb0yiNhL09p01FFDeNWWDWaa+zprCJTm5hOspS5kdyKYGVP7R3MqqqWGP+y//eN540 lA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u477ptpat-1
+        Fri, 3 Nov 2023 05:54:20 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 575331BD;
+        Fri,  3 Nov 2023 02:54:14 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A35hiAb015454;
+        Fri, 3 Nov 2023 09:54:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=TVHU97YBjKswt+HJ1mW28PHpG50N4Z1IzTTZo/H9y/Q=;
+ b=dEkzVOwIGNhGsLWpSPpsq35GX5C7LAQUcpNa7FI/usvTtj/hvNqL91HTiot9C5NM3lgp
+ a3jxdQYN52PFCOKSTlD/ibZbFOJjwDthy3Sp/xh64yz8qVWqwSs30zaTcI7i37xxnsFc
+ jLt3KXC96LoseKMDnZd37r6yhqSGwaDreuvoKHhc5QTjiYTLjivpE4iywlmHhL0bCUIp
+ JnFqLF2AEGG0CqNvokg7JubgqLsntDROfGiFnCvyA3C6xpe+0Ns3HADz/oTqBaKckwB3
+ boNvogr+E51iLHQwPZsEEomQlRBLzedT1IrHGiFnZ9c3N6UyDMBc58Dy8JhscvSquWjz Iw== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u47d52tau-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 08:11:34 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A38BX1o006588
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 08:11:33 GMT
-Received: from [10.216.16.147] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 3 Nov
- 2023 01:11:27 -0700
-Message-ID: <b6a023e9-bb54-44d6-8a48-5f6204da5b95@quicinc.com>
-Date:   Fri, 3 Nov 2023 13:41:23 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V3 4/4] arm64: dts: qcom: ipq5018: Add tsens node
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>
-CC:     Sricharan R <srichara@win-platform-upstream01.qualcomm.com>,
-        <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <srinivas.kandagatla@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <dmitry.baryshkov@linaro.org>
-References: <20230922115116.2748804-1-srichara@win-platform-upstream01.qualcomm.com>
- <20230922115116.2748804-5-srichara@win-platform-upstream01.qualcomm.com>
- <1c6ecc92-89d3-3b7e-c2d0-e2fded9b446d@gmail.com>
- <f44b6e59-c26e-1026-49b7-e02ff02d7562@quicinc.com>
- <CAOX2RU6j75+8tFMTu=fVKY=mBkv8OaZJzWYUfnqkwfJY01QqYw@mail.gmail.com>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <CAOX2RU6j75+8tFMTu=fVKY=mBkv8OaZJzWYUfnqkwfJY01QqYw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+        Fri, 03 Nov 2023 09:54:05 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3A39s2Tx005340;
+        Fri, 3 Nov 2023 09:54:02 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3u0ucm1mc9-1;
+        Fri, 03 Nov 2023 09:54:02 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3A39oORc002783;
+        Fri, 3 Nov 2023 09:54:02 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-anshar-hyd.qualcomm.com [10.213.110.5])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3A39s2bB005327;
+        Fri, 03 Nov 2023 09:54:02 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4089000)
+        id 90FDA52A387; Fri,  3 Nov 2023 15:24:01 +0530 (+0530)
+From:   Ankit Sharma <quic_anshar@quicinc.com>
+To:     cros-qcom-dts-watchers@chromium.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     Ankit Sharma <quic_anshar@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_ashayj@quicinc.com,
+        quic_atulpant@quicinc.com, quic_rgottimu@quicinc.com,
+        quic_shashim@quicinc.com, quic_pkondeti@quicinc.com
+Subject: [PATCH v1] ARM: dts: msm: Add capacity and DPC properties for sc7280 soc
+Date:   Fri,  3 Nov 2023 15:23:58 +0530
+Message-Id: <20231103095358.29312-1-quic_anshar@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dJiFYVTVgberLcXSF2KIYI7ivCo-g49y
-X-Proofpoint-ORIG-GUID: dJiFYVTVgberLcXSF2KIYI7ivCo-g49y
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5MuaN2DxgyObrvDB3g-ZdCAnx3QylU94
+X-Proofpoint-ORIG-GUID: 5MuaN2DxgyObrvDB3g-ZdCAnx3QylU94
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_06,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- phishscore=0 adultscore=0 clxscore=1011 priorityscore=1501 mlxscore=0
- mlxlogscore=999 bulkscore=0 impostorscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030066
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-11-03_09,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 mlxlogscore=886 bulkscore=0 adultscore=0 mlxscore=0
+ suspectscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 clxscore=1011
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311030081
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-<..>
+The "capacity-dmips-mhz" and "dynamic-power-coefficient" are
+used to build Energy Model which in turn is used by EAS to take
+placement decisions.
 
->>> On 22. 09. 2023. 13:51, Sricharan R wrote:
->>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>>
->>>> IPQ5018 has tsens V1.0 IP with 4 sensors.
->>>> There is no RPM, so tsens has to be manually enabled. Adding the tsens
->>>> and nvmem node and IPQ5018 has 4 thermal sensors (zones). With the
->>>> critical temperature being 120'C and action is to reboot. Adding all
->>>> the 4 zones here.
->>>>
->>>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>> ---
->>>>    [v3] Ordered the qfprom device node properties as per
->>>>         Krzysztof's comments
->>>>
->>>>    arch/arm64/boot/dts/qcom/ipq5018.dtsi | 169 ++++++++++++++++++++++++++
->>>>    1 file changed, 169 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>>> b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>>> index 9f13d2dcdfd5..9e28b54ebcbd 100644
->>>> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->>>> @@ -93,6 +93,117 @@ soc: soc@0 {
->>>>            #size-cells = <1>;
->>>>            ranges = <0 0 0 0xffffffff>;
->>>> +        qfprom: qfprom@a0000 {
->>>> +            compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
->>> Hi,
->>>
->>> "qcom,ipq5018-qfprom" needs to be documented in QFPROM bindings first.
->>
->>    Already posted here [1]. Initially had it in the same series, but kept
->>    it separately based on review comments.
->>
->>    [1] https://www.spinics.net/lists/devicetree/msg633408.html
-> 
-> Well, if it's not part of the same series then this addition would
-> cause a warning as its
-> undocumented.
-> 
-> I also dont see where is it documented as part of the v2 series.
+Change-Id: I57aa4b99734dc349034f84bd16b02609b4ac6e55
+Signed-off-by: Ankit Sharma <quic_anshar@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-  Then in that case, will keep it in same series again in V4
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 8601253aec70..b1890824188c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -176,6 +176,8 @@
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
++			capacity-dmips-mhz = <1024>;
++			dynamic-power-coefficient = <100>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -204,6 +206,8 @@
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_100>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
++			capacity-dmips-mhz = <1024>;
++			dynamic-power-coefficient = <100>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -227,6 +231,8 @@
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_200>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
++			capacity-dmips-mhz = <1024>;
++			dynamic-power-coefficient = <100>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -250,6 +256,8 @@
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_300>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
++			capacity-dmips-mhz = <1024>;
++			dynamic-power-coefficient = <100>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+@@ -273,6 +281,8 @@
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_400>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
++			capacity-dmips-mhz = <1946>;
++			dynamic-power-coefficient = <520>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+@@ -296,6 +306,8 @@
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_500>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
++			capacity-dmips-mhz = <1946>;
++			dynamic-power-coefficient = <520>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+@@ -319,6 +331,8 @@
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_600>;
+ 			operating-points-v2 = <&cpu4_opp_table>;
++			capacity-dmips-mhz = <1946>;
++			dynamic-power-coefficient = <520>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+@@ -342,6 +356,8 @@
+ 					   &CLUSTER_SLEEP_0>;
+ 			next-level-cache = <&L2_700>;
+ 			operating-points-v2 = <&cpu7_opp_table>;
++			capacity-dmips-mhz = <1985>;
++			dynamic-power-coefficient = <552>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
+ 			qcom,freq-domain = <&cpufreq_hw 2>;
+-- 
+2.17.1
 
-Regards,
-  Sricharan
