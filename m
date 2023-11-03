@@ -2,88 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 190747E0518
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 15:57:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C4347E0537
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 16:03:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229490AbjKCO4v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 10:56:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59862 "EHLO
+        id S232905AbjKCPCv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 11:02:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232488AbjKCO4u (ORCPT
+        with ESMTP id S232796AbjKCPCu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 10:56:50 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F66D49
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 07:56:42 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c515527310so30358361fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 07:56:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699023401; x=1699628201; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YzRav2ZfuBCwiXlPtdX/9u8isJFM6SrzAhyoI7wYWQE=;
-        b=Pn24tQiUjPLyBLkG3Qe2NpyvS10i7qITQ7YbnU1hGUUdtW+034F7pXZ27hmtaeVd2Y
-         +BB2M18gEOq+1Xfg+CnuPGz8iuBUijfEYPWJ4cP3PqM3/gsL2wMd8ozxgYWyP92FFOU3
-         NlJbDtSKDEWzNd3yaqN9ec9AAxIncQH+aOmP508WeqgYr/COzepVlf49nZcES5y+wQxF
-         t1Jf/UGUWv6gX/h6iM81V8NULbY2LpEpYhqI7Iyoj+88NdDEb4DYJJmwUT8pmb18tDOJ
-         gICf859WcxLFEmPgonKhOTgepAo4r8IaXzPTEFssBF8/ltxbZzxjKlJl+TrAa6Acp5N8
-         f7Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699023401; x=1699628201;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YzRav2ZfuBCwiXlPtdX/9u8isJFM6SrzAhyoI7wYWQE=;
-        b=W7hWFkHcg7VA63QwAUkAZR0gIhPc1qwnmpbrdRamqmXe91xczoSHYgF5uefwEp6Qi6
-         DC/AnSVC0F1l/mjjfK3UbZ8JTE6r6uG9VdtGxa89xlaPQrn2PzjR5jBvLr/3TZkRQKqo
-         hzWJOP/Pwpr5VCtlULD6lPTfmhJdXeWTWEzHf4/640yXY3pFx7zaWzxzVwWQ5B5dpZG9
-         8uC5Vomyp/V3u+EdFyE0UBXnSsjVi1vTcoOw9U35oCbUwtUcBDlr/uXitVfHy4wHbFOD
-         slJwzb19ImIKRvOEAy5UPQKkgsRm7enYl+YIiRoPEHpfnn5SCWTPgkV1452vsxGLOGmK
-         IkHw==
-X-Gm-Message-State: AOJu0YzHd6wjoRD5OQ8rk508w75v+7YNDpiYmNwau0lhenwz73XhEeor
-        gdNmQaJ0ZSXC78+L+/+1xeN/Yw==
-X-Google-Smtp-Source: AGHT+IHrwPsCOO5sN+SmbdkmMIdCW6kgWzAR/USeO8iPtpDH8HwcJAhi+6vW3PBDfaeLUzgkB8gAOQ==
-X-Received: by 2002:a2e:be0c:0:b0:2c5:1bd9:f95c with SMTP id z12-20020a2ebe0c000000b002c51bd9f95cmr20995596ljq.53.1699023400703;
-        Fri, 03 Nov 2023 07:56:40 -0700 (PDT)
-Received: from [192.168.1.7] (host-92-25-138-185.as13285.net. [92.25.138.185])
-        by smtp.gmail.com with ESMTPSA id er14-20020a05600c84ce00b0040472ad9a3dsm2656519wmb.14.2023.11.03.07.56.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Nov 2023 07:56:40 -0700 (PDT)
-Message-ID: <96b3ebe5-781a-432a-9a73-2217a2a674f4@linaro.org>
-Date:   Fri, 3 Nov 2023 14:56:39 +0000
+        Fri, 3 Nov 2023 11:02:50 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D278BD55
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 08:02:40 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A3Cx5YU004204;
+        Fri, 3 Nov 2023 15:02:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=09GQcEKHjDsKrItqZTo4C9CPd4HpuD7WEFjXGdy+A8k=;
+ b=RZ3prD7BawWpSAvkeGrwUX0X2+I3KP6cxyfFBtYT8+TFUevRuLekeWulMM2/SH2cxgn1
+ 9G6HUO9YCyPbWT53U9IXRcedEngs/MdfF+BluuElT3HQ+v9TMwns8h5qGwxYEDuRQ2eP
+ /uHWI+sSDJuFT3TJSK7H0PUunVwEyyZnAYeltc/IRz6dXYQ0cn6vxHbUq72/YpIv6usu
+ 4UBa4Apxe4DL3kHlzGlboS/RLJO/nrBaypCJKMKRdqBjl4ciRFT42y758C3mFegPSihn
+ F3aaz901VPHjaz54iUMNxXdrxnxdkog6ec10zA665RnmdkumEESw2g27yeZuU8SDVfjQ fA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u4yk0rfk9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 03 Nov 2023 15:02:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3F2KqT001997
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 3 Nov 2023 15:02:20 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 3 Nov
+ 2023 08:02:19 -0700
+Message-ID: <317ff41e-f19d-5f46-52f7-ca40b1026176@quicinc.com>
+Date:   Fri, 3 Nov 2023 09:02:18 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
- runtime
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] accel/qaic: Quiet array bounds check on DMA abort message
 Content-Language: en-US
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     quic_wcheng@quicinc.com, linux-usb@vger.kernel.org,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, quic_ppratap@quicinc.com,
-        quic_jackp@quicinc.com
-References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
- <20231017131851.8299-2-quic_kriskura@quicinc.com>
- <272a9764-1cae-4d86-88b1-00175de83333@linaro.org>
- <960101cc-78c0-49cf-ab62-90614eeb9ee2@quicinc.com>
- <dbf4a48e-c808-4611-96b1-563ece1e451a@linaro.org>
- <f0820464-16d6-47fd-90bc-cf80b5d76058@quicinc.com>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <f0820464-16d6-47fd-90bc-cf80b5d76058@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
+        <stanislaw.gruszka@linux.intel.com>, <ogabbay@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        "kernel test robot" <lkp@intel.com>
+References: <20231027180810.4873-1-quic_jhugo@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20231027180810.4873-1-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FVeENaWMQWnMHc5Niw-PF7NiDOqxtwU4
+X-Proofpoint-GUID: FVeENaWMQWnMHc5Niw-PF7NiDOqxtwU4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-03_14,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 mlxscore=0 spamscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 mlxlogscore=937 bulkscore=0 lowpriorityscore=0
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311030127
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,49 +80,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 03/11/2023 05:34, Krishna Kurapati PSSNV wrote:
+On 10/27/2023 12:08 PM, Jeffrey Hugo wrote:
+> From: Carl Vanderlip <quic_carlv@quicinc.com>
 > 
+> Current wrapper is right-sized to the message being transferred;
+> however, this is smaller than the structure defining message wrappers
+> since the trailing element is a union of message/transfer headers of
+> various sizes (8 and 32 bytes on 32-bit system where issue was
+> reported). Using the smaller header with a small message
+> (wire_trans_dma_xfer is 24 bytes including header) ends up being smaller
+> than a wrapper with the larger header. There are no accesses outside of
+> the defined size, however they are possible if the larger union member
+> is referenced.
 > 
-> On 11/3/2023 12:10 AM, Caleb Connolly wrote:
->>> Hi Caleb,
->>>
->>>    There are two types of platforms, some use extcon and some use
->>> role-switch to deliver vbus/id notifications. Extcon targets already
->>> have this qscratch modifications present today in vbus and id
->>> handlers. But for role-switch based targets we don't have any way to
->>> get this notification to dwc3-qcom. In this implementation, I wanted
->>> to get those notications from core to glue and for this we
->>> implenented vendor hooks.
->>>
->>> The property added has been used to do two things:
->>>
->>> 1. Register glue's vendor hooks to core driver
->>> 2. Do runtime_allow for glue (and by default for core as the dt is
->>> not flattened)
->>>
->>> In case of extcon, we don't want to register vendor hooks as
->>> notifications are not necessary.
->>
->> Could it just be enabled when role_switch is present then?
->>>
+> Abort messages are outside of hot-path and changing the wrapper struct
+> would require a larger rewrite, so having the memory allocated to the
+> message be 8 bytes too big is acceptable.
 > 
-> So we would register vendor hooks when usb-role-switch is present but
-> don't do runtime allow, and leave that option to user space right ?
-> I think it would work and we can do away with the binding completely.
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202310182253.bcb9JcyJ-lkp@intel.com/
+> Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-Can we still enable runtime suspend? Maybe someone else wants to chime
-in here, but I'd guess that it's preferable to have it enabled by
-default, particularly for devices like phones. Or are there side effects
-from this?
-> 
-> Will wait for comments from other folks as well on this approach.
+Pushed to drm-misc-next
 
-Sounds good, thanks!
-> 
-> Thanks for the review,
-> Krishna,
-
--- 
-// Caleb (they/them)
+-Jeff
