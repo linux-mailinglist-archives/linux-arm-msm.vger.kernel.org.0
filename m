@@ -2,172 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 309B07E02C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 13:25:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7360B7E02D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 13:29:10 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233093AbjKCMZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 08:25:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44480 "EHLO
+        id S1376386AbjKCM3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 08:29:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233045AbjKCMZF (ORCPT
+        with ESMTP id S1376270AbjKCM3J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 08:25:05 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 354BBCE;
-        Fri,  3 Nov 2023 05:24:59 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A3C9oVD018300;
-        Fri, 3 Nov 2023 12:24:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3iX5zSAME6yEJ7E/80TetCkqNTN9mTZI1MihvK+yZBs=;
- b=jrpaY5m3+AAP8ph0OfMrxvOP2Os6AL8538lJfH/ssxlVtdtdp34kGYFX+5Ch/GPOiAmL
- y39/DTPv/zXiwTaOjwBMBbExjQvp9CAOvhgOWM4rtFuhn4cUsdallNXw71s6D35c/tqA
- 741DRJ8967/5/z3/oMSTp5vr8BbKQl4qDSXEKT4qj71O/MU+WjCmMMIv0U/+SJbVaUpW
- oZc9/UpG3dxCffqQqyMaWOMHuQqIrMwOl7Snsvun1cpXdMWYV5m4CNVHsU6Ks4P0VwRc
- fvbWq0pKyx4JjnsfwB66nH1behpO+f0VENVEVDUEM8cSUwmwZa6CGD8H9lrr9tyq4X8h KA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u47d5337n-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 12:24:42 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3COfW5031421
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 12:24:41 GMT
-Received: from [10.201.203.219] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 3 Nov
- 2023 05:24:35 -0700
-Message-ID: <553c1373-c9a0-b2af-2286-058824e31bad@quicinc.com>
-Date:   Fri, 3 Nov 2023 17:54:32 +0530
+        Fri, 3 Nov 2023 08:29:09 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 909B8D4B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 05:29:02 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40891d38e3fso14380685e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 05:29:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699014541; x=1699619341; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=69RTn5IrZmK+iyMmM8HAfSJq1sc+QNxh8s15vQtubiw=;
+        b=wQOrTBNaAp0vxCN7tqIqDueAbXw5K5aaz/be9MpcZKWDoz0oWy/eveTdFQzokULDL0
+         MTfFoI4qivpyGCixd3GQTTugalPTHASD5dt49+M4wyNzXty1n+9WRxsYT1B+/M5qRzNe
+         twiwdDH4hcUvwNaT/vhR4tACoz3UY0Lg4Te0R4oEAs3hCKjPxLuKSZg6vPobRfbeWcJi
+         67idWfJ0xy/fhwsKZJzW6iTYB1hCQUWJVcTaVVy+MT1vZjI0Op2Lzo21rebdNf43pWWX
+         pvJIYAk9+8D1AQKOJtYkN/oX650oT6/F98NQPmBxGU4ha3IdDED1Sxn7ipj/Xiiq8sP0
+         lszw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699014541; x=1699619341;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=69RTn5IrZmK+iyMmM8HAfSJq1sc+QNxh8s15vQtubiw=;
+        b=hIMHSclo8UJAAQO//cypv8CswVBQOQS9UAQBr0qWI3ux5QGfsrrW/gLFw7+0Fl1bkJ
+         Zo/w88u3aAjX1mQtQLFTMyhWSt5C31UUMg9bSv8F6WcQW0PM+t+5exP04BwKaFDkG3yo
+         L0XN67PLLvyK8GerWlJTd7iqaZi6mQOSvROtL7AzpDRnCAOZilvD2xGNFIeTdQgwk8KI
+         D4gl7SfTUtIT082KSKLQcY7cl5lGoMY6gpJjihFn6QcU0M8DGwnwd+hsIjIk5R93UCIz
+         ofggiKC+2NRzG83JFk2lqPUBJK+1am9RssZiAjTKdKy8gzAfgQimE+y0XqpOtobjxm33
+         HPzg==
+X-Gm-Message-State: AOJu0YzbT/r0NDq4PDVzElpQEGC2T7TYmqNm6iKflVLMSW2bm/eU0jZr
+        HA7Cscx4HytaRvWHLsryCDFbXQ==
+X-Google-Smtp-Source: AGHT+IHBf4PI2hhViJetuHu7z99kdBhrGsozYp1jqUi8ETllC/NNGHTliL8Gf2BBJVX6n3wsvAMQPQ==
+X-Received: by 2002:a05:600c:310d:b0:408:3975:e225 with SMTP id g13-20020a05600c310d00b004083975e225mr16970590wmo.40.1699014540932;
+        Fri, 03 Nov 2023 05:29:00 -0700 (PDT)
+Received: from [127.0.0.1] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id ay8-20020a05600c1e0800b0040772138bb7sm2402918wmb.2.2023.11.03.05.28.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Nov 2023 05:29:00 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v4 0/7] media: qcom: camss: Introduce support for named
+ power-domains
+Date:   Fri, 03 Nov 2023 12:28:57 +0000
+Message-Id: <20231103-b4-camss-named-power-domains-v4-0-33a905359dbc@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [RFC PATCH 1/5] mtd: nand: ecc-qcom: Add support for ECC Engine
- Driver
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <conor+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>, <linux-spi@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <qpic_varada@quicinc.com>
-References: <20231031120307.1600689-1-quic_mdalam@quicinc.com>
- <20231031120307.1600689-2-quic_mdalam@quicinc.com>
- <b9af01d2-1a86-4b41-9bd6-3bf7a0dde1c0@linaro.org>
-From:   Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <b9af01d2-1a86-4b41-9bd6-3bf7a0dde1c0@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: gAmE5KsgDX63mYcZ97cBJ87Lcdo6qxmx
-X-Proofpoint-ORIG-GUID: gAmE5KsgDX63mYcZ97cBJ87Lcdo6qxmx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_12,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 mlxlogscore=999 bulkscore=0 adultscore=0 mlxscore=0
- suspectscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030103
-X-Spam-Status: No, score=-6.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAIrnRGUC/4XOMY7CMBCF4asg10xkj22QqLgHonDsSWKJeNCYz
+ YJQ7o5hG7ot/+Z776kqSaaqDpunElpyzVxauO1GxSmUkSCn1go1WqOtgd5BDHOtUMJMCa78SwK
+ J55BLhRgxRNwjemdVI65CQ75/+NO59SA8w20SCl8o7oz32mHnvdm3hbYhj1A6Tlx4nH7oeMklC
+ Hcs4xudcr2xPD6XF/um/yCj/3m3WNDQ92nwA6LbYfiGz+u6vgDZ72wxDgEAAA==
+To:     hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
+        Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        matti.lehtimaki@gmail.com, quic_grosikop@quicinc.com
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Mailer: b4 0.13-dev-26615
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+V4:
+- Updates camss_configure_pd() to use has_pd to determine if
+  a VFE has a pd instead of comparing to vfe_num
+- Brings in is_lite fixes from Matti
+  The determination of IS_LITE() has been a running sore in this code for
+  some time.
 
+  Named power domains remove magic index dependencies.
+  Similarly adding an "is_lite" flag to our resources removes the last
+  of the magic indexing sins, so this is an opportune series to add it in.
 
-On 10/31/2023 10:41 PM, Krzysztof Kozlowski wrote:
-> On 31/10/2023 13:03, Md Sadre Alam wrote:
-> 
-> Eh? Empty?
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/b4/b4-camss-named-power-domains-v4
+sm8250-testable: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/b4/b4-camss-named-power-domains-v4+sm8250
+Link: https://lore.kernel.org/r/20231101-b4-camss-named-power-domains-v3-0-bbdf5f22462a@linaro.org
 
-QPIC controller has the ecc pipelined so will keep the ecc support
-inlined in both raw nand and serial nand driver.
+V3:
+- Includes bugfix reported on IRC
+  genpd_link and genpd should be checked for NULL on the cleanup path.
+  Matti Lehtimäki 
+- Retains NULL check before dev_pm_domain_attach_by_name()
+  I experimented with the suggested drop but of_property_match_string()
+  chokes
+  Link: https://lore.kernel.org/lkml/883ce8a7-80e1-4065-a957-424d0b4a6535@linaro.org/T/#m10e5a43d0245f13eca177ef2f65b24259c641030
+  Konrad
+- Fixes spelling caught by codespell - Konrad
 
-Droping this driver since device node was NAK-ed
-https://www.spinics.net/lists/linux-arm-msm/msg177596.html
-> 
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
->> ---
->>   drivers/mtd/nand/Kconfig    |   7 ++
->>   drivers/mtd/nand/Makefile   |   1 +
->>   drivers/mtd/nand/ecc-qcom.c | 198 ++++++++++++++++++++++++++++++++++++
->>   3 files changed, 206 insertions(+)
->>   create mode 100644 drivers/mtd/nand/ecc-qcom.c
->>
-> 
-> ...
-> 
->> +
->> +	return 0;
->> +}
->> +EXPORT_SYMBOL(qcom_ecc_config);
->> +
->> +void qcom_ecc_enable(struct qcom_ecc *ecc)
->> +{
->> +	ecc->use_ecc = true;
->> +}
->> +EXPORT_SYMBOL(qcom_ecc_enable);
-> 
-> Drop this and all other exports. Nothing here explains the need for them.
-> 
->> +
->> +void qcom_ecc_disable(struct qcom_ecc *ecc)
->> +{
->> +	ecc->use_ecc = false;
->> +}
->> +EXPORT_SYMBOL(qcom_ecc_disable);
->> +
->> +static const struct of_device_id qpic_ecc_dt_match[] = {
->> +	{
->> +		.compatible = "qcom,ipq9574-ecc",
-> 
-> Please run scripts/checkpatch.pl and fix reported warnings. Some
-> warnings can be ignored, but the code here looks like it needs a fix.
-> Feel free to get in touch if the warning is not clear.
-> 
-> Checkpatch is preerquisite. Don't send patches which have obvious issues
-> pointed out by checkpatch. It's a waste of reviewers time.
-> 
->> +	},
->> +	{},
->> +};
->> +
->> +static int qpic_ecc_probe(struct platform_device *pdev)
->> +{
->> +	struct device *dev = &pdev->dev;
->> +	struct qpic_ecc *ecc;
->> +	u32 max_eccdata_size;
->> +
->> +	ecc = devm_kzalloc(dev, sizeof(*ecc), GFP_KERNEL);
->> +	if (!ecc)
->> +		return -ENOMEM;
->> +
->> +	ecc->caps = of_device_get_match_data(dev);
->> +
->> +	ecc->dev = dev;
->> +	platform_set_drvdata(pdev, ecc);
->> +	dev_info(dev, "probed\n");
-> 
-> No, no such messages.
-> 
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/b4/b4-camss-named-power-domains-v3
+sm8250-testable: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/b4/b4-camss-named-power-domains-v3+sm8250
+
+V2:
+- Incorporates Konrad's suggestion re: removing 'id'
+- Adds RB - Konrad
+- Adds in a flag to indicate if a VFE has a power domain.
+  As I rebased this series I realised we had some magic indexing for VFE v
+  VFE Lite, which isn't the root cause of my bug bear in this series but is
+  the same sin - inferring functionality from indexing.
+  Once we transition fully to named pds we won't need a 'has_pd' to flag
+  which VFEs need power-domain attachment and which don't.
+  That transition will require populating all upstream dtsi with pd-names
+  and then deprecating the old way.
+  has_pd is a far better choice than inferring from indexes so, I've added.
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commits/aa45a2b58aa1e187a2698a65164d694251f08fa1
+
+V1:
+At the moment the Qcom CAMSS driver relies on the declaration order of
+power-domains within the dtsi to determine which power-domain relates to a
+VFE and which power-domain relates to the top-level (top) CAMSS
+power-domain.
+
+VFE power-domains must be declared prior to the top power-domain. The top
+power-domain must be declared last. Early SoCs have just one top
+power-domain with later SoCs introducing VFE specific power-domains.
+
+Differentiating between the number of power-domains results in lots of code
+which is brittle and which we can mostly get rid of with named
+power-domains.
+
+The reliance on declaration ordering is in-effect magic number indexing.
+
+This series introduces named power-domains for CAMSS and refactors some of
+the code in CAMSS to support the new named power-domains. We continue to
+support the legacy indexing model with an intention to remove after a
+reasonable transition period.
+
+New SoC additions should use named power-domains from now on.
+
+Tested on x13s, rb5, db410c
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-10-23-camss-named-power-domains
+
+Bryan O'Donoghue (5):
+  media: qcom: camss: Flag which VFEs require a power-domain
+  media: qcom: camss: Convert to per-VFE pointer for power-domain
+    linkages
+  media: qcom: camss: Use common VFE pm_domain_on/pm_domain_off where
+    applicable
+  media: qcom: camss: Move VFE power-domain specifics into vfe.c
+  media: qcom: camss: Add support for named power-domains
+
+ .../media/platform/qcom/camss/camss-vfe-170.c | 36 --------
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |  8 +-
+ .../media/platform/qcom/camss/camss-vfe-4-7.c | 36 --------
+ .../media/platform/qcom/camss/camss-vfe-4-8.c | 31 -------
+ .../media/platform/qcom/camss/camss-vfe-480.c | 36 --------
+ drivers/media/platform/qcom/camss/camss-vfe.c | 77 ++++++++++++++++
+ drivers/media/platform/qcom/camss/camss-vfe.h | 16 ++++
+ drivers/media/platform/qcom/camss/camss.c     | 87 ++++++++++++-------
+ drivers/media/platform/qcom/camss/camss.h     |  7 +-
+ 9 files changed, 156 insertions(+), 178 deletions(-)
+
+--
+2.42.0
+
+---
+Bryan O'Donoghue (5):
+      media: qcom: camss: Flag which VFEs require a power-domain
+      media: qcom: camss: Convert to per-VFE pointer for power-domain linkages
+      media: qcom: camss: Use common VFE pm_domain_on/pm_domain_off where applicable
+      media: qcom: camss: Move VFE power-domain specifics into vfe.c
+      media: qcom: camss: Add support for named power-domains
+
+Matti Lehtimäki (2):
+      media: qcom: camss: Flag VFE-lites to support more VFEs
+      media: qcom: camss: Flag CSID-lites to support more CSIDs
+
+ .../media/platform/qcom/camss/camss-csid-gen2.c    |  31 +++---
+ drivers/media/platform/qcom/camss/camss-csid.c     |   5 +
+ drivers/media/platform/qcom/camss/camss-csid.h     |   7 ++
+ drivers/media/platform/qcom/camss/camss-vfe-170.c  |  36 -------
+ drivers/media/platform/qcom/camss/camss-vfe-4-1.c  |   8 +-
+ drivers/media/platform/qcom/camss/camss-vfe-4-7.c  |  36 -------
+ drivers/media/platform/qcom/camss/camss-vfe-4-8.c  |  31 ------
+ drivers/media/platform/qcom/camss/camss-vfe-480.c  |  69 +++---------
+ drivers/media/platform/qcom/camss/camss-vfe.c      |  84 +++++++++++++++
+ drivers/media/platform/qcom/camss/camss-vfe.h      |  26 +++++
+ drivers/media/platform/qcom/camss/camss.c          | 117 +++++++++++++--------
+ drivers/media/platform/qcom/camss/camss.h          |  10 +-
+ 12 files changed, 237 insertions(+), 223 deletions(-)
+---
+base-commit: 48016737a9af47328dd321df4dd3479ed5e2041d
+change-id: 20231031-b4-camss-named-power-domains-cc2ac2722543
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
