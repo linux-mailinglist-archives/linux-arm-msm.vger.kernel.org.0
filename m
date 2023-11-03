@@ -2,216 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58ACF7E040B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 14:54:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 79B637E0421
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 15:01:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377654AbjKCNyj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 09:54:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58138 "EHLO
+        id S1377704AbjKCOBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 10:01:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377662AbjKCNyi (ORCPT
+        with ESMTP id S230132AbjKCOBA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 09:54:38 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 059E1D42
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 06:54:27 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-5a92782615dso25067267b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 06:54:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699019667; x=1699624467; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ATfkuRplpjvcZPadAGRPy0zHxih4OimRMmk8d3DvTRo=;
-        b=HsgaQPM/urZOrCeA/GhuChYiEl3fGn7LcsZffq0MGisDzk8PG3AeaJjS9zM7IxUs/x
-         7Bk1upc7zlwPhoUnQYWYHV72BnzzmwzvLpJvfZoY1NaddYzLA88HNfmiymWClF0DyuOE
-         oCYXAeldo175WBO4or5jtjz1H3O69tXfJ35BdiutHWI2mXtaUXIdIdW//yiIPLi32BlN
-         Ja+x+daN71ocXKNNdCFz8Fvgq3nif4vrQg0GYq35lQ2WYmFboK7jlMdgHEIysfZMmgPB
-         nqzkK28fJok+bak+EfkRIZBDdBQPnCbW5FXesAnPb6OEJAXI5HgjMpULsdfCdPHTYyH8
-         0BEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699019667; x=1699624467;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ATfkuRplpjvcZPadAGRPy0zHxih4OimRMmk8d3DvTRo=;
-        b=bb2WpJrYDp6AaS97E2D1RUtPugbbbD95N2rz8B8AeJmrNz/scpX74w2JfzJ/lMaelY
-         O+Rbv5hebxMyWLA3L0C2zA5WNmRH4NCh94nQQ6kXzYOeqtbHcAbRB8XPt3iEKEqS/HIY
-         GecTJ/ZU4iU7Oa9aZqb5kq+uJtJ9iMyjqvJDrUx1iSWOffESPmzSnYzfBDRncsSDlRUt
-         b4RodFh2VyFQXsn/7luIt7/c97vYLb7tkuN0WBL0QfFCiR0Bgt9pmWqhOrDVOrzN+DFF
-         SKgj3NPCXIZIdzSq83XiENT1+wVkXpV9Y6ltdn3PkGeTxzMog6YL3yvS/lSjr1CQACVc
-         EbbA==
-X-Gm-Message-State: AOJu0Ywq61VDefAwmV07aOtfSKFhz4RjJgbee8tuAclSjx4b1uVcX3MD
-        RxEyQrfivjO7zyCylx4oxAgtNKYXH83LjJaVs2N0R6Wy5VMH8h2b
-X-Google-Smtp-Source: AGHT+IGJhi2HD1dMqgiPCYjBW7UEdwmlVZwkFEeH+M3ISG/Orbn/Hk+wHiAAb3Dh0JFHj3sIr8CsxN9AfX+vzx7+LpA=
-X-Received: by 2002:a05:690c:a:b0:59e:9a44:9db9 with SMTP id
- bc10-20020a05690c000a00b0059e9a449db9mr2829093ywb.26.1699019667155; Fri, 03
- Nov 2023 06:54:27 -0700 (PDT)
+        Fri, 3 Nov 2023 10:01:00 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93551A8;
+        Fri,  3 Nov 2023 07:00:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699020053; x=1730556053;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Rz6eCJm7BKehq5IHsWMYysRTu22nf253QJIHbXShJkA=;
+  b=P8m4ouBSa2Ierr8jXb/xdPcUPBpeFtR9e697xGd5M+DQlSV/Z9UJiw4E
+   hmUdHtQvDDsSczAhy5rcjkE6pOAe5FiBCkYnxqnoFoTWtd1I7ND3olz/2
+   5SI442U8mEUlpsPqsT/vpNHhemOQfVzHuJ4EG0r9LrpLViApIaERoa5uY
+   hzR6gUcaIJk/nIdcyy3r3ALZKTMDUcamnceRwppX8xM5cQSxHb9ifNBud
+   XHa1I58BKVn/gtJbWiNSMt2f5S7lPMlr1uQ4T9kYkc/z75gOymE2n8CTl
+   GcZyECgpCxKh3h0CmoGjJYBpTkAXYcGENQYGRgJ7snEgkUAMzFaDL1mVD
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10883"; a="453243547"
+X-IronPort-AV: E=Sophos;i="6.03,273,1694761200"; 
+   d="scan'208";a="453243547"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2023 07:00:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10883"; a="1093065345"
+X-IronPort-AV: E=Sophos;i="6.03,273,1694761200"; 
+   d="scan'208";a="1093065345"
+Received: from lkp-server01.sh.intel.com (HELO 17d9e85e5079) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 03 Nov 2023 07:00:47 -0700
+Received: from kbuild by 17d9e85e5079 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qyuj7-0002Yu-1M;
+        Fri, 03 Nov 2023 14:00:45 +0000
+Date:   Fri, 3 Nov 2023 21:59:44 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v11 3/4] clk: qcom: common: commonize qcom_cc_really_probe
+Message-ID: <202311032153.n6opqP2e-lkp@intel.com>
+References: <20231103104846.30875-4-quic_luoj@quicinc.com>
 MIME-Version: 1.0
-References: <20231031120307.1600689-1-quic_mdalam@quicinc.com>
- <20231031120307.1600689-2-quic_mdalam@quicinc.com> <b9af01d2-1a86-4b41-9bd6-3bf7a0dde1c0@linaro.org>
- <553c1373-c9a0-b2af-2286-058824e31bad@quicinc.com> <CAA8EJpp-xsP1x==a5DH8pKpy7XH75UF-L8ewKWmeL8ePtxUq-A@mail.gmail.com>
- <4b911907-44b9-c164-9648-3d399e557672@quicinc.com>
-In-Reply-To: <4b911907-44b9-c164-9648-3d399e557672@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 3 Nov 2023 15:54:15 +0200
-Message-ID: <CAA8EJpqtKJYK92Zd0EEZFA0duDzWBp-JObh4Dv9uR_ezhgnWuQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/5] mtd: nand: ecc-qcom: Add support for ECC Engine Driver
-To:     Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, conor+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, miquel.raynal@bootlin.com,
-        richard@nod.at, vigneshr@ti.com, broonie@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org,
-        linux-spi@vger.kernel.org, quic_srichara@quicinc.com,
-        qpic_varada@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231103104846.30875-4-quic_luoj@quicinc.com>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 3 Nov 2023 at 15:24, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
->
->
->
-> On 11/3/2023 6:03 PM, Dmitry Baryshkov wrote:
-> > On Fri, 3 Nov 2023 at 14:25, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 10/31/2023 10:41 PM, Krzysztof Kozlowski wrote:
-> >>> On 31/10/2023 13:03, Md Sadre Alam wrote:
-> >>>
-> >>> Eh? Empty?
-> >>
-> >> QPIC controller has the ecc pipelined so will keep the ecc support
-> >> inlined in both raw nand and serial nand driver.
-> >>
-> >> Droping this driver since device node was NAK-ed
-> >> https://www.spinics.net/lists/linux-arm-msm/msg177596.html
-> >
-> > It seems, we have to repeat the same thing again and again:
-> >
-> > It was not the device node that was NAKed. It was the patch that was
-> > NAKed. Please read the emails carefully.
-> >
-> > And next time please perform dtbs_check, dt_binding_check and
-> > checkpatch before sending the patch.
-> >
-> > It is perfectly fine to ask questions 'like we are getting we are
-> > getting this and that issues with the bindings, please advise'. It is
-> > not fine to skip that step completely.
->
-> Sorry in V1 will run all basic checks.
->
-> Based on below feedback [1] and NAK on the device node patch
-> got idea of having separate device node for ECC is not acceptable.
-> Could you please help to clarify that.
->
-> Since ECC block is inlined with QPIC controller so is the below
-> device node acceptable ?
+Hi Luo,
 
-No, the node below is not acceptable. And you have already got two
-reasons for that. Let me repeat them for you:
+kernel test robot noticed the following build errors:
 
-- it is "okay" not "ok"
-- no underscores in node names.
+[auto build test ERROR on ff269e2cd5adce4ae14f883fc9c8803bc43ee1e9]
 
-If you want to have a more meaningful discussion, please provide full
-ECC + NAND + SPI DT bindings, only then we can discuss them.
+url:    https://github.com/intel-lab-lkp/linux/commits/Luo-Jie/clk-qcom-branch-Add-clk_branch2_prepare_ops/20231103-185251
+base:   ff269e2cd5adce4ae14f883fc9c8803bc43ee1e9
+patch link:    https://lore.kernel.org/r/20231103104846.30875-4-quic_luoj%40quicinc.com
+patch subject: [PATCH v11 3/4] clk: qcom: common: commonize qcom_cc_really_probe
+config: csky-randconfig-002-20231103 (https://download.01.org/0day-ci/archive/20231103/202311032153.n6opqP2e-lkp@intel.com/config)
+compiler: csky-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231103/202311032153.n6opqP2e-lkp@intel.com/reproduce)
 
->     bch: qpic_ecc {
->                            compatible = "qcom,ipq9574-ecc";
->                            status = "ok";
->                    };
->
->   [1] https://www.spinics.net/lists/linux-arm-msm/msg177525.html
->
-> >
-> >>>
-> >>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> >>>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
-> >>>> ---
-> >>>>    drivers/mtd/nand/Kconfig    |   7 ++
-> >>>>    drivers/mtd/nand/Makefile   |   1 +
-> >>>>    drivers/mtd/nand/ecc-qcom.c | 198 ++++++++++++++++++++++++++++++++++++
-> >>>>    3 files changed, 206 insertions(+)
-> >>>>    create mode 100644 drivers/mtd/nand/ecc-qcom.c
-> >>>>
-> >>>
-> >>> ...
-> >>>
-> >>>> +
-> >>>> +    return 0;
-> >>>> +}
-> >>>> +EXPORT_SYMBOL(qcom_ecc_config);
-> >>>> +
-> >>>> +void qcom_ecc_enable(struct qcom_ecc *ecc)
-> >>>> +{
-> >>>> +    ecc->use_ecc = true;
-> >>>> +}
-> >>>> +EXPORT_SYMBOL(qcom_ecc_enable);
-> >>>
-> >>> Drop this and all other exports. Nothing here explains the need for them.
-> >>>
-> >>>> +
-> >>>> +void qcom_ecc_disable(struct qcom_ecc *ecc)
-> >>>> +{
-> >>>> +    ecc->use_ecc = false;
-> >>>> +}
-> >>>> +EXPORT_SYMBOL(qcom_ecc_disable);
-> >>>> +
-> >>>> +static const struct of_device_id qpic_ecc_dt_match[] = {
-> >>>> +    {
-> >>>> +            .compatible = "qcom,ipq9574-ecc",
-> >>>
-> >>> Please run scripts/checkpatch.pl and fix reported warnings. Some
-> >>> warnings can be ignored, but the code here looks like it needs a fix.
-> >>> Feel free to get in touch if the warning is not clear.
-> >>>
-> >>> Checkpatch is preerquisite. Don't send patches which have obvious issues
-> >>> pointed out by checkpatch. It's a waste of reviewers time.
-> >>>
-> >>>> +    },
-> >>>> +    {},
-> >>>> +};
-> >>>> +
-> >>>> +static int qpic_ecc_probe(struct platform_device *pdev)
-> >>>> +{
-> >>>> +    struct device *dev = &pdev->dev;
-> >>>> +    struct qpic_ecc *ecc;
-> >>>> +    u32 max_eccdata_size;
-> >>>> +
-> >>>> +    ecc = devm_kzalloc(dev, sizeof(*ecc), GFP_KERNEL);
-> >>>> +    if (!ecc)
-> >>>> +            return -ENOMEM;
-> >>>> +
-> >>>> +    ecc->caps = of_device_get_match_data(dev);
-> >>>> +
-> >>>> +    ecc->dev = dev;
-> >>>> +    platform_set_drvdata(pdev, ecc);
-> >>>> +    dev_info(dev, "probed\n");
-> >>>
-> >>> No, no such messages.
-> >>>
-> >>>
-> >>>
-> >>> Best regards,
-> >>> Krzysztof
-> >>>
-> >
-> >
-> >
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311032153.n6opqP2e-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/clk/qcom/gcc-sm4450.c: In function 'gcc_sm4450_probe':
+>> drivers/clk/qcom/gcc-sm4450.c:2874:37: error: passing argument 1 of 'qcom_cc_really_probe' from incompatible pointer type [-Werror=incompatible-pointer-types]
+    2874 |         return qcom_cc_really_probe(pdev, &gcc_sm4450_desc, regmap);
+         |                                     ^~~~
+         |                                     |
+         |                                     struct platform_device *
+   In file included from drivers/clk/qcom/clk-regmap-mux.h:11,
+                    from drivers/clk/qcom/gcc-sm4450.c:19:
+   drivers/clk/qcom/common.h:61:48: note: expected 'struct device *' but argument is of type 'struct platform_device *'
+      61 | extern int qcom_cc_really_probe(struct device *dev,
+         |                                 ~~~~~~~~~~~~~~~^~~
+   cc1: some warnings being treated as errors
 
 
+vim +/qcom_cc_really_probe +2874 drivers/clk/qcom/gcc-sm4450.c
+
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2834  
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2835  static int gcc_sm4450_probe(struct platform_device *pdev)
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2836  {
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2837  	struct regmap *regmap;
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2838  	int ret;
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2839  
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2840  	regmap = qcom_cc_map(pdev, &gcc_sm4450_desc);
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2841  	if (IS_ERR(regmap))
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2842  		return PTR_ERR(regmap);
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2843  
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2844  	clk_lucid_evo_pll_configure(&gcc_gpll3, regmap, &gcc_gpll3_config);
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2845  	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2846  				       ARRAY_SIZE(gcc_dfs_clocks));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2847  	if (ret)
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2848  		return ret;
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2849  
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2850  	qcom_branch_set_force_mem_core(regmap, gcc_ufs_phy_ice_core_clk, true);
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2851  
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2852  	/*
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2853  	 * Keep clocks always enabled:
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2854  	 * gcc_camera_ahb_clk
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2855  	 * gcc_camera_sleep_clk
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2856  	 * gcc_camera_xo_clk
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2857  	 * gcc_disp_ahb_clk
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2858  	 * gcc_disp_xo_clk
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2859  	 * gcc_gpu_cfg_ahb_clk
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2860  	 * gcc_video_ahb_clk
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2861  	 * gcc_video_xo_clk
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2862  	 */
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2863  	regmap_update_bits(regmap, 0x36004, BIT(0), BIT(0));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2864  	regmap_update_bits(regmap, 0x36018, BIT(0), BIT(0));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2865  	regmap_update_bits(regmap, 0x3601c, BIT(0), BIT(0));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2866  	regmap_update_bits(regmap, 0x37004, BIT(0), BIT(0));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2867  	regmap_update_bits(regmap, 0x37014, BIT(0), BIT(0));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2868  	regmap_update_bits(regmap, 0x81004, BIT(0), BIT(0));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2869  	regmap_update_bits(regmap, 0x42004, BIT(0), BIT(0));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2870  	regmap_update_bits(regmap, 0x42018, BIT(0), BIT(0));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2871  
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2872  	regmap_update_bits(regmap, 0x4201c, BIT(21), BIT(21));
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2873  
+c32c4ef98baca6d Ajit Pandey 2023-09-09 @2874  	return qcom_cc_really_probe(pdev, &gcc_sm4450_desc, regmap);
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2875  }
+c32c4ef98baca6d Ajit Pandey 2023-09-09  2876  
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
