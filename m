@@ -2,170 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD9E67E2744
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:42:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 34A997E065D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 17:25:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231840AbjKFOmI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 09:42:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50556 "EHLO
+        id S230228AbjKCQZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 12:25:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231872AbjKFOmE (ORCPT
+        with ESMTP id S229845AbjKCQZN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 09:42:04 -0500
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DA71D7C;
-        Mon,  6 Nov 2023 06:42:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1699281720; x=1730817720;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=nX/Ie0anw1ndgN0YJjqHJnFFjUKSdxLFOe79el+klzo=;
-  b=BPUy3v1szCXzKpje8qNzXhPVASOZUo913hOaXkeeWRRkOXOMvQFGRQTK
-   NS2khE5pVM41ZP85PlYc2CeM8ig27Cf9gjicCT4cEqaGxV7psVm1TbtBt
-   XsgL3lBLKzSFBue1kOiP/nm7DTSEPAVZXIp2VH0t20bJjmscfk7MoGBYs
-   GP3ukWxgqtFOD30nWQRsE0C2ojC7ts0n3WC533AdNCBNgeGMYtwLMsvRo
-   qswpOcLMntFW1hx3LWIJPBvShJstF9gpOW1wUen9xaS98xEPMBi+rv2V+
-   ayAETlDorlvR/gsaNVY16cacNbWo5ToSg1eB2K5EEfaHjLWhGHjASsXQl
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="379677775"
-X-IronPort-AV: E=Sophos;i="6.03,281,1694761200"; 
-   d="scan'208";a="379677775"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2023 06:41:59 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="1093799396"
-X-IronPort-AV: E=Sophos;i="6.03,281,1694761200"; 
-   d="scan'208";a="1093799396"
-Received: from dpidwerb-mobl.amr.corp.intel.com (HELO [10.209.77.27]) ([10.209.77.27])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2023 06:41:58 -0800
-Message-ID: <30f0f5ef-a148-444f-924f-594f4cbd48a4@linux.intel.com>
-Date:   Fri, 3 Nov 2023 10:39:42 -0500
+        Fri, 3 Nov 2023 12:25:13 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32B2A111
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 09:25:07 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-40891d38e3fso16238335e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 09:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699028705; x=1699633505; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cKP6IQc+TaLeXk9YRQCHSXv1g3/KaIhaK69CBx/ySdI=;
+        b=KradHAIUi/4Tj8bPYgHODtMi5kbsxmWoS9BRIOTQ4bEgAsjxLjdOfglZZJ3wRhrMMa
+         hYZchDSE7i6wqQQfEhvI5ScHYuso4/UIU/rwYq+Zn9/PpQUMmFnkYonVcJmggGAXcCHs
+         U6nRkhujfV1XlrEi/jLEGiZaSeuEHgpQw4Q6LYvzJ3URYzO2chdecRYThsbqyUfg6O+D
+         Oav9wL1xdKTjdcSBS4MLLcuDSbRUGq29xvJ8JoEgfa/AjEUGERXu7x89E91d6BmOvVhZ
+         4S+aA+Yud43Ug/JkT2/QzaE/y2ujZckjm14DLkwsRst9NyOnGrXJ3VRYNv95JQDLOKhq
+         se7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699028705; x=1699633505;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cKP6IQc+TaLeXk9YRQCHSXv1g3/KaIhaK69CBx/ySdI=;
+        b=o49vmf6xHSEIMOcXfej1yPlaYOIxs9se3f+k9oQoCarKrQGnyo2arZ1EH00Mk66L0H
+         HA1go9YSpgh3G5xCc2JrU2tO/sekT/QVqYETH4v1Ck6qOSR3U7CJc7PMlqhT6DY28Omw
+         jgRD85PmVCyCKgjIp1F6YxLlpR9To3ctMP7N8ORULIOt/Oy6SgzTyNqo1mGaTBnrAoZF
+         PW2IqswAQt23LGHlUZoQ7TCyB0VIjMZWLSmlP4UTQgWK/aqyqbDMWCopnHBQY6lpzG++
+         f3Jp4hIUqKL/dm419aM731uz0WxJULZ5cxqIFk5QS90kIg92YyNDEcCiiOdD5kuRPjh7
+         yuvA==
+X-Gm-Message-State: AOJu0Yy/ik1/bLvF+itxJR+28NFglXWnZtzox5gGX1tBPozf9G74oCbm
+        +PmG2N5vVLAhlml6sdBKE49gdg==
+X-Google-Smtp-Source: AGHT+IF66A6v5KxZN37QG9HZoMChuewXwE8Gs3r4G3ydzoegkfy2MJnAj5hC7kI7XfapQnX8KqCbvw==
+X-Received: by 2002:a05:6000:1209:b0:32d:9d3a:d8c0 with SMTP id e9-20020a056000120900b0032d9d3ad8c0mr15950748wrx.60.1699028705602;
+        Fri, 03 Nov 2023 09:25:05 -0700 (PDT)
+Received: from [127.0.0.1] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id x13-20020a5d650d000000b003142e438e8csm2219972wru.26.2023.11.03.09.25.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Nov 2023 09:25:05 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 0/6] media: qcom: camss: Add sc8280xp support
+Date:   Fri, 03 Nov 2023 16:25:03 +0000
+Message-Id: <20231103-b4-camss-sc8280xp-v2-0-b7af4d253a20@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] ASoC: codecs: wsa884x: check if set_stream is called
- for proper bus
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAN8eRWUC/22NQQrCMBBFr1Jm7UgmFmlceQ/poomTdkCbkpFSK
+ b27seDO5Xvw319BOQsrXKoVMs+iksYC9lBBGLqxZ5R7YbDGnogMoa8xdE9V1NDYxiwTGibviL0
+ lH6HspsxRlr15awsPoq+U3/vFTF/7q9k/tZnQoHPuHGsffBPr60PGLqdjyj2027Z9AI0tMEKzA
+ AAA
+To:     hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-References: <20231025144601.268645-1-krzysztof.kozlowski@linaro.org>
- <20231025144601.268645-3-krzysztof.kozlowski@linaro.org>
- <8b9db87b-0f61-4824-acf1-6b5ebdf45e63@linux.intel.com>
- <160752cb-7772-4b1d-9096-8be25e76213c@linaro.org>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <160752cb-7772-4b1d-9096-8be25e76213c@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, vincent.knecht@mailoo.org,
+        matti.lehtimaki@gmail.com, quic_grosikop@quicinc.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13-dev-26615
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+V2:
+- Rebase to capture is_lite flag from named power-domain series
+- Amends commit log of final patch to give more detail on rename - Konrad
+- Opted not to change switch() statements with returns. - bod/Konrad
 
+Requires CAMCC for sc8280xp which applies to qcom/clk-for-6.7:
+https://lore.kernel.org/linux-arm-msm/20231026105345.3376-1-bryan.odonoghue@linaro.org/
+b4 shazam 20231026105345.3376-1-bryan.odonoghue@linaro.org
 
+Requires the named power-domain patches which apply to media-tree/*:
+https://lore.kernel.org/linux-arm-msm/20231103-b4-camss-named-power-domains-v4-0-33a905359dbc@linaro.org/
+b4 shazam e700133b-58f7-4a4d-8e5c-0d04441b789b@linaro.org
 
-> We have two Soundwire controllers swr0 and swr3, each with two WSA884x
-> speakers (codecs):
-> 
-> -------------
-> &swr0 {
-> 	status = "okay";
-> 
-> 	left_woofer: speaker@0,0 {
-> 		compatible = "sdw20217020400";
-> 		reg = <0 0>;
-> 		// ...
-> 	};
-> 
-> 	/* WSA8845, Left Tweeter */
-> 	left_tweeter: speaker@0,1 {
-> 		compatible = "sdw20217020400";
-> 		reg = <0 1>;
-> 		// ...
-> 	};
-> };
-> 
-> &swr3 {
-> 	status = "okay";
-> 
-> 	/* WSA8845, Right Woofer */
-> 	right_woofer: speaker@0,0 {
-> 		compatible = "sdw20217020400";
-> 		reg = <0 0>;
-> 		// ...
-> 	};
-> 
-> 	/* WSA8845, Right Tweeter */
-> 	right_tweeter: speaker@0,1 {
-> 		compatible = "sdw20217020400";
-> 		reg = <0 1>;
-> 		// ...
-> 	};
-> };
-> -------------
-> 
-> Now, for four-speaker playback, we have sound card with links like:
-> 
-> -------------
-> wsa-dai-link {
-> 	link-name = "WSA Playback";
-> 
-> 	cpu {
-> 		sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-> 	};
-> 
-> 	codec {
-> 		sound-dai = <&left_woofer>, <&left_tweeter>,
-> 			    <&swr0 0>, <&lpass_wsamacro 0>,
-> 			    <&right_woofer>, <&right_tweeter>,
-> 			    <&swr3 0>, <&lpass_wsa2macro 0>;
-> 	};
-> 
-> 	platform {
-> 		sound-dai = <&q6apm>;
-> 	};
-> };
-> -------------
-> 
-> We need to prepare the stream for all four speakers and two soundwire
-> controllers (so two different soundwire buses), however without the
-> patches here, the stream (sdw_stream_runtime *sruntime) right
-> woofer/twitter is set to swr0 (the other bus!). But it should stay as
-> swr3 (their bus).
-> 
-> Does it help a bit? I hope I am able to properly explain it.
+Link to v1:
+https://lore.kernel.org/r/20231102-b4-camss-sc8280xp-v1-0-9996f4bcb8f4@linaro.org
 
-The configuration seems fine, but the problem is the
-"sdw_stream_runtime" definition.
+b4 base:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/b4/camss-sc8280xp-v2
 
-You need *ONE* sdw_stream_runtime, and multiple m_rt contexts added in
-the linked lists of this sdw_stream_runtime. In other words, you need to
-call sdw_stream_add_master() twice, for swr0 and swr3 respectively.
+V1:
+sc8280xp is the SoC found in the Lenovo X13s. This series adds support to
+bring up the CSIPHY, CSID, VFE/RDI interfaces.
 
-Put differently, a sdw_stream_runtime does not point to a specific bus,
-it provides a top-level structure which can use multiple buses.
+A number of precursor patches make this series smaller overall than
+previous series.
 
-The best way to allocate the sdw_stream_runtime is to rely on the
-dailink .startup callback. From the description above that's where you
-have all the needed information, and then each DAI .startup (or
-hw_params) can call sdw_stream_add_master() to update the linked lists.
+sc8280xp provides
 
+- 4 x VFE, 4 RDI per VFE
+- 4 x VFE Lite, 4 RDI per VFE
+- 4 x CSID
+- 4 x CSID Lite
+- 4 x CSI PHY
 
+I've taken the yaml from a dtsi series and included it here since 1) I sent
+the yaml to the wrong person and 2) it already has RB from Krzysztof.
+
+Requires CAMCC for sc8280xp which applies to qcom/clk-for-6.7:
+https://lore.kernel.org/linux-arm-msm/20231026105345.3376-1-bryan.odonoghue@linaro.org/
+b4 shazam 20231026105345.3376-1-bryan.odonoghue@linaro.org
+
+Requires the named power-domain patches which apply to media-tree/* :
+https://lore.kernel.org/linux-arm-msm/20231101-b4-camss-named-power-domains-v3-5-bbdf5f22462a@linaro.org/
+b4 shazam 20231101-b4-camss-named-power-domains-v3-5-bbdf5f22462a@linaro.org
+
+To use the camera on x13s with say Google Hangouts or Microsoft Teams you
+will need to
+
+1. Run Firefox
+2. Update about:config to enable pipewire
+3. Use this WIP version of libcamera
+   https://gitlab.freedesktop.org/camera/libcamera-softisp
+
+A working bootable tree can be found here:
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/lenovo-x13s-linux-6.5.y
+
+b4 base:
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/b4/camss-sc8280xp
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (6):
+      media: dt-bindings: media: camss: Add qcom,sc8280xp-camss binding
+      media: qcom: camss: Add CAMSS_SC8280XP enum
+      media: qcom: camss: csiphy-3ph: Add Gen2 v1.1 two-phase MIPI CSI-2 DPHY init
+      media: qcom: camss: Add sc8280xp resource details
+      media: qcom: camss: Add sc8280xp support
+      media: qcom: camss: vfe-17x: Rename camss-vfe-170 to camss-vfe-17x
+
+ .../bindings/media/qcom,sc8280xp-camss.yaml        | 581 +++++++++++++++++++++
+ drivers/media/platform/qcom/camss/Makefile         |   2 +-
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 108 +++-
+ drivers/media/platform/qcom/camss/camss-csiphy.c   |   1 +
+ .../camss/{camss-vfe-170.c => camss-vfe-17x.c}     |   0
+ drivers/media/platform/qcom/camss/camss-vfe.c      |  25 +-
+ drivers/media/platform/qcom/camss/camss-video.c    |   1 +
+ drivers/media/platform/qcom/camss/camss.c          | 383 ++++++++++++++
+ drivers/media/platform/qcom/camss/camss.h          |   1 +
+ 9 files changed, 1093 insertions(+), 9 deletions(-)
+---
+base-commit: 89e965e1a58f58cd359472b14c0cc25587bcf264
+change-id: 20231101-b4-camss-sc8280xp-0e1b91eb21bf
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
