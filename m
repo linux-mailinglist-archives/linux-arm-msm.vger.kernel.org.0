@@ -2,69 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B32247E0794
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 18:38:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E2B9B7E080D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 19:25:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230161AbjKCRiw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 13:38:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42586 "EHLO
+        id S233381AbjKCSZG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 14:25:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbjKCRiw (ORCPT
+        with ESMTP id S230197AbjKCSZF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 13:38:52 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63C8C1BD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 10:38:44 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2c50fbc218bso29029321fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 10:38:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699033122; x=1699637922; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+ZYzTOJPGCrY19MCAqAnksjdslBlhHcm4UfwfPNG7Wc=;
-        b=Z9s94ybzc7Ndlez3znnyUJ/ekOoO49eV2B9F76hOwHgMVx5NaABQx4Li0ve8VyvvBo
-         ySTWpQW7qapqwiXFqp2yx3xnHiaSifTE/6RuIsmzAP1miTas/y9U/G/xIL7um7TyyU32
-         Cw++NlT3OzLbVWmat6nh1SJ+KzZSCO169yVGs5smte0zEKPGxvf86sU6eEYxQcX/rj6/
-         ugnrTcEYB1DxQHi9WuPuawYqN7kZQlyJr4yMgk3WG0tIWUHN1XSVRjx+lXlsGuwY/ssr
-         lSUK0ePMVZ8OkyoGTPuRkIS+R6TCayT91veFK1dKUXy2Nvu21yQ9NJpAuIHnALp3XUMo
-         MmuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699033122; x=1699637922;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+ZYzTOJPGCrY19MCAqAnksjdslBlhHcm4UfwfPNG7Wc=;
-        b=P1QkTyXZzcbLdBZ361tdOE1RBa4GbhDL5wvx04LmGAw4Aq0LgtB0c4BIQL5orbRRiX
-         shuyp22KpLwXUJ3nVk/N5JzjodO1UyFk2loX1AuL63SsMloSaCIi8nGgaw+RzmcYgg+f
-         /7jWDLZ8JZl2KKpmfaFibrzEywkEKZsnBmGE74IO1gcFB7hl39Xnjf46DSBnmG7PAM39
-         n3yLiVRunL8T9qbn2I85dQ/Dd7LxaUVwv1AmQuVOtOQrPg0UN0WV0Z6WmgAxxU+Bio79
-         +mph3KUpS3XDM4sFA058VhxzOdW8a3j0dW09T97jv4I4zY01r7GwJjncjTDqxY6cod1L
-         XVBQ==
-X-Gm-Message-State: AOJu0YxWlqloWIpjEQFE4yN1mgCOnha78VrrW6mCdbHmVYqxwdI9HNag
-        bWE5ygzm3U3aulCC7GuCLAfPd5/b/dvb8CIbi9IKHw==
-X-Google-Smtp-Source: AGHT+IFAWaG0w5Qy1ca0rBheMkQ/q/ZcFmUQFb3s5U6J9vCuTOrHnTYXDOFwSNHjPIsr1OZfG6qgDA==
-X-Received: by 2002:a2e:be10:0:b0:2c4:fdc9:c8a3 with SMTP id z16-20020a2ebe10000000b002c4fdc9c8a3mr20595944ljq.50.1699033122300;
-        Fri, 03 Nov 2023 10:38:42 -0700 (PDT)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id p29-20020a05600c1d9d00b0040772934b12sm3300391wms.7.2023.11.03.10.38.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Nov 2023 10:38:41 -0700 (PDT)
-Message-ID: <6f3757b9-e629-4b67-a88b-3438006fbf80@linaro.org>
-Date:   Fri, 3 Nov 2023 17:38:41 +0000
+        Fri, 3 Nov 2023 14:25:05 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA91FCF;
+        Fri,  3 Nov 2023 11:24:59 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A3Dm83J004645;
+        Fri, 3 Nov 2023 18:24:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Q4A1/ShYumvFEKJwseEisL4WJre6JGG+MXAB1DSfkCM=;
+ b=LTd6P5L/52RMaij4t6W3kKSwp6G300cKxSV5Euc6Kd5hISCTHHNlAsaKFPcyLp29yVtk
+ 9C9sckItG0A0yfRvYZGfYGnL58D0mJsDYogGjO/ebvDulDHFh1HvJIS/3cFnljWVl6MO
+ qWpZwDjuaZSbUxLgyggxeP1FZTkfn3aP9ySZI+QDQs34hBW3rECFLfvpimn1Vinr33ON
+ dB/V2R1pvyfFInjPgEVYiiHK4YkpO13NOOe22BmuVE04030gu52N9DzevWrJslfXLTRL
+ zc7FhF6ujtWeQx43HzUT45e8n5f8hNTlUzBBeTJ38FZOCVVyXCbbWuxZ9RJNiMw6tCcS Rg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u4wmjh95a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 03 Nov 2023 18:24:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3IOTqx008092
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 3 Nov 2023 18:24:29 GMT
+Received: from [10.249.21.155] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 3 Nov
+ 2023 11:24:22 -0700
+Message-ID: <29752cbf-9fe4-48ce-bf21-0bb3daf7d691@quicinc.com>
+Date:   Fri, 3 Nov 2023 23:54:16 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: External display on the x13s?
+Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
+ runtime
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     <quic_wcheng@quicinc.com>, <linux-usb@vger.kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        "Philipp Zabel" <p.zabel@pengutronix.de>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <devicetree@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-2-quic_kriskura@quicinc.com>
+ <272a9764-1cae-4d86-88b1-00175de83333@linaro.org>
+ <960101cc-78c0-49cf-ab62-90614eeb9ee2@quicinc.com>
+ <dbf4a48e-c808-4611-96b1-563ece1e451a@linaro.org>
+ <f0820464-16d6-47fd-90bc-cf80b5d76058@quicinc.com>
+ <96b3ebe5-781a-432a-9a73-2217a2a674f4@linaro.org>
 Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Brian Masney <bmasney@redhat.com>, linux-arm-msm@vger.kernel.org
-References: <ZUUrMm1Q/PI5xv6a@brian-x1>
- <181bdfdc-01ef-4e60-ad62-623884cb3d6a@linaro.org>
-In-Reply-To: <181bdfdc-01ef-4e60-ad62-623884cb3d6a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <96b3ebe5-781a-432a-9a73-2217a2a674f4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LFkoDZoWy75NbMtvUKFsJCg-alEyYpK7
+X-Proofpoint-GUID: LFkoDZoWy75NbMtvUKFsJCg-alEyYpK7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-03_17,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ suspectscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=582 malwarescore=0 spamscore=0 adultscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311030153
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,21 +96,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/11/2023 17:37, Bryan O'Donoghue wrote:
-> On 03/11/2023 17:17, Brian Masney wrote:
->> I have Fedora 39 running on my x13s (with some minor tweaks to the grub
->> BLS boot entry) and it has working GPU, sound, battery status, etc. I
->> see the external display port in the DTS, however it's not working for
->> me. I have pd-mapper and qrtr installed. Does anyone have any
->> suggestions for enabling that? dmesg doesn't give any useful
->> information.
->>
->> Brian
->>
-> 
-> Run gnome and run the display @ < 2k
-> 
-> ---
-> bod
 
-<= 2k
+
+On 11/3/2023 8:26 PM, Caleb Connolly wrote:
+> 
+> 
+> On 03/11/2023 05:34, Krishna Kurapati PSSNV wrote:
+>>
+>>
+>> On 11/3/2023 12:10 AM, Caleb Connolly wrote:
+>>>> Hi Caleb,
+>>>>
+>>>>     There are two types of platforms, some use extcon and some use
+>>>> role-switch to deliver vbus/id notifications. Extcon targets already
+>>>> have this qscratch modifications present today in vbus and id
+>>>> handlers. But for role-switch based targets we don't have any way to
+>>>> get this notification to dwc3-qcom. In this implementation, I wanted
+>>>> to get those notications from core to glue and for this we
+>>>> implenented vendor hooks.
+>>>>
+>>>> The property added has been used to do two things:
+>>>>
+>>>> 1. Register glue's vendor hooks to core driver
+>>>> 2. Do runtime_allow for glue (and by default for core as the dt is
+>>>> not flattened)
+>>>>
+>>>> In case of extcon, we don't want to register vendor hooks as
+>>>> notifications are not necessary.
+>>>
+>>> Could it just be enabled when role_switch is present then?
+>>>>
+>>
+>> So we would register vendor hooks when usb-role-switch is present but
+>> don't do runtime allow, and leave that option to user space right ?
+>> I think it would work and we can do away with the binding completely.
+> 
+> Can we still enable runtime suspend? Maybe someone else wants to chime
+> in here, but I'd guess that it's preferable to have it enabled by
+> default, particularly for devices like phones. Or are there side effects
+> from this?
+>>
+
+AFAIK, I don't see any side effects whether we enable runtime from user 
+space or do runtime_allow() here in kernel itself and leave qscratch 
+config to vendor hooks.
+
+But leaving it enabled by default, we do this for almost all targets in 
+downstream today. So I guess there would be no side effects.
+
+Regards,
+Krishna,
