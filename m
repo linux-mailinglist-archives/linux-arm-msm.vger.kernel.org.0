@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06ECB7E074C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 18:18:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1967C7E0757
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 18:25:43 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377296AbjKCRSa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 13:18:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54246 "EHLO
+        id S230215AbjKCRZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 13:25:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377493AbjKCRS0 (ORCPT
+        with ESMTP id S230224AbjKCRZn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 13:18:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AEFDD55
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 10:17:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1699031863;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type;
-        bh=h+xYoZa1D29Tc8qHBnu/MR8dpq7wRlwns0nY5ywIXUg=;
-        b=QfCO7dVZ/Sa1yYd4Ak+96xtnIjuyGkkqPUnpQqpMVdP9A8kCH9vtAZDwMHQHF2pi7oop+K
-        ykTcA1VlT29/N4YUzcg+8lD9uWgKBW2MJ4rGs7SxXy2v3g+cWwNYjSTVXEbQ1dkPBDdtZq
-        XYsp8O1dS3kpP2//046S/qvll/iP4YI=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-Hl13eCqGNh25ooiRU0E_mQ-1; Fri, 03 Nov 2023 13:17:41 -0400
-X-MC-Unique: Hl13eCqGNh25ooiRU0E_mQ-1
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-41e172143c3so51692701cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 10:17:41 -0700 (PDT)
+        Fri, 3 Nov 2023 13:25:43 -0400
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B768713E;
+        Fri,  3 Nov 2023 10:25:37 -0700 (PDT)
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3b3ec45d6e9so1375650b6e.0;
+        Fri, 03 Nov 2023 10:25:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699031860; x=1699636660;
-        h=user-agent:content-disposition:mime-version:message-id:subject:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h+xYoZa1D29Tc8qHBnu/MR8dpq7wRlwns0nY5ywIXUg=;
-        b=WoF5L6U5XM/hKYFsxh/K6k0HxIMdyk87tIt/GPRImwCfQ7WyMaYFdhflJDaVYvkZss
-         PQXepvaeQgxEkuC+d4cgkin3N7PCtPcUelkOPcUSdmqQB2aWwNVKKUqS0Xtn1vbn5PVy
-         8BNCVSUdjdmX2XUlzGBVFbrFSCih9ytA+qpmmlsz2yxHfD26M8brEswsNiDN09tmnPmz
-         wdhYGeiBiuSi73Kq0Ib4fbXAcenOWCgwBmjzaLkNIe6xr3/n4co3lNQxJi0Z4E/tyo4z
-         qzZm+EDSbM+82QQswqCO68Oxa8+u2s1tinnFe1XvBmKFq6uDdgUENUufjiyZwm7U5S6Q
-         Vw1g==
-X-Gm-Message-State: AOJu0YwsO3iqUljRxYNMVKhmKEf52s05YnuSQoXLY4qGzMupPk7ygPZ4
-        C8Vm2QBXvQ159JiOmuRFB6rbZO67ZAgxFtH1XK80B6hpDjK5blnYaMgRd/0xIaNiCzIY+e4dyJT
-        p+VXdZEPDwEA+isI6LZN8MnDHkEo455csTPADX2VRXyTJp0DDVmf5tmFJkbcwZCi9qjQK8+JEr7
-        M5FIbIvloq
-X-Received: by 2002:ad4:4d93:0:b0:66d:13b5:ca16 with SMTP id cv19-20020ad44d93000000b0066d13b5ca16mr5311692qvb.27.1699031860323;
-        Fri, 03 Nov 2023 10:17:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHQxuIidyqR6xqOyrXi/5TRad6o/L+KcRV61P1oV+qMdX//0nKx8FWryvEAHjDCyyc15SKmtg==
-X-Received: by 2002:ad4:4d93:0:b0:66d:13b5:ca16 with SMTP id cv19-20020ad44d93000000b0066d13b5ca16mr5311669qvb.27.1699031859970;
-        Fri, 03 Nov 2023 10:17:39 -0700 (PDT)
-Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id f7-20020a0cc307000000b0064f4e0b2089sm921522qvi.33.2023.11.03.10.17.39
-        for <linux-arm-msm@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1699032337; x=1699637137;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kQjjfhlnmzRDjE/9MY7CPSCRY6bOaSf38w1z3/ED/wE=;
+        b=f6q+l2SElQVk7tA5l5ddTHiSiEnhZmbM0CoJMU5SOxIlSQDA7A3MZjZrIKRxzt5LOc
+         KrVlQNeYrBJaCH/5qQWxNncpa1RyT5Qn/qBb8J4HztMut8ZeBTJr6wz4TY498Hv1QFKD
+         sg2sDLkwRbZKoFQLwtvs1F6f6N0Xk5/hkQR6rxc+02Iwy5FJ+APjPF4OYsa6a5+BGUQx
+         H05RwCgt2PKzE5DGGqTJVZJWu6NTiCOEJNNZtV6hIddJnZpJ69d5EIqmo797zY1nicVl
+         tG86RX0wXsl1iYnVFWsbbu+wkhK/O1B6OKK9LQaFFYHRyWkQv5XVcqq19BvCiO8G+lE9
+         ddSw==
+X-Gm-Message-State: AOJu0Yz2VJvlRtXpWh5es5XMLaaacMruRtZlyUrqb3miyKIKslAv/DtR
+        4IC8aENaq4aLSOB5fBwKIw==
+X-Google-Smtp-Source: AGHT+IEn/XQUwpNA3WOf8aGalFihRK9hfZ7HarRN/GOuhh8KZILh/0W541V6OttK/nZwQh1czqr5zA==
+X-Received: by 2002:a05:6870:169a:b0:1e9:9e04:1d1e with SMTP id j26-20020a056870169a00b001e99e041d1emr26781631oae.48.1699032336788;
+        Fri, 03 Nov 2023 10:25:36 -0700 (PDT)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id e5-20020a056870450500b001e12bb81363sm367717oao.35.2023.11.03.10.25.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Nov 2023 10:17:39 -0700 (PDT)
-Date:   Fri, 3 Nov 2023 13:17:38 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     linux-arm-msm@vger.kernel.org
-Subject: External display on the x13s?
-Message-ID: <ZUUrMm1Q/PI5xv6a@brian-x1>
+        Fri, 03 Nov 2023 10:25:36 -0700 (PDT)
+Received: (nullmailer pid 1588221 invoked by uid 1000);
+        Fri, 03 Nov 2023 17:25:34 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/2.2.9 (2022-11-12)
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+From:   Rob Herring <robh@kernel.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        Robert Foss <rfoss@kernel.org>, Andy Gross <agross@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        vincent.knecht@mailoo.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        matti.lehtimaki@gmail.com, quic_grosikop@quicinc.com,
+        laurent.pinchart@ideasonboard.com,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        hverkuil-cisco@xs4all.nl, Todor Tomov <todor.too@gmail.com>
+In-Reply-To: <20231103-b4-camss-sc8280xp-v2-1-b7af4d253a20@linaro.org>
+References: <20231103-b4-camss-sc8280xp-v2-0-b7af4d253a20@linaro.org>
+ <20231103-b4-camss-sc8280xp-v2-1-b7af4d253a20@linaro.org>
+Message-Id: <169903233490.1588205.2821182125390694665.robh@kernel.org>
+Subject: Re: [PATCH v2 1/6] media: dt-bindings: media: camss: Add
+ qcom,sc8280xp-camss binding
+Date:   Fri, 03 Nov 2023 12:25:34 -0500
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -76,12 +77,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-I have Fedora 39 running on my x13s (with some minor tweaks to the grub
-BLS boot entry) and it has working GPU, sound, battery status, etc. I
-see the external display port in the DTS, however it's not working for
-me. I have pd-mapper and qrtr installed. Does anyone have any
-suggestions for enabling that? dmesg doesn't give any useful
-information.
 
-Brian
+On Fri, 03 Nov 2023 16:25:04 +0000, Bryan O'Donoghue wrote:
+> Add bindings for qcom,sc8280xp-camss in order to support the camera
+> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
+> 
+> This patch depends on:
+> https://lore.kernel.org/linux-arm-msm/20231026105345.3376-2-bryan.odonoghue@linaro.org/
+> https://lore.kernel.org/linux-arm-msm/20231026105345.3376-3-bryan.odonoghue@linaro.org/
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/media/qcom,sc8280xp-camss.yaml        | 581 +++++++++++++++++++++
+>  1 file changed, 581 insertions(+)
+> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dts:26:18: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
+   26 |         #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1427: dt_binding_check] Error 2
+make: *** [Makefile:234: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231103-b4-camss-sc8280xp-v2-1-b7af4d253a20@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
