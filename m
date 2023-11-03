@@ -2,78 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B7E17E014C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 11:31:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BE3067E01C6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 12:14:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229480AbjKCKW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 06:22:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43722 "EHLO
+        id S233281AbjKCKo3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 06:44:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjKCKW1 (ORCPT
+        with ESMTP id S1377828AbjKCKo0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 06:22:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72C06D4E;
-        Fri,  3 Nov 2023 03:22:21 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A39DnDb005742;
-        Fri, 3 Nov 2023 10:22:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=nRY5lOltW/stmAHC4W+teHJxj9e8mY88qXIYFfyXbKQ=;
- b=SGoL+g5yIAHb39M3LwtjWJTL466p+0iGEJ1goME3jjjA/A9ysHi26p3GwOjDzVOy21cF
- nYTlQaKLN35KGtKDc0tXpyWsmesCKJ9AjPy76u4/bZxeobTv4xQi1cg+Ip+l3bViYmhQ
- oMo8nSqLmAR/+V+EaRiMhrfCwiciydDnY/rXGIjQjE/ABEpikZ9YSYnC5YPmS0XAu579
- qGHjGxQo/hPAR/h1jRmWxY6olFq3URwuOE6OWF2QteaAlXTSxg8lNh98ZzQyPoEkMs9g
- gScmfAgc5fgNGZlh+wNgWY2t2eVDO7lANUBpA+y1xegSLflgkf93yLy+XYLMiZ85o8cD Fg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u4r00gtmg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 10:22:07 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3AM6Cc020183
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 10:22:06 GMT
-Received: from [10.214.16.225] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 3 Nov
- 2023 03:22:00 -0700
-Message-ID: <9a2ff779-163c-415d-9e78-84756ad77c86@quicinc.com>
-Date:   Fri, 3 Nov 2023 15:51:56 +0530
+        Fri, 3 Nov 2023 06:44:26 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19B47D5A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 03:44:19 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-507a55302e0so2457743e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 03:44:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699008257; x=1699613057; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c5nLolPwuJpq0W0yvjQJguc5sT9X9KBoVJr/KRt6GGU=;
+        b=uqChyuT+DOS51LiRh9a/iv3r0te8urzMp7RKtCJhnVyGS5tbXaeisW1dFJss0KqNNj
+         gus+iv2Y5VRO36R6caxwLwT+r4xolyunvj298sRcTylpyd9AM8AJ3MZdv6a2O65oee8X
+         7ivWEAihTmKkMWiFpkwcwcBJPsQ1/ez01z+USF8PgjLr2mIQeFgmF0RGs+vDhOpD2Y9c
+         Dy4oIJpR9UTkt25cyQEpq0jJ2iSe+Q/MV2IGp5D/DRov5Sie2+9GowUMj+VqoQfGnwm+
+         6bUpIEPDxX7k0VqUpJrhMkmyZfygjRUwX5sSIMshZx6b6f7oSyCGaRwmO/QiWKH86e+B
+         5scw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699008257; x=1699613057;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c5nLolPwuJpq0W0yvjQJguc5sT9X9KBoVJr/KRt6GGU=;
+        b=sSgDoKhTzq2qzxxKTnDkGxZREyLOQ6OtYWNSg76ItKgLUDCO0qH3sd0ZPdJAQNDUnv
+         BAbwcLV18lLq8jZAWSeSQFxEve3j9AppcDLQyESR/r0IoiAHRUDcwNq1EC3+xh6D6++D
+         lKuDY3j3gA80EHM0+VpVTa3U/sQKU2hvTEJJp/r6CRNUF/Ek2V1fl6Tlj57pN/kETbs4
+         8B0xKjkFIODUlGXFaSPBsGmBP9NRpOIoJwpWNYVhIj2FtKv25sZ1zacMrwFpL+dP48QR
+         /gAHE/+SuRjEDKRyhjvDFTTkqhooki1mou8WZ/n+KnsRTeVwass/Diy306V6LDX/TLXc
+         NWIA==
+X-Gm-Message-State: AOJu0YwZEfeIfNjcWi1zb0qBwThgaAlSVT6pA4bjvHuSq54pHuRtsRsD
+        ud1mvDzSW0WlPyK4HLp0Z6+5CA==
+X-Google-Smtp-Source: AGHT+IGWyRsXFk6LHw2H/ZIpZhZ8RL6RZVkgocUX8w24VSIFhdIXzdR+tNgUainvl9TtQl7/CIm11Q==
+X-Received: by 2002:a19:2d0a:0:b0:507:c7cc:12d7 with SMTP id k10-20020a192d0a000000b00507c7cc12d7mr14426147lfj.4.1699008257167;
+        Fri, 03 Nov 2023 03:44:17 -0700 (PDT)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id f6-20020a5d5686000000b0032f7eaa6e43sm1526650wrv.79.2023.11.03.03.44.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Nov 2023 03:44:16 -0700 (PDT)
+Message-ID: <fe05a0f5-2f57-4f98-afe6-3b0acbaa96fe@linaro.org>
+Date:   Fri, 3 Nov 2023 10:44:14 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] ARM: dts: msm: Add capacity and DPC properties for
- sc7280 soc
+Subject: Re: [PATCH RESEND v3 5/5] venus: pm_helpers: Use
+ dev_pm_genpd_set_hwmode to switch GDSC mode
 Content-Language: en-US
-To:     <cros-qcom-dts-watchers@chromium.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ashayj@quicinc.com>,
-        <quic_atulpant@quicinc.com>, <quic_rgottimu@quicinc.com>,
-        <quic_shashim@quicinc.com>, <quic_pkondeti@quicinc.com>
-References: <20231103095358.29312-1-quic_anshar@quicinc.com>
-From:   Ankit Sharma <quic_anshar@quicinc.com>
-In-Reply-To: <20231103095358.29312-1-quic_anshar@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Abel Vesa <abel.vesa@linaro.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-media@vger.kernel.org,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+References: <20231101-gdsc-hwctrl-v3-0-0740ae6b2b04@linaro.org>
+ <20231101-gdsc-hwctrl-v3-5-0740ae6b2b04@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20231101-gdsc-hwctrl-v3-5-0740ae6b2b04@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: aqXp8JEJkrk7SJ-V2BsLJslyR6rjFI1C
-X-Proofpoint-GUID: aqXp8JEJkrk7SJ-V2BsLJslyR6rjFI1C
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_10,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- mlxlogscore=999 clxscore=1015 impostorscore=0 spamscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030086
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -84,95 +92,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 01/11/2023 09:04, Abel Vesa wrote:
+> From: Jagadeesh Kona <quic_jkona@quicinc.com>
+> 
+> This change demonstrates the use of dev_pm_genpd_set_hwmode API from
+> video driver to switch the video mvs0 gdsc to SW/HW modes at runtime
+> based on requirement.
+> 
+> This change adds a new boolean array member vcodec_pmdomains_hwctrl in
+> venus_resources structure to indicate if GDSC's have HW control support
+> or not. This data is used in vcodec_control_v4() to check if GDSC has
+> support to switch to HW control mode and then call dev_pm_genpd_set_hwmode
+> to switch the GDSC mode.
+> 
+> Before the GDSC HWCTL was available to the consumer, the venus driver
+> needed to somehow keep the power from collapsing while under the driver
+> control. The only way to do that was to clear the CORE_PWR_DISABLE bit
+> (in wrapper POWER_CONTROL register) and, respectively, set it back after
+> the driver control was completed.
+> 
+> Now, that there is a way to switch the GDSC HW/SW control back and
+> forth, the CORE_PWR_DISABLE toggling can be dropped.
+> 
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-On 11/3/2023 3:23 PM, Ankit Sharma wrote:
-> The "capacity-dmips-mhz" and "dynamic-power-coefficient" are
-> used to build Energy Model which in turn is used by EAS to take
-> placement decisions.
->
-> Change-Id: I57aa4b99734dc349034f84bd16b02609b4ac6e55
-> Signed-off-by: Ankit Sharma <quic_anshar@quicinc.com>
-> ---
-Please ignore this, will resend again. Sorry for the spam.
+So I plan to give this a test on rb5 and db410c
 
-Thanks,
-Ankit
->   arch/arm64/boot/dts/qcom/sc7280.dtsi | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 8601253aec70..b1890824188c 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -176,6 +176,8 @@
->   					   &CLUSTER_SLEEP_0>;
->   			next-level-cache = <&L2_0>;
->   			operating-points-v2 = <&cpu0_opp_table>;
-> +			capacity-dmips-mhz = <1024>;
-> +			dynamic-power-coefficient = <100>;
->   			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
->   					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   			qcom,freq-domain = <&cpufreq_hw 0>;
-> @@ -204,6 +206,8 @@
->   					   &CLUSTER_SLEEP_0>;
->   			next-level-cache = <&L2_100>;
->   			operating-points-v2 = <&cpu0_opp_table>;
-> +			capacity-dmips-mhz = <1024>;
-> +			dynamic-power-coefficient = <100>;
->   			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
->   					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   			qcom,freq-domain = <&cpufreq_hw 0>;
-> @@ -227,6 +231,8 @@
->   					   &CLUSTER_SLEEP_0>;
->   			next-level-cache = <&L2_200>;
->   			operating-points-v2 = <&cpu0_opp_table>;
-> +			capacity-dmips-mhz = <1024>;
-> +			dynamic-power-coefficient = <100>;
->   			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
->   					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   			qcom,freq-domain = <&cpufreq_hw 0>;
-> @@ -250,6 +256,8 @@
->   					   &CLUSTER_SLEEP_0>;
->   			next-level-cache = <&L2_300>;
->   			operating-points-v2 = <&cpu0_opp_table>;
-> +			capacity-dmips-mhz = <1024>;
-> +			dynamic-power-coefficient = <100>;
->   			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
->   					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   			qcom,freq-domain = <&cpufreq_hw 0>;
-> @@ -273,6 +281,8 @@
->   					   &CLUSTER_SLEEP_0>;
->   			next-level-cache = <&L2_400>;
->   			operating-points-v2 = <&cpu4_opp_table>;
-> +			capacity-dmips-mhz = <1946>;
-> +			dynamic-power-coefficient = <520>;
->   			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
->   					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   			qcom,freq-domain = <&cpufreq_hw 1>;
-> @@ -296,6 +306,8 @@
->   					   &CLUSTER_SLEEP_0>;
->   			next-level-cache = <&L2_500>;
->   			operating-points-v2 = <&cpu4_opp_table>;
-> +			capacity-dmips-mhz = <1946>;
-> +			dynamic-power-coefficient = <520>;
->   			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
->   					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   			qcom,freq-domain = <&cpufreq_hw 1>;
-> @@ -319,6 +331,8 @@
->   					   &CLUSTER_SLEEP_0>;
->   			next-level-cache = <&L2_600>;
->   			operating-points-v2 = <&cpu4_opp_table>;
-> +			capacity-dmips-mhz = <1946>;
-> +			dynamic-power-coefficient = <520>;
->   			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
->   					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   			qcom,freq-domain = <&cpufreq_hw 1>;
-> @@ -342,6 +356,8 @@
->   					   &CLUSTER_SLEEP_0>;
->   			next-level-cache = <&L2_700>;
->   			operating-points-v2 = <&cpu7_opp_table>;
-> +			capacity-dmips-mhz = <1985>;
-> +			dynamic-power-coefficient = <552>;
->   			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
->   					<&epss_l3 MASTER_EPSS_L3_APPS &epss_l3 SLAVE_EPSS_L3_SHARED>;
->   			qcom,freq-domain = <&cpufreq_hw 2>;
+My q here though is - has anybody on the submission list tested this 
+through suspend/resume and vdd min ?
+
+---
+bod
+
