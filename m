@@ -2,203 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90E787E0BEC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 00:10:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EF7E7E0C3E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 00:35:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230521AbjKCXKg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 19:10:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50750 "EHLO
+        id S229882AbjKCXft (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 19:35:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231152AbjKCXKf (ORCPT
+        with ESMTP id S229557AbjKCXft (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 19:10:35 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047D71BD;
-        Fri,  3 Nov 2023 16:10:32 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A3N8l4Y025731;
-        Fri, 3 Nov 2023 23:10:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=PG9zHYHPHYASOSDagI1nr8iOKbFVHRx5ABeNnOYiXaQ=;
- b=H/1kgC9i79nSIlHiv1ppnw0aX6NWRR1eDdAYb6PopSjRyFr284NB/R3DXI8rKjCrUJDU
- 0woKWAPZDatl2vKDw4P/3dK7WRFOmc34t3htF8h3rbijJJHQm0GsS3P+0KzRALNjgsoW
- PDDFjVsxQznhgoFYIBhDC223wVYuqWkQGWd1j2qA9dnNsrwPgqP9W/9fF+kBXTBrlb04
- xSq8SIbg6JOV7/6TUXYq/BeVgN1U8VToKR+NvEkloDUGjyeJgg7PJqf42c3H5i7fi0Jc
- aTFlQX2iRwwNeIIvBgkxHyXMDMnJ0vfOC5VyoKEJjz37+Z8+Tm4U4O6PRGfpPU5+2gu1 hw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5a97003c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 23:10:28 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3NAR70016737
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 23:10:27 GMT
-Received: from [10.71.108.203] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 3 Nov
- 2023 16:10:27 -0700
-Message-ID: <17535d7a-73e2-465b-941c-99db4092327a@quicinc.com>
-Date:   Fri, 3 Nov 2023 16:10:26 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550-qrd: add sound card
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Fri, 3 Nov 2023 19:35:49 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2915D5A
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 16:35:45 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-6b5af4662b7so2526458b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 16:35:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1699054545; x=1699659345; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VSqLYgRbivKKnYF2aYcQthhro+1b5nXgEwvXxzPNrJI=;
+        b=Xpudmcym95weo5RMydYrt3wBcmheGvdph6nKmkUnU/Ms2To1kqu9g6HiijwWWmWO3r
+         MHjQ5cT0Ea3uTmQb71ASJVsSO+cZKzi+o+rOoZ2ZIE+P9A0qtXsuK2z6HSsPkpdNntl7
+         NrikQ6u03vqSS2PDSTs0Q3T1b5jmFyajs/1Dc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699054545; x=1699659345;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VSqLYgRbivKKnYF2aYcQthhro+1b5nXgEwvXxzPNrJI=;
+        b=Wm/el2srkdwZNcn/XJvvQNW2RETW6EM1TsW161wA1nLHr7Jc0o3Sm0J7L5exIuH5j3
+         gp1yh5sErYTWuUQtSDWGH5xbgsC5Rj5qVn92XWj+CKRQsUaDV2osGNWvPpW49H7jvEJh
+         t5UFIWteDVS+xTdMF5CyN6f8XxhHuSxzOctyrs3blZsg+vxYqLgaatPilXvSFD3nAcmQ
+         i8EU2Oth5ZPU77LRXOfOIy3KkrhlVfRd7GgvHUvkc+mtju2bZY8qUw898F8MFDieYIp2
+         gVUdGIRtDza/yjcDvUow1HpbgEf7ubJwB5FB2gRx8m83Pwntuhh6u/oyrZz5LjyMhVIK
+         3+fw==
+X-Gm-Message-State: AOJu0YzdEW4gbh9h9tyLA4MiqxUixnukTn94a2LLK04jdYCSjiRnAwf+
+        kzkz7eop2CF1INjV2+aXQQf48Q==
+X-Google-Smtp-Source: AGHT+IGivJm72G8Ok/Dga94KQLsX+IkSW0u6XGPI33zFZ+PCZIj6TFlSL7IcmjdbwjmZbUt1yJ1mbg==
+X-Received: by 2002:a05:6a20:938e:b0:180:7df:76a4 with SMTP id x14-20020a056a20938e00b0018007df76a4mr19623287pzh.45.1699054545136;
+        Fri, 03 Nov 2023 16:35:45 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:5195:5e72:f5bb:e3f0])
+        by smtp.gmail.com with ESMTPSA id jg5-20020a17090326c500b001b8b2a6c4a4sm1878114plb.172.2023.11.03.16.35.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Nov 2023 16:35:44 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230612173758.286411-1-krzysztof.kozlowski@linaro.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20230612173758.286411-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Wbb5gXFQ9P8k2ux1n--P6T0cPR-fCRoy
-X-Proofpoint-GUID: Wbb5gXFQ9P8k2ux1n--P6T0cPR-fCRoy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_21,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 bulkscore=0 malwarescore=0 phishscore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 mlxlogscore=714 mlxscore=0
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030196
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Guenter Roeck <linux@roeck-us.net>
+Cc:     linux-watchdog@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        swboyd@chromium.org, Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        Kees Cook <keescook@chromium.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Tony Luck <tony.luck@intel.com>,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/9] arm64: dts: qcom: sc7180: Make watchdog bark interrupt edge triggered
+Date:   Fri,  3 Nov 2023 16:34:27 -0700
+Message-ID: <20231103163434.1.Ic7577567baff921347d423b722de8b857602efb1@changeid>
+X-Mailer: git-send-email 2.42.0.869.gea05f2083d-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+On sc7180 when the watchdog timer fires your logs get filled with:
+  watchdog0: pretimeout event
+  watchdog0: pretimeout event
+  watchdog0: pretimeout event
+  ...
+  watchdog0: pretimeout event
 
-On 6/12/2023 10:37 AM, Krzysztof Kozlowski wrote:
-> Add the sound card node with tested playback over WSA8845 speakers and
-> WCD9385 headset over USB Type-C.  The recording links were not tested,
-> but should be similar to previous platforms.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Bindings for the sound card were not sent to LKML. Work-in-progress is
-> available here:
-> https://github.com/krzk/linux/tree/n/audio-wsa884x-on-top-of-wip-sm8450-audio-on-next
+If you're using console-ramoops to debug crashes the above gets quite
+annoying since it blows away any other log messages that might have
+been there.
 
-Do you plan to send the bindings up? I can send this patch out if you don't have the cycle:
+The issue is that the "bark" interrupt (AKA the "pretimeout"
+interrupt) remains high until the watchdog is pet. Since we've got
+things configured as "level" triggered we'll keep getting interrupted
+over and over.
 
-https://github.com/krzk/linux/commit/f678691570386a11eb75dceca7291b4e05d981da
+Let's switch to edge triggered. Now we'll get one interrupt when the
+"bark" interrupt goes off we'll get one interrupt and won't get
+another one until the "bark" interrupt is cleared and asserts again.
 
-> 
-> Depends on my previous patch adding WSA8845 speakers:
-> https://lore.kernel.org/linux-arm-msm/20230608094323.267278-1-krzysztof.kozlowski@linaro.org/T/#t
-> ---
->  arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 81 +++++++++++++++++++++++++
->  1 file changed, 81 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> index 7ef7079dd640..cb0369fbbc81 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> @@ -97,6 +97,87 @@ pmic_glink_sbu: endpoint {
->  		};
->  	};
->  
-> +	sound {
-> +		compatible = "qcom,sm8550-sndcard", "qcom,sm8450-sndcard";
-> +		model = "SM8550-QRD";
-> +		audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
-> +				"SpkrRight IN", "WSA_SPK2 OUT",
-> +				"IN1_HPHL", "HPHL_OUT",
-> +				"IN2_HPHR", "HPHR_OUT",
-> +				"AMIC2", "MIC BIAS2",
-> +				"VA DMIC0", "MIC BIAS1",
-> +				"VA DMIC1", "MIC BIAS1",
-> +				"VA DMIC2", "MIC BIAS3",
-> +				"TX DMIC0", "MIC BIAS1",
-> +				"TX DMIC1", "MIC BIAS2",
-> +				"TX DMIC2", "MIC BIAS3",
-> +				"TX SWR_ADC1", "ADC2_OUTPUT";
-> +
-> +		wcd-playback-dai-link {
-> +			link-name = "WCD Playback";
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +
-> +		wcd-capture-dai-link {
-> +			link-name = "WCD Capture";
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&wcd938x 1>, <&swr2 0>, <&lpass_txmacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +
-> +		wsa-dai-link {
-> +			link-name = "WSA Playback";
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&north_spkr>, <&south_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +
-> +		va-dai-link {
-> +			link-name = "VA Capture";
-> +
-> +			cpu {
-> +				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-> +			};
-> +
-> +			codec {
-> +				sound-dai = <&lpass_vamacro 0>;
-> +			};
-> +
-> +			platform {
-> +				sound-dai = <&q6apm>;
-> +			};
-> +		};
-> +	};
-> +
->  	vph_pwr: vph-pwr-regulator {
->  		compatible = "regulator-fixed";
->  		regulator-name = "vph_pwr";
+This matches how many older Qualcomm SoCs have things configured.
+
+Fixes: 28cc13e4060c ("arm64: dts: qcom: sc7180: Add watchdog bark interrupt")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+ arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 11f353d416b4..c0365832c315 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -3576,7 +3576,7 @@ watchdog@17c10000 {
+ 			compatible = "qcom,apss-wdt-sc7180", "qcom,kpss-wdt";
+ 			reg = <0 0x17c10000 0 0x1000>;
+ 			clocks = <&sleep_clk>;
+-			interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
+ 		};
+ 
+ 		timer@17c20000 {
+-- 
+2.42.0.869.gea05f2083d-goog
+
