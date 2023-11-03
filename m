@@ -2,505 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C42DA7E0B03
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 23:22:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EFF87E0B21
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 23:30:19 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230169AbjKCWW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 18:22:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50328 "EHLO
+        id S234076AbjKCW0X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 18:26:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230076AbjKCWW2 (ORCPT
+        with ESMTP id S1345087AbjKCW0W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 18:22:28 -0400
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F077DD54
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 15:22:24 -0700 (PDT)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-5a92782615dso31038747b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 15:22:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699050144; x=1699654944; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qWI+PV/SDboxEvAPKg+OoS5n3L7WiPbDaIYDczDd0jc=;
-        b=s3l0tjm81pnXEU9iqzb373BcALf27buDoEPXIGrPYS4Z4PYzuT/NaOv3gooaUJBX2i
-         rUtecEdnfE12YrfGwR6WO6p+n5cN1ADrwMgPD5Xf3KoKzGQ3gyAzwRk8VyWA6DZjh3J3
-         vzrsNzPy2JRfB54CE6HtHaiS8/WRGtZD6t3ywVYoRWq1nuwJSdvnzn6Fw9PFdkrUGr/g
-         aJWU/1tWzD7LmSNfX77sH+VyB1IJtIrwLlDkCmWPIZ9Ls5XCMv0b/uRIt4eQPwapzewl
-         +D4SgZR9B+Vaa+SslNm+RRNqD8N11oLq6cy8oQ4X8eru13YXWa3Z3W2xPL3by9x+AAzM
-         xhkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699050144; x=1699654944;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qWI+PV/SDboxEvAPKg+OoS5n3L7WiPbDaIYDczDd0jc=;
-        b=nyNEcEyeMebmQ32spuZNn/vq1lMQKnzptzyShw2usongVUcBi7dc9N8yc/w61ssZc2
-         n0fYTdNcPOfnndw+mM+HaRHMMg0fgQnzXv0eEybiett4SNXoQGV/7sI2EfGQUAJ8r6tp
-         5/OTxtRaAmuq7qC0zw14Br+gGZ0ZtnAlwrVwjNheMUiT//EBSCgt3tzfLBPzdnQ/hcND
-         ifZ7sUB0DbqOF6nyPt5NDvcH4RbVjt3+5ZUMM4XEwhNgiW3T24Ljc9HiQ3AEjL6qR9xe
-         21/ROlhvRMTSvRM4UZpzKn3FlHRX1W4hHf648mnlKh3mebz2PAlyM5nCrFumvHZjizcG
-         eRdg==
-X-Gm-Message-State: AOJu0YykYiLsB742qw7gfYGCFbmH0pQT0Yzd6Mb3zkAzovRvKZfXoiWM
-        zsJGlg6XgsuGHxxqPFUaoSyiqaqSRqrO9foKtvfAcQ==
-X-Google-Smtp-Source: AGHT+IEvwOQRASOwZGAyChlFnOe3cexDSPfbY/7ZMKQAancAt/Jk3NfQp0mNzKCtOl6fx3qoOCQ73QPsuFCERgid3dw=
-X-Received: by 2002:a81:8357:0:b0:59f:4f56:59bc with SMTP id
- t84-20020a818357000000b0059f4f5659bcmr4756416ywf.42.1699050143799; Fri, 03
- Nov 2023 15:22:23 -0700 (PDT)
+        Fri, 3 Nov 2023 18:26:22 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B255CCA;
+        Fri,  3 Nov 2023 15:26:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699050379; x=1730586379;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=UFiIUIQtxSDpBAFGAQ0MN5i18hTqs/RaF+24duO/53E=;
+  b=TgNXOBJpe9ia+sOCKQMkWJPXS9Zl9GzpzlXd9SQIhg13p6xVMyvgnPv6
+   /5CNX7nbhI53IZN5R4aNTioq+aiPJ3kPJISlU79y0GmKfVKAV2iNrDpwZ
+   UhGsC/F6+j/Cp7NJxwkd8aFuCcHeueL0rRnOq5sVxEnyENmmZMmaWdEbr
+   6lS+lJfMyTwreBF/JecyW1tUItPnZvl4fvXfgw03aGmE7jQ4SRw9uXl+v
+   P3bPm8fw/RwqR6rkgDsvKaO4mvz/53yGhGKlXViGosv7JGBWzAwgTLEN2
+   Q8c+FkHsgZxO4XGlbAmhYfryJjN/QR1ozXY8tuPNZqORRR57Dmm47Q6Qr
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10883"; a="388859591"
+X-IronPort-AV: E=Sophos;i="6.03,275,1694761200"; 
+   d="scan'208";a="388859591"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Nov 2023 15:26:19 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10883"; a="796749258"
+X-IronPort-AV: E=Sophos;i="6.03,275,1694761200"; 
+   d="scan'208";a="796749258"
+Received: from lkp-server01.sh.intel.com (HELO 17d9e85e5079) ([10.239.97.150])
+  by orsmga001.jf.intel.com with ESMTP; 03 Nov 2023 15:26:14 -0700
+Received: from kbuild by 17d9e85e5079 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1qz2cG-00030J-0F;
+        Fri, 03 Nov 2023 22:26:12 +0000
+Date:   Sat, 4 Nov 2023 06:25:05 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Luo Jie <quic_luoj@quicinc.com>, andersson@kernel.org,
+        agross@kernel.org, konrad.dybcio@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de
+Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v11 3/4] clk: qcom: common: commonize qcom_cc_really_probe
+Message-ID: <202311040623.9oyUHQ6A-lkp@intel.com>
+References: <20231103104846.30875-4-quic_luoj@quicinc.com>
 MIME-Version: 1.0
-References: <20231103184655.23555-1-quic_kbajaj@quicinc.com> <20231103184655.23555-3-quic_kbajaj@quicinc.com>
-In-Reply-To: <20231103184655.23555-3-quic_kbajaj@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 4 Nov 2023 00:22:12 +0200
-Message-ID: <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
- rb3 board
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_nainmeht@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231103104846.30875-4-quic_luoj@quicinc.com>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 3 Nov 2023 at 20:49, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->
-> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
-> platform. QCM6490 is derived from SC7280 meant for various
-> form factor including IoT.
->
-> Supported features are, as of now:
-> * Debug UART
-> * eMMC (only in IDP)
-> * USB
->
-> Co-developed-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |   2 +
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts      |  33 ++
->  .../boot/dts/qcom/qcm6490-iot-common.dtsi     | 291 ++++++++++++++++++
->  arch/arm64/boot/dts/qcom/qcm6490-rb3.dts      |  26 ++
->  4 files changed, 352 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
->  create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-rb3.dts
->
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 73c3be0f8872..29cd77000970 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -82,6 +82,8 @@ dtb-$(CONFIG_ARCH_QCOM)       += msm8998-sony-xperia-yoshino-maple.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += msm8998-sony-xperia-yoshino-poplar.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += msm8998-xiaomi-sagit.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += qcm6490-fairphone-fp5.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += qcm6490-idp.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)        += qcm6490-rb3.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)        += qdu1000-idp.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> new file mode 100644
-> index 000000000000..b1d1b8f40bdb
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -0,0 +1,33 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "qcm6490-iot-common.dtsi"
-> +
-> +/ {
-> +       model = "Qualcomm Technologies, Inc. QCM6490 IDP";
-> +       compatible = "qcom,qcm6490-idp", "qcom,qcm6490";
-> +
-> +       aliases {
-> +               serial0 = &uart5;
-> +       };
-> +
-> +       chosen {
-> +               stdout-path = "serial0:115200n8";
-> +       };
-> +};
-> +
-> +&sdhc_1 {
-> +       non-removable;
-> +       no-sd;
-> +       no-sdio;
-> +
-> +       vmmc-supply = <&vreg_l7b_2p952>;
-> +       vqmmc-supply = <&vreg_l19b_1p8>;
-> +
-> +       status = "okay";
-> +};
-> +
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
-> new file mode 100644
-> index 000000000000..01adc97789d0
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+Hi Luo,
 
-I have mixed feelings towards this file. Usually we add such 'common'
-files only for the phone platforms where most of the devices are
-common.
-Do you expect that IDP and RB3 will have a lot of common code other
-than these regulator settings?
+kernel test robot noticed the following build errors:
 
-> @@ -0,0 +1,291 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "sc7280.dtsi"
-> +#include "pm7325.dtsi"
-> +#include "pm8350c.dtsi"
-> +#include "pmk8350.dtsi"
-> +
-> +&apps_rsc {
-> +       regulators-0 {
-> +               compatible = "qcom,pm7325-rpmh-regulators";
-> +               qcom,pmic-id = "b";
-> +
-> +               vreg_s1b_1p872: smps1 {
-> +                       regulator-min-microvolt = <1840000>;
-> +                       regulator-max-microvolt = <2040000>;
-> +               };
-> +
-> +               vreg_s2b_0p876: smps2 {
-> +                       regulator-min-microvolt = <570070>;
-> +                       regulator-max-microvolt = <1050000>;
-> +               };
-> +
-> +               vreg_s7b_0p972: smps7 {
-> +                       regulator-min-microvolt = <535000>;
-> +                       regulator-max-microvolt = <1120000>;
-> +               };
-> +
-> +               vreg_s8b_1p272: smps8 {
-> +                       regulator-min-microvolt = <1200000>;
-> +                       regulator-max-microvolt = <1500000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_RET>;
-> +               };
-> +
-> +               vreg_l1b_0p912: ldo1 {
-> +                       regulator-min-microvolt = <825000>;
-> +                       regulator-max-microvolt = <925000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l2b_3p072: ldo2 {
-> +                       regulator-min-microvolt = <2700000>;
-> +                       regulator-max-microvolt = <3544000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l3b_0p504: ldo3 {
-> +                       regulator-min-microvolt = <312000>;
-> +                       regulator-max-microvolt = <910000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l4b_0p752: ldo4 {
-> +                       regulator-min-microvolt = <752000>;
-> +                       regulator-max-microvolt = <820000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               reg_l5b_0p752: ldo5 {
-> +                       regulator-min-microvolt = <552000>;
-> +                       regulator-max-microvolt = <832000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l6b_1p2: ldo6 {
-> +                       regulator-min-microvolt = <1140000>;
-> +                       regulator-max-microvolt = <1260000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l7b_2p952: ldo7 {
-> +                       regulator-min-microvolt = <2400000>;
-> +                       regulator-max-microvolt = <3544000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l8b_0p904: ldo8 {
-> +                       regulator-min-microvolt = <870000>;
-> +                       regulator-max-microvolt = <970000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l9b_1p2: ldo9 {
-> +                       regulator-min-microvolt = <1200000>;
-> +                       regulator-max-microvolt = <1304000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l11b_1p504: ldo11 {
-> +                       regulator-min-microvolt = <1504000>;
-> +                       regulator-max-microvolt = <2000000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l12b_0p751: ldo12 {
-> +                       regulator-min-microvolt = <751000>;
-> +                       regulator-max-microvolt = <824000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l13b_0p53: ldo13 {
-> +                       regulator-min-microvolt = <530000>;
-> +                       regulator-max-microvolt = <824000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l14b_1p08: ldo14 {
-> +                       regulator-min-microvolt = <1080000>;
-> +                       regulator-max-microvolt = <1304000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l15b_0p765: ldo15 {
-> +                       regulator-min-microvolt = <765000>;
-> +                       regulator-max-microvolt = <1020000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l16b_1p1: ldo16 {
-> +                       regulator-min-microvolt = <1100000>;
-> +                       regulator-max-microvolt = <1300000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l17b_1p7: ldo17 {
-> +                       regulator-min-microvolt = <1700000>;
-> +                       regulator-max-microvolt = <1900000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l18b_1p8: ldo18 {
-> +                       regulator-min-microvolt = <1800000>;
-> +                       regulator-max-microvolt = <2000000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l19b_1p8: ldo19 {
-> +                       regulator-min-microvolt = <1800000>;
-> +                       regulator-max-microvolt = <2000000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +       };
-> +
-> +       regulators-1 {
-> +               compatible = "qcom,pm8350c-rpmh-regulators";
-> +               qcom,pmic-id = "c";
-> +
-> +               vreg_s1c_2p19: smps1 {
-> +                       regulator-min-microvolt = <2190000>;
-> +                       regulator-max-microvolt = <2210000>;
-> +               };
-> +
-> +               vreg_s2c_0p752: smps2 {
-> +                       regulator-min-microvolt = <750000>;
-> +                       regulator-max-microvolt = <800000>;
-> +               };
-> +
-> +               vreg_s5c_0p752: smps5 {
-> +                       regulator-min-microvolt = <465000>;
-> +                       regulator-max-microvolt = <1050000>;
-> +               };
-> +
-> +               vreg_s7c_0p752: smps7 {
-> +                       regulator-min-microvolt = <465000>;
-> +                       regulator-max-microvolt = <800000>;
-> +               };
-> +
-> +               vreg_s9c_1p084: smps9 {
-> +                       regulator-min-microvolt = <1010000>;
-> +                       regulator-max-microvolt = <1170000>;
-> +               };
-> +
-> +               vreg_l1c_1p8: ldo1 {
-> +                       regulator-min-microvolt = <1800000>;
-> +                       regulator-max-microvolt = <1980000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l2c_1p62: ldo2 {
-> +                       regulator-min-microvolt = <1620000>;
-> +                       regulator-max-microvolt = <1980000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l3c_2p8: ldo3 {
-> +                       regulator-min-microvolt = <2800000>;
-> +                       regulator-max-microvolt = <3540000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l4c_1p62: ldo4 {
-> +                       regulator-min-microvolt = <1620000>;
-> +                       regulator-max-microvolt = <3300000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l5c_1p62: ldo5 {
-> +                       regulator-min-microvolt = <1620000>;
-> +                       regulator-max-microvolt = <3300000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l6c_2p96: ldo6 {
-> +                       regulator-min-microvolt = <1650000>;
-> +                       regulator-max-microvolt = <3544000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l7c_3p0: ldo7 {
-> +                       regulator-min-microvolt = <3000000>;
-> +                       regulator-max-microvolt = <3544000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l8c_1p62: ldo8 {
-> +                       regulator-min-microvolt = <1620000>;
-> +                       regulator-max-microvolt = <2000000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l9c_2p96: ldo9 {
-> +                       regulator-min-microvolt = <2700000>;
-> +                       regulator-max-microvolt = <35440000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l10c_0p88: ldo10 {
-> +                       regulator-min-microvolt = <720000>;
-> +                       regulator-max-microvolt = <1050000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l11c_2p8: ldo11 {
-> +                       regulator-min-microvolt = <2800000>;
-> +                       regulator-max-microvolt = <3544000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l12c_1p65: ldo12 {
-> +                       regulator-min-microvolt = <1650000>;
-> +                       regulator-max-microvolt = <2000000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_l13c_2p7: ldo13 {
-> +                       regulator-min-microvolt = <2700000>;
-> +                       regulator-max-microvolt = <3544000>;
-> +                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +               };
-> +
-> +               vreg_bob_3p296: bob {
-> +                       regulator-min-microvolt = <3008000>;
-> +                       regulator-max-microvolt = <3960000>;
-> +               };
-> +       };
-> +};
-> +
-> +&qupv3_id_0 {
-> +       status = "okay";
-> +};
-> +
-> +&uart5 {
-> +       compatible = "qcom,geni-debug-uart";
+[auto build test ERROR on ff269e2cd5adce4ae14f883fc9c8803bc43ee1e9]
 
-Maybe we should add qcm6490.dtsi, which has this compat string (and
-other possible differences between sc7280 and qcm6490).
+url:    https://github.com/intel-lab-lkp/linux/commits/Luo-Jie/clk-qcom-branch-Add-clk_branch2_prepare_ops/20231103-185251
+base:   ff269e2cd5adce4ae14f883fc9c8803bc43ee1e9
+patch link:    https://lore.kernel.org/r/20231103104846.30875-4-quic_luoj%40quicinc.com
+patch subject: [PATCH v11 3/4] clk: qcom: common: commonize qcom_cc_really_probe
+config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20231104/202311040623.9oyUHQ6A-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231104/202311040623.9oyUHQ6A-lkp@intel.com/reproduce)
 
-> +       status = "okay";
-> +};
-> +
-> +&usb_1 {
-> +       status = "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
-> +       dr_mode = "peripheral";
-> +};
-> +
-> +&usb_1_hsphy {
-> +       vdda-pll-supply = <&vreg_l10c_0p88>;
-> +       vdda33-supply = <&vreg_l2b_3p072>;
-> +       vdda18-supply = <&vreg_l1c_1p8>;
-> +
-> +       status = "okay";
-> +};
-> +
-> +&usb_1_qmpphy {
-> +       vdda-phy-supply = <&vreg_l6b_1p2>;
-> +       vdda-pll-supply = <&vreg_l1b_0p912>;
-> +
-> +       status = "okay";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-rb3.dts b/arch/arm64/boot/dts/qcom/qcm6490-rb3.dts
-> new file mode 100644
-> index 000000000000..5b4c2826ac5c
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-rb3.dts
-> @@ -0,0 +1,26 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +/* PM7250B is configured to use SID8/9 */
-> +#define PM7250B_SID 8
-> +#define PM7250B_SID1 9
-> +
-> +#include "qcm6490-iot-common.dtsi"
-> +#include "pm7250b.dtsi"
-> +
-> +/ {
-> +       model = "Qualcomm Technologies, Inc. QCM6490 RB3";
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311040623.9oyUHQ6A-lkp@intel.com/
 
-Is this a marketing name of the platform?
+All errors (new ones prefixed by >>):
 
-> +       compatible = "qcom,qcm6490-rb3", "qcom,qcm6490";
+   drivers/clk/qcom/camcc-sm8550.c: In function 'cam_cc_sm8550_probe':
+>> drivers/clk/qcom/camcc-sm8550.c:3547:36: error: passing argument 1 of 'qcom_cc_really_probe' from incompatible pointer type [-Werror=incompatible-pointer-types]
+    3547 |         ret = qcom_cc_really_probe(pdev, &cam_cc_sm8550_desc, regmap);
+         |                                    ^~~~
+         |                                    |
+         |                                    struct platform_device *
+   In file included from drivers/clk/qcom/camcc-sm8550.c:19:
+   drivers/clk/qcom/common.h:61:48: note: expected 'struct device *' but argument is of type 'struct platform_device *'
+      61 | extern int qcom_cc_really_probe(struct device *dev,
+         |                                 ~~~~~~~~~~~~~~~^~~
+   cc1: some warnings being treated as errors
 
-chassis-type = ?
 
-> +
-> +       aliases {
-> +               serial0 = &uart5;
-> +       };
-> +
-> +       chosen {
-> +               stdout-path = "serial0:115200n8";
-> +       };
-> +};
-> --
-> 2.42.0
->
+vim +/qcom_cc_really_probe +3547 drivers/clk/qcom/camcc-sm8550.c
 
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3505  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3506  static int cam_cc_sm8550_probe(struct platform_device *pdev)
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3507  {
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3508  	struct regmap *regmap;
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3509  	int ret;
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3510  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3511  	ret = devm_pm_runtime_enable(&pdev->dev);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3512  	if (ret)
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3513  		return ret;
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3514  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3515  	ret = pm_runtime_resume_and_get(&pdev->dev);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3516  	if (ret)
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3517  		return ret;
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3518  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3519  	regmap = qcom_cc_map(pdev, &cam_cc_sm8550_desc);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3520  	if (IS_ERR(regmap)) {
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3521  		pm_runtime_put(&pdev->dev);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3522  		return PTR_ERR(regmap);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3523  	}
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3524  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3525  	clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3526  	clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3527  	clk_rivian_evo_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3528  	clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3529  	clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3530  	clk_lucid_ole_pll_configure(&cam_cc_pll5, regmap, &cam_cc_pll5_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3531  	clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, &cam_cc_pll6_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3532  	clk_lucid_ole_pll_configure(&cam_cc_pll7, regmap, &cam_cc_pll7_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3533  	clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3534  	clk_lucid_ole_pll_configure(&cam_cc_pll9, regmap, &cam_cc_pll9_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3535  	clk_lucid_ole_pll_configure(&cam_cc_pll10, regmap, &cam_cc_pll10_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3536  	clk_lucid_ole_pll_configure(&cam_cc_pll11, regmap, &cam_cc_pll11_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3537  	clk_lucid_ole_pll_configure(&cam_cc_pll12, regmap, &cam_cc_pll12_config);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3538  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3539  	/*
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3540  	 * Keep clocks always enabled:
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3541  	 *	cam_cc_gdsc_clk
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3542  	 *	cam_cc_sleep_clk
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3543  	 */
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3544  	regmap_update_bits(regmap, 0x1419c, BIT(0), BIT(0));
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3545  	regmap_update_bits(regmap, 0x142cc, BIT(0), BIT(0));
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3546  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07 @3547  	ret = qcom_cc_really_probe(pdev, &cam_cc_sm8550_desc, regmap);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3548  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3549  	pm_runtime_put(&pdev->dev);
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3550  
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3551  	return ret;
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3552  }
+ccc4e6a061a21d Jagadeesh Kona 2023-07-07  3553  
 
 -- 
-With best wishes
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
