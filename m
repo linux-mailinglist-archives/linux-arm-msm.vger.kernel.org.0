@@ -2,88 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 345A47E03BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 14:24:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB71A7E03DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 14:43:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230077AbjKCNYW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 09:24:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40708 "EHLO
+        id S230125AbjKCNn4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 09:43:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229463AbjKCNYV (ORCPT
+        with ESMTP id S230115AbjKCNnz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 09:24:21 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0066C111;
-        Fri,  3 Nov 2023 06:24:14 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A3Bumsn000971;
-        Fri, 3 Nov 2023 13:23:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BXRh8XjjR22c6SWsyXduhIg6ETGYP+wKqm6uE98Zfhg=;
- b=UWhaPc+WrKZaG0wngW56TD907NbHdKAn6A+WdpXe/KaE2p3X/KS20LOksyfpij06PpRP
- XuA61cchGv/qw/1HITrzaPacGoi7QpMYQsMEYLMLKWYGC1lk8quFY89+B4wrNibL0DaH
- F1On3sLoBqsrrcBeehjGv360IveKjyhXg+NCDbRLkYPxsaOVUasu9/mKCYp7TRZiDVqm
- YNcykYLjdcDqImqcXCTLdVr8uci53kq+MhsObNa6JArhpLffadFwIsOkVgTGcEF8oSv6
- kISlIlKM3KoiO4FwmIc3X/4FV/LWncgw4A54feCMhdf3q/LH0RuwMsj5uwI/uFiYkE23 QA== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u4r00h660-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 13:23:56 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3DNtDR020775
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 13:23:55 GMT
-Received: from [10.201.203.219] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 3 Nov
- 2023 06:23:49 -0700
-Message-ID: <4b911907-44b9-c164-9648-3d399e557672@quicinc.com>
-Date:   Fri, 3 Nov 2023 18:53:46 +0530
+        Fri, 3 Nov 2023 09:43:55 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB78E1B2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 06:43:49 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-540fb78363bso3507107a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 06:43:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699019028; x=1699623828; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lUofKOMyeRiI+omqXkiEakkUIo+DrNpKtlG2soH1hyM=;
+        b=bLf5XRcMyEQS+A6VzcqQ7oniZtuv+c5QbcJH8ZrO1gD2F3YKxYy6q9wT9aXZJtJZyV
+         b2JhVtQJPKXQvPufMQPTRbsbox2GrdrDUaiquse8TTcMcQfxPpltRDpFPz7fm5YIc2Kd
+         yBIoNZj8xRYOZNBA8fXqlP1PeE0iFve+58QDeWaSpJxsMeE3N8C7QU+GlebUs7jg/dIG
+         uotV6COaLWVjrYVjCNZ/oCombQoo7lUb3kPqprUOxgDr1+SPMqLWPu+UmNfgRRTb2KMm
+         uyRKfgk3RHSzz7bGTq7eZWYLp32sH1X2m1+XpzqlU8NEDBND3fzmuCKiQ928/iO350Cj
+         7lKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699019028; x=1699623828;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lUofKOMyeRiI+omqXkiEakkUIo+DrNpKtlG2soH1hyM=;
+        b=YOTNFATB+p4fYVA0zgGVrfwfkZ0G7BmzA46gffjwQxj3roiPk/pGGjiHoXPpyGn4Fx
+         JukhT9fJ/mK2LM1PVX/nlR4+A2lAia9lNdAselID4FkplWUNxUKHLdsAH38gKkAXqyZ3
+         vbZAImhntVn+jdWMMwdpGsrzXV2hM1fAaMgi11n8/7tpUuiAgp9D7DoEdgiuBrrYbNKe
+         GSGdVx488WDQ861sqEN1YsRw/wEZY7Cc3E4koftEY0TiIiTRje/IiwoXGg2Xf9SD+50U
+         upYKBcmX8WQiVoBveJXh6cn+XL/ZdI5jfFVBCb5nNNvTmxEDFXa1HY6NJ7qN3J4gy/dG
+         c1NQ==
+X-Gm-Message-State: AOJu0YyINWPOg/eN2hwbFCJ4IcAhhw+wGR749ClWlDlPMh0zpdud+tBN
+        xbZTIFIa1hUHgkO0kADqZ+wt3Q==
+X-Google-Smtp-Source: AGHT+IHqghtWI10o8Tcmh5vhSCxDwxO1tNoQ75PZTGXfeXlLlP9UEgy1jVpcoqzocj/4UskzEIA5Kg==
+X-Received: by 2002:a50:9552:0:b0:543:7201:7c70 with SMTP id v18-20020a509552000000b0054372017c70mr9221760eda.7.1699019028368;
+        Fri, 03 Nov 2023 06:43:48 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id 29-20020a508e5d000000b0052ffc2e82f1sm1010569edx.4.2023.11.03.06.43.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Nov 2023 06:43:47 -0700 (PDT)
+Message-ID: <7af13415-ca58-4084-9aea-f805cf266bb8@linaro.org>
+Date:   Fri, 3 Nov 2023 14:43:45 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [RFC PATCH 1/5] mtd: nand: ecc-qcom: Add support for ECC Engine
- Driver
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] soundwire: qcom: drop unneeded DAI .set_stream
+ callback
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <conor+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>, <linux-spi@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <qpic_varada@quicinc.com>
-References: <20231031120307.1600689-1-quic_mdalam@quicinc.com>
- <20231031120307.1600689-2-quic_mdalam@quicinc.com>
- <b9af01d2-1a86-4b41-9bd6-3bf7a0dde1c0@linaro.org>
- <553c1373-c9a0-b2af-2286-058824e31bad@quicinc.com>
- <CAA8EJpp-xsP1x==a5DH8pKpy7XH75UF-L8ewKWmeL8ePtxUq-A@mail.gmail.com>
-From:   Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <CAA8EJpp-xsP1x==a5DH8pKpy7XH75UF-L8ewKWmeL8ePtxUq-A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
+References: <20231025144601.268645-1-krzysztof.kozlowski@linaro.org>
+ <322002af-09e8-4d4c-bc85-81654c6b5f9d@linux.intel.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <322002af-09e8-4d4c-bc85-81654c6b5f9d@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yB9V2oOg36eNJzFEQMzSvY3DRh3BJmo2
-X-Proofpoint-GUID: yB9V2oOg36eNJzFEQMzSvY3DRh3BJmo2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_12,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- mlxlogscore=999 clxscore=1011 impostorscore=0 spamscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030112
-X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,124 +131,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11/3/2023 6:03 PM, Dmitry Baryshkov wrote:
-> On Fri, 3 Nov 2023 at 14:25, Md Sadre Alam <quic_mdalam@quicinc.com> wrote:
->>
->>
->>
->> On 10/31/2023 10:41 PM, Krzysztof Kozlowski wrote:
->>> On 31/10/2023 13:03, Md Sadre Alam wrote:
->>>
->>> Eh? Empty?
->>
->> QPIC controller has the ecc pipelined so will keep the ecc support
->> inlined in both raw nand and serial nand driver.
->>
->> Droping this driver since device node was NAK-ed
->> https://www.spinics.net/lists/linux-arm-msm/msg177596.html
-> 
-> It seems, we have to repeat the same thing again and again:
-> 
-> It was not the device node that was NAKed. It was the patch that was
-> NAKed. Please read the emails carefully.
-> 
-> And next time please perform dtbs_check, dt_binding_check and
-> checkpatch before sending the patch.
-> 
-> It is perfectly fine to ask questions 'like we are getting we are
-> getting this and that issues with the bindings, please advise'. It is
-> not fine to skip that step completely.
-
-Sorry in V1 will run all basic checks.
-
-Based on below feedback [1] and NAK on the device node patch
-got idea of having separate device node for ECC is not acceptable.
-Could you please help to clarify that.
-
-Since ECC block is inlined with QPIC controller so is the below
-device node acceptable ?
-
-    bch: qpic_ecc {
-                           compatible = "qcom,ipq9574-ecc";
-                           status = "ok";
-                   };
-
-  [1] https://www.spinics.net/lists/linux-arm-msm/msg177525.html
-
-> 
->>>
->>>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->>>> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
->>>> ---
->>>>    drivers/mtd/nand/Kconfig    |   7 ++
->>>>    drivers/mtd/nand/Makefile   |   1 +
->>>>    drivers/mtd/nand/ecc-qcom.c | 198 ++++++++++++++++++++++++++++++++++++
->>>>    3 files changed, 206 insertions(+)
->>>>    create mode 100644 drivers/mtd/nand/ecc-qcom.c
->>>>
->>>
->>> ...
->>>
->>>> +
->>>> +    return 0;
->>>> +}
->>>> +EXPORT_SYMBOL(qcom_ecc_config);
->>>> +
->>>> +void qcom_ecc_enable(struct qcom_ecc *ecc)
->>>> +{
->>>> +    ecc->use_ecc = true;
->>>> +}
->>>> +EXPORT_SYMBOL(qcom_ecc_enable);
->>>
->>> Drop this and all other exports. Nothing here explains the need for them.
->>>
->>>> +
->>>> +void qcom_ecc_disable(struct qcom_ecc *ecc)
->>>> +{
->>>> +    ecc->use_ecc = false;
->>>> +}
->>>> +EXPORT_SYMBOL(qcom_ecc_disable);
->>>> +
->>>> +static const struct of_device_id qpic_ecc_dt_match[] = {
->>>> +    {
->>>> +            .compatible = "qcom,ipq9574-ecc",
->>>
->>> Please run scripts/checkpatch.pl and fix reported warnings. Some
->>> warnings can be ignored, but the code here looks like it needs a fix.
->>> Feel free to get in touch if the warning is not clear.
->>>
->>> Checkpatch is preerquisite. Don't send patches which have obvious issues
->>> pointed out by checkpatch. It's a waste of reviewers time.
->>>
->>>> +    },
->>>> +    {},
->>>> +};
->>>> +
->>>> +static int qpic_ecc_probe(struct platform_device *pdev)
->>>> +{
->>>> +    struct device *dev = &pdev->dev;
->>>> +    struct qpic_ecc *ecc;
->>>> +    u32 max_eccdata_size;
->>>> +
->>>> +    ecc = devm_kzalloc(dev, sizeof(*ecc), GFP_KERNEL);
->>>> +    if (!ecc)
->>>> +            return -ENOMEM;
->>>> +
->>>> +    ecc->caps = of_device_get_match_data(dev);
->>>> +
->>>> +    ecc->dev = dev;
->>>> +    platform_set_drvdata(pdev, ecc);
->>>> +    dev_info(dev, "probed\n");
->>>
->>> No, no such messages.
->>>
->>>
->>>
->>> Best regards,
->>> Krzysztof
->>>
+On 25/10/2023 17:12, Pierre-Louis Bossart wrote:
 > 
 > 
+> On 10/25/23 09:45, Krzysztof Kozlowski wrote:
+>> Qualcomm Soundwire controller drivers do not support multi-link setups,
+>> so DAI .set_stream() callback will not be used.  What's more, if called
+>> it will overwrite the sdw_stream_runtime runtime set in DAI .startup
+>> (qcom_swrm_startup()) causing issues (unsupported multi-link error) when
+>> two Soundwire controllers are passed as codec DAIs.
 > 
+> This last sentence is confusing at best.
+> 
+> A controller can have one or more managers, each of whom can have one or
+> more peripherals.
+> 
+> only peripherals should expose codec DAIs, managers should expose CPU DAIs.
+> 
+> Put differently, the controller is the host part while the peripheral is
+> the codec part. "controllers passed as codec DAIs" is not really
+> possible, or this was a typo?
+
+No, it wasn't a typo. Take a look here:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts#n1023
+
+The <&swr0 0> is the controller, although probably I should call it
+manager, but in case of Qualcomm I think they are 1-to-1.
+
+Best regards,
+Krzysztof
+
