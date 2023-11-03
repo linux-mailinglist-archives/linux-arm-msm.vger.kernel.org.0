@@ -2,128 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E18C77E0482
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 15:16:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C894D7E04F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 15:48:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230119AbjKCOQn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 10:16:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49172 "EHLO
+        id S231438AbjKCOsw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 10:48:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230052AbjKCOQm (ORCPT
+        with ESMTP id S231637AbjKCOsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 10:16:42 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3CC8D42
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 07:16:34 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-32faea0fa1fso1042938f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 07:16:34 -0700 (PDT)
+        Fri, 3 Nov 2023 10:48:51 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 959DAD53
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Nov 2023 07:48:43 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9dbb3e0ff65so264581666b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 07:48:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699020993; x=1699625793; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=evXjT31VfWFinCwS9eVIYPm4dsZFzW7Jc82ftHB3Fl8=;
-        b=sYoD7m3IfiSNCdAv+BgbZwmreLPultYiIKz52RdIizVpRx7oU+gKMbuqcg58CY9t5c
-         p/ZcpKMuFI+jFmljQ/aFAM34nh6rF/g+0j6UwWl93iyQ5e2AeaYsBumrdGnBVFksitsm
-         9TM6n3uHtxxHjmg1QtWyHaV2jpc5LDhvFcBlQjpSTHa37r2fXc0fGAprUdjDu1QIPlrB
-         AOo2t68y1x/DIBi6oXHLxE/mFRAdb7c7kY6JZvXj1ABXNCtlz8K96NeccpM3w7S6Oh25
-         QuDUENiPE8R/bO9QjuOY0WrhLMfFm0SyuPyGS/b8tEFXaJowau3HcHLfC7zV3szP8Hv0
-         hKVQ==
+        d=chromium.org; s=google; t=1699022920; x=1699627720; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PfjHfwWNRKQtLWE4mF8zOuQXPhouIuA80xLEWdz457U=;
+        b=bNUMumbdY6wGzVw2bEGrojJQ/4Iy2aBf0c22RXV6fISGXPZ7Y1/UkTEHflM4HcoZKO
+         SG3L/0FEdZWOtVjD4dinX+pyaGQCWZB6aKjyP7I1a1TQ22JCojJtghOrcI5UTL+SsUOM
+         BHgx94ErrVGeUboJcgTmC3lGH21uHkuOfJrXg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699020993; x=1699625793;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=evXjT31VfWFinCwS9eVIYPm4dsZFzW7Jc82ftHB3Fl8=;
-        b=tNB1A96xu+u/vacX1+xaz6aoFCQDwtRs9N1o7z9RHu67cz2a2p0WNiy8TTqU3oMTa3
-         ULgHCtzRWVYkZ25z6BEVFEKK6qhpepUI9kXaYscYXIFTgGaWsZWwP+sN2/H/IMU49aEA
-         v/5QOhAPYdAW64Z23AZT2W8G9LTRzV9SPHFBYVz4u048MJ5kjCO/vqmQcf/KtE/UB8Vc
-         LtueHwuazKZD7g7Cz1uiX0JvhTo/qEGO0iRKSzAWDA7JCQeE3kYWIapGoOONuw+ijXEo
-         z0lg9VcZNunnUUB52nvKUGx5i2Yn1jq3pQXDQup5CP2sYu8QnfX3VYTGtcFuYT/LYc2c
-         YiCA==
-X-Gm-Message-State: AOJu0YztXpSdLqGTGMyz4StBfYe7/RbjVmXn41IK3DdlUvHck53I88pP
-        iOnCQHVFlgwa+bKglhHMpOGTSw==
-X-Google-Smtp-Source: AGHT+IGn31m/dJNBXZFppXDkdzaC8uBqRWYSpLjgTz7gbjkVWnQc1uyK6AYeX85jvWMZ/DG4XpDYCg==
-X-Received: by 2002:a05:6000:184:b0:32f:68ae:239c with SMTP id p4-20020a056000018400b0032f68ae239cmr3171736wrx.16.1699020993224;
-        Fri, 03 Nov 2023 07:16:33 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id h17-20020adff4d1000000b0032d96dd703bsm1970175wrp.70.2023.11.03.07.16.31
+        d=1e100.net; s=20230601; t=1699022920; x=1699627720;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PfjHfwWNRKQtLWE4mF8zOuQXPhouIuA80xLEWdz457U=;
+        b=iLJl+0kC7FaovtJU6miZRe858oEoBi5BPTCB8uq3FbC+M6FnkQBOtlmnZai5Zx0kZL
+         5GPoVU2fqS1EROp8T7b0NYRjo8ApXxGavArcG9OEe+cityeORcba+fSrd0LIKH1uQtrF
+         gwUdK2OfF4X2CBYRax+PIvoQ2Fc5sqEGsX+bPMoHrgBJNiDajdOg9Ofn9EGDF6wsJK0R
+         +EzYp/P2k2w24bETv4nvke5Xr43uQgV/lQW3MALGBvvT/VYJ/bSqXvmHEL+fo16rQEXN
+         vCcAxyrCU+Z3AMSRk6xyASFieIRE+ZitcPrwcPpmiBMlROO9/DT0Wl/9n6L1h7d6cckg
+         KPDw==
+X-Gm-Message-State: AOJu0YwM47zVTv7RabXyxdKtQObBXbhHiZyLmxjUGod3QHiGZwdl8XJp
+        JRJOifhtLi1YcmwgvbWlB1jth3qwYPx7Cwq/FeY5iC7v
+X-Google-Smtp-Source: AGHT+IEd4oM5qJrPFTOrN1fvemo9CgsNTCYmCGaN99iG/R7G8VJhk0rQAkd474Ff2CEq2p+EQwkLKQ==
+X-Received: by 2002:a17:907:9085:b0:9c6:64be:a3c9 with SMTP id ge5-20020a170907908500b009c664bea3c9mr4895751ejb.39.1699022920280;
+        Fri, 03 Nov 2023 07:48:40 -0700 (PDT)
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com. [209.85.128.49])
+        by smtp.gmail.com with ESMTPSA id ft30-20020a170907801e00b009dd7097ca22sm429003ejc.194.2023.11.03.07.48.39
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Nov 2023 07:16:32 -0700 (PDT)
-Message-ID: <160752cb-7772-4b1d-9096-8be25e76213c@linaro.org>
-Date:   Fri, 3 Nov 2023 15:16:30 +0100
+        Fri, 03 Nov 2023 07:48:39 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40837124e1cso88025e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Nov 2023 07:48:39 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c26:b0:404:74f8:f47c with SMTP id
+ j38-20020a05600c1c2600b0040474f8f47cmr171937wms.5.1699022919108; Fri, 03 Nov
+ 2023 07:48:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] ASoC: codecs: wsa884x: check if set_stream is called
- for proper bus
-Content-Language: en-US
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-References: <20231025144601.268645-1-krzysztof.kozlowski@linaro.org>
- <20231025144601.268645-3-krzysztof.kozlowski@linaro.org>
- <8b9db87b-0f61-4824-acf1-6b5ebdf45e63@linux.intel.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <8b9db87b-0f61-4824-acf1-6b5ebdf45e63@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+References: <20231103105712.1159213-1-quic_adhudase@quicinc.com>
+In-Reply-To: <20231103105712.1159213-1-quic_adhudase@quicinc.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 3 Nov 2023 07:48:21 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Un2GnOC64AXgKa31FNZ+FM2dMbHVT8UuZXNbMUDBD=8w@mail.gmail.com>
+Message-ID: <CAD=FV=Un2GnOC64AXgKa31FNZ+FM2dMbHVT8UuZXNbMUDBD=8w@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: llcc: Fix dis_cap_alloc and retain_on_pc configuration
+To:     Atul Dhudase <quic_adhudase@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        swboyd@chromium.org, isaacm@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -132,121 +77,52 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/10/2023 17:03, Pierre-Louis Bossart wrote:
-> 
-> 
-> On 10/25/23 09:46, Krzysztof Kozlowski wrote:
->> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->>
->> If multiple WSA8840 speakers, from two separate Soundwire buses, are
->> used in one codec DAI link, the set_stream() should ignore calls for
->> setting stream from other Soundwire controller.
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> Co-developed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>  sound/soc/codecs/wsa884x.c | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
->> diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
->> index bee6e763c700..91205e8c96f1 100644
->> --- a/sound/soc/codecs/wsa884x.c
->> +++ b/sound/soc/codecs/wsa884x.c
->> @@ -1775,6 +1775,12 @@ static int wsa884x_set_stream(struct snd_soc_dai *dai,
->>  			      void *stream, int direction)
->>  {
->>  	struct wsa884x_priv *wsa884x = dev_get_drvdata(dai->dev);
->> +	struct sdw_stream_runtime *sruntime = stream;
->> +	struct sdw_slave *sdw = dev_to_sdw_dev(dai->dev);
->> +
->> +	/* Check if this belongs to same bus */
->> +	if (sdw->bus->dev != sruntime->dev)
->> +		return 0;
-> 
-> Sorry, maybe I am really thick or need coffee, but I can't figure out
-> why this is necessary. Each amplifier has its own "wsa884x_priv" context
-> and should have its own DAI, not following why the set_stream would
-> mix-up the two dais?
-> 
-> We've been using two buses for two amplifiers since CometLake (2019?)
-> and I don't see what's different?
+Hi,
 
-Let me start with some hardware representation in DTS.
+On Fri, Nov 3, 2023 at 3:57=E2=80=AFAM Atul Dhudase <quic_adhudase@quicinc.=
+com> wrote:
+>
+> While programming dis_cap_alloc and retain_on_pc, set a bit
+> corresponding to a specific SCID without disturbing the
+> previously configured bits.
+>
+> Fixes: c14e64b46944 ("soc: qcom: llcc: Support chipsets that can write to=
+ llcc")
+> Signed-off-by: Atul Dhudase <quic_adhudase@quicinc.com>
+> ---
+>  drivers/soc/qcom/llcc-qcom.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 674abd0d6700..509d972c1bd9 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -941,15 +941,15 @@ static int _qcom_llcc_cfg_program(const struct llcc=
+_slice_config *config,
+>                 u32 disable_cap_alloc, retain_pc;
+>
+>                 disable_cap_alloc =3D config->dis_cap_alloc << config->sl=
+ice_id;
+> -               ret =3D regmap_write(drv_data->bcast_regmap,
+> -                               LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_=
+alloc);
+> +               ret =3D regmap_update_bits(drv_data->bcast_regmap, LLCC_T=
+RP_SCID_DIS_CAP_ALLOC,
+> +                               BIT(config->slice_id), disable_cap_alloc)=
+;
+>                 if (ret)
+>                         return ret;
+>
+>                 if (drv_data->version < LLCC_VERSION_4_1_0_0) {
+>                         retain_pc =3D config->retain_on_pc << config->sli=
+ce_id;
+> -                       ret =3D regmap_write(drv_data->bcast_regmap,
+> -                                       LLCC_TRP_PCB_ACT, retain_pc);
+> +                       ret =3D regmap_update_bits(drv_data->bcast_regmap=
+, LLCC_TRP_PCB_ACT,
+> +                                       BIT(config->slice_id), retain_pc)=
+;
 
-We have two Soundwire controllers swr0 and swr3, each with two WSA884x
-speakers (codecs):
+Wow, that seems pretty serious. As far as I can tell this looks correct.
 
--------------
-&swr0 {
-	status = "okay";
-
-	left_woofer: speaker@0,0 {
-		compatible = "sdw20217020400";
-		reg = <0 0>;
-		// ...
-	};
-
-	/* WSA8845, Left Tweeter */
-	left_tweeter: speaker@0,1 {
-		compatible = "sdw20217020400";
-		reg = <0 1>;
-		// ...
-	};
-};
-
-&swr3 {
-	status = "okay";
-
-	/* WSA8845, Right Woofer */
-	right_woofer: speaker@0,0 {
-		compatible = "sdw20217020400";
-		reg = <0 0>;
-		// ...
-	};
-
-	/* WSA8845, Right Tweeter */
-	right_tweeter: speaker@0,1 {
-		compatible = "sdw20217020400";
-		reg = <0 1>;
-		// ...
-	};
-};
--------------
-
-Now, for four-speaker playback, we have sound card with links like:
-
--------------
-wsa-dai-link {
-	link-name = "WSA Playback";
-
-	cpu {
-		sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-	};
-
-	codec {
-		sound-dai = <&left_woofer>, <&left_tweeter>,
-			    <&swr0 0>, <&lpass_wsamacro 0>,
-			    <&right_woofer>, <&right_tweeter>,
-			    <&swr3 0>, <&lpass_wsa2macro 0>;
-	};
-
-	platform {
-		sound-dai = <&q6apm>;
-	};
-};
--------------
-
-We need to prepare the stream for all four speakers and two soundwire
-controllers (so two different soundwire buses), however without the
-patches here, the stream (sdw_stream_runtime *sruntime) right
-woofer/twitter is set to swr0 (the other bus!). But it should stay as
-swr3 (their bus).
-
-Does it help a bit? I hope I am able to properly explain it.
-
-Thanks for your feedback and review!
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
