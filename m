@@ -2,90 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E8C67DFEE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 06:36:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CFFC47E016A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 11:31:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbjKCFgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 01:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36920 "EHLO
+        id S1346360AbjKCH7H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 03:59:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234305AbjKCFf2 (ORCPT
+        with ESMTP id S1346404AbjKCH7E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 01:35:28 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92D5E1A6;
-        Thu,  2 Nov 2023 22:35:22 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A34KPfK015248;
-        Fri, 3 Nov 2023 05:35:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3QTZMrtNQ5iXV3Oe5LVRAtX8boxCFoz2CC9S7yIUmwY=;
- b=p2/i3aY+Apx1DCyzbVxvndiq5BURvy0PvlAgedw2EWo6nCD+xkDvhYSn6SMdnPIjlV0+
- FHGYQKuiZyIpPg2h08MMjsoUIMm2CYEc91HdjIXjs+AFJaUmnF4FfLcT84TA6vHxNMCF
- dkmviEXGhDfUr2HPGXGtybZZg1ADLp0PtiHmYaF34ZqzlxI1qYXupTE+ndGiS/7R4VSv
- VZzC/nJkdYq+EEwj4A1IMhTbA1pcol0SWjjXhLivqRyEMkjj+TUp4p7e9WwWLeG04Dbk
- VATgp7NI9F18P46zUJFLuDGiTPJ3sd/a+vRYexSQKJ5RNqmGOPuFbYNyKecggxdGAwdB Kg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u477ptctp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 05:35:09 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A35Z9hc019035
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 05:35:09 GMT
-Received: from [10.249.8.98] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 2 Nov
- 2023 22:35:03 -0700
-Message-ID: <f0820464-16d6-47fd-90bc-cf80b5d76058@quicinc.com>
-Date:   Fri, 3 Nov 2023 11:04:59 +0530
+        Fri, 3 Nov 2023 03:59:04 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A55F8D42;
+        Fri,  3 Nov 2023 00:59:00 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F884C433C8;
+        Fri,  3 Nov 2023 07:58:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1698998340;
+        bh=qtqj9OcXQ0iJ8x3L6ERsYaZ8Di9Scjzubky7iBS/P+Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TfY5gDc10v1zOKbNWcFNALTh2Q5pUyUv6TL2J3Y3/xy8uaJKFJOoBGuKXkMOQVPfv
+         1LvUCqNK7xvo5M5lkVovgiUkRmHeCQUdqXrq3G75tMl6xkStdO2EqbVdZazFsCn/N5
+         xpBYnkgNtaG/Jar/jP2hEnUCyTIQm+3dedS8ATUKIRC6iCMlkGUOr8Jf42v1FcgRw9
+         /NzGaz7k7m+sgHpkiyiUC6+3pZhcdvJAHTSzPwrWo0xrllUbWGm8OOLknYwLk8yxdc
+         7/BshZ3WmshVeIKYDbmtR4xv9Rt+GL62+HIruVbBlL3IdWiz8VTwfDTYY1Bpw6m2vL
+         cfn3M5sFPr7hg==
+Date:   Fri, 3 Nov 2023 13:28:49 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, robh+dt@kernel.org, quic_shazhuss@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
+        quic_nayiluri@quicinc.com, robh@kernel.org,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        quic_parass@quicinc.com, quic_schintav@quicinc.com,
+        quic_shijjose@quicinc.com,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v1 1/3] PCI: qcom: Enable cache coherency for SA8775P RC
+Message-ID: <20231103075849.GA3039@thinkpad>
+References: <1698767186-5046-1-git-send-email-quic_msarkar@quicinc.com>
+ <1698767186-5046-2-git-send-email-quic_msarkar@quicinc.com>
+ <CAA8EJpoMoUvF8R3PjgCNijS6-8Gs5FjvC6dYerNBVBuYW3FmPA@mail.gmail.com>
+ <20231102163619.GA20943@thinkpad>
+ <21dea74b-b802-2e69-af4b-07dfb68b7024@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/8] dt-bindings: usb: qcom,dwc3: Add bindings to enable
- runtime
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     <quic_wcheng@quicinc.com>, <linux-usb@vger.kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        "Philipp Zabel" <p.zabel@pengutronix.de>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <devicetree@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>
-References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
- <20231017131851.8299-2-quic_kriskura@quicinc.com>
- <272a9764-1cae-4d86-88b1-00175de83333@linaro.org>
- <960101cc-78c0-49cf-ab62-90614eeb9ee2@quicinc.com>
- <dbf4a48e-c808-4611-96b1-563ece1e451a@linaro.org>
-Content-Language: en-US
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <dbf4a48e-c808-4611-96b1-563ece1e451a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xwJggyNvg_32N2PTZ1CiQ1B-Zou6tdu-
-X-Proofpoint-ORIG-GUID: xwJggyNvg_32N2PTZ1CiQ1B-Zou6tdu-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_05,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- phishscore=0 adultscore=0 clxscore=1015 priorityscore=1501 mlxscore=0
- mlxlogscore=746 bulkscore=0 impostorscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030045
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+In-Reply-To: <21dea74b-b802-2e69-af4b-07dfb68b7024@linaro.org>
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -94,36 +67,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 11/3/2023 12:10 AM, Caleb Connolly wrote:
->> Hi Caleb,
->>
->>    There are two types of platforms, some use extcon and some use 
->> role-switch to deliver vbus/id notifications. Extcon targets already 
->> have this qscratch modifications present today in vbus and id 
->> handlers. But for role-switch based targets we don't have any way to 
->> get this notification to dwc3-qcom. In this implementation, I wanted 
->> to get those notications from core to glue and for this we implenented 
->> vendor hooks.
->>
->> The property added has been used to do two things:
->>
->> 1. Register glue's vendor hooks to core driver
->> 2. Do runtime_allow for glue (and by default for core as the dt is not 
->> flattened)
->>
->> In case of extcon, we don't want to register vendor hooks as 
->> notifications are not necessary.
+On Thu, Nov 02, 2023 at 11:25:36PM +0100, Konrad Dybcio wrote:
 > 
-> Could it just be enabled when role_switch is present then?
->>
+> 
+> On 02/11/2023 17:36, Manivannan Sadhasivam wrote:
+> > On Thu, Nov 02, 2023 at 05:34:24PM +0200, Dmitry Baryshkov wrote:
+> > > On Tue, 31 Oct 2023 at 17:46, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
+> > > > 
+> > > > This change will enable cache snooping logic to support
+> > > > cache coherency for SA8755P RC platform.
+> > > > 
+> > > > Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> > > > ---
+> > > >   drivers/pci/controller/dwc/pcie-qcom.c | 11 +++++++++++
+> > > >   1 file changed, 11 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > index 6902e97..6f240fc 100644
+> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > @@ -51,6 +51,7 @@
+> > > >   #define PARF_SID_OFFSET                                0x234
+> > > >   #define PARF_BDF_TRANSLATE_CFG                 0x24c
+> > > >   #define PARF_SLV_ADDR_SPACE_SIZE               0x358
+> > > > +#define PCIE_PARF_NO_SNOOP_OVERIDE             0x3d4
+> > > >   #define PARF_DEVICE_TYPE                       0x1000
+> > > >   #define PARF_BDF_TO_SID_TABLE_N                        0x2000
+> > > > 
+> > > > @@ -117,6 +118,9 @@
+> > > >   /* PARF_LTSSM register fields */
+> > > >   #define LTSSM_EN                               BIT(8)
+> > > > 
+> > > > +/* PARF_NO_SNOOP_OVERIDE register value */
+> > > > +#define NO_SNOOP_OVERIDE_EN                    0xa
+> > > > +
+> > > >   /* PARF_DEVICE_TYPE register fields */
+> > > >   #define DEVICE_TYPE_RC                         0x4
+> > > > 
+> > > > @@ -961,6 +965,13 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+> > > > 
+> > > >   static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+> > > >   {
+> > > > +       struct dw_pcie *pci = pcie->pci;
+> > > > +       struct device *dev = pci->dev;
+> > > > +
+> > > > +       /* Enable cache snooping for SA8775P */
+> > > > +       if (of_device_is_compatible(dev->of_node, "qcom,pcie-sa8775p"))
+> > > 
+> > > Obviously: please populate a flag in the data structures instead of
+> > > doing of_device_is_compatible(). Same applies to the patch 2.
+> > > 
+> > 
+> > Not necessary at this point. For some unknown reasons, the HW team ended up
+> > disabling cache snooping on this specific platform. Whereas on other platforms,
+> > it is enabled by default. So I have low expectations that we would need this
+> > setting on other platforms in the future.
+> > 
+> > My concern with the usage of flag is that it warrants a new "qcom_pcie_cfg"
+> > instance just for this quirk and it looks overkill to me.
+> > 
+> > So if we endup seeing this behavior on other platforms as well (unlikely) then
+> > we can switch to the flag approach.
+> This register reads zeroes on 8250, can we confirm it works as
+> expected there?
 
-So we would register vendor hooks when usb-role-switch is present but 
-don't do runtime allow, and leave that option to user space right ?
-I think it would work and we can do away with the binding completely.
+I don't know if this register is even implemented in 8250. Mrinmay, can you
+check?
 
-Will wait for comments from other folks as well on this approach.
+> I guess some benchmarks with and without
+> 'dma-coherent'?
+> 
 
-Thanks for the review,
-Krishna,
+The performance benefit can be measured by saturating the link. But it is
+obvious that snooping the cache will give better performance (plus it avoids
+cache flush in kernel).
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
