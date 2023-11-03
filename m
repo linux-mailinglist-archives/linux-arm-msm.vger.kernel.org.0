@@ -2,138 +2,237 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE2AA7E097E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 20:34:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C73A87E0991
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Nov 2023 20:42:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232839AbjKCTe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 15:34:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54364 "EHLO
+        id S230291AbjKCTmc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 15:42:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230259AbjKCTeZ (ORCPT
+        with ESMTP id S230192AbjKCTmb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 15:34:25 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC5FD5C;
-        Fri,  3 Nov 2023 12:34:20 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A3ImtN1018633;
-        Fri, 3 Nov 2023 19:33:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=NnkKwHdTAG/uIB15wK/mUUmEM7fyaAx7mLbZtB7bWyk=;
- b=Vac+K9PaalKrkRgnP/MuB9UxdYy3tRRhRYsdSXnygZCeqY5tlZqj7h30iSnUtiAh4ltD
- fHkbpFhe5moOUsGUu+iHzqCA3DNrDFecWb9hs9mdpxutw+cR4xb56fSil6Wlb1Tb+HxJ
- 9PfQ+bEhDLD/14vX4lUVua9iNViaACkAMW3Ytlf0vxpej6zMZSHEf0LH3yW77+Cu/dL+
- 88UGXJs2HqZo5T9NPfS/w0FzjHpiY+oqGVOFSR5Uhwv9+jwKeNtFi2AMszmpqRb30ZqP
- 9d0Fk60RO7kjhjrrHydDbzFBjQIY1UBxIh4YIHT786KscUHTyVO9aFmzYL0jlYNxDQkj zA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u4r00j152-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 03 Nov 2023 19:33:47 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A3JXkeM006513
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 3 Nov 2023 19:33:46 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Fri, 3 Nov 2023 12:33:45 -0700
-Date:   Fri, 3 Nov 2023 12:33:45 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Atul Dhudase <quic_adhudase@quicinc.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <swboyd@chromium.org>,
-        <isaacm@codeaurora.org>, <dianders@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] soc: qcom: llcc: Fix dis_cap_alloc and retain_on_pc
- configuration
-Message-ID: <20231103193345.GY3553829@hu-bjorande-lv.qualcomm.com>
-References: <20231103105712.1159213-1-quic_adhudase@quicinc.com>
+        Fri, 3 Nov 2023 15:42:31 -0400
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D3B0D50;
+        Fri,  3 Nov 2023 12:42:29 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E87C433C8;
+        Fri,  3 Nov 2023 19:42:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1699040548;
+        bh=S85mameRPRRNGRNjFJvCP+oPALlyzRxrT6MFpHRCEe0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=GzCaKem2q+eRgkJPHAs1kSEEwbZyja+YMIXwdLgxn3tacI/VlZw5Arffaqr4qS6gS
+         MDU9oU1CdkUYttX6hutisSUoEbI+hhqy8eHya+wGV1+o5LpkvAZaNh8A6ms9YhsXub
+         sB/d2h7QO7CJnkNp+LU5MdU8ns0MQ2q7J0CgYBxeDLCyaPxNZUHiQAOsStCoC1+U0L
+         kdDhxsfSUAXfQkzyHPq2LtPz1J99V4ZokwLnptzBMbps4rJU7emN6abn+xEyMGMcoD
+         UNeiqpppc13fg1ljvPTz/sqnDS0ByfGT9RJVNthohdgwSdZx5/nsA9RgOEC7hk9B0K
+         Ym84V8O7uqRhw==
+Date:   Fri, 3 Nov 2023 12:46:33 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     "Rafael J. Wysocki" <rafael@kernel.org>,
+        Kevin Hilman <khilman@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH RESEND v3 1/5] PM: domains: Allow devices attached to
+ genpd to be managed by HW
+Message-ID: <f2tufov2amxapubo4r3wqnzuf3qgm2bt2hc6g5zszj4r5w47xf@vmw3on4axns4>
+References: <20231101-gdsc-hwctrl-v3-0-0740ae6b2b04@linaro.org>
+ <20231101-gdsc-hwctrl-v3-1-0740ae6b2b04@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231103105712.1159213-1-quic_adhudase@quicinc.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RJd56D_8WL5cb-sR_2q6tCtBeFrtqEPQ
-X-Proofpoint-GUID: RJd56D_8WL5cb-sR_2q6tCtBeFrtqEPQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-03_18,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxscore=0
- mlxlogscore=999 clxscore=1011 impostorscore=0 spamscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 lowpriorityscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311030164
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20231101-gdsc-hwctrl-v3-1-0740ae6b2b04@linaro.org>
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Nov 03, 2023 at 04:27:12PM +0530, Atul Dhudase wrote:
-> While programming dis_cap_alloc and retain_on_pc, set a bit
-> corresponding to a specific SCID without disturbing the
-> previously configured bits.
+On Wed, Nov 01, 2023 at 11:04:07AM +0200, Abel Vesa wrote:
+> From: Ulf Hansson <ulf.hansson@linaro.org>
 > 
+> Some power-domains may be capable of relying on the HW to control the power
+> for a device that's hooked up to it. Typically, for these kinds of
+> configurations the device doesn't really need to be attached to a PM domain
+> (genpd), from Linux point of view.
 
-As far as I can see, the only invocation of _qcom_llcc_cfg_program()
-comes from qcom_llcc_cfg_program(), which is only called once, from
-qcom_llcc_probe(), and here also seems to only be the single write to
-these two registers.
+Per patch 5, this description isn't correct.
 
-This implies that "the previously configured bits" would be some unknown
-configuration provided to us either from the bootloader or by reset of
-the hardware. As such this changes the value of the two registers from
-being known, to having 31 unknown bits.
-
-
-I'm not saying that the change is wrong, but you're altering the
-behavior of every platform except SDM845.
-As such, I want the commit message to provide an actual problem
-description, and mention the fact that you're changing the logic to
-retain the state prior to Linux.
+Linux enables the power-domain, which in turn enables parent domains
+etc. Once the firmware is booted the hardware-control mechanism is
+engaged, but until then, and in order to keep the supplies to the domain
+voted for, Linux needs a proper genpd.
 
 Regards,
 Bjorn
 
-> Fixes: c14e64b46944 ("soc: qcom: llcc: Support chipsets that can write to llcc")
-> Signed-off-by: Atul Dhudase <quic_adhudase@quicinc.com>
+> However, in some cases the behaviour of
+> the power-domain and its device can be changed in runtime.
+> 
+> To allow a consumer driver to change the behaviour of the PM domain for its
+> device, let's provide a new function, dev_pm_genpd_set_hwmode(). Moreover,
+> let's add a corresponding optional genpd callback, ->set_hwmode_dev(),
+> which the genpd provider should implement if it can support switching
+> between HW controlled mode and SW controlled mode. Similarly, add the
+> dev_pm_genpd_get_hwmode() to allow consumers to read the current mode and
+> its corresponding optional genpd callback, ->get_hwmode_dev(), which the
+> genpd provider can also implement for reading back the mode from the
+> hardware.
+> 
+> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  drivers/soc/qcom/llcc-qcom.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  drivers/base/power/domain.c | 69 +++++++++++++++++++++++++++++++++++++++++++++
+>  include/linux/pm_domain.h   | 17 +++++++++++
+>  2 files changed, 86 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 674abd0d6700..509d972c1bd9 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -941,15 +941,15 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
->  		u32 disable_cap_alloc, retain_pc;
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index da1777e39eaa..3fb1a234c7f2 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -550,6 +550,75 @@ void dev_pm_genpd_synced_poweroff(struct device *dev)
+>  }
+>  EXPORT_SYMBOL_GPL(dev_pm_genpd_synced_poweroff);
+>  
+> +/**
+> + * dev_pm_genpd_set_hwmode - Set the HW mode for the device and its PM domain.
+> + *
+> + * @dev: Device for which the HW-mode should be changed.
+> + * @enable: Value to set or unset the HW-mode.
+> + *
+> + * Some PM domains can rely on HW signals to control the power for a device. To
+> + * allow a consumer driver to switch the behaviour for its device in runtime,
+> + * which may be beneficial from a latency or energy point of view, this function
+> + * may be called.
+> + *
+> + * It is assumed that the users guarantee that the genpd wouldn't be detached
+> + * while this routine is getting called.
+> + *
+> + * Returns 0 on success and negative error values on failures.
+> + */
+> +int dev_pm_genpd_set_hwmode(struct device *dev, bool enable)
+> +{
+> +	struct generic_pm_domain *genpd;
+> +	int ret = 0;
+> +
+> +	genpd = dev_to_genpd_safe(dev);
+> +	if (!genpd)
+> +		return -ENODEV;
+> +
+> +	if (!genpd->set_hwmode_dev)
+> +		return -EOPNOTSUPP;
+> +
+> +	genpd_lock(genpd);
+> +
+> +	if (dev_gpd_data(dev)->hw_mode == enable)
+> +		goto out;
+> +
+> +	ret = genpd->set_hwmode_dev(genpd, dev, enable);
+> +	if (!ret)
+> +		dev_gpd_data(dev)->hw_mode = enable;
+> +
+> +out:
+> +	genpd_unlock(genpd);
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(dev_pm_genpd_set_hwmode);
+> +
+> +/**
+> + * dev_pm_genpd_get_hwmode - Get the HW mode setting for the device.
+> + *
+> + * @dev: Device for which the current HW-mode setting should be fetched.
+> + *
+> + * This helper function allows consumer drivers to fetch the current HW mode
+> + * setting of its the device.
+> + *
+> + * It is assumed that the users guarantee that the genpd wouldn't be detached
+> + * while this routine is getting called.
+> + */
+> +bool dev_pm_genpd_get_hwmode(struct device *dev)
+> +{
+> +	struct generic_pm_domain *genpd;
+> +
+> +	genpd = dev_to_genpd_safe(dev);
+> +	if (!genpd)
+> +		return false;
+> +
+> +	if (genpd->get_hwmode_dev)
+> +		return genpd->get_hwmode_dev(genpd, dev);
+> +
+> +	return dev_gpd_data(dev)->hw_mode;
+> +}
+> +EXPORT_SYMBOL_GPL(dev_pm_genpd_get_hwmode);
+> +
+>  static int _genpd_power_on(struct generic_pm_domain *genpd, bool timed)
+>  {
+>  	unsigned int state_idx = genpd->state_idx;
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index 34663d0d5c55..0e7d177fdc3e 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -151,6 +151,10 @@ struct generic_pm_domain {
+>  	int (*set_performance_state)(struct generic_pm_domain *genpd,
+>  				     unsigned int state);
+>  	struct gpd_dev_ops dev_ops;
+> +	int (*set_hwmode_dev)(struct generic_pm_domain *domain,
+> +			      struct device *dev, bool enable);
+> +	bool (*get_hwmode_dev)(struct generic_pm_domain *domain,
+> +			      struct device *dev);
+>  	int (*attach_dev)(struct generic_pm_domain *domain,
+>  			  struct device *dev);
+>  	void (*detach_dev)(struct generic_pm_domain *domain,
+> @@ -213,6 +217,7 @@ struct generic_pm_domain_data {
+>  	unsigned int performance_state;
+>  	unsigned int default_pstate;
+>  	unsigned int rpm_pstate;
+> +	bool hw_mode;
+>  	void *data;
+>  };
+>  
+> @@ -242,6 +247,8 @@ int dev_pm_genpd_remove_notifier(struct device *dev);
+>  void dev_pm_genpd_set_next_wakeup(struct device *dev, ktime_t next);
+>  ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev);
+>  void dev_pm_genpd_synced_poweroff(struct device *dev);
+> +int dev_pm_genpd_set_hwmode(struct device *dev, bool enable);
+> +bool dev_pm_genpd_get_hwmode(struct device *dev);
+>  
+>  extern struct dev_power_governor simple_qos_governor;
+>  extern struct dev_power_governor pm_domain_always_on_gov;
+> @@ -310,6 +317,16 @@ static inline ktime_t dev_pm_genpd_get_next_hrtimer(struct device *dev)
+>  static inline void dev_pm_genpd_synced_poweroff(struct device *dev)
+>  { }
+>  
+> +static inline int dev_pm_genpd_set_hwmode(struct device *dev, bool enable)
+> +{
+> +	return -EOPNOTSUPP;
+> +}
+> +
+> +static inline bool dev_pm_genpd_get_hwmode(struct device *dev)
+> +{
+> +	return false;
+> +}
+> +
+>  #define simple_qos_governor		(*(struct dev_power_governor *)(NULL))
+>  #define pm_domain_always_on_gov		(*(struct dev_power_governor *)(NULL))
+>  #endif
 > 
->  		disable_cap_alloc = config->dis_cap_alloc << config->slice_id;
-> -		ret = regmap_write(drv_data->bcast_regmap,
-> -				LLCC_TRP_SCID_DIS_CAP_ALLOC, disable_cap_alloc);
-> +		ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_SCID_DIS_CAP_ALLOC,
-> +				BIT(config->slice_id), disable_cap_alloc);
->  		if (ret)
->  			return ret;
-> 
->  		if (drv_data->version < LLCC_VERSION_4_1_0_0) {
->  			retain_pc = config->retain_on_pc << config->slice_id;
-> -			ret = regmap_write(drv_data->bcast_regmap,
-> -					LLCC_TRP_PCB_ACT, retain_pc);
-> +			ret = regmap_update_bits(drv_data->bcast_regmap, LLCC_TRP_PCB_ACT,
-> +					BIT(config->slice_id), retain_pc);
->  			if (ret)
->  				return ret;
->  		}
-> --
-> 2.25.1
+> -- 
+> 2.34.1
 > 
