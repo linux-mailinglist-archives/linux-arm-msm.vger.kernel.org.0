@@ -2,77 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C41D7E0F60
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 13:32:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A4B3F7E0FAE
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 14:54:05 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbjKDMcZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Nov 2023 08:32:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58102 "EHLO
+        id S232165AbjKDNX5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Nov 2023 09:23:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbjKDMcY (ORCPT
+        with ESMTP id S230163AbjKDNXz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Nov 2023 08:32:24 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A98B19D
-        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Nov 2023 05:32:20 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-9c603e235d1so427978266b.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Nov 2023 05:32:20 -0700 (PDT)
+        Sat, 4 Nov 2023 09:23:55 -0400
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 365691B2
+        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Nov 2023 06:23:51 -0700 (PDT)
+Received: by mail-yb1-xb32.google.com with SMTP id 3f1490d57ef6-d9abc069c8bso2740116276.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Nov 2023 06:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699101139; x=1699705939; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aD8sQ7ZbeF75IJwsidf9wpTlqXnkpYqRPBDPPKQs8Y8=;
-        b=wXjyy1+UKXWRQDWF7aiV9wGI2Caqz/ruh4cI/MXIOoMZUk6fUXtMvisoJa64K0z8PV
-         Fl56SxD5jBcWLyZPXDOHJkYoRw89MM7AWHd5wf8nOdr+8uDoQTE5H3ZRBxbJBWEvChhr
-         jvHLtOCbdikJ1IXKSOGssgqvTF8f46ERCkXIgo7+y1mUHaTxrHzMvqxwZ9bRNvTL7Zmn
-         knMwIVrW7aZxYupBmB2JLmTBlDtYzKa3XG666T391lF+/HDsGQ/QoMcHXLYJdEDCE9sh
-         v/5xn8gnhqd+zE7M18VhUftq2zt7yblCd8MrQ4quMb/+i8+nPJJAVIS7RyZrIBi9LKVx
-         NSVw==
+        d=linaro.org; s=google; t=1699104230; x=1699709030; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ihpTO3F03JzgacnLk5uBUsxe1t+WyOgXLtjj9fTyAZY=;
+        b=c/cnOsccQ/fIrrcu/GNkooemVtQ1f2i7DGtv8dQQV+NN9/XTL0G5H7Z/byj7AtAGTg
+         Nh5tNYpfeGxJl85qM9Ys5nybvZr7KA12IazlA2UDDOCvIVw/HMSskEQMDZXoQgy5JIUk
+         A/R+AMFDzknrYWqSJF10Pk5FomwgdopsorBLidqxKi/puBx5zAD7wmGqJniXHBgq3Tvg
+         XdoXng5jXbgwjWjd/0Uv7gHyXaRbTdhABSt6p/eyC2trhkHROlKBR4DydXN+YBdbBl+g
+         tvei06BmxZslptmqnhc3kBqvNuQ9qnJsOdbBo+009iefbA2KhfmYXOhAI38niKyqnOnP
+         MXWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699101139; x=1699705939;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aD8sQ7ZbeF75IJwsidf9wpTlqXnkpYqRPBDPPKQs8Y8=;
-        b=WnmIGsdZo1eQovGd4xvWHmhPwzSgNJy885B2SH0SCPtRP6EgzabdSNNBP6mx704Zqx
-         gabolg6bwLiv/44rc5+rx3zoTmn9N2iwZkQmKdlrdCQom4Ns7BSwjpC0MbxHwWs+IgXf
-         t4wKYxA2DJTPA2ZBr+U2RZZCFfP9Jj4z0ZG+pf67mCPksk5FHKAo/TPGfi7mlTaGoXFq
-         /BNWQKTv6t3N2i7PcieBYo9yHKe1D183916vE59YTrIR9jJWa4qwEcK3O7yvj4IbHNUL
-         mPBmptGT2LQgO09pkkI1H3LTXxgRjhm8WKIPehs8Qw7hccJIOVcjTN5FyTTMi9PJy3GZ
-         vl6g==
-X-Gm-Message-State: AOJu0YxCfToqnDDFqdh5kKubtl2oslfvipM2UhCOd/TB6+TrHhWxZjzo
-        3JlbkgVj2/TwfoUwYAEgcuSX3A==
-X-Google-Smtp-Source: AGHT+IGHDBcap9eLMlD+wItasasKcPKHzhMXSkVNaXPMbhCdN1xZlc3moYKwu+Kens8XEBGhsaTeaQ==
-X-Received: by 2002:a17:907:9603:b0:9d3:f436:6807 with SMTP id gb3-20020a170907960300b009d3f4366807mr10003624ejc.42.1699101138774;
-        Sat, 04 Nov 2023 05:32:18 -0700 (PDT)
-Received: from [192.168.0.153] (178235177017.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.17])
-        by smtp.gmail.com with ESMTPSA id h3-20020a170906260300b009887f4e0291sm1903972ejc.27.2023.11.04.05.32.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 04 Nov 2023 05:32:18 -0700 (PDT)
-Message-ID: <62860baa-4a0f-4a69-bbe4-94579c28a1cb@linaro.org>
-Date:   Sat, 4 Nov 2023 13:32:16 +0100
+        d=1e100.net; s=20230601; t=1699104230; x=1699709030;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ihpTO3F03JzgacnLk5uBUsxe1t+WyOgXLtjj9fTyAZY=;
+        b=FKrtUu2Ttbo0MZaOL6yn/L/38P6ijYyprWbU2OK8lylp9JEEaIluu6R8e+5StYs29W
+         K4Hl8eaeCOM1usSBdGHAMwhmr6ddSE4kW7NCGMysxNkNGC8CCfw/61ZjEuPzF/IPCHg0
+         CJgdYD3b9OZgsuWjMbyhz5Ob5zQhatQip2A1wEY1npz1l2Vewq10d50Sz+QZ1bwSOq0n
+         nIuXGZeBtDBHodGSj2W/3EiH9CWcNLcZu/m0TMcZlO4OergwhiSwpT888qUu/895OD03
+         /ntFdEvTkExIXcw2OiIUVo79ToJjWCXj/5Bn2aDllas3wVnuW2rcAex7rHFWtWjja1oE
+         iv9Q==
+X-Gm-Message-State: AOJu0YxuK3P7I0c4AZwEKzkQwzK9DYgHclWp9PHiSqfyrbcKa7MK21dX
+        B+bG+naijlpiPvt2nScDxViqhJA6p2dQlDgUBqUAgQ==
+X-Google-Smtp-Source: AGHT+IGVlWdeV8B/RVB/c5DH0WUIogCLxoudcchmyfPsPK9fAim8y9X901ML2K7hubgLTE5ct4OanZhXxd+HhodgcZg=
+X-Received: by 2002:a25:dfc7:0:b0:d0f:846c:ef7b with SMTP id
+ w190-20020a25dfc7000000b00d0f846cef7bmr21101785ybg.17.1699104230336; Sat, 04
+ Nov 2023 06:23:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
- rb3 board
-Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
+References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
+ <20231027-sc7280-remoteprocs-v1-9-05ce95d9315a@fairphone.com>
+ <12ea48bd-5022-4820-815a-89ef23ec9385@linaro.org> <CWMK0AQRL87L.1F9MIDVQ4J439@fairphone.com>
+In-Reply-To: <CWMK0AQRL87L.1F9MIDVQ4J439@fairphone.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 4 Nov 2023 15:23:38 +0200
+Message-ID: <CAA8EJpqCeW8NVcrpwo6JVn0kE2W-QMELB1YH7i7pgOH6qiPbCQ@mail.gmail.com>
+Subject: Re: [PATCH 9/9] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable WiFi
+To:     Luca Weiss <luca.weiss@fairphone.com>,
+        Kalle Valo <kvalo@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_nainmeht@quicinc.com
-References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
- <20231103184655.23555-3-quic_kbajaj@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231103184655.23555-3-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,44 +83,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+[Added Kalle to the CC list]
 
+On Tue, 31 Oct 2023 at 12:31, Luca Weiss <luca.weiss@fairphone.com> wrote:
+>
+> On Mon Oct 30, 2023 at 8:26 PM CET, Konrad Dybcio wrote:
+> > On 27.10.2023 16:20, Luca Weiss wrote:
+> > > Now that the WPSS remoteproc is enabled, enable wifi so we can use it.
+> > >
+> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 4 ++++
+> > >  1 file changed, 4 insertions(+)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> > > index d65eef30091b..e7e20f73cbe6 100644
+> > > --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+> > > @@ -713,3 +713,7 @@ &venus {
+> > >     firmware-name = "qcom/qcm6490/fairphone5/venus.mbn";
+> > >     status = "okay";
+> > >  };
+> > > +
+> > > +&wifi {
+> > > +   status = "okay";
+> > qcom,ath11k-calibration-variant?
+>
+> What value would I put there for my device? Based on existing usages
+> (mostly for ath10k) I'd say "Fairphone_5"?
 
-On 11/3/23 19:46, Komal Bajaj wrote:
-> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
-> platform. QCM6490 is derived from SC7280 meant for various
-> form factor including IoT.
-> 
-> Supported features are, as of now:
-> * Debug UART
-> * eMMC (only in IDP)
-> * USB
-> 
-> Co-developed-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
-[...]
+I think this is fine.
 
-> +
-> +&sdhc_1 {
-> +	non-removable;
-> +	no-sd;
-> +	no-sdio;
-> +
-> +	vmmc-supply = <&vreg_l7b_2p952>;
-> +	vqmmc-supply = <&vreg_l19b_1p8>;
-I think you also need to add regulator-allow-set-mode and something
-something regulator allowed modes to VQMMC
+> And you mean I should add this property in dts before even looking into
+> the firmware/calibration side of it?
 
-[...]
+From my experience some (most?) of the device manufacturers do the
+wrong thing here. They do not program a sensible board_id, leaving it
+as 0xff or some other semi-random value. The calibration variant is
+the only way for the kernel to distinguish between such poor devices.
 
-> +	model = "Qualcomm Technologies, Inc. QCM6490 RB3";
-Is the name just "QCM6490 RB3"? One already exists, based on SDM845.
+The kernel will do a smart thing though. If the device-specific
+calibration data is not present, it will try to fall back to the
+generic data.
 
-Otherwise, this looks very good to me now, thanks.
-
-With these nits addressed:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
+-- 
+With best wishes
+Dmitry
