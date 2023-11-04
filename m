@@ -2,88 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C9A77E106F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 18:03:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 468DB7E1100
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 21:56:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230503AbjKDRD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Nov 2023 13:03:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33090 "EHLO
+        id S229684AbjKDU4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Nov 2023 16:56:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230346AbjKDRDY (ORCPT
+        with ESMTP id S229625AbjKDU4o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Nov 2023 13:03:24 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CC62D6;
-        Sat,  4 Nov 2023 10:03:21 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A4H0CeS007386;
-        Sat, 4 Nov 2023 17:03:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=k18Ts0ut2IoH66o6ZrcLWBPsRz7WH3GCevTUNI4/wF4=;
- b=FxfoIHL/lVWG9StWBQ3w5B4TrH+7Br7xta36I1rf5d+SUV/PQRX8aKKhCZyOXCixZwoH
- 0oP8Dn+m2yveImUNf4KLaJjWH9X+TUVhnlW7seNf+e+h8oLsiuJd4FJWDrx/OEwIV8eg
- FncsxVlr9OftKw2rbdKtJOFCWPtX8pDG66AUffuqWFG3YGKaZcWGD5zWapvfrFqQLuqA
- ylFJzjCOTkKoTsOSstKqG+1FX3CDwhdB4rIvw9AV6/DmF1TLiJ4oZMqSCrxQ2t9e8FvW
- 0h33rSdz0w6mznz7IYWeZrlpiDyEdu39KI4WoBv8RUjDg1XTTcC4f+5NspD7Wd2c9UW8 XQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5eu60w35-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 04 Nov 2023 17:03:05 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A4H34CY022940
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 4 Nov 2023 17:03:04 GMT
-Received: from [10.249.19.93] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Sat, 4 Nov
- 2023 10:02:58 -0700
-Message-ID: <ea919050-22a8-4d28-ade2-fd16a99876cb@quicinc.com>
-Date:   Sat, 4 Nov 2023 22:32:55 +0530
+        Sat, 4 Nov 2023 16:56:44 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F05F4D57
+        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Nov 2023 13:56:41 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-53e751aeb3cso5197866a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Nov 2023 13:56:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699131400; x=1699736200; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T7icGMbUiQy+im0g/40WS9gOLOWKvv5vy2jRH0rcsEI=;
+        b=XP9QZvbEq7LT4Cgmb65oHZtoOplKBje4/cgfPyjWwAvAfjhfeNjZWL3w/BWhFJCanf
+         ++teN2u8J5zOHsuYpUz7HNHqwLVNZVOp6KwYHRwZBndhdpzvKnKGn/iC016RwUyuf+xi
+         N5CANWLnUHVCXSfXOmhs++w0n6nubi9J1f3Z79cLoKP94Zj8ZYkLAIdIgaz8TWIWrfla
+         k/PnhfRNYmki9pKLBEXVzh+x/g+dFeJ60NE23977zMERl1ibNLB4V46+54x788Qdz3T3
+         zDBcsI1WsHnA008ydyrPx5smEuvsiu9PTL1lLzEzsbY/QEjdGUbcueMiNLhNIJFVPTBv
+         cxmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699131400; x=1699736200;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T7icGMbUiQy+im0g/40WS9gOLOWKvv5vy2jRH0rcsEI=;
+        b=gCyrQ8CzHEHHylBnsahR/A5vbgt2cALaN9onoB9JtBRzMkDMsMPc9kkeXVbgTmHrER
+         iHTBzmQ2+zlzrYhZBBzSQOC89cmX6dZn7JY0m1+zAzxOCH6VfMgJEBRTOiYIuu7IYLgs
+         2uoDQr8QodBM45B1ZKDuury7JV03hm3/w5/upJWRljAbret79Z3yaayqXqIMwhI1Vneo
+         Vy8MYOqcLo4WUVjl/TdID9CaHkj0thepIDj32uYmMICuLKWHCqm4LfB9ZFARZwBWUqTT
+         KXFp43leNDQeBtH4Hj065pEwGmTzKLqgXXC6qwLoEt1sHDS1spKCJ1dtjWJBEpLLzYFj
+         OY8A==
+X-Gm-Message-State: AOJu0YxbH7uUwBrEOHP5sHnSrfL4mTfM6RhuUWB4R7qywhLM/36A2Fnv
+        2fH2LlXIk65rmnDcLo8y0+qA7g==
+X-Google-Smtp-Source: AGHT+IGv3YNSF0IVhDKBUbB3aVjdbRB8a3+Ft8elorpFbjAPVZeTw8+lFVFOC7Haxe5NnAj/loEd8Q==
+X-Received: by 2002:a17:907:928c:b0:9b2:b9ad:ddd1 with SMTP id bw12-20020a170907928c00b009b2b9adddd1mr8916181ejc.28.1699131400428;
+        Sat, 04 Nov 2023 13:56:40 -0700 (PDT)
+Received: from [127.0.1.1] (178235177017.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.17])
+        by smtp.gmail.com with ESMTPSA id u21-20020a170906655500b00985ed2f1584sm2295075ejn.187.2023.11.04.13.56.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Nov 2023 13:56:40 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Sat, 04 Nov 2023 21:56:35 +0100
+Subject: [PATCH] arm64: dts: qcom: qrb4210-rb2: Enable MPSS and Wi-Fi
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 2/8] usb: dwc3: core: Register vendor hooks for dwc3-qcom
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231104-topic-rb2_wifi-v1-1-fd45ae535d2f@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAAKwRmUC/x3MQQqAIBBA0avIrBPSEqGrRETZTM2mZIwKwrsnL
+ d/i/xcSCmOCTr0geHHiYy8wlYKwTfuKmpdisLVtjKlbfR6Rg5bZjjcTa5q8b4Ij5zBAiaIg8fM
+ P+yHnDxPten1gAAAA
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>
-CC:     <linux-usb@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Thinh Nguyen" <Thinh.Nguyen@synopsys.com>,
         Rob Herring <robh+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
-        <quic_wcheng@quicinc.com>, Andy Gross <agross@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
- <20231017131851.8299-3-quic_kriskura@quicinc.com>
- <e700133b-58f7-4a4d-8e5c-0d04441b789b@linaro.org>
- <5ef66bdc-9645-4bbe-8182-baa7fe4c583a@quicinc.com>
- <3be5e95f-85d2-4abf-a8b4-18b019341602@quicinc.com>
- <cf553cd8-45f8-4a61-b016-69e7a80eee9f@linaro.org>
-Content-Language: en-US
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <cf553cd8-45f8-4a61-b016-69e7a80eee9f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3qUD6-cNryyq5LI22b-kPDdWjCZuSzC6
-X-Proofpoint-ORIG-GUID: 3qUD6-cNryyq5LI22b-kPDdWjCZuSzC6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-04_16,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999 spamscore=0
- impostorscore=0 clxscore=1015 suspectscore=0 malwarescore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
- definitions=main-2311040145
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.13-dev-0438c
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -94,89 +79,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Enable the remote processors and tighten up the regulators to enable
+Wi-Fi functionality on the RB2.
 
+For reference, the hw/sw identifies as:
 
+qmi chip_id 0x150 chip_family 0x4002 board_id 0xff soc_id 0x40670000
+qmi fw_version 0x337302d3 fw_build_timestamp 2023-01-06 01:50
+fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HL.3.3.7.c2-00723-QCAHLSWMTPLZ-1
+wcn3990 hw1.0 target 0x00000008 chip_id 0x00000000 sub 0000:0000
+kconfig debug 0 debugfs 0 tracing 0 dfs 0 testmode 0
+firmware ver  api 5 features wowlan,mgmt-tx-by-reference,non-bmi
+crc32 b3d4b790
+htt-ver 3.114 wmi-op 4 htt-op 3 cal file max-sta 32 raw 0 hwcrypto 1
 
->>> Hi Bryan,
->>>
->>>> What happens to this code if you
->>>>
->>>> static int count;
->>>>
->>>> 1. sleep in dwc3_probe for 10 milliseconds
->>>> 2. return -EPROBE_DEFER
->>>> 3. if count++ < 5 goto 1
->>>>
->>>> i.e. if we simulate say waiting on a PHY driver to probe in 
->>>> dwc3_probe()
->>>>
->>> The vendor hooks are used in __dwc3_set_mode and role_switch_set 
->>> calls in core and drd files respectively. These are invoked only if 
->>> we are OTG capable. The drd_work is initialized in core_init_mode 
->>> which is called at the end of dwc3_probe. If dwc3_probe fails and 
->>> gets deferred before that, none of the vendor hooks will be fired and 
->>> dwc3_qcom_probe is also deferred.
->>>
->>> However I see that if core_init_mode fails (the cleanup is already 
->>> done in drd to prevent set_role from getting invoked already),  I 
->>> need to cleanup vendor hooks in error path of dwc3_probe().
->>>
->>>> and what happens if we introduce a 100 millsecond sleep into 
->>>> dwc3_qcom_probe() - and run a fake disconnect event from 
->>>> dwc3_qcom_probe_core() directly ?
->>>>
->>>> In other words if make it that dwc3_probe() completes and struct 
->>>> dwc3_glue_ops->notify_cable_disconnect() fires prior to 
->>>> dwc3_qcom_probe_core() completing ?
->>>>
->>>> i.e. I don't immediately see how you've solved the probe() 
->>>> completion race condition here.
->>>>
->>> Just wanted to understand the situation clearly. Is this the sequence 
->>> you are referring to ?
->>>
->>> 1. dwc3_probe is successful and role switch is registered properly.
->>> 2. added delay after dwc3_qcom_probe_core and before interconnect_init
->>> 3. Between this delay, we got a disconnect notificiation from glink
->>> 4. We are clearing the qscratch reg in case of device mode and 
->>> un-registering notifier in case of host mode.
->>>
->>> If so, firstly I don't see any issue if we process disconnect event 
->>> before qcom probe is complete. If we reached this stage, the 
->>> clocks/gdsc is definitely ON and register accesses are good to go.
->>>
->>> If we are in host mode at this point, we would just unregister to 
->>> usb-core notifier and mark last busy. If we are in device mode, we 
->>> would just clear the hs_phy_ctrl reg of qscratch. After the 100ms 
->>> delay you mentioned we would call dwc3_remove anyways and cleanup the 
->>> vendor hooks. But is the concern here that, what if we enter 
->>> runtime_suspend at this point ?
->>>
->>
->> Just to clarify one more thing. The probe completion requirement came 
->> in because, before the device tree was flattened, dwc3-qcom and core 
->> are two different platform devices. And if the dwc3 core device probe 
->> got deferred, dwc3-qcom probe still gets successfully completed. The 
->> glue would never know when to register vendor hook callbacks to 
->> dwc3-core as it would never know when the core probe was completed.
->>
->> That is the reason we wanted to find out accurate point where core 
->> probe is done to ensure we can properly register these callbacks.
-> 
-> Are you saying to you require/rely on both of these series being applied 
-> first ?
-> 
-> [1]: 
-> https://lore.kernel.org/all/af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com/
-> [2]: 
-> https://lore.kernel.org/all/20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com/
-> 
-> Must be, nothing applies for me in this series.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-The first one is not a patch. It is just a discussion thread I started 
-to get community's opinion before on disconnect interrupt handling. The 
-current series is based on top of [2] made by Bjorn (as you already 
-found out) and as I mentioned in cover letter of my series.
+diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+index 9738c0dacd58..c2d7e3998d05 100644
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
++++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+@@ -280,6 +280,12 @@ &remoteproc_cdsp {
+ 	status = "okay";
+ };
+ 
++&remoteproc_mpss {
++	firmware-name = "qcom/qrb4210/modem.mbn";
++
++	status = "okay";
++};
++
+ &rpm_requests {
+ 	regulators {
+ 		compatible = "qcom,rpm-pm6125-regulators";
+@@ -346,8 +352,8 @@ vreg_l7a_1p256: l7 {
+ 		};
+ 
+ 		vreg_l8a_0p664: l8 {
+-			regulator-min-microvolt = <400000>;
+-			regulator-max-microvolt = <728000>;
++			regulator-min-microvolt = <640000>;
++			regulator-max-microvolt = <640000>;
+ 		};
+ 
+ 		vreg_l9a_1p8: l9 {
+@@ -424,8 +430,8 @@ vreg_l22a_2p96: l22 {
+ 		};
+ 
+ 		vreg_l23a_3p3: l23 {
+-			regulator-min-microvolt = <3200000>;
+-			regulator-max-microvolt = <3400000>;
++			regulator-min-microvolt = <3312000>;
++			regulator-max-microvolt = <3312000>;
+ 		};
+ 
+ 		vreg_l24a_2p96: l24 {
+@@ -535,6 +541,16 @@ &usb_qmpphy {
+ 	status = "okay";
+ };
+ 
++&wifi {
++	vdd-0.8-cx-mx-supply = <&vreg_l8a_0p664>;
++	vdd-1.8-xo-supply = <&vreg_l16a_1p3>;
++	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
++	vdd-3.3-ch0-supply = <&vreg_l23a_3p3>;
++	qcom,ath10k-calibration-variant = "Thundercomm_RB2";
++
++	status = "okay";
++};
++
+ &xo_board {
+ 	clock-frequency = <19200000>;
+ };
 
-Regards,
-Krishna,
+---
+base-commit: e27090b1413ff236ca1aec26d6b022149115de2c
+change-id: 20231104-topic-rb2_wifi-fa773c5f55ec
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
