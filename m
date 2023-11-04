@@ -2,266 +2,268 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C21F27E0D0A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 02:24:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E81667E0D9E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Nov 2023 04:56:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231176AbjKDBYy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Nov 2023 21:24:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39288 "EHLO
+        id S232558AbjKDDt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Nov 2023 23:49:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjKDBYx (ORCPT
+        with ESMTP id S229657AbjKDDt2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Nov 2023 21:24:53 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF42D5F;
-        Fri,  3 Nov 2023 18:24:50 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABF8C433C8;
-        Sat,  4 Nov 2023 01:24:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1699061090;
-        bh=kES0qfVWNXA43mUOzfx7bbZfhya/EhlrolZFrykp/mk=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=uiqLKjYYNdmn9eRRgg1sV/bdBbBEGo6kR9BtlHOgm4sPEfDKN/bdzPjgCyQ+pytcO
-         AVUYlz0R4eEumAiwR3YKnModEZTCSaTZ7MyInyoMivC/F90PTJhampMCXVjSgXsZiw
-         3qt3uuDxFlA4cpqjpXmDDRfyLblDXAfDAsMj+AsW56whv7M0BAIIzhFIM/TlJZXxaw
-         2oTYNPCCbGWHdNJviWbTtvBOBDwZXwq08iYqqo0k8fJytX8EaZCe4ZQ597AnWg1EVw
-         4PqYoxYGp3xdNQnOu9nU6ROkqAkX7Va/gHaTr0AGcQrtfiYHAWrBia6azuwBQOd62h
-         KK86xLUwE7+gQ==
-Message-ID: <2346f541be5b8528ad1a16df256a2f50.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+        Fri, 3 Nov 2023 23:49:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 314C5184;
+        Fri,  3 Nov 2023 20:49:25 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A43UnVS013951;
+        Sat, 4 Nov 2023 03:49:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=z7J4w8AIQhBfo6voAmDy+eiFvgXqP4usPxjhxkdfAOg=;
+ b=C667yC8Vwx9IBSQmBvswotkE5o0LvUYuVEEu48ecSZhgn4NLW9eVnJmAUjwV0nCclMaW
+ lPgRZMn3I+dfO40vpM2LNitW4KIUZvUcC+M4WDWP98iBTwexiIapb2gQobMHJXHLJjHA
+ ok6oZqhfRwIfxIygEWiXHpliivAVr9osVfHh4rZKdqEnOmP8OWwXDfLQorvm+TFTZYtg
+ 0P4Yi8wAxmu0Jn0GW21NBIlyhMBmki58bZn+i/Hd0eap16uyNNVElLYxM+cdBh5WYCFj
+ i4EAw52ENL6aPge9jHiSvkCKPFNmqcLe97bM5JkFqbGu9WVHvSVR/AgayIRmkki+9+XO Vg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u4cw9v3gg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 04 Nov 2023 03:49:12 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A43nBQt002651
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 4 Nov 2023 03:49:11 GMT
+Received: from akronite-sh-dev02.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Fri, 3 Nov 2023 20:49:08 -0700
+From:   Luo Jie <quic_luoj@quicinc.com>
+To:     <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <p.zabel@pengutronix.de>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
+Subject: [PATCH v12 0/4] add clock controller of qca8386/qca8084
+Date:   Sat, 4 Nov 2023 11:48:54 +0800
+Message-ID: <20231104034858.9159-1-quic_luoj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20231004012308.2305273-3-dmitry.baryshkov@linaro.org>
-References: <20231004012308.2305273-1-dmitry.baryshkov@linaro.org> <20231004012308.2305273-3-dmitry.baryshkov@linaro.org>
-Subject: Re: [RFC PATCH v2 2/3] clk: qcom: implement RCG2 'parked' clock support
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Date:   Fri, 03 Nov 2023 18:24:47 -0700
-User-Agent: alot/0.10
-X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZJz12lcaSA8H_ODmkbaJ220QooFhjQc3
+X-Proofpoint-ORIG-GUID: ZJz12lcaSA8H_ODmkbaJ220QooFhjQc3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-04_01,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
+ mlxscore=0 malwarescore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
+ definitions=main-2311040031
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Dmitry Baryshkov (2023-10-03 18:23:07)
-> clk_rcg2_shared_ops implements support for the case of the RCG which
-> must not be completely turned off. However its design has one major
-> drawback: it doesn't allow us to properly implement the is_enabled
-> callback, which causes different kinds of misbehaviour from the CCF.
->=20
-> Follow the idea behind clk_regmap_phy_mux_ops and implement the new
-> clk_rcg2_parked_ops. It also targets the clocks which must not be fully
-> switched off (and shared most of the implementation with
-> clk_rcg2_shared_ops). The major difference is that it requires that the
-> parent map doesn't conain the safe (parked) clock source. Instead if the
-> CFG_REG register points to the safe source, the clock is considered to
-> be disabled.
->=20
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/qcom/clk-rcg.h  |  1 +
->  drivers/clk/qcom/clk-rcg2.c | 56 +++++++++++++++++++++++++++++++++++++
->  2 files changed, 57 insertions(+)
->=20
-> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> index e6d84c8c7989..9fbbf1251564 100644
-> --- a/drivers/clk/qcom/clk-rcg.h
-> +++ b/drivers/clk/qcom/clk-rcg.h
-> @@ -176,6 +176,7 @@ extern const struct clk_ops clk_byte2_ops;
->  extern const struct clk_ops clk_pixel_ops;
->  extern const struct clk_ops clk_gfx3d_ops;
->  extern const struct clk_ops clk_rcg2_shared_ops;
-> +extern const struct clk_ops clk_rcg2_parked_ops;
->  extern const struct clk_ops clk_dp_ops;
-> =20
->  struct clk_rcg_dfs_data {
-> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> index 5183c74b074f..fc75e2bc2d70 100644
-> --- a/drivers/clk/qcom/clk-rcg2.c
-> +++ b/drivers/clk/qcom/clk-rcg2.c
-> @@ -5,6 +5,7 @@
-> =20
->  #include <linux/kernel.h>
->  #include <linux/bitops.h>
-> +#include <linux/bitfield.h>
->  #include <linux/err.h>
->  #include <linux/bug.h>
->  #include <linux/export.h>
-> @@ -1150,6 +1151,61 @@ const struct clk_ops clk_rcg2_shared_ops =3D {
->  };
->  EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
-> =20
-> +static int clk_rcg2_parked_is_enabled(struct clk_hw *hw)
-> +{
-> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> +       u32 cmd, cfg;
-> +       int ret;
-> +
-> +       ret =3D regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CMD_REG, &c=
-md);
-> +       if (ret)
-> +               return ret;
-> +
-> +       if ((cmd & CMD_ROOT_EN) =3D=3D 0)
-> +               return false;
+qca8xxx is 4 * 2.5GBaseT ports chip, working as switch mode
+named by qca8386, or working as PHY mode named by qca8084,
+clock hardware reigster is accessed by MDIO bus.
 
-return 0?
+This patch series add the clock controller of qca8363/qca8084,
+and add the clock ops clk_branch2_prepare_ops to avoid spin lock
+used during the clock operation of qca8k clock controller where
+the sleep happens when accessing clock control register by MDIO
+bus.
 
-CMD_ROOT_OFF can be 0 and CMD_ROOT_EN can also be 0 at the same time.
-When that happens, some branch child clk is enabled and the rcg is
-actually enabled. There's a hardware feedback mechanism from the
-branches to the rcg so the rcg is guaranteed enabled. I'm trying to say
-that this bit is unreliable on its own, so we need to take care here. In
-fact, this bit is only used as a software override to make sure the
-branches don't turn off the rcg inadvertently.
+Changes in v2:
+	* remove clock flag CLK_ENABLE_MUTEX_LOCK.
+	* add clock ops clk_branch2_qca8k_ops.
+	* improve yaml file for fixing dtschema warnings.
+	* enable clock controller driver in defconfig.
 
-What if a branch is enabled, but the rcg root_en bit isn't set, and XO
-is used? In that case, this will report the clk as disabled when it's
-really enabled. That will look confusing to the clk framework because a
-child will be enabled without the parent being enabled. Things will
-probably still work though, because this only matters during disabling
-unused clks.
+Changes in v3:
+	* rename clk_branch2_qca8k_ops to clk_branch2_mdio_ops.
+	* fix review comments on yaml file.
+	* use dev_err_probe on driver probe error.
+	* only use the compatible "qcom,qca8084-nsscc".
+	* remove enable clock controller driver patch.
 
-Maybe it's better to not implement an is_enabled() callback for this clk
-and simply call a function to see which parent the hardware is using (XO
-or not). Basically don't go through clk_hw_is_enabled() and just call
-clk_rcg2_parked_is_enabled() directly wherever the clk_hw API is used.
-Then the framework doesn't get confused about enabled children with
-disabled parents, but the downside is that the framework doesn't know if
-the rcg is enabled. This is most likely fine though because an enabled
-rcg doesn't really make a difference. The important thing is knowing
-which branches are enabled at the framework level. Furthermore, the
-framework doesn't currently handle propagating up the enable state at
-boot to parents, so if say we have a child branch that is enabled, the
-enable state of the parent _must_ be enabled as well, or the branch is
-wedged and the only way to unwedge that is to enable the parent. It's
-quite a mess!
+Changes in v4:
+	* add _qcom_cc_really_probe function.
+	* commonizing the probe function.
+	* remove flag CLK_IS_CRITICAL from clocks only needed
+	to be enabled in switch device.
+	* update device tree property reg to 0x10. 
 
-Long story short, I question why we need to implement is_enabled() for
-this clk. What's the benefit? The branches being off is more important
-if we're concerned about saving power. There's the problem of handing
-off enable state from when the driver probes, but that's not so easy to
-solve given that a branch could be enabled (or a branch could be enabled
-that isn't even known to linux). And it also sort of doesn't matter
-because we know XO is practically always enabled and what really matters
-is making sure the driver can't wedge the RCG by changing the source to
-something that isn't enabled if it thinks the RCG is disabled when it is
-really enabled.
+Changes in v5:
+	* commonize qcom_cc_really_probe.
+	* add halt_check for the branch clocks.
+	* fix the review comments on nsscc-qca8k.c. 
 
-That's sort of the only rule here, don't write the hardware when the
-current parent isn't enabled or the new parent isn't enabled. We don't
-know if the rcg is ever enabled, so we can only write the "go bit"
-(CMD_UPDATE) when we're 100% certain that the parent (or next parent
-when switching) is enabled. XO we know is always enabled, but otherwise
-we don't know unless the framework has enabled the clk (and therefore
-implicitly enabled the parent). The set_rate op could be called from
-either enabled or disabled state, same for the set_parent op. And we
-want the other clk APIs to report the state of the clk (like the parent
-or rate) even if the hardware hasn't been changed.
+Changes in v6:
+	* rename clk_branch2_mdio_ops to clk_branch2_prepare_ops.
 
-> +
-> +       ret =3D regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &c=
-fg);
-> +       if (ret)
-> +               return ret;
-> +
-> +       return FIELD_GET(CFG_SRC_SEL_MASK, cfg) !=3D rcg->safe_src_index;
-> +}
-> +
-> +static int clk_rcg2_parked_init(struct clk_hw *hw)
-> +{
-> +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> +       const struct freq_tbl *f =3D rcg->freq_tbl;
-> +
-> +       regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &rcg->parked_c=
-fg);
+Changes in v7:
+	* remove the clock flag CLK_IS_CRITICAL.
+	* optimize the file nsscc-qca8k.c.
+	* identify & fix the comments from Stephen.
 
-I need this part today to fix a stuck clk problem I see on trogdor.lazor
-where during registration a call to clk_ops::get_parent() sees the clk
-isn't enabled at boot (because there isn't a clk_ops::is_enabled()
-function) so clk_rcg2_shared_get_parent() reads the parent from the
-'parked_cfg' value, which is zero. If the hardware actually has non-zero
-for the parent then the framework will get the wrong parent, which is
-what happens on trogdor when the devmode screen is shown. The parent is
-the display PLL instead of XO. I haven't dug far enough to understand
-why disabling unused clks wedges the branch when we try to enable it
-again, but not disabling unused clks fixes the problem or reading the
-config register at registration to get the proper parent also fixes it.
-I guess the problem is that we're switching the RCG value when we
-shouldn't be doing that.
+Changes in v8:
+	* add dependency on ARM in Kconfig.
 
-> +
-> +       if (FIELD_GET(CFG_SRC_SEL_MASK, rcg->parked_cfg) !=3D rcg->safe_s=
-rc_index)
-> +               return 0;
-> +
-> +       if (WARN_ON(!f) ||
-> +           WARN_ON(qcom_find_src_cfg(hw, rcg->parent_map, f->src) =3D=3D=
- rcg->safe_src_index))
-> +               return -EINVAL;
-> +
-> +       return __clk_rcg2_configure(rcg, f, &rcg->parked_cfg);
+Changes in v9:
+	* take the clk_ops clk_rcg2_mux_closest_ops to remove the
+	  redundant freq_tbls.
 
-It would be good to have a comment above this like
+Changes in v10:
+        * fix the patch CHECK and improve the comments.
 
-	/*
-	 * Dirty the rcg registers to point at the first frequency table
-	 * entry which is guaranteed to not use the safe_src_index.
-	 * Setting the rate of the clk with rcg registers containing the
-	 * safe_src_index will confuse clk_rcg2_parked_is_enabled() as
-	 * to the enable state and lead to actually changing the rate of
-	 * the clk when it isn't enabled.
-	 */
+Changes in v11:
+	* update the clock names to reflect hardware connecton.
+	  NSS_CC_MAC4_SRDS1_CH2_XGMII_RX_DIV_CLK_SRC ->
+	  NSS_CC_MAC4_SRDS1_CH3_XGMII_RX_DIV_CLK_SRC
 
-> +}
-> +
-> +/*
-> + * Unlike clk_rcg2_shared_ops, the safe_src_index aka XO must NOT be pre=
-sent in
-> + * parent_map. This allows us to implement proper is_enabled callback.
+	  NSS_CC_MAC4_SRDS1_CH2_XGMII_TX_DIV_CLK_SRC ->
+	  NSS_CC_MAC4_SRDS1_CH3_XGMII_TX_DIV_CLK_SRC
+        * resolve the qcom_cc_really_probe merge conflict based
+	  on the latest code.
 
-We could also modify clk_ops::set_rate() and clk_ops::determine_rate()
-to ignore frequency table entries with the safe_src_index, so that no
-driver can change the frequency to be XO. Then XO is still "reserved",
-and it still means the clk is disabled when the parent is XO, but we
-don't have to change the RCG registers during clk_rcg2_parked_init() to
-move off the safe_src/XO parent. We also have to prevent the parent from
-being set to XO with clk_set_parent(). That should be doable by failing
-the clk_ops::set_parent() op when the parent is XO.
+Changes in v12:
+	* Fix the compile error caused by the parameter of
+	  qcom_cc_really_probe updated from pdev to &pdev->dev in the
+	  new merged clock driver gcc-sm4450.c and camcc-sm8550.c.
 
-I'd actually prefer that approach if it's workable, so that we don't
-dirty the RCG registers during clk registration. I think qcom folks were
-unhappy with the rcg registers being dirty for a long time
-(CMD_DIRTY_CFG), because the other entity (the gdsc?) was triggering the
-rcg switch (CMD_UPDATE) and that was causing the wrong parent to be
-used.
+Luo Jie (4):
+  clk: qcom: branch: Add clk_branch2_prepare_ops
+  dt-bindings: clock: add qca8386/qca8084 clock and reset definitions
+  clk: qcom: common: commonize qcom_cc_really_probe
+  clk: qcom: add clock controller driver for qca8386/qca8084
 
-I still come back to the why question though. What are we gaining by
-implementing is_enabled for this clk?
+ .../bindings/clock/qcom,qca8k-nsscc.yaml      |   79 +
+ drivers/clk/qcom/Kconfig                      |    9 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/apss-ipq6018.c               |    2 +-
+ drivers/clk/qcom/camcc-sc7180.c               |    2 +-
+ drivers/clk/qcom/camcc-sc7280.c               |    2 +-
+ drivers/clk/qcom/camcc-sdm845.c               |    2 +-
+ drivers/clk/qcom/camcc-sm6350.c               |    2 +-
+ drivers/clk/qcom/camcc-sm8250.c               |    2 +-
+ drivers/clk/qcom/camcc-sm8450.c               |    2 +-
+ drivers/clk/qcom/camcc-sm8550.c               |    2 +-
+ drivers/clk/qcom/clk-branch.c                 |    7 +
+ drivers/clk/qcom/clk-branch.h                 |    1 +
+ drivers/clk/qcom/common.c                     |    7 +-
+ drivers/clk/qcom/common.h                     |    2 +-
+ drivers/clk/qcom/dispcc-qcm2290.c             |    2 +-
+ drivers/clk/qcom/dispcc-sc7180.c              |    2 +-
+ drivers/clk/qcom/dispcc-sc7280.c              |    2 +-
+ drivers/clk/qcom/dispcc-sc8280xp.c            |    2 +-
+ drivers/clk/qcom/dispcc-sdm845.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6115.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6125.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6350.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm6375.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8250.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8450.c              |    2 +-
+ drivers/clk/qcom/dispcc-sm8550.c              |    2 +-
+ drivers/clk/qcom/gcc-ipq5018.c                |    2 +-
+ drivers/clk/qcom/gcc-ipq6018.c                |    2 +-
+ drivers/clk/qcom/gcc-ipq8074.c                |    2 +-
+ drivers/clk/qcom/gcc-mdm9607.c                |    2 +-
+ drivers/clk/qcom/gcc-mdm9615.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8917.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8939.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8953.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8976.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8996.c                |    2 +-
+ drivers/clk/qcom/gcc-msm8998.c                |    2 +-
+ drivers/clk/qcom/gcc-qcm2290.c                |    2 +-
+ drivers/clk/qcom/gcc-qcs404.c                 |    2 +-
+ drivers/clk/qcom/gcc-qdu1000.c                |    2 +-
+ drivers/clk/qcom/gcc-sa8775p.c                |    2 +-
+ drivers/clk/qcom/gcc-sc7180.c                 |    2 +-
+ drivers/clk/qcom/gcc-sc7280.c                 |    2 +-
+ drivers/clk/qcom/gcc-sc8180x.c                |    2 +-
+ drivers/clk/qcom/gcc-sc8280xp.c               |    2 +-
+ drivers/clk/qcom/gcc-sdm660.c                 |    2 +-
+ drivers/clk/qcom/gcc-sdm845.c                 |    2 +-
+ drivers/clk/qcom/gcc-sdx55.c                  |    2 +-
+ drivers/clk/qcom/gcc-sdx65.c                  |    2 +-
+ drivers/clk/qcom/gcc-sdx75.c                  |    2 +-
+ drivers/clk/qcom/gcc-sm4450.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6115.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6125.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6350.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm6375.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm7150.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8150.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8250.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8350.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8450.c                 |    2 +-
+ drivers/clk/qcom/gcc-sm8550.c                 |    2 +-
+ drivers/clk/qcom/gpucc-msm8998.c              |    2 +-
+ drivers/clk/qcom/gpucc-sa8775p.c              |    2 +-
+ drivers/clk/qcom/gpucc-sc7180.c               |    2 +-
+ drivers/clk/qcom/gpucc-sc7280.c               |    2 +-
+ drivers/clk/qcom/gpucc-sc8280xp.c             |    2 +-
+ drivers/clk/qcom/gpucc-sdm660.c               |    2 +-
+ drivers/clk/qcom/gpucc-sdm845.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6115.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6125.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6350.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm6375.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8150.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8250.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8350.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8450.c               |    2 +-
+ drivers/clk/qcom/gpucc-sm8550.c               |    2 +-
+ drivers/clk/qcom/lcc-ipq806x.c                |    2 +-
+ drivers/clk/qcom/lcc-msm8960.c                |    2 +-
+ drivers/clk/qcom/lpassaudiocc-sc7280.c        |    4 +-
+ drivers/clk/qcom/lpasscorecc-sc7180.c         |    2 +-
+ drivers/clk/qcom/lpasscorecc-sc7280.c         |    2 +-
+ drivers/clk/qcom/mmcc-msm8960.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8974.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8994.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8996.c               |    2 +-
+ drivers/clk/qcom/mmcc-msm8998.c               |    2 +-
+ drivers/clk/qcom/mmcc-sdm660.c                |    2 +-
+ drivers/clk/qcom/nsscc-qca8k.c                | 2139 +++++++++++++++++
+ drivers/clk/qcom/tcsrcc-sm8550.c              |    2 +-
+ drivers/clk/qcom/videocc-sc7180.c             |    2 +-
+ drivers/clk/qcom/videocc-sc7280.c             |    2 +-
+ drivers/clk/qcom/videocc-sdm845.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8150.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8250.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8350.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8450.c             |    2 +-
+ drivers/clk/qcom/videocc-sm8550.c             |    2 +-
+ include/dt-bindings/clock/qcom,qca8k-nsscc.h  |  101 +
+ include/dt-bindings/reset/qcom,qca8k-nsscc.h  |   75 +
+ 101 files changed, 2508 insertions(+), 97 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,qca8k-nsscc.yaml
+ create mode 100644 drivers/clk/qcom/nsscc-qca8k.c
+ create mode 100644 include/dt-bindings/clock/qcom,qca8k-nsscc.h
+ create mode 100644 include/dt-bindings/reset/qcom,qca8k-nsscc.h
 
-> + */
-> +const struct clk_ops clk_rcg2_parked_ops =3D {
-> +       .init =3D clk_rcg2_parked_init,
-> +       .is_enabled =3D clk_rcg2_parked_is_enabled,
-> +       .enable =3D clk_rcg2_shared_enable,
-> +       .disable =3D clk_rcg2_shared_disable,
-> +       .get_parent =3D clk_rcg2_shared_get_parent,
-> +       .set_parent =3D clk_rcg2_shared_set_parent,
-> +       .recalc_rate =3D clk_rcg2_shared_recalc_rate,
-> +       .determine_rate =3D clk_rcg2_determine_rate,
-> +       .set_rate =3D clk_rcg2_shared_set_rate,
-> +       .set_rate_and_parent =3D clk_rcg2_shared_set_rate_and_parent,
-> +};
-> +EXPORT_SYMBOL_GPL(clk_rcg2_parked_ops);
+
+base-commit: ff269e2cd5adce4ae14f883fc9c8803bc43ee1e9
+-- 
+2.42.0
+
