@@ -2,72 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7407D7E1382
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 14:06:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 392767E138B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 14:08:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229436AbjKENGS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Nov 2023 08:06:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38642 "EHLO
+        id S230009AbjKENIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Nov 2023 08:08:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjKENGR (ORCPT
+        with ESMTP id S229967AbjKENIc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Nov 2023 08:06:17 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B16C2E0
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 05:06:14 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-32fadd4ad09so2237020f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 05:06:14 -0800 (PST)
+        Sun, 5 Nov 2023 08:08:32 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB805DE
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 05:08:28 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-4094301d505so27584965e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 05:08:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699189573; x=1699794373; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699189707; x=1699794507; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yk9cmvAD3pBKreSl8ty20jfviH0gO+DHwfcuMx08Q1E=;
-        b=DZRNk5S6Rdc/x1tuNQ8mOpRZnZYBPEcf0l/KgxmNq/tLUHmNYelVwMzrAps1k76Utb
-         5PRLAy/tsM3rXsCLgnzLrVwHXVhV02aCcA5lBXpiciAKxAL4y01EGox/d8RCYdlpD1S2
-         E3Nx9lHKmytHU+XC1AuAkxBvvzhgv11abpksXrpXsrfvy82qMw/pea0t8LzPNNCWjhzs
-         paCoLXRtm1xjBB9c5d1H67ycIJgbBIDodY0lGqvu5jOynF5C//1f8QEziKhQx26+TCGS
-         zEyb5aCdB7CTbEKe7uXiJKz6L9GU1N49h0ybM5J+uFVhpJ4OyQ7g2ORGPoHc29lASQZo
-         vR0A==
+        bh=kA5HbJ1nAC1HbU6KlOKuy+GraCyrQG/02+Rf4rzbG0k=;
+        b=atGXLwu/s2hkHDILkHkTPrTtSdEs6dCW5V9yNlg+xfIQNPVQxROHh93KEPTKhxjeQW
+         GZp0pjbwDN1NOkAnWzzPq0IiC3Vrt4CmppwW2MY+Ar89DAKznhMjcWCFzLEXRB99Ya8D
+         gyzKFVXfaAHrh6C3+GaKTO07YLVejbfyWegTwHRGhtgMRLnbrDs6mEUoExp32xSdCw9V
+         cAMzPg1OFZ0t9GNc9tiVj1AN2loG6E2Zy7C9BR+XRTTs0enlQTAAh0IcuAUHX86AgNxe
+         oOdBHu4eYawxoQG5lt0yz4LEwlEb9pUORmXjn1/rHgQRp39AYjGOtRHwlfs3rGw6izzF
+         duLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699189573; x=1699794373;
+        d=1e100.net; s=20230601; t=1699189707; x=1699794507;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yk9cmvAD3pBKreSl8ty20jfviH0gO+DHwfcuMx08Q1E=;
-        b=Vyhv8909UBKUbbU8tjPxS/8g5d8tuqHV+8lTkLtfNywkhDskxLYT4BmfzE/SjbzngL
-         nkWR4HT5hlFOlSFEVC7hekZ5i2Z1N1P/DA3pr8YhZIGZop51zvf+HXkNfOPLV9NyOZNV
-         PwOP2smVxucuruB8b+By9d1Aqki1LYpKIC+uxFdUB0YmTZcpOGd6kDmjyC+STMGA/Qcv
-         TEM10dX2B7YFosxOW1CZq/ZvsDvsdlXDusGbmTkVqVGJv26UyWjT3U1z3yB/d3WrltbK
-         qlT63g0x+9jJX0IqQt6xs6yD9ve4f+6xbjRnjLAWTxkavBv3KXENBxQQjnzcBJb57MTZ
-         tJwg==
-X-Gm-Message-State: AOJu0Yz/8Ch+DfOUMKJV9O9K+81otC2nonSAHr0X16s3uzXBOBgb3OJx
-        WPKbD5Jr+HwvQeN0TzsQfva5mg==
-X-Google-Smtp-Source: AGHT+IGmITVAx5tw2shWoi9p53LdxIkJZG2ISua+aTyMB6gKowaSEsMpqhja7SK7JnY1h4db+3vi3Q==
-X-Received: by 2002:adf:fd82:0:b0:319:7c0f:d920 with SMTP id d2-20020adffd82000000b003197c0fd920mr17703245wrr.57.1699189573169;
-        Sun, 05 Nov 2023 05:06:13 -0800 (PST)
+        bh=kA5HbJ1nAC1HbU6KlOKuy+GraCyrQG/02+Rf4rzbG0k=;
+        b=LwdNT/ZgJzCujqvDzFAwbqJebsLO3u0WNzN9/b8E2oI3ezGJ9w23YTrvYnLle0qcDx
+         Qv3viGpJmM9Ud9sPNmJvBvIzr50NR/VHyoYRsucO2KJMZFTNNLVRRTyAK79eGvNPKB4f
+         f6nHPjjJolOvLsHvNQncesNNMQNkD1yqsdtyt2HfWkTrf3WOd5ibC8l9tuIV8rUGgpzE
+         x2wMEiPhijWIo7+45KgqJjf5w3a2sLEPEcLjnWO7/oXcUm75FpLQ8Wddrq1jUw2JdBKz
+         +Hq3ivMBXSN9YKRxqUqCi3tq7CNg2Tn683uh1hej8384i4wmHt09bBUGNnHzYuryclBS
+         5Cew==
+X-Gm-Message-State: AOJu0YydwPjdgCUGoQRer+G0Q3CE+jF/KmuDKbzjka5dVLNC/JbUVIvY
+        PZ/lRZ2DDkDcDQBFS3pnZSqDPg==
+X-Google-Smtp-Source: AGHT+IHArqkEU1cHnDuJ82f7/D8SJobPuk02DcB3+uYQo6EjWky+brGhKkVzsPK3MrFiIPF+u1uIaA==
+X-Received: by 2002:a05:600c:1e11:b0:406:53aa:7a5f with SMTP id ay17-20020a05600c1e1100b0040653aa7a5fmr21253548wmb.10.1699189707074;
+        Sun, 05 Nov 2023 05:08:27 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id e4-20020adfe384000000b003200c918c81sm6738514wrm.112.2023.11.05.05.06.11
+        by smtp.gmail.com with ESMTPSA id i20-20020a05600c355400b0040839fcb217sm8935931wmq.8.2023.11.05.05.08.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Nov 2023 05:06:12 -0800 (PST)
-Message-ID: <78eb30a4-4ff1-447d-9736-7e98c27f7cf9@linaro.org>
-Date:   Sun, 5 Nov 2023 14:06:10 +0100
+        Sun, 05 Nov 2023 05:08:26 -0800 (PST)
+Message-ID: <1830fc44-7bac-4db5-af59-112410d73a64@linaro.org>
+Date:   Sun, 5 Nov 2023 14:08:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/2] dt-bindings: arm: qcom: Add QCM6490 IDP and RB3
- board
+Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
+ rb3 board
 Content-Language: en-US
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, quic_nainmeht@quicinc.com
 References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
- <20231103184655.23555-2-quic_kbajaj@quicinc.com>
+ <20231103184655.23555-3-quic_kbajaj@quicinc.com>
+ <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -113,28 +115,51 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231103184655.23555-2-quic_kbajaj@quicinc.com>
+In-Reply-To: <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/11/2023 19:46, Komal Bajaj wrote:
-> Document the qcom,qcm6490-idp and qcm6490-rb3 board based off
-> qcm6490 SoC.
-> 
-> Co-developed-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+On 03/11/2023 23:22, Dmitry Baryshkov wrote:
+> On Fri, 3 Nov 2023 at 20:49, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>>
+>> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
+>> platform. QCM6490 is derived from SC7280 meant for various
+>> form factor including IoT.
+>>
+>> Supported features are, as of now:
+>> * Debug UART
+>> * eMMC (only in IDP)
+>> * USB
+>>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+...
+
+>> +
+>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+>> new file mode 100644
+>> index 000000000000..01adc97789d0
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+> 
+> I have mixed feelings towards this file. Usually we add such 'common'
+> files only for the phone platforms where most of the devices are
+> common.
+> Do you expect that IDP and RB3 will have a lot of common code other
+> than these regulator settings?
+
+I agree here. What exactly is common in the real hardware between IDP
+and RB3? Commit msg does not explain it, so I do not see enough
+justification for common file. Just because some DTS looks similar for
+different hardware does not mean you should creat common file.
 
 Best regards,
 Krzysztof
