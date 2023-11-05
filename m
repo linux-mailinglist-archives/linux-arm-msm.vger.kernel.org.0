@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B03D7E136D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 13:58:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 11F3A7E1376
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 14:03:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229592AbjKEM6c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Nov 2023 07:58:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42594 "EHLO
+        id S229532AbjKENDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Nov 2023 08:03:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbjKEM6b (ORCPT
+        with ESMTP id S229436AbjKENDR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Nov 2023 07:58:31 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B46B9E0
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 04:58:28 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9d224dca585so532156366b.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 04:58:28 -0800 (PST)
+        Sun, 5 Nov 2023 08:03:17 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAEA6E0
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 05:03:13 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-32da4ffd7e5so2125841f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 05:03:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699189107; x=1699793907; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699189392; x=1699794192; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bkpEaVM2Dxrs1saXGQCI2CPXp4qWCJBHJyK0mt90sZI=;
-        b=P6cBt1OvzLtweDcKTM9Xzyc4XyzKrB6w/gNusxRLcYK++OtgbcLbsgGwIYRGL4k34G
-         +lVw08KzpuRmdEu/3eIH9IBnw9Glc3wNaIDSatPK0SVHe308DlqTRoaIjpOJEQx4dJDW
-         BvKRyFtnr8QJeOr65afPsy889ASo0ZttUdBH293FNrnGiUCTU0QQKieTU30WSVwe6iCg
-         YQh7bLGfH0y8wguZ3ZSWOXGl3vrIEUbMpXSm+9/JwI4MrXqNiPEZXdgSVSPKjhSLYrSF
-         o+l/J40N/dQ9n1sWtLiiprmQQh84GcOinVUM2EmGOzJlXul9cA9/6wT3DZqbh38saPph
-         dvEg==
+        bh=2KBTcZFRrRnggqoCJ9tY6Zm1rKCADbDaQM0EqS6zsGU=;
+        b=qoTzNg8uBlaqqEpg94fbBsuwUAsFayeXQg+PUDqo0Iz7vvNTZBzyEWhkhzHiXqBfuy
+         PPv1/Zu0HjEIBrMQWLhjFe6Xgk/Vg39kulmLH1jf8QHUMAgGKykC9J0tTSyHAZagO4a+
+         KVX+7vIL6YlFqN0js6jFQf7CAGQjJ/F0n1Xe7nsr+bbPWMNuoKSXm53QlghXCeO6m8oM
+         XW8PhfkMGH03RSz5yEuD+uIaEluu5MYvZGzm32t5TIhX0sPefT2mDhwci4Za+YbEwvdF
+         wzyhVc+lp08HslqTrjayR5O0IxRRQ8mNSdGP7xvlV0bwyxjWiQzhyDIm/BL/Q4Ix9SFO
+         VRFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699189107; x=1699793907;
+        d=1e100.net; s=20230601; t=1699189392; x=1699794192;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bkpEaVM2Dxrs1saXGQCI2CPXp4qWCJBHJyK0mt90sZI=;
-        b=fd6XIHRAiERDaZOfzeFRzqFgxYBlCQUE2azNX+NbqOZ+1xygBJhOsxwQ+M/x0OrXnq
-         x62jWKarLYJFwWydnGgTllCiufY0neJ7qik5ecAZ0fhZOQvQEd9YtVT6VcDYeCbf28n4
-         N88SvlypvwddPEq/4yfKJuaOZ+YH0HwRU09MwqJaLY6skmZ4h6UapjTFfknPyQn97IBD
-         j5jXRTBvTbdIqQKVuOYXJxSlfCeNnAgKvdmYeCp/fPiUAKmH0Bgv9B3y5i9GI729f3ZK
-         gn6xqBKkcZJbFkf3L7tZN/FODqa9vPZSErS4Wm+c7+cAZafD20y7xkuB/ov8T+HLqt6Z
-         jdFw==
-X-Gm-Message-State: AOJu0YzadJfS6VDivVZzN29JfUAVzJRb0FtsVEA3QUWGz7VdkYbm20cA
-        m/aodigFm8/fq6JdT3t6AOXECg==
-X-Google-Smtp-Source: AGHT+IF7Fo1bDwh0kPNKZtS5tky93wHqLj7b9rPnd6tDWCHeGZYWbVwkjZRjZGecgfe0yLbUO+OJ0A==
-X-Received: by 2002:a17:907:9452:b0:9d3:85b9:afda with SMTP id dl18-20020a170907945200b009d385b9afdamr11213613ejc.34.1699189107086;
-        Sun, 05 Nov 2023 04:58:27 -0800 (PST)
+        bh=2KBTcZFRrRnggqoCJ9tY6Zm1rKCADbDaQM0EqS6zsGU=;
+        b=Je5ki41CZ7dl/wrrjUntpFOl0MZT79L9NaQJZXROJBIcyAIiFqiHy5G0S2i7itxT7h
+         iCfgkcxUGWrjPFsPGppLq8avjMSkvNg2ceASHn4vWE1zWfMIqX7biTVzylce0XEAmlpe
+         QTPaGcsV/Z3ZpuWNYgTSzaePZ9GlJjIwd2jQkz5iZrfCGQLJE03Fdz9Cs+ZcPA/ezeSP
+         e42vBUelefqu0WU5kbQVzbD/MYBB1XDAQ0uYAfdssissy6nRewrwXkhkRuPnINwBjZxw
+         XTI5YqkV0Zp4bQ4ryIAdgRi70DcOCUP1vdbVngFn6dh91mEB1aQL8zxKekP+CnpqxzvD
+         /JVg==
+X-Gm-Message-State: AOJu0YwU89IwPPToIZ3O0KSSufUkk5/bgIloq6cBLdywf/FqVp2e1Jk6
+        LCs1iTMH3BBz0u+8yL+Gy67dhw==
+X-Google-Smtp-Source: AGHT+IES/1bRaf53dFdjpbxLr+J48y6hOa+AEW7LfMBqJ9XlX1pmtutA9xN+eE5XLZ+TF4RljhTpgA==
+X-Received: by 2002:a5d:64a4:0:b0:32f:7eb0:2ed3 with SMTP id m4-20020a5d64a4000000b0032f7eb02ed3mr8956204wrp.5.1699189392406;
+        Sun, 05 Nov 2023 05:03:12 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id z20-20020a1709060ad400b0099c53c4407dsm2998858ejf.78.2023.11.05.04.58.24
+        by smtp.gmail.com with ESMTPSA id y3-20020adfe6c3000000b003140f47224csm6766651wrm.15.2023.11.05.05.03.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Nov 2023 04:58:26 -0800 (PST)
-Message-ID: <0e082f72-a770-49fb-8bd4-f8248a3a9579@linaro.org>
-Date:   Sun, 5 Nov 2023 13:58:24 +0100
+        Sun, 05 Nov 2023 05:03:11 -0800 (PST)
+Message-ID: <04707003-531c-4c58-af74-e770d22d85e4@linaro.org>
+Date:   Sun, 5 Nov 2023 14:03:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
+Subject: Re: [RESEND PATCH] dt-bindings: crypto: qcom,prng: Add SM8450
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
+To:     Elliot Berman <quic_eberman@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, vincent.knecht@mailoo.org,
-        matti.lehtimaki@gmail.com, quic_grosikop@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Conor Dooley <conor.dooley@microchip.com>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231103-b4-camss-sc8280xp-v2-0-b7af4d253a20@linaro.org>
- <20231103-b4-camss-sc8280xp-v2-1-b7af4d253a20@linaro.org>
+References: <20231103225255.867243-1-quic_eberman@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -118,7 +115,7 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231103-b4-camss-sc8280xp-v2-1-b7af4d253a20@linaro.org>
+In-Reply-To: <20231103225255.867243-1-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -131,18 +128,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/11/2023 17:25, Bryan O'Donoghue wrote:
-> Add bindings for qcom,sc8280xp-camss in order to support the camera
-> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
+On 03/11/2023 23:52, Elliot Berman wrote:
+> From: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> This patch depends on:
-> https://lore.kernel.org/linux-arm-msm/20231026105345.3376-2-bryan.odonoghue@linaro.org/
-> https://lore.kernel.org/linux-arm-msm/20231026105345.3376-3-bryan.odonoghue@linaro.org/
+> SM8450's PRNG does not require a core clock reference. Add a new
+> compatible with a qcom,prng-ee fallback and handle that.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> ---
+> I noticed this patch got missed while running make dtbs_check. No
+> changes to this patch from the original version:
+> 
+> https://lore.kernel.org/all/2c208796-5ad6-c362-dabc-1228b978ca1d@linaro.org/
+> 
 
-Do not put dependencies in the commit log. Once this is merged, it does
-not make any sense in Git history. Dependencies should be mentioned only
-in the changelog ---.
-
+I don't understand why do you send this. This is not a correct patch,
+was rejected. Different patch was already merged.
 
 Best regards,
 Krzysztof
