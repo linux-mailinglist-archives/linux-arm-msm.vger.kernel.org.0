@@ -2,74 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11F3A7E1376
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 14:03:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7407D7E1382
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 14:06:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229532AbjKENDR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Nov 2023 08:03:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38854 "EHLO
+        id S229436AbjKENGS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Nov 2023 08:06:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjKENDR (ORCPT
+        with ESMTP id S229447AbjKENGR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Nov 2023 08:03:17 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAEA6E0
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 05:03:13 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-32da4ffd7e5so2125841f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 05:03:13 -0800 (PST)
+        Sun, 5 Nov 2023 08:06:17 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B16C2E0
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 05:06:14 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-32fadd4ad09so2237020f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 05:06:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699189392; x=1699794192; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699189573; x=1699794373; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2KBTcZFRrRnggqoCJ9tY6Zm1rKCADbDaQM0EqS6zsGU=;
-        b=qoTzNg8uBlaqqEpg94fbBsuwUAsFayeXQg+PUDqo0Iz7vvNTZBzyEWhkhzHiXqBfuy
-         PPv1/Zu0HjEIBrMQWLhjFe6Xgk/Vg39kulmLH1jf8QHUMAgGKykC9J0tTSyHAZagO4a+
-         KVX+7vIL6YlFqN0js6jFQf7CAGQjJ/F0n1Xe7nsr+bbPWMNuoKSXm53QlghXCeO6m8oM
-         XW8PhfkMGH03RSz5yEuD+uIaEluu5MYvZGzm32t5TIhX0sPefT2mDhwci4Za+YbEwvdF
-         wzyhVc+lp08HslqTrjayR5O0IxRRQ8mNSdGP7xvlV0bwyxjWiQzhyDIm/BL/Q4Ix9SFO
-         VRFA==
+        bh=yk9cmvAD3pBKreSl8ty20jfviH0gO+DHwfcuMx08Q1E=;
+        b=DZRNk5S6Rdc/x1tuNQ8mOpRZnZYBPEcf0l/KgxmNq/tLUHmNYelVwMzrAps1k76Utb
+         5PRLAy/tsM3rXsCLgnzLrVwHXVhV02aCcA5lBXpiciAKxAL4y01EGox/d8RCYdlpD1S2
+         E3Nx9lHKmytHU+XC1AuAkxBvvzhgv11abpksXrpXsrfvy82qMw/pea0t8LzPNNCWjhzs
+         paCoLXRtm1xjBB9c5d1H67ycIJgbBIDodY0lGqvu5jOynF5C//1f8QEziKhQx26+TCGS
+         zEyb5aCdB7CTbEKe7uXiJKz6L9GU1N49h0ybM5J+uFVhpJ4OyQ7g2ORGPoHc29lASQZo
+         vR0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699189392; x=1699794192;
+        d=1e100.net; s=20230601; t=1699189573; x=1699794373;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2KBTcZFRrRnggqoCJ9tY6Zm1rKCADbDaQM0EqS6zsGU=;
-        b=Je5ki41CZ7dl/wrrjUntpFOl0MZT79L9NaQJZXROJBIcyAIiFqiHy5G0S2i7itxT7h
-         iCfgkcxUGWrjPFsPGppLq8avjMSkvNg2ceASHn4vWE1zWfMIqX7biTVzylce0XEAmlpe
-         QTPaGcsV/Z3ZpuWNYgTSzaePZ9GlJjIwd2jQkz5iZrfCGQLJE03Fdz9Cs+ZcPA/ezeSP
-         e42vBUelefqu0WU5kbQVzbD/MYBB1XDAQ0uYAfdssissy6nRewrwXkhkRuPnINwBjZxw
-         XTI5YqkV0Zp4bQ4ryIAdgRi70DcOCUP1vdbVngFn6dh91mEB1aQL8zxKekP+CnpqxzvD
-         /JVg==
-X-Gm-Message-State: AOJu0YwU89IwPPToIZ3O0KSSufUkk5/bgIloq6cBLdywf/FqVp2e1Jk6
-        LCs1iTMH3BBz0u+8yL+Gy67dhw==
-X-Google-Smtp-Source: AGHT+IES/1bRaf53dFdjpbxLr+J48y6hOa+AEW7LfMBqJ9XlX1pmtutA9xN+eE5XLZ+TF4RljhTpgA==
-X-Received: by 2002:a5d:64a4:0:b0:32f:7eb0:2ed3 with SMTP id m4-20020a5d64a4000000b0032f7eb02ed3mr8956204wrp.5.1699189392406;
-        Sun, 05 Nov 2023 05:03:12 -0800 (PST)
+        bh=yk9cmvAD3pBKreSl8ty20jfviH0gO+DHwfcuMx08Q1E=;
+        b=Vyhv8909UBKUbbU8tjPxS/8g5d8tuqHV+8lTkLtfNywkhDskxLYT4BmfzE/SjbzngL
+         nkWR4HT5hlFOlSFEVC7hekZ5i2Z1N1P/DA3pr8YhZIGZop51zvf+HXkNfOPLV9NyOZNV
+         PwOP2smVxucuruB8b+By9d1Aqki1LYpKIC+uxFdUB0YmTZcpOGd6kDmjyC+STMGA/Qcv
+         TEM10dX2B7YFosxOW1CZq/ZvsDvsdlXDusGbmTkVqVGJv26UyWjT3U1z3yB/d3WrltbK
+         qlT63g0x+9jJX0IqQt6xs6yD9ve4f+6xbjRnjLAWTxkavBv3KXENBxQQjnzcBJb57MTZ
+         tJwg==
+X-Gm-Message-State: AOJu0Yz/8Ch+DfOUMKJV9O9K+81otC2nonSAHr0X16s3uzXBOBgb3OJx
+        WPKbD5Jr+HwvQeN0TzsQfva5mg==
+X-Google-Smtp-Source: AGHT+IGmITVAx5tw2shWoi9p53LdxIkJZG2ISua+aTyMB6gKowaSEsMpqhja7SK7JnY1h4db+3vi3Q==
+X-Received: by 2002:adf:fd82:0:b0:319:7c0f:d920 with SMTP id d2-20020adffd82000000b003197c0fd920mr17703245wrr.57.1699189573169;
+        Sun, 05 Nov 2023 05:06:13 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id y3-20020adfe6c3000000b003140f47224csm6766651wrm.15.2023.11.05.05.03.10
+        by smtp.gmail.com with ESMTPSA id e4-20020adfe384000000b003200c918c81sm6738514wrm.112.2023.11.05.05.06.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Nov 2023 05:03:11 -0800 (PST)
-Message-ID: <04707003-531c-4c58-af74-e770d22d85e4@linaro.org>
-Date:   Sun, 5 Nov 2023 14:03:09 +0100
+        Sun, 05 Nov 2023 05:06:12 -0800 (PST)
+Message-ID: <78eb30a4-4ff1-447d-9736-7e98c27f7cf9@linaro.org>
+Date:   Sun, 5 Nov 2023 14:06:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND PATCH] dt-bindings: crypto: qcom,prng: Add SM8450
+Subject: Re: [RFC PATCH 1/2] dt-bindings: arm: qcom: Add QCM6490 IDP and RB3
+ board
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Conor Dooley <conor.dooley@microchip.com>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231103225255.867243-1-quic_eberman@quicinc.com>
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_nainmeht@quicinc.com
+References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
+ <20231103184655.23555-2-quic_kbajaj@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -115,11 +113,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231103225255.867243-1-quic_eberman@quicinc.com>
+In-Reply-To: <20231103184655.23555-2-quic_kbajaj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -128,24 +126,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/11/2023 23:52, Elliot Berman wrote:
-> From: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 03/11/2023 19:46, Komal Bajaj wrote:
+> Document the qcom,qcm6490-idp and qcm6490-rb3 board based off
+> qcm6490 SoC.
 > 
-> SM8450's PRNG does not require a core clock reference. Add a new
-> compatible with a qcom,prng-ee fallback and handle that.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
-> I noticed this patch got missed while running make dtbs_check. No
-> changes to this patch from the original version:
-> 
-> https://lore.kernel.org/all/2c208796-5ad6-c362-dabc-1228b978ca1d@linaro.org/
-> 
+> Co-developed-by: Naina Mehta <quic_nainmeht@quicinc.com>
+> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 
-I don't understand why do you send this. This is not a correct patch,
-was rejected. Different patch was already merged.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
