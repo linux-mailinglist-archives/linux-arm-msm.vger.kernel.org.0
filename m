@@ -2,74 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 392767E138B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 14:08:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C4817E13AC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 14:33:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230009AbjKENIc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Nov 2023 08:08:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40730 "EHLO
+        id S230306AbjKENd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Nov 2023 08:33:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229967AbjKENIc (ORCPT
+        with ESMTP id S230418AbjKENd4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Nov 2023 08:08:32 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB805DE
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 05:08:28 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-4094301d505so27584965e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 05:08:28 -0800 (PST)
+        Sun, 5 Nov 2023 08:33:56 -0500
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0519F125
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 05:33:52 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c5629fdbf8so44592731fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 05:33:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699189707; x=1699794507; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699191231; x=1699796031; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kA5HbJ1nAC1HbU6KlOKuy+GraCyrQG/02+Rf4rzbG0k=;
-        b=atGXLwu/s2hkHDILkHkTPrTtSdEs6dCW5V9yNlg+xfIQNPVQxROHh93KEPTKhxjeQW
-         GZp0pjbwDN1NOkAnWzzPq0IiC3Vrt4CmppwW2MY+Ar89DAKznhMjcWCFzLEXRB99Ya8D
-         gyzKFVXfaAHrh6C3+GaKTO07YLVejbfyWegTwHRGhtgMRLnbrDs6mEUoExp32xSdCw9V
-         cAMzPg1OFZ0t9GNc9tiVj1AN2loG6E2Zy7C9BR+XRTTs0enlQTAAh0IcuAUHX86AgNxe
-         oOdBHu4eYawxoQG5lt0yz4LEwlEb9pUORmXjn1/rHgQRp39AYjGOtRHwlfs3rGw6izzF
-         duLw==
+        bh=i71VLtyGXnfgqlxiaczDIdWu43BdqWayucGi7/Xq0uw=;
+        b=Da/9tVM9nBi4zAkpzSqE9Huvev20kSGvKwYmJgmzKoZJQA1HcS9EyKmGGxZTZnA61s
+         cdPSorfIfF9lb9ZKVA29INmYVOjG3S4O2F9138f5gav+2zvaxidG53XJi9bu31EEBPSD
+         jRAY9gGbYWQqImIJgDstTSKjRdUMpTDuPXir8Bx+H7eIASlo7z/YT6IDA12CVq7Ql3Eh
+         i3ETcj+U4xIBBq4W+27vBq5KSS+nrlUzC3cwQ31jJ7q7IKb4LjVzpbwks1JoNlHYM5zA
+         G0yZMQ+MDzSW0l9lCVGEP7U0lfB04at8ZgJF70MCZG7p3YpWsvXe3iO693ia/FHdUu0c
+         /VRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699189707; x=1699794507;
+        d=1e100.net; s=20230601; t=1699191231; x=1699796031;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kA5HbJ1nAC1HbU6KlOKuy+GraCyrQG/02+Rf4rzbG0k=;
-        b=LwdNT/ZgJzCujqvDzFAwbqJebsLO3u0WNzN9/b8E2oI3ezGJ9w23YTrvYnLle0qcDx
-         Qv3viGpJmM9Ud9sPNmJvBvIzr50NR/VHyoYRsucO2KJMZFTNNLVRRTyAK79eGvNPKB4f
-         f6nHPjjJolOvLsHvNQncesNNMQNkD1yqsdtyt2HfWkTrf3WOd5ibC8l9tuIV8rUGgpzE
-         x2wMEiPhijWIo7+45KgqJjf5w3a2sLEPEcLjnWO7/oXcUm75FpLQ8Wddrq1jUw2JdBKz
-         +Hq3ivMBXSN9YKRxqUqCi3tq7CNg2Tn683uh1hej8384i4wmHt09bBUGNnHzYuryclBS
-         5Cew==
-X-Gm-Message-State: AOJu0YydwPjdgCUGoQRer+G0Q3CE+jF/KmuDKbzjka5dVLNC/JbUVIvY
-        PZ/lRZ2DDkDcDQBFS3pnZSqDPg==
-X-Google-Smtp-Source: AGHT+IHArqkEU1cHnDuJ82f7/D8SJobPuk02DcB3+uYQo6EjWky+brGhKkVzsPK3MrFiIPF+u1uIaA==
-X-Received: by 2002:a05:600c:1e11:b0:406:53aa:7a5f with SMTP id ay17-20020a05600c1e1100b0040653aa7a5fmr21253548wmb.10.1699189707074;
-        Sun, 05 Nov 2023 05:08:27 -0800 (PST)
+        bh=i71VLtyGXnfgqlxiaczDIdWu43BdqWayucGi7/Xq0uw=;
+        b=tuh81b1KImIeOpk79qEuG0GwV4zwVFuCY/9V8m2kMkrhkpIy1mYJL54NzktlXiWuji
+         nDIObHiFAPpmm90gHdd06UpiWv3TPIcP/JoJl9wnKmJK1n+8gATdGzjZeV75v4J394t0
+         QrE0GwKoFK2FnSYed4KBTammDbDXyWM6xSvUJy2lilo9mICDhRO93aTPJpOu/YcV/K3Y
+         deRkUrtT8485UBAKTNDqWctmxm/fH58qaa1TKfjvrdz0y0jyc5qZadn4v4XfcCFAviQY
+         0OimLvorK3Jxe4isXLCK3j8UtnnJVBJavZca1pdoRFAqTC4+AcgbMTcXYqaPxmEugxIc
+         YjNQ==
+X-Gm-Message-State: AOJu0YzkL1/NG/bSR7UgA7XQsehf2kP3cHoFWTrzkMJ1MofE3xhsVH1x
+        TmpW7S71B20QVFXlG38NRhLvtg==
+X-Google-Smtp-Source: AGHT+IG9cyYh8pZ/6MjaYjvx53/tv0yPcpPPyzkKeVGh6nhbrgVfREbLF7nDazwBlWie0DF8vFHPvg==
+X-Received: by 2002:a2e:be10:0:b0:2c4:fdc9:c8a3 with SMTP id z16-20020a2ebe10000000b002c4fdc9c8a3mr24349326ljq.50.1699191231138;
+        Sun, 05 Nov 2023 05:33:51 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id i20-20020a05600c355400b0040839fcb217sm8935931wmq.8.2023.11.05.05.08.25
+        by smtp.gmail.com with ESMTPSA id f20-20020a05600c43d400b003fbe4cecc3bsm8718488wmn.16.2023.11.05.05.33.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Nov 2023 05:08:26 -0800 (PST)
-Message-ID: <1830fc44-7bac-4db5-af59-112410d73a64@linaro.org>
-Date:   Sun, 5 Nov 2023 14:08:24 +0100
+        Sun, 05 Nov 2023 05:33:50 -0800 (PST)
+Message-ID: <a3679c0a-0c74-42d9-a31f-e3a99407f1d7@linaro.org>
+Date:   Sun, 5 Nov 2023 14:33:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
- rb3 board
+Subject: Re: [PATCH 9/9] dt-bindings: watchdog: qcom-wdt: Make the interrupt
+ example edge triggered
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Douglas Anderson <dianders@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_nainmeht@quicinc.com
-References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
- <20231103184655.23555-3-quic_kbajaj@quicinc.com>
- <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
+        Guenter Roeck <linux@roeck-us.net>
+Cc:     linux-watchdog@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        swboyd@chromium.org, Andy Gross <agross@kernel.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231103163434.1.Ic7577567baff921347d423b722de8b857602efb1@changeid>
+ <20231103163434.9.Ie30c1d3f780666f6906fd2fd7c437632c229d987@changeid>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -115,11 +116,11 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
+In-Reply-To: <20231103163434.9.Ie30c1d3f780666f6906fd2fd7c437632c229d987@changeid>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -128,39 +129,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/11/2023 23:22, Dmitry Baryshkov wrote:
-> On Fri, 3 Nov 2023 at 20:49, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->>
->> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
->> platform. QCM6490 is derived from SC7280 meant for various
->> form factor including IoT.
->>
->> Supported features are, as of now:
->> * Debug UART
->> * eMMC (only in IDP)
->> * USB
->>
-
-...
-
->> +
->> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
->> new file mode 100644
->> index 000000000000..01adc97789d0
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+On 04/11/2023 00:34, Douglas Anderson wrote:
+> As described in the patch ("arm64: dts: qcom: sc7180: Make watchdog
+> bark interrupt edge triggered"), the Qualcomm watchdog timer's bark
+> interrupt should be configured as edge triggered.
 > 
-> I have mixed feelings towards this file. Usually we add such 'common'
-> files only for the phone platforms where most of the devices are
-> common.
-> Do you expect that IDP and RB3 will have a lot of common code other
-> than these regulator settings?
-
-I agree here. What exactly is common in the real hardware between IDP
-and RB3? Commit msg does not explain it, so I do not see enough
-justification for common file. Just because some DTS looks similar for
-different hardware does not mean you should creat common file.
-
+> Update the example in the bindings.
+> 
+> Fixes: 7c631cdff391 ("dt-bindings: watchdog: qcom-wdt: allow interrupts")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Best regards,
 Krzysztof
 
