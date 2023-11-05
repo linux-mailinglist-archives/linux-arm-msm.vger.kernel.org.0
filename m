@@ -2,129 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2972A7E12AB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 09:56:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 502A67E12FF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Nov 2023 11:20:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230168AbjKEI4L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Nov 2023 03:56:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34994 "EHLO
+        id S229455AbjKEKUZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Nov 2023 05:20:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjKEI4K (ORCPT
+        with ESMTP id S229447AbjKEKUY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Nov 2023 03:56:10 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE41EE;
-        Sun,  5 Nov 2023 01:56:08 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA76AC433C9;
-        Sun,  5 Nov 2023 08:55:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1699174567;
-        bh=/FJtqScaHrtd80S9WXDntjorw/0XwpXE9blm9TxhbeM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=u9drhfhNhCoarASbCXcYw5PXiPekZkdUUoBGDhMQMOWm57oZNbyQ86U1sDC6W2A4U
-         /qBYYxrlg1G45/AcHA0tmKQ9F2M/0lZV4a+i6xf/oWg2BHnTUqW+L4TpfamWsgHdVb
-         uyn4eZw99NNra5odll6jGIw4Urdat3eu8wMy3HAXTHQBdI93J246Vc2k52wRuD6P+c
-         u3/tulwIJEtNX5tXRq++ZQZXP8uLn+NZd5r1i7Yv3kxTOo/DTjpmiMgn6h6JSBVJUE
-         ag75I5JsiOunBKeRu0Njm0bcR244r5/J27ELu4pIB4szra/G8mwmWE8s/puh72y+q+
-         HELhOwYDFJvKg==
-Date:   Sun, 5 Nov 2023 14:25:50 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        konrad.dybcio@linaro.org, quic_shazhuss@quicinc.com,
-        quic_nitegupt@quicinc.com, quic_ramkri@quicinc.com,
-        quic_nayiluri@quicinc.com, dmitry.baryshkov@linaro.org,
-        robh@kernel.org, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
-        quic_schintav@quicinc.com, quic_shijose@quicinc.com,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mhi@lists.linux.dev
-Subject: Re: [PATCH v6 3/4] PCI: epf-mhi: Add support for SA8775P
-Message-ID: <20231105085550.GC2508@thinkpad>
-References: <1698729108-27356-1-git-send-email-quic_msarkar@quicinc.com>
- <1698729108-27356-4-git-send-email-quic_msarkar@quicinc.com>
+        Sun, 5 Nov 2023 05:20:24 -0500
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84DF6E9
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 02:20:21 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50931355d48so4661989e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 02:20:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699179620; x=1699784420; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ASuoihSIUKaqHBs9DjtyoGbQtXdvykq9XUQb9kp37eU=;
+        b=V2FGxWal6CR6pdq+PmUqyy5VCF0ektiC6WnypNwI4YQ9Sz2ghfyFO2SVggw7oOcVwK
+         IcF3AZ+vUMIvf1RPXD3xqLaTn+0T2pTFmJcSAicY+VJLNls4F58G1WrMMmKfvjsaylCl
+         2Mh9BcNYj0OqAI4m3hUTVMGpQgv6+l84c2bzF69qDkpt0XSmXKgpuhAtxig2Ew0xhcJw
+         mEhzVLXabC9lNsT2kclaM76kubmYJubReiVB3OCsue8sw/BVPp0cvrtgh2nmItyGvGyM
+         hHzi16Og70cjvJWuy3LiVMQBf+wAENM0tltybpsl1dv9HyLB4CVL4FmZIKQPscq2P1vx
+         NMzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699179620; x=1699784420;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ASuoihSIUKaqHBs9DjtyoGbQtXdvykq9XUQb9kp37eU=;
+        b=YkMUi8eoRAitaH3MAS+UqBy+LpqIIF842tJcvUf7INvFSklUtdThP8lc5GSfd+NNz/
+         o3Iva0xC9IWu60iWcfwF3lYB8xcDms5CTwFrgfgwG+0lrRX3CA1uuf23PV44OM8UX4Z3
+         sjjweNfyDvTSBqnDa7CCIG01sbvT54MEd1jOA+4J1fV8b+OJU8RQFIHBQ/kTmrljH8do
+         kSysVpxCCAtDjVAZxJLupaMAAnlXAba4s70eCNVJ4ZRnosrj9Ir4EJ4dE+UkIUEbq9dS
+         nStoROlEpunwJStp70NlIbZfkj8UzLx/xh3Qb2I9E8LYrxwfBYUFVxAFuiSNT/QwqwIt
+         hMug==
+X-Gm-Message-State: AOJu0YwMT3ciVN8X7d764/HmjW25cSSkDYKURvWBgAgxW71jDOxruyRq
+        o06a+e+/cVLvQrnDPy0GM5Gn12Qay7lGL9b3p6A=
+X-Google-Smtp-Source: AGHT+IFawZqB8yudfteW76oYipYXbd03J0xfErr4uEYj1y92zxKGb/0jPJPTNE7T7nXMPXTAZWpjRA==
+X-Received: by 2002:a19:ca0d:0:b0:507:a1dd:5a86 with SMTP id a13-20020a19ca0d000000b00507a1dd5a86mr17393282lfg.13.1699179619690;
+        Sun, 05 Nov 2023 02:20:19 -0800 (PST)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id u16-20020ac248b0000000b0050336e38735sm790997lfg.92.2023.11.05.02.20.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Nov 2023 02:20:18 -0800 (PST)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: qrb2210-rb1: add wifi variant property
+Date:   Sun,  5 Nov 2023 12:19:25 +0200
+Message-ID: <20231105102018.1546057-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1698729108-27356-4-git-send-email-quic_msarkar@quicinc.com>
-X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 31, 2023 at 10:41:47AM +0530, Mrinmay Sarkar wrote:
-> Add support for Qualcomm Snapdragon SA8775P SoC to the EPF driver.
-> Reusing DID (0x0306) for SA8775P and it supports HDMA. Currently,
+The RB1 platform doesn't have board-specific board-id programmed, it uses
+generic 0xff. Thus add the property with the 'variant' of the
+calibration data.
 
-You should state why you are reusing the "PID" and whether it is going to be
-updated in the future or not.
+Note: the driver will check for the calibration data for the following
+IDs, so existing board-2.bin files will continue to work.
 
-> it has no fixed PCI class, so it is being advertised as
-> "PCI_CLASS_OTHERS".
-> 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+- 'bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1'
+- 'bus=snoc,qmi-board-id=ff,qmi-chip-id=120'
+- 'bus=snoc,qmi-board-id=ff'
 
-With the above mentioned change,
+For the reference, the board is identified by the driver in the
+following way:
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+ath10k_snoc c800000.wifi: qmi chip_id 0x120 chip_family 0x4007 board_id 0xff soc_id 0x40670000
+ath10k_snoc c800000.wifi: qmi fw_version 0x337302d3 fw_build_timestamp 2023-01-06 01:50 fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HL.3.3.7.c2-00723-QCAHLSWMTPLZ-1
+ath10k_snoc c800000.wifi: wcn3990 hw1.0 target 0x00000008 chip_id 0x00000000 sub 0000:0000
+ath10k_snoc c800000.wifi: kconfig debug 0 debugfs 0 tracing 0 dfs 0 testmode 0
+ath10k_snoc c800000.wifi: firmware ver  api 5 features wowlan,mgmt-tx-by-reference,non-bmi crc32 b3d4b790
+ath10k_snoc c800000.wifi: htt-ver 3.114 wmi-op 4 htt-op 3 cal file max-sta 32 raw 0 hwcrypto 1
 
-- Mani
+Fixes: 9692ccc49583 ("arm64: dts: qcom: qrb2210-rb1: Enable remote processors")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
 
-> ---
->  drivers/pci/endpoint/functions/pci-epf-mhi.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> index b7b9d3e..23ea94e 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> @@ -114,6 +114,22 @@ static const struct pci_epf_mhi_ep_info sm8450_info = {
->  	.flags = MHI_EPF_USE_DMA,
->  };
->  
-> +static struct pci_epf_header sa8775p_header = {
-> +	.vendorid = PCI_VENDOR_ID_QCOM,
-> +	.deviceid = 0x0306,               /* FIXME: Update deviceid for sa8775p EP */
-> +	.baseclass_code = PCI_CLASS_OTHERS,
-> +	.interrupt_pin = PCI_INTERRUPT_INTA,
-> +};
-> +
-> +static const struct pci_epf_mhi_ep_info sa8775p_info = {
-> +	.config = &mhi_v1_config,
-> +	.epf_header = &sa8775p_header,
-> +	.bar_num = BAR_0,
-> +	.epf_flags = PCI_BASE_ADDRESS_MEM_TYPE_32,
-> +	.msi_count = 32,
-> +	.mru = 0x8000,
-> +};
-> +
->  struct pci_epf_mhi {
->  	const struct pci_epc_features *epc_features;
->  	const struct pci_epf_mhi_ep_info *info;
-> @@ -677,6 +693,7 @@ static int pci_epf_mhi_probe(struct pci_epf *epf,
->  }
->  
->  static const struct pci_epf_device_id pci_epf_mhi_ids[] = {
-> +	{ .name = "sa8775p", .driver_data = (kernel_ulong_t)&sa8775p_info },
->  	{ .name = "sdx55", .driver_data = (kernel_ulong_t)&sdx55_info },
->  	{ .name = "sm8450", .driver_data = (kernel_ulong_t)&sm8450_info },
->  	{},
-> -- 
-> 2.7.4
-> 
-> 
+Initially this patch was sent before Konrad actually sending the WiFi
+support patchset for the RB1 board. Afterwards we didn't synchronise and
+the calibration variant wasn't squashed into the relevant patchset.
 
+---
+
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+index 66062006ef4d..a7a744bafc45 100644
+--- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
++++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+@@ -536,6 +536,7 @@ &wifi {
+ 	vdd-1.8-xo-supply = <&pm2250_l13>;
+ 	vdd-1.3-rfa-supply = <&pm2250_l10>;
+ 	vdd-3.3-ch0-supply = <&pm2250_l22>;
++	qcom,ath10k-calibration-variant = "Thundercomm_RB1";
+ 	status = "okay";
+ };
+ 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.42.0
+
