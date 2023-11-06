@@ -2,79 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D441E7E2A78
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 17:56:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 751427E2A97
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 18:05:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232905AbjKFQ4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 11:56:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42448 "EHLO
+        id S232375AbjKFRFw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 12:05:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232869AbjKFQ4X (ORCPT
+        with ESMTP id S231792AbjKFRFv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 11:56:23 -0500
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 129FE1BC
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 08:56:20 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-5079f3f3d7aso6267850e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 08:56:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1699289775; x=1699894575; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=alAxQ7E5oSuVFPStBPyKJDDCOhb3s2DIeYQfUTb7TAs=;
-        b=KEk9K3BCwVsHHNGhEwaHq5L3V0IncuiZ7IitIkPfJjQ0v6nRel7FfLlViETtfWY+Tg
-         Yp1K3OMKewylpBwc8aXYktKACAJwt7+RhEus5JbsXo2d3TtCQGTCnICpo2p/inleakjp
-         GW1lARq8nF1ZWLNC6uzDnaO2D9dm3ALkprJ44=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699289775; x=1699894575;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=alAxQ7E5oSuVFPStBPyKJDDCOhb3s2DIeYQfUTb7TAs=;
-        b=W6in9BeAxVPNa/Tc2IOC1/wL3OC/XE7wV9qIDjruLpW6IS+XUj20Beqxf/ezNp8t2b
-         t42q+3RJPA0bigVRFw14gRe8lkKF5iYWpTQR+RRxBtdLp+RKpBfqG4tEqir4tjcb618P
-         TH/x/VhqPK10uxKwVpeUTd0O+O9RSzUdZSmXTU5lYjSPRZ2+tlt2NFTsU+Yi42/FbCzt
-         gvjGW8Lni42OoUOPqi+jDn+oMdz1Y70FYgFWyqJaNbrFFS7YzPQMvdPCJz5KynXqvuAu
-         R2qef85xIct+To/46QXZKjCR4k8IyFNH/MHG1hEoI9rgs0zUycsZ3rX80k7ct/FTwNqM
-         IY9A==
-X-Gm-Message-State: AOJu0Yy4BclYN6I9dmIcEVtnHpN8jZz2zPCrgdqB38GhkDn34qU+CuoE
-        jm/QVIMHS8FaM1Oub8l6t46TaBsaimo3mOzuL4Jaogdc
-X-Google-Smtp-Source: AGHT+IEDSZJW/QOZLC7WNqrNM+8INKogseOJsPSFmsLvs8i1SR+PxvbrQ64aSG+9xR0EmEXaMiB8sw==
-X-Received: by 2002:ac2:4f8e:0:b0:503:1d46:6f29 with SMTP id z14-20020ac24f8e000000b005031d466f29mr20213704lfs.37.1699289774819;
-        Mon, 06 Nov 2023 08:56:14 -0800 (PST)
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com. [209.85.167.53])
-        by smtp.gmail.com with ESMTPSA id o22-20020a056512053600b004fe48a27fa1sm24453lfc.114.2023.11.06.08.56.13
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 08:56:13 -0800 (PST)
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-507c9305727so5959e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 08:56:13 -0800 (PST)
-X-Received: by 2002:a05:6512:2806:b0:505:6e12:9e70 with SMTP id
- cf6-20020a056512280600b005056e129e70mr156923lfb.6.1699289773464; Mon, 06 Nov
- 2023 08:56:13 -0800 (PST)
+        Mon, 6 Nov 2023 12:05:51 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E552191;
+        Mon,  6 Nov 2023 09:05:48 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6ARCgu025332;
+        Mon, 6 Nov 2023 17:05:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=wnNHnFEMyfOZMGjEKUau1Yf64RRAah49EJ8lArNY59Q=;
+ b=BtGTw+AzMmJD0qTvfHNn6fwP3qJXAUztU7Z/Kh4NguxnCxNaa+NlGiUPF3a3dAEI9fAA
+ Xcfa4xWKpXg2gHB+dXaTvH3/etceFJ8eDTFKQnq607ecTKfbyXAvzXAjqnYYiTTYE0er
+ dqh+DGb3TuW0QiZiAtX8/qoundcZ9+VVkvSLTmsQVHXhEhgWZJTQGTg074wWBbDgg3O9
+ GLgPQ0igDhTMg2L/QtxMvPL1zzSXMJBBP5VT1kFVdoDQcGW1gQqkNj/MFPOVIdHp4LwH
+ CKKYyLSes4Lh/kgvofkp++C2NafIdF/dqQ3JSzp3MSdORTbnXsO5HFl3ZU7CwZopJ06Y Zw== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5efymwhy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Nov 2023 17:05:37 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6H5aMk002573
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Nov 2023 17:05:36 GMT
+Received: from [10.71.108.203] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
+ 2023 09:05:36 -0800
+Message-ID: <e2b73ea0-c659-431e-9275-88d1a98f37cf@quicinc.com>
+Date:   Mon, 6 Nov 2023 09:05:36 -0800
 MIME-Version: 1.0
-References: <20231103105440.23904-1-quic_anshar@quicinc.com> <feca8e74-6653-4cec-943d-47302431e1fc@linaro.org>
-In-Reply-To: <feca8e74-6653-4cec-943d-47302431e1fc@linaro.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 6 Nov 2023 08:56:01 -0800
-X-Gmail-Original-Message-ID: <CAD=FV=VTCXSQo3Bo3G7oJ48qA-fUet5rHAzT8WLM1Hx70KyYMA@mail.gmail.com>
-Message-ID: <CAD=FV=VTCXSQo3Bo3G7oJ48qA-fUet5rHAzT8WLM1Hx70KyYMA@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add capacity and DPC properties
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Ankit Sharma <quic_anshar@quicinc.com>,
-        cros-qcom-dts-watchers@chromium.org, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_ashayj@quicinc.com,
-        quic_atulpant@quicinc.com, quic_rgottimu@quicinc.com,
-        quic_shashim@quicinc.com, quic_pkondeti@quicinc.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RESEND PATCH] dt-bindings: crypto: qcom,prng: Add SM8450
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+CC:     Conor Dooley <conor.dooley@microchip.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20231103225255.867243-1-quic_eberman@quicinc.com>
+ <04707003-531c-4c58-af74-e770d22d85e4@linaro.org>
+Content-Language: en-US
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <04707003-531c-4c58-af74-e770d22d85e4@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: o_DmlOkt3kEXJKMkLTRMgQjammDGuK-L
+X-Proofpoint-ORIG-GUID: o_DmlOkt3kEXJKMkLTRMgQjammDGuK-L
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-06_12,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=986 priorityscore=1501 malwarescore=0 mlxscore=0 clxscore=1015
+ phishscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311060139
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,84 +89,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Sat, Nov 4, 2023 at 4:52=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro.=
-org> wrote:
->
->
->
-> On 11/3/23 11:54, Ankit Sharma wrote:
-> > The "capacity-dmips-mhz" and "dynamic-power-coefficient" are
-> > used to build Energy Model which in turn is used by EAS to take
-> > placement decisions. So add it to SC7280 soc.
-> >
-> > Signed-off-by: Ankit Sharma <quic_anshar@quicinc.com>
-> > ---Hi, thanks for this patch
->
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->
-> I performed a quick grep in arch/arm64/boot/dts/qcom and noticed
-> that at least one of these values is missing for:
->
-> rg -l --files-without-match dynamic-power-coeff $(rg cpu@ -l) | sort
-> ipq5018.dtsi (homogeneous cluster)
-> ipq5332.dtsi (homogeneous cluster)
-> ipq6018.dtsi (homogeneous cluster)
-> ipq8074.dtsi (homogeneous cluster)
-> ipq9574.dtsi (homogeneous cluster)
-> msm8916.dtsi (homogeneous cluster)
-> msm8939.dtsi
-> msm8953.dtsi
-> msm8976.dtsi
-> msm8994.dtsi
-> msm8996.dtsi
-> msm8998.dtsi
-> qcs404.dtsi (homogeneous cluster)
-> qdu1000.dtsi (homogeneous cluster)
-> sa8775p.dtsi
-> sc7280.dtsi
-> sc8180x.dtsi
-> sc8280xp.dtsi
-> sdm630.dtsi
-> sm4450.dtsi
-> sm6125.dtsi
-> sm6375.dtsi
-> sm8350.dtsi
-> sm8450.dtsi
->
-> rg -l --files-without-match capacity-dmips $(rg cpu@ -l) | sort
-> ipq5018.dtsi (homogeneous cluster)
-> ipq5332.dtsi (homogeneous cluster)
-> ipq6018.dtsi (homogeneous cluster)
-> ipq8074.dtsi (homogeneous cluster)
-> ipq9574.dtsi (homogeneous cluster)
-> msm8916.dtsi (homogeneous cluster)
-> msm8939.dtsi
-> msm8994.dtsi
-> qcs404.dtsi (homogeneous cluster)
-> qdu1000.dtsi (homogeneous cluster)
-> sa8775p.dtsi
-> sc7280.dtsi
-> sm4450.dtsi
-> sm6375.dtsi
-> sm8350.dtsi
-> sm8450.dtsi
->
-> Where platforms with a single, homogeneous cluster likely don't
-> benefit from EAS..
->
-> Is there any chance you could dig up the correct values, for at least
-> some of these platforms? Or would you know whom to ask?
->
-> FWIW the one we're missing the most is sc8280xp..
 
-FWIW, I wrote up a longwinded commit message when I added these values
-for sc7180. See commit 82ea7d411d43 ("arm64: dts: qcom: sc7180: Base
-dynamic CPU power coefficients in reality").
+On 11/5/2023 5:03 AM, Krzysztof Kozlowski wrote:
+> On 03/11/2023 23:52, Elliot Berman wrote:
+>> From: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
+>> SM8450's PRNG does not require a core clock reference. Add a new
+>> compatible with a qcom,prng-ee fallback and handle that.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>> I noticed this patch got missed while running make dtbs_check. No
+>> changes to this patch from the original version:
+>>
+>> https://lore.kernel.org/all/2c208796-5ad6-c362-dabc-1228b978ca1d@linaro.org/
+>>
+> 
+> I don't understand why do you send this. This is not a correct patch,
+> was rejected. Different patch was already merged.
 
-The short of it is that if you have hardware and a basic "smart
-battery" to measure power consumption it's pretty easy for anyone to
-add some reasonable numbers.
+I see that 6.6 has
 
--Doug
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sm8450.dtsi?h=v6.6#n1741
+
+but bindings not updated:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/crypto/qcom,prng.yaml?h=v6.6
+
+I came up with similar-ish fix offline, then found Konrad had posted the patch when searching lore.
+I didn't find any other patch on lore. 
+
+I think you rejected a proposal to drop "p" from "prng", but this patch
+doesn't do that and we stayed course with naming scheme.
+
+Thanks,
+
+Elliot
