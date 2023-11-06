@@ -2,110 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7A7B87E265B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:12:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EF777E2685
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:21:45 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231520AbjKFOMf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 09:12:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39470 "EHLO
+        id S231324AbjKFOVq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 09:21:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230514AbjKFOMe (ORCPT
+        with ESMTP id S230155AbjKFOVp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 09:12:34 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFC9191
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 06:12:30 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-4083dbc43cfso28419995e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 06:12:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699279949; x=1699884749; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2UW8OyDjFKxtjol+dT9GLHS+Z/D3YkbAjmLVTJp/MhM=;
-        b=ZDQrMPEk9LFGmfxjgGwcNOZ/THI7Ma2Xllez/1Br38mGefURgMViMwfqktIBf8Lqoo
-         j6+KJNFWWSG3mUBpvpn/kkUax0IMJoIfuxpZQ6sZZ/rr02VGAVEeUOLaHNxGXvfG6uZO
-         MKTjqk1mz9N9WbQrkCbBinPhimtBNIy7Zemo0zrIk7RwALlUflI+fCbt+ZlCiFFl8C77
-         2F2soVYVniELqyObXfnmFalHv2/STkOoeZ+A7OX1wyI8IIRmTbJ3ayJClG4kFMWtWaPD
-         vRbMma0XoI1+/OxELM4sCVa0gr9SVhe2Y94Ue8P2sb0mXtI6xHkc1YPt3kO3WyYGNih7
-         /YlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699279949; x=1699884749;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2UW8OyDjFKxtjol+dT9GLHS+Z/D3YkbAjmLVTJp/MhM=;
-        b=tAfBo0hwyU51k/laivde18qe8Xn4RKSes0bEKUm77nbR0YEFGOH7zdIkBBP8Ho7DBV
-         rIM6hBSP6k7A6tP464nHwuo0FU1MPOoRNy4fU618TsdKvy/khytdaRXjirSZW/YOy4Mt
-         FYPgyRpZQ2vYuJWJ/fUk4nWvQ/RqX1rdxr8ZbdmVylCShBEF+xVwKHN7I6wXobV7dtaW
-         3pnOxMPcBcr0X+Dr7Yab8chtShnvg37RwueorjFz/cQbTMh5zp9ddAvCz7kS3fEu1jy6
-         sZJZyDU4yqJa0EkJes+t9fRMmXnXHD3w6W+lKMlQ3YMgw5fd1ym4QyS56u7Cee45aHHe
-         J3Dg==
-X-Gm-Message-State: AOJu0Yyni8L/Fv5nlNc3rpgIXYg8ZDBygkfgPYoDcQCJhl2Q9Rm/RkO/
-        NhrU5o7RFm4133llRO2GIeAjCg==
-X-Google-Smtp-Source: AGHT+IHGi1Jhsnzg62gOMi19F89UcfjyG0t2H2SyW3GrtqUMKA104ODJpGoIiUs8OdUxuyKurtyrzQ==
-X-Received: by 2002:a05:600c:1c84:b0:401:b504:b6a0 with SMTP id k4-20020a05600c1c8400b00401b504b6a0mr22875441wms.3.1699279948941;
-        Mon, 06 Nov 2023 06:12:28 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:7a54:34e:8001:fb7d? ([2a01:e0a:982:cbb0:7a54:34e:8001:fb7d])
-        by smtp.gmail.com with ESMTPSA id j6-20020adfea46000000b0032fc609c118sm6500108wrn.66.2023.11.06.06.12.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 06:12:28 -0800 (PST)
-Message-ID: <1f9ff23e-51f0-47a7-82a6-d9709d52109c@linaro.org>
-Date:   Mon, 6 Nov 2023 15:12:27 +0100
+        Mon, 6 Nov 2023 09:21:45 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB67B8;
+        Mon,  6 Nov 2023 06:21:42 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6CIQsB016441;
+        Mon, 6 Nov 2023 14:21:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=sfQu0EihO7InF9XjKQ/DwguvwSmRl6Q79sCZ6g91iio=;
+ b=a5FycRqKL73bJ4Nr0VjfGEgb2BISfb3fSgol74N2VDFPSIvCs8OunNosR2iMsuNo5/cz
+ vIhWDiYyFTf+LCR3KETljY/drkII7I26rXGFx4nYZyN2JVp6/z7Ra43NBsmVjQJm1qgZ
+ lXsKfaHWQy99c0N0AIidv8VmRu+szLeB69lWMNOFTO3ltqj+COxZUEdHgbqCjl8Dm1Zi
+ t9+1/iWwWDHtGbWa2bVvoPwlnDnUDCHoy32hWuc8FVC8dUV0VpHOJ4D+NyEqLT5fO1Km
+ 4oNByJgqXTmST/wSi6Boq4WFMcj/FoW9ILCywJhIp8dhIxw4c00CXkeeUvsnT7241oXq 1g== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5efymfua-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Nov 2023 14:21:36 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6ELY6R017355
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Nov 2023 14:21:34 GMT
+Received: from [10.216.12.16] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
+ 2023 06:21:27 -0800
+Message-ID: <eb4f49da-ecc4-54d7-1c40-efc48306308b@quicinc.com>
+Date:   Mon, 6 Nov 2023 19:51:24 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [RESEND PATCH v2] dt-bindings: qcom,pdc: Add compatible for
- SM8550
-Content-Language: en-US, fr
-To:     Rob Herring <robh@kernel.org>,
-        Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 2/2] phy: qcom-qmp-pcie: Add support for keeping refclk
+ always on
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Marc Zyngier <maz@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20231103224304.764730-1-quic_eberman@quicinc.com>
- <169927974215.213488.494934081428498717.robh@kernel.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <169927974215.213488.494934081428498717.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_vpernami@quicinc.com>, <quic_parass@quicinc.com>
+References: <20231106-refclk_always_on-v1-0-17a7fd8b532b@quicinc.com>
+ <20231106-refclk_always_on-v1-2-17a7fd8b532b@quicinc.com>
+ <CAA8EJpq9azRC5msZfS1V8NK4EmPN+jxh+99yGEyQ+EWkk1gROQ@mail.gmail.com>
+From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <CAA8EJpq9azRC5msZfS1V8NK4EmPN+jxh+99yGEyQ+EWkk1gROQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Vfh6WjbSCuhmY7NFxv9Ke-XtWw49Sl9s
+X-Proofpoint-ORIG-GUID: Vfh6WjbSCuhmY7NFxv9Ke-XtWw49Sl9s
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-06_12,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 priorityscore=1501 malwarescore=0 mlxscore=0 clxscore=1015
+ phishscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311060116
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -114,37 +93,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
 
-On 06/11/2023 15:10, Rob Herring wrote:
-> 
-> On Fri, 03 Nov 2023 15:43:03 -0700, Elliot Berman wrote:
->> From: Abel Vesa <abel.vesa@linaro.org>
+On 11/6/2023 5:43 PM, Dmitry Baryshkov wrote:
+> On Mon, 6 Nov 2023 at 13:53, Krishna chaitanya chundru
+> <quic_krichai@quicinc.com> wrote:
+>> In PCIe low power states like L1.1 or L1.2 the phy will stop
+>> supplying refclk to endpoint. If endpoint asserts clkreq to bring
+>> back link L0, then RC needs to provide refclk to endpoint.
 >>
->> Document the compatible for SM8550 PDC.
+>> If there is some issues in platform with clkreq signal propagation
+>> to host and due to that host will not send refclk which results PCIe link
+>> down. For those platforms  phy needs to provide refclk even in low power
+>> states.
 >>
->> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> Add a flag which indicates refclk is always supplied to endpoint.
+>>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 >> ---
->> I noticed this patch was never picked up while running make dtbs_check.
->> No changes since it was last sent except the trivial rebase that came
->> from me picking the change up.
+>>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 21 +++++++++++++++++----
+>>   1 file changed, 17 insertions(+), 4 deletions(-)
 >>
->> Original patch:
->> https://lore.kernel.org/lkml/20230127132558.1176730-1-abel.vesa@linaro.org/
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>> index a63ca7424974..d7e377a7d96e 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+>> @@ -43,6 +43,8 @@
+>>   /* QPHY_PCS_STATUS bit */
+>>   #define PHYSTATUS                              BIT(6)
+>>   #define PHYSTATUS_4_20                         BIT(7)
+>> +/* PCS_PCIE_ENDPOINT_REFCLK_CNTRL */
+>> +#define EPCLK_ALWAYS_ON_EN                     BIT(6)
+>
+>>   #define PHY_INIT_COMPLETE_TIMEOUT              10000
 >>
->>   .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
->>   1 file changed, 1 insertion(+)
+>> @@ -77,6 +79,7 @@ enum qphy_reg_layout {
+>>          QPHY_START_CTRL,
+>>          QPHY_PCS_STATUS,
+>>          QPHY_PCS_POWER_DOWN_CONTROL,
+>> +       QPHY_PCS_ENDPOINT_REFCLK_CNTRL,
+>>          /* Keep last to ensure regs_layout arrays are properly initialized */
+>>          QPHY_LAYOUT_SIZE
+>>   };
+>> @@ -103,10 +106,11 @@ static const unsigned int sdm845_qhp_pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
+>>   };
 >>
-> 
-> Applied, thanks!
-> 
+>>   static const unsigned int pciephy_v4_regs_layout[QPHY_LAYOUT_SIZE] = {
+>> -       [QPHY_SW_RESET]                 = QPHY_V4_PCS_SW_RESET,
+>> -       [QPHY_START_CTRL]               = QPHY_V4_PCS_START_CONTROL,
+>> -       [QPHY_PCS_STATUS]               = QPHY_V4_PCS_PCS_STATUS1,
+>> -       [QPHY_PCS_POWER_DOWN_CONTROL]   = QPHY_V4_PCS_POWER_DOWN_CONTROL,
+>> +       [QPHY_SW_RESET]                         = QPHY_V4_PCS_SW_RESET,
+>> +       [QPHY_START_CTRL]                       = QPHY_V4_PCS_START_CONTROL,
+>> +       [QPHY_PCS_STATUS]                       = QPHY_V4_PCS_PCS_STATUS1,
+>> +       [QPHY_PCS_POWER_DOWN_CONTROL]           = QPHY_V4_PCS_POWER_DOWN_CONTROL,
+> No unnecessary whitespace changes, please.
+I will remove above white space and keep below change as it is as it is 
+throwing error as white space required there
+>
+>> +       [QPHY_PCS_ENDPOINT_REFCLK_CNTRL]        = QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_CNTRL,
+> Any other platform having this register?
+we have this register for other platforms also I will add that register 
+in which ever versions it exits in next patch
+>
+>>   };
+>>
+>>   static const unsigned int pciephy_v5_regs_layout[QPHY_LAYOUT_SIZE] = {
+>> @@ -2244,6 +2248,8 @@ struct qmp_pcie {
+>>          struct phy *phy;
+>>          int mode;
+>>
+>> +       bool refclk_always_on;
+>> +
+>>          struct clk_fixed_rate pipe_clk_fixed;
+>>   };
+>>
+>> @@ -3159,6 +3165,10 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
+>>          qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
+>>          qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
+>>
+>> +       if (qmp->refclk_always_on && cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL])
+>> +               qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL],
+>> +                            EPCLK_ALWAYS_ON_EN);
+>> +
+>>          if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
+>>                  qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
+>>                  qmp_pcie_init_port_b(qmp, tbls);
+>> @@ -3681,6 +3691,9 @@ static int qmp_pcie_probe(struct platform_device *pdev)
+>>          if (ret)
+>>                  goto err_node_put;
+>>
+>> +       qmp->refclk_always_on = of_property_read_bool(dev->of_node,
+>> +                                                     "qcom,refclk-always-on");
+> Error out if !cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL]).
+> Otherwise your DT value can be silently ignored.
 
-Thanks for applying, same problem will appear for sm8650,
-do you think you can also pick it ?
+sure I will add this in next patch series.
 
-https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-pdc-v1-1-42f62cc9858c@linaro.org/
+- Krishna Chaitanya.
 
-Thanks,
-Neil
+>> +
+>>          ret = phy_pipe_clk_register(qmp, np);
+>>          if (ret)
+>>                  goto err_node_put;
+>>
+>> --
+>> 2.42.0
+>>
+>
