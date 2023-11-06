@@ -2,140 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F1877E222F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 13:47:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DC907E229C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 14:00:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232054AbjKFMrP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 07:47:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34246 "EHLO
+        id S231676AbjKFNAj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 08:00:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231953AbjKFMq6 (ORCPT
+        with ESMTP id S231590AbjKFNAi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 07:46:58 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87511173D;
-        Mon,  6 Nov 2023 04:46:39 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6ChXrS018285;
-        Mon, 6 Nov 2023 12:46:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=LFHsw2CHqWkE2Ruz0s0m3+LE0ckb3BJXWQ2uWgj8osk=;
- b=AgOJhm40rscia+NbsIG8TBaSRo9Q+NUgdxDitFhePCDQVQlWjbzO+sG1jf1cSsixOD76
- J/4p54b1o+2GPNQgNCbO2EuZp4XxqiH7QWQGB/68Gh5tgrwlQdgacg+1sNGom5PdZiYA
- wchAdi56C+RVJJ36ruW85KFZUaJQlZ3vUihVV7tGoAC3VT0X8ahkoOFOhZOXknAZn8O7
- WcxlkP8GQhapF/8vCITcvHkWA38j58vSR1FpyzmxrByrA98Wb5UPjlcPViTY3UgjUQFq
- PTCDgkstPiEPV19SbhnsS2IYIL1DIxEFfEbgDkFas3lwFduMhHBzWXSn3upiA01KsatU lQ== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5exhv3n4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Nov 2023 12:46:32 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3A6CkTna027841;
-        Mon, 6 Nov 2023 12:46:29 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3u5f1m2j4d-1;
-        Mon, 06 Nov 2023 12:46:29 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3A6CkTSg027830;
-        Mon, 6 Nov 2023 12:46:29 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3A6CkTnL027824;
-        Mon, 06 Nov 2023 12:46:29 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id 8F1A1543A; Mon,  6 Nov 2023 20:46:28 +0800 (CST)
-From:   Qiang Yu <qianyu@qti.qualcomm.com>
-To:     mani@kernel.org, quic_jhugo@quicinc.com
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v2 2/2] bus: mhi: host: pci_generic: Add SDX75 based modem support
-Date:   Mon,  6 Nov 2023 20:46:26 +0800
-Message-Id: <1699274786-73881-3-git-send-email-qianyu@qti.qualcomm.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1699274786-73881-1-git-send-email-qianyu@qti.qualcomm.com>
-References: <1699274786-73881-1-git-send-email-qianyu@qti.qualcomm.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JF5FBQq8lCLtuJfy_8Jmic98BWcOKKO4
-X-Proofpoint-GUID: JF5FBQq8lCLtuJfy_8Jmic98BWcOKKO4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-06_11,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 phishscore=0 suspectscore=0 bulkscore=0 mlxlogscore=999
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311060103
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Mon, 6 Nov 2023 08:00:38 -0500
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BFBCB8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 05:00:35 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-d9b9adaf291so3723162276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 05:00:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699275634; x=1699880434; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GsPAHuuacaXRxIMIbqeYFW832Idaj5Z8NonFcgzOGQQ=;
+        b=GjaU3l4kia/urkfICgVHVWjT+p9YlH/qqqDFw37gEX1L1V/x4qDAjH64Gd7xf5jzyf
+         7OWi5dB1JwWhPmmrwhfxXZFp+v2CBRhezsaeM6ZBwIdvKm+W1p/Rc6B+aaIuOx4MpgB8
+         jgPW5wHgzxxrH1e9yQITzkPJBBUrlc3UQCMeYvT5l0O9ZxhH8taMyCEwWL4p8CGoGfGv
+         Y3mxeEt3QVAYZrxViNVmi5EOqJOF5doYCaHKKsUF4e2YqjVveFp3oMWgCWKh/0mXEGvf
+         0so/rckVg2zownx+OZw3J9bgs029mrhUS0+irYpdJvY7ghTpME/RWSoCOC6Kg6fpVOu0
+         JUCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699275634; x=1699880434;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GsPAHuuacaXRxIMIbqeYFW832Idaj5Z8NonFcgzOGQQ=;
+        b=E4YI0DjL9pMI2o/wdLqFkQ/GnV4qS3OaDfj7fCIUDDIc7q3yc8b/L2c499gb1ros60
+         oJZmpFcUK/bh1vQC18ZVWoTrpcfP4P+dQfAhpaafVS9rMNVzUH4hyQ5efimslfyX3KRl
+         pupaHZUvI1/TOx1m5Egb56MzZq6JApVGXLubkq+t3wTbnuPGirubdXRxxCkyTgO8mHXl
+         mRV+T3lh3GUO6Rt8cW28UT90DvL717jwI+zPGUgEnCN6ky8c5k+i3mXHB2c0X1wZb7f9
+         8LmgBk3IWi6W7i5GvzapfZvgOVytMYdddOFmiXPfQvylgFvGfTSDwiP59TPCg4tGfYfN
+         lOxw==
+X-Gm-Message-State: AOJu0Yxx98uz1bnJ1zE2SmlkD6uyR9VqNh6MnnPPCZGt40UuNDkYi9vl
+        bp5wEvDV0HkL3w7fKEoLz+AWpDLd32zYi97y+eiHog==
+X-Google-Smtp-Source: AGHT+IGGAQ0SPeS9k4vThxvaIdIq5zE1xB8+xmEuSjhUvM+qfy1Ks2t7vu34m9fYxaX8ybZo779u9UEx0SnF2U0/H4U=
+X-Received: by 2002:a25:d047:0:b0:da0:3b6c:fc22 with SMTP id
+ h68-20020a25d047000000b00da03b6cfc22mr24752762ybg.31.1699275634492; Mon, 06
+ Nov 2023 05:00:34 -0800 (PST)
+MIME-Version: 1.0
+References: <20231106103027.3988871-1-quic_imrashai@quicinc.com> <20231106103027.3988871-3-quic_imrashai@quicinc.com>
+In-Reply-To: <20231106103027.3988871-3-quic_imrashai@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 6 Nov 2023 15:00:23 +0200
+Message-ID: <CAA8EJpqcyh1YrfHkdYaZfjyEDjKiV+HixrhcfPzsuTPwA5pzTQ@mail.gmail.com>
+Subject: Re: [PATCH V3 2/4] clk: qcom: branch: Add mem ops support for branch2 clocks
+To:     Imran Shaik <quic_imrashai@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Ajit Pandey <quic_ajipan@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+On Mon, 6 Nov 2023 at 12:31, Imran Shaik <quic_imrashai@quicinc.com> wrote:
+>
+> From: Taniya Das <quic_tdas@quicinc.com>
+>
+> Clock CBCRs with memories need an update for memory before enable/disable
+> of the clock, which helps retain the respective block's register contents.
+> Add support for the mem ops to handle this sequence.
+>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
 
-Add generic info for SDX75 based modems. SDX75 takes longer to set ready
-during power up. Hence use separate configuration.
+It would be nice to have a description of what is 'CBCR with memories'
+and how does it differ from CBCR_FORCE_MEM_CORE_ON?
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+> ---
+>  drivers/clk/qcom/clk-branch.c | 39 +++++++++++++++++++++++++++++++++++
+>  drivers/clk/qcom/clk-branch.h | 21 +++++++++++++++++++
+>  2 files changed, 60 insertions(+)
+>
+> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
+> index fc4735f74f0f..61bdd2147bed 100644
+> --- a/drivers/clk/qcom/clk-branch.c
+> +++ b/drivers/clk/qcom/clk-branch.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2013, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>
+>  #include <linux/kernel.h>
+> @@ -134,6 +135,44 @@ static void clk_branch2_disable(struct clk_hw *hw)
+>         clk_branch_toggle(hw, false, clk_branch2_check_halt);
+>  }
+>
+> +static int clk_branch2_mem_enable(struct clk_hw *hw)
+> +{
+> +       struct clk_mem_branch *mem_br = to_clk_mem_branch(hw);
+> +       struct clk_branch branch = mem_br->branch;
+> +       const char *name = clk_hw_get_name(&branch.clkr.hw);
+> +       u32 val;
+> +       int ret;
+> +
+> +       regmap_update_bits(branch.clkr.regmap, mem_br->mem_enable_reg,
+> +                       mem_br->mem_enable_ack_mask, mem_br->mem_enable_ack_mask);
+> +
+> +       ret = regmap_read_poll_timeout(branch.clkr.regmap, mem_br->mem_ack_reg,
+> +                       val, val & mem_br->mem_enable_ack_mask, 0, 200);
+> +       if (ret) {
+> +               WARN(1, "%s mem enable failed\n", name);
+> +               return ret;
+> +       }
+> +
+> +       return clk_branch2_enable(hw);
+> +}
+> +
+> +static void clk_branch2_mem_disable(struct clk_hw *hw)
+> +{
+> +       struct clk_mem_branch *mem_br = to_clk_mem_branch(hw);
+> +
+> +       regmap_update_bits(mem_br->branch.clkr.regmap, mem_br->mem_enable_reg,
+> +                                               mem_br->mem_enable_ack_mask, 0);
+> +
+> +       return clk_branch2_disable(hw);
+> +}
+> +
+> +const struct clk_ops clk_branch2_mem_ops = {
+> +       .enable = clk_branch2_mem_enable,
+> +       .disable = clk_branch2_mem_disable,
+> +       .is_enabled = clk_is_enabled_regmap,
+> +};
+> +EXPORT_SYMBOL_GPL(clk_branch2_mem_ops);
+> +
+>  const struct clk_ops clk_branch2_ops = {
+>         .enable = clk_branch2_enable,
+>         .disable = clk_branch2_disable,
+> diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
+> index 0cf800b9d08d..8ffed603c050 100644
+> --- a/drivers/clk/qcom/clk-branch.h
+> +++ b/drivers/clk/qcom/clk-branch.h
+> @@ -38,6 +38,23 @@ struct clk_branch {
+>         struct clk_regmap clkr;
+>  };
+>
+> +/**
+> + * struct clk_mem_branch - gating clock which are associated with memories
+> + *
+> + * @mem_enable_reg: branch clock memory gating register
+> + * @mem_ack_reg: branch clock memory ack register
+> + * @mem_enable_ack_mask: branch clock memory enable and ack field in @mem_ack_reg
+> + * @branch: branch clock gating handle
+> + *
+> + * Clock which can gate its memories.
+> + */
+> +struct clk_mem_branch {
+> +       u32     mem_enable_reg;
+> +       u32     mem_ack_reg;
+> +       u32     mem_enable_ack_mask;
+> +       struct clk_branch branch;
+> +};
+> +
+>  /* Branch clock common bits for HLOS-owned clocks */
+>  #define CBCR_CLK_OFF                   BIT(31)
+>  #define CBCR_NOC_FSM_STATUS            GENMASK(30, 28)
+> @@ -85,8 +102,12 @@ extern const struct clk_ops clk_branch_ops;
+>  extern const struct clk_ops clk_branch2_ops;
+>  extern const struct clk_ops clk_branch_simple_ops;
+>  extern const struct clk_ops clk_branch2_aon_ops;
+> +extern const struct clk_ops clk_branch2_mem_ops;
+>
+>  #define to_clk_branch(_hw) \
+>         container_of(to_clk_regmap(_hw), struct clk_branch, clkr)
+>
+> +#define to_clk_mem_branch(_hw) \
+> +       container_of(to_clk_branch(_hw), struct clk_mem_branch, branch)
+> +
+>  #endif
+> --
+> 2.25.1
+>
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 08f3f03..cd6cd14 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -269,6 +269,16 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
- 	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
- };
- 
-+static const struct mhi_controller_config modem_qcom_v2_mhiv_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 8000,
-+	.ready_timeout_ms = 50000,
-+	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
-+	.ch_cfg = modem_qcom_v1_mhi_channels,
-+	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
-+	.event_cfg = modem_qcom_v1_mhi_events,
-+};
-+
- static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
- 	.max_channels = 128,
- 	.timeout_ms = 8000,
-@@ -278,6 +288,16 @@ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
- 	.event_cfg = modem_qcom_v1_mhi_events,
- };
- 
-+static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
-+	.name = "qcom-sdx75m",
-+	.fw = "qcom/sdx75m/xbl.elf",
-+	.edl = "qcom/sdx75m/edl.mbn",
-+	.config = &modem_qcom_v2_mhiv_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.sideband_wake = false,
-+};
-+
- static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
- 	.name = "qcom-sdx65m",
- 	.fw = "qcom/sdx65m/xbl.elf",
-@@ -600,6 +620,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
-+		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
+
 -- 
-2.7.4
-
+With best wishes
+Dmitry
