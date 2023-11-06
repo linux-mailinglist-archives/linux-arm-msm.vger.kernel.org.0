@@ -2,82 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 666417E2623
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 14:55:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AD657E264C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:10:30 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231520AbjKFNz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 08:55:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52438 "EHLO
+        id S229563AbjKFOKa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 09:10:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229934AbjKFNz5 (ORCPT
+        with ESMTP id S229485AbjKFOKa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 08:55:57 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A70F1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 05:55:54 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-32d81864e3fso2606435f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 05:55:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699278952; x=1699883752; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=k7K/G0f6ZEQYZQT5cSn0nDVYnEltfi7z57xwENHHtHM=;
-        b=yIgCa0TdliwwR3nTmefjuk9/SE/lTLg32cZhAUOcF6Tng54SFntxkfZ/hgtom/zQ1R
-         +Uc7dUu2so/zvQeQLZbSP0WCtxIsk+ylZp4Os6Dt2vuu2pKpN50mIUMra+6QBqUISUPE
-         rCeSYWTqo1HmFl0amqd6yhnleUnqbU7+yt8nlYhfP8JooVG9WFW0oe+gFE5Oz/oa+PqT
-         RuwdR6ohFqJmt9ZTTU7YKIMCpqTyMd4jGH4lnntcfHZugpBAkvgFxqowpNIcZzmQ9SaH
-         wzUfeayW1ZaWaSLyNYsduj6tVgflEDfzqVq1LHXpHzqhaKYPl2wXSIqRVxUEKxDTDCBz
-         v0lw==
+        Mon, 6 Nov 2023 09:10:30 -0500
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60788BF;
+        Mon,  6 Nov 2023 06:10:27 -0800 (PST)
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6ce291b5df9so2895380a34.2;
+        Mon, 06 Nov 2023 06:10:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699278952; x=1699883752;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k7K/G0f6ZEQYZQT5cSn0nDVYnEltfi7z57xwENHHtHM=;
-        b=Iq2k6/wOImlQPN5/ZaQ+hTmomgyiDhQHyceaFx+kma5x+IBi4kcNxh6LXA1pDNb0pL
-         ezzsY6J8h4P0zCr9dM6H1zzVl0qKIGFHwNqiCndG3A0e/4V4TZ9i56V2zGfyF2D2mZ4f
-         MRjg0nlUwAEjEEIgD027iFfA5CdCZzFRxqja7vv6NntMi6gSefIbBPIbYl6ZjOauOCmg
-         y1GckbTtDEOQQx9YIbRRJHAkLn5RPrbW0759Zzee3SxPxo7HvaAgX5scsue7A1VGSF05
-         SIq2AsLPszx5DFx9GP46mLzsU/2lg7rNFhATOfJFSTTIL/yaOHjR1oXb6sugTegKXgVK
-         UOqA==
-X-Gm-Message-State: AOJu0YxvopeEzSzt/rylY7aryJ1q8zsm/oVjZg3fxMbMC+qnnQEmLV+D
-        Tv5SZ4xQ62ELKZZGVCW3d4Mzqg==
-X-Google-Smtp-Source: AGHT+IGR+a68DIJMCWA87zZmPqnk0K4fWbuHIkwr5qAkD+KetGDdjDJSkrxRV54oIblYdbBTES4HNw==
-X-Received: by 2002:adf:f646:0:b0:31f:db1b:7296 with SMTP id x6-20020adff646000000b0031fdb1b7296mr18563924wrp.21.1699278952438;
-        Mon, 06 Nov 2023 05:55:52 -0800 (PST)
-Received: from [192.168.1.7] (host-92-25-138-185.as13285.net. [92.25.138.185])
-        by smtp.gmail.com with ESMTPSA id g8-20020a5d4888000000b0032f7cc56509sm1932116wrq.98.2023.11.06.05.55.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 05:55:51 -0800 (PST)
-Message-ID: <f6848c84-ba5a-473b-9a98-8115611c1789@linaro.org>
-Date:   Mon, 6 Nov 2023 13:55:51 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] mfd: qcom-spmi-pmic: Add support for PM8937
-Content-Language: en-US
-To:     Dang Huynh <danct12@riseup.net>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        d=1e100.net; s=20230601; t=1699279826; x=1699884626;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Klrpc9/HMitoNsxi5eUxwCyC1GjEBwFfy1ew9+R/Oi4=;
+        b=iQbUwz95c/REL6UrjmdTE4JPDh1LZYGRxr5sawPQDtu/xQRLHvBzevP8hog/J6b6Xm
+         5SEW59pWombhW5VkhYcj2CHuR03WyaqNEyx0uvXN7mLbCNaZsZ5SQ7JqyornryDndSA8
+         ackeL86uFsK8kkpmJmo0qaS8lt7xnP9R6+UXq338DXmfM46rp0T3BS/6clMi0MmgbyGh
+         JokSjx16+O7k91ubckKf7GyalOliGPpuJn42hr8zH/gSOvKr9mKHXVIAg2cfwG4RebKr
+         WD0SBN8gCVON9N4Lhdby7Yypm3vMcns3WiFUa5q17dxHgjo69h045xqV5lAdUrhpZSVM
+         u6ng==
+X-Gm-Message-State: AOJu0Yxul6Elew3nJIR6Lt3/poIjwrnJ+fjsuRScn6tlXbMUk0+Ppx9H
+        sr3ZmuDzKARI2Q5tSfI8nA==
+X-Google-Smtp-Source: AGHT+IH9k4iHDl+o7Uuw5S+gQLCcJqGlXx7N0fl3/Hzby7Ru3jSa5a6u0muTzBb+4QVMKQFJfJPnKA==
+X-Received: by 2002:a05:6830:a:b0:6bd:1059:8212 with SMTP id c10-20020a056830000a00b006bd10598212mr29309594otp.26.1699279826655;
+        Mon, 06 Nov 2023 06:10:26 -0800 (PST)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id x46-20020a05683040ae00b006b8e8884f2fsm1273579ott.51.2023.11.06.06.10.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Nov 2023 06:10:26 -0800 (PST)
+Received: (nullmailer pid 219226 invoked by uid 1000);
+        Mon, 06 Nov 2023 14:10:25 -0000
+Date:   Mon, 6 Nov 2023 08:10:24 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marc Zyngier <maz@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Robert Marko <robimarko@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20231106-pm8937-v1-0-ec51d9eeec53@riseup.net>
- <20231106-pm8937-v1-1-ec51d9eeec53@riseup.net>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20231106-pm8937-v1-1-ec51d9eeec53@riseup.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [RESEND PATCH v2] dt-bindings: qcom,pdc: Add compatible for
+ SM8550
+Message-ID: <169927974215.213488.494934081428498717.robh@kernel.org>
+References: <20231103224304.764730-1-quic_eberman@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231103224304.764730-1-quic_eberman@quicinc.com>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,46 +74,25 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 06/11/2023 12:08, Dang Huynh wrote:
-> Add the subtype and compatible strings for PM8937.
+On Fri, 03 Nov 2023 15:43:03 -0700, Elliot Berman wrote:
+> From: Abel Vesa <abel.vesa@linaro.org>
 > 
-> The PM8937 is found in various SoCs, including MSM8917, MSM8937,
-> MSM8940 and APQ variants.
+> Document the compatible for SM8550 PDC.
 > 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
->  drivers/mfd/qcom-spmi-pmic.c      | 1 +
->  include/soc/qcom/qcom-spmi-pmic.h | 1 +
->  2 files changed, 2 insertions(+)
+> I noticed this patch was never picked up while running make dtbs_check.
+> No changes since it was last sent except the trivial rebase that came
+> from me picking the change up.
 > 
-> diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
-> index 4549fa9f7d4b..eab5bf6cff10 100644
-> --- a/drivers/mfd/qcom-spmi-pmic.c
-> +++ b/drivers/mfd/qcom-spmi-pmic.c
-> @@ -53,6 +53,7 @@ static const struct of_device_id pmic_spmi_id_table[] = {
->  	{ .compatible = "qcom,pm8901", .data = N_USIDS(2) },
->  	{ .compatible = "qcom,pm8909", .data = N_USIDS(2) },
->  	{ .compatible = "qcom,pm8916", .data = N_USIDS(2) },
-> +	{ .compatible = "qcom,pm8937", .data = N_USIDS(2) },
->  	{ .compatible = "qcom,pm8941", .data = N_USIDS(2) },
->  	{ .compatible = "qcom,pm8950", .data = N_USIDS(2) },
->  	{ .compatible = "qcom,pm8994", .data = N_USIDS(2) },
-> diff --git a/include/soc/qcom/qcom-spmi-pmic.h b/include/soc/qcom/qcom-spmi-pmic.h
-> index c47cc71a999e..17a0a8c3d656 100644
-> --- a/include/soc/qcom/qcom-spmi-pmic.h
-> +++ b/include/soc/qcom/qcom-spmi-pmic.h
-> @@ -31,6 +31,7 @@
->  #define PM8998_SUBTYPE		0x14
->  #define PMI8998_SUBTYPE		0x15
->  #define PM8005_SUBTYPE		0x18
-> +#define PM8937_SUBTYPE		0x19
->  #define PM660L_SUBTYPE		0x1a
->  #define PM660_SUBTYPE		0x1b
->  #define PM8150_SUBTYPE		0x1e
+> Original patch:
+> https://lore.kernel.org/lkml/20230127132558.1176730-1-abel.vesa@linaro.org/
+> 
+>  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
--- 
-// Caleb (they/them)
+Applied, thanks!
+
