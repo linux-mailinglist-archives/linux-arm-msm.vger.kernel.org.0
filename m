@@ -2,271 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B3CE7E2740
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:42:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E38A17E2772
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:46:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231837AbjKFOmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 09:42:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50518 "EHLO
+        id S231604AbjKFOqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 09:46:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231807AbjKFOmC (ORCPT
+        with ESMTP id S229705AbjKFOqQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 09:42:02 -0500
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D11CAD51;
-        Mon,  6 Nov 2023 06:41:56 -0800 (PST)
-Received: from benjamin-XPS-13-9310.. (cola.collaboradmins.com [195.201.22.229])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: benjamin.gaignard)
-        by madras.collabora.co.uk (Postfix) with ESMTPSA id 2945B660746B;
-        Mon,  6 Nov 2023 14:41:54 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-        s=mail; t=1699281715;
-        bh=3MJuKgnFwDc4oyDCfIOoqn6QQ2rR7zTCGPA6lb7rbJg=;
-        h=From:To:Cc:Subject:Date:From;
-        b=l3dMLdqJcV7oUOWO9gCIQTEJM850BwSHLm37ou4Gz51ART/UuIxsn1fwYEHEf5FMB
-         Yva70Kxxg7gJEVSsXnJt6mEXwwS+lqZXmh40lM5PVvdc50UOttHtJlc2DMOk28eUbN
-         t13z2geRwI/E92XI0X7sIlnrFDslo3oWr46yvGegZCoVmZZgFinGIV1m8o8BEi+4lG
-         JCoohrotvXpVOyOy+f71kjxgA3QVKj7Cm2S+TFxpHEa/Uvz/NCzMvJ/O67tOrFRDil
-         gQtBlD/ZMzvu45PRStqg90bMuFqsgdoXSuFR2c1gSaw1A/K3qevgN9ap4+1acmy6zS
-         9n7Up2Kt+x9Zw==
-From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
-To:     mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com,
-        ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
-        hverkuil-cisco@xs4all.nl, nicolas.dufresne@collabora.com
-Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-        kernel@collabora.com,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Subject: [PATCH v14.1] media: videobuf2: Be more flexible on the number of queue stored buffers
-Date:   Mon,  6 Nov 2023 15:39:40 +0100
-Message-Id: <20231106143940.324020-1-benjamin.gaignard@collabora.com>
-X-Mailer: git-send-email 2.39.2
+        Mon, 6 Nov 2023 09:46:16 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 893EBB6;
+        Mon,  6 Nov 2023 06:46:13 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6BZIbI020924;
+        Mon, 6 Nov 2023 14:46:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ydjxTFNwpKunzUce5gcokdWKhm0TytBkiLo5Z++aS5c=;
+ b=YrTeQT8o0VsprgQmvqG6ELMC6txmIaqt4Eb9tVXb/C9JQHH8GUxX/SjpfZUb43OzJ4eP
+ tJeoouX2+84SJc48KIWdfwmP5qZXpxOEyV4sUgEXzLuo29CehB8YgeY1HrK8yk97OTK6
+ WSTGOnnXEE+e2vLgPCmtUdNbrVwxB0wXm+I4VKMnUa+yDLFIV/vh1+hCy5d5amsJoZ3s
+ vO7Dy3/hQ7l2N95qWcFFQuQLR5ZiQUs78YK5o5Nrh3uYEjpEZ8Re7pBK8fI1sEk7h2bM
+ u9LcuDHeZW3rBHQlP0wKvQcrO861+HKG83L8ZVLkpT/nybBDyfdI0xioR+tjKdcyIg5E 1Q== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5ernmfht-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Nov 2023 14:46:08 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6Ek7Sb020186
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Nov 2023 14:46:07 GMT
+Received: from [10.216.42.224] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
+ 2023 06:46:02 -0800
+Message-ID: <d5492e4d-6c70-7d6c-3f5b-a0b5d9266ab0@quicinc.com>
+Date:   Mon, 6 Nov 2023 20:15:57 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
+ rb3 board
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_nainmeht@quicinc.com>
+References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
+ <20231103184655.23555-3-quic_kbajaj@quicinc.com>
+ <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
+ <1830fc44-7bac-4db5-af59-112410d73a64@linaro.org>
+ <af05dbdb-21bf-34f0-e9b3-9f6b9a0c3115@quicinc.com>
+ <CAA8EJpq89g9EeyKcogU+Mt9ie6Bk-rmgi=GqyycYBm_291i1Bw@mail.gmail.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <CAA8EJpq89g9EeyKcogU+Mt9ie6Bk-rmgi=GqyycYBm_291i1Bw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JsUyb1WmZZxhiA6GnZVj-BCPxvroWDtY
+X-Proofpoint-GUID: JsUyb1WmZZxhiA6GnZVj-BCPxvroWDtY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-06_12,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 mlxlogscore=999 malwarescore=0 spamscore=0
+ mlxscore=0 suspectscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
+ definitions=main-2311060118
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add 'max_num_buffers' field in vb2_queue struct to let drivers decide
-how many buffers could be stored in a queue.
-This require 'bufs' array to be allocated at queue init time and freed
-when releasing the queue.
-By default VB2_MAX_FRAME remains the limit.
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
----
-version 14.1:
-- Do not change the number of freed buffers in vb2_core_queue_release().
 
- .../media/common/videobuf2/videobuf2-core.c   | 39 +++++++++++++++----
- .../media/common/videobuf2/videobuf2-v4l2.c   |  6 +--
- include/media/videobuf2-core.h                | 10 ++++-
- 3 files changed, 43 insertions(+), 12 deletions(-)
+On 11/6/2023 5:24 PM, Dmitry Baryshkov wrote:
+> On Mon, 6 Nov 2023 at 13:41, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+>>
+>>
+>> On 11/5/2023 6:38 PM, Krzysztof Kozlowski wrote:
+>>> On 03/11/2023 23:22, Dmitry Baryshkov wrote:
+>>>> On Fri, 3 Nov 2023 at 20:49, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>>>>>
+>>>>> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
+>>>>> platform. QCM6490 is derived from SC7280 meant for various
+>>>>> form factor including IoT.
+>>>>>
+>>>>> Supported features are, as of now:
+>>>>> * Debug UART
+>>>>> * eMMC (only in IDP)
+>>>>> * USB
+>>>>>
+>>>
+>>> ...
+>>>
+>>>>> +
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+>>>>> new file mode 100644
+>>>>> index 000000000000..01adc97789d0
+>>>>> --- /dev/null
+>>>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+>>>>
+>>>> I have mixed feelings towards this file. Usually we add such 'common'
+>>>> files only for the phone platforms where most of the devices are
+>>>> common.
+>>>> Do you expect that IDP and RB3 will have a lot of common code other
+>>>> than these regulator settings?
+>>>
+>>> I agree here. What exactly is common in the real hardware between IDP
+>>> and RB3? Commit msg does not explain it, so I do not see enough
+>>> justification for common file. Just because some DTS looks similar for
+>>> different hardware does not mean you should creat common file.
+>>
+>> @Dmitry/@Krzysztof,
+>>
+>> Thank you for reviewing the RFC, we wanted to continue the
+>> suggestion/discussion given on [1] , where we discussed that this
+>> qcm6490 is going to be targeted for IOT segment and will have different
+>> memory map and it is going to use some of co-processors like adsp/cdsp
+>> which chrome does not use.
+>>
+>> So to your question what is common between RB3 and IDP, mostly they will
+>> share common memory map(similar to [2]) and regulator settings and both
+>> will use adsp/cdsp etc., we will be posting the memory map changes as
+>> well in coming weeks once this RFC is acked.
+> 
+> Is the memory map going to be the same as the one used on Fairphone5?
 
-diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-index c5c5ae4d213d..5711c6a130fd 100644
---- a/drivers/media/common/videobuf2/videobuf2-core.c
-+++ b/drivers/media/common/videobuf2/videobuf2-core.c
-@@ -416,7 +416,7 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
-  */
- static void vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, unsigned int index)
- {
--	WARN_ON(index >= VB2_MAX_FRAME || q->bufs[index]);
-+	WARN_ON(index >= q->max_num_buffers || q->bufs[index]);
- 
- 	q->bufs[index] = vb;
- 	vb->index = index;
-@@ -449,9 +449,9 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
- 	struct vb2_buffer *vb;
- 	int ret;
- 
--	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
-+	/* Ensure that the number of already queue + num_buffers is below q->max_num_buffers */
- 	num_buffers = min_t(unsigned int, num_buffers,
--			    VB2_MAX_FRAME - q_num_buffers);
-+			    q->max_num_buffers - q_num_buffers);
- 
- 	for (buffer = 0; buffer < num_buffers; ++buffer) {
- 		/* Allocate vb2 buffer structures */
-@@ -813,7 +813,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
- 	unsigned plane_sizes[VB2_MAX_PLANES] = { };
- 	bool non_coherent_mem = flags & V4L2_MEMORY_FLAG_NON_COHERENT;
- 	unsigned int i;
--	int ret;
-+	int ret = 0;
- 
- 	if (q->streaming) {
- 		dprintk(q, 1, "streaming active\n");
-@@ -857,17 +857,22 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
- 	/*
- 	 * Make sure the requested values and current defaults are sane.
- 	 */
--	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
- 	num_buffers = max_t(unsigned int, *count, q->min_buffers_needed);
--	num_buffers = min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
-+	num_buffers = min_t(unsigned int, num_buffers, q->max_num_buffers);
- 	memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
- 	/*
- 	 * Set this now to ensure that drivers see the correct q->memory value
- 	 * in the queue_setup op.
- 	 */
- 	mutex_lock(&q->mmap_lock);
-+	if (!q->bufs)
-+		q->bufs = kcalloc(q->max_num_buffers, sizeof(*q->bufs), GFP_KERNEL);
-+	if (!q->bufs)
-+		ret = -ENOMEM;
- 	q->memory = memory;
- 	mutex_unlock(&q->mmap_lock);
-+	if (ret)
-+		return ret;
- 	set_queue_coherency(q, non_coherent_mem);
- 
- 	/*
-@@ -976,7 +981,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
- 	bool no_previous_buffers = !q_num_bufs;
- 	int ret = 0;
- 
--	if (q_num_bufs == VB2_MAX_FRAME) {
-+	if (q->num_buffers == q->max_num_buffers) {
- 		dprintk(q, 1, "maximum number of buffers already allocated\n");
- 		return -ENOBUFS;
- 	}
-@@ -993,7 +998,13 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
- 		 */
- 		mutex_lock(&q->mmap_lock);
- 		q->memory = memory;
-+		if (!q->bufs)
-+			q->bufs = kcalloc(q->max_num_buffers, sizeof(*q->bufs), GFP_KERNEL);
-+		if (!q->bufs)
-+			ret = -ENOMEM;
- 		mutex_unlock(&q->mmap_lock);
-+		if (ret)
-+			return ret;
- 		q->waiting_for_buffers = !q->is_output;
- 		set_queue_coherency(q, non_coherent_mem);
- 	} else {
-@@ -1005,7 +1016,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
- 			return -EINVAL;
- 	}
- 
--	num_buffers = min(*count, VB2_MAX_FRAME - q_num_bufs);
-+	num_buffers = min(*count, q->max_num_buffers - q_num_bufs);
- 
- 	if (requested_planes && requested_sizes) {
- 		num_planes = requested_planes;
-@@ -2465,6 +2476,12 @@ int vb2_core_queue_init(struct vb2_queue *q)
- 	/*
- 	 * Sanity check
- 	 */
-+	if (!q->max_num_buffers)
-+		q->max_num_buffers = VB2_MAX_FRAME;
-+
-+	/* The maximum is limited by offset cookie encoding pattern */
-+	q->max_num_buffers = min_t(unsigned int, q->max_num_buffers, MAX_BUFFER_INDEX);
-+
- 	if (WARN_ON(!q)			  ||
- 	    WARN_ON(!q->ops)		  ||
- 	    WARN_ON(!q->mem_ops)	  ||
-@@ -2474,6 +2491,10 @@ int vb2_core_queue_init(struct vb2_queue *q)
- 	    WARN_ON(!q->ops->buf_queue))
- 		return -EINVAL;
- 
-+	if (WARN_ON(q->max_num_buffers > MAX_BUFFER_INDEX) ||
-+	    WARN_ON(q->min_buffers_needed > q->max_num_buffers))
-+		return -EINVAL;
-+
- 	if (WARN_ON(q->requires_requests && !q->supports_requests))
- 		return -EINVAL;
- 
-@@ -2520,6 +2541,8 @@ void vb2_core_queue_release(struct vb2_queue *q)
- 	__vb2_queue_cancel(q);
- 	mutex_lock(&q->mmap_lock);
- 	__vb2_queue_free(q, vb2_get_num_buffers(q));
-+	kfree(q->bufs);
-+	q->bufs = NULL;
- 	q->num_buffers = 0;
- 	mutex_unlock(&q->mmap_lock);
- }
-diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
-index 7d798fb15c0b..f3cf4b235c1f 100644
---- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
-+++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
-@@ -627,7 +627,7 @@ struct vb2_buffer *vb2_find_buffer(struct vb2_queue *q, u64 timestamp)
- 	 * This loop doesn't scale if there is a really large number of buffers.
- 	 * Maybe something more efficient will be needed in this case.
- 	 */
--	for (i = 0; i < vb2_get_num_buffers(q); i++) {
-+	for (i = 0; i < q->max_num_buffers; i++) {
- 		vb2 = vb2_get_buffer(q, i);
- 
- 		if (!vb2)
-@@ -1142,7 +1142,7 @@ int _vb2_fop_release(struct file *file, struct mutex *lock)
- 
- 	if (lock)
- 		mutex_lock(lock);
--	if (file->private_data == vdev->queue->owner) {
-+	if (!vdev->queue->owner || file->private_data == vdev->queue->owner) {
- 		vb2_queue_release(vdev->queue);
- 		vdev->queue->owner = NULL;
- 	}
-@@ -1270,7 +1270,7 @@ void vb2_video_unregister_device(struct video_device *vdev)
- 	 */
- 	get_device(&vdev->dev);
- 	video_unregister_device(vdev);
--	if (vdev->queue && vdev->queue->owner) {
-+	if (vdev->queue) {
- 		struct mutex *lock = vdev->queue->lock ?
- 			vdev->queue->lock : vdev->lock;
- 
-diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
-index 8f9d9e4af5b1..e77a397195f2 100644
---- a/include/media/videobuf2-core.h
-+++ b/include/media/videobuf2-core.h
-@@ -558,6 +558,7 @@ struct vb2_buf_ops {
-  * @dma_dir:	DMA mapping direction.
-  * @bufs:	videobuf2 buffer structures
-  * @num_buffers: number of allocated/used buffers
-+ * @max_num_buffers: upper limit of number of allocated/used buffers
-  * @queued_list: list of buffers currently queued from userspace
-  * @queued_count: number of buffers queued and ready for streaming.
-  * @owned_by_drv_count: number of buffers owned by the driver
-@@ -619,8 +620,9 @@ struct vb2_queue {
- 	struct mutex			mmap_lock;
- 	unsigned int			memory;
- 	enum dma_data_direction		dma_dir;
--	struct vb2_buffer		*bufs[VB2_MAX_FRAME];
-+	struct vb2_buffer		**bufs;
- 	unsigned int			num_buffers;
-+	unsigned int			max_num_buffers;
- 
- 	struct list_head		queued_list;
- 	unsigned int			queued_count;
-@@ -1248,6 +1250,12 @@ static inline void vb2_clear_last_buffer_dequeued(struct vb2_queue *q)
- static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
- 						unsigned int index)
- {
-+	if (!q->bufs)
-+		return NULL;
-+
-+	if (index >= q->max_num_buffers)
-+		return NULL;
-+
- 	if (index < q->num_buffers)
- 		return q->bufs[index];
- 	return NULL;
--- 
-2.39.2
+No, Fairphone5 looks to be using chrome memory map and i suggested
+here to move them into sc7280.dtsi
 
+https://lore.kernel.org/lkml/d5d53346-ca3b-986a-e104-d87c37115b62@quicinc.com/
+
+> 
+> Are ADSP and CDSP physically present on sc7280?
+
+Yes, they are present but not used.
+
+> 
+> I think that your goal should be to:
+> - populate missing device in sc7280.dtsi
+> - maybe add qcm6490.dtsi which defines SoC-level common data (e.g. memory map)
+> - push the rest to board files.
+
+Agree to all of the point.
+We started with the same thought at[3] but it got lost in discussion
+due to its differentiation with mobile counter part(fairphone) which
+follow chrome memory map and hence we came up with qcm6490-iot-common.
+Do you think, qcm6490-iot.dtsi should be good ?
+
+[3]
+https://lore.kernel.org/linux-arm-msm/20231003175456.14774-3-quic_kbajaj@quicinc.com/
+
+-Mukesh
+> 
+> I don't think that putting regulators to the common file is a good
+> idea. Platforms will further change and limit voltage limits and
+> modes, so they usually go to the board file.
+> 
+>>
+>>
+>> Thanks,
+>> Mukesh
+>>
+>> [1]
+>> https://lore.kernel.org/linux-arm-msm/d97ebf74-ad03-86d6-b826-b57be209b9e2@quicinc.com/
+>>
+>> [2]
+>> commit 90c856602e0346ce9ff234062e86a198d71fa723
+>> Author: Douglas Anderson <dianders@chromium.org>
+>> Date:   Tue Jan 25 14:44:20 2022 -0800
+>>
+>>       arm64: dts: qcom: sc7280: Factor out Chrome common fragment
+>>
+>>       This factors out a device tree fragment from some sc7280 device
+>>       trees. It represents the device tree bits that should be included for
+>>       "Chrome" based sc7280 boards. On these boards the bootloader (Coreboot
+>>       + Depthcharge) configures things slightly different than the
+>>       bootloader that Qualcomm provides. The modem firmware on these boards
+>>       also works differently than on other Qulacomm products and thus the
+>>       reserved memory map needs to be adjusted.
+>>
+>>       NOTES:
+>>       - This is _not_ quite a no-op change. The "herobrine" and "idp"
+>>         fragments here were different and it looks like someone simply
+>>         forgot to update the herobrine version. This updates a few numbers
+>>         to match IDP. This will also cause the `pmk8350_pon` to be disabled
+>>         on idp/crd, which I belive is a correct change.
+>>       - At the moment this assumes LTE skus. Once it's clearer how WiFi SKUs
+>>         will work (how much of the memory map they can reclaim) we may add
+>>         an extra fragment that will rejigger one way or the other.
+>>
+>>       Signed-off-by: Douglas Anderson <dianders@chromium.org>
+>>       Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>>       Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>>       Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>       Link:
+>> https://lore.kernel.org/r/20220125144316.v2.3.Iac012fa8d727be46448d47027a1813ea716423ce@changeid
+>>
+>>
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>>
+> 
+> 
+> 
