@@ -1,156 +1,177 @@
-Return-Path: <linux-arm-msm-owner@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEAFF7E30BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 00:11:01 +0100 (CET)
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232790AbjKFXLC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 18:11:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43374 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233080AbjKFXLB (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 18:11:01 -0500
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 361D07E316F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 00:30:55 +0100 (CET)
+Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEB93280CA8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 23:30:53 +0000 (UTC)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C3C72FE06;
+	Mon,  6 Nov 2023 23:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d6GsPHr7"
+X-Original-To: linux-arm-msm@vger.kernel.org
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB511CF95
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 23:30:50 +0000 (UTC)
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E1492
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 15:10:58 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6MwOGU024339;
-        Mon, 6 Nov 2023 23:10:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=qcppdkim1;
- bh=2jnwvE88yl8CLCEAiKZwik90qtUyemJkutYzFYtv9DE=;
- b=Ti6VMJUI3JDDUmjV6SkgR3DNHQ7Nqv1PFNIqp0AYKJlRF5OVNFtk8rDRhFk7ZdDU70qS
- JtoMnnXWG/wR1iYXoIEU7NX40k7/h7wUvmHpbSnZi1wAh2DdzWOTDcbEzkHuleeDhRZ0
- VbB4UuTmdrdCFJxYVbEcrudNWNEG9u/VxGTrr8PZWzJ2cc929BvRCf7C+q8IOGSYvC5O
- wmKibYgmcseonaWQka2lKHwat7cMvEAHMKPicH6MWEaif5OsLo0SCzOKCVua22ExFCAz
- n55bz3JcxuinCVouj+9PpTZzuPYTHjjdl+QyfKkWObKV+UcS8jw1WBBdpCwOx8tktypX DA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u6yehskdv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Nov 2023 23:10:55 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6NAsri004344
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Nov 2023 23:10:54 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Mon, 6 Nov 2023 15:10:54 -0800
-Date:   Mon, 6 Nov 2023 15:10:53 -0800
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Brian Masney <bmasney@redhat.com>
-CC:     <linux-arm-msm@vger.kernel.org>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Eric Chanudet <echanude@redhat.com>
-Subject: Re: External display on the x13s?
-Message-ID: <20231106231053.GB3553829@hu-bjorande-lv.qualcomm.com>
-References: <ZUUrMm1Q/PI5xv6a@brian-x1>
- <20231103190433.GX3553829@hu-bjorande-lv.qualcomm.com>
- <CABx5tqJRVWtDpVZD++EK9RrRK-nZh-sZJFSd9xsf6p=o_wdp4g@mail.gmail.com>
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AA3283
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 15:30:49 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6MoOYV017430;
+	Mon, 6 Nov 2023 23:30:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=U3BLYVg6YGzPgy81lm70PTAfKjhyhUwPRKtpLLoAX9c=;
+ b=d6GsPHr7nnSmO4FR23UQfYarJWVuaV4527kDAc095lHFmZ/yHUoAMIzpayZWW8RT5VNa
+ rjZWndWPp+Ku7jPRyo3hH3KXYZUlSdTReLoy36vkGXhPyHlfxYQ4W1q9xwpEXcALjR3/
+ 5ltSq9NquK3lb2rOLxJVc7GU04IAfGGZVi4Up3WWL4dyq6UjI3rwZDXQ0NUgpcLR2uNB
+ OAHFHVKd/hrg/NfbfhOW7N0h1ZfPjDv3fyouLgxs85LlXSXMiE71uYkSC+TfoMtAoVTi
+ YibUB+9IZUoxZO0nkh3rrnNQoTyHD6LlqrzfaB4JjeaC0t71mjmspWuukMXV4T0mfq86 Xw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u72avs3eb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 06 Nov 2023 23:30:38 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6NUaks030710
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 6 Nov 2023 23:30:36 GMT
+Received: from [10.71.109.77] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
+ 2023 15:30:34 -0800
+Message-ID: <1ac30bfd-86d9-8186-1aee-f201b8ff4370@quicinc.com>
+Date: Mon, 6 Nov 2023 15:30:32 -0800
+Precedence: bulk
+X-Mailing-List: linux-arm-msm@vger.kernel.org
+List-Id: <linux-arm-msm.vger.kernel.org>
+List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
+List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABx5tqJRVWtDpVZD++EK9RrRK-nZh-sZJFSd9xsf6p=o_wdp4g@mail.gmail.com>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dpu: correct clk bit for WB2 block
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231009171139.2691218-1-dmitry.baryshkov@linaro.org>
+ <e4c94f9d-773a-e894-d655-41afeb01dae1@quicinc.com>
+ <CAA8EJprpBy6UhtScRkFS24TgKevBOb9nVBFCqPhEof=-k58Mwg@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJprpBy6UhtScRkFS24TgKevBOb9nVBFCqPhEof=-k58Mwg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: peYXP9u_Tgc3NjfMAKcZ8rcAcwgwPkZ8
-X-Proofpoint-ORIG-GUID: peYXP9u_Tgc3NjfMAKcZ8rcAcwgwPkZ8
+X-Proofpoint-ORIG-GUID: iXL6pwzsvqF2z-i7nHQLeFT1K8mrHSxP
+X-Proofpoint-GUID: iXL6pwzsvqF2z-i7nHQLeFT1K8mrHSxP
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-06_15,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- lowpriorityscore=0 adultscore=0 priorityscore=1501 spamscore=0
- malwarescore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 suspectscore=0
- phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311060190
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
-Precedence: bulk
-List-ID: <linux-arm-msm.vger.kernel.org>
-X-Mailing-List: linux-arm-msm@vger.kernel.org
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ mlxlogscore=999 impostorscore=0 phishscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 clxscore=1015 spamscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311060192
 
-On Sat, Nov 04, 2023 at 07:35:07AM -0400, Brian Masney wrote:
-> On Fri, Nov 3, 2023 at 3:04 PM Bjorn Andersson
-> <quic_bjorande@quicinc.com> wrote:
-> > With the ADSP remoteproc and pd-mapper running, and pd-mapper being able
-> > to pick up the json files you should get your power-supply, and you
-> > should get your USB Type-C events.
-> >
-> > Unless I'm mistaken, there's still some issue with Gnome, but you should
-> > be able to validate if the display is detected using "modetest -c". It
-> > should present you with a eDP-1, USB-1 and USB-2 (or eDP-1, DP-1, DP-2
-> > now in the future).
-> >
-> >
-> > For reference, I'm running v6.6 with no modifications and built straight
-> > from the upstream defconfig. I just confirmed that I can drive my 4k TV
-> > (at 30Hz...) over HDMI with that.
+
+
+On 11/6/2023 2:11 PM, Dmitry Baryshkov wrote:
+> On Mon, 6 Nov 2023 at 20:39, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>> Sorry for the delay in getting back on this. There was quite a bit of
+>> history digging I had to do myself to give a certain response.
+>>
+>>
+>> On 10/9/2023 10:11 AM, Dmitry Baryshkov wrote:
+>>> On sc7280 there are two clk bits for WB2: control and status. While
+>>> programming the VBIF params of WB, the driver should be toggling the
+>>> former bit, while the sc7280_mdp struct lists the latter one.
+>>>
+>>
+>> No, this is not correct. Both are control bits. But for the context of
+>> where this is being used today, that is setting the VBIF OT limit, we
+>> should be using the VBIF_CLI one. So the below change itself is correct
+>> but not the commit text.
 > 
-> The issue ended up being my HDMI adapter since it looks like it's
-> thunderbolt. I found a different USB-C to HDMI adapter in my box of
-> cables and it's now detected on the x13s.
-
-Woho!
-
-> However, mutter crashes and
-> I believe it's this issue:
-> https://gitlab.gnome.org/GNOME/mutter/-/issues/2398
+> Maybe you can update dt bindings for the SDE driver? Because they
+> clearly speak about the control and status bits.
 > 
 
-:(
+There is nothing to update here if we both are referring to the same 
+entries in the dt bindings.
 
-> To get Fedora 39 on the x13s, I had to take the nvme drive out, put it
-> in a USB caddy, dd the image to the drive using another computer, and
-> modify the grub config. It looks like Fedora's initramfs is missing
-> one or more modules that's needed so that the USB storage is detected.
-> I'm going to look into that as I have free time. I heard from Andrew
-> that there is (or was) an issue on boot up where the USB voltage
-> drops. Is that still an issue?
+qcom,sde-wb-clk-status = <0x3bc 20>;
+
+the clk status is indeed bit 20 of 0x3bc.
+
+What we have before your patch was bit 24 of 0x3b8 which was indeed 
+clk_ctl bit for wb2. But the only issue was it was not the vbif_cli one.
+
+So we are talking about two different registers?
+
+>>
+>> We need to make the same change on sm8250 WB2 as well as this register
+>> is present there too. In fact, anything >=msm8994 for setting VBIF OT
+>> for WB2 we should be using VBIF_CLI bits of register MDP_CLK_CTRL2
+>> (offset 0x2bc).
+>>
+>> For anything >=sm8550, we need to use WB_2_CLK_CTRL present within the
+>> WB block and not the one in the top.
+>>
+>> Hence for this change, we can do below:
+>>
+>> -> update the commit text to indicate both are control bits but for the
+>> vbif ot context we should using the corrected one
+>> -> if you can also add sm8250 in the same change i can ack it and pick it up
+>>
+>> Have you re-validated WB with this change? If not, let me know I shall
+>> while picking this up for -fixes.
+> 
+> No, I haven't validated this on sc7280. I'll try this on sm8250 and
+> then I'll send v2.
+> 
+>>
+>>> Correct that to ensure proper programming sequence for WB2 on sc7280.
+>>>
+>>> Fixes: 3ce166380567 ("drm/msm/dpu: add writeback support for sc7280")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>> index 3b5061c4402a..9195cb996f44 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>> @@ -25,7 +25,7 @@ static const struct dpu_mdp_cfg sc7280_mdp = {
+>>>                [DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
+>>>                [DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
+>>>                [DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
+>>> -             [DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
+>>> +             [DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+>>>        },
+>>>    };
+>>>
+> 
+> 
 > 
 
-I've not scoped the cable, or analysed the problem further, but the USB
-bus is at least re-enumerated when the USB Type-C firmware is loaded by
-remoteproc.
-
-> For the search engines: To get Fedora 39 booting on the x13s
-> 
-> directly dd the image using a different computer as I describe above
-> 
-> Mount the second partition and edit the loader/entries/xxx.conf file
-> on that partition:
-> 
-> Under options, remove 'quiet' and add 'arm64.nopauth clk_ignore_unused
-> pd_ignore_unused'
-> Add a new line:
-> 
->     devicetree /dtb-6.5.6-300.fc39.aarch64/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-> 
-> Put the drive back in the system.
-> 
-> To persist the kernel options once you boot the system, edit
-> /etc/default/grub. Change this line to:
-> 
-> GRUB_CMDLINE_LINUX="arm64.nopauth clk_ignore_unused pd_ignore_unused"
-> 
-> Add a new line GRUB_DEFAULT_DTB=/dtb/qcom/sc8280xp-lenovo-thinkpad-x13s.dtb
-> 
-> Fedora 39 currently has the 6.5.6 kernel and you can upgrade to a 6.6
-> kernel with:
-> 
-> sudo dnf copr enable @kernel-vanilla/mainline-wo-mergew
-> sudo dnf upgrade 'kernel*'
-> 
-
-Thank you for sharing,
-Bjorn
