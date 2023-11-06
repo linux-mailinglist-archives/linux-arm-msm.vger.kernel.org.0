@@ -2,107 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B05AB7E28F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 16:45:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E1C97E2934
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 16:58:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229799AbjKFPpn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 10:45:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49814 "EHLO
+        id S232064AbjKFP6l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 10:58:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229922AbjKFPpm (ORCPT
+        with ESMTP id S231929AbjKFP6k (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 10:45:42 -0500
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61BCBFA
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 07:45:37 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-509109104e2so5985007e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 07:45:37 -0800 (PST)
+        Mon, 6 Nov 2023 10:58:40 -0500
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 652CD134
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 07:58:37 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-5079f3f3d7aso6161621e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 07:58:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699285535; x=1699890335; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j4zNa66tU9LDu4ntzAjdNZcWXIQRXUIkVKUhIyKqwfs=;
-        b=PIzsxvDPqO5+vspd0rFkS0IMtMHfIucV1f+Tg+o2o032RTzfjAUhGeWImxf707m4ZP
-         GvYF7wkHuasJ/KzNuDRBdyDm8FZhdAAgtMD6VQ8xtgXPaHBLz7fkEm2JJY09u7ydTmSd
-         U1lg7OKegkhw3EUOISCe4bJa1snjxEjdupLqXazAmL+MtwSsWRD31IuKoouW+60GI1Qt
-         JYQAFNRnTSfURHdsFeHazhmZvZX+ZQrtjXTGhROYUIENqfIvReDEMCucGxhqr2ch+ygK
-         W1266Iy7WIxBkCiLUfxIbUHoC1E43bhaakioTHZbeDWSwDEprM/7kGryEV30CinMqU5P
-         U60Q==
+        d=linaro.org; s=google; t=1699286315; x=1699891115; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pz+lvo9KWB/0i1C6RY/EtcgH2mRAd7C23ZyO/WkKZOQ=;
+        b=pzoW6JFrp+FypLfDc2Y3K5D9KywA8oNZ/4VdUvU50eLUTg3DLv6r5OruDsuXLE3ne/
+         07ZhZ4KUiD9x8PUS/RC/jeJictDMBmecCsJyK+qtmlulAQvTeuS5LpIeHf2fOkfaOppE
+         LfrANhgDK67uOmpJkzE29X2fP/zvibRJ4y1xvObzGWIab/ulTE6grs3Z6jgKk2DctvaY
+         aY+yofsPEa3C/jc5xl9LORkJOaR61Y3dgzBwe7jooMlWnvnsSdiKmCBYLPuF9HsLBjJu
+         AjxTx2vBRmmRXK9k0tRZjP2gfma2NXTmx1jTa2jvJl2OVF7ebWvsSFt1I4wBmt3IjBpL
+         1nyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699285535; x=1699890335;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
-         :references:cc:to:content-language:subject:reply-to:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=j4zNa66tU9LDu4ntzAjdNZcWXIQRXUIkVKUhIyKqwfs=;
-        b=mrcVNpDeMgWwKoL+9iRj+sZLl1G/JQkc4MQBsWud9gW1bB5jnIzEkyDv/r5Fkag3Ht
-         upUOJBFU0VNcLdQNFORs5UCl7BiZOT0mxUK5UlRwF3a8B0cPV1Y1syy8xGdG6SJeQk5n
-         kpF4BmrSxlZGeXf2hTJMphCtvjRt2YqQq+fz6qyYLzFTdIipxaF+sWMRtAe58YLN/ihu
-         QJoWTGLVf/S60doG6jJUjnWjtu8/ivKOb9G2p1SZP8P+xmdDSNvYZO3QCiBkXXzvsQvN
-         rzOQFaARJIfD3TbMfLKZA9yKOQ53zNhm3wLdCuxEBamv054oT0Os4tqhMK+LCpunhIor
-         QyRA==
-X-Gm-Message-State: AOJu0Yy0g4wAie9pneCPs59kELc4bhpB48yiznWy4sWLaoCPxzs2GLCp
-        rkZGn7axAC/AU3QpYSFUPsMP1Jc+RpeNC5W7PUp4JA==
-X-Google-Smtp-Source: AGHT+IEKrFLBL4eYJLlAb1eNsc/xpLwlEqxPzH/et4FbIUCOtrwSehAb36ib1E4knPd7s7Av6UgHSA==
-X-Received: by 2002:a2e:8e94:0:b0:2c5:2133:a9fc with SMTP id z20-20020a2e8e94000000b002c52133a9fcmr22315017ljk.40.1699285535542;
-        Mon, 06 Nov 2023 07:45:35 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:7a54:34e:8001:fb7d? ([2a01:e0a:982:cbb0:7a54:34e:8001:fb7d])
-        by smtp.gmail.com with ESMTPSA id n20-20020a05600c4f9400b00407efbc4361sm12735833wmq.9.2023.11.06.07.45.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 07:45:35 -0800 (PST)
-Message-ID: <aaacd997-4b85-4086-982a-c992ad52831a@linaro.org>
-Date:   Mon, 6 Nov 2023 16:45:34 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 2/6] dt-bindings: display/msm: Add reg bus and rotator
- interconnects
-Content-Language: en-US, fr
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20230928113535.1217613-1-dmitry.baryshkov@linaro.org>
- <20230928113535.1217613-3-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20230601; t=1699286315; x=1699891115;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pz+lvo9KWB/0i1C6RY/EtcgH2mRAd7C23ZyO/WkKZOQ=;
+        b=vAUx5UG14UL2zI3P7N1bcaPwM6BcPHf15aWFvaI2OrchSxb9ozYv4zHeKg1vlpL9/e
+         xAgMMKLSLLpeahYp2Cq+5yGnVwOC31i6RxazFt8cvQnNbeowq6jPowvwHsHXKgGKvne6
+         CakdhK+ZKUXD2mnPEFNG0oPAefkIBrHp6P0KbjuR7Wtt0JZOYDZdZULoz0Fn/Ii36bhs
+         8kjPw3r3MOPnmgkMpOGYS4AIs48j8bx8YFX82u/IoUbB44aH5hnEgi99X/PgyP3k7MDT
+         E42puWXhywmuMFreq5i7J+3odaygW+eszcLTvCPIhI1WqBaLgtaDyUTkEN2dp4Xm3qbM
+         dcew==
+X-Gm-Message-State: AOJu0YzEVG0MSi+H0oYiASqp64+NoaFl6orVBHJy/Mg44yABP0rBhNrx
+        W23SZFZCBPocZbly5S7V/Nd6BQ==
+X-Google-Smtp-Source: AGHT+IE7C1jByKEvpl6j51TMqPSkZhjWqwB6jxg4LPUOR/FkXArv3oKYNjCeTWC9t2cAb0W3GECoBw==
+X-Received: by 2002:ac2:48b8:0:b0:507:aa44:28f8 with SMTP id u24-20020ac248b8000000b00507aa4428f8mr21123982lfg.6.1699286315483;
+        Mon, 06 Nov 2023 07:58:35 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id p12-20020adfe60c000000b0032d886039easm9688287wrm.14.2023.11.06.07.58.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Nov 2023 07:58:35 -0800 (PST)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20230928113535.1217613-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date:   Mon, 06 Nov 2023 16:58:33 +0100
+Subject: [PATCH] arm64: dts: qcom: sm8450: fix soundwire controllers node
+ name
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20231106-topic-sm8450-upstream-soundwire-bindings-fix-v1-1-41d4844a5a7d@linaro.org>
+X-B4-Tracking: v=1; b=H4sIACgNSWUC/x2NMQ6DMAwAv4I811JCKar6lapDgh3qASeKgVZC/
+ L1Rx7vh7gDjKmzw6A6ovItJ1gb+0sH0DjozCjWG3vVX792Iay4yoS334eZwK7ZWDgta3pQ+Uhm
+ jKInOhkm+mIgGRzHENDK0ZKnc9H/3fJ3nDzm+TQN+AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2044;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=6+9hJc9qj0vwlS9G0ytuTFWYQuw2Z3HbqLNwaaRYS1o=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlSQ0qbwciZpCbfNkwPeyAVV3IWHBGEcLt1l/Kt9Ne
+ DVlGQL+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZUkNKgAKCRB33NvayMhJ0ZXmD/
+ 47Q7FW4nSwFahwsv7/nEUnLvhdbDAwOwL8p5VwtAvZEF+DeqfQ7CUPKn2AU/StZOYDx9NGWucAq9EX
+ DfXCG41DisIXvarMzRa0DhUWma0qsDAA57HdSxCrp0moVOGfkKmierNQoZPRo1hDxYeUETyRh1zLAb
+ Lvp/nkX2NC0kK9doVZ6fqFjvb5AHaTQuCWZgm/HKFWbo630plgakmYtax5yDnlf0UDa/rVCHrkR3Yy
+ k+nXWEOO5sVVmpYBJPJsm8xYJ4bkw/oPsM/acXb2O0cbbU3SFzCiLGaHmpmCfZlzaAYV2rz+G2y3Zu
+ c1p7dq9T33xkbRNSuaqEiBp4i4LOnh3PGCb+rfRJ10+fTuhCnGRQAIC6cuf+RnFU7Y+kMh7ZkbZ8vP
+ M6g6yv/Qsu6/aFm1TnidBGdywvDWhbUTB3hvFm5PPasXIoH2bT2srhXhzkGgfLt//vl4hN5y1F9t66
+ qmaI6K8yDhM/nJ1j0MTGfbr4O0if3D1yWDa/ph8I0R3cx8v/LY+oVRpZ6NEFJ1IyeHuc0Bz9QlFcbg
+ xy548sOb9u3chlX9LGBvlJqsZhhwuyiI/DiIN+QEF2wMqUpV34ViyCgjhs+QPon6ExAAZO9yglWq/8
+ iubk59dOpDORc/WwZ74ycu+z/Yo9ID/laJgftCD3JI6Kp2KltUzVSRVu1Vog==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -113,74 +96,61 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Fix the following dt bindings check:
+arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: soundwire-controller@31f0000: $nodename:0: 'soundwire-controller@31f0000' does not match '^soundwire(@.*)?$'
+        from schema $id: http://devicetree.org/schemas/soundwire/qcom,soundwire.yaml#
 
-On 28/09/2023 13:35, Dmitry Baryshkov wrote:
-> From: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there are
-> other connection paths:
-> - a path that connects rotator block to the DDR.
-> - a path that needs to be handled to ensure MDSS register access
->    functions properly, namely the "reg bus", a.k.a the CPU-MDSS CFG
->    interconnect.
-> 
-> Describe these paths bindings to allow using them in device trees and in
-> the driver
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   Documentation/devicetree/bindings/display/msm/mdss-common.yaml | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> index f69196e4cc76..6b4ce08a60dc 100644
-> --- a/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/mdss-common.yaml
-> @@ -66,12 +66,14 @@ properties:
->       items:
->         - description: Interconnect path from mdp0 (or a single mdp) port to the data bus
->         - description: Interconnect path from mdp1 port to the data bus
-> +      - description: Interconnect path from CPU to the reg bus
->   
->     interconnect-names:
->       minItems: 1
->       items:
->         - const: mdp0-mem
->         - const: mdp1-mem
-> +      - const: cpu-cfg
->   
->     resets:
->       items:
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-This is not enough, on sm8450 this still appears with patch applied:
-arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: display-subsystem@ae00000: interconnects: [[182, 14, 0, 30, 3, 0], [182, 14, 0, 30, 3, 0], [53, 2, 3, 183, 14, 3]] is too long
-         from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8450-mdss.yaml#
-arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: display-subsystem@ae00000: interconnect-names: ['mdp0-mem', 'mdp1-mem', 'cpu-cfg'] is too long
-         from schema $id: http://devicetree.org/schemas/display/msm/qcom,sm8450-mdss.yaml#
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 9b0ff240e678..a305f8c03f9e 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -2165,7 +2165,7 @@ wsa2macro: codec@31e0000 {
+ 			#sound-dai-cells = <1>;
+ 		};
+ 
+-		swr4: soundwire-controller@31f0000 {
++		swr4: soundwire@31f0000 {
+ 			compatible = "qcom,soundwire-v1.7.0";
+ 			reg = <0 0x031f0000 0 0x2000>;
+ 			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
+@@ -2213,7 +2213,7 @@ rxmacro: codec@3200000 {
+ 			#sound-dai-cells = <1>;
+ 		};
+ 
+-		swr1: soundwire-controller@3210000 {
++		swr1: soundwire@3210000 {
+ 			compatible = "qcom,soundwire-v1.7.0";
+ 			reg = <0 0x03210000 0 0x2000>;
+ 			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
+@@ -2280,7 +2280,7 @@ wsamacro: codec@3240000 {
+ 			#sound-dai-cells = <1>;
+ 		};
+ 
+-		swr0: soundwire-controller@3250000 {
++		swr0: soundwire@3250000 {
+ 			compatible = "qcom,soundwire-v1.7.0";
+ 			reg = <0 0x03250000 0 0x2000>;
+ 			interrupts = <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>;
+@@ -2307,7 +2307,7 @@ swr0: soundwire-controller@3250000 {
+ 			status = "disabled";
+ 		};
+ 
+-		swr2: soundwire-controller@33b0000 {
++		swr2: soundwire@33b0000 {
+ 			compatible = "qcom,soundwire-v1.7.0";
+ 			reg = <0 0x033b0000 0 0x2000>;
+ 			interrupts = <GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
 
-This is also needed:
-==========><================================
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
-index 001b26e65301..e94e8630cc85 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8450-mdss.yaml
-@@ -30,10 +30,10 @@ properties:
-      maxItems: 1
+---
+base-commit: d9ea330bc3c68e8d08e116f3827ae94568fef367
+change-id: 20231106-topic-sm8450-upstream-soundwire-bindings-fix-fdd40dbabf6e
 
-    interconnects:
--    maxItems: 2
-+    maxItems: 3
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
-    interconnect-names:
--    maxItems: 2
-+    maxItems: 3
-
-  patternProperties:
-    "^display-controller@[0-9a-f]+$":
-==============================================
-
-Thanks,
-Neil
