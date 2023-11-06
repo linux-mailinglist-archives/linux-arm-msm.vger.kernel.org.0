@@ -2,184 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5B80A7E2035
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 12:41:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id F022D7E206B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 12:53:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231414AbjKFLly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 06:41:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47834 "EHLO
+        id S230155AbjKFLxD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 06:53:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbjKFLlx (ORCPT
+        with ESMTP id S229689AbjKFLxC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 06:41:53 -0500
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48354BE;
-        Mon,  6 Nov 2023 03:41:50 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A65pNTM022945;
-        Mon, 6 Nov 2023 11:41:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=gUDEE2dz5GLAemOBWyVoCMY+wl8Y9k+DBPKEwhf8QJY=;
- b=TuZUH62ib6Q847URwIBJF1gV5x8rzkFhfoR+vXOCSYd1lhDX0xiLMQeBM2GfQBi3BOxM
- 9CGryYjw8rlnDXoropjC59ucXYgwzRL9nGUnZcKsYeMY7RBIwYHHtiqTaVjy/avlvmKC
- 6fl6T26bhD/hC918vZbKaOMqZdlS3i+z2XAVQxKoLbZCoOzSOANeMNi+cqS4T8kYCJTt
- a78/zymUY8tT1HPkL3xWvY2hL3O9t1zmaJDUIxl/9zLmL2WDYlO5dpqXbZeGFblJtT+A
- bBTKhsO3AhrnhcBu+DyZSPXQiRgfGhFIUYuRvWmWzJQQzex7Bj9bknmW8Qcwy/Vk6f9S sw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5ernkyxm-1
+        Mon, 6 Nov 2023 06:53:02 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A104B94;
+        Mon,  6 Nov 2023 03:52:59 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6ASvNa005529;
+        Mon, 6 Nov 2023 11:52:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=O7Ok2W0/XRJKfI34YipOsLcgoAANsmCKZDKdtVVLPwo=;
+ b=MHhFVPhgTBBCNRVaWcvwzTcBZusbWWK2/+cZJt88d3/sWloFT1ZwxoM9rkQmKM1Sd202
+ 3+I0ASQzpvXMC3HZuTklVVGljjyGu7MDrYVnOE1Lx4mSkOjsnIBwXj4kijK/pilLusx2
+ UcjmQH7NtKUf3DIFv9guyatfFtxz/zVs5Yd+xRFWN50xmrEs9yA9G95EoaYKPIYrb9TC
+ obbYkByTAyYJfYNUd6dv3TTdNFxdSWJeGXoyeNUy3g7WE7XLqsp0OaN+k8w4oBzI5CCm
+ EQ+ud3eqS2VqTnaJZrnbbnk3zo4HYlnZ0IJUCgLINCluose37lIRPK8z4iOuxI1DONKl GA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u6xdu87bs-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Nov 2023 11:41:46 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6Bfjn4027388
+        Mon, 06 Nov 2023 11:52:51 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6Bqo6r014804
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Nov 2023 11:41:45 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
- 2023 03:41:41 -0800
-Message-ID: <af05dbdb-21bf-34f0-e9b3-9f6b9a0c3115@quicinc.com>
-Date:   Mon, 6 Nov 2023 17:11:38 +0530
+        Mon, 6 Nov 2023 11:52:50 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Mon, 6 Nov 2023 03:52:45 -0800
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH 0/2] phy: qcom-qmp-pcie: Add support to keep refclk always
+ on
+Date:   Mon, 6 Nov 2023 17:22:33 +0530
+Message-ID: <20231106-refclk_always_on-v1-0-17a7fd8b532b@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
- rb3 board
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>
-CC:     Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAILTSGUC/x2MWwqAIBAArxL7nZAGpV0lQtS2WgoLhR6Ed0/6H
+ JiZFyIGwghd8ULAkyLtPgMvC3CL8TMyGjODqETNedWwgJPbVm22yzxR754piwalUK2zEnJ2ZIP
+ uf9kPKX22j9GLYgAAAA==
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_nainmeht@quicinc.com>
-References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
- <20231103184655.23555-3-quic_kbajaj@quicinc.com>
- <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
- <1830fc44-7bac-4db5-af59-112410d73a64@linaro.org>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <1830fc44-7bac-4db5-af59-112410d73a64@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_vpernami@quicinc.com>, <quic_parass@quicinc.com>,
+        "Krishna chaitanya chundru" <quic_krichai@quicinc.com>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1699271564; l=1149;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=rOqRd8dUZXBv8AK+fFRgy5WFi6zRJCdIHc+U2YfEafk=;
+ b=rS5if1xwJXYJ31AXMIj/0x3LJ8ePUkfqSStWanLdLMfdi/BjMDcDeO6Sh/ocSJNx/dMHP6tFy
+ qhQo2K3bG+CD8Ovi1Fd7nJYl1WPot3X4mbxtMgnMEno97FfCk3tixJ0
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6JF5azQjTaONYIU5iqCi5xWindgHQpdS
-X-Proofpoint-GUID: 6JF5azQjTaONYIU5iqCi5xWindgHQpdS
+X-Proofpoint-GUID: daU4FlACUj3NOompZky48E78CpQgzj66
+X-Proofpoint-ORIG-GUID: daU4FlACUj3NOompZky48E78CpQgzj66
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-06_09,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- phishscore=0 priorityscore=1501 mlxlogscore=999 malwarescore=0 spamscore=0
- mlxscore=0 suspectscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
- definitions=main-2311060096
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-11-06_10,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=573 priorityscore=1501
+ spamscore=0 impostorscore=0 mlxscore=0 malwarescore=0 clxscore=1011
+ bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311060098
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds support to provide refclk to endpoint even in low
+power states.
 
-On 11/5/2023 6:38 PM, Krzysztof Kozlowski wrote:
-> On 03/11/2023 23:22, Dmitry Baryshkov wrote:
->> On Fri, 3 Nov 2023 at 20:49, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->>>
->>> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
->>> platform. QCM6490 is derived from SC7280 meant for various
->>> form factor including IoT.
->>>
->>> Supported features are, as of now:
->>> * Debug UART
->>> * eMMC (only in IDP)
->>> * USB
->>>
-> 
-> ...
-> 
->>> +
->>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
->>> new file mode 100644
->>> index 000000000000..01adc97789d0
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
->>
->> I have mixed feelings towards this file. Usually we add such 'common'
->> files only for the phone platforms where most of the devices are
->> common.
->> Do you expect that IDP and RB3 will have a lot of common code other
->> than these regulator settings?
-> 
-> I agree here. What exactly is common in the real hardware between IDP
-> and RB3? Commit msg does not explain it, so I do not see enough
-> justification for common file. Just because some DTS looks similar for
-> different hardware does not mean you should creat common file.
+Due to some platform specific issues with CLKREQ signal, it is not being
+propagated to the host and as host doesn't know the clkreq signal host is
+not sending refclk. Due to this endpoint is seeing linkdown and going
+to bad state.
+To avoid those ref clk should be provided always to the endpoint. The
+issue is coming only when ep intiates the L1.1 or L1.2 exit and clkreq
+is not being propagated properly to the host. 
 
-@Dmitry/@Krzysztof,
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+Krishna chaitanya chundru (2):
+      dt-bindings: phy: qcom,qmp: Add PCIe qcom,refclk-always-on property
+      phy: qcom-qmp-pcie: Add support for keeping refclk always on
 
-Thank you for reviewing the RFC, we wanted to continue the
-suggestion/discussion given on [1] , where we discussed that this
-qcm6490 is going to be targeted for IOT segment and will have different
-memory map and it is going to use some of co-processors like adsp/cdsp 
-which chrome does not use.
+ .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml    |  5 +++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c            | 21 +++++++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
+---
+base-commit: 71e68e182e382e951d6248bccc3c960dcec5a718
+change-id: 20231106-refclk_always_on-9beae8297cb8
 
-So to your question what is common between RB3 and IDP, mostly they will
-share common memory map(similar to [2]) and regulator settings and both 
-will use adsp/cdsp etc., we will be posting the memory map changes as 
-well in coming weeks once this RFC is acked.
+Best regards,
+-- 
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-
-Thanks,
-Mukesh
-
-[1]
-https://lore.kernel.org/linux-arm-msm/d97ebf74-ad03-86d6-b826-b57be209b9e2@quicinc.com/
-
-[2]
-commit 90c856602e0346ce9ff234062e86a198d71fa723
-Author: Douglas Anderson <dianders@chromium.org>
-Date:   Tue Jan 25 14:44:20 2022 -0800
-
-     arm64: dts: qcom: sc7280: Factor out Chrome common fragment
-
-     This factors out a device tree fragment from some sc7280 device
-     trees. It represents the device tree bits that should be included for
-     "Chrome" based sc7280 boards. On these boards the bootloader (Coreboot
-     + Depthcharge) configures things slightly different than the
-     bootloader that Qualcomm provides. The modem firmware on these boards
-     also works differently than on other Qulacomm products and thus the
-     reserved memory map needs to be adjusted.
-
-     NOTES:
-     - This is _not_ quite a no-op change. The "herobrine" and "idp"
-       fragments here were different and it looks like someone simply
-       forgot to update the herobrine version. This updates a few numbers
-       to match IDP. This will also cause the `pmk8350_pon` to be disabled
-       on idp/crd, which I belive is a correct change.
-     - At the moment this assumes LTE skus. Once it's clearer how WiFi SKUs
-       will work (how much of the memory map they can reclaim) we may add
-       an extra fragment that will rejigger one way or the other.
-
-     Signed-off-by: Douglas Anderson <dianders@chromium.org>
-     Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-     Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-     Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-     Link: 
-https://lore.kernel.org/r/20220125144316.v2.3.Iac012fa8d727be46448d47027a1813ea716423ce@changeid
-
-
-> 
-> Best regards,
-> Krzysztof
-> 
