@@ -2,81 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98A567E2C25
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 19:39:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 034A47E2C4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 19:50:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231800AbjKFSjc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 13:39:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37920 "EHLO
+        id S232025AbjKFSuf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 13:50:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231773AbjKFSjb (ORCPT
+        with ESMTP id S232006AbjKFSue (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 13:39:31 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8835AF
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 10:39:28 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6HsOej026196;
-        Mon, 6 Nov 2023 18:39:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=5v9Ozv28xqt7xzsIePHRUig9LVHYUIs4aWLRgkev1js=;
- b=dV4EKrzcMuFlQi1m0flRL8K1XCSr1iWhW+lH6STd5xuf8NYpQqW4fe+N8qbQaXQ7ar6w
- ob5yagczUumAp0mBT0HU9/hwHR5tneTVNy/YTBgLsKwtRC4nxFlHeTfHr6uUxRWBo5mK
- yS/yhpL+o37FITjTodqLYKB3f8hAakoVo5fKhK8mG37+rIiYLUe/KJw3XcRPx36jaIRL
- aVt98kkiWzUcTnVVEEoKypKBxOzQCrqOvAYc5Fvf54wj8gk6TorDLi9ZZ0MvOEjSA/Aw
- /ywUO9olO1akgcoxZvsv6lS4tehZP8DXuD8IBQFipNHUhTj8LQvaMIVjN26/ekPXnvAx Vw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5efyn5a6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Nov 2023 18:39:16 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6IdFCf030479
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Nov 2023 18:39:15 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
- 2023 10:39:13 -0800
-Message-ID: <e4c94f9d-773a-e894-d655-41afeb01dae1@quicinc.com>
-Date:   Mon, 6 Nov 2023 10:38:45 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/dpu: correct clk bit for WB2 block
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
+        Mon, 6 Nov 2023 13:50:34 -0500
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59206A2;
+        Mon,  6 Nov 2023 10:50:32 -0800 (PST)
+Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-6c320a821c4so4305638b3a.2;
+        Mon, 06 Nov 2023 10:50:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699296632; x=1699901432; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6cU21C5fA+9HfxPv3J8m9Wghhy7CjkmSAa3XrNBXmko=;
+        b=Ie/KIEDqymP0Gju2ZdFvwyIo5XD+M32NgariZ/2qo1NwxvS9C0k9jGkIEtrAn6hKLk
+         LSmQWUizswlwJQJwg3gWLfTH2YQKvy7Bd+Evi2K7BHgEkpQB4ytwquJJApCfMp/RsNkH
+         B4nArmz1g7DYtj5NteBv/WNZlTNNA13pE+/FiktY/mm8oNNr4h1cBwluctMxq4yqJO3A
+         AZdu3sfbKFA2JDEQte2SDEj2j1CEe/JwNbizOGUkEAAeQxJ47nS8IKRB4TA8DYOH2oTX
+         WFveUBYe8QR9VETiT/v18TY1gGAPA4612zXaL/jx7w184sW/OhCMnM4qYB95uK5eF5sw
+         P/sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699296632; x=1699901432;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6cU21C5fA+9HfxPv3J8m9Wghhy7CjkmSAa3XrNBXmko=;
+        b=RGnuYNs26jRsf4oJyxHhqKt0x/PnyV1eEeaLEnbCEU1OGnL5ZQbl0CYwE2jov0nu+K
+         S8hr4X8tZFlO5oc+rwQbge+3xdAL+NEatGAUjiK1hvjKELGTXw3s6JHqDdn13DsbsySf
+         joa/TmVUOf0ewjRrrF5JsKcS3a1fryRy4huNnLd47bPb8JP6Bg9g16wyqGYltOwvmEPN
+         N9zpbtV0KmJh7uBY+A4cXwc+nDoNgKzebh76GRsi2X8YBL406Basy4Pe1vuWK5riQXxc
+         uKaaJ3jFovfs4PLqEIjad6Ju4qq1TiwboApnAP7kQ2NWLd7IEDcu46r7dRD9CB9BT26J
+         krbg==
+X-Gm-Message-State: AOJu0YxMLw7p9RhmW2kf2BVhYhZ1RKiBNLlyI4YEbFoBzFPL2xzauo3r
+        YW/Fe0HJsEo+zrc7INNDveg=
+X-Google-Smtp-Source: AGHT+IErzhlvo3uGRZ8ikMypK9vCw5+kSuhekjr2LhVNm7lhbCURZcq8B5VN8mniHRSxNPPNfQAchw==
+X-Received: by 2002:a05:6a00:330a:b0:6c3:3bf9:217e with SMTP id cq10-20020a056a00330a00b006c33bf9217emr11111970pfb.19.1699296631673;
+        Mon, 06 Nov 2023 10:50:31 -0800 (PST)
+Received: from localhost ([2a00:79e1:abd:4a00:6c80:7c10:75a0:44f4])
+        by smtp.gmail.com with ESMTPSA id n35-20020a056a000d6300b006b90f1706f1sm5941925pfv.134.2023.11.06.10.50.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Nov 2023 10:50:30 -0800 (PST)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20231009171139.2691218-1-dmitry.baryshkov@linaro.org>
-Content-Language: en-US
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231009171139.2691218-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Q0kYKXlBu7GBLw7oZ4gZjbDzmM1V0c93
-X-Proofpoint-ORIG-GUID: Q0kYKXlBu7GBLw7oZ4gZjbDzmM1V0c93
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-06_14,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 priorityscore=1501 malwarescore=0 mlxscore=0 clxscore=1015
- phishscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311060154
-X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        Daniel Stone <daniels@collabora.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        linux-kernel@vger.kernel.org (open list),
+        linux-pm@vger.kernel.org (open list:POWER MANAGEMENT CORE),
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Sean Paul <sean@poorly.run>
+Subject: [PATCH v3 0/2] drm/msm/gem: Add metadata uapi
+Date:   Mon,  6 Nov 2023 10:50:24 -0800
+Message-ID: <20231106185028.209462-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,56 +77,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sorry for the delay in getting back on this. There was quite a bit of 
-history digging I had to do myself to give a certain response.
+From: Rob Clark <robdclark@chromium.org>
 
+Add metadata mechanism to provide a back-channel to communicate image
+layout information between vk and gl, because EXT_external_objects
+doesn't support explicit modifiers and "OPTIMAL_TILING_EXT" is not
+enough information for the importer to deduce the layout.
 
-On 10/9/2023 10:11 AM, Dmitry Baryshkov wrote:
-> On sc7280 there are two clk bits for WB2: control and status. While
-> programming the VBIF params of WB, the driver should be toggling the
-> former bit, while the sc7280_mdp struct lists the latter one.
-> 
+Rob Clark (2):
+  drm/msm: Small uabi fixes
+  drm/msm/gem: Add metadata
 
-No, this is not correct. Both are control bits. But for the context of 
-where this is being used today, that is setting the VBIF OT limit, we 
-should be using the VBIF_CLI one. So the below change itself is correct 
-but not the commit text.
+ drivers/gpu/drm/msm/msm_drv.c | 94 ++++++++++++++++++++++++++++++++++-
+ drivers/gpu/drm/msm/msm_gem.c |  1 +
+ drivers/gpu/drm/msm/msm_gem.h |  4 ++
+ include/uapi/drm/msm_drm.h    |  2 +
+ 4 files changed, 99 insertions(+), 2 deletions(-)
 
-We need to make the same change on sm8250 WB2 as well as this register 
-is present there too. In fact, anything >=msm8994 for setting VBIF OT 
-for WB2 we should be using VBIF_CLI bits of register MDP_CLK_CTRL2 
-(offset 0x2bc).
+-- 
+2.41.0
 
-For anything >=sm8550, we need to use WB_2_CLK_CTRL present within the 
-WB block and not the one in the top.
-
-Hence for this change, we can do below:
-
--> update the commit text to indicate both are control bits but for the 
-vbif ot context we should using the corrected one
--> if you can also add sm8250 in the same change i can ack it and pick it up
-
-Have you re-validated WB with this change? If not, let me know I shall 
-while picking this up for -fixes.
-
-> Correct that to ensure proper programming sequence for WB2 on sc7280.
-> 
-> Fixes: 3ce166380567 ("drm/msm/dpu: add writeback support for sc7280")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> index 3b5061c4402a..9195cb996f44 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> @@ -25,7 +25,7 @@ static const struct dpu_mdp_cfg sc7280_mdp = {
->   		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
->   		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
->   		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
-> -		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x3b8, .bit_off = 24 },
-> +		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
->   	},
->   };
->   
