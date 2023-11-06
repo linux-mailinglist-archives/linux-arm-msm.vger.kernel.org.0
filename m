@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A16A7E1C6C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 09:39:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D16E7E1C6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 09:39:25 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229834AbjKFIjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 03:39:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46102 "EHLO
+        id S231186AbjKFIjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 03:39:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231180AbjKFIjY (ORCPT
+        with ESMTP id S230431AbjKFIjY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 6 Nov 2023 03:39:24 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA611DB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 00:39:19 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-32dc9ff4a8fso2416875f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 00:39:19 -0800 (PST)
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA9EF100
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 00:39:20 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-32ded3eb835so2957041f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 00:39:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699259958; x=1699864758; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pTUGWkFm+eoFBrzY4hz2ysi787CRQJ+goyZRuyIksI4=;
-        b=pMydOPHanAhAq8HTFUR7cGj57ssv6pAME/jVqwjE9FiwtJQW2vHYjIKGe+KBhd4NCL
-         DYOY6C/lJyZWLMTnM0yHB30NO5bLFaXVwuebbo6QO4unz3vzfSH7xx6lqT/5vqb6HwX3
-         JieoiA7dufoCAD61UF+Z81mJqX6sjX+jQ7yMDB8ySdJmlQMoolOLKsBcqPCKMdLan5Fu
-         UFpkguhDru2HoOTpB8/dyteUHS1TZtktDMukqi/4SX8kb1mLpPfhszm05vCAnp18EqeJ
-         GA/kiHcgHmxLjpaKZQlV4PYohsc6prD/DQS6NqFmfJDT5YHiyQYFozkCzGe3t0L+ElTr
-         91bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699259958; x=1699864758;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1699259959; x=1699864759; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pTUGWkFm+eoFBrzY4hz2ysi787CRQJ+goyZRuyIksI4=;
-        b=dxiM7bSo7uTb2RcX6UEOq9SHrky+kXG485T1BDaBc3G6ndf2U9zrfwan7FLt2M3MAg
-         +m9NcYwERYHHWFs1BnNcpVd0LXmrLUABsG9KIafwttd+f96To8LDdLj+mgiz2RRnNhqi
-         KXG5nwDLk3UYDnmPK12i4K212e+Vi9V70A7zev7tw+4sa5FruX0CSnYu2PxW/FbroJ8z
-         sKuruwf2APkZsmbRY1fgACN17Do2vpJcUwnDv55+sSTc9xv8+dnf5TDoI/6PONbehW37
-         OUcHMlJK//K0vRqwFmdPdEGYnXIKc8rl8Yix/JrH+W8BP3Xday4ggXsrEKfbTvQ7hyKd
-         WXxw==
-X-Gm-Message-State: AOJu0YxcnQhM4OB5nXUJ8rXdS3bVOjlYx0Q0V22QOJQKLVbNoXRhrSGi
-        CMGJ13JxMpwRb2QadehUAL31eQ==
-X-Google-Smtp-Source: AGHT+IEF6pThiR1da8QQ/3I3buz7DyM87pZyWq8xnCNloeg3ygd/0h60F6oYsb2SMWd16qqJlTo6Ug==
-X-Received: by 2002:a5d:674c:0:b0:32d:bc7d:c431 with SMTP id l12-20020a5d674c000000b0032dbc7dc431mr21228644wrw.1.1699259958171;
-        Mon, 06 Nov 2023 00:39:18 -0800 (PST)
+        bh=WxpSuXDoom2RWs6bn/SJPon0BVz9GrlE7SEKe7RDhZw=;
+        b=u7w2sVRlHwI+2GsGj4vUq1P0BAsc0fnW464hE2I6fj8KjeWEi0nEsRwYeTS403Mqcm
+         Do2KBGjItaAbw0PymJpa+UxIY7LmowAEofe2wlxAS1BkBEKPQgJC5FtVOzttYsKsIUHO
+         RY+cH+We85RqdZe4bvzbosz1i/+QJqOalpL3pA9Fs0lNHKVitF+wVkd31uuP3rdkMco0
+         Km07s7lOwANiPvzTNc2zW8LOAOrrwfJHRkZt65cEo2wqyPZsZX9pvnCKsFMQOsEJiDTt
+         GupD4JXpBKjrxdqZ1VQWm3odvfOEFjowJpptAAbQdD5YnCcwpKev9RQV4WTb9OCkwL56
+         26Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699259959; x=1699864759;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WxpSuXDoom2RWs6bn/SJPon0BVz9GrlE7SEKe7RDhZw=;
+        b=GCLiz14WnH03qG82vimuJgo+KuzsO4zktnODiAU3pis69SwO4SncZLZ0/i5eSUe9Hu
+         FrNcKlDnls1AjcM7TYQpDlk3CuuLyHKVI3qTCGuF9MePJO7yn2oMNPBHRJGUNwDClrTA
+         FJFBWIIMDA07GX9i9k9ZbbKBMuXK/h2ok0UzpI9iMdTkZtc9g0j6lbEgF+ScB30D6N32
+         tDfplOCj6xSVjlngdhB2is2AGVp3mjKpCP5nLq2+QDCL3xpv5v5S8fIJswT7WK/4ucGN
+         bTt2qXDqYb0MwnDOmt8WwFBKZxb0Tv6+i7qIY1YLpNrEKOFYYzUejTrO2SBSFTx+njYM
+         lpOw==
+X-Gm-Message-State: AOJu0YzKwdxxdA9n673/WJMW3ZmeIKo4bLjoXAl4Mk7IreAb6j8McgCO
+        0vOkDBaNvzwCQSHS+Ujpxji4rA==
+X-Google-Smtp-Source: AGHT+IEhYrXI9itv6YupEtvTaN6G/zOpcHBoWVN/YscOkhOcyrbglwr583huBxTB8M7MU/bgvo5W8A==
+X-Received: by 2002:a5d:508b:0:b0:32d:5cc0:2f0c with SMTP id a11-20020a5d508b000000b0032d5cc02f0cmr22081873wrt.40.1699259959099;
+        Mon, 06 Nov 2023 00:39:19 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id t5-20020adfe445000000b00323293bd023sm8829830wrm.6.2023.11.06.00.39.17
+        by smtp.gmail.com with ESMTPSA id t5-20020adfe445000000b00323293bd023sm8829830wrm.6.2023.11.06.00.39.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Nov 2023 00:39:17 -0800 (PST)
+        Mon, 06 Nov 2023 00:39:18 -0800 (PST)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v2 0/8] arm64: dts: qcom: Introduce SM8650 platforms device
- tree
-Date:   Mon, 06 Nov 2023 09:39:08 +0100
-Message-Id: <20231106-topic-sm8650-upstream-dt-v2-0-44d6f9710fa7@linaro.org>
+Date:   Mon, 06 Nov 2023 09:39:09 +0100
+Subject: [PATCH v2 1/8] dt-bindings: arm: qcom: document SM8650 and the
+ reference boards
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACymSGUC/3XNwQ6CMAzG8VchO1uz1TCZJ97DcFigQBNhpJtEQ
- 3h3J/Hq8f8l/XVTkYQpqluxKaGVI4c5B54K1Y5+Hgi4y61Q48VoYyGFhVuIU2VLDc8lJiE/QZe
- AyDrrnOt6iyqfL0I9vw763uQeOaYg7+PTar7rD8XyP7oa0OArNFeDPsN9/eDZSzgHGVSz7/sHP
- agkScEAAAA=
+Message-Id: <20231106-topic-sm8650-upstream-dt-v2-1-44d6f9710fa7@linaro.org>
+References: <20231106-topic-sm8650-upstream-dt-v2-0-44d6f9710fa7@linaro.org>
+In-Reply-To: <20231106-topic-sm8650-upstream-dt-v2-0-44d6f9710fa7@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -72,25 +71,25 @@ Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6958;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1087;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=WZLAF297H8bm+I4vuhrG7BZHVymzYUf0PL6FzNTKLN4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlSKYxwsBGpOEmnX1DC+KQajDqwvs0WYcK+0a3r874
- 2Emd3kyJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZUimMQAKCRB33NvayMhJ0RrtEA
- C0KF2MC+9x+OHxBzHvgpimy8kX5dssWy4P3Ohna3AtA3lFUsB1uOrkCW4XIHRQLmVJAe2h8qY4d2kf
- qHfDW7cpmys/pt8Mbd5/wZs8303Pwdc//oxjM2+nwfpSqmecp5Dl3YxuPDe/mzGC/hjRjIgp5pLuA1
- sEI3AvzXm5KtFiiqRnB/pOWml82fwhBzjaHaxIeCHgA4qioLJ7PRKXtVa53DmlWCCxvMHrQ/xKd9/4
- q2tyGN7EHtnBpYDuB0RwhOV7+o+QovZ+J1n8VQW0q21ExJDve7qPYzQ+NH4gbKyEF62TOgKGhd1wWA
- DWbdqnosrSl902gUALSWLUTHGlW+Mgf2SSH2xt3uRI9YAgVTsqENyqoeAqOx1f+xwzb0toHSqCRTlW
- dXdf/tnqsOgx4tz+/plSD4xdTZTwoz3ZABQJdhPm1GA33MbQf9Asvfr9vb/xmfQmF68ppHiy6pjP4a
- xTQq7f054izQHAlmWVX/TrJuH5nizGt9lK29dBmFxPeBBpNarklJ+kasgOAh6yhsoj/qTuYR7Ia4jj
- 83MN4L6g5TSl0NvocP2kv8k4j5OPSx/xtHL3aQU753lJEBvOUybLhkZBj1GQbiMXAIvQW9/XGPLRE9
- AKKAUEOdpxZR+Dw1gx2tqd4rabAB0zJVELeIcAKZ4ggYGTgyJrg0Gd63xxHw==
+ bh=UZ2eQGqqiWNvOpQYnbzT/mou5C8lbL9c01Zc1IvQLo0=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlSKYxtLSXOrk6lCKW4cwXYxjE5T5XelBSBYoizKv4
+ iuGJKH+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZUimMQAKCRB33NvayMhJ0R3YEA
+ CmqzdW15GvV0UP3/bQQd3cMwJrlhz5hlGK1M/lQV6JbRrpZri1kjygcwNchWj6Nl3Xvav40q3KsBm9
+ Lff9ocq1tiulH1Plpuq0z7eoVoBnt9arKYxQumEqGt1pJeYfysB+RxffDDahgNaXD1L2VPU49O3EtJ
+ yExz39+N6RgEAGijAnltzT5JEyETs6jObLVM8/8Od0XRojxq3h45c+2L4HxTxE9MvEIcbGAh0WaN2u
+ Yn7EpPsNpSFESjup49Mc/vqdu8szJ5gx/57fz+H+gOCWjgtKIWWg4tJRLH2ghEvLjidfg0xUQnhOuS
+ 3zr5x1TueXEDar4l0WdAI7FTuZU2uMwmF1mmGXIEIE+MNJ+ZB0GTDUmj97/Fp/VkzkxfEZ07PUjDml
+ MZOzmUppL1mnVLdEejX8X6dLISv2cbJSxMFpOKQQyDTeQ5bE6o9gu6hLd/eVt44bTly7pyCBtx9pXG
+ lC/KI72qf158Q2kZAJtcazvD73TTEUJGr5NxcL12PPGNr5vbgjTZXcy0nK8G8+PgNBMGQ4tYmmnHs9
+ T1SvVJat5ruui3GcS2BkssweBHviL4L5ykyXTv9hzHzg3oxOGC6vQ4WVV8m/xdvCMbHh/iFBdpN+eR
+ Pp5E9ivz1A0LZbdFqFUwoddwx64Hq+t/+Nv5coaQ/2ngqo4tb2k9GjgUsRyw==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -98,114 +97,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This introduces the Device Tree for the recently announced Snapdragon 8 Gen 3
-from Qualcomm, you can find the marketing specifications at:
-https://docs.qualcomm.com/bundle/publicresource/87-71408-1_REV_B_Snapdragon_8_gen_3_Mobile_Platform_Product_Brief.pdf
+Document the SM8650 SoC and based MTP (Mobile Test Platforms) and QRD
+(Qualcomm Reference Device) boards.
 
-Bindings and base Device Tree for the SM8650 SoC, MTP (Mobile Test Platform)
-and QRD (Qualcommm Reference Device) are splited in two:
-- 1-5: boot-to-shell first set that are only build-dependent on Clock bindings
-- 6-8: multimedia second set that are build-dependent with Interconnect bindings
-
-Features added and enabled:
-- CPUs with CPUFREQ, SCPI idle states
-- QICv3, IOMMU, Timers
-- Interconnect NoCs with LLCC/CPU BWMONs
-- SoC 3xTemperature Sensors
-- Pinctrl/GPIO with PDC wakeup support
-- Global, GPU, Display, TCSR Clock Controllers
-- cDSP, aDSP and MPSS with SMP2P
-- QuP/I2C Master Hub I2C and SPI controllers + GPI DMA
-- PCIe 0/1
-- USB2/USB3 with USB3/DP Combo PHY
-- UFS with Inline Crypto Engine
-- Crypto Engine + DMA and True Random Generator
-- SDHCI
-- Mobile Display Subsystem with 2xDSI output
-- PMIC Glink (USB-PD UCSI + Altmode) provided by aDSP firmware
-- GPIO and PMIC Buttons/LEDs on QRD board
-- WCN7850 Bluetooth
-- DSI + Touch panel
-
-Bindings Dependencies:
-- aoss-qmp: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-aoss-qmp-v1-1-8940621d704c@linaro.org/ - Reviewed
-- bwmon: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-bwmon-v1-1-11efcdd8799e@linaro.org/ - Reviewed
-- cpufreq: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-cpufreq-v1-1-31dec4887d14@linaro.org/ - Applied
-- dwc3: https://lore.kernel.org/all/20231030-topic-sm8650-upstream-bindings-dwc3-v2-1-60c0824fb835@linaro.org/ - Reviewed
-- gpi: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-gpi-v2-1-4de85293d730@linaro.org/ - Reviewed
-- ice: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-ice-v1-1-6b2bc14e71db@linaro.org/ - Reviewed
-- ipcc: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-ipcc-v1-1-acca4318d06e@linaro.org/ - Reviewed
-- pcie: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-pcie-v1-1-0e3d6f0c5827@linaro.org/ - Reviewed
-- pcd: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-pdc-v1-1-42f62cc9858c@linaro.org/ - Reviewed
-- pmic-glink: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-pmic-glink-v1-1-0c2829a62565@linaro.org/ - Reviewed
-- qce: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-qce-v1-1-7e30dba20dbf@linaro.org/ - Reviewed
-- rng: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-rng-v1-1-6b6a020e3441@linaro.org/ - Reviewed
-- scm: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-scm-v2-1-68a8db7ae434@linaro.org/ - Reviewed
-- sdhci: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-scm-v2-1-68a8db7ae434@linaro.org/ - Reviewed
-- smmu: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-smmu-v1-1-bfa25faa061e@linaro.org/ - Reviewed
-- tsens: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-tsens-v2-1-5add2ac04943@linaro.org/ - Reviewed
-- ufs: https://lore.kernel.org/r/20231030-topic-sm8650-upstream-bindings-ufs-v3-1-a96364463fd5@linaro.org - Reviewed
-- clocks: https://lore.kernel.org/all/20231106-topic-sm8650-upstream-clocks-v3-0-761a6fadb4c0@linaro.org/
-- interconnect: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-interconnect-v1-0-b7277e03aa3d@linaro.org/ - Reviewed
-- llcc: https://lore.kernel.org/r/20231030-topic-sm8650-upstream-llcc-v2-0-f281cec608e2@linaro.org - Reviewed
-- mdss: https://lore.kernel.org/all/20231030-topic-sm8650-upstream-mdss-v2-0-43f1887c82b8@linaro.org/ - Reviewed
-- phy: https://lore.kernel.org/all/20231030-topic-sm8650-upstream-phy-v2-0-a543a4c4b491@linaro.org/ - Reviewed
-- remoteproc: https://lore.kernel.org/r/20231030-topic-sm8650-upstream-remoteproc-v2-0-609ee572e0a2@linaro.org - Reviewed
-- rpmpd: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-rpmpd-v1-0-f25d313104c6@linaro.org/ - Applied
-- tlmm: https://lore.kernel.org/all/20231106-topic-sm8650-upstream-tlmm-v3-0-0e179c368933@linaro.org/ - Reviewed
-- goodix: https://lore.kernel.org/all/20231106-topic-goodix-berlin-upstream-initial-v11-0-5c47e9707c03@linaro.org/ - Reviewed
-
-Build Dependencies:
-- clocks: https://lore.kernel.org/all/20231106-topic-sm8650-upstream-clocks-v3-0-761a6fadb4c0@linaro.org/
-- interconnect: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-interconnect-v1-0-b7277e03aa3d@linaro.org/ - Reviewed
-
-Other:
-- socinfo: https://lore.kernel.org/all/20231030-topic-sm8650-upstream-socinfo-v2-0-4751e7391dc9@linaro.org/ - Reviewed
-
-Merge Strategy:
-- Merge patches 1-5 with Clock bindings immutable branch
-- Merge patches 6-8 with Interconnect immutable branch
-
-For convenience, a regularly refreshed linux-next based git tree containing
-all the SM8650 related work is available at:
-https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Changes in v2:
-- Drop RFC since most of bindings were reviewed
-- Collect Reviewed-by/Acked-bys
-- Remove #ifndef PMK8550VE_SID in favor of #define in sm8550 dts
-- Add allow-set-load/allowed-modes to LDOs
-- Add QCOM_ICC_TAG_ALWAYS/QCOM_ICC_TAG_ACTIVE_ONLY to interconnects = <> instead of 0 & 3
-- minimal sm8650-qrd.dts cleanup
-- Link to v1: https://lore.kernel.org/r/20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org
+ Documentation/devicetree/bindings/arm/qcom.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
----
-Neil Armstrong (8):
-      dt-bindings: arm: qcom: document SM8650 and the reference boards
-      arm64: dts: qcom: add initial SM8650 dtsi
-      arm64: dts: qcom: pm8550ve: make PMK8550VE SID configurable
-      arm64: dts: qcom: sm8650: add initial SM8650 MTP dts
-      arm64: dts: qcom: sm8650: add initial SM8650 QRD dts
-      arm64: dts: qcom: sm8650: add interconnect dependent device nodes
-      arm64: dts: qcom: sm8650-mtp: add interconnect dependent device nodes
-      arm64: dts: qcom: sm8650-qrd: add interconnect dependent device nodes
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 88b84035e7b1..c5b6518973d8 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -87,6 +87,7 @@ description: |
+         sm8350
+         sm8450
+         sm8550
++        sm8650
+ 
+   The 'board' element must be one of the following strings:
+ 
+@@ -1044,6 +1045,12 @@ properties:
+               - qcom,sm8550-qrd
+           - const: qcom,sm8550
+ 
++      - items:
++          - enum:
++              - qcom,sm8650-mtp
++              - qcom,sm8650-qrd
++          - const: qcom,sm8650
++
+   # Board compatibles go above
+ 
+   qcom,msm-id:
 
- Documentation/devicetree/bindings/arm/qcom.yaml |    7 +
- arch/arm64/boot/dts/qcom/Makefile               |    2 +
- arch/arm64/boot/dts/qcom/pm8550ve.dtsi          |    6 +-
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts         |    1 +
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts         |    1 +
- arch/arm64/boot/dts/qcom/sm8650-mtp.dts         |  678 +++
- arch/arm64/boot/dts/qcom/sm8650-qrd.dts         |  803 ++++
- arch/arm64/boot/dts/qcom/sm8650.dtsi            | 5610 +++++++++++++++++++++++
- 8 files changed, 7105 insertions(+), 3 deletions(-)
----
-base-commit: fe1998aa935b44ef873193c0772c43bce74f17dc
-change-id: 20231016-topic-sm8650-upstream-dt-ee696999df62
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
