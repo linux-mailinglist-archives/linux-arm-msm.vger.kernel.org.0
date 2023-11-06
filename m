@@ -2,52 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E750A7E1972
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 05:51:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A9077E19B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 06:43:17 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229486AbjKFEva (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Nov 2023 23:51:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43410 "EHLO
+        id S230252AbjKFFnP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 00:43:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230269AbjKFEv3 (ORCPT
+        with ESMTP id S229485AbjKFFnP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Nov 2023 23:51:29 -0500
+        Mon, 6 Nov 2023 00:43:15 -0500
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E018F9;
-        Sun,  5 Nov 2023 20:51:26 -0800 (PST)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C83BC433C7;
-        Mon,  6 Nov 2023 04:51:22 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 164BCFA;
+        Sun,  5 Nov 2023 21:43:12 -0800 (PST)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5454AC433C8;
+        Mon,  6 Nov 2023 05:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1699246285;
-        bh=rySQffP2NQSfe8P6PjPcJtxJpIx3FMaahWg+eEcTVRY=;
+        s=k20201202; t=1699249391;
+        bh=e583JGY0G0pVmOX1ecIKiTB6ae+xfhdJaZ6fBELBZc0=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cqOrrjDYWjgU06y+Om+9Tr8F3s1IrKw+AX0vwGeez7F1LD7CfpKDGjgaBRdr0piOW
-         w2lr4mMv7460Mo+rDBqGO4a8/eunMGqZoLCN/LGqzO7L+XLsjspBZsq/+lNgYo4A3j
-         VAtGhDGJFalXR+Nsa68Bgv2hkgpN2EmIBEpXaqwXNW4VijmVzxYKrs8lEkpccZSoLe
-         xKXOWnox/vzIuCyH2snHWfe9YazB/RX4UinKjbXZSTzg/kG3ZHPpo5KS6DmSRWsftD
-         oxPy7PDDild10TR2+wnQPtv864ydxYdmG36uj9dn0etagsrT2Y+X78HLy/Q+13FoRY
-         aQ7+qC20ryVMg==
-Date:   Mon, 6 Nov 2023 10:21:19 +0530
+        b=IDQciV5AMLLj35Epnxcgf91p7dF4rK1PKDfPfYTfNll2CoWi7U9GC6bL8y+TxVcif
+         IVvcoe1mmoiNG/lwdMUdQy75XdSKcXp2ldAC6jlraXmhOrfwjfRDouzX2DxO9a2DLD
+         jW2pxBnCrW4BHQZC6sUAB2AneZlKuKYtuqx0iJ9GiEfOvzglnDEkDKTDjomQx11IcF
+         7wsnSViZwJj99Z/NTQTm7DFabX4/LEqWdoA0HrrmFSbU50Cvt3QQWjk9OOT5RjJz+e
+         /ZR5mAfsVgwjs0mE8BYpGT7TrvQbTOnJtB7v8JxAqCcKktf95W04BKocpjOOyD4yqA
+         21g6tMpiKkLGw==
+Date:   Mon, 6 Nov 2023 11:13:05 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Qiang Yu <quic_qianyu@quicinc.com>, mhi@lists.linux.dev,
+To:     Qiang Yu <quic_qianyu@quicinc.com>
+Cc:     quic_jhugo@quicinc.com, mhi@lists.linux.dev,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         quic_cang@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH v2 1/2] bus: mhi: host: Add spinlock to protect WP access
- when queueing TREs
-Message-ID: <20231106045119.GB2474@thinkpad>
-References: <1694594861-12691-1-git-send-email-quic_qianyu@quicinc.com>
- <1694594861-12691-2-git-send-email-quic_qianyu@quicinc.com>
- <af4fc816-d75b-997d-6d37-a774f5eb96ae@quicinc.com>
- <dfeb6071-8ae4-38ba-5273-59478ea8e178@quicinc.com>
- <c30c9c68-bfe1-0cc5-c511-218f7d1da92d@quicinc.com>
- <15526b95-518c-445a-be64-6a15259405fb@quicinc.com>
- <472817a7-78bb-25d9-b8c6-2d70f713b7fb@quicinc.com>
+Subject: Re: [PATCH 1/2] bus: mhi: host: Add a separate timeout parameter for
+ waiting ready
+Message-ID: <20231106054305.GC2474@thinkpad>
+References: <1699242172-79472-1-git-send-email-quic_qianyu@quicinc.com>
+ <1699242172-79472-2-git-send-email-quic_qianyu@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <472817a7-78bb-25d9-b8c6-2d70f713b7fb@quicinc.com>
+In-Reply-To: <1699242172-79472-2-git-send-email-quic_qianyu@quicinc.com>
 X-Spam-Status: No, score=-5.0 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -58,108 +53,192 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 20, 2023 at 09:07:35AM -0600, Jeffrey Hugo wrote:
-> On 10/16/2023 2:46 AM, Qiang Yu wrote:
-> > 
-> > On 9/29/2023 11:22 PM, Jeffrey Hugo wrote:
-> > > On 9/24/2023 9:10 PM, Qiang Yu wrote:
-> > > > 
-> > > > On 9/22/2023 10:44 PM, Jeffrey Hugo wrote:
-> > > > > On 9/13/2023 2:47 AM, Qiang Yu wrote:
-> > > > > > From: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > > > > 
-> > > > > > Protect WP accesses such that multiple threads queueing buffers for
-> > > > > > incoming data do not race and access the same WP twice.
-> > > > > > Ensure read and
-> > > > > > write locks for the channel are not taken in succession
-> > > > > > by dropping the
-> > > > > > read lock from parse_xfer_event() such that a callback given to client
-> > > > > > can potentially queue buffers and acquire the write lock
-> > > > > > in that process.
-> > > > > > Any queueing of buffers should be done without channel
-> > > > > > read lock acquired
-> > > > > > as it can result in multiple locks and a soft lockup.
-> > > > > > 
-> > > > > > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-> > > > > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> > > > > > ---
-> > > > > >   drivers/bus/mhi/host/main.c | 11 ++++++++++-
-> > > > > >   1 file changed, 10 insertions(+), 1 deletion(-)
-> > > > > > 
-> > > > > > diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> > > > > > index dcf627b..13c4b89 100644
-> > > > > > --- a/drivers/bus/mhi/host/main.c
-> > > > > > +++ b/drivers/bus/mhi/host/main.c
-> > > > > > @@ -642,6 +642,7 @@ static int parse_xfer_event(struct
-> > > > > > mhi_controller *mhi_cntrl,
-> > > > > >               mhi_del_ring_element(mhi_cntrl, tre_ring);
-> > > > > >               local_rp = tre_ring->rp;
-> > > > > >   +            read_unlock_bh(&mhi_chan->lock);
-> > > > > 
-> > > > > This doesn't work due to the
-> > > > > write_lock_irqsave(&mhi_chan->lock, flags); on line 591.
-> > > > Write_lock_irqsave(&mhi_chan->lock, flags) is used in case of
-> > > > ev_code >= MHI_EV_CC_OOB. We only read_lock/read_unlock the
-> > > > mhi_chan while ev_code < MHI_EV_CC_OOB.
-> > > 
-> > > Sorry.  OOB != EOB
-> > > 
-> > > > > 
-> > > > > I really don't like that we are unlocking the mhi_chan while
-> > > > > still using it.  It opens up a window where the mhi_chan
-> > > > > state can be updated between here and the client using the
-> > > > > callback to queue a buf.
-> > > > > 
-> > > > > Perhaps we need a new lock that just protects the wp, and
-> > > > > needs to be only grabbed while mhi_chan->lock is held?
-> > > > 
-> > > > Since we have employed mhi_chan lock to protect the channel and
-> > > > what we are concerned here is that client may queue buf to a
-> > > > disabled or stopped channel, can we check channel state after
-> > > > getting mhi_chan->lock like line 595.
-> > > > 
-> > > > We can add the check after getting write lock in mhi_gen_tre()
-> > > > and after getting read lock again here.
-> > > 
-> > > I'm not sure that is sufficient.  After you unlock to notify the
-> > > client, MHI is going to manipulate the packet count and runtime_pm
-> > > without the lock (648-652).  It seems like that adds additional
-> > > races which won't be covered by the additional check you propose.
-> > 
-> > I don't think read_lock_bh(&mhi_chan->lock) can protect runtime_pm and
-> > the packet count here. Even if we do not unlock, mhi state and packet
-> > count can still be changed because we did not get pm_lock here, which is
-> > used in all mhi state transition function.
-> > 
-> > I also checked all places that mhi_chan->lock is grabbed, did not see
-> > packet count and runtime_pm be protected by write_lock(&mhi_chan->lock).
-> > 
-> > 
-> > If you really don't like the unlock operation, we can also take a new
-> > lock. But I think we only need to add the new lock in two places,
-> > mhi_gen_tre and mhi_pm_m0_transition while mhi_chan->lock is held.
+On Mon, Nov 06, 2023 at 11:42:51AM +0800, Qiang Yu wrote:
+> Some devices(eg. SDX75) take longer than expected (default, 8 seconds) to
+> set ready after reboot. Hence add optional ready timeout parameter and pass
+> the appropriate timeout value to mhi_poll_reg_field() to wait enough for
+> device ready as part of power up sequence.
 > 
-> Mani, if I recall correctly, you were the architect of the locking.  Do you
-> have an opinion?
-> 
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 
-TBH, the locking situation is a mess with MHI. Initially, we happen to have
-separate locks for protecting various operations, but then during review, it was
-advised to reuse existing locks and avoid having too many separate locks.
-
-This worked well but then we kind of abused the locks over time. I asked Hemant
-and Bhaumik to audit the locks and fix them, but both of them left Qcom.
-
-So in this situation, the intent of the pm_lock was to protect concurrent access
-against updating the pm_state. And it also happen to protect _other_things_ such
-as runtime_put, pending_pkts etc... But not properly, because most of the time
-read lock is taken in places where pm_state is being read. So there is still a
-possibility of race while accessing these _other_things_.
-
-For this patch, I'm happy with dropping chan->lock before calling xfer_cb() and
-I want someone (maybe Qiang) to do the audit of locking in general and come up
-with fixes where needed.
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 - Mani
+
+> ---
+>  drivers/bus/mhi/host/init.c     |  1 +
+>  drivers/bus/mhi/host/internal.h |  2 +-
+>  drivers/bus/mhi/host/main.c     |  5 +++--
+>  drivers/bus/mhi/host/pm.c       | 24 +++++++++++++++++-------
+>  include/linux/mhi.h             |  4 ++++
+>  5 files changed, 26 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index f78aefd..65ceac1 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -881,6 +881,7 @@ static int parse_config(struct mhi_controller *mhi_cntrl,
+>  	if (!mhi_cntrl->timeout_ms)
+>  		mhi_cntrl->timeout_ms = MHI_TIMEOUT_MS;
+>  
+> +	mhi_cntrl->ready_timeout_ms = config->ready_timeout_ms;
+>  	mhi_cntrl->bounce_buf = config->use_bounce_buf;
+>  	mhi_cntrl->buffer_len = config->buf_len;
+>  	if (!mhi_cntrl->buffer_len)
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index 2e139e7..30ac415 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -321,7 +321,7 @@ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+>  				    u32 *out);
+>  int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+>  				    void __iomem *base, u32 offset, u32 mask,
+> -				    u32 val, u32 delayus);
+> +				    u32 val, u32 delayus, u32 timeout_ms);
+>  void mhi_write_reg(struct mhi_controller *mhi_cntrl, void __iomem *base,
+>  		   u32 offset, u32 val);
+>  int __must_check mhi_write_reg_field(struct mhi_controller *mhi_cntrl,
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index dcf627b..6cf1145 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -40,10 +40,11 @@ int __must_check mhi_read_reg_field(struct mhi_controller *mhi_cntrl,
+>  
+>  int __must_check mhi_poll_reg_field(struct mhi_controller *mhi_cntrl,
+>  				    void __iomem *base, u32 offset,
+> -				    u32 mask, u32 val, u32 delayus)
+> +				    u32 mask, u32 val, u32 delayus,
+> +				    u32 timeout_ms)
+>  {
+>  	int ret;
+> -	u32 out, retry = (mhi_cntrl->timeout_ms * 1000) / delayus;
+> +	u32 out, retry = (timeout_ms * 1000) / delayus;
+>  
+>  	while (retry--) {
+>  		ret = mhi_read_reg_field(mhi_cntrl, base, offset, mask, &out);
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 8a4362d..a2f2fee 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -163,6 +163,7 @@ int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl)
+>  	enum mhi_pm_state cur_state;
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  	u32 interval_us = 25000; /* poll register field every 25 milliseconds */
+> +	u32 timeout_ms;
+>  	int ret, i;
+>  
+>  	/* Check if device entered error state */
+> @@ -173,14 +174,18 @@ int mhi_ready_state_transition(struct mhi_controller *mhi_cntrl)
+>  
+>  	/* Wait for RESET to be cleared and READY bit to be set by the device */
+>  	ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> -				 MHICTRL_RESET_MASK, 0, interval_us);
+> +				 MHICTRL_RESET_MASK, 0, interval_us,
+> +				 mhi_cntrl->timeout_ms);
+>  	if (ret) {
+>  		dev_err(dev, "Device failed to clear MHI Reset\n");
+>  		return ret;
+>  	}
+>  
+> +	timeout_ms = mhi_cntrl->ready_timeout_ms ?
+> +		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
+>  	ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHISTATUS,
+> -				 MHISTATUS_READY_MASK, 1, interval_us);
+> +				 MHISTATUS_READY_MASK, 1, interval_us,
+> +				 timeout_ms);
+>  	if (ret) {
+>  		dev_err(dev, "Device failed to enter MHI Ready\n");
+>  		return ret;
+> @@ -479,7 +484,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+>  
+>  		/* Wait for the reset bit to be cleared by the device */
+>  		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> -				 MHICTRL_RESET_MASK, 0, 25000);
+> +				 MHICTRL_RESET_MASK, 0, 25000, mhi_cntrl->timeout_ms);
+>  		if (ret)
+>  			dev_err(dev, "Device failed to clear MHI Reset\n");
+>  
+> @@ -492,8 +497,8 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+>  		if (!MHI_IN_PBL(mhi_get_exec_env(mhi_cntrl))) {
+>  			/* wait for ready to be set */
+>  			ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs,
+> -						 MHISTATUS,
+> -						 MHISTATUS_READY_MASK, 1, 25000);
+> +						 MHISTATUS, MHISTATUS_READY_MASK,
+> +						 1, 25000, mhi_cntrl->timeout_ms);
+>  			if (ret)
+>  				dev_err(dev, "Device failed to enter READY state\n");
+>  		}
+> @@ -1111,7 +1116,8 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
+>  	if (state == MHI_STATE_SYS_ERR) {
+>  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
+>  		ret = mhi_poll_reg_field(mhi_cntrl, mhi_cntrl->regs, MHICTRL,
+> -				 MHICTRL_RESET_MASK, 0, interval_us);
+> +				 MHICTRL_RESET_MASK, 0, interval_us,
+> +				 mhi_cntrl->timeout_ms);
+>  		if (ret) {
+>  			dev_info(dev, "Failed to reset MHI due to syserr state\n");
+>  			goto error_exit;
+> @@ -1202,14 +1208,18 @@ EXPORT_SYMBOL_GPL(mhi_power_down);
+>  int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+>  {
+>  	int ret = mhi_async_power_up(mhi_cntrl);
+> +	u32 timeout_ms;
+>  
+>  	if (ret)
+>  		return ret;
+>  
+> +	/* Some devices need more time to set ready during power up */
+> +	timeout_ms = mhi_cntrl->ready_timeout_ms ?
+> +		mhi_cntrl->ready_timeout_ms : mhi_cntrl->timeout_ms;
+>  	wait_event_timeout(mhi_cntrl->state_event,
+>  			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
+>  			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+> -			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
+> +			   msecs_to_jiffies(timeout_ms));
+>  
+>  	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
+>  	if (ret)
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 039943e..d0f9b522 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -266,6 +266,7 @@ struct mhi_event_config {
+>   * struct mhi_controller_config - Root MHI controller configuration
+>   * @max_channels: Maximum number of channels supported
+>   * @timeout_ms: Timeout value for operations. 0 means use default
+> + * @ready_timeout_ms: Timeout value for waiting device to be ready (optional)
+>   * @buf_len: Size of automatically allocated buffers. 0 means use default
+>   * @num_channels: Number of channels defined in @ch_cfg
+>   * @ch_cfg: Array of defined channels
+> @@ -277,6 +278,7 @@ struct mhi_event_config {
+>  struct mhi_controller_config {
+>  	u32 max_channels;
+>  	u32 timeout_ms;
+> +	u32 ready_timeout_ms;
+>  	u32 buf_len;
+>  	u32 num_channels;
+>  	const struct mhi_channel_config *ch_cfg;
+> @@ -330,6 +332,7 @@ struct mhi_controller_config {
+>   * @pm_mutex: Mutex for suspend/resume operation
+>   * @pm_lock: Lock for protecting MHI power management state
+>   * @timeout_ms: Timeout in ms for state transitions
+> + * @ready_timeout_ms: Timeout in ms for waiting device to be ready (optional)
+>   * @pm_state: MHI power management state
+>   * @db_access: DB access states
+>   * @ee: MHI device execution environment
+> @@ -419,6 +422,7 @@ struct mhi_controller {
+>  	struct mutex pm_mutex;
+>  	rwlock_t pm_lock;
+>  	u32 timeout_ms;
+> +	u32 ready_timeout_ms;
+>  	u32 pm_state;
+>  	u32 db_access;
+>  	enum mhi_ee_type ee;
+> -- 
+> 2.7.4
+> 
+> 
+
 -- 
 மணிவண்ணன் சதாசிவம்
