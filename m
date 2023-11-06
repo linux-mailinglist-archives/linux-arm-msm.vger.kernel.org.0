@@ -2,137 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAC0F7E1FF9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 12:28:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B80A7E2035
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 12:41:53 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230009AbjKFL2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 06:28:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50428 "EHLO
+        id S231414AbjKFLly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 06:41:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229974AbjKFL2C (ORCPT
+        with ESMTP id S230018AbjKFLlx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 06:28:02 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05E1E8F
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 03:27:59 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-4079ed65471so32556845e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 03:27:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699270077; x=1699874877; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hgu4VlyFL3wFZ/EhhZcfLZcE5W5jhq1icY2j3A5/BBw=;
-        b=f8V4Oc9h57Rbw5gzqJfsY30rCTFG4Od31vNO4rfy1TkuQIZm9sTANw0H+Nm9Y9jFob
-         Ucy6OfBDwzdbxegaQr8eKVgJ11bC8rRR8e0iFy9AD+eXjXgJQ2tWHq1Cixb+taborx7Z
-         wgYBG13cNCsSuKx/V6zOncIJ70245xZr7O9bq0LgkxpVx7LKzpwgrM58LKhULHxe27qm
-         xgpLoUHErypfmXweX0cdQwArr1nQyBbbCJF1mi6ZV6ap/Xk/naOYZeMAnxy9Rkrb7zk2
-         pG3eflD4MFwSwfslEBYBfFleCCE1qFqKiovbOuRlLXx2KT08sPVYoM7+fKwKN/UF5WVq
-         CJ3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699270077; x=1699874877;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hgu4VlyFL3wFZ/EhhZcfLZcE5W5jhq1icY2j3A5/BBw=;
-        b=i6HOjlt5OyR9BeDxqtDrG12j7Wnf1MqwbPWagH7/pvH5RRqWqGuZJq2ZgCp0MhrhLP
-         SLEtcPS7MYeYvPEkfhrRpWT4TsCZ6tnZu5GsQUEFhPe38W7QW1OCNIUiH+jNPT1Duhhd
-         puer5g4McBkO019N7hAKJDBdJ3W1x8yhdzlqp3eI9DOj2FumX3+AmpuWMQo+fIDiOd7L
-         OEvSj9vgaKtOAMwDr5HYCGDH/YTNXAjGeXq9B4XIIS21WDKn/pj8qilwQDiply77KO2j
-         LU8fLoQZfdVm0qj9/alOAyodH2BMjme5GcVEKgBDHzS4cDI8s6I+c6kVKQdBVwFkZ8PP
-         /neg==
-X-Gm-Message-State: AOJu0YwRFxqbnjhpmWh2JY4IKoW/VEkyVRQISmmIEtGMyg0WhQMyP8wO
-        n9zzkSw4ZXU+HlzIL7+OZdo/sg==
-X-Google-Smtp-Source: AGHT+IFOQ9Km+YPXN9cfucx1lHK5kUvP6h20DdURvLEgxsfs7t9FuitRV6Teu6xK7zypOHLy+Wm+iw==
-X-Received: by 2002:a05:600c:5488:b0:401:2ee0:7558 with SMTP id iv8-20020a05600c548800b004012ee07558mr24505156wmb.32.1699270077365;
-        Mon, 06 Nov 2023 03:27:57 -0800 (PST)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id f21-20020a7bcc15000000b0040773c69fc0sm11723228wmh.11.2023.11.06.03.27.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 03:27:56 -0800 (PST)
-Message-ID: <ee3f92c1-afb9-482a-9d37-d86a05f8eb8b@linaro.org>
-Date:   Mon, 6 Nov 2023 11:27:55 +0000
+        Mon, 6 Nov 2023 06:41:53 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48354BE;
+        Mon,  6 Nov 2023 03:41:50 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A65pNTM022945;
+        Mon, 6 Nov 2023 11:41:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=gUDEE2dz5GLAemOBWyVoCMY+wl8Y9k+DBPKEwhf8QJY=;
+ b=TuZUH62ib6Q847URwIBJF1gV5x8rzkFhfoR+vXOCSYd1lhDX0xiLMQeBM2GfQBi3BOxM
+ 9CGryYjw8rlnDXoropjC59ucXYgwzRL9nGUnZcKsYeMY7RBIwYHHtiqTaVjy/avlvmKC
+ 6fl6T26bhD/hC918vZbKaOMqZdlS3i+z2XAVQxKoLbZCoOzSOANeMNi+cqS4T8kYCJTt
+ a78/zymUY8tT1HPkL3xWvY2hL3O9t1zmaJDUIxl/9zLmL2WDYlO5dpqXbZeGFblJtT+A
+ bBTKhsO3AhrnhcBu+DyZSPXQiRgfGhFIUYuRvWmWzJQQzex7Bj9bknmW8Qcwy/Vk6f9S sw== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5ernkyxm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Nov 2023 11:41:46 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6Bfjn4027388
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Nov 2023 11:41:45 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
+ 2023 03:41:41 -0800
+Message-ID: <af05dbdb-21bf-34f0-e9b3-9f6b9a0c3115@quicinc.com>
+Date:   Mon, 6 Nov 2023 17:11:38 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: External display on the x13s?
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
+ rb3 board
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Brian Masney <bmasney@redhat.com>,
-        linux-arm-msm@vger.kernel.org
-References: <ZUUrMm1Q/PI5xv6a@brian-x1>
- <181bdfdc-01ef-4e60-ad62-623884cb3d6a@linaro.org>
- <20231103185309.GW3553829@hu-bjorande-lv.qualcomm.com>
- <a3c7b627-ca22-43ce-89f8-48a26c5df34f@linaro.org>
- <ZUidVUomjf8GMzrG@hovoldconsulting.com>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <ZUidVUomjf8GMzrG@hovoldconsulting.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Komal Bajaj <quic_kbajaj@quicinc.com>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_nainmeht@quicinc.com>
+References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
+ <20231103184655.23555-3-quic_kbajaj@quicinc.com>
+ <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
+ <1830fc44-7bac-4db5-af59-112410d73a64@linaro.org>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <1830fc44-7bac-4db5-af59-112410d73a64@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6JF5azQjTaONYIU5iqCi5xWindgHQpdS
+X-Proofpoint-GUID: 6JF5azQjTaONYIU5iqCi5xWindgHQpdS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-06_09,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 mlxlogscore=999 malwarescore=0 spamscore=0
+ mlxscore=0 suspectscore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
+ definitions=main-2311060096
+X-Spam-Status: No, score=-5.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/11/2023 08:01, Johan Hovold wrote:
-> On Sat, Nov 04, 2023 at 02:54:45PM +0000, Bryan O'Donoghue wrote:
->> On 03/11/2023 18:53, Bjorn Andersson wrote:
->>> On Fri, Nov 03, 2023 at 05:37:36PM +0000, Bryan O'Donoghue wrote:
->>>> On 03/11/2023 17:17, Brian Masney wrote:
->>>>> I have Fedora 39 running on my x13s (with some minor tweaks to the grub
->>>>> BLS boot entry) and it has working GPU, sound, battery status, etc. I
->>>>> see the external display port in the DTS, however it's not working for
->>>>> me. I have pd-mapper and qrtr installed. Does anyone have any
->>>>> suggestions for enabling that? dmesg doesn't give any useful
->>>>> information.
+
+On 11/5/2023 6:38 PM, Krzysztof Kozlowski wrote:
+> On 03/11/2023 23:22, Dmitry Baryshkov wrote:
+>> On Fri, 3 Nov 2023 at 20:49, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>>>
+>>> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
+>>> platform. QCM6490 is derived from SC7280 meant for various
+>>> form factor including IoT.
+>>>
+>>> Supported features are, as of now:
+>>> * Debug UART
+>>> * eMMC (only in IDP)
+>>> * USB
+>>>
 > 
->>>> Run gnome and run the display @ < 2k
+> ...
 > 
->>> Brian's question makes it seem like he doesn't have any display, your
->>> <=2k only relates to the display artifacts that you have, right?
+>>> +
+>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+>>> new file mode 100644
+>>> index 000000000000..01adc97789d0
+>>> --- /dev/null
+>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+>>
+>> I have mixed feelings towards this file. Usually we add such 'common'
+>> files only for the phone platforms where most of the devices are
+>> common.
+>> Do you expect that IDP and RB3 will have a lot of common code other
+>> than these regulator settings?
 > 
->> I had an idea Gnome was working but lxqt was not, testing this a bit I
->> get the second display up if the display port is connected to the port
->> furthest away from the screen, not the port closest to the screen.
+> I agree here. What exactly is common in the real hardware between IDP
+> and RB3? Commit msg does not explain it, so I do not see enough
+> justification for common file. Just because some DTS looks similar for
+> different hardware does not mean you should creat common file.
+
+@Dmitry/@Krzysztof,
+
+Thank you for reviewing the RFC, we wanted to continue the
+suggestion/discussion given on [1] , where we discussed that this
+qcm6490 is going to be targeted for IOT segment and will have different
+memory map and it is going to use some of co-processors like adsp/cdsp 
+which chrome does not use.
+
+So to your question what is common between RB3 and IDP, mostly they will
+share common memory map(similar to [2]) and regulator settings and both 
+will use adsp/cdsp etc., we will be posting the memory map changes as 
+well in coming weeks once this RFC is acked.
+
+
+Thanks,
+Mukesh
+
+[1]
+https://lore.kernel.org/linux-arm-msm/d97ebf74-ad03-86d6-b826-b57be209b9e2@quicinc.com/
+
+[2]
+commit 90c856602e0346ce9ff234062e86a198d71fa723
+Author: Douglas Anderson <dianders@chromium.org>
+Date:   Tue Jan 25 14:44:20 2022 -0800
+
+     arm64: dts: qcom: sc7280: Factor out Chrome common fragment
+
+     This factors out a device tree fragment from some sc7280 device
+     trees. It represents the device tree bits that should be included for
+     "Chrome" based sc7280 boards. On these boards the bootloader (Coreboot
+     + Depthcharge) configures things slightly different than the
+     bootloader that Qualcomm provides. The modem firmware on these boards
+     also works differently than on other Qulacomm products and thus the
+     reserved memory map needs to be adjusted.
+
+     NOTES:
+     - This is _not_ quite a no-op change. The "herobrine" and "idp"
+       fragments here were different and it looks like someone simply
+       forgot to update the herobrine version. This updates a few numbers
+       to match IDP. This will also cause the `pmk8350_pon` to be disabled
+       on idp/crd, which I belive is a correct change.
+     - At the moment this assumes LTE skus. Once it's clearer how WiFi SKUs
+       will work (how much of the memory map they can reclaim) we may add
+       an extra fragment that will rejigger one way or the other.
+
+     Signed-off-by: Douglas Anderson <dianders@chromium.org>
+     Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+     Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+     Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+     Link: 
+https://lore.kernel.org/r/20220125144316.v2.3.Iac012fa8d727be46448d47027a1813ea716423ce@changeid
+
+
 > 
-> Works fine on both ports here so that could also indicate a
-> (configuration) problem with your user space.
-
-Maybe. I've apt update/apt upgrade -y as at ~ 30 minutes ago and I see 
-gnome-shell crashing with the second port -> nearest the screen.
-
-Not the mutter related backtrace though.
-
-kde plasma seems happy with both ports.
-sway uses both ports.
-
-Looks like something specific to gnome shell.
-
-gdm doesn't show anything in journalctl but does appear to restart
-sddm is fine but, then again displays only on the laptop screen.
-
-
-> The port closes to the screen is the second port ("Unknown20-2", "USB-2"
-> or soon "DP-2"), which may or may not be relevant.
+> Best regards,
+> Krzysztof
 > 
->> Plugging the cable in and out at the gdm prompt seems to crash gdm.
-> 
-> I don't use Gnome, but that sounds like it could be related to the
-> mutter issue Brian mentioned. Have your verified that you have that fix?
-
-
-> Try booting to a VT console (stop whatever display server you are using)
-> and then plug in the USB connector in order to confirm that the issue is
-> in user space. You should see the console mirrored on your external
-> display.
-
-Works.
-
-Looks gnome shell specific to me.
-
