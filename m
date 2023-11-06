@@ -2,163 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 037717E2ADB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 18:22:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 374DC7E2B90
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 19:02:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230086AbjKFRWG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 12:22:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45170 "EHLO
+        id S231773AbjKFSCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 13:02:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbjKFRWG (ORCPT
+        with ESMTP id S229567AbjKFSCM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 12:22:06 -0500
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDC4E1BC;
-        Mon,  6 Nov 2023 09:22:02 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1699291320; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=TbvFJH4XprGZfb2hvMmc5ctU8eEq21Oh5g6LOJJdkowBZupRkiv26u49ZCsj8DgBSq
-    lR76qWA/4/oNjZAyoYvTNiBKmwXDz+4uH76Qs/Q+Ar701gGHy+XZCjYwAv+DqqMsazyR
-    NGlC0OjUpb/BlMo85ojxyorVsLhFo2P3BlYSwOJzDXxMpp4dYycizQSQ5LUG9uMRHuH8
-    d4c+Jv3BliIGQcZITW/HxcUmao37YJS2COuT7+Dh3pKFb0xhDpAJzQFyhTOBZUDnJXKW
-    gf+/vdzEDxfhGOi9bSNv99Pwp2r/l7I6loK9sTSRnOikw/YwkpgcoxIXRJqzKUMq8qPV
-    jxmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1699291320;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=xhpTO12snhTyUAudCCBknK/y5KS1BxQ8Az7BF7pqWV8=;
-    b=qrYBKbbHO6JObFJMSAryUKngOdRg+UlGqO46xU8f1TkEFdIZib1+D9u+3UOmK1VQG8
-    K2Gh9HJhsV1EOtDE0iuMmEE2eENob4mYuFIeNnfF4qLIV62gDOZQgSAP/1s1ioih4EKT
-    vaejLZHJwINN3ako5nOnZTRF+XTCgvtVhkZbHDzZ5JxsBaQFXBx9LaDclvDfAv1hgam6
-    Dt71wg+OV67MufuQvA4zW3bz+m5nrjralo4D7rc02uZ2tRIA1rcsYMeYX2FAAW33CxTa
-    LGVTPwWNKLA8bWHSurP3VEaN7/FrbvAwr8w/XzhcG7lmJAP06v5WKUCFVV7HsgQwJwtc
-    vJmQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1699291320;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=xhpTO12snhTyUAudCCBknK/y5KS1BxQ8Az7BF7pqWV8=;
-    b=LXNAN7IKiWGOs2CPJoHeQzmNma/6JEW6U+IX7NYsP9CXTYkswXoftiSz8wSYupCpvM
-    YjcKAHbST0itDn8+70faXGYSPAdUl2l3L8T+GCVUx3/BnHxi9j1LnwKNKDJCYCBxBJiR
-    4nQTyC5wS0bvcZZ5txQZ9rEUznb2V+pAJvguLKFNuVw3XVffCjmS2Mwa5VYsYwaGYUrR
-    6x+lMwO8w+SVe+SQ7u57ca4UBiouHkF+iCKXX6BGzCDH6GRqqlpN9ljPonfGfDfQ4J58
-    6kM3HMn6pSqYOGYtwxvfdNA2BZCgFUjT3rEnE8I7/8FT9mXSvteCjF6EpxK3rjtNYNlI
-    ZvbQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1699291320;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=xhpTO12snhTyUAudCCBknK/y5KS1BxQ8Az7BF7pqWV8=;
-    b=flX/bOirgwI//BSG7vd8VfmRD6zPXJC4wHgnejIbeEYvO3dNRud3C03D0a1aE9kjDj
-    e6mO8fPfqgAm1drbZbDQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z2L1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.9.1 DYNA|AUTH)
-    with ESMTPSA id Lbb8e2zA6HLxXHV
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 6 Nov 2023 18:21:59 +0100 (CET)
-Date:   Mon, 6 Nov 2023 18:21:53 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Dang Huynh <danct12@riseup.net>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 6 Nov 2023 13:02:12 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC49C1BF
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 10:02:09 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40907b82ab9so34317595e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 10:02:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699293728; x=1699898528; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dX0GZem93PHXl0XM4Q6Xj370jAqGiUXq5pREgYEwcRo=;
+        b=yfk7tp2gAM5B8a9fvW5WSyJKwfcx9eXAa1MzjB9j9bC/mX35vwkedNQI9r0X5TgRKQ
+         C19pGdt6mBU5JY9IVAOhRVhQG3lDC8UTadVx+/l+IDvvEO10Lr3hwzDYNkVnR2bFJeFe
+         yaGUdQYM50tyOIaQpIDutC2Pj4a+C5s5jSgNPX6ATQo+OPwZifjZKrinUQkybODrzv7K
+         fzlYyQOeXWVesYi+0bZegvCXHRr7xCLI4ElTEcz2dPtm1/HVotXIABbdBhZLj1qIvasM
+         +tC95ri5w32Tjwg/Aj1YvhyGN4apfZI88Im+mHIp95PCw/CFAbEqJaFU0BUl4w5QZT3A
+         vF4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699293728; x=1699898528;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dX0GZem93PHXl0XM4Q6Xj370jAqGiUXq5pREgYEwcRo=;
+        b=IQ6C8JhXORF5ofB5XGSrDzOB/YaTLzjr7CS2sKQGCHn2VY0o9mghvMQklBVYSLT+Sd
+         3/nsyJDrtsqgqFa3mfWyUvwoNsV7k23uxSp1951nTcXIkugzuyToPLLvwjgVPPNtSXIA
+         ecmG9xuC3sgY8l8Q8n44aA5qe9Dra3GR6Z8jW6b9XG/tNjYoQXXAZTGNUkVzytQCatz2
+         OUdpLwhEmtiQIpnq+HyK8fluYTV4wIX9BOL4tAK/Y8PHiS6gWmgDuML/X50ajYFEmcuX
+         JIHTsPAiqtq8tZtZCYMe7cfnQ0yhdCLe8ng844i9AlUnQ40BvWFoKoBZJyv34Y/CX3dB
+         gy9A==
+X-Gm-Message-State: AOJu0YwkGxdyU9xm3dZd69gIYfLqUSj4W9d3UzlgbXJbURUsjBnBtWtZ
+        uSELIpMq4bRxMuJSRaGIwWazIw==
+X-Google-Smtp-Source: AGHT+IFI3uYj3jbLig7WRrjMxqSHLgF77U2VtKT7UMc6nlZE6jNjmuK4KvC6oQlR8iAh42pTlVHfFg==
+X-Received: by 2002:a05:6000:2a9:b0:32d:a3cb:4059 with SMTP id l9-20020a05600002a900b0032da3cb4059mr219399wry.24.1699293728188;
+        Mon, 06 Nov 2023 10:02:08 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id o12-20020a5d4a8c000000b0032fbd0c7d04sm210530wrq.55.2023.11.06.10.02.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Nov 2023 10:02:07 -0800 (PST)
+Message-ID: <4e512ab0-f241-4826-8d8d-670c606ec99b@linaro.org>
+Date:   Mon, 6 Nov 2023 19:02:05 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550-qrd: add sound card
+Content-Language: en-US
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: Add PM8937 PMIC
-Message-ID: <ZUkgsW4pyojMBtD9@gerhold.net>
-References: <20231106-pm8937-v1-0-ec51d9eeec53@riseup.net>
- <20231106-pm8937-v1-7-ec51d9eeec53@riseup.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231106-pm8937-v1-7-ec51d9eeec53@riseup.net>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230612173758.286411-1-krzysztof.kozlowski@linaro.org>
+ <17535d7a-73e2-465b-941c-99db4092327a@quicinc.com>
+ <7371257e-3fb0-4538-ad0f-07bd0a827120@linaro.org>
+ <16c03446-cc1c-4f71-8c0d-fe6c6f1bdfd0@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <16c03446-cc1c-4f71-8c0d-fe6c6f1bdfd0@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 06, 2023 at 07:08:35PM +0700, Dang Huynh wrote:
-> The PM8937 features integrated peripherals like ADC, GPIO controller,
-> MPPs, PON keys and others.
+On 06/11/2023 18:07, Elliot Berman wrote:
 > 
-> Add the device tree so that any boards with this PMIC can use it.
 > 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> ---
->  arch/arm64/boot/dts/qcom/pm8937.dtsi | 202 +++++++++++++++++++++++++++++++++++
->  1 file changed, 202 insertions(+)
+> On 11/5/2023 4:55 AM, Krzysztof Kozlowski wrote:
+>> On 04/11/2023 00:10, Elliot Berman wrote:
+>>> Hi Krzysztof,
+>>>
+>>> On 6/12/2023 10:37 AM, Krzysztof Kozlowski wrote:
+>>>> Add the sound card node with tested playback over WSA8845 speakers and
+>>>> WCD9385 headset over USB Type-C.  The recording links were not tested,
+>>>> but should be similar to previous platforms.
+>>>>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>>
+>>>> ---
+>>>>
+>>>> Bindings for the sound card were not sent to LKML. Work-in-progress is
+>>>> available here:
+>>>> https://github.com/krzk/linux/tree/n/audio-wsa884x-on-top-of-wip-sm8450-audio-on-next
+>>>
+>>> Do you plan to send the bindings up? I can send this patch out if you don't have the cycle:
+>>>
+>>> https://github.com/krzk/linux/commit/f678691570386a11eb75dceca7291b4e05d981da
+>>
+>> The patch itself does not make sense without dependencies. It should be
+>> sent after dependencies are sent.
+>>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/pm8937.dtsi b/arch/arm64/boot/dts/qcom/pm8937.dtsi
-> new file mode 100644
-> index 000000000000..6091d6938885
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8937.dtsi
-> @@ -0,0 +1,202 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023, Dang Huynh <danct12@riseup.net>
-> + */
-> +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +#include <dt-bindings/input/linux-event-codes.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +
-> [...]
-> +&spmi_bus {
-> +	pmic@0 {
-> +		compatible = "qcom,pm8937", "qcom,spmi-pmic";
-> +		reg = <0x0 SPMI_USID>;
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		pon@800 {
-> +			compatible = "qcom,pm8916-pon";
-> +			reg = <0x800>;
-> +			mode-bootloader = <0x2>;
-> +			mode-recovery = <0x1>;
-> +
-> +			pm8937_pwrkey: pwrkey {
-> +				compatible = "qcom,pm8941-pwrkey";
-> +				interrupts = <0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_POWER>;
-> +			};
-> +
-> +			pm8937_resin: resin {
-> +				compatible = "qcom,pm8941-resin";
-> +				interrupts = <0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
-> +				debounce = <15625>;
-> +				bias-pull-up;
-> +				linux,code = <KEY_VOLUMEDOWN>;
+> I think the patch makes sense now that the v6.6 sm8550-mtp.dtb is using the compatible:
 
-Please move the linux,code into the board-specific part and make this
-status = "disabled" by default, like in the other PMIC dtsi files.
+The dependencies were not sent. Still. But sure, I can send the patch,
+why not.
 
-One could theoretically assign any other function to this key. Also,
-some devices don't have this hooked up at all.
+Best regards,
+Krzysztof
 
-Thanks,
-Stephan
