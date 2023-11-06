@@ -2,126 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D19147E1BAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 09:08:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 912C07E1BDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 09:22:15 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230173AbjKFIIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 03:08:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37042 "EHLO
+        id S229563AbjKFIWP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 03:22:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229803AbjKFIIK (ORCPT
+        with ESMTP id S231168AbjKFIWO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 03:08:10 -0500
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 980B09B;
-        Mon,  6 Nov 2023 00:08:07 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 0299A5C01E2;
-        Mon,  6 Nov 2023 03:08:07 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute3.internal (MEProxy); Mon, 06 Nov 2023 03:08:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mai.rs; h=cc
-        :content-type:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm2; t=1699258086; x=1699344486; bh=aa
-        lE5VObBiIUcCq3ni6lb0qhFxT4MrqRCVeFdCozL7A=; b=BHNqdNH7Ch5AkyRktE
-        +SoeXLGzPREraJwsA9w383xPI/wTYEhW3Ehac8H1rlpaNfgjFrCv2/yLeUEsg/0u
-        lBHvlHiR5hcqoVCfTFqqFk3pvfoNsyF2WhJKE/iA8Rug9R1G1k2v1lJTFnaYwNJ6
-        /7sV0j38HQq4rEqQ5o9jbPSnmjKyWhM/mAFkQtuK0W42bSih5GQNmB2QnDrBZgUX
-        c66+4yRw1R3RjuryhzH61scTztJaah4oplN1kbxrHx8d+MraAovCuNml/9sAEghl
-        LLoH5b53NfsCoqUSGiO9qkmMYI5ZNOLMlXI+KeJ/1dNCm347RQSk5lk/e4dLLRx6
-        gzsQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:content-type:date:date
-        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm3; t=1699258086; x=1699344486; bh=aalE5VObBiIUc
-        Cq3ni6lb0qhFxT4MrqRCVeFdCozL7A=; b=E0kwt/84I34ZUbtxVKtvK8EhXywSP
-        vrlipddahJUgUMwc66j6yWP5ixeRUoAO+g3oW65js5HTKM1PZCix9biDWWH4a8Fy
-        Nci7MAHDK9dBP+8LNU1SGqbNlFmJe1ZvmxoSvQTY18oYgjZKzLaiYmj199qtUu1b
-        Tw8SU0jgju9my4C69ZUWqmlmS3Q/HXDps+gUv1w4941nl4KPW+MbYqEQqmo9/bt2
-        t0wK3z8dqsY0tDKakHSnMxU7MHDr2CKXdWWPQFwR3ehFEYf4Hl1JNlQbyiu7HTfs
-        cGxeb4HpUVyouGwWH418SQYrop/UpSAKUobKzv58E5R0tlCX0DgFUbVQA==
-X-ME-Sender: <xms:5p5IZc58ISmHJnKWccxyMICTyiQwMvOxGQUEmGwAQCA_WxohMqwF4Q>
-    <xme:5p5IZd5TQZOWkicW4MFX0o4ZtDEKNp4YqIy1u5YOujSKkqLu2FYokfJiJtZEarwku
-    LYaha7iyPCcPlSA2g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddufedgudduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedfuehr
-    higrnhhtucforghirhhsfdcuoegsrhihrghnthesmhgrihdrrhhsqeenucggtffrrghtth
-    gvrhhnpeekgeeivdehkefhleelueduudevfeeujedvkeegtddvhfffieelgefgiefhiedu
-    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrh
-    ihrghnthesmhgrihdrrhhs
-X-ME-Proxy: <xmx:5p5IZbeBMjAtubcr0sDq7cNRySJ2efXrSBfI-ce4uFQwX66BP9FS-w>
-    <xmx:5p5IZRIRo3GEpBH26LMV1jyq1vtFLsgtv3oSXy5AGFmfkNotvaTnag>
-    <xmx:5p5IZQI1oHjYJNhD_KvSFSQZsd_seQA8lcR_BYQMZS_XdNb1fO5n-Q>
-    <xmx:5p5IZdALZja0hkIfq9i1--WPe6DkBQuNQqO6_ahSZnR7qZdxLhUuRg>
-Feedback-ID: i891b436e:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id A831715A0091; Mon,  6 Nov 2023 03:08:06 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-1108-g3a29173c6d-fm-20231031.005-g3a29173c
+        Mon, 6 Nov 2023 03:22:14 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCC03E1
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 00:22:11 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-40836ea8cbaso29666465e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 00:22:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699258930; x=1699863730; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/s4WaicY3zcmDpasJgFxCNVTufL2PCvIDsFygw7p9Rg=;
+        b=DCC3iFOfrjwQQAUvTy+eClsmYYsvrujqVGcY6saN9L/lc/vLhG5NDnW5czUvoCDx5r
+         Cqk1+qqn9AQ0ahjd75qUvfHwROPU5C1r0NaHWLTvpOVOqlDP1CawBqN5IHzY9cMwW1jy
+         PICyKDOQz7gr4iam/aiSv6J/XsAaUBa7QvJGFJ0HnVBK07NXGwxuEnJpiHm455VZZNjZ
+         audyA1CrJFiiyX7Fw4YOfp1Mu8SPHaTcrXjF7aZ7L6mdoB8mTbC0ZnPDKxG8ldiiU0ot
+         Fw2O6DdLhdoYMu/WD9N6eJ3QLvO0tlp/CEHfE7f+dylD96HIajku+EYTKGg1V4LzAj3S
+         0gjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699258930; x=1699863730;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/s4WaicY3zcmDpasJgFxCNVTufL2PCvIDsFygw7p9Rg=;
+        b=IezRz2aASPjnQM0Y9JKm5P2pxaZNuEc9sDPSoGBQlzupqgaSxkYnIxVWu/0WNbeoef
+         1PKT/GtTJhuerwlT4LnF8NeWQMj7+zE8KfYrluzggFZu3AcTY9Q7YLDF8fJwak7Bn+Dd
+         jl/2ElSXVdq8WP3CXbD7utTP5XEfrJVrDBuZk72EAjL0g/ZEAiGoLiqMTxHMf4p2BbRO
+         /PzyJsrYADMRrdTQ5tFBhTtHR4qbbdQyE7ow+wp7NJQrROO6y9vtTs3r4sLujGOkOUER
+         mipyaJHzOJaN1wxAoDJe4e0ar3iJKLfD8OCBeiWxtQHaqbEVJhXjD5Mj/aRkfnt+3B4j
+         aQJw==
+X-Gm-Message-State: AOJu0Ywgx1FgnpWvQl5ICADSO1rXogUYQIWOVpfxfwkaeoC7MTFwYP0d
+        GKX4Ie/zv8j6uwMoxAvDREo/MQ==
+X-Google-Smtp-Source: AGHT+IHGIutU89DMAyPjuX6YzPJhPUpKjZKrTeyeB6DH5gewWgxNEUAqJ+POwfZVryYnI7yGSoY/fQ==
+X-Received: by 2002:a05:600c:4f02:b0:405:3885:490a with SMTP id l2-20020a05600c4f0200b004053885490amr23464392wmq.0.1699258930105;
+        Mon, 06 Nov 2023 00:22:10 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:7a54:34e:8001:fb7d? ([2a01:e0a:982:cbb0:7a54:34e:8001:fb7d])
+        by smtp.gmail.com with ESMTPSA id o13-20020a05600c4fcd00b0040588d85b3asm11305092wmq.15.2023.11.06.00.22.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Nov 2023 00:22:09 -0800 (PST)
+Message-ID: <9f5f317a-4f3a-4bdd-b640-b75858bd79d4@linaro.org>
+Date:   Mon, 6 Nov 2023 09:22:08 +0100
 MIME-Version: 1.0
-Message-Id: <8a2743f5-86e1-45ae-b9b3-85b788749686@app.fastmail.com>
-In-Reply-To: <1ea6c498-09bc-4491-a083-37fa242766c8@linaro.org>
-References: <20231105204759.37107-1-bryant@mai.rs>
- <20231105204759.37107-3-bryant@mai.rs>
- <1ea6c498-09bc-4491-a083-37fa242766c8@linaro.org>
-Date:   Mon, 06 Nov 2023 09:07:44 +0100
-From:   "Bryant Mairs" <bryant@mai.rs>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        "Dmitry Torokhov" <dmitry.torokhov@gmail.com>,
-        "Linus Walleij" <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-input@vger.kernel.org
-Subject: Re: [PATCH 2/7] dt-bindings: arm: qcom: Document samsung,milletwifi device
-Content-Type: text/plain
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFC 2/8] arm64: dts: qcom: add initial SM8650 dtsi
+Content-Language: en-US, fr
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org>
+ <20231025-topic-sm8650-upstream-dt-v1-2-a821712af62f@linaro.org>
+ <691f1781-906c-411f-90f6-e1cc71062253@linaro.org>
+ <e86fa7b4-635c-4fd5-9b3c-ade96ddf5c0f@linaro.org>
+ <30b4c424-39ee-7ae6-faf2-c5ba32dda07f@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <30b4c424-39ee-7ae6-faf2-c5ba32dda07f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sending again in plain text, sorry about that!
+On 02/11/2023 14:32, Konrad Dybcio wrote:
+> 
+> 
+> On 02/11/2023 11:54, Neil Armstrong wrote:
+>> On 25/10/2023 11:01, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 10/25/23 09:47, Neil Armstrong wrote:
+>>>> Add initial DTSI for the Qualcomm SM8650 platform,
+>>>> only contains nodes which doesn't depend on interconnect.
+>>>>
+>>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>>> ---[...]
+>>>
+>>>> +            CLUSTER_SLEEP_1: cluster-sleep-1 {
+>>>> +                compatible = "domain-idle-state";
+>>>> +                arm,psci-suspend-param = <0x4100c344>;
+>>> I think this parameter signals the AOSS to attempt system
+>>> suspend and CLUSTER_SLEEP is a shallower, separate state.
+>>
+>> OK, so downstream call this state "APSS_OFF" and the other state
+>> calling 0x41000044 "CLUSTER_PWR_DN"Well, the name APSS_OFF suggests that all clusters go offline so
+> that would be a bit more complex than a simple "cut power to this
+> cluster"
+> 
+> 
+>> On sm8[345]0 and qdu1000/sm4450 there's both states called CLUSTER_SLEEP_0 and CLUSTER_SLEEP_1,
+>> and referenced into CLUSTER_PD cluster power domain.
+>>
+>> I assume this is the same as SM8550, so what's the issue ?
+> It's just that we've been naming it in the most generic way possible
+> and that it could be more descriptive, especially given its
+> correlation with different things
 
------
-That's a good question. Note that there is also samsung-matisselte, so I wasn't certain what the policy was on naming, which is why I deferred to the manufacturer naming scheme, which seems to be the most common approach.
+Ack, will change the naming
 
-On Mon, Nov 6, 2023, at 08:37, Krzysztof Kozlowski wrote:
-> On 05/11/2023 21:46, Bryant Mairs wrote:
-> > Add binding documentation for Samsung Galaxy Tab 4 8.0 Wi-Fi
-> > tablet which is based on Snapdragon 400 (apq8026) SoC.
-> > 
-> > Signed-off-by: Bryant Mairs <bryant@mai.rs>
-> > ---
-> >  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > index 88b84035e7b1..c66980b79f59 100644
-> > --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> > @@ -156,6 +156,7 @@ properties:
-> >                - huawei,sturgeon
-> >                - lg,lenok
-> >                - samsung,matisse-wifi
-> > +              - samsung,milletwifi
+Neil
+
 > 
-> Not millet-wifi like the other one?
-> 
-> Best regards,
-> Krzysztof
-> 
-> 
+> Konrad
+
