@@ -2,119 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56E4F7E2985
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 17:14:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AE497E2975
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 17:13:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232625AbjKFQOx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 11:14:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42570 "EHLO
+        id S231881AbjKFQNE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 11:13:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232341AbjKFQOw (ORCPT
+        with ESMTP id S229642AbjKFQND (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 11:14:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E721BC
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 08:14:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1699287243;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=yPJHKqEFUKVnalICwN8MsQZa6/E9PJ2FebhT0bEQtfw=;
-        b=Fq2OJw4e2+8R+Vcu19KrZCT8ID51DdO36fV4IS388b54VhdUqGYBm2WFLiaMYPC4AeEWLF
-        FTfojqbJm1EgC70PcyGj/ZvNqOanwe4443Biui0y2beFmvVX/iqBwSC4afFS+zACWQnT/r
-        jkIPITURDD+55tShtR0XiEyfccKEOYw=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-447-W8srCpWGNHKvDabo5bddMA-1; Mon, 06 Nov 2023 11:14:00 -0500
-X-MC-Unique: W8srCpWGNHKvDabo5bddMA-1
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-66d08175882so54820406d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 08:14:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699287239; x=1699892039;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yPJHKqEFUKVnalICwN8MsQZa6/E9PJ2FebhT0bEQtfw=;
-        b=D6biv+3qEziGayYfbhf/XofbPyHSHuEPyfPP40GNONLSGIJPe5P9AXMuVqVsVdi2Xe
-         h18C4y7VK4l8qLOuLV0fgsdq5IsbiWEOYSZLrJLfjloOIv8TcA8QzEW/n991arPbz8v9
-         zNjN8k0Jt0nayrLxhLxJOFDS8YkZ7H8V2YerebxUDq8UiaRfJWxHHQPSR0zCB4x8BONF
-         kJQUVJqHHPDWGl27A4WTR8rP9fkp7cXMJ1ScObBn5Gp7d9RKzad6WlwZIoWBBmLtqDwR
-         1h3rNEB/ZW6pZr+xtM2cfMHLPKUgl2YqqKUP6dvQz/qLLuwOE1ND3vmVk6a/mQkz8+yT
-         8Onw==
-X-Gm-Message-State: AOJu0Yz35Xg7Sa6c6Q+MPOMiPvgy3UsHm6JVMV2a4yztG0+rlinrLwem
-        QHjPfNgvL/6HHcUFyWYzOpOYU2UPyT90lvPRyjxZHMfY5goXKMG+MNuZLyfobl2TNsk4R/5EGjB
-        UdYgN1lqrMNw5cOX4gQsaISTdHgJfh+dIJw==
-X-Received: by 2002:a0c:cd0f:0:b0:66d:6544:8eae with SMTP id b15-20020a0ccd0f000000b0066d65448eaemr28129961qvm.34.1699287239347;
-        Mon, 06 Nov 2023 08:13:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGMXunA6xJxQocRzTNWGiaAV+55AniCYdWyCNaLtfV6kmgS9xOFjwUX2TapYqXLNmbhN2evpg==
-X-Received: by 2002:a0c:cd0f:0:b0:66d:6544:8eae with SMTP id b15-20020a0ccd0f000000b0066d65448eaemr28129942qvm.34.1699287238965;
-        Mon, 06 Nov 2023 08:13:58 -0800 (PST)
-Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id v1-20020a0cc601000000b0066d05ed3778sm3556049qvi.56.2023.11.06.08.13.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Nov 2023 08:13:58 -0800 (PST)
-Date:   Mon, 6 Nov 2023 11:13:56 -0500
-From:   Brian Masney <bmasney@redhat.com>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     Johan Hovold <johan@kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: External display on the x13s?
-Message-ID: <ZUkQxMlb7fy0kNRE@brian-x1>
-References: <ZUUrMm1Q/PI5xv6a@brian-x1>
- <181bdfdc-01ef-4e60-ad62-623884cb3d6a@linaro.org>
- <20231103185309.GW3553829@hu-bjorande-lv.qualcomm.com>
- <a3c7b627-ca22-43ce-89f8-48a26c5df34f@linaro.org>
- <ZUidVUomjf8GMzrG@hovoldconsulting.com>
- <ee3f92c1-afb9-482a-9d37-d86a05f8eb8b@linaro.org>
+        Mon, 6 Nov 2023 11:13:03 -0500
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F5391BC;
+        Mon,  6 Nov 2023 08:13:01 -0800 (PST)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6391DC433C7;
+        Mon,  6 Nov 2023 16:12:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1699287180;
+        bh=0H1dc6HEmRBipKy8E5yk0M2LZ1eX6eHdMCL4x9+kr4s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DyNL/QwqDDRkV01QwKcgdEd2Bu5G+zzEPC9ycp0QdDGw0GJdSh97VsFF/AI7QejaL
+         0q6UEbtp1zR1QbBAy2qlRk5TKstR6bNPc2moLb9PJ/x3MBSuhGX0F8HmPpUTvrF6Qe
+         hVZkF5APmmAS5dA4jqBb5qRAnNgYXm3k0+BOpbq/Vc1xqEKDIM9brLzTsOs3DpNFLZ
+         HItclxvXMpEbZJ9rlwtHNqnsq7IrEKn/nPQ24uybJbRGxVU6x9aU+sCtf8mzYexSCP
+         0UiZTwteOPzRRJ720P4+ciJjj+Xe29LV3Kgw1Sd+wp7m7IZgHMixXIDKJgwHZtiuH+
+         n8Ak/x5PaLfow==
+Date:   Mon, 6 Nov 2023 08:17:01 -0800
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+        quic_vpernami@quicinc.com, quic_parass@quicinc.com
+Subject: Re: [PATCH 2/2] phy: qcom-qmp-pcie: Add support for keeping refclk
+ always on
+Message-ID: <p3ozkq2rjkl2qowkbb5oq2bk33s476ismuxhkxv3ttlvafjyis@ctmowtnwg4rp>
+References: <20231106-refclk_always_on-v1-0-17a7fd8b532b@quicinc.com>
+ <20231106-refclk_always_on-v1-2-17a7fd8b532b@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ee3f92c1-afb9-482a-9d37-d86a05f8eb8b@linaro.org>
-User-Agent: Mutt/2.2.9 (2022-11-12)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20231106-refclk_always_on-v1-2-17a7fd8b532b@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 06, 2023 at 11:27:55AM +0000, Bryan O'Donoghue wrote:
-> On 06/11/2023 08:01, Johan Hovold wrote:
-> > Try booting to a VT console (stop whatever display server you are using)
-> > and then plug in the USB connector in order to confirm that the issue is
-> > in user space. You should see the console mirrored on your external
-> > display.
+On Mon, Nov 06, 2023 at 05:22:35PM +0530, Krishna chaitanya chundru wrote:
+> In PCIe low power states like L1.1 or L1.2 the phy will stop
+> supplying refclk to endpoint. If endpoint asserts clkreq to bring
+> back link L0, then RC needs to provide refclk to endpoint.
 > 
-> Works.
+> If there is some issues in platform with clkreq signal propagation
+> to host and due to that host will not send refclk which results PCIe link
+> down. For those platforms  phy needs to provide refclk even in low power
+
+Double <space> ------------^^
+
+> states.
 > 
-> Looks gnome shell specific to me.
+> Add a flag which indicates refclk is always supplied to endpoint.
+> 
 
-The VT consoles work for me and mirror the screen as expected.
+The patch itself look good, the problem description looks good, but if
+you have an indication that the refclk "is always supplied to the
+endpoint", then you don't have a problem with refclk and I don't think
+you need this patch.
 
-I did some more digging and this appears to be GNOME shell related and
-is likely different than the issue that I originally linked to [1].
-When I run with GNOME under Wayland, I see this error come through from
-the XWayland:
+Something to the tune of "keep refclk always supplied to endpoint" seems
+to more appropriately describe what this flag is doing.
 
-    Received an X Window System error.
-    This probably reflects a bug in the program.
-    The error was 'BadValue (integer parameter out of range for
-        operation)'.
-    (Details: serial 315 error_code 2 request_code 140 (RANDR)
-        minor_code 7)
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 21 +++++++++++++++++----
+>  1 file changed, 17 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index a63ca7424974..d7e377a7d96e 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -43,6 +43,8 @@
+>  /* QPHY_PCS_STATUS bit */
+>  #define PHYSTATUS				BIT(6)
+>  #define PHYSTATUS_4_20				BIT(7)
+> +/* PCS_PCIE_ENDPOINT_REFCLK_CNTRL */
+> +#define EPCLK_ALWAYS_ON_EN			BIT(6)
+>  
+>  #define PHY_INIT_COMPLETE_TIMEOUT		10000
+>  
+> @@ -77,6 +79,7 @@ enum qphy_reg_layout {
+>  	QPHY_START_CTRL,
+>  	QPHY_PCS_STATUS,
+>  	QPHY_PCS_POWER_DOWN_CONTROL,
+> +	QPHY_PCS_ENDPOINT_REFCLK_CNTRL,
+>  	/* Keep last to ensure regs_layout arrays are properly initialized */
+>  	QPHY_LAYOUT_SIZE
+>  };
+> @@ -103,10 +106,11 @@ static const unsigned int sdm845_qhp_pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
+>  };
+>  
+>  static const unsigned int pciephy_v4_regs_layout[QPHY_LAYOUT_SIZE] = {
+> -	[QPHY_SW_RESET]			= QPHY_V4_PCS_SW_RESET,
+> -	[QPHY_START_CTRL]		= QPHY_V4_PCS_START_CONTROL,
+> -	[QPHY_PCS_STATUS]		= QPHY_V4_PCS_PCS_STATUS1,
+> -	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V4_PCS_POWER_DOWN_CONTROL,
+> +	[QPHY_SW_RESET]				= QPHY_V4_PCS_SW_RESET,
+> +	[QPHY_START_CTRL]			= QPHY_V4_PCS_START_CONTROL,
+> +	[QPHY_PCS_STATUS]			= QPHY_V4_PCS_PCS_STATUS1,
+> +	[QPHY_PCS_POWER_DOWN_CONTROL]		= QPHY_V4_PCS_POWER_DOWN_CONTROL,
+> +	[QPHY_PCS_ENDPOINT_REFCLK_CNTRL]	= QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_CNTRL,
+>  };
+>  
+>  static const unsigned int pciephy_v5_regs_layout[QPHY_LAYOUT_SIZE] = {
+> @@ -2244,6 +2248,8 @@ struct qmp_pcie {
+>  	struct phy *phy;
+>  	int mode;
+>  
+> +	bool refclk_always_on;
+> +
+>  	struct clk_fixed_rate pipe_clk_fixed;
+>  };
+>  
+> @@ -3159,6 +3165,10 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
+>  	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
+>  	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
+>  
+> +	if (qmp->refclk_always_on && cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL])
+> +		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL],
+> +			     EPCLK_ALWAYS_ON_EN);
+> +
+>  	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
+>  		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
+>  		qmp_pcie_init_port_b(qmp, tbls);
+> @@ -3681,6 +3691,9 @@ static int qmp_pcie_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto err_node_put;
+>  
+> +	qmp->refclk_always_on = of_property_read_bool(dev->of_node,
+> +						      "qcom,refclk-always-on");
 
-I have MUTTER_SYNC=1 set in my environment variables, and gdb shows that
-gnome-shell crashes at [2] since plane_assignment is NULL. I don't have
-anymore time to dig deeper into this today unfortunately.
+Leave this line unwrapped, for readability.
 
-[1] https://gitlab.gnome.org/GNOME/mutter/-/issues/2398
-[2] https://github.com/GNOME/mutter/blob/main/src/backends/native/meta-kms-crtc.c#L365
+Regards,
+Bjorn
 
-Brian
-
+> +
+>  	ret = phy_pipe_clk_register(qmp, np);
+>  	if (ret)
+>  		goto err_node_put;
+> 
+> -- 
+> 2.42.0
+> 
