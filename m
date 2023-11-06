@@ -2,93 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC7BD7E26A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:24:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 44C7A7E26CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 15:29:47 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231559AbjKFOYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 09:24:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39680 "EHLO
+        id S229485AbjKFO3s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 09:29:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33352 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231277AbjKFOYI (ORCPT
+        with ESMTP id S229799AbjKFO3r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 09:24:08 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCB40D73
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 06:24:03 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-40906fc54fdso34987715e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 06:24:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699280642; x=1699885442; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y71neDZp28SM9UCppWA9Z9/rY93fXQytngy/ALew8rQ=;
-        b=CTSWs4NvP2Z0J9iaWJrKQMnbBLunuexYUHs9aKKuVovhanZc45C/lxjeqEtigepgKI
-         PRFSC1+6sb1Y9jm19Gu6i9JALASLhwzGDg8fsQJDc2WOcgswrb15+/B1RKY8o2UPlmrk
-         cruXcsEZErBAKS2hcNcsRpB+D0tIUzYuI9jeqFox86UEtWA4VmOQEHZySa+fdsyKOIbf
-         Jf46Q5arlHJy+a44XNIJY2+jRdz/+D3PW4n/D1OUYXgByZQFF9dzl50IVFmWrmViwyGF
-         xf5jDp4zpvYFlvwzdwP8prF3gCon4+s/PzS7qwaNNw1M+/ZEd3LKP6Bmi3S6hJBRVQfT
-         sdjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699280642; x=1699885442;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y71neDZp28SM9UCppWA9Z9/rY93fXQytngy/ALew8rQ=;
-        b=ipmXcbz23Vx0G3jxUtRNqqUmuOMftqHKPg0mQ7j1Yptk3fX92EaRVw1AjrE2jNfzf4
-         ch7nWYit2s1skq/Jk6X3t7Ncbl07rL8A+V4WyDGxet/BxvqzinqZ/QQujdUIoh+vMQaW
-         iUa14NBq6rFGIJ1/WRRXpi4qq60qFN2bmaSb3kWfLYVHG6qWq8wQQ2mTC/FnjYxYTsJc
-         XgLAUmbMJxNIwL/7jH39S/RFDNgmlvrvS62d+WmZOd/q5HrBf1AAxsBJDs/zXK45X0j7
-         tr3T0GQjJrlbMPSP/dLvXzMqyuFtXywuxEOUn9Nde2f+2HAX5ClIIUDsZvi8tfmXNzDz
-         WbdQ==
-X-Gm-Message-State: AOJu0YzD6aAg2ept9KKuCZqkXOzyDoB87q+UeKdCDUXIkpmI8h5shQ6H
-        WS04iBYRyBP9dkzs6Qnl50FrgQ==
-X-Google-Smtp-Source: AGHT+IGmUpoaIF/DPCna5FfP9gHBZdHU+kMvnZHX2AGqLp35+hpvtUb/kJP21jCRPoQlQPgKwAr9VA==
-X-Received: by 2002:a5d:6051:0:b0:32d:a4c4:f700 with SMTP id j17-20020a5d6051000000b0032da4c4f700mr20614880wrt.38.1699280642165;
-        Mon, 06 Nov 2023 06:24:02 -0800 (PST)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id c12-20020adffb0c000000b0032fc5f5abafsm6492025wrr.96.2023.11.06.06.24.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Nov 2023 06:24:01 -0800 (PST)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Mon, 06 Nov 2023 15:23:57 +0100
-Subject: [PATCH] arm64: dts: qcom: sm8550: fix soundwire controllers node
- name
+        Mon, 6 Nov 2023 09:29:47 -0500
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C458DBD;
+        Mon,  6 Nov 2023 06:29:43 -0800 (PST)
+Received: from [100.98.136.55] (cola.collaboradmins.com [195.201.22.229])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: benjamin.gaignard)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 6B78066073E3;
+        Mon,  6 Nov 2023 14:29:41 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1699280982;
+        bh=vSC+cdCLGlsrUhZbwSn3jj5J/3k37u8Tm3jBkEhprIo=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=CX7ZNnLPH58OZ8EyRFe7nzLZit+6otkjqxxorkw3f02FbC0vqfRALFFi+E4CqWp1a
+         HeR5tczCpERj3FemaJ4tXpG7+zU6uWlHEy4xVjS76fS9+CgTu6VECFojDgAWsQtkBp
+         LBfm5GTvzj8adFTPmCT/M1JVdaDrepwPvcD+FQCAiBnoUtTZaXxooEV9IH/gmDBXhV
+         YuLHxFwHqtlHZqVvdkgKAsyJDkWIji6EuhhOT+CU+GgZUNiNEaZ2VMpRAh72yTegP6
+         0cRRdma6d20++fySO21MKMPzkZoGKkentdXPU8oLdmISBMI0gxwD7HJEcpoK7MpfU0
+         ke/S+oZRzu5sw==
+Message-ID: <26cc2d7d-e883-4159-a3f9-eda32d44126a@collabora.com>
+Date:   Mon, 6 Nov 2023 15:29:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231106-topic-sm8550-upstream-soundwire-bindings-fix-v1-1-4ded91c805a1@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAPz2SGUC/x2NMQ6DMAwAv4I811JCC0R8pepAEgMeSCIb2kqIv
- zfqeDfcnaAkTApjc4LQm5VzqmBvDYR1Sgshx8rQmvZurelxz4UD6ua6zuBRdBeaNtR8pPhhIfS
- cIqdFceYvuocfog/9PBgHNVmEqv7vnq/r+gHg9mRLfgAAAA==
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2058;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=iaOLj36FAc4olkdSibLasAQpUsIwwHBODZ4KhepQONQ=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlSPcAlx2cC1kfI53Xmp/i2TEG5TZqy1EKLQeXjF9t
- NRMLQZmJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZUj3AAAKCRB33NvayMhJ0XpFD/
- wP515JR3mFSm5M6scJ2Oa8mTfdHxAfR5ylNovQ9KSBOBlG7w9dq9KXmG2dKePaWIs8QZCX5pShJNAw
- 92FlIuoUdf4BAa36QDNN4MM21PMKV8/kSOXxF7234LHZEQsn6pLCihOV5JObxSHgHYUZyjmhEY90sl
- usb7C6JOq+e9zybY0DJjw5pgva2pupuRxyx5FZv5X/fWvHsFTDyRT9tXvIXld6fgzz0ZH6G+TjlA0G
- tAjZW37T2ZKZeVwiP+FQyfp9sa7V44JWlTomguZPK5avjRXxlsuBEphiI+cQMfWr9Q2Y1m0uQ3LZ/M
- mQ83ub+46DOO7MKOxBx9lsy76WAwxmL6DO91u+v5tED2lqtrlSpihJXoWvvimD9WzeD1m2MVAnLteo
- fh3P3ljvv6VwWQIDywJaajbDTu9wx59Mw0B8r0/2npwEOJjGZw68zAzWgeVNDhv5vKXCyGp20zHyjl
- Wv8dqBqLbauCgO5Jtg46A7VM9LmclWVyltcqID9gP7D6AF+g1SWT9pvqUOYqZOn4OKj10450Ej1wci
- r/WPqJzW2Ctvg8TO9RqsgLSVKK63ZhGM89hV/HRjWaUZu7X+LmmxxAWj+6JCgyckNbEblYHH5HaMcO
- fyCcvbtS8ioWxe0CWPxJKZDgJiIGW08CyNY3+FBC6WkZSLpTTTPrIYydf1+w==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 43/56] media: videobuf2: Be more flexible on the
+ number of queue stored buffers
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>, mchehab@kernel.org,
+        tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
+        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+        gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+        kernel@collabora.com
+References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
+ <20231031163104.112469-44-benjamin.gaignard@collabora.com>
+ <75bc90a5-85c3-4cac-9bf9-a868d1d052bd@xs4all.nl>
+Content-Language: en-US
+From:   Benjamin Gaignard <benjamin.gaignard@collabora.com>
+In-Reply-To: <75bc90a5-85c3-4cac-9bf9-a868d1d052bd@xs4all.nl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,61 +65,264 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the following dt bindings check:
-arch/arm64/boot/dts/qcom/sm8550-mtp.dtb: soundwire-controller@6ab0000: $nodename:0: 'soundwire-controller@6ab0000' does not match '^soundwire(@.*)?$'
-from schema $id: http://devicetree.org/schemas/soundwire/qcom,soundwire.yaml#
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Le 02/11/2023 à 09:17, Hans Verkuil a écrit :
+> Hi Benjamin,
+>
+> After a lot of testing yesterday I discovered that this patch introduces a
+> bug. After this bug, running the test-media script will result in a lot of
+> unbalanced counters messages:
+>
+> [Wed Nov  1 16:40:48 2023] videobuf2_common: unbalanced counters for queue ffff888115a07f00, buffer 11:
+> [Wed Nov  1 16:40:48 2023] videobuf2_common:      buf_init: 1 buf_cleanup: 0
+> [Wed Nov  1 16:40:48 2023] videobuf2_common:      alloc: 1 put: 0
+> [Wed Nov  1 16:40:48 2023] videobuf2_common:      get_dmabuf: 0 num_users: 0
+>
+> Apparently buf_init is called, but not buf_cleanup.
+>
+> I also get loads of kmemleak reports:
+>
+> unreferenced object 0xffff88800eae6800 (size 2048):
+>    comm "v4l2-compliance", pid 652, jiffies 4294937190 (age 149.650s)
+>    hex dump (first 32 bytes):
+>      e0 52 18 0c 81 88 ff ff 00 00 00 00 02 00 00 00  .R..............
+>      01 00 00 00 01 00 00 00 20 2f d3 f3 3e 00 00 00  ........ /..>...
+>    backtrace:
+>      [<ffffffffacbdb08b>] __kmalloc+0x4b/0x150
+>      [<ffffffffc01df77a>] __vb2_queue_alloc+0x11a/0xca0 [videobuf2_common]
+>      [<ffffffffc01e74f5>] vb2_core_reqbufs+0x735/0xfd0 [videobuf2_common]
+>      [<ffffffffc046ca71>] v4l2_m2m_ioctl_reqbufs+0xc1/0x1b0 [v4l2_mem2mem]
+>      [<ffffffffc0231520>] __video_do_ioctl+0x8d0/0xc20 [videodev]
+>      [<ffffffffc0232bcc>] video_usercopy+0x48c/0xd00 [videodev]
+>      [<ffffffffc021e2ff>] v4l2_ioctl+0x17f/0x1f0 [videodev]
+>      [<ffffffffacd758ce>] __do_compat_sys_ioctl+0x13e/0x1d0
+>      [<ffffffffae7df992>] __do_fast_syscall_32+0x62/0xe0
+>      [<ffffffffae7dfb4f>] do_fast_syscall_32+0x2f/0x70
+>      [<ffffffffaea012ed>] entry_SYSCALL_compat_after_hwframe+0x45/0x4d
+>
+> Very likely the same issue.
+>
+> Unfortunately, the build script does not yet check for issues like this,
+> you have to manually inspect the test-media logs (found in the logs directory
+> after the run). It's on my TODO list.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 7bafb3d88d69..52e8f4c52426 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2055,7 +2055,7 @@ lpass_wsa2macro: codec@6aa0000 {
- 			#sound-dai-cells = <1>;
- 		};
- 
--		swr3: soundwire-controller@6ab0000 {
-+		swr3: soundwire@6ab0000 {
- 			compatible = "qcom,soundwire-v2.0.0";
- 			reg = <0 0x06ab0000 0 0x10000>;
- 			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2101,7 +2101,7 @@ lpass_rxmacro: codec@6ac0000 {
- 			#sound-dai-cells = <1>;
- 		};
- 
--		swr1: soundwire-controller@6ad0000 {
-+		swr1: soundwire@6ad0000 {
- 			compatible = "qcom,soundwire-v2.0.0";
- 			reg = <0 0x06ad0000 0 0x10000>;
- 			interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2166,7 +2166,7 @@ lpass_wsamacro: codec@6b00000 {
- 			#sound-dai-cells = <1>;
- 		};
- 
--		swr0: soundwire-controller@6b10000 {
-+		swr0: soundwire@6b10000 {
- 			compatible = "qcom,soundwire-v2.0.0";
- 			reg = <0 0x06b10000 0 0x10000>;
- 			interrupts = <GIC_SPI 170 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2193,7 +2193,7 @@ swr0: soundwire-controller@6b10000 {
- 			status = "disabled";
- 		};
- 
--		swr2: soundwire-controller@6d30000 {
-+		swr2: soundwire@6d30000 {
- 			compatible = "qcom,soundwire-v2.0.0";
- 			reg = <0 0x06d30000 0 0x10000>;
- 			interrupts = <GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
+The issue is in vb2_core_queue_release(), the patch shouldn't change
+__vb2_queue_free() second parameter.
+When removing this change, unbalanced messages disappear.
 
----
-base-commit: f21821a1f31f531d9f516ec24323e40ae32e21b5
-change-id: 20231106-topic-sm8550-upstream-soundwire-bindings-fix-84b7dbc6f708
+Regards,
+Benjamin
 
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+>
+> Regards,
+>
+> 	Hans
+>
+> On 31/10/2023 17:30, Benjamin Gaignard wrote:
+>> Add 'max_num_buffers' field in vb2_queue struct to let drivers decide
+>> how many buffers could be stored in a queue.
+>> This require 'bufs' array to be allocated at queue init time and freed
+>> when releasing the queue.
+>> By default VB2_MAX_FRAME remains the limit.
+>>
+>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+>> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+>> ---
+>>   .../media/common/videobuf2/videobuf2-core.c   | 41 +++++++++++++++----
+>>   .../media/common/videobuf2/videobuf2-v4l2.c   |  6 +--
+>>   include/media/videobuf2-core.h                | 10 ++++-
+>>   3 files changed, 44 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+>> index c5c5ae4d213d..72ef7179d80a 100644
+>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+>> @@ -416,7 +416,7 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
+>>    */
+>>   static void vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, unsigned int index)
+>>   {
+>> -	WARN_ON(index >= VB2_MAX_FRAME || q->bufs[index]);
+>> +	WARN_ON(index >= q->max_num_buffers || q->bufs[index]);
+>>   
+>>   	q->bufs[index] = vb;
+>>   	vb->index = index;
+>> @@ -449,9 +449,9 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>>   	struct vb2_buffer *vb;
+>>   	int ret;
+>>   
+>> -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
+>> +	/* Ensure that the number of already queue + num_buffers is below q->max_num_buffers */
+>>   	num_buffers = min_t(unsigned int, num_buffers,
+>> -			    VB2_MAX_FRAME - q_num_buffers);
+>> +			    q->max_num_buffers - q_num_buffers);
+>>   
+>>   	for (buffer = 0; buffer < num_buffers; ++buffer) {
+>>   		/* Allocate vb2 buffer structures */
+>> @@ -813,7 +813,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   	unsigned plane_sizes[VB2_MAX_PLANES] = { };
+>>   	bool non_coherent_mem = flags & V4L2_MEMORY_FLAG_NON_COHERENT;
+>>   	unsigned int i;
+>> -	int ret;
+>> +	int ret = 0;
+>>   
+>>   	if (q->streaming) {
+>>   		dprintk(q, 1, "streaming active\n");
+>> @@ -857,17 +857,22 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   	/*
+>>   	 * Make sure the requested values and current defaults are sane.
+>>   	 */
+>> -	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
+>>   	num_buffers = max_t(unsigned int, *count, q->min_buffers_needed);
+>> -	num_buffers = min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
+>> +	num_buffers = min_t(unsigned int, num_buffers, q->max_num_buffers);
+>>   	memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
+>>   	/*
+>>   	 * Set this now to ensure that drivers see the correct q->memory value
+>>   	 * in the queue_setup op.
+>>   	 */
+>>   	mutex_lock(&q->mmap_lock);
+>> +	if (!q->bufs)
+>> +		q->bufs = kcalloc(q->max_num_buffers, sizeof(*q->bufs), GFP_KERNEL);
+>> +	if (!q->bufs)
+>> +		ret = -ENOMEM;
+>>   	q->memory = memory;
+>>   	mutex_unlock(&q->mmap_lock);
+>> +	if (ret)
+>> +		return ret;
+>>   	set_queue_coherency(q, non_coherent_mem);
+>>   
+>>   	/*
+>> @@ -976,7 +981,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   	bool no_previous_buffers = !q_num_bufs;
+>>   	int ret = 0;
+>>   
+>> -	if (q_num_bufs == VB2_MAX_FRAME) {
+>> +	if (q->num_buffers == q->max_num_buffers) {
+>>   		dprintk(q, 1, "maximum number of buffers already allocated\n");
+>>   		return -ENOBUFS;
+>>   	}
+>> @@ -993,7 +998,13 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   		 */
+>>   		mutex_lock(&q->mmap_lock);
+>>   		q->memory = memory;
+>> +		if (!q->bufs)
+>> +			q->bufs = kcalloc(q->max_num_buffers, sizeof(*q->bufs), GFP_KERNEL);
+>> +		if (!q->bufs)
+>> +			ret = -ENOMEM;
+>>   		mutex_unlock(&q->mmap_lock);
+>> +		if (ret)
+>> +			return ret;
+>>   		q->waiting_for_buffers = !q->is_output;
+>>   		set_queue_coherency(q, non_coherent_mem);
+>>   	} else {
+>> @@ -1005,7 +1016,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>>   			return -EINVAL;
+>>   	}
+>>   
+>> -	num_buffers = min(*count, VB2_MAX_FRAME - q_num_bufs);
+>> +	num_buffers = min(*count, q->max_num_buffers - q_num_bufs);
+>>   
+>>   	if (requested_planes && requested_sizes) {
+>>   		num_planes = requested_planes;
+>> @@ -2465,6 +2476,12 @@ int vb2_core_queue_init(struct vb2_queue *q)
+>>   	/*
+>>   	 * Sanity check
+>>   	 */
+>> +	if (!q->max_num_buffers)
+>> +		q->max_num_buffers = VB2_MAX_FRAME;
+>> +
+>> +	/* The maximum is limited by offset cookie encoding pattern */
+>> +	q->max_num_buffers = min_t(unsigned int, q->max_num_buffers, MAX_BUFFER_INDEX);
+>> +
+>>   	if (WARN_ON(!q)			  ||
+>>   	    WARN_ON(!q->ops)		  ||
+>>   	    WARN_ON(!q->mem_ops)	  ||
+>> @@ -2474,6 +2491,10 @@ int vb2_core_queue_init(struct vb2_queue *q)
+>>   	    WARN_ON(!q->ops->buf_queue))
+>>   		return -EINVAL;
+>>   
+>> +	if (WARN_ON(q->max_num_buffers > MAX_BUFFER_INDEX) ||
+>> +	    WARN_ON(q->min_buffers_needed > q->max_num_buffers))
+>> +		return -EINVAL;
+>> +
+>>   	if (WARN_ON(q->requires_requests && !q->supports_requests))
+>>   		return -EINVAL;
+>>   
+>> @@ -2519,7 +2540,9 @@ void vb2_core_queue_release(struct vb2_queue *q)
+>>   	__vb2_cleanup_fileio(q);
+>>   	__vb2_queue_cancel(q);
+>>   	mutex_lock(&q->mmap_lock);
+>> -	__vb2_queue_free(q, vb2_get_num_buffers(q));
+>> +	__vb2_queue_free(q, q->max_num_buffers);
+>> +	kfree(q->bufs);
+>> +	q->bufs = NULL;
+>>   	q->num_buffers = 0;
+>>   	mutex_unlock(&q->mmap_lock);
+>>   }
+>> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>> index 7d798fb15c0b..f3cf4b235c1f 100644
+>> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+>> @@ -627,7 +627,7 @@ struct vb2_buffer *vb2_find_buffer(struct vb2_queue *q, u64 timestamp)
+>>   	 * This loop doesn't scale if there is a really large number of buffers.
+>>   	 * Maybe something more efficient will be needed in this case.
+>>   	 */
+>> -	for (i = 0; i < vb2_get_num_buffers(q); i++) {
+>> +	for (i = 0; i < q->max_num_buffers; i++) {
+>>   		vb2 = vb2_get_buffer(q, i);
+>>   
+>>   		if (!vb2)
+>> @@ -1142,7 +1142,7 @@ int _vb2_fop_release(struct file *file, struct mutex *lock)
+>>   
+>>   	if (lock)
+>>   		mutex_lock(lock);
+>> -	if (file->private_data == vdev->queue->owner) {
+>> +	if (!vdev->queue->owner || file->private_data == vdev->queue->owner) {
+>>   		vb2_queue_release(vdev->queue);
+>>   		vdev->queue->owner = NULL;
+>>   	}
+>> @@ -1270,7 +1270,7 @@ void vb2_video_unregister_device(struct video_device *vdev)
+>>   	 */
+>>   	get_device(&vdev->dev);
+>>   	video_unregister_device(vdev);
+>> -	if (vdev->queue && vdev->queue->owner) {
+>> +	if (vdev->queue) {
+>>   		struct mutex *lock = vdev->queue->lock ?
+>>   			vdev->queue->lock : vdev->lock;
+>>   
+>> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
+>> index 8f9d9e4af5b1..e77a397195f2 100644
+>> --- a/include/media/videobuf2-core.h
+>> +++ b/include/media/videobuf2-core.h
+>> @@ -558,6 +558,7 @@ struct vb2_buf_ops {
+>>    * @dma_dir:	DMA mapping direction.
+>>    * @bufs:	videobuf2 buffer structures
+>>    * @num_buffers: number of allocated/used buffers
+>> + * @max_num_buffers: upper limit of number of allocated/used buffers
+>>    * @queued_list: list of buffers currently queued from userspace
+>>    * @queued_count: number of buffers queued and ready for streaming.
+>>    * @owned_by_drv_count: number of buffers owned by the driver
+>> @@ -619,8 +620,9 @@ struct vb2_queue {
+>>   	struct mutex			mmap_lock;
+>>   	unsigned int			memory;
+>>   	enum dma_data_direction		dma_dir;
+>> -	struct vb2_buffer		*bufs[VB2_MAX_FRAME];
+>> +	struct vb2_buffer		**bufs;
+>>   	unsigned int			num_buffers;
+>> +	unsigned int			max_num_buffers;
+>>   
+>>   	struct list_head		queued_list;
+>>   	unsigned int			queued_count;
+>> @@ -1248,6 +1250,12 @@ static inline void vb2_clear_last_buffer_dequeued(struct vb2_queue *q)
+>>   static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
+>>   						unsigned int index)
+>>   {
+>> +	if (!q->bufs)
+>> +		return NULL;
+>> +
+>> +	if (index >= q->max_num_buffers)
+>> +		return NULL;
+>> +
+>>   	if (index < q->num_buffers)
+>>   		return q->bufs[index];
+>>   	return NULL;
