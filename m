@@ -2,102 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4DC37E1D5A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 10:40:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A2A187E1D5F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 10:42:07 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230350AbjKFJkP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 04:40:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39958 "EHLO
+        id S231435AbjKFJmH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 04:42:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230086AbjKFJkO (ORCPT
+        with ESMTP id S231338AbjKFJmG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 04:40:14 -0500
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5924EDB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 01:40:11 -0800 (PST)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-5af6c445e9eso49807267b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 01:40:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699263610; x=1699868410; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=FpIVvXMECFRktQ4IhefFOl0oiCPkgte0mG50ImpQsdk=;
-        b=m2oINbE3aELoScUJWKmzQkLqrBr2jIyK0TbiP357vpB3pbGePhcnX/LiKCtlcSw5dJ
-         Nps6kNjATYXFK+hz4LvNt/y4i6j35LPT+P7de/AYW/CrOQEYML+dG2HxODh/9UB3Dkmq
-         c9LD/5RxVpjuFt1ViKs1dJMMQDkMp8r203FTgugxP/3dO2xe+DH3/Bcpp8IH50tUzoI9
-         SF8w6IjuK8W9Ic9EstP6MMROgdii9iwj1AhP7V8mVL68/+9JDDpRGOsOG8ZyihODofyW
-         iKeFl0NqvMnccVs+/vcDQCJcBLleJpV3miZamUp5eFts+Bm/cLSkqTmLxNIqxvtlndHU
-         YutQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699263610; x=1699868410;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FpIVvXMECFRktQ4IhefFOl0oiCPkgte0mG50ImpQsdk=;
-        b=suYkNjGjdqRnTj6+SpWo6wE6kLp98S2VRRDvg9GwXjsGvkG+CSAcmwQmp2bdhX47F7
-         rEbLtJW03J0RnBvEhkMxd9YI/ghFhFNy62yi4NQMV9X+tlRy1jlCM3jDcqMEJfQ3OkFT
-         lWpEHgC0LfGgTBtBPrnD14g18OgdTwSQv82fjNwNeApRt2GD+TYQT+O9RVCfQwVQufZU
-         yDyp8q01nLKFnCrojvXXAkAFVDwzhMJ9F1VmNw+VHcLyLUGXtkQnHj1a0V1MKoF/e+Gj
-         Mt/qGTctrjS6z4CIsLH6o/VDaThzC/xyMj5hIBJe1wYEl6Ya8FjRc1OEjDE4OOcCvWUH
-         TRCg==
-X-Gm-Message-State: AOJu0Yy6+IShxLadLuZ5kmtwFk6DjL2bJqvZMPBOTXjN8Cjextt10t3J
-        RiTWuIAUgMyz5St8gzXvvLM9BglDrCxXYmG0cNgYUuy2zLB8du8u
-X-Google-Smtp-Source: AGHT+IEteHXH+5R7EEOi7azE/STUcVaeWLwtpXheOcC2xH4yrT14fOb22Bk4vXiIohltgkr9GmLf/SVrlHYf6RmNdkI=
-X-Received: by 2002:a05:690c:dc6:b0:5a7:b682:7929 with SMTP id
- db6-20020a05690c0dc600b005a7b6827929mr12178727ywb.17.1699263610498; Mon, 06
- Nov 2023 01:40:10 -0800 (PST)
+        Mon, 6 Nov 2023 04:42:06 -0500
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 060AEEA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 01:42:03 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A69UmJm013204;
+        Mon, 6 Nov 2023 09:41:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=XG7DqSJeQJKx8MHCJ/YU4nBle4JN6M8SRLuC5oNFqfY=;
+ b=gjxrt1lI6EhD3qioqaUb7hS79A1MAMfE9n0DJJSSM2bST7Jf3PDaeZq8hEc0zCtTZFV5
+ ySFZnGz+V4nIW+8J48EE0bI82i30KiaQPR9qwAONczwLpculY062ohzOrUNBtDyFOhP7
+ SNuVuur274O1fuEuwro0eQzgYV7XN2u/FKbMs/agbM+IYGxnbFN4AUHmP/+CpYqKSaR0
+ VKGsgHHEe98TMV6zBv8h0JCenLlF54cZ0vLbhCkDXn96jqGokx7rQP8xcFDTaoY/VgZZ
+ Ptn+DBzlBslkIxKo4s7tPc9cY7QEr9AsuwnxzQCWOZkZDdCUUyJXS2nwA73IByU/HdEj jA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5eg3uptj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Nov 2023 09:41:42 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A69ffCj014306
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 6 Nov 2023 09:41:41 GMT
+Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
+ 2023 01:41:38 -0800
+Message-ID: <67518705-cfc2-4ae0-9cd2-0c33146cf48b@quicinc.com>
+Date:   Mon, 6 Nov 2023 15:11:35 +0530
 MIME-Version: 1.0
-References: <1699242172-79472-1-git-send-email-quic_qianyu@quicinc.com>
-In-Reply-To: <1699242172-79472-1-git-send-email-quic_qianyu@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 6 Nov 2023 11:39:58 +0200
-Message-ID: <CAA8EJppfo94PWYK3Q=ChUBC05PZ5zCguaiB28AHxMNhpRp-tDA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Add SDX75 support and its dependency
-To:     Qiang Yu <quic_qianyu@quicinc.com>
-Cc:     mani@kernel.org, quic_jhugo@quicinc.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com, quic_mrana@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/3] phy: qcom-qmp-combo: correct sm8550 PHY
+ programming
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>
+References: <20230911203842.778411-1-dmitry.baryshkov@linaro.org>
+ <aabb8345-7b5d-447d-af79-1e5743465315@quicinc.com>
+ <CAA8EJpoQ0k_4GSQyrziLYn1v942ppzNOvwxN55sLkZUUDWLe4w@mail.gmail.com>
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+In-Reply-To: <CAA8EJpoQ0k_4GSQyrziLYn1v942ppzNOvwxN55sLkZUUDWLe4w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: SukmHfoCTb3zIWss7OKtOICtkaZZR5wX
+X-Proofpoint-ORIG-GUID: SukmHfoCTb3zIWss7OKtOICtkaZZR5wX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-06_07,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ adultscore=0 malwarescore=0 suspectscore=0 mlxlogscore=414 clxscore=1015
+ bulkscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311060082
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Nov 2023 at 05:43, Qiang Yu <quic_qianyu@quicinc.com> wrote:
+
+On 11/6/2023 3:07 PM, Dmitry Baryshkov wrote:
+> Hi Rohit,
 >
-> This series add new configuration for SDX75 and new parameter
-
-Qualcomm SDX75.
-
-> ready_timeout_ms for waiting ready state.
-
-Please follow the same subject style for the cover letter subjects.
-This cover letter looks as if it was adding support for the SDX75
-platform to the whole kernel.
-
+> On Mon, 6 Nov 2023 at 08:46, Rohit Agarwal <quic_rohiagar@quicinc.com> wrote:
+>>
+>> On 9/12/2023 2:08 AM, Dmitry Baryshkov wrote:
+>>> Fix several small issues with the QMP USB+DP PHY programming on the
+>>> Qualcomm SM8550 platform.
+>> Hi Dmitry,
+>>
+>> Can we have a conclusion on this series?
+> Yes. Version 3 of this series was accepted by Vinod:
 >
-> Qiang Yu (2):
->   bus: mhi: host: Add a separate timeout parameter for waiting ready
->   bus: mhi: host: pci_generic: Add SDX75 based modem support
->
->  drivers/bus/mhi/host/init.c        |  1 +
->  drivers/bus/mhi/host/internal.h    |  2 +-
->  drivers/bus/mhi/host/main.c        |  5 +++--
->  drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
->  drivers/bus/mhi/host/pm.c          | 24 +++++++++++++++++-------
->  include/linux/mhi.h                |  4 ++++
->  6 files changed, 48 insertions(+), 10 deletions(-)
->
-> --
-> 2.7.4
->
+> https://lore.kernel.org/linux-arm-msm/169719381727.165658.9377101716537787206.b4-ty@kernel.org/
+Thanks for the update!!!.
 
-
--- 
-With best wishes
-Dmitry
+Thanks,
+Rohit.
+>
+>> The USB support series [1] for
+>> SDX75 depends on it.
+>> [1]
+>> https://lore.kernel.org/all/1695359525-4548-1-git-send-email-quic_rohiagar@quicinc.com/
+>
