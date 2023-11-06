@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F053D7E1B47
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 08:36:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D01CC7E1B4F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 08:37:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230514AbjKFHgj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 02:36:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41102 "EHLO
+        id S231193AbjKFHhU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 02:37:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230489AbjKFHgi (ORCPT
+        with ESMTP id S231158AbjKFHhT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 02:36:38 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17282A9
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 23:36:35 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-40842752c6eso31980245e9.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 23:36:35 -0800 (PST)
+        Mon, 6 Nov 2023 02:37:19 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4918F1B2
+        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 23:37:16 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-40839807e82so24630415e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Nov 2023 23:37:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699256193; x=1699860993; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1699256235; x=1699861035; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7HZFuTThqNBXigENUrn1+5WKDQWbvpxI76bKk+psjyA=;
-        b=GMDwqX6RM117sRyEORyqNTsKtRng/EI/Qy972VKZGVGsgI4he364XMAIlkQK/QJPlZ
-         IrlugvBJKPGkijFNrpEGTmVn7tR8x2c6+9qKz0+UXgXlv4NIf5+a6bo25KK5QuwsYVAY
-         S2W9rxA3oyIElt1kHdm9dRBYfSmfm6t5SgXc1I2BXXcZTyzwAGZbOunKo2/T13rtbAFK
-         hSdcKlih6YUIURT5nTo72LHFcdETiEb+oGLiGHfsNSZ/sMHhwZ7WmuE3Ld7nmuVa5MYN
-         I7oue72s0Is3OX61S/B+KmiZZy97jW4O7HZYVUcSKmrfX+P0UcY4HUA2bZgEwmu1uiec
-         D8Yg==
+        bh=shZ9+Y1DEvjXiDPdhC1PF2s7oLeLr65fToDbykalinQ=;
+        b=iAORGzASb4TdrqfDj17sn9pgN3YSHXlRC9iHnycclib9fy5AsFYY6/CTEO29Qhv4J1
+         oB2Xxr8EgcQ/vvsrOUpdzfEY2QJLtKdLr8AkKNQzL0UAtQoyr7SHJUjg0cYsAaD5Jmc6
+         f5KN4uAiA+3V1MF4V5cbmHzV+to2s2BaodNEDTnToj6ejqXre87Ph2czOWH5rnsVeRDJ
+         79pZ9WY51ev4UXdTP012EUNGIOnqjNoPiH5zLjV17YhHw4fHoYoUrqPab94SVZAoPsEm
+         JQrX0vTEnpAQ0aFD0juamuIxoIhAPIJB1rvBOLiFo7VOODh6THRjMqbh3WKc0Q/cZ9OA
+         8nMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699256193; x=1699860993;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1699256235; x=1699861035;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7HZFuTThqNBXigENUrn1+5WKDQWbvpxI76bKk+psjyA=;
-        b=LkMH1nHtQ38/0PZfcn7I058/VaVzfoT2xWp9xAC3N/ngWNZ7lMWKyeFmJvSyZidblQ
-         L83UejZyw0sqg38hABx78RRjMK8EyT2cvJuaM9jQJgTIMQJlvVvJ7T5D6gxZcSoHlf4v
-         AUiphBtSNhdfKyrVlaaGZpnNMwBOp+bAPhLmFspgsAev9YndprM33iqfRCU3lAz86U5J
-         JUO5+2XMrBuo4SE83Nk5sPW9CvadGw1J6RRMPeowbNwEDyPoPttX85XG6ZuYp6htTyhe
-         So2WzDYxGx0/Mm1vwCSmOPOtDmg8MuNM9WwzCkyknLSxWvskrxFeN3V16WEUj5v95QRf
-         e8Zg==
-X-Gm-Message-State: AOJu0YwEbvqoyF8gnvjAPqTfhEN9iplPnAWoVLT8dJI/cbq/CarelXmR
-        qP6n9HXT1M3Ul/1vKLE+JOOshw==
-X-Google-Smtp-Source: AGHT+IEMLyn73bpYlJ/TIeAS79j+E2f9q22Y5AXgwoqNowHVBP1vIUhhP0rWupQ7gRGRk8VVrPFIXA==
-X-Received: by 2002:a05:600c:1992:b0:406:53c0:3c71 with SMTP id t18-20020a05600c199200b0040653c03c71mr23564326wmq.37.1699256193469;
-        Sun, 05 Nov 2023 23:36:33 -0800 (PST)
+        bh=shZ9+Y1DEvjXiDPdhC1PF2s7oLeLr65fToDbykalinQ=;
+        b=SYPB0twqEMoX+FAVYZ636NTaTxL/PR0oldk4yfGu1KyiyoII7EkCGLVCuvBVsTdaOn
+         OUPSS/s4p9UvO47Plu4NtQRT0n4QXWUlswI5z0zXMkSTdbsr64eH6Qvi9Avq215k7jnC
+         9g7P4XH/hKKTNifZPc9/irQg8opv9PVhScpdt1BpKnTt8/QzbTOWyHTT90M1E7mTvD9G
+         QAhMxg49uWsklPnyVcKZAEl4jYEP9Np3d9NB1el//LoXJRIi656TOiZQnOql8JGNPc2y
+         AeV5bhdcItZD7RmZaG7AP+3oJmPEd0segIB3fzt28yBEt9aMHCcgNGpAQf67NenVeFMH
+         npUA==
+X-Gm-Message-State: AOJu0YxANeC7Q2aHgJd2XUMRw1ZrTYGA7X1O0EnV6/Kf73tSOx9ICd4k
+        6SjyPxYMTTWHbi1kuYY36pIEvQ==
+X-Google-Smtp-Source: AGHT+IFSOhik3B7FEh0ZymioLhIbIKCT/K3AD9fy6kOmof6o0xWD1FVcr2OLNl5N96/DWOZJeNCSdQ==
+X-Received: by 2002:a05:600c:3b24:b0:403:c70b:b688 with SMTP id m36-20020a05600c3b2400b00403c70bb688mr11160278wms.6.1699256234776;
+        Sun, 05 Nov 2023 23:37:14 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id q8-20020a05600c46c800b0040776008abdsm11186755wmo.40.2023.11.05.23.36.31
+        by smtp.gmail.com with ESMTPSA id q8-20020a05600c46c800b0040776008abdsm11186755wmo.40.2023.11.05.23.37.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Nov 2023 23:36:32 -0800 (PST)
-Message-ID: <84d8b4cf-4ce0-4c90-926c-2a022e28bd9e@linaro.org>
-Date:   Mon, 6 Nov 2023 08:36:30 +0100
+        Sun, 05 Nov 2023 23:37:14 -0800 (PST)
+Message-ID: <1ea6c498-09bc-4491-a083-37fa242766c8@linaro.org>
+Date:   Mon, 6 Nov 2023 08:37:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] dt-bindings: input: melfas,mms114: add MMS252
- compatible
+Subject: Re: [PATCH 2/7] dt-bindings: arm: qcom: Document samsung,milletwifi
+ device
 Content-Language: en-US
 To:     Bryant Mairs <bryant@mai.rs>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -67,9 +67,8 @@ To:     Bryant Mairs <bryant@mai.rs>, Andy Gross <agross@kernel.org>,
         Linus Walleij <linus.walleij@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-input@vger.kernel.org
-Cc:     Luca Weiss <luca@z3ntu.xyz>
 References: <20231105204759.37107-1-bryant@mai.rs>
- <20231105204759.37107-2-bryant@mai.rs>
+ <20231105204759.37107-3-bryant@mai.rs>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -115,12 +114,12 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231105204759.37107-2-bryant@mai.rs>
+In-Reply-To: <20231105204759.37107-3-bryant@mai.rs>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -129,15 +128,25 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 05/11/2023 21:46, Bryant Mairs wrote:
-> From: Luca Weiss <luca@z3ntu.xyz>
+> Add binding documentation for Samsung Galaxy Tab 4 8.0 Wi-Fi
+> tablet which is based on Snapdragon 400 (apq8026) SoC.
 > 
-> Add a compatible for MMS252 touchscreen which appears to work fine with
-> the MMS114 driver.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > Signed-off-by: Bryant Mairs <bryant@mai.rs>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 88b84035e7b1..c66980b79f59 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -156,6 +156,7 @@ properties:
+>                - huawei,sturgeon
+>                - lg,lenok
+>                - samsung,matisse-wifi
+> +              - samsung,milletwifi
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Not millet-wifi like the other one?
 
 Best regards,
 Krzysztof
