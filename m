@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C48757E213A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 13:20:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AD9627E21D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 13:36:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231618AbjKFMUt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 07:20:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40482 "EHLO
+        id S231705AbjKFMgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 07:36:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231620AbjKFMUr (ORCPT
+        with ESMTP id S231653AbjKFMgL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 07:20:47 -0500
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10C9BBB
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 04:20:44 -0800 (PST)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-d9ad67058fcso4451295276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 04:20:44 -0800 (PST)
+        Mon, 6 Nov 2023 07:36:11 -0500
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3C6810B
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 04:36:08 -0800 (PST)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-579de633419so52616767b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 04:36:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699273243; x=1699878043; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jNrBmQOtJ17ojJmeT7du8FrKMIIzYnoq4n1GU13u2lU=;
-        b=H92pnSDeWr3e9AcWDs2HT161bar1Tlz7Fq0xkqPxFqi/+B9Gy3Q4RKTt7i7pMaq0U/
-         5G7Po1GNkVT5+BKPE9njjgFfxM8uvnc9MATXcBpooaRBgp1wENAsNdc9ZQzMfpEP/D3a
-         1DByK9X+a2bCTMkzxzTiDcJQC6mBh5Fyw2QctbKPe0tn7LiMuzhuS5ExvE9pI+Kvsqcx
-         yOVTm5+6m+83KiSOCULLpTyzssZWWIUZjfHdXO7Ntg6bIVwPltR9XvarUPODItRCc+V5
-         QHTsznETSfzbZlmPWcVXhqtoIn8imhPZHcrASvA1dHKuUa2WmamaqoD5ma3Q54THTUQ+
-         cHRQ==
+        d=linaro.org; s=google; t=1699274168; x=1699878968; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VJDUivzyJwXlqL5M091869BzocP1uyzJFbwtw7gtmyI=;
+        b=n93W4TnmXfrquQ1mFVO0lpT4bmOFN8EQYJmZyzH1qj35in4fkxhxkdFYpbwSw5jShh
+         cTo2NCtMdrDjY4PxOVpEQ6ZzHUr0fQdnp1sMxmyFRnNzgJi2U7PtOGoeyfCzPxjS7sig
+         QgbmuLS91qWzeTofIZM+bucqkHema413soikx9FbjwbrKt9oK8pG7jplq7P1nepvxZFr
+         IK37XM9Sx/++WeTaQIP2KrCrGDLI0QR127fv0s57tzPEzKhlDgB3bsENSko+PfGEwFJN
+         +ELTbAvlmzfq+Yn8ibzt6GbL8is1qEC2NYW7B7QlG835GtkUcRHm+1cW+2VukOEB8XCe
+         dJ6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699273243; x=1699878043;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jNrBmQOtJ17ojJmeT7du8FrKMIIzYnoq4n1GU13u2lU=;
-        b=mu11mSJ3bBNwOdo0E+6l6Khmy9T/K+9Gd81M0ALuWkXZmszYYpct0NN2fNeuhpPWAZ
-         K8PSKo39pwWx3r87VrmMKOzOBXPhGyJPweWpG/LnbvvNYgUb7pqaJryi98aFyximn6gO
-         QDZNUiqIsdVbXxnqp3QBqsybOZyr7eHzMR0au8TDLJEIogflvf2S36if61XDfUi4v+Dz
-         vljXP4Li/K02KT/9bykU7j4nTjIEwcLF4qkSFp6R1iIvRmg7tZx2pejpRRc5zrJ7BFSp
-         l90hUCAaAzcc6W9Ly2dVFzhPV/I97C5Lapkky8nUHcnLBHBomeyDauGlTpcQsoZ6fimK
-         HP5Q==
-X-Gm-Message-State: AOJu0YxRL5n657QHe8efxFB94RQC6SljtcEMhiBdzKE5IYau8hr0jh5/
-        c0fv0v+643K0zO+FyRgoy+BFTW33Q7JPRTf2R6etUg==
-X-Google-Smtp-Source: AGHT+IEWI+f1HNKNSeeVWXlqh/hIENbIf83dLNlmNVJ1X8gb5errhSt5Vw0iEDS5BYJhLkKMzUml4nTi0qHyePAxOUU=
-X-Received: by 2002:a25:324c:0:b0:da0:6cf3:c629 with SMTP id
- y73-20020a25324c000000b00da06cf3c629mr24702415yby.41.1699273243154; Mon, 06
- Nov 2023 04:20:43 -0800 (PST)
+        d=1e100.net; s=20230601; t=1699274168; x=1699878968;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VJDUivzyJwXlqL5M091869BzocP1uyzJFbwtw7gtmyI=;
+        b=e91bXf2d8I3d03YdGnj0i2CLfwnR8CtKnFDpd9yeEpVuBhVAtxXgqHM8XXidTskyfF
+         8VuSZlLbHjz7usnERMkcDJii7BYZtyu1khkhPwzvFUE6gQA79MkDhXDsDFubVt0oIHCq
+         NknJQeLkGSiEqgljkzBjn58WakdeSpoKCkVERVoSxB0ebycjdIx2WH7NjO2XR0U93Yfv
+         lbZXq/vcNuc2F5QbsKV8T7rUVCgFKdVi0p9hhLS1D897zOWGOBKDt5cSn7UjiPWNUowN
+         /VRZyO3GjJ0ddo7JSjQ+MJaLbpxq5QbArE0I9/Z9dQUN9yHyQF+MMbtmAhB6kd0E78er
+         o6ng==
+X-Gm-Message-State: AOJu0Yxp3QpgX1dUm9lh9cWqo8tJ99CpQg04Lm4Tc1Sgvucrn5CEQjeh
+        6z4cMk6hcjqMiuTNr1Nf6VqRzzhKLOs+iZ7KP1HDwA==
+X-Google-Smtp-Source: AGHT+IGhS2m7ZE2zGAOmmnn1e6cpTmJkjwjC9JdnNOFUffxfIaqaxIrJ5/28oPGlMryE9W1BYGXDofXV+sJNA0Q6mr4=
+X-Received: by 2002:a81:6d11:0:b0:58f:a19f:2b79 with SMTP id
+ i17-20020a816d11000000b0058fa19f2b79mr11127022ywc.9.1699274167864; Mon, 06
+ Nov 2023 04:36:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20231106-pm8937-v1-0-ec51d9eeec53@riseup.net> <20231106-pm8937-v1-7-ec51d9eeec53@riseup.net>
-In-Reply-To: <20231106-pm8937-v1-7-ec51d9eeec53@riseup.net>
+References: <20231106-pm8937-v1-0-ec51d9eeec53@riseup.net> <20231106-pm8937-v1-3-ec51d9eeec53@riseup.net>
+In-Reply-To: <20231106-pm8937-v1-3-ec51d9eeec53@riseup.net>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 6 Nov 2023 14:20:31 +0200
-Message-ID: <CAA8EJprKNPiaMi1OxVUHtY-YxzUuy_uZhrNemmU6dQeFEukv0w@mail.gmail.com>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: Add PM8937 PMIC
+Date:   Mon, 6 Nov 2023 14:35:56 +0200
+Message-ID: <CAA8EJprJQMMPwtZQ5AMB=SLA0YhT7pYORNaAqAopZxS2nRu3EQ@mail.gmail.com>
+Subject: Re: [PATCH 3/8] regulator: qcom_spmi: Add PM8937 SPMI regulator
 To:     Dang Huynh <danct12@riseup.net>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -68,7 +67,6 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -79,80 +77,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Nov 2023 at 14:11, Dang Huynh <danct12@riseup.net> wrote:
+On Mon, 6 Nov 2023 at 14:19, Dang Huynh <danct12@riseup.net> wrote:
 >
-> The PM8937 features integrated peripherals like ADC, GPIO controller,
-> MPPs, PON keys and others.
->
-> Add the device tree so that any boards with this PMIC can use it.
+> The PM8937 has 4 HFSMPS, 2 FTSMPS2.5 (for controlling APC voltage)
+> and 23 LDO regulators.
+> Add the configuration for this chip.
 >
 > Signed-off-by: Dang Huynh <danct12@riseup.net>
 > ---
->  arch/arm64/boot/dts/qcom/pm8937.dtsi | 202 +++++++++++++++++++++++++++++=
-++++++
->  1 file changed, 202 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/pm8937.dtsi b/arch/arm64/boot/dts/q=
-com/pm8937.dtsi
-> new file mode 100644
-> index 000000000000..6091d6938885
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/pm8937.dtsi
-> @@ -0,0 +1,202 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023, Dang Huynh <danct12@riseup.net>
-> + */
-> +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +#include <dt-bindings/input/linux-event-codes.h>
-> +#include <dt-bindings/interrupt-controller/irq.h>
-> +#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-> +#include <dt-bindings/spmi/spmi.h>
-> +
-> +/ {
-> +       thermal-zones {
-> +               pm8937-thermal {
-> +                       polling-delay-passive =3D <0>;
-> +                       polling-delay =3D <0>;
-> +                       thermal-sensors =3D <&pm8937_temp>;
-> +
-> +                       trips {
-> +                               pm8937_trip0: pm8937-trip0 {
-
-I don't think you need labels here. Also you can drop PMIC name from
-trip point node names.
-
-> +                                       temperature =3D <105000>;
-> +                                       hysteresis =3D <0>;
-> +                                       type =3D "passive";
-> +                               };
-> +                               pm8937_trip1: pm8937-trip1 {
-> +                                       temperature =3D <125000>;
-> +                                       hysteresis =3D <0>;
-> +                                       type =3D "passive";
-> +                               };
-> +                               pm8937_trip2: pm8937-trip2 {
-> +                                       temperature =3D <145000>;
-> +                                       hysteresis =3D <0>;
-> +                                       type =3D "passive";
-
-145=C2=B0C is very hot for the passive trip point
-
-Comparing this with other platforms, 125=C2=B0C can be "hot" and 145=C2=B0C=
- is "critical".
-
-Other than that:
+>  drivers/regulator/qcom_spmi-regulator.c | 34 +++++++++++++++++++++++++++++++++
+>  1 file changed, 34 insertions(+)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-> +                               };
-> +                       };
-> +               };
-> +       };
-> +};
 
 
---=20
+--
 With best wishes
 Dmitry
