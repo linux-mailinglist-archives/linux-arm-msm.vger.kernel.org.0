@@ -2,57 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DC907E229C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 14:00:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id BA4607E22BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 14:04:28 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231676AbjKFNAj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 08:00:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58040 "EHLO
+        id S231738AbjKFNE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 08:04:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52412 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231590AbjKFNAi (ORCPT
+        with ESMTP id S231641AbjKFNE1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 08:00:38 -0500
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BFBCB8
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 05:00:35 -0800 (PST)
-Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-d9b9adaf291so3723162276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 05:00:35 -0800 (PST)
+        Mon, 6 Nov 2023 08:04:27 -0500
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C51910A
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 05:04:23 -0800 (PST)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-1eb39505ba4so2740253fac.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 05:04:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699275634; x=1699880434; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699275862; x=1699880662; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=GsPAHuuacaXRxIMIbqeYFW832Idaj5Z8NonFcgzOGQQ=;
-        b=GjaU3l4kia/urkfICgVHVWjT+p9YlH/qqqDFw37gEX1L1V/x4qDAjH64Gd7xf5jzyf
-         7OWi5dB1JwWhPmmrwhfxXZFp+v2CBRhezsaeM6ZBwIdvKm+W1p/Rc6B+aaIuOx4MpgB8
-         jgPW5wHgzxxrH1e9yQITzkPJBBUrlc3UQCMeYvT5l0O9ZxhH8taMyCEwWL4p8CGoGfGv
-         Y3mxeEt3QVAYZrxViNVmi5EOqJOF5doYCaHKKsUF4e2YqjVveFp3oMWgCWKh/0mXEGvf
-         0so/rckVg2zownx+OZw3J9bgs029mrhUS0+irYpdJvY7ghTpME/RWSoCOC6Kg6fpVOu0
-         JUCA==
+        bh=C5eVmNAONKBSMMyy+trlqek0ekUCKHBQR7aBuMQnyPY=;
+        b=w5+RSnfIZ1i/wrJLGONhXwhSF2NsxCq/ABmriO19yWQgerpFS4xnVvZnfveHQuYsHl
+         5oegPAailI3FZfe4LQPl5fDCZJVENGtu9eqCXsr95zWGjfLrVSjCItkiFMxQe5vmMB7P
+         gZD5WUY0nORtPLYTowruHUGTptSCdP6ImULotgiCe9VEFEoTjSRW3vZv0pYpAERyTCOY
+         pj6/JAvMb+4WM0DvzQ7den9494khoul24y3M3nKpcBeZUoa4wGxGBXGZSjAf0TaXSNKW
+         9+dfXYdVfyuw4GTeedKGRp5MYz/ImTsAz8JAKOlg/YpxMMnEOLGd5bYzlAZZak8wCX3w
+         6+eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699275634; x=1699880434;
+        d=1e100.net; s=20230601; t=1699275862; x=1699880662;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=GsPAHuuacaXRxIMIbqeYFW832Idaj5Z8NonFcgzOGQQ=;
-        b=E4YI0DjL9pMI2o/wdLqFkQ/GnV4qS3OaDfj7fCIUDDIc7q3yc8b/L2c499gb1ros60
-         oJZmpFcUK/bh1vQC18ZVWoTrpcfP4P+dQfAhpaafVS9rMNVzUH4hyQ5efimslfyX3KRl
-         pupaHZUvI1/TOx1m5Egb56MzZq6JApVGXLubkq+t3wTbnuPGirubdXRxxCkyTgO8mHXl
-         mRV+T3lh3GUO6Rt8cW28UT90DvL717jwI+zPGUgEnCN6ky8c5k+i3mXHB2c0X1wZb7f9
-         8LmgBk3IWi6W7i5GvzapfZvgOVytMYdddOFmiXPfQvylgFvGfTSDwiP59TPCg4tGfYfN
-         lOxw==
-X-Gm-Message-State: AOJu0Yxx98uz1bnJ1zE2SmlkD6uyR9VqNh6MnnPPCZGt40UuNDkYi9vl
-        bp5wEvDV0HkL3w7fKEoLz+AWpDLd32zYi97y+eiHog==
-X-Google-Smtp-Source: AGHT+IGGAQ0SPeS9k4vThxvaIdIq5zE1xB8+xmEuSjhUvM+qfy1Ks2t7vu34m9fYxaX8ybZo779u9UEx0SnF2U0/H4U=
-X-Received: by 2002:a25:d047:0:b0:da0:3b6c:fc22 with SMTP id
- h68-20020a25d047000000b00da03b6cfc22mr24752762ybg.31.1699275634492; Mon, 06
- Nov 2023 05:00:34 -0800 (PST)
+        bh=C5eVmNAONKBSMMyy+trlqek0ekUCKHBQR7aBuMQnyPY=;
+        b=f6T3mLbJStl8uEonKqaP4l7FVxTkZf4KzqrlsCdF3/FqTv+QitULvNGV9XfjlVksve
+         5loUe1gM71iBHTQCS7ca4nqMr2kcRUAjrGtS+r3kZBvY5DPhlZ7mD/gySdDce1jKJcDX
+         qUkucJa71ns/9HzZgJ0cq5AXPz4tpy6/Pj4RyvwCzL1ID/wZv86zZEffeazAfho94QVV
+         sAf/mb3ULEQXM8JzIw86KmKdCWw9mdgE9vCby3D/Ue6t/yFYEY4g5BndCAsA/R3puIX8
+         K0QZeLsfBNb3/qzrx5I4faxQe5g+lvPtfPsVd4W2lhgUtbNSluZT1Jwnv7rH32IpSAKn
+         7P4w==
+X-Gm-Message-State: AOJu0YzC2P1B4GX8DmsuuCTJBnE25esSGZtDhu2NFXDVrUIIIuZfnKrE
+        QnWGI1ZaS56Z7KfoPmVwkI7CSoiAeHkGXHVkC3HEpQ==
+X-Google-Smtp-Source: AGHT+IFHqKhB1wMxHu8Srrew3duilO6EXP4mM1DNi+Ebxai0n13IsIUNU62pjLo9Oj624Z2/oLchCiWUtIxMa1P6w8A=
+X-Received: by 2002:a05:6870:90d5:b0:1d0:d9e2:985f with SMTP id
+ s21-20020a05687090d500b001d0d9e2985fmr30085226oab.57.1699275862329; Mon, 06
+ Nov 2023 05:04:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20231106103027.3988871-1-quic_imrashai@quicinc.com> <20231106103027.3988871-3-quic_imrashai@quicinc.com>
-In-Reply-To: <20231106103027.3988871-3-quic_imrashai@quicinc.com>
+References: <20231106103027.3988871-1-quic_imrashai@quicinc.com> <20231106103027.3988871-4-quic_imrashai@quicinc.com>
+In-Reply-To: <20231106103027.3988871-4-quic_imrashai@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 6 Nov 2023 15:00:23 +0200
-Message-ID: <CAA8EJpqcyh1YrfHkdYaZfjyEDjKiV+HixrhcfPzsuTPwA5pzTQ@mail.gmail.com>
-Subject: Re: [PATCH V3 2/4] clk: qcom: branch: Add mem ops support for branch2 clocks
+Date:   Mon, 6 Nov 2023 15:04:10 +0200
+Message-ID: <CAA8EJpoGLCfrWQ5r8cOcqyWmF2ZTTqPxFy_HVzPC-A-dCiV48A@mail.gmail.com>
+Subject: Re: [PATCH V3 3/4] clk: qcom: Add ECPRICC driver support for QDU1000
+ and QRU1000
 To:     Imran Shaik <quic_imrashai@quicinc.com>
 Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -70,7 +71,7 @@ Cc:     Andy Gross <agross@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,123 +79,744 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Nov 2023 at 12:31, Imran Shaik <quic_imrashai@quicinc.com> wrote:
+On Mon, 6 Nov 2023 at 12:32, Imran Shaik <quic_imrashai@quicinc.com> wrote:
 >
-> From: Taniya Das <quic_tdas@quicinc.com>
+> Add ECPRI Clock Controller (ECPRICC) support for QDU1000 and QRU1000 SoCs.
+
+After reading this series I have one main question. What is ECPRI?
+You've never expanded this acronym.
+
 >
-> Clock CBCRs with memories need an update for memory before enable/disable
-> of the clock, which helps retain the respective block's register contents.
-> Add support for the mem ops to handle this sequence.
->
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-
-It would be nice to have a description of what is 'CBCR with memories'
-and how does it differ from CBCR_FORCE_MEM_CORE_ON?
-
 > ---
->  drivers/clk/qcom/clk-branch.c | 39 +++++++++++++++++++++++++++++++++++
->  drivers/clk/qcom/clk-branch.h | 21 +++++++++++++++++++
->  2 files changed, 60 insertions(+)
+>  drivers/clk/qcom/Kconfig           |    9 +
+>  drivers/clk/qcom/Makefile          |    1 +
+>  drivers/clk/qcom/ecpricc-qdu1000.c | 2456 ++++++++++++++++++++++++++++
+>  3 files changed, 2466 insertions(+)
+>  create mode 100644 drivers/clk/qcom/ecpricc-qdu1000.c
 >
-> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
-> index fc4735f74f0f..61bdd2147bed 100644
-> --- a/drivers/clk/qcom/clk-branch.c
-> +++ b/drivers/clk/qcom/clk-branch.c
-> @@ -1,6 +1,7 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /*
->   * Copyright (c) 2013, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->   */
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index ad1acd9b7426..9e54afc67519 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -668,6 +668,15 @@ config QDU_GCC_1000
+>           QRU1000 devices. Say Y if you want to use peripheral
+>           devices such as UART, SPI, I2C, USB, SD, PCIe, etc.
 >
->  #include <linux/kernel.h>
-> @@ -134,6 +135,44 @@ static void clk_branch2_disable(struct clk_hw *hw)
->         clk_branch_toggle(hw, false, clk_branch2_check_halt);
->  }
->
-> +static int clk_branch2_mem_enable(struct clk_hw *hw)
-> +{
-> +       struct clk_mem_branch *mem_br = to_clk_mem_branch(hw);
-> +       struct clk_branch branch = mem_br->branch;
-> +       const char *name = clk_hw_get_name(&branch.clkr.hw);
-> +       u32 val;
-> +       int ret;
+> +config QDU_ECPRICC_1000
+> +       tristate "QDU1000/QRU1000 ECPRI Clock Controller"
+> +       depends on ARM64 || COMPILE_TEST
+> +       select QDU_GCC_1000
+> +       help
+> +         Support for the ECPRI clock controller on QDU1000 and
+> +         QRU1000 devices. Say Y if you want to support the ECPRI
+> +         clock controller functionality such as Ethernet.
 > +
-> +       regmap_update_bits(branch.clkr.regmap, mem_br->mem_enable_reg,
-> +                       mem_br->mem_enable_ack_mask, mem_br->mem_enable_ack_mask);
+>  config SDM_GCC_845
+>         tristate "SDM845/SDM670 Global Clock Controller"
+>         depends on ARM64 || COMPILE_TEST
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index 17edd73f9839..607ed0fabf36 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -65,6 +65,7 @@ obj-$(CONFIG_QCM_DISPCC_2290) += dispcc-qcm2290.o
+>  obj-$(CONFIG_QCS_GCC_404) += gcc-qcs404.o
+>  obj-$(CONFIG_QCS_Q6SSTOP_404) += q6sstop-qcs404.o
+>  obj-$(CONFIG_QCS_TURING_404) += turingcc-qcs404.o
+> +obj-$(CONFIG_QDU_ECPRICC_1000) += ecpricc-qdu1000.o
+>  obj-$(CONFIG_QDU_GCC_1000) += gcc-qdu1000.o
+>  obj-$(CONFIG_SC_CAMCC_7180) += camcc-sc7180.o
+>  obj-$(CONFIG_SC_CAMCC_7280) += camcc-sc7280.o
+> diff --git a/drivers/clk/qcom/ecpricc-qdu1000.c b/drivers/clk/qcom/ecpricc-qdu1000.c
+> new file mode 100644
+> index 000000000000..a430b7228c26
+> --- /dev/null
+> +++ b/drivers/clk/qcom/ecpricc-qdu1000.c
+> @@ -0,0 +1,2456 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+
+[skipped]
+
+
 > +
-> +       ret = regmap_read_poll_timeout(branch.clkr.regmap, mem_br->mem_ack_reg,
-> +                       val, val & mem_br->mem_enable_ack_mask, 0, 200);
-> +       if (ret) {
-> +               WARN(1, "%s mem enable failed\n", name);
-> +               return ret;
-> +       }
-> +
-> +       return clk_branch2_enable(hw);
-> +}
-> +
-> +static void clk_branch2_mem_disable(struct clk_hw *hw)
-> +{
-> +       struct clk_mem_branch *mem_br = to_clk_mem_branch(hw);
-> +
-> +       regmap_update_bits(mem_br->branch.clkr.regmap, mem_br->mem_enable_reg,
-> +                                               mem_br->mem_enable_ack_mask, 0);
-> +
-> +       return clk_branch2_disable(hw);
-> +}
-> +
-> +const struct clk_ops clk_branch2_mem_ops = {
-> +       .enable = clk_branch2_mem_enable,
-> +       .disable = clk_branch2_mem_disable,
-> +       .is_enabled = clk_is_enabled_regmap,
-> +};
-> +EXPORT_SYMBOL_GPL(clk_branch2_mem_ops);
-> +
->  const struct clk_ops clk_branch2_ops = {
->         .enable = clk_branch2_enable,
->         .disable = clk_branch2_disable,
-> diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
-> index 0cf800b9d08d..8ffed603c050 100644
-> --- a/drivers/clk/qcom/clk-branch.h
-> +++ b/drivers/clk/qcom/clk-branch.h
-> @@ -38,6 +38,23 @@ struct clk_branch {
->         struct clk_regmap clkr;
->  };
->
-> +/**
-> + * struct clk_mem_branch - gating clock which are associated with memories
-> + *
-> + * @mem_enable_reg: branch clock memory gating register
-> + * @mem_ack_reg: branch clock memory ack register
-> + * @mem_enable_ack_mask: branch clock memory enable and ack field in @mem_ack_reg
-> + * @branch: branch clock gating handle
-> + *
-> + * Clock which can gate its memories.
-> + */
-> +struct clk_mem_branch {
-> +       u32     mem_enable_reg;
-> +       u32     mem_ack_reg;
-> +       u32     mem_enable_ack_mask;
-> +       struct clk_branch branch;
+> +static struct clk_mem_branch ecpri_cc_eth_phy_0_ock_sram_clk = {
+> +       .mem_enable_reg = 0x8404,
+> +       .mem_ack_reg = 0x8418,
+> +       .mem_enable_ack_mask = BIT(6),
+> +       .branch = {
+> +               .halt_reg = 0xd140,
+> +               .halt_check = BRANCH_HALT,
+> +               .clkr = {
+> +                       .enable_reg = 0xd140,
+> +                       .enable_mask = BIT(0),
+> +                       .hw.init = &(const struct clk_init_data) {
+> +                               .name = "ecpri_cc_eth_phy_0_ock_sram_clk",
+> +                               .ops = &clk_branch2_mem_ops,
+
+This (and several following branch clocks) do not have a parent
+defined. From which clock are they derived from?
+
+> +                       },
+> +               },
+> +       },
 > +};
 > +
->  /* Branch clock common bits for HLOS-owned clocks */
->  #define CBCR_CLK_OFF                   BIT(31)
->  #define CBCR_NOC_FSM_STATUS            GENMASK(30, 28)
-> @@ -85,8 +102,12 @@ extern const struct clk_ops clk_branch_ops;
->  extern const struct clk_ops clk_branch2_ops;
->  extern const struct clk_ops clk_branch_simple_ops;
->  extern const struct clk_ops clk_branch2_aon_ops;
-> +extern const struct clk_ops clk_branch2_mem_ops;
->
->  #define to_clk_branch(_hw) \
->         container_of(to_clk_regmap(_hw), struct clk_branch, clkr)
->
-> +#define to_clk_mem_branch(_hw) \
-> +       container_of(to_clk_branch(_hw), struct clk_mem_branch, branch)
+> +static struct clk_mem_branch ecpri_cc_eth_phy_1_ock_sram_clk = {
+> +       .mem_enable_reg = 0x8408,
+> +       .mem_ack_reg = 0x841C,
+> +       .mem_enable_ack_mask = BIT(6),
+> +       .branch = {
+> +               .halt_reg = 0xd148,
+> +               .halt_check = BRANCH_HALT,
+> +               .clkr = {
+> +                       .enable_reg = 0xd148,
+> +                       .enable_mask = BIT(0),
+> +                       .hw.init = &(const struct clk_init_data) {
+> +                               .name = "ecpri_cc_eth_phy_1_ock_sram_clk",
+> +                               .ops = &clk_branch2_mem_ops,
+> +                       },
+> +               },
+> +       },
+> +};
 > +
->  #endif
+> +static struct clk_mem_branch ecpri_cc_eth_phy_2_ock_sram_clk = {
+> +       .mem_enable_reg = 0x840c,
+> +       .mem_ack_reg = 0x8420,
+> +       .mem_enable_ack_mask = BIT(6),
+> +       .branch = {
+> +               .halt_reg = 0xd150,
+> +               .halt_check = BRANCH_HALT,
+> +               .clkr = {
+> +                       .enable_reg = 0xd150,
+> +                       .enable_mask = BIT(0),
+> +                       .hw.init = &(const struct clk_init_data) {
+> +                               .name = "ecpri_cc_eth_phy_2_ock_sram_clk",
+> +                               .ops = &clk_branch2_mem_ops,
+> +                       },
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_mem_branch ecpri_cc_eth_phy_3_ock_sram_clk = {
+> +       .mem_enable_reg = 0x8410,
+> +       .mem_ack_reg = 0x8424,
+> +       .mem_enable_ack_mask = BIT(6),
+> +       .branch = {
+> +               .halt_reg = 0xd158,
+> +               .halt_check = BRANCH_HALT,
+> +               .clkr = {
+> +                       .enable_reg = 0xd158,
+> +                       .enable_mask = BIT(0),
+> +                       .hw.init = &(const struct clk_init_data) {
+> +                               .name = "ecpri_cc_eth_phy_3_ock_sram_clk",
+> +                               .ops = &clk_branch2_mem_ops,
+> +                       },
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_mem_branch ecpri_cc_eth_phy_4_ock_sram_clk = {
+> +       .mem_enable_reg = 0x8414,
+> +       .mem_ack_reg = 0x8428,
+> +       .mem_enable_ack_mask = BIT(6),
+> +       .branch = {
+> +               .halt_reg = 0xd160,
+> +               .halt_check = BRANCH_HALT,
+> +               .clkr = {
+> +                       .enable_reg = 0xd160,
+> +                       .enable_mask = BIT(0),
+> +                       .hw.init = &(const struct clk_init_data) {
+> +                               .name = "ecpri_cc_eth_phy_4_ock_sram_clk",
+> +                               .ops = &clk_branch2_mem_ops,
+> +                       },
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_mss_emac_clk = {
+> +       .halt_reg = 0xe008,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xe008,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_mss_emac_clk",
+> +                       .parent_hws = (const struct clk_hw*[]) {
+> +                               &ecpri_cc_mss_emac_clk_src.clkr.hw,
+> +                       },
+> +                       .num_parents = 1,
+> +                       .flags = CLK_SET_RATE_PARENT,
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_mss_oran_clk = {
+> +       .halt_reg = 0xe004,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xe004,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_mss_oran_clk",
+> +                       .parent_hws = (const struct clk_hw*[]) {
+> +                               &ecpri_cc_ecpri_oran_clk_src.clkr.hw,
+> +                       },
+> +                       .num_parents = 1,
+> +                       .flags = CLK_SET_RATE_PARENT,
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy0_lane0_rx_clk = {
+> +       .halt_reg = 0xd000,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd000,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy0_lane0_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy0_lane0_tx_clk = {
+> +       .halt_reg = 0xd050,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd050,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy0_lane0_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy0_lane1_rx_clk = {
+> +       .halt_reg = 0xd004,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd004,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy0_lane1_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy0_lane1_tx_clk = {
+> +       .halt_reg = 0xd054,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd054,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy0_lane1_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy0_lane2_rx_clk = {
+> +       .halt_reg = 0xd008,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd008,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy0_lane2_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy0_lane2_tx_clk = {
+> +       .halt_reg = 0xd058,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd058,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy0_lane2_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy0_lane3_rx_clk = {
+> +       .halt_reg = 0xd00c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd00c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy0_lane3_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy0_lane3_tx_clk = {
+> +       .halt_reg = 0xd05c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd05c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy0_lane3_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy1_lane0_rx_clk = {
+> +       .halt_reg = 0xd010,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd010,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy1_lane0_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy1_lane0_tx_clk = {
+> +       .halt_reg = 0xd060,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd060,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy1_lane0_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy1_lane1_rx_clk = {
+> +       .halt_reg = 0xd014,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd014,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy1_lane1_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy1_lane1_tx_clk = {
+> +       .halt_reg = 0xd064,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd064,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy1_lane1_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy1_lane2_rx_clk = {
+> +       .halt_reg = 0xd018,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd018,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy1_lane2_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy1_lane2_tx_clk = {
+> +       .halt_reg = 0xd068,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd068,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy1_lane2_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy1_lane3_rx_clk = {
+> +       .halt_reg = 0xd01c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd01c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy1_lane3_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy1_lane3_tx_clk = {
+> +       .halt_reg = 0xd06c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd06c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy1_lane3_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy2_lane0_rx_clk = {
+> +       .halt_reg = 0xd020,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd020,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy2_lane0_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy2_lane0_tx_clk = {
+> +       .halt_reg = 0xd070,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd070,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy2_lane0_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy2_lane1_rx_clk = {
+> +       .halt_reg = 0xd024,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd024,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy2_lane1_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy2_lane1_tx_clk = {
+> +       .halt_reg = 0xd074,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd074,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy2_lane1_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy2_lane2_rx_clk = {
+> +       .halt_reg = 0xd028,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd028,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy2_lane2_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy2_lane2_tx_clk = {
+> +       .halt_reg = 0xd078,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd078,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy2_lane2_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy2_lane3_rx_clk = {
+> +       .halt_reg = 0xd02c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd02c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy2_lane3_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy2_lane3_tx_clk = {
+> +       .halt_reg = 0xd07c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd07c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy2_lane3_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy3_lane0_rx_clk = {
+> +       .halt_reg = 0xd030,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd030,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy3_lane0_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy3_lane0_tx_clk = {
+> +       .halt_reg = 0xd080,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd080,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy3_lane0_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy3_lane1_rx_clk = {
+> +       .halt_reg = 0xd034,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd034,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy3_lane1_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy3_lane1_tx_clk = {
+> +       .halt_reg = 0xd084,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd084,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy3_lane1_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy3_lane2_rx_clk = {
+> +       .halt_reg = 0xd038,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd038,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy3_lane2_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy3_lane2_tx_clk = {
+> +       .halt_reg = 0xd088,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd088,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy3_lane2_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy3_lane3_rx_clk = {
+> +       .halt_reg = 0xd03c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd03c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy3_lane3_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy3_lane3_tx_clk = {
+> +       .halt_reg = 0xd08c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd08c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy3_lane3_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy4_lane0_rx_clk = {
+> +       .halt_reg = 0xd040,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd040,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy4_lane0_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy4_lane0_tx_clk = {
+> +       .halt_reg = 0xd090,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd090,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy4_lane0_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy4_lane1_rx_clk = {
+> +       .halt_reg = 0xd044,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd044,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy4_lane1_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy4_lane1_tx_clk = {
+> +       .halt_reg = 0xd094,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd094,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy4_lane1_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy4_lane2_rx_clk = {
+> +       .halt_reg = 0xd048,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd048,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy4_lane2_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy4_lane2_tx_clk = {
+> +       .halt_reg = 0xd098,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd098,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy4_lane2_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy4_lane3_rx_clk = {
+> +       .halt_reg = 0xd04c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd04c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy4_lane3_rx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+> +
+> +static struct clk_branch ecpri_cc_phy4_lane3_tx_clk = {
+> +       .halt_reg = 0xd09c,
+> +       .halt_check = BRANCH_HALT,
+> +       .clkr = {
+> +               .enable_reg = 0xd09c,
+> +               .enable_mask = BIT(0),
+> +               .hw.init = &(const struct clk_init_data) {
+> +                       .name = "ecpri_cc_phy4_lane3_tx_clk",
+> +                       .ops = &clk_branch2_ops,
+> +               },
+> +       },
+> +};
+
+[skipped]
+
+> +static int ecpri_cc_qdu1000_probe(struct platform_device *pdev)
+> +{
+> +       struct regmap *regmap;
+> +
+> +       regmap = qcom_cc_map(pdev, &ecpri_cc_qdu1000_desc);
+> +       if (IS_ERR(regmap))
+> +               return PTR_ERR(regmap);
+> +
+> +       clk_lucid_evo_pll_configure(&ecpri_cc_pll0, regmap, &ecpri_cc_pll0_config);
+> +       clk_lucid_evo_pll_configure(&ecpri_cc_pll1, regmap, &ecpri_cc_pll1_config);
+> +
+> +       return qcom_cc_really_probe(pdev, &ecpri_cc_qdu1000_desc, regmap);
+> +}
+> +
+> +static struct platform_driver ecpri_cc_qdu1000_driver = {
+> +       .probe = ecpri_cc_qdu1000_probe,
+> +       .driver = {
+> +               .name = "ecpri_cc-qdu1000",
+> +               .of_match_table = ecpri_cc_qdu1000_match_table,
+> +       },
+> +};
+> +
+> +module_platform_driver(ecpri_cc_qdu1000_driver);
+> +
+> +MODULE_DESCRIPTION("QTI ECPRICC QDU1000 Driver");
+> +MODULE_LICENSE("GPL");
 > --
 > 2.25.1
 >
