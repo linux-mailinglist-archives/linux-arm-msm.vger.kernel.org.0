@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CFE87E2941
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 17:00:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A8D677E2952
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 17:02:42 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232375AbjKFQAs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 11:00:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58042 "EHLO
+        id S232564AbjKFQCn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 11:02:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231881AbjKFQAr (ORCPT
+        with ESMTP id S231881AbjKFQCm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 11:00:47 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 211BA118
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 08:00:44 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c5720a321aso61976771fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 08:00:44 -0800 (PST)
+        Mon, 6 Nov 2023 11:02:42 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24880118
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 08:02:39 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-32f70391608so2402720f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 08:02:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699286442; x=1699891242; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699286557; x=1699891357; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VyUVTN1M5a232QHSATvzR6NdZs204FvtCzNAQj0DPbM=;
-        b=J8bcSonXuH+ukLF4juVyIJYOXUhcEbmM4cujxLNQU7DJJiK86pJL/TZXOEgA4u56IL
-         oaAznj/euM0DG7Azb3Pp+xcTiL+y5kxP/usrw0chQN9fMhVupfYNGZSNFFeM1Alpt/8G
-         ku/Kj8zBv011rBpxGY+bBFeIAhgC8/9BpcXLwbTmEse3O3FRu7jNsFVZ9Li+0SHwvDfR
-         2YhbFzZQF5MBp2FtbdFr463g20XkZAttatSDLzH638nAmKaYDcXuq5B6T4LJ8vZuB3Vq
-         8H9rewFYPGLrnOuqGai/9Z8LmsV/HKK4ibqkjbQIXLZx1Kze1ynZvVo9EbLSiPf5sNpp
-         EoOA==
+        bh=+9b+WrpVJ5Bra4/8dNX9onA4RcJtXe4j7EycQNcq2/s=;
+        b=yDcxkfInypp6EsGgnI20nRuMkgYanDpi/ZqcBMi2wZLlK4ux399ZYLqp/oRI7j9vbl
+         4Vq0EiPgo2HUQh8tOHC8RJhw3u2EADK43EIfKotu9vaSiZCkmx2Lakh9pPudA7ExIbcO
+         kjsrCTql8PhclVVLTeqo1Vrg8+mBBiuoJCSBsWLN3VSDvZ8p+OtQGdtjstj+pcVSmis5
+         NeF1YV1h75M3sDnNT8cbUFRwx/yHb20jM2RjTiLpLPWAz0TyIXAcxr8LNd6OZe9L+xi4
+         yoazdrmNOshZ96J7R/JhNTaGh3ttT6ZYCVMU7xBygQ3z/zmPPOsCtKXzTzkTRvdIS13/
+         T8og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699286442; x=1699891242;
+        d=1e100.net; s=20230601; t=1699286557; x=1699891357;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VyUVTN1M5a232QHSATvzR6NdZs204FvtCzNAQj0DPbM=;
-        b=XTPr2977cdNM/Htc8i1KJRO+B4Mni+TER+y//RKXoBNu3nYa2guyk/pro5KaaWrAQ5
-         V5oQxiW5yawSJ9+KA7xMBSPwPu3xsKXbYFPG0DYR5fVZbibIcDiN9pE779dnLhk07xOS
-         DY74qgfLUg5vkiHPynOOzoESFhuCoHocZV9afJjMCA+xqQecPmygXClgxUDGLn0fF0g4
-         do3dxaYgJR9YfPHXmTno9oMEmAlDWBH22QqzOnbj13wH+C/j+uKWVQU/s0rP1b/fGTGn
-         dQ49B9Ma+y1311/Ii4hm3Rk4aeufYaari7YZD9dQqc0dEIEc0Emrg1Gzbz3cbeuDzGF5
-         7wbQ==
-X-Gm-Message-State: AOJu0YwmZAkRBjsQHGhkAJWhK2XnKkKgUVkvdTqBvhiCqEvshQsnjDKx
-        PrELN6MVIzvx0ePDD4tvKsEfvw==
-X-Google-Smtp-Source: AGHT+IG9qDXz1a+/65q4qd+aBHpwa6c/lpvHr42huInEa6zCKjM1+Eak4xU/aGS9J1Wa5Z7+2k4Ciw==
-X-Received: by 2002:a2e:a694:0:b0:2c0:318a:6ee1 with SMTP id q20-20020a2ea694000000b002c0318a6ee1mr20267498lje.49.1699286442295;
-        Mon, 06 Nov 2023 08:00:42 -0800 (PST)
+        bh=+9b+WrpVJ5Bra4/8dNX9onA4RcJtXe4j7EycQNcq2/s=;
+        b=bWpboWxOXxTVwSF4RgkQv2EMRtrN4U/gtpdeB5J+0ImbRYqAC5tQKH1RTao7QE+0MN
+         4EU38qy6/oBd03qBcjyubI6l8yGs+xjI57ViXyvUlAJuhbV7w92PfjzO2FQMc+hB1Rw7
+         YjP83KmN2AMrPBGK32QWwX2GhS4jtdISx1yGthqpP9vZzvwnLVKFixr5NdpHy/taKhky
+         mgbhb2A5iOg/nppjXPYBEbfZ2D+SAZMqvcQmZpaLPSI+qwtBcX2DG4ovDaWklWIbdABm
+         QbdyKplRVtCRtLcrEmCAh13NZxGzrDnSBoNX6WSYKQ31l1TWI7e/6M44Nu+xh6oihPOv
+         SpKQ==
+X-Gm-Message-State: AOJu0YxZsUJMrqVv/SO9QyI63yW8P/+xlM9DmVRpVUsx8GgPnsB97B3d
+        thdLwM1yctncu4aOscYBmmSWGg==
+X-Google-Smtp-Source: AGHT+IFSjIBCq6IEeVd+jRNKgGBxZoq6cOWS+01kPWKw9GGWS2LVMBl4b6MFK3+CGY0XuHOoUi2KtA==
+X-Received: by 2002:a05:6000:1f83:b0:32f:84e3:9db5 with SMTP id bw3-20020a0560001f8300b0032f84e39db5mr19602538wrb.6.1699286557461;
+        Mon, 06 Nov 2023 08:02:37 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id az34-20020a05600c602200b004076f522058sm12954868wmb.0.2023.11.06.08.00.40
+        by smtp.gmail.com with ESMTPSA id g8-20020a5d4888000000b0032f7cc56509sm2203853wrq.98.2023.11.06.08.02.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Nov 2023 08:00:41 -0800 (PST)
-Message-ID: <9ab9694e-2595-4e88-8a39-c035378c15f4@linaro.org>
-Date:   Mon, 6 Nov 2023 17:00:39 +0100
+        Mon, 06 Nov 2023 08:02:36 -0800 (PST)
+Message-ID: <757e9f3c-e70e-457e-a6d5-6d204b7294c5@linaro.org>
+Date:   Mon, 6 Nov 2023 17:02:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: sm8450: fix soundwire controllers node
@@ -129,11 +129,8 @@ On 06/11/2023 16:58, Neil Armstrong wrote:
 > Fix the following dt bindings check:
 > arch/arm64/boot/dts/qcom/sm8450-hdk.dtb: soundwire-controller@31f0000: $nodename:0: 'soundwire-controller@31f0000' does not match '^soundwire(@.*)?$'
 >         from schema $id: http://devicetree.org/schemas/soundwire/qcom,soundwire.yaml#
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Wait, how did you get this? There is no such pattern enforcement.
 
 Best regards,
 Krzysztof
