@@ -2,154 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB0797E2CDB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 20:32:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F99C7E2F1E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 22:49:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231277AbjKFTcU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 14:32:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54702 "EHLO
+        id S232005AbjKFVtL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 16:49:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232196AbjKFTcU (ORCPT
+        with ESMTP id S233005AbjKFVtK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 14:32:20 -0500
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76315103;
-        Mon,  6 Nov 2023 11:32:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1699299133; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=XgdK8DDDpP7P/1cRCviflvC29vjgRoykNcFhCm6wzuO5yiCNenKwOZFVDeIawWXRBz
-    /tV82bPOlkiaZiWDf1Yqjne2h17MUcpdnqNlojZAmh9Rf7REU2M4Vz8qGRkGox/36Uun
-    1xHoZE/+nKlbGYzdHi2q+zTHIYDlESTk35rlP/ieTi1YXgwlZdA3qlGExsxwiMi+hHgK
-    H6J+Q3kqC1anvaXvePgdQn9o6lI09CDc12GCDegHVjmYswGlH2aG/rOCXyvn+Tr8fTr6
-    v6eYOHACHB9dtrDQ4IyzpaBKoN+cpOUfo466LNqILm1dgAEy0S2m/gN0tN/kxgZsA8dN
-    02iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1699299133;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=57RQjPWYE9g4BN2v5kN64PfbhlJAlDmf3yAW/OfR5M8=;
-    b=hflZzDUklEr6swZnMYCJG8fxNOm/pxuM7zc3ADVSDRblZSwVmNSdgiWnwuo/8Fxyja
-    cVDrAh+RnaV8RXMJPFFGBwSTHVEdk1VcTsIDKqH++YGfVjq3rWAHLPOGM/SayZ0fTrwx
-    7h6Sk5/iWGj6tTUryMmfAoN5sS8JPlPse9f8CH8iYzfatgs6Sb726XKhAHMbH7OGpNbh
-    UOADSycJf3WuBVAaYK6egytk9b15mNHg3nXJo4LkfBnHno/IJVYbt3YRc1oxApcVKduT
-    Vi76UlXLTOuUBOXHRcs5rONMc+zDZolHKZa0kUP2f5PkWZXw4MijVBa43Y8jVGTvNxZP
-    TYZQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1699299133;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=57RQjPWYE9g4BN2v5kN64PfbhlJAlDmf3yAW/OfR5M8=;
-    b=A47wv3mVHbDnzv9hd/VX6KibC7qG5NS2NA+nCQmgDeZoGy7B0AuRYAu8EURvXyux+V
-    GsupN8BpaRN6r/Zy479y43i6qONdLD3Gm9+1R9lOxMuZE8M387RK+SE+KdmksolunMbO
-    4MDEqfx61XVJvV8pQxY83ssUqpdS9HDKsvubSj0UyIw/KDr/cYH+lbkWaFrzdq37Gq6+
-    PgceXAKiEB9B7httlLbRPYJNg5+BXdp1LZBf4IRYla+2urK5FpLNN/g82Tg+6xJ15Rbl
-    2ChTQ/6cyG21GX6khluN1KYoPekV5wf6P0JF+yS2Ew/ItN3NgU2tXSiqUBaufdblM3bY
-    X9fQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1699299133;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=57RQjPWYE9g4BN2v5kN64PfbhlJAlDmf3yAW/OfR5M8=;
-    b=PKWoXJs2g1NzjZFqNDhnkHqrZds63JVCS15UTRSumafGZY+WrzTLn4NBgLZbMbho3p
-    ZauCBFKuaWaZQAw1Y7DQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z2L1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.9.1 DYNA|AUTH)
-    with ESMTPSA id Lbb8e2zA6JWDXXQ
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 6 Nov 2023 20:32:13 +0100 (CET)
-Date:   Mon, 6 Nov 2023 20:32:06 +0100
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Dang Huynh <danct12@riseup.net>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Lee Jones <lee@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>,
-        Robert Marko <robimarko@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH 5/8] regulator: qcom_smd: Add PM8937 regulators
-Message-ID: <ZUk_NmR9Hb922ZFF@gerhold.net>
-References: <20231106-pm8937-v1-0-ec51d9eeec53@riseup.net>
- <20231106-pm8937-v1-5-ec51d9eeec53@riseup.net>
- <CAA8EJprRT=thU-7_rfX6Qhk55iC9Hc0d8x46uyt-p4DOHCrrwQ@mail.gmail.com>
+        Mon, 6 Nov 2023 16:49:10 -0500
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54282D77
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 13:49:07 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2c51682fddeso63297191fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 13:49:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1699307345; x=1699912145; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iMUtXedtMfHyVhpNXb+9y7B6UprnYxiJrIY/x/1tAbY=;
+        b=fEtKcaBijM5yRdeB72nVnob3ImfXVWOdIGpNtRTrqZsEirDoanhYDVaXUCUli/qLZx
+         Dz5ki8EzfTMSNP5pXZlRVr+yC1bSk/ysNq1B7iHexm0fl6+6c9f4j00TuQkqOxrpXNgL
+         NoaT8eWUbxoGnFDZvtqkOIESybUndGAcPWGzw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699307345; x=1699912145;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iMUtXedtMfHyVhpNXb+9y7B6UprnYxiJrIY/x/1tAbY=;
+        b=dazTWiltOTi/tPZ18heKfsdeklXRRsB+qk+0TqN3XFKKHh6X7NAszs7KTtvxRQbMJn
+         bGk3KWzgOJ4k3SXZmJGY25dNmfvzshvoF2yOCQM9WD+UeAMmtJRzIpe7tejoT6oeMb3V
+         7RMrmIXHLwm54bpr2vVxhGmd+2po+ScUrxF3/UkzCZlm0z071cTSMSRIG2PnkMcMka9b
+         t4Vl8WF/+8Ayj7uFt7OZCNjNcw24JM1W+xNPTdnPCO6zoRzChQIdAk4Tc7YEd5a+ZBGn
+         Y7982N+X8ajlBjyePvCpAQx4BjppsBSGmboh4oqCSbbl1OoP5hUNarThHWLkq8/nNfZT
+         1wxw==
+X-Gm-Message-State: AOJu0YzSSd+jDoOt71t0VSlhznk7CVi/FUBI3xlof4/FVfB/DTXDF+58
+        zC8PId/jXCyAEW1uawzRND7SRlMxEXAMwNOLDJH43g==
+X-Google-Smtp-Source: AGHT+IHCr0f4oobPmpg4io2bupLLG0IzNyyolPOrELq/1yG34ld0ri2ZpgidIQCoT1Gj/+EHt+le3Xj3RzSVW9Xl5Dc=
+X-Received: by 2002:a2e:978d:0:b0:2c5:2357:c6a7 with SMTP id
+ y13-20020a2e978d000000b002c52357c6a7mr253471lji.17.1699307345582; Mon, 06 Nov
+ 2023 13:49:05 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 6 Nov 2023 13:49:04 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJprRT=thU-7_rfX6Qhk55iC9Hc0d8x46uyt-p4DOHCrrwQ@mail.gmail.com>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20231103163434.1.Ic7577567baff921347d423b722de8b857602efb1@changeid>
+References: <20231103163434.1.Ic7577567baff921347d423b722de8b857602efb1@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Mon, 6 Nov 2023 13:49:04 -0800
+Message-ID: <CAE-0n50vtad5hkkAuV-hvsnm+tTevd_4OSr3iGofBa5L8A0RQw@mail.gmail.com>
+Subject: Re: [PATCH 1/9] arm64: dts: qcom: sc7180: Make watchdog bark
+ interrupt edge triggered
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Guenter Roeck <linux@roeck-us.net>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-watchdog@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Andy Gross <agross@kernel.org>,
+        "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        Kees Cook <keescook@chromium.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Tony Luck <tony.luck@intel.com>,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Nov 06, 2023 at 02:15:12PM +0200, Dmitry Baryshkov wrote:
-> On Mon, 6 Nov 2023 at 14:11, Dang Huynh <danct12@riseup.net> wrote:
-> >
-> > The PM8937 is found on boards with MSM8917, MSM8937, MSM8940 SoCs and
-> > APQ variants.
-> >
-> > It provides 6 SMPS (two are controlled by SPMI) and 23 LDO regulators.
-> >
-> > Signed-off-by: Dang Huynh <danct12@riseup.net>
-> 
-> I haven't checked LDO / SMPS types.
+Quoting Douglas Anderson (2023-11-03 16:34:27)
+> On sc7180 when the watchdog timer fires your logs get filled with:
+>   watchdog0: pretimeout event
+>   watchdog0: pretimeout event
+>   watchdog0: pretimeout event
+>   ...
+>   watchdog0: pretimeout event
+>
+> If you're using console-ramoops to debug crashes the above gets quite
+> annoying since it blows away any other log messages that might have
+> been there.
+>
+> The issue is that the "bark" interrupt (AKA the "pretimeout"
+> interrupt) remains high until the watchdog is pet. Since we've got
+> things configured as "level" triggered we'll keep getting interrupted
+> over and over.
+>
+> Let's switch to edge triggered. Now we'll get one interrupt when the
+> "bark" interrupt goes off we'll get one interrupt and won't get
 
-That's kind of the part where one would most likely make mistakes
-though. :D
+"We'll get one" twice?
 
-I checked them based on the log Dang posted on IRC, by cross-referencing
-the voltage ranges with the regulator types in the SPMI regulator driver.
+> another one until the "bark" interrupt is cleared and asserts again.
+>
+> This matches how many older Qualcomm SoCs have things configured.
+>
+> Fixes: 28cc13e4060c ("arm64: dts: qcom: sc7180: Add watchdog bark interrupt")
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
 
-Looks good :)
-
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-
-Thanks,
-Stephan
-
-(bootloader) Detected PMIC 0x10019
-(bootloader)   s1: 1225000 mV, disabled,   fast  (smps)
-(bootloader)   s2: 1162500 mV,  enabled,   fast  (smps)
-(bootloader)   s3: 1412500 mV,  enabled,   fast  (smps)
-(bootloader)   s4: 2050000 mV,  enabled,   fast  (smps)
-(bootloader)   s5: 1225000 mV,  enabled,   fast  (ftsmps2p5)
-(bootloader)   s6: 1225000 mV,  enabled,   fast  (ftsmps2p5)
-(bootloader)   l1: 1000000 mV, disabled, normal  (ult_nldo)
-(bootloader)   l2: 1250000 mV,  enabled, normal  (ult_nldo)
-(bootloader)   l3: 1350000 mV,  enabled,   idle  (ult_nldo)
-(bootloader)   l4: 1800000 mV, disabled, normal  (ult_pldo)
-(bootloader)   l5: 1800000 mV,  enabled,   idle  (ult_pldo)
-(bootloader)   l6: 1800000 mV,  enabled, normal  (ult_pldo)
-(bootloader)   l7: 1800000 mV,  enabled, normal  (ult_pldo)
-(bootloader)   l8: 2900000 mV,  enabled, normal  (ult_pldo)
-(bootloader)   l9: 3300000 mV, disabled, normal  (ult_pldo)
-(bootloader)  l10: 2800000 mV, disabled, normal  (ult_pldo)
-(bootloader)  l11: 2950000 mV,  enabled, normal  (ult_pldo)
-(bootloader)  l12: 2950000 mV,  enabled, normal  (ult_pldo)
-(bootloader)  l13: 3075000 mV,  enabled, normal  (ult_pldo)
-(bootloader)  l14: 1800000 mV, disabled, normal  (ult_pldo)
-(bootloader)  l15: 1800000 mV, disabled, normal  (ult_pldo)
-(bootloader)  l16: 1800000 mV, disabled, normal  (ult_pldo)
-(bootloader)  l17: 2850000 mV,  enabled, normal  (ult_pldo)
-(bootloader)  l18: 2700000 mV, disabled, normal  (ult_pldo)
-(bootloader)  l19: 1300000 mV, disabled, normal  (ult_nldo)
-(bootloader)  l20: 1740000 mV, disabled  (ln_ldo)
-(bootloader)  l21: 1740000 mV, disabled  (ln_ldo)
-(bootloader)  l22: 2800000 mV, disabled, normal  (ult_pldo)
-(bootloader)  l23: 1300000 mV, disabled, normal  (nldo1)
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
