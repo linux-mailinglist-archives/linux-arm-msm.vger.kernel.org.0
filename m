@@ -2,67 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BCDEC7E1838
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 01:58:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CCC787E1936
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 04:43:18 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbjKFA6y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Nov 2023 19:58:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48610 "EHLO
+        id S230117AbjKFDnS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Nov 2023 22:43:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbjKFA6y (ORCPT
+        with ESMTP id S229485AbjKFDnS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Nov 2023 19:58:54 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 05 Nov 2023 16:58:49 PST
-Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D63DE0
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Nov 2023 16:58:49 -0800 (PST)
-Received: (qmail 5941 invoked by uid 990); 6 Nov 2023 00:52:06 -0000
-Authentication-Results: devico.uberspace.de;
-        auth=pass (plain)
-Message-ID: <06d6a503-7770-4e99-a4be-9a2870678d56@lausen.nl>
-Date:   Sun, 5 Nov 2023 19:51:58 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Freedreno] [PATCH v7 0/7] incorporate pm runtime framework and
- eDP clean up
-Content-Language: en-US
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org
-Cc:     quic_sbillaka@quicinc.com, linux-arm-msm@vger.kernel.org,
-        quic_abhinavk@quicinc.com, marijn.suijten@somainline.org,
-        quic_jesszhan@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Leonard Lausen <leonard@lausen.nl>
-In-Reply-To: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Bar: -
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-2.678521) XM_UA_NO_VERSION(0.01) MIME_GOOD(-0.1)
-X-Rspamd-Score: -1.268521
-Received: from unknown (HELO unkown) (::1)
-        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Mon, 06 Nov 2023 01:52:06 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=lausen.nl; s=uberspace;
-        h=from;
-        bh=Ikukj+p56W9fQ+/M9OzNzKR+W0ErNk+42/TcUwyRmz0=;
-        b=R2auO9p68OArumCmabX5uYYT0C0H3wZauRF9PztKLs7FLVT6uxoqb02hZYFFVaNqoB+gvazJ9X
-        43YA6vm+ky8XGD6kfG1QMfcTWCjsrIPNNt59r9NNmonQhvZXSGi/GYO+JIujTn0vfFgM3HGEnNPF
-        q35YswdGLjiGLPEDb27r/WfezTmV2GzNhtFvXWDpT4CcSfbyTSc05nBJreSjpgnL/kgRfBHjuomM
-        dLNSewaBYEW4ac09AZJeKQMET2gSHHWXevgjTU3zwZaK254fE15xr6F0bJ6LpIuz2IK5+ya9NWjp
-        g5CyRNhuZ/89Pe/jxhm3phufaAvB0ItHmsqzB+eSryCtd2/FbhZmzZ7eiRGvuXBGnnlx5AOZuXPA
-        qbXifh/Dc4Z5xsQY5w48uLecsLgd0tNPYruHkR073iWS1hQ/ACf5RVn5ZItdhUyFcxLzXyMgXKzL
-        4MJkwDleW5c15mAbLRk2+uYk+mHqGhnR6ZU5TeS/tq3ai3RqvNO13TdoI3FGMvwiGXqNbLxqavTN
-        Zh7MKFEycnKQ7QqTxuizVNDglIp2WgrBV2C4wqUH+oHOjT3cc+atYiG9IkirZUF4u9vgVAnECm2/
-        XpwzOSHbTiE9wX4o+n3kQ3tgabMXGw2R6rjsi/obMgTO3d2yUvuFh3mR64rgkVksQlDRbUfgEWYR
-        w=
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        Sun, 5 Nov 2023 22:43:18 -0500
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D548BD;
+        Sun,  5 Nov 2023 19:43:15 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A61u2VA028023;
+        Mon, 6 Nov 2023 03:42:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=OKCw/t7nq8IWz86AirlkzK8qrvqNo3WXJr+ctjpke+8=;
+ b=nkDViSWwZKbSH985yDSYTmI2qehm2O5LGHICXhv1k+h7HWh5zvIWW1TvPLfxyYb/teqp
+ flyDccDVsouIU5BLYZGPKLCwF3/ZIp2gqHWfLeRivJfXAJr+n21yghkZUGEsY6dNUmwv
+ kIRMhK+n8lkLnp53m/+N/2zMJswHMGmsK3VlV3W85Vvs2pd70YvaCkkYSr05yHyQUk3J
+ wAKA2xpVMWFdISdk0ojCWNprAeM0sbvn6laI4mocRrv8WohmkClHxrZplwQwE1ROrzlR
+ lj78qBI4nKktsLtYghF6ExOBEakWU6Y5woesUEMuv4IN2RfXuBa3FAnj9WeZSW41Epst KQ== 
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5euytwbu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 06 Nov 2023 03:42:58 +0000
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3A63gt5M027817;
+        Mon, 6 Nov 2023 03:42:55 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3u5f1m0tt1-1;
+        Mon, 06 Nov 2023 03:42:55 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3A63gsid027812;
+        Mon, 6 Nov 2023 03:42:55 GMT
+Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
+        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3A63gsR1027811;
+        Mon, 06 Nov 2023 03:42:54 +0000
+Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
+        id B35AF5438; Mon,  6 Nov 2023 11:42:53 +0800 (CST)
+From:   Qiang Yu <quic_qianyu@quicinc.com>
+To:     mani@kernel.org, quic_jhugo@quicinc.com
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH 0/2] Add SDX75 support and its dependency
+Date:   Mon,  6 Nov 2023 11:42:50 +0800
+Message-Id: <1699242172-79472-1-git-send-email-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _uxDejwdqeg7rJswcsai-CMBHDgQNH-b
+X-Proofpoint-ORIG-GUID: _uxDejwdqeg7rJswcsai-CMBHDgQNH-b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-05_21,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 mlxlogscore=515
+ phishscore=0 mlxscore=0 priorityscore=1501 adultscore=0 clxscore=1015
+ spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311060029
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,37 +77,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Verified this fixes the "[drm:drm_mode_config_helper_resume] *ERROR* Failed to
-resume (-107)" issue https://gitlab.freedesktop.org/drm/msm/-/issues/25
+This series add new configuration for SDX75 and new parameter
+ready_timeout_ms for waiting ready state. 
 
-Tested-by: Leonard Lausen <leonard@lausen.nl> # on sc7180 lazor
+Qiang Yu (2):
+  bus: mhi: host: Add a separate timeout parameter for waiting ready
+  bus: mhi: host: pci_generic: Add SDX75 based modem support
 
-On 10/6/23 18:55, Kuogee Hsieh wrote:
-> The purpose of this patch series is to incorporate pm runtime framework
-> into MSM eDP/DP driver so that eDP panel can be detected by DRM eDP panel
-> driver during system probe time. During incorporating procedure, original
-> customized pm realted fucntions, such as dp_pm_prepare(), dp_pm_suspend(),
-> dp_pm_resume() and dp_pm_prepare(), are removed and replaced with functions
-> provided by pm runtiem framework such as pm_runtime_force_suspend() and
-> pm_runtime_force_resume(). In addition, both eDP aux-bus and irq handler
-> are bound at system probe time too.
-> 
-> Kuogee Hsieh (7):
->   drm/msm/dp: tie dp_display_irq_handler() with dp driver
->   drm/msm/dp: rename is_connected with link_ready
->   drm/msm/dp: use drm_bridge_hpd_notify() to report HPD status changes
->   drm/msm/dp: move parser->parse() and dp_power_client_init() to probe
->   drm/msm/dp: incorporate pm_runtime framework into DP driver
->   drm/msm/dp: delete EV_HPD_INIT_SETUP
->   drm/msm/dp: move of_dp_aux_populate_bus() to eDP probe()
-> 
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c |   4 -
->  drivers/gpu/drm/msm/dp/dp_aux.c         |  39 +++-
->  drivers/gpu/drm/msm/dp/dp_display.c     | 333 ++++++++++++--------------------
->  drivers/gpu/drm/msm/dp/dp_display.h     |   3 +-
->  drivers/gpu/drm/msm/dp/dp_drm.c         |  14 +-
->  drivers/gpu/drm/msm/dp/dp_power.c       |  16 --
->  drivers/gpu/drm/msm/dp/dp_power.h       |  11 --
->  drivers/gpu/drm/msm/msm_drv.h           |   5 -
->  8 files changed, 161 insertions(+), 264 deletions(-)
-> 
+ drivers/bus/mhi/host/init.c        |  1 +
+ drivers/bus/mhi/host/internal.h    |  2 +-
+ drivers/bus/mhi/host/main.c        |  5 +++--
+ drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
+ drivers/bus/mhi/host/pm.c          | 24 +++++++++++++++++-------
+ include/linux/mhi.h                |  4 ++++
+ 6 files changed, 48 insertions(+), 10 deletions(-)
+
+-- 
+2.7.4
+
