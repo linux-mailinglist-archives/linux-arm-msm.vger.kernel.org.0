@@ -2,83 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D0C27E2A9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 18:07:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E64B7E2AD5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Nov 2023 18:18:14 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232064AbjKFRHn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Nov 2023 12:07:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36386 "EHLO
+        id S229715AbjKFRSP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Nov 2023 12:18:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231785AbjKFRHm (ORCPT
+        with ESMTP id S229755AbjKFRSN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Nov 2023 12:07:42 -0500
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C61E1BC;
-        Mon,  6 Nov 2023 09:07:40 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A6FvKMV023526;
-        Mon, 6 Nov 2023 17:07:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=l2EpXIJBgGHwQgIDPnnZNsim/X6+ej1v5tGiO3s+02U=;
- b=agm6qxBwvuqerpJEhNPceKSgZorLOUxrUGwKc7W9LRUbuWTUwe1IDVhuhggmHR9968UK
- /rRrlqRxwtWFmetVeAm2Crx03e6qcLLZVclrh7kzXvWJ68jOp1SjnHdxa2chm3mcXizw
- PYEOqDU0SsUXYlpCAl4aYcuHPzI5BLLSSJxzOQcpCv3eVBZbjFDxhZAUpyHB+Qz0dsXE
- q+G1Fc6UGWTVIy2ycfUNSMky34+YsI6N20/cc9efKweuk2Muki4mc3OP6ycHReIPZAR/
- mBl9d6fX0e9g7CCoB7RtE9NeNXMQNax6waIow05uryKrkzYNSGyjDgGetjTj52qLd60x Fg== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u5f8dvuge-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 06 Nov 2023 17:07:35 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A6H7YPn025988
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 6 Nov 2023 17:07:34 GMT
-Received: from [10.71.108.203] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
- 2023 09:07:34 -0800
-Message-ID: <16c03446-cc1c-4f71-8c0d-fe6c6f1bdfd0@quicinc.com>
-Date:   Mon, 6 Nov 2023 09:07:34 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550-qrd: add sound card
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mon, 6 Nov 2023 12:18:13 -0500
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43065D4C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 09:18:11 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1r03EV-0005QQ-75; Mon, 06 Nov 2023 18:17:51 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1r03ER-0075yD-9N; Mon, 06 Nov 2023 18:17:47 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1r03EQ-00DrIi-VZ; Mon, 06 Nov 2023 18:17:46 +0100
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Lee Jones <lee@kernel.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, kernel@pengutronix.de,
+        Benson Leung <bleung@chromium.org>,
+        Guenter Roeck <groeck@chromium.org>,
+        chrome-platform@lists.linux.dev,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Tony Lindgren <tony@atomide.com>, linux-omap@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230612173758.286411-1-krzysztof.kozlowski@linaro.org>
- <17535d7a-73e2-465b-941c-99db4092327a@quicinc.com>
- <7371257e-3fb0-4538-ad0f-07bd0a827120@linaro.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <7371257e-3fb0-4538-ad0f-07bd0a827120@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZLUzQD0fpYSqMaRhDGYf8up-lYzXT1Fe
-X-Proofpoint-GUID: ZLUzQD0fpYSqMaRhDGYf8up-lYzXT1Fe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-06_12,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0
- mlxscore=0 suspectscore=0 phishscore=0 mlxlogscore=849 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311060139
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        linux-arm-msm@vger.kernel.org,
+        Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        linux-stm32@st-md-mailman.stormreply.com
+Subject: [PATCH 00/18] mfd: Convert to platform remove callback returning void
+Date:   Mon,  6 Nov 2023 18:17:09 +0100
+Message-ID: <20231106171708.3892347-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3116; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=0FF0Hir69E2HKsvJfQNY/ddJ62LkMYTY7VB8GGwosMM=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlSR+UEVz6EdKPvoEWe/b9VJEfQp/9GrduLgHED EGfX/1hsAWJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZUkflAAKCRCPgPtYfRL+ TrkgCACt6jktG815FM78opuMSJzVh8L8EMrXJg2QcTB4PFmiFdLTrdybne7rIjMRxTpAjmsba0v VL8Ob6Kz8AmNLdjbx3qjHYArjUhG2hGyldjimtJxv5vEEpdcpJbJnl2Tj3vdtAWxfk4DE0K3xcl TTIh0MSMGJsPKQiE/fuKjG8fzS3mk8bORQEu+5KMYAVZLQdUsoZcmUULLWFdnOvaqFxrGackoTM 51EtiqsmxEKubEHJa0r+WpKi3bNHl/nRXTPU4MNCLO2JCXXY3cRSJ24qriAGi/+BvbLWiNrdVRN adO9ADuSwQuYtHKSkBXthB6PplIwkbPbXVaxwNvTbbhwprJY
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,35 +73,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello,
 
+this series converts all platform drivers below drivers/mfd to use
+.remove_new(). Compared to the traditional .remove() callback
+.remove_new() returns no value. This is a good thing because the driver
+core doesn't (and cannot) cope for errors during remove. The only effect
+of a non-zero return value in .remove() is that the driver core emits a
+warning. The device is removed anyhow and an early return from .remove()
+usually yields resource leaks and/or use-after-free bugs.
 
-On 11/5/2023 4:55 AM, Krzysztof Kozlowski wrote:
-> On 04/11/2023 00:10, Elliot Berman wrote:
->> Hi Krzysztof,
->>
->> On 6/12/2023 10:37 AM, Krzysztof Kozlowski wrote:
->>> Add the sound card node with tested playback over WSA8845 speakers and
->>> WCD9385 headset over USB Type-C.  The recording links were not tested,
->>> but should be similar to previous platforms.
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>> ---
->>>
->>> Bindings for the sound card were not sent to LKML. Work-in-progress is
->>> available here:
->>> https://github.com/krzk/linux/tree/n/audio-wsa884x-on-top-of-wip-sm8450-audio-on-next
->>
->> Do you plan to send the bindings up? I can send this patch out if you don't have the cycle:
->>
->> https://github.com/krzk/linux/commit/f678691570386a11eb75dceca7291b4e05d981da
-> 
-> The patch itself does not make sense without dependencies. It should be
-> sent after dependencies are sent.
-> 
+See commit 5c5a7680e67b ("platform: Provide a remove callback that
+returns no value") for an extended explanation and the eventual goal.
 
-I think the patch makes sense now that the v6.6 sm8550-mtp.dtb is using the compatible:
+All drivers converted here already returned zero unconditionally in
+.remove(), so they are converted here trivially.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sm8550-mtp.dts?h=v6.6#n100
+Best regards
+Uwe
 
-- Elliot
+Uwe Kleine-König (18):
+  mfd: ab8500-sysctrl: Convert to platform remove callback returning
+    void
+  mfd: cros_ec_dev: Convert to platform remove callback returning void
+  mfd: exynos-lpass: Convert to platform remove callback returning void
+  mfd: fsl-imx25-tsadc: Convert to platform remove callback returning
+    void
+  mfd: hi655x-pmic: Convert to platform remove callback returning void
+  mfd: intel-lpss-acpi: Convert to platform remove callback returning
+    void
+  mfd: kempld-core: Convert to platform remove callback returning void
+  mfd: mcp-sa11x0: Convert to platform remove callback returning void
+  mfd: mxs-lradc: Convert to platform remove callback returning void
+  mfd: omap-usb-host: Convert to platform remove callback returning void
+  mfd: omap-usb-tll: Convert to platform remove callback returning void
+  mfd: pcf50633-adc: Convert to platform remove callback returning void
+  mfd: qcom-pm8xxx: Convert to platform remove callback returning void
+  mfd: sm501: Convert to platform remove callback returning void
+  mfd: stm32-timers: Convert to platform remove callback returning void
+  mfd: ti_am335x_tscadc: Convert to platform remove callback returning
+    void
+  mfd: tps65911-comparator: Convert to platform remove callback
+    returning void
+  mfd: twl4030-audio: Convert to platform remove callback returning void
+
+ drivers/mfd/ab8500-sysctrl.c      | 6 ++----
+ drivers/mfd/cros_ec_dev.c         | 5 ++---
+ drivers/mfd/exynos-lpass.c        | 6 ++----
+ drivers/mfd/fsl-imx25-tsadc.c     | 6 ++----
+ drivers/mfd/hi655x-pmic.c         | 5 ++---
+ drivers/mfd/intel-lpss-acpi.c     | 6 ++----
+ drivers/mfd/kempld-core.c         | 6 ++----
+ drivers/mfd/mcp-sa11x0.c          | 6 ++----
+ drivers/mfd/mxs-lradc.c           | 6 ++----
+ drivers/mfd/omap-usb-host.c       | 5 ++---
+ drivers/mfd/omap-usb-tll.c        | 5 ++---
+ drivers/mfd/pcf50633-adc.c        | 6 ++----
+ drivers/mfd/qcom-pm8xxx.c         | 6 ++----
+ drivers/mfd/sm501.c               | 6 ++----
+ drivers/mfd/stm32-timers.c        | 6 ++----
+ drivers/mfd/ti_am335x_tscadc.c    | 6 ++----
+ drivers/mfd/tps65911-comparator.c | 6 ++----
+ drivers/mfd/twl4030-audio.c       | 6 ++----
+ 18 files changed, 36 insertions(+), 68 deletions(-)
+
+base-commit: 3ff7a5781ceee3befb9224d29cef6e6a4766c5fe
+-- 
+2.42.0
+
