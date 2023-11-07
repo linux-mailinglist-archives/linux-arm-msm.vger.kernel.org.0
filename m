@@ -1,137 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-4-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-5-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 116817E320D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 01:12:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9B207E3257
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 01:44:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF059280DA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 00:12:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F01251C2037E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 00:44:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37B2A80E;
-	Tue,  7 Nov 2023 00:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE99C17C7;
+	Tue,  7 Nov 2023 00:44:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iS2m562n"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FT598sG1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0955E633;
-	Tue,  7 Nov 2023 00:12:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 71E1FC433C8;
-	Tue,  7 Nov 2023 00:12:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699315934;
-	bh=IzvDcSXVc6Sv1zIOCJrJxYCGu8IPPHkKg7fcM6qoiKw=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=iS2m562nrCl1RiKX+Sy1RYiunIDGdiPcDySe5O4CZMNtjC83k6cd0IFZQBUoyP6En
-	 vrvhJ1P4lLueHCUDlA0vqNJnmLZwNsAPscRt1Zx+x3n0xL/NUOk8GjE5oTvn/HqRdQ
-	 Dd2afZgesSkF0Ox6WEAfoM7jdhVQO8QFsw3LI3h/rxZFhy29zGyft7PTfB/p4oXYxQ
-	 lqgTq/pqJ33QiB0GNjpSWb9Zk/timrYiIzLFiOWS29ALBzDdJisVc1zYOGe5WEk10I
-	 /WAEFww3iu25SOTtLJsGHO+cSN5v/U20sR2IzOlAEs6Q7ay/2ZVjT8O+kp0azA4OGw
-	 IDWMf14m+H7FQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54BD3C4332F;
-	Tue,  7 Nov 2023 00:12:14 +0000 (UTC)
-From: Steev Klimaszewski via B4 Relay <devnull+steev.kali.org@kernel.org>
-Date: Mon, 06 Nov 2023 18:12:11 -0600
-Subject: [PATCH] arm64: dts: qcom: sdm850-lenovo-yoga: Add wakeup-sources
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500CA17C2
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 00:44:29 +0000 (UTC)
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C676D75
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 16:44:27 -0800 (PST)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c6b30acacdso68180391fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 16:44:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699317866; x=1699922666; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l4sQQn36L2+/zoCkGPO8pkAoerlaydAQhrz7oIT51ro=;
+        b=FT598sG1IfYas/GqukigrwYhRsD8Eb7+6TmdIB0q2QyvuHk9BUCx0gAr6Hj4s4kffG
+         sqZ/IODgs52KjPZXslZaDqK2OdyrHzfKLz+9L48s8VHUeb+FKzMs27V5O+nRIlybFp5A
+         KRBB3PWxmTXhuJzUMcToIrQjuQGHuWQ0qTm4If+gHnq1/uRiwrWCnusrAPVarGcUpVRP
+         dBQUS0Ny6wrBtR9HW7LuWD7wtOCg5csPmf+HvlTuBspA6FjPr921BwrFOeYEz+38p/ur
+         Tb/Ud/O7mURUBOkOfAdStpTn10vWfuQS9GAUzt8z6MPit0UYd1SKiamqNbeHyvU2cXzo
+         AlfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699317866; x=1699922666;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l4sQQn36L2+/zoCkGPO8pkAoerlaydAQhrz7oIT51ro=;
+        b=K/g98sz4C3QcFvmKlz97xVja91GaEJ6LH73RSShWS45LvT4W/gleXa90ESNYAKbEUV
+         vfYac7JXOoDopbtZsl4xwXsbzF+QyQJNz5CcnsWk3cjW96PKSa1IREEIvuJAfWxyPkMI
+         0/XaCAATYp2EguqjtZDHLe8CEkVsEENSo2tzh6vm8M/lPImnQGjOgz+6aqpyKFEmRJwV
+         PDCboRRRUXcgPLyXxBManPVPOV/lBDCpp5NGtbxWm18a3cZ70T4qw1sl04shHFGMtGzN
+         3qIGWy9xo7cvIJQ9Oth7G8BuVwDTQrHaKyHMu54e1NHMPig1ImDR/gVkHo6kwWW0FUe/
+         un4w==
+X-Gm-Message-State: AOJu0YxpD4aOLkwVfGmZ8dwhAGi4D7tNtinK9gvjaGntx1g7sDTh7KHr
+	9jB+XE5e7o1beTIYwASs2YYllQ==
+X-Google-Smtp-Source: AGHT+IGq/gbVJACFjo+UjFOrO/9DZFv8U31OsE7j5XrfgMAni1X9Tg3EXzFgOQQAbQtrdqyqkHPeyA==
+X-Received: by 2002:ac2:57c4:0:b0:4fd:c715:5667 with SMTP id k4-20020ac257c4000000b004fdc7155667mr20544414lfo.20.1699317865656;
+        Mon, 06 Nov 2023 16:44:25 -0800 (PST)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id m15-20020a05651202ef00b0050567a8b36esm142974lfq.251.2023.11.06.16.44.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Nov 2023 16:44:25 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+Cc: Stephen Boyd <swboyd@chromium.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/dp: call dp_display_get_next_bridge() during probe
+Date: Tue,  7 Nov 2023 02:43:33 +0200
+Message-ID: <20231107004424.2112698-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231106-wakeup-source-v1-1-36b1f39e67fd@kali.org>
-X-B4-Tracking: v=1; b=H4sIANqASWUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI2NDQwMz3fLE7NTSAt3i/NKi5FRdQ9PENLM000QzYyNLJaCegqLUtMwKsHn
- RsbW1AGuFZptfAAAA
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Steev Klimaszewski <steev@kali.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1699315933; l=1648;
- i=steev@kali.org; s=20231106; h=from:subject:message-id;
- bh=XxMr1pRCV6LxTCL9BHo4MJtPNXm2qJQqiz+fIboTk1I=;
- b=vjaUjZqT8uoer/iEV4k7jfxyJNb8OqOWndAP7CAxWb8vSu85CqW+CrAoPCv+59Z0xqc9erI5Z
- +Yjw6KDVd3UCDvzeJtXYgZ7om7X9WAhiQfVPZbUTqH4bva01E/4mHYB
-X-Developer-Key: i=steev@kali.org; a=ed25519;
- pk=KY+JnLRNy7Hdf04yfpE5ubOsDBIIfXAWnBijkySXbb4=
-X-Endpoint-Received: by B4 Relay for steev@kali.org/20231106 with auth_id=97
-X-Original-From: Steev Klimaszewski <steev@kali.org>
-Reply-To: <steev@kali.org>
+Content-Transfer-Encoding: 8bit
 
-From: Steev Klimaszewski <steev@kali.org>
+The funcion dp_display_get_next_bridge() can return -EPROBE_DEFER if the
+next bridge is not (yet) available. However returning -EPROBE_DEFER from
+msm_dp_modeset_init() is not ideal. This leads to -EPROBE return from
+component_bind, which can easily result in -EPROBE_DEFR loops.
 
-The keyboard, touchpad and touchscreen can all be used to wake the
-computer up from sleep, so mark them as such in the dts file.
-
-Signed-off-by: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-It would be nice to wake up the Lenovo Yoga C630 from suspend by hitting
-the keyboard or touchpad or even touchscreen, so this patch enables that
-ability.
 
-I'm not married to enabling it for the touchscreen, so if anyone wants
-me to drop that hunk, I'd be fine with it.
----
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index 92a812b5f423..9ddffb98408d 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -384,6 +384,8 @@ tsel: hid@15 {
- 		hid-descr-addr = <0x1>;
- 
- 		interrupts-extended = <&tlmm 37 IRQ_TYPE_LEVEL_HIGH>;
-+
-+		wakeup-source;
- 	};
- 
- 	tsc2: hid@2c {
-@@ -392,6 +394,8 @@ tsc2: hid@2c {
- 		hid-descr-addr = <0x20>;
- 
- 		interrupts-extended = <&tlmm 37 IRQ_TYPE_LEVEL_HIGH>;
-+
-+		wakeup-source;
- 	};
- };
- 
-@@ -408,6 +412,8 @@ tsc1: hid@10 {
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&i2c5_hid_active>;
-+
-+		wakeup-source;
- 	};
- };
- 
-@@ -482,6 +488,8 @@ ecsh: hid@5c {
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&i2c11_hid_active>;
-+
-+		wakeup-source;
- 	};
- };
- 
+Dependencies: https://patchwork.freedesktop.org/series/120375/
 
 ---
-base-commit: 3ff7a5781ceee3befb9224d29cef6e6a4766c5fe
-change-id: 20231106-wakeup-source-15af6f5a6329
+ drivers/gpu/drm/msm/dp/dp_display.c | 36 +++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
 
-Best regards,
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index d542db37763a..ddb3c84f39a2 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1197,15 +1197,27 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
+ 	return NULL;
+ }
+ 
+-static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
++static int dp_display_get_next_bridge(struct msm_dp *dp);
++
++static int dp_display_probe_tail(struct device *dev)
+ {
+-	int rc;
++	struct msm_dp *dp = dev_get_drvdata(dev);
++	int ret;
+ 
+-	rc = component_add(aux->dev, &dp_display_comp_ops);
+-	if (rc)
+-		DRM_ERROR("eDP component add failed, rc=%d\n", rc);
++	ret = dp_display_get_next_bridge(dp);
++	if (ret)
++		return ret;
+ 
+-	return rc;
++	ret = component_add(dev, &dp_display_comp_ops);
++	if (ret)
++		DRM_ERROR("component add failed, rc=%d\n", ret);
++
++	return ret;
++}
++
++static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
++{
++	return dp_display_probe_tail(aux->dev);
+ }
+ 
+ static int dp_display_probe(struct platform_device *pdev)
+@@ -1280,11 +1292,9 @@ static int dp_display_probe(struct platform_device *pdev)
+ 			goto err;
+ 		}
+ 	} else {
+-		rc = component_add(&pdev->dev, &dp_display_comp_ops);
+-		if (rc) {
+-			DRM_ERROR("component add failed, rc=%d\n", rc);
++		rc = dp_display_probe_tail(&pdev->dev);
++		if (rc)
+ 			goto err;
+-		}
+ 	}
+ 
+ 	return rc;
+@@ -1415,7 +1425,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
+ 	 * For DisplayPort interfaces external bridges are optional, so
+ 	 * silently ignore an error if one is not present (-ENODEV).
+ 	 */
+-	rc = devm_dp_parser_find_next_bridge(dp->drm_dev->dev, dp_priv->parser);
++	rc = devm_dp_parser_find_next_bridge(&dp->pdev->dev, dp_priv->parser);
+ 	if (!dp->is_edp && rc == -ENODEV)
+ 		return 0;
+ 
+@@ -1435,10 +1445,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+ 
+ 	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+-	ret = dp_display_get_next_bridge(dp_display);
+-	if (ret)
+-		return ret;
+-
+ 	ret = dp_bridge_init(dp_display, dev, encoder);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev,
 -- 
-Steev Klimaszewski <steev@kali.org>
+2.42.0
 
 
