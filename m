@@ -1,193 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-58-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-59-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 948197E3AA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 11:57:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3CFD7E3AB3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 12:03:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C507A1C209DC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 10:57:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B0AC1C20B00
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 11:03:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E74F129CF2;
-	Tue,  7 Nov 2023 10:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0306B2D04C;
+	Tue,  7 Nov 2023 11:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/f56Qzx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o6f7W2Nu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C951F12E7B
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 10:57:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD84DC433C7;
-	Tue,  7 Nov 2023 10:57:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699354672;
-	bh=SZv0J0mT59n2rZKjNBl8CMR8RlpgRNfa0+MUCGFThB0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O/f56Qzx1DTTqtDZ23652PJa4QPOvkmUrSpgkQDF0xV4MpQZ/yFMzHZutCIEyf7Fh
-	 COtX6iCuuiR//L5Q5vpD/D/8QUbe7t31vf7fjTFpDEjwDDl5QykQKuwgJFq9SzvJS8
-	 GaTudeP8naxDp1BWECaGrfA8lh/jpEqUZxlckGsct6hmWMhA/oJ+Xx0ie7WAsJM9lP
-	 vquzOGQE5axH9BEa9ANyw4jNqC2w4ZeANezDp7qt/dywkNn2FC2Hx2Kb0wWaOzXt7P
-	 4opfSncIL6l074QFgGrGtzw9asAQnsAE2JmMHRe8kEMniNlyUKLWpOw5bGhU97JOd3
-	 BPkTvIHuYF5Vg==
-Date: Tue, 7 Nov 2023 11:57:49 +0100
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Douglas Anderson <dianders@chromium.org>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
- the DSI link power state
-Message-ID: <2z3yvvtd6ttsd7qw43sl5svtfijxevdr6omxxmws64k6l5qv55@5nnh2b32h2ep>
-References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
- <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
- <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
- <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
- <uj6rtlionmacnwlqxy6ejt5iaczgbbe5z54ipte5ffbixcx3p4@pps7fcr3uqhf>
- <1696f131-83fb-4d0c-b4d7-0bdb61e4ae65@linaro.org>
- <mxtb6vymowutj7whbrygwlcupbdnfqxjralc3nwwapsbvrcmbm@sewxtdslfoen>
- <CAA8EJpozZkEswnioKjRCqBg4fcjVHFwGivoFNTNHVwyocKprQw@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9882D039;
+	Tue,  7 Nov 2023 11:03:06 +0000 (UTC)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 596A7114;
+	Tue,  7 Nov 2023 03:03:05 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A7ADrx4029500;
+	Tue, 7 Nov 2023 11:02:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=SFRYKwU5koGWL5dv8W4KKvT9e10tazgxHr6Z4LinXI8=;
+ b=o6f7W2NuUH8oSnUhvHydTzahuShmT1Mny2h94uCM5ff6zpNJbMZMQOvNGZq6NZglJwlB
+ S0/GavH2bfBBHDFQtSIOtcnqz2P4BVlFcQMtNgX4UC0qc0Vi4Ff/Drd9gRZkJ0Dn/fXX
+ jL7+EBmbYqppZs/M3+rAJJO06N080P8sDuQjI1MQsjbep5I3pLZhd6NtZnbNyiru60GS
+ 5VUKR9lEcq6Yu6Q2L0ZJAI52Ew/vsy+ConhB3Ynox3x4vgDU2qvMei0Pi3VnRcjaYSVS
+ K3Coyx3aBR7ev1VWTGKVFHwsFMqlnHtGGlm2B54WGx6UQmBgqM4O/umUN8Rm0P0oqKNr Jw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u6xdub4bh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 Nov 2023 11:02:52 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A7B2puZ018234
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 7 Nov 2023 11:02:51 GMT
+Received: from [10.249.29.138] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
+ 2023 03:02:46 -0800
+Message-ID: <70b5cdc9-f0e1-4fad-a1ab-858fff3c110c@quicinc.com>
+Date: Tue, 7 Nov 2023 16:32:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gxtcgkxgr2bmmbci"
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpozZkEswnioKjRCqBg4fcjVHFwGivoFNTNHVwyocKprQw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 2/8] usb: dwc3: core: Register vendor hooks for dwc3-qcom
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>
+CC: <linux-usb@vger.kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        <linux-kernel@vger.kernel.org>,
+        "Thinh
+ Nguyen" <Thinh.Nguyen@synopsys.com>,
+        Rob Herring <robh+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_wcheng@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
+ <20231017131851.8299-3-quic_kriskura@quicinc.com>
+ <e700133b-58f7-4a4d-8e5c-0d04441b789b@linaro.org>
+ <5ef66bdc-9645-4bbe-8182-baa7fe4c583a@quicinc.com>
+ <3be5e95f-85d2-4abf-a8b4-18b019341602@quicinc.com>
+ <cf553cd8-45f8-4a61-b016-69e7a80eee9f@linaro.org>
+ <ea919050-22a8-4d28-ade2-fd16a99876cb@quicinc.com>
+ <105d84b6-cbea-4758-9eba-1c104fa7a670@quicinc.com>
+ <f94ca738-476c-4664-a8f1-e3ef3ac8220a@linaro.org>
+ <4b3e1f66-31e0-4b7a-9cc0-0b7a7a6ef2f5@linaro.org>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <4b3e1f66-31e0-4b7a-9cc0-0b7a7a6ef2f5@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Mxfa6Z2ES4PVL7h7l10ERvgnqaGGyPkf
+X-Proofpoint-ORIG-GUID: Mxfa6Z2ES4PVL7h7l10ERvgnqaGGyPkf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-07_01,2023-11-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=876 priorityscore=1501
+ spamscore=0 impostorscore=0 mlxscore=0 malwarescore=0 clxscore=1015
+ bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311070091
 
 
---gxtcgkxgr2bmmbci
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-+GKH
+On 11/7/2023 4:25 PM, Bryan O'Donoghue wrote:
+> On 07/11/2023 10:41, Bryan O'Donoghue wrote:
+>> On 07/11/2023 08:33, Krishna Kurapati PSSNV wrote:
+>>>
+>>>
+>>> On 11/4/2023 10:32 PM, Krishna Kurapati PSSNV wrote:
+>>>>>
+>>>>> Are you saying to you require/rely on both of these series being 
+>>>>> applied first ?
+>>>>>
+>>>>> [1]: 
+>>>>> https://lore.kernel.org/all/af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com/
+>>>>> [2]: 
+>>>>> https://lore.kernel.org/all/20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com/
+>>>>>
+>>>>> Must be, nothing applies for me in this series.
+>>>>
+>>>> The first one is not a patch. It is just a discussion thread I 
+>>>> started to get community's opinion before on disconnect interrupt 
+>>>> handling. The current series is based on top of [2] made by Bjorn 
+>>>> (as you already found out) and as I mentioned in cover letter of my 
+>>>> series.
+>>>>
+>>>
+>>> Hi Bryan,
+>>>
+>>>    Are you able to apply the series after including Bjorn's patches ? 
+>>> Also can you confirm if the comments provided to your queries on [1] 
+>>> are proper and if you have any other comments w.r.t probe deferral.
+>>>
+>>> [1]: 
+>>> https://lore.kernel.org/all/e700133b-58f7-4a4d-8e5c-0d04441b789b@linaro.org/
+>>>
+>>> Regards,
+>>> Krishna,
+>>
+>> I wonder could you give a base SHA to apply the various series on ?
+>>
+>> Your referenced precursor doesn't apply to usb-next
+> 
+> Well now, that doesn't point where I thought it pointed usb-next/master 
+> is extremely old
+> 
+>   b3a9e3b9622ae - (HEAD -> usb-next-23-10-07-usb-glue-test, tag: 
+> v5.8-rc1, usb-next/master, origin/tracking-qcomlt-sm8150-gcc, 
+> linaro/tracking-qcomlt-sm8150-gcc, fecked-old, delete-this-branch2, 
+> delete-this-branch) Linux 5.8-rc1 (3 years, 5 months ago)
+> 
+> I want usb-next/main
+> 
+> *   d2f51b3516dad - (usb-next/usb-testing, usb-next/usb-next, 
+> usb-next/main) Merge tag 'rtc-6.7' of 
+> git://git.kernel.org/pub/scm/linux/kernel/git/abelloni/linux (32 hours ago)
+> 
+> Everything applies there.
 
-On Thu, Oct 26, 2023 at 11:41:34AM +0300, Dmitry Baryshkov wrote:
-> > > > Also, we would still need to update every single panel driver, whic=
-h is
-> > > > going to create a lot of boilerplate that people might get wrong.
-> > >
-> > > Yes, quite unfortunately. Another approach that I have in mind is to =
-add two
-> > > callbacks to mipi_dsi_device. This way the DSI host will call into the
-> > > device to initialise it once the link has been powered up and just be=
-fore
-> > > tearing it down. We solve a lot of problems this way, no boilerplate =
-and the
-> > > panel / bridge are in control of the initialisation procedure. WDYT?
-> > >
-> > > > I have the feeling that we should lay out the problem without talki=
-ng
-> > > > about any existing code base first. So, what does the MIPI-DSI spec
-> > > > requires and what does panels and bridges expect?
-> > >
-> > > There is not that much in the DSI spec (or maybe I do not understand =
-the
-> > > question). The spec is more about the power states and the commands. =
-Our
-> > > problem is that this doesn't fully match kernel expectations.
-> >
-> > You're explicitly asking for comments on that series. How can we provide
-> > any comment if you're dead-set on a particular implementation and not
-> > explain what the problem you are trying to solve is?
->=20
-> Ah, excuse me. I thought that I explained that in the cover letter.
->=20
-> DSI device lifetime has three different stages:
-> 1. before the DSI link being powered up and clocking,
-> 2. when the DSI link is in LP state (for the purpose of this question,
-> this is the time between the DSI link being powered up and the video
-> stream start)
-> 3. when the DSI link is in HS state (while streaming the video).
->=20
-> Different DSI bridges have different requirements with respect to the
-> code being executed at stages 1 and 2. For example several DSI-to-eDP
-> bridges (ps8640, tc358767 require for the link to be quiet during
-> reset time.
-> The DSI-controlled bridges and DSI panels need to send some commands
-> in stage 2, before starting up video
->=20
-> In the DRM subsystem stage 3 naturally maps to the
-> drm_bridge_funcs::enable, stage 1 also naturally maps to the
-> drm_bridge_funcs::pre_enable. Stage 2 doesn't have its own place in
-> the DRM call chain.
-> Earlier we attempted to solve that using the pre_enable_prev_first,
-> which remapped pre-enable callback execution order. However it has led
-> us to the two issues. First, at the DSI host driver we do not know
-> whether the panel / bridge were updated to use pre_enable_prev_first
-> or not. Second, if the bridge has to perform steps during both stages
-> 1 and 2, it can not do that.
->=20
-> I'm trying to find a way to express the difference between stages 1
-> and 2 in the generic code, so that we do not to worry about particular
-> DSI host and DSI bridge / panel peculiarities when implementing the
-> DSI host and/or DSI panel driver.
->=20
-> Last, but not least, we currently document that it is fine to call DSI
-> transfer functions at any point during the driver's life time (at
-> least that was the interpretation that we have agreed in the
-> DSI-related threads). It has its own drawbacks for the DSI host
-> drivers. The hosts have to deal with the DSI commands being sent at
-> the different times, when the host is fully powered down, when it is
-> running in the LP mode and when it is fully running and streaming
-> video. By defining DSI lifetime more precisely, we can limit the
-> period when the DSI commands can be legitimately sent, simplifying DSI
-> host drives.
+Hi Bryan,
 
-Thanks for writing this :)
+   I should have mentioned that series is pushed on top of usb-next. 
+Apologies.
 
-> > Thinking more about it, I'm even more skeptical about the general
-> > approach that this should be implemented at the bridge level (or in
-> > KMS).
-> >
-> > It looks to me that this is very much a bus problem. USB device drivers
-> > also require the bus to be powered and generally available to send data
-> > to their device, and you don't fix that up in the HID or storage
-> > drivers, you make the bus behave that way.
-> >
-> > What prevents us from fixing it at the bus level?
->=20
-> Yes, this can also be possible. Do you mean adding code / callbacks to
-> struct mipi_dsi_device ?
+> 
+> Anyway, your pointing to Bjorn's series answers my question re: 
+> sequencing of the probe.
 
-Yes, even more so with your summary above, I really think this should be
-dealt with at the bus layer.
+Perfect. Thanks for the confirmation.
 
-To put it in a different way, if we had an (imaginary, probably)
-MIPI-DSI device that didn't fit into KMS but in any other framework, we
-would still have all the constraints you list above. It really is a bus
-matter, not something that bridges need to express.
-
-I had a look at the other buses we have in the kernel and it looks like
-HSI might have the same requirements?
-
-Maxime
-
---gxtcgkxgr2bmmbci
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZUoYLQAKCRDj7w1vZxhR
-xb5/AP9ur7o+WNgPDxCmvT8EAcxrlM8qGwtHOpSPORzeRKdLoAEA9fFl6YYXKCR/
-7vsBwaX6Z10UcCEvv9k1HEKXLhxVcgw=
-=uM1e
------END PGP SIGNATURE-----
-
---gxtcgkxgr2bmmbci--
+Regards,
+Krishna,
 
