@@ -1,169 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-77-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-78-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1971C7E3D3F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:26:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 002327E3D6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:28:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 49C071C20A02
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 12:26:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30CFB1C209CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 12:28:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 810A32FE16;
-	Tue,  7 Nov 2023 12:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 283B72FE1F;
+	Tue,  7 Nov 2023 12:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bBKanvrG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EMNGmOZd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FF32FE18;
-	Tue,  7 Nov 2023 12:26:48 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F06F1711;
-	Tue,  7 Nov 2023 04:26:47 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A7Bqufj004981;
-	Tue, 7 Nov 2023 12:26:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=1+9ZqMfTmOVm6k2O/7cypKmKcfs7Lw4ecgmh68LjS5M=;
- b=bBKanvrGRqem3I0j0VN3YleGu6/FXSAZOMm8kynqqbOTzpS0HeaF6HumUbt1zJ5p9qQ9
- 1tHAXgiqYZJjdF7FVC0k4fpjA6FddFbySPh+6JWdwIbWFVw2XlrAZHOOnqL+jfe9NttG
- M3m+31UKyCSydGQZ0aSLbWL7nkcADel54z1IeoxxxpwHjirCEi8PZVOXDRJyvZBOFstC
- VysCumeG2fVAil6CHDSiAjXf55x8JL8Qs43QBSmZcvxlx/gQWiitU6vD0izeNBzCdVAV
- zExpNPhoQM8eatN/YAsm0R+n7vW4oJJ8KX35CjnJqA5bH1WTqQ3jHnmBONqM7L8U9Xi1 zw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u72c02j8q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Nov 2023 12:26:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A7CQgN1016439
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Nov 2023 12:26:42 GMT
-Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Tue, 7 Nov 2023 04:26:36 -0800
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Date: Tue, 7 Nov 2023 17:56:15 +0530
-Subject: [PATCH v2 3/3] phy: qcom-qmp-pcie: Add support for keeping refclk
- always on
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B73D2EB02
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 12:28:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1496FC433C9;
+	Tue,  7 Nov 2023 12:28:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699360114;
+	bh=kxuYbZVR7ft7C3zIio+kedGzMoIPQDhSKly1xJtq0T8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=EMNGmOZdNz8Ex5Hg3MM22k0qyMIWQFau7QLOD3lsVR4aDsAQcWMIAVPAYJkmy9fA1
+	 k+BCAVGfw8qapYpAkjE4j5YZpn7QTh2W8Hv7LM1zAJMUtMJOBnTpA0GBjHz5WZKMw5
+	 CaBM/agiNUHwPYY3R3r8j3dXrrUd4oUhjAe2SAf5kVaBRAxYFrGjniqezKXgZVgywG
+	 YGSmPhy7HPZqObyiG6ebLQqO0CKgeLnTy9sU2PmPKQ2c/+o9LbOkQrAIF9PK8liADI
+	 8R1uzVyyMK1sq5Xpv5aQYY9gx70hBWQ7tqaEu+Cej+lOYU3wrHndK+BzwaZh8E/jrQ
+	 xmgbKPwymCDUw==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Jani Nikula <jani.nikula@intel.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kuogee Hsieh <khsieh@codeaurora.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Stephen Boyd <swboyd@chromium.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	quic_vpolimer@quicinc.com,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.1 12/25] drm/msm/dp: skip validity check for DP CTS EDID checksum
+Date: Tue,  7 Nov 2023 07:26:51 -0500
+Message-ID: <20231107122745.3761613-12-sashal@kernel.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231107122745.3761613-1-sashal@kernel.org>
+References: <20231107122745.3761613-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20231107-refclk_always_on-v2-3-de23962fc4b3@quicinc.com>
-References: <20231107-refclk_always_on-v2-0-de23962fc4b3@quicinc.com>
-In-Reply-To: <20231107-refclk_always_on-v2-0-de23962fc4b3@quicinc.com>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_vpernami@quicinc.com>, <quic_parass@quicinc.com>,
-        "Krishna chaitanya
- chundru" <quic_krichai@quicinc.com>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1699359980; l=2354;
- i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
- bh=JUk/FJ9xXUwVyUZKmKOaplZAA11pO+CSXisdJEVQfMI=;
- b=jj+fJ1UdhMPYxXep+1d1C+YY3FbEJCWNbzCj4/x28dGib8YJmQ/2yaiStFPYYjeV5L9I6OJ5t
- 94g2ELn1WTvBN1hEbkZIGRmTwRMBFVinYHXq0ILXfdpLsiI4Qmkt22s
-X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: K17XiqBscUn3sI-3vsp3g-DXUJ9Hlfr-
-X-Proofpoint-GUID: K17XiqBscUn3sI-3vsp3g-DXUJ9Hlfr-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-07_02,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 mlxscore=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
- adultscore=0 spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2310240000 definitions=main-2311070102
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.1.61
+Content-Transfer-Encoding: 8bit
 
-In PCIe low power states like L1.1 or L1.2 the phy will stop
-supplying refclk to endpoint. If endpoint asserts clkreq to bring
-back link L0, then RC needs to provide refclk to endpoint.
+From: Jani Nikula <jani.nikula@intel.com>
 
-If there is some issues in platform with clkreq signal propagation
-to host and due to that host will not send refclk which results PCIe link
-down. For those platforms phy needs to provide refclk even in low power
-states.
+[ Upstream commit a251c9d8e30833b260101edb9383b176ee2b7cb1 ]
 
-Add a flag to keep refclk always supplied to endpoint.
+The DP CTS test for EDID last block checksum expects the checksum for
+the last block, invalid or not. Skip the validity check.
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+For the most part (*), the EDIDs returned by drm_get_edid() will be
+valid anyway, and there's the CTS workaround to get the checksum for
+completely invalid EDIDs. See commit 7948fe12d47a ("drm/msm/dp: return
+correct edid checksum after corrupted edid checksum read").
+
+This lets us remove one user of drm_edid_block_valid() with hopes the
+function can be removed altogether in the future.
+
+(*) drm_get_edid() ignores checksum errors on CTA extensions.
+
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Kuogee Hsieh <khsieh@codeaurora.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/555361/
+Link: https://lore.kernel.org/r/20230901142034.580802-1-jani.nikula@intel.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/msm/dp/dp_panel.c | 21 ++-------------------
+ 1 file changed, 2 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 74d03d217ff2..a8d6d69e3f74 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -43,6 +43,8 @@
- /* QPHY_PCS_STATUS bit */
- #define PHYSTATUS				BIT(6)
- #define PHYSTATUS_4_20				BIT(7)
-+/* PCS_PCIE_ENDPOINT_REFCLK_CNTRL */
-+#define EPCLK_ALWAYS_ON_EN			BIT(6)
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
+index 5149cebc93f61..d38086650fcf7 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.c
++++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+@@ -266,26 +266,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
  
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
+ static u8 dp_panel_get_edid_checksum(struct edid *edid)
+ {
+-	struct edid *last_block;
+-	u8 *raw_edid;
+-	bool is_edid_corrupt = false;
++	edid += edid->extensions;
  
-@@ -2264,6 +2266,8 @@ struct qmp_pcie {
- 	struct phy *phy;
- 	int mode;
+-	if (!edid) {
+-		DRM_ERROR("invalid edid input\n");
+-		return 0;
+-	}
+-
+-	raw_edid = (u8 *)edid;
+-	raw_edid += (edid->extensions * EDID_LENGTH);
+-	last_block = (struct edid *)raw_edid;
+-
+-	/* block type extension */
+-	drm_edid_block_valid(raw_edid, 1, false, &is_edid_corrupt);
+-	if (!is_edid_corrupt)
+-		return last_block->checksum;
+-
+-	DRM_ERROR("Invalid block, no checksum\n");
+-	return 0;
++	return edid->checksum;
+ }
  
-+	bool refclk_always_on;
-+
- 	struct clk_fixed_rate pipe_clk_fixed;
- };
- 
-@@ -3179,6 +3183,10 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
- 	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
- 	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
- 
-+	if (qmp->refclk_always_on && cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL])
-+		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL],
-+			     EPCLK_ALWAYS_ON_EN);
-+
- 	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
- 		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
- 		qmp_pcie_init_port_b(qmp, tbls);
-@@ -3701,6 +3709,12 @@ static int qmp_pcie_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_node_put;
- 
-+	qmp->refclk_always_on = of_property_read_bool(dev->of_node, "qcom,refclk-always-on");
-+	if (qmp->refclk_always_on && !qmp->cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL]) {
-+		dev_err(dev, "refclk is always on is present but refclk cntrl offset is not present\n");
-+		goto err_node_put;
-+	}
-+
- 	ret = phy_pipe_clk_register(qmp, np);
- 	if (ret)
- 		goto err_node_put;
-
+ void dp_panel_handle_sink_request(struct dp_panel *dp_panel)
 -- 
 2.42.0
 
