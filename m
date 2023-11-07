@@ -1,145 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-37-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-39-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E049D7E367E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 09:15:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFA497E36A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 09:29:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A5011C20AB4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:15:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F11F91C20A20
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:29:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EBCBFC1D;
-	Tue,  7 Nov 2023 08:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E96C10957;
+	Tue,  7 Nov 2023 08:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NDSNLHh+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zej0VJI7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4F0DDAB
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 08:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E02C11189;
+	Tue,  7 Nov 2023 08:29:56 +0000 (UTC)
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C6AD10C6;
-	Tue,  7 Nov 2023 00:15:00 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A77SFE5000807;
-	Tue, 7 Nov 2023 08:14:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=JG+uTqn2Z5XjxNDpjtDREeQ7xYwoeuEw41eC0gvUYl8=;
- b=NDSNLHh+3p+cRd0/4YfOMuK62nvYjLewPrgrT5yxJ1P5ZXK9YzAqzJpPXPsm/V92c2tP
- Y5RXloNbEc5wL5G37UAw+6xaojEhdyFdWsSTpIla+7x7fU6EOBYYtHZ7GsisocOzQr95
- /I7bLFmzN8Y62xp9KtezpIHf1sWQ/mnZrm/BPn8ghuHVbqENSm804fJRRvG2n04Akp4h
- FvEPh/anjqLzQLUafa48Vq+Wzlii87unAs1kGRhbhQX/xvWgQKWur1tfb3mHhdgEBTYO
- fUPoGQ6TIe98lG72DGFNmf72qLF1U0qO2gPjKnvV+smgQikaLqd9Z7LkMJgcTZRunkNX AA== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u758n1h63-1
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73ACFE8;
+	Tue,  7 Nov 2023 00:29:54 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A77S1Ck031262;
+	Tue, 7 Nov 2023 08:29:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=CAgbhith+IxcJgMX58QDJcHe1eTf1v+UVLj/drat0xQ=;
+ b=Zej0VJI7e8Jl0x4pmULEu5oRNAZKqujqru3VEOTjKp1MRdqGB8f8FoXvF25Hj1YbJJl6
+ xgF6RXLGKoHjPR+DDYPoM5jjiTPH6g8gwvsc+Ce+4kpcT5AOdSjm7DtQayYezL5XrPs6
+ WPzdo9KVD7j8YayLrHbJbEcsc2aWtwAmyjXOWUQDwEWb1E4CBH+Ex9gyqUPSMdynW2eF
+ /FZsS7a/Z6JBzPnfVaUij5lidRCAa3SOb8vSEOYX3C3QohnyvKYiJ5YbCVrGlKxxo4QJ
+ dyCwLfCNH/38xvznnuKGPl/sjfSJkkTqzczGs9iZc8zS31Wthkb+i6xLisH3HZ5+Nphw xQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u74v31kef-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Nov 2023 08:14:55 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3A78ErvE017358;
-	Tue, 7 Nov 2023 08:14:53 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3u5f1m6c7g-1;
-	Tue, 07 Nov 2023 08:14:53 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3A78Eqcp017351;
-	Tue, 7 Nov 2023 08:14:53 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3A78EqDq017350;
-	Tue, 07 Nov 2023 08:14:52 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-	id 04521544E; Tue,  7 Nov 2023 16:14:52 +0800 (CST)
-From: Qiang Yu <quic_qianyu@quicinc.com>
-To: mani@kernel.org, quic_jhugo@quicinc.com
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v3 2/2] bus: mhi: host: pci_generic: Add SDX75 based modem support
-Date: Tue,  7 Nov 2023 16:14:50 +0800
-Message-Id: <1699344890-87076-3-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1699344890-87076-1-git-send-email-quic_qianyu@quicinc.com>
-References: <1699344890-87076-1-git-send-email-quic_qianyu@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Bs-mqV4NwpfvS_Ly2oarN4e0eMDs_1K6
-X-Proofpoint-ORIG-GUID: Bs-mqV4NwpfvS_Ly2oarN4e0eMDs_1K6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-06_15,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2310240000 definitions=main-2311070067
+	Tue, 07 Nov 2023 08:29:43 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A78TgcO009928
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 7 Nov 2023 08:29:42 GMT
+Received: from [10.249.29.138] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
+ 2023 00:29:36 -0800
+Message-ID: <7f800c67-064e-405a-bc36-39544d9e28ef@quicinc.com>
+Date: Tue, 7 Nov 2023 13:59:32 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+To: Johan Hovold <johan@kernel.org>
+CC: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy
+ Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi
+	<balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
+        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-6-quic_kriskura@quicinc.com>
+ <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
+ <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+ <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+ <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+ <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
+ <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
+ <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5i7WXT_WEm9jwcoxvpclFngisjiOE05r
+X-Proofpoint-ORIG-GUID: 5i7WXT_WEm9jwcoxvpclFngisjiOE05r
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-06_15,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
+ malwarescore=0 phishscore=0 suspectscore=0 adultscore=0 mlxlogscore=883
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
+ definitions=main-2311070069
 
-Add generic info for SDX75 based modems. SDX75 takes longer to set ready
-during power up. Hence use separate configuration.
+>>
+>> But there is already support for these interrupts in the driver. You
+>> work for Qualcomm who built the thing so surely you can figure how they
+>> intended these to be used?
+>>
+>> You need to provide this information so that we can determine what the
+>> binding should look like. The implementation would also be simplified if
+>> we don't have to add random hacks to it just because we don't know why
+>> the vendor driver you refer does not use it currently on this particular
+>> platform.
+>>
+> 
+> Hi Johan,
+> 
+> Regarding the points of discussion we had last week on [1], here are 
+> some clarifications:
+> 
+> 1. We do have hs_phy_irq 1/2/3/4 for tertiary port of Sc8280 as 
+> mentioned. Why do we need them and would we use it in multiport targets ?
+> 
+> DPSE and DMSE are single ended line state of DP and DM lines. The DP 
+> line and DM line stay in steady High or Low during suspend and they flip 
+> when there is a RESUME or REMOTE WAKE. This is what we do/check in 
+> dwc3_qcom_enable_interrupts call for dp/dm irq's based on usb2_speed.
+> 
+> Initially in QUSB2 targets, the interrupts were enabled and configured 
+> in phy and the wakeup was interrupt was read on hs_phy_irq vector - [2].
+> In that case, we modify DP/DM interrupts in phy registers, specifically 
+> QUSB2PHY_INTR_CTRL and when wakeup signal comes in, hs_phy_irq is 
+> triggered. But in femto targets, this is done via DP/DM interrupts and 
+> there is no use of hs_phy_irq. Even hw folks confirmed they dont use 
+> hs_ph_irq in femto phy targets.
+> 
+> As an experiment, I tried to test wakeup by pressing buttons on 
+> connected keyboard when in suspend state or connecting/disconnecting 
+> keyboard in suspended state on different ports and only see dp/dm IRQ's 
+> getting fired although we register for hs_phy_irq as well:
+> 
+> / # cat /proc/interrupts  |grep phy_
+> 171:   1  0   0   0  0  0  0  0       PDC 127 Edge      dp_hs_phy_1
+> 172:   2  0   0   0  0  0  0  0       PDC 126 Edge      dm_hs_phy_1
+> 173:   3  0   0   0  0  0  0  0       PDC 129 Edge      dp_hs_phy_2
+> 174:   4  0   0   0  0  0  0  0       PDC 128 Edge      dm_hs_phy_2
+> 175:   0  0   0   0  0  0  0  0       PDC 131 Edge      dp_hs_phy_3
+> 176:   2  0   0   0  0  0  0  0       PDC 130 Edge      dm_hs_phy_3
+> 177:   2  0   0   0  0  0  0  0       PDC 133 Edge      dp_hs_phy_4
+> 178:   5  0   0   0  0  0  0  0       PDC 132 Edge      dm_hs_phy_4
+> 179:   0  0   0   0  0  0  0  0       PDC  16 Level     ss_phy_1
+> 180:   0  0   0   0  0  0  0  0       PDC  17 Level     ss_phy_2
+> 181:   0  0   0   0  0  0  0  0     GICv3 163 Level     hs_phy_1
+> 182:   0  0   0   0  0  0  0  0     GICv3 168 Level     hs_phy_2
+> 183:   0  0   0   0  0  0  0  0     GICv3 892 Level     hs_phy_3
+> 184:   0  0   0   0  0  0  0  0     GICv3 891 Level     hs_phy_4
+> 
+> Since the hs_phy_irq is applicable only for qusb2 targets, do we still 
+> need to add it to DT.
+> 
+> 2. BAM Irq usage (u_usb31_scnd_mvs_pipe_wrapper_usb31_bam_irq[0]):
+> 
+> BAM IRQ is not needed in host-only controller. It was just added in 
+> process of porting/deriving code from DRD controllers and is 
+> non-functional (confirmed by HW team here). We can skip this from DT of 
+> multiport.
+> 
+> 3. ctrl_irq[1] usage:
+> 
+> This is a feature of SNPS controller, not qcom glue wrapper, and is 
+> present on all targets (non-QC as well probably). As mentioned before on 
+> [3], this is used for HW acceleration.
+> 
+> In host mode, XHCI spec does allow for multiple interrupters when 
+> multiple event rings are used. A possible usage is multiple execution 
+> environments something like what we are doing on mobile with ADSP audio 
+> offload [4]. Another possibility could be some of virtualization where 
+> host/hyp would manage the first interrupter and could allow a guest to 
+> operate only with the second (though current design does not go far 
+> enough to offer true isolation for real VM type workloads). The 
+> additional interrupts (ones other than ctrl_irq[0]) are either for 
+> virtualization use cases, or for our various “hw offload” features. In 
+> device mode, these are used for offloading tethering functionality to 
+> IPA FW.
+> 
+> Since the DeviceTree passed to the OS, should describe the hardware to 
+> the OS, and should represent the hardware from the point-of-view of the 
+> OS, adding one interrupt (ctrl_irq[0]) might be sufficient as Linux 
+> would not use the other interrupts. Furthermore AFAIK even UEFI/Windows 
+> also use only ctrl_irq[0] for host mode in their execution environment 
+> today. Do we still need to add this to bindings and DT ?
+> 
+> [1]: https://lore.kernel.org/all/ZTJ_T1UL8-s2cgNz@hovoldconsulting.com/
+> [2]: 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/phy/qualcomm/phy-qcom-qusb2.c?h=v6.6#n626
+> [3]: https://lore.kernel.org/all/ZTduh5LULBMYf3wq@hovoldconsulting.com/
+> [4]: 
+> https://lore.kernel.org/all/20231017200109.11407-1-quic_wcheng@quicinc.com/
+> 
 
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/host/pci_generic.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Hi Johan,
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 08f3f03..cd6cd14 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -269,6 +269,16 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
- 	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
- };
- 
-+static const struct mhi_controller_config modem_qcom_v2_mhiv_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 8000,
-+	.ready_timeout_ms = 50000,
-+	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
-+	.ch_cfg = modem_qcom_v1_mhi_channels,
-+	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
-+	.event_cfg = modem_qcom_v1_mhi_events,
-+};
-+
- static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
- 	.max_channels = 128,
- 	.timeout_ms = 8000,
-@@ -278,6 +288,16 @@ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
- 	.event_cfg = modem_qcom_v1_mhi_events,
- };
- 
-+static const struct mhi_pci_dev_info mhi_qcom_sdx75_info = {
-+	.name = "qcom-sdx75m",
-+	.fw = "qcom/sdx75m/xbl.elf",
-+	.edl = "qcom/sdx75m/edl.mbn",
-+	.config = &modem_qcom_v2_mhiv_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.sideband_wake = false,
-+};
-+
- static const struct mhi_pci_dev_info mhi_qcom_sdx65_info = {
- 	.name = "qcom-sdx65m",
- 	.fw = "qcom/sdx65m/xbl.elf",
-@@ -600,6 +620,8 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
-+		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
- 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
--- 
-2.7.4
+  Can you help provide your comments on the above mentioned points so 
+that we can take the discussion forward and finalize changes for v14 
+patches. And thanks for all the reviews so far on previous revisions.
 
+Regards,
+Krishna,
 
