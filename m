@@ -1,208 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-45-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-46-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C49F7E383B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 10:53:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7185A7E38A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 11:16:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB9D0280F2B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 09:53:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D07D8B20C1F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 10:16:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BB3112E4B;
-	Tue,  7 Nov 2023 09:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E971E13AE1;
+	Tue,  7 Nov 2023 10:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U72jG0bI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hm/XMT7S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D5E12E40;
-	Tue,  7 Nov 2023 09:53:27 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C25111D;
-	Tue,  7 Nov 2023 01:53:25 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A75EGmk016905;
-	Tue, 7 Nov 2023 09:53:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=JJyqOeDVKPnGpmsy8rK0MY4A/PgRThwklgkRF/cIzpY=;
- b=U72jG0bIl9KTpsPSfw7f1ugM34wJ2fwoaq+5/PAV+Zalu4hqa6Q2vBSCg419f+BE2QzE
- 7gDh5c50tNZ5jWDAgCji2apzgc91vincZfjJCORI2MWfB9ItGFF7tEqs2qwYNMXXYk0q
- kfTPvSZTRe70hOjBpu2g6BQ1POEqZwYlAs2ASz/pNfqfqgOc70b77a2KtdWerQuXqPIW
- MFpbNReg6VlRuMbEMmNneC9nr/zPWOY4IH5cAK0AEiSIFKHf6+pBKLaMcEgqFedy6P9k
- Z0/Fq1gm85SzRzsJyYNEVLDbzjVzciuLw6bHgTbBY58zygd9zU3ocnFNtgEVT836KmEK JA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u758n1qnq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Nov 2023 09:53:10 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A79rAbj012332
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Nov 2023 09:53:10 GMT
-Received: from [10.218.41.203] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
- 2023 01:53:03 -0800
-Message-ID: <996d4368-57d9-43cf-381b-4d4c5ded9fdc@quicinc.com>
-Date: Tue, 7 Nov 2023 15:23:00 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9573710A0D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 10:16:19 +0000 (UTC)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A8C6F7
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 02:16:17 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50797cf5b69so7179984e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 02:16:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699352175; x=1699956975; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=95vD72c+bC2P8X8C/IdsTMXs0cKxT+IRop924lJhGj8=;
+        b=hm/XMT7SZKzjyj8Ebsm372Kt5mKKn0eOerShTN0y4EaqYFGyT2nkRO7v1MDHjaBH6l
+         FvyoRJZ4orOeOHCNBqBcU0vlncqIvAPJUkDvRc1/RR+rYmToBFrxwSr1RRjP0GD7skPk
+         jggaO0Eox2MG8CPXzvNfK6L1hiZ8m8Klm2kLmsE1mOAXysg/79hDSUX80k1BCT57D991
+         oguSIftO5JTQ+9YbqGhtyxUahhWNyKCUuu/n2RUuDmskDNZOenjvotUrPPDvSyIzJutK
+         9KCKOhb8PCi5z5ByEpipK91gmSZcdHntPZyRrYeKuZn/d1omLndnW4rGvH2hyuNwH+Lb
+         2OdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699352175; x=1699956975;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=95vD72c+bC2P8X8C/IdsTMXs0cKxT+IRop924lJhGj8=;
+        b=niJo18H8Fh4MZYF1XkSY92AaxtIbRoETJglaZbJoPOHxS1DT8j/KjfOK/8VbrCR3Sn
+         Mi24QJHe7S8iSBFevWR+3M1ckswmShDiO3cMFOT9ViPvVjhP71e6KO++ICtrF5UDjL8B
+         i0f3YDLjMZvx8AvrPa461gqRVU3sfDw8NJbz3Cz45woQGInLWSMZbfuv47Lvatcdjx+5
+         hWgTl55fIw0C7owrLZTk/GPAonHxcVtw80V1/tyLYGt0y3yoVFlGRic4IH2+0damMTzO
+         pZlr1BPbRiot+qC78DOD1Bouoj1rfUbz/8P9b1VZF7i2bpSThiKwLVg6Djxrafyoma4V
+         evmw==
+X-Gm-Message-State: AOJu0YyqbjDxWb4wR3w0rRo1LihNjyrQ2UTD4QBBnNbK22OcnGSLm7Z8
+	Pteo/gynvQgbiOkOiTSGbTMW4g==
+X-Google-Smtp-Source: AGHT+IGJuO6mk0T3Wt1edO/lmNN8eTn2eGwaG7+JJc/a3UervFShShCwhOClqq8GfMz5fuLE3zkgEA==
+X-Received: by 2002:ac2:546e:0:b0:507:9855:bc68 with SMTP id e14-20020ac2546e000000b005079855bc68mr23509396lfn.37.1699352175531;
+        Tue, 07 Nov 2023 02:16:15 -0800 (PST)
+Received: from krzk-bin.. ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id l3-20020a05600c4f0300b003fc0505be19sm15249922wmq.37.2023.11.07.02.16.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Nov 2023 02:16:14 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Ryan Lee <ryans.lee@analog.com>,
+	linux-sound@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	alsa-devel@alsa-project.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH] ASoC: dt-bindings: use "soundwire" as controller's node name in examples
+Date: Tue,  7 Nov 2023 11:16:10 +0100
+Message-Id: <20231107101610.13728-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH 2/2] phy: qcom-qmp-pcie: Add support for keeping refclk
- always on
-Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_vpernami@quicinc.com>,
-        <quic_parass@quicinc.com>
-References: <20231106-refclk_always_on-v1-0-17a7fd8b532b@quicinc.com>
- <20231106-refclk_always_on-v1-2-17a7fd8b532b@quicinc.com>
- <p3ozkq2rjkl2qowkbb5oq2bk33s476ismuxhkxv3ttlvafjyis@ctmowtnwg4rp>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <p3ozkq2rjkl2qowkbb5oq2bk33s476ismuxhkxv3ttlvafjyis@ctmowtnwg4rp>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JfbwFeJkvyn76N6Sx05YKPT4RNeSE8Dw
-X-Proofpoint-ORIG-GUID: JfbwFeJkvyn76N6Sx05YKPT4RNeSE8Dw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-06_15,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 mlxscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2310240000 definitions=main-2311070081
+Content-Transfer-Encoding: 8bit
 
+Soundwire Devicetree bindings expect the Soundwire controller device
+node to be named just "soundwire".  Correct examples, so the incorrect
+code will not be re-used.
 
-On 11/6/2023 9:47 PM, Bjorn Andersson wrote:
-> On Mon, Nov 06, 2023 at 05:22:35PM +0530, Krishna chaitanya chundru wrote:
->> In PCIe low power states like L1.1 or L1.2 the phy will stop
->> supplying refclk to endpoint. If endpoint asserts clkreq to bring
->> back link L0, then RC needs to provide refclk to endpoint.
->>
->> If there is some issues in platform with clkreq signal propagation
->> to host and due to that host will not send refclk which results PCIe link
->> down. For those platforms  phy needs to provide refclk even in low power
-> Double <space> ------------^^
-ACK
->> states.
->>
->> Add a flag which indicates refclk is always supplied to endpoint.
->>
-> The patch itself look good, the problem description looks good, but if
-> you have an indication that the refclk "is always supplied to the
-> endpoint", then you don't have a problem with refclk and I don't think
-> you need this patch.
->
-> Something to the tune of "keep refclk always supplied to endpoint" seems
-> to more appropriately describe what this flag is doing.
-Sure I will change it in my next patch.
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 21 +++++++++++++++++----
->>   1 file changed, 17 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> index a63ca7424974..d7e377a7d96e 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
->> @@ -43,6 +43,8 @@
->>   /* QPHY_PCS_STATUS bit */
->>   #define PHYSTATUS				BIT(6)
->>   #define PHYSTATUS_4_20				BIT(7)
->> +/* PCS_PCIE_ENDPOINT_REFCLK_CNTRL */
->> +#define EPCLK_ALWAYS_ON_EN			BIT(6)
->>   
->>   #define PHY_INIT_COMPLETE_TIMEOUT		10000
->>   
->> @@ -77,6 +79,7 @@ enum qphy_reg_layout {
->>   	QPHY_START_CTRL,
->>   	QPHY_PCS_STATUS,
->>   	QPHY_PCS_POWER_DOWN_CONTROL,
->> +	QPHY_PCS_ENDPOINT_REFCLK_CNTRL,
->>   	/* Keep last to ensure regs_layout arrays are properly initialized */
->>   	QPHY_LAYOUT_SIZE
->>   };
->> @@ -103,10 +106,11 @@ static const unsigned int sdm845_qhp_pciephy_regs_layout[QPHY_LAYOUT_SIZE] = {
->>   };
->>   
->>   static const unsigned int pciephy_v4_regs_layout[QPHY_LAYOUT_SIZE] = {
->> -	[QPHY_SW_RESET]			= QPHY_V4_PCS_SW_RESET,
->> -	[QPHY_START_CTRL]		= QPHY_V4_PCS_START_CONTROL,
->> -	[QPHY_PCS_STATUS]		= QPHY_V4_PCS_PCS_STATUS1,
->> -	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V4_PCS_POWER_DOWN_CONTROL,
->> +	[QPHY_SW_RESET]				= QPHY_V4_PCS_SW_RESET,
->> +	[QPHY_START_CTRL]			= QPHY_V4_PCS_START_CONTROL,
->> +	[QPHY_PCS_STATUS]			= QPHY_V4_PCS_PCS_STATUS1,
->> +	[QPHY_PCS_POWER_DOWN_CONTROL]		= QPHY_V4_PCS_POWER_DOWN_CONTROL,
->> +	[QPHY_PCS_ENDPOINT_REFCLK_CNTRL]	= QPHY_V4_PCS_PCIE_ENDPOINT_REFCLK_CNTRL,
->>   };
->>   
->>   static const unsigned int pciephy_v5_regs_layout[QPHY_LAYOUT_SIZE] = {
->> @@ -2244,6 +2248,8 @@ struct qmp_pcie {
->>   	struct phy *phy;
->>   	int mode;
->>   
->> +	bool refclk_always_on;
->> +
->>   	struct clk_fixed_rate pipe_clk_fixed;
->>   };
->>   
->> @@ -3159,6 +3165,10 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
->>   	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
->>   	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
->>   
->> +	if (qmp->refclk_always_on && cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL])
->> +		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL],
->> +			     EPCLK_ALWAYS_ON_EN);
->> +
->>   	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
->>   		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
->>   		qmp_pcie_init_port_b(qmp, tbls);
->> @@ -3681,6 +3691,9 @@ static int qmp_pcie_probe(struct platform_device *pdev)
->>   	if (ret)
->>   		goto err_node_put;
->>   
->> +	qmp->refclk_always_on = of_property_read_bool(dev->of_node,
->> +						      "qcom,refclk-always-on");
-> Leave this line unwrapped, for readability.
->
-> Regards,
-> Bjorn
+Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/sound/adi,max98363.yaml | 2 +-
+ Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml | 2 +-
+ Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-sure I will update this in next patch.
+diff --git a/Documentation/devicetree/bindings/sound/adi,max98363.yaml b/Documentation/devicetree/bindings/sound/adi,max98363.yaml
+index a844b63f3930..c388cda56011 100644
+--- a/Documentation/devicetree/bindings/sound/adi,max98363.yaml
++++ b/Documentation/devicetree/bindings/sound/adi,max98363.yaml
+@@ -39,7 +39,7 @@ unevaluatedProperties: false
+ 
+ examples:
+   - |
+-    soundwire-controller@3250000 {
++    soundwire@3250000 {
+         #address-cells = <2>;
+         #size-cells = <0>;
+         reg = <0x3250000 0x2000>;
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml
+index ba572a7f4f3c..8e462cdf0018 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml
+@@ -52,7 +52,7 @@ examples:
+   - |
+     #include <dt-bindings/gpio/gpio.h>
+ 
+-    soundwire-controller@3250000 {
++    soundwire@3250000 {
+         #address-cells = <2>;
+         #size-cells = <0>;
+         reg = <0x3250000 0x2000>;
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+index e6723c9e312a..d717017b0fdb 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+@@ -48,7 +48,7 @@ examples:
+   - |
+     #include <dt-bindings/gpio/gpio.h>
+ 
+-    soundwire-controller {
++    soundwire {
+         #address-cells = <2>;
+         #size-cells = <0>;
+ 
+-- 
+2.34.1
 
-- Krishna Chaitanya.
-
->> +
->>   	ret = phy_pipe_clk_register(qmp, np);
->>   	if (ret)
->>   		goto err_node_put;
->>
->> -- 
->> 2.42.0
->>
 
