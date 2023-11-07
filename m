@@ -1,168 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-85-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-86-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17C937E3F3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:51:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1919F7E3F75
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 14:02:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 94B0DB20BBB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 12:51:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF128280C86
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:02:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 644622E622;
-	Tue,  7 Nov 2023 12:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6191E22F00;
+	Tue,  7 Nov 2023 13:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bSVtyHV5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r5Few5gp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD84114F73;
-	Tue,  7 Nov 2023 12:50:50 +0000 (UTC)
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81651A5CE;
-	Tue,  7 Nov 2023 04:50:49 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A7CjG2b012206;
-	Tue, 7 Nov 2023 12:50:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=3+YMA23o75yDOPLIrv3GEbuYP46t8YxPCwUb1AJ4tA8=;
- b=bSVtyHV5MpCbMgLztXPRqDgrVw6Y1KIZYjh8yaOvcd9KP9Mdt06gi7bkBJCbZVre1jRq
- kk/oJqXASWa72m5rpPNdmddPQuQuc4vesdbpRFoc1pTz5/+Sg46Wy/glGRsrlyATHo3d
- PRZ9QNrkvJdG6mlhKU9kK20zP+yRCNU9jKACvHXkpLWIhw/bT+tAajExxdE5eF0mQfLp
- xFpYn+G4mZ+deYL0IyPuvRYt/Xhn4e85dLo5QC2GLhUouKBek4dPG3gBcLrXlyx4e2/C
- h97Hxt1zc9SWPW5h7Mh5+7d57nU/+QTJTmLJ2qhEqBdoaiapuTyPHrdhNekJnpiYOuuk 5A== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u73a72bk0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Nov 2023 12:50:40 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3A7CoYaK000737;
-	Tue, 7 Nov 2023 12:50:37 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3u5f1m401f-1;
-	Tue, 07 Nov 2023 12:50:37 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3A7CobPI000764;
-	Tue, 7 Nov 2023 12:50:37 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3A7CoaGL000761;
-	Tue, 07 Nov 2023 12:50:37 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
-	id 03F0D4C77; Tue,  7 Nov 2023 18:20:36 +0530 (+0530)
-From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-To: agross@kernel.org, andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org,
-        robh+dt@kernel.org
-Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-        dmitry.baryshkov@linaro.org, robh@kernel.org, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
-        quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
-        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mhi@lists.linux.dev
-Subject: [PATCH v7 4/4] arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
-Date: Tue,  7 Nov 2023 18:20:28 +0530
-Message-Id: <1699361428-12802-5-git-send-email-quic_msarkar@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1699361428-12802-1-git-send-email-quic_msarkar@quicinc.com>
-References: <1699361428-12802-1-git-send-email-quic_msarkar@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SVOSm48Ir8PZWbMASV8Flh4_qPuSc-ud
-X-Proofpoint-GUID: SVOSm48Ir8PZWbMASV8Flh4_qPuSc-ud
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-07_02,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 clxscore=1015 bulkscore=0 spamscore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 mlxlogscore=999 adultscore=0 malwarescore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311070105
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F146A12E69
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 13:02:01 +0000 (UTC)
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5436EBA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 05:01:59 -0800 (PST)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-5a7fb84f6ceso61819047b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 05:01:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699362118; x=1699966918; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vKVO9Km+ohatrlDcgogUtJ4mNCpxTTFHDSK1wMZmOyc=;
+        b=r5Few5gpA76Ifz0dX1zlEQNbsMf92BhqfRDD+0U85UtZhe8OTiUVKxvIVlEXOJfE4i
+         y3ayktHHwujW29SkiK8YLXqxM1ZbbhM+f/I7MzIA2afZ3aac/Wq0VWzNkAuVqAeCy/1P
+         7h7g6SbKBR4yryNNbg5v/5SofqqZRFlaKOYr0uotIQfY8JPw+8hXdqTVTZIl3dbaQGTx
+         PChQBD72Qe+PFPMcyePbGppoTiBTvpkm3kelhZ5fgFEnsSYSmhtkzmjaK9w8v0uSF043
+         ICL6zsglBB9ML92k7sOpiJqsqggFo339o8fy6CK/lJfg50HOTIgYTw3hQEHTeyWIh6XN
+         cBhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699362118; x=1699966918;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vKVO9Km+ohatrlDcgogUtJ4mNCpxTTFHDSK1wMZmOyc=;
+        b=DezPVJTH1g0fohbS3FBntIIdZUtjOpH9e/NZ5tXG0+TXAhUKzSt4yEi9JWY8W2RWje
+         n6paXf/74PDWqo7CJ+5o+mKbD6mqannD42eLl2RRIIOnbALfU72MxMzdvAu4WHvDi5NZ
+         4B/haFVuhCVRGE5pWd1YGR8ZAoJxPbXIMMSPiaXCNjZRdXu3uVRVUKUk6bir20uuml4/
+         F48KoWeKMIZtXXr8mx9D4SFbojMQ4Lja1oTJzbbJi+XfMPfNgv7/QIevpycdS3rzJWh2
+         Ut7pbfLO5I5ImhexCgZn+u+5jOd4g2l22Rm5nWlwXE0neR6eyCD6KhnoCw9MFeEoyIvv
+         3f7A==
+X-Gm-Message-State: AOJu0YxzC1gSchoizUIO1Tew7iKJzy2bAmoTUL6HcI/c7XUY/8zhJ2wH
+	yjTiZeTKx5ZkijMpE002G7eCzR+Ls5cdqAMh+07ufA==
+X-Google-Smtp-Source: AGHT+IHKQoKSsmRcg/sOieixzdu1e2l7NoB3NK+XgDvDXaMmTUjWJdL0uuTj6OuaO4uthq+8deJFWHoWrBfrpSar5O8=
+X-Received: by 2002:a81:5210:0:b0:5a8:181e:8d6c with SMTP id
+ g16-20020a815210000000b005a8181e8d6cmr10151699ywb.10.1699362118505; Tue, 07
+ Nov 2023 05:01:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20231107-refclk_always_on-v2-0-de23962fc4b3@quicinc.com> <20231107-refclk_always_on-v2-1-de23962fc4b3@quicinc.com>
+In-Reply-To: <20231107-refclk_always_on-v2-1-de23962fc4b3@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 7 Nov 2023 15:01:47 +0200
+Message-ID: <CAA8EJpqvCJsft3Y-m2ZYORBg=6P7EhT-PsCSkuQ4xaxuf3KOwA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
+ qcom,refclk-always-on property
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com, 
+	quic_skananth@quicinc.com, quic_vpernami@quicinc.com, quic_parass@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-Add ep pcie dtsi node for pcie0 controller found on sa8775p platform.
-It supports gen4 and x2 link width. Limiting the speed to Gen3 due to
-stability issues.
+On Tue, 7 Nov 2023 at 14:26, Krishna chaitanya chundru
+<quic_krichai@quicinc.com> wrote:
+>
+> Document qcom,refclk-always-on property which is needed in some platforms
+> to supply refclk even in PCIe low power states.
+>
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> index 2c3d6553a7ba..263291447a5b 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> @@ -93,6 +93,13 @@ properties:
+>    "#phy-cells":
+>      const: 0
+>
+> +  qcom,refclk-always-on:
+> +    type: boolean
+> +    description: If there is some issues in platform with clkreq signal
 
-Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 46 +++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+nit: there are some
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 13dd44d..7eab458 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -3586,6 +3586,52 @@
- 		status = "disabled";
- 	};
- 
-+	pcie0_ep: pcie-ep@1c00000 {
-+		compatible = "qcom,sa8775p-pcie-ep";
-+		reg = <0x0 0x01c00000 0x0 0x3000>,
-+		      <0x0 0x40000000 0x0 0xf20>,
-+		      <0x0 0x40000f20 0x0 0xa8>,
-+		      <0x0 0x40001000 0x0 0x4000>,
-+		      <0x0 0x40200000 0x0 0x100000>,
-+		      <0x0 0x01c03000 0x0 0x1000>,
-+		      <0x0 0x40005000 0x0 0x2000>;
-+		reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
-+			    "mmio", "dma";
-+
-+		clocks = <&gcc GCC_PCIE_0_AUX_CLK>,
-+			<&gcc GCC_PCIE_0_CFG_AHB_CLK>,
-+			<&gcc GCC_PCIE_0_MSTR_AXI_CLK>,
-+			<&gcc GCC_PCIE_0_SLV_AXI_CLK>,
-+			<&gcc GCC_PCIE_0_SLV_Q2A_AXI_CLK>;
-+
-+		clock-names = "aux",
-+			      "cfg",
-+			      "bus_master",
-+			      "bus_slave",
-+			      "slave_q2a";
-+
-+		interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
-+
-+		interrupt-names = "global", "doorbell", "dma";
-+
-+		interconnects = <&pcie_anoc MASTER_PCIE_0 0 &mc_virt SLAVE_EBI1 0>,
-+				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
-+		interconnect-names = "pcie-mem", "cpu-pcie";
-+
-+		iommus = <&pcie_smmu 0x0000 0x7f>;
-+		resets = <&gcc GCC_PCIE_0_BCR>;
-+		reset-names = "core";
-+		power-domains = <&gcc PCIE_0_GDSC>;
-+		phys = <&pcie0_phy>;
-+		phy-names = "pciephy";
-+		max-link-speed = <3>; /* FIXME: Limiting the Gen speed due to stability issues */
-+		num-lanes = <2>;
-+
-+		status = "disabled";
-+	};
-+
- 	pcie0_phy: phy@1c04000 {
- 		compatible = "qcom,sa8775p-qmp-gen4x2-pcie-phy";
- 		reg = <0x0 0x1c04000 0x0 0x2000>;
+However this still doesn't describe what kind of issues with clkreq
+you observe. I mean, clkreq is just a GPIO pin.
+
+> +      propagation to the host and due to that host will not send refclk, which
+> +      results in linkdown in L1.2 or L1.1 exit initiated by EP. This property
+> +      if set keeps refclk always on even in Low power states (optional).
+> +
+>  required:
+>    - compatible
+>    - reg
+>
+> --
+> 2.42.0
+>
+>
+
+
 -- 
-2.7.4
-
+With best wishes
+Dmitry
 
