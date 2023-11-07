@@ -1,138 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-93-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2FD47E3FC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 14:10:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8C3B7E3FE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 14:17:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 003861C209F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:10:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C180280F51
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:17:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 859222EB0E;
-	Tue,  7 Nov 2023 13:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FBEB2EB0E;
+	Tue,  7 Nov 2023 13:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GMhePyp1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mpGp03LU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D362E65D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 13:10:24 +0000 (UTC)
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8077199B
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 05:10:22 -0800 (PST)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-5a81ab75f21so67518277b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 05:10:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699362622; x=1699967422; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wm1Mb5/Vjq9aMkJlsrjTa8/I47O6pvYgHKx9Bcn4a/Q=;
-        b=GMhePyp1xSjoCtMzDE13LEVP1aNRD09yC5boje5juuXie05U1E7JcwHAuYp6cMJIEQ
-         O58QaTxVxhwvfh3deAsZBik+Et4fRdy+WnI2yMVNtYlgscFkRWkr94NxIaUWTHKqr+bh
-         jwR6jv4pqvYaM9ZwKZ3QZSJJoTGlr50iTsx9zicd0otcH+abyYyO9U6b29x3+Df94zQw
-         hkMYFAd4dJxHRmTCe5cR3TWrpBrEshrQOUSE9rakadtSUilUEUftY9EGx+h0nVeMvxqf
-         3Y1X4kSdPffdpC3CzTPrEHxbDb5Yu+n20XNBl2VZpErC4KjvJHS26c8TLSefY/Yrn+sS
-         lHgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699362622; x=1699967422;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Wm1Mb5/Vjq9aMkJlsrjTa8/I47O6pvYgHKx9Bcn4a/Q=;
-        b=cX+4VPCg8JSK8gR8oaJ2DDuXxGpjNz7ExJf0dYexZYQIOvtwwEht3W55ISmZgRMism
-         uBWo1pKe7qUoR4UeyTmUKqzHA4pU+pxePUYa7TJtH7perP1fxSIsDb8tIWtVxxtSikss
-         xixHrbwGRUtUOc5bDTZRPXP+3qtMOO1eQGcDsRn9yPH8pUJ4KoWpSahkLC59d3TixtAE
-         oqlffOtghqrGpG3fEagQQ25N8Xq7+WgMbj1rMvk9Fapjs6NTe6OE4J6oeqTSBZyLJ7Tu
-         QVu9DAgZE/+eHhLXDBa9s+wEu0FSRUngVN+pWgIr8QKtMbFCR6TiKtj3/oppjWe+IOkU
-         JrYw==
-X-Gm-Message-State: AOJu0Yw4G1tndyIKAuqh7GgpknEfppiy0OQHZhdvu3iIKBQqDZaymOan
-	W5BX9KdS3IOhnm+uYbXnfpaapSSI6J+5Vy2gK7b25g==
-X-Google-Smtp-Source: AGHT+IF5Y2PdTK3EgzgxLoQDJvc7JWtJeaqzhWMhuNj03yIKxJpo/mL6Uhb0mf5EVPARRWo8zNGIUpAEY6Ec32rjXXY=
-X-Received: by 2002:a0d:d48a:0:b0:5ad:4975:c860 with SMTP id
- w132-20020a0dd48a000000b005ad4975c860mr13979075ywd.39.1699362621854; Tue, 07
- Nov 2023 05:10:21 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFFF2DF91
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 13:16:57 +0000 (UTC)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A10AB11A;
+	Tue,  7 Nov 2023 05:16:56 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A7DCQN4011710;
+	Tue, 7 Nov 2023 13:16:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=GVlcIxCVDApckKrvxYh3Tmsu0V3EwTj/pZalGxv22JE=;
+ b=mpGp03LUNmsbzIHssZds9jkd9U1AoIT+v+Mmi8SWfwlCC8TMMJKUl5UqXNXIBbezBDJn
+ PC0y+95E+c41VIp43dQds+q4tPmnUVs7LLzIxFL8S6uubsIE6XtL1Amng7SLgOlE4YyY
+ JVJCzvZB8ub3+iIrtsimslNIXEld8tapLavtOsFM8nSgPLWzFXueW/mIHJpXsS7982Wi
+ ag0z8Hm+XKLosaXCFGgaiYZsI1IyCJ6isfL0Styl6j5deG4eKaAuxnkj7LjwoCXtTwg4
+ LRkejYqlf8Wdw4NvPwZ49QyfbcwT+ZlKajn0ongAaWjuAOyx8Mc/MEk1O7kXCtNu66FI Jg== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u6wer3gr5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 Nov 2023 13:16:22 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A7DGLfQ014633
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 7 Nov 2023 13:16:21 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
+ 2023 05:16:17 -0800
+Message-ID: <d1e3adb5-b179-a119-fc0c-f92c2b84c7c2@quicinc.com>
+Date: Tue, 7 Nov 2023 18:46:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1699362294-15558-1-git-send-email-quic_msarkar@quicinc.com> <1699362294-15558-2-git-send-email-quic_msarkar@quicinc.com>
-In-Reply-To: <1699362294-15558-2-git-send-email-quic_msarkar@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 7 Nov 2023 15:10:09 +0200
-Message-ID: <CAA8EJpp4E7L0JZjj3mT_2SQHeA6az9uwtaF3_diZ_McpGRg-Jg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] phy: qcom-qmp-pcie: add x4 lane EP support for sa8775p
-To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
-	conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org, 
-	robh+dt@kernel.org, quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com, 
-	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com, robh@kernel.org, 
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com, quic_parass@quicinc.com, 
-	quic_schintav@quicinc.com, quic_shijjose@quicinc.com, 
-	Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Tue, 7 Nov 2023 at 15:05, Mrinmay Sarkar <quic_msarkar@quicinc.com> wrote:
->
-> Add support for x4 lane end point mode PHY found on sa8755p platform.
-> Reusing existing serdes and pcs_misc table for EP and moved
-> BIAS_EN_CLKBUFLR_EN register from RC serdes table to common serdes
-> table as this register is part of both RC and EP.
->
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index b64598a..7114b4e 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -2099,6 +2099,7 @@ static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x4_pcie_pcs_alt_tbl[] = {
->  };
->
->  static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x4_pcie_serdes_alt_tbl[] = {
-> +       QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_IVCO, 0x0f),
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE0, 0x36),
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_PLL_CCTRL_MODE1, 0x36),
-> @@ -2125,7 +2126,6 @@ static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x4_pcie_rc_serdes_alt_tbl[]
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE2_MODE0, 0x07),
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE1_MODE1, 0x97),
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_SSC_STEP_SIZE2_MODE1, 0x0c),
-> -       QMP_PHY_INIT_CFG(QSERDES_V5_COM_BIAS_EN_CLKBUFLR_EN, 0x1c),
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_CLK_ENABLE1, 0x90),
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE0, 0x06),
->         QMP_PHY_INIT_CFG(QSERDES_V5_COM_CP_CTRL_MODE1, 0x06),
-> @@ -3114,6 +3114,13 @@ static const struct qmp_phy_cfg sa8775p_qmp_gen4x4_pciephy_cfg = {
->                 .pcs_misc_num   = ARRAY_SIZE(sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl),
->         },
->
-> +       .tbls_ep = &(const struct qmp_phy_cfg_tbls) {
-> +               .serdes         = sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl,
-> +               .serdes_num     = ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_ep_serdes_alt_tbl),
-> +               .pcs_misc       = sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl,
-> +               .pcs_misc_num   = ARRAY_SIZE(sm8450_qmp_gen4x2_pcie_ep_pcs_misc_tbl),
-> +       },
-> +
->         .reset_list             = sdm845_pciephy_reset_l,
->         .num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
->         .vreg_list              = qmp_phy_vreg_l,
-> --
-> 2.7.4
->
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] soc: qcom: llcc: Fix dis_cap_alloc and retain_on_pc
+ configuration
+Content-Language: en-US
+To: Stephen Boyd <swboyd@chromium.org>,
+        Atul Dhudase
+	<quic_adhudase@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>
+CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <isaacm@codeaurora.org>, <dianders@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20231103105712.1159213-1-quic_adhudase@quicinc.com>
+ <20231103193345.GY3553829@hu-bjorande-lv.qualcomm.com>
+ <5e83d947-c77f-9318-4a4c-377a8304b8fd@quicinc.com>
+ <CAE-0n50HwE+gNYotYXduer3b=O+c3ZWLC_8gEmpo0KQmtzmNvQ@mail.gmail.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <CAE-0n50HwE+gNYotYXduer3b=O+c3ZWLC_8gEmpo0KQmtzmNvQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: v4IPTD1xYMGlnE16jxOLB4w8TrvsFmvp
+X-Proofpoint-GUID: v4IPTD1xYMGlnE16jxOLB4w8TrvsFmvp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-07_04,2023-11-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=885 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
+ definitions=main-2311070110
 
 
--- 
-With best wishes
-Dmitry
+
+On 11/7/2023 3:25 AM, Stephen Boyd wrote:
+> Quoting Mukesh Ojha (2023-11-05 22:54:28)
+>>
+>>
+>> On 11/4/2023 1:03 AM, Bjorn Andersson wrote:
+>>> On Fri, Nov 03, 2023 at 04:27:12PM +0530, Atul Dhudase wrote:
+>>>> While programming dis_cap_alloc and retain_on_pc, set a bit
+>>>> corresponding to a specific SCID without disturbing the
+>>>> previously configured bits.
+>>>>
+>>>
+>>> As far as I can see, the only invocation of _qcom_llcc_cfg_program()
+>>> comes from qcom_llcc_cfg_program(), which is only called once, from
+>>> qcom_llcc_probe(), and here also seems to only be the single write to
+>>> these two registers.
+>>
+>> It does not look to be single write but the write is for each slice
+>> in the same register which was overriding other slices values.
+> 
+> Can you add that detail to the commit text? What's the seriousness of
+> the issue? Why should it be backported to stable? Is something seriously
+> broken because a slice configuration is overwritten? Does it mean that
+> some allocation made in a slice is being lost over power collapse (pc)
+> when it shouldn't be?
+
+@Atul will update the commit text as per suggestion.
+
+And yes, without this change, retention feature will not work properly.
+
+-Mukesh
 
