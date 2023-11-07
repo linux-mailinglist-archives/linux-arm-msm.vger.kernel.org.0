@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B29B57E4374
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 16:30:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71D9D7E4380
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 16:31:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1CED1C20CA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 15:30:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EE5B8B20CF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 15:31:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D28B0AD52;
-	Tue,  7 Nov 2023 15:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72C6A315A1;
+	Tue,  7 Nov 2023 15:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vF6r8eb8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DFrSWmPY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075712C872
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 15:30:36 +0000 (UTC)
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B5BF127
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 07:30:36 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9d224dca585so888609066b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 07:30:36 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48862D05E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 15:31:50 +0000 (UTC)
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16B5D127
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 07:31:50 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9c3aec5f326so1368057766b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 07:31:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699371034; x=1699975834; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699371108; x=1699975908; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=X533tTgWb1eLSTyAkSIxe6pqYTgEk5kDQ0hSy0Z6A+g=;
-        b=vF6r8eb8FPJqc4JsQhpM68hdN64k8qev5hseB1tCWmS+BgehaT8vqGtxLmFKNKMTPc
-         s8QrmZSlsosD+c9FjMs6byZMePPNd4Z32f/ItATsKMhZUZsVA4lB4SiIib3AKjSmsFlq
-         aIVZXzjek52pnSan+L0JQDP+rOsgIrL2e88vjuTkF6YcWrBVkbSS6IJh9Y6g/7ZGfgB9
-         laxnnUBSpp2e85JzF3+/mldsfy8hY9Qt7xuIcLl2dXHu54L7ZI9NBebOiupKnaCPagfJ
-         vCCD3404oG6cbiMFf5eIb+RjVOxOhcVqpM9aCz2xqm6OdCaFy1vPZlOunfkDPj0em3Hk
-         KddA==
+        bh=H9+TJbn76zlyGwuIAJqgU4J1R6EuORiXh7xg9gYQ4lc=;
+        b=DFrSWmPYpBDD1LhvCxDuOgkJaKTde4FINEMm094a83m+lTog4CveakUuV3fG3oqQO6
+         lGgx+O0ai8VWiTZlX6C8JldDrxtdVsB6Cf1dEdi64Q+z/EhhYU6qdJjN4o9k49aI/35t
+         FWG0N934MxkrHdjYJwiB+fvQRB44mCO8VHUYSvO5eI1/Xxe/sf0z0uGs6v6LnlutXRRx
+         ydFGjm71SjZtEgeESZQKfwmz9l8faht4k0JZEPdT3pg2Izx8zMof1jXvZrdALNvgy9JR
+         eBi89QpR5KUJw3d/4dWoZRFXgodI9ve1B6AxolntSTslI9am2wemVtq9Svy1p3hm4kOm
+         0AtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699371034; x=1699975834;
+        d=1e100.net; s=20230601; t=1699371108; x=1699975908;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X533tTgWb1eLSTyAkSIxe6pqYTgEk5kDQ0hSy0Z6A+g=;
-        b=UwebR8ZpbJwFwbifdOc6cVoMPGXeXaducCXneSgEmVuvFm/u3+WaWGMTjdN41C8yms
-         eOtFKf2BPZBIsh1uWY3vs8MUtfwQMIklJsSvMMuDuLQk3434a5brVLAcJWLroaK26dzL
-         Mx12dnITXppkwvYqsjMyKkVglbJr47UbyTfNGBnDd/HcD8A8lVdMH8F1JY2ag1nPayhz
-         v/LDGYfSGnpQFweyDHERgLJ+Ej/wvSGP8hiiXRd/yz3yD3HmAxRXjwb+47xCzizD8QxL
-         mRIzyT8mkXAinWZD1xi+4cQwBSrqw5mALf3qm6tuI+7Zkm650DYpPyfzBGHGHERIITeK
-         9y8A==
-X-Gm-Message-State: AOJu0Yy7K1Rv+8TggR099zYRlb42LRvYpCQfkul5lMFE1mww+SOJhoMO
-	Uq82NM+n/TIVFYST/9L9F+bjXw==
-X-Google-Smtp-Source: AGHT+IHqRzlMQW1322zEZU++nyEQZu6GAp3fMN+6lhVBpMx1K3kqRuYNwaOZb8vjH8JBTiw5Npdhcw==
-X-Received: by 2002:a17:907:9815:b0:9b2:b152:b0f2 with SMTP id ji21-20020a170907981500b009b2b152b0f2mr17810273ejc.10.1699371034593;
-        Tue, 07 Nov 2023 07:30:34 -0800 (PST)
+        bh=H9+TJbn76zlyGwuIAJqgU4J1R6EuORiXh7xg9gYQ4lc=;
+        b=HLNRqPRGTGGljwVbHQ1dmEkrKp0WRzfX4Lstf3TdkRb+YtCXruNEaERwspWNKyitOg
+         o373TudkTgN2YmqLx8FKfONXqStYcfdlttwck6629WQ3eP2HDAXrDtR31tK33WlLBoSt
+         ir3RqUYIUGORYdCKjMbh4b1WbrtwonGHYF50VIBdItrvVkPONfixo+Q/qTEhR40A8hgg
+         +WvaC8jqB1Mmjz44rGDUp7ly4pAq76r2QDWREW5f+U+In63OHDT0BEoHNM93L4d68S2w
+         8P1kGDqqCoCauTJ4sD6G+dnQbPIFUjsXLZK/EPMao7ttcsMKlZgQlX4hYn7Gm/MQdGkR
+         JpUA==
+X-Gm-Message-State: AOJu0Yz8R/U1aVnFhFhFMyBc8AGejvRMoX8702o9DgnjP8GLcHXljvj0
+	VVEu47CUKUBL4eNHclTkeowBZA==
+X-Google-Smtp-Source: AGHT+IEy6q8Z/avWXw9dA+/MaClYQUdspP2ZIzSs5xm9U35hY34TzKSMcOXhfrHqPueU8m4/lZnSzA==
+X-Received: by 2002:a17:906:74cb:b0:9a9:405b:26d1 with SMTP id z11-20020a17090674cb00b009a9405b26d1mr2529743ejl.5.1699371108212;
+        Tue, 07 Nov 2023 07:31:48 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id i20-20020a17090671d400b009ddf38056f8sm1163639ejk.118.2023.11.07.07.30.32
+        by smtp.gmail.com with ESMTPSA id i20-20020a17090671d400b009ddf38056f8sm1163639ejk.118.2023.11.07.07.31.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Nov 2023 07:30:34 -0800 (PST)
-Message-ID: <d2c4e571-fbc4-4c3b-b382-1dabb88fbcb9@linaro.org>
-Date: Tue, 7 Nov 2023 16:30:31 +0100
+        Tue, 07 Nov 2023 07:31:47 -0800 (PST)
+Message-ID: <d811ac94-1190-4910-907a-5731b40973b5@linaro.org>
+Date: Tue, 7 Nov 2023 16:31:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -135,102 +135,23 @@ Content-Transfer-Encoding: 7bit
 On 07/11/2023 07:09, Mao Jinlong wrote:
 > Add new coresight-remote-etm.yaml file describing the bindings required
 > to define coresight remote etm in the device trees.
-
-Subject: drop driver. Bindings are about hardware, not drivers.
-
 > 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  .../arm/qcom,coresight-remote-etm.yaml        | 59 +++++++++++++++++++
->  1 file changed, 59 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml
-> new file mode 100644
-> index 000000000000..04bb57b48d96
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-remote-etm.yaml
-> @@ -0,0 +1,59 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/qcom,coresight-remote-etm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
+
+...
+
 > +title: Qualcomm Coresight Remote ETM
-
-What is ETM?
-
 > +
 > +maintainers:
 > +  - Jinlong Mao <quic_jinlmao@quicinc.com>
 > +  - Tao Zhang <quic_taozha@quicinc.com>
 > +
 > +description: |
-
-Do not need '|' unless you need to preserve formatting.
-
 > +  Support for ETM trace collection on remote processor using coresight
 > +  framework. Enabling this will allow turning on ETM tracing on remote
 > +  processor via sysfs and collecting the trace via TMC sinks.
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-remote-etm
-> +
-> +  qcom,inst-id:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    description:
-> +      Instance id of remote etm.
 
-It's the first time this property appears... Why do you need to
-hard-code it and why would it differ between each board? If you want to
-use existing, accepted property, then you must use exactly the same.
-
-> +
-> +  out-ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    additionalProperties: false
-> +
-> +    properties:
-> +      port:
-> +        description: Output connection to the CoreSight Trace bus.
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +  - compatible
-> +  - qcom,inst-id
-> +  - out-ports
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    modem_etm0 {
-
-Node names should be generic. See also an explanation and list of
-examples (not exhaustive) in DT specification:
-https://devicetree-specification.readthedocs.io/en/latest/chapter2-devicetree-basics.html#generic-names-recommendation
-
-Underscores are not allowed.
-
-> +        compatible = "qcom,coresight-remote-etm";
-> +        qcom,inst-id = <2>;
-> +
-> +        out-ports {
-> +            port {
-> +                modem_etm0_out_funnel_modem: endpoint {
-> +                remote-endpoint =
-> +                    <&funnel_modem_in_modem_etm0>;
-
-Fix wrapping.
-
-> +                };
-> +            };
-> +        };
-> +    };
-> +...
+BTW, your cover letter says more than commit messages and descriptions.
+It should be reversed. Cover letter is meaningless afterwards.
 
 Best regards,
 Krzysztof
