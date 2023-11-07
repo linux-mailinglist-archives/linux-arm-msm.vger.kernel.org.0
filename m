@@ -1,216 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-39-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-40-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFA497E36A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 09:29:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BE6EC7E36AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 09:31:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F11F91C20A20
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:29:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 02CA21C209EC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:31:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E96C10957;
-	Tue,  7 Nov 2023 08:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5450F33C7;
+	Tue,  7 Nov 2023 08:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zej0VJI7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mqtLJzxx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E02C11189;
-	Tue,  7 Nov 2023 08:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E75312E5D;
+	Tue,  7 Nov 2023 08:31:51 +0000 (UTC)
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73ACFE8;
-	Tue,  7 Nov 2023 00:29:54 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72BADBD;
+	Tue,  7 Nov 2023 00:31:50 -0800 (PST)
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A77S1Ck031262;
-	Tue, 7 Nov 2023 08:29:43 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A76aV7a024670;
+	Tue, 7 Nov 2023 08:31:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
+ mime-version : subject : to : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=CAgbhith+IxcJgMX58QDJcHe1eTf1v+UVLj/drat0xQ=;
- b=Zej0VJI7e8Jl0x4pmULEu5oRNAZKqujqru3VEOTjKp1MRdqGB8f8FoXvF25Hj1YbJJl6
- xgF6RXLGKoHjPR+DDYPoM5jjiTPH6g8gwvsc+Ce+4kpcT5AOdSjm7DtQayYezL5XrPs6
- WPzdo9KVD7j8YayLrHbJbEcsc2aWtwAmyjXOWUQDwEWb1E4CBH+Ex9gyqUPSMdynW2eF
- /FZsS7a/Z6JBzPnfVaUij5lidRCAa3SOb8vSEOYX3C3QohnyvKYiJ5YbCVrGlKxxo4QJ
- dyCwLfCNH/38xvznnuKGPl/sjfSJkkTqzczGs9iZc8zS31Wthkb+i6xLisH3HZ5+Nphw xQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u74v31kef-1
+ bh=ZyOUMpJgMksPDdd8qr75Dx/OmScIish8+gXQKyaIzdM=;
+ b=mqtLJzxxzdZpeP7epFxGv28RCgx+wZi2SmiuePk9WYNvfffgKHIU2RYBBTNGMbX2IhVm
+ oTiIj6sihKmF+Fh19/HE2n2XNH2XD/LYYvXNIxgxFxKsEVApbsUk8m+35HHV8S30l5Y7
+ 52QlZpGRtCQmLeoYVEcSapvkpobAf2KByNqaNld9qtnmOLfjZQ6ZWw/Ln+jtXab/FUvg
+ ZNz6Qfa5N3fR0jKsVdJ+tb6xgsVfRCE18JcYXEVEWVvWxK4i7ddwyEO/QHiLhDfv3s8e
+ 7hNQIZ/pboS3qNX/nyM4Wwg2HHx/QAsELF4V+kbUmbRRtinc2tY0R1kkGqn2h2X01DZ5 UQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u74v31kj7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Nov 2023 08:29:43 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A78TgcO009928
+	Tue, 07 Nov 2023 08:31:47 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A78Vkqq000355
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Nov 2023 08:29:42 GMT
-Received: from [10.249.29.138] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 7 Nov 2023 08:31:46 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
- 2023 00:29:36 -0800
-Message-ID: <7f800c67-064e-405a-bc36-39544d9e28ef@quicinc.com>
-Date: Tue, 7 Nov 2023 13:59:32 +0530
+ 2023 00:31:43 -0800
+Message-ID: <98eced9a-8ae5-b1b5-8765-4fce18a96fa4@quicinc.com>
+Date: Tue, 7 Nov 2023 14:01:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-To: Johan Hovold <johan@kernel.org>
-CC: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy
- Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi
-	<balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
-        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
-References: <20231007154806.605-1-quic_kriskura@quicinc.com>
- <20231007154806.605-6-quic_kriskura@quicinc.com>
- <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
- <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
- <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
- <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
- <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
- <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
- <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
- <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: qdu1000: correct LLCC reg entries
 Content-Language: en-US
-In-Reply-To: <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof
+ Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20231107080417.16700-1-krzysztof.kozlowski@linaro.org>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20231107080417.16700-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5i7WXT_WEm9jwcoxvpclFngisjiOE05r
-X-Proofpoint-ORIG-GUID: 5i7WXT_WEm9jwcoxvpclFngisjiOE05r
+X-Proofpoint-GUID: s_fkf4vpmSnR9eEB4B__MWNe8Am1aXcp
+X-Proofpoint-ORIG-GUID: s_fkf4vpmSnR9eEB4B__MWNe8Am1aXcp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-06_15,2023-11-02_03,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
  bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
- malwarescore=0 phishscore=0 suspectscore=0 adultscore=0 mlxlogscore=883
+ malwarescore=0 phishscore=0 suspectscore=0 adultscore=0 mlxlogscore=962
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
  definitions=main-2311070069
 
->>
->> But there is already support for these interrupts in the driver. You
->> work for Qualcomm who built the thing so surely you can figure how they
->> intended these to be used?
->>
->> You need to provide this information so that we can determine what the
->> binding should look like. The implementation would also be simplified if
->> we don't have to add random hacks to it just because we don't know why
->> the vendor driver you refer does not use it currently on this particular
->> platform.
->>
-> 
-> Hi Johan,
-> 
-> Regarding the points of discussion we had last week on [1], here are 
-> some clarifications:
-> 
-> 1. We do have hs_phy_irq 1/2/3/4 for tertiary port of Sc8280 as 
-> mentioned. Why do we need them and would we use it in multiport targets ?
-> 
-> DPSE and DMSE are single ended line state of DP and DM lines. The DP 
-> line and DM line stay in steady High or Low during suspend and they flip 
-> when there is a RESUME or REMOTE WAKE. This is what we do/check in 
-> dwc3_qcom_enable_interrupts call for dp/dm irq's based on usb2_speed.
-> 
-> Initially in QUSB2 targets, the interrupts were enabled and configured 
-> in phy and the wakeup was interrupt was read on hs_phy_irq vector - [2].
-> In that case, we modify DP/DM interrupts in phy registers, specifically 
-> QUSB2PHY_INTR_CTRL and when wakeup signal comes in, hs_phy_irq is 
-> triggered. But in femto targets, this is done via DP/DM interrupts and 
-> there is no use of hs_phy_irq. Even hw folks confirmed they dont use 
-> hs_ph_irq in femto phy targets.
-> 
-> As an experiment, I tried to test wakeup by pressing buttons on 
-> connected keyboard when in suspend state or connecting/disconnecting 
-> keyboard in suspended state on different ports and only see dp/dm IRQ's 
-> getting fired although we register for hs_phy_irq as well:
-> 
-> / # cat /proc/interrupts  |grep phy_
-> 171:   1  0   0   0  0  0  0  0       PDC 127 Edge      dp_hs_phy_1
-> 172:   2  0   0   0  0  0  0  0       PDC 126 Edge      dm_hs_phy_1
-> 173:   3  0   0   0  0  0  0  0       PDC 129 Edge      dp_hs_phy_2
-> 174:   4  0   0   0  0  0  0  0       PDC 128 Edge      dm_hs_phy_2
-> 175:   0  0   0   0  0  0  0  0       PDC 131 Edge      dp_hs_phy_3
-> 176:   2  0   0   0  0  0  0  0       PDC 130 Edge      dm_hs_phy_3
-> 177:   2  0   0   0  0  0  0  0       PDC 133 Edge      dp_hs_phy_4
-> 178:   5  0   0   0  0  0  0  0       PDC 132 Edge      dm_hs_phy_4
-> 179:   0  0   0   0  0  0  0  0       PDC  16 Level     ss_phy_1
-> 180:   0  0   0   0  0  0  0  0       PDC  17 Level     ss_phy_2
-> 181:   0  0   0   0  0  0  0  0     GICv3 163 Level     hs_phy_1
-> 182:   0  0   0   0  0  0  0  0     GICv3 168 Level     hs_phy_2
-> 183:   0  0   0   0  0  0  0  0     GICv3 892 Level     hs_phy_3
-> 184:   0  0   0   0  0  0  0  0     GICv3 891 Level     hs_phy_4
-> 
-> Since the hs_phy_irq is applicable only for qusb2 targets, do we still 
-> need to add it to DT.
-> 
-> 2. BAM Irq usage (u_usb31_scnd_mvs_pipe_wrapper_usb31_bam_irq[0]):
-> 
-> BAM IRQ is not needed in host-only controller. It was just added in 
-> process of porting/deriving code from DRD controllers and is 
-> non-functional (confirmed by HW team here). We can skip this from DT of 
-> multiport.
-> 
-> 3. ctrl_irq[1] usage:
-> 
-> This is a feature of SNPS controller, not qcom glue wrapper, and is 
-> present on all targets (non-QC as well probably). As mentioned before on 
-> [3], this is used for HW acceleration.
-> 
-> In host mode, XHCI spec does allow for multiple interrupters when 
-> multiple event rings are used. A possible usage is multiple execution 
-> environments something like what we are doing on mobile with ADSP audio 
-> offload [4]. Another possibility could be some of virtualization where 
-> host/hyp would manage the first interrupter and could allow a guest to 
-> operate only with the second (though current design does not go far 
-> enough to offer true isolation for real VM type workloads). The 
-> additional interrupts (ones other than ctrl_irq[0]) are either for 
-> virtualization use cases, or for our various “hw offload” features. In 
-> device mode, these are used for offloading tethering functionality to 
-> IPA FW.
-> 
-> Since the DeviceTree passed to the OS, should describe the hardware to 
-> the OS, and should represent the hardware from the point-of-view of the 
-> OS, adding one interrupt (ctrl_irq[0]) might be sufficient as Linux 
-> would not use the other interrupts. Furthermore AFAIK even UEFI/Windows 
-> also use only ctrl_irq[0] for host mode in their execution environment 
-> today. Do we still need to add this to bindings and DT ?
-> 
-> [1]: https://lore.kernel.org/all/ZTJ_T1UL8-s2cgNz@hovoldconsulting.com/
-> [2]: 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/phy/qualcomm/phy-qcom-qusb2.c?h=v6.6#n626
-> [3]: https://lore.kernel.org/all/ZTduh5LULBMYf3wq@hovoldconsulting.com/
-> [4]: 
-> https://lore.kernel.org/all/20231017200109.11407-1-quic_wcheng@quicinc.com/
-> 
 
-Hi Johan,
 
-  Can you help provide your comments on the above mentioned points so 
-that we can take the discussion forward and finalize changes for v14 
-patches. And thanks for all the reviews so far on previous revisions.
+On 11/7/2023 1:34 PM, Krzysztof Kozlowski wrote:
+> According to bindings and Linux driver there is no
+> "multi_channel_register" address space for LLCC.  The first "reg" entry
+> is supposed to be llcc0_base since commit 43aa006e074c ("dt-bindings:
+> arm: msm: Fix register regions used for LLCC banks"):
+> 
+>    qdu1000-idp.dtb: system-cache-controller@19200000: reg: [[0, 421527552, 0, 14155776], [0, 438304768, 0, 524288], [0, 572293416, 0, 4]] is too long
+>    qdu1000-idp.dtb: system-cache-controller@19200000: reg-names:0: 'llcc0_base' was expected
+>    qdu1000-idp.dtb: system-cache-controller@19200000: reg-names: ['llcc_base', 'llcc_broadcast_base', 'multi_channel_register'] is too long
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/qdu1000.dtsi | 8 +++-----
+>   1 file changed, 3 insertions(+), 5 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> index 1c0e5d271e91..618a101eb53a 100644
+> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> @@ -1446,11 +1446,9 @@ gem_noc: interconnect@19100000 {
+>   		system-cache-controller@19200000 {
+>   			compatible = "qcom,qdu1000-llcc";
+>   			reg = <0 0x19200000 0 0xd80000>,
+> -			      <0 0x1a200000 0 0x80000>,
+> -			      <0 0x221c8128 0 0x4>;
+> -			reg-names = "llcc_base",
+> -				    "llcc_broadcast_base",
+> -				    "multi_channel_register";
+> +			      <0 0x1a200000 0 0x80000>;
+> +			reg-names = "llcc0_base",
+> +				    "llcc_broadcast_base";
 
-Regards,
-Krishna,
+
+Thanks for fixing this.
+This indeed needed to be fixed, looks like it got missed after
+moving to below sec-qfprom of reading multichannel.
+
+https://lore.kernel.org/lkml/20230801064025.17381-2-quic_kbajaj@quicinc.com/
+
+Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+
+-Mukesh
+
+>   			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+>   			multi-ch-bit-off = <24 2>;
+>   		};
 
