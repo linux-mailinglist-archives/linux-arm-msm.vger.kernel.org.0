@@ -1,115 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-30-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A95A87E3600
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:40:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AA2397E3623
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 09:00:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4A9A9B20BD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 07:40:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4AF66B20A2F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:00:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C17CCCA5C;
-	Tue,  7 Nov 2023 07:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94B65CA6E;
+	Tue,  7 Nov 2023 08:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gpbngZQo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Us2e+i2P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBE1947A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 07:40:32 +0000 (UTC)
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520CAFD
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 23:40:30 -0800 (PST)
-Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-da2e786743aso5498681276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 23:40:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699342829; x=1699947629; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fmjk2S1gx+Mc5+ahgQ713WeG4CHwIeelidOIJhG+yrU=;
-        b=gpbngZQoHZASwVRGuasiLGM2AJsGXd8wIwBhG3LDz013w6XGvRpn3XyuHQa6XKlvEL
-         gt8itovHaqH3V0PDyvhQB3Z1SI2f3Z/FQBKKTNqddgydE5KNiwOoOpJTlliKqZnBKGOu
-         30KX4mJbzoWSq5e4F5cnaErudG8FHVd1iN1V8QKljHU+Ss7DruYxEtQY9K5qBfCZnQtw
-         KrbIJUwx23E4CHOxNvdKM3Y3kcXJ1FQ7sDlk0ShFeQN6A7Km4pnJAJ6pZa9ClynnTYHO
-         qcDEd2iP3SCojjOpxjyGKhqa/IbvHOs6hM5xaHzS1vFv0e/uY5dP8rz8r6NBLeKQ0efu
-         IfBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699342829; x=1699947629;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fmjk2S1gx+Mc5+ahgQ713WeG4CHwIeelidOIJhG+yrU=;
-        b=EzFs/pYdk/CjTt4lU3EOXJT1le/ywKDmj0890aliDYpAsbFXRVVnGUMDJofnXGPaug
-         SaSDj7LVMDviKidxRgG5kQ6CoLBl6pP+RIReHsHo64qZYg3GIekIMs2JAOmwNU2E0Bek
-         2sY8yfioUbg+mxsEudL51Z3Nec6s4NwTdyXxOglidK4PseJ7JyzIbOfFh5hOY9Wfrj3M
-         WWxdD7fjnYkLwQwABb2CNlCkZFMLjXeGyHE9OV+sxhmc58Hg8VQCOt7H1Zgxj/fbscxq
-         LCEnDZVvj37mPdSRD3HOOkCZxzSyJ8Q/Zqd9ILpwlDVeiXtFVfulKXKFI/WmLWgUjOxK
-         fCSg==
-X-Gm-Message-State: AOJu0YyfeRsv/KsjvhSm0F7RPQQbHFwmlI1mfnyNPv2it0//ucPPNtG6
-	ZaBrBK7LZbxXqe5bkmVbb2RLWuwaIiDHkSYQags+o/CzJrkH8BeI
-X-Google-Smtp-Source: AGHT+IEkezaO3xn+bZBw5zU5yiH9kZRM2ERBEPQaE0eEGpN1fDLHKGTNDxCLoAWK+RBxtSNwmsD3XxAQ4jHLyeMD6ow=
-X-Received: by 2002:a25:25cd:0:b0:d9a:f949:45d1 with SMTP id
- l196-20020a2525cd000000b00d9af94945d1mr29426309ybl.13.1699342829481; Mon, 06
- Nov 2023 23:40:29 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8B0C12D
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 08:00:01 +0000 (UTC)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 254A3E8;
+	Tue,  7 Nov 2023 00:00:00 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A76eXJH018774;
+	Tue, 7 Nov 2023 07:59:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=NDucsj2q75e98JcNIa4TZAP69g3rwEi7mKSn4CFEMBU=;
+ b=Us2e+i2PXGtk2wpqideV659ZhYUno2778ZsxkuKHVYOAK/tObf2iOf7lWgwc/vo31tSa
+ jsL45xPwV4J621+Z/ObpKwtfgo8WcddDe2JA7ptHZfTD9HG04KscovN+rsVQdZ5Nvt9Q
+ POn9rGKTxC3GXbFTFcZQTH5NBeX5V6RgfzkCs7yOGginv/MCOwoGHbzSDjqSpdEHsk7J
+ I2ggwTlF1bJxCexj2e/77rN7Z8/FF3H2gRZxDq2Q/gKxW18UTy/nWL7BO1/sgcmd9rCz
+ MCJji/nHjVW8bnpqsa4p0ck+3o7zZ9f1eNzvhvZ8V/QlsQysg+Tfhma/gLxjHkaMMWEc 0A== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u6wer2vqs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 Nov 2023 07:59:54 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A77xrj1014858
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 7 Nov 2023 07:59:53 GMT
+Received: from [10.253.15.27] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
+ 2023 23:59:51 -0800
+Message-ID: <00305327-d866-4da4-916c-fb414398bc3a@quicinc.com>
+Date: Tue, 7 Nov 2023 15:59:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231106144335.v2.1.Ic7577567baff921347d423b722de8b857602efb1@changeid>
- <20231106144335.v2.6.I909b7c4453d7b7fb0db4b6e49aa21666279d827d@changeid>
-In-Reply-To: <20231106144335.v2.6.I909b7c4453d7b7fb0db4b6e49aa21666279d827d@changeid>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Tue, 7 Nov 2023 08:40:18 +0100
-Message-ID: <CACMJSeupvs4zkz9GiBwL5r+fN9qiqdpbcRgnifsBrZrQiFEaQg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/9] arm64: dts: qcom: sa8775p: Make watchdog bark
- interrupt edge triggered
-To: Douglas Anderson <dianders@chromium.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, swboyd@chromium.org, 
-	linux-watchdog@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] bus: mhi: host: Add spinlock to protect WP access
+ when queueing TREs
+Content-Language: en-US
+To: Manivannan Sadhasivam <mani@kernel.org>,
+        Jeffrey Hugo
+	<quic_jhugo@quicinc.com>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_mrana@quicinc.com>
+References: <1694594861-12691-1-git-send-email-quic_qianyu@quicinc.com>
+ <1694594861-12691-2-git-send-email-quic_qianyu@quicinc.com>
+ <af4fc816-d75b-997d-6d37-a774f5eb96ae@quicinc.com>
+ <dfeb6071-8ae4-38ba-5273-59478ea8e178@quicinc.com>
+ <c30c9c68-bfe1-0cc5-c511-218f7d1da92d@quicinc.com>
+ <15526b95-518c-445a-be64-6a15259405fb@quicinc.com>
+ <472817a7-78bb-25d9-b8c6-2d70f713b7fb@quicinc.com>
+ <20231106045119.GB2474@thinkpad>
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <20231106045119.GB2474@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: owIEIQkDwFhbK7exT3Kb00mP_xfOVM9N
+X-Proofpoint-GUID: owIEIQkDwFhbK7exT3Kb00mP_xfOVM9N
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-06_15,2023-11-02_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ mlxscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2310240000
+ definitions=main-2311070065
 
-On Mon, 6 Nov 2023 at 23:44, Douglas Anderson <dianders@chromium.org> wrote:
->
-> As described in the patch ("arm64: dts: qcom: sc7180: Make watchdog
-> bark interrupt edge triggered"), the Qualcomm watchdog timer's bark
-> interrupt should be configured as edge triggered. Make the change.
->
-> Fixes: 09b701b89a76 ("arm64: dts: qcom: sa8775p: add the watchdog node")
-> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
->
-> (no changes since v1)
->
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 13dd44dd9ed1..6b92f9083104 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -2235,7 +2235,7 @@ watchdog@17c10000 {
->                         compatible = "qcom,apss-wdt-sa8775p", "qcom,kpss-wdt";
->                         reg = <0x0 0x17c10000 0x0 0x1000>;
->                         clocks = <&sleep_clk>;
-> -                       interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
-> +                       interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
->                 };
->
->                 memtimer: timer@17c20000 {
-> --
-> 2.42.0.869.gea05f2083d-goog
->
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 11/6/2023 12:51 PM, Manivannan Sadhasivam wrote:
+> On Fri, Oct 20, 2023 at 09:07:35AM -0600, Jeffrey Hugo wrote:
+>> On 10/16/2023 2:46 AM, Qiang Yu wrote:
+>>> On 9/29/2023 11:22 PM, Jeffrey Hugo wrote:
+>>>> On 9/24/2023 9:10 PM, Qiang Yu wrote:
+>>>>> On 9/22/2023 10:44 PM, Jeffrey Hugo wrote:
+>>>>>> On 9/13/2023 2:47 AM, Qiang Yu wrote:
+>>>>>>> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>>>>>>>
+>>>>>>> Protect WP accesses such that multiple threads queueing buffers for
+>>>>>>> incoming data do not race and access the same WP twice.
+>>>>>>> Ensure read and
+>>>>>>> write locks for the channel are not taken in succession
+>>>>>>> by dropping the
+>>>>>>> read lock from parse_xfer_event() such that a callback given to client
+>>>>>>> can potentially queue buffers and acquire the write lock
+>>>>>>> in that process.
+>>>>>>> Any queueing of buffers should be done without channel
+>>>>>>> read lock acquired
+>>>>>>> as it can result in multiple locks and a soft lockup.
+>>>>>>>
+>>>>>>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>>>>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>>>> ---
+>>>>>>>    drivers/bus/mhi/host/main.c | 11 ++++++++++-
+>>>>>>>    1 file changed, 10 insertions(+), 1 deletion(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+>>>>>>> index dcf627b..13c4b89 100644
+>>>>>>> --- a/drivers/bus/mhi/host/main.c
+>>>>>>> +++ b/drivers/bus/mhi/host/main.c
+>>>>>>> @@ -642,6 +642,7 @@ static int parse_xfer_event(struct
+>>>>>>> mhi_controller *mhi_cntrl,
+>>>>>>>                mhi_del_ring_element(mhi_cntrl, tre_ring);
+>>>>>>>                local_rp = tre_ring->rp;
+>>>>>>>    +            read_unlock_bh(&mhi_chan->lock);
+>>>>>> This doesn't work due to the
+>>>>>> write_lock_irqsave(&mhi_chan->lock, flags); on line 591.
+>>>>> Write_lock_irqsave(&mhi_chan->lock, flags) is used in case of
+>>>>> ev_code >= MHI_EV_CC_OOB. We only read_lock/read_unlock the
+>>>>> mhi_chan while ev_code < MHI_EV_CC_OOB.
+>>>> Sorry.  OOB != EOB
+>>>>
+>>>>>> I really don't like that we are unlocking the mhi_chan while
+>>>>>> still using it.  It opens up a window where the mhi_chan
+>>>>>> state can be updated between here and the client using the
+>>>>>> callback to queue a buf.
+>>>>>>
+>>>>>> Perhaps we need a new lock that just protects the wp, and
+>>>>>> needs to be only grabbed while mhi_chan->lock is held?
+>>>>> Since we have employed mhi_chan lock to protect the channel and
+>>>>> what we are concerned here is that client may queue buf to a
+>>>>> disabled or stopped channel, can we check channel state after
+>>>>> getting mhi_chan->lock like line 595.
+>>>>>
+>>>>> We can add the check after getting write lock in mhi_gen_tre()
+>>>>> and after getting read lock again here.
+>>>> I'm not sure that is sufficient.  After you unlock to notify the
+>>>> client, MHI is going to manipulate the packet count and runtime_pm
+>>>> without the lock (648-652).  It seems like that adds additional
+>>>> races which won't be covered by the additional check you propose.
+>>> I don't think read_lock_bh(&mhi_chan->lock) can protect runtime_pm and
+>>> the packet count here. Even if we do not unlock, mhi state and packet
+>>> count can still be changed because we did not get pm_lock here, which is
+>>> used in all mhi state transition function.
+>>>
+>>> I also checked all places that mhi_chan->lock is grabbed, did not see
+>>> packet count and runtime_pm be protected by write_lock(&mhi_chan->lock).
+>>>
+>>>
+>>> If you really don't like the unlock operation, we can also take a new
+>>> lock. But I think we only need to add the new lock in two places,
+>>> mhi_gen_tre and mhi_pm_m0_transition while mhi_chan->lock is held.
+>> Mani, if I recall correctly, you were the architect of the locking.  Do you
+>> have an opinion?
+>>
+> TBH, the locking situation is a mess with MHI. Initially, we happen to have
+> separate locks for protecting various operations, but then during review, it was
+> advised to reuse existing locks and avoid having too many separate locks.
+>
+> This worked well but then we kind of abused the locks over time. I asked Hemant
+> and Bhaumik to audit the locks and fix them, but both of them left Qcom.
+>
+> So in this situation, the intent of the pm_lock was to protect concurrent access
+> against updating the pm_state. And it also happen to protect _other_things_ such
+> as runtime_put, pending_pkts etc... But not properly, because most of the time
+> read lock is taken in places where pm_state is being read. So there is still a
+> possibility of race while accessing these _other_things_.
+>
+> For this patch, I'm happy with dropping chan->lock before calling xfer_cb() and
+> I want someone (maybe Qiang) to do the audit of locking in general and come up
+> with fixes where needed.
+>
+> - Mani
+
+As discussed with Jeff before, we also need to check channel state 
+before queue buffer and after re-lock
+
+in parse_xfer_event, so I also add the channel state check in next 
+version patch.
+
+Probably I can do the audit of locking. It's a good chance for me to 
+understand various locks in MHI host
+
+driver completely.
+
 
