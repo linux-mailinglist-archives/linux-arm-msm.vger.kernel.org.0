@@ -1,37 +1,37 @@
-Return-Path: <linux-arm-msm+bounces-78-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-79-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 002327E3D6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:28:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 062B17E3DA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:30:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30CFB1C209CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 12:28:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4D24280BD9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 12:30:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 283B72FE1F;
-	Tue,  7 Nov 2023 12:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 944AC2FE2E;
+	Tue,  7 Nov 2023 12:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EMNGmOZd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mcoCZ6Hq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B73D2EB02
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 12:28:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1496FC433C9;
-	Tue,  7 Nov 2023 12:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A9C2FE2C
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 12:30:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24801C433C8;
+	Tue,  7 Nov 2023 12:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699360114;
-	bh=kxuYbZVR7ft7C3zIio+kedGzMoIPQDhSKly1xJtq0T8=;
+	s=k20201202; t=1699360206;
+	bh=wbvTLQGJtpuf12rYqZUR8WtVSjj/6AgcxHuFTeloxgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMNGmOZdNz8Ex5Hg3MM22k0qyMIWQFau7QLOD3lsVR4aDsAQcWMIAVPAYJkmy9fA1
-	 k+BCAVGfw8qapYpAkjE4j5YZpn7QTh2W8Hv7LM1zAJMUtMJOBnTpA0GBjHz5WZKMw5
-	 CaBM/agiNUHwPYY3R3r8j3dXrrUd4oUhjAe2SAf5kVaBRAxYFrGjniqezKXgZVgywG
-	 YGSmPhy7HPZqObyiG6ebLQqO0CKgeLnTy9sU2PmPKQ2c/+o9LbOkQrAIF9PK8liADI
-	 8R1uzVyyMK1sq5Xpv5aQYY9gx70hBWQ7tqaEu+Cej+lOYU3wrHndK+BzwaZh8E/jrQ
-	 xmgbKPwymCDUw==
+	b=mcoCZ6Hq1xVXZ/OLOXAERAobBi9bYAZk284zcBuXc60bLzkQkpTgIZOd0Nq7REGWi
+	 C24DmMoRU5XJ4jlMCXKbWnrgKqWw8z/V6gY1yCv1qXfAX84bau8D2PaMIXYspMMVib
+	 pJ9qRMe020iE0UKOkMmZHWdNREb2lwe8Kap+hrPYTbx8KR00uKiQfGBSK7JyjhSDtx
+	 ZSMt+7BbkGJtbOSVOLYS2tldZNres/lHrRvj7u++gO7IA96btftXTPHR1E1jbr4EGC
+	 QQeowxW2Oa7OOxCFKNfeehYQWqZtAb32pZtWaZXusf7eZWLRgWIMyxW7Wn5QikbnVm
+	 Kjf4l50Nzwq1A==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -51,12 +51,12 @@ Cc: Jani Nikula <jani.nikula@intel.com>,
 	daniel@ffwll.ch,
 	quic_vpolimer@quicinc.com,
 	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.1 12/25] drm/msm/dp: skip validity check for DP CTS EDID checksum
-Date: Tue,  7 Nov 2023 07:26:51 -0500
-Message-ID: <20231107122745.3761613-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.15 08/20] drm/msm/dp: skip validity check for DP CTS EDID checksum
+Date: Tue,  7 Nov 2023 07:29:02 -0500
+Message-ID: <20231107122940.3762228-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231107122745.3761613-1-sashal@kernel.org>
-References: <20231107122745.3761613-1-sashal@kernel.org>
+In-Reply-To: <20231107122940.3762228-1-sashal@kernel.org>
+References: <20231107122940.3762228-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,7 +65,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.1.61
+X-stable-base: Linux 5.15.137
 Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
@@ -107,10 +107,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 19 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 5149cebc93f61..d38086650fcf7 100644
+index 62b742e701d2c..f9d31069f4848 100644
 --- a/drivers/gpu/drm/msm/dp/dp_panel.c
 +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -266,26 +266,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+@@ -263,26 +263,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
  
  static u8 dp_panel_get_edid_checksum(struct edid *edid)
  {
