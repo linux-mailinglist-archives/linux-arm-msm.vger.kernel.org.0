@@ -1,145 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-80-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-81-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A6BB7E3DCC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:31:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C01B87E3F35
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 13:50:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1F138B20A38
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 12:31:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8206828104C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 12:50:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B9E92FE34;
-	Tue,  7 Nov 2023 12:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 632001EB43;
+	Tue,  7 Nov 2023 12:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RB7mRNIU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RdAl44xL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA4B2FE31
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 12:31:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1D8C433CA;
-	Tue,  7 Nov 2023 12:31:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699360268;
-	bh=eNA5gp6HFbGz4UtiuIERCsSvA6OW8EkQ0csvECZGDtA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RB7mRNIU8z+kHvFGrW+NZpHruIkq85Ej69syzqdtBHOHh1TdN6v5kjXfKBRudOEXS
-	 wWOTVO/XklO4H/sBok/1Dqb5LD2XymvKjBPINPR3xlCYvuWhHi8SXeX5zcfxX89Pev
-	 yQkpOR/TTIKZsUy9BQKElarfcghNJQdd6gD3n7yzGGCRG7qAiixHRr1S1MR8ozyta6
-	 0cXQOZ4Fsr1UaG+oLY9Rhmj0ZZuN4E+veK7mpT8rdMLiYe2uQ90+j746tLFrkNRp1e
-	 7h1xS8AQIaldA8bUXygZ93h0w23wM1OxXHDIaYJslutjhYtdQRegH/2i+HyLMd7LPA
-	 wTZUnjcCk2nbQ==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Jani Nikula <jani.nikula@intel.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <khsieh@codeaurora.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Stephen Boyd <swboyd@chromium.org>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	quic_vpolimer@quicinc.com,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.10 02/11] drm/msm/dp: skip validity check for DP CTS EDID checksum
-Date: Tue,  7 Nov 2023 07:30:35 -0500
-Message-ID: <20231107123100.3762796-2-sashal@kernel.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231107123100.3762796-1-sashal@kernel.org>
-References: <20231107123100.3762796-1-sashal@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404FE182D4;
+	Tue,  7 Nov 2023 12:50:47 +0000 (UTC)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12AD13AB4;
+	Tue,  7 Nov 2023 04:50:44 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A7CRauu016029;
+	Tue, 7 Nov 2023 12:50:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=BL0uDTEWGdbQxbpyn753QKl4MctRTSXPvVBmvvaABXM=;
+ b=RdAl44xLxGdOVZczCjr31nFNsCagaCrJBCsh4kk1E9+EMUV3GTdWBCgTOqsU2370GSXx
+ YRXXAu/nrXnXSR2UPOatDkc0BD3HRARngdsBhSMp1i0ZcS+280ow3dKoywnwAkWkdQ2U
+ uvfgxsxiDhEd9NwGOE3e1SK0E6BtWWuJO4YoabkbmYijw5lf2OxZL0V8dxTbsX8ZCRxn
+ krZ/bLzVz2bcjBc4Sm+GqidVdCGNxu3/B3onyiAbVN46kBXZPVg7Lm05ZlNvK57DlvKZ
+ dg3APgShIqVr3UE60AhH4N1JLjLNMdE5BHP7G3KxHjc236iIDcbYtX1wl20QcoaU5JL6 ew== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7n8u01bd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 07 Nov 2023 12:50:34 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3A7CoVjF000705;
+	Tue, 7 Nov 2023 12:50:31 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3u5f1m400n-1;
+	Tue, 07 Nov 2023 12:50:31 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3A7CoVc7000700;
+	Tue, 7 Nov 2023 12:50:31 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3A7CoVJt000699;
+	Tue, 07 Nov 2023 12:50:31 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+	id 76B1F4C77; Tue,  7 Nov 2023 18:20:30 +0530 (+0530)
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To: agross@kernel.org, andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org,
+        robh+dt@kernel.org
+Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        dmitry.baryshkov@linaro.org, robh@kernel.org, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+        quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
+        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev
+Subject: [PATCH v7 0/4] arm64: qcom: sa8775p: add support for EP PCIe
+Date: Tue,  7 Nov 2023 18:20:24 +0530
+Message-Id: <1699361428-12802-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YwOrzkXMnxZ3kpfsyaF_Dn6U_ArYtBS2
+X-Proofpoint-ORIG-GUID: YwOrzkXMnxZ3kpfsyaF_Dn6U_ArYtBS2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-07_02,2023-11-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ malwarescore=0 clxscore=1015 phishscore=0 priorityscore=1501
+ mlxlogscore=643 adultscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311070105
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.10.199
-Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+This series adds the relavent DT bindings, new compatible string,
+add support to EPF driver and add EP PCIe node in dtsi file for
+ep pcie0 controller.
 
-[ Upstream commit a251c9d8e30833b260101edb9383b176ee2b7cb1 ]
+v6 -> v7:
+- add reviewed by tag in commit message in all patches.
+- update commit message in patch 2 as per comment.
+- update reason for reusing PID in commit message.
 
-The DP CTS test for EDID last block checksum expects the checksum for
-the last block, invalid or not. Skip the validity check.
+v5 -> v6:
+- update cover letter.
 
-For the most part (*), the EDIDs returned by drm_get_edid() will be
-valid anyway, and there's the CTS workaround to get the checksum for
-completely invalid EDIDs. See commit 7948fe12d47a ("drm/msm/dp: return
-correct edid checksum after corrupted edid checksum read").
+v4 -> v5:
+- add maxItems to the respective field to constrain io space and
+  interrupt in all variants.
 
-This lets us remove one user of drm_edid_block_valid() with hopes the
-function can be removed altogether in the future.
+v3 -> v4:
+- add maxItems field in dt bindings
+- update comment in patch2
+- dropped PHY driver patch as it is already applied [1]
+- update comment in EPF driver patch
+- update commect in dtsi and add iommus instead of iommu-map
 
-(*) drm_get_edid() ignores checksum errors on CTA extensions.
+[1] https://lore.kernel.org/all/169804254205.383714.18423881810869732517.b4-ty@kernel.org/
 
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/555361/
-Link: https://lore.kernel.org/r/20230901142034.580802-1-jani.nikula@intel.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/dp/dp_panel.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
+v2 -> v3:
+- removed if/then schemas, added minItems for reg,
+  reg-bnames, interrupt and interrupt-names instead.
+- adding qcom,sa8775p-pcie-ep compitable for sa8775p
+  as we have some specific change to add.
+- reusing sm8450's pcs_misc num table as it is same as sa8775p.
+  used appropriate namespace for pcs.
+- remove const from sa8775p_header as kernel test robot
+  throwing some warnings due to this.
+- remove fallback compatiable as we are adding compatiable for sa8775p.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 4e8a19114e87d..93a2ee0f772fc 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -264,26 +264,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
- 
- static u8 dp_panel_get_edid_checksum(struct edid *edid)
- {
--	struct edid *last_block;
--	u8 *raw_edid;
--	bool is_edid_corrupt = false;
-+	edid += edid->extensions;
- 
--	if (!edid) {
--		DRM_ERROR("invalid edid input\n");
--		return 0;
--	}
--
--	raw_edid = (u8 *)edid;
--	raw_edid += (edid->extensions * EDID_LENGTH);
--	last_block = (struct edid *)raw_edid;
--
--	/* block type extension */
--	drm_edid_block_valid(raw_edid, 1, false, &is_edid_corrupt);
--	if (!is_edid_corrupt)
--		return last_block->checksum;
--
--	DRM_ERROR("Invalid block, no checksum\n");
--	return 0;
-+	return edid->checksum;
- }
- 
- void dp_panel_handle_sink_request(struct dp_panel *dp_panel)
+v1 -> v2:
+- update description for dma
+- Reusing qcom,sdx55-pcie-ep compatibe so remove compaitable
+  for sa8775p
+- sort the defines in phy header file and remove extra defines
+- add const in return type pci_epf_header and remove MHI_EPF_USE_DMA
+  flag as hdma patch is not ready
+- add fallback compatiable as qcom,sdx55-pcie-ep, add iommu property
+
+Mrinmay Sarkar (4):
+  dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
+  PCI: qcom-ep: Add support for SA8775P SOC
+  PCI: epf-mhi: Add support for SA8775P
+  arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
+
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 64 +++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 46 ++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          |  1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c       | 17 ++++++
+ 4 files changed, 126 insertions(+), 2 deletions(-)
+
 -- 
-2.42.0
+2.7.4
 
 
