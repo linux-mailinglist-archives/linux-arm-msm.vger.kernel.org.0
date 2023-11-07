@@ -1,158 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-57-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-58-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B22817E3A5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 11:55:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 948197E3AA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 11:57:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E21CE1C20B85
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 10:55:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C507A1C209DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 10:57:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26EE52C859;
-	Tue,  7 Nov 2023 10:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E74F129CF2;
+	Tue,  7 Nov 2023 10:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VVZ4AG1v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/f56Qzx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA5229D15
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 10:55:31 +0000 (UTC)
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32EDCED
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 02:55:28 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-40853c639abso40312505e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 02:55:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699354526; x=1699959326; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9YR3HyIcWUCtOVLP7VoPEa4NXJBtPEhrFvCreFh9ZV8=;
-        b=VVZ4AG1vhGCbALpfV8Ugd4SIprlDADjT0xix1Q5fSvPzfwkATJAsQV9e67xD5+lehd
-         Nry9SdweUzcx6YmGAMZHNJkAEAIIyAj857pf/ierCS4byw18v8Z3Qvo5HVpK05g0yPIg
-         /x0CrU77ut860S01NLHgLVt6njNhCRqQReuC6Qgfj/XK2EKsh38Vey6ijO/vNL9H/zRZ
-         n/T7odO30sY5/lt1vP3tdijwPcLcaesw9aCBviKM09CmE/6zGFC6bj2CEVK3xGRz93rQ
-         LZQG5gobadvRRfpzYLCP0QpOG/1MiP/z/5NJLv4+sbUhOLZjg7KvYi11PlhlpUiGKdX5
-         CmEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699354526; x=1699959326;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9YR3HyIcWUCtOVLP7VoPEa4NXJBtPEhrFvCreFh9ZV8=;
-        b=k553ywRT9BOGGW68EzkZF6cG+GB+LMGOflqK65b2olS0xSpIcNwyjGKv+7GYAVqRa+
-         lG1EM9AzWwJuB4X2FrmoKik9+f70GevMXWU8aqh94nzQH0W0ByqtX6trNjvMAkmsv5c5
-         FzlcPZ1zSulkcnYSr33m6Iz0XpLdxpag2m+Cc90cwdOiintT2kivxasUK92cotzsAi/7
-         m4jzgAsUxHBNOxdz2bEqmEJgYZktT6kNrw8bPxm6Ts5xUcoaefxSFoK80O9Y73R2+UZl
-         T59M2thrQnn6rJcG8ig3g+W8G1GHVWYm6IliWztbxGM8XKlKATR0j3bR3KQiQJal31Er
-         Awhg==
-X-Gm-Message-State: AOJu0YzzxdMu8/dMfZ+w+EZNoDEtsm8Ef8p9ESBsM8wd8/hPjZqReiBH
-	5eOw8xb9va0W7m/mtodaIUciUQ==
-X-Google-Smtp-Source: AGHT+IGJhP7SgEGrSMxqmO/hcQGe8Dh/czcY9QMxuvEh3I2lNVZq1cwfNUr3DfJnKmQwX4kPVuuU/A==
-X-Received: by 2002:a05:600c:46c6:b0:406:5308:cfeb with SMTP id q6-20020a05600c46c600b004065308cfebmr2281387wmo.11.1699354526560;
-        Tue, 07 Nov 2023 02:55:26 -0800 (PST)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id t14-20020a05600c198e00b00405d9a950a2sm15456999wmq.28.2023.11.07.02.55.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Nov 2023 02:55:26 -0800 (PST)
-Message-ID: <4b3e1f66-31e0-4b7a-9cc0-0b7a7a6ef2f5@linaro.org>
-Date: Tue, 7 Nov 2023 10:55:24 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C951F12E7B
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 10:57:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD84DC433C7;
+	Tue,  7 Nov 2023 10:57:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699354672;
+	bh=SZv0J0mT59n2rZKjNBl8CMR8RlpgRNfa0+MUCGFThB0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O/f56Qzx1DTTqtDZ23652PJa4QPOvkmUrSpgkQDF0xV4MpQZ/yFMzHZutCIEyf7Fh
+	 COtX6iCuuiR//L5Q5vpD/D/8QUbe7t31vf7fjTFpDEjwDDl5QykQKuwgJFq9SzvJS8
+	 GaTudeP8naxDp1BWECaGrfA8lh/jpEqUZxlckGsct6hmWMhA/oJ+Xx0ie7WAsJM9lP
+	 vquzOGQE5axH9BEa9ANyw4jNqC2w4ZeANezDp7qt/dywkNn2FC2Hx2Kb0wWaOzXt7P
+	 4opfSncIL6l074QFgGrGtzw9asAQnsAE2JmMHRe8kEMniNlyUKLWpOw5bGhU97JOd3
+	 BPkTvIHuYF5Vg==
+Date: Tue, 7 Nov 2023 11:57:49 +0100
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Douglas Anderson <dianders@chromium.org>, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Marek Vasut <marex@denx.de>, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
+ the DSI link power state
+Message-ID: <2z3yvvtd6ttsd7qw43sl5svtfijxevdr6omxxmws64k6l5qv55@5nnh2b32h2ep>
+References: <20231016165355.1327217-1-dmitry.baryshkov@linaro.org>
+ <20231016165355.1327217-4-dmitry.baryshkov@linaro.org>
+ <7e4ak4e77fp5dat2aopyq3g4wnqu3tt7di7ytdr3dvgjviyhrd@vqiqx6iso6vg>
+ <CAA8EJpp48AdJmx_U=bEJZUWZgOiT1Ctz6Lpe9QwjLXkMQvsw5w@mail.gmail.com>
+ <uj6rtlionmacnwlqxy6ejt5iaczgbbe5z54ipte5ffbixcx3p4@pps7fcr3uqhf>
+ <1696f131-83fb-4d0c-b4d7-0bdb61e4ae65@linaro.org>
+ <mxtb6vymowutj7whbrygwlcupbdnfqxjralc3nwwapsbvrcmbm@sewxtdslfoen>
+ <CAA8EJpozZkEswnioKjRCqBg4fcjVHFwGivoFNTNHVwyocKprQw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 2/8] usb: dwc3: core: Register vendor hooks for dwc3-qcom
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-usb@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- linux-kernel@vger.kernel.org, Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
- Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, quic_ppratap@quicinc.com,
- quic_jackp@quicinc.com, quic_wcheng@quicinc.com,
- Andy Gross <agross@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Philipp Zabel <p.zabel@pengutronix.de>
-References: <20231017131851.8299-1-quic_kriskura@quicinc.com>
- <20231017131851.8299-3-quic_kriskura@quicinc.com>
- <e700133b-58f7-4a4d-8e5c-0d04441b789b@linaro.org>
- <5ef66bdc-9645-4bbe-8182-baa7fe4c583a@quicinc.com>
- <3be5e95f-85d2-4abf-a8b4-18b019341602@quicinc.com>
- <cf553cd8-45f8-4a61-b016-69e7a80eee9f@linaro.org>
- <ea919050-22a8-4d28-ade2-fd16a99876cb@quicinc.com>
- <105d84b6-cbea-4758-9eba-1c104fa7a670@quicinc.com>
- <f94ca738-476c-4664-a8f1-e3ef3ac8220a@linaro.org>
-In-Reply-To: <f94ca738-476c-4664-a8f1-e3ef3ac8220a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gxtcgkxgr2bmmbci"
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpozZkEswnioKjRCqBg4fcjVHFwGivoFNTNHVwyocKprQw@mail.gmail.com>
 
-On 07/11/2023 10:41, Bryan O'Donoghue wrote:
-> On 07/11/2023 08:33, Krishna Kurapati PSSNV wrote:
->>
->>
->> On 11/4/2023 10:32 PM, Krishna Kurapati PSSNV wrote:
->>>>
->>>> Are you saying to you require/rely on both of these series being 
->>>> applied first ?
->>>>
->>>> [1]: 
->>>> https://lore.kernel.org/all/af60c05b-4a0f-51b8-486a-1fc601602515@quicinc.com/
->>>> [2]: 
->>>> https://lore.kernel.org/all/20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com/
->>>>
->>>> Must be, nothing applies for me in this series.
->>>
->>> The first one is not a patch. It is just a discussion thread I 
->>> started to get community's opinion before on disconnect interrupt 
->>> handling. The current series is based on top of [2] made by Bjorn (as 
->>> you already found out) and as I mentioned in cover letter of my series.
->>>
->>
->> Hi Bryan,
->>
->>    Are you able to apply the series after including Bjorn's patches ? 
->> Also can you confirm if the comments provided to your queries on [1] 
->> are proper and if you have any other comments w.r.t probe deferral.
->>
->> [1]: 
->> https://lore.kernel.org/all/e700133b-58f7-4a4d-8e5c-0d04441b789b@linaro.org/
->>
->> Regards,
->> Krishna,
-> 
-> I wonder could you give a base SHA to apply the various series on ?
-> 
-> Your referenced precursor doesn't apply to usb-next
 
-Well now, that doesn't point where I thought it pointed usb-next/master 
-is extremely old
+--gxtcgkxgr2bmmbci
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  b3a9e3b9622ae - (HEAD -> usb-next-23-10-07-usb-glue-test, tag: 
-v5.8-rc1, usb-next/master, origin/tracking-qcomlt-sm8150-gcc, 
-linaro/tracking-qcomlt-sm8150-gcc, fecked-old, delete-this-branch2, 
-delete-this-branch) Linux 5.8-rc1 (3 years, 5 months ago)
++GKH
 
-I want usb-next/main
+On Thu, Oct 26, 2023 at 11:41:34AM +0300, Dmitry Baryshkov wrote:
+> > > > Also, we would still need to update every single panel driver, whic=
+h is
+> > > > going to create a lot of boilerplate that people might get wrong.
+> > >
+> > > Yes, quite unfortunately. Another approach that I have in mind is to =
+add two
+> > > callbacks to mipi_dsi_device. This way the DSI host will call into the
+> > > device to initialise it once the link has been powered up and just be=
+fore
+> > > tearing it down. We solve a lot of problems this way, no boilerplate =
+and the
+> > > panel / bridge are in control of the initialisation procedure. WDYT?
+> > >
+> > > > I have the feeling that we should lay out the problem without talki=
+ng
+> > > > about any existing code base first. So, what does the MIPI-DSI spec
+> > > > requires and what does panels and bridges expect?
+> > >
+> > > There is not that much in the DSI spec (or maybe I do not understand =
+the
+> > > question). The spec is more about the power states and the commands. =
+Our
+> > > problem is that this doesn't fully match kernel expectations.
+> >
+> > You're explicitly asking for comments on that series. How can we provide
+> > any comment if you're dead-set on a particular implementation and not
+> > explain what the problem you are trying to solve is?
+>=20
+> Ah, excuse me. I thought that I explained that in the cover letter.
+>=20
+> DSI device lifetime has three different stages:
+> 1. before the DSI link being powered up and clocking,
+> 2. when the DSI link is in LP state (for the purpose of this question,
+> this is the time between the DSI link being powered up and the video
+> stream start)
+> 3. when the DSI link is in HS state (while streaming the video).
+>=20
+> Different DSI bridges have different requirements with respect to the
+> code being executed at stages 1 and 2. For example several DSI-to-eDP
+> bridges (ps8640, tc358767 require for the link to be quiet during
+> reset time.
+> The DSI-controlled bridges and DSI panels need to send some commands
+> in stage 2, before starting up video
+>=20
+> In the DRM subsystem stage 3 naturally maps to the
+> drm_bridge_funcs::enable, stage 1 also naturally maps to the
+> drm_bridge_funcs::pre_enable. Stage 2 doesn't have its own place in
+> the DRM call chain.
+> Earlier we attempted to solve that using the pre_enable_prev_first,
+> which remapped pre-enable callback execution order. However it has led
+> us to the two issues. First, at the DSI host driver we do not know
+> whether the panel / bridge were updated to use pre_enable_prev_first
+> or not. Second, if the bridge has to perform steps during both stages
+> 1 and 2, it can not do that.
+>=20
+> I'm trying to find a way to express the difference between stages 1
+> and 2 in the generic code, so that we do not to worry about particular
+> DSI host and DSI bridge / panel peculiarities when implementing the
+> DSI host and/or DSI panel driver.
+>=20
+> Last, but not least, we currently document that it is fine to call DSI
+> transfer functions at any point during the driver's life time (at
+> least that was the interpretation that we have agreed in the
+> DSI-related threads). It has its own drawbacks for the DSI host
+> drivers. The hosts have to deal with the DSI commands being sent at
+> the different times, when the host is fully powered down, when it is
+> running in the LP mode and when it is fully running and streaming
+> video. By defining DSI lifetime more precisely, we can limit the
+> period when the DSI commands can be legitimately sent, simplifying DSI
+> host drives.
 
-*   d2f51b3516dad - (usb-next/usb-testing, usb-next/usb-next, 
-usb-next/main) Merge tag 'rtc-6.7' of 
-git://git.kernel.org/pub/scm/linux/kernel/git/abelloni/linux (32 hours ago)
+Thanks for writing this :)
 
-Everything applies there.
+> > Thinking more about it, I'm even more skeptical about the general
+> > approach that this should be implemented at the bridge level (or in
+> > KMS).
+> >
+> > It looks to me that this is very much a bus problem. USB device drivers
+> > also require the bus to be powered and generally available to send data
+> > to their device, and you don't fix that up in the HID or storage
+> > drivers, you make the bus behave that way.
+> >
+> > What prevents us from fixing it at the bus level?
+>=20
+> Yes, this can also be possible. Do you mean adding code / callbacks to
+> struct mipi_dsi_device ?
 
-Anyway, your pointing to Bjorn's series answers my question re: 
-sequencing of the probe.
+Yes, even more so with your summary above, I really think this should be
+dealt with at the bus layer.
 
----
-bod
+To put it in a different way, if we had an (imaginary, probably)
+MIPI-DSI device that didn't fit into KMS but in any other framework, we
+would still have all the constraints you list above. It really is a bus
+matter, not something that bridges need to express.
 
+I had a look at the other buses we have in the kernel and it looks like
+HSI might have the same requirements?
+
+Maxime
+
+--gxtcgkxgr2bmmbci
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZUoYLQAKCRDj7w1vZxhR
+xb5/AP9ur7o+WNgPDxCmvT8EAcxrlM8qGwtHOpSPORzeRKdLoAEA9fFl6YYXKCR/
+7vsBwaX6Z10UcCEvv9k1HEKXLhxVcgw=
+=uM1e
+-----END PGP SIGNATURE-----
+
+--gxtcgkxgr2bmmbci--
 
