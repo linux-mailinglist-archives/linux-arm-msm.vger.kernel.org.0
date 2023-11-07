@@ -1,143 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-43-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-44-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 999DA7E36F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 09:55:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E33F7E382A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 10:52:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 34F2FB20B70
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:55:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA78E280F2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 09:52:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B875CA4E;
-	Tue,  7 Nov 2023 08:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2922712B91;
+	Tue,  7 Nov 2023 09:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nYrIdn8L"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ACEiJAQ5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A2ACA46;
-	Tue,  7 Nov 2023 08:55:36 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B329D11A;
-	Tue,  7 Nov 2023 00:55:35 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A77MtcZ023680;
-	Tue, 7 Nov 2023 08:55:33 GMT
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9012912E40;
+	Tue,  7 Nov 2023 09:52:11 +0000 (UTC)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6053D11A;
+	Tue,  7 Nov 2023 01:52:10 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A799pOg025340;
+	Tue, 7 Nov 2023 09:52:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=6pa11KNsKYAxwvnBF32BvIbYj+w+9BXSuYGDwT/lRpg=;
- b=nYrIdn8LfP0d32NqzXTE1iRnDf39E9DzExul9qr5k45a8K3qUZWWkBr5+oi/DcXE85DS
- 4jRaDifv/o2Q8LssD0KxZmGsp8LlRAUh+xluCHeTn0Y5eYDsrzx/XaCrgOjzn6rLEDnZ
- IrHjDa6xo1bakg7kB+y5sAPJeJGL8z+5ZcJXFPAgFs/YvQUtw/0r2IHVURWFztl8uvMt
- 7U30V6/9vIm+eMVpcaLk0m/yYg3hqKTBHkAOU/AXzC8pwRqNMeogkaSdGvBooA+kGvOF
- rRdrSiKmaOrxbqG1ni5+QbaUq8jSECVBpojDjiZ2HA15n1pBHlw3C51BIWEO5Bi0jcz2 Kw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u758n1kp5-1
+ bh=gRVHVnW6RyQwwjooSESskhWPcW7DSJvleK6kuyrci1I=;
+ b=ACEiJAQ5jeZHVrKBDyF9zzLJm1VDx2EpVvySo2qSLgBkwvXyJkLFxuihA920CYUmXBAd
+ J2CAjEHYwSsajCQ0X3RUig7Waur3lyeYFQ/BsdGU9NX26a6brRxLbz4uAcrrsCB1vbF7
+ X4DH5cKGAX3tnV5Mz1uh+rk8oftOrRoaM31BpZrCuaeBun53/KtTEGhU+yvFtyAn9ijZ
+ YvIFLP9FJfCRD0wurYe/hNRdCkRdgQs6lt/sI0fQS9Zx2dihLUKHbWPcyItWL5F0PmyX
+ LVTNSZz/z/xSYoHS5cZI2heZvMD74QoKyKT4jMBoIMQlbJ4x//ODBM841s9rsYEJ3rqN ew== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u71bracdp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Nov 2023 08:55:32 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A78tWkN002845
+	Tue, 07 Nov 2023 09:52:01 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A79q0Yr026189
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Nov 2023 08:55:32 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 7 Nov 2023 09:52:00 GMT
+Received: from [10.218.41.203] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
- 2023 00:55:29 -0800
-Message-ID: <0f76a5c1-14ce-cbfa-bbd9-b2826c4bbbdb@quicinc.com>
-Date: Tue, 7 Nov 2023 14:25:25 +0530
+ 2023 01:51:54 -0800
+Message-ID: <9ce28fea-ab3e-0737-6749-3e00be6cc380@quicinc.com>
+Date: Tue, 7 Nov 2023 15:21:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] dt-bindings: cache: qcom,llcc: correct QDU1000 reg
- entries
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: Add PCIe
+ qcom,refclk-always-on property
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof
- Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20231107080436.16747-1-krzysztof.kozlowski@linaro.org>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20231107080436.16747-1-krzysztof.kozlowski@linaro.org>
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_vpernami@quicinc.com>,
+        <quic_parass@quicinc.com>
+References: <20231106-refclk_always_on-v1-0-17a7fd8b532b@quicinc.com>
+ <20231106-refclk_always_on-v1-1-17a7fd8b532b@quicinc.com>
+ <wt47mf6vx5fx5ddghwb4aljfjqftkplsc2zieays2xwjhkxag3@plromlkrbyxz>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <wt47mf6vx5fx5ddghwb4aljfjqftkplsc2zieays2xwjhkxag3@plromlkrbyxz>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: O22k0UAxUpYRtrJEGHIL5Jvs4oOExYku
-X-Proofpoint-ORIG-GUID: O22k0UAxUpYRtrJEGHIL5Jvs4oOExYku
+X-Proofpoint-ORIG-GUID: 9wAizPbfiZzIX16tqmpdgZw4uO-g1Boe
+X-Proofpoint-GUID: 9wAizPbfiZzIX16tqmpdgZw4uO-g1Boe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-06_15,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 mlxscore=0 mlxlogscore=643 spamscore=0 suspectscore=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0
- priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2310240000 definitions=main-2311070073
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ malwarescore=0 spamscore=0 adultscore=0 suspectscore=0 bulkscore=0
+ lowpriorityscore=0 mlxlogscore=999 phishscore=0 impostorscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2310240000 definitions=main-2311070081
 
 
+On 11/6/2023 9:50 PM, Bjorn Andersson wrote:
+> On Mon, Nov 06, 2023 at 05:22:34PM +0530, Krishna chaitanya chundru wrote:
+>> Document qcom,refclk-always-on property which is needed in some platforms
+>> to supply refclk even in PCIe low power states.
+>>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml          | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>> index 2c3d6553a7ba..9daf0556ed3b 100644
+>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>> @@ -93,6 +93,11 @@ properties:
+>>     "#phy-cells":
+>>       const: 0
+>>   
+>> +  qcom,refclk-always-on:
+>> +    type: boolean
+>> +    description: A boolean property indicating the refclk is
+>> +      always on even in Low power states (optional)
+> As with the driver patch, please improve this description (and use your
+> 80 characters).
+>
+>
+> It would also be preferable to capture (or at least indicate) the
+> problem that this flash is working around - so that future readers
+> doesn't need to go look in the commit history for the phy driver to
+> figure out what this is doing.
+>
+> Regards,
+> Bjorn
 
-On 11/7/2023 1:34 PM, Krzysztof Kozlowski wrote:
-> Qualcomm QDU1000 DTSI comes with one LLCC0 base address as pointed by
-> dtbs_check:
-> 
->    qdu1000-idp.dtb: system-cache-controller@19200000: reg-names:2: 'llcc2_base' was expected
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Recent LLCC patches were not tested on QDU1000 thus the LLCC is there
-> broken.  This patch at least tries to bring some sense according to
-> DTSI, but I have no clue what is here correct: driver, DTS or bindings.
-> ---
->   Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-> index 580f9a97ddf7..d610b0be262c 100644
-> --- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-> +++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-> @@ -64,6 +64,7 @@ allOf:
->           compatible:
->             contains:
->               enum:
-> +              - qcom,qdu1000-llcc
->                 - qcom,sc7180-llcc
->                 - qcom,sm6350-llcc
+Sure I will update this in my next patch.
 
-Thanks, again.
+- Krishna Chaitanya.
 
-Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
-
--Mukesh
-
-
->       then:
-> @@ -101,7 +102,6 @@ allOf:
->           compatible:
->             contains:
->               enum:
-> -              - qcom,qdu1000-llcc
->                 - qcom,sc8180x-llcc
->                 - qcom,sc8280xp-llcc
->       then:
+>> +
+>>   required:
+>>     - compatible
+>>     - reg
+>>
+>> -- 
+>> 2.42.0
+>>
 
