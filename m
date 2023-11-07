@@ -1,174 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-5-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-6-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9B207E3257
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 01:44:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CEC27E329B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 02:28:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F01251C2037E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 00:44:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9266B20AB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 01:28:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE99C17C7;
-	Tue,  7 Nov 2023 00:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 335A31C01;
+	Tue,  7 Nov 2023 01:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FT598sG1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OFKtISmp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500CA17C2
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 00:44:29 +0000 (UTC)
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C676D75
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 16:44:27 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2c6b30acacdso68180391fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 16:44:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699317866; x=1699922666; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=l4sQQn36L2+/zoCkGPO8pkAoerlaydAQhrz7oIT51ro=;
-        b=FT598sG1IfYas/GqukigrwYhRsD8Eb7+6TmdIB0q2QyvuHk9BUCx0gAr6Hj4s4kffG
-         sqZ/IODgs52KjPZXslZaDqK2OdyrHzfKLz+9L48s8VHUeb+FKzMs27V5O+nRIlybFp5A
-         KRBB3PWxmTXhuJzUMcToIrQjuQGHuWQ0qTm4If+gHnq1/uRiwrWCnusrAPVarGcUpVRP
-         dBQUS0Ny6wrBtR9HW7LuWD7wtOCg5csPmf+HvlTuBspA6FjPr921BwrFOeYEz+38p/ur
-         Tb/Ud/O7mURUBOkOfAdStpTn10vWfuQS9GAUzt8z6MPit0UYd1SKiamqNbeHyvU2cXzo
-         AlfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699317866; x=1699922666;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l4sQQn36L2+/zoCkGPO8pkAoerlaydAQhrz7oIT51ro=;
-        b=K/g98sz4C3QcFvmKlz97xVja91GaEJ6LH73RSShWS45LvT4W/gleXa90ESNYAKbEUV
-         vfYac7JXOoDopbtZsl4xwXsbzF+QyQJNz5CcnsWk3cjW96PKSa1IREEIvuJAfWxyPkMI
-         0/XaCAATYp2EguqjtZDHLe8CEkVsEENSo2tzh6vm8M/lPImnQGjOgz+6aqpyKFEmRJwV
-         PDCboRRRUXcgPLyXxBManPVPOV/lBDCpp5NGtbxWm18a3cZ70T4qw1sl04shHFGMtGzN
-         3qIGWy9xo7cvIJQ9Oth7G8BuVwDTQrHaKyHMu54e1NHMPig1ImDR/gVkHo6kwWW0FUe/
-         un4w==
-X-Gm-Message-State: AOJu0YxpD4aOLkwVfGmZ8dwhAGi4D7tNtinK9gvjaGntx1g7sDTh7KHr
-	9jB+XE5e7o1beTIYwASs2YYllQ==
-X-Google-Smtp-Source: AGHT+IGq/gbVJACFjo+UjFOrO/9DZFv8U31OsE7j5XrfgMAni1X9Tg3EXzFgOQQAbQtrdqyqkHPeyA==
-X-Received: by 2002:ac2:57c4:0:b0:4fd:c715:5667 with SMTP id k4-20020ac257c4000000b004fdc7155667mr20544414lfo.20.1699317865656;
-        Mon, 06 Nov 2023 16:44:25 -0800 (PST)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id m15-20020a05651202ef00b0050567a8b36esm142974lfq.251.2023.11.06.16.44.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Nov 2023 16:44:25 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Sankeerth Billakanti <quic_sbillaka@quicinc.com>
-Cc: Stephen Boyd <swboyd@chromium.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm/dp: call dp_display_get_next_bridge() during probe
-Date: Tue,  7 Nov 2023 02:43:33 +0200
-Message-ID: <20231107004424.2112698-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.42.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B64186E;
+	Tue,  7 Nov 2023 01:28:35 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10037D51;
+	Mon,  6 Nov 2023 17:28:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699320514; x=1730856514;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=KGp1FTMlLvE0W7RuyMeG9Bl9f53olpKJMGfeLaVZB9c=;
+  b=OFKtISmpMfGma0vNO745XiRn11LkB8K/pSSCBCrXJWuDr/1LniUTTQd8
+   XO/sKpcqUMOYRG2EBhQOD/QSbxv9+Aa24GEBrmXLIhrZN/2KQxGeID7e4
+   Mm8yx9htyRE6gLtPBroorlU/yJ7vY49xyAbLkQryeqQjlEloFd/K7wZlO
+   hLiH7giEiFjY86s+DgG7lOinlQjahDnWDh3PvXsIqPAxqrHLk9uC49vsW
+   4p12wmzJ1/vkHP/f9PP7xN/rX5rVeilxwRH2dHokcw1JFgYVgR3QCwZs5
+   z4Z9ViVrhoT7IdCuOBNqyrLYZp9OLSRB4WR0xgUWNDaX6N9ZLoaXCO83U
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="386577560"
+X-IronPort-AV: E=Sophos;i="6.03,282,1694761200"; 
+   d="scan'208";a="386577560"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2023 17:28:33 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="756022146"
+X-IronPort-AV: E=Sophos;i="6.03,282,1694761200"; 
+   d="scan'208";a="756022146"
+Received: from lkp-server01.sh.intel.com (HELO 17d9e85e5079) ([10.239.97.150])
+  by orsmga007.jf.intel.com with ESMTP; 06 Nov 2023 17:28:30 -0800
+Received: from kbuild by 17d9e85e5079 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r0AtH-0006sm-2W;
+	Tue, 07 Nov 2023 01:28:27 +0000
+Date: Tue, 7 Nov 2023 09:28:06 +0800
+From: kernel test robot <lkp@intel.com>
+To: Bryant Mairs <bryant@mai.rs>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-input@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev
+Subject: Re: [PATCH 3/7] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4
+ 8.0 Wi-Fi
+Message-ID: <202311070844.zoUJwRlS-lkp@intel.com>
+References: <20231105204759.37107-4-bryant@mai.rs>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231105204759.37107-4-bryant@mai.rs>
 
-The funcion dp_display_get_next_bridge() can return -EPROBE_DEFER if the
-next bridge is not (yet) available. However returning -EPROBE_DEFER from
-msm_dp_modeset_init() is not ideal. This leads to -EPROBE return from
-component_bind, which can easily result in -EPROBE_DEFR loops.
+Hi Bryant,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
+kernel test robot noticed the following build errors:
 
-Dependencies: https://patchwork.freedesktop.org/series/120375/
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on dtor-input/next linus/master v6.6 next-20231106]
+[cannot apply to dtor-input/for-linus]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
----
- drivers/gpu/drm/msm/dp/dp_display.c | 36 +++++++++++++++++------------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+url:    https://github.com/intel-lab-lkp/linux/commits/Bryant-Mairs/dt-bindings-input-melfas-mms114-add-MMS252-compatible/20231106-045021
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20231105204759.37107-4-bryant%40mai.rs
+patch subject: [PATCH 3/7] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 8.0 Wi-Fi
+config: arm-allyesconfig (https://download.01.org/0day-ci/archive/20231107/202311070844.zoUJwRlS-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231107/202311070844.zoUJwRlS-lkp@intel.com/reproduce)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index d542db37763a..ddb3c84f39a2 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1197,15 +1197,27 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
- 	return NULL;
- }
- 
--static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
-+static int dp_display_get_next_bridge(struct msm_dp *dp);
-+
-+static int dp_display_probe_tail(struct device *dev)
- {
--	int rc;
-+	struct msm_dp *dp = dev_get_drvdata(dev);
-+	int ret;
- 
--	rc = component_add(aux->dev, &dp_display_comp_ops);
--	if (rc)
--		DRM_ERROR("eDP component add failed, rc=%d\n", rc);
-+	ret = dp_display_get_next_bridge(dp);
-+	if (ret)
-+		return ret;
- 
--	return rc;
-+	ret = component_add(dev, &dp_display_comp_ops);
-+	if (ret)
-+		DRM_ERROR("component add failed, rc=%d\n", ret);
-+
-+	return ret;
-+}
-+
-+static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
-+{
-+	return dp_display_probe_tail(aux->dev);
- }
- 
- static int dp_display_probe(struct platform_device *pdev)
-@@ -1280,11 +1292,9 @@ static int dp_display_probe(struct platform_device *pdev)
- 			goto err;
- 		}
- 	} else {
--		rc = component_add(&pdev->dev, &dp_display_comp_ops);
--		if (rc) {
--			DRM_ERROR("component add failed, rc=%d\n", rc);
-+		rc = dp_display_probe_tail(&pdev->dev);
-+		if (rc)
- 			goto err;
--		}
- 	}
- 
- 	return rc;
-@@ -1415,7 +1425,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
- 	 * For DisplayPort interfaces external bridges are optional, so
- 	 * silently ignore an error if one is not present (-ENODEV).
- 	 */
--	rc = devm_dp_parser_find_next_bridge(dp->drm_dev->dev, dp_priv->parser);
-+	rc = devm_dp_parser_find_next_bridge(&dp->pdev->dev, dp_priv->parser);
- 	if (!dp->is_edp && rc == -ENODEV)
- 		return 0;
- 
-@@ -1435,10 +1445,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
- 
- 	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
- 
--	ret = dp_display_get_next_bridge(dp_display);
--	if (ret)
--		return ret;
--
- 	ret = dp_bridge_init(dp_display, dev, encoder);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev->dev,
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311070844.zoUJwRlS-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts:14.15-26 Label or path mba_region not found
+>> Error: arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts:15.15-27 Label or path mpss_region not found
+>> Error: arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts:17.15-28 Label or path wcnss_region not found
+   FATAL ERROR: Syntax error parsing input tree
+
 -- 
-2.42.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
