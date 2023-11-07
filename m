@@ -1,54 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-28-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C5BE7E35B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:19:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D11997E35ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 08:29:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 87BF1B207A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 07:19:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E182280EA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 07:29:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14861C2F0;
-	Tue,  7 Nov 2023 07:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AF4C17C3;
+	Tue,  7 Nov 2023 07:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gMY92Rfx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hGUiwS4G"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87F9C2DE
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 07:19:50 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65FC1FC;
-	Mon,  6 Nov 2023 23:19:49 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A73pvB7013472;
-	Tue, 7 Nov 2023 07:19:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=u1DxfSI0u6GU0XwgXgfaS4gkCqfJ0FwPigY3T4KxkZQ=;
- b=gMY92RfxZOCObfwGRe2/698AFqathWTcUSO0I2k+IvT4BzHCEWqBJCnYeYeLkmhGWydg
- k37zNjLameuXOOz1CIJPfUOvyDRbBYyVkhj+DhXllF97hHk6NwRfxhM0T93UpTc7q6xs
- Reqt8/Ysi7YopzCcDOY5aqrgRx1MGf2qQPC/ZLuEQ9xiLXvA+HkFIMd2y96ZC3YlDTzi
- hpuWQCRLWhn9b/DmmRiuW6NsFIvT2/IMVZjzSA473+xTLLlC4UUZnPIdUz27K3+hKvs9
- AzAD006q2l/Uts0ENWxzNziFCE4623lcrbwAdmI8psJgT5jljkkq7+sRb7OlyMackhDG 5w== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u6xduan34-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Nov 2023 07:19:17 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A77JGHA030829
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Nov 2023 07:19:16 GMT
-Received: from [10.253.15.27] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 6 Nov
- 2023 23:19:14 -0800
-Message-ID: <92cc9fd2-eb05-4c2d-ad85-b3f411dece3e@quicinc.com>
-Date: Tue, 7 Nov 2023 15:19:02 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181A2CA46
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 07:29:17 +0000 (UTC)
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C4CFD
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 23:29:14 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-53ed4688b9fso8865716a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 23:29:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699342153; x=1699946953; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=G/tiiTazlujsS+wOpHKRUOKlGuoJnxsMv5imXX1XO88=;
+        b=hGUiwS4G/4EzJZepf9whWmUvnTr8gLilVDXHX6TckWfZRt6gRwSw5oORdPgAXozwa2
+         Cji3/u4zIAcIDbRZSIntIKaGrJrDVZz3uM9Uxg7tlI5rZCiCKy/iD8n4KInQzV5TpgcL
+         kY5PLLo52vOHBDzm7PM4YaDjTPw3o/Tbs0P9KU/sh6XVxLJv3gausCGO3b4jQYw7O0jh
+         2yz/uKBAp+2t5TV+fFqskyXHMyXMJC2z44ff6gWTXdBzBKexS6TpgCCGlq/b0hKIN0u9
+         Kx0Fuqd0wXfC6yQZ95YTsW+s5Tao86PLL1HAKl3YiEN4Kihr+Q20YXKp+zZNSgUK+tCG
+         Cmuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699342153; x=1699946953;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=G/tiiTazlujsS+wOpHKRUOKlGuoJnxsMv5imXX1XO88=;
+        b=CjXQhMEtkuxXuK9Of4F5/OFVZ8q7aiZYipe3dme2/ja099SuEcQY0RtWhrluPcugXd
+         vRcKXfRuG9eH6/G4o9x4hp1T+K14Cmx/SZQv4ypOJ8c+yvgT5qTk1rAs/URwwwXT4kzZ
+         oHISu6Q375hzuHiGVsjWNCybYBKLNXLm3FJCOxbbqelYa4nsT+a0kimcmBlVKyGBTa12
+         KW4hdffPFG5CyZJzBnNnreZO37cwCEEpfVjM8p5EPoTU7wS7BfzvVOnQ3sEo3YpZxb9z
+         18YjUaiM8O4/jHTKrqbDrmK7AIQPcpRWMHzLTIuQ6jJUsrLSOn8RF98WtgdgaSPeea+x
+         gQMA==
+X-Gm-Message-State: AOJu0YwA+z0+T7TqzSJad4leY8+dwNs+D/F14UOjeTpvkIvZGqT+7Gf7
+	LZPGASbbgbWb5qAn92KuZ9l0ww==
+X-Google-Smtp-Source: AGHT+IFR++sjwbdBLk1mUT9if066tHS2xusme+j4M+agcoKetFloUOj/Kue1GQ4n+4RX8L6Taqi4qg==
+X-Received: by 2002:a05:6402:229a:b0:541:875:53d8 with SMTP id cw26-20020a056402229a00b00541087553d8mr22825870edb.23.1699342152856;
+        Mon, 06 Nov 2023 23:29:12 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.126])
+        by smtp.gmail.com with ESMTPSA id s24-20020a056402037800b0053e8bb112adsm5107281edw.53.2023.11.06.23.29.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Nov 2023 23:29:12 -0800 (PST)
+Message-ID: <466ffc6c-19c9-44e0-b97b-8fa4358f34ab@linaro.org>
+Date: Tue, 7 Nov 2023 08:29:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,120 +67,84 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] bus: mhi: host: Add spinlock to protect WP access
- when queueing TREs
+Subject: Re: [PATCH 3/7] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4
+ 8.0 Wi-Fi
 Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>,
-        Bhaumik Bhatt
-	<bbhatt@codeaurora.org>
-References: <1694594861-12691-1-git-send-email-quic_qianyu@quicinc.com>
- <1694594861-12691-2-git-send-email-quic_qianyu@quicinc.com>
- <20231106044126.GA2474@thinkpad>
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20231106044126.GA2474@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Bryant Mairs <bryant@mai.rs>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-input@vger.kernel.org
+References: <20231105204759.37107-1-bryant@mai.rs>
+ <20231105204759.37107-4-bryant@mai.rs>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231105204759.37107-4-bryant@mai.rs>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _sUUq1hV39g9h-zZPqlYgM445QL1JcwK
-X-Proofpoint-ORIG-GUID: _sUUq1hV39g9h-zZPqlYgM445QL1JcwK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-06_15,2023-11-02_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 mlxlogscore=635 priorityscore=1501
- spamscore=0 impostorscore=0 mlxscore=0 malwarescore=0 clxscore=1015
- bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2310240000 definitions=main-2311070059
 
+On 05/11/2023 21:46, Bryant Mairs wrote:
+> Add support for this tablet based on the MSM8226 SoC, codenamed
+> "milletwifi".
+> 
+> Signed-off-by: Bryant Mairs <bryant@mai.rs>
+> ---
+>  arch/arm/boot/dts/qcom/Makefile               |   1 +
+>  .../qcom/qcom-apq8026-samsung-milletwifi.dts  | 543 ++++++++++++++++++
+>  2 files changed, 544 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts
+> 
 
-On 11/6/2023 12:41 PM, Manivannan Sadhasivam wrote:
-> On Wed, Sep 13, 2023 at 04:47:40PM +0800, Qiang Yu wrote:
->> From: Bhaumik Bhatt <bbhatt@codeaurora.org>
->>
->> Protect WP accesses such that multiple threads queueing buffers for
->> incoming data do not race and access the same WP twice. Ensure read and
->> write locks for the channel are not taken in succession by dropping the
->> read lock from parse_xfer_event() such that a callback given to client
->> can potentially queue buffers and acquire the write lock in that process.
->> Any queueing of buffers should be done without channel read lock acquired
->> as it can result in multiple locks and a soft lockup.
->>
-> This change is doing two things:
->
-> 1. Unlocking xfer_cb to prevent potential lockup
-> 2. Protecting mhi_gen_tre() against concurrent access
->
-> So you should split this into two patches and also add Fixes tag if appropriate.
->
-> - Mani
-Hi Mani, thanks for review. I split this into two patch and add Fixes tag.
->
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->> ---
->>   drivers/bus/mhi/host/main.c | 11 ++++++++++-
->>   1 file changed, 10 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
->> index dcf627b..13c4b89 100644
->> --- a/drivers/bus/mhi/host/main.c
->> +++ b/drivers/bus/mhi/host/main.c
->> @@ -642,6 +642,7 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->>   			mhi_del_ring_element(mhi_cntrl, tre_ring);
->>   			local_rp = tre_ring->rp;
->>   
->> +			read_unlock_bh(&mhi_chan->lock);
->>   			/* notify client */
->>   			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->>   
->> @@ -667,6 +668,7 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->>   					kfree(buf_info->cb_buf);
->>   				}
->>   			}
->> +			read_lock_bh(&mhi_chan->lock);
->>   		}
->>   		break;
->>   	} /* CC_EOT */
->> @@ -1204,6 +1206,9 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->>   	int eot, eob, chain, bei;
->>   	int ret;
->>   
->> +	/* Protect accesses for reading and incrementing WP */
->> +	write_lock_bh(&mhi_chan->lock);
->> +
->>   	buf_ring = &mhi_chan->buf_ring;
->>   	tre_ring = &mhi_chan->tre_ring;
->>   
->> @@ -1221,8 +1226,10 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->>   
->>   	if (!info->pre_mapped) {
->>   		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
->> -		if (ret)
->> +		if (ret) {
->> +			write_unlock_bh(&mhi_chan->lock);
->>   			return ret;
->> +		}
->>   	}
->>   
->>   	eob = !!(flags & MHI_EOB);
->> @@ -1239,6 +1246,8 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->>   	mhi_add_ring_element(mhi_cntrl, tre_ring);
->>   	mhi_add_ring_element(mhi_cntrl, buf_ring);
->>   
->> +	write_unlock_bh(&mhi_chan->lock);
->> +
->>   	return 0;
->>   }
->>   
->> -- 
->> 2.7.4
->>
->>
+LKP reports that patches were most likely not even built :(
+
+Best regards,
+Krzysztof
+
 
