@@ -1,115 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-6-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-7-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CEC27E329B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 02:28:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 360BA7E32A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 02:36:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9266B20AB2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 01:28:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F2A8AB20A78
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 01:36:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 335A31C01;
-	Tue,  7 Nov 2023 01:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F19C7186C;
+	Tue,  7 Nov 2023 01:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OFKtISmp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bT6izTAG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B64186E;
-	Tue,  7 Nov 2023 01:28:35 +0000 (UTC)
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10037D51;
-	Mon,  6 Nov 2023 17:28:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1699320514; x=1730856514;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=KGp1FTMlLvE0W7RuyMeG9Bl9f53olpKJMGfeLaVZB9c=;
-  b=OFKtISmpMfGma0vNO745XiRn11LkB8K/pSSCBCrXJWuDr/1LniUTTQd8
-   XO/sKpcqUMOYRG2EBhQOD/QSbxv9+Aa24GEBrmXLIhrZN/2KQxGeID7e4
-   Mm8yx9htyRE6gLtPBroorlU/yJ7vY49xyAbLkQryeqQjlEloFd/K7wZlO
-   hLiH7giEiFjY86s+DgG7lOinlQjahDnWDh3PvXsIqPAxqrHLk9uC49vsW
-   4p12wmzJ1/vkHP/f9PP7xN/rX5rVeilxwRH2dHokcw1JFgYVgR3QCwZs5
-   z4Z9ViVrhoT7IdCuOBNqyrLYZp9OLSRB4WR0xgUWNDaX6N9ZLoaXCO83U
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="386577560"
-X-IronPort-AV: E=Sophos;i="6.03,282,1694761200"; 
-   d="scan'208";a="386577560"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Nov 2023 17:28:33 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10886"; a="756022146"
-X-IronPort-AV: E=Sophos;i="6.03,282,1694761200"; 
-   d="scan'208";a="756022146"
-Received: from lkp-server01.sh.intel.com (HELO 17d9e85e5079) ([10.239.97.150])
-  by orsmga007.jf.intel.com with ESMTP; 06 Nov 2023 17:28:30 -0800
-Received: from kbuild by 17d9e85e5079 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1r0AtH-0006sm-2W;
-	Tue, 07 Nov 2023 01:28:27 +0000
-Date: Tue, 7 Nov 2023 09:28:06 +0800
-From: kernel test robot <lkp@intel.com>
-To: Bryant Mairs <bryant@mai.rs>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-input@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev
-Subject: Re: [PATCH 3/7] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4
- 8.0 Wi-Fi
-Message-ID: <202311070844.zoUJwRlS-lkp@intel.com>
-References: <20231105204759.37107-4-bryant@mai.rs>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE70C17F4;
+	Tue,  7 Nov 2023 01:36:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC55C433C7;
+	Tue,  7 Nov 2023 01:36:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699320972;
+	bh=kL48fIOTndmBh9Sq5LIKKaJC+DRa+TCqhCyeEJzBeMM=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=bT6izTAGxcTL/ZNfNkJosin+OA6yE/q62UZD4hOeuNGWMWsUfLiY4Bs66omKmdIue
+	 hTPLvI4TT1Hj/3UlDOLEKAyG0zkdF9r6uGPoWPxv5AV88qfUI7H20JvsigwGRayd3m
+	 U6/nivePTruLGPCjMzhgwSc6naHAafLVgXDxIvhsJm5ay2wCF0TmfwU1dmQCPa3QJ5
+	 zxGqZbM3aPQvoPu7pyM2HRwl7Cn4otihDAx7venQDwcsfTlNXqdrR6ti+bbhza3e3o
+	 XLREMr07NH3WqyLLUiOXB45F+kWIZzfAbqLO8bkOPQ9QxhnfoKOMIQfxGJFkiyQgTd
+	 SOjeflTLK0+lg==
+Message-ID: <1290a5a0f7f584fcce722eeb2a1fd898.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231105204759.37107-4-bryant@mai.rs>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <2346f541be5b8528ad1a16df256a2f50.sboyd@kernel.org>
+References: <20231004012308.2305273-1-dmitry.baryshkov@linaro.org> <20231004012308.2305273-3-dmitry.baryshkov@linaro.org> <2346f541be5b8528ad1a16df256a2f50.sboyd@kernel.org>
+Subject: Re: [RFC PATCH v2 2/3] clk: qcom: implement RCG2 'parked' clock support
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, Taniya Das <quic_tdas@quicinc.com>
+Date: Mon, 06 Nov 2023 17:36:09 -0800
+User-Agent: alot/0.10
 
-Hi Bryant,
+Quoting Stephen Boyd (2023-11-03 18:24:47)
+> Quoting Dmitry Baryshkov (2023-10-03 18:23:07)
+> > +
+> > +       ret =3D regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, =
+&cfg);
+> > +       if (ret)
+> > +               return ret;
+> > +
+> > +       return FIELD_GET(CFG_SRC_SEL_MASK, cfg) !=3D rcg->safe_src_inde=
+x;
+> > +}
+> > +
+> > +static int clk_rcg2_parked_init(struct clk_hw *hw)
+> > +{
+> > +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
+> > +       const struct freq_tbl *f =3D rcg->freq_tbl;
+> > +
+> > +       regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &rcg->parked=
+_cfg);
+>=20
+> I need this part today to fix a stuck clk problem I see on trogdor.lazor
+> where during registration a call to clk_ops::get_parent() sees the clk
+> isn't enabled at boot (because there isn't a clk_ops::is_enabled()
+> function) so clk_rcg2_shared_get_parent() reads the parent from the
+> 'parked_cfg' value, which is zero. If the hardware actually has non-zero
+> for the parent then the framework will get the wrong parent, which is
+> what happens on trogdor when the devmode screen is shown. The parent is
+> the display PLL instead of XO. I haven't dug far enough to understand
+> why disabling unused clks wedges the branch when we try to enable it
+> again, but not disabling unused clks fixes the problem or reading the
+> config register at registration to get the proper parent also fixes it.
+> I guess the problem is that we're switching the RCG value when we
+> shouldn't be doing that.
+>=20
 
-kernel test robot noticed the following build errors:
+I looked at this more today. It seems that I need to both read the
+config register at init and also move over the rcg to the safe source at
+init (i.e. park the clk at init). That's doable with a call to
+clk_rcg2_shared_disable() for the clk_ops::init callback. Otherwise I
+get a stuck clk warning.
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on dtor-input/next linus/master v6.6 next-20231106]
-[cannot apply to dtor-input/for-linus]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Either
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bryant-Mairs/dt-bindings-input-melfas-mms114-add-MMS252-compatible/20231106-045021
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20231105204759.37107-4-bryant%40mai.rs
-patch subject: [PATCH 3/7] ARM: dts: qcom: Add support for Samsung Galaxy Tab 4 8.0 Wi-Fi
-config: arm-allyesconfig (https://download.01.org/0day-ci/archive/20231107/202311070844.zoUJwRlS-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231107/202311070844.zoUJwRlS-lkp@intel.com/reproduce)
+ disp_cc_mdss_mdp_clk status stuck at 'off'
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311070844.zoUJwRlS-lkp@intel.com/
+or
 
-All errors (new ones prefixed by >>):
+ disp_cc_mdss_rot_clk status stuck at 'on'
 
->> Error: arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts:14.15-26 Label or path mba_region not found
->> Error: arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts:15.15-27 Label or path mpss_region not found
->> Error: arch/arm/boot/dts/qcom/qcom-apq8026-samsung-milletwifi.dts:17.15-28 Label or path wcnss_region not found
-   FATAL ERROR: Syntax error parsing input tree
+When I don't park the rcg, the disp_cc_mdss_rot_clk gets stuck during
+disabling of unused clks. I think I understand that problem. What
+happens is disp_cc_mdss_mdp_clk_src and disp_cc_mdss_rot_clk_src are
+both sourcing from disp_cc_pll0 at boot. Fixing the parent mapping makes
+it so that enabling and then disabling disp_cc_mdss_ahb_clk causes
+disp_cc_pll0 to be turned off when disp_cc_mdss_rot_clk_src is sourced
+from it (and the branch disp_cc_mdss_rot_clk is enabled). If we park
+both the rcgs at clk registration time we avoid this problem because the
+PLL is disabled but nothing is actually a child clk. The act of reading
+the config register and stashing that in the 'parked_cfg' only helps
+avoid duplicate calls to change the rate, and doesn't help when we try
+to repoint the clk at XO when the parent PLL is off.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+The part I still don't understand is why reading the config register at
+init and stashing that in 'parked_cfg' fixes the disp_cc_mdss_mdp_clk
+stuck at off problem. I see that the branch clk is turned off and on
+many times during boot and there aren't any warnings regardless of
+stashing the config register. That means we should be moving the RCG to
+XO source, between forcibly enabling and disabling the RCG, which
+presumably would complain about being unable to update the config
+register, but it doesn't. Only after late init does the clk fail to
+enable, and the source is still XO at that time. Something else must be
+happening that wedges the branch to the point that it can't be
+recovered. But simply reporting the proper parent is enough for
+disp_cc_mdss_mdp_clk.
 
