@@ -1,127 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-7-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-8-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 360BA7E32A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 02:36:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D382E7E32BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 02:56:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F2A8AB20A78
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 01:36:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DC4D280DEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 01:56:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F19C7186C;
-	Tue,  7 Nov 2023 01:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D72A1870;
+	Tue,  7 Nov 2023 01:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bT6izTAG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BZFblLgj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE70C17F4;
-	Tue,  7 Nov 2023 01:36:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC55C433C7;
-	Tue,  7 Nov 2023 01:36:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699320972;
-	bh=kL48fIOTndmBh9Sq5LIKKaJC+DRa+TCqhCyeEJzBeMM=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=bT6izTAGxcTL/ZNfNkJosin+OA6yE/q62UZD4hOeuNGWMWsUfLiY4Bs66omKmdIue
-	 hTPLvI4TT1Hj/3UlDOLEKAyG0zkdF9r6uGPoWPxv5AV88qfUI7H20JvsigwGRayd3m
-	 U6/nivePTruLGPCjMzhgwSc6naHAafLVgXDxIvhsJm5ay2wCF0TmfwU1dmQCPa3QJ5
-	 zxGqZbM3aPQvoPu7pyM2HRwl7Cn4otihDAx7venQDwcsfTlNXqdrR6ti+bbhza3e3o
-	 XLREMr07NH3WqyLLUiOXB45F+kWIZzfAbqLO8bkOPQ9QxhnfoKOMIQfxGJFkiyQgTd
-	 SOjeflTLK0+lg==
-Message-ID: <1290a5a0f7f584fcce722eeb2a1fd898.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63A0186E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 01:56:08 +0000 (UTC)
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24883109
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Nov 2023 17:56:04 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5a90d6ab962so60437147b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Nov 2023 17:56:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699322163; x=1699926963; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qRdFl5udOcDDgpUUHFmtzTJy5y7ihwibQnaHgGQmu7k=;
+        b=BZFblLgjjM8OPrYN1LQG8qQwUVwf1K6prfsGbAy4Bhzm8h+623wqk2iEmra2LeDRLe
+         0hIOjLbH+rlPSWP6psoPUqmwG/ubWml1CUtslEYTcFiiv8b5PYZSlBfIbdtVfRa0hsxm
+         v2oymDSdKZXJuZH2AAB1/Ov2Uepwti+X7H++7YNazEaqbxY6vK2m2vTi4qvsMnunH+/j
+         9dbEMsxQpbgXCiIm2fPH6dBoCHU75yR9WJOLPHgwwFfPGkCrnhXPSr3idkcnD5hMqVxr
+         pq5K4Qeq1R3AW2jMycFL1w58bExHzcxhpaD40E5JCMFY/TAOmKGNTUndfSYyPZse4Jzy
+         yzVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699322163; x=1699926963;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qRdFl5udOcDDgpUUHFmtzTJy5y7ihwibQnaHgGQmu7k=;
+        b=Mtjvd1b6NXhiwedrbXDpduZtIlxiDLcL5RpQjiONdsfJEApxcE4EzWfc2/16Kl6jSo
+         QHD+j5W7QH5vdjZUoUfwJoq+keXNu/Y8I6GkEZDfRMUS/jJ1UPnM02xPkc+kmpo0wZsM
+         XL9XQlNvqfSFW99Lh/O52OGXbISXBe2oPetpX5MH2tOH4svGBRKmXOyyZ/qwY88WnEUC
+         Bx9Odc1lkxZYVrU0qvvKx5fVkCUwtF7nqXp8AQJUOncb8D5O2kmoLoLaOsopZES3hep8
+         wqy4iOr4QLvpxenwroWNOXPWthSkVNn5mcxLF7sdOu/Dcph19ctFzIckmJ3RpZyAdNZm
+         rm/Q==
+X-Gm-Message-State: AOJu0Ywb8Maym+N+KWWQRoape4+hsd3yTjHU6NmcMLgz2sGpCysevsMS
+	hBIiC4IAQSN/0o3XgOfwIsf6jCVUk5iDxycFj3GICQ==
+X-Google-Smtp-Source: AGHT+IFtN3nj1SFB8choYmUK6+L0wPLOEXRz8UqI3Ocfv/fDkJmkQoE2qADkYCuPiioo32CihjU/UeJ2DjK7I3fYw4E=
+X-Received: by 2002:a81:9a54:0:b0:5a7:fa8b:3fa6 with SMTP id
+ r81-20020a819a54000000b005a7fa8b3fa6mr12601421ywg.9.1699322163303; Mon, 06
+ Nov 2023 17:56:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <2346f541be5b8528ad1a16df256a2f50.sboyd@kernel.org>
-References: <20231004012308.2305273-1-dmitry.baryshkov@linaro.org> <20231004012308.2305273-3-dmitry.baryshkov@linaro.org> <2346f541be5b8528ad1a16df256a2f50.sboyd@kernel.org>
-Subject: Re: [RFC PATCH v2 2/3] clk: qcom: implement RCG2 'parked' clock support
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, Taniya Das <quic_tdas@quicinc.com>
-Date: Mon, 06 Nov 2023 17:36:09 -0800
-User-Agent: alot/0.10
+References: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 7 Nov 2023 03:55:51 +0200
+Message-ID: <CAA8EJpoFRp+7GyO=F3Ar21tfG5Yt0cL6zkAquqg7D1XXQjp50Q@mail.gmail.com>
+Subject: Re: [PATCH v7 0/7] incorporate pm runtime framework and eDP clean up
+To: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: dri-devel@lists.freedesktop.org, robdclark@gmail.com, sean@poorly.run, 
+	swboyd@chromium.org, dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch, 
+	airlied@gmail.com, agross@kernel.org, andersson@kernel.org, 
+	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
+	quic_sbillaka@quicinc.com, marijn.suijten@somainline.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Quoting Stephen Boyd (2023-11-03 18:24:47)
-> Quoting Dmitry Baryshkov (2023-10-03 18:23:07)
-> > +
-> > +       ret =3D regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, =
-&cfg);
-> > +       if (ret)
-> > +               return ret;
-> > +
-> > +       return FIELD_GET(CFG_SRC_SEL_MASK, cfg) !=3D rcg->safe_src_inde=
-x;
-> > +}
-> > +
-> > +static int clk_rcg2_parked_init(struct clk_hw *hw)
-> > +{
-> > +       struct clk_rcg2 *rcg =3D to_clk_rcg2(hw);
-> > +       const struct freq_tbl *f =3D rcg->freq_tbl;
-> > +
-> > +       regmap_read(rcg->clkr.regmap, RCG_CFG_OFFSET(rcg), &rcg->parked=
-_cfg);
->=20
-> I need this part today to fix a stuck clk problem I see on trogdor.lazor
-> where during registration a call to clk_ops::get_parent() sees the clk
-> isn't enabled at boot (because there isn't a clk_ops::is_enabled()
-> function) so clk_rcg2_shared_get_parent() reads the parent from the
-> 'parked_cfg' value, which is zero. If the hardware actually has non-zero
-> for the parent then the framework will get the wrong parent, which is
-> what happens on trogdor when the devmode screen is shown. The parent is
-> the display PLL instead of XO. I haven't dug far enough to understand
-> why disabling unused clks wedges the branch when we try to enable it
-> again, but not disabling unused clks fixes the problem or reading the
-> config register at registration to get the proper parent also fixes it.
-> I guess the problem is that we're switching the RCG value when we
-> shouldn't be doing that.
->=20
+On Sat, 7 Oct 2023 at 01:55, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> The purpose of this patch series is to incorporate pm runtime framework
+> into MSM eDP/DP driver so that eDP panel can be detected by DRM eDP panel
+> driver during system probe time. During incorporating procedure, original
+> customized pm realted fucntions, such as dp_pm_prepare(), dp_pm_suspend(),
+> dp_pm_resume() and dp_pm_prepare(), are removed and replaced with functions
+> provided by pm runtiem framework such as pm_runtime_force_suspend() and
+> pm_runtime_force_resume(). In addition, both eDP aux-bus and irq handler
+> are bound at system probe time too.
 
-I looked at this more today. It seems that I need to both read the
-config register at init and also move over the rcg to the safe source at
-init (i.e. park the clk at init). That's doable with a call to
-clk_rcg2_shared_disable() for the clk_ops::init callback. Otherwise I
-get a stuck clk warning.
 
-Either
+With this patchset in place I can crash the board using the following
+sequence (SM8350-HDK):
 
- disp_cc_mdss_mdp_clk status stuck at 'off'
+- plug the USBC DP dongle
+- run modetest at any mode, don't press Enter yet
+- unplug the dongle
+- press Enter to stop modetest
 
-or
+=> the board resets to Sahara.
 
- disp_cc_mdss_rot_clk status stuck at 'on'
+Please ping me if you need any additional information from my side.
 
-When I don't park the rcg, the disp_cc_mdss_rot_clk gets stuck during
-disabling of unused clks. I think I understand that problem. What
-happens is disp_cc_mdss_mdp_clk_src and disp_cc_mdss_rot_clk_src are
-both sourcing from disp_cc_pll0 at boot. Fixing the parent mapping makes
-it so that enabling and then disabling disp_cc_mdss_ahb_clk causes
-disp_cc_pll0 to be turned off when disp_cc_mdss_rot_clk_src is sourced
-from it (and the branch disp_cc_mdss_rot_clk is enabled). If we park
-both the rcgs at clk registration time we avoid this problem because the
-PLL is disabled but nothing is actually a child clk. The act of reading
-the config register and stashing that in the 'parked_cfg' only helps
-avoid duplicate calls to change the rate, and doesn't help when we try
-to repoint the clk at XO when the parent PLL is off.
-
-The part I still don't understand is why reading the config register at
-init and stashing that in 'parked_cfg' fixes the disp_cc_mdss_mdp_clk
-stuck at off problem. I see that the branch clk is turned off and on
-many times during boot and there aren't any warnings regardless of
-stashing the config register. That means we should be moving the RCG to
-XO source, between forcibly enabling and disabling the RCG, which
-presumably would complain about being unable to update the config
-register, but it doesn't. Only after late init does the clk fail to
-enable, and the source is still XO at that time. Something else must be
-happening that wedges the branch to the point that it can't be
-recovered. But simply reporting the proper parent is enough for
-disp_cc_mdss_mdp_clk.
+-- 
+With best wishes
+Dmitry
 
