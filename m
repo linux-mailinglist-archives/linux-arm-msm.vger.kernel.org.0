@@ -1,407 +1,270 @@
-Return-Path: <linux-arm-msm+bounces-167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F88A7E5290
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 10:20:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56EA77E52C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 10:42:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34DF128142B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 09:20:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 79BB61C20AB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 09:42:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0844DF49;
-	Wed,  8 Nov 2023 09:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 107C3101C1;
+	Wed,  8 Nov 2023 09:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X5FU46fr"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ZwDc75dV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0CBDF46
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 09:20:30 +0000 (UTC)
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4A4210A;
-	Wed,  8 Nov 2023 01:20:29 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A88V4Cf018609;
-	Wed, 8 Nov 2023 09:19:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=rcPNip5AhtcgvJ2/yTRZns0bNJOpCsCY67AC5CVa4zk=;
- b=X5FU46fr6nvIlhkWpkW93kow9a76e11Vn1SZxLtKjcMluSYMxjNyHFN2MRbVm9NWbGYO
- 0o5Bg2IPW+lY7DKvqBcxSJ9DD4F2vtNogyS9Slul6WnK3SHNBFzMqVf4QX3N7eptpOZG
- 2+HWGpvbXKlW9r31eSE6WXrqn5cCLBXZUNe0XHENm94XW4h3Akg37wEigtS78W6csoGp
- SBB5E1mDf6ivucw/Ao16QZ2DAc7hsWyEPnaqT63BKUa73gG1SMmjQFeraMVk040YIAv/
- LDWsem7xTzpWJFPxwdk5SK91SNnQUbKY2Rl/C4+fKXF+SP8dgPDwuJq8baO9Vw8zJMHP Tw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w7r9559-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Nov 2023 09:19:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A89JpSB029982
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Nov 2023 09:19:51 GMT
-Received: from [10.253.34.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 8 Nov
- 2023 01:19:46 -0800
-Message-ID: <e8fce711-dfe3-612c-dc53-f45418c9dfeb@quicinc.com>
-Date: Wed, 8 Nov 2023 17:19:43 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F929FC17
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 09:42:29 +0000 (UTC)
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C32DE1B3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 01:42:28 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1cc5b6d6228so45536375ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Nov 2023 01:42:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1699436548; x=1700041348; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aDXaY//8y/74BvKRPuAKyEkdsaFq1PaWBhrY8xQYRKA=;
+        b=ZwDc75dVkImSsGmNSQ+nRJK0iPnSreBBdZCuYoPBEyXLBDJG4fZhgzayX2MWE/hk4X
+         017BVJxxzQC1JxGkZIJUnMR25tf37qIOjYt5sDur/Tj0rNvg5aUPgjO5uUVNl9Ia9oRq
+         f3++B2EIP0+YmUBKtpx7J7BPxv71HZxIPOY1E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699436548; x=1700041348;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aDXaY//8y/74BvKRPuAKyEkdsaFq1PaWBhrY8xQYRKA=;
+        b=jSYMjdX656XHAzZlrFIB8B9+liHHANR0uYu/VaWauayhfCs1RjAtvaYPqKSrfzhDHO
+         8Hn24ZFRN0AqnQFw3g00px1K0fQeVplXeRnP//GlVFAnPQhw7SoLDS1IZ8D/aMzwFrd6
+         M9z4wbpmiSQyNdrPhR4XD8l5Cp9bZstr57/hWfYe/JgCMELUTSTx5ZjnFo/3ZuSqDPoI
+         gVLbjgmWR/C+vuJe3BYproUyPnmjM333VNV5QgWwC+W/HkMMFI5YaASz2bij8eDjSPdv
+         0I9S52UHldIuU3M6ixoN+h5OsqkMVRSLUcl00mDGSiOdt/3OnxbzzJEjHgcLrGTJRIl1
+         je9w==
+X-Gm-Message-State: AOJu0YwGmpRH8sIAFUvvsS2UTiAj1+8HLGM6ZO/diHAlW7D9whqGzxRo
+	hXwtjvYjALKh9izT+oVks5xnIA==
+X-Google-Smtp-Source: AGHT+IEku/YTV/xT1M0nzk1MJ4RhSHCuriXRqjCX16X/FZowan9lL/VgocqkpYuEJFJ0gwLpNy3ZMw==
+X-Received: by 2002:a17:902:e9c6:b0:1cc:3598:4ba0 with SMTP id 6-20020a170902e9c600b001cc35984ba0mr1216149plk.68.1699436548216;
+        Wed, 08 Nov 2023 01:42:28 -0800 (PST)
+Received: from chromium.org (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
+        by smtp.gmail.com with ESMTPSA id q9-20020a170902dac900b001cc32f46757sm1314380plx.107.2023.11.08.01.42.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Nov 2023 01:42:27 -0800 (PST)
+Date: Wed, 8 Nov 2023 09:42:23 +0000
+From: Tomasz Figa <tfiga@chromium.org>
+To: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
+	ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+	gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl,
+	nicolas.dufresne@collabora.com, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+	kernel@collabora.com
+Subject: Re: [PATCH v14 08/56] media: videobuf2: Use vb2_get_num_buffers()
+ helper
+Message-ID: <20231108094223.rprskkeee47vaezy@chromium.org>
+References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
+ <20231031163104.112469-9-benjamin.gaignard@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 6/7] phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed
- Gear 5 support for SM8550
-Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Can Guo <cang@qti.qualcomm.com>, <bvanassche@acm.org>,
-        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
-        <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon Vijay
- Abraham I" <kishon@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT"
-	<linux-arm-msm@vger.kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK"
-	<linux-phy@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1699332374-9324-1-git-send-email-cang@qti.qualcomm.com>
- <1699332374-9324-7-git-send-email-cang@qti.qualcomm.com>
- <CAA8EJpqEkkEoQ9vncNJU1t=mKbvBXKk1FUxnmGTE0Q++sf=oXA@mail.gmail.com>
- <20231108054942.GF3296@thinkpad>
-From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <20231108054942.GF3296@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: q2DHQ4k0zWUHHnBU0uTIAyQF3YryW_ZB
-X-Proofpoint-ORIG-GUID: q2DHQ4k0zWUHHnBU0uTIAyQF3YryW_ZB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-08_01,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
- mlxscore=0 mlxlogscore=999 priorityscore=1501 suspectscore=0 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311080076
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231031163104.112469-9-benjamin.gaignard@collabora.com>
 
-Hi Mani,
+On Tue, Oct 31, 2023 at 05:30:16PM +0100, Benjamin Gaignard wrote:
+> Stop using queue num_buffers field directly, instead use
+> vb2_get_num_buffers().
+> This prepares for the future 'delete buffers' feature where there are
+> holes in the buffer indices.
+> 
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> ---
+>  .../media/common/videobuf2/videobuf2-core.c   | 92 +++++++++++--------
+>  .../media/common/videobuf2/videobuf2-v4l2.c   |  4 +-
+>  2 files changed, 54 insertions(+), 42 deletions(-)
+> 
+> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> index b406a30a9b35..c5c5ae4d213d 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> @@ -444,13 +444,14 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>  			     unsigned int num_buffers, unsigned int num_planes,
+>  			     const unsigned plane_sizes[VB2_MAX_PLANES])
+>  {
+> +	unsigned int q_num_buffers = vb2_get_num_buffers(q);
+>  	unsigned int buffer, plane;
+>  	struct vb2_buffer *vb;
+>  	int ret;
+>  
+>  	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
+>  	num_buffers = min_t(unsigned int, num_buffers,
+> -			    VB2_MAX_FRAME - q->num_buffers);
+> +			    VB2_MAX_FRAME - q_num_buffers);
 
-On 11/8/2023 1:49 PM, Manivannan Sadhasivam wrote:
-> On Tue, Nov 07, 2023 at 03:18:09PM +0200, Dmitry Baryshkov wrote:
->> On Tue, 7 Nov 2023 at 06:47, Can Guo <cang@qti.qualcomm.com> wrote:
->>>
->>> From: Can Guo <quic_cang@quicinc.com>
->>>
->>> On SM8550, two sets of UFS PHY settings are provided, one set is to support
->>> HS-G5, another set is to support HS-G4 and lower gears. The two sets of PHY
->>> settings are programming different values to different registers, mixing
->>> the two sets and/or overwriting one set with another set is definitely not
->>> blessed by UFS PHY designers. In order to add HS-G5 support for SM8550, we
->>> need to split the two sets into their dedicated tables, and leave only the
->>> common settings in the .tlbs. To have the PHY programmed with the correct
->>> set of PHY settings, the submode passed to PHY driver must be either HS-G4
->>> or HS-G5.
->>>
-> 
-> You should also mention that this issue is also present in G4 supported targets.
-> And a note that it will get fixed later.
+I guess it's safe in this specific situation, but was there any reason
+behind not just calling vb2_get_num_buffers() directly here?
 
-Will this info upset more people? How about I mention this in the cover 
-letter?
+>  
+>  	for (buffer = 0; buffer < num_buffers; ++buffer) {
+>  		/* Allocate vb2 buffer structures */
+> @@ -470,7 +471,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>  			vb->planes[plane].min_length = plane_sizes[plane];
+>  		}
+>  
+> -		vb2_queue_add_buffer(q, vb, q->num_buffers + buffer);
+> +		vb2_queue_add_buffer(q, vb, q_num_buffers + buffer);
 
-> 
->>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->>> ---
->>>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h     |   2 +
->>>   drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h |   2 +
->>>   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |  12 +++
->>>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 112 ++++++++++++++++++---
->>>   4 files changed, 115 insertions(+), 13 deletions(-)
->>>
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
->>> index c23d5e4..e563af5 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
->>> @@ -18,6 +18,7 @@
->>>   #define QPHY_V6_PCS_UFS_BIST_FIXED_PAT_CTRL            0x060
->>>   #define QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY           0x074
->>>   #define QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY           0x0bc
->>> +#define QPHY_V6_PCS_UFS_RX_HS_G5_SYNC_LENGTH_CAPABILITY        0x12c
->>>   #define QPHY_V6_PCS_UFS_DEBUG_BUS_CLKSEL               0x158
->>>   #define QPHY_V6_PCS_UFS_LINECFG_DISABLE                        0x17c
->>>   #define QPHY_V6_PCS_UFS_RX_MIN_HIBERN8_TIME            0x184
->>> @@ -27,5 +28,6 @@
->>>   #define QPHY_V6_PCS_UFS_READY_STATUS                   0x1a8
->>>   #define QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1              0x1f4
->>>   #define QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1               0x1fc
->>> +#define QPHY_V6_PCS_UFS_RX_HSG5_SYNC_WAIT_TIME         0x220
->>>
->>>   #endif
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
->>> index f420f8f..ef392ce 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
->>> @@ -56,6 +56,8 @@
->>>   #define QSERDES_V6_COM_SYS_CLK_CTRL                            0xe4
->>>   #define QSERDES_V6_COM_SYSCLK_BUF_ENABLE                       0xe8
->>>   #define QSERDES_V6_COM_PLL_IVCO                                        0xf4
->>> +#define QSERDES_V6_COM_CMN_IETRIM                              0xfc
->>> +#define QSERDES_V6_COM_CMN_IPTRIM                              0x100
->>>   #define QSERDES_V6_COM_SYSCLK_EN_SEL                           0x110
->>>   #define QSERDES_V6_COM_RESETSM_CNTRL                           0x118
->>>   #define QSERDES_V6_COM_LOCK_CMP_EN                             0x120
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->>> index 15bcb4b..48f31c8 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->>> @@ -10,10 +10,20 @@
->>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_RX                     0x2c
->>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX              0x30
->>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX              0x34
->>> +#define QSERDES_UFS_V6_TX_LANE_MODE_1                          0x7c
->>> +#define QSERDES_UFS_V6_TX_FR_DCC_CTRL                          0x108
->>>
->>>   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2          0x08
->>>   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4          0x10
->>> +#define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_SO_GAIN_RATE4          0x24
->>> +#define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_COUNT_HIGH_RATE4       0x54
->>> +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2                   0xd4
->>> +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE4                   0xdc
->>> +#define QSERDES_UFS_V6_RX_UCDR_SO_GAIN_RATE4                   0xf0
->>> +#define QSERDES_UFS_V6_RX_UCDR_PI_CONTROLS                     0xf4
->>>   #define QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL                      0x178
->>> +#define QSERDES_UFS_V6_RX_EQ_OFFSET_ADAPTOR_CNTRL1             0x1bc
->>> +#define QSERDES_UFS_V6_RX_OFFSET_ADAPTOR_CNTRL3                        0x1c4
->>>   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0                     0x208
->>>   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1                     0x20c
->>>   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3                     0x214
->>> @@ -25,6 +35,8 @@
->>>   #define QSERDES_UFS_V6_RX_MODE_RATE3_B5                                0x264
->>>   #define QSERDES_UFS_V6_RX_MODE_RATE3_B8                                0x270
->>>   #define QSERDES_UFS_V6_RX_MODE_RATE4_B3                                0x280
->>> +#define QSERDES_UFS_V6_RX_MODE_RATE4_B4                                0x284
->>>   #define QSERDES_UFS_V6_RX_MODE_RATE4_B6                                0x28c
->>> +#define QSERDES_UFS_V6_RX_DLL0_FTUNE_CTRL                      0x2f8
->>>
->>>   #endif
->>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->>> index 3927eba..e0a01497 100644
->>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->>> @@ -649,32 +649,51 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x11),
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x01),
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
->>> +
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_INITVAL2, 0x00),
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x41),
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x7f),
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x06),
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x4c),
->>> +};
->>> +
->>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_hs_b_serdes[] = {
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x44),
->>> +};
->>> +
->>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_g4_serdes[] = {
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
->>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x99),
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x07),
->>
->> Aside from moving these registers to the HS_G4 table, you are also
->> changing these registers. It makes me think that there was an error in
->> the original programming sequence.
->> If that is correct, could you please split the patch into two pieces:
->> - Fix programming sequence (add proper Fixes tags)
->> - Split G4 and G5 tables.
-> 
-> Ack
-> 
->>
->>> +
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x4c),
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x0a),
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x14),
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x99),
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x07),
->>
->> I see all the MODE1 registers being only present in G4 and G5 tables.
->> Should they be programmed for the modes lower than G4?
->>
-> 
-> We use G4 table for all the modes <= G4.
-> 
->>> +};
->>> +
->>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_g5_serdes[] = {
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x1f),
->>> +
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_IETRIM, 0x1b),
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_IPTRIM, 0x1c),
->>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x06),
->>>   };
->>>
->>>   static const struct qmp_phy_init_tbl sm8550_ufsphy_tx[] = {
->>> -       QMP_PHY_INIT_CFG(QSERDES_V6_TX_LANE_MODE_1, 0x05),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_LANE_MODE_1, 0x05),
->>>          QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX, 0x07),
->>>   };
->>>
->>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_g4_tx[] = {
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_FR_DCC_CTRL, 0x4c),
->>> +};
->>> +
->>>   static const struct qmp_phy_init_tbl sm8550_ufsphy_rx[] = {
->>> -       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2, 0x0c),
->>> -       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4, 0x0f),
->>> -       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x0e),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2, 0x0c),
->>>
->>>          QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0, 0xc2),
->>>          QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1, 0xc2),
->>> @@ -690,14 +709,46 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_rx[] = {
->>>          QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE3_B8, 0x02),
->>>   };
->>>
->>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_g4_rx[] = {
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x0e),
->>> +};
->>> +
->>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_g5_rx[] = {
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE4, 0x0c),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_SO_GAIN_RATE4, 0x04),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_EQ_OFFSET_ADAPTOR_CNTRL1, 0x14),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_PI_CONTROLS, 0x07),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_OFFSET_ADAPTOR_CNTRL3, 0x0e),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_COUNT_HIGH_RATE4, 0x02),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4, 0x1c),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_SO_GAIN_RATE4, 0x06),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x08),
->>> +
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE4_B3, 0xb9),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE4_B4, 0x4f),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE4_B6, 0xff),
->>> +       QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_DLL0_FTUNE_CTRL, 0x30),
->>> +};
->>> +
->>>   static const struct qmp_phy_init_tbl sm8550_ufsphy_pcs[] = {
->>>          QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_SIGDET_CTRL2, 0x69),
->>>          QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_LARGE_AMP_DRV_LVL, 0x0f),
->>>          QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
->>> -       QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x2b),
->>>          QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
->>>   };
->>>
->>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_g4_pcs[] = {
->>> +       QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x2b),
->>> +       QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
->>> +       QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
->>> +};
->>> +
->>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_g5_pcs[] = {
->>> +       QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x33),
->>> +       QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HS_G5_SYNC_LENGTH_CAPABILITY, 0x4f),
->>> +       QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSG5_SYNC_WAIT_TIME, 0x9e),
->>> +};
->>> +
->>>   struct qmp_ufs_offsets {
->>>          u16 serdes;
->>>          u16 pcs;
->>> @@ -731,6 +782,8 @@ struct qmp_phy_cfg {
->>>          const struct qmp_phy_cfg_tbls tbls_hs_b;
->>>          /* Additional sequence for HS G4 */
->>>          const struct qmp_phy_cfg_tbls tbls_hs_g4;
->>> +       /* Additional sequence for HS G4 */
-> 
-> HS G5
+In this case it should also be fine, but actually now this is a loop and if
+somone doesn't know what the other code in the loop does, one could be
+concerned that the num buffers actually could have changed, but we still
+use the cached one that we got at the beginning of the function.
 
-Sure
+(Ideally I'd imagine vb2_queue_add_buffer() to append the buffer
+at the end of the queue and increment the num_buffers internally, but it
+doesn't have to happen now, as this series is already quite complex...)
 
-> 
->>> +       const struct qmp_phy_cfg_tbls tbls_hs_g5;
->>>
->>>          /* clock ids to be requested */
->>>          const char * const *clk_list;
->>> @@ -1157,6 +1210,28 @@ static const struct qmp_phy_cfg sm8550_ufsphy_cfg = {
->>>                  .pcs            = sm8550_ufsphy_pcs,
->>>                  .pcs_num        = ARRAY_SIZE(sm8550_ufsphy_pcs),
->>>          },
->>> +       .tbls_hs_b = {
->>> +               .serdes         = sm8550_ufsphy_hs_b_serdes,
->>> +               .serdes_num     = ARRAY_SIZE(sm8550_ufsphy_hs_b_serdes),
->>> +       },
->>> +       .tbls_hs_g4 = {
->>> +               .serdes         = sm8550_ufsphy_g4_serdes,
->>> +               .serdes_num     = ARRAY_SIZE(sm8550_ufsphy_g4_serdes),
->>> +               .tx             = sm8550_ufsphy_g4_tx,
->>> +               .tx_num         = ARRAY_SIZE(sm8550_ufsphy_g4_tx),
->>> +               .rx             = sm8550_ufsphy_g4_rx,
->>> +               .rx_num         = ARRAY_SIZE(sm8550_ufsphy_g4_rx),
->>> +               .pcs            = sm8550_ufsphy_g4_pcs,
->>> +               .pcs_num        = ARRAY_SIZE(sm8550_ufsphy_g4_pcs),
->>> +       },
->>> +       .tbls_hs_g5 = {
->>> +               .serdes         = sm8550_ufsphy_g5_serdes,
->>> +               .serdes_num     = ARRAY_SIZE(sm8550_ufsphy_g5_serdes),
->>> +               .rx             = sm8550_ufsphy_g5_rx,
->>> +               .rx_num         = ARRAY_SIZE(sm8550_ufsphy_g5_rx),
->>> +               .pcs            = sm8550_ufsphy_g5_pcs,
->>> +               .pcs_num        = ARRAY_SIZE(sm8550_ufsphy_g5_pcs),
->>> +       },
->>>          .clk_list               = sdm845_ufs_phy_clk_l,
->>>          .num_clks               = ARRAY_SIZE(sdm845_ufs_phy_clk_l),
->>>          .vreg_list              = qmp_phy_vreg_l,
->>> @@ -1222,14 +1297,25 @@ static void qmp_ufs_pcs_init(struct qmp_ufs *qmp, const struct qmp_phy_cfg_tbls
->>>   static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg *cfg)
->>>   {
->>>          qmp_ufs_serdes_init(qmp, &cfg->tbls);
->>> +       if (qmp->submode == UFS_HS_G4)
->>> +               qmp_ufs_serdes_init(qmp, &cfg->tbls_hs_g4);
->>> +       else if (qmp->submode == UFS_HS_G5)
->>> +               qmp_ufs_serdes_init(qmp, &cfg->tbls_hs_g5);
->>> +
-> 
-> Should we program submode sequence after HS_B?
-> 
-> - Mani
-> 
-As the UFS PHY HW programming doc mentions, order of these writes is not 
-important, so long as they are programmed correctly before release S/W 
-reset, then it is fine.
+>  		call_void_bufop(q, init_buffer, vb);
+>  
+>  		/* Allocate video buffer memory for the MMAP type */
+[snip]
+> @@ -2513,7 +2519,8 @@ void vb2_core_queue_release(struct vb2_queue *q)
+>  	__vb2_cleanup_fileio(q);
+>  	__vb2_queue_cancel(q);
+>  	mutex_lock(&q->mmap_lock);
+> -	__vb2_queue_free(q, q->num_buffers);
+> +	__vb2_queue_free(q, vb2_get_num_buffers(q));
+> +	q->num_buffers = 0;
 
-Thanks,
-Can Guo.
+Unrelated change?
 
+>  	mutex_unlock(&q->mmap_lock);
+>  }
+>  EXPORT_SYMBOL_GPL(vb2_core_queue_release);
+> @@ -2542,7 +2549,7 @@ __poll_t vb2_core_poll(struct vb2_queue *q, struct file *file,
+>  	/*
+>  	 * Start file I/O emulator only if streaming API has not been used yet.
+>  	 */
+> -	if (q->num_buffers == 0 && !vb2_fileio_is_active(q)) {
+> +	if (vb2_get_num_buffers(q) == 0 && !vb2_fileio_is_active(q)) {
+>  		if (!q->is_output && (q->io_modes & VB2_READ) &&
+>  				(req_events & (EPOLLIN | EPOLLRDNORM))) {
+>  			if (__vb2_init_fileio(q, 1))
+> @@ -2580,7 +2587,7 @@ __poll_t vb2_core_poll(struct vb2_queue *q, struct file *file,
+>  	 * For output streams you can call write() as long as there are fewer
+>  	 * buffers queued than there are buffers available.
+>  	 */
+> -	if (q->is_output && q->fileio && q->queued_count < q->num_buffers)
+> +	if (q->is_output && q->fileio && q->queued_count < vb2_get_num_buffers(q))
+>  		return EPOLLOUT | EPOLLWRNORM;
+>  
+>  	if (list_empty(&q->done_list)) {
+> @@ -2629,8 +2636,8 @@ struct vb2_fileio_buf {
+>   * struct vb2_fileio_data - queue context used by file io emulator
+>   *
+>   * @cur_index:	the index of the buffer currently being read from or
+> - *		written to. If equal to q->num_buffers then a new buffer
+> - *		must be dequeued.
+> + *		written to. If equal to number of already queued buffers
+> + *		then a new buffer must be dequeued.
 
+Hmm, that's a significant meaning change compared to the original text. Is
+it indended?
+
+>   * @initial_index: in the read() case all buffers are queued up immediately
+>   *		in __vb2_init_fileio() and __vb2_perform_fileio() just cycles
+>   *		buffers. However, in the write() case no buffers are initially
+> @@ -2640,7 +2647,7 @@ struct vb2_fileio_buf {
+>   *		buffers. This means that initially __vb2_perform_fileio()
+>   *		needs to know what buffer index to use when it is queuing up
+>   *		the buffers for the first time. That initial index is stored
+> - *		in this field. Once it is equal to q->num_buffers all
+> + *		in this field. Once it is equal to num_buffers all
+
+It's not clear what num_buffers means here. Would it make sense to instead
+say "number of buffers in the vb2_queue"?
+
+>   *		available buffers have been queued and __vb2_perform_fileio()
+>   *		should start the normal dequeue/queue cycle.
+>   *
+> @@ -2690,7 +2697,7 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>  	/*
+>  	 * Check if streaming api has not been already activated.
+>  	 */
+> -	if (q->streaming || q->num_buffers > 0)
+> +	if (q->streaming || vb2_get_num_buffers(q) > 0)
+>  		return -EBUSY;
+>  
+>  	/*
+> @@ -2740,7 +2747,7 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>  	/*
+>  	 * Get kernel address of each buffer.
+>  	 */
+> -	for (i = 0; i < q->num_buffers; i++) {
+> +	for (i = 0; i < vb2_get_num_buffers(q); i++) {
+>  		/* vb can never be NULL when using fileio. */
+>  		vb = vb2_get_buffer(q, i);
+>  
+> @@ -2759,18 +2766,23 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>  		/*
+>  		 * Queue all buffers.
+>  		 */
+> -		for (i = 0; i < q->num_buffers; i++) {
+> -			ret = vb2_core_qbuf(q, q->bufs[i], NULL, NULL);
+> +		for (i = 0; i < vb2_get_num_buffers(q); i++) {
+> +			struct vb2_buffer *vb2 = vb2_get_buffer(q, i);
+> +
+> +			if (!vb2)
+> +				continue;
+> +
+> +			ret = vb2_core_qbuf(q, vb2, NULL, NULL);
+>  			if (ret)
+>  				goto err_reqbufs;
+>  			fileio->bufs[i].queued = 1;
+>  		}
+
+Doesn't this part belong to the previous patch that changes q->bufs[x] to
+vb2_get_buffer()?
+
+>  		/*
+>  		 * All buffers have been queued, so mark that by setting
+> -		 * initial_index to q->num_buffers
+> +		 * initial_index to num_buffers
+
+What num_buffers?
+
+>  		 */
+> -		fileio->initial_index = q->num_buffers;
+> -		fileio->cur_index = q->num_buffers;
+> +		fileio->initial_index = vb2_get_num_buffers(q);
+> +		fileio->cur_index = fileio->initial_index;
+>  	}
+>  
+>  	/*
+> @@ -2964,12 +2976,12 @@ static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_
+>  		 * If we are queuing up buffers for the first time, then
+>  		 * increase initial_index by one.
+>  		 */
+> -		if (fileio->initial_index < q->num_buffers)
+> +		if (fileio->initial_index < vb2_get_num_buffers(q))
+>  			fileio->initial_index++;
+>  		/*
+>  		 * The next buffer to use is either a buffer that's going to be
+> -		 * queued for the first time (initial_index < q->num_buffers)
+> -		 * or it is equal to q->num_buffers, meaning that the next
+> +		 * queued for the first time (initial_index < num_buffers)
+> +		 * or it is equal to num_buffers, meaning that the next
+
+What num_buffers?
+
+Best regards,
+Tomasz
 
