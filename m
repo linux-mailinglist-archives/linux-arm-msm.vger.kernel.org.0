@@ -1,38 +1,38 @@
-Return-Path: <linux-arm-msm+bounces-141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11AD47E5005
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 06:26:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FBF67E500C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 06:34:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6FF4B20D31
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 05:26:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AFC50B20D02
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 05:34:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44E418F68;
-	Wed,  8 Nov 2023 05:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E283DC8CC;
+	Wed,  8 Nov 2023 05:34:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r/qmN1cU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="INFPOU7Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295E38F7E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 05:26:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C12EC433C8;
-	Wed,  8 Nov 2023 05:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2448C8C4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 05:34:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD713C433C7;
+	Wed,  8 Nov 2023 05:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699421165;
-	bh=6XsO4oPWRbENbVTxo0tFgjVMF1113wwAH94yp91iZYw=;
+	s=k20201202; t=1699421665;
+	bh=QCMb8LNvrw0v1n2WKL+qqMTAtgJkKYzYKLDoK7dEVho=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r/qmN1cUwEur5A73ezFFDUidlST90QTC5khaFYwwgArL7cQBHOr4nQ2U/UKEr9I0M
-	 EWXJexK7a6apFSN0yRch7zrqzB/JrPH5GTkKeO/zpNCuWRjw/j/B5XjIELP0bdWL0h
-	 ptP/sUxQyt195JQl1duaFrCHfYpM2rlbfDJJgL/AglEHhPXk0Zc2HZ2Efg1FdDQhIu
-	 JB7MvjANCkLySdsaVaCbrvAoT0cHVHKB3EphCKjL8P0S00dfwBH1x4wP/yv1u5UabJ
-	 8Lzcl1OIaXestaLkerRsQRSaz8KQthc9D97aSBMeAbyt8IRkh1BeB83zDT4drMYHvs
-	 3nReP4w5PrXKA==
-Date: Wed, 8 Nov 2023 10:55:55 +0530
+	b=INFPOU7QgqLQwfvrQ2zSmvcDkpJuMTs/mqrdkxsp5CJh3g4qm6cPnm7zqAv6AaJXC
+	 /slMj1Ht504mIuErcYlVfbIWwxPzRF+WGeIHYZCcFGZkNjikncQShyQ7AfZVr/2BLL
+	 27mIl+jpDNxTpJCAweeSX4ICRZJnuOmdOueyTmgr9VFJdbfeqyGYXjX+fvZgkH/ya1
+	 jW/Eo+5Kcz1Go/uRsCU51gHMhvjvQ+1Sr2URUMV2VduBebwh4z/3ckrXLQbUWbaBcs
+	 TusYJpgcxgeXwo5pcRx+dUd2HRBaRaHWhQ4J6lB011K+aW1JOAxRKm5cxXLyZZqP1d
+	 Uu5FryDZ9/pjQ==
+Date: Wed, 8 Nov 2023 11:04:15 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Can Guo <cang@qti.qualcomm.com>
 Cc: quic_cang@quicinc.com, bvanassche@acm.org, stanley.chu@mediatek.com,
@@ -42,13 +42,13 @@ Cc: quic_cang@quicinc.com, bvanassche@acm.org, stanley.chu@mediatek.com,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	"open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+	"open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." <linux-arm-msm@vger.kernel.org>,
 	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 4/7] scsi: ufs: ufs-qcom: Limit HS-G5 Rate-A to hosts
- with HW version 5
-Message-ID: <20231108052555.GD3296@thinkpad>
+Subject: Re: [PATCH v2 5/7] scsi: ufs: ufs-qcom: Set initial PHY gear to max
+ HS gear for HW ver 5 and newer
+Message-ID: <20231108053415.GE3296@thinkpad>
 References: <1699332374-9324-1-git-send-email-cang@qti.qualcomm.com>
- <1699332374-9324-5-git-send-email-cang@qti.qualcomm.com>
+ <1699332374-9324-6-git-send-email-cang@qti.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,65 +58,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1699332374-9324-5-git-send-email-cang@qti.qualcomm.com>
+In-Reply-To: <1699332374-9324-6-git-send-email-cang@qti.qualcomm.com>
 
-On Mon, Nov 06, 2023 at 08:46:10PM -0800, Can Guo wrote:
+On Mon, Nov 06, 2023 at 08:46:11PM -0800, Can Guo wrote:
 > From: Can Guo <quic_cang@quicinc.com>
 > 
-> Qcom UFS hosts, with HW ver 5, can only support up to HS-G5 Rate-A due to
-> HW limitations. If the HS-G5 PHY gear is used, update host_params->hs_rate
-> to Rate-A, so that the subsequent power mode changes shall stick to Rate-A.
+> Set the initial PHY gear to max HS gear for hosts with HW ver 5 and newer.
 > 
+
+How about,
+
+"For UFSHC >= 5.0, set the initial PHY gear based on the gear value returned by
+ufs_qcom_get_hs_gear(). For the rest, use the existing default value of G2."
+
+> This patch is not changing any functionalities or logic but only a
+> preparation patch for the next patch in this series.
+> 
+
+You are also moving the default phy_gear code to ufs_qcom_set_host_params(). So
+it should be mentioned in the commit message.
+
 > Signed-off-by: Can Guo <quic_cang@quicinc.com>
 > ---
->  drivers/ufs/host/ufs-qcom.c | 18 +++++++++++++++++-
->  1 file changed, 17 insertions(+), 1 deletion(-)
+>  drivers/ufs/host/ufs-qcom.c | 14 ++++++++------
+>  1 file changed, 8 insertions(+), 6 deletions(-)
 > 
 > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 60b35ca..55ee31d 100644
+> index 55ee31d..94d34b5 100644
 > --- a/drivers/ufs/host/ufs-qcom.c
 > +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -442,9 +442,25 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
->  static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->  {
->  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +	struct ufs_host_params *host_params = &host->host_params;
->  	struct phy *phy = host->generic_phy;
-> +	enum phy_mode mode;
->  	int ret;
+> @@ -1069,6 +1069,14 @@ static void ufs_qcom_set_host_params(struct ufs_hba *hba)
 >  
+>  	/* This driver only supports symmetic gear setting i.e., hs_tx_gear == hs_rx_gear */
+>  	host_params->hs_tx_gear = host_params->hs_rx_gear = ufs_qcom_get_hs_gear(hba);
+> +	host->phy_gear = host_params->hs_tx_gear;
+> +
 > +	/*
-> +	 * HW ver 5 can only support up to HS-G5 Rate-A due to HW limitations.
+> +	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
+> +	 * Switching to max gear will be performed during reinit if supported.
+> +	 */
 
-Does this limitation apply to future targets as well or just to SM8550? If
-it's the latter, then we need to use a flag.
+This comment should be moved inside the "if" condition here as done in the next
+patch.
 
 - Mani
 
-> +	 * If the HS-G5 PHY gear is used, update host_params->hs_rate to Rate-A,
-> +	 * so that the subsequent power mode change shall stick to Rate-A.
-> +	 */
-> +	if (host->hw_ver.major == 0x5) {
-> +		if (host->phy_gear == UFS_HS_G5)
-> +			host_params->hs_rate = PA_HS_MODE_A;
-> +		else
-> +			host_params->hs_rate = PA_HS_MODE_B;
-> +	}
-> +
-> +	mode = host_params->hs_rate == PA_HS_MODE_B ? PHY_MODE_UFS_HS_B : PHY_MODE_UFS_HS_A;
-> +
->  	/* Reset UFS Host Controller and PHY */
->  	ret = ufs_qcom_host_reset(hba);
->  	if (ret)
-> @@ -459,7 +475,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
->  		return ret;
->  	}
+> +	if (host->hw_ver.major < 0x5)
+> +		host->phy_gear = UFS_HS_G2;
+>  }
 >  
-> -	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);
-> +	phy_set_mode_ext(phy, mode, host->phy_gear);
+>  static void ufs_qcom_set_caps(struct ufs_hba *hba)
+> @@ -1313,12 +1321,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+>  		dev_warn(dev, "%s: failed to configure the testbus %d\n",
+>  				__func__, err);
 >  
->  	/* power on phy - start serdes and phy's power and clocks */
->  	ret = phy_power_on(phy);
+> -	/*
+> -	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
+> -	 * Switching to max gear will be performed during reinit if supported.
+> -	 */
+> -	host->phy_gear = UFS_HS_G2;
+> -
+>  	return 0;
+>  
+>  out_variant_clear:
 > -- 
 > 2.7.4
 > 
