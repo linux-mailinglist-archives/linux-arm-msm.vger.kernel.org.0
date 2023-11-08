@@ -1,255 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 354E17E5366
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 11:31:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 53F367E5383
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 11:41:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B4731C20AF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 10:31:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83F611C20A6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 10:41:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F76312E50;
-	Wed,  8 Nov 2023 10:31:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18287D29E;
+	Wed,  8 Nov 2023 10:41:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hnlSDDqD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F59D12B7C;
-	Wed,  8 Nov 2023 10:31:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBC3C433C8;
-	Wed,  8 Nov 2023 10:31:24 +0000 (UTC)
-Message-ID: <38382016-4769-411d-b0bf-35ce05753abd@xs4all.nl>
-Date: Wed, 8 Nov 2023 11:31:22 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD13D526;
+	Wed,  8 Nov 2023 10:41:16 +0000 (UTC)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEBAE1723;
+	Wed,  8 Nov 2023 02:41:13 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A89qjdj024523;
+	Wed, 8 Nov 2023 10:41:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=OeUsSoLKavclQgNda6VqukwhXJOhP3aMnXxDNooxqQ0=;
+ b=hnlSDDqDaNO6FfZSdaCgW3V0v9VRzfTKzAkIRm8gDWi12rSnyaaN+m1fUfgaR4pM4Tqd
+ mg+bdbVM9C213uTts7xbHm6ggb9JyCiD9dkhH8HaR0oQ7zVzIVFKvcNW8uijz7tyVUB7
+ YOJ9VGIdEDI74/G9LCa6MbKB0XePxUE9R9bUaX7RPhSmXNcdA0LJw5f4hDUhDuhW3KJ+
+ nd54M7cOl4Ak4l0lunuzYx6CHLtJhD9FkJSC3gzM48bAmWUcnOqUJ9cVGnvJPGazQEV1
+ OmwrH/X+iO6fZ6N/QJqkvKK2gjKAmpyZg0YST3poVcZIBTaGQs1Mzaj1Jd6qAX5SPj24 SA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w7r9b83-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Nov 2023 10:41:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A8Af73i004439
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Nov 2023 10:41:08 GMT
+Received: from [10.201.206.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 8 Nov
+ 2023 02:41:00 -0800
+Message-ID: <969a2789-ef46-c6ac-dec2-51ef0a362a1e@quicinc.com>
+Date: Wed, 8 Nov 2023 16:10:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 02/56] media: videobuf2: Rework offset 'cookie'
- encoding pattern
-Content-Language: en-US, nl
-To: Benjamin Gaignard <benjamin.gaignard@collabora.com>,
- Tomasz Figa <tfiga@chromium.org>
-Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
- ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
- gregkh@linuxfoundation.org, nicolas.dufresne@collabora.com,
- linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-staging@lists.linux.dev, kernel@collabora.com
-References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
- <20231031163104.112469-3-benjamin.gaignard@collabora.com>
- <20231108062322.l2k2n2jlpoaa4tws@chromium.org>
- <ce33854a-f547-411a-a747-2d32d442b15e@collabora.com>
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <ce33854a-f547-411a-a747-2d32d442b15e@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH v5 09/11] remoteproc: qcom: Add Hexagon based multipd
+ rproc driver
+Content-Language: en-US
+To: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <mathieu.poirier@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_eberman@quicinc.com>, <quic_gurus@quicinc.com>,
+        <kvalo@kernel.org>, <loic.poulain@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_varada@quicinc.com>
+References: <20230802140606.2041889-1-quic_mmanikan@quicinc.com>
+ <20230802140606.2041889-10-quic_mmanikan@quicinc.com>
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <20230802140606.2041889-10-quic_mmanikan@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XjpLpwTSaL1Vm-AYHlATKhOYIUBbuNhk
+X-Proofpoint-ORIG-GUID: XjpLpwTSaL1Vm-AYHlATKhOYIUBbuNhk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-08_01,2023-11-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ lowpriorityscore=0 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ mlxscore=0 mlxlogscore=688 priorityscore=1501 suspectscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311080089
 
-On 08/11/2023 11:14, Benjamin Gaignard wrote:
+
+
+On 8/2/2023 7:36 PM, Manikanta Mylavarapu wrote:
+> It adds support to bring up remoteproc's on multipd model.
+> Pd means protection domain. It's similar to process in Linux.
+> Here QDSP6 processor runs each wifi radio functionality on a
+> separate process. One process can't access other process
+> resources, so this is termed as PD i.e protection domain.
 > 
-> Le 08/11/2023 à 07:23, Tomasz Figa a écrit :
->> Hi Benjamin,
->>
->> On Tue, Oct 31, 2023 at 05:30:10PM +0100, Benjamin Gaignard wrote:
->>> Change how offset 'cookie' field value is computed to make possible
->>> to use more buffers.
->>> The maximum number of buffers depends of PAGE_SHIFT value and can
->>> go up to 0x7fff when PAGE_SHIFT = 12.
->>> With this encoding pattern we know the maximum number that a queue
->>> could store so we can check it at  queue init time.
->>> It also make easier and faster to find buffer and plane from using
->>> the offset field.
->>> Change __find_plane_by_offset() prototype to return the video buffer
->>> itself rather than it index.
->>>
->>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
->>> ---
->>>   .../media/common/videobuf2/videobuf2-core.c   | 73 +++++++++----------
->>>   1 file changed, 35 insertions(+), 38 deletions(-)
->>>
->> Thanks a lot for working on this series. Just one comment inline.
->>
->>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
->>> index a5e57affeb30..09be8e026044 100644
->>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
->>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
->>> @@ -31,6 +31,11 @@
->>>     #include <trace/events/vb2.h>
->>>   +#define PLANE_INDEX_SHIFT    (PAGE_SHIFT + 3)
->>> +#define PLANE_INDEX_MASK    0x7
->> Could we somehow ensure that it indeed matches VIDEO_MAX_PLANES?
->>
->> One thing that comes to my mind would be
->>
->> #define PLANE_INDEX_BITS    3
->> #define PLANE_INDEX_SHIFT    (PAGE_SHIFT + PLANE_INDEX_BITS)
->> #define PLANE_INDEX_MASK    BIT_MASK(PLANE_INDEX_BITS)
->>
->> BUILD_BUG_ON(BIT(PLANE_INDEX_BITS) != VIDEO_MAX_PLANES);
->>
->> Alternatively we could change the videodev2.h, so that we have
->>
->> #define VIDEO_MAX_PLANES_BITS    3
->> #define VIDEO_MAX_PLANES    (1U < VIDEO_MAX_PLANES_BITS)
->>
->> and then we can just VIDEO_MAX_PLANES_BITS in our definitions in this file
->> and no checks would be necessary.
+> Here we have two pd's called root and user pd. We can correlate
+> Root pd as root and user pd as user in linux. Root pd has more
+> privileges than user pd. Root will provide services to user pd.
 > 
-> I would prefer this solution.
-> Hans should I do that in an other patch ?
-
-I prefer to not make changes in videodev2.h, to be honest. I think it is fine to
-just add a check in videobuf2-core.c.
-
-Regards,
-
-	Hans
-
+>  From remoteproc driver perspective, root pd corresponds to QDSP6
+> processor bring up and user pd corresponds to Wifi radio (WCSS)
+> bring up.
 > 
-> Regards,
-> Benjamin
+> Here WCSS(user) PD is dependent on Q6(root) PD, so first
+> q6 pd should be up before wcss pd. After wcss pd goes down,
+> q6 pd should be turned off.
 > 
->>
->> Best regards,
->> Tomasz
->>
->>> +#define MAX_BUFFER_INDEX    BIT_MASK(30 - PLANE_INDEX_SHIFT)
->>> +#define BUFFER_INDEX_MASK    (MAX_BUFFER_INDEX - 1)
->>> +
->>>   static int debug;
->>>   module_param(debug, int, 0644);
->>>   @@ -358,21 +363,27 @@ static void __setup_offsets(struct vb2_buffer *vb)
->>>       unsigned int plane;
->>>       unsigned long offset = 0;
->>>   -    if (vb->index) {
->>> -        struct vb2_buffer *prev = q->bufs[vb->index - 1];
->>> -        struct vb2_plane *p = &prev->planes[prev->num_planes - 1];
->>> -
->>> -        offset = PAGE_ALIGN(p->m.offset + p->length);
->>> -    }
->>> +    /*
->>> +     * The offset "cookie" value has the following constraints:
->>> +     * - a buffer can have up to 8 planes.
->>> +     * - v4l2 mem2mem uses bit 30 to distinguish between
->>> +     *   OUTPUT (aka "source", bit 30 is 0) and
->>> +     *   CAPTURE (aka "destination", bit 30 is 1) buffers.
->>> +     * - must be page aligned
->>> +     * That led to this bit mapping when PAGE_SHIFT = 12:
->>> +     * |30                |29        15|14       12|11 0|
->>> +     * |DST_QUEUE_OFF_BASE|buffer index|plane index| 0  |
->>> +     * where there are 15 bits to store the buffer index.
->>> +     * Depending on PAGE_SHIFT value we can have fewer bits
->>> +     * to store the buffer index.
->>> +     */
->>> +    offset = vb->index << PLANE_INDEX_SHIFT;
->>>         for (plane = 0; plane < vb->num_planes; ++plane) {
->>> -        vb->planes[plane].m.offset = offset;
->>> +        vb->planes[plane].m.offset = offset + (plane << PAGE_SHIFT);
->>>             dprintk(q, 3, "buffer %d, plane %d offset 0x%08lx\n",
->>>                   vb->index, plane, offset);
->>> -
->>> -        offset += vb->planes[plane].length;
->>> -        offset = PAGE_ALIGN(offset);
->>>       }
->>>   }
->>>   @@ -2188,10 +2199,9 @@ EXPORT_SYMBOL_GPL(vb2_core_streamoff);
->>>    * __find_plane_by_offset() - find plane associated with the given offset
->>>    */
->>>   static int __find_plane_by_offset(struct vb2_queue *q, unsigned long offset,
->>> -            unsigned int *_buffer, unsigned int *_plane)
->>> +            struct vb2_buffer **vb, unsigned int *plane)
->>>   {
->>> -    struct vb2_buffer *vb;
->>> -    unsigned int buffer, plane;
->>> +    unsigned int buffer;
->>>         /*
->>>        * Sanity checks to ensure the lock is held, MEMORY_MMAP is
->>> @@ -2209,24 +2219,15 @@ static int __find_plane_by_offset(struct vb2_queue *q, unsigned long offset,
->>>           return -EBUSY;
->>>       }
->>>   -    /*
->>> -     * Go over all buffers and their planes, comparing the given offset
->>> -     * with an offset assigned to each plane. If a match is found,
->>> -     * return its buffer and plane numbers.
->>> -     */
->>> -    for (buffer = 0; buffer < q->num_buffers; ++buffer) {
->>> -        vb = q->bufs[buffer];
->>> +    /* Get buffer and plane from the offset */
->>> +    buffer = (offset >> PLANE_INDEX_SHIFT) & BUFFER_INDEX_MASK;
->>> +    *plane = (offset >> PAGE_SHIFT) & PLANE_INDEX_MASK;
->>>   -        for (plane = 0; plane < vb->num_planes; ++plane) {
->>> -            if (vb->planes[plane].m.offset == offset) {
->>> -                *_buffer = buffer;
->>> -                *_plane = plane;
->>> -                return 0;
->>> -            }
->>> -        }
->>> -    }
->>> +    if (buffer >= q->num_buffers || *plane >= q->bufs[buffer]->num_planes)
->>> +        return -EINVAL;
->>>   -    return -EINVAL;
->>> +    *vb = q->bufs[buffer];
->>> +    return 0;
->>>   }
->>>     int vb2_core_expbuf(struct vb2_queue *q, int *fd, unsigned int type,
->>> @@ -2306,7 +2307,7 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
->>>   {
->>>       unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
->>>       struct vb2_buffer *vb;
->>> -    unsigned int buffer = 0, plane = 0;
->>> +    unsigned int plane = 0;
->>>       int ret;
->>>       unsigned long length;
->>>   @@ -2335,12 +2336,10 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
->>>        * Find the plane corresponding to the offset passed by userspace. This
->>>        * will return an error if not MEMORY_MMAP or file I/O is in progress.
->>>        */
->>> -    ret = __find_plane_by_offset(q, offset, &buffer, &plane);
->>> +    ret = __find_plane_by_offset(q, offset, &vb, &plane);
->>>       if (ret)
->>>           goto unlock;
->>>   -    vb = q->bufs[buffer];
->>> -
->>>       /*
->>>        * MMAP requires page_aligned buffers.
->>>        * The buffer length was page_aligned at __vb2_buf_mem_alloc(),
->>> @@ -2368,7 +2367,7 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
->>>       if (ret)
->>>           return ret;
->>>   -    dprintk(q, 3, "buffer %d, plane %d successfully mapped\n", buffer, plane);
->>> +    dprintk(q, 3, "buffer %u, plane %d successfully mapped\n", vb->index, plane);
->>>       return 0;
->>>   }
->>>   EXPORT_SYMBOL_GPL(vb2_mmap);
->>> @@ -2382,7 +2381,7 @@ unsigned long vb2_get_unmapped_area(struct vb2_queue *q,
->>>   {
->>>       unsigned long offset = pgoff << PAGE_SHIFT;
->>>       struct vb2_buffer *vb;
->>> -    unsigned int buffer, plane;
->>> +    unsigned int plane;
->>>       void *vaddr;
->>>       int ret;
->>>   @@ -2392,12 +2391,10 @@ unsigned long vb2_get_unmapped_area(struct vb2_queue *q,
->>>        * Find the plane corresponding to the offset passed by userspace. This
->>>        * will return an error if not MEMORY_MMAP or file I/O is in progress.
->>>        */
->>> -    ret = __find_plane_by_offset(q, offset, &buffer, &plane);
->>> +    ret = __find_plane_by_offset(q, offset, &vb, &plane);
->>>       if (ret)
->>>           goto unlock;
->>>   -    vb = q->bufs[buffer];
->>> -
->>>       vaddr = vb2_plane_vaddr(vb, plane);
->>>       mutex_unlock(&q->mmap_lock);
->>>       return vaddr ? (unsigned long)vaddr : -EINVAL;
->>> -- 
->>> 2.39.2
->>>
 
+Thanks Krzysztof, Kalle, Rob, Bjorn for all your reviews.
+I have addressed them in this series.
+Can you please suggest and help me to take this forward ?
+
+Thanks & Regards,
+Manikanta.
 
