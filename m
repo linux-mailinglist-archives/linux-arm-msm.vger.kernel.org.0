@@ -1,97 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77F4B7E5C7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 18:35:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 935037E5CBA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 18:50:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 132A5B20D38
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 17:35:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 49B86281585
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 17:50:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D87E321B9;
-	Wed,  8 Nov 2023 17:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8D65358A4;
+	Wed,  8 Nov 2023 17:50:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="GjVz95bG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F2B30338
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 17:35:31 +0000 (UTC)
-X-Greylist: delayed 447 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 08 Nov 2023 09:35:30 PST
-Received: from relay163.nicmail.ru (relay163.nicmail.ru [91.189.117.7])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CA3E1FC8;
-	Wed,  8 Nov 2023 09:35:30 -0800 (PST)
-Received: from [10.28.136.255] (port=50502 helo=[192.168.95.111])
-	by relay.hosting.mail.nic.ru with esmtp (Exim 5.55)
-	(envelope-from <kiryushin@ancud.ru>)
-	id 1r0mLO-0006Tf-Br; Wed, 08 Nov 2023 20:27:59 +0300
-Received: from [87.245.155.195] (account kiryushin@ancud.ru HELO [192.168.95.111])
-	by incarp1105.mail.hosting.nic.ru (Exim 5.55)
-	with id 1r0mLO-0000zR-1w;
-	Wed, 08 Nov 2023 20:27:58 +0300
-Message-ID: <feeb1a89-59bd-4fd6-81a5-1d828f95b0f0@ancud.ru>
-Date: Wed, 8 Nov 2023 20:27:57 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689573C2F;
+	Wed,  8 Nov 2023 17:50:37 +0000 (UTC)
+Received: from fanzine2.igalia.com (fanzine.igalia.com [178.60.130.6])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BF451FFB;
+	Wed,  8 Nov 2023 09:50:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=S5rT8rE+ClvIH+jOcR2k9TwkiX+vDd+dKto1lL4KPuU=; b=GjVz95bGbtOWZ/NuFPASJKrMtR
+	0ujtCK4NAK/+7SOrnNyW9STYlMCJkPrqYj6vPUFugSZvS/IWz0Ai9s0tCzopFVd1G/6kRRJdq5u5/
+	ATy6CmFwApC7m26KJ8ux95gSLWoNEW36qPUGQ7/hC341JjP8pAJQI8Prp4zujNwRhA8e+vGn9dTP8
+	16Pvk1gpibtjQCEmQjXDYphbQ3KKUDr5eZaAkhjO5JpSPqpGzKWfKgYp02u+W0/KpV32/tNoOqE2I
+	L0kLDZfqDBnbXStPNLdKsinvK9Zu3TocpsIxPCsFbFrXcmvawd//sygh7x3QzdAf2kXrqx75OlKKw
+	0iOwCZ5Q==;
+Received: from i73190.upc-i.chello.nl ([62.195.73.190] helo=[192.168.68.111])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1r0mhB-000vX4-Gy; Wed, 08 Nov 2023 18:50:29 +0100
+From: Nia Espera <nespera@igalia.com>
+Subject: [PATCH v3 0/6] support oneplus-lemonade(p) devices
+Date: Wed, 08 Nov 2023 18:50:24 +0100
+Message-Id: <20231108-nia-sm8350-for-upstream-v3-0-18a024b5c74c@igalia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Nikita Kiryushin <kiryushin@ancud.ru>
-Subject: [PATCH] power: reset: msm: Process register_restart_handler() error
-To: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Sebastian Reichel
- <sre@kernel.org>, Stephen Boyd <sboyd@codeaurora.org>,
- Pramod Gurav <pramod.gurav@smartplayin.com>,
- Guenter Roeck <linux@roeck-us.net>, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- lvc-project@linuxtesting.org
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-MS-Exchange-Organization-SCL: -1
+X-B4-Tracking: v=1; b=H4sIAGDKS2UC/4XNQQ7CIBCF4asY1mJgKFBdeQ/jAiq0k9jSQCWap
+ neXdqUL4/J/yXwzk+QiukROu5lElzFhGEqI/Y40nRlaR/FWmgADwRlXdEBDU18LyagPkT7GNEV
+ negq+kiCUchVwUq7H6Dw+N/lyLd1hmkJ8bY8yX9f/ZuaUUWul1IYZD+54xtbc0Rya0JMVzfAJ1
+ b8hKJC2UAkOqrFaf0HLsrwBKwj/6AgBAAA=
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, 
+ Rob Herring <robh+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+ Kees Cook <keescook@chromium.org>, Tony Luck <tony.luck@intel.com>, 
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>, Vinod Koul <vkoul@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
+ devicetree@vger.kernel.org, phone-devel@vger.kernel.org, Rob <Me@orbit.sh>, 
+ Clayton Craft <clayton@igalia.com>, 
+ Caleb Connolly <caleb.connolly@linaro.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ ~postmarketos/upstreaming@lists.sr.ht, Nia Espera <nespera@igalia.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2203; i=nespera@igalia.com;
+ h=from:subject:message-id; bh=YddSMrW4DZiUiNgGyxwXH0caeo5iX7lnnBQmIFb7hBg=;
+ b=owEB7QES/pANAwAIAfIkzsI3VuKtAcsmYgBlS8pkolc8xkc5Y7FgqzYUB0GVYa+8JsC4P4rHv
+ nI0SrUW4eWJAbMEAAEIAB0WIQSBPDomug3slDJEnubyJM7CN1birQUCZUvKZAAKCRDyJM7CN1bi
+ rUNEC/4kQ0S176UMZTgZf6B6WvIbREsTIFsAAd9/JIQ1hNUQPZdMGtND8Zx1hSNPOv0A0oaKPAD
+ PPqUFocZEPBGUGKfVI93lViNASQylZ/meOmLYXFfUMiEm+/TzGAXbYWcEhzrMTOZjnz5/DQOC7l
+ hl2yWr/Yx8z+/7EQ5plgWhkB86dFxBKf4L6Q81QSd4fPLLQDGonR57+kYdUWZeqPE4uIyReP0OL
+ /2rdxAzljum5w9IVJroo3KUMKjEhwdRd7rWKEyAoJCvTlYLWaz8p8KddKtOT19aR2w9+pXAJPG8
+ 3PqCmDFYx+xFp+/iEDwS7LZm04G4I4v2rCxWRf2HAudR+AhqTFEMYn8GROUzSK/xn01PjK60ATw
+ xTjjBPqVfUmAZAs2sylrfmuy0dSVMTR3OPQRuBZi2oD7sHWYwvFp8b1petWOgX8WdhVVci04Rbo
+ G4TwqftUAYyDCOTutaKjaXzMywd7XIEbFcFZ/eyKeFKbJ5FNqn5CoSXdb3vhOaBV/onzQ=
+X-Developer-Key: i=nespera@igalia.com; a=openpgp;
+ fpr=813C3A26BA0DEC9432449EE6F224CEC23756E2AD
 
-If registering restart handler fails for msm-restart result is not checked.
-It may be irrelevant now (as stated in comment to register_restart_handler,
-the function currently always returns zero), but if the behavior changes
-in the future, an error at registration of handler will be silently skipped.
+Patch series adding support for oneplus-lemonade and oneplus-lemonadep
+devices (OnePlus 9 & 9 Pro), along with a few needed fixups. Currently
+working as of this series:
 
-Add return error code and print error message too debug log in case of
-non-zero result of register_restart_handler.
+- USB OTG
+- UFS
+- Framebuffer display
+- Touchscreen (for lemonade)
+- Power & volume down keys
+- Battery reading
+- Modem, IPA, and remoteproc bringup
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 18a702e0de98 ("power: reset: use restart_notifier mechanism for 
-msm-poweroff")
-
-Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
+Signed-off-by: Nia Espera <nespera@igalia.com>
 ---
-  drivers/power/reset/msm-poweroff.c | 7 ++++++-
-  1 file changed, 6 insertions(+), 1 deletion(-)
+Changes in v3:
+- Fixed up more incorrect devicetree properties.
+- Properly enabled the fsa type-C mux.
+- Added node for sm8350 PMIC glink.
+- Patch name fixes.
+- Link to v2: https://lore.kernel.org/r/20231018-nia-sm8350-for-upstream-v2-0-7b243126cb77@igalia.com
 
-diff --git a/drivers/power/reset/msm-poweroff.c 
-b/drivers/power/reset/msm-poweroff.c
-index b9a401bd280b..5877a1ba2778 100644
---- a/drivers/power/reset/msm-poweroff.c
-+++ b/drivers/power/reset/msm-poweroff.c
-@@ -35,11 +35,16 @@ static void do_msm_poweroff(void)
-   static int msm_restart_probe(struct platform_device *pdev)
-  {
-+	int ret = -EINVAL;
-  	msm_ps_hold = devm_platform_ioremap_resource(pdev, 0);
-  	if (IS_ERR(msm_ps_hold))
-  		return PTR_ERR(msm_ps_hold);
-  -	register_restart_handler(&restart_nb);
-+	ret = register_restart_handler(&restart_nb);
-+	if (ret) {
-+		dev_err(&pdev->dev, "unable to register restart handler, %d\n", ret);
-+		return ret;
-+	}
-   	pm_power_off = do_msm_poweroff;
-  -- 2.34.1
+Changes in v2:
+- Fixed up formatting/style.
+- Removed unused pinctrl nodes.
+- Removed unused properties.
+- Moved ADC7 defines to vadc header.
+- Edited copyright on lemonade dts and license on spmi header.
+- Fixed up therm channels.
+- Removed unnecessary hack w.r.t. timer node.
+- Link to v1: https://lore.kernel.org/r/20231016-nia-sm8350-for-upstream-v1-0-bb557a0af2e9@igalia.com
+
+---
+Nia Espera (6):
+      dt-bindings: iio: adc: add smb139x
+      arm64: dts: qcom: sm8350: Fix DMA0 address
+      arm64: dts: qcom: pm8350k: Remove hanging whitespace
+      arm64: dts: qcom: sm8350: Fix remoteproc interrupt type
+      dt-bindings: arm: qcom: Add oneplus-lemonade(p)
+      arm64: dts: qcom: sm8350-lemonade(p): New devices
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    2 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    2 +
+ arch/arm64/boot/dts/qcom/pmk8350.dtsi              |    2 +-
+ .../arm64/boot/dts/qcom/sm8350-oneplus-common.dtsi | 1088 ++++++++++++++++++++
+ .../boot/dts/qcom/sm8350-oneplus-lemonade.dts      |   85 ++
+ .../boot/dts/qcom/sm8350-oneplus-lemonadep.dts     |   20 +
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |   12 +-
+ include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h   |   19 +
+ include/dt-bindings/iio/qcom,spmi-vadc.h           |    3 +
+ 9 files changed, 1226 insertions(+), 7 deletions(-)
+---
+base-commit: ffc253263a1375a65fa6c9f62a893e9767fbebfa
+change-id: 20231016-nia-sm8350-for-upstream-2f452366e421
+
+Best regards,
+-- 
+Nia Espera <nespera@igalia.com>
 
 
