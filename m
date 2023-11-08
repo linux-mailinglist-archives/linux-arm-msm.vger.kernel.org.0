@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 519AF7E5157
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:49:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B6947E51A5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 09:07:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF55328138C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 07:49:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E5C23B20D38
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:07:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A968DD2F0;
-	Wed,  8 Nov 2023 07:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32879D520;
+	Wed,  8 Nov 2023 08:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l+uk7QZD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GaxFJuAn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C19D2EF
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 07:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85674D52B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 08:07:28 +0000 (UTC)
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEB4113;
-	Tue,  7 Nov 2023 23:49:41 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A84RObF008885;
-	Wed, 8 Nov 2023 07:49:08 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0699A119;
+	Wed,  8 Nov 2023 00:07:28 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A82qV2R014988;
+	Wed, 8 Nov 2023 08:07:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=D/dxczvvsYMr70g43cKzL3igpf+UjlHp4+Ee7UJnllU=;
- b=l+uk7QZDvNc8jP1YMs5hPUuXUatbQFZxc0Rys3VgEHl8rzwI8KF0PU+oycOY8jxtpyR8
- NqvuxITx9crlasRm+qW1haxRKcwQ4iH+bn2NecyNiI5YygArdlSIZFnv8iysZ0j/ce6L
- rqwrbVyBgxfFghipmpWIXC8jWpENbe82Sc49Pl+PDOG2dk/vI1PAfjUGGkcKQ5HzBjc9
- BbHsPiokz+XbitrcG1BInnwXDqqZfbCKorVEO0cdn99Z5B5RZWBKNNzzDT/790Lh4kfG
- ZyzwmhLP51p/BIfoEZDZnYAMaJRr2WM8DQXuwn3YHugkM2xK4tuBrTNDYj3Bbr9q9oH0 7A== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w2ch0t0-1
+ bh=9eyiYNrLu9ByGJR2DrKWtV3PSoPk0VBh9FCDFkPpn/g=;
+ b=GaxFJuAnUlkoKWveNtlEtRzF838KSgYWDSWpUOlBci9+S8AYxmW1ojDrSXP5SAG7rbBb
+ ODTJt3mfmB+DETjHJCRRQlfmi0+HLnwroQRmor5kSWDqFpkQ06HLC5Es4UMUlKF5mnSL
+ QBIMJtaltzbI0rjCkA4BKffqVaIb4pwuuqErDfVvKA6sKdlW0cxIsQAtKEh+f3DZJGrv
+ LdBvojymXTqv+mP7yHzfJ+woHFTouZjxWp2KMhATpX/wHlPZhMEQ8zv/9n+UEzN1fqoH
+ Vj6q7L/zVFhW8VS4MJsoTILrgdwyUbNIAGIQ+eb/gLgXPXxmKkgPlfQIe69eS69DOpoU Mw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w2ds265-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Nov 2023 07:49:08 +0000
+	Wed, 08 Nov 2023 08:07:13 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A87mjiA007746
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A887DFg024653
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Nov 2023 07:48:45 GMT
+	Wed, 8 Nov 2023 08:07:13 GMT
 Received: from [10.253.34.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
- 2023 23:48:40 -0800
-Message-ID: <351a7a54-1aeb-f226-855b-30291e9edd80@quicinc.com>
-Date: Wed, 8 Nov 2023 15:48:38 +0800
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 8 Nov
+ 2023 00:07:09 -0800
+Message-ID: <d34cf12d-e42c-89e1-7eeb-400f305f7632@quicinc.com>
+Date: Wed, 8 Nov 2023 16:07:06 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,89 +57,89 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v2 1/7] scsi: ufs: host: Rename structure ufs_dev_params
- to ufs_host_params
+Subject: Re: [PATCH v2 2/7] scsi: ufs: ufs-qcom: Setup host power mode during
+ init
 Content-Language: en-US
-To: Bart Van Assche <bvanassche@acm.org>, Can Guo <cang@qti.qualcomm.com>,
-        <mani@kernel.org>, <stanley.chu@mediatek.com>,
+To: Manivannan Sadhasivam <mani@kernel.org>, Can Guo <cang@qti.qualcomm.com>
+CC: <bvanassche@acm.org>, <stanley.chu@mediatek.com>,
         <adrian.hunter@intel.com>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>
-CC: <linux-scsi@vger.kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
+        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
+        <linux-scsi@vger.kernel.org>,
+        "Bao D . Nguyen" <quic_nguyenb@quicinc.com>,
+        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?=
-	<u.kleine-koenig@pengutronix.de>,
-        Brian Masney <bmasney@redhat.com>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES"
-	<linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND
- EXYNOS ARM ARCHITECTURES" <linux-samsung-soc@vger.kernel.org>,
-        open list
-	<linux-kernel@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST
- CONTROLLER DRIVER..." <linux-mediatek@lists.infradead.org>,
-        "open
- list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..."
-	<linux-arm-msm@vger.kernel.org>
+        "James E.J. Bottomley"
+	<jejb@linux.ibm.com>,
+        "open list:ARM/QUALCOMM SUPPORT"
+	<linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
 References: <1699332374-9324-1-git-send-email-cang@qti.qualcomm.com>
- <1699332374-9324-2-git-send-email-cang@qti.qualcomm.com>
- <74f98f63-3200-4485-bbf0-819800837ee9@acm.org>
+ <1699332374-9324-3-git-send-email-cang@qti.qualcomm.com>
+ <20231108050729.GA3296@thinkpad>
 From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <74f98f63-3200-4485-bbf0-819800837ee9@acm.org>
+In-Reply-To: <20231108050729.GA3296@thinkpad>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UYbZiAHeFoDrEtDh_Tq4xe_sc4f_RE9k
-X-Proofpoint-ORIG-GUID: UYbZiAHeFoDrEtDh_Tq4xe_sc4f_RE9k
+X-Proofpoint-GUID: R3C_AkNydWNgxD-QYRfWF25uQfPD8bc8
+X-Proofpoint-ORIG-GUID: R3C_AkNydWNgxD-QYRfWF25uQfPD8bc8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-08_01,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 malwarescore=0 phishscore=0
- bulkscore=0 mlxlogscore=999 suspectscore=0 adultscore=0 priorityscore=1501
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311080064
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 impostorscore=0 adultscore=0
+ clxscore=1015 mlxlogscore=999 mlxscore=0 suspectscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311080066
 
-Hi Bart,
+Hi Mani,
 
-On 11/8/2023 4:56 AM, Bart Van Assche wrote:
-> On 11/6/23 20:46, Can Guo wrote:
->>   /**
->> - * ufshcd_get_pwr_dev_param - get finally agreed attributes for
->> + * ufshcd_negotiate_pwr_param - get finally agreed attributes for
->>    *                            power mode change
->
-> Since you are renaming the function, please also change the description
-> of the function into something more meaningful, e.g. "find power mode
-> settings that are supported by both the controller and the device".
-Sure, will do.
->
->> - * @pltfrm_param: pointer to platform parameters
->> + * @host_param: pointer to platform parameters
->
-> Please make sure that the argument name and argument description are in
-> sync.
-Sure.
->
-> Thanks,
->
-> Bart.
-
+On 11/8/2023 1:07 PM, Manivannan Sadhasivam wrote:
+> On Mon, Nov 06, 2023 at 08:46:08PM -0800, Can Guo wrote:
+>> From: Can Guo <quic_cang@quicinc.com>
+>>
+>> Setup host power mode and its limitations during UFS host driver init to
+>> avoid repetitive work during every power mode change.
+>>
+>> Co-developed-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+>> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> ---
+>>   drivers/ufs/host/ufs-qcom.c | 22 ++++++++++++++--------
+>>   drivers/ufs/host/ufs-qcom.h |  1 +
+>>   2 files changed, 15 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>> index aee66a3..cc0eb37 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -898,7 +898,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>>   				struct ufs_pa_layer_attr *dev_req_params)
+>>   {
+>>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> -	struct ufs_host_params host_params;
+>> +	struct ufs_host_params *host_params = &host->host_params;
+>>   	int ret = 0;
+>>   
+>>   	if (!dev_req_params) {
+>> @@ -908,13 +908,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>>   
+>>   	switch (status) {
+>>   	case PRE_CHANGE:
+>> -		ufshcd_init_host_param(&host_params);
+>> -		host_params.hs_rate = UFS_QCOM_LIMIT_HS_RATE;
+> 
+> As Andrew spotted, this gets removed without explanation. So, I'd also suggest
+> doing it in a separate patch.
+> 
+> - Mani
+Sure, will do
 
 Thanks,
 
 Can Guo.
-
 
