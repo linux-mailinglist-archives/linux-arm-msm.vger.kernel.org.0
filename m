@@ -1,321 +1,650 @@
-Return-Path: <linux-arm-msm+bounces-176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D0177E53EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 11:44:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC16F7E54EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 12:19:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C218E281300
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 10:44:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE1681C208BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 11:19:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7286B12E66;
-	Wed,  8 Nov 2023 10:44:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="QN7qWsTU"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2858156FD;
+	Wed,  8 Nov 2023 11:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5620912E65
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 10:44:49 +0000 (UTC)
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B91342737
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 02:44:44 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-6bd32d1a040so6901150b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Nov 2023 02:44:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1699440284; x=1700045084; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gKTyWokpX5cgue49QDtZFQPjUpwVAu8TbIboU5lRKS0=;
-        b=QN7qWsTUCLuv2mb9MZds0fFM3GEB87l8mGOk+Pmc3zWMZcDFPwJNlapjPEgyQ/1Llf
-         KGTIQ9BDQqTO/PztuDKjG77xoQoQ6P+pQEkCY8OojWfc1cCVwjdsfoA5zs6DPTdWOIAR
-         N5TkXxe/qKJicNQIQnNbQ601auELYBC7OaB8k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699440284; x=1700045084;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gKTyWokpX5cgue49QDtZFQPjUpwVAu8TbIboU5lRKS0=;
-        b=N9z6a2sY6J2L7+Pf2IhCq8dVfpVdNn5cq+d7cYVomESY4Su+Y47SysnDWIlsITVFjt
-         1OwNXRYQSw+J18rcjswMhuOkCna3oPugtqpyO9QuAaRtre0j+WwXsaXyBB5TDeErS/cK
-         mr61v9GNdmU5tHn/ZSezLuGZodS4aj/2y+9dO3JMy0fkJL/2ES5HB8DVw0C5ufnHDnga
-         tl/epFcZl3BqrjsK4NfGFqVyV0dM650J0Qj5KZIcak/dEi46IIGr7umVAUCbCzIUCkp8
-         vOG6S/CcNhNAWwB31/iAyTYCNevADV+jcJ+Fp0ighlmlFtpuUR0BFfNmVmu7HsJVx6uZ
-         nVPA==
-X-Gm-Message-State: AOJu0Ywx1cJ3NpHYLWgStAwTR9lJJcjKtMN6XsAQFMLE9VlVted5X+3C
-	2jnHwmqRwCXvSm1gOjbxLdKTcg==
-X-Google-Smtp-Source: AGHT+IEzqy1BibD2RC0l4kCSPsKsVPKvQCQxco2ue8t7SCmmOXz1P0lkP95g4IaHmCfbUqjrwn7xKw==
-X-Received: by 2002:a05:6a20:7f97:b0:14c:daa9:5e22 with SMTP id d23-20020a056a207f9700b0014cdaa95e22mr1989536pzj.45.1699440283822;
-        Wed, 08 Nov 2023 02:44:43 -0800 (PST)
-Received: from chromium.org (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
-        by smtp.gmail.com with ESMTPSA id w12-20020a170902e88c00b001bb3beb2bc6sm1450272plg.65.2023.11.08.02.44.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Nov 2023 02:44:43 -0800 (PST)
-Date: Wed, 8 Nov 2023 10:44:39 +0000
-From: Tomasz Figa <tfiga@chromium.org>
-To: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
-	ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-	gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl,
-	nicolas.dufresne@collabora.com, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-	kernel@collabora.com
-Subject: Re: [PATCH v14 52/56] media: core: Add bitmap manage bufs array
- entries
-Message-ID: <20231108104439.oxpbbd2yro7u57t4@chromium.org>
-References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
- <20231031163104.112469-53-benjamin.gaignard@collabora.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6FA171A6;
+	Wed,  8 Nov 2023 11:19:16 +0000 (UTC)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTP id B21981BD5;
+	Wed,  8 Nov 2023 03:19:15 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DF39D1477;
+	Wed,  8 Nov 2023 03:19:59 -0800 (PST)
+Received: from [10.1.26.57] (e127643.arm.com [10.1.26.57])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8C9703F703;
+	Wed,  8 Nov 2023 03:19:11 -0800 (PST)
+Message-ID: <d396d9ba-9574-8f11-8bbb-d1fd939421c5@arm.com>
+Date: Wed, 8 Nov 2023 11:19:09 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231031163104.112469-53-benjamin.gaignard@collabora.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v1 1/2] coresight: Add remote etm support
+Content-Language: en-US
+To: Mao Jinlong <quic_jinlmao@quicinc.com>
+Cc: linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+References: <20231107060939.13449-1-quic_jinlmao@quicinc.com>
+ <20231107060939.13449-2-quic_jinlmao@quicinc.com>
+From: James Clark <james.clark@arm.com>
+In-Reply-To: <20231107060939.13449-2-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 31, 2023 at 05:31:00PM +0100, Benjamin Gaignard wrote:
-> Add a bitmap field to know which of bufs array entries are
-> used or not.
-> Remove no more used num_buffers field from queue structure.
-> Use bitmap_find_next_zero_area() to find the first possible
-> range when creating new buffers to fill the gaps.
+
+
+On 07/11/2023 06:09, Mao Jinlong wrote:
+> Add support for ETM trace collection on remote processor using
+> coreSight framework.
 > 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 > ---
->  .../media/common/videobuf2/videobuf2-core.c   | 42 +++++++++++++++----
->  include/media/videobuf2-core.h                | 15 ++++---
->  2 files changed, 42 insertions(+), 15 deletions(-)
+>  drivers/hwtracing/coresight/Kconfig           |   9 +
+>  drivers/hwtracing/coresight/Makefile          |   1 +
+>  drivers/hwtracing/coresight/coresight-core.c  |   3 +
+>  drivers/hwtracing/coresight/coresight-qmi.h   | 109 ++++++
+>  .../coresight/coresight-remote-etm.c          | 325 ++++++++++++++++++
+>  include/linux/coresight.h                     |   1 +
+>  6 files changed, 448 insertions(+)
+>  create mode 100644 drivers/hwtracing/coresight/coresight-qmi.h
+>  create mode 100644 drivers/hwtracing/coresight/coresight-remote-etm.c
 > 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index 2c8cf479a962..6e88406fcae9 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -416,11 +416,12 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
->   */
->  static void vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, unsigned int index)
->  {
-> -	WARN_ON(index >= q->max_num_buffers || q->bufs[index]);
-> +	WARN_ON(index >= q->max_num_buffers || test_bit(index, q->bufs_bitmap));
+> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+> index 06f0a7594169..425886ab7401 100644
+> --- a/drivers/hwtracing/coresight/Kconfig
+> +++ b/drivers/hwtracing/coresight/Kconfig
+> @@ -247,4 +247,13 @@ config CORESIGHT_DUMMY
 >  
->  	q->bufs[index] = vb;
->  	vb->index = index;
->  	vb->vb2_queue = q;
-> +	set_bit(index, q->bufs_bitmap);
->  }
->  
->  /**
-> @@ -429,6 +430,7 @@ static void vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, uns
->   */
->  static void vb2_queue_remove_buffer(struct vb2_buffer *vb)
->  {
-> +	clear_bit(vb->index, vb->vb2_queue->bufs_bitmap);
->  	vb->vb2_queue->bufs[vb->index] = NULL;
->  	vb->vb2_queue = NULL;
->  }
-> @@ -450,11 +452,12 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->  	unsigned long index;
->  	int ret;
->  
-> -	/* Ensure that the number of already queue + num_buffers is below q->max_num_buffers */
-> +	/* Ensure that vb2_get_num_buffers(q) + num_buffers is no more than q->max_num_buffers */
->  	num_buffers = min_t(unsigned int, num_buffers,
->  			    q->max_num_buffers - vb2_get_num_buffers(q));
->  
-> -	index = vb2_get_num_buffers(q);
-> +	index = bitmap_find_next_zero_area(q->bufs_bitmap, q->max_num_buffers,
-> +					   0, num_buffers, 0);
->  
->  	*first_index = index;
->  
-> @@ -656,7 +659,6 @@ static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
->  		kfree(vb);
->  	}
->  
-> -	q->num_buffers -= buffers;
->  	if (!vb2_get_num_buffers(q)) {
->  		q->memory = VB2_MEMORY_UNKNOWN;
->  		INIT_LIST_HEAD(&q->queued_list);
-> @@ -874,6 +876,14 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->  		q->bufs = kcalloc(q->max_num_buffers, sizeof(*q->bufs), GFP_KERNEL);
->  	if (!q->bufs)
->  		ret = -ENOMEM;
+>  	  To compile this driver as a module, choose M here: the module will be
+>  	  called coresight-dummy.
 > +
-> +	if (!q->bufs_bitmap)
-> +		q->bufs_bitmap = bitmap_zalloc(q->max_num_buffers, GFP_KERNEL);
-> +	if (!q->bufs_bitmap) {
-> +		ret = -ENOMEM;
-> +		kfree(q->bufs);
-> +		q->bufs = NULL;
+> +config CORESIGHT_REMOTE_ETM
+> +	tristate "Remote processor ETM trace support"
+> +	select QCOM_QMI_HELPERS
+> +	help
+> +	  Enables support for ETM trace collection on remote processor using
+> +	  CoreSight framework. Enabling this will allow turning on ETM
+> +	  tracing on remote processor via sysfs by configuring the required
+> +	  CoreSight components.
+>  endif
+> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+> index 995d3b2c76df..a5283cab0bc0 100644
+> --- a/drivers/hwtracing/coresight/Makefile
+> +++ b/drivers/hwtracing/coresight/Makefile
+> @@ -29,5 +29,6 @@ obj-$(CONFIG_CORESIGHT_TPDM) += coresight-tpdm.o
+>  obj-$(CONFIG_CORESIGHT_TPDA) += coresight-tpda.o
+>  coresight-cti-y := coresight-cti-core.o	coresight-cti-platform.o \
+>  		   coresight-cti-sysfs.o
+> +obj-$(CONFIG_CORESIGHT_REMOTE_ETM) += coresight-remote-etm.o
+>  obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+>  obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
+> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
+> index d7f0e231feb9..f365a3899821 100644
+> --- a/drivers/hwtracing/coresight/coresight-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-core.c
+> @@ -1094,6 +1094,7 @@ static int coresight_validate_source(struct coresight_device *csdev,
+>  	if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
+>  	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
+>  	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM &&
+> +	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_REMOTE_PROC &&
+
+It's not really related to this patch, but it feels like we're starting
+to add too many subtypes that all behave in the same way. Sometimes the
+subtype is used for identification, and sometimes it's used for
+behavior. But when it's used for behavior like in this case they all
+mean the same thing.
+
+We should probably have just three subtypes "PROC", "OTHER" and
+"SOFTWARE". And add a new ID field for things like "TPDM", or even just
+use the names for identification, if that's possible.
+
+In this case your new one would be "OTHER" because it doesn't have
+per-CPU behaviour, and it doesn't have the enable refcounting that
+"SOFTWARE" has.
+
+>  	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS) {
+>  		dev_err(&csdev->dev, "wrong device subtype in %s\n", function);
+>  		return -EINVAL;
+> @@ -1164,6 +1165,7 @@ int coresight_enable(struct coresight_device *csdev)
+>  		break;
+>  	case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
+>  	case CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM:
+> +	case CORESIGHT_DEV_SUBTYPE_SOURCE_REMOTE_PROC:
+>  	case CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS:
+>  		/*
+>  		 * Use the hash of source's device name as ID
+> @@ -1215,6 +1217,7 @@ void coresight_disable(struct coresight_device *csdev)
+>  		break;
+>  	case CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE:
+>  	case CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM:
+> +	case CORESIGHT_DEV_SUBTYPE_SOURCE_REMOTE_PROC:
+>  	case CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS:
+>  		hash = hashlen_hash(hashlen_string(NULL, dev_name(&csdev->dev)));
+>  		/* Find the path by the hash. */
+> diff --git a/drivers/hwtracing/coresight/coresight-qmi.h b/drivers/hwtracing/coresight/coresight-qmi.h
+> new file mode 100644
+> index 000000000000..4c35ba8c8a05
+> --- /dev/null
+> +++ b/drivers/hwtracing/coresight/coresight-qmi.h
+> @@ -0,0 +1,109 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _CORESIGHT_QMI_H
+> +#define _CORESIGHT_QMI_H
+> +
+> +#include <linux/soc/qcom/qmi.h>
+> +
+> +#define CORESIGHT_QMI_SVC_ID			(0x33)
+> +#define CORESIGHT_QMI_VERSION			(1)
+> +
+> +#define CORESIGHT_QMI_GET_ETM_REQ_V01		(0x002B)
+> +#define CORESIGHT_QMI_GET_ETM_RESP_V01		(0x002B)
+> +#define CORESIGHT_QMI_SET_ETM_REQ_V01		(0x002C)
+> +#define CORESIGHT_QMI_SET_ETM_RESP_V01		(0x002C)
+> +
+> +#define CORESIGHT_QMI_GET_ETM_REQ_MAX_LEN	(0)
+> +#define CORESIGHT_QMI_GET_ETM_RESP_MAX_LEN	(14)
+> +#define CORESIGHT_QMI_SET_ETM_REQ_MAX_LEN	(7)
+> +#define CORESIGHT_QMI_SET_ETM_RESP_MAX_LEN	(7)
+> +
+> +#define TIMEOUT_MS				(10000)
+> +
+> +enum coresight_etm_state_enum_type_v01 {
+> +	/* To force a 32 bit signed enum. Do not change or use */
+> +	CORESIGHT_ETM_STATE_ENUM_TYPE_MIN_ENUM_VAL_V01 = INT_MIN,
+> +	CORESIGHT_ETM_STATE_DISABLED_V01 = 0,
+> +	CORESIGHT_ETM_STATE_ENABLED_V01 = 1,
+> +	CORESIGHT_ETM_STATE_ENUM_TYPE_MAX_ENUM_VAL_01 = INT_MAX,
+> +};
+> +
+> +struct coresight_get_etm_req_msg_v01 {
+> +	/*
+> +	 * This element is a placeholder to prevent declaration of
+> +	 * empty struct. Do not change.
+> +	 */
+
+But struct coresight_get_etm_req_msg_v01 is never used, so couldn't you
+just delete it, then you won't get an issue with the empty struct?
+
+> +	char __placeholder;
+> +};
+> +
+> +struct coresight_get_etm_resp_msg_v01 {
+
+Is this one used either? I couldn't find it. It looks like all of the
+get stuff isn't, including the #defines. I know they might be added for
+completeness or for use in the future, but if they haven't been tested
+it might be better to just delete it all because there is a chance there
+is a mistake in it anyway.
+
+
+> +	/* Mandatory */
+> +	/* QMI result Code */
+> +	struct qmi_response_type_v01 resp;
+> +
+> +	/* Optional */
+> +	/* ETM output state, must be set to true if state is being passed */
+> +	uint8_t state_valid;
+> +	/* Present when result code is QMI_RESULT_SUCCESS */
+> +	enum coresight_etm_state_enum_type_v01 state;
+> +};
+> +
+> +struct coresight_set_etm_req_msg_v01 {
+> +	/* Mandatory */
+> +	/* ETM output state */
+> +	enum coresight_etm_state_enum_type_v01 state;
+> +};
+> +
+> +struct coresight_set_etm_resp_msg_v01 {
+> +	/* Mandatory */
+> +	struct qmi_response_type_v01 resp;
+> +};
+> +
+> +static struct qmi_elem_info coresight_set_etm_req_msg_v01_ei[] = {
+> +	{
+> +		.data_type = QMI_UNSIGNED_4_BYTE,
+> +		.elem_len  = 1,
+> +		.elem_size = sizeof(enum coresight_etm_state_enum_type_v01),
+> +		.array_type  = NO_ARRAY,
+> +		.tlv_type  = 0x01,
+> +		.offset    = offsetof(struct coresight_set_etm_req_msg_v01,
+> +				      state),
+> +		.ei_array  = NULL,
+> +	},
+> +	{
+> +		.data_type = QMI_EOTI,
+> +		.elem_len  = 0,
+> +		.elem_size = 0,
+> +		.array_type  = NO_ARRAY,
+> +		.tlv_type  = 0,
+> +		.offset    = 0,
+> +		.ei_array  = NULL,
+> +	},
+> +};
+> +
+> +static struct qmi_elem_info coresight_set_etm_resp_msg_v01_ei[] = {
+> +	{
+> +		.data_type = QMI_STRUCT,
+> +		.elem_len  = 1,
+> +		.elem_size = sizeof(struct qmi_response_type_v01),
+> +		.array_type  = NO_ARRAY,
+> +		.tlv_type  = 0x02,
+> +		.offset    = offsetof(struct coresight_set_etm_resp_msg_v01,
+> +				      resp),
+> +		.ei_array  = qmi_response_type_v01_ei,
+> +	},
+> +	{
+> +		.data_type = QMI_EOTI,
+> +		.elem_len  = 0,
+> +		.elem_size = 0,
+> +		.array_type  = NO_ARRAY,
+> +		.tlv_type  = 0,
+> +		.offset    = 0,
+> +		.ei_array  = NULL,
+> +	},
+> +};
+> +
+> +#endif
+> diff --git a/drivers/hwtracing/coresight/coresight-remote-etm.c b/drivers/hwtracing/coresight/coresight-remote-etm.c
+> new file mode 100644
+> index 000000000000..d895dc5d14c2
+> --- /dev/null
+> +++ b/drivers/hwtracing/coresight/coresight-remote-etm.c
+> @@ -0,0 +1,325 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/init.h>
+> +#include <linux/types.h>
+> +#include <linux/device.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/io.h>
+> +#include <linux/err.h>
+> +#include <linux/sysfs.h>
+> +#include <linux/mutex.h>
+> +#include <linux/of.h>
+> +#include <linux/coresight.h>
+> +#include "coresight-qmi.h"
+> +#include "coresight-priv.h"
+> +
+> +#define REMOTE_ETM_TRACE_ID_START	192
+
+This isn't used.
+
+> +
+> +DEFINE_CORESIGHT_DEVLIST(remote_etm_devs, "remote-etm");
+> +
+> +static DEFINE_MUTEX(remote_etm_lock);
+> +static LIST_HEAD(remote_etm_list);
+> +
+> +struct remote_etm_drvdata {
+> +	struct device			*dev;
+> +	struct coresight_device		*csdev;
+> +	struct mutex			mutex;
+> +	struct qmi_handle		handle;
+> +	uint32_t			inst_id;
+> +	bool				enable;
+
+enable is never read so can probably be dropped. If not, "enabled" would
+be better than "enable".
+
+> +	bool service_connected;
+> +	bool security;
+
+security is never used either.
+
+> +	struct sockaddr_qrtr s_addr;
+> +	struct list_head link;
+> +};
+> +
+> +static int service_remote_etm_new_server(struct qmi_handle *qmi,
+> +		struct qmi_service *svc)
+> +{
+> +	struct remote_etm_drvdata *drvdata = container_of(qmi,
+> +					struct remote_etm_drvdata, handle);
+> +
+> +	drvdata->s_addr.sq_family = AF_QIPCRTR;
+> +	drvdata->s_addr.sq_node = svc->node;
+> +	drvdata->s_addr.sq_port = svc->port;
+> +	drvdata->service_connected = true;
+> +	dev_info(drvdata->dev,
+> +		"Connection established between QMI handle and %d service\n",
+> +		drvdata->inst_id);
+> +
+> +	return 0;
+> +}
+> +
+> +static void service_remote_etm_del_server(struct qmi_handle *qmi,
+> +		struct qmi_service *svc)
+> +{
+> +	struct remote_etm_drvdata *drvdata = container_of(qmi,
+> +					struct remote_etm_drvdata, handle);
+> +	drvdata->service_connected = false;
+> +	dev_info(drvdata->dev,
+> +		"Connection disconnected between QMI handle and %d service\n",
+> +		drvdata->inst_id);
+> +}
+> +
+> +static struct qmi_ops server_ops = {
+> +	.new_server = service_remote_etm_new_server,
+> +	.del_server = service_remote_etm_del_server,
+> +};
+> +
+> +static int remote_etm_enable(struct coresight_device *csdev,
+> +			     struct perf_event *event, u32 mode)
+> +{
+> +	struct remote_etm_drvdata *drvdata =
+> +		dev_get_drvdata(csdev->dev.parent);
+> +	struct coresight_set_etm_req_msg_v01 req;
+> +	struct coresight_set_etm_resp_msg_v01 resp = { { 0, 0 } };
+> +	struct qmi_txn txn;
+> +	int ret;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +
+> +	if (!drvdata->service_connected) {
+> +		dev_err(drvdata->dev, "QMI service not connected!\n");
+> +		ret = EINVAL;
+
+= -EINVAL?
+
+> +		goto err;
 > +	}
->  	q->memory = memory;
->  	mutex_unlock(&q->mmap_lock);
->  	if (ret)
-> @@ -943,7 +953,6 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->  	}
->  
->  	mutex_lock(&q->mmap_lock);
-> -	q->num_buffers = allocated_buffers;
->  
->  	if (ret < 0) {
->  		/*
-> @@ -970,6 +979,10 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->  	mutex_lock(&q->mmap_lock);
->  	q->memory = VB2_MEMORY_UNKNOWN;
->  	mutex_unlock(&q->mmap_lock);
-> +	kfree(q->bufs);
-> +	q->bufs = NULL;
-> +	bitmap_free(q->bufs_bitmap);
-> +	q->bufs_bitmap = NULL;
->  	return ret;
->  }
->  EXPORT_SYMBOL_GPL(vb2_core_reqbufs);
-> @@ -1006,9 +1019,19 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->  		q->memory = memory;
->  		if (!q->bufs)
->  			q->bufs = kcalloc(q->max_num_buffers, sizeof(*q->bufs), GFP_KERNEL);
-> -		if (!q->bufs)
-> +		if (!q->bufs) {
->  			ret = -ENOMEM;
-> +			goto unlock;
-> +		}
-> +		if (!q->bufs_bitmap)
-> +			q->bufs_bitmap = bitmap_zalloc(q->max_num_buffers, GFP_KERNEL);
-
-Same as with the kcalloc(). Why not just allocate this in the core code,
-e.g. vb2_core_queue_init()?
-
-Actually, is it because we want to avoid allocating
-resources early, before the need to actually use the vb2 queue?
-If so, could this go to some other core function that runs later, e.g. __vb2_queue_alloc()?
-
-> +		if (!q->bufs_bitmap) {
-> +			ret = -ENOMEM;
-> +			kfree(q->bufs);
-> +			q->bufs = NULL;
-> +		}
->  		mutex_unlock(&q->mmap_lock);
-> +unlock:
->  		if (ret)
->  			return ret;
->  		q->waiting_for_buffers = !q->is_output;
-> @@ -1070,7 +1093,6 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->  	}
->  
->  	mutex_lock(&q->mmap_lock);
-> -	q->num_buffers += allocated_buffers;
->  
->  	if (ret < 0) {
->  		/*
-> @@ -2549,7 +2571,9 @@ void vb2_core_queue_release(struct vb2_queue *q)
->  	__vb2_queue_free(q, q->max_num_buffers);
->  	kfree(q->bufs);
->  	q->bufs = NULL;
-> -	q->num_buffers = 0;
-> +	bitmap_free(q->bufs_bitmap);
-> +	q->bufs_bitmap = NULL;
+> +	/*
+> +	 * The QMI handle may be NULL in the following scenarios:
+> +	 * 1. QMI service is not present
+> +	 * 2. QMI service is present but attempt to enable remote ETM is earlier
+> +	 *    than service is ready to handle request
+> +	 * 3. Connection between QMI client and QMI service failed
+> +	 *
+> +	 * Enable CoreSight without processing further QMI commands which
+> +	 * provides the option to enable remote ETM by other means.
+> +	 */
+> +	req.state = CORESIGHT_ETM_STATE_ENABLED_V01;
 > +
->  	mutex_unlock(&q->mmap_lock);
->  }
->  EXPORT_SYMBOL_GPL(vb2_core_queue_release);
-> @@ -2904,7 +2928,7 @@ static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_
->  	 * Check if we need to dequeue the buffer.
->  	 */
->  	index = fileio->cur_index;
-> -	if (index >= q->num_buffers) {
-> +	if (!test_bit(index, q->bufs_bitmap)) {
-
-I don't like this low level manipulation of queue internals here (after all
-the work other patches did to use helpers). Why not just keep
-vb2_get_num_buffers() here?
-
->  		struct vb2_buffer *b;
->  
->  		/*
-> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
-> index 6986ff4b77cd..288477075a0e 100644
-> --- a/include/media/videobuf2-core.h
-> +++ b/include/media/videobuf2-core.h
-> @@ -346,7 +346,7 @@ struct vb2_buffer {
->   *			describes the requested number of planes and sizes\[\]
->   *			contains the requested plane sizes. In this case
->   *			\*num_buffers are being allocated additionally to
-> - *			q->num_buffers. If either \*num_planes or the requested
-> + *			queue buffers. If either \*num_planes or the requested
-
-Perhaps "the buffers already in the queue"?
-
->   *			sizes are invalid callback must return %-EINVAL.
->   * @wait_prepare:	release any locks taken while calling vb2 functions;
->   *			it is called before an ioctl needs to wait for a new
-> @@ -557,7 +557,7 @@ struct vb2_buf_ops {
->   * @memory:	current memory type used
->   * @dma_dir:	DMA mapping direction.
->   * @bufs:	videobuf2 buffer structures
-> - * @num_buffers: number of allocated/used buffers
-> + * @bufs_bitmap: bitmap to manage bufs entries.
-
-Perhaps "bitmap tracking whether each bufs[] entry is used"?
-
->   * @max_num_buffers: upper limit of number of allocated/used buffers
->   * @queued_list: list of buffers currently queued from userspace
->   * @queued_count: number of buffers queued and ready for streaming.
-> @@ -621,7 +621,7 @@ struct vb2_queue {
->  	unsigned int			memory;
->  	enum dma_data_direction		dma_dir;
->  	struct vb2_buffer		**bufs;
-> -	unsigned int			num_buffers;
-> +	unsigned long			*bufs_bitmap;
->  	unsigned int			max_num_buffers;
->  
->  	struct list_head		queued_list;
-> @@ -1150,7 +1150,10 @@ static inline bool vb2_fileio_is_active(struct vb2_queue *q)
->   */
->  static inline unsigned int vb2_get_num_buffers(struct vb2_queue *q)
->  {
-> -	return q->num_buffers;
-> +	if (!q->bufs_bitmap)
-> +		return 0;
+> +	ret = qmi_txn_init(&drvdata->handle, &txn,
+> +			coresight_set_etm_resp_msg_v01_ei,
+> +			&resp);
 > +
-> +	return bitmap_weight(q->bufs_bitmap, q->max_num_buffers);
+> +	if (ret < 0) {
+> +		dev_err(drvdata->dev, "QMI tx init failed , ret:%d\n",
+> +				ret);
+> +		goto err;
+> +	}
+> +
+> +	ret = qmi_send_request(&drvdata->handle, &drvdata->s_addr,
+> +			&txn, CORESIGHT_QMI_SET_ETM_REQ_V01,
+> +			CORESIGHT_QMI_SET_ETM_REQ_MAX_LEN,
+> +			coresight_set_etm_req_msg_v01_ei,
+> +			&req);
+> +	if (ret < 0) {
+> +		dev_err(drvdata->dev, "QMI send ACK failed, ret:%d\n",
+> +				ret);
+> +		qmi_txn_cancel(&txn);
+> +		goto err;
+> +	}
+> +
+> +	ret = qmi_txn_wait(&txn, msecs_to_jiffies(TIMEOUT_MS));
+> +	if (ret < 0) {
+> +		dev_err(drvdata->dev, "QMI qmi txn wait failed, ret:%d\n",
+> +				ret);
+> +		goto err;
+> +	}
+> +
+> +	/* Check the response */
+> +	if (resp.resp.result != QMI_RESULT_SUCCESS_V01)
+> +		dev_err(drvdata->dev, "QMI request failed 0x%x\n",
+> +				resp.resp.error);
+> +
+> +	drvdata->enable = true;
+> +	mutex_unlock(&drvdata->mutex);
+> +
+> +	dev_info(drvdata->dev, "Remote ETM tracing enabled for instance %d\n",
+> +				drvdata->inst_id);
+> +	return 0;
+> +err:
+> +	mutex_unlock(&drvdata->mutex);
+> +	return ret;
+> +}
+> +
+> +static void remote_etm_disable(struct coresight_device *csdev,
+> +			       struct perf_event *event)
+> +{
+> +	struct remote_etm_drvdata *drvdata =
+> +		 dev_get_drvdata(csdev->dev.parent);
+> +	struct coresight_set_etm_req_msg_v01 req;
+> +	struct coresight_set_etm_resp_msg_v01 resp = { { 0, 0 } };
+> +	struct qmi_txn txn;
+> +	int ret;
+> +
+> +	mutex_lock(&drvdata->mutex);
+> +	if (!drvdata->service_connected) {
+> +		dev_err(drvdata->dev, "QMI service not connected!\n");
+> +		goto err;
+> +	}
+> +
+> +	req.state = CORESIGHT_ETM_STATE_DISABLED_V01;
+> +
+> +	ret = qmi_txn_init(&drvdata->handle, &txn,
+> +			coresight_set_etm_resp_msg_v01_ei,
+> +			&resp);
+> +
+> +	if (ret < 0) {
+> +		dev_err(drvdata->dev, "QMI tx init failed , ret:%d\n",
+> +				ret);
+> +		goto err;
+> +	}
+> +
+> +	ret = qmi_send_request(&drvdata->handle, &drvdata->s_addr,
+> +			&txn, CORESIGHT_QMI_SET_ETM_REQ_V01,
+> +			CORESIGHT_QMI_SET_ETM_REQ_MAX_LEN,
+> +			coresight_set_etm_req_msg_v01_ei,
+> +			&req);
+> +	if (ret < 0) {
+> +		dev_err(drvdata->dev, "QMI send req failed, ret:%d\n",
+> +				 ret);
+> +		qmi_txn_cancel(&txn);
+> +		goto err;
+> +	}
+> +
+> +	ret = qmi_txn_wait(&txn, msecs_to_jiffies(TIMEOUT_MS));
+> +	if (ret < 0) {
+> +		dev_err(drvdata->dev, "QMI qmi txn wait failed, ret:%d\n",
+> +				ret);
+> +		goto err;
+> +	}
+> +
+> +	/* Check the response */
+> +	if (resp.resp.result != QMI_RESULT_SUCCESS_V01) {
+> +		dev_err(drvdata->dev, "QMI request failed 0x%x\n",
+> +				resp.resp.error);
+> +		goto err;
+> +	}
+> +
+> +	drvdata->enable = false;
+> +	dev_info(drvdata->dev, "Remote ETM tracing disabled for instance %d\n",
+> +				drvdata->inst_id);
+> +err:
+> +	mutex_unlock(&drvdata->mutex);
+> +}
+> +
+> +static const struct coresight_ops_source remote_etm_source_ops = {
+> +	.enable		= remote_etm_enable,
+> +	.disable	= remote_etm_disable,
+> +};
+> +
+> +static const struct coresight_ops remote_cs_ops = {
+> +	.source_ops	= &remote_etm_source_ops,
+> +};
+> +
+> +static int remote_etm_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct coresight_platform_data *pdata;
+> +	struct remote_etm_drvdata *drvdata;
+> +	struct coresight_desc desc = {0 };
+> +	int ret;
+> +
+> +	desc.name = coresight_alloc_device_name(&remote_etm_devs, dev);
+> +	if (!desc.name)
+> +		return -ENOMEM;
+> +	pdata = coresight_get_platform_data(dev);
+> +	if (IS_ERR(pdata))
+> +		return PTR_ERR(pdata);
+> +	pdev->dev.platform_data = pdata;
+> +
+> +	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> +	if (!drvdata)
+> +		return -ENOMEM;
+> +
+> +	drvdata->dev = &pdev->dev;
+> +	platform_set_drvdata(pdev, drvdata);
+> +
+> +	ret = of_property_read_u32(pdev->dev.of_node, "qcom,inst-id",
+> +			&drvdata->inst_id);
+> +	if (ret)
+> +		return ret;
+> +
+> +	mutex_init(&drvdata->mutex);
+> +
+> +	ret = qmi_handle_init(&drvdata->handle,
+> +			CORESIGHT_QMI_SET_ETM_REQ_MAX_LEN,
+> +			&server_ops, NULL);
+> +	if (ret < 0) {
+> +		dev_err(dev, "Remote ETM client init failed ret:%d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	qmi_add_lookup(&drvdata->handle,
+> +			CORESIGHT_QMI_SVC_ID,
+> +			CORESIGHT_QMI_VERSION,
+> +			drvdata->inst_id);
+> +
+> +	desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+> +	desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_REMOTE_PROC;
+> +	desc.ops = &remote_cs_ops;
+> +	desc.pdata = pdev->dev.platform_data;
+> +	desc.dev = &pdev->dev;
+> +	drvdata->csdev = coresight_register(&desc);
+> +	if (IS_ERR(drvdata->csdev)) {
+> +		ret = PTR_ERR(drvdata->csdev);
+> +		goto err;
+> +	}
+> +	dev_info(dev, "Remote ETM initialized\n");
+> +
+> +	pm_runtime_enable(dev);
 
-Hmm, could we just cache the number of buffers we have, so that we don't
-have to go over the entire bitmap every time? (Basically just keep the
-code that we had for handling q->num_buffers before this patch.)
+I think as soon as coresight_register() returns, the coresight mutex is
+unlocked and the device can be used, so this pm_runtime_enable() and the
+inst_id check are too late.
 
->  }
+> +	if (drvdata->inst_id >= sizeof(int)*BITS_PER_BYTE)
+> +		dev_err(dev, "inst_id greater than boot_enable bit mask\n");
+
+I didn't understand this inst_id bit. It's specifically a uint32_t, but
+it can't be a higher value than 32? So it could be an 8 bit field? It
+also looks like it makes sense to validate this where it's read from the
+DT, rather than later.
+
+> +
+> +	list_add_tail(&drvdata->link, &remote_etm_list);
+> +
+
+Apart from being deleted later, I didn't see this link or
+remote_etm_list being used.
+
+> +	return 0;
+> +err:
+> +	qmi_handle_release(&drvdata->handle);
+> +	return ret;
+> +}
+> +
+> +static int remote_etm_remove(struct platform_device *pdev)
+> +{
+> +	struct remote_etm_drvdata *drvdata = platform_get_drvdata(pdev);
+> +	struct device *dev = &pdev->dev;
+> +
+> +	list_del(&drvdata->link);
+> +	pm_runtime_disable(dev);
+> +	qmi_handle_release(&drvdata->handle);
+> +	coresight_unregister(drvdata->csdev);
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id remote_etm_match[] = {
+> +	{.compatible = "qcom,coresight-remote-etm"},
+> +	{}
+> +};
+> +
+> +static struct platform_driver remote_etm_driver = {
+> +	.probe          = remote_etm_probe,
+> +	.remove         = remote_etm_remove,
+> +	.driver         = {
+> +		.name   = "coresight-remote-etm",
+> +		.of_match_table = remote_etm_match,
+> +	},
+> +};
+> +
+> +int __init remote_etm_init(void)
+> +{
+> +	return platform_driver_register(&remote_etm_driver);
+> +}
+> +module_init(remote_etm_init);
+> +
+> +void __exit remote_etm_exit(void)
+> +{
+> +	platform_driver_unregister(&remote_etm_driver);
+> +}
+> +module_exit(remote_etm_exit);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("CoreSight Remote ETM driver");
+> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+> index a4cb7dd6ca23..f0a947a61680 100644
+> --- a/include/linux/coresight.h
+> +++ b/include/linux/coresight.h
+> @@ -65,6 +65,7 @@ enum coresight_dev_subtype_source {
+>  	CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
+>  	CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
+>  	CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM,
+> +	CORESIGHT_DEV_SUBTYPE_SOURCE_REMOTE_PROC,
+>  	CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS,
+>  };
 >  
->  /**
-> @@ -1253,13 +1256,13 @@ static inline void vb2_clear_last_buffer_dequeued(struct vb2_queue *q)
->  static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
->  						unsigned int index)
->  {
-> -	if (!q->bufs)
-> +	if (!q->bufs_bitmap)
->  		return NULL;
->  
->  	if (index >= q->max_num_buffers)
->  		return NULL;
->  
-> -	if (index < q->num_buffers)
-> +	if (test_bit(index, q->bufs_bitmap))
-
-Aha, I see why we need the extra condition above now. Perhaps it should've
-been added in this patch instead?
-
->  		return q->bufs[index];
->  	return NULL;
->  }
-> -- 
-> 2.39.2
-> 
-
-Best regards,
-Tomasz
 
