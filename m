@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12DA77E51E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 09:24:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 335147E5212
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 09:43:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 98002B20C6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:24:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 63ADF1C20949
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:43:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46DF0DDB4;
-	Wed,  8 Nov 2023 08:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 862A563DF;
+	Wed,  8 Nov 2023 08:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UUssv799"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UEcIzoMJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF09DDDA3
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 08:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2C263B3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 08:43:26 +0000 (UTC)
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23731170A;
-	Wed,  8 Nov 2023 00:24:19 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A88O3dR017572;
-	Wed, 8 Nov 2023 08:24:03 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E74D1710;
+	Wed,  8 Nov 2023 00:43:25 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A87N8iF006330;
+	Wed, 8 Nov 2023 08:42:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
+ mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=63wL2OLhSylIIhNNHXSlq/q1YxF1HwJ3SnILw67DNdM=;
- b=UUssv799G/qwsS7tPKn1BftXZmJ2uiJaWeJIePC57YPR/yRIDCyUpt85AlhWXCw7v6Q2
- 0d93W/G22TozVCC2ALaLnR4CsriMZT1b9HoqtHtkyukF5tN4rCz0+8XfOxjbHUSynI1l
- 6fcemYGaeIELAv236+ZDu5x69JCn2ukfjX2Sx/L8QSR3G1u1vrJEAdjYNgV0YQ+KXsuB
- jb/K2y6xWXl0Dp0sx1B/YjlFmkREb0ul3x5SOF4CY10j47of/zsM6wDfWUz/JgQGdCmd
- z066Abe+wbhBFC2L0WI+WCIEiGrfLGcHnLHamXY8kqhJxIccgKqAHEEbh/EdYSMz+Zas gQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7wt28yt5-1
+ bh=fMjvdbcTN+mM1stRhX8y1SgEAH+2W4UOL/UD/yX8wXA=;
+ b=UEcIzoMJOwYBfiHi85XoYxknJ9oBVVapJnHlvXUwjXw3acFE4vsePXS5kvAVuzKlxDS+
+ 2ihgxctaK6COxd2kUe/oZXLpQP/EY5/1EpNGWQIS506xDt6W27hh+xYpKN/ManNiAY/8
+ d2SrvtB8R3n1jkcJVGKtPem7K2kCrNmxKnvpzi7Mi4Kl91gimZMBu7Ygga5ahLoHf+pf
+ DRKYaKf25ht119BeEFvAS+o2kmuAPQMrnWJGHmlTmX+8Hp2CZWsp2KZErbEo2otteB38
+ yvCWXxv5ceXe2LUeAVphtM8esTwhleDqHphUu2L5u4F/MzLMLp8g9lF5z/JuA/p2WRqw Ew== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7xyu0vw7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Nov 2023 08:24:03 +0000
+	Wed, 08 Nov 2023 08:42:51 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A88O1VO023310
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A88gnCU020751
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Nov 2023 08:24:01 GMT
+	Wed, 8 Nov 2023 08:42:49 GMT
 Received: from [10.253.34.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 8 Nov
- 2023 00:23:58 -0800
-Message-ID: <f3bb9cf7-e57d-af5d-6516-9773ccb5dd1c@quicinc.com>
-Date: Wed, 8 Nov 2023 16:23:55 +0800
+ 2023 00:42:45 -0800
+Message-ID: <59f83fcd-6c2d-6b8a-55e6-0db07bfb5744@quicinc.com>
+Date: Wed, 8 Nov 2023 16:42:42 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,10 +57,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v2 3/7] scsi: ufs: ufs-qcom: Allow the first init start
- with the maximum supported gear
+Subject: Re: [PATCH v2 4/7] scsi: ufs: ufs-qcom: Limit HS-G5 Rate-A to hosts
+ with HW version 5
 Content-Language: en-US
-From: Can Guo <quic_cang@quicinc.com>
 To: Manivannan Sadhasivam <mani@kernel.org>, Can Guo <cang@qti.qualcomm.com>
 CC: <bvanassche@acm.org>, <stanley.chu@mediatek.com>,
         <adrian.hunter@intel.com>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
@@ -75,10 +74,10 @@ CC: <bvanassche@acm.org>, <stanley.chu@mediatek.com>,
 	<linux-arm-msm@vger.kernel.org>,
         open list <linux-kernel@vger.kernel.org>
 References: <1699332374-9324-1-git-send-email-cang@qti.qualcomm.com>
- <1699332374-9324-4-git-send-email-cang@qti.qualcomm.com>
- <20231108052310.GC3296@thinkpad>
- <49b331dc-37eb-6e26-f701-c83187a30788@quicinc.com>
-In-Reply-To: <49b331dc-37eb-6e26-f701-c83187a30788@quicinc.com>
+ <1699332374-9324-5-git-send-email-cang@qti.qualcomm.com>
+ <20231108052555.GD3296@thinkpad>
+From: Can Guo <quic_cang@quicinc.com>
+In-Reply-To: <20231108052555.GD3296@thinkpad>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -86,81 +85,56 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: R1EaAxz5sd2FwdBNje6BGRwTGfsS8Wfb
-X-Proofpoint-GUID: R1EaAxz5sd2FwdBNje6BGRwTGfsS8Wfb
+X-Proofpoint-ORIG-GUID: tMRjIEwacoyZnb3pbBjRcNL9tnXyxnVD
+X-Proofpoint-GUID: tMRjIEwacoyZnb3pbBjRcNL9tnXyxnVD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-08_01,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- spamscore=0 phishscore=0 bulkscore=0 adultscore=0 impostorscore=0
- suspectscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311080068
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 adultscore=0
+ suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311080071
 
 Hi Mani,
 
-On 11/8/2023 4:21 PM, Can Guo wrote:
-> Hi Mani,
+On 11/8/2023 1:25 PM, Manivannan Sadhasivam wrote:
+> On Mon, Nov 06, 2023 at 08:46:10PM -0800, Can Guo wrote:
+>> From: Can Guo <quic_cang@quicinc.com>
+>>
+>> Qcom UFS hosts, with HW ver 5, can only support up to HS-G5 Rate-A due to
+>> HW limitations. If the HS-G5 PHY gear is used, update host_params->hs_rate
+>> to Rate-A, so that the subsequent power mode changes shall stick to Rate-A.
+>>
+>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> ---
+>>   drivers/ufs/host/ufs-qcom.c | 18 +++++++++++++++++-
+>>   1 file changed, 17 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>> index 60b35ca..55ee31d 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -442,9 +442,25 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
+>>   static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>>   {
+>>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> +	struct ufs_host_params *host_params = &host->host_params;
+>>   	struct phy *phy = host->generic_phy;
+>> +	enum phy_mode mode;
+>>   	int ret;
+>>   
+>> +	/*
+>> +	 * HW ver 5 can only support up to HS-G5 Rate-A due to HW limitations.
 > 
-> On 11/8/2023 1:23 PM, Manivannan Sadhasivam wrote:
->> On Mon, Nov 06, 2023 at 08:46:09PM -0800, Can Guo wrote:
->>> From: Can Guo <quic_cang@quicinc.com>
->>>
->>> During host driver init, the phy_gear is set to the minimum supported 
->>> gear
->>> (HS_G2). Then, during the first power mode change, the negotiated 
->>> gear, say
->>> HS-G4, is updated to the phy_gear variable so that in the second init 
->>> the
->>> updated phy_gear can be used to program the PHY.
->>>
->>> But the current code only allows update the phy_gear to a higher 
->>> value. If
->>> one wants to start the first init with the maximum support gear, say 
->>> HS-G4,
->>> the phy_gear is not updated to HS-G3 if the device only supports HS-G3.
->>>
->>
->> Can you elaborate when this can happen? AFAICS, there are 3 
->> possibilities of
->> initial phy gear with this series:
->>
->> 1. If ufshc is < 5.0, then G2 will be used.
->> 2. If ufshc is >= 5.0 and if the version is populated in register, 
->> then that
->> gear will be used. Most likely that gear can be G4/G5 depending on the 
->> device
->> connected.
->> 3. If ufshc is >=5.0 and version is not populated, then G4 will be used.
-I think this made you confused, in case #3, HS-G5 is used as initial PHY 
-gear, not G4 (in the last patch in this series).
+> Does this limitation apply to future targets as well or just to SM8550? If
+> it's the latter, then we need to use a flag.
+> 
+> - ManiUFS host controller HW ver (major) 5 IPs (they may have different 
+minor/step verions) can be used by many QCOM chipsets, so it applies to 
+several available targets and future targets which are going to have HW 
+ver 5 UFS host controller. This limitation goes away since HW ver 6.
 
 Thanks,
 Can Guo.
->>
->> In all the above cases, I do not see any necessity to switch the phy gear
->> setting to lower one while scaling. Since the gears are backwards 
->> compatible,
->> we always use one phy gear sequence. Moreover, we only have 2 init 
->> sequences.
->>
->> Please correct me if I'm missing anything.
->>
->> - Mani
-> In the next patch, I am setting the initial PHY gear to max HS gear read
-> from UFS host cap register, so that we don't need to keep updating the 
-> initial value for host->phy_gear for different HW versions in future. 
-> FYI, for HW ver 5 and 6, it is HS-G5. In future, the max gear might 
-> become HS-G6 or higher on newer HW verions.
-> 
-> I the case #3, if HS-G5 is set to host->phy_gear, the first init uses 
-> HS-G5, then after negotiation if the agreed gear is HS-G4, we need to 
-> update host->phy_gear to HS-G4 (a lower value) such that we use a power 
-> saving PHY gear settings during the 2nd init.
-> 
-> If the commit message is making you confused, I can update it in next 
-> version. Please let me if I made any mistakes here.
-> 
-> Thanks,
-> Can Guo.
 
