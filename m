@@ -1,121 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC10C7E4EED
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 03:32:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3552F7E4EF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 03:35:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED0151C20D2C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 02:32:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 661201C20A82
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 02:35:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D7161110;
-	Wed,  8 Nov 2023 02:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 719A263D;
+	Wed,  8 Nov 2023 02:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XFBb1Ga/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="B5EOhYUV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A181373;
-	Wed,  8 Nov 2023 02:32:43 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99E2A10F8;
-	Tue,  7 Nov 2023 18:32:42 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A828BBl008611;
-	Wed, 8 Nov 2023 02:32:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=g4Cv5ypflLdXhHFj4Pj/RaVxQ6QZsT6ZxFVJnc4pP1c=;
- b=XFBb1Ga/BlR9EWzRmIeehfQNpy6scDDk2zhmDMAzsclD9tPZPtLMJL4TH389oiX/qZ1Y
- nDAWOtPnJabiKUCFb8g2elk4EZBMFY+NPtws2AtRZR54tpdqC//m6AXbSZj9E79mODur
- Q1SyXfgkXK6sNnXWNyKXgnFz7FDojcJXWEHX7he+0QGeSPm1PwSShkoXA6ketOypluVz
- Ls8GZ4HG4O682Wjl0dcuB0WHCCYtkBMKxiNcJR5dMaVWB6ePrDcPG+NusRy8dYWZ7R0B
- ht4Nu7mB/zPoMkB0EryduOLj6ZwnKRhd3wemjpmgw0Hppii8E+17tmxsqHcnEjDguMLM Vw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w2cgfqq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Nov 2023 02:32:34 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A82WYHd028868
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Nov 2023 02:32:34 GMT
-Received: from [10.216.1.136] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
- 2023 18:32:23 -0800
-Message-ID: <15a98ec0-214b-218b-1e3c-c09f770fce2e@quicinc.com>
-Date: Wed, 8 Nov 2023 08:02:18 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D612481F;
+	Wed,  8 Nov 2023 02:35:02 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A636181;
+	Tue,  7 Nov 2023 18:35:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699410902; x=1730946902;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=lIQhC7POCcImWvUOeBOHOOcj+sBmsQejKlKpslScH84=;
+  b=B5EOhYUVDl7RvKPgSXTl8LnrJVF7WaFFTZ0KaqjRbw0LW766ZSn10xlg
+   eaK4Wrbdb1g87ETx5fK3NLKktpn+Ux5MwlSalMLDj9rrXPm4q5Hq5N7Q9
+   qid8bjIYh/omZxMtrNBDNH+CPXJxfhNaKOHSdb7Mp1OPzon7oDpEPVsOS
+   FCkxaN0Y2XuiaTkIGYpmWBt7qa/4vZhYbbtBxVdMWi5LrXhBe/0/eUdBh
+   Tje85udLMuZCy5mxUVqbucFlozLRQMAt+sMbSscOlpwpaKjsvq7UOQNh4
+   08ZLpPubKyC+s5wNU4SPMeroYxmkhqk5vTmXJamanW8PupzinipNwE/88
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10887"; a="374716880"
+X-IronPort-AV: E=Sophos;i="6.03,285,1694761200"; 
+   d="scan'208";a="374716880"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Nov 2023 18:35:01 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10887"; a="828822431"
+X-IronPort-AV: E=Sophos;i="6.03,285,1694761200"; 
+   d="scan'208";a="828822431"
+Received: from lkp-server01.sh.intel.com (HELO 17d9e85e5079) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 07 Nov 2023 18:34:57 -0800
+Received: from kbuild by 17d9e85e5079 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r0YP9-0007ZI-0E;
+	Wed, 08 Nov 2023 02:34:55 +0000
+Date: Wed, 8 Nov 2023 10:34:17 +0800
+From: kernel test robot <lkp@intel.com>
+To: Mao Jinlong <quic_jinlmao@quicinc.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, Mao Jinlong <quic_jinlmao@quicinc.com>,
+	linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+	Tao Zhang <quic_taozha@quicinc.com>
+Subject: Re: [PATCH v1 1/2] coresight: Add remote etm support
+Message-ID: <202311081053.fWRkXGH0-lkp@intel.com>
+References: <20231107060939.13449-2-quic_jinlmao@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v5 5/5] PCI: qcom: Add OPP support to scale performance
- state of power domain
-Content-Language: en-US
-To: Viresh Kumar <viresh.kumar@linaro.org>, Bjorn Helgaas <helgaas@kernel.org>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <vireshk@kernel.org>, <nm@ti.com>, <sboyd@kernel.org>,
-        <mani@kernel.org>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <robh@kernel.org>, <bhelgaas@google.com>, <rafael@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_parass@quicinc.com>
-References: <20231102053013.7yt7pxin5awlu7w7@vireshk-i7>
- <20231102120950.GA115288@bhelgaas>
- <20231103051247.u4cnckzstcvs4lf5@vireshk-i7>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20231103051247.u4cnckzstcvs4lf5@vireshk-i7>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2-gJotlcQ3gh9-6L_23Y87F28GMFBywc
-X-Proofpoint-ORIG-GUID: 2-gJotlcQ3gh9-6L_23Y87F28GMFBywc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-08_01,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1011 malwarescore=0 phishscore=0
- bulkscore=0 mlxlogscore=850 suspectscore=0 adultscore=0 priorityscore=1501
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311080019
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231107060939.13449-2-quic_jinlmao@quicinc.com>
+
+Hi Mao,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on next-20231107]
+[cannot apply to robh/for-next linus/master v6.6 v6.6-rc7 v6.6-rc6 v6.6]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/coresight-Add-remote-etm-support/20231107-141331
+base:   next-20231107
+patch link:    https://lore.kernel.org/r/20231107060939.13449-2-quic_jinlmao%40quicinc.com
+patch subject: [PATCH v1 1/2] coresight: Add remote etm support
+config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20231108/202311081053.fWRkXGH0-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231108/202311081053.fWRkXGH0-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311081053.fWRkXGH0-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/hwtracing/coresight/coresight-remote-etm.c:312:12: warning: no previous prototype for 'remote_etm_init' [-Wmissing-prototypes]
+     312 | int __init remote_etm_init(void)
+         |            ^~~~~~~~~~~~~~~
+>> drivers/hwtracing/coresight/coresight-remote-etm.c:318:13: warning: no previous prototype for 'remote_etm_exit' [-Wmissing-prototypes]
+     318 | void __exit remote_etm_exit(void)
+         |             ^~~~~~~~~~~~~~~
 
 
-On 11/3/2023 10:42 AM, Viresh Kumar wrote:
-> On 02-11-23, 07:09, Bjorn Helgaas wrote:
->> On Thu, Nov 02, 2023 at 11:00:13AM +0530, Viresh Kumar wrote:
->>> On 01-11-23, 17:17, Bjorn Helgaas wrote:
->>>> Can you expand "OPP" somewhere so we know what it stands for?  I'm
->>>> sure everybody knows except me :)
->>> It is "Operating Performance Points", defined here:
->>>
->>> Documentation/power/opp.rst
->> Thanks; I meant in the subject or commit log of the next revision, of
->> course.
-> Yeah, I understood that. Krishna shall do it in next version I believe.
->
-Hi All,
+vim +/remote_etm_init +312 drivers/hwtracing/coresight/coresight-remote-etm.c
 
-I will do this in my next patch both commit message and ICC voting 
-through OPP
+   311	
+ > 312	int __init remote_etm_init(void)
+   313	{
+   314		return platform_driver_register(&remote_etm_driver);
+   315	}
+   316	module_init(remote_etm_init);
+   317	
+ > 318	void __exit remote_etm_exit(void)
+   319	{
+   320		platform_driver_unregister(&remote_etm_driver);
+   321	}
+   322	module_exit(remote_etm_exit);
+   323	
 
-got stuck in some other work, will try to send new series as soon as 
-possible.
-
-- Krishna Chaitanya.
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
