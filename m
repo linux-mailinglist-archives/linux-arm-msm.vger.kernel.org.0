@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8C457E514C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:45:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA3AE7E5163
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:53:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 062C31C20941
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 07:45:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A4107281391
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 07:53:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E424AD2EF;
-	Wed,  8 Nov 2023 07:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ED22D50F;
+	Wed,  8 Nov 2023 07:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kz3HEava"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="idV0dt1Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63267D2F0
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 07:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D24D505
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 07:53:12 +0000 (UTC)
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C15411706;
-	Tue,  7 Nov 2023 23:45:46 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A86Gk58009326;
-	Wed, 8 Nov 2023 07:44:58 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 152C4199;
+	Tue,  7 Nov 2023 23:53:12 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A85xPJL013886;
+	Wed, 8 Nov 2023 07:48:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=oGKLdo3NPJ5cRCFZ+eE7FWQBivkD2Wt2J//M4dNAs/s=;
- b=kz3HEavag4zn6s677HTpkQTx00RiNurPkmS/Q1ACbgPCk1FnlVj9X9DVVP1RQNlG/KUO
- xxqtQsbkQ4I7u4Lkg03kzGO6q6TQSj3ssMpUCsGIFV3u0kTNZqqetqDp/OAoRe8tTl2F
- DVe8rbIUO3swkT4+W1pwDkeyobbROnoQLPaCUItY3dVQXuev6aycBQuoy8/OI190/Tmb
- 47GNJY/E2Jkf+Ne4A8/LdgqJLLhRN7xpf1mL9lwtBzY4amROdcxE9JDkTHIk3GmNuIyM
- f6T0TH/EmXGyf7vOjYS0SYZHZwwAX/kxsj6iivIi5oCKuy5CyDEBaN8dH14580tdWEVG Yw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7xyu0sex-1
+ bh=DSdKhTWjAzHr2mcHRgsJUwEb5EUT4mdrBCAfJ1bYdK8=;
+ b=idV0dt1YILpTkyt0O5dsfYjgcbd1kosGufIxMqo8Vy/9ww5/4Z6icaqRZjezZm6FMfNH
+ 4cMXBclqX+95qULaq13Cl5I9sPVzDc1lPdoW3N0Wiuyohb13jR4KZA0zxUvm6ZpbK4Jv
+ TyBDnJZIloYEUeiIFDSbgJHAILpVaWRFM75G4AoDXaDpax3rEz7T19cl9kN7VY4LHd2m
+ o/NjxB1c5Y1mbXbupLo4BRQkJd1nx7+/n9iO9uww+1n/pKK140x2JNg0OryQJGKBZ+9X
+ NxM9S4eDp0dCeWm4HeZJ5/UIbAc3j+2Xq4L9FVKgDIYIHfmicml+2zxUtrh6X7Iy5or7 gA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7wt28wqn-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Nov 2023 07:44:58 +0000
+	Wed, 08 Nov 2023 07:48:00 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A87ivZs002711
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A87lxE3030244
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Nov 2023 07:44:57 GMT
+	Wed, 8 Nov 2023 07:47:59 GMT
 Received: from [10.253.34.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
- 2023 23:44:51 -0800
-Message-ID: <cbe26ea4-07b9-9922-07f5-d4b96f910b56@quicinc.com>
-Date: Wed, 8 Nov 2023 15:44:49 +0800
+ 2023 23:47:55 -0800
+Message-ID: <4efa0d56-7c36-2e4f-5597-fbade94231b1@quicinc.com>
+Date: Wed, 8 Nov 2023 15:47:53 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,139 +57,99 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
-Subject: Re: [PATCH v2 1/7] scsi: ufs: host: Rename structure ufs_dev_params
- to ufs_host_params
+Subject: Re: [PATCH v2 2/7] scsi: ufs: ufs-qcom: Setup host power mode during
+ init
+Content-Language: en-US
 To: Andrew Halaney <ahalaney@redhat.com>, Can Guo <cang@qti.qualcomm.com>
 CC: <bvanassche@acm.org>, <mani@kernel.org>, <stanley.chu@mediatek.com>,
         <adrian.hunter@intel.com>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
         <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, Alim Akhtar <alim.akhtar@samsung.com>,
-        "James
- E.J. Bottomley" <jejb@linux.ibm.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
+        <linux-scsi@vger.kernel.org>,
+        "Bao D . Nguyen" <quic_nguyenb@quicinc.com>,
+        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?=
-	<u.kleine-koenig@pengutronix.de>,
-        Brian Masney <bmasney@redhat.com>,
-        "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES"
-	<linux-arm-kernel@lists.infradead.org>,
-        "open list:ARM/SAMSUNG S3C, S5P AND
- EXYNOS ARM ARCHITECTURES" <linux-samsung-soc@vger.kernel.org>,
-        open list
-	<linux-kernel@vger.kernel.org>,
-        "moderated list:UNIVERSAL FLASH STORAGE HOST
- CONTROLLER DRIVER..." <linux-mediatek@lists.infradead.org>,
-        "open
- list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..."
-	<linux-arm-msm@vger.kernel.org>
+        "James E.J. Bottomley"
+	<jejb@linux.ibm.com>,
+        "open list:ARM/QUALCOMM SUPPORT"
+	<linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
 References: <1699332374-9324-1-git-send-email-cang@qti.qualcomm.com>
- <1699332374-9324-2-git-send-email-cang@qti.qualcomm.com>
- <fcovysoo6vxvqdrypfbnfyclrmifibio46rne5zhiqnmqhzd7k@5ltemasdhfxp>
-Content-Language: en-US
+ <1699332374-9324-3-git-send-email-cang@qti.qualcomm.com>
+ <pami4442fspxmmyg32jjn2iyzozkyeblcuzwpmkql7wfa3xvq5@ftblajt7hsgo>
 From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <fcovysoo6vxvqdrypfbnfyclrmifibio46rne5zhiqnmqhzd7k@5ltemasdhfxp>
+In-Reply-To: <pami4442fspxmmyg32jjn2iyzozkyeblcuzwpmkql7wfa3xvq5@ftblajt7hsgo>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Zg3DmZ3qNhekEerDGSpqD2-ivhjgznXo
-X-Proofpoint-GUID: Zg3DmZ3qNhekEerDGSpqD2-ivhjgznXo
+X-Proofpoint-ORIG-GUID: b9zSSijwM2iyoYOSrAZwlT2m6ktxGKEQ
+X-Proofpoint-GUID: b9zSSijwM2iyoYOSrAZwlT2m6ktxGKEQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-08_01,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- impostorscore=0 priorityscore=1501 mlxlogscore=999 adultscore=0
- suspectscore=0 clxscore=1011 malwarescore=0 phishscore=0 spamscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311080062
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ spamscore=0 phishscore=0 bulkscore=0 adultscore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 clxscore=1015 mlxlogscore=999
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311080063
 
 Hi Andrew,
 
-On 11/8/2023 3:36 AM, Andrew Halaney wrote:
-> On Mon, Nov 06, 2023 at 08:46:07PM -0800, Can Guo wrote:
+On 11/8/2023 4:14 AM, Andrew Halaney wrote:
+> On Mon, Nov 06, 2023 at 08:46:08PM -0800, Can Guo wrote:
 >> From: Can Guo <quic_cang@quicinc.com>
 >>
->> Structure ufs_dev_params is actually used in UFS host vendor drivers to
->> declare host specific power mode parameters, like ufs_<vendor>_params or
->> host_cap, which makes the code not very straightforward to read. Rename the
->> structure ufs_dev_params to ufs_host_params and unify the declarations in
->> all vendor drivers to host_params.
+>> Setup host power mode and its limitations during UFS host driver init to
+>> avoid repetitive work during every power mode change.
 >>
->> In addition, rename the two functions ufshcd_init_dev_pwr_param() and
-> nit: s/ufshcd_init_dev_pwr_param/ufshcd_init_pwr_dev_param/
-sure
->
->> ufshcd_get_dev_pwr_param() which work based on the ufs_host_params to
-> nit: s/ufshcd_get_dev_pwr_param/ufshcd_get_pwr_dev_param/
-sure
->
->> ufshcd_init_host_param() and ufshcd_negotiate_pwr_param() respectively to
->> avoid confusions.
->>
->> This change does not change any functionalities or logic.
->>
+>> Co-developed-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+>> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
 >> Signed-off-by: Can Guo <quic_cang@quicinc.com>
 >> ---
->>   drivers/ufs/host/ufs-exynos.c    |  7 +++---
->>   drivers/ufs/host/ufs-hisi.c      | 11 ++++-----
->>   drivers/ufs/host/ufs-mediatek.c  | 12 ++++------
->>   drivers/ufs/host/ufs-qcom.c      | 12 ++++------
->>   drivers/ufs/host/ufshcd-pltfrm.c | 49 ++++++++++++++++++++--------------------
->>   drivers/ufs/host/ufshcd-pltfrm.h | 10 ++++----
->>   6 files changed, 47 insertions(+), 54 deletions(-)
+>>   drivers/ufs/host/ufs-qcom.c | 22 ++++++++++++++--------
+>>   drivers/ufs/host/ufs-qcom.h |  1 +
+>>   2 files changed, 15 insertions(+), 8 deletions(-)
 >>
-> <snip>
->
->> diff --git a/drivers/ufs/host/ufshcd-pltfrm.c b/drivers/ufs/host/ufshcd-pltfrm.c
->> index da2558e..6e65b61 100644
->> --- a/drivers/ufs/host/ufshcd-pltfrm.c
->> +++ b/drivers/ufs/host/ufshcd-pltfrm.c
->> @@ -285,17 +285,17 @@ static int ufshcd_parse_operating_points(struct ufs_hba *hba)
->>   }
->>   
->>   /**
->> - * ufshcd_get_pwr_dev_param - get finally agreed attributes for
->> + * ufshcd_negotiate_pwr_param - get finally agreed attributes for
->>    *                            power mode change
->> - * @pltfrm_param: pointer to platform parameters
->> + * @host_param: pointer to platform parameters
->>    * @dev_max: pointer to device attributes
->>    * @agreed_pwr: returned agreed attributes
->>    *
->>    * Return: 0 on success, non-zero value on failure.
->>    */
->> -int ufshcd_get_pwr_dev_param(const struct ufs_dev_params *pltfrm_param,
->> -			     const struct ufs_pa_layer_attr *dev_max,
->> -			     struct ufs_pa_layer_attr *agreed_pwr)
->> +int ufshcd_negotiate_pwr_param(const struct ufs_host_params *host_param,
->> +			       const struct ufs_pa_layer_attr *dev_max,
->> +			       struct ufs_pa_layer_attr *agreed_pwr)
+>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>> index aee66a3..cc0eb37 100644
+>> --- a/drivers/ufs/host/ufs-qcom.c
+>> +++ b/drivers/ufs/host/ufs-qcom.c
+>> @@ -898,7 +898,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>>   				struct ufs_pa_layer_attr *dev_req_params)
 >>   {
->>   	int min_pltfrm_gear;
-> If you're going to change pltfrm -> host, maybe do so for
-> min_pltfrm_gear too? I think this all reads nicer with the functions
-> changed as is, but the consistency would be nice in my opinion.
+>>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>> -	struct ufs_host_params host_params;
+>> +	struct ufs_host_params *host_params = &host->host_params;
+>>   	int ret = 0;
+>>   
+>>   	if (!dev_req_params) {
+>> @@ -908,13 +908,7 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>>   
+>>   	switch (status) {
+>>   	case PRE_CHANGE:
+>> -		ufshcd_init_host_param(&host_params);
+>> -		host_params.hs_rate = UFS_QCOM_LIMIT_HS_RATE;
+> You drop the setting of hs_rate in your new function. It seems setting that's
+> also overkill since UFS_QCOM_LIMIT_HS_RATE == PA_HS_MODE_B. hs_rate is
+> already set to that in ufshcd_init_host_param(), so removing it makes
+> sense.
+>
+> Can you remove it prior in its own patch, and remove the now unused
+> UFS_QCOM_LIMIT_HS_RATE as well from ufs-qcom.h?
 
-Sure, will address in next version.
+Sure, will address this in next version.
 
 >
-> Outside of those nits, I think this reads nicer now as well.
+> With that in place this seems like a good improvement:
 >
 > Acked-by: Andrew Halaney <ahalaney@redhat.com>
 
 
 Thanks,
 
-Can Guo
+Can Guo.
 
 
