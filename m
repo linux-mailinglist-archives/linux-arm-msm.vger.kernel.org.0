@@ -1,205 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E6F47E50E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:21:44 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CCCC7E511F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:36:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 882D21C2095E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 07:21:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB1CF2813AC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 07:36:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17118D26C;
-	Wed,  8 Nov 2023 07:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45EF3D296;
+	Wed,  8 Nov 2023 07:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o5dEzm8Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KtoX//0U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C779D266;
-	Wed,  8 Nov 2023 07:21:37 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C09AF10F9;
-	Tue,  7 Nov 2023 23:21:36 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A84TMvP024836;
-	Wed, 8 Nov 2023 07:21:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=fWksQUMil+B/Wy7CX7XDZrLx6f9mZ/XXlqnJLxZ7SOE=;
- b=o5dEzm8YHCVTB0kZURvBFg3/cNdasvbDoIykepPDReJiDAdZ6Z5TmhjHWHAsHZGAK75+
- vbg71byyk0uCku0VNZQGRZKqciFXVXRhZysVLHV8DriiaWfKCFOCBfI1XxANn6vfzrH1
- nItuiVCqrtJTHIqtKwzTNyc4FLBismth7DwIy2o7xl9UoO51vyvpIDkowp72Yw27UfpS
- hckabGhfDqXvXFZp/4Xm12eS5BABtzJwDR3Czskts7D8adRQjJNoPggQjJhLyha8qRb6
- qX6OP/n+ncIe6TM3yocxEPlCFB9uIiDeGKh7Xc8n/ZtxZS88y+58hRxvhDYmljXyUvOI vg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w2dry84-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Nov 2023 07:21:24 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A87LNLj028235
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Nov 2023 07:21:23 GMT
-Received: from [10.239.133.211] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Tue, 7 Nov
- 2023 23:21:19 -0800
-Message-ID: <d04c9db2-6198-46d4-81be-689a221a51ac@quicinc.com>
-Date: Wed, 8 Nov 2023 15:21:17 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234BCD2E9;
+	Wed,  8 Nov 2023 07:36:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 977B0C433C8;
+	Wed,  8 Nov 2023 07:36:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699429015;
+	bh=SSzKXj4HYgTm7zHPy0rOpxw6Ed5QTb2H+dQfnhkXJKo=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=KtoX//0UQupx8fDj+h4c+kDhmePhtb5376wo7rMVwR1m6GtKVyk/hK+gG/YFXt4Z3
+	 rfIZTIJc038CJZ7Oay34o7KxwGM8YoTJ8/Dn4BKjqPcxPDevX6FYe69hxZqtMH3wtv
+	 Vl8hBOqHueRu+ZsOAXP2idUZRgiPeTBuL7hMvYtyMYuQV6N1Qxj5V5NbqXgPfvrqlU
+	 mJR35h9onw5AkfOJqKoUcYcX/VvGW+gdo8HmVH34DzZWTAucJKvEt1NnDMA0fsIb/s
+	 q7eDl1vxJ4n6yPHPmvkUh+jxWOPwVRM7U0XBCE82dbmnB08IKLZ+94wUMfilgqeHct
+	 84lsNcTGDv4GQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7417AC4332F;
+	Wed,  8 Nov 2023 07:36:55 +0000 (UTC)
+From: Fenglin Wu via B4 Relay <devnull+quic_fenglinw.quicinc.com@kernel.org>
+Subject: [PATCH RESEND v7 0/3] Add support for vibrator in multiple PMICs
+Date: Wed, 08 Nov 2023 15:36:33 +0800
+Message-Id: <20231108-pm8xxx-vibrator-v7-0-632c731d25a8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/8] dt-bindings: arm: Add support for CMB element size
-From: Tao Zhang <quic_taozha@quicinc.com>
-To: Rob Herring <robh@kernel.org>
-CC: Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin
-	<alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <andersson@kernel.org>
-References: <1698202408-14608-1-git-send-email-quic_taozha@quicinc.com>
- <1698202408-14608-2-git-send-email-quic_taozha@quicinc.com>
- <20231026212546.GA420866-robh@kernel.org>
- <15cbd29f-100c-48cc-9fc6-fde222a783b1@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <15cbd29f-100c-48cc-9fc6-fde222a783b1@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uzRSf08sCGLtn-KirOosotmjF8pp7ERp
-X-Proofpoint-ORIG-GUID: uzRSf08sCGLtn-KirOosotmjF8pp7ERp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-08_01,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- clxscore=1015 mlxlogscore=999 mlxscore=0 suspectscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311080059
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-input@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, quic_collinsd@quicinc.com, 
+ quic_subbaram@quicinc.com, quic_kamalw@quicinc.com, jestar@qti.qualcomm.com, 
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ Fenglin Wu <quic_fenglinw@quicinc.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1699429013; l=2464;
+ i=quic_fenglinw@quicinc.com; s=20230725; h=from:subject:message-id;
+ bh=SSzKXj4HYgTm7zHPy0rOpxw6Ed5QTb2H+dQfnhkXJKo=;
+ b=w3GvfpwJQDcTKDhpETrdjoDKdj197h/+qiHfVkUkJNswYpwyg8QvMme8o2T5kCRvhdf2W26AM
+ qNQoRzbn6QyBTaZ6pPu7f5QcGQUzWTnyC4Fy8f0aW0+uYgfWxqUvu7L
+X-Developer-Key: i=quic_fenglinw@quicinc.com; a=ed25519;
+ pk=hleIDz3Unk1zeiwwOnZUjoQVMMelRancDFXg927lNjI=
+X-Endpoint-Received:
+ by B4 Relay for quic_fenglinw@quicinc.com/20230725 with auth_id=68
+X-Original-From: Fenglin Wu <quic_fenglinw@quicinc.com>
+Reply-To: <quic_fenglinw@quicinc.com>
 
+Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, PM7550BA.
+It is very similar to the vibrator module inside PM8916 which is supported in
+pm8xxx-vib driver but just the drive amplitude is controlled with 2 registers,
+and the register base offset in each PMIC is different.
 
-On 11/1/2023 2:29 PM, Tao Zhang wrote:
->
-> On 10/27/2023 5:25 AM, Rob Herring wrote:
->> On Wed, Oct 25, 2023 at 10:53:21AM +0800, Tao Zhang wrote:
->>> Add property "qcom,cmb-elem-size" to support CMB(Continuous
->>> Multi-Bit) element for TPDM. The associated aggregator will read
->>> this size before it is enabled. CMB element size currently only
->>> supports 32-bit and 64-bit.
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
->>> ---
->>>   .../bindings/arm/qcom,coresight-tpdm.yaml          | 27 
->>> ++++++++++++++++++++++
->>>   1 file changed, 27 insertions(+)
->>>
->>> diff --git 
->>> a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml 
->>> b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->>> index 61ddc3b..f9a2025 100644
->>> --- a/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->>> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tpdm.yaml
->>> @@ -52,6 +52,14 @@ properties:
->>>       $ref: /schemas/types.yaml#/definitions/uint8
->>>       enum: [32, 64]
->>>   +  qcom,cmb-element-size:
->> What are the units? Use '-bits' suffix.
->
-> Yes, its unit should be bit.
->
-> Do you mean that you prefer to use "qcom, cmb-element-size-bits"?
->
-> Do I also need to replace "qcom, dsb-element-size" with "qcom, 
-> dsb-element-size-bits".
+Changes in v7;
+  1. Fix a typo: SSBL_VIB_DRV_REG --> SSBI_VIB_DRV_REG
+  2. Move the hw_type switch case in pm8xxx_vib_set() to the refactoring
+     change.
 
-I will continue to use the property name "qcom, cmb-element-size" in 
-order to be consistent with "qcom, dsb-element-size".
+Changes in v6:
+  1. Add "qcom,pmi632-vib" as a standalone compatible string.
 
-Let me know if you have any concerns about this.
+Changes in v5:
+  1. Drop "qcom,spmi-vib-gen2" generic compatible string as requested
+     and use device specific compatible strings only.
 
+Changes in v4:
+  1. Update to use the combination of the HW type and register offset
+     as the constant match data, the register base address defined in
+     'reg' property will be added when accessing SPMI registers using
+     regmap APIs.
+  2. Remove 'qcom,spmi-vib-gen1' generic compatible string.
 
-Best,
+Changes in v3:
+  1. Refactor the driver to support different type of the vibrators with
+    better flexibility by introducing the HW type with corresponding
+    register fields definitions.
+  2. Add 'qcom,spmi-vib-gen1' and 'qcom,spmi-vib-gen2' compatible
+    strings, and add PMI632, PM7250B, PM7325B, PM7550BA as compatbile as
+    spmi-vib-gen2.
 
-Tao
+Changes in v2:
+  Remove the "pm7550ba-vib" compatible string as it's compatible with pm7325b.
 
->
->>
->>> +    description:
->>> +      Specifies the CMB(Continuous Multi-Bit) element size 
->>> supported by
->>> +      the monitor. The associated aggregator will read this size 
->>> before it
->>> +      is enabled. CMB element size currently only supports 32-bit 
->>> and 64-bit.
->> The enum says 8-bit is supported.
->
-> Yes, 8-bit is supported. I will update the description in the next 
-> patch series.
->
->
-> Best,
->
-> Tao
->
->>
->>> +    $ref: /schemas/types.yaml#/definitions/uint8
->>> +    enum: [8, 32, 64]
->>> +
->>>     qcom,dsb-msrs-num:
->>>       description:
->>>         Specifies the number of DSB(Discrete Single Bit) MSR(mux 
->>> select register)
->>> @@ -110,4 +118,23 @@ examples:
->>>         };
->>>       };
->>>   +    tpdm@6c29000 {
->>> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
->>> +      reg = <0x06c29000 0x1000>;
->>> +      reg-names = "tpdm-base";
->>> +
->>> +      qcom,cmb-element-size = /bits/ 8 <64>;
->>> +
->>> +      clocks = <&aoss_qmp>;
->>> +      clock-names = "apb_pclk";
->>> +
->>> +      out-ports {
->>> +        port {
->>> +          tpdm_ipcc_out_funnel_center: endpoint {
->>> +            remote-endpoint =
->>> +              <&funnel_center_in_tpdm_ipcc>;
->>> +          };
->>> +        };
->>> +      };
->>> +    };
->>>   ...
->>> -- 
->>> 2.7.4
->>>
-> _______________________________________________
-> CoreSight mailing list -- coresight@lists.linaro.org
-> To unsubscribe send an email to coresight-leave@lists.linaro.org
+Fenglin Wu (3):
+  input: pm8xxx-vib: refactor to easily support new SPMI vibrator
+  dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
+  input: pm8xxx-vibrator: add new SPMI vibrator support
+
+ .../bindings/input/qcom,pm8xxx-vib.yaml       |  16 +-
+ drivers/input/misc/pm8xxx-vibrator.c          | 171 ++++++++++++------
+ 2 files changed, 132 insertions(+), 55 deletions(-)
+
+--
+2.25.1
+
+---
+Fenglin Wu (3):
+      input: pm8xxx-vib: refactor to easily support new SPMI vibrator
+      dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
+      input: pm8xxx-vibrator: add new SPMI vibrator support
+
+ .../devicetree/bindings/input/qcom,pm8xxx-vib.yaml |  16 +-
+ drivers/input/misc/pm8xxx-vibrator.c               | 170 ++++++++++++++-------
+ 2 files changed, 131 insertions(+), 55 deletions(-)
+---
+base-commit: 650cda2ce25f08e8fae391b3ba6be27e7296c6a5
+change-id: 20230925-pm8xxx-vibrator-62df3df46a6c
+
+Best regards,
+-- 
+Fenglin Wu <quic_fenglinw@quicinc.com>
+
 
