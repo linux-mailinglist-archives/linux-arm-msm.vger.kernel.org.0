@@ -1,129 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5F697E5227
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 09:49:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D4FD7E522B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 09:50:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CFD551C20949
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:49:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DD0A1C20A8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 08:50:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2914B6FB1;
-	Wed,  8 Nov 2023 08:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C782DD266;
+	Wed,  8 Nov 2023 08:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kkmtpINj"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="nlFIObWs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26CA6AC2
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 08:49:28 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3ED33197;
-	Wed,  8 Nov 2023 00:49:28 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A82qV4Y014988;
-	Wed, 8 Nov 2023 08:46:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DCA0oQZXop6+akQSIhzDloGbKf2fbuO5jWBs663BxbI=;
- b=kkmtpINjF/k7dCAz+qInDyKf3X0QDy3LhSjn9vzEaQIZTn1imYBxXdPE1+NnIJ/Oehi4
- SxbefjKdDJsYWWYJ5XrwzvnVkiLuj8UpWDrbyJoTGvw/ogmXkrci9Ed+ji7tnfl2m5gP
- mvNFrcgEhrOe7cPy/L3mwAnHM0yLEYnDHlpYHMg3hwD+YIg3S0S8doQAtbtVTgwX6Rxr
- TC3IOqZtouHt9OYPft+gA8lOwOIlXygSw6BJwFSxBgAtZQjTKs/1guWwH08zkY75HryM
- Ysymr+Xu6/1+DOymm/d8bHj4NYxqefZM/32WoAZw8mrNFnkeMyZcBjv9XdyYAM+e2Eq9 NQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w2ds4dy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Nov 2023 08:46:10 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A88k9ZF006418
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 8 Nov 2023 08:46:09 GMT
-Received: from [10.253.34.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 8 Nov
- 2023 00:46:05 -0800
-Message-ID: <c1ec8f66-6f3d-ae1c-6fca-27f4d6e91b8a@quicinc.com>
-Date: Wed, 8 Nov 2023 16:46:03 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372D9D268
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 08:50:22 +0000 (UTC)
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A47DD170F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 00:50:21 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-6b709048d8eso5677925b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Nov 2023 00:50:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1699433421; x=1700038221; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5zK82/6BqvKNKQgaDqfy7Pto0Ojlpc/8oMTwUMvbxWs=;
+        b=nlFIObWs3bGnCj6sd6cH+9wiWNOEFjU0yJwUAvErcNrxxSGB7lLMWgUYEylDDxfLeA
+         YtKfchj0z3WfuIPN7Tl1AHjPCdBNovlzNV8wy471Qw0ozuYGrIehb96noDYjgikmdOOc
+         3aimqfXW6G4GEu3fj4TVhLDxBcPWwmOplQVsE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699433421; x=1700038221;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5zK82/6BqvKNKQgaDqfy7Pto0Ojlpc/8oMTwUMvbxWs=;
+        b=IcFDAXtYG9/106I943w0Bk+xt4tscCL5DqpYagJCXvAN2bFpFRdCz+jKyW8KIMrLuK
+         xt36/X6tplTiISkjlQWZ/yHEniDGcmnILzRZIaWoEHiXU3ZsZ41SAh663cbqdGFMVL3S
+         xUsi3ZcDhMGaoQQERSRGP3ZNQm8CxlAt+CUIT0vFLZOQoyaHpxe74J5/pDhWnh7fvTyx
+         +Pjz8XGcsGVkN/mwfdTlnk/J6PAqqyB/LXX2F7ruJFsUtJvb/BShnN/w8Si0EB7cQBGe
+         o/5+mDcjKhXifIldoiIaSv799oevpK2nxIuwhN3Zvo0/0kwznOl3NqwGSfMgAkJPmqjp
+         MSng==
+X-Gm-Message-State: AOJu0YyNV6Ya4GpbzylnvBND1efVt6S2SFpwLb5j1iZPdGrANL8046uP
+	iamMLC53FjOXRvzrqsnBY42u6Q==
+X-Google-Smtp-Source: AGHT+IEHQkQi7fFj1XBDdA1qkqIbF8LsDwsuYzZpYRjILqB0R+pLZlNNyUqPLPXG7J8Xz/MdT6Nc7g==
+X-Received: by 2002:a05:6a00:cc8:b0:6be:2e07:5c5c with SMTP id b8-20020a056a000cc800b006be2e075c5cmr1240783pfv.20.1699433421074;
+        Wed, 08 Nov 2023 00:50:21 -0800 (PST)
+Received: from chromium.org (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
+        by smtp.gmail.com with ESMTPSA id n28-20020a056a00213c00b006c34a04c782sm8482914pfj.61.2023.11.08.00.50.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Nov 2023 00:50:20 -0800 (PST)
+Date: Wed, 8 Nov 2023 08:50:16 +0000
+From: Tomasz Figa <tfiga@chromium.org>
+To: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
+	ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+	gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl,
+	nicolas.dufresne@collabora.com, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+	kernel@collabora.com
+Subject: Re: [PATCH v14 05/56] media: videobuf2: Access vb2_queue bufs array
+ through helper functions
+Message-ID: <20231108085016.3kmhmdroh4qs53f5@chromium.org>
+References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
+ <20231031163104.112469-6-benjamin.gaignard@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 5/7] scsi: ufs: ufs-qcom: Set initial PHY gear to max
- HS gear for HW ver 5 and newer
-Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>, Can Guo <cang@qti.qualcomm.com>
-CC: <bvanassche@acm.org>, <stanley.chu@mediatek.com>,
-        <adrian.hunter@intel.com>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J.
- Bottomley" <jejb@linux.ibm.com>,
-        "open list:UNIVERSAL FLASH STORAGE HOST
- CONTROLLER DRIVER..." <linux-arm-msm@vger.kernel.org>,
-        open list
-	<linux-kernel@vger.kernel.org>
-References: <1699332374-9324-1-git-send-email-cang@qti.qualcomm.com>
- <1699332374-9324-6-git-send-email-cang@qti.qualcomm.com>
- <20231108053415.GE3296@thinkpad>
-From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <20231108053415.GE3296@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vn2uCaR1X_8sh0l9WS2-A_NX1qY1BD2w
-X-Proofpoint-ORIG-GUID: vn2uCaR1X_8sh0l9WS2-A_NX1qY1BD2w
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-08_01,2023-11-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- clxscore=1015 mlxlogscore=999 mlxscore=0 suspectscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311080072
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231031163104.112469-6-benjamin.gaignard@collabora.com>
 
-Hi Mani,
-
-On 11/8/2023 1:34 PM, Manivannan Sadhasivam wrote:
-> On Mon, Nov 06, 2023 at 08:46:11PM -0800, Can Guo wrote:
->> From: Can Guo <quic_cang@quicinc.com>
->>
->> Set the initial PHY gear to max HS gear for hosts with HW ver 5 and newer.
->>
+On Tue, Oct 31, 2023 at 05:30:13PM +0100, Benjamin Gaignard wrote:
+> This patch adds 2 helpers functions to add and remove vb2 buffers
+> from a queue. With these 2 and vb2_get_buffer(), bufs field of
+> struct vb2_queue becomes like a private member of the structure.
 > 
-> How about,
+> After each call to vb2_get_buffer() we need to be sure that we get
+> a valid pointer in preparation for when buffers can be deleted.
 > 
-> "For UFSHC >= 5.0, set the initial PHY gear based on the gear value returned by
-> ufs_qcom_get_hs_gear(). For the rest, use the existing default value of G2."
->
-
-It is much better, will improve in next version.
-
->> This patch is not changing any functionalities or logic but only a
->> preparation patch for the next patch in this series.
->>
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> ---
+>  .../media/common/videobuf2/videobuf2-core.c   | 151 +++++++++++++-----
+>  .../media/common/videobuf2/videobuf2-v4l2.c   |  50 ++++--
+>  2 files changed, 149 insertions(+), 52 deletions(-)
 > 
-> You are also moving the default phy_gear code to ufs_qcom_set_host_params(). So
-> it should be mentioned in the commit message.
-> 
+> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> index 968b7c0e7934..b406a30a9b35 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> @@ -408,6 +408,31 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
+>  		vb->skip_cache_sync_on_finish = 1;
+>  }
+>  
+> +/**
+> + * vb2_queue_add_buffer() - add a buffer to a queue
+> + * @q:	pointer to &struct vb2_queue with videobuf2 queue.
+> + * @vb:	pointer to &struct vb2_buffer to be added to the queue.
+> + * @index: index where add vb2_buffer in the queue
+> + */
+> +static void vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *vb, unsigned int index)
+> +{
+> +	WARN_ON(index >= VB2_MAX_FRAME || q->bufs[index]);
 
-Sure.
+nit: Would it make sense to also ensure that vb->vb2_queue is NULL?
 
-Thanks,
-Can Guo.
+> +
+> +	q->bufs[index] = vb;
+> +	vb->index = index;
+> +	vb->vb2_queue = q;
+> +}
+[snip]
+> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> index d19d82a75ac6..2ffb097bf00a 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> @@ -377,6 +377,12 @@ static int vb2_queue_or_prepare_buf(struct vb2_queue *q, struct media_device *md
+>  		return -EINVAL;
+>  	}
+>  
+> +	vb = vb2_get_buffer(q, b->index);
+> +	if (!vb) {
+> +		dprintk(q, 1, "%s: buffer %u is NULL\n", opname,  b->index);
+> +		return -EINVAL;
+> +	}
+> +
+
+Is this a leftover from earlier revisions? I think it shouldn't be
+needed anymore after the previous patch which changed the function to
+get vb as an argument.
+
+Best regards,
+Tomasz
 
