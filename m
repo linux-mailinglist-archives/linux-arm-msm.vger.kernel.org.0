@@ -1,126 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4504E7E5630
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 13:26:25 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2DA07E57E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 14:22:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 752211C20926
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 12:26:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 16CD7B20D35
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 13:22:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5530D17981;
-	Wed,  8 Nov 2023 12:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D13E019441;
+	Wed,  8 Nov 2023 13:22:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CWJaa7vP"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="MwnTr5tc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC441774F;
-	Wed,  8 Nov 2023 12:26:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F02C433C8;
-	Wed,  8 Nov 2023 12:26:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699446378;
-	bh=IAfCCDkyoqMwRgNhZZHV9D9EdJkD+fp8NviqqTM9R0o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CWJaa7vP/INIn8Y/fc9tSougRzydXlE+zcbYQV/yVWuoIQQkU88oDF3J8rgluf1w4
-	 o3Y918+q/6luxGdfVnKL98mUvhEGzRZCv9NCzm7LOQqwP4eGrGEAuRrJhr8w4qQuzz
-	 XvnP2NewCKvmW3KIqU0IGZSmTDw3iyZDufsEVDwo+noFH9jRybMEhDc8SfVIUVvLns
-	 kiqRu7dWltgp/UGQ9AAooKDDGL0NR87CUM+3MVSbIT2rxwZ1b2LtA2i7EUQZMwuyRj
-	 ULyIpLI+kJU9MYwSuxO2ScQf+slsvZK3RJWFP1tbawO705pVaOCwjdMOa1ydyYB8Vf
-	 coQGki1WJMKqQ==
-Date: Wed, 8 Nov 2023 12:26:13 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: cache: qcom,llcc: correct QDU1000 reg
- entries
-Message-ID: <20231108-hurricane-carefully-d9d3c1348f8c@spud>
-References: <20231107080436.16747-1-krzysztof.kozlowski@linaro.org>
- <0f76a5c1-14ce-cbfa-bbd9-b2826c4bbbdb@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275DD19446
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 13:22:29 +0000 (UTC)
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 258CD1BEB;
+	Wed,  8 Nov 2023 05:22:29 -0800 (PST)
+Received: from [100.98.136.55] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: benjamin.gaignard)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id E32426607688;
+	Wed,  8 Nov 2023 13:22:25 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1699449746;
+	bh=keD3VyqIJlhYmPuf+KK0sz1/ewEuRUY/RM4hVjgaOp8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MwnTr5tcEQ07rPmnL49bOTZBbbQXEUauQoH2hUWxYbWcILkRRUHUGI+Kfwl8ujTxZ
+	 X4NCiUOcZm6WGTwyNOEhNKmlPDSdYiQa33CK8x1nkxlIiBch3d4/XzOlWPFnLa5NLf
+	 DU3wE9CeONVPiXLY8WlLrse6MTAfW5H133jRPkgl8BpVQQbAOJQ7n5DHZQxRj9f2+l
+	 l0FyE14pIAevipTGcZMCmgHgo8AVIHH/u3b1yP/NE7MtKeXc6GG7BC0byfzYgDhaID
+	 9GFhzt8Utp/MjoIgT7L9sXnqyM13OUMoRyelQZNp9OyqInMCoEE0OyK4s/pjimKzzR
+	 zlas5P2+2Irxw==
+Message-ID: <adc94476-8188-4569-8a39-2a1fb6b2f9dc@collabora.com>
+Date: Wed, 8 Nov 2023 14:22:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="3PXY0uOgYwGgqLR6"
-Content-Disposition: inline
-In-Reply-To: <0f76a5c1-14ce-cbfa-bbd9-b2826c4bbbdb@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 08/56] media: videobuf2: Use vb2_get_num_buffers()
+ helper
+Content-Language: en-US
+To: Tomasz Figa <tfiga@chromium.org>
+Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
+ ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+ gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl,
+ nicolas.dufresne@collabora.com, linux-media@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+ kernel@collabora.com
+References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
+ <20231031163104.112469-9-benjamin.gaignard@collabora.com>
+ <20231108094223.rprskkeee47vaezy@chromium.org>
+From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+In-Reply-To: <20231108094223.rprskkeee47vaezy@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
 
---3PXY0uOgYwGgqLR6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Le 08/11/2023 à 10:42, Tomasz Figa a écrit :
+> On Tue, Oct 31, 2023 at 05:30:16PM +0100, Benjamin Gaignard wrote:
+>> Stop using queue num_buffers field directly, instead use
+>> vb2_get_num_buffers().
+>> This prepares for the future 'delete buffers' feature where there are
+>> holes in the buffer indices.
+>>
+>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+>> ---
+>>   .../media/common/videobuf2/videobuf2-core.c   | 92 +++++++++++--------
+>>   .../media/common/videobuf2/videobuf2-v4l2.c   |  4 +-
+>>   2 files changed, 54 insertions(+), 42 deletions(-)
+>>
+>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+>> index b406a30a9b35..c5c5ae4d213d 100644
+>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+>> @@ -444,13 +444,14 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>>   			     unsigned int num_buffers, unsigned int num_planes,
+>>   			     const unsigned plane_sizes[VB2_MAX_PLANES])
+>>   {
+>> +	unsigned int q_num_buffers = vb2_get_num_buffers(q);
+>>   	unsigned int buffer, plane;
+>>   	struct vb2_buffer *vb;
+>>   	int ret;
+>>   
+>>   	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
+>>   	num_buffers = min_t(unsigned int, num_buffers,
+>> -			    VB2_MAX_FRAME - q->num_buffers);
+>> +			    VB2_MAX_FRAME - q_num_buffers);
+> I guess it's safe in this specific situation, but was there any reason
+> behind not just calling vb2_get_num_buffers() directly here?
+>
+>>   
+>>   	for (buffer = 0; buffer < num_buffers; ++buffer) {
+>>   		/* Allocate vb2 buffer structures */
+>> @@ -470,7 +471,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>>   			vb->planes[plane].min_length = plane_sizes[plane];
+>>   		}
+>>   
+>> -		vb2_queue_add_buffer(q, vb, q->num_buffers + buffer);
+>> +		vb2_queue_add_buffer(q, vb, q_num_buffers + buffer);
+> In this case it should also be fine, but actually now this is a loop and if
+> somone doesn't know what the other code in the loop does, one could be
+> concerned that the num buffers actually could have changed, but we still
+> use the cached one that we got at the beginning of the function.
+>
+> (Ideally I'd imagine vb2_queue_add_buffer() to append the buffer
+> at the end of the queue and increment the num_buffers internally, but it
+> doesn't have to happen now, as this series is already quite complex...)
 
-On Tue, Nov 07, 2023 at 02:25:25PM +0530, Mukesh Ojha wrote:
->=20
->=20
-> On 11/7/2023 1:34 PM, Krzysztof Kozlowski wrote:
-> > Qualcomm QDU1000 DTSI comes with one LLCC0 base address as pointed by
-> > dtbs_check:
-> >=20
-> >    qdu1000-idp.dtb: system-cache-controller@19200000: reg-names:2: 'llc=
-c2_base' was expected
-> >=20
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >=20
-> > ---
-> >=20
-> > Recent LLCC patches were not tested on QDU1000 thus the LLCC is there
-> > broken.  This patch at least tries to bring some sense according to
-> > DTSI, but I have no clue what is here correct: driver, DTS or bindings.
-> > ---
-> >   Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/D=
-ocumentation/devicetree/bindings/cache/qcom,llcc.yaml
-> > index 580f9a97ddf7..d610b0be262c 100644
-> > --- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-> > +++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-> > @@ -64,6 +64,7 @@ allOf:
-> >           compatible:
-> >             contains:
-> >               enum:
-> > +              - qcom,qdu1000-llcc
-> >                 - qcom,sc7180-llcc
-> >                 - qcom,sm6350-llcc
->=20
-> Thanks, again.
->=20
-> Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+That will be the case later in the series when I replace num_buffers field
+by a bitmap. Until that I prefer to limit the changes in this loop.
 
-I'm assuming given your employer, this ack means that there is no
-llcc2_base on the qdu1000.
+>
+>>   		call_void_bufop(q, init_buffer, vb);
+>>   
+>>   		/* Allocate video buffer memory for the MMAP type */
+> [snip]
+>> @@ -2513,7 +2519,8 @@ void vb2_core_queue_release(struct vb2_queue *q)
+>>   	__vb2_cleanup_fileio(q);
+>>   	__vb2_queue_cancel(q);
+>>   	mutex_lock(&q->mmap_lock);
+>> -	__vb2_queue_free(q, q->num_buffers);
+>> +	__vb2_queue_free(q, vb2_get_num_buffers(q));
+>> +	q->num_buffers = 0;
+> Unrelated change?
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+No because I found a case where q->num_buffers wasn't correctly reset while testing.
 
-Cheers,
-Conor.
+>
+>>   	mutex_unlock(&q->mmap_lock);
+>>   }
+>>   EXPORT_SYMBOL_GPL(vb2_core_queue_release);
+>> @@ -2542,7 +2549,7 @@ __poll_t vb2_core_poll(struct vb2_queue *q, struct file *file,
+>>   	/*
+>>   	 * Start file I/O emulator only if streaming API has not been used yet.
+>>   	 */
+>> -	if (q->num_buffers == 0 && !vb2_fileio_is_active(q)) {
+>> +	if (vb2_get_num_buffers(q) == 0 && !vb2_fileio_is_active(q)) {
+>>   		if (!q->is_output && (q->io_modes & VB2_READ) &&
+>>   				(req_events & (EPOLLIN | EPOLLRDNORM))) {
+>>   			if (__vb2_init_fileio(q, 1))
+>> @@ -2580,7 +2587,7 @@ __poll_t vb2_core_poll(struct vb2_queue *q, struct file *file,
+>>   	 * For output streams you can call write() as long as there are fewer
+>>   	 * buffers queued than there are buffers available.
+>>   	 */
+>> -	if (q->is_output && q->fileio && q->queued_count < q->num_buffers)
+>> +	if (q->is_output && q->fileio && q->queued_count < vb2_get_num_buffers(q))
+>>   		return EPOLLOUT | EPOLLWRNORM;
+>>   
+>>   	if (list_empty(&q->done_list)) {
+>> @@ -2629,8 +2636,8 @@ struct vb2_fileio_buf {
+>>    * struct vb2_fileio_data - queue context used by file io emulator
+>>    *
+>>    * @cur_index:	the index of the buffer currently being read from or
+>> - *		written to. If equal to q->num_buffers then a new buffer
+>> - *		must be dequeued.
+>> + *		written to. If equal to number of already queued buffers
+>> + *		then a new buffer must be dequeued.
+> Hmm, that's a significant meaning change compared to the original text. Is
+> it indended?
 
---3PXY0uOgYwGgqLR6
-Content-Type: application/pgp-signature; name="signature.asc"
+Does "If equal to number of buffers in the vb2_queue then a new buffer must be dequeued."
+sound better for you ?
 
------BEGIN PGP SIGNATURE-----
+>
+>>    * @initial_index: in the read() case all buffers are queued up immediately
+>>    *		in __vb2_init_fileio() and __vb2_perform_fileio() just cycles
+>>    *		buffers. However, in the write() case no buffers are initially
+>> @@ -2640,7 +2647,7 @@ struct vb2_fileio_buf {
+>>    *		buffers. This means that initially __vb2_perform_fileio()
+>>    *		needs to know what buffer index to use when it is queuing up
+>>    *		the buffers for the first time. That initial index is stored
+>> - *		in this field. Once it is equal to q->num_buffers all
+>> + *		in this field. Once it is equal to num_buffers all
+> It's not clear what num_buffers means here. Would it make sense to instead
+> say "number of buffers in the vb2_queue"?
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZUt+ZQAKCRB4tDGHoIJi
-0u8iAP9Q5Ny4RSfKFakhQaf6p2q2ELHTZhnirexsH3kgpTx2xwEAgyelTaZCZv2D
-JaOhjbkF1boR3VmcF8YGORNiZXMeVAY=
-=L4Oy
------END PGP SIGNATURE-----
+Yes I will change that
 
---3PXY0uOgYwGgqLR6--
+>
+>>    *		available buffers have been queued and __vb2_perform_fileio()
+>>    *		should start the normal dequeue/queue cycle.
+>>    *
+>> @@ -2690,7 +2697,7 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>>   	/*
+>>   	 * Check if streaming api has not been already activated.
+>>   	 */
+>> -	if (q->streaming || q->num_buffers > 0)
+>> +	if (q->streaming || vb2_get_num_buffers(q) > 0)
+>>   		return -EBUSY;
+>>   
+>>   	/*
+>> @@ -2740,7 +2747,7 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>>   	/*
+>>   	 * Get kernel address of each buffer.
+>>   	 */
+>> -	for (i = 0; i < q->num_buffers; i++) {
+>> +	for (i = 0; i < vb2_get_num_buffers(q); i++) {
+>>   		/* vb can never be NULL when using fileio. */
+>>   		vb = vb2_get_buffer(q, i);
+>>   
+>> @@ -2759,18 +2766,23 @@ static int __vb2_init_fileio(struct vb2_queue *q, int read)
+>>   		/*
+>>   		 * Queue all buffers.
+>>   		 */
+>> -		for (i = 0; i < q->num_buffers; i++) {
+>> -			ret = vb2_core_qbuf(q, q->bufs[i], NULL, NULL);
+>> +		for (i = 0; i < vb2_get_num_buffers(q); i++) {
+>> +			struct vb2_buffer *vb2 = vb2_get_buffer(q, i);
+>> +
+>> +			if (!vb2)
+>> +				continue;
+>> +
+>> +			ret = vb2_core_qbuf(q, vb2, NULL, NULL);
+>>   			if (ret)
+>>   				goto err_reqbufs;
+>>   			fileio->bufs[i].queued = 1;
+>>   		}
+> Doesn't this part belong to the previous patch that changes q->bufs[x] to
+> vb2_get_buffer()?
+
+Yes I will change that too.
+
+>
+>>   		/*
+>>   		 * All buffers have been queued, so mark that by setting
+>> -		 * initial_index to q->num_buffers
+>> +		 * initial_index to num_buffers
+> What num_buffers?
+
+I will use your wording: "the number of buffers in the vb2_queue"
+
+>
+>>   		 */
+>> -		fileio->initial_index = q->num_buffers;
+>> -		fileio->cur_index = q->num_buffers;
+>> +		fileio->initial_index = vb2_get_num_buffers(q);
+>> +		fileio->cur_index = fileio->initial_index;
+>>   	}
+>>   
+>>   	/*
+>> @@ -2964,12 +2976,12 @@ static size_t __vb2_perform_fileio(struct vb2_queue *q, char __user *data, size_
+>>   		 * If we are queuing up buffers for the first time, then
+>>   		 * increase initial_index by one.
+>>   		 */
+>> -		if (fileio->initial_index < q->num_buffers)
+>> +		if (fileio->initial_index < vb2_get_num_buffers(q))
+>>   			fileio->initial_index++;
+>>   		/*
+>>   		 * The next buffer to use is either a buffer that's going to be
+>> -		 * queued for the first time (initial_index < q->num_buffers)
+>> -		 * or it is equal to q->num_buffers, meaning that the next
+>> +		 * queued for the first time (initial_index < num_buffers)
+>> +		 * or it is equal to num_buffers, meaning that the next
+> What num_buffers?
+
+Same here
+
+>
+> Best regards,
+> Tomasz
+> _______________________________________________
+> Kernel mailing list -- kernel@mailman.collabora.com
+> To unsubscribe send an email to kernel-leave@mailman.collabora.com
 
