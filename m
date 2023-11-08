@@ -1,80 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-206-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D98C27E5CE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 19:09:24 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E20F7E5CEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 19:10:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 939A128148D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 18:09:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E5461C20941
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 18:10:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3909F32C88;
-	Wed,  8 Nov 2023 18:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0A3A10A0E;
+	Wed,  8 Nov 2023 18:10:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eIzoqse1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E035B321B7;
-	Wed,  8 Nov 2023 18:09:18 +0000 (UTC)
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 624F71FEB;
-	Wed,  8 Nov 2023 10:09:18 -0800 (PST)
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6ce2ee17cb5so4391591a34.2;
-        Wed, 08 Nov 2023 10:09:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699466957; x=1700071757;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hnGahxah7u3QgZVPvtUjb4k93efx3g5ON8mE+tawIB0=;
-        b=qubwiyhWKrggunN/lL/wXUUwdVXbqj8YP0oQLo671sslcwH73zgGgsnEjGBAjyHODB
-         ydrBg2lijHLRJXwTAJc2I167kBvnOg/nM/6MmZbBvtXZTsg59Zg1L2SOxiAzamAs4wkj
-         vhMsUCsS0+sArSI2JEQtw3EK3i5rt9SGn6r+QK3nTjot8G4L6Oy3BCn7CS41qV+Lhh2F
-         tuzHfMe3ifvAm2SI5xg5SV4bF/ZcDGOhcD7byvcKh0TaeNUAcKiD2nfrUQsyRqGPhaE+
-         00mSF/vw8B61Qr1sYUlZKXnBUQktlD14hj2HaDH2xFDZIpKNnKSduMLkl1jfBg0TSGbL
-         7oQg==
-X-Gm-Message-State: AOJu0Yxsv8riAIqSiNjalugbO5TIec7gqh556cSkjCQ1M5+VnJQ21XIo
-	AQhiC9TVwgioHIJVch8YxrRSRc41bw==
-X-Google-Smtp-Source: AGHT+IH80TXU8x2dEy8NfsISE5Tz1j4RmhZpTxSuBSFCD6Fp9P0/NzEpZSn7wSjNfk+2BtrLisoGKg==
-X-Received: by 2002:a9d:69d9:0:b0:6bf:3f4:3edc with SMTP id v25-20020a9d69d9000000b006bf03f43edcmr2665760oto.22.1699466957554;
-        Wed, 08 Nov 2023 10:09:17 -0800 (PST)
-Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id v15-20020a4aad8f000000b005737ca61829sm950379oom.13.2023.11.08.10.09.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Nov 2023 10:09:16 -0800 (PST)
-Received: (nullmailer pid 2647761 invoked by uid 1000);
-	Wed, 08 Nov 2023 18:09:15 -0000
-Date: Wed, 8 Nov 2023 12:09:15 -0600
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, alsa-devel@alsa-project.org
-Subject: Re: [PATCH] ASoC: dt-bindings: qcom,sm8250: add SM8550 sound card
-Message-ID: <169946695488.2647474.4328961977911017338.robh@kernel.org>
-References: <20231106180422.170492-1-krzysztof.kozlowski@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1111732C87
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 18:10:45 +0000 (UTC)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80CF61FEB;
+	Wed,  8 Nov 2023 10:10:45 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A8E15Y8005641;
+	Wed, 8 Nov 2023 18:10:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2dDaqrLyD6bgBMl0XHyCu6Dr2G0wgU+OOOC2HymfpiQ=;
+ b=eIzoqse1eFYoOEi+9rIM1h3RevrobYkdQCJBXrF9Cx9QXtyVI01+Zjbg10r3di43HBIu
+ GG0bnnqJmZHJe87u9LEb+oZI40gfvGG4f/gylyEP98bxX2dW0UOG48SS5CGf9FRUwcFE
+ y0XP84rLYEuQUve1Idh+2tHp/wpAlHxc8T06MoQE7NbbWE8EuxtdMULUf/fp6ThIWY9F
+ l56y/mqtkDCoL/aqbPAfZ8ukXnLuHTmwNkMLm0OnavGsm5BTQAxdzUZnYn4kwWWZ8CWM
+ bD5AoGy8MXb4kRGK4Zbj73aJXUCzVEjiq1go4cWQaT35XdLNVv0vAOOA7rqLeqH9v8je UQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w7rag6k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Nov 2023 18:10:35 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A8IAXpF023228
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Nov 2023 18:10:33 GMT
+Received: from [10.71.110.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 8 Nov
+ 2023 10:10:32 -0800
+Message-ID: <b708df07-6812-df43-1313-cf6f1289fd47@quicinc.com>
+Date: Wed, 8 Nov 2023 10:10:32 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231106180422.170492-1-krzysztof.kozlowski@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v7 0/7] incorporate pm runtime framework and eDP clean up
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpoFRp+7GyO=F3Ar21tfG5Yt0cL6zkAquqg7D1XXQjp50Q@mail.gmail.com>
+ <55a4f98e-2772-e4fd-ae8a-132f92582c78@quicinc.com>
+ <CAA8EJpo9CFf-Z3eiuKPvwf-y6eGkSibro-q-=SBxKK_L-zFOBA@mail.gmail.com>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <CAA8EJpo9CFf-Z3eiuKPvwf-y6eGkSibro-q-=SBxKK_L-zFOBA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Am_BIKSb7zh0kfSKvK4xO3IHTv373wpf
+X-Proofpoint-ORIG-GUID: Am_BIKSb7zh0kfSKvK4xO3IHTv373wpf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-08_07,2023-11-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ mlxscore=0 mlxlogscore=625 priorityscore=1501 suspectscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311080149
 
 
-On Mon, 06 Nov 2023 19:04:22 +0100, Krzysztof Kozlowski wrote:
-> Add sound card for SM8550, which as of now looks fully compatible with
-> SM8450.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-
-Acked-by: Rob Herring <robh@kernel.org>
-
+On 11/7/2023 1:23 PM, Dmitry Baryshkov wrote:
+> On Tue, 7 Nov 2023 at 23:01, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>>
+>> On 11/6/2023 5:55 PM, Dmitry Baryshkov wrote:
+>>> On Sat, 7 Oct 2023 at 01:55, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>>>> The purpose of this patch series is to incorporate pm runtime framework
+>>>> into MSM eDP/DP driver so that eDP panel can be detected by DRM eDP panel
+>>>> driver during system probe time. During incorporating procedure, original
+>>>> customized pm realted fucntions, such as dp_pm_prepare(), dp_pm_suspend(),
+>>>> dp_pm_resume() and dp_pm_prepare(), are removed and replaced with functions
+>>>> provided by pm runtiem framework such as pm_runtime_force_suspend() and
+>>>> pm_runtime_force_resume(). In addition, both eDP aux-bus and irq handler
+>>>> are bound at system probe time too.
+>>> With this patchset in place I can crash the board using the following
+>>> sequence (SM8350-HDK):
+>>>
+>>> - plug the USBC DP dongle
+>>> - run modetest at any mode, don't press Enter yet
+>>> - unplug the dongle
+>>> - press Enter to stop modetest
+>>>
+>>> => the board resets to Sahara.
+>>>
+>>> Please ping me if you need any additional information from my side.
+>> questiosn,
+>>
+>> 1) which dongle are you used?
+> I have used several Dell and Hama USB-C dongles.
+>
+>> 2) what code branch shoud I used to duplicate this problem.
+> I have pushed my kernel tree to
+> git.codelinaro.org/dmitry.baryshkov/linux.git, branch test-dp-rpm
+> I had several UCSI patches on top, but they should not be relevant.
+git.codelinaro.org/dmitry.baryshkov/linux.git, branch test-dp-rpm <== I 
+synced out his branch and it is still work at my chromebook Kodiak DUT.
+>
+>> I can not duplicate  system crash problem at my setup kodiak (SM7325)
+>> chrome book with my PM runtime patch series.
+>>
+>> my code base is Linux 6.6-rc2 + pm runtime patch series (7 patches)
+>>
+>> I did:
+>>
+>> 1) plugin either apple dongle (DP-to-HDMI) + 1080p display or DP typeC
+>> cable directly to 1080p display
+>>
+>> 2)  stop ui
+>>
+>> 3) /usr/bin/modetest -M msm -s 34:1920x1080 (see test pattern show at
+>> display)
+>>
+>> 4) unplug apple dongle or DP typeC cable
+>>
+>> 5) hit enter key
+>>
+>> 6) start ui
+>>
+>> 7) display back to login page of chrome book
+>>
+>>
+>
 
