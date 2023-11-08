@@ -1,75 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B67577E5049
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 07:23:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 972577E5077
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 07:48:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6ED6A281341
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 06:23:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C22581C20998
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 06:48:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94F93D264;
-	Wed,  8 Nov 2023 06:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B3962CA8;
+	Wed,  8 Nov 2023 06:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="l+tVBmNE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cITdGJlP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DD1CA7D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 06:23:27 +0000 (UTC)
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C730D41
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 22:23:27 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-6c311ca94b4so5568948b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 22:23:27 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C0853A6
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 06:48:46 +0000 (UTC)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0046B8F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 22:48:45 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-53dd3f169d8so10831379a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 22:48:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1699424607; x=1700029407; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=q9PXT7WtNc9war0QIYrSKiH8o0H7yV2HB6Vr4SCPxz8=;
-        b=l+tVBmNEeokY3vqOR74XuJQjiBiOe/nVUZCtIV6sx3T5z4t/UeAu2ZkNNFAMRJx7vT
-         FmsFtgmpwfz0GlaWFeAzwc1wcgLaseXBDtzmaBbfVHbsg2bXn9dULG1NLtEjv0jbSob3
-         kmrZ5yYMLvetZ8URlTKQCahzhENFoL8aPkt3M=
+        d=linaro.org; s=google; t=1699426124; x=1700030924; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jb2O/lBBk955CKNe/gEpV8g9kuAg3iF6vieIJ3Ps/0o=;
+        b=cITdGJlPC/wrO5VALa7URsvLV6hQnlCrzaBc5G0GlCew/J7yka8D4gBz53yOpTWawY
+         B+ZaNSFmFPkOO+SNzHresywUB/LKDJd2gumbQivQoip3FD06AKrBzeXniFq/B2YHQMvo
+         xsZ4i2tPoFYoWxjX9DsUcq8vrOSrmvxYxnZ7jV8u/37KjEVZ8IgvWFhhEvZgGr7Oa1aG
+         ONTMZAMR425vd8PEpRmLqiic8qoh5uVOElyveXWAJevJfJruF96VhmFagyOq+FbUHjU+
+         zcqcs3VRlAEZSTd2y/1H7tuSIv/ubBTCabqzTroJkWjAulamGsu6kKwfbPeZPELEtdFd
+         J5Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699424607; x=1700029407;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q9PXT7WtNc9war0QIYrSKiH8o0H7yV2HB6Vr4SCPxz8=;
-        b=tNOEaW7ngFpJSZfoILHSGvqc3hkS4pTDzQ741YZGyqCrRRPy+Dp/wGJGpUXtRxMVp1
-         Q6zwd00tVSf8TebDoVJSRQhZe87qhprZ2j1C0t6lLsRWuYrllSznKXq6sU5bBDmU8jq6
-         88tN0b6/7ey4FdW+AAEqN6sM+PPyE542yZpIqEvcMeLlYEENQ/rmKUbPKg7fXAV/jl09
-         pwtxpEeeeF7WZhcsW72l3oFrBRhXPsmOeSySJItEsCf0B21IVxeOg1OBMdxidMCtt4ZQ
-         2fOWTziDalBP+z8/efA/7GdMEwpdxhjXsOpJ2Go2DzicsPXmQYkuDZHpYm2O2YrLylxM
-         ZhMA==
-X-Gm-Message-State: AOJu0YxvA8TmDEeEXs+PJy5RtIOU8Jbuq8si5eVCGuXWX0pOUKidsM/9
-	y9bYpGNACfU2SE6KX4i1jJIMjw==
-X-Google-Smtp-Source: AGHT+IEE1CcP9XDcoi36X9nEdzrJoWVV/Ohs+mfJ3KeghFslU25c0yPM0dXQu3eD4ho1jOb9TiTM7Q==
-X-Received: by 2002:a05:6a21:7185:b0:181:1cfa:4106 with SMTP id wq5-20020a056a21718500b001811cfa4106mr1507162pzb.62.1699424606696;
-        Tue, 07 Nov 2023 22:23:26 -0800 (PST)
-Received: from chromium.org (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
-        by smtp.gmail.com with ESMTPSA id b21-20020a170902b61500b001c9c97beb9csm879787pls.71.2023.11.07.22.23.23
+        d=1e100.net; s=20230601; t=1699426124; x=1700030924;
+        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jb2O/lBBk955CKNe/gEpV8g9kuAg3iF6vieIJ3Ps/0o=;
+        b=OvxV2w7iFifl+uWWA0zBq/fJvH9BD45IRzEWjOBLIbYNV5DDmqHP/dJ5M+9J/WHsJ3
+         IH20UfsJfi5244CqMhFJ1f6H7RHDb9EuTPNOhAqorrN1Mz7YbxvlUEp8j7R3yDJJZa9a
+         aOUt3aFaZ5mWtp6qvXLFxMsl2NNK1Smm2kHVQwZEwvNmjv3BVQGIg63+WG6WGoToX9jO
+         HKVNfH7CK5kgSbveDY6XtgFLnPRWWDR1gDnWVIml1Tm2LswY5GTwb1DRuIYvHLzKiejP
+         wPd0EqFI5Ja09MX/XxEcgqa4sBuGtYkX1AkRIwNVBIHayy3fJJYVoGMxQNMNh1xI2Ubm
+         xT7w==
+X-Gm-Message-State: AOJu0Yyrb1m5/tzmfxZv6mtvPOUmdKpBNiYsnghSAbzGphQ6fYlWE23n
+	zKAgc8MPgowqOYphpeM6NXRA9A==
+X-Google-Smtp-Source: AGHT+IHaXbdMnQkxeSuF6krmzXyFXkV0AOojjJ7bqHnUMTGc1KreBH+zRVv3VtilSbX9ZkVZYkTbNQ==
+X-Received: by 2002:a50:c352:0:b0:53e:782f:cfa6 with SMTP id q18-20020a50c352000000b0053e782fcfa6mr575642edb.37.1699426124137;
+        Tue, 07 Nov 2023 22:48:44 -0800 (PST)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id v19-20020a50d093000000b005434095b179sm6326163edd.92.2023.11.07.22.48.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Nov 2023 22:23:26 -0800 (PST)
-Date: Wed, 8 Nov 2023 06:23:22 +0000
-From: Tomasz Figa <tfiga@chromium.org>
-To: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
-	ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-	gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl,
-	nicolas.dufresne@collabora.com, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
-	kernel@collabora.com
-Subject: Re: [PATCH v14 02/56] media: videobuf2: Rework offset 'cookie'
- encoding pattern
-Message-ID: <20231108062322.l2k2n2jlpoaa4tws@chromium.org>
-References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
- <20231031163104.112469-3-benjamin.gaignard@collabora.com>
+        Tue, 07 Nov 2023 22:48:43 -0800 (PST)
+Date: Wed, 8 Nov 2023 09:48:41 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: oe-kbuild@lists.linux.dev, Qiang Yu <quic_qianyu@quicinc.com>,
+	mani@kernel.org, quic_jhugo@quicinc.com
+Cc: lkp@intel.com, oe-kbuild-all@lists.linux.dev, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_cang@quicinc.com, quic_mrana@quicinc.com,
+	Qiang Yu <quic_qianyu@quicinc.com>
+Subject: Re: [PATCH v3 3/4] bus: mhi: host: Avoid processing buffer and event
+ of a disable channel
+Message-ID: <12ceff53-bbd0-4e12-9597-f6a4bfd0f87f@kadam.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,207 +76,95 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231031163104.112469-3-benjamin.gaignard@collabora.com>
+In-Reply-To: <1699341365-47737-4-git-send-email-quic_qianyu@quicinc.com>
 
-Hi Benjamin,
+Hi Qiang,
 
-On Tue, Oct 31, 2023 at 05:30:10PM +0100, Benjamin Gaignard wrote:
-> Change how offset 'cookie' field value is computed to make possible
-> to use more buffers.
-> The maximum number of buffers depends of PAGE_SHIFT value and can
-> go up to 0x7fff when PAGE_SHIFT = 12.
-> With this encoding pattern we know the maximum number that a queue
-> could store so we can check it at  queue init time.
-> It also make easier and faster to find buffer and plane from using
-> the offset field.
-> Change __find_plane_by_offset() prototype to return the video buffer
-> itself rather than it index.
-> 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> ---
->  .../media/common/videobuf2/videobuf2-core.c   | 73 +++++++++----------
->  1 file changed, 35 insertions(+), 38 deletions(-)
-> 
+kernel test robot noticed the following build warnings:
 
-Thanks a lot for working on this series. Just one comment inline.
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index a5e57affeb30..09be8e026044 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -31,6 +31,11 @@
->  
->  #include <trace/events/vb2.h>
->  
-> +#define PLANE_INDEX_SHIFT	(PAGE_SHIFT + 3)
-> +#define PLANE_INDEX_MASK	0x7
+url:    https://github.com/intel-lab-lkp/linux/commits/Qiang-Yu/bus-mhi-host-Add-spinlock-to-protect-WP-access-when-queueing-TREs/20231107-151918
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git mhi-next
+patch link:    https://lore.kernel.org/r/1699341365-47737-4-git-send-email-quic_qianyu%40quicinc.com
+patch subject: [PATCH v3 3/4] bus: mhi: host: Avoid processing buffer and event of a disable channel
+config: x86_64-randconfig-161-20231107 (https://download.01.org/0day-ci/archive/20231108/202311080155.MiyREgoQ-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20231108/202311080155.MiyREgoQ-lkp@intel.com/reproduce)
 
-Could we somehow ensure that it indeed matches VIDEO_MAX_PLANES?
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+| Closes: https://lore.kernel.org/r/202311080155.MiyREgoQ-lkp@intel.com/
 
-One thing that comes to my mind would be
+smatch warnings:
+drivers/bus/mhi/host/main.c:1257 mhi_gen_tre() warn: inconsistent returns '&mhi_chan->lock'.
 
-#define PLANE_INDEX_BITS	3
-#define PLANE_INDEX_SHIFT	(PAGE_SHIFT + PLANE_INDEX_BITS)
-#define PLANE_INDEX_MASK	BIT_MASK(PLANE_INDEX_BITS)
+vim +1257 drivers/bus/mhi/host/main.c
 
-BUILD_BUG_ON(BIT(PLANE_INDEX_BITS) != VIDEO_MAX_PLANES);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1204  int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1205  			struct mhi_buf_info *info, enum mhi_flags flags)
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1206  {
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1207  	struct mhi_ring *buf_ring, *tre_ring;
+84f5f31f110e5e drivers/bus/mhi/host/main.c Manivannan Sadhasivam 2022-03-01  1208  	struct mhi_ring_element *mhi_tre;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1209  	struct mhi_buf_info *buf_info;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1210  	int eot, eob, chain, bei;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1211  	int ret;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1212  
+da05b5d43f483c drivers/bus/mhi/host/main.c Bhaumik Bhatt         2023-11-07  1213  	/* Protect accesses for reading and incrementing WP */
+da05b5d43f483c drivers/bus/mhi/host/main.c Bhaumik Bhatt         2023-11-07  1214  	write_lock_bh(&mhi_chan->lock);
+6025cde6ecb13c drivers/bus/mhi/host/main.c Qiang Yu              2023-11-07  1215  	if (mhi_chan->ch_state != MHI_CH_STATE_ENABLED)
+6025cde6ecb13c drivers/bus/mhi/host/main.c Qiang Yu              2023-11-07  1216  		return -EINVAL;
 
-Alternatively we could change the videodev2.h, so that we have
+This looks like two people submitted patches on the same day?
+We should unlock before returning?
 
-#define VIDEO_MAX_PLANES_BITS	3
-#define VIDEO_MAX_PLANES	(1U < VIDEO_MAX_PLANES_BITS)
+da05b5d43f483c drivers/bus/mhi/host/main.c Bhaumik Bhatt         2023-11-07  1217  
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1218  	buf_ring = &mhi_chan->buf_ring;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1219  	tre_ring = &mhi_chan->tre_ring;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1220  
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1221  	buf_info = buf_ring->wp;
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1222  	WARN_ON(buf_info->used);
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1223  	buf_info->pre_mapped = info->pre_mapped;
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1224  	if (info->pre_mapped)
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1225  		buf_info->p_addr = info->p_addr;
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1226  	else
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1227  		buf_info->v_addr = info->v_addr;
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1228  	buf_info->cb_buf = info->cb_buf;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1229  	buf_info->wp = tre_ring->wp;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1230  	buf_info->dir = mhi_chan->dir;
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1231  	buf_info->len = info->len;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1232  
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1233  	if (!info->pre_mapped) {
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1234  		ret = mhi_cntrl->map_single(mhi_cntrl, buf_info);
+da05b5d43f483c drivers/bus/mhi/host/main.c Bhaumik Bhatt         2023-11-07  1235  		if (ret) {
+da05b5d43f483c drivers/bus/mhi/host/main.c Bhaumik Bhatt         2023-11-07  1236  			write_unlock_bh(&mhi_chan->lock);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1237  			return ret;
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1238  		}
+da05b5d43f483c drivers/bus/mhi/host/main.c Bhaumik Bhatt         2023-11-07  1239  	}
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1240  
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1241  	eob = !!(flags & MHI_EOB);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1242  	eot = !!(flags & MHI_EOT);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1243  	chain = !!(flags & MHI_CHAIN);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1244  	bei = !!(mhi_chan->intmod);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1245  
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1246  	mhi_tre = tre_ring->wp;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1247  	mhi_tre->ptr = MHI_TRE_DATA_PTR(buf_info->p_addr);
+cd116318803f5e drivers/bus/mhi/core/main.c Hemant Kumar          2020-05-21  1248  	mhi_tre->dword[0] = MHI_TRE_DATA_DWORD0(info->len);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1249  	mhi_tre->dword[1] = MHI_TRE_DATA_DWORD1(bei, eot, eob, chain);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1250  
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1251  	/* increment WP */
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1252  	mhi_add_ring_element(mhi_cntrl, tre_ring);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1253  	mhi_add_ring_element(mhi_cntrl, buf_ring);
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1254  
+da05b5d43f483c drivers/bus/mhi/host/main.c Bhaumik Bhatt         2023-11-07  1255  	write_unlock_bh(&mhi_chan->lock);
+da05b5d43f483c drivers/bus/mhi/host/main.c Bhaumik Bhatt         2023-11-07  1256  
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20 @1257  	return 0;
+189ff97cca53e3 drivers/bus/mhi/core/main.c Manivannan Sadhasivam 2020-02-20  1258  }
 
-and then we can just VIDEO_MAX_PLANES_BITS in our definitions in this file
-and no checks would be necessary.
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
-Best regards,
-Tomasz
-
-> +#define MAX_BUFFER_INDEX	BIT_MASK(30 - PLANE_INDEX_SHIFT)
-> +#define BUFFER_INDEX_MASK	(MAX_BUFFER_INDEX - 1)
-> +
->  static int debug;
->  module_param(debug, int, 0644);
->  
-> @@ -358,21 +363,27 @@ static void __setup_offsets(struct vb2_buffer *vb)
->  	unsigned int plane;
->  	unsigned long offset = 0;
->  
-> -	if (vb->index) {
-> -		struct vb2_buffer *prev = q->bufs[vb->index - 1];
-> -		struct vb2_plane *p = &prev->planes[prev->num_planes - 1];
-> -
-> -		offset = PAGE_ALIGN(p->m.offset + p->length);
-> -	}
-> +	/*
-> +	 * The offset "cookie" value has the following constraints:
-> +	 * - a buffer can have up to 8 planes.
-> +	 * - v4l2 mem2mem uses bit 30 to distinguish between
-> +	 *   OUTPUT (aka "source", bit 30 is 0) and
-> +	 *   CAPTURE (aka "destination", bit 30 is 1) buffers.
-> +	 * - must be page aligned
-> +	 * That led to this bit mapping when PAGE_SHIFT = 12:
-> +	 * |30                |29        15|14       12|11 0|
-> +	 * |DST_QUEUE_OFF_BASE|buffer index|plane index| 0  |
-> +	 * where there are 15 bits to store the buffer index.
-> +	 * Depending on PAGE_SHIFT value we can have fewer bits
-> +	 * to store the buffer index.
-> +	 */
-> +	offset = vb->index << PLANE_INDEX_SHIFT;
->  
->  	for (plane = 0; plane < vb->num_planes; ++plane) {
-> -		vb->planes[plane].m.offset = offset;
-> +		vb->planes[plane].m.offset = offset + (plane << PAGE_SHIFT);
->  
->  		dprintk(q, 3, "buffer %d, plane %d offset 0x%08lx\n",
->  				vb->index, plane, offset);
-> -
-> -		offset += vb->planes[plane].length;
-> -		offset = PAGE_ALIGN(offset);
->  	}
->  }
->  
-> @@ -2188,10 +2199,9 @@ EXPORT_SYMBOL_GPL(vb2_core_streamoff);
->   * __find_plane_by_offset() - find plane associated with the given offset
->   */
->  static int __find_plane_by_offset(struct vb2_queue *q, unsigned long offset,
-> -			unsigned int *_buffer, unsigned int *_plane)
-> +			struct vb2_buffer **vb, unsigned int *plane)
->  {
-> -	struct vb2_buffer *vb;
-> -	unsigned int buffer, plane;
-> +	unsigned int buffer;
->  
->  	/*
->  	 * Sanity checks to ensure the lock is held, MEMORY_MMAP is
-> @@ -2209,24 +2219,15 @@ static int __find_plane_by_offset(struct vb2_queue *q, unsigned long offset,
->  		return -EBUSY;
->  	}
->  
-> -	/*
-> -	 * Go over all buffers and their planes, comparing the given offset
-> -	 * with an offset assigned to each plane. If a match is found,
-> -	 * return its buffer and plane numbers.
-> -	 */
-> -	for (buffer = 0; buffer < q->num_buffers; ++buffer) {
-> -		vb = q->bufs[buffer];
-> +	/* Get buffer and plane from the offset */
-> +	buffer = (offset >> PLANE_INDEX_SHIFT) & BUFFER_INDEX_MASK;
-> +	*plane = (offset >> PAGE_SHIFT) & PLANE_INDEX_MASK;
->  
-> -		for (plane = 0; plane < vb->num_planes; ++plane) {
-> -			if (vb->planes[plane].m.offset == offset) {
-> -				*_buffer = buffer;
-> -				*_plane = plane;
-> -				return 0;
-> -			}
-> -		}
-> -	}
-> +	if (buffer >= q->num_buffers || *plane >= q->bufs[buffer]->num_planes)
-> +		return -EINVAL;
->  
-> -	return -EINVAL;
-> +	*vb = q->bufs[buffer];
-> +	return 0;
->  }
->  
->  int vb2_core_expbuf(struct vb2_queue *q, int *fd, unsigned int type,
-> @@ -2306,7 +2307,7 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
->  {
->  	unsigned long offset = vma->vm_pgoff << PAGE_SHIFT;
->  	struct vb2_buffer *vb;
-> -	unsigned int buffer = 0, plane = 0;
-> +	unsigned int plane = 0;
->  	int ret;
->  	unsigned long length;
->  
-> @@ -2335,12 +2336,10 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
->  	 * Find the plane corresponding to the offset passed by userspace. This
->  	 * will return an error if not MEMORY_MMAP or file I/O is in progress.
->  	 */
-> -	ret = __find_plane_by_offset(q, offset, &buffer, &plane);
-> +	ret = __find_plane_by_offset(q, offset, &vb, &plane);
->  	if (ret)
->  		goto unlock;
->  
-> -	vb = q->bufs[buffer];
-> -
->  	/*
->  	 * MMAP requires page_aligned buffers.
->  	 * The buffer length was page_aligned at __vb2_buf_mem_alloc(),
-> @@ -2368,7 +2367,7 @@ int vb2_mmap(struct vb2_queue *q, struct vm_area_struct *vma)
->  	if (ret)
->  		return ret;
->  
-> -	dprintk(q, 3, "buffer %d, plane %d successfully mapped\n", buffer, plane);
-> +	dprintk(q, 3, "buffer %u, plane %d successfully mapped\n", vb->index, plane);
->  	return 0;
->  }
->  EXPORT_SYMBOL_GPL(vb2_mmap);
-> @@ -2382,7 +2381,7 @@ unsigned long vb2_get_unmapped_area(struct vb2_queue *q,
->  {
->  	unsigned long offset = pgoff << PAGE_SHIFT;
->  	struct vb2_buffer *vb;
-> -	unsigned int buffer, plane;
-> +	unsigned int plane;
->  	void *vaddr;
->  	int ret;
->  
-> @@ -2392,12 +2391,10 @@ unsigned long vb2_get_unmapped_area(struct vb2_queue *q,
->  	 * Find the plane corresponding to the offset passed by userspace. This
->  	 * will return an error if not MEMORY_MMAP or file I/O is in progress.
->  	 */
-> -	ret = __find_plane_by_offset(q, offset, &buffer, &plane);
-> +	ret = __find_plane_by_offset(q, offset, &vb, &plane);
->  	if (ret)
->  		goto unlock;
->  
-> -	vb = q->bufs[buffer];
-> -
->  	vaddr = vb2_plane_vaddr(vb, plane);
->  	mutex_unlock(&q->mmap_lock);
->  	return vaddr ? (unsigned long)vaddr : -EINVAL;
-> -- 
-> 2.39.2
-> 
 
