@@ -1,203 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 903087E4CD2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 00:23:45 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8CCC7E4E33
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 01:36:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B3EC61C209B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Nov 2023 23:23:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F35EBB20F07
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Nov 2023 00:36:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE8903067D;
-	Tue,  7 Nov 2023 23:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D40D81FB0;
+	Wed,  8 Nov 2023 00:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JpknelIG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MJ7iTFmg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D087330670
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 23:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A14AC433C7;
-	Tue,  7 Nov 2023 23:23:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699399422;
-	bh=xSKDbMjZxWCuofpDuLk9rbV6CGlLNun1ecOTlgQ0OZ4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpknelIGKQkiY8Z6wkIuSoUK5fFLb96VfznqwCOyrff37aEdZhY0SJb+iGUHvvFFB
-	 cCJn9sXtVIbH800dx7SpyNgQR5w5cj8vNASEowhkoZfpcrHvSWzLceWfUqZzZszoxm
-	 pIiWy006eIsV1r2xfihGmzpyqCB3smyaYl8FYU9ryOWCIeZZeGiMj+wYFkgtNUoiXU
-	 /cPXVwt7y26hs0Rrz5Mfnlr3/Fe0tM+mU//thUGcjnHw5fOxrprzYze6QHTc6LXqVS
-	 A3YKB6Hz8apCMkJy378K5ReH8QKrswUsuO5yNh5aNghRkW/XLvC3W2rOeylzVTAgg9
-	 g9Pk4WLZagDtg==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	agross@kernel.org,
-	andersson@kernel.org,
-	kishon@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.5 06/18] phy: qualcomm: phy-qcom-eusb2-repeater: Zero out untouched tuning regs
-Date: Tue,  7 Nov 2023 18:23:01 -0500
-Message-ID: <20231107232330.3776001-6-sashal@kernel.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231107232330.3776001-1-sashal@kernel.org>
-References: <20231107232330.3776001-1-sashal@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8209A137E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 00:36:05 +0000 (UTC)
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A800810FB
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Nov 2023 16:36:04 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-507a3b8b113so8029376e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Nov 2023 16:36:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699403763; x=1700008563; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tLCtsTg94ZkYKlxM35PI/7QpN+IW2xY9/USBi3sx8e0=;
+        b=MJ7iTFmgyaWBmmY4IGaip5aDrJrcOq9jDFtsabyuT1LUHyrsNQMcm/ctN1gzE7fygf
+         eoZTJ1wqNcXJQBq+10gxZsont/tB/4blfYDuXM1XPjQsgZI1MMjg6l4EtN9UUJ/Aoh62
+         zyUst9rAuz8ZP5boXAsW3fv2b2SEdXajpuV0CcYJdQegfazIVJaes3KFjNM66MVZClXT
+         yaLFq2Xlpq6LOsbgeyej1sYmrBqpqeOK6dRAo7VyEov8YVsObJEkZOCSHKo33rjbmHAp
+         XAjS1msE1UQkRIgZa+wJcT5NEF5P6Bc7oE741KOYwU6S/lplbdssm3egY1zIFdU1B1L5
+         s+lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699403763; x=1700008563;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tLCtsTg94ZkYKlxM35PI/7QpN+IW2xY9/USBi3sx8e0=;
+        b=lMSLoV90JEFLEyWskWjuN944D97/SMts7+5hiGuQ5bJFABSwC2c+p+im+W/iP6yLT6
+         wOrp/X8SllU2lIe0hFvkWqmPwz7kMg2JUUEuJwqHlDfj1WOs3Fh3xd+Eh1mEac4OyLG2
+         DlQlQWHHtRKsQ7U3vYvglJBXotZ5OZlv1ckkkyAZCXRRCnF0WB750p6WoptWvOuILZEc
+         p1nv4mQABpPywTPg9dTSZ97JaX8NM1G6o1gso8ay3u2RWbRXGRGWznADthEfs8v//jU0
+         n3q2Y+r4bn419GWVDN/FTjYDel8EJFV9msAfRS6qPj52FPbW7jT1CgHBc/fFv4o/QvVH
+         2eWA==
+X-Gm-Message-State: AOJu0YyDf5MpdguLapMx4lVnnGnZDblJKWpOEo1DneXNMXPf/OpseJum
+	BA5xqw8AkvvPsFPItZyJopoWHg==
+X-Google-Smtp-Source: AGHT+IHl+VAYGxe/DNmWYTV7boSYThTTOIb/X3vqD8Z9d7rD2VPoeP9ac4YqJU0Le6n452fR4Otgrw==
+X-Received: by 2002:ac2:4f06:0:b0:507:9a8c:a8fe with SMTP id k6-20020ac24f06000000b005079a8ca8femr219318lfr.53.1699403762869;
+        Tue, 07 Nov 2023 16:36:02 -0800 (PST)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id a4-20020a5d53c4000000b0032f7d7ec4adsm3581791wrw.92.2023.11.07.16.36.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Nov 2023 16:36:02 -0800 (PST)
+Message-ID: <27cb79f8-2c44-48db-8f6d-c2ec861dc249@linaro.org>
+Date: Wed, 8 Nov 2023 00:36:01 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.5.10
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/6] media: qcom: camss: csiphy-3ph: Add Gen2 v1.1
+ two-phase MIPI CSI-2 DPHY init
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
+ laurent.pinchart@ideasonboard.com, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, vincent.knecht@mailoo.org,
+ matti.lehtimaki@gmail.com, quic_grosikop@quicinc.com
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231105-b4-camss-sc8280xp-v3-0-4b3c372ff0f4@linaro.org>
+ <20231105-b4-camss-sc8280xp-v3-3-4b3c372ff0f4@linaro.org>
+ <ff8532ca-fe74-4f52-bab9-b14f6a4599b1@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <ff8532ca-fe74-4f52-bab9-b14f6a4599b1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 07/11/2023 21:43, Konrad Dybcio wrote:
+> 
+> 
+> On 11/5/23 18:45, Bryan O'Donoghue wrote:
+>> Add a PHY configuration sequence for the sc8280xp which uses a Qualcomm
+>> Gen 2 version 1.1 CSI-2 PHY.
+>>
+>> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
+>> mode. This configuration supports two-phase D-PHY mode.
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+> Makes it sound like the current 2ph/3ph split is rather nonsensical?
+> 
+> Perhaps we should restructure it to match hw revision? Especially since
+> one can get it from the hardware itself..
+> 
+> Konrad
 
-[ Upstream commit 99a517a582fc1272d1d3cf3b9e671a14d7db77b8 ]
+For the C-PHY though we have to either add or remove caps - I forget 
+which on ~ all of our reference platforms.
 
-The vendor kernel zeroes out all tuning data outside the init sequence
-as part of initialization. Follow suit to avoid UB.
+"The PHY can do it" but I'd be surprised to find there's a single real 
+implementation of it outside of a silicon test bench.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230830-topic-eusb2_override-v2-3-7d8c893d93f6@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../phy/qualcomm/phy-qcom-eusb2-repeater.c    | 58 ++++++++++++++-----
- 1 file changed, 44 insertions(+), 14 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-index b20b805414a2a..6777532dd4dc9 100644
---- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-+++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-@@ -25,9 +25,18 @@
- #define EUSB2_FORCE_VAL_5		0xeD
- #define V_CLK_19P2M_EN			BIT(6)
- 
-+#define EUSB2_TUNE_USB2_CROSSOVER	0x50
- #define EUSB2_TUNE_IUSB2		0x51
-+#define EUSB2_TUNE_RES_FSDIF		0x52
-+#define EUSB2_TUNE_HSDISC		0x53
- #define EUSB2_TUNE_SQUELCH_U		0x54
-+#define EUSB2_TUNE_USB2_SLEW		0x55
-+#define EUSB2_TUNE_USB2_EQU		0x56
- #define EUSB2_TUNE_USB2_PREEM		0x57
-+#define EUSB2_TUNE_USB2_HS_COMP_CUR	0x58
-+#define EUSB2_TUNE_EUSB_SLEW		0x59
-+#define EUSB2_TUNE_EUSB_EQU		0x5A
-+#define EUSB2_TUNE_EUSB_HS_COMP_CUR	0x5B
- 
- #define QCOM_EUSB2_REPEATER_INIT_CFG(r, v)	\
- 	{					\
-@@ -36,9 +45,18 @@
- 	}
- 
- enum reg_fields {
-+	F_TUNE_EUSB_HS_COMP_CUR,
-+	F_TUNE_EUSB_EQU,
-+	F_TUNE_EUSB_SLEW,
-+	F_TUNE_USB2_HS_COMP_CUR,
- 	F_TUNE_USB2_PREEM,
-+	F_TUNE_USB2_EQU,
-+	F_TUNE_USB2_SLEW,
- 	F_TUNE_SQUELCH_U,
-+	F_TUNE_HSDISC,
-+	F_TUNE_RES_FSDIF,
- 	F_TUNE_IUSB2,
-+	F_TUNE_USB2_CROSSOVER,
- 	F_NUM_TUNE_FIELDS,
- 
- 	F_FORCE_VAL_5 = F_NUM_TUNE_FIELDS,
-@@ -51,9 +69,18 @@ enum reg_fields {
- };
- 
- static struct reg_field eusb2_repeater_tune_reg_fields[F_NUM_FIELDS] = {
-+	[F_TUNE_EUSB_HS_COMP_CUR] = REG_FIELD(EUSB2_TUNE_EUSB_HS_COMP_CUR, 0, 1),
-+	[F_TUNE_EUSB_EQU] = REG_FIELD(EUSB2_TUNE_EUSB_EQU, 0, 1),
-+	[F_TUNE_EUSB_SLEW] = REG_FIELD(EUSB2_TUNE_EUSB_SLEW, 0, 1),
-+	[F_TUNE_USB2_HS_COMP_CUR] = REG_FIELD(EUSB2_TUNE_USB2_HS_COMP_CUR, 0, 1),
- 	[F_TUNE_USB2_PREEM] = REG_FIELD(EUSB2_TUNE_USB2_PREEM, 0, 2),
-+	[F_TUNE_USB2_EQU] = REG_FIELD(EUSB2_TUNE_USB2_EQU, 0, 1),
-+	[F_TUNE_USB2_SLEW] = REG_FIELD(EUSB2_TUNE_USB2_SLEW, 0, 1),
- 	[F_TUNE_SQUELCH_U] = REG_FIELD(EUSB2_TUNE_SQUELCH_U, 0, 2),
-+	[F_TUNE_HSDISC] = REG_FIELD(EUSB2_TUNE_HSDISC, 0, 2),
-+	[F_TUNE_RES_FSDIF] = REG_FIELD(EUSB2_TUNE_RES_FSDIF, 0, 2),
- 	[F_TUNE_IUSB2] = REG_FIELD(EUSB2_TUNE_IUSB2, 0, 3),
-+	[F_TUNE_USB2_CROSSOVER] = REG_FIELD(EUSB2_TUNE_USB2_CROSSOVER, 0, 2),
- 
- 	[F_FORCE_VAL_5] = REG_FIELD(EUSB2_FORCE_VAL_5, 0, 7),
- 	[F_FORCE_EN_5] = REG_FIELD(EUSB2_FORCE_EN_5, 0, 7),
-@@ -63,13 +90,8 @@ static struct reg_field eusb2_repeater_tune_reg_fields[F_NUM_FIELDS] = {
- 	[F_RPTR_STATUS] = REG_FIELD(EUSB2_RPTR_STATUS, 0, 7),
- };
- 
--struct eusb2_repeater_init_tbl {
--	unsigned int reg;
--	unsigned int val;
--};
--
- struct eusb2_repeater_cfg {
--	const struct eusb2_repeater_init_tbl *init_tbl;
-+	const u32 *init_tbl;
- 	int init_tbl_num;
- 	const char * const *vreg_list;
- 	int num_vregs;
-@@ -88,10 +110,10 @@ static const char * const pm8550b_vreg_l[] = {
- 	"vdd18", "vdd3",
- };
- 
--static const struct eusb2_repeater_init_tbl pm8550b_init_tbl[] = {
--	QCOM_EUSB2_REPEATER_INIT_CFG(F_TUNE_IUSB2, 0x8),
--	QCOM_EUSB2_REPEATER_INIT_CFG(F_TUNE_SQUELCH_U, 0x3),
--	QCOM_EUSB2_REPEATER_INIT_CFG(F_TUNE_USB2_PREEM, 0x5),
-+static const u32 pm8550b_init_tbl[F_NUM_TUNE_FIELDS] = {
-+	[F_TUNE_IUSB2] = 0x8,
-+	[F_TUNE_SQUELCH_U] = 0x3,
-+	[F_TUNE_USB2_PREEM] = 0x5,
- };
- 
- static const struct eusb2_repeater_cfg pm8550b_eusb2_cfg = {
-@@ -119,8 +141,9 @@ static int eusb2_repeater_init_vregs(struct eusb2_repeater *rptr)
- 
- static int eusb2_repeater_init(struct phy *phy)
- {
-+	struct reg_field *regfields = eusb2_repeater_tune_reg_fields;
- 	struct eusb2_repeater *rptr = phy_get_drvdata(phy);
--	const struct eusb2_repeater_init_tbl *init_tbl = rptr->cfg->init_tbl;
-+	const u32 *init_tbl = rptr->cfg->init_tbl;
- 	u32 val;
- 	int ret;
- 	int i;
-@@ -131,9 +154,16 @@ static int eusb2_repeater_init(struct phy *phy)
- 
- 	regmap_field_update_bits(rptr->regs[F_EN_CTL1], EUSB2_RPTR_EN, EUSB2_RPTR_EN);
- 
--	for (i = 0; i < rptr->cfg->init_tbl_num; i++)
--		regmap_field_update_bits(rptr->regs[init_tbl[i].reg],
--					 init_tbl[i].val, init_tbl[i].val);
-+	for (i = 0; i < F_NUM_TUNE_FIELDS; i++) {
-+		if (init_tbl[i]) {
-+			regmap_field_update_bits(rptr->regs[i], init_tbl[i], init_tbl[i]);
-+		} else {
-+			/* Write 0 if there's no value set */
-+			u32 mask = GENMASK(regfields[i].msb, regfields[i].lsb);
-+
-+			regmap_field_update_bits(rptr->regs[i], mask, 0);
-+		}
-+	}
- 
- 	ret = regmap_field_read_poll_timeout(rptr->regs[F_RPTR_STATUS],
- 					     val, val & RPTR_OK, 10, 5);
--- 
-2.42.0
-
+bod
 
