@@ -1,112 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 084BA7E6F31
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 17:38:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 775B27E6EF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 17:35:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B66F12811E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 16:38:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C79B628101B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 16:35:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3355B32C96;
-	Thu,  9 Nov 2023 16:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7118CA5A;
+	Thu,  9 Nov 2023 16:35:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="i7xor/DT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOZT5u/k"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4591D3035C
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 16:38:29 +0000 (UTC)
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 593ED3848;
-	Thu,  9 Nov 2023 08:38:28 -0800 (PST)
-Received: from benjamin-XPS-13-9310.. (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: benjamin.gaignard)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 3DFBD66076B3;
-	Thu,  9 Nov 2023 16:38:26 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1699547907;
-	bh=NppHGvNMzHpeRnryqExvoNEtSwathlR3U98iRKn31sU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7xor/DTJ1HNHWgjz51eI96QO91oXdYe8VGOhJ5b4tQRdfWTVn6Nsw3D1jgU/TLvC
-	 jZibvjE9X2vs80fvj8IsLyE/2H9qHE7Vn9XtQmhtkOZA3k6XqGtTKVYCt3RT9uClN/
-	 GyR0blOiaGfwZcksojyLH4kp6bzc1GPB1ST6ewA9nau8+d348dVMhD05AV57/UBBv6
-	 jcUKh3XvqfKmpBNo2z6tui1SEfOmEzQuUyGzu+TDj2AOQhCld2dT9yvXiWHgGscEZ1
-	 NjkbqKKz6FSnf9hO1v1+JkVvLBTzSFy0zhMRnPCDwuKm7+wAEz+UxWGBOJ9Us0AtXE
-	 IE0g9XmMWl8fg==
-From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-To: mchehab@kernel.org,
-	tfiga@chromium.org,
-	m.szyprowski@samsung.com,
-	ming.qian@nxp.com,
-	ezequiel@vanguardiasur.com.ar,
-	p.zabel@pengutronix.de,
-	gregkh@linuxfoundation.org,
-	hverkuil-cisco@xs4all.nl,
-	nicolas.dufresne@collabora.com
-Cc: linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-staging@lists.linux.dev,
-	kernel@collabora.com,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	Antti Palosaari <crope@iki.fi>
-Subject: [PATCH v15 41/56] media: usb: hackrf: Stop direct calls to queue num_buffers field
-Date: Thu,  9 Nov 2023 17:34:57 +0100
-Message-Id: <20231109163512.179524-42-benjamin.gaignard@collabora.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231109163512.179524-14-benjamin.gaignard@collabora.com>
-References: <20231109163512.179524-14-benjamin.gaignard@collabora.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A88A225CF;
+	Thu,  9 Nov 2023 16:35:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F8DC433C7;
+	Thu,  9 Nov 2023 16:35:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699547708;
+	bh=DO7rti32qM8aexLDfsJn/f7IKXiyncbiQH0D8eWb7AY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FOZT5u/kJrglzPjz3w2sZ1ulGNVMQGY7/Sa2kpZQY6rNWGa+0EJ+7Ag7Cj24pTjYq
+	 1Mn3xl0sZXcSma6QQc6wkQPA51y52iHLxfWIswazxUXGXSiyjqpDwJ5gVHcT2D2Mhu
+	 ok0FKbHwVluXVLZn7nZBX8AfNwCDJkhRcMnrQ4yca4A0GBlwfdxUIb6Q/yAXtYv0cj
+	 f8k+4zDf6hFk6qROiCiEesdy+wOXKlIGP9KdYwtTe7cCiC002ijMDjmtrrQTTwd+SX
+	 jg7cbzOZ6nyuKuRL9S2lg2I2iK6sETP99wq85eJkkBUWlElu4xQkKwZ497LJE7J2pE
+	 DXqgQT/xkgfMA==
+Date: Thu, 9 Nov 2023 22:04:57 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com, stable@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: host: Add alignment check for event ring
+ read pointer
+Message-ID: <20231109163457.GM3752@thinkpad>
+References: <20231031-alignment_check-v2-1-1441db7c5efd@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231031-alignment_check-v2-1-1441db7c5efd@quicinc.com>
 
-Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
-This allows us to change how the number of buffers is computed in the
-future.
+On Tue, Oct 31, 2023 at 03:21:05PM +0530, Krishna chaitanya chundru wrote:
+> Though we do check the event ring read pointer by "is_valid_ring_ptr"
+> to make sure it is in the buffer range, but there is another risk the
+> pointer may be not aligned.  Since we are expecting event ring elements
+> are 128 bits(struct mhi_ring_element) aligned, an unaligned read pointer
+> could lead to multiple issues like DoS or ring buffer memory corruption.
+> 
+> So add a alignment check for event ring read pointer.
+> 
+> Fixes: ec32332df764 ("bus: mhi: core: Sanity check values from remote device before use")
+> cc: stable@vger.kernel.org
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 
-Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-CC: Antti Palosaari <crope@iki.fi>
----
- drivers/media/usb/hackrf/hackrf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Applied to mhi-next!
 
-diff --git a/drivers/media/usb/hackrf/hackrf.c b/drivers/media/usb/hackrf/hackrf.c
-index 3e535be2c520..9c0ecd5f056c 100644
---- a/drivers/media/usb/hackrf/hackrf.c
-+++ b/drivers/media/usb/hackrf/hackrf.c
-@@ -753,12 +753,13 @@ static int hackrf_queue_setup(struct vb2_queue *vq,
- 		unsigned int *nplanes, unsigned int sizes[], struct device *alloc_devs[])
- {
- 	struct hackrf_dev *dev = vb2_get_drv_priv(vq);
-+	unsigned int q_num_bufs = vb2_get_num_buffers(vq);
- 
- 	dev_dbg(dev->dev, "nbuffers=%d\n", *nbuffers);
- 
- 	/* Need at least 8 buffers */
--	if (vq->num_buffers + *nbuffers < 8)
--		*nbuffers = 8 - vq->num_buffers;
-+	if (q_num_bufs + *nbuffers < 8)
-+		*nbuffers = 8 - q_num_bufs;
- 	*nplanes = 1;
- 	sizes[0] = PAGE_ALIGN(dev->buffersize);
- 
+- Mani
+
+> ---
+> Changes in v2:
+> - Change the modulus operation to bit-wise & operation as suggested by Jeff.
+> - Link to v1: https://lore.kernel.org/r/20231023-alignment_check-v1-1-2ca5716d5c15@quicinc.com
+> ---
+>  drivers/bus/mhi/host/main.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index 499590437e9b..e765c16a99d1 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -268,7 +268,8 @@ static void mhi_del_ring_element(struct mhi_controller *mhi_cntrl,
+>  
+>  static bool is_valid_ring_ptr(struct mhi_ring *ring, dma_addr_t addr)
+>  {
+> -	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len;
+> +	return addr >= ring->iommu_base && addr < ring->iommu_base + ring->len &&
+> +			!(addr & (sizeof(struct mhi_ring_element) - 1));
+>  }
+>  
+>  int mhi_destroy_device(struct device *dev, void *data)
+> 
+> ---
+> base-commit: 71e68e182e382e951d6248bccc3c960dcec5a718
+> change-id: 20231013-alignment_check-c013f509d24a
+> 
+> Best regards,
+> -- 
+> Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> 
+> 
+
 -- 
-2.39.2
-
+மணிவண்ணன் சதாசிவம்
 
