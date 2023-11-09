@@ -1,149 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD2667E7248
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 20:24:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8071C7E72B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 21:22:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D802B1C20A08
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 19:24:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0214C1F21368
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 20:22:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9668E341BF;
-	Thu,  9 Nov 2023 19:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AA91374C2;
+	Thu,  9 Nov 2023 20:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U7WLsYJF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fym6Eh4U"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4739936AED
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 19:24:46 +0000 (UTC)
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87C9D30F9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 11:24:45 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-409299277bbso8331375e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Nov 2023 11:24:45 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DBF374C8
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 20:22:05 +0000 (UTC)
+Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17DFB3C25;
+	Thu,  9 Nov 2023 12:22:05 -0800 (PST)
+Received: by mail-vk1-xa33.google.com with SMTP id 71dfb90a1353d-4ac10aacd27so568692e0c.0;
+        Thu, 09 Nov 2023 12:22:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699557884; x=1700162684; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=l1CJqeZ8u7eaD4Q/icHyhIHN2vLT3h3xpvRo3vUPhJI=;
-        b=U7WLsYJFwFsCsJMq5C4u34AUFHM4ajgWIHUo1upHZTe3crLKA4SIwekPvzJJSWtPSN
-         HIQT9EQNuLHLpmpU/JBUUtRyNPIqkU8NTzXTdDDUBbhG/DDkEibMfNGnmmmjT2aCO/kI
-         UW61bP426YTlKNwgywHex1V+QtFhfvUPAnPssoOopRumx6phBa9+DzmeXQ+wx/a0kVrx
-         K6+un3WZfZLz6t0v/5m3T9QsE2mXcUcIEQaBO0QTj+2FaVINQXtYyCvl/g10Nj8oEwog
-         s0p4xM/bFSJYNBGwU+Pj4hz/0BqNVEufFJ0aQl8vLEp4Byics5+/161odwkMh/21N2UW
-         3BDQ==
+        d=gmail.com; s=20230601; t=1699561324; x=1700166124; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=79oUciC1MphFLchMyW5zN+ld+Ip/ohdJ3MzsnnkdArI=;
+        b=fym6Eh4UlK1bIQk8HlrfcdxwmEOr/baVGCQPRHviA82PJ6dCyK+8ndazUYmSZyr5A1
+         Hxsmafp/Pze1hl/wBmpgJsVScDWs0JG8XNoUTmwE4EM+p63A/QwhXbR8T34fEpG8vX0f
+         Ht2u3Lh4l4LkHu3qOXkCRWSjRpF0GCd8QaFJzXYOYK+KczlZ715FJxZAcOoRkSTJQc+C
+         dn/+yV4XiD1cW/oWn7z2I/KtoYaQ3u1uG6TTKCVh8qNEs8BVu9ff1/YsdFgXlqeKjNz3
+         vZeQWsr2iKOY2alKtoNiX+GWy/Cj86tp5UrVTNSbuzDgTVdjW3+1uBykxoIGJrb0SoZT
+         57bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699557884; x=1700162684;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=l1CJqeZ8u7eaD4Q/icHyhIHN2vLT3h3xpvRo3vUPhJI=;
-        b=HCD1eqPH6YyCEYLCj0du0QqatrV/BBY/VN8IzBW1+3LHPPgp8DZBlIvpeCvAAmVpVk
-         +txiO5IlnCN2EnnLHphCEXUqynisPktfaEMM8UMD1VO9BnZwG6rt6E/aGkUzHw+2lVqH
-         lyg44r+3va2Dh8/iTRipR4HHCzl1gseMDgnuEdvWOnvGZQwbNya0MehiJ8k1gFomoZ0Z
-         HkUxp0cQmed3cSvAQ64fcVICkKDKaMMEmQ9bQg1OVnKNHcUPMCUh2cF5d/eKWQZp9wdm
-         k+syPsz4PEtEhFJXQbRZANSGrdzizVXe0qIyNhM34DLZjrHPFKnjTVx18Nh3XT+hgB9o
-         J2Ow==
-X-Gm-Message-State: AOJu0Yyjmbm+zQSd4rHF//5RxY5BmruPuTraiUHldbhKPBislWWveo6Y
-	aaRlze52hNLpgTK9kGY5N6Hz8g==
-X-Google-Smtp-Source: AGHT+IF/BLKulO6qnWwr/aMbGCtJwiiTSp3nZlhJ8ghABo6m4xXeqoIy0WP2LNWq5jaUk7wkGbi3dg==
-X-Received: by 2002:a05:600c:450d:b0:402:f55c:faee with SMTP id t13-20020a05600c450d00b00402f55cfaeemr5287667wmo.26.1699557883893;
-        Thu, 09 Nov 2023 11:24:43 -0800 (PST)
-Received: from [10.66.66.2] (9.ip-51-91-159.eu. [51.91.159.9])
-        by smtp.gmail.com with ESMTPSA id p8-20020a05600c430800b00405d9a950a2sm2903833wme.28.2023.11.09.11.24.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Nov 2023 11:24:43 -0800 (PST)
-Message-ID: <4f56327d-abe1-44fa-8979-17edf86cd406@linaro.org>
-Date: Thu, 9 Nov 2023 20:24:39 +0100
+        d=1e100.net; s=20230601; t=1699561324; x=1700166124;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=79oUciC1MphFLchMyW5zN+ld+Ip/ohdJ3MzsnnkdArI=;
+        b=nqGVd47ixLKUAZu0q6cOm4KgprHwAI3jc3GMwFDa9imOesL7uPu5Q/RfiyzkqkQJQd
+         fqksjAXJC7hTVIuWC4Y7UbYzwOLQIN4ycRKxSdW9hbi41fdblpUyrqTXiTHRTr10uAL0
+         gqsNVaZwNQhE4UBGpaCwSHns/XYsPzkmT7cCPrTj1qX1RdDIKCuMMeGOnFt3XJE6IRGx
+         +ThzTxFtjbNJDFTvhk+WeQDtUqKTqiFGXpc+jgoqrXScH8Ty186emq3l6j/sxt3lle2f
+         2SJO+VJj9MuvahpKHGjCwLAKsLIjCFVk5O0sh1KNRJ7zVXKoH7lpFp4I8ywS/GBLF3TL
+         JFdg==
+X-Gm-Message-State: AOJu0YwAioxzoLhEA9fa+RaOY8BUlL9lvbA3h+7aW/ldMNGIcNzW6Qd+
+	CwgHDDBcbDzcqd0cQXj5/CoXAikPwJTunURTnS0=
+X-Google-Smtp-Source: AGHT+IHeEYBi5nUVdK8O1Fji9SXoWwVQ1ionOejtl0pq9n4Oxy3eyVaDJB4oTZ8X0i5CLfXx5Mqs5VNvA3gtw+Gk21c=
+X-Received: by 2002:a05:6122:1807:b0:4a1:7278:3bf5 with SMTP id
+ ay7-20020a056122180700b004a172783bf5mr2992264vkb.4.1699561324079; Thu, 09 Nov
+ 2023 12:22:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/6] media: qcom: camss: csiphy-3ph: Add Gen2 v1.1
- two-phase MIPI CSI-2 DPHY init
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, hverkuil-cisco@xs4all.nl,
- laurent.pinchart@ideasonboard.com, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, vincent.knecht@mailoo.org,
- matti.lehtimaki@gmail.com, quic_grosikop@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231109-b4-camss-sc8280xp-v4-0-58a58bc200f9@linaro.org>
- <20231109-b4-camss-sc8280xp-v4-3-58a58bc200f9@linaro.org>
- <0e325a57-f07d-47e6-8456-523cfa04c52b@linaro.org>
- <1e99ddcc-db3b-4a79-a2d1-815bebb5a5c9@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1e99ddcc-db3b-4a79-a2d1-815bebb5a5c9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20231109163512.179524-14-benjamin.gaignard@collabora.com> <20231109163512.179524-39-benjamin.gaignard@collabora.com>
+In-Reply-To: <20231109163512.179524-39-benjamin.gaignard@collabora.com>
+From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+Date: Thu, 9 Nov 2023 20:21:17 +0000
+Message-ID: <CA+V-a8t33Q5C00dUmo=i=wd5wPzqdCNVO8MLH8to-7Ge9SjYuQ@mail.gmail.com>
+Subject: Re: [PATCH v15 38/56] media: ti: Stop direct calls to queue
+ num_buffers field
+To: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc: mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com, 
+	ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de, 
+	gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl, 
+	nicolas.dufresne@collabora.com, linux-media@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev, 
+	kernel@collabora.com, Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Nov 9, 2023 at 4:38=E2=80=AFPM Benjamin Gaignard
+<benjamin.gaignard@collabora.com> wrote:
+>
+> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly=
+.
+> This allows us to change how the number of buffers is computed in the
+> future.
+>
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+> CC: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
+> ---
+>  drivers/media/platform/ti/am437x/am437x-vpfe.c   | 5 +++--
+>  drivers/media/platform/ti/cal/cal-video.c        | 5 +++--
+>  drivers/media/platform/ti/davinci/vpif_capture.c | 5 +++--
+>  drivers/media/platform/ti/davinci/vpif_display.c | 5 +++--
+>  drivers/media/platform/ti/omap/omap_vout.c       | 5 +++--
+>  5 files changed, 15 insertions(+), 10 deletions(-)
+>
+Reviewed-by: Prabhakar <prabhakar.csengg@gmail.com>
 
+Cheers,
+Prabhakar
 
-On 11/9/23 18:11, Bryan O'Donoghue wrote:
-> On 09/11/2023 13:55, Konrad Dybcio wrote:
->>
->>
->> On 11/9/23 12:30, Bryan O'Donoghue wrote:
->>> Add a PHY configuration sequence for the sc8280xp which uses a Qualcomm
->>> Gen 2 version 1.1 CSI-2 PHY.
->>>
->>> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
->>> mode. This configuration supports two-phase D-PHY mode.
->>>
->>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> ---
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>
->> Aside from initialization, looks like the reset seq should be more
->> complex:
->>
->> https://git.codelinaro.org/clo/la/platform/vendor/opensource/camera-kernel/-/blob/LA.AU.1.3.7-02900-gen3_gvmgh.0/drivers/cam_sensor_module/cam_csiphy/include/cam_csiphy_1_1_hwreg.h?ref_type=tags#L39-45
->>
->> https://git.codelinaro.org/clo/la/platform/vendor/opensource/camera-kernel/-/blob/LA.AU.1.3.7-02900-gen3_gvmgh.0/drivers/cam_sensor_module/cam_csiphy/cam_csiphy_core.c#L133-154
->>
->> similarly for the "common regs" that seem to extend the init seq
->>
->> https://git.codelinaro.org/clo/la/platform/vendor/opensource/camera-kernel/-/blob/LA.AU.1.3.7-02900-gen3_gvmgh.0/drivers/cam_sensor_module/cam_csiphy/cam_csiphy_core.c#L491-527
->>
->> Konrad
-> 
-> So..
-> 
-> https://git.codelinaro.org/clo/la/platform/vendor/opensource/camera-kernel/-/blob/LA.AU.1.3.7-02900-gen3_gvmgh.0/drivers/cam_sensor_module/cam_csiphy/include/cam_csiphy_1_1_hwreg.h?ref_type=tags#L39
-> 
-> static struct csiphy_reg_t csiphy_reset_reg_1_1[] = {
->      {0x0814, 0x00, 0x05, CSIPHY_LANE_ENABLE}, // this is interesting
->                                                    // powers off lanemask
->                                                    // seems like a good
->                                                    // idea to me
->      {0x0818, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS}, [1]
->      {0x081C, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS}, [2]
->      {0x0800, 0x01, 0x01, CSIPHY_DEFAULT_PARAMS}, // this we already
->      {0x0800, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS}, // do right now
-> };
-> 
-> [1] [2] I don't see why you need that and I'd imagine the reset drives these values to zero anyway.. it should as I read the reg docs, I'd guess this is a reset sequence that comes out of a Si test bench.
-Since it's there on shipped devices, I'd skew towards including it, maybe some
-chips with this block had an erratum wrt the reset value
-
-
-> 
-> The 0x814 warrants an investigation - i.e. can we add it across platforms without breaking existing setups.
-> 
-> I'll kick that to a separate - one LOC "series", so we can take our time validating if it has any unexpected side-effects across our various platforms.
-Sure, that's what I had in mind
-
-Konrad
+> diff --git a/drivers/media/platform/ti/am437x/am437x-vpfe.c b/drivers/med=
+ia/platform/ti/am437x/am437x-vpfe.c
+> index 5fa2ea9025d9..f18acf9286a2 100644
+> --- a/drivers/media/platform/ti/am437x/am437x-vpfe.c
+> +++ b/drivers/media/platform/ti/am437x/am437x-vpfe.c
+> @@ -1771,9 +1771,10 @@ static int vpfe_queue_setup(struct vb2_queue *vq,
+>  {
+>         struct vpfe_device *vpfe =3D vb2_get_drv_priv(vq);
+>         unsigned size =3D vpfe->fmt.fmt.pix.sizeimage;
+> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
+>
+> -       if (vq->num_buffers + *nbuffers < 3)
+> -               *nbuffers =3D 3 - vq->num_buffers;
+> +       if (q_num_bufs + *nbuffers < 3)
+> +               *nbuffers =3D 3 - q_num_bufs;
+>
+>         if (*nplanes) {
+>                 if (sizes[0] < size)
+> diff --git a/drivers/media/platform/ti/cal/cal-video.c b/drivers/media/pl=
+atform/ti/cal/cal-video.c
+> index a8abcd0fee17..94e67c057a20 100644
+> --- a/drivers/media/platform/ti/cal/cal-video.c
+> +++ b/drivers/media/platform/ti/cal/cal-video.c
+> @@ -603,9 +603,10 @@ static int cal_queue_setup(struct vb2_queue *vq,
+>  {
+>         struct cal_ctx *ctx =3D vb2_get_drv_priv(vq);
+>         unsigned int size =3D ctx->v_fmt.fmt.pix.sizeimage;
+> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
+>
+> -       if (vq->num_buffers + *nbuffers < 3)
+> -               *nbuffers =3D 3 - vq->num_buffers;
+> +       if (q_num_bufs + *nbuffers < 3)
+> +               *nbuffers =3D 3 - q_num_bufs;
+>
+>         if (*nplanes) {
+>                 if (sizes[0] < size)
+> diff --git a/drivers/media/platform/ti/davinci/vpif_capture.c b/drivers/m=
+edia/platform/ti/davinci/vpif_capture.c
+> index 99fae8830c41..fc42b4bc37e6 100644
+> --- a/drivers/media/platform/ti/davinci/vpif_capture.c
+> +++ b/drivers/media/platform/ti/davinci/vpif_capture.c
+> @@ -113,6 +113,7 @@ static int vpif_buffer_queue_setup(struct vb2_queue *=
+vq,
+>         struct channel_obj *ch =3D vb2_get_drv_priv(vq);
+>         struct common_obj *common =3D &ch->common[VPIF_VIDEO_INDEX];
+>         unsigned size =3D common->fmt.fmt.pix.sizeimage;
+> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
+>
+>         vpif_dbg(2, debug, "vpif_buffer_setup\n");
+>
+> @@ -122,8 +123,8 @@ static int vpif_buffer_queue_setup(struct vb2_queue *=
+vq,
+>                 size =3D sizes[0];
+>         }
+>
+> -       if (vq->num_buffers + *nbuffers < 3)
+> -               *nbuffers =3D 3 - vq->num_buffers;
+> +       if (q_num_bufs + *nbuffers < 3)
+> +               *nbuffers =3D 3 - q_num_bufs;
+>
+>         *nplanes =3D 1;
+>         sizes[0] =3D size;
+> diff --git a/drivers/media/platform/ti/davinci/vpif_display.c b/drivers/m=
+edia/platform/ti/davinci/vpif_display.c
+> index f8ec2991c667..9dbab1003c1d 100644
+> --- a/drivers/media/platform/ti/davinci/vpif_display.c
+> +++ b/drivers/media/platform/ti/davinci/vpif_display.c
+> @@ -115,6 +115,7 @@ static int vpif_buffer_queue_setup(struct vb2_queue *=
+vq,
+>         struct channel_obj *ch =3D vb2_get_drv_priv(vq);
+>         struct common_obj *common =3D &ch->common[VPIF_VIDEO_INDEX];
+>         unsigned size =3D common->fmt.fmt.pix.sizeimage;
+> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
+>
+>         if (*nplanes) {
+>                 if (sizes[0] < size)
+> @@ -122,8 +123,8 @@ static int vpif_buffer_queue_setup(struct vb2_queue *=
+vq,
+>                 size =3D sizes[0];
+>         }
+>
+> -       if (vq->num_buffers + *nbuffers < 3)
+> -               *nbuffers =3D 3 - vq->num_buffers;
+> +       if (q_num_bufs + *nbuffers < 3)
+> +               *nbuffers =3D 3 - q_num_bufs;
+>
+>         *nplanes =3D 1;
+>         sizes[0] =3D size;
+> diff --git a/drivers/media/platform/ti/omap/omap_vout.c b/drivers/media/p=
+latform/ti/omap/omap_vout.c
+> index 4143274089c3..72ce903717d3 100644
+> --- a/drivers/media/platform/ti/omap/omap_vout.c
+> +++ b/drivers/media/platform/ti/omap/omap_vout.c
+> @@ -944,10 +944,11 @@ static int omap_vout_vb2_queue_setup(struct vb2_que=
+ue *vq,
+>                                      struct device *alloc_devs[])
+>  {
+>         struct omap_vout_device *vout =3D vb2_get_drv_priv(vq);
+> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
+>         int size =3D vout->pix.sizeimage;
+>
+> -       if (is_rotation_enabled(vout) && vq->num_buffers + *nbufs > VRFB_=
+NUM_BUFS) {
+> -               *nbufs =3D VRFB_NUM_BUFS - vq->num_buffers;
+> +       if (is_rotation_enabled(vout) && q_num_bufs + *nbufs > VRFB_NUM_B=
+UFS) {
+> +               *nbufs =3D VRFB_NUM_BUFS - q_num_bufs;
+>                 if (*nbufs =3D=3D 0)
+>                         return -EINVAL;
+>         }
+> --
+> 2.39.2
+>
 
