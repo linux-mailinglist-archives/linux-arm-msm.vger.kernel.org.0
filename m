@@ -1,546 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6800E7E61D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 02:35:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BC807E6273
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 03:52:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1F10B20C26
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 01:35:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E72D1C20873
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 02:52:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 974AD10F3;
-	Thu,  9 Nov 2023 01:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B17EC4C8F;
+	Thu,  9 Nov 2023 02:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eHZWIf1N"
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="X8xMRkxd";
+	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="Figi9wC9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EA610EC
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 01:35:21 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF4E8D5A;
-	Wed,  8 Nov 2023 17:35:20 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A8NiSaF007152;
-	Thu, 9 Nov 2023 01:35:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=i4I6Sqlpc5bhpTdnGlmCRfb0IsrAbeAZCXM+6dzFB8k=;
- b=eHZWIf1N8nKKDGedaoy/adNcHCN7t1qWL9Id4TboSB8bkUCDaW2mZmYzdxmHwf2UBGvZ
- 2QrodLKanSfKTwT+3tgIej4bjKYKmwbuzlomZmw+zZUkfDlC6PcEmL1SyrCaQGYxeAhM
- kYiQx6k4VEHtkbFSHP45U6D3aWtNy5B5opRBjCvs4JLfR5UL+dV18UFA6ICIQRlCGXQs
- XcqPHEVugVlR4n+vEeOuVrTbs8R6k/MqQGFniFJ9O33fZqXfLazq9RjGLAK/c8rzO3pm
- 9QGMbdZuCjntE7EODf2f53y0CuGPH1K4jGTCU1JXU0aY+e2KUueHZHWfK2J0nMKa6n5o RQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u7w2dub3t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Nov 2023 01:35:13 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A91ZCSt024961
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 Nov 2023 01:35:12 GMT
-Received: from [10.253.34.202] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 8 Nov
- 2023 17:35:09 -0800
-Message-ID: <00870a26-baa2-7b11-8d1b-7866d5b5ef3d@quicinc.com>
-Date: Thu, 9 Nov 2023 09:35:06 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F08539D;
+	Thu,  9 Nov 2023 02:51:58 +0000 (UTC)
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1270D2590;
+	Wed,  8 Nov 2023 18:51:58 -0800 (PST)
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A91iEIn020370;
+	Thu, 9 Nov 2023 02:51:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : message-id : references : date : in-reply-to : content-type :
+ mime-version; s=corp-2023-03-30;
+ bh=jBUxgMB9KH5XqCt/F3hkCeb/J4D+a/F0SLFc07B5MAE=;
+ b=X8xMRkxdqSANR+Xz53A3sLLS01MtPOYl2Wsm4qy/a4U6x3n8VUTNK88aER/oB3rTgZ3k
+ kLgj2l8tp1fBV8XNeC8lLX3NUsKTmaivRmOzlLNviOJ3mOEv5bZJpWUpqkbSQO9wA9YG
+ TosghoyQCh4mBjEAbwpm+E9EoHvyth19ftUbqNNE5PqnNIxF3ES53kTyTwBn29Cjyvk2
+ ZvifP3XG1Rui4rglaY6o5Q0b0vYVtCDU7YI59VpKFBV1fcIhznIR4Ot1RAyGMNMH+j6O
+ /ipvNWTfYPgbvP6D8yfk26PBXwsZ9REZk1qp2bBhZqJTpSFg7XgqVVS8D4bUr11DA+lW IA== 
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3u7w203182-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 09 Nov 2023 02:51:49 +0000
+Received: from pps.filterd (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 3A92PKlB023778;
+	Thu, 9 Nov 2023 02:51:48 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com (mail-mw2nam12lp2040.outbound.protection.outlook.com [104.47.66.40])
+	by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3u7w2610uv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 09 Nov 2023 02:51:48 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=l7QdjDtaKVBEP/C/X/D51GoL6qg6SQCM64C8pp19CHAvJDq5XA9cOEnrKCzGrjwNmNVnq8XLYN7o6YM/6BWV9wd7b8YpaJpto8GUiq3El9ywGQJCkQE9sG/2JxUfwnluarwXVv4rhcB0oqFqQAOFedWEQzvYVnk7M4vMXFwXldkN3/++ToMXYYAIjEKlDUmB47ipiWX4bCj/Ac8WpsuSVvJFLdOvELTHvCHkDfgv4Pb+BbPIPFwjv6yEtaPKnSNQ7tak7isVGPchTT5SGwGH5N66AiMB/0nca/9qQMY6v1p793myprFL92cmDaCjBCjdSIxNjn+KBqVgbMy5bQIgBg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jBUxgMB9KH5XqCt/F3hkCeb/J4D+a/F0SLFc07B5MAE=;
+ b=XQs5HmBzB5ct3azG400H5B+DsTJ3DPPoS+Mf+ErwnfGuClyOXRxnRXjfi3NnMPHzAbJFIGAckuGoywZvT3NiAxNvRGIdG82YxQ0Jc369Wgek9XwJY4RlvYUvaQ8Td+SyuprT5YRLneKAx8KoeW2l6toGU+GGlStgsWWpLN6TuVfPz+X+KhtBzMnzHt/3ogbkAV8TnwjbOJVUQnYTrKLSWJzgdmJYHnDDMji36f4mn+C+CIN9zWcv9grJSvv3yJg555quy7xPoNGCCrnm77BBJRPaTQLMk88Ettty1jmlQDTuI9FdLr4yydTu/M60LbkSIZ/u4mzcn14m7Aiugg69Cg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jBUxgMB9KH5XqCt/F3hkCeb/J4D+a/F0SLFc07B5MAE=;
+ b=Figi9wC9kvzQyZKvsKHG2SrknYVDbRdl2qMXgDUEqzMAcMFfOTboHkbz8IrVdyzRib8C5DQIfSolfGp5vORNXdxCs4NYuGww4m7+LOnwnPuYvyciuwEhOK3DjycedxCaE+7usa3Xxzn1SSK6P8iYIoYXynrQo9nh3yaK1jDpeGs=
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com (2603:10b6:510:3d::12)
+ by IA0PR10MB6844.namprd10.prod.outlook.com (2603:10b6:208:434::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.28; Thu, 9 Nov
+ 2023 02:51:45 +0000
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::abe0:e274:435c:5660]) by PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::abe0:e274:435c:5660%4]) with mapi id 15.20.6977.018; Thu, 9 Nov 2023
+ 02:51:45 +0000
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam
+ <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman
+ <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Rob Herring
+ <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3] dt-bindings: ufs: qcom-ufs: document the SM8650 UFS
+ Controller
+From: "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+Message-ID: <yq1ttpv4p1j.fsf@ca-mkp.ca.oracle.com>
+References: <20231030-topic-sm8650-upstream-bindings-ufs-v3-1-a96364463fd5@linaro.org>
+Date: Wed, 08 Nov 2023 21:51:43 -0500
+In-Reply-To: <20231030-topic-sm8650-upstream-bindings-ufs-v3-1-a96364463fd5@linaro.org>
+	(Neil Armstrong's message of "Mon, 30 Oct 2023 10:43:11 +0100")
+Content-Type: text/plain
+X-ClientProxiedBy: BY5PR17CA0068.namprd17.prod.outlook.com
+ (2603:10b6:a03:167::45) To PH0PR10MB4759.namprd10.prod.outlook.com
+ (2603:10b6:510:3d::12)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH V8 2/5] scsi: ufs: qcom: Add multiple frequency support
- for MAX_CORE_CLK_1US_CYCLES
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Nitin Rawat
-	<quic_nitirawa@quicinc.com>
-CC: <mani@kernel.org>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <jejb@linux.ibm.com>,
-        <martin.petersen@oracle.com>, <quic_nguyenb@quicinc.com>,
-        <linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Naveen Kumar Goud Arepalli
-	<quic_narepall@quicinc.com>
-References: <20230905052400.13935-1-quic_nitirawa@quicinc.com>
- <20230905052400.13935-3-quic_nitirawa@quicinc.com>
- <CAA8EJpr1RE5wDxM939vec8c7aaFYozXc1SxU-tT2dg4Gx4PqEg@mail.gmail.com>
-Content-Language: en-US
-From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <CAA8EJpr1RE5wDxM939vec8c7aaFYozXc1SxU-tT2dg4Gx4PqEg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dzq14Mc5VMIBWbZrIFnTLJRJuuUVBGYz
-X-Proofpoint-ORIG-GUID: dzq14Mc5VMIBWbZrIFnTLJRJuuUVBGYz
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4759:EE_|IA0PR10MB6844:EE_
+X-MS-Office365-Filtering-Correlation-Id: f60f46e2-37d1-4fdc-3b87-08dbe0cecfc9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	z84r5ip/2sdGrYplrj41RQyiCYMa0oclGZ/VBTyabR15NPxU8tJWKJ9l5T6T/psnUXNANo1zOLMshFM26NkCQRj86YG6SPZAUdFoCde2ITiJCMnDfNfTrneFQF5tVcPmkG76u0vpJjOrEqjpb6MZEv6pRdXKK5bS19qt7TMqLdk1Rh79wfzGnHhyRGw3t06LzQ3lbeS7+v063+eugWDfoSsVCi9EUK7CdE8F6EjXhPq63iwVUCMspLFs5p2G4hYcFSVjALmk4sqysEkR4GDD8jkIJ5KpiFv6F/bXJXLysA4lsRQWm8Yzsdr2OJuXjuq0quFEIDscMkhInCjIuR5FuhnYCLNhpN+uXuusyFY6eIKTzCtvkZewD+1Rzwt0W5W1RPcTOIhG+GOATbDe+VjiCbBoEHZaRJxOu35+efw6hUsJpvS0UMZ1DMDhf+Ag7i6Ym+HcoGaBw2oMAbaa7t211YsJo5jXbic0/cOY+Yry990Jf8ZxvxyurFFoLlnQrn+eYHc1GSzW0gC+Ae2z2jvTj0SM1fbnACsSv2J28Pz8nZJClTB6TSUa7KWcMI16hWTP
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB4759.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(376002)(39860400002)(396003)(366004)(136003)(230922051799003)(186009)(1800799009)(64100799003)(451199024)(6506007)(86362001)(36916002)(558084003)(8676002)(478600001)(8936002)(6486002)(4326008)(5660300002)(6512007)(38100700002)(54906003)(66946007)(66476007)(6916009)(66556008)(316002)(7416002)(2906002)(26005)(41300700001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?us-ascii?Q?gEzXHh+78RaRRcZ5mpfnn7BfMLxSJi/Ksb4ZKEIJq6N1F+Rrv6nGrVOa5nD7?=
+ =?us-ascii?Q?yfDoBIGCOIoCPthWAGyCvc7LXOhbXAsCs4HtIs9yCu/quXSO7zQ8mgAAnJcZ?=
+ =?us-ascii?Q?vCpTBHdUH0DVr2YJ5mXrFJJolbZKh+nwwuKLZvYg8Oo1kKU6uLcguLxnYaSy?=
+ =?us-ascii?Q?IFlw0z6A/OMZzw0RnADIlclZMLPD4dumE7kDgDTpL+FLgDWK/yAl9vtan4hE?=
+ =?us-ascii?Q?m93MwfW4c8RUPYot9l+KJLbvgXta4M5ERtVNFy7rmd5a0iJqHnt0KtNvltbB?=
+ =?us-ascii?Q?JDa5buRv0/su+0oykWwBzVqx9hzgftqawrnlL9LWME9eYRSna2O4T/cANFt0?=
+ =?us-ascii?Q?SBIwd28ImMpHCpILtgRKLW0XjxMPaNTBhZKKHj010EKDxtmfW6na45B7Iqw4?=
+ =?us-ascii?Q?EXiatmklx4fMftzIg6wn1mi257t265k9peMvAHJqEMloW0rnQXB45EIAJytV?=
+ =?us-ascii?Q?fmu39mKO93sPoXoVje3LNE9dCslzOvZLxVXzvm9TuiFZ51nPJRSF0JJJZZqv?=
+ =?us-ascii?Q?zS4X/DkleB+FK9yQzYMYETuhW8A6naJFlUph+MT5ppXmKfLsIcN2vaBU/crP?=
+ =?us-ascii?Q?CDYg77Qynq9NtrUL1d+JFTLfFQHhL+jDtOqr3SX0e8qEy5rE+hIAX2E0MiQ/?=
+ =?us-ascii?Q?46h/53oWdxgZ4ZgF1X3/0V6BQWs/3rigY04BZX2r/zi34JCzyETfP98SJdNz?=
+ =?us-ascii?Q?mB72PcDmcoK3c9q3RC0yfUKhk/sUo1DHopBBYyNw1p0bXgGf6VQPYCxoHO6Z?=
+ =?us-ascii?Q?+qsMne9aMuARocpNr/Ad5MvkBtHM5dcetA8ly7azwnXE4kYIf3JTQ0QZoGMD?=
+ =?us-ascii?Q?up1cFdPzyhPtHKgGQ02fMNgYyhokmGk/KXQBzgiR64mmSazg1BQitlLT3DuA?=
+ =?us-ascii?Q?vubZeRJKiBfXVoXETJopPVudZ72uDbSnf08v4y+QPJbidDvlnPOPbxVHUbNd?=
+ =?us-ascii?Q?F8CpRzgUAfN0IYPMuZmFb6uCYXkxYeKCPqkXP3MinbAesMEspK7V29q5IVkx?=
+ =?us-ascii?Q?vumEctJKKaWugmkydfX578qAoVV7ycjb5aNwOLuYGOSAKAGTDpJXsdJzeq29?=
+ =?us-ascii?Q?nYgu5IOppGiaDMzAP4o23aPFoDSakRfUsyaFqrp8WBRsOVm5kFS5dcDv7XD7?=
+ =?us-ascii?Q?aS1hNaEEgWHI/5D7jlkBdOjGtKD3jZV7JTyTDfo05DFTqSyDVKuLjHf+IDQr?=
+ =?us-ascii?Q?aBm6upq3Ld8aYPM5q47EmuwTQkJpaWXgNL7jgNUcTJTzfpKOhAP9fdgE+abc?=
+ =?us-ascii?Q?msn86Ue/sps03yNCMFlPs7L2FIBA98HJ/0DWwP4mmQ1zE7u0u3GQkaLRXQBd?=
+ =?us-ascii?Q?juCQbMfmjC8vCjWoB+DdyPsV8/+kCTfxTnZQMxhtjkQ7risk5U07ucN+pncz?=
+ =?us-ascii?Q?bc6V6N/xxNQ2l27UFQd0rvxmVGs9pGUKHAOnyEbvy7ceZClnC0CkSXkJ4v8/?=
+ =?us-ascii?Q?oIaGLDCpOM65E7bwxRrgXPA5lDPJ5Zn9Djja0M/nQyfB4CmLPjoKIjSHWz39?=
+ =?us-ascii?Q?DBYBEZIELD7kGDWR9P78eLWPNVz0eotAHrCSUEnbm9Wk7f8FiM/BaRQbjsAM?=
+ =?us-ascii?Q?l/qWTY1zihRDlptXtv43qPDL5Ut27m8o3vbFHuUqClBhZJ2uCWoC3axqUQa7?=
+ =?us-ascii?Q?Gw=3D=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	3KbhIFM+mfEa8ctKi/f6Fk3KdBa4rCP12kXRp8lFJ6bImaqaJZs8x12bNLT8NPnI7dt2KSPM/pHfRPdmaHPy2p0djmbp1SthLa/S3Zg48kP5h2u7cm3tVxXknjTuwKvuk/jbnkN8N8O4iB+NEL+y/Jm2Fzfa0XHZ4zsH5+wci5sMBUXj6zB6VuFa65Fg1/98Q6OYijoWqLLl0ChOHb1CFSM/zW8PUaHLuV29571zhNZf7Q+PCX+D4SzF99Atnf1Bb6SKDzvFXUkXOLx7Xq1LqrwvsILNU5HC43LfqyQsAVvj5zbFgh6o9lX757vvm8U+TyJvrrBJDgX7w1JrVdPj4Mxny7qQoUuZxQRSbcXr0oSPORmCztrUZRopnWCQzFXvlqcOHRTun7h3D29ogRAI8GhMztEVGofGAJKcT1RozevpQaim+PcIcv2g7q8TV7MkUy7VjSbtdO3Rn9x9Pkg9jpSu710nACYTa0XrQgRghbArFdLSBSu/rALuVSzVmT0s0MA1O8+SO0RFoEfN31IpzFT6GX9grVoIxpPNA8jADeSLdU6C5fdqB3QK+hUG4Z4gpFvTfGqY9QBYC/PGWI137Sn3+vSHYNTAJKIaoR8PgF2ilUCpwZnO/KuCG+dG2elPa+FoNrm3bqwDcml+1OW9qeO2d6vzdUeTIzQYKKJtq1WS24WHexynhV8uLMT9nbgUGR+imLyhOPcNTnLOWc0RXOCoWBTX3a/RXJWaoBX6a58CWXwXVQ6WA63ydGCxDV9TJXD6RiD4CuZdRSBXt/3n8gVpIdZgG5lHUkUpaJqsb0pI3rMeh9W6oPE8paE5WA1nk1X1ktJz1KRAAIX8+YyfBdXB9y8vCr92vKQmJ0oZ9RyK2XemBCT8bxcgQ1u/ZlihqdexSgkmy88Gp7F9WwdDlA==
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f60f46e2-37d1-4fdc-3b87-08dbe0cecfc9
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4759.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Nov 2023 02:51:45.8074
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2pg5c3PGRS4z1ZWaiiG5n6mnQxsLoAJaEUthKTaAgF8cqzAlvRxVHI06lZpyhTAdm/CnQTH/uFZUCYn5G9xYKvM5whFZOgjLtBm69pdNq9A=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB6844
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-09_01,2023-11-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- clxscore=1015 mlxlogscore=999 mlxscore=0 suspectscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311090011
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=737 phishscore=0
+ spamscore=0 mlxscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311090021
+X-Proofpoint-ORIG-GUID: sImqYrGx5GazH255O49LQAG0Rsu1X2O0
+X-Proofpoint-GUID: sImqYrGx5GazH255O49LQAG0Rsu1X2O0
 
 
+Neil,
 
-On 11/9/2023 12:30 AM, Dmitry Baryshkov wrote:
-> On Tue, 5 Sept 2023 at 19:20, Nitin Rawat <quic_nitirawa@quicinc.com> wrote:
->>
->> Qualcomm UFS Controller V4 and above supports multiple unipro frequencies
->> like 403MHz, 300MHz, 202MHz, 150 MHz, 75Mhz, 37.5 MHz. Current code
->> supports only 150MHz and 75MHz which have performance impact due to low
->> UFS controller frequencies.
->>
->> For targets which supports frequencies other than 150 MHz and 75 Mhz,
->> needs an update of MAX_CORE_CLK_1US_CYCLES to match the configured
->> frequency to avoid functionality issues. Add multiple frequency support
->> for MAX_CORE_CLK_1US_CYCLES based on the frequency configured.
->>
->> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
->> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
->> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> 
-> This patch breaks UFS support on the APQ8096. Now the boot process
-> breaks with the following messages.
-> 
-> 
-> [    4.885592] ufshcd-qcom 624000.ufshc: uic cmd 0x16 with arg3 0x0
-> completion timeout
-> [    4.890996] ufshcd-qcom 624000.ufshc: ufs_qcom_host_reset: reset
-> control not set
-> [    5.424864] ufshcd-qcom 624000.ufshc: uic cmd 0x16 with arg3 0x0
-> completion timeout
-> [    5.425020] ufshcd-qcom 624000.ufshc: ufs_qcom_host_reset: reset
-> control not set
-> [    5.936918] ufshcd-qcom 624000.ufshc: uic cmd 0x16 with arg3 0x0
-> completion timeout
-> [    5.937136] ufshcd-qcom 624000.ufshc: link startup failed -110
-> [    5.943584] ufshcd-qcom 624000.ufshc: UFS Host state=0
-> [    5.949463] ufshcd-qcom 624000.ufshc: outstanding reqs=0x0 tasks=0x0
-> [    5.954594] ufshcd-qcom 624000.ufshc: saved_err=0x0, saved_uic_err=0x0
-> [    5.961106] ufshcd-qcom 624000.ufshc: Device power mode=1, UIC link state=0
-> [    5.967479] ufshcd-qcom 624000.ufshc: PM in progress=0, sys. suspended=0
-> [    5.974310] ufshcd-qcom 624000.ufshc: Auto BKOPS=0, Host self-block=0
-> [    5.981271] ufshcd-qcom 624000.ufshc: Clk gate=1
-> [    5.987541] ufshcd-qcom 624000.ufshc: last_hibern8_exit_tstamp at 0
-> us, hibern8_exit_cnt=0
-> [    5.992330] ufshcd-qcom 624000.ufshc: last intr at 5432791 us, last
-> intr status=0x400
-Just chiming in, looks like the cmd 0x16 completion IRQ comes a bit 
-late, but it indeed comes.
+> Document the UFS Controller on the SM8650 Platform.
 
-Thanks,
-Can Guo.
-> [    6.000300] ufshcd-qcom 624000.ufshc: error handling flags=0x0,
-> req. abort count=0
-> [    6.008236] ufshcd-qcom 624000.ufshc: hba->ufs_version=0x200, Host
-> capabilities=0x107001f, caps=0x12cf
-> [    6.015804] ufshcd-qcom 624000.ufshc: quirks=0x20, dev. quirks=0x0
-> [    6.024942] ufshcd-qcom 624000.ufshc: clk: core_clk_src, rate: 200000000
-> [    6.031064] ufshcd-qcom 624000.ufshc: clk: core_clk_unipro_src,
-> rate: 300000000
-> [    6.037960] host_regs: 00000000: 0107001f 00000000 00010100 00000000
-> [    6.044956] host_regs: 00000010: 01000000 00010217 00000000 00000000
-> [    6.051547] host_regs: 00000020: 00000000 00000470 00000000 00000000
-> [    6.057899] host_regs: 00000030: 00000000 00000001 00000000 00000000
-> [    6.064277] host_regs: 00000040: 00000000 00000000 00000000 00000000
-> [    6.070673] host_regs: 00000050: 00000000 00000000 00000000 00000000
-> [    6.076894] host_regs: 00000060: 00000000 00000000 00000000 00000000
-> [    6.083237] host_regs: 00000070: 00000000 00000000 00000000 00000000
-> [    6.089586] host_regs: 00000080: 00000000 00000000 00000000 00000000
-> [    6.095906] host_regs: 00000090: 00000016 00000000 00000000 00000000
-> [    6.102258] ufshcd-qcom 624000.ufshc: No record of pa_err
-> [    6.108571] ufshcd-qcom 624000.ufshc: No record of dl_err
-> [    6.113865] ufshcd-qcom 624000.ufshc: No record of nl_err
-> [    6.119246] ufshcd-qcom 624000.ufshc: No record of tl_err
-> [    6.124627] ufshcd-qcom 624000.ufshc: No record of dme_err
-> [    6.130010] ufshcd-qcom 624000.ufshc: No record of auto_hibern8_err
-> [    6.135396] ufshcd-qcom 624000.ufshc: No record of fatal_err
-> [    6.141558] ufshcd-qcom 624000.ufshc: link_startup_fail[0] =
-> 0xffffff92 at 5937130 us
-> [    6.147473] ufshcd-qcom 624000.ufshc: link_startup_fail: total cnt=1
-> [    6.155187] ufshcd-qcom 624000.ufshc: No record of resume_fail
-> [    6.161608] ufshcd-qcom 624000.ufshc: No record of suspend_fail
-> [    6.167252] ufshcd-qcom 624000.ufshc: No record of wlun resume_fail
-> [    6.173070] ufshcd-qcom 624000.ufshc: No record of wlun suspend_fail
-> [    6.179322] ufshcd-qcom 624000.ufshc: No record of dev_reset
-> [    6.185915] ufshcd-qcom 624000.ufshc: No record of host_reset
-> [    6.191557] ufshcd-qcom 624000.ufshc: No record of task_abort
-> [    6.197222] HCI Vendor Specific Registers 00000000: 000000c8
-> 00000000 00000000 00000000
-> [    6.202944] HCI Vendor Specific Registers 00000010: 00000000
-> 00000000 00000000 5c5c052c
-> [    6.210755] HCI Vendor Specific Registers 00000020: 3f0113ff
-> 20020000 00000007 00000000
-> [    6.218743] HCI Vendor Specific Registers 00000030: 00000000
-> 00000000 02500000 00000000
-> [    6.226748] UFS_UFS_DBG_RD_REG_OCSC 00000000: 00000000 00000000
-> 00000000 00000000
-> [    6.234712] UFS_UFS_DBG_RD_REG_OCSC 00000010: 00000000 00000000
-> 00000000 00000000
-> [    6.242349] UFS_UFS_DBG_RD_REG_OCSC 00000020: 00000000 00000000
-> 00000000 00000000
-> [    6.249815] UFS_UFS_DBG_RD_REG_OCSC 00000030: 00000000 00000000
-> 00000000 00000000
-> [    6.257282] UFS_UFS_DBG_RD_REG_OCSC 00000040: 00000000 00000000
-> 00000000 00000000
-> [    6.264746] UFS_UFS_DBG_RD_REG_OCSC 00000050: 00000000 00000000
-> 00000000 00000000
-> [    6.272228] UFS_UFS_DBG_RD_REG_OCSC 00000060: 00000000 00000000
-> 00000000 00000000
-> [    6.279675] UFS_UFS_DBG_RD_REG_OCSC 00000070: 00000000 00000000
-> 00000000 00000000
-> [    6.287141] UFS_UFS_DBG_RD_REG_OCSC 00000080: 00000000 00000000
-> 00000000 00000000
-> [    6.294608] UFS_UFS_DBG_RD_REG_OCSC 00000090: 00000000 00000000
-> 00000000 00000000
-> [    6.302069] UFS_UFS_DBG_RD_REG_OCSC 000000a0: 00000000 00000000
-> 00000000 00000000
-> [    6.309557] UFS_UFS_DBG_RD_EDTL_RAM 00000000: 00000000 a4491e48
-> fcf4caf8 46ff663f
-> [    6.317002] UFS_UFS_DBG_RD_EDTL_RAM 00000010: 3495a3c2 7be92e99
-> 2334e629 a9f5cf7a
-> [    6.324478] UFS_UFS_DBG_RD_EDTL_RAM 00000020: e0edb246 e551c5b7
-> d060df83 c84da5e6
-> [    6.331935] UFS_UFS_DBG_RD_EDTL_RAM 00000030: 59e307b2 f6855da2
-> 3d0484ee 33b4d9d9
-> [    6.339410] UFS_UFS_DBG_RD_EDTL_RAM 00000040: 4de326b3 5ba15f50
-> 50c13d42 ca1e97e5
-> [    6.346863] UFS_UFS_DBG_RD_EDTL_RAM 00000050: 4cf00e3d b54c986e
-> 0755044b e235db57
-> [    6.354346] UFS_UFS_DBG_RD_EDTL_RAM 00000060: b92c1aeb 281dc88f
-> 76ff1877 3307093a
-> [    6.361795] UFS_UFS_DBG_RD_EDTL_RAM 00000070: f8193d0a 222e4061
-> d2cc6207 1fa596f9
-> [    6.369341] UFS_UFS_DBG_RD_DESC_RAM 00000000: 00000fff 000245b9
-> 40000fff 000245d7
-> [    6.376725] UFS_UFS_DBG_RD_DESC_RAM 00000010: ad10cc60 00368847
-> 151c412f 0038a520
-> [    6.384223] UFS_UFS_DBG_RD_DESC_RAM 00000020: 0c0d244a 0036774c
-> 027721d1 00145503
-> [    6.391659] UFS_UFS_DBG_RD_DESC_RAM 00000030: ec11c082 00357203
-> 74e1d006 000d8511
-> [    6.399122] UFS_UFS_DBG_RD_DESC_RAM 00000040: c54067b1 0029bc16
-> e7e164f6 00053070
-> [    6.406588] UFS_UFS_DBG_RD_DESC_RAM 00000050: a0c0bff6 002a0367
-> 4a35b6ca 0021a240
-> [    6.414051] UFS_UFS_DBG_RD_DESC_RAM 00000060: 085b1f23 002c64ef
-> 73820a12 0010ef31
-> [    6.421515] UFS_UFS_DBG_RD_DESC_RAM 00000070: 69029047 00190510
-> 6046fb03 0026f328
-> [    6.428981] UFS_UFS_DBG_RD_DESC_RAM 00000080: 329031b4 0010e6fa
-> 17914504 00109484
-> [    6.436447] UFS_UFS_DBG_RD_DESC_RAM 00000090: 26d10045 001c14dc
-> 5503fb3d 00040c95
-> [    6.443913] UFS_UFS_DBG_RD_DESC_RAM 000000a0: 90445642 003122f0
-> f74a51e5 002c0765
-> [    6.451384] UFS_UFS_DBG_RD_DESC_RAM 000000b0: c1581085 00124fc2
-> 79137305 0024c227
-> [    6.458844] UFS_UFS_DBG_RD_DESC_RAM 000000c0: 65b22114 003b9a58
-> 61d01770 000ab182
-> [    6.466308] UFS_UFS_DBG_RD_DESC_RAM 000000d0: d4096375 00169e4c
-> 1a0477b6 00064615
-> [    6.473773] UFS_UFS_DBG_RD_DESC_RAM 000000e0: 232840aa 001c5490
-> 14cd840d 000a2944
-> [    6.481240] UFS_UFS_DBG_RD_DESC_RAM 000000f0: 8a228d09 00041b11
-> d0241490 00064e1b
-> [    6.488704] UFS_UFS_DBG_RD_DESC_RAM 00000100: 1a0f6846 000282d1
-> 06118e46 00102644
-> [    6.496169] UFS_UFS_DBG_RD_DESC_RAM 00000110: b6669e01 00052b38
-> 1720792c 000c3156
-> [    6.503634] UFS_UFS_DBG_RD_DESC_RAM 00000120: 0641cf61 000997fd
-> 7c900815 0004ad50
-> [    6.511099] UFS_UFS_DBG_RD_DESC_RAM 00000130: 1ef37280 00244c4d
-> 3bb119d0 00286f65
-> [    6.518565] UFS_UFS_DBG_RD_DESC_RAM 00000140: db9c09e5 0028c2e7
-> 5b5d1df6 0031d8dd
-> [    6.526029] UFS_UFS_DBG_RD_DESC_RAM 00000150: ca1d1166 00036152
-> d8641112 001ac503
-> [    6.533494] UFS_UFS_DBG_RD_DESC_RAM 00000160: 8d429104 0038dc61
-> cb6e324b 00311563
-> [    6.540960] UFS_UFS_DBG_RD_DESC_RAM 00000170: 4438455a 003d4061
-> 68596183 001749bf
-> [    6.548426] UFS_UFS_DBG_RD_DESC_RAM 00000180: 781e7129 00249c1f
-> 10192822 0002c85c
-> [    6.555891] UFS_UFS_DBG_RD_DESC_RAM 00000190: 16c0c0fb 000296c5
-> 3126c8d6 00345830
-> [    6.563357] UFS_UFS_DBG_RD_DESC_RAM 000001a0: 1461e741 00384181
-> 46a04712 00113eee
-> [    6.570822] UFS_UFS_DBG_RD_DESC_RAM 000001b0: 2b8332c4 00070e4e
-> 3c00b95f 002afa6c
-> [    6.578296] UFS_UFS_DBG_RD_DESC_RAM 000001c0: bc8c71c9 002b0d96
-> 0d1b0097 00061d0c
-> [    6.585752] UFS_UFS_DBG_RD_DESC_RAM 000001d0: 5da4850f 002aa5dd
-> 7cea0d59 0000bf25
-> [    6.593218] UFS_UFS_DBG_RD_DESC_RAM 000001e0: 400040a0 00080408
-> 66249825 002106cb
-> [    6.600682] UFS_UFS_DBG_RD_DESC_RAM 000001f0: e6831b0d 0010a590
-> 646e0397 00042a16
-> [    6.608198] UFS_UFS_DBG_RD_PRDT_RAM 00000000: b6500000 0000916c
-> cd401d62 00043550
-> [    6.615614] UFS_UFS_DBG_RD_PRDT_RAM 00000010: 3037914c 0005a31f
-> f5469fe9 00093259
-> [    6.623079] UFS_UFS_DBG_RD_PRDT_RAM 00000020: 00040000 00000010
-> 49470e15 000c2784
-> [    6.630543] UFS_UFS_DBG_RD_PRDT_RAM 00000030: 3e63f4c4 000c5d99
-> ff34178f 0009ebef
-> [    6.638020] UFS_UFS_DBG_RD_PRDT_RAM 00000040: e6c207f6 0002ad55
-> 58618cab 00049e17
-> [    6.645473] UFS_UFS_DBG_RD_PRDT_RAM 00000050: e175022b 000cfcfb
-> d98e1281 000dc9b2
-> [    6.652941] UFS_UFS_DBG_RD_PRDT_RAM 00000060: 10000001 00000000
-> 711494d2 000fe80b
-> [    6.660405] UFS_UFS_DBG_RD_PRDT_RAM 00000070: 4814b1d8 000a0ca1
-> 6dc32ecd 00000e54
-> [    6.667870] UFS_UFS_DBG_RD_PRDT_RAM 00000080: 00000041 00000004
-> e910c009 00018567
-> [    6.675336] UFS_UFS_DBG_RD_PRDT_RAM 00000090: 62508d4d 0004eaa8
-> 892dfb22 000cd259
-> [    6.682803] UFS_UFS_DBG_RD_PRDT_RAM 000000a0: cd20c8e2 000a55a0
-> 01816101 000f88ef
-> [    6.690267] UFS_UFS_DBG_RD_PRDT_RAM 000000b0: c811a2b7 00050746
-> 73310333 000b5b59
-> [    6.697732] UFS_UFS_DBG_RD_PRDT_RAM 000000c0: 2c4841ec 000a3517
-> b55c4bdf 00008308
-> [    6.705205] UFS_UFS_DBG_RD_PRDT_RAM 000000d0: f16cc22f 0006193d
-> f810d7ef 0005a2ef
-> [    6.712662] UFS_UFS_DBG_RD_PRDT_RAM 000000e0: 48140178 0005912e
-> 713db144 0000925e
-> [    6.720128] UFS_UFS_DBG_RD_PRDT_RAM 000000f0: 1cd0a405 000ac1a0
-> 60518a6b 000d3a4c
-> [    6.727598] UFS_DBG_RD_REG_UAWM 00000000: 00000000 00000062 00000000 0001fec0
-> [    6.735060] UFS_DBG_RD_REG_UARM 00000000: 00000000 00000001 00000011 00000001
-> [    6.742196] UFS_DBG_RD_REG_TXUC 00000000: 00000000 00000000 00000000 00000000
-> [    6.749291] UFS_DBG_RD_REG_TXUC 00000010: 00000000 00000000 00000000 00000000
-> [    6.756410] UFS_DBG_RD_REG_TXUC 00000020: 00000000 00000000 00000000 00000000
-> [    6.763527] UFS_DBG_RD_REG_TXUC 00000030: 00000000 00000000 00000000 00000000
-> [    6.770644] UFS_DBG_RD_REG_TXUC 00000040: 00000000 00000000 00000000 00000000
-> [    6.777762] UFS_DBG_RD_REG_TXUC 00000050: 00000000 00000000 00000000 00000000
-> [    6.784880] UFS_DBG_RD_REG_TXUC 00000060: 00000000 00000000 00000000 00000000
-> [    6.791998] UFS_DBG_RD_REG_TXUC 00000070: 00000000 00000000 00000000 00000000
-> [    6.799117] UFS_DBG_RD_REG_TXUC 00000080: 00000000 00000000 00000000 00000000
-> [    6.806234] UFS_DBG_RD_REG_TXUC 00000090: 00000000 00000000 00000000 00000000
-> [    6.813353] UFS_DBG_RD_REG_TXUC 000000a0: 00000000 00000000 00000000 00000000
-> [    6.820471] UFS_DBG_RD_REG_TXUC 000000b0: 00000001 00000040 00000000 00000004
-> [    6.827604] UFS_DBG_RD_REG_RXUC 00000000: 00000000 00000001 00000000 00000004
-> [    6.834716] UFS_DBG_RD_REG_RXUC 00000010: 00000000 00000000 00000000 00000000
-> [    6.841825] UFS_DBG_RD_REG_RXUC 00000020: 00000000 00000000 00000000 00000000
-> [    6.848943] UFS_DBG_RD_REG_RXUC 00000030: 00000000 00000000 00000000 00000000
-> [    6.856060] UFS_DBG_RD_REG_RXUC 00000040: 00000000 00000000 00000000 00000000
-> [    6.863178] UFS_DBG_RD_REG_RXUC 00000050: 00000000 00000000 00000000 00000001
-> [    6.870347] UFS_DBG_RD_REG_RXUC 00000060: 00000040 00000000 00000004
-> [    6.877424] UFS_DBG_RD_REG_DFC 00000000: 00000000 00000000 00000000 00000000
-> [    6.883838] UFS_DBG_RD_REG_DFC 00000010: 00000000 00000000 00000000 00000000
-> [    6.890869] UFS_DBG_RD_REG_DFC 00000020: 00000000 00000000 00000000 00000000
-> [    6.897921] UFS_DBG_RD_REG_DFC 00000030: 00000000 00000000 00000000 00000000
-> [    6.904934] UFS_DBG_RD_REG_DFC 00000040: ffffffff 00000000 00000000
-> [    6.911978] UFS_DBG_RD_REG_TRLUT 00000000: 00000000 00000001
-> 00000000 00000000
-> [    6.917955] UFS_DBG_RD_REG_TRLUT 00000010: 00000000 00000000
-> 00000000 00000000
-> [    6.925246] UFS_DBG_RD_REG_TRLUT 00000020: 00000000 00000000
-> 00000000 00000000
-> [    6.932454] UFS_DBG_RD_REG_TRLUT 00000030: 00000000 00000000
-> 00000000 00000000
-> [    6.939668] UFS_DBG_RD_REG_TRLUT 00000040: 00000000 00000000
-> 00000000 00000000
-> [    6.946861] UFS_DBG_RD_REG_TRLUT 00000050: 00000000 00000000
-> 00000000 00000000
-> [    6.954067] UFS_DBG_RD_REG_TRLUT 00000060: 00000000 00000000
-> 00000000 00000000
-> [    6.961280] UFS_DBG_RD_REG_TRLUT 00000070: 00000000 00000000
-> 00000000 00000000
-> [    6.968477] UFS_DBG_RD_REG_TRLUT 00000080: 00000000 00000000
-> [    6.975678] UFS_DBG_RD_REG_TMRLUT 00000000: 00000000 00000001
-> 00000000 00000000
-> [    6.981497] UFS_DBG_RD_REG_TMRLUT 00000010: 00000000 00000000
-> 00000000 00000000
-> [    6.988527] UFS_DBG_RD_REG_TMRLUT 00000020: 00000000
-> [    7.003383] ------------[ cut here ]------------
-> [    7.003439] gcc_ufs_axi_clk status stuck at 'off'
-> [    7.003466] WARNING: CPU: 3 PID: 60 at
-> drivers/clk/qcom/clk-branch.c:86 clk_branch_wait+0x140/0x158
-> [    7.011712] Modules linked in:
-> [    7.020537] CPU: 3 PID: 60 Comm: kworker/u11:0 Tainted: G     U
->          6.6.0-rc1-00002-gb4e13e1ae95e #1257
-> [    7.023703] Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
-> [    7.033652] Workqueue: ufs_clk_gating_0 ufshcd_ungate_work
-> [    7.039898] pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    7.045371] pc : clk_branch_wait+0x140/0x158
-> [    7.052223] lr : clk_branch_wait+0x140/0x158
-> [    7.056738] sp : ffff8000833f3c30
-> [    7.060984] x29: ffff8000833f3c30 x28: ffff800081d0b200 x27: 0000000000000000
-> [    7.064218] x26: 0000000000000001 x25: ffff000081b318e8 x24: 000000019c366bfc
-> [    7.071337] x23: ffff800081611c10 x22: 0000000000000001 x21: ffff800080624180
-> [    7.078455] x20: 0000000000000000 x19: ffff800081e49738 x18: fffffffffffed120
-> [    7.085572] x17: 3030303030203030 x16: 3030303030302030 x15: 0000000000000030
-> [    7.092691] x14: 0000000000000000 x13: ffff800081d2b9f8 x12: 00000000000008e8
-> [    7.099809] x11: 00000000000002f8 x10: ffff800081d88138 x9 : ffff800081d2b9f8
-> [    7.106928] x8 : 00000000ffffefff x7 : ffff800081d839f8 x6 : 00000000000002f8
-> [    7.114046] x5 : 000000000000bff4 x4 : 40000000fffff2f8 x3 : 0000000000000000
-> [    7.121163] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff000080db3200
-> [    7.128282] Call trace:
-> [    7.135372]  clk_branch_wait+0x140/0x158
-> [    7.137637]  clk_branch2_enable+0x30/0x40
-> [    7.141806]  clk_core_enable+0xd0/0x264
-> [    7.145709]  clk_enable+0x2c/0x4c
-> [    7.149353]  ufshcd_setup_clocks+0x248/0x3cc
-> [    7.152832]  ufshcd_ungate_work+0xc0/0x134
-> [    7.157170]  process_one_work+0x1ec/0x51c
-> [    7.161075]  worker_thread+0x1ec/0x3e4
-> [    7.165154]  kthread+0x120/0x124
-> [    7.168797]  ret_from_fork+0x10/0x20
-> [    7.172186] irq event stamp: 1144
-> [    7.175742] hardirqs last  enabled at (1143): [<ffff800080fa05c0>]
-> _raw_spin_unlock_irq+0x30/0x64
-> [    7.178987] hardirqs last disabled at (1144): [<ffff800080f96e08>]
-> __schedule+0x7b0/0xc00
-> [    7.187837] softirqs last  enabled at (1138): [<ffff800080090630>]
-> __do_softirq+0x430/0x4e4
-> [    7.195999] softirqs last disabled at (1133): [<ffff800080096154>]
-> ____do_softirq+0x10/0x1c
-> [    7.204158] ---[ end trace 0000000000000000 ]---
-> [    7.212642] ufshcd-qcom 624000.ufshc: ufshcd_setup_clocks: core_clk
-> prepare enable failed, -16
-> 
-> 
->> ---
->>   drivers/ufs/host/ufs-qcom.c | 51 ++++++++++++++++++++++---------------
->>   drivers/ufs/host/ufs-qcom.h |  1 +
->>   2 files changed, 31 insertions(+), 21 deletions(-)
->>
->> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->> index d846e68a5734..b2be9ff272a4 100644
->> --- a/drivers/ufs/host/ufs-qcom.c
->> +++ b/drivers/ufs/host/ufs-qcom.c
->> @@ -93,8 +93,7 @@ static const struct __ufs_qcom_bw_table {
->>   static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
->>
->>   static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
->> -static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
->> -                                                      u32 clk_cycles);
->> +static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up);
->>
->>   static struct ufs_qcom_host *rcdev_to_ufs_host(struct reset_controller_dev *rcd)
->>   {
->> @@ -685,14 +684,11 @@ static int ufs_qcom_link_startup_notify(struct ufs_hba *hba,
->>                          return -EINVAL;
->>                  }
->>
->> -               if (ufs_qcom_cap_qunipro(host))
->> -                       /*
->> -                        * set unipro core clock cycles to 150 & clear clock
->> -                        * divider
->> -                        */
->> -                       err = ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba,
->> -                                                                         150);
->> -
->> +               if (ufs_qcom_cap_qunipro(host)) {
->> +                       err = ufs_qcom_set_core_clk_ctrl(hba, true);
->> +                       if (err)
->> +                               dev_err(hba->dev, "cfg core clk ctrl failed\n");
->> +               }
->>                  /*
->>                   * Some UFS devices (and may be host) have issues if LCC is
->>                   * enabled. So we are setting PA_Local_TX_LCC_Enable to 0
->> @@ -1296,12 +1292,25 @@ static void ufs_qcom_exit(struct ufs_hba *hba)
->>          phy_exit(host->generic_phy);
->>   }
->>
->> -static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
->> -                                                      u32 clk_cycles)
->> +static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up)
->>   {
->>          struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->> -       int err;
->> +       struct list_head *head = &hba->clk_list_head;
->> +       struct ufs_clk_info *clki;
->> +       u32 cycles_in_1us;
->>          u32 core_clk_ctrl_reg;
->> +       int err;
->> +
->> +       list_for_each_entry(clki, head, list) {
->> +               if (!IS_ERR_OR_NULL(clki->clk) &&
->> +                       !strcmp(clki->name, "core_clk_unipro")) {
->> +                       if (is_scale_up)
->> +                               cycles_in_1us = ceil(clki->max_freq, (1000 * 1000));
->> +                       else
->> +                               cycles_in_1us = ceil(clk_get_rate(clki->clk), (1000 * 1000));
->> +                       break;
->> +               }
->> +       }
->>
->>          err = ufshcd_dme_get(hba,
->>                              UIC_ARG_MIB(DME_VS_CORE_CLK_CTRL),
->> @@ -1311,15 +1320,15 @@ static int ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(struct ufs_hba *hba,
->>
->>          /* Bit mask is different for UFS host controller V4.0.0 onwards */
->>          if (host->hw_ver.major >= 4) {
->> -               if (!FIELD_FIT(CLK_1US_CYCLES_MASK_V4, clk_cycles))
->> +               if (!FIELD_FIT(CLK_1US_CYCLES_MASK_V4, cycles_in_1us))
->>                          return -ERANGE;
->>                  core_clk_ctrl_reg &= ~CLK_1US_CYCLES_MASK_V4;
->> -               core_clk_ctrl_reg |= FIELD_PREP(CLK_1US_CYCLES_MASK_V4, clk_cycles);
->> +               core_clk_ctrl_reg |= FIELD_PREP(CLK_1US_CYCLES_MASK_V4, cycles_in_1us);
->>          } else {
->> -               if (!FIELD_FIT(CLK_1US_CYCLES_MASK, clk_cycles))
->> +               if (!FIELD_FIT(CLK_1US_CYCLES_MASK, cycles_in_1us))
->>                          return -ERANGE;
->>                  core_clk_ctrl_reg &= ~CLK_1US_CYCLES_MASK;
->> -               core_clk_ctrl_reg |= FIELD_PREP(CLK_1US_CYCLES_MASK, clk_cycles);
->> +               core_clk_ctrl_reg |= FIELD_PREP(CLK_1US_CYCLES_MASK, cycles_in_1us);
->>          }
->>
->>          /* Clear CORE_CLK_DIV_EN */
->> @@ -1343,8 +1352,8 @@ static int ufs_qcom_clk_scale_up_post_change(struct ufs_hba *hba)
->>          if (!ufs_qcom_cap_qunipro(host))
->>                  return 0;
->>
->> -       /* set unipro core clock cycles to 150 and clear clock divider */
->> -       return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 150);
->> +       /* set unipro core clock attributes and clear clock divider */
->> +       return ufs_qcom_set_core_clk_ctrl(hba, true);
->>   }
->>
->>   static int ufs_qcom_clk_scale_down_pre_change(struct ufs_hba *hba)
->> @@ -1379,8 +1388,8 @@ static int ufs_qcom_clk_scale_down_post_change(struct ufs_hba *hba)
->>          if (!ufs_qcom_cap_qunipro(host))
->>                  return 0;
->>
->> -       /* set unipro core clock cycles to 75 and clear clock divider */
->> -       return ufs_qcom_set_dme_vs_core_clk_ctrl_clear_div(hba, 75);
->> +       /* set unipro core clock attributes and clear clock divider */
->> +       return ufs_qcom_set_core_clk_ctrl(hba, false);
->>   }
->>
->>   static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
->> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
->> index 8a9d3dbec297..3c6ef1259af3 100644
->> --- a/drivers/ufs/host/ufs-qcom.h
->> +++ b/drivers/ufs/host/ufs-qcom.h
->> @@ -245,6 +245,7 @@ ufs_qcom_get_debug_reg_offset(struct ufs_qcom_host *host, u32 reg)
->>   #define ufs_qcom_is_link_off(hba) ufshcd_is_link_off(hba)
->>   #define ufs_qcom_is_link_active(hba) ufshcd_is_link_active(hba)
->>   #define ufs_qcom_is_link_hibern8(hba) ufshcd_is_link_hibern8(hba)
->> +#define ceil(freq, div) ((freq) % (div) == 0 ? ((freq)/(div)) : ((freq)/(div) + 1))
->>
->>   int ufs_qcom_testbus_config(struct ufs_qcom_host *host);
->>
->> --
->> 2.17.1
->>
-> 
-> 
+Applied to 6.7/scsi-staging, thanks!
+
+-- 
+Martin K. Petersen	Oracle Linux Engineering
 
