@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28E387E69CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 12:37:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8A397E6A92
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 13:29:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D6975280FD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 11:37:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 157DC1C20847
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 12:29:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53A08199B9;
-	Thu,  9 Nov 2023 11:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9527F1DDC3;
+	Thu,  9 Nov 2023 12:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="nkL9i3Il"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ExFkeytF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0970C1A72E
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 11:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9C11DDC1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 12:28:55 +0000 (UTC)
 Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FC622D76;
-	Thu,  9 Nov 2023 03:37:16 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9F3B2590;
+	Thu,  9 Nov 2023 04:28:54 -0800 (PST)
 Received: from [100.116.125.19] (cola.collaboradmins.com [195.201.22.229])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: andrzej.p)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id D800F660748C;
-	Thu,  9 Nov 2023 11:37:13 +0000 (GMT)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id 191B9660747A;
+	Thu,  9 Nov 2023 12:28:51 +0000 (GMT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1699529835;
-	bh=wUHoc5zpet6eywYkyKBwFgxm3jsVkAzT68bGG5YHoIY=;
+	s=mail; t=1699532932;
+	bh=wvBhmLqQREGAx7oI3reWe2l9af2k7nuNnRJBg9FCTr4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nkL9i3Il5m690763T3RMOIMD67YVb03EoPmOSqYCDXOlmo75ZLTIXKuy//GXgwLul
-	 uHn26mhT0z35qefwsRtuufOwdrvykYJ8yyJxfdZYR35hTqHqOwkvo+PZqZNnqGsIbd
-	 SU6USvy4GtCn+VvxmLwPKldxc/wQZo5JRJ7DozA1H1nunrbt4KeMQQersrLbciEYSn
-	 WxOMSIeKEp8qJPfQRDgBgiJPjFO3xp+Xw2LSYJQOJJyVpdFFXAKd/Jy1k3El9zI0e9
-	 PQj0GdJqxJ6wQZTY/33Fb8MpBnn2SFQNtLojwoPhM00+gFhQZMh5KLSVfO7ckAd9Mp
-	 FBE0SBgZySLyA==
-Message-ID: <71cfb62d-1ad0-41cf-ac7e-f0a9ac6fe926@collabora.com>
-Date: Thu, 9 Nov 2023 12:37:13 +0100
+	b=ExFkeytFlei55dbrJW6zpwbv5BYV0MbggCVBUcXQBNiM1/sHKVg/JpGHHnF2s7dCo
+	 Li7kwuM3z+7qXVFORQmvymicrppZRH85wCQZMsLN7f2rgCEglpxhTv+fZXy1dydcfZ
+	 GDPGLHh38V93b/yBaJnXaWSZu8x0I2yvc5VO/fwGRtCEslW39AR1gB+B3PTFdL5qGz
+	 AMVyazugfVnHbygYcv7/22BzSpfukJJssucjtrgWIK7MpRgrNQQGriMw40W5F1QCE7
+	 kDLVkR3xW9NLYiRr0GvcgEm+RhVsP7ysyGmCBgF3XENKjRaE7uMREYvh+oM8G0SNNZ
+	 aZ86u3NgLFyKg==
+Message-ID: <25614b04-4bb5-4b32-b41f-92477d1117a0@collabora.com>
+Date: Thu, 9 Nov 2023 13:28:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,8 +49,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 42/56] media: usb: usbtv: Stop direct calls to queue
- num_buffers field
+Subject: Re: [PATCH v14 44/56] media: core: Report the maximum possible number
+ of buffers for the queue
 Content-Language: en-US
 To: Benjamin Gaignard <benjamin.gaignard@collabora.com>, mchehab@kernel.org,
  tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
@@ -62,41 +62,179 @@ Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
  linux-staging@lists.linux.dev, kernel@collabora.com
 References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
- <20231031163104.112469-43-benjamin.gaignard@collabora.com>
+ <20231031163104.112469-45-benjamin.gaignard@collabora.com>
 From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-In-Reply-To: <20231031163104.112469-43-benjamin.gaignard@collabora.com>
+In-Reply-To: <20231031163104.112469-45-benjamin.gaignard@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+Hi Benjamin,
+
+
 W dniu 31.10.2023 o 17:30, Benjamin Gaignard pisze:
-> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
-> This allows us to change how the number of buffers is computed in the
-> future.
-> 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Use one of the struct v4l2_create_buffers reserved bytes to report
+
+I initially thought you were using literally a single byte, which made
+no sense to me given that values much larger than 255 are sometimes going to be
+stored there.
+
+Maybe rephrase this to:
+
+Use one element of the struct v4l2_create_buffers "reserved" array to report...
+
+With that you can add my
 
 Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
 
-> ---
->   drivers/media/usb/usbtv/usbtv-video.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+
+> the maximum possible number of buffers for the queue.
+> V4l2 framework set V4L2_BUF_CAP_SUPPORTS_MAX_NUM_BUFFERS flags in queue
+> capabilities so userland can know when the field is valid.
+> Does the same change in v4l2_create_buffers32 structure.
 > 
-> diff --git a/drivers/media/usb/usbtv/usbtv-video.c b/drivers/media/usb/usbtv/usbtv-video.c
-> index 1e30e05953dc..62a583040cd4 100644
-> --- a/drivers/media/usb/usbtv/usbtv-video.c
-> +++ b/drivers/media/usb/usbtv/usbtv-video.c
-> @@ -726,9 +726,10 @@ static int usbtv_queue_setup(struct vb2_queue *vq,
->   {
->   	struct usbtv *usbtv = vb2_get_drv_priv(vq);
->   	unsigned size = USBTV_CHUNK * usbtv->n_chunks * 2 * sizeof(u32);
-> +	unsigned int q_num_bufs = vb2_get_num_buffers(vq);
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> ---
+>   .../userspace-api/media/v4l/vidioc-create-bufs.rst       | 8 ++++++--
+>   Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst | 1 +
+>   drivers/media/common/videobuf2/videobuf2-v4l2.c          | 2 ++
+>   drivers/media/v4l2-core/v4l2-compat-ioctl32.c            | 9 ++++++++-
+>   drivers/media/v4l2-core/v4l2-ioctl.c                     | 4 ++--
+>   include/uapi/linux/videodev2.h                           | 7 ++++++-
+>   6 files changed, 25 insertions(+), 6 deletions(-)
+> 
+> diff --git a/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst b/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+> index a048a9f6b7b6..49232c9006c2 100644
+> --- a/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+> +++ b/Documentation/userspace-api/media/v4l/vidioc-create-bufs.rst
+> @@ -116,9 +116,13 @@ than the number requested.
+>         - ``flags``
+>         - Specifies additional buffer management attributes.
+>   	See :ref:`memory-flags`.
+> -
+>       * - __u32
+> -      - ``reserved``\ [6]
+> +      - ``max_num_buffers``
+> +      - If the V4L2_BUF_CAP_SUPPORTS_MAX_NUM_BUFFERS capability flag is set
+> +        this field indicates the maximum possible number of buffers
+> +        for this queue.
+> +    * - __u32
+> +      - ``reserved``\ [5]
+>         - A place holder for future extensions. Drivers and applications
+>   	must set the array to zero.
 >   
-> -	if (vq->num_buffers + *nbuffers < 2)
-> -		*nbuffers = 2 - vq->num_buffers;
-> +	if (q_num_bufs + *nbuffers < 2)
-> +		*nbuffers = 2 - q_num_bufs;
->   	if (*nplanes)
->   		return sizes[0] < size ? -EINVAL : 0;
->   	*nplanes = 1;
+> diff --git a/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst b/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+> index 099fa6695167..0b3a41a45d05 100644
+> --- a/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+> +++ b/Documentation/userspace-api/media/v4l/vidioc-reqbufs.rst
+> @@ -120,6 +120,7 @@ aborting or finishing any DMA in progress, an implicit
+>   .. _V4L2-BUF-CAP-SUPPORTS-ORPHANED-BUFS:
+>   .. _V4L2-BUF-CAP-SUPPORTS-M2M-HOLD-CAPTURE-BUF:
+>   .. _V4L2-BUF-CAP-SUPPORTS-MMAP-CACHE-HINTS:
+> +.. _V4L2-BUF-CAP-SUPPORTS-MAX-NUM-BUFFERS:
+>   
+>   .. raw:: latex
+>   
+> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> index f3cf4b235c1f..bdfc3a253c65 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> @@ -762,6 +762,8 @@ int vb2_create_bufs(struct vb2_queue *q, struct v4l2_create_buffers *create)
+>   	fill_buf_caps(q, &create->capabilities);
+>   	validate_memory_flags(q, create->memory, &create->flags);
+>   	create->index = vb2_get_num_buffers(q);
+> +	create->max_num_buffers = q->max_num_buffers;
+> +	create->capabilities |= V4L2_BUF_CAP_SUPPORTS_MAX_NUM_BUFFERS;
+>   	if (create->count == 0)
+>   		return ret != -EBUSY ? ret : 0;
+>   
+> diff --git a/drivers/media/v4l2-core/v4l2-compat-ioctl32.c b/drivers/media/v4l2-core/v4l2-compat-ioctl32.c
+> index f3bed37859a2..5aac5cf780b3 100644
+> --- a/drivers/media/v4l2-core/v4l2-compat-ioctl32.c
+> +++ b/drivers/media/v4l2-core/v4l2-compat-ioctl32.c
+> @@ -116,6 +116,9 @@ struct v4l2_format32 {
+>    * @flags:	additional buffer management attributes (ignored unless the
+>    *		queue has V4L2_BUF_CAP_SUPPORTS_MMAP_CACHE_HINTS capability and
+>    *		configured for MMAP streaming I/O).
+> + * @max_num_buffers: if V4L2_BUF_CAP_SUPPORTS_MAX_NUM_BUFFERS capability flag is set
+> + *		this field indicate the maximum possible number of buffers
+> + *		for this queue.
+>    * @reserved:	future extensions
+>    */
+>   struct v4l2_create_buffers32 {
+> @@ -125,7 +128,8 @@ struct v4l2_create_buffers32 {
+>   	struct v4l2_format32	format;
+>   	__u32			capabilities;
+>   	__u32			flags;
+> -	__u32			reserved[6];
+> +	__u32			max_num_buffers;
+> +	__u32			reserved[5];
+>   };
+>   
+>   static int get_v4l2_format32(struct v4l2_format *p64,
+> @@ -175,6 +179,8 @@ static int get_v4l2_create32(struct v4l2_create_buffers *p64,
+>   		return -EFAULT;
+>   	if (copy_from_user(&p64->flags, &p32->flags, sizeof(p32->flags)))
+>   		return -EFAULT;
+> +	if (copy_from_user(&p64->max_num_buffers, &p32->max_num_buffers, sizeof(p32->max_num_buffers)))
+> +		return -EFAULT;
+>   	return get_v4l2_format32(&p64->format, &p32->format);
+>   }
+>   
+> @@ -221,6 +227,7 @@ static int put_v4l2_create32(struct v4l2_create_buffers *p64,
+>   			 offsetof(struct v4l2_create_buffers32, format)) ||
+>   	    put_user(p64->capabilities, &p32->capabilities) ||
+>   	    put_user(p64->flags, &p32->flags) ||
+> +	    put_user(p64->max_num_buffers, &p32->max_num_buffers) ||
+>   	    copy_to_user(p32->reserved, p64->reserved, sizeof(p64->reserved)))
+>   		return -EFAULT;
+>   	return put_v4l2_format32(&p64->format, &p32->format);
+> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+> index 9b1de54ce379..4d90424cbfc4 100644
+> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
+> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+> @@ -483,9 +483,9 @@ static void v4l_print_create_buffers(const void *arg, bool write_only)
+>   {
+>   	const struct v4l2_create_buffers *p = arg;
+>   
+> -	pr_cont("index=%d, count=%d, memory=%s, capabilities=0x%08x, ",
+> +	pr_cont("index=%d, count=%d, memory=%s, capabilities=0x%08x, max num buffers=%u",
+>   		p->index, p->count, prt_names(p->memory, v4l2_memory_names),
+> -		p->capabilities);
+> +		p->capabilities, p->max_num_buffers);
+>   	v4l_print_format(&p->format, write_only);
+>   }
+>   
+> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+> index c3d4e490ce7c..13ddb5abf584 100644
+> --- a/include/uapi/linux/videodev2.h
+> +++ b/include/uapi/linux/videodev2.h
+> @@ -1035,6 +1035,7 @@ struct v4l2_requestbuffers {
+>   #define V4L2_BUF_CAP_SUPPORTS_ORPHANED_BUFS		(1 << 4)
+>   #define V4L2_BUF_CAP_SUPPORTS_M2M_HOLD_CAPTURE_BUF	(1 << 5)
+>   #define V4L2_BUF_CAP_SUPPORTS_MMAP_CACHE_HINTS		(1 << 6)
+> +#define V4L2_BUF_CAP_SUPPORTS_MAX_NUM_BUFFERS		(1 << 7)
+>   
+>   /**
+>    * struct v4l2_plane - plane info for multi-planar buffers
+> @@ -2605,6 +2606,9 @@ struct v4l2_dbg_chip_info {
+>    * @flags:	additional buffer management attributes (ignored unless the
+>    *		queue has V4L2_BUF_CAP_SUPPORTS_MMAP_CACHE_HINTS capability
+>    *		and configured for MMAP streaming I/O).
+> + * @max_num_buffers: if V4L2_BUF_CAP_SUPPORTS_MAX_NUM_BUFFERS capability flag is set
+> + *		this field indicate the maximum possible number of buffers
+> + *		for this queue.
+>    * @reserved:	future extensions
+>    */
+>   struct v4l2_create_buffers {
+> @@ -2614,7 +2618,8 @@ struct v4l2_create_buffers {
+>   	struct v4l2_format	format;
+>   	__u32			capabilities;
+>   	__u32			flags;
+> -	__u32			reserved[6];
+> +	__u32			max_num_buffers;
+> +	__u32			reserved[5];
+>   };
+>   
+>   /*
 
 
