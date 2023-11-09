@@ -1,146 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F33E7E6FE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 18:12:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A42D7E70D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 18:51:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 491FF281040
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 17:12:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 54063281034
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 17:51:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CD121E533;
-	Thu,  9 Nov 2023 17:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CA0530667;
+	Thu,  9 Nov 2023 17:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cMydEhz7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Plv3zypU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED432230D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 17:11:59 +0000 (UTC)
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B736130D1
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 09:11:58 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-53de0d1dc46so1836041a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Nov 2023 09:11:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699549917; x=1700154717; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VKup6gPLqadYBXO4b6NJZJ76nJs2bYooRO5/myvRzOE=;
-        b=cMydEhz7e1ZI03lDAh995x7QUUM/RCG+ac9EhtfionJyGErsqfjZnrJv6LUrNlsd4X
-         U6BOpkJGDpHrn47AAUaWmoDVwGMcF3HHikW/EKg9BkYsvpgbIgY7jzxkryceYQdOZz4o
-         76p+gepx3jQcQ4OlK/tEKG5tuwkeEkEDs/mAeoSZHvjG9nsAUyH5geEgoIp/5rYpx+zz
-         F0ZStE0nO33IgLsQBr3bkQVp/HGHx9QXRwvRwLxboUHEB3S7Lb5FqSCDYD9dC2MoPd1W
-         HGoljZNeDFuuGTZaUJeeCmuZiiBCb0NZrcq1IAv8nm+OC+T9HPzpkvM6A4i+py2ewuNG
-         ryFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699549917; x=1700154717;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VKup6gPLqadYBXO4b6NJZJ76nJs2bYooRO5/myvRzOE=;
-        b=f31WcWdvK15qKc4H7r6pLZlkL+yv5ruvjQxP7l/QoYJuhlT4Bi3KoV/g8qF+X10Sjw
-         eISSN+40gECJlEddFxGK66PvSqyKcJw1GXgDEQxZhg0T7nBFpaZdn8hGh9MzKTZZMbmc
-         luAy931T/rd2HcFDeBLjrddXrIHfUOINV/UINypVN46FpoXpu9IFgwlqD0De/SDH/dWj
-         9rcSqXB5+4srL216DuQPkkqc/lJUWa/VW4Fw+ILsNZnm4XVo27v6o05sPzaiVrAXJihA
-         Zk0Tzrnk0UmVRkiA0F39tK6r61IKyZhop9R16cgtw7x4OV5yaTso8yqcb5pmc56M/SGK
-         Ngmw==
-X-Gm-Message-State: AOJu0Yx464Uix9C+KYyrt2K9mlCQCqNbH/Wqr0fxuUOfqy4SJhMUAFPK
-	2exphO1m/OPKYAdYMWEBAZIjPw==
-X-Google-Smtp-Source: AGHT+IFNmTkUKTpurLhMr6Imw2D4ZQw7nrJTojquLN9XZrC0EJudf3CToSRmvMwGsl/XL3CximP5/Q==
-X-Received: by 2002:a17:906:fd85:b0:9c6:1143:b52 with SMTP id xa5-20020a170906fd8500b009c611430b52mr4953257ejb.55.1699549916987;
-        Thu, 09 Nov 2023 09:11:56 -0800 (PST)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id u2-20020a7bcb02000000b004068e09a70bsm2634991wmj.31.2023.11.09.09.11.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Nov 2023 09:11:56 -0800 (PST)
-Message-ID: <1e99ddcc-db3b-4a79-a2d1-815bebb5a5c9@linaro.org>
-Date: Thu, 9 Nov 2023 17:11:55 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C7E3065D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 17:51:34 +0000 (UTC)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A35CF3A8E;
+	Thu,  9 Nov 2023 09:51:33 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A9CrtUk014394;
+	Thu, 9 Nov 2023 17:51:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=VGrocBjpfB4eUDrm+j3cr9UddNm0arMjWqZFjcDlqE0=;
+ b=Plv3zypUMJ0ik5hxoYdBeX+TqjqV0JltbInzHs9c2TxXHGt6YP+HTwxDFWiJ/4121xAT
+ Z23GVeOiN2YbHBtZNsyxe5oo/EmbYgIgumE2vbB/vTubrbYsqFm0cxci01xCvQQrtOvX
+ wosDkQD7wllLyPZsznr8UQwv6Bd1FDiZu8Imx44sMKxug99HFDgjm33kzlSDQWby33xv
+ b/KONQI37Jefa7Swoc8pLfCc9EMDs8yg5q7AhAxUd/EHNdSXHa4rgh/6KQvRe7l70AGm
+ 7MEadHYyxtChNr5rtYK0v5tHN/QrC9d/KDEqAosNOL7H4BbADmVyQY6qPnvqAUvKpI/F dA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u8w0ns54u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 09 Nov 2023 17:51:21 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A9HpKHh023297
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 9 Nov 2023 17:51:20 GMT
+Received: from [10.110.84.171] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 9 Nov
+ 2023 09:51:18 -0800
+Message-ID: <748da144-af4c-5a2a-e82b-3a870995cbce@quicinc.com>
+Date: Thu, 9 Nov 2023 09:51:18 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/6] media: qcom: camss: csiphy-3ph: Add Gen2 v1.1
- two-phase MIPI CSI-2 DPHY init
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v7 0/7] incorporate pm runtime framework and eDP clean up
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
- laurent.pinchart@ideasonboard.com, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, vincent.knecht@mailoo.org,
- matti.lehtimaki@gmail.com, quic_grosikop@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231109-b4-camss-sc8280xp-v4-0-58a58bc200f9@linaro.org>
- <20231109-b4-camss-sc8280xp-v4-3-58a58bc200f9@linaro.org>
- <0e325a57-f07d-47e6-8456-523cfa04c52b@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <0e325a57-f07d-47e6-8456-523cfa04c52b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1696632910-21942-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpoFRp+7GyO=F3Ar21tfG5Yt0cL6zkAquqg7D1XXQjp50Q@mail.gmail.com>
+ <55a4f98e-2772-e4fd-ae8a-132f92582c78@quicinc.com>
+ <CAA8EJpo9CFf-Z3eiuKPvwf-y6eGkSibro-q-=SBxKK_L-zFOBA@mail.gmail.com>
+ <b708df07-6812-df43-1313-cf6f1289fd47@quicinc.com>
+ <d597554a-ad3a-0af1-e21b-3001c80f6d30@quicinc.com>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <d597554a-ad3a-0af1-e21b-3001c80f6d30@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XsUPbI8h8-aczDOJ5vFlGcvNkQm4TTAs
+X-Proofpoint-ORIG-GUID: XsUPbI8h8-aczDOJ5vFlGcvNkQm4TTAs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-09_14,2023-11-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 phishscore=0 spamscore=0
+ adultscore=0 impostorscore=0 mlxlogscore=674 priorityscore=1501
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311090134
 
-On 09/11/2023 13:55, Konrad Dybcio wrote:
-> 
-> 
-> On 11/9/23 12:30, Bryan O'Donoghue wrote:
->> Add a PHY configuration sequence for the sc8280xp which uses a Qualcomm
->> Gen 2 version 1.1 CSI-2 PHY.
+
+On 11/8/2023 10:27 AM, Abhinav Kumar wrote:
+>
+>
+> On 11/8/2023 10:10 AM, Kuogee Hsieh wrote:
 >>
->> The PHY can be configured as two phase or three phase in C-PHY or D-PHY
->> mode. This configuration supports two-phase D-PHY mode.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Aside from initialization, looks like the reset seq should be more
-> complex:
-> 
-> https://git.codelinaro.org/clo/la/platform/vendor/opensource/camera-kernel/-/blob/LA.AU.1.3.7-02900-gen3_gvmgh.0/drivers/cam_sensor_module/cam_csiphy/include/cam_csiphy_1_1_hwreg.h?ref_type=tags#L39-45
-> 
-> https://git.codelinaro.org/clo/la/platform/vendor/opensource/camera-kernel/-/blob/LA.AU.1.3.7-02900-gen3_gvmgh.0/drivers/cam_sensor_module/cam_csiphy/cam_csiphy_core.c#L133-154
-> 
-> similarly for the "common regs" that seem to extend the init seq
-> 
-> https://git.codelinaro.org/clo/la/platform/vendor/opensource/camera-kernel/-/blob/LA.AU.1.3.7-02900-gen3_gvmgh.0/drivers/cam_sensor_module/cam_csiphy/cam_csiphy_core.c#L491-527
-> 
-> Konrad
+>> On 11/7/2023 1:23 PM, Dmitry Baryshkov wrote:
+>>> On Tue, 7 Nov 2023 at 23:01, Kuogee Hsieh <quic_khsieh@quicinc.com> 
+>>> wrote:
+>>>>
+>>>> On 11/6/2023 5:55 PM, Dmitry Baryshkov wrote:
+>>>>> On Sat, 7 Oct 2023 at 01:55, Kuogee Hsieh 
+>>>>> <quic_khsieh@quicinc.com> wrote:
+>>>>>> The purpose of this patch series is to incorporate pm runtime 
+>>>>>> framework
+>>>>>> into MSM eDP/DP driver so that eDP panel can be detected by DRM 
+>>>>>> eDP panel
+>>>>>> driver during system probe time. During incorporating procedure, 
+>>>>>> original
+>>>>>> customized pm realted fucntions, such as dp_pm_prepare(), 
+>>>>>> dp_pm_suspend(),
+>>>>>> dp_pm_resume() and dp_pm_prepare(), are removed and replaced with 
+>>>>>> functions
+>>>>>> provided by pm runtiem framework such as 
+>>>>>> pm_runtime_force_suspend() and
+>>>>>> pm_runtime_force_resume(). In addition, both eDP aux-bus and irq 
+>>>>>> handler
+>>>>>> are bound at system probe time too.
+>>>>> With this patchset in place I can crash the board using the following
+>>>>> sequence (SM8350-HDK):
+>>>>>
+>>>>> - plug the USBC DP dongle
+>>>>> - run modetest at any mode, don't press Enter yet
+>>>>> - unplug the dongle
+>>>>> - press Enter to stop modetest
+>>>>>
+>>>>> => the board resets to Sahara.
+>>>>>
+>>>>> Please ping me if you need any additional information from my side.
+>>>> questiosn,
+>>>>
+>>>> 1) which dongle are you used?
+>>> I have used several Dell and Hama USB-C dongles.
+>>>
+>>>> 2) what code branch shoud I used to duplicate this problem.
+>>> I have pushed my kernel tree to
+>>> git.codelinaro.org/dmitry.baryshkov/linux.git, branch test-dp-rpm
+>>> I had several UCSI patches on top, but they should not be relevant.
+>> git.codelinaro.org/dmitry.baryshkov/linux.git, branch test-dp-rpm <== 
+>> I synced out his branch and it is still work at my chromebook Kodiak 
+>> DUT.
+>>>
+>
+> Perhaps the gap in test results with the same tree is due to internal 
+> hpd vs hpd pin. We need to try this on a device which does not use 
+> internal hpd.
 
-So..
 
-https://git.codelinaro.org/clo/la/platform/vendor/opensource/camera-kernel/-/blob/LA.AU.1.3.7-02900-gen3_gvmgh.0/drivers/cam_sensor_module/cam_csiphy/include/cam_csiphy_1_1_hwreg.h?ref_type=tags#L39
+Hi Dmitry,
 
-static struct csiphy_reg_t csiphy_reset_reg_1_1[] = {
-	{0x0814, 0x00, 0x05, CSIPHY_LANE_ENABLE}, // this is interesting
-                                                   // powers off lanemask
-                                                   // seems like a good
-                                                   // idea to me
-	{0x0818, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS}, [1]
-	{0x081C, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS}, [2]
-	{0x0800, 0x01, 0x01, CSIPHY_DEFAULT_PARAMS}, // this we already
-	{0x0800, 0x00, 0x00, CSIPHY_DEFAULT_PARAMS}, // do right now
-};
+I have two more questions,
 
-[1] [2] I don't see why you need that and I'd imagine the reset drives 
-these values to zero anyway.. it should as I read the reg docs, I'd 
-guess this is a reset sequence that comes out of a Si test bench.
+1) are you see test pattern shows at external DP when you run modetest?
+2) is *.kcrash file created under /var/spool/crash/ when system crashed. 
+If it is, can you share it?
 
-The 0x814 warrants an investigation - i.e. can we add it across 
-platforms without breaking existing setups.
+Thanks,
 
-I'll kick that to a separate - one LOC "series", so we can take our time 
-validating if it has any unexpected side-effects across our various 
-platforms.
-
----
-bod
+>
+>>>> I can not duplicate  system crash problem at my setup kodiak (SM7325)
+>>>> chrome book with my PM runtime patch series.
+>>>>
+>>>> my code base is Linux 6.6-rc2 + pm runtime patch series (7 patches)
+>>>>
+>>>> I did:
+>>>>
+>>>> 1) plugin either apple dongle (DP-to-HDMI) + 1080p display or DP typeC
+>>>> cable directly to 1080p display
+>>>>
+>>>> 2)  stop ui
+>>>>
+>>>> 3) /usr/bin/modetest -M msm -s 34:1920x1080 (see test pattern show at
+>>>> display)
+>>>>
+>>>> 4) unplug apple dongle or DP typeC cable
+>>>>
+>>>> 5) hit enter key
+>>>>
+>>>> 6) start ui
+>>>>
+>>>> 7) display back to login page of chrome book
+>>>>
+>>>>
+>>>
 
