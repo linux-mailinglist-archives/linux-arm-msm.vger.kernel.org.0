@@ -1,45 +1,45 @@
-Return-Path: <linux-arm-msm+bounces-341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F4D57E6F11
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 17:38:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12A3A7E6F18
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 17:38:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 584E8281137
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 16:38:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A7FB3B20F33
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 16:38:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE22C374E1;
-	Thu,  9 Nov 2023 16:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A5A238DCD;
+	Thu,  9 Nov 2023 16:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="VvoS9CUy"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="afCqqPbL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9426374D5
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 16:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C09374C2
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 16:37:58 +0000 (UTC)
 Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E5B0384D;
-	Thu,  9 Nov 2023 08:37:56 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FD7D3874;
+	Thu,  9 Nov 2023 08:37:58 -0800 (PST)
 Received: from benjamin-XPS-13-9310.. (cola.collaboradmins.com [195.201.22.229])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: benjamin.gaignard)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 00F566607421;
-	Thu,  9 Nov 2023 16:37:53 +0000 (GMT)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id C6D3F66076A5;
+	Thu,  9 Nov 2023 16:37:55 +0000 (GMT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1699547875;
-	bh=+Hqk/nxCcDyN1NZIvRoKMHSzkbjjWG5EbAmHVA6LLfM=;
+	s=mail; t=1699547876;
+	bh=ioad4eznaxnOj9zTodU1qDxSmo+Iro3wnE43clfkbec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvoS9CUyCC7fwQzbtIRQaG+szawARH4k2FwfMxPjgDNnPZt6B1RUJf8Zw1V7d2bUk
-	 IQGN2WS5yI3u9i5nAQq7A/6IFKX/zvYEsuayqbQ+JMWJBfdlMNhh550mSlgazuutsu
-	 nZbSMQWZJIv+Z5Af+jVfXZwSeoJhKwP+GWeqW2CnNmhsum1C4cffCXiii5CSN6jdK7
-	 r7O7v8F1WYvhxONDsLsVbM8wvjq8dC8VShyOTe6cVn9WeWZm8juTZccynZC1yxjp0k
-	 AyxNny4UtgDpVOovxBczZLp3X3u1zPuWNW6NIr3D/2Zc98FDsquwlwsSXrRaCM+oZ6
-	 xWQD9j8Y49s4A==
+	b=afCqqPbLxw1RmnTEI7Fk0EfHjqj338bem/6+TU25259xJwuqVjyxqZQ4EaKxXCmID
+	 rQoo2GtCmYbWU54VXPyAhiyehc7DC8TxGdS1PQTmLV6WFw1kolM8BYDYwVj3oGvG8O
+	 Dt2Hf2K7ObMY7B3OBUp/l/NRdl5lJGk63yLzdR2jbWtoF/bJ6evmJEYvu4QrDQOIV1
+	 rRBQhs3QcAXGFLr+ypZF3Z0EQ41g+YZ7cUmSoH7UeoBi0/+6r1I8hX8rR1o4GwIkdb
+	 yuW6GX62sHjocz4AbcA/wBnMicUfk1p4C/kExkRUk5Dd8j9GEsd5CZgIREl3GyIIvY
+	 AV7Hr1ztTSUtQ==
 From: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 To: mchehab@kernel.org,
 	tfiga@chromium.org,
@@ -62,9 +62,9 @@ Cc: linux-media@vger.kernel.org,
 	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
 	Sergey Kozlov <serjk@netup.ru>,
 	Abylay Ospan <aospan@netup.ru>
-Subject: [PATCH v15 23/56] media: pci: cx18: Stop direct calls to queue num_buffers field
-Date: Thu,  9 Nov 2023 17:34:39 +0100
-Message-Id: <20231109163512.179524-24-benjamin.gaignard@collabora.com>
+Subject: [PATCH v15 24/56] media: pci: netup_unidvb: Stop direct calls to queue num_buffers field
+Date: Thu,  9 Nov 2023 17:34:40 +0100
+Message-Id: <20231109163512.179524-25-benjamin.gaignard@collabora.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231109163512.179524-14-benjamin.gaignard@collabora.com>
 References: <20231109163512.179524-14-benjamin.gaignard@collabora.com>
@@ -85,32 +85,29 @@ Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
 CC: Sergey Kozlov <serjk@netup.ru>
 CC: Abylay Ospan <aospan@netup.ru>
 ---
- drivers/media/pci/cx18/cx18-streams.c | 5 +++--
+ drivers/media/pci/netup_unidvb/netup_unidvb_core.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/cx18/cx18-streams.c b/drivers/media/pci/cx18/cx18-streams.c
-index 597472754c4c..cfbc4a907802 100644
---- a/drivers/media/pci/cx18/cx18-streams.c
-+++ b/drivers/media/pci/cx18/cx18-streams.c
-@@ -104,6 +104,7 @@ static int cx18_queue_setup(struct vb2_queue *vq,
- 			    unsigned int *nbuffers, unsigned int *nplanes,
- 			    unsigned int sizes[], struct device *alloc_devs[])
+diff --git a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+index d85bfbb77a25..557985ba25db 100644
+--- a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
++++ b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+@@ -293,12 +293,13 @@ static int netup_unidvb_queue_setup(struct vb2_queue *vq,
+ 				    struct device *alloc_devs[])
  {
+ 	struct netup_dma *dma = vb2_get_drv_priv(vq);
 +	unsigned int q_num_bufs = vb2_get_num_buffers(vq);
- 	struct cx18_stream *s = vb2_get_drv_priv(vq);
- 	struct cx18 *cx = s->cx;
- 	unsigned int szimage;
-@@ -121,8 +122,8 @@ static int cx18_queue_setup(struct vb2_queue *vq,
- 	 * Let's request at least three buffers: two for the
- 	 * DMA engine and one for userspace.
- 	 */
--	if (vq->num_buffers + *nbuffers < 3)
--		*nbuffers = 3 - vq->num_buffers;
-+	if (q_num_bufs + *nbuffers < 3)
-+		*nbuffers = 3 - q_num_bufs;
  
- 	if (*nplanes) {
- 		if (*nplanes != 1 || sizes[0] < szimage)
+ 	dev_dbg(&dma->ndev->pci_dev->dev, "%s()\n", __func__);
+ 
+ 	*nplanes = 1;
+-	if (vq->num_buffers + *nbuffers < VIDEO_MAX_FRAME)
+-		*nbuffers = VIDEO_MAX_FRAME - vq->num_buffers;
++	if (q_num_bufs + *nbuffers < VIDEO_MAX_FRAME)
++		*nbuffers = VIDEO_MAX_FRAME - q_num_bufs;
+ 	sizes[0] = PAGE_ALIGN(NETUP_DMA_PACKETS_COUNT * 188);
+ 	dev_dbg(&dma->ndev->pci_dev->dev, "%s() nbuffers=%d sizes[0]=%d\n",
+ 		__func__, *nbuffers, sizes[0]);
 -- 
 2.39.2
 
