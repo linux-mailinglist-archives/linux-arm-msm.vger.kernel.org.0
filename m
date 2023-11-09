@@ -1,220 +1,333 @@
-Return-Path: <linux-arm-msm+bounces-382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8071C7E72B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 21:22:10 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B51A07E72C0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 21:26:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0214C1F21368
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 20:22:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 22B58B20DCB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 20:26:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AA91374C2;
-	Thu,  9 Nov 2023 20:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93429374DE;
+	Thu,  9 Nov 2023 20:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fym6Eh4U"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mv+SxyeC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DBF374C8
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 20:22:05 +0000 (UTC)
-Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17DFB3C25;
-	Thu,  9 Nov 2023 12:22:05 -0800 (PST)
-Received: by mail-vk1-xa33.google.com with SMTP id 71dfb90a1353d-4ac10aacd27so568692e0c.0;
-        Thu, 09 Nov 2023 12:22:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699561324; x=1700166124; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=79oUciC1MphFLchMyW5zN+ld+Ip/ohdJ3MzsnnkdArI=;
-        b=fym6Eh4UlK1bIQk8HlrfcdxwmEOr/baVGCQPRHviA82PJ6dCyK+8ndazUYmSZyr5A1
-         Hxsmafp/Pze1hl/wBmpgJsVScDWs0JG8XNoUTmwE4EM+p63A/QwhXbR8T34fEpG8vX0f
-         Ht2u3Lh4l4LkHu3qOXkCRWSjRpF0GCd8QaFJzXYOYK+KczlZ715FJxZAcOoRkSTJQc+C
-         dn/+yV4XiD1cW/oWn7z2I/KtoYaQ3u1uG6TTKCVh8qNEs8BVu9ff1/YsdFgXlqeKjNz3
-         vZeQWsr2iKOY2alKtoNiX+GWy/Cj86tp5UrVTNSbuzDgTVdjW3+1uBykxoIGJrb0SoZT
-         57bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699561324; x=1700166124;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=79oUciC1MphFLchMyW5zN+ld+Ip/ohdJ3MzsnnkdArI=;
-        b=nqGVd47ixLKUAZu0q6cOm4KgprHwAI3jc3GMwFDa9imOesL7uPu5Q/RfiyzkqkQJQd
-         fqksjAXJC7hTVIuWC4Y7UbYzwOLQIN4ycRKxSdW9hbi41fdblpUyrqTXiTHRTr10uAL0
-         gqsNVaZwNQhE4UBGpaCwSHns/XYsPzkmT7cCPrTj1qX1RdDIKCuMMeGOnFt3XJE6IRGx
-         +ThzTxFtjbNJDFTvhk+WeQDtUqKTqiFGXpc+jgoqrXScH8Ty186emq3l6j/sxt3lle2f
-         2SJO+VJj9MuvahpKHGjCwLAKsLIjCFVk5O0sh1KNRJ7zVXKoH7lpFp4I8ywS/GBLF3TL
-         JFdg==
-X-Gm-Message-State: AOJu0YwAioxzoLhEA9fa+RaOY8BUlL9lvbA3h+7aW/ldMNGIcNzW6Qd+
-	CwgHDDBcbDzcqd0cQXj5/CoXAikPwJTunURTnS0=
-X-Google-Smtp-Source: AGHT+IHeEYBi5nUVdK8O1Fji9SXoWwVQ1ionOejtl0pq9n4Oxy3eyVaDJB4oTZ8X0i5CLfXx5Mqs5VNvA3gtw+Gk21c=
-X-Received: by 2002:a05:6122:1807:b0:4a1:7278:3bf5 with SMTP id
- ay7-20020a056122180700b004a172783bf5mr2992264vkb.4.1699561324079; Thu, 09 Nov
- 2023 12:22:04 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E950F374C8;
+	Thu,  9 Nov 2023 20:26:18 +0000 (UTC)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 488FF44B6;
+	Thu,  9 Nov 2023 12:26:18 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A9JY6br026296;
+	Thu, 9 Nov 2023 20:26:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=BSEFC97DPNuh2NKt1LnpDdqp0So3uF6/pbicepm5WAc=;
+ b=mv+SxyeCa3ZSYSgf4anZeYTRG7BUGKuLQG+AepLDWWsPn5auvaj3htzJsnXjXhjOYYoz
+ Uhti4VlqmNRJUPDCtbWVDbEc0yYtFWQyEpjxKHj+nUOQo4iKiUGPYexmt0ZgfTEUmoS+
+ peqvT/nGajBvK7PTkO1JGlJcY4UetYCkNsBUYj95Q6O9mYayKth+aKZugb1VOzo1gUNL
+ H55tG6j4D9us3Bry7h8/GiBy66BZOWbJXMxKBRLdCnsDTrZovR05kgRmtefbUlm5Lh/k
+ 5zpVPOQ8TP6I968V0DQPYSxAPHZg4EaRKaG4WmZyEoV3a1tJrFIc81Kv66q6ReTV/UT7 vQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u93rbrdhy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 09 Nov 2023 20:26:06 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A9KQ3xs008437
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 9 Nov 2023 20:26:03 GMT
+Received: from [10.71.112.236] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 9 Nov
+ 2023 12:26:02 -0800
+Message-ID: <50931ba5-132f-3982-e33a-691583e3a71f@quicinc.com>
+Date: Thu, 9 Nov 2023 12:25:59 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231109163512.179524-14-benjamin.gaignard@collabora.com> <20231109163512.179524-39-benjamin.gaignard@collabora.com>
-In-Reply-To: <20231109163512.179524-39-benjamin.gaignard@collabora.com>
-From: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-Date: Thu, 9 Nov 2023 20:21:17 +0000
-Message-ID: <CA+V-a8t33Q5C00dUmo=i=wd5wPzqdCNVO8MLH8to-7Ge9SjYuQ@mail.gmail.com>
-Subject: Re: [PATCH v15 38/56] media: ti: Stop direct calls to queue
- num_buffers field
-To: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc: mchehab@kernel.org, tfiga@chromium.org, m.szyprowski@samsung.com, 
-	ming.qian@nxp.com, ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de, 
-	gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl, 
-	nicolas.dufresne@collabora.com, linux-media@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev, 
-	kernel@collabora.com, Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.1
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+Content-Language: en-US
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+        Johan Hovold
+	<johan@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel
+	<p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi
+	<balbi@kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
+        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-6-quic_kriskura@quicinc.com>
+ <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
+ <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+ <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+ <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+ <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
+ <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
+ <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+ <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
+ <2b19b5e2-5eb0-49e0-8c47-8aff3d48f34e@quicinc.com>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <2b19b5e2-5eb0-49e0-8c47-8aff3d48f34e@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: udjM-C__RW-E6zGhcyWuGHZTcE8kHPzd
+X-Proofpoint-ORIG-GUID: udjM-C__RW-E6zGhcyWuGHZTcE8kHPzd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-09_14,2023-11-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
+ phishscore=0 adultscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0
+ mlxlogscore=999 impostorscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311090146
 
-On Thu, Nov 9, 2023 at 4:38=E2=80=AFPM Benjamin Gaignard
-<benjamin.gaignard@collabora.com> wrote:
->
-> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly=
-.
-> This allows us to change how the number of buffers is computed in the
-> future.
->
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-> CC: "Lad, Prabhakar" <prabhakar.csengg@gmail.com>
-> ---
->  drivers/media/platform/ti/am437x/am437x-vpfe.c   | 5 +++--
->  drivers/media/platform/ti/cal/cal-video.c        | 5 +++--
->  drivers/media/platform/ti/davinci/vpif_capture.c | 5 +++--
->  drivers/media/platform/ti/davinci/vpif_display.c | 5 +++--
->  drivers/media/platform/ti/omap/omap_vout.c       | 5 +++--
->  5 files changed, 15 insertions(+), 10 deletions(-)
->
-Reviewed-by: Prabhakar <prabhakar.csengg@gmail.com>
 
-Cheers,
-Prabhakar
 
-> diff --git a/drivers/media/platform/ti/am437x/am437x-vpfe.c b/drivers/med=
-ia/platform/ti/am437x/am437x-vpfe.c
-> index 5fa2ea9025d9..f18acf9286a2 100644
-> --- a/drivers/media/platform/ti/am437x/am437x-vpfe.c
-> +++ b/drivers/media/platform/ti/am437x/am437x-vpfe.c
-> @@ -1771,9 +1771,10 @@ static int vpfe_queue_setup(struct vb2_queue *vq,
->  {
->         struct vpfe_device *vpfe =3D vb2_get_drv_priv(vq);
->         unsigned size =3D vpfe->fmt.fmt.pix.sizeimage;
-> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
->
-> -       if (vq->num_buffers + *nbuffers < 3)
-> -               *nbuffers =3D 3 - vq->num_buffers;
-> +       if (q_num_bufs + *nbuffers < 3)
-> +               *nbuffers =3D 3 - q_num_bufs;
->
->         if (*nplanes) {
->                 if (sizes[0] < size)
-> diff --git a/drivers/media/platform/ti/cal/cal-video.c b/drivers/media/pl=
-atform/ti/cal/cal-video.c
-> index a8abcd0fee17..94e67c057a20 100644
-> --- a/drivers/media/platform/ti/cal/cal-video.c
-> +++ b/drivers/media/platform/ti/cal/cal-video.c
-> @@ -603,9 +603,10 @@ static int cal_queue_setup(struct vb2_queue *vq,
->  {
->         struct cal_ctx *ctx =3D vb2_get_drv_priv(vq);
->         unsigned int size =3D ctx->v_fmt.fmt.pix.sizeimage;
-> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
->
-> -       if (vq->num_buffers + *nbuffers < 3)
-> -               *nbuffers =3D 3 - vq->num_buffers;
-> +       if (q_num_bufs + *nbuffers < 3)
-> +               *nbuffers =3D 3 - q_num_bufs;
->
->         if (*nplanes) {
->                 if (sizes[0] < size)
-> diff --git a/drivers/media/platform/ti/davinci/vpif_capture.c b/drivers/m=
-edia/platform/ti/davinci/vpif_capture.c
-> index 99fae8830c41..fc42b4bc37e6 100644
-> --- a/drivers/media/platform/ti/davinci/vpif_capture.c
-> +++ b/drivers/media/platform/ti/davinci/vpif_capture.c
-> @@ -113,6 +113,7 @@ static int vpif_buffer_queue_setup(struct vb2_queue *=
-vq,
->         struct channel_obj *ch =3D vb2_get_drv_priv(vq);
->         struct common_obj *common =3D &ch->common[VPIF_VIDEO_INDEX];
->         unsigned size =3D common->fmt.fmt.pix.sizeimage;
-> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
->
->         vpif_dbg(2, debug, "vpif_buffer_setup\n");
->
-> @@ -122,8 +123,8 @@ static int vpif_buffer_queue_setup(struct vb2_queue *=
-vq,
->                 size =3D sizes[0];
->         }
->
-> -       if (vq->num_buffers + *nbuffers < 3)
-> -               *nbuffers =3D 3 - vq->num_buffers;
-> +       if (q_num_bufs + *nbuffers < 3)
-> +               *nbuffers =3D 3 - q_num_bufs;
->
->         *nplanes =3D 1;
->         sizes[0] =3D size;
-> diff --git a/drivers/media/platform/ti/davinci/vpif_display.c b/drivers/m=
-edia/platform/ti/davinci/vpif_display.c
-> index f8ec2991c667..9dbab1003c1d 100644
-> --- a/drivers/media/platform/ti/davinci/vpif_display.c
-> +++ b/drivers/media/platform/ti/davinci/vpif_display.c
-> @@ -115,6 +115,7 @@ static int vpif_buffer_queue_setup(struct vb2_queue *=
-vq,
->         struct channel_obj *ch =3D vb2_get_drv_priv(vq);
->         struct common_obj *common =3D &ch->common[VPIF_VIDEO_INDEX];
->         unsigned size =3D common->fmt.fmt.pix.sizeimage;
-> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
->
->         if (*nplanes) {
->                 if (sizes[0] < size)
-> @@ -122,8 +123,8 @@ static int vpif_buffer_queue_setup(struct vb2_queue *=
-vq,
->                 size =3D sizes[0];
->         }
->
-> -       if (vq->num_buffers + *nbuffers < 3)
-> -               *nbuffers =3D 3 - vq->num_buffers;
-> +       if (q_num_bufs + *nbuffers < 3)
-> +               *nbuffers =3D 3 - q_num_bufs;
->
->         *nplanes =3D 1;
->         sizes[0] =3D size;
-> diff --git a/drivers/media/platform/ti/omap/omap_vout.c b/drivers/media/p=
-latform/ti/omap/omap_vout.c
-> index 4143274089c3..72ce903717d3 100644
-> --- a/drivers/media/platform/ti/omap/omap_vout.c
-> +++ b/drivers/media/platform/ti/omap/omap_vout.c
-> @@ -944,10 +944,11 @@ static int omap_vout_vb2_queue_setup(struct vb2_que=
-ue *vq,
->                                      struct device *alloc_devs[])
->  {
->         struct omap_vout_device *vout =3D vb2_get_drv_priv(vq);
-> +       unsigned int q_num_bufs =3D vb2_get_num_buffers(vq);
->         int size =3D vout->pix.sizeimage;
->
-> -       if (is_rotation_enabled(vout) && vq->num_buffers + *nbufs > VRFB_=
-NUM_BUFS) {
-> -               *nbufs =3D VRFB_NUM_BUFS - vq->num_buffers;
-> +       if (is_rotation_enabled(vout) && q_num_bufs + *nbufs > VRFB_NUM_B=
-UFS) {
-> +               *nbufs =3D VRFB_NUM_BUFS - q_num_bufs;
->                 if (*nbufs =3D=3D 0)
->                         return -EINVAL;
->         }
-> --
-> 2.39.2
->
+On 11/9/2023 8:38 AM, Krishna Kurapati PSSNV wrote:
+> 
+> 
+> On 11/9/2023 8:48 PM, Johan Hovold wrote:
+>> On Fri, Nov 03, 2023 at 03:34:52PM +0530, Krishna Kurapati PSSNV wrote:
+>>> On 10/24/2023 12:26 PM, Johan Hovold wrote:
+>>>> On Mon, Oct 23, 2023 at 10:42:31PM +0530, Krishna Kurapati PSSNV wrote:
+>>>>> On 10/23/2023 7:37 PM, Johan Hovold wrote:
+>>>>
+>>>>>> Right. And I assume there are hs_phy_irqs also for the first two USB
+>>>>>> controllers on sc8280xp?
+>>>>
+>>>>> There are, I can dig through and find out. Atleast in downstream I 
+>>>>> don't
+>>>>> see any use of them.
+>>>>
+>>>> Yes, please do post how these are wired as well for completeness.
+>>
+>> Did you find these two interrupts as well?
+>>
+>>
+>>> Regarding the points of discussion we had last week on [1], here are
+>>> some clarifications:
+>>>
+>>> 1. We do have hs_phy_irq 1/2/3/4 for tertiary port of Sc8280 as
+>>> mentioned. Why do we need them and would we use it in multiport 
+>>> targets ?
+>>>
+>>> DPSE and DMSE are single ended line state of DP and DM lines. The DP
+>>> line and DM line stay in steady High or Low during suspend and they flip
+>>> when there is a RESUME or REMOTE WAKE. This is what we do/check in
+>>> dwc3_qcom_enable_interrupts call for dp/dm irq's based on usb2_speed.
+>>
+>> Right, this bit is clear.
+>>
+>>> Initially in QUSB2 targets, the interrupts were enabled and configured
+>>> in phy and the wakeup was interrupt was read on hs_phy_irq vector - [2].
+>>> In that case, we modify DP/DM interrupts in phy registers, specifically
+>>> QUSB2PHY_INTR_CTRL and when wakeup signal comes in, hs_phy_irq is
+>>> triggered. But in femto targets, this is done via DP/DM interrupts and
+>>> there is no use of hs_phy_irq. Even hw folks confirmed they dont use
+>>> hs_ph_irq in femto phy targets.
+>>
+>> Ok, thanks for pointing to QUSB2. The same mechanism is apparently used
+>> in phy-qcom-usb-hs-28nm.c as well (even if the dtsi currently does not
+>> define the wakeup interrupts).
+>>
+>> Furthermore, that implementation is broken and has never worked due to
+>> another half-arsed, incomplete Qualcomm implementation. Specifically, no
+>> one is changing the PHY mode based on the current speed before suspend
+>> as commits like
+>>
+>>     3b3cd24ae61b ("phy: Add USB speed related PHY modes")
+>>
+>> and
+>>
+>>     891a96f65ac3 ("phy: qcom-qusb2: Add support for runtime PM")
+>>
+>> depend on. Guess I should go revert that mess too...
+>>
+>>> As an experiment, I tried to test wakeup by pressing buttons on
+>>> connected keyboard when in suspend state or connecting/disconnecting
+>>> keyboard in suspended state on different ports and only see dp/dm IRQ's
+>>> getting fired although we register for hs_phy_irq as well:
+>>>
+>>> / # cat /proc/interrupts  |grep phy_
+>>> 171:   1  0   0   0  0  0  0  0       PDC 127 Edge      dp_hs_phy_1
+>>> 172:   2  0   0   0  0  0  0  0       PDC 126 Edge      dm_hs_phy_1
+>>> 173:   3  0   0   0  0  0  0  0       PDC 129 Edge      dp_hs_phy_2
+>>> 174:   4  0   0   0  0  0  0  0       PDC 128 Edge      dm_hs_phy_2
+>>> 175:   0  0   0   0  0  0  0  0       PDC 131 Edge      dp_hs_phy_3
+>>> 176:   2  0   0   0  0  0  0  0       PDC 130 Edge      dm_hs_phy_3
+>>> 177:   2  0   0   0  0  0  0  0       PDC 133 Edge      dp_hs_phy_4
+>>> 178:   5  0   0   0  0  0  0  0       PDC 132 Edge      dm_hs_phy_4
+>>> 179:   0  0   0   0  0  0  0  0       PDC  16 Level     ss_phy_1
+>>> 180:   0  0   0   0  0  0  0  0       PDC  17 Level     ss_phy_2
+>>> 181:   0  0   0   0  0  0  0  0     GICv3 163 Level     hs_phy_1
+>>> 182:   0  0   0   0  0  0  0  0     GICv3 168 Level     hs_phy_2
+>>> 183:   0  0   0   0  0  0  0  0     GICv3 892 Level     hs_phy_3
+>>> 184:   0  0   0   0  0  0  0  0     GICv3 891 Level     hs_phy_4
+>>
+>> Yes, but that doesn't really say much since you never enable the hs_phy
+>> interrupt in the PHY on suspend.
+> 
+> I did register to and enabled the hs_phy_irq interrupt when I tested and 
+> posted the above table.
+> 
+>>> Since the hs_phy_irq is applicable only for qusb2 targets, do we still
+>>> need to add it to DT.
+>>
+>> Are you sure there's no support for hs_phy_irq also in the "femto" PHYs
+>> and that it's just that there is currently no driver support for using
+>> them?
+>>
+>> And why is it defined if there is truly no use for it?
+> 
+> Femto phy's have nothing to be configured for interrupts like we do for 
+> qusb2 phy's. I confirmed from hw validation team that they never used 
+> hs_phy_irq for validating wakeup. They only used dp/dm IRQ's for wakeup.
+> 
+>> Also, if hs_phy_irq and dp/dm_phy_irq were mutually exclusive, why does
+>> the following Qualcomm SoCs define all three?
+>>
+> 
+> Similar to BAM IRQ's these might have been just ported over targets I 
+> believe. I say so because HW Validation team confirmed they don't use 
+> this interrupt at all on femto phy targets.
+> 
+>>                - qcom,ipq4019-dwc3
+>>                - qcom,ipq6018-dwc3
+>>                - qcom,ipq8064-dwc3
+>>                - qcom,ipq8074-dwc3
+>>                - qcom,msm8994-dwc3
+>>                - qcom,qcs404-dwc3
+>>                - qcom,sc7180-dwc3
+>>           - qcom,sc7280-dwc3
+>>                - qcom,sdm670-dwc3
+>>                - qcom,sdm845-dwc3
+>>                - qcom,sdx55-dwc3
+>>                - qcom,sdx65-dwc3
+>>                - qcom,sm4250-dwc3
+>>                - qcom,sm6125-dwc3
+>>                - qcom,sm6350-dwc3
+>>                - qcom,sm8150-dwc3
+>>                - qcom,sm8250-dwc3
+>>                - qcom,sm8350-dwc3
+>>                - qcom,sm8450-dwc3
+>>                - qcom,sm8550-dwc3
+>>
+>> Some of those use QUSB2 PHYs and some use "femto" PHYs.
+>>  > And this comes from Qualcomm through commits like:
+>>
+>>     0b766e7fe5a2 ("arm64: dts: qcom: sc7180: Add USB related nodes")
+>>     bb9efa59c665 ("arm64: dts: qcom: sc7280: Add USB related nodes")
+>>
+>>
+>>> 3. ctrl_irq[1] usage:
+>>>
+>>> This is a feature of SNPS controller, not qcom glue wrapper, and is
+>>> present on all targets (non-QC as well probably). As mentioned before on
+>>> [3], this is used for HW acceleration.
+>>>
+>>> In host mode, XHCI spec does allow for multiple interrupters when
+>>> multiple event rings are used. A possible usage is multiple execution
+>>> environments something like what we are doing on mobile with ADSP audio
+>>> offload [4]. Another possibility could be some of virtualization where
+>>> host/hyp would manage the first interrupter and could allow a guest to
+>>> operate only with the second (though current design does not go far
+>>> enough to offer true isolation for real VM type workloads). The
+>>> additional interrupts (ones other than ctrl_irq[0]) are either for
+>>> virtualization use cases, or for our various “hw offload” features. In
+>>> device mode, these are used for offloading tethering functionality to
+>>> IPA FW.
+>>
+>> Ok, thanks for clarifying what you meant by "HW acceleration".
+>>
+>>> Since the DeviceTree passed to the OS, should describe the hardware to
+>>> the OS, and should represent the hardware from the point-of-view of the
+>>> OS, adding one interrupt (ctrl_irq[0]) might be sufficient as Linux
+>>> would not use the other interrupts.
+>>
+>> I've only skimmed the virtualisation bits in xHCI spec, but it seems
+>> Linux as VMM would still be involved in assigning these interrupts to
+>> VMs.
+
+Hi Krishna/Johan,
+
+IMO it might be a bit premature to add definitions for how to utilize 
+secondary interrupters since design wise, there's nothing really too 
+well defined yet.  At least for the XHCI path, we will have a slew of 
+potential use cases for secondary interrupters, such as USB audio 
+offloading, or for VMMs, etc...  I've only heard mentions about some of 
+them after pushing the usb audio offloading series, but I don't have 
+much details on it.
+
+For example, for the USB audio offload path, the idea is to not have to 
+interrupt the apps proc, and allow for an external DSP to be managing 
+the event ring.
+
+> 
+> I didn't understand this sentence. Are you referring to cases where 
+> Linux needs to act as the entity using the ctrl_irq[1] ?
+> 
+> On QCOM SoC's, in reality (atleast in device mode) I can say that we 
+> create the event rings for IPA FW (which registers for ctrl_irq[1]) to 
+> use and read depevt's. We don't register or get this IRQ from DT and 
+> then provide to IPA (not even in downstream).
+> 
+>>
+>> This may possibly be something that we can ignore for now, but perhaps
+>> someone more familiar with the hardware, like Thinh, can chime in.
+>>
+>>> Furthermore AFAIK even UEFI/Windows
+>>> also use only ctrl_irq[0] for host mode in their execution environment
+>>> today. Do we still need to add this to bindings and DT ?
+>>
+>> But the second interrupt is described in the ACPI tables, which means
+>> that a simple driver update could (in theory) allow for it to be used.
+>>
+>> You need to get into the same mindset when it comes to devicetree. Even
+>> if Linux currently does not use an interrupt, like the pwr_event_irq,
+>> you should still add it so that when/if someone implements support for
+>> it, an older platform using the original dt may also take advantage of
+>> it.
+
+Yeah, I totally agree with this point, but I'm not sure if adding it 
+into the "interrupts" array is the way to go.  It would probably have to 
+change as support is added.
+
+Sorry for jumping in, but just giving my two cents since I'm the one 
+trying to do the initial push for the support for secondary interrupters :).
+
+Thanks
+Wesley Cheng
+
 
