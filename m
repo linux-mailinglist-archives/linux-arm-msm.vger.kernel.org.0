@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 049C27E6970
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 12:19:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E6927E6985
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 12:27:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A954228108B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 11:19:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 56701280E6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 11:27:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B422199D0;
-	Thu,  9 Nov 2023 11:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6AF01A727;
+	Thu,  9 Nov 2023 11:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="MHJMl57V"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="I3MnaGQe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8649199D3
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 11:19:47 +0000 (UTC)
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7410C2D69;
-	Thu,  9 Nov 2023 03:19:47 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2911A711
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 11:27:19 +0000 (UTC)
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F2702D6A;
+	Thu,  9 Nov 2023 03:27:18 -0800 (PST)
 Received: from [100.116.125.19] (cola.collaboradmins.com [195.201.22.229])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: andrzej.p)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 0F597660745F;
-	Thu,  9 Nov 2023 11:19:44 +0000 (GMT)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id 1CC7B6607421;
+	Thu,  9 Nov 2023 11:27:15 +0000 (GMT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1699528786;
-	bh=n5ME7SmWZNZRvgb0w3nunEyLQd4iUQAOH5nCJG6H6ik=;
+	s=mail; t=1699529236;
+	bh=elsGLjJBUb0H7SaXpx5HZ3Jp4Gtyrn+yMrEadZP4Gdk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MHJMl57VTOZfvON/Jp8Vvh0d3D0I2lnpz0lA/SZHcMhZTPxcKOwBQJFW4fVzLcrpS
-	 McA9j84OjxTAJSEjibqMq8qdWfYbJTJT/I4+ksSJhRMngy7vUr9bJJbEkP5rdxGqnF
-	 NX7TCLKHwe2QyCQ8gexteKddZ5poBYKdmq9PcOc9aptXnWiZbpO7JOJBkRsTwipSw3
-	 5JUIAieQyeH+uM1rF1IN3UQWTO8T+TCg60qGufgYfQ11NExnXuDVD1VM1q4hF4jb+v
-	 Om4itFV4xodHJkKXkN1VkJC8Wcae93BgNuSgj4U75MYrjhV3MJ19UkuwCJth7XkpM9
-	 jfTrL0VrRLdrg==
-Message-ID: <705dfab2-dbb5-44f2-b40b-c7d56945ba22@collabora.com>
-Date: Thu, 9 Nov 2023 12:19:44 +0100
+	b=I3MnaGQem39Sj5xyItDxU2YsUjGm+wnLAEIlocZ+hSVaI6WV4gSFOKN+F2sarwt5g
+	 jXyefOGfiPIgs8uclUyUQBpI9xXCAZTLYWdwWFXcso/DoVY1vrnE8Q136E1fENU2BH
+	 nOjQO4Pa532J1Vgycgw9M5/Ij6LqSyhrCUhEq0o4mwPIbdsuUyBTl0H5PvKKjt2b8A
+	 2LzYxyEn0SBvJ98VhPfowGXefKJeRMAky2a/DnYIe2qh5pbFxqKHZw5hMKrMscRaTp
+	 3VZ18Ex7R7CuvfTZbaef+hbJENlSsmBxJSy3eadshVp+bzpnmw1oJISX0UvoRyR5be
+	 W3XT0l2d1jXJg==
+Message-ID: <083e43d9-452a-4b11-b7f1-f75992bc795e@collabora.com>
+Date: Thu, 9 Nov 2023 12:27:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,7 +49,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 34/56] sample: v4l: Stop direct calls to queue
+Subject: Re: [PATCH v14 35/56] media: cedrus: Stop direct calls to queue
  num_buffers field
 Content-Language: en-US
 To: Benjamin Gaignard <benjamin.gaignard@collabora.com>, mchehab@kernel.org,
@@ -60,13 +60,17 @@ To: Benjamin Gaignard <benjamin.gaignard@collabora.com>, mchehab@kernel.org,
 Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
  linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-staging@lists.linux.dev, kernel@collabora.com
+ linux-staging@lists.linux.dev, kernel@collabora.com,
+ Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+ Maxime Ripard <mripard@kernel.org>
 References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
- <20231031163104.112469-35-benjamin.gaignard@collabora.com>
+ <20231031163104.112469-36-benjamin.gaignard@collabora.com>
 From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-In-Reply-To: <20231031163104.112469-35-benjamin.gaignard@collabora.com>
+In-Reply-To: <20231031163104.112469-36-benjamin.gaignard@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+
+Hi Paul,
 
 W dniu 31.10.2023 o 17:30, Benjamin Gaignard pisze:
 > Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
@@ -74,35 +78,65 @@ W dniu 31.10.2023 o 17:30, Benjamin Gaignard pisze:
 > future.
 > 
 > Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Acked-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+
+Given you've alaredy A-b, would you be ok with adding this sentence:
+
+"While at it, check the return value of vb2_get_buffer()."
+
+to the commit message body?
+
+@Benjamin:
+
+With this change, you can add my
 
 Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
 
+> CC: Maxime Ripard <mripard@kernel.org>
 > ---
->   samples/v4l/v4l2-pci-skeleton.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+>   drivers/staging/media/sunxi/cedrus/cedrus_h264.c | 9 +++++++--
+>   drivers/staging/media/sunxi/cedrus/cedrus_h265.c | 9 +++++++--
+>   2 files changed, 14 insertions(+), 4 deletions(-)
 > 
-> diff --git a/samples/v4l/v4l2-pci-skeleton.c b/samples/v4l/v4l2-pci-skeleton.c
-> index a61f94db18d9..a65aa9d1e9da 100644
-> --- a/samples/v4l/v4l2-pci-skeleton.c
-> +++ b/samples/v4l/v4l2-pci-skeleton.c
-> @@ -155,6 +155,7 @@ static int queue_setup(struct vb2_queue *vq,
->   		       unsigned int sizes[], struct device *alloc_devs[])
->   {
->   	struct skeleton *skel = vb2_get_drv_priv(vq);
-> +	unsigned int q_num_bufs = vb2_get_num_buffers(vq);
+> diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_h264.c b/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
+> index dfb401df138a..3e2843ef6cce 100644
+> --- a/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
+> +++ b/drivers/staging/media/sunxi/cedrus/cedrus_h264.c
+> @@ -653,8 +653,13 @@ static void cedrus_h264_stop(struct cedrus_ctx *ctx)
 >   
->   	skel->field = skel->format.field;
->   	if (skel->field == V4L2_FIELD_ALTERNATE) {
-> @@ -167,8 +168,8 @@ static int queue_setup(struct vb2_queue *vq,
->   		skel->field = V4L2_FIELD_TOP;
->   	}
+>   	vq = v4l2_m2m_get_vq(ctx->fh.m2m_ctx, V4L2_BUF_TYPE_VIDEO_CAPTURE);
 >   
-> -	if (vq->num_buffers + *nbuffers < 3)
-> -		*nbuffers = 3 - vq->num_buffers;
-> +	if (q_num_bufs + *nbuffers < 3)
-> +		*nbuffers = 3 - q_num_bufs;
+> -	for (i = 0; i < vq->num_buffers; i++) {
+> -		buf = vb2_to_cedrus_buffer(vb2_get_buffer(vq, i));
+> +	for (i = 0; i < vb2_get_num_buffers(vq); i++) {
+> +		struct vb2_buffer *vb = vb2_get_buffer(vq, i);
+> +
+> +		if (!vb)
+> +			continue;
+> +
+> +		buf = vb2_to_cedrus_buffer(vb);
 >   
->   	if (*nplanes)
->   		return sizes[0] < skel->format.sizeimage ? -EINVAL : 0;
+>   		if (buf->codec.h264.mv_col_buf_size > 0) {
+>   			dma_free_attrs(dev->dev,
+> diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
+> index fc9297232456..52e94c8f2f01 100644
+> --- a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
+> +++ b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
+> @@ -869,8 +869,13 @@ static void cedrus_h265_stop(struct cedrus_ctx *ctx)
+>   
+>   	vq = v4l2_m2m_get_vq(ctx->fh.m2m_ctx, V4L2_BUF_TYPE_VIDEO_CAPTURE);
+>   
+> -	for (i = 0; i < vq->num_buffers; i++) {
+> -		buf = vb2_to_cedrus_buffer(vb2_get_buffer(vq, i));
+> +	for (i = 0; i < vb2_get_num_buffers(vq); i++) {
+> +		struct vb2_buffer *vb = vb2_get_buffer(vq, i);
+> +
+> +		if (!vb)
+> +			continue;
+> +
+> +		buf = vb2_to_cedrus_buffer(vb);
+>   
+>   		if (buf->codec.h265.mv_col_buf_size > 0) {
+>   			dma_free_attrs(dev->dev,
 
 
