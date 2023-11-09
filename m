@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 650077E62DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 05:36:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 334587E6386
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 07:06:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 861621C208C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 04:36:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D3395281136
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 06:06:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FEE2612A;
-	Thu,  9 Nov 2023 04:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF6BBD292;
+	Thu,  9 Nov 2023 06:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="VPgpWoIW"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ZxI0ZuK8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755CE611F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 04:36:43 +0000 (UTC)
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 911F21FF3
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 20:36:42 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-5098e423ba2so404877e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Nov 2023 20:36:42 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CAFD27D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 06:06:11 +0000 (UTC)
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 277C726A4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Nov 2023 22:06:11 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9becde9ea7bso334801966b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Nov 2023 22:06:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1699504600; x=1700109400; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1699509969; x=1700114769; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yQyapGaksxc5HPHzYoaRYUc1BPx1RyETpKHLmN7h1N8=;
-        b=VPgpWoIWTOnCNNZdf75s8arE1v2K0Q7Y/Gv/AZV3XXku2OB664OnzkpX/jywJTtQGU
-         qvFalIx9ZAgBFR7ZZvVhfsgyole/3iosJXxE55d5hciIAXx1v+KG0CpGLmxBpDns4Mgh
-         1HUiYfLTPNE/BxQkiwyJRVDLWVWlD4j/hNPz0=
+        bh=mhQRJ2tsdSmsbr+tWtWTDDJ49tF/bwf8rgyCxeQj0go=;
+        b=ZxI0ZuK8xctNKm5ZBcbijs8aiEwWdi4Oxsajl5rcVfl857bti2Px2nlA1loeLQrJ51
+         4flyPnqUlmdaBIGhclsIIGDo5qVw6/NVKILsh5btWR3IiE4zgFJbIpoU+Q46VYDPtugr
+         RGd09V4nTYpfFmsWuW/ph73Q2dASc5XLiOQGM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699504600; x=1700109400;
+        d=1e100.net; s=20230601; t=1699509969; x=1700114769;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yQyapGaksxc5HPHzYoaRYUc1BPx1RyETpKHLmN7h1N8=;
-        b=JD1MPoBon+UlaBfi0wxEG9FsT5KtVxhlW1Eo99mJqPxMfSJpD6P1HTM5bmjv21ZID8
-         I6dDcsh+pZQ2UAhixi2l2+oirBdhAfoD9+pas35tcgVXbbsNjw03CAISFKFLruShHMBz
-         da2Yt9yS/f4o7ko3Vz3cnvkdErj2aoZinyHQNhSHuaAeNBxdKQ2Exk1kiFZB2BxTaQYP
-         6didGUEPuKKl0t661CXSldVAWVpRNsTuJEsYra8dJeypp5BR6jpYVYlAVc/C6Bxq1fwg
-         WYPBzhECCQiIVKJuwFm+i89sbFIlebv551ZAuVoGCTQa6CW2GSWMCtDndx+Po9Nw0/M0
-         4Oyw==
-X-Gm-Message-State: AOJu0Yzw5eLzu04mtUO+6LZBNwnPXB3ozXlawfGaaagUh62dC9gFTy/8
-	yonQleUOiS9HrLBY8W7uyL00vgVARW29Bq9B/2ZNwhDk
-X-Google-Smtp-Source: AGHT+IGVR+cbmUwhI9jhnZkSyBDUiEO341BcXykcn2mSRwp6HaWkIHeLGA9wFRIua/2B8qUJULHGWg==
-X-Received: by 2002:a19:f805:0:b0:507:9702:c11d with SMTP id a5-20020a19f805000000b005079702c11dmr352823lff.64.1699504599932;
-        Wed, 08 Nov 2023 20:36:39 -0800 (PST)
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com. [209.85.167.52])
-        by smtp.gmail.com with ESMTPSA id r18-20020ac24d12000000b004ff973cb14esm906472lfi.108.2023.11.08.20.36.39
+        bh=mhQRJ2tsdSmsbr+tWtWTDDJ49tF/bwf8rgyCxeQj0go=;
+        b=X7Kg3mJeDD4uR9xYiKi2h6AtwIkj4BA2x/8LLyhMLgnmtF4KeFgjSopI/wbCMmT3kE
+         LiCGiZ6BKXn27HY3MwPbEScaB+1wZlHUibcnepSrcOP/K9V/46HKs3hujNEV7RRoqRB4
+         VEMTouo1iY7NtMA4BZKdstdqdePxxGQFv2svbK1h9byN7u8D7q0t+/VDtx9jCmQdL2uh
+         4RNFM8ADKwz+N0kfNASpkopxY5EIWbsNxQCTlMyagjuU5gRTnb6yeCaj9oJi+8ur3EZG
+         4vb1e56wUQiHAsruaqPL8wF+vxSlJBbuxfqI1ETEfAnSEIan0ML5hGOI2W4Zg8xdgNoF
+         +EhQ==
+X-Gm-Message-State: AOJu0YzehHPpzLRv83k6FX+mlXAihtdPkSVFaQuMEyWBDW0yBzd2qjAm
+	F9A3Vqr+jT5H5iF8sCQgzxu7BvxyLLP40mI+hRYgyBYW
+X-Google-Smtp-Source: AGHT+IF/c11zXdnWPV8MTqYmblB1lMpope0eFTBrCvMo6hpJfVPNRfupiTR8t/GX2H8YiTwmY6PSbA==
+X-Received: by 2002:a17:906:7092:b0:9ad:e62c:4517 with SMTP id b18-20020a170906709200b009ade62c4517mr6946096ejk.34.1699509968847;
+        Wed, 08 Nov 2023 22:06:08 -0800 (PST)
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com. [209.85.128.53])
+        by smtp.gmail.com with ESMTPSA id t18-20020a1709066bd200b009db9c5e9b4csm2046995ejs.122.2023.11.08.22.06.08
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Nov 2023 20:36:39 -0800 (PST)
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5098e423ba2so404853e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Nov 2023 20:36:39 -0800 (PST)
-X-Received: by 2002:a05:6512:3251:b0:509:4b59:d40e with SMTP id
- c17-20020a056512325100b005094b59d40emr327270lfr.49.1699504598991; Wed, 08 Nov
- 2023 20:36:38 -0800 (PST)
+        Wed, 08 Nov 2023 22:06:08 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4081ccf69dcso9487395e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Nov 2023 22:06:08 -0800 (PST)
+X-Received: by 2002:a5d:648c:0:b0:32f:86e7:9bef with SMTP id
+ o12-20020a5d648c000000b0032f86e79befmr5265032wri.8.1699509967695; Wed, 08 Nov
+ 2023 22:06:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
- <20231031163104.112469-9-benjamin.gaignard@collabora.com> <20231108094223.rprskkeee47vaezy@chromium.org>
- <adc94476-8188-4569-8a39-2a1fb6b2f9dc@collabora.com>
-In-Reply-To: <adc94476-8188-4569-8a39-2a1fb6b2f9dc@collabora.com>
+References: <20231106143940.324020-1-benjamin.gaignard@collabora.com>
+ <20231108102444.4yp7y7mgsociy725@chromium.org> <1da380ce-aef9-4ed2-9581-21301833d556@collabora.com>
+In-Reply-To: <1da380ce-aef9-4ed2-9581-21301833d556@collabora.com>
 From: Tomasz Figa <tfiga@chromium.org>
-Date: Thu, 9 Nov 2023 13:36:21 +0900
-X-Gmail-Original-Message-ID: <CAAFQd5C0PG+tP1Sa9BHKOFFpc9K9Fc-SqUxGmBKnd09eJnzDZA@mail.gmail.com>
-Message-ID: <CAAFQd5C0PG+tP1Sa9BHKOFFpc9K9Fc-SqUxGmBKnd09eJnzDZA@mail.gmail.com>
-Subject: Re: [PATCH v14 08/56] media: videobuf2: Use vb2_get_num_buffers() helper
+Date: Thu, 9 Nov 2023 15:05:48 +0900
+X-Gmail-Original-Message-ID: <CAAFQd5DDpqZc41qKF_6mzOF3YAR_c6swisVDNSjapRFxHz2s9Q@mail.gmail.com>
+Message-ID: <CAAFQd5DDpqZc41qKF_6mzOF3YAR_c6swisVDNSjapRFxHz2s9Q@mail.gmail.com>
+Subject: Re: [PATCH v14.1] media: videobuf2: Be more flexible on the number of
+ queue stored buffers
 To: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com, 
 	ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de, 
@@ -88,263 +88,312 @@ Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 8, 2023 at 10:22=E2=80=AFPM Benjamin Gaignard
+On Wed, Nov 8, 2023 at 10:56=E2=80=AFPM Benjamin Gaignard
 <benjamin.gaignard@collabora.com> wrote:
 >
 >
-> Le 08/11/2023 =C3=A0 10:42, Tomasz Figa a =C3=A9crit :
-> > On Tue, Oct 31, 2023 at 05:30:16PM +0100, Benjamin Gaignard wrote:
-> >> Stop using queue num_buffers field directly, instead use
-> >> vb2_get_num_buffers().
-> >> This prepares for the future 'delete buffers' feature where there are
-> >> holes in the buffer indices.
+> Le 08/11/2023 =C3=A0 11:24, Tomasz Figa a =C3=A9crit :
+> > On Mon, Nov 06, 2023 at 03:39:40PM +0100, Benjamin Gaignard wrote:
+> >> Add 'max_num_buffers' field in vb2_queue struct to let drivers decide
+> >> how many buffers could be stored in a queue.
+> >> This require 'bufs' array to be allocated at queue init time and freed
+> >> when releasing the queue.
+> >> By default VB2_MAX_FRAME remains the limit.
 > >>
 > >> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> >> Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 > >> ---
-> >>   .../media/common/videobuf2/videobuf2-core.c   | 92 +++++++++++------=
+> >> version 14.1:
+> >> - Do not change the number of freed buffers in vb2_core_queue_release(=
+).
+> >>
+> >>   .../media/common/videobuf2/videobuf2-core.c   | 39 +++++++++++++++--=
 --
-> >>   .../media/common/videobuf2/videobuf2-v4l2.c   |  4 +-
-> >>   2 files changed, 54 insertions(+), 42 deletions(-)
+> >>   .../media/common/videobuf2/videobuf2-v4l2.c   |  6 +--
+> >>   include/media/videobuf2-core.h                | 10 ++++-
+> >>   3 files changed, 43 insertions(+), 12 deletions(-)
 > >>
 > >> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers=
 /media/common/videobuf2/videobuf2-core.c
-> >> index b406a30a9b35..c5c5ae4d213d 100644
+> >> index c5c5ae4d213d..5711c6a130fd 100644
 > >> --- a/drivers/media/common/videobuf2/videobuf2-core.c
 > >> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> >> @@ -444,13 +444,14 @@ static int __vb2_queue_alloc(struct vb2_queue *q=
-, enum vb2_memory memory,
-> >>                           unsigned int num_buffers, unsigned int num_p=
-lanes,
-> >>                           const unsigned plane_sizes[VB2_MAX_PLANES])
+> >> @@ -416,7 +416,7 @@ static void init_buffer_cache_hints(struct vb2_que=
+ue *q, struct vb2_buffer *vb)
+> >>    */
+> >>   static void vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buf=
+fer *vb, unsigned int index)
 > >>   {
-> >> +    unsigned int q_num_buffers =3D vb2_get_num_buffers(q);
-> >>      unsigned int buffer, plane;
+> >> -    WARN_ON(index >=3D VB2_MAX_FRAME || q->bufs[index]);
+> >> +    WARN_ON(index >=3D q->max_num_buffers || q->bufs[index]);
+> >>
+> >>      q->bufs[index] =3D vb;
+> >>      vb->index =3D index;
+> >> @@ -449,9 +449,9 @@ static int __vb2_queue_alloc(struct vb2_queue *q, =
+enum vb2_memory memory,
 > >>      struct vb2_buffer *vb;
 > >>      int ret;
 > >>
-> >>      /* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME =
+> >> -    /* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME =
 */
-> >>      num_buffers =3D min_t(unsigned int, num_buffers,
-> >> -                        VB2_MAX_FRAME - q->num_buffers);
-> >> +                        VB2_MAX_FRAME - q_num_buffers);
-> > I guess it's safe in this specific situation, but was there any reason
-> > behind not just calling vb2_get_num_buffers() directly here?
+> >> +    /* Ensure that the number of already queue + num_buffers is below=
+ q->max_num_buffers */
+> > Perhaps "the number of buffers already in the queue"?
+>
+> I will do that in the next version.
+>
 > >
+> >>      num_buffers =3D min_t(unsigned int, num_buffers,
+> >> -                        VB2_MAX_FRAME - q_num_buffers);
+> >> +                        q->max_num_buffers - q_num_buffers);
 > >>
 > >>      for (buffer =3D 0; buffer < num_buffers; ++buffer) {
 > >>              /* Allocate vb2 buffer structures */
-> >> @@ -470,7 +471,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, =
-enum vb2_memory memory,
-> >>                      vb->planes[plane].min_length =3D plane_sizes[plan=
-e];
-> >>              }
+> >> @@ -813,7 +813,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2=
+_memory memory,
+> >>      unsigned plane_sizes[VB2_MAX_PLANES] =3D { };
+> >>      bool non_coherent_mem =3D flags & V4L2_MEMORY_FLAG_NON_COHERENT;
+> >>      unsigned int i;
+> >> -    int ret;
+> >> +    int ret =3D 0;
 > >>
-> >> -            vb2_queue_add_buffer(q, vb, q->num_buffers + buffer);
-> >> +            vb2_queue_add_buffer(q, vb, q_num_buffers + buffer);
-> > In this case it should also be fine, but actually now this is a loop an=
-d if
-> > somone doesn't know what the other code in the loop does, one could be
-> > concerned that the num buffers actually could have changed, but we stil=
-l
-> > use the cached one that we got at the beginning of the function.
-> >
-> > (Ideally I'd imagine vb2_queue_add_buffer() to append the buffer
-> > at the end of the queue and increment the num_buffers internally, but i=
-t
-> > doesn't have to happen now, as this series is already quite complex...)
+> >>      if (q->streaming) {
+> >>              dprintk(q, 1, "streaming active\n");
+> >> @@ -857,17 +857,22 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum v=
+b2_memory memory,
+> >>      /*
+> >>       * Make sure the requested values and current defaults are sane.
+> >>       */
+> >> -    WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
+> > Do we really want to remove this warning completely?
 >
-> That will be the case later in the series when I replace num_buffers fiel=
-d
-> by a bitmap. Until that I prefer to limit the changes in this loop.
+> Yes because VB2_MAX_FRAME is no more relevant.
+
+Hmm, but we still have q->max_num_buffers. Although given your reply
+to my other comment below, we may be able to just ensure the value is
+valid in vb2_core_queue_init().
+
 >
 > >
-> >>              call_void_bufop(q, init_buffer, vb);
-> >>
-> >>              /* Allocate video buffer memory for the MMAP type */
-> > [snip]
-> >> @@ -2513,7 +2519,8 @@ void vb2_core_queue_release(struct vb2_queue *q)
-> >>      __vb2_cleanup_fileio(q);
-> >>      __vb2_queue_cancel(q);
+> >>      num_buffers =3D max_t(unsigned int, *count, q->min_buffers_needed=
+);
+> >> -    num_buffers =3D min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
+> >> +    num_buffers =3D min_t(unsigned int, num_buffers, q->max_num_buffe=
+rs);
+> >>      memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
+> >>      /*
+> >>       * Set this now to ensure that drivers see the correct q->memory =
+value
+> >>       * in the queue_setup op.
+> >>       */
 > >>      mutex_lock(&q->mmap_lock);
-> >> -    __vb2_queue_free(q, q->num_buffers);
-> >> +    __vb2_queue_free(q, vb2_get_num_buffers(q));
-> >> +    q->num_buffers =3D 0;
-> > Unrelated change?
+> >> +    if (!q->bufs)
+> >> +            q->bufs =3D kcalloc(q->max_num_buffers, sizeof(*q->bufs),=
+ GFP_KERNEL);
+> > Shouldn't this happen in core code rather than the v4l2-specific ioctl
+> > helper? Since we just allocate the maximum possible size, then maybe
+> > vb2_core_queue_init()?
 >
-> No because I found a case where q->num_buffers wasn't correctly reset whi=
-le testing.
+> Hans had already suggest that in a previous version but it appear that
+> vb2_core_queue_init() and vb2_core_queue_release() aren't balanced so
+> we got cases where queue aren't initialized before reqbufs or create_bufs
+> that why I had to put this allocation here.
+
+How about __vb2_queue_alloc()?
+
 >
-
-Could you provide more details about that case? Shouldn't it be fixed inste=
-ad?
-
-It's a bit weird to me, because __vb2_queue_free() is supposed to
-decrement q->num_buffers by the number of buffers freed and it's
-called with vb2_get_num_buffers() just one line above.
-
 > >
+> >> +    if (!q->bufs)
+> >> +            ret =3D -ENOMEM;
+> >>      q->memory =3D memory;
 > >>      mutex_unlock(&q->mmap_lock);
-> >>   }
-> >>   EXPORT_SYMBOL_GPL(vb2_core_queue_release);
-> >> @@ -2542,7 +2549,7 @@ __poll_t vb2_core_poll(struct vb2_queue *q, stru=
-ct file *file,
-> >>      /*
-> >>       * Start file I/O emulator only if streaming API has not been use=
-d yet.
-> >>       */
-> >> -    if (q->num_buffers =3D=3D 0 && !vb2_fileio_is_active(q)) {
-> >> +    if (vb2_get_num_buffers(q) =3D=3D 0 && !vb2_fileio_is_active(q)) =
-{
-> >>              if (!q->is_output && (q->io_modes & VB2_READ) &&
-> >>                              (req_events & (EPOLLIN | EPOLLRDNORM))) {
-> >>                      if (__vb2_init_fileio(q, 1))
-> >> @@ -2580,7 +2587,7 @@ __poll_t vb2_core_poll(struct vb2_queue *q, stru=
-ct file *file,
-> >>       * For output streams you can call write() as long as there are f=
-ewer
-> >>       * buffers queued than there are buffers available.
-> >>       */
-> >> -    if (q->is_output && q->fileio && q->queued_count < q->num_buffers=
-)
-> >> +    if (q->is_output && q->fileio && q->queued_count < vb2_get_num_bu=
-ffers(q))
-> >>              return EPOLLOUT | EPOLLWRNORM;
-> >>
-> >>      if (list_empty(&q->done_list)) {
-> >> @@ -2629,8 +2636,8 @@ struct vb2_fileio_buf {
-> >>    * struct vb2_fileio_data - queue context used by file io emulator
-> >>    *
-> >>    * @cur_index:     the index of the buffer currently being read from=
- or
-> >> - *          written to. If equal to q->num_buffers then a new buffer
-> >> - *          must be dequeued.
-> >> + *          written to. If equal to number of already queued buffers
-> >> + *          then a new buffer must be dequeued.
-> > Hmm, that's a significant meaning change compared to the original text.=
- Is
-> > it indended?
->
-> Does "If equal to number of buffers in the vb2_queue then a new buffer mu=
-st be dequeued."
-> sound better for you ?
-
-Yes, I think now it matches the original meaning. Thanks.
-
->
-> >
-> >>    * @initial_index: in the read() case all buffers are queued up imme=
-diately
-> >>    *         in __vb2_init_fileio() and __vb2_perform_fileio() just cy=
-cles
-> >>    *         buffers. However, in the write() case no buffers are init=
-ially
-> >> @@ -2640,7 +2647,7 @@ struct vb2_fileio_buf {
-> >>    *         buffers. This means that initially __vb2_perform_fileio()
-> >>    *         needs to know what buffer index to use when it is queuing=
- up
-> >>    *         the buffers for the first time. That initial index is sto=
-red
-> >> - *          in this field. Once it is equal to q->num_buffers all
-> >> + *          in this field. Once it is equal to num_buffers all
-> > It's not clear what num_buffers means here. Would it make sense to inst=
-ead
-> > say "number of buffers in the vb2_queue"?
->
-> Yes I will change that
->
-> >
-> >>    *         available buffers have been queued and __vb2_perform_file=
-io()
-> >>    *         should start the normal dequeue/queue cycle.
-> >>    *
-> >> @@ -2690,7 +2697,7 @@ static int __vb2_init_fileio(struct vb2_queue *q=
-, int read)
-> >>      /*
-> >>       * Check if streaming api has not been already activated.
-> >>       */
-> >> -    if (q->streaming || q->num_buffers > 0)
-> >> +    if (q->streaming || vb2_get_num_buffers(q) > 0)
-> >>              return -EBUSY;
+> >> +    if (ret)
+> >> +            return ret;
+> >>      set_queue_coherency(q, non_coherent_mem);
 > >>
 > >>      /*
-> >> @@ -2740,7 +2747,7 @@ static int __vb2_init_fileio(struct vb2_queue *q=
-, int read)
-> >>      /*
-> >>       * Get kernel address of each buffer.
-> >>       */
-> >> -    for (i =3D 0; i < q->num_buffers; i++) {
-> >> +    for (i =3D 0; i < vb2_get_num_buffers(q); i++) {
-> >>              /* vb can never be NULL when using fileio. */
-> >>              vb =3D vb2_get_buffer(q, i);
+> >> @@ -976,7 +981,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum=
+ vb2_memory memory,
+> >>      bool no_previous_buffers =3D !q_num_bufs;
+> >>      int ret =3D 0;
 > >>
-> >> @@ -2759,18 +2766,23 @@ static int __vb2_init_fileio(struct vb2_queue =
-*q, int read)
-> >>              /*
-> >>               * Queue all buffers.
+> >> -    if (q_num_bufs =3D=3D VB2_MAX_FRAME) {
+> >> +    if (q->num_buffers =3D=3D q->max_num_buffers) {
+> >>              dprintk(q, 1, "maximum number of buffers already allocate=
+d\n");
+> >>              return -ENOBUFS;
+> >>      }
+> >> @@ -993,7 +998,13 @@ int vb2_core_create_bufs(struct vb2_queue *q, enu=
+m vb2_memory memory,
 > >>               */
-> >> -            for (i =3D 0; i < q->num_buffers; i++) {
-> >> -                    ret =3D vb2_core_qbuf(q, q->bufs[i], NULL, NULL);
-> >> +            for (i =3D 0; i < vb2_get_num_buffers(q); i++) {
-> >> +                    struct vb2_buffer *vb2 =3D vb2_get_buffer(q, i);
-> >> +
-> >> +                    if (!vb2)
-> >> +                            continue;
-> >> +
-> >> +                    ret =3D vb2_core_qbuf(q, vb2, NULL, NULL);
-> >>                      if (ret)
-> >>                              goto err_reqbufs;
-> >>                      fileio->bufs[i].queued =3D 1;
-> >>              }
-> > Doesn't this part belong to the previous patch that changes q->bufs[x] =
-to
-> > vb2_get_buffer()?
->
-> Yes I will change that too.
->
+> >>              mutex_lock(&q->mmap_lock);
+> >>              q->memory =3D memory;
+> >> +            if (!q->bufs)
+> >> +                    q->bufs =3D kcalloc(q->max_num_buffers, sizeof(*q=
+->bufs), GFP_KERNEL);
+> > Ditto.
 > >
-> >>              /*
-> >>               * All buffers have been queued, so mark that by setting
-> >> -             * initial_index to q->num_buffers
-> >> +             * initial_index to num_buffers
-> > What num_buffers?
->
-> I will use your wording: "the number of buffers in the vb2_queue"
->
-
-Thanks!
-
-> >
-> >>               */
-> >> -            fileio->initial_index =3D q->num_buffers;
-> >> -            fileio->cur_index =3D q->num_buffers;
-> >> +            fileio->initial_index =3D vb2_get_num_buffers(q);
-> >> +            fileio->cur_index =3D fileio->initial_index;
+> >> +            if (!q->bufs)
+> >> +                    ret =3D -ENOMEM;
+> >>              mutex_unlock(&q->mmap_lock);
+> >> +            if (ret)
+> >> +                    return ret;
+> >>              q->waiting_for_buffers =3D !q->is_output;
+> >>              set_queue_coherency(q, non_coherent_mem);
+> >>      } else {
+> >> @@ -1005,7 +1016,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, en=
+um vb2_memory memory,
+> >>                      return -EINVAL;
 > >>      }
 > >>
+> >> -    num_buffers =3D min(*count, VB2_MAX_FRAME - q_num_bufs);
+> >> +    num_buffers =3D min(*count, q->max_num_buffers - q_num_bufs);
+> >>
+> >>      if (requested_planes && requested_sizes) {
+> >>              num_planes =3D requested_planes;
+> >> @@ -2465,6 +2476,12 @@ int vb2_core_queue_init(struct vb2_queue *q)
 > >>      /*
-> >> @@ -2964,12 +2976,12 @@ static size_t __vb2_perform_fileio(struct vb2_=
-queue *q, char __user *data, size_
-> >>               * If we are queuing up buffers for the first time, then
-> >>               * increase initial_index by one.
-> >>               */
-> >> -            if (fileio->initial_index < q->num_buffers)
-> >> +            if (fileio->initial_index < vb2_get_num_buffers(q))
-> >>                      fileio->initial_index++;
-> >>              /*
-> >>               * The next buffer to use is either a buffer that's going=
- to be
-> >> -             * queued for the first time (initial_index < q->num_buff=
-ers)
-> >> -             * or it is equal to q->num_buffers, meaning that the nex=
-t
-> >> +             * queued for the first time (initial_index < num_buffers=
-)
-> >> +             * or it is equal to num_buffers, meaning that the next
-> > What num_buffers?
+> >>       * Sanity check
+> >>       */
+> >> +    if (!q->max_num_buffers)
+> >> +            q->max_num_buffers =3D VB2_MAX_FRAME;
+> > Can we add a comment here to explain that this is for backwards
+> > compatibility with drivers which don't support more buffers?
+> >
+> > Actually, we should probably document in kerneldoc for vb2_queue that 0=
+ is
+> > an allowed and special value.
 >
-> Same here
+> I will do that.
+>
+> >
+> >> +
+> >> +    /* The maximum is limited by offset cookie encoding pattern */
+> >> +    q->max_num_buffers =3D min_t(unsigned int, q->max_num_buffers, MA=
+X_BUFFER_INDEX);
+> >> +
+> >>      if (WARN_ON(!q)                   ||
+> >>          WARN_ON(!q->ops)              ||
+> >>          WARN_ON(!q->mem_ops)          ||
+> >> @@ -2474,6 +2491,10 @@ int vb2_core_queue_init(struct vb2_queue *q)
+> >>          WARN_ON(!q->ops->buf_queue))
+> >>              return -EINVAL;
+> >>
+> >> +    if (WARN_ON(q->max_num_buffers > MAX_BUFFER_INDEX) ||
+> > Hmm, how is this possible?
+>
+> MAX_BUFFER_INDEX depends on PAGE_SHIFT and, on some architectures,
+> it can goes up to 15. In this MAX_BUFFER_INDEX is only equal to 512,
+> that why this check in needed.
+>
+> >
+> >> +        WARN_ON(q->min_buffers_needed > q->max_num_buffers))
+> >> +            return -EINVAL;
+> > I have a loose recollection that it's allowed for a driver to change th=
+is
+> > value depending on the configuration. You may want to double check if a=
+ny
+> > driver doesn't do so already if we want to disallow that. (and also
+> > document that it's not allowed)
+>
+> I don't think any driver change is value given the configuration but Hans=
+ wants
+> to clarify the usage of this field on another series.
+>
 
-Thanks!
+Okay, thanks.
+
+> >
+> >> +
+> >>      if (WARN_ON(q->requires_requests && !q->supports_requests))
+> >>              return -EINVAL;
+> >>
+> >> @@ -2520,6 +2541,8 @@ void vb2_core_queue_release(struct vb2_queue *q)
+> >>      __vb2_queue_cancel(q);
+> >>      mutex_lock(&q->mmap_lock);
+> >>      __vb2_queue_free(q, vb2_get_num_buffers(q));
+> >> +    kfree(q->bufs);
+> >> +    q->bufs =3D NULL;
+> >>      q->num_buffers =3D 0;
+> >>      mutex_unlock(&q->mmap_lock);
+> >>   }
+> >> diff --git a/drivers/media/common/videobuf2/videobuf2-v4l2.c b/drivers=
+/media/common/videobuf2/videobuf2-v4l2.c
+> >> index 7d798fb15c0b..f3cf4b235c1f 100644
+> >> --- a/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> >> +++ b/drivers/media/common/videobuf2/videobuf2-v4l2.c
+> >> @@ -627,7 +627,7 @@ struct vb2_buffer *vb2_find_buffer(struct vb2_queu=
+e *q, u64 timestamp)
+> >>       * This loop doesn't scale if there is a really large number of b=
+uffers.
+> >>       * Maybe something more efficient will be needed in this case.
+> >>       */
+> >> -    for (i =3D 0; i < vb2_get_num_buffers(q); i++) {
+> >> +    for (i =3D 0; i < q->max_num_buffers; i++) {
+> >>              vb2 =3D vb2_get_buffer(q, i);
+> >>
+> >>              if (!vb2)
+> >> @@ -1142,7 +1142,7 @@ int _vb2_fop_release(struct file *file, struct m=
+utex *lock)
+> >>
+> >>      if (lock)
+> >>              mutex_lock(lock);
+> >> -    if (file->private_data =3D=3D vdev->queue->owner) {
+> >> +    if (!vdev->queue->owner || file->private_data =3D=3D vdev->queue-=
+>owner) {
+> >>              vb2_queue_release(vdev->queue);
+> >>              vdev->queue->owner =3D NULL;
+> >>      }
+> >> @@ -1270,7 +1270,7 @@ void vb2_video_unregister_device(struct video_de=
+vice *vdev)
+> >>       */
+> >>      get_device(&vdev->dev);
+> >>      video_unregister_device(vdev);
+> >> -    if (vdev->queue && vdev->queue->owner) {
+> >> +    if (vdev->queue) {
+> >>              struct mutex *lock =3D vdev->queue->lock ?
+> >>                      vdev->queue->lock : vdev->lock;
+> >>
+> >> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-=
+core.h
+> >> index 8f9d9e4af5b1..e77a397195f2 100644
+> >> --- a/include/media/videobuf2-core.h
+> >> +++ b/include/media/videobuf2-core.h
+> >> @@ -558,6 +558,7 @@ struct vb2_buf_ops {
+> >>    * @dma_dir:       DMA mapping direction.
+> >>    * @bufs:  videobuf2 buffer structures
+> >>    * @num_buffers: number of allocated/used buffers
+> >> + * @max_num_buffers: upper limit of number of allocated/used buffers
+> >>    * @queued_list: list of buffers currently queued from userspace
+> >>    * @queued_count: number of buffers queued and ready for streaming.
+> >>    * @owned_by_drv_count: number of buffers owned by the driver
+> >> @@ -619,8 +620,9 @@ struct vb2_queue {
+> >>      struct mutex                    mmap_lock;
+> >>      unsigned int                    memory;
+> >>      enum dma_data_direction         dma_dir;
+> >> -    struct vb2_buffer               *bufs[VB2_MAX_FRAME];
+> >> +    struct vb2_buffer               **bufs;
+> >>      unsigned int                    num_buffers;
+> >> +    unsigned int                    max_num_buffers;
+> >>
+> >>      struct list_head                queued_list;
+> >>      unsigned int                    queued_count;
+> >> @@ -1248,6 +1250,12 @@ static inline void vb2_clear_last_buffer_dequeu=
+ed(struct vb2_queue *q)
+> >>   static inline struct vb2_buffer *vb2_get_buffer(struct vb2_queue *q,
+> >>                                              unsigned int index)
+> >>   {
+> >> +    if (!q->bufs)
+> >> +            return NULL;
+> >> +
+> >> +    if (index >=3D q->max_num_buffers)
+> > Wouldn't this be already prevented by the condition below?
+>
+> yes but the series will remove q->num_buffers after this patch
+> so for me it make sense to introduce this check now.
+>
+
+Yeah, I realized it later. Thanks.
 
 Best regards,
 Tomasz
