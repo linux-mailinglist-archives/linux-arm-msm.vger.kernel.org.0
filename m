@@ -1,149 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60DE87E6579
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 09:41:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A5EC7E664F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 10:10:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C05E2811C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 08:41:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1BC6280FA0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 09:10:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C22EA2C;
-	Thu,  9 Nov 2023 08:41:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E15BC1118A;
+	Thu,  9 Nov 2023 09:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j8JfkoxK"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="BfE5xHs8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4A3DDC6;
-	Thu,  9 Nov 2023 08:40:59 +0000 (UTC)
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD3CBD5A;
-	Thu,  9 Nov 2023 00:40:58 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3A96wmwa031035;
-	Thu, 9 Nov 2023 08:40:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=si4S0+PigtnfpKrx9uqTjzcl2aCL6PAyb/NTxxpjs4c=;
- b=j8JfkoxKcWvnI7WUf2kivqG0scvJxGlyPwq417shiffC8Zzr3YJNgx7LR9um89XSJ5P6
- kyCHxuInpkV7yrOipuxdHEkcyeBeIjhy3lkp2adDHBF9moryQxYHiSP4txfVqmUDQXnD
- LAVysJrxdL1Cgb53ZfBrcr8Sx9QRfrmk8EUgiPjMWlGtggpO45TVmY+yG53IoyJyXrKk
- mUlUQ6mgdkMTJHOM3cstE4qv4H16Vffm+sHMIfRTsMd5Pp0Q5PjYCKbx52Gff7Ol7BfN
- 2eODUAq9X/tUxOdMUEXyjrfdjqtRrlKRvR4XTMClPOnd13QxKyWu+VSj2TfqepQG91lL LQ== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u8nhd15bc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 09 Nov 2023 08:40:54 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3A98eoG2013576
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 9 Nov 2023 08:40:50 GMT
-Received: from [10.216.50.129] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 9 Nov
- 2023 00:40:45 -0800
-Message-ID: <ec0bb93c-30a1-bcda-a842-8cbad6ceea62@quicinc.com>
-Date: Thu, 9 Nov 2023 14:10:41 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BAD1118E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 09:10:24 +0000 (UTC)
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69C89210E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 01:10:23 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-6c4b06af98bso345867b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Nov 2023 01:10:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1699521023; x=1700125823; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=trb4MuQ6XLLHp9cbrU7Qhxh5OD3/4hryMzvH31htzlg=;
+        b=BfE5xHs8SaXQXG0b9xYL59BZex2/UqiE11tZAi0CgLK7Ydexx4iCva8h+xgM0e9krJ
+         ueCIcl+A8AUONksNUSdbecpH2Imox49H8q2vc/lz8fuOabf9zfvmLsERsMN3NSlYmD9u
+         xufmGgtvftJXrnScHK2RugsszirDt7DCcdb8A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699521023; x=1700125823;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=trb4MuQ6XLLHp9cbrU7Qhxh5OD3/4hryMzvH31htzlg=;
+        b=as1vm7bngrcdjOcVmVpdhKFcK15gJLYNPqCCVGYeAlX9JXCkGR17SptJD6zAi8872H
+         9WErmpH3dfhtOsLPFCAEkJcs1jjLUrLOUglkZv6GiQag3uyNre3MehQj10W1A3+twk1b
+         EwoQ/vaXPdoa7vyvLh6YZ9J58sI1Hi1IH3vrQ8a7hsloY5oWEiD0FTxlf0gztjC1oqaD
+         HGjnaGCNFs1Fr35tbq15d8lFdsJ2/5uBj7XwJkI9FcLnUosq5Sjp3H2j3Bf3KZPDcpjD
+         RNHlO4TV5z/alT5Os75KPQy0ZN/MhW6UPpQScitTzduCBAtlQlUh4HZ1SD6LIZUWkS+V
+         /7RA==
+X-Gm-Message-State: AOJu0Yxpn9lROvB9/200ESG47hBpqLGjgwvilO86Hk2mBV/sB1mzY0uY
+	/J4V3VahbtgixYJw556OTMUgDw==
+X-Google-Smtp-Source: AGHT+IHeH9bwSDaqUzS/5j97Pi2uukXE85TheRG3ama6+WbfBb0l8z3y1v7unvrgCAzIC5YVZM0pcw==
+X-Received: by 2002:a05:6a20:7493:b0:15d:e68d:a850 with SMTP id p19-20020a056a20749300b0015de68da850mr4661238pzd.29.1699521022894;
+        Thu, 09 Nov 2023 01:10:22 -0800 (PST)
+Received: from chromium.org (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
+        by smtp.gmail.com with ESMTPSA id i4-20020a17090332c400b001c9d968563csm3041205plr.79.2023.11.09.01.10.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Nov 2023 01:10:22 -0800 (PST)
+Date: Thu, 9 Nov 2023 09:10:18 +0000
+From: Tomasz Figa <tfiga@chromium.org>
+To: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc: mchehab@kernel.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
+	ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+	gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl,
+	nicolas.dufresne@collabora.com, linux-media@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, linux-staging@lists.linux.dev,
+	kernel@collabora.com
+Subject: Re: [PATCH v14 53/56] media: core: Free range of buffers
+Message-ID: <20231109091018.tzodchqp44tmwq3k@chromium.org>
+References: <20231031163104.112469-1-benjamin.gaignard@collabora.com>
+ <20231031163104.112469-54-benjamin.gaignard@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] dt-bindings: cache: qcom,llcc: correct QDU1000 reg
- entries
-Content-Language: en-US
-To: Conor Dooley <conor@kernel.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof
- Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20231107080436.16747-1-krzysztof.kozlowski@linaro.org>
- <0f76a5c1-14ce-cbfa-bbd9-b2826c4bbbdb@quicinc.com>
- <20231108-hurricane-carefully-d9d3c1348f8c@spud>
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20231108-hurricane-carefully-d9d3c1348f8c@spud>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _ONhkTefcxfQDmhf-gjvw9q4ZmN31ixS
-X-Proofpoint-ORIG-GUID: _ONhkTefcxfQDmhf-gjvw9q4ZmN31ixS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-09_07,2023-11-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- malwarescore=0 phishscore=0 mlxlogscore=706 lowpriorityscore=0
- adultscore=0 impostorscore=0 bulkscore=0 priorityscore=1501 clxscore=1011
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311090069
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231031163104.112469-54-benjamin.gaignard@collabora.com>
 
-
-
-On 11/8/2023 5:56 PM, Conor Dooley wrote:
-> On Tue, Nov 07, 2023 at 02:25:25PM +0530, Mukesh Ojha wrote:
->>
->>
->> On 11/7/2023 1:34 PM, Krzysztof Kozlowski wrote:
->>> Qualcomm QDU1000 DTSI comes with one LLCC0 base address as pointed by
->>> dtbs_check:
->>>
->>>     qdu1000-idp.dtb: system-cache-controller@19200000: reg-names:2: 'llcc2_base' was expected
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>
->>> ---
->>>
->>> Recent LLCC patches were not tested on QDU1000 thus the LLCC is there
->>> broken.  This patch at least tries to bring some sense according to
->>> DTSI, but I have no clue what is here correct: driver, DTS or bindings.
->>> ---
->>>    Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->>> index 580f9a97ddf7..d610b0be262c 100644
->>> --- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->>> +++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->>> @@ -64,6 +64,7 @@ allOf:
->>>            compatible:
->>>              contains:
->>>                enum:
->>> +              - qcom,qdu1000-llcc
->>>                  - qcom,sc7180-llcc
->>>                  - qcom,sm6350-llcc
->>
->> Thanks, again.
->>
->> Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+On Tue, Oct 31, 2023 at 05:31:01PM +0100, Benjamin Gaignard wrote:
+> Improve __vb2_queue_free() and __vb2_free_mem() to free
+> range of buffers and not only the last few buffers.
+> Intoduce starting index to be flexible on range and change the loops
+> according to this parameters.
 > 
-> I'm assuming given your employer, this ack means that there is no
-> llcc2_base on the qdu1000.
-
-Yes, not even have llcc1 , just llcc0.
-
--Mukesh
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> ---
+>  .../media/common/videobuf2/videobuf2-core.c   | 59 +++++++++----------
+>  1 file changed, 28 insertions(+), 31 deletions(-)
 > 
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> 
-> Cheers,
-> Conor.
+> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> index 6e88406fcae9..010a8bca0240 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> @@ -519,15 +519,13 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>  /*
+>   * __vb2_free_mem() - release all video buffer memory for a given queue
+
+This comment is kind of outdated. Maybe we should replace it with
+
+	release video buffer memory for a given range of buffers in a given
+	queue
+
+?
+
+>   */
+> -static void __vb2_free_mem(struct vb2_queue *q, unsigned int buffers)
+> +static void __vb2_free_mem(struct vb2_queue *q, unsigned int start, unsigned int count)
+>  {
+> -	unsigned int buffer;
+> +	unsigned int i;
+>  	struct vb2_buffer *vb;
+> -	unsigned int q_num_buffers = vb2_get_num_buffers(q);
+>  
+> -	for (buffer = q_num_buffers - buffers; buffer < q_num_buffers;
+> -	     ++buffer) {
+> -		vb = vb2_get_buffer(q, buffer);
+> +	for (i = start; i < q->max_num_buffers && i < start + count; i++) {
+
+We could make this (and all those numerous simialr iterations) more
+efficient by using bitmap helpers (probably wrapped in some vb2 helpers),
+e.g. for_each_set_bit_from() (vb2_for_each_buffer_from()?). It can be done
+in a follow up patch separately from this series though.
+
+> +		vb = vb2_get_buffer(q, i);
+>  		if (!vb)
+>  			continue;
+>  
+> @@ -542,35 +540,35 @@ static void __vb2_free_mem(struct vb2_queue *q, unsigned int buffers)
+>  }
+>  
+>  /*
+> - * __vb2_queue_free() - free buffers at the end of the queue - video memory and
+> + * __vb2_queue_free() - free count buffers from start index of the queue - video memory and
+
+nit: How about using the @count and @start notation to refer the argument
+names? (Can be done with a follow up patch outside of this series later.)
+
+>   * related information, if no buffers are left return the queue to an
+>   * uninitialized state. Might be called even if the queue has already been freed.
+>   */
+> -static void __vb2_queue_free(struct vb2_queue *q, unsigned int buffers)
+> +static void __vb2_queue_free(struct vb2_queue *q, unsigned int start, unsigned int count)
+>  {
+> -	unsigned int buffer;
+> -	unsigned int q_num_buffers = vb2_get_num_buffers(q);
+> +	unsigned int i;
+>  
+>  	lockdep_assert_held(&q->mmap_lock);
+>  
+>  	/* Call driver-provided cleanup function for each buffer, if provided */
+> -	for (buffer = q_num_buffers - buffers; buffer < q_num_buffers;
+> -	     ++buffer) {
+> -		struct vb2_buffer *vb = vb2_get_buffer(q, buffer);
+> +	for (i = start; i < q->max_num_buffers && i < start + count; i++) {
+> +		struct vb2_buffer *vb = vb2_get_buffer(q, i);
+>  
+> -		if (vb && vb->planes[0].mem_priv)
+> +		if (!vb)
+> +			continue;
+> +		if (vb->planes[0].mem_priv)
+
+nit: Not sure if we really had to change this, but I'm fine with either.
+
+Best regards,
+Tomasz
 
