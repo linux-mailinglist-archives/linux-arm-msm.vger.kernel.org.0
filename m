@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AE0E7E6D00
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 16:14:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D80627E6D18
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 16:15:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C72741C208BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 15:14:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 32DC9B20FBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Nov 2023 15:15:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2034513AEA;
-	Thu,  9 Nov 2023 15:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8150200B8;
+	Thu,  9 Nov 2023 15:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D/cbWeWy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t5tnuqEI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C4A200B6
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 15:14:02 +0000 (UTC)
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FFEA35A8
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 07:14:02 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-408425c7c10so7087925e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Nov 2023 07:14:02 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59A0200D2
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 15:15:39 +0000 (UTC)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F4335A7
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Nov 2023 07:15:39 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-407da05f05aso6465805e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Nov 2023 07:15:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699542840; x=1700147640; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1699542937; x=1700147737; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ngW2H67nvbIil9Jd4FOLYMiZuCHl7MW2vB4VxmLrw94=;
-        b=D/cbWeWyNFEBZgDtQGXEselP1HuQmIV16NxRx2IQN3lsMuTWTHgfcTpETP3rXoI8sP
-         hljlmn9holU4YYOY/LVMURM+jqESfWxC5c27yKX6V+uXmiidCwD9S5vKH1GmZxxvN3e2
-         so3OZN4gxQ9cGzFk9FOtwqxaKCn6+aB+cdQLqo+Lt06Z8/Muyf9IKfpeQ2uV9yt0WSiM
-         TTquk5NNN+OZlfgawXuAgbZoaJEgWEKH0P4wZKk+g3o+N2Yve/ovQf4RyhdJpzzj1nR0
-         sNiFhBpPxeal3IPsZu1XF15SXLTE7mlvRFYC7Ifyof1fsdbeMT+Rgrk8anVMxtWoOHCr
-         g9lQ==
+        bh=wNzU0830D43H2VXQRT2Ex372KHUEc4BXST5kikj6r14=;
+        b=t5tnuqEIeRifPxgCvuu/PMFVdf0LSv5h/G8np3dYWTgfdz8ynyMtJmcnCxNVPLqsyW
+         vftT4UDkjOALX8GhJCGQfslzENj8Q67sqJNds7PIbpXvcFA+LVfa4lOgYZWBVH65lGQ9
+         MEukpur6H2+6kR147rLAZhobfFiasukuuZzl44wHmbr3QT89qXFF7AvD8XAN50Bc5EWd
+         ZS4Wmij3Av3EA5FyGl4sQljbh76IByg/VdSAPlQiP3GnKQ9yRaHOtT/fDvjF0ejn5tEn
+         MJKRmy8HM2ZGkxw5R9UB0gQpH+fu45vZ3jYU5k8C3EfKV9W2CL6l90PFPKQDxTRed99c
+         9TuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699542840; x=1700147640;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20230601; t=1699542937; x=1700147737;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ngW2H67nvbIil9Jd4FOLYMiZuCHl7MW2vB4VxmLrw94=;
-        b=kM1p8v2ZmjysWuWAyQ9JwPBAtCS3Qul2aslndALz2ISep410mWSwKUqhszbg/PNyVn
-         ANL9FmhwJBwNJNWC4kdGi1rMQ0kDFo73dr8Xiy+gB7UJk+Fob8LPA1tNG1+KXzGVCWpN
-         vJCZHc2AN1Idlnn6yIJkClqJfE9KR2dHzs1lWwoZEJVO+pRWQDHicfaV3dz0cHOAHfY/
-         aYikJzjshQnE1vROZgfIMmU96nNWYN8251NhtqRftLCJieNdMRQHHgzVgCoEwBP2HHbS
-         WJQK/a/Tlvd9P7C5iXye8r899m8JEv894/2QWvipGXV0eG+u7sFxgEY4+L+tsi9pERS3
-         +jxQ==
-X-Gm-Message-State: AOJu0YxJCijG3F+sIblAGW5ldRTIRNM+yl+MdxjI20YYdxO23WaxIqBu
-	HDRsuCpieV8jme/0bfHrYj3NBIvwOVNsTWf3A2XRHg==
-X-Google-Smtp-Source: AGHT+IHO8LoMMy2ZV8wNcw352FFV308MNE/rSe7GnvAe6vm0+bXvfQNvz5jUBAOsn9dTb3l5eqNmtA==
-X-Received: by 2002:a05:600c:3b8b:b0:401:b6f6:d8fd with SMTP id n11-20020a05600c3b8b00b00401b6f6d8fdmr4409042wms.6.1699542840519;
-        Thu, 09 Nov 2023 07:14:00 -0800 (PST)
+        bh=wNzU0830D43H2VXQRT2Ex372KHUEc4BXST5kikj6r14=;
+        b=hK3a39HYmfbnHV/AdYQKDvr2yqXIqST0kZpHOpKcV8IME32MMGkhoAu1oXlKsLOi46
+         ATToPUBGcYNsZaVV/tvMrHAYFogbXAm2mwl4+F7l3w+xEyi1VZPtt42z0uMJFryeSfrj
+         hqav1cskfSTnCbaUASZ7OVpidrv5V0+q23uMKd0rhooODccs4kofQ4yvpLjMH0LgUI3R
+         10NNeByhw6OEUoye14hzioxvb6kyoGYhu9d7/WojRh+gubIZdVlC/jSoKM5U8MIs2umz
+         BDzh3rIm0FCeS9zdHxEBALUMvvmdWRrXal1oKtCJbI5+HP+Vxxf8tykEJuq+NUj07BML
+         ZBoA==
+X-Gm-Message-State: AOJu0Yx4j2pnfBVTSAWPiSmlN/9yYeO3brh6tt1ntRUpN74t6dttj9fi
+	stUVTwpQyOebfAM55qMygNn9Iw==
+X-Google-Smtp-Source: AGHT+IHLq/kcnLWmV7fbCwPCWFLGE6/07PY/z6miJPuXuiqHqYElIVqLGIrKDC7b/qdLyTL6Q5JkqQ==
+X-Received: by 2002:a05:600c:5103:b0:408:403a:34dc with SMTP id o3-20020a05600c510300b00408403a34dcmr4829978wms.37.1699542937574;
+        Thu, 09 Nov 2023 07:15:37 -0800 (PST)
 Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id u2-20020a7bcb02000000b004068e09a70bsm2329709wmj.31.2023.11.09.07.13.59
+        by smtp.gmail.com with ESMTPSA id u2-20020a7bcb02000000b004068e09a70bsm2329709wmj.31.2023.11.09.07.15.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Nov 2023 07:13:59 -0800 (PST)
-Message-ID: <e80d4026-a525-48ef-b53a-f1276dd316e6@linaro.org>
-Date: Thu, 9 Nov 2023 15:13:58 +0000
+        Thu, 09 Nov 2023 07:15:37 -0800 (PST)
+Message-ID: <4aaa25fb-de9a-4d7f-9316-ef83c27f4b42@linaro.org>
+Date: Thu, 9 Nov 2023 15:15:36 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,6 +69,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 4/6] media: qcom: camss: Add sc8280xp resource details
 Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 To: Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
  laurent.pinchart@ideasonboard.com, Andy Gross <agross@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>, Robert Foss <rfoss@kernel.org>,
@@ -82,44 +83,17 @@ Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
 References: <20231109-b4-camss-sc8280xp-v4-0-58a58bc200f9@linaro.org>
  <20231109-b4-camss-sc8280xp-v4-4-58a58bc200f9@linaro.org>
  <3e0958a9-4d1e-4d1b-a914-5da154caa11f@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <3e0958a9-4d1e-4d1b-a914-5da154caa11f@linaro.org>
+ <e80d4026-a525-48ef-b53a-f1276dd316e6@linaro.org>
+In-Reply-To: <e80d4026-a525-48ef-b53a-f1276dd316e6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 09/11/2023 13:44, Konrad Dybcio wrote:
->> +        .clock_rate = { { 0 },
->> +                { 0 },
->> +                { 19200000, 80000000, 80000000, 80000000, 80000000},
->> +                { 19200000, 150000000, 266666667, 320000000, 
->> 400000000, 480000000 },
->> +                { 400000000, 558000000, 637000000, 760000000 },
->> +                { 0 }, },
-> Not the case here!
+On 09/11/2023 15:13, Bryan O'Donoghue wrote:
+> printf("index %d = %d\n", clock_rate[0][i]);
 
-I agree with you in principle, the checking for the frequency shouldn't 
-rely on if (freq[x]) however in this case - we are doing aggregate 
-initialisation of a fixed size array and the compiler should save us 
-from ourselves.
+Doh !
 
-./test
-index 19200000 = 0
-index 80000000 = 4
-index 80000000 = 8
-index 80000000 = 12
-index 80000000 = 16
-index 0 = 20
-index 0 = 24
-index 0 = 28
-index 0 = 32
-index 0 = 36
-index 0 = 40
-index 0 = 44
-index 0 = 48
-index 0 = 52
-index 0 = 56
-index 0 = 60
-index 0 = 64
+But you get the idea
 
 deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ cat test.c
 #include <stdbool.h>
@@ -143,10 +117,27 @@ int main (int argc, char *argv[])
 
 	return 0;
 }
+deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ vim test.c 
+drivers/media/platform/qcom/camss/camss.h
+2 files to edit
+deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ gcc -o test test.c
+deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ ./test
+index 0 = 19200000
+index 1 = 80000000
+index 2 = 80000000
+index 3 = 80000000
+index 4 = 80000000
+index 5 = 0
+index 6 = 0
+index 7 = 0
+index 8 = 0
+index 9 = 0
+index 10 = 0
+index 11 = 0
+index 12 = 0
+index 13 = 0
+index 14 = 0
+index 15 = 0
+index 16 = 0
 
-However this code only works at the moment by happenstance not by design 
-so, I will drop something separate to this series to remediate.
-
----
-bod
 
