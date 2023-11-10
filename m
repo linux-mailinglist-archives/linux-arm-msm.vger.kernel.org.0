@@ -1,65 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 672D27E7B8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 11:59:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72EB97E7B98
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 12:04:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A4E42814A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 10:59:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E4681C20C74
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 11:04:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0CFE12B75;
-	Fri, 10 Nov 2023 10:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BEC112B75;
+	Fri, 10 Nov 2023 11:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H9xuSCtg"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="O5qOOfkb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C4412B7F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 10:59:14 +0000 (UTC)
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B614B2AD30
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 02:59:11 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c79d8b67f3so10685691fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 02:59:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699613950; x=1700218750; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0YtnsbkjgNmMK4oNQZ7/5K+J2+w6BQuYkA1R55uanv0=;
-        b=H9xuSCtgkd1Sge/1+o+eAXBgf1VOw6JF7k8n1LTvU79ZEoxEBKaI2d5ZWY1uNpHj3v
-         y7c+ht+oJLkH/2pYb2mxBhS4m5aHfRWApEGmxoESQRCZzEOYLfy7ycc3YKP0gdqT6jPq
-         G440DDmzcP897L86yXklBylW5UDVXcjk1srblmTCraQNopxQPuWxP8ev1cI/vbgeLkAw
-         HfBRXccCQ4DwP82b8Y1AsuuXkEOUejvyjrWu31Zw5e8PmHili6m8ZT+mTSNAXISVTbfU
-         OLl+hhpfHxagm29fwkE+2vOebAYo8uSCxU2qr2fncUIUZhmiYjcrxWrv8QTVKz0lwnNA
-         Rm7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699613950; x=1700218750;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0YtnsbkjgNmMK4oNQZ7/5K+J2+w6BQuYkA1R55uanv0=;
-        b=F+UloEYwcu8F4kgn/8y/b5Anw9unJTYiIgOldfzweY7Vwe+wqe9swCGHJvkoKV8p/L
-         RH0lGipdrMwcnF+CZ4PYSfMdKafAQaFBnn50k8QRGufyvMxtlb/jbO0kvA3fw8cXG9eY
-         h0lE0R6v2Tv/zC2S6U4sWBaPvQDMb80KY9MoPD9J7V82dVmp4ubk+eejW3n3Bw3hpiqp
-         KxtRg7UxbQUMOiu1WvZzRCNRUWbpRH4gXYaVBXI58+nUvwsXbcD/n8cTPYfLKgm5KAIK
-         kvc3qihII72GiuqwbDOViAtVxxBQZHaF4zN4MRMfPnEptPW6IkaqEbu2vJmCgkUGXH5Z
-         uzzQ==
-X-Gm-Message-State: AOJu0Yx8iN0BrsnHdUs/0KfJVohJxdVVieDxLLHsr3YWiTjL+BXnCT5u
-	TEGx6yrlvQQOgpucyreRXzr72w==
-X-Google-Smtp-Source: AGHT+IFSVrapyybW2AyJuImHeeidk8TiEnVGijxqBCd8mmjR/9eba809vpDi5XMmGFAGFZO7KB9ltA==
-X-Received: by 2002:a05:651c:2dd:b0:2c0:318a:6ee1 with SMTP id f29-20020a05651c02dd00b002c0318a6ee1mr5343889ljo.49.1699613949943;
-        Fri, 10 Nov 2023 02:59:09 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id z12-20020a1c4c0c000000b003fe61c33df5sm4758021wmf.3.2023.11.10.02.59.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Nov 2023 02:59:09 -0800 (PST)
-Message-ID: <8114d2f9-43d8-4761-adfa-aad9ae249cbc@linaro.org>
-Date: Fri, 10 Nov 2023 11:59:06 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDBC14003
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 11:03:58 +0000 (UTC)
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CF542B78C;
+	Fri, 10 Nov 2023 03:03:56 -0800 (PST)
+Received: from [100.116.125.19] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: andrzej.p)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id EC78B66073EB;
+	Fri, 10 Nov 2023 11:03:53 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1699614235;
+	bh=IlFF4hLVYQMy+8z6m7boQ1emEGxM3/fBp3D4sqFY4lo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=O5qOOfkbHwk1EQ79MoiHJUqkRlyLWF59KLiv1aw0WWhGJJ1igR1uGZtohHN0HL8fB
+	 EniGr8zsuLvPLB61+ZBiWTyoufc/iPdUzGCivPmO0wJQg2zbOSaWOxrH/gW78Rk3Zj
+	 e5xDfDQlYjYjwv7HFdNkzibpmDNwpytUEdRm0k2SaoeqmkgwSU0yg3rGvD7Z7YRoVT
+	 hWUmU1Q4jRrs0nZPeKgVlvBEXYF5XmUJIGWz1icdoLxp0zWngiwA/cASOsdqWlEdY7
+	 ZSCVe2KuerHlMq1X7IDv2CHnyq5W5Nqwb/9Br4x6doJqrNs0OlXEyJ54IQSUf2hOqh
+	 3rGPJxP7piJMg==
+Message-ID: <ca386f5c-34b2-4515-99ea-975b009b6628@collabora.com>
+Date: Fri, 10 Nov 2023 12:03:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,128 +49,227 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/11] ARM: dts: qcom: Update devicetree for ADC7 rename
- for QCOM PMICs
+Subject: Re: [PATCH v15 30/56] media: test-drivers: Stop direct calls to queue
+ num_buffers field
+To: Benjamin Gaignard <benjamin.gaignard@collabora.com>, mchehab@kernel.org,
+ tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
+ ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+ gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl,
+ nicolas.dufresne@collabora.com
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-staging@lists.linux.dev, kernel@collabora.com,
+ Daniel Almeida <daniel.almeida@collabora.com>
+References: <20231109163512.179524-14-benjamin.gaignard@collabora.com>
+ <20231109163512.179524-31-benjamin.gaignard@collabora.com>
+ <0b79bb25-2e44-4a6d-b306-76477a2c8a08@collabora.com>
+ <84f22803-bd25-4985-a17c-b38bd738b487@collabora.com>
 Content-Language: en-US
-To: Jishnu Prakash <quic_jprakash@quicinc.com>, agross@kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linus.walleij@linaro.org, Jonathan.Cameron@huawei.com, sboyd@kernel.org,
- dmitry.baryshkov@linaro.org, quic_subbaram@quicinc.com,
- quic_collinsd@quicinc.com, quic_kamalw@quicinc.com,
- marijn.suijten@somainline.org, andriy.shevchenko@linux.intel.com,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
- linux-arm-msm@vger.kernel.org
-Cc: linux-iio@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-References: <20230708072835.3035398-1-quic_jprakash@quicinc.com>
- <20230708072835.3035398-4-quic_jprakash@quicinc.com>
- <839cfac2-8f74-3386-5854-e3fb2ba4e07f@linaro.org>
- <27b5806f-ef15-7a90-5adc-5ee12690f2ca@quicinc.com>
- <7af782f3-fe6c-415b-a993-55962845a102@linaro.org>
- <7ccaf08e-0add-33e5-fbea-ce737e53fa28@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <7ccaf08e-0add-33e5-fbea-ce737e53fa28@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+In-Reply-To: <84f22803-bd25-4985-a17c-b38bd738b487@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 09/11/2023 09:22, Jishnu Prakash wrote:
-> Hi Krzysztof,
+Hi Benjamin,
+
+W dniu 10.11.2023 o 10:55, Benjamin Gaignard pisze:
 > 
-> On 10/23/2023 12:02 PM, Krzysztof Kozlowski wrote:
->> On 23/10/2023 08:09, Jishnu Prakash wrote:
->>> Hi Krzysztof,
+> Le 10/11/2023 à 10:35, Andrzej Pietrasiewicz a écrit :
+>> Hi Benjamin,
+>>
+>> W dniu 9.11.2023 o 17:34, Benjamin Gaignard pisze:
+>>> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
+>>> This allows us to change how the number of buffers is computed in the
+>>> future.
+>>> If 'min_buffers_needed' is set remove useless checks in queue setup
+>>> functions.
 >>>
->>> On 7/9/2023 10:48 PM, Krzysztof Kozlowski wrote:
->>>> On 08/07/2023 09:28, Jishnu Prakash wrote:
->>>>> The name "ADC7" needs to be replaced with the name "ADC5_GEN2"
->>>>> everywhere to match the convention used for these ADC peripherals
->>>>> on Qualcomm Technologies, Inc. PMICs. Update devicetree files for
->>>> We do not rename compatibles to match convention. Please provide proper
->>>> rationale.
->>> I'll avoid renaming the compatible directly, will just mark it
->>> deprecated - but is it fine to do the other changes, for updating the
->>> macro names used in devicetree (replacing the ADC7 macros with the ADC5
->>> Gen2 macros)?
->> Please provide proper rationale why "ADC7 needs to be replaced". Your
->> marketing is not a proper rationale.
+>>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+>>> CC: Daniel Almeida <daniel.almeida@collabora.com>
+>>> ---
+>>>   drivers/media/test-drivers/visl/visl-dec.c         | 4 ++--
+>>>   drivers/media/test-drivers/vivid/vivid-meta-cap.c  | 3 ---
+>>>   drivers/media/test-drivers/vivid/vivid-meta-out.c  | 5 +++--
+>>>   drivers/media/test-drivers/vivid/vivid-touch-cap.c | 5 +++--
+>>>   drivers/media/test-drivers/vivid/vivid-vbi-cap.c   | 3 ---
+>>>   drivers/media/test-drivers/vivid/vivid-vbi-out.c   | 3 ---
+>>>   drivers/media/test-drivers/vivid/vivid-vid-cap.c   | 3 ---
+>>>   drivers/media/test-drivers/vivid/vivid-vid-out.c   | 5 +----
+>>>   8 files changed, 9 insertions(+), 22 deletions(-)
+>>>
+>>> diff --git a/drivers/media/test-drivers/visl/visl-dec.c 
+>>> b/drivers/media/test-drivers/visl/visl-dec.c
+>>> index ba20ea998d19..4672dc5e52bb 100644
+>>> --- a/drivers/media/test-drivers/visl/visl-dec.c
+>>> +++ b/drivers/media/test-drivers/visl/visl-dec.c
+>>> @@ -287,7 +287,7 @@ static void visl_tpg_fill(struct visl_ctx *ctx, struct 
+>>> visl_run *run)
+>>>       frame_dprintk(ctx->dev, run->dst->sequence, "%s\n", buf);
+>>>         len = 0;
+>>> -    for (i = 0; i < out_q->num_buffers; i++) {
+>>> +    for (i = 0; i < vb2_get_num_buffers(out_q); i++) {
+>>>           char entry[] = "index: %u, state: %s, request_fd: %d, ";
+>>>           u32 old_len = len;
+>>>           struct vb2_buffer *vb2;
+>>> @@ -347,7 +347,7 @@ static void visl_tpg_fill(struct visl_ctx *ctx, struct 
+>>> visl_run *run)
+>>>       frame_dprintk(ctx->dev, run->dst->sequence, "%s\n", buf);
+>>>         len = 0;
+>>> -    for (i = 0; i < cap_q->num_buffers; i++) {
+>>> +    for (i = 0; i < vb2_get_num_buffers(cap_q); i++) {
+>>>           u32 old_len = len;
+>>>           struct vb2_buffer *vb2;
+>>>           char *q_status;
+>>> diff --git a/drivers/media/test-drivers/vivid/vivid-meta-cap.c 
+>>> b/drivers/media/test-drivers/vivid/vivid-meta-cap.c
+>>> index 780f96860a6d..0a718d037e59 100644
+>>> --- a/drivers/media/test-drivers/vivid/vivid-meta-cap.c
+>>> +++ b/drivers/media/test-drivers/vivid/vivid-meta-cap.c
+>>> @@ -30,9 +30,6 @@ static int meta_cap_queue_setup(struct vb2_queue *vq, 
+>>> unsigned int *nbuffers,
+>>>           sizes[0] = size;
+>>>       }
+>>>   -    if (vq->num_buffers + *nbuffers < 2)
+>>> -        *nbuffers = 2 - vq->num_buffers;
+>>> -
+>>>       *nplanes = 1;
+>>>       return 0;
+>>>   }
+>>> diff --git a/drivers/media/test-drivers/vivid/vivid-meta-out.c 
+>>> b/drivers/media/test-drivers/vivid/vivid-meta-out.c
+>>> index 95835b52b58f..4a569a6e58be 100644
+>>> --- a/drivers/media/test-drivers/vivid/vivid-meta-out.c
+>>> +++ b/drivers/media/test-drivers/vivid/vivid-meta-out.c
+>>> @@ -18,6 +18,7 @@ static int meta_out_queue_setup(struct vb2_queue *vq, 
+>>> unsigned int *nbuffers,
+>>>                   struct device *alloc_devs[])
+>>>   {
+>>>       struct vivid_dev *dev = vb2_get_drv_priv(vq);
+>>> +    unsigned int q_num_bufs = vb2_get_num_buffers(vq);
+>>>       unsigned int size =  sizeof(struct vivid_meta_out_buf);
+>>>         if (!vivid_is_webcam(dev))
+>>> @@ -30,8 +31,8 @@ static int meta_out_queue_setup(struct vb2_queue *vq, 
+>>> unsigned int *nbuffers,
+>>>           sizes[0] = size;
+>>>       }
+>>>   -    if (vq->num_buffers + *nbuffers < 2)
+>>> -        *nbuffers = 2 - vq->num_buffers;
+>>> +    if (q_num_bufs + *nbuffers < 2)
+>>> +        *nbuffers = 2 - q_num_bufs;
+>>>         *nplanes = 1;
+>>>       return 0;
+>>> diff --git a/drivers/media/test-drivers/vivid/vivid-touch-cap.c 
+>>> b/drivers/media/test-drivers/vivid/vivid-touch-cap.c
+>>> index c7f6e23df51e..4b3c6ea0afde 100644
+>>> --- a/drivers/media/test-drivers/vivid/vivid-touch-cap.c
+>>> +++ b/drivers/media/test-drivers/vivid/vivid-touch-cap.c
+>>> @@ -13,6 +13,7 @@ static int touch_cap_queue_setup(struct vb2_queue *vq, 
+>>> unsigned int *nbuffers,
+>>>                    struct device *alloc_devs[])
+>>>   {
+>>>       struct vivid_dev *dev = vb2_get_drv_priv(vq);
+>>> +    unsigned int q_num_bufs = vb2_get_num_buffers(vq);
+>>>       struct v4l2_pix_format *f = &dev->tch_format;
+>>>       unsigned int size = f->sizeimage;
+>>>   @@ -23,8 +24,8 @@ static int touch_cap_queue_setup(struct vb2_queue *vq, 
+>>> unsigned int *nbuffers,
+>>>           sizes[0] = size;
+>>>       }
+>>>   -    if (vq->num_buffers + *nbuffers < 2)
+>>> -        *nbuffers = 2 - vq->num_buffers;
+>>> +    if (q_num_bufs + *nbuffers < 2)
+>>> +        *nbuffers = 2 - q_num_bufs;
+>>>         *nplanes = 1;
+>>>       return 0;
+>>> diff --git a/drivers/media/test-drivers/vivid/vivid-vbi-cap.c 
+>>> b/drivers/media/test-drivers/vivid/vivid-vbi-cap.c
+>>> index b65b02eeeb97..3840b3a664ac 100644
+>>> --- a/drivers/media/test-drivers/vivid/vivid-vbi-cap.c
+>>> +++ b/drivers/media/test-drivers/vivid/vivid-vbi-cap.c
+>>> @@ -134,9 +134,6 @@ static int vbi_cap_queue_setup(struct vb2_queue *vq,
+>>>         sizes[0] = size;
+>>>   -    if (vq->num_buffers + *nbuffers < 2)
+>>> -        *nbuffers = 2 - vq->num_buffers;
+>>> -
+>>>       *nplanes = 1;
+>>>       return 0;
+>>>   }
+>>> diff --git a/drivers/media/test-drivers/vivid/vivid-vbi-out.c 
+>>> b/drivers/media/test-drivers/vivid/vivid-vbi-out.c
+>>> index cd56476902a2..434a10676417 100644
+>>> --- a/drivers/media/test-drivers/vivid/vivid-vbi-out.c
+>>> +++ b/drivers/media/test-drivers/vivid/vivid-vbi-out.c
+>>> @@ -30,9 +30,6 @@ static int vbi_out_queue_setup(struct vb2_queue *vq,
+>>>         sizes[0] = size;
+>>>   -    if (vq->num_buffers + *nbuffers < 2)
+>>> -        *nbuffers = 2 - vq->num_buffers;
+>>> -
+>>>       *nplanes = 1;
+>>>       return 0;
+>>>   }
+>>> diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c 
+>>> b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+>>> index 3a06df35a2d7..2804975fe278 100644
+>>> --- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+>>> +++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+>>> @@ -117,9 +117,6 @@ static int vid_cap_queue_setup(struct vb2_queue *vq,
+>>>                       dev->fmt_cap->data_offset[p];
+>>>       }
+>>>   -    if (vq->num_buffers + *nbuffers < 2)
+>>> -        *nbuffers = 2 - vq->num_buffers;
+>>> -
+>>>       *nplanes = buffers;
+>>>         dprintk(dev, 1, "%s: count=%d\n", __func__, *nbuffers);
+>>
+>> here the format specifier for "*nbuffers" is "%d"...
+>>
+>>> diff --git a/drivers/media/test-drivers/vivid/vivid-vid-out.c 
+>>> b/drivers/media/test-drivers/vivid/vivid-vid-out.c
+>>> index 184a6df2c29f..1653b2988f7e 100644
+>>> --- a/drivers/media/test-drivers/vivid/vivid-vid-out.c
+>>> +++ b/drivers/media/test-drivers/vivid/vivid-vid-out.c
+>>> @@ -73,12 +73,9 @@ static int vid_out_queue_setup(struct vb2_queue *vq,
+>>>                          vfmt->data_offset[p] : size;
+>>>       }
+>>>   -    if (vq->num_buffers + *nbuffers < 2)
+>>> -        *nbuffers = 2 - vq->num_buffers;
+>>> -
+>>>       *nplanes = planes;
+>>>   -    dprintk(dev, 1, "%s: count=%d\n", __func__, *nbuffers);
+>>> +    dprintk(dev, 1, "%s: count=%u\n", __func__, *nbuffers);
+>>
+>> ... but here you change it to "%u". Is there a reason for these two to be
+>> different? I didn't notice it in the previous version but now it stands out
+>> clearly. Probably you changed to %u because of the type returned by
+>> vb2_get_num_buffers(). And, actually, *nbuffers _is_ unsigned, too.
 > 
+> Like you said *nbuffers is unsigned so %u sound for me.
+> The goal of this patch was to avoid vq->num_buffers usage not to clean up all the
+> file.
+> That could be done in other patch since there is lot to do here.
 > 
-> The name "ADC7" was the one used internally at first, but it got changed 
-> later to "ADC5 Gen2" by our HW team, after we had added this support 
-> both downstream and upstream. Since we are now adding support for the 
-> next generation named "ADC5 Gen3", we thought it would be helpful to 
-> indicate in some way that this generation (ADC7) lies between the 
-> earlier ADC5 and the latest ADC5 Gen3.
 
-You keep replying with the same arguments as before. I wrote that
-marketing, so how you call your devices and then change your mind, is
-not the valid rationale.
+Arguably, if the purpose of this patch is to avoid using vq->num_buffers,
+the line we're discussing could be left unpatched, which minimizes the diffstat.
 
+Otherwise, you _are_ changing vid_cap_queue_setup() anyway.
+
+Regards,
+
+Andrzej
+
+> Regards,
+> Benjamin
 > 
-> Since you do not want us to modify the existing bindings, is it fine if 
-> I just add a new compatible for ADC5 Gen2 and comments to indicate the 
-> ADC7 compatible should be considered deprecated?
-
-No, because adc7 compatible is valid and there is no reason to replace
-it. Just because you changed naming does not matter for compatibles.
-It's just unique string, that's it. Don't touch it.
-
-
-> 
-> If you are not convinced, we can drop the Gen2 name related changes from 
-> the patch series.
-
-Feel free to add comments or descriptions, if you want to map some
-marketing name to real hardware or to compatibles.
-
-
-Best regards,
-Krzysztof
+>>
+>> Regards,
+>>
+>> Andrzej
+>>
+>>>       for (p = 0; p < planes; p++)
+>>>           dprintk(dev, 1, "%s: size[%u]=%u\n", __func__, p, sizes[p]);
+>>>       return 0;
+>>
 
 
