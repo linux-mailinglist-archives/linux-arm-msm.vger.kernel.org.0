@@ -1,168 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A6B27E7A88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 10:18:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15E8A7E7A8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 10:19:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18F19B20BA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 09:18:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37E6F1C20AEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 09:19:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D644C10A0F;
-	Fri, 10 Nov 2023 09:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E6D610A22;
+	Fri, 10 Nov 2023 09:19:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ctgh/v6P"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/15eAPS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E38610965
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 09:18:00 +0000 (UTC)
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 757582B7FB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 01:17:58 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-54553e4888bso2700717a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 01:17:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699607877; x=1700212677; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4LYDpBcl0MlEH+R1oWmv0xRfeWfotESF7unF3rtHosM=;
-        b=ctgh/v6P7PGtWsqzmBXVNaa3RTWxGLNZ1z/PZVK8DdmLD1DUizCahIAn1rxnmqcCvm
-         D9Drs5rkdEVkQI0Xn9NvZBAmDQ6ERUQMTI0ZkWSZPKzC1PsE9pVkPhx1vSYklkP0C6UF
-         teVMNxtDaMF0vare7+0l+VbJ5P3qUDPLF/qGU5d6gkK39ac/NbDtG4DtOusJgEQaj+wr
-         s7xpyyNQhJGizLXenmo4nt9fNaW+xIgiGoPKSRUK4ZbpOqQeBNpMen+OvjK+HD3uit/U
-         kU1yHgKUdFnyjVTSwpUm40BIZ7gM3qLdTylaMStF5vMSWDGKHioXe/xVe/CjoP/xrICB
-         WuwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699607877; x=1700212677;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4LYDpBcl0MlEH+R1oWmv0xRfeWfotESF7unF3rtHosM=;
-        b=L263vOjBmdeGT2OpJ5cM/YqXPbsKzlU5V7ObLl7e1PXGHnjgdMSIAB9wesvvHSfKzk
-         LgMT3xCyCRO8CDWo2G2hCU8XzU4kbom1ytOo5QV6mZBKFUaTu4mr0MIL4IKqPD+3j8Ff
-         1NtuVf3Gx1ZPPD5fAYnXlwOjYuL37heUTCAQy/MfSAIc+TocCCsx9XaaGCNSsElWmVva
-         57VHUSO8kXjLEPMUxmyXKHfHIgLtveUC3TQ03foipSDgE+xngXT+ZfA4Bk1ge1meC/E6
-         OmyEhdQuWQYJxo5A9Mg5qjTBubb5LOa6ry4h7i0KwNGuZTF+vaVQbddv4f6WGwJeCJx2
-         /oUQ==
-X-Gm-Message-State: AOJu0YyCnmSEJt2qHtC/jlv7Vgm0+UOPVltYe+jA56/jgNpwuq0aiW/k
-	fy5aJxyv0R6pHoBsS1QJJnTCCg==
-X-Google-Smtp-Source: AGHT+IEi+jnigMNlZUp5tY2hieuoJdQ+0SEgWhSPbTbvPnM2yM5Sou8lXJBCGZLHxF5rHcGAfKoDWQ==
-X-Received: by 2002:a17:907:7b95:b0:9c7:59d1:b2c9 with SMTP id ne21-20020a1709077b9500b009c759d1b2c9mr6807869ejc.17.1699607876897;
-        Fri, 10 Nov 2023 01:17:56 -0800 (PST)
-Received: from [192.168.7.189] (679773502.box.freepro.com. [212.114.21.58])
-        by smtp.gmail.com with ESMTPSA id h7-20020a05600c350700b004090ca6d785sm4601196wmq.2.2023.11.10.01.17.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Nov 2023 01:17:56 -0800 (PST)
-Message-ID: <10cbb859-bdbf-4763-9887-fa13003b58cd@linaro.org>
-Date: Fri, 10 Nov 2023 10:17:55 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060D5D26B;
+	Fri, 10 Nov 2023 09:19:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7238FC433C7;
+	Fri, 10 Nov 2023 09:19:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699607946;
+	bh=b9jyp9d6eUs12groes8KvuLudG/6cY80nzVdpBVlpl4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=i/15eAPSmNar0fmxrbidbkveb69ykFpmetwPD7Yza1TswwTh+IpgJSSIMHqzZNP9R
+	 y5zAQ2Xgo4NVYjaMLLxRV+fKgppRoxikGpT8QuJVGwVFHJaX6m1BDUiFI53AkD7Dbz
+	 DyACF7jrbVQmI5Jnpy08C5eX54ntRlki7xM+T2Y0m2YS4H/Xz3fMr2EJwl3mwn7UDv
+	 sjZg3ZAHHD5t+GMii5Cj+4M6636v+g9yQBPCcq/Vf3X1RyLQ1J7vLUK5eyGvqYYDyQ
+	 dEgZLzY2ud9Jql0Gk5YRq3ySoVaFUhITcouW50caJp5GhCovdhVD99hjRRxMa7yL65
+	 BLTtCnLJ6qZJg==
+Received: from johan by theta with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r1NfH-0002iZ-2T;
+	Fri, 10 Nov 2023 10:18:59 +0100
+Date: Fri, 10 Nov 2023 10:18:59 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Felipe Balbi <balbi@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+	ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+Message-ID: <ZU31gx-LY5GBJGPU@hovoldconsulting.com>
+References: <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
+ <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+ <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+ <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+ <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
+ <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
+ <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+ <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
+ <2b19b5e2-5eb0-49e0-8c47-8aff3d48f34e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 6/7] phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed
- Gear 5 support for SM8550
-Content-Language: en-US, fr
-To: Can Guo <quic_cang@quicinc.com>, Can Guo <cang@qti.qualcomm.com>,
- bvanassche@acm.org, mani@kernel.org, stanley.chu@mediatek.com,
- adrian.hunter@intel.com, beanhuo@micron.com, avri.altman@wdc.com,
- junwoo80.lee@samsung.com, martin.petersen@oracle.com
-Cc: linux-scsi@vger.kernel.org, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
- "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
- open list <linux-kernel@vger.kernel.org>
-References: <1699332374-9324-1-git-send-email-cang@qti.qualcomm.com>
- <1699332374-9324-7-git-send-email-cang@qti.qualcomm.com>
- <e4bafeaf-bbeb-4990-b6f2-497159995910@linaro.org>
- <c3fb1fa1-4ba6-613f-a545-79e0e4b2658f@quicinc.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <c3fb1fa1-4ba6-613f-a545-79e0e4b2658f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2b19b5e2-5eb0-49e0-8c47-8aff3d48f34e@quicinc.com>
 
-Hi,
+On Thu, Nov 09, 2023 at 10:08:12PM +0530, Krishna Kurapati PSSNV wrote:
+> On 11/9/2023 8:48 PM, Johan Hovold wrote:
+> > On Fri, Nov 03, 2023 at 03:34:52PM +0530, Krishna Kurapati PSSNV wrote:
+> > > On 10/24/2023 12:26 PM, Johan Hovold wrote:
+> > > > On Mon, Oct 23, 2023 at 10:42:31PM +0530, Krishna Kurapati PSSNV wrote:
+> > > > > On 10/23/2023 7:37 PM, Johan Hovold wrote:
+> > > > 
+> > > > > > Right. And I assume there are hs_phy_irqs also for the first two USB
+> > > > > > controllers on sc8280xp?
+> > > > 
+> > > > > There are, I can dig through and find out. Atleast in downstream I don't
+> > > > > see any use of them.
+> > > > 
+> > > > Yes, please do post how these are wired as well for completeness.
+> > 
+> > Did you find these two interrupts as well?
 
-On 10/11/2023 10:03, Can Guo wrote:
-> Hi Neil,
+Please answer.
+
+> > > As an experiment, I tried to test wakeup by pressing buttons on
+> > > connected keyboard when in suspend state or connecting/disconnecting
+> > > keyboard in suspended state on different ports and only see dp/dm IRQ's
+> > > getting fired although we register for hs_phy_irq as well:
+> > > 
+> > > / # cat /proc/interrupts  |grep phy_
+> > > 171:   1  0   0   0  0  0  0  0       PDC 127 Edge      dp_hs_phy_1
+> > > 172:   2  0   0   0  0  0  0  0       PDC 126 Edge      dm_hs_phy_1
+> > > 173:   3  0   0   0  0  0  0  0       PDC 129 Edge      dp_hs_phy_2
+> > > 174:   4  0   0   0  0  0  0  0       PDC 128 Edge      dm_hs_phy_2
+> > > 175:   0  0   0   0  0  0  0  0       PDC 131 Edge      dp_hs_phy_3
+> > > 176:   2  0   0   0  0  0  0  0       PDC 130 Edge      dm_hs_phy_3
+> > > 177:   2  0   0   0  0  0  0  0       PDC 133 Edge      dp_hs_phy_4
+> > > 178:   5  0   0   0  0  0  0  0       PDC 132 Edge      dm_hs_phy_4
+> > > 179:   0  0   0   0  0  0  0  0       PDC  16 Level     ss_phy_1
+> > > 180:   0  0   0   0  0  0  0  0       PDC  17 Level     ss_phy_2
+> > > 181:   0  0   0   0  0  0  0  0     GICv3 163 Level     hs_phy_1
+> > > 182:   0  0   0   0  0  0  0  0     GICv3 168 Level     hs_phy_2
+> > > 183:   0  0   0   0  0  0  0  0     GICv3 892 Level     hs_phy_3
+> > > 184:   0  0   0   0  0  0  0  0     GICv3 891 Level     hs_phy_4
+> > 
+> > Yes, but that doesn't really say much since you never enable the hs_phy
+> > interrupt in the PHY on suspend.
 > 
-> On 11/10/2023 4:47 PM, neil.armstrong@linaro.org wrote:
->> Hi,
->>
->> On 07/11/2023 05:46, Can Guo wrote:
->>> From: Can Guo <quic_cang@quicinc.com>
->>>
->>> On SM8550, two sets of UFS PHY settings are provided, one set is to support
->>> HS-G5, another set is to support HS-G4 and lower gears. The two sets of PHY
->>> settings are programming different values to different registers, mixing
->>> the two sets and/or overwriting one set with another set is definitely not
->>> blessed by UFS PHY designers. In order to add HS-G5 support for SM8550, we
->>> need to split the two sets into their dedicated tables, and leave only the
->>> common settings in the .tlbs. To have the PHY programmed with the correct
->>> set of PHY settings, the submode passed to PHY driver must be either HS-G4
->>> or HS-G5.
->>
->> I guess I'll need to rebase my SM8650 UFS PHY driver to support both G4 and G5 modes
->> at some point ?
-> 
-> 
-> Thank for reaching out. Yes, please.
-> 
-> I can help review the PHY settings.
+> I did register to and enabled the hs_phy_irq interrupt when I tested and
+> posted the above table.
 
-Ok I'll try rebasing on this serie and add G5 support.
+Yes, but, again, you never enabled them in the PHY (cf. QUSB2) so it's
+hardly surprising that they do not fire.
 
+Still good to know that requesting them doesn't trigger spurious
+interrupts either since these are apparently enabled on most Qualcomm
+SoCs even though they are not used. We should fix that too.
+
+> > > Since the hs_phy_irq is applicable only for qusb2 targets, do we still
+> > > need to add it to DT.
+> > 
+> > Are you sure there's no support for hs_phy_irq also in the "femto" PHYs
+> > and that it's just that there is currently no driver support for using
+> > them?
+> > 
+> > And why is it defined if there is truly no use for it?
 > 
-> BTW, are you enabling MCQ (by adding MCQ related DT) at the same time?
+> Femto phy's have nothing to be configured for interrupts like we do for
+> qusb2 phy's. I confirmed from hw validation team that they never used
+> hs_phy_irq for validating wakeup. They only used dp/dm IRQ's for wakeup.
 
-I tested MCQ but it triggers the same issues we have with suspend/resume on SM8550 & SM8650,
-and the bindings are not present of the UFS qcom node.
+Ok.
 
-Neil
+Is there some other (non-wakeup) functionality which may potentially use
+this interrupt?
 
+> > Also, if hs_phy_irq and dp/dm_phy_irq were mutually exclusive, why does
+> > the following Qualcomm SoCs define all three?
+> > 
 > 
-> Thanks,
-> Can Guo.
-> 
->>
->> Neil
->>
+> Similar to BAM IRQ's these might have been just ported over targets I
+> believe. I say so because HW Validation team confirmed they don't use this
+> interrupt at all on femto phy targets.
 
+So then including the hs_phy_irq for most of these SoCs was a mistake
+and we should drop it from the bindings?
+
+What about the QUSB2 SoCs that also define DP/DM, are both useable
+there?
+
+And if so, is there any reason to prefer one mechanism over the other?
+
+> >                - qcom,ipq4019-dwc3
+> >                - qcom,ipq6018-dwc3
+> >                - qcom,ipq8064-dwc3
+> >                - qcom,ipq8074-dwc3
+> >                - qcom,msm8994-dwc3
+> >                - qcom,qcs404-dwc3
+> >                - qcom,sc7180-dwc3
+> > 	      - qcom,sc7280-dwc3
+> >                - qcom,sdm670-dwc3
+> >                - qcom,sdm845-dwc3
+> >                - qcom,sdx55-dwc3
+> >                - qcom,sdx65-dwc3
+> >                - qcom,sm4250-dwc3
+> >                - qcom,sm6125-dwc3
+> >                - qcom,sm6350-dwc3
+> >                - qcom,sm8150-dwc3
+> >                - qcom,sm8250-dwc3
+> >                - qcom,sm8350-dwc3
+> >                - qcom,sm8450-dwc3
+> >                - qcom,sm8550-dwc3
+> > 
+> > Some of those use QUSB2 PHYs and some use "femto" PHYs.
+
+> > > Since the DeviceTree passed to the OS, should describe the hardware to
+> > > the OS, and should represent the hardware from the point-of-view of the
+> > > OS, adding one interrupt (ctrl_irq[0]) might be sufficient as Linux
+> > > would not use the other interrupts.
+> > 
+> > I've only skimmed the virtualisation bits in xHCI spec, but it seems
+> > Linux as VMM would still be involved in assigning these interrupts to
+> > VMs.
+> 
+> I didn't understand this sentence. Are you referring to cases where Linux
+> needs to act as the entity using the ctrl_irq[1] ?
+
+It seems Linux acting as VMM would need to be involved in configuring
+such interrupts and passing them to the VM that eventually use them.
+
+> On QCOM SoC's, in reality (atleast in device mode) I can say that we create
+> the event rings for IPA FW (which registers for ctrl_irq[1]) to use and read
+> depevt's. We don't register or get this IRQ from DT and then provide to IPA
+> (not even in downstream).
+
+Yeah, I don't know how such things would best be handled.
+
+Johan
 
