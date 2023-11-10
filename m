@@ -1,400 +1,340 @@
-Return-Path: <linux-arm-msm+bounces-458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 261487E7D16
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 15:41:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 552D37E7D73
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 16:33:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ACDDF1F207C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 14:41:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0870128102B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 15:33:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E38C31B291;
-	Fri, 10 Nov 2023 14:41:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YANxTIPX"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E01421CA89;
+	Fri, 10 Nov 2023 15:33:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B581B277
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 14:41:36 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5E6B3976F;
-	Fri, 10 Nov 2023 06:41:34 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AAEeYvL028447;
-	Fri, 10 Nov 2023 14:41:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uPKrSbtoy5UrkG1Rsr0gu52n6i0oPXj7F74DpghJe08=;
- b=YANxTIPX/p3Bley2JQBqaRbHW54MyOQ9+HRUescqmkwN00VjSCTQcvOeIRpeZKGhueGb
- VLCuZ+8ShZiOjBsdMX/mKeXVbu3JErCJefibY1cnpcl6gu47HOtoqqoJN7b3YmBs3Zr2
- PVEONscsaMnFmBqU8a0+Jg8mN8HWX3AbDGh0idzwyH2hOxpd9CHm09Ejc0WYDX8/57oN
- g6PZP5n82tla40Tq2GjM0i2JDutXBGksvlF2K3VxHMwoEYZNLaAYzhG4BLhr0zUR5DP1
- io/pMLHyEEvRXgOOSoBH5rX9soxgIvYCnlYM1OCB2EBB8ZoVrEnE+9cxtOjfKqV+Lsn9 tQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u93tqadmx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Nov 2023 14:41:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AAEf0El024208
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Nov 2023 14:41:00 GMT
-Received: from [10.253.32.19] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 10 Nov
- 2023 06:40:55 -0800
-Message-ID: <1ac5ae60-7e76-43f2-8b3d-c286eade0251@quicinc.com>
-Date: Fri, 10 Nov 2023 22:40:53 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E011CA81
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 15:33:01 +0000 (UTC)
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A4913AE39
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 07:32:59 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r1TT8-00065R-WB; Fri, 10 Nov 2023 16:30:51 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r1TSy-0083Ie-0c; Fri, 10 Nov 2023 16:30:40 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r1TSx-00Gnuj-JI; Fri, 10 Nov 2023 16:30:39 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Tony Lindgren <tony@atomide.com>,
+	Alexander Shiyan <shc_work@mail.ru>
+Cc: John Ogness <john.ogness@linutronix.de>,
+	=?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thomas Richard <thomas.richard@bootlin.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	kernel@pengutronix.de,
+	linux-serial@vger.kernel.org,
+	Richard GENOUD <richard.genoud@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Yangtao Li <frank.li@vivo.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Ray Jui <rjui@broadcom.com>,
+	Scott Branden <sbranden@broadcom.com>,
+	Al Cooper <alcooperx@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Johan Hovold <johan@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rob Herring <robh@kernel.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	=?utf-8?q?Duje_Mihanovi=C4=87?= <duje.mihanovic@skole.hr>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-mips@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-tegra@vger.kernel.org,
+	Tobias Klauser <tklauser@distanz.ch>,
+	Russell King <linux@armlinux.org.uk>,
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Jiamei Xie <jiamei.xie@arm.com>,
+	Hongyu Xie <xiehongyu1@kylinos.cn>,
+	delisun <delisun@pateo.com.cn>,
+	Fabio Estevam <festevam@denx.de>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Baruch Siach <baruch@tkos.co.il>,
+	Thierry Reding <treding@nvidia.com>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Zhang Shurong <zhang_shurong@foxmail.com>,
+	Sherry Sun <sherry.sun@nxp.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Sergey Organov <sorganov@gmail.com>,
+	Tom Rix <trix@redhat.com>,
+	Martin Fuzzey <martin.fuzzey@flowbird.group>,
+	Bernhard Seibold <mail@bernhard-seibold.de>,
+	Karol Gugala <kgugala@antmicro.com>,
+	Mateusz Holenko <mholenko@antmicro.com>,
+	Gabriel Somlo <gsomlo@gmail.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Dmitry Rokosov <ddrokosov@sberdevices.ru>,
+	Lucas Tanure <tanure@linux.com>,
+	Pavel Krasavin <pkrasavin@imaqliq.com>,
+	linux-amlogic@lists.infradead.org,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	=?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-actions@lists.infradead.org,
+	Yuan Can <yuancan@huawei.com>,
+	linux-unisoc@lists.infradead.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	linux-samsung-soc@vger.kernel.org,
+	Laxman Dewangan <ldewangan@nvidia.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Nick Hu <nick.hu@sifive.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Ruan Jinjie <ruanjinjie@huawei.com>,
+	linux-riscv@lists.infradead.org,
+	Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Valentin Caron <valentin.caron@foss.st.com>,
+	Marek Vasut <marex@denx.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Erwan Le Ray <erwan.leray@foss.st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	"David S. Miller" <davem@davemloft.net>,
+	sparclinux@vger.kernel.org,
+	Hammer Hsieh <hammerh0314@gmail.com>,
+	Peter Korsgaard <jacmet@sunsite.dk>,
+	Timur Tabi <timur@kernel.org>,
+	linuxppc-dev@lists.ozlabs.org,
+	Michal Simek <michal.simek@amd.com>,
+	Julien Malik <julien.malik@unseenlabs.fr>
+Subject: [PATCH 00/52] serial: Convert to platform remove callback returning void
+Date: Fri, 10 Nov 2023 16:29:28 +0100
+Message-ID: <20231110152927.70601-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed
- Gear 5 support for SM8550
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Can Guo <cang@qti.qualcomm.com>, <bvanassche@acm.org>,
-        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
-        <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        "Kishon Vijay
- Abraham I" <kishon@kernel.org>,
-        "open list:ARM/QUALCOMM SUPPORT"
-	<linux-arm-msm@vger.kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK"
-	<linux-phy@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1699332374-9324-7-git-send-email-cang@qti.qualcomm.com>
- <CAA8EJpqEkkEoQ9vncNJU1t=mKbvBXKk1FUxnmGTE0Q++sf=oXA@mail.gmail.com>
- <20231108054942.GF3296@thinkpad>
- <CAA8EJpoCZChHDQLF0QHN0PkRUWV20thXMQvK-sH2fpYaC1zcvg@mail.gmail.com>
- <20231109032418.GA3752@thinkpad>
- <CAA8EJpoZUf9Ku5meH5VAcSkCbna__5LdPi8rgnN0tyBc-UzzWw@mail.gmail.com>
- <20231109104250.GF3752@thinkpad>
- <CAA8EJpp+wfe5wUj0FAMY2g3J8v7F8DVf8Bi3BwrAuCp-n=PFJg@mail.gmail.com>
- <20231109160430.GG3752@thinkpad>
- <CAA8EJpq+R4QsQSn1_sf1_dkh8mOmWLtBm7SSa953s8jRQR-pAg@mail.gmail.com>
- <20231110131803.GA5025@thinkpad>
-Content-Language: en-US
-From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <20231110131803.GA5025@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8575; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=uSjGK//3oFZ52v8CbMudZ2zWDpIf+rV/Bz06fMr6GWo=; b=owGbwMvMwMXY3/A7olbonx/jabUkhlQ/nwgpw9SOtCV6v+pmM2qvy30b4Lq49LLWF9d7/DeVZ WUfT6vrZDRmYWDkYpAVU2Sxb1yTaVUlF9m59t9lmEGsTCBTGLg4BWAit63Y/3DeWbXNbsaN6owD v7zeKjbpJWlH1DLLuAtpXzizckMmx203llrb1/+nvTIsPrdq+5X595O9r7k579Bw9+82qJzub57 xYRLnlnOf3z5I0jkjI3+hnSlh3u7CZtWj17OsTwtF9Zh1VPec575QJnDf2cNMZ92auiNbfa0U1I K4NMS4nGKWL9M2r8plO87j5ygYa/6+RbEk4fm2VxMXr107Q7gswU3y947dArnBDXHf36sIsmiEc f/g4GZMEG/dF80S1BrAt/VW0ITwlZUaT7adCHP/6ih/oXzv47Wsk5b57sm0tYvXmXys/bGln80K A/VHR2RlH3V3/5h2e8W6Lbt3hnOZavQfU+68c0/+U304AA==
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PB9oFDcRvzphHgZ5qJMWOYGfVjfP8eW8
-X-Proofpoint-ORIG-GUID: PB9oFDcRvzphHgZ5qJMWOYGfVjfP8eW8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-10_12,2023-11-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- suspectscore=0 clxscore=1015 priorityscore=1501 mlxlogscore=999
- spamscore=0 phishscore=0 impostorscore=0 bulkscore=0 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311100121
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+
+Hello,
+
+this series starts with two fixes. The first one fixes a resource leak
+and use after free. The second only improves error reporting. I added a
+Fixes: marker to these. I let you decide if you want to drop them (or
+the second only) or add a Cc: stable (to both or only the first one).
+
+After that all drivers below drivers/tty/serial are converted to struct
+platform_driver::remove_new. See commit 5c5a7680e67b ("platform: Provide
+a remove callback that returns no value") for an extended explanation
+and the eventual goal. The TL;DR; is to prevent bugs like the two fixed
+here.
+
+After these two fixes all conversations are trivial, because all
+.remove() callbacks returned zero unconditionally.
+
+The conversion patches are merge window material. The two fixes might go
+in also before v6.7, but given the fixed problems are already old
+(v6.1-rc6 + v3.10-rc1) there is probably no urge.
+
+Best regards
+Uwe
+
+Uwe Kleine-König (52):
+  serial: 8250: omap: Don't skip resource freeing if
+    pm_runtime_resume_and_get() failed
+  serial: sccnxp: Improve error message if regulator_disable() fails
+  serial: 8250: Convert to platform remove callback returning void
+  serial: altera_jtaguart: Convert to platform remove callback returning
+    void
+  serial: altera: Convert to platform remove callback returning void
+  serial: amba-pl011: Convert to platform remove callback returning void
+  serial: ar933x: Convert to platform remove callback returning void
+  serial: atmel: Convert to platform remove callback returning void
+  serial: bcm63xx: Convert to platform remove callback returning void
+  serial: clps711x: Convert to platform remove callback returning void
+  serial: cpm: Convert to platform remove callback returning void
+  serial: digicolor: Convert to platform remove callback returning void
+  serial: esp32_acm: Convert to platform remove callback returning void
+  serial: esp32: Convert to platform remove callback returning void
+  serial: fsl_linflexuart: Convert to platform remove callback returning
+    void
+  serial: fsl_lpuart: Convert to platform remove callback returning void
+  serial: imx: Convert to platform remove callback returning void
+  serial: lantiq: Convert to platform remove callback returning void
+  serial: liteuart: Convert to platform remove callback returning void
+  serial: lpc32xx_hs: Convert to platform remove callback returning void
+  serial: ma35d1: Convert to platform remove callback returning void
+  serial: mcf: Convert to platform remove callback returning void
+  serial: meson: Convert to platform remove callback returning void
+  serial: milbeaut_usio: Convert to platform remove callback returning
+    void
+  serial: mpc52xx: Convert to platform remove callback returning void
+  serial: msm: Convert to platform remove callback returning void
+  serial: mxs-auart: Convert to platform remove callback returning void
+  serial: omap: Convert to platform remove callback returning void
+  serial: owl: Convert to platform remove callback returning void
+  serial: pic32: Convert to platform remove callback returning void
+  serial: qcom_geni: Convert to platform remove callback returning void
+  serial: rda: Convert to platform remove callback returning void
+  serial: sa1100: Convert to platform remove callback returning void
+  serial: samsung: Convert to platform remove callback returning void
+  serial: sccnxp: Convert to platform remove callback returning void
+  serial: tegra: Convert to platform remove callback returning void
+  serial: txx9: Convert to platform remove callback returning void
+  serial: sh-sci: Convert to platform remove callback returning void
+  serial: sifive: Convert to platform remove callback returning void
+  serial: sprd: Convert to platform remove callback returning void
+  serial: st-asc: Convert to platform remove callback returning void
+  serial: stm32: Convert to platform remove callback returning void
+  serial: sunhv: Convert to platform remove callback returning void
+  serial: sunplus: Convert to platform remove callback returning void
+  serial: sunsab: Convert to platform remove callback returning void
+  serial: sunsu: Convert to platform remove callback returning void
+  serial: sunzilog: Convert to platform remove callback returning void
+  serial: tegra-tcu: Convert to platform remove callback returning void
+  serial: timbuart: Convert to platform remove callback returning void
+  serial: uartlite: Convert to platform remove callback returning void
+  serial: ucc: Convert to platform remove callback returning void
+  serial: xilinx_uartps: Convert to platform remove callback returning
+    void
+
+ drivers/tty/serial/8250/8250_aspeed_vuart.c |  6 ++----
+ drivers/tty/serial/8250/8250_bcm2835aux.c   |  6 ++----
+ drivers/tty/serial/8250/8250_bcm7271.c      |  5 ++---
+ drivers/tty/serial/8250/8250_core.c         |  5 ++---
+ drivers/tty/serial/8250/8250_dw.c           |  6 ++----
+ drivers/tty/serial/8250/8250_em.c           |  5 ++---
+ drivers/tty/serial/8250/8250_fsl.c          |  5 ++---
+ drivers/tty/serial/8250/8250_ingenic.c      |  5 ++---
+ drivers/tty/serial/8250/8250_ioc3.c         |  5 ++---
+ drivers/tty/serial/8250/8250_lpc18xx.c      |  6 ++----
+ drivers/tty/serial/8250/8250_mtk.c          |  6 ++----
+ drivers/tty/serial/8250/8250_of.c           |  5 ++---
+ drivers/tty/serial/8250/8250_omap.c         |  7 +++----
+ drivers/tty/serial/8250/8250_pxa.c          |  6 ++----
+ drivers/tty/serial/8250/8250_tegra.c        |  6 ++----
+ drivers/tty/serial/8250/8250_uniphier.c     |  6 ++----
+ drivers/tty/serial/altera_jtaguart.c        |  6 ++----
+ drivers/tty/serial/altera_uart.c            |  6 ++----
+ drivers/tty/serial/amba-pl011.c             |  5 ++---
+ drivers/tty/serial/ar933x_uart.c            |  6 ++----
+ drivers/tty/serial/atmel_serial.c           |  6 ++----
+ drivers/tty/serial/bcm63xx_uart.c           |  5 ++---
+ drivers/tty/serial/clps711x.c               |  6 ++----
+ drivers/tty/serial/cpm_uart.c               |  6 ++----
+ drivers/tty/serial/digicolor-usart.c        |  6 ++----
+ drivers/tty/serial/esp32_acm.c              |  5 ++---
+ drivers/tty/serial/esp32_uart.c             |  6 ++----
+ drivers/tty/serial/fsl_linflexuart.c        |  6 ++----
+ drivers/tty/serial/fsl_lpuart.c             |  5 ++---
+ drivers/tty/serial/imx.c                    |  6 ++----
+ drivers/tty/serial/lantiq.c                 |  6 ++----
+ drivers/tty/serial/liteuart.c               |  6 ++----
+ drivers/tty/serial/lpc32xx_hs.c             |  6 ++----
+ drivers/tty/serial/ma35d1_serial.c          |  5 ++---
+ drivers/tty/serial/mcf.c                    |  6 ++----
+ drivers/tty/serial/meson_uart.c             |  8 +++-----
+ drivers/tty/serial/milbeaut_usio.c          |  6 ++----
+ drivers/tty/serial/mpc52xx_uart.c           |  7 ++-----
+ drivers/tty/serial/msm_serial.c             |  6 ++----
+ drivers/tty/serial/mxs-auart.c              |  6 ++----
+ drivers/tty/serial/omap-serial.c            |  6 ++----
+ drivers/tty/serial/owl-uart.c               |  6 ++----
+ drivers/tty/serial/pic32_uart.c             |  7 ++-----
+ drivers/tty/serial/qcom_geni_serial.c       |  6 ++----
+ drivers/tty/serial/rda-uart.c               |  6 ++----
+ drivers/tty/serial/sa1100.c                 |  6 ++----
+ drivers/tty/serial/samsung_tty.c            |  6 ++----
+ drivers/tty/serial/sccnxp.c                 | 13 +++++++------
+ drivers/tty/serial/serial-tegra.c           |  5 ++---
+ drivers/tty/serial/serial_txx9.c            |  5 ++---
+ drivers/tty/serial/sh-sci.c                 |  6 ++----
+ drivers/tty/serial/sifive.c                 |  6 ++----
+ drivers/tty/serial/sprd_serial.c            |  6 ++----
+ drivers/tty/serial/st-asc.c                 |  6 ++----
+ drivers/tty/serial/stm32-usart.c            |  6 ++----
+ drivers/tty/serial/sunhv.c                  |  6 ++----
+ drivers/tty/serial/sunplus-uart.c           |  6 ++----
+ drivers/tty/serial/sunsab.c                 |  6 ++----
+ drivers/tty/serial/sunsu.c                  |  6 ++----
+ drivers/tty/serial/sunzilog.c               |  6 ++----
+ drivers/tty/serial/tegra-tcu.c              |  6 ++----
+ drivers/tty/serial/timbuart.c               |  6 ++----
+ drivers/tty/serial/uartlite.c               |  5 ++---
+ drivers/tty/serial/ucc_uart.c               |  6 ++----
+ drivers/tty/serial/xilinx_uartps.c          |  5 ++---
+ 65 files changed, 137 insertions(+), 249 deletions(-)
 
 
+base-commit: 8728c14129df7a6e29188a2e737b4774fb200953
+-- 
+2.42.0
 
-On 11/10/2023 9:18 PM, Manivannan Sadhasivam wrote:
-> On Fri, Nov 10, 2023 at 12:11:46AM +0200, Dmitry Baryshkov wrote:
->> On Thu, 9 Nov 2023 at 18:04, Manivannan Sadhasivam <mani@kernel.org> wrote:
->>>
->>> On Thu, Nov 09, 2023 at 01:00:51PM +0200, Dmitry Baryshkov wrote:
->>>> On Thu, 9 Nov 2023 at 12:43, Manivannan Sadhasivam <mani@kernel.org> wrote:
->>>>>
->>>>> On Thu, Nov 09, 2023 at 11:40:51AM +0200, Dmitry Baryshkov wrote:
->>>>>> On Thu, 9 Nov 2023 at 05:24, Manivannan Sadhasivam <mani@kernel.org> wrote:
->>>>>>>
->>>>>>> On Wed, Nov 08, 2023 at 08:56:16AM +0200, Dmitry Baryshkov wrote:
->>>>>>>> On Wed, 8 Nov 2023 at 07:49, Manivannan Sadhasivam <mani@kernel.org> wrote:
->>>>>>>>>
->>>>>>>>> On Tue, Nov 07, 2023 at 03:18:09PM +0200, Dmitry Baryshkov wrote:
->>>>>>>>>> On Tue, 7 Nov 2023 at 06:47, Can Guo <cang@qti.qualcomm.com> wrote:
->>>>>>>>>>>
->>>>>>>>>>> From: Can Guo <quic_cang@quicinc.com>
->>>>>>>>>>>
->>>>>>>>>>> On SM8550, two sets of UFS PHY settings are provided, one set is to support
->>>>>>>>>>> HS-G5, another set is to support HS-G4 and lower gears. The two sets of PHY
->>>>>>>>>>> settings are programming different values to different registers, mixing
->>>>>>>>>>> the two sets and/or overwriting one set with another set is definitely not
->>>>>>>>>>> blessed by UFS PHY designers. In order to add HS-G5 support for SM8550, we
->>>>>>>>>>> need to split the two sets into their dedicated tables, and leave only the
->>>>>>>>>>> common settings in the .tlbs. To have the PHY programmed with the correct
->>>>>>>>>>> set of PHY settings, the submode passed to PHY driver must be either HS-G4
->>>>>>>>>>> or HS-G5.
->>>>>>>>>>>
->>>>>>>>>
->>>>>>>>> You should also mention that this issue is also present in G4 supported targets.
->>>>>>>>> And a note that it will get fixed later.
->>>>>>>>>
->>>>>>>>>>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->>>>>>>>>>> ---
->>>>>>>>>>>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h     |   2 +
->>>>>>>>>>>   drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h |   2 +
->>>>>>>>>>>   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |  12 +++
->>>>>>>>>>>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 112 ++++++++++++++++++---
->>>>>>>>>>>   4 files changed, 115 insertions(+), 13 deletions(-)
->>>>>>>>>>>
->>>>>>>>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
->>>>>>>>>>> index c23d5e4..e563af5 100644
->>>>>>>>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
->>>>>>>>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
->>>>>>>>>>> @@ -18,6 +18,7 @@
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_BIST_FIXED_PAT_CTRL            0x060
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY           0x074
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY           0x0bc
->>>>>>>>>>> +#define QPHY_V6_PCS_UFS_RX_HS_G5_SYNC_LENGTH_CAPABILITY        0x12c
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_DEBUG_BUS_CLKSEL               0x158
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_LINECFG_DISABLE                        0x17c
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_RX_MIN_HIBERN8_TIME            0x184
->>>>>>>>>>> @@ -27,5 +28,6 @@
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_READY_STATUS                   0x1a8
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1              0x1f4
->>>>>>>>>>>   #define QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1               0x1fc
->>>>>>>>>>> +#define QPHY_V6_PCS_UFS_RX_HSG5_SYNC_WAIT_TIME         0x220
->>>>>>>>>>>
->>>>>>>>>>>   #endif
->>>>>>>>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
->>>>>>>>>>> index f420f8f..ef392ce 100644
->>>>>>>>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
->>>>>>>>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
->>>>>>>>>>> @@ -56,6 +56,8 @@
->>>>>>>>>>>   #define QSERDES_V6_COM_SYS_CLK_CTRL                            0xe4
->>>>>>>>>>>   #define QSERDES_V6_COM_SYSCLK_BUF_ENABLE                       0xe8
->>>>>>>>>>>   #define QSERDES_V6_COM_PLL_IVCO                                        0xf4
->>>>>>>>>>> +#define QSERDES_V6_COM_CMN_IETRIM                              0xfc
->>>>>>>>>>> +#define QSERDES_V6_COM_CMN_IPTRIM                              0x100
->>>>>>>>>>>   #define QSERDES_V6_COM_SYSCLK_EN_SEL                           0x110
->>>>>>>>>>>   #define QSERDES_V6_COM_RESETSM_CNTRL                           0x118
->>>>>>>>>>>   #define QSERDES_V6_COM_LOCK_CMP_EN                             0x120
->>>>>>>>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->>>>>>>>>>> index 15bcb4b..48f31c8 100644
->>>>>>>>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->>>>>>>>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->>>>>>>>>>> @@ -10,10 +10,20 @@
->>>>>>>>>>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_RX                     0x2c
->>>>>>>>>>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX              0x30
->>>>>>>>>>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX              0x34
->>>>>>>>>>> +#define QSERDES_UFS_V6_TX_LANE_MODE_1                          0x7c
->>>>>>>>>>> +#define QSERDES_UFS_V6_TX_FR_DCC_CTRL                          0x108
->>>>>>>>>>>
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2          0x08
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4          0x10
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_SO_GAIN_RATE4          0x24
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_COUNT_HIGH_RATE4       0x54
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2                   0xd4
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE4                   0xdc
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_UCDR_SO_GAIN_RATE4                   0xf0
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_UCDR_PI_CONTROLS                     0xf4
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL                      0x178
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_EQ_OFFSET_ADAPTOR_CNTRL1             0x1bc
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_OFFSET_ADAPTOR_CNTRL3                        0x1c4
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0                     0x208
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1                     0x20c
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3                     0x214
->>>>>>>>>>> @@ -25,6 +35,8 @@
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_MODE_RATE3_B5                                0x264
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_MODE_RATE3_B8                                0x270
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_MODE_RATE4_B3                                0x280
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_MODE_RATE4_B4                                0x284
->>>>>>>>>>>   #define QSERDES_UFS_V6_RX_MODE_RATE4_B6                                0x28c
->>>>>>>>>>> +#define QSERDES_UFS_V6_RX_DLL0_FTUNE_CTRL                      0x2f8
->>>>>>>>>>>
->>>>>>>>>>>   #endif
->>>>>>>>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->>>>>>>>>>> index 3927eba..e0a01497 100644
->>>>>>>>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->>>>>>>>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->>>>>>>>>>> @@ -649,32 +649,51 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x11),
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x01),
->>>>>>>>>>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
->>>>>>>>>>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
->>>>>>>>>>> +
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_INITVAL2, 0x00),
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x41),
->>>>>>>>>>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x7f),
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x06),
->>>>>>>>>>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x4c),
->>>>>>>>>>> +};
->>>>>>>>>>> +
->>>>>>>>>>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_hs_b_serdes[] = {
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x44),
->>>>>>>>>>> +};
->>>>>>>>>>> +
->>>>>>>>>>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_g4_serdes[] = {
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
->>>>>>>>>>>          QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
->>>>>>>>>>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
->>>>>>>>>>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
->>>>>>>>>>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x99),
->>>>>>>>>>> -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x07),
->>>>>>>>>>
->>>>>>>>>> Aside from moving these registers to the HS_G4 table, you are also
->>>>>>>>>> changing these registers. It makes me think that there was an error in
->>>>>>>>>> the original programming sequence.
->>>>>>>>>> If that is correct, could you please split the patch into two pieces:
->>>>>>>>>> - Fix programming sequence (add proper Fixes tags)
->>>>>>>>>> - Split G4 and G5 tables.
->>>>>>>>>
->>>>>>>>> Ack
->>>>>>>>>
->>>>>>>>>>
->>>>>>>>>>> +
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x4c),
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x0a),
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x14),
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x99),
->>>>>>>>>>> +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x07),
->>>>>>>>>>
->>>>>>>>>> I see all the MODE1 registers being only present in G4 and G5 tables.
->>>>>>>>>> Should they be programmed for the modes lower than G4?
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> We use G4 table for all the modes <= G4.
->>>>>>>>
->>>>>>>> Could you please point me how it's handled?
->>>>>>>> In the patch I see just:
->>>>>>>>
->>>>>>>>         if (qmp->submode == UFS_HS_G4)
->>>>>>>>                 qmp_ufs_serdes_init(qmp, &cfg->tbls_hs_g4);
->>>>>>>>         else if (qmp->submode == UFS_HS_G5)
->>>>>>>>                 qmp_ufs_serdes_init(qmp, &cfg->tbls_hs_g5);
->>>>>>>>
->>>>>>>> Which looks like two special cases (HS_G4 and HS_G5) and nothing for
->>>>>>>> anything else.
->>>>>>>>
->>>>>>>
->>>>>>> Yes, and the UFS driver passes only G4/G5. For all the gears <=G4, G4 init
->>>>>>> sequence will be used and for G5, G5 sequence will be used.
->>>>>>>
->>>>>>
->>>>>> That's what I could not find in the UFS driver. I see a call to
->>>>>> `phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);` and
->>>>>> host->phy_gear is initialised to UFS_HS_G2.
->>>>>>
->>>>>
->>>>> You need to check the UFS driver changes in this series to get the complete
->>>>> picture as the logic is getting changed.
->>>>>
->>>>> It is common to get confused because of the way the UFS driver (qcom mostly)
->>>>> handles the PHY init sequence programming. We used to have only one init
->>>>> sequence for older targets and life was easy. But when I wanted to add G4
->>>>> support for SM8250, I learned that there are 2 separate init sequences. One for
->>>>> non-G4 and other for G4. So I used the phy_sub_mode property to pass the
->>>>> relevant mode from the UFS driver to the PHY driver and programmed the sequence
->>>>> accordingly. This got extended to non-G5 and G5 now.
->>>>>
->>>>> Now, the UFS driver will start probing from a low gear for older targets (G2)
->>>>> and G4/G5 for newer ones then scale up based on the device and host capability.
->>>>> For older targets, the common table (tbls) will be used if the submode doesn't
->>>>> match G4/G5. But for newer targets, the UFS driver will _only_ pass G4 or G5 as
->>>>> the phy_gear, so those specific sequence will only be used.
->>>>>
->>>>> Hope I'm clear.
->>>>
->>>> Yes, it is now clear, thank you!
->>>>
->>>> Would it be possible / feasible / logical to maintain this idea even
->>>> for newer platforms (leaving the HS_A  / HS_B aside)?
->>>>
->>>> tbls - works for HS_G2
->>>> tbls + tbls_g4 - works for HS_G4
->>>> tbls + tbls_g5 - works for HS_G5
->>>>
->>>
->>> No. The PHY team only gives 2 init sequences for any SoC now.
->>
->> Ack. Then the code should become
->> if (HS_G5)
->>     program(tbls_hs_g5)
->> else
->>     program(tbls_hs_g4);
->>
-> 
-> This should work. Even if we have to accomodate G6 in the future, we can use
-> "else if" for that and keep G4 as the "else" condition. This logic can also be
-> optimized in the future.
-
-That would make dual init meaningless for old targets. Say on SM8450, 
-the initial PHY gear is G2, with the "else" condition, during the first 
-init, G4 table would be programmed, then gear negotiation happens btw 
-host and device and the negotiated gear is G3 (assume a UFS2.x is 
-connected). During the 2nd init, the "else" condition would __again__ 
-program the G4 table - it is not programming the non-G4 table for power 
-saving. The dual init is supposed to find the optimal PHY settings, but 
-the "else" condition is programming G4 table unconditinally.
-
-With the original code change in this patch, the dual init works as it 
-is for old targets. say SM8450, the initial PHY gear is G2, during the 
-2nd init, it is programming the non-G4 table (assume a UFS2.x is 
-connected), but not the G4 table.
-
-Thanks,
-Can Guo.
-> 
-> - Mani
-> 
->>>
->>> - Mani
->>>
->>>> I mean here that the PHY driver should not depend on the knowledge
->>>> that the UFS driver will not be setting HS_G2 for some particular
->>>> platform and ideally it should continue working if at some point we
->>>> change the UFS driver to set HS_G2.
->>>>
->>>>
->>>>>
->>>>> - Mani
->>>>>
->>>>>> Maybe we should change the condition here (in the PHY driver) to:
->>>>>>
->>>>>> if (qmp->submode <= UFS_HS_G4)
->>>>>>
->>>>>> ?
->>>>>> --
->>>>>> With best wishes
->>>>>> Dmitry
->>>>>
->>>>> --
->>>>> மணிவண்ணன் சதாசிவம்
->>>>
->>>>
->>>>
->>>> --
->>>> With best wishes
->>>> Dmitry
->>>
->>> --
->>> மணிவண்ணன் சதாசிவம்
->>
->>
->>
->> -- 
->> With best wishes
->> Dmitry
-> 
 
