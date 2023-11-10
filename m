@@ -1,54 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 003A97E7BB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 12:09:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A59EC7E7BB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 12:09:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8C852B20AC3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 11:09:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF3091C20C70
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 11:09:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7696414A8C;
-	Fri, 10 Nov 2023 11:09:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF67514F79;
+	Fri, 10 Nov 2023 11:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="neeyUEPE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ahpsUV+y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B0C1429B;
-	Fri, 10 Nov 2023 11:09:32 +0000 (UTC)
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EDD32B7AE;
-	Fri, 10 Nov 2023 03:09:31 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AA9rahH004338;
-	Fri, 10 Nov 2023 11:09:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=AAJ2DnWw91bvf04Qt3Nf9uO+jAD3wkFbYUZX4Ih8fqM=;
- b=neeyUEPE7aZ+lfuRwu9LPRcoo/JZfjPyrAJJ2UA/YZn6JWzMOccbaTvJCIx2GpaSsYvA
- 98MPeUMnEoMvp2ygR2ROpkskRdgagxOVeQ2RVAqn5AMzGesb7lhk8T1c1W8DWADTNy33
- Gy1K0+Gj04mUBX7yrLdxpjyxW82DT2KUgAPxhnmqkrgIOxx1tNRZAsHvnHRWG3+ck6gQ
- EQ3g4TBblEwM+22HbbTpCuX0wuOMu8PTLOMvrZBy/K82EdTpDMCsf9c13CXsJGiosUyN
- p+qnVUS/FyEoyHzAHpimHEiZCrimhgEd2SPYJKT5sXgS5tozCrfQi4QRZr6jhzlHVkqb FA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u8u2buf78-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Nov 2023 11:09:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AAB9IU4018848
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 10 Nov 2023 11:09:18 GMT
-Received: from [10.249.28.118] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 10 Nov
- 2023 03:09:10 -0800
-Message-ID: <660f50a6-79e7-4b62-aad4-29453fa5b2be@quicinc.com>
-Date: Fri, 10 Nov 2023 16:39:05 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF30815492
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 11:09:36 +0000 (UTC)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 991FB2B7B6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 03:09:33 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40906fc54fdso14395085e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 03:09:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1699614572; x=1700219372; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=x0pADGJn0q6Hogb4HKG0TCZ/m/pzEDmxFAPr5TzrN0s=;
+        b=ahpsUV+yGii1Mbzz7EZoH8qUfw9v5o9HCaRHCh6WEiJo9vwPSK2lTyaS5m/JcqhpGh
+         rTVOF5KH3VSjlnmHVlbkRfOS1Izv1RE8yWlQvs2STdy57hdIVChigV9D4HgNG8REGOQs
+         kSaPffZXY2MUs6HDamSyk8E/zuAQM6/UIzYPvThWYIZEd7auc9Cg3BPtImZx0czGA75f
+         H1ea4Cr5PJauE+fveHVdZ/J7f+3xKoAQ9ZzcLH2+uPoOPWjnMc7/Ij+Dl8XNd3x3Fy1f
+         xBLjcqEsL07MsXUF+WreXAEe0fNQphUzpq9yQoDJD3buFmjO0sQLpcMFv9Q2E9Ijw2io
+         u9Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699614572; x=1700219372;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=x0pADGJn0q6Hogb4HKG0TCZ/m/pzEDmxFAPr5TzrN0s=;
+        b=bOO1My7DORtmlmYf6nkJaufmyn7EUPtOGpG9D6WvCjeTJ32LfNVhM01j2Tuc+0v+tE
+         5HxMETnIHySIjuSRuWoSxyg1VKTQ8oA3GLRF4c8Bsb+FQ5TN5amE2Pn3AtHFf0yFPkg6
+         9CfEsG98xGgpCTtX1MHKo3+87ghUbzHLIadCu0yQqkCqpSJYj1e2CEnkfxalwqEYfDYU
+         5jdCetOLse4fdj4mCYH/qz14sLdWOe9kkDtGCaBOH5HbfFdVw0xgUXjYIPxomKldAOKj
+         RaBRkFTvkFvHj/bGM/CLvDfh4uWa8DmkJIG+mnLdrEb9Il4x15bgrR37+dk0B9zP23lm
+         PtMA==
+X-Gm-Message-State: AOJu0YwmzbEzyYd5y3BcIqJEt5/dkOryFwKzUVibTfIvqcZyE4NR9ssy
+	kIKoGJ9+8IgQgW1p9bGLL7wsxQ==
+X-Google-Smtp-Source: AGHT+IGmC5Ai27yr496WtLN9GxMx8T4pEXQsdGZQKhCHPdnlNxA6SGjI5+iIDeSrR3auzeZjl5v3UA==
+X-Received: by 2002:a05:600c:a44:b0:40a:3e41:a258 with SMTP id c4-20020a05600c0a4400b0040a3e41a258mr4066695wmq.17.1699614571963;
+        Fri, 10 Nov 2023 03:09:31 -0800 (PST)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id jg25-20020a05600ca01900b00405718cbeadsm794518wmb.1.2023.11.10.03.09.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Nov 2023 03:09:31 -0800 (PST)
+Message-ID: <6d083c38-8807-47ad-8a05-37e89731de4f@linaro.org>
+Date: Fri, 10 Nov 2023 11:09:29 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,85 +67,177 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
+Subject: Re: [PATCH RESEND v3 4/5] clk: qcom: Use HW_CTRL_TRIGGER flag to
+ switch video GDSC to HW mode
 Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>
-CC: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>, Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi
-	<balbi@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
-        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
-References: <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
- <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
- <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
- <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
- <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
- <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
- <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
- <2b19b5e2-5eb0-49e0-8c47-8aff3d48f34e@quicinc.com>
- <ZU31gx-LY5GBJGPU@hovoldconsulting.com>
- <dc20ecc0-f930-49c5-9e21-5a6e4c8ce637@quicinc.com>
- <ZU4JeenAf_K8liAI@hovoldconsulting.com>
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZU4JeenAf_K8liAI@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1pLQFTu8NgxLhVqW22HR8zXXno5HtEqp
-X-Proofpoint-ORIG-GUID: 1pLQFTu8NgxLhVqW22HR8zXXno5HtEqp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-10_07,2023-11-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=721 impostorscore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 spamscore=0 malwarescore=0 adultscore=0 mlxscore=0
- bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311100090
+To: Jagadeesh Kona <quic_jkona@quicinc.com>, Abel Vesa
+ <abel.vesa@linaro.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Kevin Hilman <khilman@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Pavel Machek <pavel@ucw.cz>, Len Brown <len.brown@intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Taniya Das <tdas@qti.qualcomm.com>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-media@vger.kernel.org
+References: <20231101-gdsc-hwctrl-v3-0-0740ae6b2b04@linaro.org>
+ <20231101-gdsc-hwctrl-v3-4-0740ae6b2b04@linaro.org>
+ <835a6add-81e9-42e4-abbe-91632aaa6bc9@linaro.org>
+ <dfc56206-6e8d-d932-6493-e74162855298@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <dfc56206-6e8d-d932-6493-e74162855298@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-
-
+On 10/11/2023 08:29, Jagadeesh Kona wrote:
+> 
+> 
+> On 11/7/2023 6:35 PM, Bryan O'Donoghue wrote:
+>> On 01/11/2023 09:04, Abel Vesa wrote:
+>>> From: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>>
+>>> The current HW_CTRL flag switches the video GDSC to HW control mode as
+>>> part of GDSC enable itself, instead of that use HW_CTRL_TRIGGER flag to
+>>> give consumer drivers more control and switch the GDSC mode as and when
+>>> required.
+>>>
+>>> HW_CTRL_TRIGGER flag allows consumer drivers to switch the video GDSC to
+>>> HW/SW control modes at runtime using dev_pm_genpd_set_hwmode API.
+>>>
+>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>> ---
+>>>   drivers/clk/qcom/videocc-sc7180.c | 2 +-
+>>>   drivers/clk/qcom/videocc-sc7280.c | 2 +-
+>>>   drivers/clk/qcom/videocc-sdm845.c | 4 ++--
+>>>   drivers/clk/qcom/videocc-sm8250.c | 4 ++--
+>>>   drivers/clk/qcom/videocc-sm8550.c | 4 ++--
+>>>   5 files changed, 8 insertions(+), 8 deletions(-)
 >>
->> While I do so, since there are no qusb2 targets present on femto phy's, do
->> you suggest we still add them to port structure in dwc3-qcom ? I am inclined
->> to add it because it would make implementation look cleaner w.r.t code and
->> also spurious interrupts are not getting triggered (which was my primary
->> concern as it was never tested).
+>> So.
+>>
+>> I'm assuming the rest of this series works however for sc8250 at least 
+>> this is a NAK, breaks venus on rb5.
+>>
+>> Reproduction:
+>>
+>> - Debian trixie rb5
+>> - Linux 6.6-rc3 + this patch
+>> - Attached defconfig
+>> - This file:
+>>    https://download.samplelib.com/mp4/sample-30s.mp4
+>> - This command:
+>>    ffplay -loglevel debug -code:video h264_v4l2m2m -i sample-30s.mp4
+>>
+>> Second play of file shows stuck gdsc as below
+>>
+>> I didn't try on rb3, I'd expect similar results. Does this work on 8550 ?
+>>
+>> [ 1601.581204] ------------[ cut here ]------------
+>> [ 1601.585983] mvs0_gdsc status stuck at 'off'
+>> [ 1601.586015] WARNING: CPU: 1 PID: 13372 at 
+>> drivers/clk/qcom/gdsc.c:178 gdsc_toggle_logic+0x16c/0x174
+>> [ 1601.599627] Modules linked in: nf_tables libcrc32c nfnetlink 
+>> snd_soc_hdmi_codec q6asm_dai q6routing q6afe_dai q6asm q6adm 
+>> q6afe_clocks snd_q6dsp_common q6afe q6core apr pdr_interface venus_enc 
+>> venus_dec qcom_camss videobuf2_dma_contig mcp251xfd imx412 
+>> videobuf2_dma_sg venus_core xhci_plat_hcd v4l2_fwnode fastrpc xhci_hcd 
+>> can_dev qrtr_smd lontium_lt9611uxc msm v4l2_async v4l2_mem2mem 
+>> qcom_spmi_adc_tm5 rtc_pm8xxx qcom_spmi_adc5 qcom_pon videobuf2_memops 
+>> crct10dif_ce qcom_spmi_temp_alarm videobuf2_v4l2 qcom_vadc_common 
+>> gpu_sched drm_dp_aux_bus videodev snd_soc_sm8250 drm_display_helper 
+>> snd_soc_qcom_sdw videobuf2_common snd_soc_qcom_common qrtr 
+>> i2c_qcom_cci soundwire_qcom mc i2c_qcom_geni spi_geni_qcom 
+>> phy_qcom_qmp_combo qcom_q6v5_pas qcom_rng soundwire_bus qcom_pil_info 
+>> snd_soc_lpass_va_macro qcom_q6v5 slimbus snd_soc_lpass_macro_common 
+>> qcom_sysmon snd_soc_lpass_wsa_macro display_connector qcom_common 
+>> socinfo qcom_glink_smem qmi_helpers drm_kms_helper mdt_loader qcom_wdt 
+>> icc_osm_l3 qnoc_sm8250 fuse drm backlight dm_mod
+>> [ 1601.599859]  ip_tables x_tables
+>> [ 1601.695314] CPU: 1 PID: 13372 Comm: video_decoder Not tainted 
+>> 6.6.0-rc3-00396-gdbc0d9fa7641-dirty #1
+>> [ 1601.704694] Hardware name: Qualcomm Technologies, Inc. Robotics RB5 
+>> (DT)
+>> [ 1601.711582] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS 
+>> BTYPE=--)
+>> [ 1601.718740] pc : gdsc_toggle_logic+0x16c/0x174
+>> [ 1601.723317] lr : gdsc_toggle_logic+0x16c/0x174
+>> [ 1601.727888] sp : ffff80008adab800
+>> [ 1601.731296] x29: ffff80008adab800 x28: ffffb661e8596210 x27: 
+>> ffffb661e855ad88
+>> [ 1601.738629] x26: 0000000000000000 x25: ffff100c0b5a0d28 x24: 
+>> ffffb6620fd92118
+>> [ 1601.745960] x23: ffffb6620fe1d3d8 x22: 0000000000000000 x21: 
+>> 0000000000000001
+>> [ 1601.753292] x20: 00000000ffffff92 x19: ffffb6620fd92118 x18: 
+>> ffffffffffc0d3e8
+>> [ 1601.760631] x17: 0000000000000000 x16: ffffb6620e269e14 x15: 
+>> 0000000000000028
+>> [ 1601.767973] x14: 0000000000000000 x13: ffff100d75c00000 x12: 
+>> 0000000000000894
+>> [ 1601.775304] x11: 00000000000002dc x10: ffff100d767044a0 x9 : 
+>> ffff100d75c00000
+>> [ 1601.782636] x8 : 00000000fffdffff x7 : ffff100d76700000 x6 : 
+>> 00000000000002dc
+>> [ 1601.789976] x5 : ffff100d7ef40d48 x4 : 40000000fffe02dc x3 : 
+>> ffff59ab6fa21000
+>> [ 1601.797306] x2 : 0000000000000000 x1 : 0000000000000000 x0 : 
+>> ffff100cdacdec80
+>> [ 1601.804638] Call trace:
+>> [ 1601.807161]  gdsc_toggle_logic+0x16c/0x174
+>> [ 1601.811383]  gdsc_enable+0x60/0x27c
+>> [ 1601.814982]  _genpd_power_on+0x94/0x184
+>> [ 1601.818931]  genpd_power_on+0xa8/0x16c
+>> [ 1601.822791]  genpd_runtime_resume+0xd4/0x2a4
+>> [ 1601.827184]  __rpm_callback+0x48/0x1dc
+>> [ 1601.831045]  rpm_callback+0x6c/0x78
+>> [ 1601.834638]  rpm_resume+0x45c/0x6c8
+>> [ 1601.838231]  __pm_runtime_resume+0x4c/0x90
+>> [ 1601.842443]  coreid_power_v4+0x378/0x58c [venus_core]
+>> [ 1601.847695]  vdec_start_streaming+0xc0/0x4e8 [venus_dec]
+>> [ 1601.853169]  vb2_start_streaming+0x68/0x15c [videobuf2_common]
+>> [ 1601.859199]  vb2_core_streamon+0xf8/0x1bc [videobuf2_common]
+>> [ 1601.865032]  vb2_streamon+0x18/0x64 [videobuf2_v4l2]
+>> [ 1601.870174]  v4l2_m2m_ioctl_streamon+0x38/0x98 [v4l2_mem2mem]
+>> [ 1601.876134]  v4l_streamon+0x24/0x30 [videodev]
+>> [ 1601.880759]  __video_do_ioctl+0x15c/0x3c0 [videodev]
+>> [ 1601.885905]  video_usercopy+0x1f0/0x658 [videodev]
+>> [ 1601.890868]  video_ioctl2+0x18/0x28 [videodev]
+>> [ 1601.895481]  v4l2_ioctl+0x40/0x60 [videodev]
+>> [ 1601.899911]  __arm64_sys_ioctl+0xac/0xf0
+>> [ 1601.903958]  invoke_syscall+0x48/0x114
+>> [ 1601.907829]  el0_svc_common.constprop.0+0x40/0xe0
+>> [ 1601.912672]  do_el0_svc+0x1c/0x28
+>> [ 1601.916085]  el0_svc+0x40/0xe8
+>> [ 1601.919243]  el0t_64_sync_handler+0x100/0x12c
+>> [ 1601.923730]  el0t_64_sync+0x190/0x194
+>> [ 1601.927505] ---[ end trace 0000000000000000 ]---
+>> [ 1608.121533] ------------[ cut here ]------------
+>>
+>> And just reverting the one patch - yields
+>>
+>> [  157.083287] qcom-venus aa00000.video-codec: Failed to switch 
+>> power-domain:1 to SW mode
+>> [  162.004630] qcom-venus aa00000.video-codec: Failed to switch 
+>> power-domain:1 to SW mode
+>>
+>> I'll leave the testing here. Please fix !
+>>
 > 
-> Yes, that's what I've been suggesting all along. It's a per-port
-> interrupt so that's where it belongs.
-> 
-> We should still try to determine when each interrupt should be enabled
-> and how best to implement that (hence all my questions).
-> 
-> For example, if there is no use for hs interrupts on SoCs using femto
-> PHYs we should fix the bindings. If we can use dp/dm on SoCs using QUSB2
-> PHYs, we should probably just ignore the hs interrupt when all three are
-> defined (especially since that functionality has never worked anyway).
-> 
+> Thanks Bryan for reporting this, this could be happening since GDSC 
+> might be left in HW control mode during power off sequence, so the 
+> subsequent GDSC enable is failing since GDSC is still in HW mode. I am 
+> checking internally on this and will get back.
 
-Sure. Will finalise this once I get the complete info (why do we have 
-dp/dm on qusb targets)
+Great,
 
-And apologies, I mentioned "qusb2 targets on femto phy's".
-It was supposed to be "hs_phy_irq's on femto phy targets", but I think 
-you got the gist of my question. Thanks for the response.
+Please remember to check for rb3 / sdm845 too.
 
-Regards,
-Krishna,
+---
+bod
+
 
