@@ -1,105 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 662B77E7ACA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 10:27:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 607467E7AD1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 10:28:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FD15281576
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 09:27:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A5142816C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 09:28:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06E7B125BA;
-	Fri, 10 Nov 2023 09:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5C13125D1;
+	Fri, 10 Nov 2023 09:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ep3Y5wWK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DhZlWNO/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1E2125A4
-	for <linux-arm-msm@vger.kernel.org>; Fri, 10 Nov 2023 09:27:26 +0000 (UTC)
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6783DA5DD;
-	Fri, 10 Nov 2023 01:27:25 -0800 (PST)
-Received: from [100.116.125.19] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: andrzej.p)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 439A666073E2;
-	Fri, 10 Nov 2023 09:27:23 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1699608444;
-	bh=jgC/HX0DCivudpq7G6ihAYUdFIx19Q8cGDVDSrd4fH4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ep3Y5wWKvqdYWq0GuLTK8Omn+oRHjIKlHMyuX6zi3I/dppgmWNgnn3sadX198vWE0
-	 paBGvRYX5NIaY9ihOnNcLvhYDOo88sIE0zi4YSg3buLmuhzRKFC/l3hcMMVPzR+0DG
-	 Wa0IfBuWlvuKGUdAAtxyMmV1rGjySZCIh/U0b/xVSSer2H7xPodA+3SCjbV4/O+tM3
-	 Ss0mjgtPPSrT1Uhfux9iAFd/q+s+FvSD7K8Vn18Z8PoXMBi5QRehJ66YnK6k0xD1uU
-	 02xvFLEtdA9RKd3gH6lXIIzDCQ8/LY62h60za2nIkdGdRcaJqbpYz7cfYeJ0tkDjZ5
-	 w4CVFCMnh+8dw==
-Message-ID: <abd4fcc2-a450-4027-abef-98a689f502c6@collabora.com>
-Date: Fri, 10 Nov 2023 10:27:23 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9E3847A;
+	Fri, 10 Nov 2023 09:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6C1C433C8;
+	Fri, 10 Nov 2023 09:28:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699608510;
+	bh=O71kWkjLpRl34q0yTwylpF7QtQRF306pEE+e5Yis+eg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DhZlWNO/O/GlcCmSNulebkNqJCBcE5IlpGDHxug+wJ86H+p/patK8+fRBqpzzGjaZ
+	 d6SvpHoCvd1jfHn0itYAEK/akm7STqjUawTQ2JZfk9hYQA9/TAjtOhrQvPkDcghomr
+	 5kFVtluMH6FzAcpqfx/Y4STvx2lN3e2HW8zTkrkM3qDQ9bdy3wsJYQp/4mPkUiIE1f
+	 ZEnVwc6HchoE0JiBE25kzYrFGYEeohmxnnDHR22CC8ILlJX7YmHlR9EQpmT1lwvFq8
+	 uWB5YOP+FAoBaAb6TZBf0qBFLhas93tda9svqEyCKdBaiU2Nm75GqOfA56DsPeewdc
+	 jk8hn7oMcLkVA==
+Received: from johan by theta with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r1NoP-0002tb-1q;
+	Fri, 10 Nov 2023 10:28:25 +0100
+Date: Fri, 10 Nov 2023 10:28:25 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Wesley Cheng <quic_wcheng@quicinc.com>
+Cc: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+	ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+Message-ID: <ZU33uWpStIobzyd6@hovoldconsulting.com>
+References: <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+ <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+ <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+ <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
+ <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
+ <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+ <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
+ <2b19b5e2-5eb0-49e0-8c47-8aff3d48f34e@quicinc.com>
+ <50931ba5-132f-3982-e33a-691583e3a71f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 26/56] media: i2c: video-i2c: Stop direct calls to
- queue num_buffers field
-Content-Language: en-US
-To: Benjamin Gaignard <benjamin.gaignard@collabora.com>, mchehab@kernel.org,
- tfiga@chromium.org, m.szyprowski@samsung.com, ming.qian@nxp.com,
- ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
- gregkh@linuxfoundation.org, hverkuil-cisco@xs4all.nl,
- nicolas.dufresne@collabora.com
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org,
- linux-staging@lists.linux.dev, kernel@collabora.com,
- Matt Ranostay <matt.ranostay@konsulko.com>
-References: <20231109163512.179524-14-benjamin.gaignard@collabora.com>
- <20231109163512.179524-27-benjamin.gaignard@collabora.com>
-From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-In-Reply-To: <20231109163512.179524-27-benjamin.gaignard@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <50931ba5-132f-3982-e33a-691583e3a71f@quicinc.com>
 
-W dniu 9.11.2023 o 17:34, Benjamin Gaignard pisze:
-> Use vb2_get_num_buffers() to avoid using queue num_buffers field directly.
-> This allows us to change how the number of buffers is computed in the
-> future.
-> Fix the number of buffers computation at the same time.
+On Thu, Nov 09, 2023 at 12:25:59PM -0800, Wesley Cheng wrote:
+
+> > > > Since the DeviceTree passed to the OS, should describe the hardware to
+> > > > the OS, and should represent the hardware from the point-of-view of the
+> > > > OS, adding one interrupt (ctrl_irq[0]) might be sufficient as Linux
+> > > > would not use the other interrupts.
+> > > 
+> > > I've only skimmed the virtualisation bits in xHCI spec, but it seems
+> > > Linux as VMM would still be involved in assigning these interrupts to
+> > > VMs.
+
+> IMO it might be a bit premature to add definitions for how to utilize
+> secondary interrupters since design wise, there's nothing really too well
+> defined yet.  At least for the XHCI path, we will have a slew of potential
+> use cases for secondary interrupters, such as USB audio offloading, or for
+> VMMs, etc...  I've only heard mentions about some of them after pushing the
+> usb audio offloading series, but I don't have much details on it.
+
+I tend to agree.
+
+> > > This may possibly be something that we can ignore for now, but perhaps
+> > > someone more familiar with the hardware, like Thinh, can chime in.
+
+> > > You need to get into the same mindset when it comes to devicetree. Even
+> > > if Linux currently does not use an interrupt, like the pwr_event_irq,
+> > > you should still add it so that when/if someone implements support for
+> > > it, an older platform using the original dt may also take advantage of
+> > > it.
 > 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> Yeah, I totally agree with this point, but I'm not sure if adding it into
+> the "interrupts" array is the way to go.  It would probably have to change
+> as support is added.
 
-Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Yes, that in itself would probably not be sufficient and possibly not
+even correct.
 
-> CC: Matt Ranostay <matt.ranostay@konsulko.com>
-> ---
->   drivers/media/i2c/video-i2c.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/i2c/video-i2c.c b/drivers/media/i2c/video-i2c.c
-> index 178bd06cc2ed..ebf2ac98a068 100644
-> --- a/drivers/media/i2c/video-i2c.c
-> +++ b/drivers/media/i2c/video-i2c.c
-> @@ -405,9 +405,10 @@ static int queue_setup(struct vb2_queue *vq,
->   {
->   	struct video_i2c_data *data = vb2_get_drv_priv(vq);
->   	unsigned int size = data->chip->buffer_size;
-> +	unsigned int q_num_bufs = vb2_get_num_buffers(vq);
->   
-> -	if (vq->num_buffers + *nbuffers < 2)
-> -		*nbuffers = 2;
-> +	if (q_num_bufs + *nbuffers < 2)
-> +		*nbuffers = 2 - q_num_bufs;
->   
->   	if (*nplanes)
->   		return sizes[0] < size ? -EINVAL : 0;
+> Sorry for jumping in, but just giving my two cents since I'm the one trying
+> to do the initial push for the support for secondary interrupters :).
 
+Appreciate your input.
+
+Johan
 
