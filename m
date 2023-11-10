@@ -1,113 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC2E77E836D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 21:08:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C4037E86AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 00:48:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7C8FBB20EB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 20:08:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 051A61F20EF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Nov 2023 23:48:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69EC33B2BF;
-	Fri, 10 Nov 2023 20:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCE1B3D969;
+	Fri, 10 Nov 2023 23:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mir1M6M3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711053B787;
-	Fri, 10 Nov 2023 20:08:06 +0000 (UTC)
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59891C7;
-	Fri, 10 Nov 2023 12:08:05 -0800 (PST)
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3b6ce6fac81so497751b6e.1;
-        Fri, 10 Nov 2023 12:08:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699646884; x=1700251684;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=GW2jL/fzj0LL7YoFWhP8+MqZ7XMQolZsctEoqTfbDmI=;
-        b=Ck+UsGq+dgp4ObZB5YQm9waWeOrxmEL5FTKaCJQv363GgUbcJ1uIaU+NJUg0rqtLPg
-         ggBLtldyvyZs8FvmCU2J63WKTouyzVK4JVy/ioAnvxTGKizfTdpOuHUP40FUNBWv4xFd
-         FVZMYLXm4WxUolEjx+I/3wQRUEMHcdsrR8A9ZoEaqAwkaTAZwImIcZshkqPE/RZS7Eao
-         vXtlbQ/Y1EgKpZy67TnaciJSBPbHbdWEWe3fq3wCx7gOzjBVkmLxsEx8BwqmjaDlx+KM
-         aGaqRye/k7gLryBotDwCSY0S/45m2ZjH+5Zwkl09L63geXfWclYcEIeyp3w5pNwSMvuh
-         3Z5g==
-X-Gm-Message-State: AOJu0YyXSm5QxaxOxeuuCyo4jwVkLaFluz7ZiQxeEevrzEL6lmYXP+rY
-	DOkO/wIzs/jTzkJxjF/hLQ==
-X-Google-Smtp-Source: AGHT+IFwqlk2+M4bnkien5UnQLulkKj5XEKP+RLX/dyDNM3cKUCIQ/5VxQXXIhvcbR0RTHsIlypytA==
-X-Received: by 2002:a05:6808:b0e:b0:3b2:e07e:5062 with SMTP id s14-20020a0568080b0e00b003b2e07e5062mr356191oij.52.1699646884606;
-        Fri, 10 Nov 2023 12:08:04 -0800 (PST)
-Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id g34-20020a0568080de200b003b2df32d9a9sm34712oic.19.2023.11.10.12.08.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Nov 2023 12:08:03 -0800 (PST)
-Received: (nullmailer pid 343102 invoked by uid 1000);
-	Fri, 10 Nov 2023 20:08:00 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3611D681;
+	Fri, 10 Nov 2023 23:48:18 +0000 (UTC)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B8DA3C39;
+	Fri, 10 Nov 2023 15:48:17 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AANMOLT029711;
+	Fri, 10 Nov 2023 23:48:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=nPqLvqWSNzXaiUzUGDsBCTpfqHwVD2HejTtYoZlTink=;
+ b=mir1M6M3BRYIoTn3uk0nZU7tgMQRFTbeu8pQ/JwDO1cAK3ljK+9l8dJzD5ldJr0YuWPe
+ CinPYVMVE3PTr1JT74acqu0ic9gFPNnTSBlWjB4mH7HGT6PgmZzVTUFHW+/VKSGdpfgw
+ P39rxJDsC7THoRCaY5FhRdH/8e8Vlr0luf6QwsTQa+dvsqCCszl31BnKeAbpULwgTfU6
+ ++Ci8W8VJ4bgaP5JnGtYg5YIGhF/nNJwlRkV4/qPaTHrucsGTVzX3lRkZK9bePG8OeyP
+ CqCz8/bPenFA7EWxofzWR1ZwBxTxKDrv8AP5sOlA4NwiYSmZ79acH8WBEq0ub0ugFvQV Lw== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3u9rgwrxda-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Nov 2023 23:48:01 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AANm0wj011811
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Nov 2023 23:48:01 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.39; Fri, 10 Nov 2023 15:48:00 -0800
+Date: Fri, 10 Nov 2023 15:47:58 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Jishnu Prakash <quic_jprakash@quicinc.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linus.walleij@linaro.org>, <Jonathan.Cameron@huawei.com>,
+        <sboyd@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_subbaram@quicinc.com>, <quic_collinsd@quicinc.com>,
+        <quic_kamalw@quicinc.com>, <marijn.suijten@somainline.org>,
+        <andriy.shevchenko@linux.intel.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-iio@vger.kernel.org>, <linux-arm-msm-owner@vger.kernel.org>
+Subject: Re: [PATCH 10/11] ARM: dts: qcom: Update devicetree for QCOM ADC
+ bindings path change
+Message-ID: <20231110234758.GE3553829@hu-bjorande-lv.qualcomm.com>
+References: <20230708072835.3035398-1-quic_jprakash@quicinc.com>
+ <20230708072835.3035398-11-quic_jprakash@quicinc.com>
+ <59ea565c-93ad-e8e3-10db-ae3ba481ebe9@linaro.org>
+ <706d3b7e-a9b5-081c-52b2-7cce4f0d5f10@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, matti.lehtimaki@gmail.com, Todor Tomov <todor.too@gmail.com>, Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Mauro Carvalho Chehab <mchehab@kernel.org>, Conor Dooley <conor+dt@kernel.org>, hverkuil-cisco@xs4all.nl, Robert Foss <rfoss@kernel.org>, quic_grosikop@quicinc.com, linux-media@vger.kernel.org, laurent.pinchart@ideasonboard.com, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, vincent.knecht@mailoo.org
-In-Reply-To: <20231110-b4-camss-sc8280xp-v5-1-7f4947cc59c8@linaro.org>
-References: <20231110-b4-camss-sc8280xp-v5-0-7f4947cc59c8@linaro.org>
- <20231110-b4-camss-sc8280xp-v5-1-7f4947cc59c8@linaro.org>
-Message-Id: <169964683843.342153.8939955333662052078.robh@kernel.org>
-Subject: Re: [PATCH v5 1/6] media: dt-bindings: media: camss: Add
- qcom,sc8280xp-camss binding
-Date: Fri, 10 Nov 2023 14:08:00 -0600
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <706d3b7e-a9b5-081c-52b2-7cce4f0d5f10@quicinc.com>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6AJ9hk15vPowi0gTtV63OjTn3Ge_Ojzm
+X-Proofpoint-GUID: 6AJ9hk15vPowi0gTtV63OjTn3Ge_Ojzm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-10_21,2023-11-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ impostorscore=0 spamscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 mlxlogscore=800 clxscore=1011 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311100197
 
-
-On Fri, 10 Nov 2023 01:04:46 +0000, Bryan O'Donoghue wrote:
-> Add bindings for qcom,sc8280xp-camss in order to support the camera
-> subsystem for sc8280xp as found in the Lenovo x13s Laptop.
+On Mon, Oct 23, 2023 at 11:48:13AM +0530, Jishnu Prakash wrote:
+> Hi Krzysztof,
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/media/qcom,sc8280xp-camss.yaml        | 512 +++++++++++++++++++++
->  1 file changed, 512 insertions(+)
+> On 7/9/2023 10:56 PM, Krzysztof Kozlowski wrote:
+> > On 08/07/2023 09:28, Jishnu Prakash wrote:
+> > > Update ADC dt-bindings file paths in QCOM devicetree files to
+> > > match the dt-bindings change moving the files from 'iio' to
+> > > 'iio/adc' folder.
+> > > 
+> > > Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+> > > ---
+> > Your order of patches is incorrect. DTS cannot be before bindings,
+> > because this indicates you broke ABI. Please keep entire patchset
+> > bisectable and split DTS to separate patchset (linking the driver and
+> > bindings).
+> > 
+> > Best regards,
+> > Krzysztof
+> 
+> OK....so you mean I can move the dtbinding files and update documentation
+> and driver files for this, all in one patch and then make a second patch for
+> updating devicetree files for the file paths?
+> 
+> I'll make this change in the next patchset if it looks fine, although the
+> two patches would need to be picked together to avoid kernel breakage. I
+> have asked Jonathan about this too in my reply for the previous patchset 9.
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+1) We need to be able to use git bisect to identify regressions, and as
+such the kernel need to be buildable and functional after each applied
+patch.
 
-yamllint warnings/errors:
+2) DeviceTree source (dts) changes enters the kernel through different
+maintainer paths than the DeviceTree binding and driver changes, and
+therefore at different times. In some cases the .dtb file is also
+delivered separately from the kernel, which means people might be
+running an old .dtb for a considerable amount of time after your change.
+As such your driver changes needs to be compatible with both the new and
+the old DeviceTree binding.
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dts:26:18: fatal error: dt-bindings/clock/qcom,sc8280xp-camcc.h: No such file or directory
-   26 |         #include <dt-bindings/clock/qcom,sc8280xp-camcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1427: dt_binding_check] Error 2
-make: *** [Makefile:234: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231110-b4-camss-sc8280xp-v5-1-7f4947cc59c8@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Regards,
+Bjorn
 
