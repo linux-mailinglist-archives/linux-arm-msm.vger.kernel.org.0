@@ -1,151 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 633F07E8BB6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 17:42:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 99F727E8C15
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 19:19:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E338280EF9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 16:42:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4FB26280E0E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 18:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53647168AF;
-	Sat, 11 Nov 2023 16:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD8481C29F;
+	Sat, 11 Nov 2023 18:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hWqmg3GO"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KrIKKdE9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893C41A282
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 16:42:43 +0000 (UTC)
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A7423C3C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 08:42:42 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-53e08e439c7so5138944a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 08:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699720960; x=1700325760; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+Mk3Wy2SuYkImZWPXHt6qqgECjvIgKtTdRVHxjkc3s0=;
-        b=hWqmg3GOPLD2UtABdtyZw22Ejardbgdwbiajzxzj0a6wj/sj9TFxveq55ggBWYaJIo
-         sR1kwITMhdgv0f4hddZVFMiFNz5rm+AuYiAHtCm+24RwKwzOWwhVJKxQHVs2lcUbThHM
-         94CHXKYTXR9N3z8ox6MsupxklpL3tudjnZLuVLmMLHYXIeYRuQF162YfS8cqvBm5SbSG
-         TuYQqqosqxHL68NzLJ3LiD/dEDxPEYLa4buFnZxyBwa/eiw/9thjI0EWdIC81JnlG802
-         kbxj3W0S0XaHetjjJDDHTiS3Zh4ZdXqbYzeY0X0p8/O/MjZIUges2NbsT3gzJifFeMGh
-         0xuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699720960; x=1700325760;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+Mk3Wy2SuYkImZWPXHt6qqgECjvIgKtTdRVHxjkc3s0=;
-        b=ssQm4PGIlN0ONvU//d/PWWDuLxl9NREivEXkoUZRxclqyFTx3qrT+ZC3Oc6SQU4wlB
-         JWGpt1uJ6gfLnC6vaP7sbf4QGTSWEy8jUN7tH4ubappiju/zvUO/Frc+JBkqTw4ktn4t
-         Jx6qk9MZW1l+cyqia3Ej+pK2oj5Z9zLhFe7/qqYNzWLlQvrJeY6ZIMUKsu7Bo8traRn/
-         lPANtry6HEbQSPtMOXafk1cAldYucvtoArteyvZh0rJEyDLXYpcUrcNZt7m2pcZy7AU2
-         ZN5W1ZDfCvbqgLIXXDu3olrOMU8P4kOmwWmHtyoWKSokn6IWs7aYSpYnZKEKW2fv7jsz
-         QS8w==
-X-Gm-Message-State: AOJu0YwTsYczoEbwEpv3505CwkbVeihzqb6ijEpzmFTFjHn3DeOQzCcq
-	Y2/d+eZKlto/aoWMXuq7Byxsjw==
-X-Google-Smtp-Source: AGHT+IGLT9FdCNCGVJ2KjdPrarNpwkIwb7a8z+WpS9aOBLwDqoCwqI1BlnBg4yBrMgsaA/BtSyrfuA==
-X-Received: by 2002:aa7:c788:0:b0:543:8391:a19a with SMTP id n8-20020aa7c788000000b005438391a19amr1351243eds.40.1699720960674;
-        Sat, 11 Nov 2023 08:42:40 -0800 (PST)
-Received: from krzk-bin.. ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id k25-20020aa7c059000000b0053dd8898f75sm1161917edo.81.2023.11.11.08.42.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Nov 2023 08:42:40 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [RFT PATCH 6/6] arm64: dts: qcom: sm6375-pdx225: add fixed touchscreen AVDD regulator
-Date: Sat, 11 Nov 2023 17:42:29 +0100
-Message-Id: <20231111164229.63803-6-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231111164229.63803-1-krzysztof.kozlowski@linaro.org>
-References: <20231111164229.63803-1-krzysztof.kozlowski@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D491C297;
+	Sat, 11 Nov 2023 18:19:44 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.93])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF9022D77;
+	Sat, 11 Nov 2023 10:19:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699726783; x=1731262783;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gBCw9mofHRJSzFvzwiP3EWR07pcL46O0tLTa9AB5JR0=;
+  b=KrIKKdE94/wKKoSVi/uPtOiE7MROxicGA61pS/pKR1+L5PgPlV6EUqUe
+   AqidzEXR0SMV6+GKaRHbnUnrnJUCHCBWra2XsOskhqEUHXKGjIoNu1DOT
+   QIPD/EPjANzDDs5H/Gcdk1kipLnfHL1AUQYtaFTvNfTnMYVXz3egjblEg
+   W47a8p7vEPwzBptZuY2vqmRlR9+XfT57MOfAP9FVvklTFiHskKsILidOd
+   eY+Csm0Rn+5UJwHhYXQYyRlQHnYl+2bbkGlObDOH1atBylhknpG4vPjGL
+   ZXzNovz3xlwGCwCaHRGrCLpVIGY127/ASmTVuyoY1g3ysxHlTZfOk81ab
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10891"; a="387455164"
+X-IronPort-AV: E=Sophos;i="6.03,295,1694761200"; 
+   d="scan'208";a="387455164"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Nov 2023 10:19:43 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10891"; a="937408856"
+X-IronPort-AV: E=Sophos;i="6.03,295,1694761200"; 
+   d="scan'208";a="937408856"
+Received: from lkp-server01.sh.intel.com (HELO 17d9e85e5079) ([10.239.97.150])
+  by orsmga005.jf.intel.com with ESMTP; 11 Nov 2023 10:19:39 -0800
+Received: from kbuild by 17d9e85e5079 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r1sa1-000Afh-17;
+	Sat, 11 Nov 2023 18:19:37 +0000
+Date: Sun, 12 Nov 2023 02:18:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_parass@quicinc.com,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: Re: [PATCH v4] bus: mhi: host: Add tracing support
+Message-ID: <202311120247.SeMDyRT6-lkp@intel.com>
+References: <20231111-ftrace_support-v4-1-c83602399461@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231111-ftrace_support-v4-1-c83602399461@quicinc.com>
 
-The Samsung S6SY761 touchscreen bindings expect AVDD regulator which is
-missing in the Sony Xperia PDX225 DTS.  There is however pinctrl setting
-for in the touchscreen device node with similar name: "avdd", so assume
-author wanted to control a fixed regulator with a GPIO.
+Hi Krishna,
 
-This fixes dtbs_check warning:
+kernel test robot noticed the following build warnings:
 
-  sm6375-sony-xperia-murray-pdx225.dtb: touchscreen@48: 'avdd-supply' is a required property
+[auto build test WARNING on 3006adf3be79cde4d14b1800b963b82b6e5572e0]
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/bus-mhi-host-Add-tracing-support/20231111-135816
+base:   3006adf3be79cde4d14b1800b963b82b6e5572e0
+patch link:    https://lore.kernel.org/r/20231111-ftrace_support-v4-1-c83602399461%40quicinc.com
+patch subject: [PATCH v4] bus: mhi: host: Add tracing support
+config: i386-randconfig-062-20231111 (https://download.01.org/0day-ci/archive/20231112/202311120247.SeMDyRT6-lkp@intel.com/config)
+compiler: gcc-11 (Debian 11.3.0-12) 11.3.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231112/202311120247.SeMDyRT6-lkp@intel.com/reproduce)
 
----
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311120247.SeMDyRT6-lkp@intel.com/
 
-Not tested on HW.
+sparse warnings: (new ones prefixed by >>)
+   drivers/bus/mhi/host/init.c: note: in included file (through include/trace/trace_events.h, include/trace/define_trace.h, drivers/bus/mhi/host/trace.h):
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: cast to restricted __le64
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: restricted __le64 degrades to integer
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: restricted __le64 degrades to integer
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: cast to restricted __le32
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: cast to restricted __le32
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:17:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: cast to restricted __le64
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: restricted __le64 degrades to integer
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: restricted __le64 degrades to integer
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: cast to restricted __le32
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: cast to restricted __le32
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:99:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: cast to restricted __le64
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: restricted __le64 degrades to integer
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: restricted __le64 degrades to integer
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: cast to restricted __le32
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: cast to restricted __le32
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: restricted __le32 degrades to integer
+   drivers/bus/mhi/host/init.c: note: in included file (through include/trace/trace_events.h, include/trace/define_trace.h, drivers/bus/mhi/host/trace.h):
+>> drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/bus/mhi/host/init.c: note: in included file (through include/trace/perf.h, include/trace/define_trace.h, drivers/bus/mhi/host/trace.h):
+>> drivers/bus/mhi/host/./trace.h:123:1: sparse: sparse: non size-preserving pointer to integer cast
 
-Bindings for touchscreen:
-https://lore.kernel.org/linux-devicetree/20231111-mothball-diploma-c034c0622bc6@squawk/T/#t
----
- .../dts/qcom/sm6375-sony-xperia-murray-pdx225.dts  | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+vim +123 drivers/bus/mhi/host/./trace.h
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-index 0ce4fa8de8b0..cca2c2eb88ad 100644
---- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-@@ -80,6 +80,15 @@ ramoops@ffc40000 {
- 		};
- 	};
- 
-+	touch_avdd: touch-avdd-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "touch_avdd";
-+		gpio = <&tlmm 59 GPIO_ACTIVE_HIGH>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_avdd_default>;
-+		enable-active-high;
-+	};
-+
- 	vph_pwr: vph-pwr-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vph_pwr";
-@@ -136,9 +145,10 @@ touchscreen@48 {
- 		interrupts = <22 0x2008>;
- 
- 		vdd-supply = <&pm6125_l13>;
-+		avdd-supply = <&touch_avdd>;
- 
- 		pinctrl-names = "default";
--		pinctrl-0 = <&ts_int_default &ts_avdd_default>;
-+		pinctrl-0 = <&ts_int_default>;
- 	};
- };
- 
-@@ -417,7 +427,7 @@ ts_avdd_default: ts-avdd-default-state {
- 		pins = "gpio59";
- 		function = "gpio";
- 		drive-strength = <8>;
--		output-high;
-+		output-low;
- 	};
- };
- 
+   122	
+ > 123	TRACE_EVENT(mhi_process_ctrl_ev_ring,
+   124	
+   125		TP_PROTO(const char *name, struct mhi_ring_element *rp, __le64 ptr,
+   126			 __le32 dword0, __le32 dword1),
+   127	
+   128		TP_ARGS(name, rp, ptr, dword0, dword1),
+   129	
+   130		TP_STRUCT__entry(
+   131			__field(u64, rp)
+   132			__field(__le64, ptr)
+   133			__string(name, name)
+   134			__field(__le32, dword0)
+   135			__field(__le32, dword1)
+   136			__field(int, state)
+   137		),
+   138	
+   139		TP_fast_assign(
+   140			__assign_str(name, name);
+   141			__entry->rp = (u64)rp;
+   142			__entry->ptr = ptr;
+   143			__entry->dword0 = dword0;
+   144			__entry->dword1 = dword1;
+   145			__entry->state = MHI_TRE_GET_EV_STATE(rp);
+   146		),
+   147	
+   148		TP_printk("%s: RP:0x%llx Processing Event:0x%llx 0x%08x 0x%08x state:%s\n",
+   149			  __get_str(name), __entry->rp, __entry->ptr, __entry->dword0,
+   150			  __entry->dword1, mhi_state_str(__entry->state))
+   151	);
+   152	
+
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
