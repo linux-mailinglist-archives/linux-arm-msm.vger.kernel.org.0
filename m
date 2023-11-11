@@ -1,132 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 364857E8A65
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 11:55:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A09207E8AB0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 12:28:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 956AC280D4C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 10:55:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 021C7B20B06
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 11:28:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51090111BE;
-	Sat, 11 Nov 2023 10:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEB4213ADF;
+	Sat, 11 Nov 2023 11:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jhQJBw2p"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WrjuV6CY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A754107B7;
-	Sat, 11 Nov 2023 10:55:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F7FC433C8;
-	Sat, 11 Nov 2023 10:55:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699700121;
-	bh=yhZpTjWRK6RKd63R4nWe56MWy0CMG7eNfkNMHL2QcRE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jhQJBw2ply+Us4XYDAgeXbr4WDWJ3jiVW/6DPinTKjrwVwX+DmVqt8lhxT2BJwxSK
-	 l744L/rFpeuiglGmmqHidvqtcPsa/pdvx7WgBhSCEnYEwM13o4/mwh8zGli154MW3Y
-	 H31OjHIdZq16RiXnkZSVBjDwI7OSWu0R+lv2XDGJU+DvUFgQLtUq60r7nlwQGq8Q3l
-	 i7UnynQxBXATG4WzeeQlve+49tMYVrHcmk4LplX+wKMj3OJqHVha8D3fTd0uuS1EZB
-	 4kwdRzV75i3StzG5p2Xr/ARidjukxRKkQi1GDKLAnVT/LLpHwnFrd0qnFD3GjRChA/
-	 /sF61VX7QLYvQ==
-Received: from johan by xi.lan with local (Exim 4.96)
-	(envelope-from <johan@kernel.org>)
-	id 1r1le1-0001Tb-17;
-	Sat, 11 Nov 2023 11:55:18 +0100
-Date: Sat, 11 Nov 2023 11:55:17 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Mathias Nyman <mathias.nyman@intel.com>, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
-	ahalaney@redhat.com, quic_shazhuss@quicinc.com,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v11 02/13] dt-bindings: usb: Add bindings for multiport
- properties on DWC3 controller
-Message-ID: <ZU9dlfM8tdfdqKkx@hovoldconsulting.com>
-References: <20230828133033.11988-1-quic_kriskura@quicinc.com>
- <20230828133033.11988-3-quic_kriskura@quicinc.com>
- <ZU4wA9xhfjYBCaTU@hovoldconsulting.com>
- <bc3e9da6-c932-46a0-923a-44be817bd129@quicinc.com>
- <c8b0af46-6513-43fc-994d-4d04f6c65b5e@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3557412B70;
+	Sat, 11 Nov 2023 11:28:17 +0000 (UTC)
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E8B3862;
+	Sat, 11 Nov 2023 03:28:16 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-6c398717726so2649646b3a.2;
+        Sat, 11 Nov 2023 03:28:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699702095; x=1700306895; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gvo63Ap3eCN7O+5c4nuw7iFnIW0OCrKiMm64henb2qA=;
+        b=WrjuV6CYIEx4LWwLG4khXzG+qmubmHG9zheAg+KlNTC61dPWJIzZag0QygZ5NR6s1d
+         QDXkkMnUxonNZHOftEEUr7+s39eI25Kk8yqpcRy9Iyfy0JpUYGNIDQJazjCsSWxCfdmp
+         ESu5gO8a0BnOhL+wZngCViHfGiXld/P/Vvltrl7tbnpa0vo1WjkyGPAXqAufkgCIuUb1
+         ZVtnuf/YK2c/aQ6e+32T2UGnFRJd96cx9e9hLk5DMDr8cAnTGDl9IatkJkjGIkBVMLZj
+         5rYGcAAakOaiG85rH+UaxguHjgCz3qcjMvl+BgTpsmTy5qHllgDWiN/IuMZmaiwPbn0R
+         nVPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699702095; x=1700306895;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gvo63Ap3eCN7O+5c4nuw7iFnIW0OCrKiMm64henb2qA=;
+        b=BGsPASy0nDYedxHilspunUxOty0NpBw4D6fpeA37CHRtgjAwelGbuznayjmfz7rWpq
+         LoQOwo51OeFibeEwVMZgy0mffUJl6xygfDaxlrRMZm4BDHAqucpKTekGD25g66t6IKe8
+         xx/k4Ala7FySYT5Jn+nhoaCOb0v8jV02Onjryv0g0AXllHVJI65gaQknFqmbGNouY22J
+         2ybdCAutlaohtk1sSX/p7acsTt1ur8Kr1Ubs8bgXrKWIwfzQ63bQkCl0/XMGWBEBLO9O
+         V6QvkyEq0U9+sF8abyvr5qMGdkQwXctijjAG3x3IpxyTZJzDi5L9MwW0Ax5LwTw3TYpM
+         NoBA==
+X-Gm-Message-State: AOJu0YwApQV9IDNOcVUmzo65i2DT+1drzIc1iT9/Hzz/2Ue87gMQYKu5
+	vQ5Ns0e/HEH07N1SarOesQ0X7yCOIQtdZilcmmw=
+X-Google-Smtp-Source: AGHT+IENPQo0bEs3lsJTUDUbui+ftHSAimNCdluqkm5kDIhjuu1++Xf6J2i55Ho8tyFnYGVZXqxe/xrksbMNWfKQ50Q=
+X-Received: by 2002:a05:6a20:4426:b0:181:16c7:6cd0 with SMTP id
+ ce38-20020a056a20442600b0018116c76cd0mr1449510pzb.17.1699702095344; Sat, 11
+ Nov 2023 03:28:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c8b0af46-6513-43fc-994d-4d04f6c65b5e@quicinc.com>
+References: <20231025104457.628109-1-robimarko@gmail.com> <20231025104457.628109-2-robimarko@gmail.com>
+ <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com>
+ <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org> <CAOX2RU5-XFZhGzjigNtu-qFnPWDd2XkpGpY=HXWigRa5SXw4TA@mail.gmail.com>
+ <ef377506-4132-4805-a76e-18f241afe319@linaro.org> <CAOX2RU4K67evm10giQvF1rcfqTfR+e--KQT3ZePoHQoqASv_fg@mail.gmail.com>
+ <bdf6be0b-c137-48ce-8a3f-ab74bced6f87@linaro.org>
+In-Reply-To: <bdf6be0b-c137-48ce-8a3f-ab74bced6f87@linaro.org>
+From: Robert Marko <robimarko@gmail.com>
+Date: Sat, 11 Nov 2023 12:28:04 +0100
+Message-ID: <CAOX2RU4z1Dcs7ct0BAaS7wicYVmQEiSe74=w_grFDKQv22uoFg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] clk: qcom: ipq6018: add USB GDSCs
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	mturquette@baylibre.com, sboyd@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, 
+	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat, Nov 11, 2023 at 03:17:40PM +0530, Krishna Kurapati PSSNV wrote:
-> On 11/11/2023 2:00 PM, Krishna Kurapati PSSNV wrote:
-> > On 11/10/2023 6:58 PM, Johan Hovold wrote:
-
-> >>>     phy-names:
-> >>>       minItems: 1
-> >>> -    maxItems: 2
-> >>> -    items:
-> >>> -      enum:
-> >>> -        - usb2-phy
-> >>> -        - usb3-phy
-> >>> +    maxItems: 8
-> >>> +    oneOf:
-> >>> +      - items:
-> >>> +          enum: [ usb2-phy, usb3-phy ]
-> >>> +      - items:
-> >>> +          pattern: "^usb[23]-port[0-3]$"
-> >>
-> >> Shouldn't this just be
-> >>
-> >>     pattern: "^usb[23]-[0-3]$"
-> >>
-> >> so that it matches the names that are used by the nvidia bindings?
-> >>
-> >> We already have some inconsistency in that Amlogic uses a variant based
-> >> on the legacy names that needlessly includes "phy" in the names:
-> >>
-> >>     const: usb2-phy0
-> >>     const: usb2-phy1
-> >>     const: usb3-phy0
-> >>     ...
-> >>
-> >> I don't think we should be introducing a third naming scheme here so I
-> >> suggest just following the nvidia bindings.
-
-> >> > In that case, why don't we use  "^usb[23]-phy[0-3]$". I think its close
-> > to what we have on dwc3 core already today (usb2-phy/usb3-phy).
+On Tue, 7 Nov 2023 at 22:51, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
-> I mean, it isn't needless. It is a phy and shouldn't the binding suggest 
-> that and include "-phy" in the name ?
+>
+>
+> On 10/31/23 10:01, Robert Marko wrote:
+> > On Mon, 30 Oct 2023 at 22:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> On 30.10.2023 21:37, Robert Marko wrote:
+> >>> On Mon, 30 Oct 2023 at 20:37, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>>>
+> >>>> On 29.10.2023 12:04, Robert Marko wrote:
+> >>>>> On Wed, 25 Oct 2023 at 12:45, Robert Marko <robimarko@gmail.com> wrote:
+> >>>>>>
+> >>>>>> IPQ6018 has GDSC-s for each of the USB ports, so lets define them as such
+> >>>>>> and drop the curent code that is de-asserting the USB GDSC-s as part of
+> >>>>>> the GCC probe.
+> >>>>>>
+> >>>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >>>>>
+> >>>>> Unfortunately, after testing on multiple devices I hit the same GDSC
+> >>>>> issue I had a long time ago
+> >>>>> that was the reason I did not send this upstream.
+> >>>>> It seems that USB3 port GDSC (USB0 GDSC in code) works just fine,
+> >>>>> however the USB2 one
+> >>>>> (USB1 GDSC in code) it is stuck off and USB2 port will fail due to this:
+> >>>>>      1.607531] ------------[ cut here ]------------
+> >>>>> [    1.607559] usb1_gdsc status stuck at 'off'
+> >>>>> [    1.607592] WARNING: CPU: 0 PID: 35 at gdsc_toggle_logic+0x16c/0x174
+> >>>>> [    1.615120] Modules linked in:
+> >>>> Can you dump GDSCR (the entire 32-bit register) at boot and when toggling?
+> >>>
+> >>> Sure, here it is:
+> >>> [    0.023760] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val: 0x8222004 init
+> >>> [    0.023782] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val: 0x8222004 init
+> >>> [    0.988626] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+> >>> 0x8282000 before toggle
+> >>> [    1.202506] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+> >>> 0x8282000 after toggle
+> >>> [    1.207208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
+> >>> 0xa0282000 before toggle
+> >> Any chance
+> >>
+> >> .en_few_wait_val = 0x2
+> >>
+> >> (turning BIT(19) into BIT(17))
+> >>
+> >> will make a difference?
+> >
+> > Sadly, it makes no difference and GDSC status bit newer comes up which is
+> > rather weird as USB0 one seems to work just fine.
+> What if you add clk_ignore_unused?
 
-No, adding a '-phy' suffix to each name is unnecessary since the
-property is called 'phy-names'.
+To the USB1 master clock or?
 
-This is also documented:
+There is definitively something broken regarding the GDSC as
+GDSC_STATE bits (30-27)
+change from 0 to something on the USB0 GDSC but on GDSC1 they are 0 even after
+SW_OVERRIDE BIT(2) is set to 1, and the POWER BIT(31) newer changes to 1.
 
-	For names used in {clock,dma,interrupt,reset}-names, do not add
-	any suffix, e.g.: "tx" instead of "txirq" (for interrupt).
+However, if you manually set BIT(2) to 1 then the USB1 master clock
+can come up so
+GDSC seems to work.
+USB1 (The USB2.0 HS) port is still broken after this if USB mass storage is used
+but that was present before the GDSC changes as well and I still need
+to figure out
+which quirk is missing for this.
 
-	https://docs.kernel.org/devicetree/bindings/writing-bindings.html
+Regards,
+Robert
 
-and we've already discussed this when I asked you to drop the likewise
-redundant '_irq' suffix from the interrupt names.
-
-Johan
+>
+> Konrad
 
