@@ -1,384 +1,290 @@
-Return-Path: <linux-arm-msm+bounces-476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AEE37E891A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 05:12:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22D977E8950
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 06:07:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A92E71F20EC9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 04:12:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EFAD31C208FC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 05:07:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 816E663B1;
-	Sat, 11 Nov 2023 04:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF37963DD;
+	Sat, 11 Nov 2023 05:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dHoKp4c/"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gpo320WE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619C263AF
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 04:12:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692E4C433C7;
-	Sat, 11 Nov 2023 04:12:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699675944;
-	bh=zlVIXusYR5JdUHxMJMxftsT7sO1DFB+E1/HW4Mh2VWM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dHoKp4c/LKd6Oe4wiG+RqKMWf02cMbbbly0aJ4BZ5u8QD00M8WD16CFXtWjLADtec
-	 IUCr7WQskZHkf8nruGtAEYzlKgWFs50mvLQK9DTIiX4M3wF17I6dbzsaVbdjPRnGVd
-	 okTax5TdIqn2uMdaORHRv2036KJs1p0zYY5r7j59q9vlOY+1QOdSoZYo9xOHPDcAzj
-	 5TuoFWsfG2NAT0y1HT1YYw/zGhj5pVPIRHCouYxtTDqe21ECsg3mAOK212QYIYS/w/
-	 ng6WNlB90n5p6oKy5i/0ryvE5GestCHA0yoEWZzFTkUhJ/bH11F3uxfbytNIcCDBRu
-	 xzo/tyYlfhG5Q==
-Date: Sat, 11 Nov 2023 09:42:15 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Can Guo <quic_cang@quicinc.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Can Guo <cang@qti.qualcomm.com>, bvanassche@acm.org,
-	stanley.chu@mediatek.com, adrian.hunter@intel.com,
-	beanhuo@micron.com, avri.altman@wdc.com, junwoo80.lee@samsung.com,
-	martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	"open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-	"open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 6/7] phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed
- Gear 5 support for SM8550
-Message-ID: <20231111041215.GA4823@thinkpad>
-References: <20231108054942.GF3296@thinkpad>
- <CAA8EJpoCZChHDQLF0QHN0PkRUWV20thXMQvK-sH2fpYaC1zcvg@mail.gmail.com>
- <20231109032418.GA3752@thinkpad>
- <CAA8EJpoZUf9Ku5meH5VAcSkCbna__5LdPi8rgnN0tyBc-UzzWw@mail.gmail.com>
- <20231109104250.GF3752@thinkpad>
- <CAA8EJpp+wfe5wUj0FAMY2g3J8v7F8DVf8Bi3BwrAuCp-n=PFJg@mail.gmail.com>
- <20231109160430.GG3752@thinkpad>
- <CAA8EJpq+R4QsQSn1_sf1_dkh8mOmWLtBm7SSa953s8jRQR-pAg@mail.gmail.com>
- <20231110131803.GA5025@thinkpad>
- <1ac5ae60-7e76-43f2-8b3d-c286eade0251@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD67D53B4;
+	Sat, 11 Nov 2023 05:07:02 +0000 (UTC)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE9F81FD7;
+	Fri, 10 Nov 2023 21:07:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1699679220; x=1731215220;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=vSKSY9tE7YTJMxF0CNtF11cQM9FmCkpKo8Bvq48ESLY=;
+  b=gpo320WEXAoqmS01Fggkp0unQaLfNhb5O1MmMIEK+p0q7hwlfwgSsfv0
+   Pjw62frGo6AAF+BkEPE8SCajCrF2nQODHhcnBVuIdRM14w2Zh7cMRNawR
+   Hd8t8tu9bt1jemIKPcC/5SkwZjDbo3LeS8Py+pfbj4qUIemJb/zfwAc4R
+   y1BuNKyd0IrJLcEUZ+HLggF9VhwtqnTYt+LdpSRX/3UuBbjaZEpkFrRKI
+   8XUwclp8ebuGGJMjtZD67QzmjaGW27YhZf8FstQZe1AlBdKmLgKewDYM7
+   ++P+DUHP6aBooTMvujQbhfhAuuXrrBkVXbDCRkD9J5VKvxIJeOFTtlAAQ
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10890"; a="3261588"
+X-IronPort-AV: E=Sophos;i="6.03,294,1694761200"; 
+   d="scan'208";a="3261588"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Nov 2023 21:07:00 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10890"; a="907602641"
+X-IronPort-AV: E=Sophos;i="6.03,294,1694761200"; 
+   d="scan'208";a="907602641"
+Received: from lkp-server01.sh.intel.com (HELO 17d9e85e5079) ([10.239.97.150])
+  by fmsmga001.fm.intel.com with ESMTP; 10 Nov 2023 21:06:57 -0800
+Received: from kbuild by 17d9e85e5079 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r1gCt-000ADp-0T;
+	Sat, 11 Nov 2023 05:06:55 +0000
+Date: Sat, 11 Nov 2023 13:06:53 +0800
+From: kernel test robot <lkp@intel.com>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_parass@quicinc.com,
+	Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: Re: [PATCH v3] bus: mhi: host: Add tracing support
+Message-ID: <202311111237.zTm5NBLH-lkp@intel.com>
+References: <20231111-ftrace_support-v3-1-f358d2911a74@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1ac5ae60-7e76-43f2-8b3d-c286eade0251@quicinc.com>
+In-Reply-To: <20231111-ftrace_support-v3-1-f358d2911a74@quicinc.com>
 
-On Fri, Nov 10, 2023 at 10:40:53PM +0800, Can Guo wrote:
-> 
-> 
-> On 11/10/2023 9:18 PM, Manivannan Sadhasivam wrote:
-> > On Fri, Nov 10, 2023 at 12:11:46AM +0200, Dmitry Baryshkov wrote:
-> > > On Thu, 9 Nov 2023 at 18:04, Manivannan Sadhasivam <mani@kernel.org> wrote:
-> > > > 
-> > > > On Thu, Nov 09, 2023 at 01:00:51PM +0200, Dmitry Baryshkov wrote:
-> > > > > On Thu, 9 Nov 2023 at 12:43, Manivannan Sadhasivam <mani@kernel.org> wrote:
-> > > > > > 
-> > > > > > On Thu, Nov 09, 2023 at 11:40:51AM +0200, Dmitry Baryshkov wrote:
-> > > > > > > On Thu, 9 Nov 2023 at 05:24, Manivannan Sadhasivam <mani@kernel.org> wrote:
-> > > > > > > > 
-> > > > > > > > On Wed, Nov 08, 2023 at 08:56:16AM +0200, Dmitry Baryshkov wrote:
-> > > > > > > > > On Wed, 8 Nov 2023 at 07:49, Manivannan Sadhasivam <mani@kernel.org> wrote:
-> > > > > > > > > > 
-> > > > > > > > > > On Tue, Nov 07, 2023 at 03:18:09PM +0200, Dmitry Baryshkov wrote:
-> > > > > > > > > > > On Tue, 7 Nov 2023 at 06:47, Can Guo <cang@qti.qualcomm.com> wrote:
-> > > > > > > > > > > > 
-> > > > > > > > > > > > From: Can Guo <quic_cang@quicinc.com>
-> > > > > > > > > > > > 
-> > > > > > > > > > > > On SM8550, two sets of UFS PHY settings are provided, one set is to support
-> > > > > > > > > > > > HS-G5, another set is to support HS-G4 and lower gears. The two sets of PHY
-> > > > > > > > > > > > settings are programming different values to different registers, mixing
-> > > > > > > > > > > > the two sets and/or overwriting one set with another set is definitely not
-> > > > > > > > > > > > blessed by UFS PHY designers. In order to add HS-G5 support for SM8550, we
-> > > > > > > > > > > > need to split the two sets into their dedicated tables, and leave only the
-> > > > > > > > > > > > common settings in the .tlbs. To have the PHY programmed with the correct
-> > > > > > > > > > > > set of PHY settings, the submode passed to PHY driver must be either HS-G4
-> > > > > > > > > > > > or HS-G5.
-> > > > > > > > > > > > 
-> > > > > > > > > > 
-> > > > > > > > > > You should also mention that this issue is also present in G4 supported targets.
-> > > > > > > > > > And a note that it will get fixed later.
-> > > > > > > > > > 
-> > > > > > > > > > > > Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> > > > > > > > > > > > ---
-> > > > > > > > > > > >   drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h     |   2 +
-> > > > > > > > > > > >   drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h |   2 +
-> > > > > > > > > > > >   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |  12 +++
-> > > > > > > > > > > >   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 112 ++++++++++++++++++---
-> > > > > > > > > > > >   4 files changed, 115 insertions(+), 13 deletions(-)
-> > > > > > > > > > > > 
-> > > > > > > > > > > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
-> > > > > > > > > > > > index c23d5e4..e563af5 100644
-> > > > > > > > > > > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
-> > > > > > > > > > > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h
-> > > > > > > > > > > > @@ -18,6 +18,7 @@
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_BIST_FIXED_PAT_CTRL            0x060
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY           0x074
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY           0x0bc
-> > > > > > > > > > > > +#define QPHY_V6_PCS_UFS_RX_HS_G5_SYNC_LENGTH_CAPABILITY        0x12c
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_DEBUG_BUS_CLKSEL               0x158
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_LINECFG_DISABLE                        0x17c
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_RX_MIN_HIBERN8_TIME            0x184
-> > > > > > > > > > > > @@ -27,5 +28,6 @@
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_READY_STATUS                   0x1a8
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1              0x1f4
-> > > > > > > > > > > >   #define QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1               0x1fc
-> > > > > > > > > > > > +#define QPHY_V6_PCS_UFS_RX_HSG5_SYNC_WAIT_TIME         0x220
-> > > > > > > > > > > > 
-> > > > > > > > > > > >   #endif
-> > > > > > > > > > > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
-> > > > > > > > > > > > index f420f8f..ef392ce 100644
-> > > > > > > > > > > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
-> > > > > > > > > > > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h
-> > > > > > > > > > > > @@ -56,6 +56,8 @@
-> > > > > > > > > > > >   #define QSERDES_V6_COM_SYS_CLK_CTRL                            0xe4
-> > > > > > > > > > > >   #define QSERDES_V6_COM_SYSCLK_BUF_ENABLE                       0xe8
-> > > > > > > > > > > >   #define QSERDES_V6_COM_PLL_IVCO                                        0xf4
-> > > > > > > > > > > > +#define QSERDES_V6_COM_CMN_IETRIM                              0xfc
-> > > > > > > > > > > > +#define QSERDES_V6_COM_CMN_IPTRIM                              0x100
-> > > > > > > > > > > >   #define QSERDES_V6_COM_SYSCLK_EN_SEL                           0x110
-> > > > > > > > > > > >   #define QSERDES_V6_COM_RESETSM_CNTRL                           0x118
-> > > > > > > > > > > >   #define QSERDES_V6_COM_LOCK_CMP_EN                             0x120
-> > > > > > > > > > > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
-> > > > > > > > > > > > index 15bcb4b..48f31c8 100644
-> > > > > > > > > > > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
-> > > > > > > > > > > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
-> > > > > > > > > > > > @@ -10,10 +10,20 @@
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_RX                     0x2c
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX              0x30
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX              0x34
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_TX_LANE_MODE_1                          0x7c
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_TX_FR_DCC_CTRL                          0x108
-> > > > > > > > > > > > 
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2          0x08
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4          0x10
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_SO_GAIN_RATE4          0x24
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_COUNT_HIGH_RATE4       0x54
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2                   0xd4
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE4                   0xdc
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_UCDR_SO_GAIN_RATE4                   0xf0
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_UCDR_PI_CONTROLS                     0xf4
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL                      0x178
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_EQ_OFFSET_ADAPTOR_CNTRL1             0x1bc
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_OFFSET_ADAPTOR_CNTRL3                        0x1c4
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0                     0x208
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1                     0x20c
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B3                     0x214
-> > > > > > > > > > > > @@ -25,6 +35,8 @@
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_MODE_RATE3_B5                                0x264
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_MODE_RATE3_B8                                0x270
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_MODE_RATE4_B3                                0x280
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_MODE_RATE4_B4                                0x284
-> > > > > > > > > > > >   #define QSERDES_UFS_V6_RX_MODE_RATE4_B6                                0x28c
-> > > > > > > > > > > > +#define QSERDES_UFS_V6_RX_DLL0_FTUNE_CTRL                      0x2f8
-> > > > > > > > > > > > 
-> > > > > > > > > > > >   #endif
-> > > > > > > > > > > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> > > > > > > > > > > > index 3927eba..e0a01497 100644
-> > > > > > > > > > > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> > > > > > > > > > > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> > > > > > > > > > > > @@ -649,32 +649,51 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x11),
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_HS_SWITCH_SEL_1, 0x00),
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x01),
-> > > > > > > > > > > > -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
-> > > > > > > > > > > > -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
-> > > > > > > > > > > > +
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_INITVAL2, 0x00),
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x41),
-> > > > > > > > > > > > -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x7f),
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x06),
-> > > > > > > > > > > > -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x4c),
-> > > > > > > > > > > > +};
-> > > > > > > > > > > > +
-> > > > > > > > > > > > +static const struct qmp_phy_init_tbl sm8550_ufsphy_hs_b_serdes[] = {
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x44),
-> > > > > > > > > > > > +};
-> > > > > > > > > > > > +
-> > > > > > > > > > > > +static const struct qmp_phy_init_tbl sm8550_ufsphy_g4_serdes[] = {
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x04),
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x0f),
-> > > > > > > > > > > >          QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
-> > > > > > > > > > > > -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
-> > > > > > > > > > > > -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
-> > > > > > > > > > > > -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x99),
-> > > > > > > > > > > > -       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x07),
-> > > > > > > > > > > 
-> > > > > > > > > > > Aside from moving these registers to the HS_G4 table, you are also
-> > > > > > > > > > > changing these registers. It makes me think that there was an error in
-> > > > > > > > > > > the original programming sequence.
-> > > > > > > > > > > If that is correct, could you please split the patch into two pieces:
-> > > > > > > > > > > - Fix programming sequence (add proper Fixes tags)
-> > > > > > > > > > > - Split G4 and G5 tables.
-> > > > > > > > > > 
-> > > > > > > > > > Ack
-> > > > > > > > > > 
-> > > > > > > > > > > 
-> > > > > > > > > > > > +
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x4c),
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x0a),
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x14),
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x99),
-> > > > > > > > > > > > +       QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x07),
-> > > > > > > > > > > 
-> > > > > > > > > > > I see all the MODE1 registers being only present in G4 and G5 tables.
-> > > > > > > > > > > Should they be programmed for the modes lower than G4?
-> > > > > > > > > > > 
-> > > > > > > > > > 
-> > > > > > > > > > We use G4 table for all the modes <= G4.
-> > > > > > > > > 
-> > > > > > > > > Could you please point me how it's handled?
-> > > > > > > > > In the patch I see just:
-> > > > > > > > > 
-> > > > > > > > >         if (qmp->submode == UFS_HS_G4)
-> > > > > > > > >                 qmp_ufs_serdes_init(qmp, &cfg->tbls_hs_g4);
-> > > > > > > > >         else if (qmp->submode == UFS_HS_G5)
-> > > > > > > > >                 qmp_ufs_serdes_init(qmp, &cfg->tbls_hs_g5);
-> > > > > > > > > 
-> > > > > > > > > Which looks like two special cases (HS_G4 and HS_G5) and nothing for
-> > > > > > > > > anything else.
-> > > > > > > > > 
-> > > > > > > > 
-> > > > > > > > Yes, and the UFS driver passes only G4/G5. For all the gears <=G4, G4 init
-> > > > > > > > sequence will be used and for G5, G5 sequence will be used.
-> > > > > > > > 
-> > > > > > > 
-> > > > > > > That's what I could not find in the UFS driver. I see a call to
-> > > > > > > `phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);` and
-> > > > > > > host->phy_gear is initialised to UFS_HS_G2.
-> > > > > > > 
-> > > > > > 
-> > > > > > You need to check the UFS driver changes in this series to get the complete
-> > > > > > picture as the logic is getting changed.
-> > > > > > 
-> > > > > > It is common to get confused because of the way the UFS driver (qcom mostly)
-> > > > > > handles the PHY init sequence programming. We used to have only one init
-> > > > > > sequence for older targets and life was easy. But when I wanted to add G4
-> > > > > > support for SM8250, I learned that there are 2 separate init sequences. One for
-> > > > > > non-G4 and other for G4. So I used the phy_sub_mode property to pass the
-> > > > > > relevant mode from the UFS driver to the PHY driver and programmed the sequence
-> > > > > > accordingly. This got extended to non-G5 and G5 now.
-> > > > > > 
-> > > > > > Now, the UFS driver will start probing from a low gear for older targets (G2)
-> > > > > > and G4/G5 for newer ones then scale up based on the device and host capability.
-> > > > > > For older targets, the common table (tbls) will be used if the submode doesn't
-> > > > > > match G4/G5. But for newer targets, the UFS driver will _only_ pass G4 or G5 as
-> > > > > > the phy_gear, so those specific sequence will only be used.
-> > > > > > 
-> > > > > > Hope I'm clear.
-> > > > > 
-> > > > > Yes, it is now clear, thank you!
-> > > > > 
-> > > > > Would it be possible / feasible / logical to maintain this idea even
-> > > > > for newer platforms (leaving the HS_A  / HS_B aside)?
-> > > > > 
-> > > > > tbls - works for HS_G2
-> > > > > tbls + tbls_g4 - works for HS_G4
-> > > > > tbls + tbls_g5 - works for HS_G5
-> > > > > 
-> > > > 
-> > > > No. The PHY team only gives 2 init sequences for any SoC now.
-> > > 
-> > > Ack. Then the code should become
-> > > if (HS_G5)
-> > >     program(tbls_hs_g5)
-> > > else
-> > >     program(tbls_hs_g4);
-> > > 
-> > 
-> > This should work. Even if we have to accomodate G6 in the future, we can use
-> > "else if" for that and keep G4 as the "else" condition. This logic can also be
-> > optimized in the future.
-> 
-> That would make dual init meaningless for old targets. Say on SM8450, the
-> initial PHY gear is G2, with the "else" condition, during the first init, G4
-> table would be programmed, then gear negotiation happens btw host and device
-> and the negotiated gear is G3 (assume a UFS2.x is connected). During the 2nd
-> init, the "else" condition would __again__ program the G4 table - it is not
-> programming the non-G4 table for power saving. The dual init is supposed to
-> find the optimal PHY settings, but the "else" condition is programming G4
-> table unconditinally.
-> 
-> With the original code change in this patch, the dual init works as it is
-> for old targets. say SM8450, the initial PHY gear is G2, during the 2nd
-> init, it is programming the non-G4 table (assume a UFS2.x is connected), but
-> not the G4 table.
-> 
+Hi Krishna,
 
-You are right. I completely overlooked the compatibility for old targets. But
-still we can move the common table to the "else" condition. This makes it clear
-that one of the 3 will be programmed at a time. But with the current logic, I
-get the impression that common table is overridden by G4/G5 tables.
+kernel test robot noticed the following build errors:
 
-So this is what I'm suggesting:
+[auto build test ERROR on 3006adf3be79cde4d14b1800b963b82b6e5572e0]
 
-if (HS_G5)
-	program(tbls_hs_g5)
-else if (HS_G4)
-	program(tbls_hs_g4);
-else
-	program(tbls_hs_common);
+url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-chaitanya-chundru/bus-mhi-host-Add-tracing-support/20231111-101955
+base:   3006adf3be79cde4d14b1800b963b82b6e5572e0
+patch link:    https://lore.kernel.org/r/20231111-ftrace_support-v3-1-f358d2911a74%40quicinc.com
+patch subject: [PATCH v3] bus: mhi: host: Add tracing support
+config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20231111/202311111237.zTm5NBLH-lkp@intel.com/config)
+compiler: sh4-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231111/202311111237.zTm5NBLH-lkp@intel.com/reproduce)
 
-- Mani
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311111237.zTm5NBLH-lkp@intel.com/
 
-> Thanks,
-> Can Guo.
-> > 
-> > - Mani
-> > 
-> > > > 
-> > > > - Mani
-> > > > 
-> > > > > I mean here that the PHY driver should not depend on the knowledge
-> > > > > that the UFS driver will not be setting HS_G2 for some particular
-> > > > > platform and ideally it should continue working if at some point we
-> > > > > change the UFS driver to set HS_G2.
-> > > > > 
-> > > > > 
-> > > > > > 
-> > > > > > - Mani
-> > > > > > 
-> > > > > > > Maybe we should change the condition here (in the PHY driver) to:
-> > > > > > > 
-> > > > > > > if (qmp->submode <= UFS_HS_G4)
-> > > > > > > 
-> > > > > > > ?
-> > > > > > > --
-> > > > > > > With best wishes
-> > > > > > > Dmitry
-> > > > > > 
-> > > > > > --
-> > > > > > மணிவண்ணன் சதாசிவம்
-> > > > > 
-> > > > > 
-> > > > > 
-> > > > > --
-> > > > > With best wishes
-> > > > > Dmitry
-> > > > 
-> > > > --
-> > > > மணிவண்ணன் சதாசிவம்
-> > > 
-> > > 
-> > > 
-> > > -- 
-> > > With best wishes
-> > > Dmitry
-> > 
+All errors (new ones prefixed by >>):
+
+   In file included from include/trace/define_trace.h:102,
+                    from drivers/bus/mhi/host/trace.h:224,
+                    from drivers/bus/mhi/host/init.c:24:
+   drivers/bus/mhi/host/./trace.h: In function 'trace_event_raw_event_mhi_process_ctrl_ev_ring':
+>> drivers/bus/mhi/host/../common.h:144:58: error: invalid type argument of '->' (have 'u64' {aka 'long long unsigned int'})
+     144 | #define MHI_TRE_GET_DWORD(tre, word)    le32_to_cpu((tre)->dword[(word)])
+         |                                                          ^~
+   include/trace/trace_events.h:402:11: note: in definition of macro 'DECLARE_EVENT_CLASS'
+     402 |         { assign; }                                                     \
+         |           ^~~~~~
+   include/trace/trace_events.h:44:30: note: in expansion of macro 'PARAMS'
+      44 |                              PARAMS(assign),                   \
+         |                              ^~~~~~
+   drivers/bus/mhi/host/./trace.h:123:1: note: in expansion of macro 'TRACE_EVENT'
+     123 | TRACE_EVENT(mhi_process_ctrl_ev_ring,
+         | ^~~~~~~~~~~
+   drivers/bus/mhi/host/./trace.h:138:9: note: in expansion of macro 'TP_fast_assign'
+     138 |         TP_fast_assign(
+         |         ^~~~~~~~~~~~~~
+   include/linux/compiler_types.h:413:9: note: in expansion of macro '__compiletime_assert'
+     413 |         __compiletime_assert(condition, msg, prefix, suffix)
+         |         ^~~~~~~~~~~~~~~~~~~~
+   include/linux/compiler_types.h:425:9: note: in expansion of macro '_compiletime_assert'
+     425 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+         |         ^~~~~~~~~~~~~~~~~~~
+   include/linux/build_bug.h:39:37: note: in expansion of macro 'compiletime_assert'
+      39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+         |                                     ^~~~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:71:17: note: in expansion of macro 'BUILD_BUG_ON_MSG'
+      71 |                 BUILD_BUG_ON_MSG(__bf_cast_unsigned(_mask, _mask) >     \
+         |                 ^~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:61:43: note: in expansion of macro '__unsigned_scalar_typeof'
+      61 | #define __bf_cast_unsigned(type, x)     ((__unsigned_scalar_typeof(type))(x))
+         |                                           ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:72:34: note: in expansion of macro '__bf_cast_unsigned'
+      72 |                                  __bf_cast_unsigned(_reg, ~0ull),       \
+         |                                  ^~~~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:154:17: note: in expansion of macro '__BF_FIELD_CHECK'
+     154 |                 __BF_FIELD_CHECK(_mask, _reg, 0U, "FIELD_GET: ");       \
+         |                 ^~~~~~~~~~~~~~~~
+   drivers/bus/mhi/host/../common.h:159:41: note: in expansion of macro 'FIELD_GET'
+     159 | #define MHI_TRE_GET_EV_STATE(tre)       FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0)))
+         |                                         ^~~~~~~~~
+   include/linux/byteorder/generic.h:89:21: note: in expansion of macro '__le32_to_cpu'
+      89 | #define le32_to_cpu __le32_to_cpu
+         |                     ^~~~~~~~~~~~~
+   drivers/bus/mhi/host/../common.h:159:69: note: in expansion of macro 'MHI_TRE_GET_DWORD'
+     159 | #define MHI_TRE_GET_EV_STATE(tre)       FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0)))
+         |                                                                     ^~~~~~~~~~~~~~~~~
+   drivers/bus/mhi/host/./trace.h:144:34: note: in expansion of macro 'MHI_TRE_GET_EV_STATE'
+     144 |                 __entry->state = MHI_TRE_GET_EV_STATE(rp);
+         |                                  ^~~~~~~~~~~~~~~~~~~~
+>> drivers/bus/mhi/host/../common.h:144:58: error: invalid type argument of '->' (have 'u64' {aka 'long long unsigned int'})
+     144 | #define MHI_TRE_GET_DWORD(tre, word)    le32_to_cpu((tre)->dword[(word)])
+         |                                                          ^~
+   include/trace/trace_events.h:402:11: note: in definition of macro 'DECLARE_EVENT_CLASS'
+     402 |         { assign; }                                                     \
+         |           ^~~~~~
+   include/trace/trace_events.h:44:30: note: in expansion of macro 'PARAMS'
+      44 |                              PARAMS(assign),                   \
+         |                              ^~~~~~
+   drivers/bus/mhi/host/./trace.h:123:1: note: in expansion of macro 'TRACE_EVENT'
+     123 | TRACE_EVENT(mhi_process_ctrl_ev_ring,
+         | ^~~~~~~~~~~
+   drivers/bus/mhi/host/./trace.h:138:9: note: in expansion of macro 'TP_fast_assign'
+     138 |         TP_fast_assign(
+         |         ^~~~~~~~~~~~~~
+   drivers/bus/mhi/host/../common.h:159:41: note: in expansion of macro 'FIELD_GET'
+     159 | #define MHI_TRE_GET_EV_STATE(tre)       FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0)))
+         |                                         ^~~~~~~~~
+   include/linux/byteorder/generic.h:89:21: note: in expansion of macro '__le32_to_cpu'
+      89 | #define le32_to_cpu __le32_to_cpu
+         |                     ^~~~~~~~~~~~~
+   drivers/bus/mhi/host/../common.h:159:69: note: in expansion of macro 'MHI_TRE_GET_DWORD'
+     159 | #define MHI_TRE_GET_EV_STATE(tre)       FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0)))
+         |                                                                     ^~~~~~~~~~~~~~~~~
+   drivers/bus/mhi/host/./trace.h:144:34: note: in expansion of macro 'MHI_TRE_GET_EV_STATE'
+     144 |                 __entry->state = MHI_TRE_GET_EV_STATE(rp);
+         |                                  ^~~~~~~~~~~~~~~~~~~~
+   In file included from include/trace/define_trace.h:103:
+   drivers/bus/mhi/host/./trace.h: In function 'perf_trace_mhi_process_ctrl_ev_ring':
+>> drivers/bus/mhi/host/../common.h:144:58: error: invalid type argument of '->' (have 'u64' {aka 'long long unsigned int'})
+     144 | #define MHI_TRE_GET_DWORD(tre, word)    le32_to_cpu((tre)->dword[(word)])
+         |                                                          ^~
+   include/trace/perf.h:51:11: note: in definition of macro 'DECLARE_EVENT_CLASS'
+      51 |         { assign; }                                                     \
+         |           ^~~~~~
+   include/trace/trace_events.h:44:30: note: in expansion of macro 'PARAMS'
+      44 |                              PARAMS(assign),                   \
+         |                              ^~~~~~
+   drivers/bus/mhi/host/./trace.h:123:1: note: in expansion of macro 'TRACE_EVENT'
+     123 | TRACE_EVENT(mhi_process_ctrl_ev_ring,
+         | ^~~~~~~~~~~
+   drivers/bus/mhi/host/./trace.h:138:9: note: in expansion of macro 'TP_fast_assign'
+     138 |         TP_fast_assign(
+         |         ^~~~~~~~~~~~~~
+   include/linux/compiler_types.h:413:9: note: in expansion of macro '__compiletime_assert'
+     413 |         __compiletime_assert(condition, msg, prefix, suffix)
+         |         ^~~~~~~~~~~~~~~~~~~~
+   include/linux/compiler_types.h:425:9: note: in expansion of macro '_compiletime_assert'
+     425 |         _compiletime_assert(condition, msg, __compiletime_assert_, __COUNTER__)
+         |         ^~~~~~~~~~~~~~~~~~~
+   include/linux/build_bug.h:39:37: note: in expansion of macro 'compiletime_assert'
+      39 | #define BUILD_BUG_ON_MSG(cond, msg) compiletime_assert(!(cond), msg)
+         |                                     ^~~~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:71:17: note: in expansion of macro 'BUILD_BUG_ON_MSG'
+      71 |                 BUILD_BUG_ON_MSG(__bf_cast_unsigned(_mask, _mask) >     \
+         |                 ^~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:61:43: note: in expansion of macro '__unsigned_scalar_typeof'
+      61 | #define __bf_cast_unsigned(type, x)     ((__unsigned_scalar_typeof(type))(x))
+         |                                           ^~~~~~~~~~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:72:34: note: in expansion of macro '__bf_cast_unsigned'
+      72 |                                  __bf_cast_unsigned(_reg, ~0ull),       \
+         |                                  ^~~~~~~~~~~~~~~~~~
+   include/linux/bitfield.h:154:17: note: in expansion of macro '__BF_FIELD_CHECK'
+     154 |                 __BF_FIELD_CHECK(_mask, _reg, 0U, "FIELD_GET: ");       \
+         |                 ^~~~~~~~~~~~~~~~
+   drivers/bus/mhi/host/../common.h:159:41: note: in expansion of macro 'FIELD_GET'
+     159 | #define MHI_TRE_GET_EV_STATE(tre)       FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0)))
+         |                                         ^~~~~~~~~
+   include/linux/byteorder/generic.h:89:21: note: in expansion of macro '__le32_to_cpu'
+      89 | #define le32_to_cpu __le32_to_cpu
+         |                     ^~~~~~~~~~~~~
+   drivers/bus/mhi/host/../common.h:159:69: note: in expansion of macro 'MHI_TRE_GET_DWORD'
+     159 | #define MHI_TRE_GET_EV_STATE(tre)       FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0)))
+         |                                                                     ^~~~~~~~~~~~~~~~~
+   drivers/bus/mhi/host/./trace.h:144:34: note: in expansion of macro 'MHI_TRE_GET_EV_STATE'
+     144 |                 __entry->state = MHI_TRE_GET_EV_STATE(rp);
+         |                                  ^~~~~~~~~~~~~~~~~~~~
+>> drivers/bus/mhi/host/../common.h:144:58: error: invalid type argument of '->' (have 'u64' {aka 'long long unsigned int'})
+     144 | #define MHI_TRE_GET_DWORD(tre, word)    le32_to_cpu((tre)->dword[(word)])
+         |                                                          ^~
+   include/trace/perf.h:51:11: note: in definition of macro 'DECLARE_EVENT_CLASS'
+      51 |         { assign; }                                                     \
+         |           ^~~~~~
+   include/trace/trace_events.h:44:30: note: in expansion of macro 'PARAMS'
+      44 |                              PARAMS(assign),                   \
+         |                              ^~~~~~
+   drivers/bus/mhi/host/./trace.h:123:1: note: in expansion of macro 'TRACE_EVENT'
+     123 | TRACE_EVENT(mhi_process_ctrl_ev_ring,
+         | ^~~~~~~~~~~
+   drivers/bus/mhi/host/./trace.h:138:9: note: in expansion of macro 'TP_fast_assign'
+     138 |         TP_fast_assign(
+         |         ^~~~~~~~~~~~~~
+   drivers/bus/mhi/host/../common.h:159:41: note: in expansion of macro 'FIELD_GET'
+     159 | #define MHI_TRE_GET_EV_STATE(tre)       FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0)))
+         |                                         ^~~~~~~~~
+   include/linux/byteorder/generic.h:89:21: note: in expansion of macro '__le32_to_cpu'
+      89 | #define le32_to_cpu __le32_to_cpu
+         |                     ^~~~~~~~~~~~~
+   drivers/bus/mhi/host/../common.h:159:69: note: in expansion of macro 'MHI_TRE_GET_DWORD'
+     159 | #define MHI_TRE_GET_EV_STATE(tre)       FIELD_GET(GENMASK(31, 24), (MHI_TRE_GET_DWORD(tre, 0)))
+         |                                                                     ^~~~~~~~~~~~~~~~~
+   drivers/bus/mhi/host/./trace.h:144:34: note: in expansion of macro 'MHI_TRE_GET_EV_STATE'
+     144 |                 __entry->state = MHI_TRE_GET_EV_STATE(rp);
+         |                                  ^~~~~~~~~~~~~~~~~~~~
+
+
+vim +144 drivers/bus/mhi/host/../common.h
+
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  122  
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  123  /* Channel reset command */
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  124  #define MHI_TRE_CMD_RESET_PTR		0
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  125  #define MHI_TRE_CMD_RESET_DWORD0	0
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  126  #define MHI_TRE_CMD_RESET_DWORD1(chid)	cpu_to_le32(FIELD_PREP(GENMASK(31, 24), chid) | \
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  127  						    FIELD_PREP(GENMASK(23, 16),         \
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  128  							       MHI_CMD_RESET_CHAN))
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  129  
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  130  /* Channel stop command */
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  131  #define MHI_TRE_CMD_STOP_PTR		0
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  132  #define MHI_TRE_CMD_STOP_DWORD0		0
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  133  #define MHI_TRE_CMD_STOP_DWORD1(chid)	cpu_to_le32(FIELD_PREP(GENMASK(31, 24), chid) | \
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  134  						    FIELD_PREP(GENMASK(23, 16),         \
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  135  							       MHI_CMD_STOP_CHAN))
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  136  
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  137  /* Channel start command */
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  138  #define MHI_TRE_CMD_START_PTR		0
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  139  #define MHI_TRE_CMD_START_DWORD0	0
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  140  #define MHI_TRE_CMD_START_DWORD1(chid)	cpu_to_le32(FIELD_PREP(GENMASK(31, 24), chid) | \
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  141  						    FIELD_PREP(GENMASK(23, 16),         \
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  142  							       MHI_CMD_START_CHAN))
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  143  
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01 @144  #define MHI_TRE_GET_DWORD(tre, word)	le32_to_cpu((tre)->dword[(word)])
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  145  #define MHI_TRE_GET_CMD_CHID(tre)	FIELD_GET(GENMASK(31, 24), MHI_TRE_GET_DWORD(tre, 1))
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  146  #define MHI_TRE_GET_CMD_TYPE(tre)	FIELD_GET(GENMASK(23, 16), MHI_TRE_GET_DWORD(tre, 1))
+8485149c7a84bb Manivannan Sadhasivam 2022-03-01  147  
 
 -- 
-மணிவண்ணன் சதாசிவம்
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
