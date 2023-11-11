@@ -1,76 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8359F7E8CA1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 21:47:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A6B77E8CA5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 21:49:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DF5EFB20A3A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 20:47:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C1A8280DDF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Nov 2023 20:49:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F67911720;
-	Sat, 11 Nov 2023 20:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5672C1B274;
+	Sat, 11 Nov 2023 20:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q1zBnuKZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kX/kZTon"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66DF1B283
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 20:47:31 +0000 (UTC)
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E5E72D64
-	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 12:47:30 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-9d216597f64so506961466b.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 12:47:30 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B4111720
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 20:49:25 +0000 (UTC)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2CBC2D73
+	for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 12:49:23 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-40a46ea95f0so14220675e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Nov 2023 12:49:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699735649; x=1700340449; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699735762; x=1700340562; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Peg1pxCwGlnhNKPOTBWdvFK6RQItCTgLiK4ys22+0zI=;
-        b=q1zBnuKZgE8y/IgPhTpQCy1JhBOB4879vLQuhvTmXNGAOT70oRsrnWRRGMi+K/RpkN
-         pasJP1BhPp3rX9kXmXOQCaGTDBDWBV0vNF3o5Z3avjHm2jk6etL0Rw8ljatHsvGNOTeC
-         YM1eQjy4eku2213kDgS+yYpdAQv9lYfUAatfKcE8N6ajJG5TnSjNG0rz/qinNLexK2oj
-         iqOBfYznH9pIPFdJPPDx4MnkakKLo1IuDaYjqxztISHt/wJwhrvIE8HBYuUU5JxD+Tzz
-         CilP9Gb0oEAMG7cLW57MBOQcyhm3x1E94+wLbpyeX9voe7FzynlrcmgTZ58lEs2ckjew
-         tMqQ==
+        bh=zzxKG8FmQG/QiSceBe9NLjt7GSztbReGb177SqO02RA=;
+        b=kX/kZTonsEkLGMYQZDrFfrZTnwo3Sb46n8qZg1mAIRXC0x4PFPiAs4tBGllovOH36Q
+         49bkr3ysua4ADJTjbVg9qKKMH13AOx1qWNI+7KGQBNOPR/eDzgVy85oNehpenN+8RsmS
+         AtRh8cPMwMwwFrjcRT69aOf38PDpwTAo9/gHqZjVvC4QnI8yylekj63AdhZ4mPO92RxS
+         vsARFk3WFCfoQc8L22AtQq7IDgY3PhxXBkfNpnu8sfzPfqH1nyPl5EnNi74LDGbuzYD/
+         ykv8NBZBD7JBL/iDgIb7ZpvqYo2c+7p2fIbbcUJMQP2fcBC1jU3CcTnq+TZpioIe+k+q
+         zXTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699735649; x=1700340449;
+        d=1e100.net; s=20230601; t=1699735762; x=1700340562;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Peg1pxCwGlnhNKPOTBWdvFK6RQItCTgLiK4ys22+0zI=;
-        b=e9TC/uS/Irw8uUE/6lyPdzAI3FqYndluutOzyM6msXoPk0F/IHG56Uo5+ZBww0HyuV
-         GFSTLwI48MdzqtDJQHmaA3Hv2WMpADgUv8LN7iYEDD73gPRDhCVX756YWPedsfog+3GL
-         A8WJNpipL9VWp/e2vIi24Jzsboe7bQBR7ahaNiBV19N2bpqyIqEsd7b3gUqR7HQq9YqG
-         QBC9hdt1fka9eKXiUAOYmX8fRt6mle9cBNdkeKUX6oXi1z74aSXi5MeJgvjmNwC64+j2
-         XA/toTYykNWNIrQ9scM9UOMy2DstqOfScX9UO10wkhTw0Gz+PuakzbSewatTSZWcaH1N
-         Ommw==
-X-Gm-Message-State: AOJu0YxnTj1z0RsQjvcWZLy6oowPsKlGYtr/bO4pceBuyINV9AsbarSK
-	fh7OliPKATeh7+nL+pzJ47Jy9w==
-X-Google-Smtp-Source: AGHT+IE/AWG1HaOZp60zhem7NngI/0APEHckp98uQ4HTdPA7+GViVgAA3x2I697DRgKOwHFqYwMXbw==
-X-Received: by 2002:a17:906:234d:b0:9d3:f436:6809 with SMTP id m13-20020a170906234d00b009d3f4366809mr1743119eja.39.1699735649053;
-        Sat, 11 Nov 2023 12:47:29 -0800 (PST)
+        bh=zzxKG8FmQG/QiSceBe9NLjt7GSztbReGb177SqO02RA=;
+        b=WrDU4pQ6EMT85Mb7AT2Y8O3iJLzOX08DQNxn2cpkAh4XL8EU9VgwD6Xh3MU8/SClFF
+         IDxWHQqETsYwunxa4L5eR/YfjgLbCbDLwP88IWlHciF68GWhPX2Hvo5c6FGTz6zO7h/x
+         Rukijyo255f1ElksEUctlzDKBCNNQAVplayoyQi+cyfk40cz0euXkc/fNHfMqD0WP2Zy
+         0fFXEJu995pT0gMzbv8LcC5VRklWenTCSxF3/ieBta/aq2WS6nCy69REhs7bUqz9uYnY
+         BtYxCwVA/RF47PkfFYjAidbGPj186xXV5nXi7g+U9xOoye8UsVfZh7wS0Ek8gVwuxSYY
+         /dSw==
+X-Gm-Message-State: AOJu0YyhjF3DREKOPgI4ONEftyMyMudKVfIcPhpD8VG73bxAWAsl354n
+	/rZHa6jETLYHj7aIARtQXxCwoh05g8/2paKQNI4=
+X-Google-Smtp-Source: AGHT+IGq6iWtEtCacNYFkoPOd1d+bCOaS3T0W8tGIc01caux6dOOsSo2ncPZB/+eM1mLqDqakLRVAA==
+X-Received: by 2002:a05:600c:19cd:b0:405:36a0:108f with SMTP id u13-20020a05600c19cd00b0040536a0108fmr2338642wmq.41.1699735762281;
+        Sat, 11 Nov 2023 12:49:22 -0800 (PST)
 Received: from krzk-bin.. ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id dc3-20020a170906c7c300b009b947f81c4asm1547346ejb.155.2023.11.11.12.47.27
+        by smtp.gmail.com with ESMTPSA id t9-20020a05600c198900b00407752bd834sm3121226wmq.1.2023.11.11.12.49.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Nov 2023 12:47:28 -0800 (PST)
+        Sat, 11 Nov 2023 12:49:21 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sc8180x: align APSS with bindings
-Date: Sat, 11 Nov 2023 21:47:25 +0100
-Message-Id: <20231111204725.35707-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v5 0/3] mailbox/arm64: qcom: rework compatibles for fallback (continued)
+Date: Sat, 11 Nov 2023 21:49:13 +0100
+Message-Id: <20231111204916.35835-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -80,30 +81,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-SC8180x APSS Devicetree bindings expect qcom,sc8180x-apss-shared to use
-qcom,sdm845-apss-shared fallback:
+Hi,
 
-  sc8180x-lenovo-flex-5g.dtb: mailbox@17c00000: compatible: 'oneOf' conditional failed, one must be fixed:
-    ['qcom,sc8180x-apss-shared'] is too short
+Changes since v4
+================
+v3: https://lore.kernel.org/linux-devicetree/20230322174148.810938-1-krzysztof.kozlowski@linaro.org/
+v4: https://lore.kernel.org/linux-devicetree/20230327140752.163009-1-krzysztof.kozlowski@linaro.org/
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Important: v3 and v4 are quite different.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index a34f438ef2d9..6f5c07fa6c2e 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -3421,7 +3421,7 @@ intc: interrupt-controller@17a00000 {
- 		};
- 
- 		apss_shared: mailbox@17c00000 {
--			compatible = "qcom,sc8180x-apss-shared";
-+			compatible = "qcom,sc8180x-apss-shared", "qcom,sdm845-apss-shared";
- 			reg = <0x0 0x17c00000 0x0 0x1000>;
- 			#mbox-cells = <1>;
- 		};
+v3 did not reach full consensus, so I prepared v4 doing a subset of the
+original change. Then DTS pieces from the v3 were applied, without bindings
+and driver.  OTOH, bindings and driver were applied from v4.
+So we have DTS from v3 and driver+bindings from v4.
+
+This leaves us in inconsistent state and several warnings:
+['qcom,msm8976-apcs-kpss-global', 'qcom,msm8994-apcs-kpss-global', 'syscon'] is too long
+['qcom,msm8998-apcs-hmss-global', 'qcom,msm8994-apcs-kpss-global'] is too long
+['qcom,sm6115-apcs-hmss-global', 'qcom,msm8994-apcs-kpss-global'] is too long
+['qcom,sdm660-apcs-hmss-global', 'qcom,msm8994-apcs-kpss-global'] is too long
+['qcom,sm6125-apcs-hmss-global', 'qcom,msm8994-apcs-kpss-global'] is too long
+
+Bring back changes from v3, to align bindings and driver with DTS.
+
+Changes since v3
+================
+1. Narrow the scope of the patches after feedback from Dmitry - only few
+   variants are made compatible.
+
+Changes since v2
+================
+1. Split fixes to separate patchset which is now dependency:
+   https://lore.kernel.org/linux-arm-msm/20230322173559.809805-1-krzysztof.kozlowski@linaro.org/T/#t
+2. Add Ack
+3. No other changes, as discussion with Dmitry did not reach conclusion on incompatibility.
+
+Changes since v1
+================
+1. Rebase
+2. Make msm8994 fallback for several variants, not msm8953, because the latter
+   actually might take some clocks.
+3. Two new patches for SDX55.
+4. Minor corrections in bindings style.
+v1: https://lore.kernel.org/all/20230202161856.385825-1-krzysztof.kozlowski@linaro.org/
+
+Best regards,
+Krzysztof
+
+Krzysztof Kozlowski (3):
+  dt-bindings: mailbox: qcom,apcs-kpss-global: drop duplicated
+    qcom,ipq8074-apcs-apps-global
+  dt-bindings: mailbox: qcom,apcs-kpss-global: use fallbacks
+  mailbox: qcom-apcs-ipc: re-organize compatibles with fallbacks
+
+ .../mailbox/qcom,apcs-kpss-global.yaml        | 62 +++++++++++++------
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c       | 10 +--
+ 2 files changed, 48 insertions(+), 24 deletions(-)
+
 -- 
 2.34.1
 
