@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 102B57E921B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Nov 2023 19:46:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 087277E921D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Nov 2023 19:46:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1BCEA1C2028E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Nov 2023 18:46:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9C2C91F20FEA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Nov 2023 18:46:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CA2016415;
-	Sun, 12 Nov 2023 18:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 278B016407;
+	Sun, 12 Nov 2023 18:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VCKr8s05"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w0EQtle/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6BC1641A
-	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Nov 2023 18:46:09 +0000 (UTC)
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C275D2D49
-	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Nov 2023 10:46:07 -0800 (PST)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-da41e70e334so3752022276.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Nov 2023 10:46:07 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56931641F
+	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Nov 2023 18:46:10 +0000 (UTC)
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2519B2D51
+	for <linux-arm-msm@vger.kernel.org>; Sun, 12 Nov 2023 10:46:08 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-da077db5145so3674907276.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 12 Nov 2023 10:46:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699814767; x=1700419567; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=K0UezdLYD5scNL5kYSvTIK/LGcnTqVfERy2ExLqUR88=;
-        b=VCKr8s05r+s7F1MKoBjoD9X5Yju/zxitaUofUYbxEcZRUVgOW5BfpPbmegldxh6aUv
-         U0HdQ4gEfBsJ4rb7HgTCfT+Kp948hd+DZIun+JuZ4CBlFJXP0iDV19GWcH+juCKOX1z4
-         wnuXMsKM+Du/f4T7Qwti/Jk4C2EDFBYgW6ZioMx0fuskJBDIqHYcVA2ceilM7WTYRSnG
-         l/S+5GoC0Rkj+5NzXUltr1HzbsC0lVlkehEODlkdnOomVpQCF0mH0D9WMZ0+7QqsfJ8Z
-         2kOdHBp2KVc/vCQ5JflzJ48q3QkyUwVJQKP9w9uN8ddnoIilwW64BmOCVnSQgAtH/IMA
-         ISTA==
+        d=linaro.org; s=google; t=1699814768; x=1700419568; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wn1DSQebknxYNCCIzKnnQDNVuciT/cA69uS6Y9C3/NY=;
+        b=w0EQtle/VrQujMTYOz5DmXCfLEqKsSocAHMOEdSKPkUBnz6A77q4lmgaoyXw7n4CTO
+         l7FrohYImm49a0JhIZ1CAOFTkeylmZoJrkPf2asS/4ZU7rZy5KSAW1iU21RBUjsxyVr0
+         Sc+aXinoHuHuVxn2ibyIu4rjBc29gvP5tVoG27Od6k//XNlKWDI0kuiOfOEgj40c+2tU
+         IiucPHufhrSgIfLqwmje5AuSEfUb5/wWq6rkaQTp8i8wWdiwoQ7IQ+WAnXA72ADnkuU2
+         Qyf+YZZyxFLAfSXKuqPMc0NyniSS3McAP91TEL/Hs6Zab4BoNZqdf40t1pXwqPECxpcA
+         EYuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699814767; x=1700419567;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K0UezdLYD5scNL5kYSvTIK/LGcnTqVfERy2ExLqUR88=;
-        b=wdNG7jGZOwPtWKJVZt0vORZAqStBl4+fomT4GaVHHV41xF6W79V8YvPqvtJhhOf8ld
-         BB/kyf64lWl9BVhO3oQAsu6DtqIsNnbu+XZdCSHrZdLRJkuQRs2+8fZ4RL4XWwiwDYPk
-         Jxn9m0MCJCeOsM4ohym+vRiIViJgb44OctzOnPOfZw61LRTis20VjgePSY1/TyZniE5h
-         YlXyFBC4J6aS87fUEDXYJAFe/p6iSPDiQqW7UZTXmwNw2ovGZGxkmK4hUDnGsACAYHJO
-         By8L7UqdvraFINljgf7TG0zzJxcAx7Kcp/wmU2vH6wP1u2UXVkRUpjxe1jp9te/fIO8E
-         ifgQ==
-X-Gm-Message-State: AOJu0YwnXV8BwJg1AwDHQkuHPxKdk8Vowml9YwPlFtz1dYlqvo19/R9S
-	/QO6aCdrOMycvJ5q7eCr5HRghw==
-X-Google-Smtp-Source: AGHT+IGzMDV42Dc+z6kVlgJlDpbc3rB95mpnZwob8pQsfQOsfIb2nXUi2vL3ixJhYc5tnfaiJtoJ4A==
-X-Received: by 2002:a25:33c6:0:b0:daf:6259:43d8 with SMTP id z189-20020a2533c6000000b00daf625943d8mr2987278ybz.36.1699814766920;
-        Sun, 12 Nov 2023 10:46:06 -0800 (PST)
+        d=1e100.net; s=20230601; t=1699814768; x=1700419568;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Wn1DSQebknxYNCCIzKnnQDNVuciT/cA69uS6Y9C3/NY=;
+        b=t3Ol7Nz+mbLVxnnzxHNSlVb3ozhLFSYaMAVK5G5LJHheDcvyLOid6wtH0VXD1JYQiI
+         ZNKZ76CGyeLaDw26EY/YpoAvKV9uaB/sbSVAX64fhf1AfKtxny+7aN5mo5uPKzSov/zf
+         InqswE5yfczHietvx/YGIB/GTIAuu6sBpS4nDHc8s9dQ64lP1wZsEF9PEjttRP1WtdzF
+         uWr/bXxlX9PWE2cMjIMvTZrAI/35Ggp4YEsgrCrqJ4grtPEkB6XwP3+N/Uv6pEb6QJ7M
+         YLQO+tHmX6ojSJU9Cq2NAWgUmDDYKcbao3JYNv2TlnI3kUSaqnNNnYkkP+XuvSjF90Qe
+         kOvg==
+X-Gm-Message-State: AOJu0YwnCRChperfz/k+tGZ4aq2B0WBfTmfhQOte4Qh97IX1VnLz6AgB
+	bj2o7REBK3GdjR1qTi3yV5hHSg==
+X-Google-Smtp-Source: AGHT+IHyQiDotozscR8vhf/XovpXjRjO/Idm6MUqMuG5+0cCXZHz0ta8NLpaq1dIbCAPW5EEf77h7g==
+X-Received: by 2002:a25:2604:0:b0:d9a:44fe:be93 with SMTP id m4-20020a252604000000b00d9a44febe93mr4495811ybm.26.1699814768075;
+        Sun, 12 Nov 2023 10:46:08 -0800 (PST)
 Received: from krzk-bin.. ([12.161.6.170])
-        by smtp.gmail.com with ESMTPSA id o17-20020a258d91000000b00d995a8b956csm1104185ybl.51.2023.11.12.10.46.06
+        by smtp.gmail.com with ESMTPSA id o17-20020a258d91000000b00d995a8b956csm1104185ybl.51.2023.11.12.10.46.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 Nov 2023 10:46:06 -0800 (PST)
+        Sun, 12 Nov 2023 10:46:07 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -73,10 +74,12 @@ To: Andy Gross <agross@kernel.org>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 1/2] dt-bindings: PCI: qcom: adjust iommu-map for different SoC
-Date: Sun, 12 Nov 2023 19:45:56 +0100
-Message-Id: <20231112184557.3801-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 2/2] dt-bindings: PCI: qcom: correct clocks for SC8180x and SM8150
+Date: Sun, 12 Nov 2023 19:45:57 +0100
+Message-Id: <20231112184557.3801-2-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20231112184557.3801-1-krzysztof.kozlowski@linaro.org>
+References: <20231112184557.3801-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,32 +88,97 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The PCIe controller on SDX55 has five entries in its iommu-map, MSM8998
-has one and SDM845 has sixteen, so allow wider number of items to fix
-dtbs_check warnings like:
+PCI node in Qualcomm SC8180x DTS has 8 clocks, while one on SM8150 has 7
+clocks:
 
-  qcom-sdx55-mtp.dtb: pcie@1c00000: iommu-map: [[0, 21, 512, 1], [256, 21, 513, 1],
-    [512, 21, 514, 1], [768, 21, 515, 1], [1024, 21, 516, 1]] is too long
+  sc8180x-primus.dtb: pci@1c00000: 'oneOf' conditional failed, one must be fixed:
+    ['pipe', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'ref', 'tbu'] is too short
+
+  sm8150-hdk.dtb: pci@1c00000: 'oneOf' conditional failed, one must be fixed:
+    ['pipe', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'ref', 'tbu'] is too short
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- Documentation/devicetree/bindings/pci/qcom,pcie.yaml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../devicetree/bindings/pci/qcom,pcie.yaml    | 58 ++++++++++++++++++-
+ 1 file changed, 57 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-index 8bfae8eb79a3..14d25e8a18e4 100644
+index 14d25e8a18e4..4c993ea97d7c 100644
 --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
 +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-@@ -62,7 +62,8 @@ properties:
-     maxItems: 8
+@@ -479,6 +479,35 @@ allOf:
+           items:
+             - const: pci # PCIe core reset
  
-   iommu-map:
--    maxItems: 2
-+    minItems: 1
-+    maxItems: 16
- 
-   # Common definitions for clocks, clock-names and reset.
-   # Platform constraints are described later.
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,pcie-sc8180x
++    then:
++      oneOf:
++        - properties:
++            clocks:
++              minItems: 8
++              maxItems: 8
++            clock-names:
++              items:
++                - const: pipe # PIPE clock
++                - const: aux # Auxiliary clock
++                - const: cfg # Configuration clock
++                - const: bus_master # Master AXI clock
++                - const: bus_slave # Slave AXI clock
++                - const: slave_q2a # Slave Q2A clock
++                - const: ref # REFERENCE clock
++                - const: tbu # PCIe TBU clock
++      properties:
++        resets:
++          maxItems: 1
++        reset-names:
++          items:
++            - const: pci # PCIe core reset
++
+   - if:
+       properties:
+         compatible:
+@@ -527,8 +556,35 @@ allOf:
+         compatible:
+           contains:
+             enum:
+-              - qcom,pcie-sc8180x
+               - qcom,pcie-sm8150
++    then:
++      oneOf:
++        - properties:
++            clocks:
++              minItems: 7
++              maxItems: 7
++            clock-names:
++              items:
++                - const: pipe # PIPE clock
++                - const: aux # Auxiliary clock
++                - const: cfg # Configuration clock
++                - const: bus_master # Master AXI clock
++                - const: bus_slave # Slave AXI clock
++                - const: slave_q2a # Slave Q2A clock
++                - const: tbu # PCIe TBU clock
++      properties:
++        resets:
++          maxItems: 1
++        reset-names:
++          items:
++            - const: pci # PCIe core reset
++
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
+               - qcom,pcie-sm8250
+     then:
+       oneOf:
 -- 
 2.34.1
 
