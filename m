@@ -1,67 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 832F67E9840
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 09:56:32 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 474ED7E9844
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 09:56:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16C16280CDC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 08:56:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EFDA41F20CE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 08:56:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B938182DD;
-	Mon, 13 Nov 2023 08:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C653E1863B;
+	Mon, 13 Nov 2023 08:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="3asjtuz7"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="HMvEqzIm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52FC1773A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 08:56:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387AC182D8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 08:56:27 +0000 (UTC)
 Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25EA10D4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 00:56:23 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9ae2cc4d17eso634299266b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 00:56:23 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4645410FB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 00:56:25 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-991c786369cso640400366b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 00:56:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1699865782; x=1700470582; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1699865783; x=1700470583; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8Yy2i2F+9pJywYxY6AKw4sbn/DiDdL44GgjGmpRdRoA=;
-        b=3asjtuz7sgt8quCwhI1cdHSBLmVtwRjEFYRU9UTkuX8DFtQYc5UuI85sxenC1MLo+S
-         LI/bwueDq3LNbZD7UNwel4436vXjg/oDoiIy/fClR3dU34uY1NAZ+ad+/TY8AfKaQokm
-         b11EN04wMukjV8kBpF6U77vmAG9jcMef8eBrgcVAOh13xtS405t3a1AZSbzny8YyiRKq
-         gQSdWmxyE9QsSHummEALpZcQWon7pQKPHhH/IlGYKSreghHBjekbsMoyGDu3f7rA+yNS
-         dpOcIwsp0ROzqnfqu1ye6gvG5UTUkPRoiF5JMQ8Qt+hDnlE+YQZ2enVFh+IcpKQCsUnT
-         +Qjg==
+        bh=u7LwuWo/xQR19drDlZX7ccinmtAJFTBRZl3P7VkhCjE=;
+        b=HMvEqzIm3huRRk/LvVMyldJayReJUcIvxGNx6551nf/ecvuReoVKyPJYDRc90kO5D0
+         4ti8Svgmr4NyuuVql0OtmxNYh53osg0cNqB2uul+sNjsv34Sr5Z2XD+5y+/S724wU5Zu
+         RzPFWBIXQ90vubdusccSXjhLxWlkNCANazc4OuTRcQCiLB7qXPCHb3bao3gWWBAYkFdC
+         eltMxQm3y4ZZR5h9nBL9sAQnoiERgaqI9h9Vpg2Ahio80+z1ekgGNQ1Kq5htWmebkfj1
+         ICnGXKUe5DvTm4iO0bE36ELYdJ7bh1RA1CY52h2vSIEmyQWDO7c9W0GZZhdt1OEUXp/k
+         XkoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699865782; x=1700470582;
+        d=1e100.net; s=20230601; t=1699865783; x=1700470583;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8Yy2i2F+9pJywYxY6AKw4sbn/DiDdL44GgjGmpRdRoA=;
-        b=n3s+Q/Mj9mNfLc2ZrLj5vW5p1ErFNLE69IHvsvsUi3+dYddAhcT1QlyjT9X93rObRS
-         ZFduBcwzyMO3nHlfjMgQk28kRAt5FBMJByz5UFJsmh4t1VZdeoHLWb3VNSzuYUAS93Bj
-         4F2ILqvEgBDf8s9QiYQIfs5i7krcSniyJY5mSw5JRsNEoSd8ymxAdk/oKzPp/kIPv7wp
-         tkM2v7Cib9wk1OssMOLlyXbpwPDt9NWC6IaxcQbIjdI//n713s9lnNiCvrxxF5+juXYo
-         Ioa/RusDNnZF7sMac5f6vvAIRPHT4lYZztUQKUZqO7TwwFLfqEsNZeswQpxQi69EuNVa
-         3yAg==
-X-Gm-Message-State: AOJu0Yxluej6ozKJl/i2sv6sT0CvQa23a7k7oQOp7VJq0N/GNbSs8Sbg
-	pjqwCZ2OzrB5oDljuwnimQ8ycg==
-X-Google-Smtp-Source: AGHT+IFM/lpqUyVAhbMPMKL5aNIUU8Y2d2td7/wT/Q4RZpTSCZABxHEPsS/89HX+GaB730z6a+XDOg==
-X-Received: by 2002:a17:906:4708:b0:9e5:2e15:35c6 with SMTP id y8-20020a170906470800b009e52e1535c6mr4195362ejq.44.1699865782434;
-        Mon, 13 Nov 2023 00:56:22 -0800 (PST)
+        bh=u7LwuWo/xQR19drDlZX7ccinmtAJFTBRZl3P7VkhCjE=;
+        b=e6HhhhddcAjMK4GHNOG7ndnJY1a7X3Ycnib5puSTnGaVyM3GXLxEeVIQPNnGoehMHP
+         lwdV2bQ8PZfVp5xNWEAC3IjsFNqwpx4FQHbKE1uIeQ7yH4JufvYbt0YaFxtc9edwTNs5
+         YuPTytKz/o82JAKSggBIqWdYcfpj53HOAFDntQIYJln4uzsUvkdiqsJ6PrWnc78klzRk
+         rqD7IyV8hELBDswwYTcO+mr5PcqwSJ8Mh1esJ8GzJG4dcjM7PhSeUbwliORC4Fki2KOY
+         1GgUJVHfOx6NAwBXncRWhS5j56UFlFC6r68zCAqm5GafWB2A6JZrP734dfCyD68YYB7H
+         rolw==
+X-Gm-Message-State: AOJu0YwkdGURThFuhxOQWy/0AtwfJt/ek7pfcv7kWCX3+3hX40V05rjq
+	FFI2eU2CrtlZZwnfqmNUxpzvGw==
+X-Google-Smtp-Source: AGHT+IG2SPX6L+vKzqIsrr5ZRHSaYCS1SjrAy3heGkk0fWSk/LQ6Ns4+4rDVY1OcAqIObc2tESSX3w==
+X-Received: by 2002:a17:906:44e:b0:9e6:c845:dba6 with SMTP id e14-20020a170906044e00b009e6c845dba6mr3579811eja.66.1699865783665;
+        Mon, 13 Nov 2023 00:56:23 -0800 (PST)
 Received: from otso.luca.vpn.lucaweiss.eu (k10064.upc-k.chello.nl. [62.108.10.64])
-        by smtp.gmail.com with ESMTPSA id kk22-20020a170907767600b009c758b6cdefsm3673538ejc.128.2023.11.13.00.56.21
+        by smtp.gmail.com with ESMTPSA id kk22-20020a170907767600b009c758b6cdefsm3673538ejc.128.2023.11.13.00.56.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 00:56:21 -0800 (PST)
+        Mon, 13 Nov 2023 00:56:23 -0800 (PST)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Mon, 13 Nov 2023 09:56:12 +0100
-Subject: [PATCH v2 01/11] dt-bindings: remoteproc: qcom: sc7180-pas: Fix
- SC7280 MPSS PD-names
+Date: Mon, 13 Nov 2023 09:56:13 +0100
+Subject: [PATCH v2 02/11] arm64: dts: qcom: sc7280: Remove unused second
+ MPSS reg
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231113-sc7280-remoteprocs-v2-1-e5c5fd5268a7@fairphone.com>
+Message-Id: <20231113-sc7280-remoteprocs-v2-2-e5c5fd5268a7@fairphone.com>
 References: <20231113-sc7280-remoteprocs-v2-0-e5c5fd5268a7@fairphone.com>
 In-Reply-To: <20231113-sc7280-remoteprocs-v2-0-e5c5fd5268a7@fairphone.com>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -89,35 +89,47 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.12.4
 
-The power domains for MPSS on SC7280 are actually named CX and MSS, and
-not CX and MX. Adjust the name which also aligns the bindings with the
-dts and fixes validation.
+The bindings for sc7280-mpss-pas neither expects a second reg nor a
+reg-names property, which is only required by the sc7280-mss-pil
+bindings.
 
-Fixes: 8bb92d6fd0b3 ("dt-bindings: remoteproc: qcom,sc7180-pas: split into separate file")
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Move it to sc7280-herobrine-lte-sku.dtsi, the only place where that
+other compatible is used.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- Documentation/devicetree/bindings/remoteproc/qcom,sc7180-pas.yaml | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi | 2 ++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi                   | 3 +--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-pas.yaml
-index f10f329677d8..6f0bd6fa5d26 100644
---- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-pas.yaml
-+++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-pas.yaml
-@@ -114,11 +114,11 @@ allOf:
-         power-domains:
-           items:
-             - description: CX power domain
--            - description: MX power domain
-+            - description: MSS power domain
-         power-domain-names:
-           items:
-             - const: cx
--            - const: mx
-+            - const: mss
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+index 95505549adcc..203274c10532 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-lte-sku.dtsi
+@@ -33,6 +33,8 @@ &ipa {
  
- unevaluatedProperties: false
+ &remoteproc_mpss {
+ 	compatible = "qcom,sc7280-mss-pil";
++	reg = <0 0x04080000 0 0x10000>, <0 0x04180000 0 0x48>;
++	reg-names = "qdsp6", "rmb";
  
+ 	clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
+ 		 <&gcc GCC_MSS_OFFLINE_AXI_CLK>,
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 5db468d1a06e..0d9cc44066ce 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -2848,8 +2848,7 @@ adreno_smmu: iommu@3da0000 {
+ 
+ 		remoteproc_mpss: remoteproc@4080000 {
+ 			compatible = "qcom,sc7280-mpss-pas";
+-			reg = <0 0x04080000 0 0x10000>, <0 0x04180000 0 0x48>;
+-			reg-names = "qdsp6", "rmb";
++			reg = <0 0x04080000 0 0x10000>;
+ 
+ 			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_LEVEL_HIGH>,
+ 					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
 
 -- 
 2.42.1
