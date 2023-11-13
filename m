@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C50BB7E9BC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:04:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 911147E9BD4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:07:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64A8F1F20F07
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:04:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46FE51F20FB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:07:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B41E1D535;
-	Mon, 13 Nov 2023 12:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 173271D68A;
+	Mon, 13 Nov 2023 12:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PqCgzmcQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uapxKblD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE381D533
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 12:04:13 +0000 (UTC)
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F6CD6D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:04:12 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9c41e95efcbso641097666b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:04:12 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80401D554
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 12:07:27 +0000 (UTC)
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26EB7D73
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:07:26 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-54553e4888bso6555453a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:07:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699877051; x=1700481851; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1699877244; x=1700482044; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=W1HCIwcTyh5yecxbj2P13ttqD9fa1gow9SIDq/cvT2U=;
-        b=PqCgzmcQd/bIwASBv6HhNUqU0Wdbn9ES6y3NsFLUINs7BbMg8bEjq3+5cYzglWUMRo
-         WezUjm2nmhJVJfgibaPsg0OSWMmunDikAaFTe0clikyrhy1t46/blVKs/NxD25O/vWyR
-         rOEw2Gpi/icRtdDeLKdfzfrAqyulVi3tyuSNIf18+975+ZADHOfJSwxxgpGZ9zVnqgmo
-         JqLPMKKHtqETFPa23+zICSTr757VPHi8Y6lSnbA7/FNXtdp6E+1SJlUpHCEdWITbU6xz
-         OeEShF03omV4L8QUY+s0iZSEZOgXZ+pRt9Ur45WhaZGP0Yz9pq6l2XE+y+6P7XSj3KQq
-         3urg==
+        bh=nR7y4Jg2Ac+auB40P6/wbWH5X7rzzXC9e7/AXIOSL30=;
+        b=uapxKblDS+agB4/QTt6hxJEGp4vChxQhclBlqEQaX/21Xby31QghH6DI6Rruhqtkfc
+         FP71PyM+YVbM6S3YVdBK0J9TvUvXw0EIWrVLoKtb9KjbDcaz3Ld+TS653Q5Z/UnVmvQM
+         I39NACBuaaLEFfiYXJtVXAc0m35ICD8pEKTu78LkENmjn30MOcrnb99e8NN+/pEQpyqF
+         i0gpnJEduIzy8Kd4bbvscOmH5GPX/84vRBdZJJXwfsoZN2+QRI06m0FDQPd+mWvbS4Qa
+         +bRkeaShZdz0TWdDMMSsHQDY4sYyQ22AeErK1bxRZV2AUQQBYuBsTOUuVikr2baqFxcD
+         HliA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699877051; x=1700481851;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1699877244; x=1700482044;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W1HCIwcTyh5yecxbj2P13ttqD9fa1gow9SIDq/cvT2U=;
-        b=orkaxVNt16ltju/b3cIltg3e3QirRD/6tDnDZyXHjbIrNlyEmJNye3UWj6S5tNT5rF
-         GOVlaVlnOPp4vepAxrArrcSzWI9GFsnrSstgCpz2Lfo1mtIfHiO2jtKYiZJD781SM0R/
-         J7Fqs5duuQv4r915SpEqVNmQ8gYP/1SvNee3kgR7H8nDYaIWoFi+o2bW5xthVSxU+UGw
-         tqyLVU9f22YZXze0A8XUpw93VS11sGfe5C+NSDjY7NhAovzZJQhyQJVxPXf77h1E1EyV
-         gCXwCbZNxp6AdX8imWPaSYXYgF3iULbvkL+YdxMuhg+GmFrT+PBZVMOKxzSNb1isOjGR
-         2KYA==
-X-Gm-Message-State: AOJu0YzCeGCk1nYSr5qoaY8WCc9nn2kEQWMo/S08gEuKTstpyTu7XuPK
-	hM0BkSTiwIrDrsGOqC8cxIWgeg==
-X-Google-Smtp-Source: AGHT+IGGcqPqE5hm8hZrM7AOVMuWL3ymFZIqPkbzT0zrb+/u8fDCtOnu1JKNBE57z11KRoV1ZEJplQ==
-X-Received: by 2002:a17:906:2515:b0:9c7:5667:5649 with SMTP id i21-20020a170906251500b009c756675649mr4484878ejb.73.1699877050769;
-        Mon, 13 Nov 2023 04:04:10 -0800 (PST)
+        bh=nR7y4Jg2Ac+auB40P6/wbWH5X7rzzXC9e7/AXIOSL30=;
+        b=EDD6HCJxriQMJ/IVo8vJqRw/dYKYmvmGNY85TtCXEcETi0dqzkSQM98Yx5ETqQnxS7
+         q2IN+7GRreLBlpWWvtHUhJeCUV+xSprONZy5Wn6DUPXLCgYDaHxpouamKF/Ia1PkQrdl
+         d/OYO82R9no1tgXB+syEILVBH6fWunc4YGVJlnB6UifXIbpTtaBw/NkteVh8QYGCkQId
+         GBDKknOpMR2zI1Q9i61VwBbTjYH/S8gHrjWP5XchMIPCWSKUWkwpx5pLmv1773KD/C89
+         zWMvxUrWSxl5iwE1NmHqLire0cJgJmC/uCYLf5WaXRDdzQtBirv9SVfzUezvn4vKS0ZQ
+         u52w==
+X-Gm-Message-State: AOJu0YzPC22h09mjgnhvqDQARavFJMmkYbsj/cXx/wvUyVt07yL0Aekj
+	g3jxf/nNGgjq+aQcKOIdVMV9+w==
+X-Google-Smtp-Source: AGHT+IFGXNyx91jlePTnCHs0+zbDtx+pV512qDNcUq3qYaLBGqu/OJpoE2tkA9DUNe0jdKEy6qudaQ==
+X-Received: by 2002:a17:906:6da:b0:9e6:ccad:b45d with SMTP id v26-20020a17090606da00b009e6ccadb45dmr4669015ejb.49.1699877244420;
+        Mon, 13 Nov 2023 04:07:24 -0800 (PST)
 Received: from [192.168.201.100] (178235177064.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.64])
-        by smtp.gmail.com with ESMTPSA id gx24-20020a170906f1d800b009c503bf61c9sm3868184ejb.165.2023.11.13.04.04.09
+        by smtp.gmail.com with ESMTPSA id k15-20020a17090646cf00b009932337747esm3874925ejs.86.2023.11.13.04.07.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Nov 2023 04:04:10 -0800 (PST)
-Message-ID: <2f533b7e-c758-4213-a838-1639e79d7d39@linaro.org>
-Date: Mon, 13 Nov 2023 13:04:09 +0100
+        Mon, 13 Nov 2023 04:07:24 -0800 (PST)
+Message-ID: <651e9b17-5c08-4d6c-b318-cacfa2341d7d@linaro.org>
+Date: Mon, 13 Nov 2023 13:07:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,17 +67,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: correct LED panic
- indicator
+Subject: Re: [PATCH 3/4] clk: qcom: videocc-sm8150: Update the
+ video_pll0_config
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Andy Gross <agross@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231111094623.12476-1-krzysztof.kozlowski@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20231110065029.2117212-1-quic_skakitap@quicinc.com>
+ <20231110065029.2117212-4-quic_skakitap@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -114,20 +116,19 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231111094623.12476-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231110065029.2117212-4-quic_skakitap@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11.11.2023 10:46, Krzysztof Kozlowski wrote:
-> There is no "panic-indicator" default trigger but a property with that
-> name:
+On 10.11.2023 07:50, Satya Priya Kakitapalli wrote:
+> Update the video_pll0_config to configure the test_ctl_hi and
+> test_ctl_hi1 values.
 > 
->   qrb5165-rb5.dtb: leds: led-user4: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
-> 
-> Fixes: b5cbd84e499a ("arm64: dts: qcom: qrb5165-rb5: Add onboard LED support")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver for SM8150")
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+These values are not present on LA.UM.7.1.r1. Can you confirm internally
+that they're valid?
 
 Konrad
 
