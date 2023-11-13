@@ -1,113 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C5407E9E1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 15:06:55 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A28D27E9E37
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 15:11:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7F5D280DD0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 14:06:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3144AB20975
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 14:11:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3833B20B35;
-	Mon, 13 Nov 2023 14:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5398E20B2E;
+	Mon, 13 Nov 2023 14:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Kp1NHbLM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J3ay90WH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3E920B22
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 14:06:48 +0000 (UTC)
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71921D63
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 06:06:47 -0800 (PST)
-Received: by mail-oi1-x22c.google.com with SMTP id 5614622812f47-3b3f6dd612cso2624713b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 06:06:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699884406; x=1700489206; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oyrc6FshW+z5U6vJqacgbhem3IFjlCautuYHlaSBfRo=;
-        b=Kp1NHbLMShO28/6rld1FHRBGeFLK3VII9fHxBbUlmeGgms7ogzJZKdaL8Z68X+kvoq
-         DoCHxOsQuAqfvg5+XfB1m0HqlO0oKAd6z/bTjjZlGybQX+vcRi8z5Qxt68HhfSk12feu
-         Aiw2Ch5Q0gMSNm9M+sHkd5puGGROrGAnLhu+jwppJ7evvcs+KzCCSajXhQoe2GlFPtV7
-         OXAaN86p+IEvWsInflTdW2l/q5oFfG0JV/KzvNioBzcqPmpsC15FwmI26gLh+coUgAQU
-         4ctAl685rknz+4XG2IKWzSwq1GT6j5HXY8Kx0O+A5rneCpBEH46wKnF3FBZ/Y+ICUOjc
-         JFzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699884406; x=1700489206;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oyrc6FshW+z5U6vJqacgbhem3IFjlCautuYHlaSBfRo=;
-        b=E5SkfvoowJdFntA1ETaTo2W9OOvL4JfqHgDmsv9VuWAfZHigEQI+Fv69760FBXoONB
-         eiCuLEao5JdFz2m3mDuL4EMZoybrY2xbeOKd+t/3dC9prjZaLVtF5Gm4aBp/+fF4QJQf
-         zj5zoF866EGlRiNTzaXz6GJQdjals7kSzfGkVE/XJTcSoJ6AYIcoO7Fehd4hB67Kr8zp
-         DbqsRgwyktNBDBbArDKJTCBnOqdenwtak92niRm5ldictQdOWXhEiNJ5fuXFhe8bpCDi
-         ceMDmrA2mvxirh153hroq+8K/9fmisncls/3ljOM73xyAW55Rj27+9M5RWEPXZkfTkOJ
-         HjtQ==
-X-Gm-Message-State: AOJu0Yy3D+FVwVXlCdW/wvc/kY3VzjOZ9z6NJCOr6QZOoqen3hTKSfqB
-	Lpg1rHo6unYinwUbuzS3QN3S3H5V0sGm5u0kl5Uc3g==
-X-Google-Smtp-Source: AGHT+IE4LQpkmC3gS33ZjHm+rJ8dP97RNKPJ49IFJV4V19OzOvJ1ryzjchxsRhW4RHqYW/kj+O1GDoUY74Q5mJrcJgQ=
-X-Received: by 2002:a05:6808:320b:b0:3b5:9965:2bc2 with SMTP id
- cb11-20020a056808320b00b003b599652bc2mr9568936oib.23.1699884406725; Mon, 13
- Nov 2023 06:06:46 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6A22031B;
+	Mon, 13 Nov 2023 14:10:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B90C433C8;
+	Mon, 13 Nov 2023 14:10:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699884657;
+	bh=2vpy58rQTHTP9krRVNgcAQrv/Q/+avRu6pax/Biruds=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=J3ay90WHC4ALuWZzRA6IAYlybdjApZS9p2RVDXtuXHnkWS7x0DOZEkfn/uXDp1IaA
+	 WKiPqVM1DJvqdJejm4ZO6tnPrJqw8ph6QyrtjW28Eq1bIzm31leY/dGKFXYYWHqYBg
+	 y4VAgNZtktIzHV0GYWAuc05wxFSClKCWiwIG1puKsf6fT95+mEDV1F8PJLUgOpzpCb
+	 B8BJO0bcBD1XK821yKbKpCc1kInm6+ae4p8lWG++1F9rXd4OwuakoWh+YekOWxi9/m
+	 a2CnN0GSmBUE+1nNZ1B68QZDp9mnQKs+PnOVIYmYyHH8fjQraIzZIjG4zR0lMfkvN0
+	 GjZqHE6whIX9g==
+From: Kalle Valo <kvalo@kernel.org>
+To: "Luca Weiss" <luca.weiss@fairphone.com>
+Cc: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,  "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>,  "Andy Gross" <agross@kernel.org>,  "Bjorn
+ Andersson" <andersson@kernel.org>,  "Mathieu Poirier"
+ <mathieu.poirier@linaro.org>,  "Rob Herring" <robh+dt@kernel.org>,
+  "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,  "Conor
+ Dooley" <conor+dt@kernel.org>,  "Manivannan Sadhasivam" <mani@kernel.org>,
+  <cros-qcom-dts-watchers@chromium.org>,
+  <~postmarketos/upstreaming@lists.sr.ht>,  <phone-devel@vger.kernel.org>,
+  "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,  "Rob Herring"
+ <robh@kernel.org>,  Matti =?utf-8?Q?Lehtim=C3=A4ki?=
+ <matti.lehtimaki@gmail.com>,
+  <linux-arm-msm@vger.kernel.org>,  <linux-remoteproc@vger.kernel.org>,
+  <devicetree@vger.kernel.org>,  <linux-kernel@vger.kernel.org>,
+  <ath11k@lists.infradead.org>
+Subject: Re: [PATCH 9/9] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable WiFi
+References: <20231027-sc7280-remoteprocs-v1-0-05ce95d9315a@fairphone.com>
+	<20231027-sc7280-remoteprocs-v1-9-05ce95d9315a@fairphone.com>
+	<12ea48bd-5022-4820-815a-89ef23ec9385@linaro.org>
+	<CWMK0AQRL87L.1F9MIDVQ4J439@fairphone.com>
+	<CAA8EJpqCeW8NVcrpwo6JVn0kE2W-QMELB1YH7i7pgOH6qiPbCQ@mail.gmail.com>
+	<87zfzhu9kx.fsf@kernel.org> <CWXP3TCW3A1G.2ME0JJT3S540G@fairphone.com>
+Date: Mon, 13 Nov 2023 16:10:51 +0200
+In-Reply-To: <CWXP3TCW3A1G.2ME0JJT3S540G@fairphone.com> (Luca Weiss's message
+	of "Mon, 13 Nov 2023 13:50:21 +0100")
+Message-ID: <87r0ktu4k4.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231106-topic-sm8650-upstream-tlmm-v3-0-0e179c368933@linaro.org>
-In-Reply-To: <20231106-topic-sm8650-upstream-tlmm-v3-0-0e179c368933@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Mon, 13 Nov 2023 15:06:35 +0100
-Message-ID: <CACRpkdYB7AQZ7HeNmE5d716sWz5_MHiVtAet6P5XOC1etDKNcw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] pinctrl: qcom: Introduce Pinctrl/GPIO for SM8650
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Nov 6, 2023 at 9:32=E2=80=AFAM Neil Armstrong <neil.armstrong@linar=
-o.org> wrote:
+"Luca Weiss" <luca.weiss@fairphone.com> writes:
 
-> The SM8650 Top Level Mode Multiplexer supports 211 GPIOs,
-> and the usual UFS Reset, SDC Clk/Cmd/Data special pins.
+>> >> > > --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+>> >> > > +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+>> >> > > @@ -713,3 +713,7 @@ &venus {
+>> >> > >     firmware-name = "qcom/qcm6490/fairphone5/venus.mbn";
+>> >> > >     status = "okay";
+>> >> > >  };
+>> >> > > +
+>> >> > > +&wifi {
+>> >> > > +   status = "okay";
+>> >> > qcom,ath11k-calibration-variant?
+>> >>
+>> >> What value would I put there for my device? Based on existing usages
+>> >> (mostly for ath10k) I'd say "Fairphone_5"?
+>> >
+>> > I think this is fine.
+>>
+>> From style point of view I would prefer lower case and dashes, for
+>> example "fairphone-5" but I'm just nitpicking, uppercase and underscores
+>> work fine as well.
 >
-> An handful of pins can have their IRQ generated by the PDC
-> module, and for this support for the new wakeup_present &
-> wakeup_enable_bit is required to allow the "wakeup" event
-> to be passed to PDC and generate an interrupt or a wakeup
-> system event.
->
-> As SM8550, it also supports the i2c_pull_bit bit to enable the
-> on-SoC load resistor for I2C busses.
->
-> Dependencies: None
->
-> For convenience, a regularly refreshed linux-next based git tree containi=
-ng
-> all the SM8650 related work is available at:
-> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstr=
-eam/integ
->
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> I really don't mind, but I used "Fairphone_5" in v2 now, but I can
+> change it for v3 if that happens if you wish.
 
-Patches applied, unless Bjorn has some last minutes regrets,
-they are in.
+Nah, no need to resend. That's fine.
 
-Had to rebase the last patch manually because of Krzysztof's
-LPASS driver, check the result pls.
+But in the future please try to CC the ath11k list for patches like
+this, easier to follow what's happening.
 
-Yours,
-Linus Walleij
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
