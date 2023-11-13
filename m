@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 911147E9BD4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:07:35 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16FA37E9BE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:12:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46FE51F20FB8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:07:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9ADA0B2096B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:11:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 173271D68A;
-	Mon, 13 Nov 2023 12:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 609791D68D;
+	Mon, 13 Nov 2023 12:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uapxKblD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wU9Xxd6o"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80401D554
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 12:07:27 +0000 (UTC)
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26EB7D73
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:07:26 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-54553e4888bso6555453a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:07:26 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228EB1CFAC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 12:11:53 +0000 (UTC)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D850CD75
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:11:51 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-5401bab7525so7168391a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:11:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699877244; x=1700482044; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1699877510; x=1700482310; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=nR7y4Jg2Ac+auB40P6/wbWH5X7rzzXC9e7/AXIOSL30=;
-        b=uapxKblDS+agB4/QTt6hxJEGp4vChxQhclBlqEQaX/21Xby31QghH6DI6Rruhqtkfc
-         FP71PyM+YVbM6S3YVdBK0J9TvUvXw0EIWrVLoKtb9KjbDcaz3Ld+TS653Q5Z/UnVmvQM
-         I39NACBuaaLEFfiYXJtVXAc0m35ICD8pEKTu78LkENmjn30MOcrnb99e8NN+/pEQpyqF
-         i0gpnJEduIzy8Kd4bbvscOmH5GPX/84vRBdZJJXwfsoZN2+QRI06m0FDQPd+mWvbS4Qa
-         +bRkeaShZdz0TWdDMMSsHQDY4sYyQ22AeErK1bxRZV2AUQQBYuBsTOUuVikr2baqFxcD
-         HliA==
+        bh=7EqdrZ36ZPDXnu6LaxvYm50LDUtFPDle2SqxeXECmaQ=;
+        b=wU9Xxd6o3MrAtIFfo42yi6L6N2lwWSisjy9+KGFy/sL06O6j+Zee7D+N/eqorktgmh
+         vjpVAD/gztdMj7Lgq3b7IUwZ5CICrIaoBtHYuqlNvu0G4Kf62DMY0NyP6Uq4bmUk1XgA
+         tDe8fz8H2xYfwGmxeA3RL1KAs6p/tPsRwEC00mtjRtrxGozML7XgAjwsyeSWo1pz79kC
+         8Nldssy/Pcs0j8PGEhD1kZMvW/JNgLQqIJQYSDFFQPr/du9MEIegKIOooVw0AVf1MJlH
+         fSljt4gQ1NQBoQgFw8VxJOBkzPWKpw1kUF0jFhiOCOEol4gNay4ccKgBdf7aLE0suErj
+         y/Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699877244; x=1700482044;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1699877510; x=1700482310;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nR7y4Jg2Ac+auB40P6/wbWH5X7rzzXC9e7/AXIOSL30=;
-        b=EDD6HCJxriQMJ/IVo8vJqRw/dYKYmvmGNY85TtCXEcETi0dqzkSQM98Yx5ETqQnxS7
-         q2IN+7GRreLBlpWWvtHUhJeCUV+xSprONZy5Wn6DUPXLCgYDaHxpouamKF/Ia1PkQrdl
-         d/OYO82R9no1tgXB+syEILVBH6fWunc4YGVJlnB6UifXIbpTtaBw/NkteVh8QYGCkQId
-         GBDKknOpMR2zI1Q9i61VwBbTjYH/S8gHrjWP5XchMIPCWSKUWkwpx5pLmv1773KD/C89
-         zWMvxUrWSxl5iwE1NmHqLire0cJgJmC/uCYLf5WaXRDdzQtBirv9SVfzUezvn4vKS0ZQ
-         u52w==
-X-Gm-Message-State: AOJu0YzPC22h09mjgnhvqDQARavFJMmkYbsj/cXx/wvUyVt07yL0Aekj
-	g3jxf/nNGgjq+aQcKOIdVMV9+w==
-X-Google-Smtp-Source: AGHT+IFGXNyx91jlePTnCHs0+zbDtx+pV512qDNcUq3qYaLBGqu/OJpoE2tkA9DUNe0jdKEy6qudaQ==
-X-Received: by 2002:a17:906:6da:b0:9e6:ccad:b45d with SMTP id v26-20020a17090606da00b009e6ccadb45dmr4669015ejb.49.1699877244420;
-        Mon, 13 Nov 2023 04:07:24 -0800 (PST)
+        bh=7EqdrZ36ZPDXnu6LaxvYm50LDUtFPDle2SqxeXECmaQ=;
+        b=SRmEnrjaNAwbVN6l9Z+mw9H5tWwfEC4yOp9oS+FHjnfh8/YQ/gSkfbl1Y54yqFghEC
+         R/+oMqswDXi0hRYJ/qLxRqXpJc3ZiumlXW5vK522QpDZes7Vn302l5kOFZrjA/bVvxBR
+         EQqjibbkahEY9nvujuzXrRJ/fEdah73Zigw2rDjO3Awii97dQrEYjygkeuAnVPcdO+du
+         HT1go3QO2TH9wVBCPOssvWaqTUMvtxhkX1Si7Vxb4uPdClx99D/6XKE0wkcf8alOdJ8v
+         pF16Fdh8hfBF6fO9MnGYrcqnOCbeGirVh/S9pyf3XnhNWNpAJceiehOLHfvJVaOdUx/F
+         e/rA==
+X-Gm-Message-State: AOJu0YwoZVUPus+0EdUjqjkYRrcWEDNZUtN1tMFcu7ITCIcAmwTuI5cr
+	pba0YCLsgRxV+H5mhkpanEeHrg==
+X-Google-Smtp-Source: AGHT+IG1PhFHUdC2NObfBurn2eB2A3eq0QSf6I1IKvPY9cDMg28zv8cA+qVlTw8nUwRcP7bLlx1VIQ==
+X-Received: by 2002:a17:906:7708:b0:9e0:9d26:420a with SMTP id q8-20020a170906770800b009e09d26420amr5081477ejm.65.1699877510327;
+        Mon, 13 Nov 2023 04:11:50 -0800 (PST)
 Received: from [192.168.201.100] (178235177064.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.64])
-        by smtp.gmail.com with ESMTPSA id k15-20020a17090646cf00b009932337747esm3874925ejs.86.2023.11.13.04.07.23
+        by smtp.gmail.com with ESMTPSA id d21-20020a1709064c5500b00991faf3810esm4033861ejw.146.2023.11.13.04.11.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Nov 2023 04:07:24 -0800 (PST)
-Message-ID: <651e9b17-5c08-4d6c-b318-cacfa2341d7d@linaro.org>
-Date: Mon, 13 Nov 2023 13:07:22 +0100
+        Mon, 13 Nov 2023 04:11:50 -0800 (PST)
+Message-ID: <329b7b96-dc08-4f5b-92e8-2fe39ecb5cda@linaro.org>
+Date: Mon, 13 Nov 2023 13:11:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,19 +67,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] clk: qcom: videocc-sm8150: Update the
- video_pll0_config
+Subject: Re: [PATCH] arm64: dts: qcom: sc8180x: align APSS with bindings
 Content-Language: en-US
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Andy Gross <agross@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20231110065029.2117212-1-quic_skakitap@quicinc.com>
- <20231110065029.2117212-4-quic_skakitap@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231111204725.35707-1-krzysztof.kozlowski@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -116,19 +112,20 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231110065029.2117212-4-quic_skakitap@quicinc.com>
+In-Reply-To: <20231111204725.35707-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10.11.2023 07:50, Satya Priya Kakitapalli wrote:
-> Update the video_pll0_config to configure the test_ctl_hi and
-> test_ctl_hi1 values.
+On 11.11.2023 21:47, Krzysztof Kozlowski wrote:
+> SC8180x APSS Devicetree bindings expect qcom,sc8180x-apss-shared to use
+> qcom,sdm845-apss-shared fallback:
 > 
-> Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver for SM8150")
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>   sc8180x-lenovo-flex-5g.dtb: mailbox@17c00000: compatible: 'oneOf' conditional failed, one must be fixed:
+>     ['qcom,sc8180x-apss-shared'] is too short
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-These values are not present on LA.UM.7.1.r1. Can you confirm internally
-that they're valid?
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
