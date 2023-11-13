@@ -1,100 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75CF47EA3E0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 20:40:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90D1D7EA4F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 21:40:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30132280E70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 19:40:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42F731F226AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 20:40:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 652202375F;
-	Mon, 13 Nov 2023 19:40:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vGEzhC91"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58A0523776;
+	Mon, 13 Nov 2023 20:40:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423867E;
-	Mon, 13 Nov 2023 19:40:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E1EC433CA;
-	Mon, 13 Nov 2023 19:40:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699904432;
-	bh=Pku/AXmSkmETBoNY2XfS16sT2QpxqRxPSU/j8yciQ/M=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=vGEzhC91V07BOuK8Jbxel2UenXl9kJFd7nA88SPftbENAyZeJcErL7BR6g38rRobQ
-	 tzPrf+hUjVwEcBqwtdQUMBdlVjo90V2wqukXwQFpzlTl9PVT1Z90AJ14ltvEHY5Ttg
-	 wNYx2U9rASpyT9LAX2/H9JKMI1kkuROoa7FbbCEvVhUwKUcPs8+N3XvAONshd+tjrV
-	 CejvZC7O6zxZFLNdCkzqBwEaodp30foC84rjldsbtmoaXl6DUQeJvirIuah6vsCEuf
-	 eENr4GGXtokqYKW9/kvaSSiD2LwWzQtDZDYhEb9DmNm9HwUdJ2nBjRaDazhbt7HHQQ
-	 Eb/pScxJSGhBQ==
-From: Mark Brown <broonie@kernel.org>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Robert Marko <robimarko@gmail.com>, 
- Dang Huynh <danct12@riseup.net>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org
-In-Reply-To: <20231106-pm8937-v1-0-ec51d9eeec53@riseup.net>
-References: <20231106-pm8937-v1-0-ec51d9eeec53@riseup.net>
-Subject: Re: (subset) [PATCH 0/8] Add PM8937 PMIC support
-Message-Id: <169990442820.3294075.3854725538330307845.b4-ty@kernel.org>
-Date: Mon, 13 Nov 2023 19:40:28 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F4A224C8;
+	Mon, 13 Nov 2023 20:40:47 +0000 (UTC)
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A3DD57;
+	Mon, 13 Nov 2023 12:40:46 -0800 (PST)
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3b6ce6fac81so2030644b6e.1;
+        Mon, 13 Nov 2023 12:40:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699908046; x=1700512846;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=zlUyGqF8YFfY+SBOA/cyr6ZOVZJ7c/K2t3V+uvFzoZo=;
+        b=O3QbQ5AIEem6KzcyB8c7fodmhY2Ztze6NXpTr1eO5CHCswrYhNCAfRZ2JyNoXtlAho
+         GBrGYar232rLRx4cWIhIXLGx6+/47fn+2IVVVPcgjlINt1waoKErfkRrHjuVuGOcgbg9
+         xVE7vtgZIfTKm8Olys17DjhUqb9ZwOhv9mPM78bgLbiXmiz4nRFeqI312BVZuR05zTqA
+         TUDRiT1eIimSvYvpwP7OS20OrvWlt1mXB4FUWaKSn9Z7EYDg+VJDEm1hJ3Y6hUg/4gQV
+         3AMaOqsOSCnwWRKIi1oUC02dOV6xR/4A2oi+pdV2E+1JlRI7RdFS+8rix9SYUQtfEZ/2
+         Mgvw==
+X-Gm-Message-State: AOJu0YwRercYPCzD+WWirE4cZp2wWQvezkoCXKlN/+TaJMUjK2x3Fn2y
+	NaYw+wFJ6YW7BzvdiuMyUzCVjEGLmQ==
+X-Google-Smtp-Source: AGHT+IHBzTJq+oL6GFdaOVxFk4/Ftg8k5iAgT1Ifs85gnVEKM22ESG9dmEHGWLJWa+sT6dWirBhxpw==
+X-Received: by 2002:a05:6808:210f:b0:3b2:dc66:21a9 with SMTP id r15-20020a056808210f00b003b2dc6621a9mr10510321oiw.28.1699908046076;
+        Mon, 13 Nov 2023 12:40:46 -0800 (PST)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id l5-20020a056808020500b003b2f3fb081csm902881oie.51.2023.11.13.12.40.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Nov 2023 12:40:45 -0800 (PST)
+Received: (nullmailer pid 38665 invoked by uid 1000);
+	Mon, 13 Nov 2023 20:40:42 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-0438c
+From: Rob Herring <robh@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Bjorn Andersson <andersson@kernel.org>, Mark Gross <markgross@kernel.org>, Conor Dooley <conor+dt@kernel.org>, platform-driver-x86@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, Hans de Goede <hdegoede@redhat.com>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
+In-Reply-To: <20231113145328.42575-2-dmitry.baryshkov@linaro.org>
+References: <20231113145328.42575-1-dmitry.baryshkov@linaro.org>
+ <20231113145328.42575-2-dmitry.baryshkov@linaro.org>
+Message-Id: <169990801021.37946.4455016402393368576.robh@kernel.org>
+Subject: Re: [PATCH 1/3] dt-bindings: connector: usb: add altmodes
+ description
+Date: Mon, 13 Nov 2023 14:40:42 -0600
 
-On Mon, 06 Nov 2023 19:08:28 +0700, Dang Huynh wrote:
-> PM8937 is a power management IC. It is used in various boards with
-> MSM8917, MSM8937, MSM8940 and APQ variants.
+
+On Mon, 13 Nov 2023 16:33:07 +0200, Dmitry Baryshkov wrote:
+> Add description of the USB-C AltModes supported on the particular USB-C
+> connector. This is required for devices like Qualcomm Robotics RB5,
+> which have no other way to express alternative modes supported by the
+> hardware platform.
 > 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../bindings/connector/usb-connector.yaml     | 35 +++++++++++++++++++
+>  1 file changed, 35 insertions(+)
 > 
 
-Applied to
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+yamllint warnings/errors:
 
-Thanks!
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/connector/usb-connector.yaml: $defs:altmodes-list: 'anyOf' conditional failed, one must be fixed:
+	'descrption' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
+	'type' was expected
+	hint: $defs entries must contain schemas
+	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
 
-[3/8] regulator: qcom_spmi: Add PM8937 SPMI regulator
-      commit: c0d6b2acf78e3195a6b100a236210f2e6e42b0c0
-[4/8] dt-bindings: regulator: qcom,spmi-regulator: Document PM8937 PMIC
-      commit: f2b003c8235e0afed60ed426e891e41dab131821
-[5/8] regulator: qcom_smd: Add PM8937 regulators
-      commit: 18cc1cd011131d878be2619b56eff7bc2a278bdf
-[6/8] dt-bindings: regulator: qcom,smd-rpm-regulator: Document PM8937 IC
-      commit: 40e13ae67c6fc2897b49398d6f804b5d1ec63fff
+doc reference errors (make refcheckdocs):
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231113145328.42575-2-dmitry.baryshkov@linaro.org
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+pip3 install dtschema --upgrade
 
-Thanks,
-Mark
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
