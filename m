@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 875D87E9BC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:03:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C50BB7E9BC8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:04:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 416AE280A61
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:03:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64A8F1F20F07
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:04:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AC681CA90;
-	Mon, 13 Nov 2023 12:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B41E1D535;
+	Mon, 13 Nov 2023 12:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vDX1yNZi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PqCgzmcQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2F11CA8C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 12:03:11 +0000 (UTC)
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63822D70
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:03:10 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-50949b7d7ffso6372186e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:03:10 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE381D533
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 12:04:13 +0000 (UTC)
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49F6CD6D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:04:12 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9c41e95efcbso641097666b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:04:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699876988; x=1700481788; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1699877051; x=1700481851; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9dtMC1kY2J9KsRELK2Rm5xgzngoz9ZGk6SxL2fxFBaM=;
-        b=vDX1yNZi3tfnE8F7dY09JVBaP5sBNoLFEcrIJqtlVm4Ihmy2O3uEr7E4k8cdZuTYyq
-         8EU9e1JhJUrCqBSO51859lTju/BRD/9LvgQ3vMFTacIp0oDk4r0H89PO2pX4nutwue2B
-         Zh0f3s1EcPTfPnGCSRcABOk0BFKs5sgS6aSyQHOSBjcjr8ea6n9JzujSUdjXo/SYRt2r
-         IwpMc/Tx79Q4VN3daB73E5X0aVYQCaTg1QA+rZ+cHY5mO3RUa/zhWKNK8gwyapJa9mSp
-         V7haGLt3qe4vvn4vu+zjHG/g9ZwX8wZgm5S73u+51l6UEKXYohMiPeoC0Zf2i8dsTboD
-         IqTA==
+        bh=W1HCIwcTyh5yecxbj2P13ttqD9fa1gow9SIDq/cvT2U=;
+        b=PqCgzmcQd/bIwASBv6HhNUqU0Wdbn9ES6y3NsFLUINs7BbMg8bEjq3+5cYzglWUMRo
+         WezUjm2nmhJVJfgibaPsg0OSWMmunDikAaFTe0clikyrhy1t46/blVKs/NxD25O/vWyR
+         rOEw2Gpi/icRtdDeLKdfzfrAqyulVi3tyuSNIf18+975+ZADHOfJSwxxgpGZ9zVnqgmo
+         JqLPMKKHtqETFPa23+zICSTr757VPHi8Y6lSnbA7/FNXtdp6E+1SJlUpHCEdWITbU6xz
+         OeEShF03omV4L8QUY+s0iZSEZOgXZ+pRt9Ur45WhaZGP0Yz9pq6l2XE+y+6P7XSj3KQq
+         3urg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699876988; x=1700481788;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1699877051; x=1700481851;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9dtMC1kY2J9KsRELK2Rm5xgzngoz9ZGk6SxL2fxFBaM=;
-        b=vnUPyHRwF0BrwGtXx4WdapdKTTK5XrjGcG6/3SbXD3so5nzbM4/r7LDq0wYk5afFw0
-         pRcwTE3nXocxOW5zqQfLsWKUAGnP2zAoUq97ct6t5KSNYhY5nErDP95J/wCuosib+MaY
-         eGUOCX+6lk6aVVg/WQA7dCIUd81R0c8w3mbX8jsDcm5Vb2J+povJp4HSwPWxyDkTpa3c
-         bWXuERr9bKpQuvNoMVDKSXrtvKFA6d0HUiRelh//AG90uBRJTdhjMWIVIA3/y7FMl5Qm
-         uFkk51vLAdH2sUHt+mugsY5OBIBXCKLoF66a/5koRZZkhyYOgMzPLE/YVneQj+8sEzFR
-         ajHw==
-X-Gm-Message-State: AOJu0YwWlNVqUlM+OWkT9pFcctaTe07CcvbGFVZWkq9Ax2Emo2OQePK/
-	S0oiOLZVO+cLot6vky5mKR9f+2eVe4zHdGYIWNY=
-X-Google-Smtp-Source: AGHT+IHYvhsazOb7ua3c5YpJCZ/gCrc2shFaqHQ2g5OW+WZ0/FTegW/L6WIUZPF4bwAUMOTSijEU+g==
-X-Received: by 2002:a05:6512:230a:b0:509:4b59:d40e with SMTP id o10-20020a056512230a00b005094b59d40emr5214561lfu.49.1699876988550;
-        Mon, 13 Nov 2023 04:03:08 -0800 (PST)
+        bh=W1HCIwcTyh5yecxbj2P13ttqD9fa1gow9SIDq/cvT2U=;
+        b=orkaxVNt16ltju/b3cIltg3e3QirRD/6tDnDZyXHjbIrNlyEmJNye3UWj6S5tNT5rF
+         GOVlaVlnOPp4vepAxrArrcSzWI9GFsnrSstgCpz2Lfo1mtIfHiO2jtKYiZJD781SM0R/
+         J7Fqs5duuQv4r915SpEqVNmQ8gYP/1SvNee3kgR7H8nDYaIWoFi+o2bW5xthVSxU+UGw
+         tqyLVU9f22YZXze0A8XUpw93VS11sGfe5C+NSDjY7NhAovzZJQhyQJVxPXf77h1E1EyV
+         gCXwCbZNxp6AdX8imWPaSYXYgF3iULbvkL+YdxMuhg+GmFrT+PBZVMOKxzSNb1isOjGR
+         2KYA==
+X-Gm-Message-State: AOJu0YzCeGCk1nYSr5qoaY8WCc9nn2kEQWMo/S08gEuKTstpyTu7XuPK
+	hM0BkSTiwIrDrsGOqC8cxIWgeg==
+X-Google-Smtp-Source: AGHT+IGGcqPqE5hm8hZrM7AOVMuWL3ymFZIqPkbzT0zrb+/u8fDCtOnu1JKNBE57z11KRoV1ZEJplQ==
+X-Received: by 2002:a17:906:2515:b0:9c7:5667:5649 with SMTP id i21-20020a170906251500b009c756675649mr4484878ejb.73.1699877050769;
+        Mon, 13 Nov 2023 04:04:10 -0800 (PST)
 Received: from [192.168.201.100] (178235177064.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.64])
-        by smtp.gmail.com with ESMTPSA id gx24-20020a170906f1d800b009c503bf61c9sm3868184ejb.165.2023.11.13.04.03.07
+        by smtp.gmail.com with ESMTPSA id gx24-20020a170906f1d800b009c503bf61c9sm3868184ejb.165.2023.11.13.04.04.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Nov 2023 04:03:08 -0800 (PST)
-Message-ID: <8b683f78-c034-4b6e-91f2-8ceab62f4ab0@linaro.org>
-Date: Mon, 13 Nov 2023 13:03:07 +0100
+        Mon, 13 Nov 2023 04:04:10 -0800 (PST)
+Message-ID: <2f533b7e-c758-4213-a838-1639e79d7d39@linaro.org>
+Date: Mon, 13 Nov 2023 13:04:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,14 +67,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] arm64: defconfig: Enable SDM660 Clock Controllers
+Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: correct LED panic
+ indicator
 Content-Language: en-US
-To: Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org
-Cc: Petr Vorel <petr.vorel@gmail.com>, Bjorn Andersson
- <andersson@kernel.org>, Martin Botka <martin.botka@somainline.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-References: <20231112235124.1671468-1-pvorel@suse.cz>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231111094623.12476-1-krzysztof.kozlowski@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,16 +114,20 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231112235124.1671468-1-pvorel@suse.cz>
+In-Reply-To: <20231111094623.12476-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13.11.2023 00:51, Petr Vorel wrote:
-> From: Petr Vorel <petr.vorel@gmail.com>
+On 11.11.2023 10:46, Krzysztof Kozlowski wrote:
+> There is no "panic-indicator" default trigger but a property with that
+> name:
 > 
-> Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+>   qrb5165-rb5.dtb: leds: led-user4: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
+> 
+> Fixes: b5cbd84e499a ("arm64: dts: qcom: qrb5165-rb5: Add onboard LED support")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
-Please provide a commit message.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
