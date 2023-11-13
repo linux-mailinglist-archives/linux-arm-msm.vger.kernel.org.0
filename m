@@ -1,116 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 757BE7E9F4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 15:53:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7491C7E9F1A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 15:47:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 15FE4B20AFC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 14:53:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04CB5B20A4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 14:46:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 636982134B;
-	Mon, 13 Nov 2023 14:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3E0D20B2D;
+	Mon, 13 Nov 2023 14:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VJcfMXe3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZpD9H236"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6505C21356
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 14:53:36 +0000 (UTC)
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FE5D171A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 06:53:34 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-507a0907896so6232672e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 06:53:34 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9015E20B35
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 14:46:49 +0000 (UTC)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F7521711
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 06:46:47 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-32f7abbb8b4so2750264f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 06:46:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699887213; x=1700492013; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KajBuUuJpwuy15xSzO9YMy+TSc6B+gUFFD30MmfVQnM=;
-        b=VJcfMXe3ExiMBDQgYmCyUNtHRsDg+Yhk/Q8ESynJ1U48TbuzDon7N4dz3sWUHXWSCX
-         7y5mxJCq4E7WvR4+G+VohoZfFnwToNZBhO7YVmLoxyq6gCuyXB5oH33ME2oVmh9jm1Ow
-         wk+ww22bB8ouOCnSJo3BKLy8VKsPkSg9q8npY8TprRjzA0EYKGomAWuVTwW5gUgPZ/Qw
-         YtaN08+KPrjWJAdrY2PVyHd42CE18u45HGYKdxa2f0xEU6MTq+RK0GNMfuGGItC3YUyS
-         8vFDuHLadKsK4xyYgss2gF5O1nS3JvLp0xOnBZzqk4Xd5+ObSrz2rjvKW/IRWdYScLE9
-         4CDw==
+        d=linaro.org; s=google; t=1699886806; x=1700491606; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eH/cbv+HTmjd9T6Og+nrY0oFWB621hXpBo6QeBm/lDg=;
+        b=ZpD9H2366KcA0db6Mu4/g0+zwNYDKLjKHr939p5a3t6OPxGoqU5xpCupux0V4GaZG1
+         umko9mVdDObX/FlgIBHZpTGRzSDSSupiQk7Htje2gkF7n4puU1l/0qGECVueI1OVACYw
+         bV4aoVXqswCaW51kd/ZKpkiPfsiKgQnNE461y20xdgnJJx6MUJ6MSC6xmGKCidEIL0W/
+         rg2JJl8S+NOQ1dnBfyH5h3+TuhEzYmpPM+iSshHJLQin61qwt9TiovfCXkt6KSu/e9T8
+         qDhPTAhA3xPmsGrClcDH4QO2LTX4voO6iKMpVn5n1vDULvkBk4+PIYOXQGMnjvYBx+XC
+         dCDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699887213; x=1700492013;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KajBuUuJpwuy15xSzO9YMy+TSc6B+gUFFD30MmfVQnM=;
-        b=kHezQ8CToqYPgmlzK7WymOmf/2MKB7cS8DFmt6SGwh96N2h6lYr1X9d8p/rHJ81ieg
-         xTmsS2nX+PezFlrzCNyn4UVD3F5dobc8mKKekpao5ftoH5p1f31MPgDxLAInYwPFq8e/
-         PAbNkgfIMEeSVDWm47WGew9bkys+MfNxyioLt1OftZVreyVXzUHEN1bgCQSYZEL/qsoB
-         aejX0FIxQilwXeltavKgTcPeUocAqR8+80b4Gg9bpHSxV8Fwl3maQnIYGK33I0G/y8Zh
-         kgIdsnkHx9Y6/YpLyX5WJS5U2jQP7UHQAqQ+i+K9+oAqfljJb0JYGquiC9ZI8DvkBhjD
-         aO6w==
-X-Gm-Message-State: AOJu0Yw2DzbW64dli4DkUgpGqeruGyMk8XpN5sLjHediFWgO8/LUhanx
-	zyTiAbc6kcWbDTl0h3/LwWuopQ==
-X-Google-Smtp-Source: AGHT+IFssdsSeMO8OhuFr2rnn73oVtRkLf8RT6Drkzt27EUHXdwP55jUd9bvfFdMoYRyYOwcBoTFqA==
-X-Received: by 2002:a05:6512:3d90:b0:509:494d:c3d2 with SMTP id k16-20020a0565123d9000b00509494dc3d2mr5401160lfv.32.1699887212950;
-        Mon, 13 Nov 2023 06:53:32 -0800 (PST)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id x24-20020ac24898000000b0050794b05c8asm991429lfc.42.2023.11.13.06.53.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 06:53:32 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Mark Gross <markgross@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	linux-usb@vger.kernel.org
-Subject: [PATCH 3/3] arm64: dts: qcom: qrb5165-rb5: use u16 for DP altmode svid
-Date: Mon, 13 Nov 2023 16:33:09 +0200
-Message-ID: <20231113145328.42575-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231113145328.42575-1-dmitry.baryshkov@linaro.org>
-References: <20231113145328.42575-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20230601; t=1699886806; x=1700491606;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eH/cbv+HTmjd9T6Og+nrY0oFWB621hXpBo6QeBm/lDg=;
+        b=t9QeKbWJUiimc34QDY85QqqStre3OQ0s2JoivVn/3yRrsdv3sPwrXx8MWh5c3PX2I0
+         TEM2EZTSjJhU+af2SbxgAn9xa+EpEHCb8zvUFbYZ+Tiut8SNbFMoXps6PZiQ0ctyL96X
+         uaEVrjj5pGpdCnPhUhebuFYmTxGsC8CBj/glLvHL+vhKQGZy7SezvNe577ijTXpjCT66
+         VNwcMYvkJYf1Qzhhfn5ld3ZwsEPHUL4UsgmYVKvX7L8n5MEnIEkxf/hBmCRYVPp1kpK3
+         2HAnAZAdqDU6L29270IAzc9QlnY1yZLZJEC7a3lorCZoJ9XFn4btwXBccJNZ3KVTzQs/
+         HjsA==
+X-Gm-Message-State: AOJu0YxAbMefwxtXO1Jl39tFzctJutpcDuqLPGPjnYHbGqsAesUExdku
+	PaSRdKfbMKFuG5yBuD4hCmPwTwA1XuyN8/j+nZS34/7f
+X-Google-Smtp-Source: AGHT+IFElif9cHOC9qe+E7tgITXO3oLS7DlfLfXUb9l/5s3/U7DnGOzL81WwyZYiUMApLuYHuAwrUw==
+X-Received: by 2002:a05:6000:178d:b0:32d:a466:48d8 with SMTP id e13-20020a056000178d00b0032da46648d8mr6597253wrg.69.1699886805912;
+        Mon, 13 Nov 2023 06:46:45 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:1bb7:80e:7bf2:f66c? ([2a01:e0a:982:cbb0:1bb7:80e:7bf2:f66c])
+        by smtp.gmail.com with ESMTPSA id o16-20020adfe810000000b0032326908972sm5587673wrm.17.2023.11.13.06.46.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Nov 2023 06:46:45 -0800 (PST)
+Message-ID: <418b98b5-738b-491d-b5a2-692fd26dbf98@linaro.org>
+Date: Mon, 13 Nov 2023 15:46:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 0/3] pinctrl: qcom: Introduce Pinctrl/GPIO for SM8650
+Content-Language: en-US, fr
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20231106-topic-sm8650-upstream-tlmm-v3-0-0e179c368933@linaro.org>
+ <CACRpkdYB7AQZ7HeNmE5d716sWz5_MHiVtAet6P5XOC1etDKNcw@mail.gmail.com>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <CACRpkdYB7AQZ7HeNmE5d716sWz5_MHiVtAet6P5XOC1etDKNcw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Follow the bindings and use 16-bit value for AltMode SVID instead of
-using the full u32.
+Hi Linus,
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 13/11/2023 15:06, Linus Walleij wrote:
+> On Mon, Nov 6, 2023 at 9:32 AM Neil Armstrong <neil.armstrong@linaro.org> wrote:
+> 
+>> The SM8650 Top Level Mode Multiplexer supports 211 GPIOs,
+>> and the usual UFS Reset, SDC Clk/Cmd/Data special pins.
+>>
+>> An handful of pins can have their IRQ generated by the PDC
+>> module, and for this support for the new wakeup_present &
+>> wakeup_enable_bit is required to allow the "wakeup" event
+>> to be passed to PDC and generate an interrupt or a wakeup
+>> system event.
+>>
+>> As SM8550, it also supports the i2c_pull_bit bit to enable the
+>> on-SoC load resistor for I2C busses.
+>>
+>> Dependencies: None
+>>
+>> For convenience, a regularly refreshed linux-next based git tree containing
+>> all the SM8650 related work is available at:
+>> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> 
+> Patches applied, unless Bjorn has some last minutes regrets,
+> they are in.
+> 
+> Had to rebase the last patch manually because of Krzysztof's
+> LPASS driver, check the result pls.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index c8cd40a462a3..88b37ceb13ed 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1425,7 +1425,7 @@ PDO_FIXED_USB_COMM |
- 
- 		altmodes {
- 			displayport {
--				svid = <0xff01>;
-+				svid = /bits/ 16 <0xff01>;
- 				vdo = <0x00001c46>;
- 			};
- 		};
--- 
-2.42.0
+Will check, thanks.
+
+Neil
+
+> 
+> Yours,
+> Linus Walleij
 
 
