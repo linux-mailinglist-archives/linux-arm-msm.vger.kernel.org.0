@@ -1,111 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90D1D7EA4F7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 21:40:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86C967EA518
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 21:55:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42F731F226AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 20:40:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B7B111C208E9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 20:55:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58A0523776;
-	Mon, 13 Nov 2023 20:40:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D91DB2420B;
+	Mon, 13 Nov 2023 20:55:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LQaTqPxs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F4A224C8;
-	Mon, 13 Nov 2023 20:40:47 +0000 (UTC)
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A3DD57;
-	Mon, 13 Nov 2023 12:40:46 -0800 (PST)
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3b6ce6fac81so2030644b6e.1;
-        Mon, 13 Nov 2023 12:40:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699908046; x=1700512846;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zlUyGqF8YFfY+SBOA/cyr6ZOVZJ7c/K2t3V+uvFzoZo=;
-        b=O3QbQ5AIEem6KzcyB8c7fodmhY2Ztze6NXpTr1eO5CHCswrYhNCAfRZ2JyNoXtlAho
-         GBrGYar232rLRx4cWIhIXLGx6+/47fn+2IVVVPcgjlINt1waoKErfkRrHjuVuGOcgbg9
-         xVE7vtgZIfTKm8Olys17DjhUqb9ZwOhv9mPM78bgLbiXmiz4nRFeqI312BVZuR05zTqA
-         TUDRiT1eIimSvYvpwP7OS20OrvWlt1mXB4FUWaKSn9Z7EYDg+VJDEm1hJ3Y6hUg/4gQV
-         3AMaOqsOSCnwWRKIi1oUC02dOV6xR/4A2oi+pdV2E+1JlRI7RdFS+8rix9SYUQtfEZ/2
-         Mgvw==
-X-Gm-Message-State: AOJu0YwRercYPCzD+WWirE4cZp2wWQvezkoCXKlN/+TaJMUjK2x3Fn2y
-	NaYw+wFJ6YW7BzvdiuMyUzCVjEGLmQ==
-X-Google-Smtp-Source: AGHT+IHBzTJq+oL6GFdaOVxFk4/Ftg8k5iAgT1Ifs85gnVEKM22ESG9dmEHGWLJWa+sT6dWirBhxpw==
-X-Received: by 2002:a05:6808:210f:b0:3b2:dc66:21a9 with SMTP id r15-20020a056808210f00b003b2dc6621a9mr10510321oiw.28.1699908046076;
-        Mon, 13 Nov 2023 12:40:46 -0800 (PST)
-Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id l5-20020a056808020500b003b2f3fb081csm902881oie.51.2023.11.13.12.40.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Nov 2023 12:40:45 -0800 (PST)
-Received: (nullmailer pid 38665 invoked by uid 1000);
-	Mon, 13 Nov 2023 20:40:42 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85562374B;
+	Mon, 13 Nov 2023 20:55:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF40C433C7;
+	Mon, 13 Nov 2023 20:55:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699908904;
+	bh=HX9WoOacLDigRvGbp357tabXuA7DcFEvIQHKWbMNF6E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LQaTqPxspSv8+i8SRdoAcGMGMJWmklQSt2qjaNXA1AMMlyY4c9y0uPRZK6v+driu+
+	 PZT+8PlAO2Y0ZIVoKK8JgZWgb0r8FLC9xdYQbyV55NWfJegLb+P+AzXpqSAfuGEYVk
+	 jObnlArfM+YzkpXwglUhxc39+XcVMAtVnr3jumiMlgx6fV0Mwxkg3LITDyNZ3DlLif
+	 r3gn31aLtJF6maVADxUQ9qAFTgxLc6nkrFcZIFAmg5OyjUklwyIl7Q+ARPC84LaNHV
+	 OSBqemaVBcAVWDerDEV+U8L7AyhIYpsVj6XLOGuIlymBEcxs0BenFcnsFiYriMqW/d
+	 Q9OncnEY39k2Q==
+Date: Mon, 13 Nov 2023 15:54:58 -0500
+From: Wolfram Sang <wsa@kernel.org>
+To: Heiner Kallweit <hkallweit1@gmail.com>
+Cc: intel-gfx@lists.freedesktop.org, linux-i2c@vger.kernel.org,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	linux-fbdev@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>, linux-sunxi@lists.linux.dev,
+	linux-mediatek@lists.infradead.org, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	John Stultz <jstultz@google.com>
+Subject: Re: [PATCH 00/20] remove I2C_CLASS_DDC support
+Message-ID: <ZVKNIn1eSlZ9yzco@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	intel-gfx@lists.freedesktop.org, linux-i2c@vger.kernel.org,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	linux-fbdev@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>, linux-sunxi@lists.linux.dev,
+	linux-mediatek@lists.infradead.org, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	John Stultz <jstultz@google.com>
+References: <20231113112344.719-1-hkallweit1@gmail.com>
+ <ZVJhwSS16+/Zzt0f@shikoro>
+ <887657ba-86ca-49bc-b6c3-8543610c3230@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Bjorn Andersson <andersson@kernel.org>, Mark Gross <markgross@kernel.org>, Conor Dooley <conor+dt@kernel.org>, platform-driver-x86@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, Hans de Goede <hdegoede@redhat.com>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-In-Reply-To: <20231113145328.42575-2-dmitry.baryshkov@linaro.org>
-References: <20231113145328.42575-1-dmitry.baryshkov@linaro.org>
- <20231113145328.42575-2-dmitry.baryshkov@linaro.org>
-Message-Id: <169990801021.37946.4455016402393368576.robh@kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: connector: usb: add altmodes
- description
-Date: Mon, 13 Nov 2023 14:40:42 -0600
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6QEpjAXU69jL13kX"
+Content-Disposition: inline
+In-Reply-To: <887657ba-86ca-49bc-b6c3-8543610c3230@gmail.com>
 
 
-On Mon, 13 Nov 2023 16:33:07 +0200, Dmitry Baryshkov wrote:
-> Add description of the USB-C AltModes supported on the particular USB-C
-> connector. This is required for devices like Qualcomm Robotics RB5,
-> which have no other way to express alternative modes supported by the
-> hardware platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/connector/usb-connector.yaml     | 35 +++++++++++++++++++
->  1 file changed, 35 insertions(+)
-> 
+--6QEpjAXU69jL13kX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-yamllint warnings/errors:
+> We're not in a hurry. It's just my experience with patch series' affecting
+> multiple subsystems that typically the decision was to apply the full
+> series via one tree. Also to avoid inquires from maintainers like:
+> Shall I take it or are you going to take it?
+> Of course there may be different opinions. Please advise.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/connector/usb-connector.yaml: $defs:altmodes-list: 'anyOf' conditional failed, one must be fixed:
-	'descrption' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
-	'type' was expected
-	hint: $defs entries must contain schemas
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+Ok, then this turns out to be a negotation thing between the drm/fbdev
+maintainers and me. I *can* take all the patches, of course. But since
+the number of patches touching the non-i2c subsystems is high, I'd like
+to hear their preference, too.
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231113145328.42575-2-dmitry.baryshkov@linaro.org
+--6QEpjAXU69jL13kX
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+-----BEGIN PGP SIGNATURE-----
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmVSjR4ACgkQFA3kzBSg
+KbYBGw//VUbVW9+Ixe9HjIJ3HSfBWxKVxRlhYfBmhO2cE0q82ZWNtXn9KLCRvISh
+gZrYpOYKuRPodc9sB1e/Rq02rg4ZUdVslMIs6CARXyHkijz+WjIqexT7uMjM4hVr
+8cQfVKgr72AbhCzzD8q1g5KIYbnwkeS4NDPc48YYKs7CgpRsCfBaisBvbCCEZFez
+oMVUyEqNtFOeBht//TldZh+lhRVBw8fIEUT2/y4pYtuA1gFAsD5kFKu1JkYRn9uL
+WWb9mRIz2ybsmzlxda1ED+z7YegeV6yaNQahG++hboHcVEhYlNeWbCx0few90tpb
+8AuP1ArLT8SdvOcYHLRBzcE8C94fpichL7IbfZGeHr74DJSehuD5huLHC6WvcMsR
+9A6eW3D82gAa+SCgUFpndu82NbVtBrqOl06BdQpARQZ0sqvQ6SMGx2Vvd4LgKGth
+tKnNU5kH9Q1eP04Pn1dJQqHgJYjsA2eaOG5GGIcuZHWigWZIUnYrOpTVKvChlwJc
+UV3URepN9RiQ7aOMB65NcBLJ/FSEe02wSE7uLpu7N6G60RaKPFMYPE3hRKjyCXky
+/9iJ4EB02vBA2xbP8lV5ZXdxrPv752oaC9kqNnsb2JrmOULiTgXnDanBmSHvtQ9n
+o3AwiwXfOeWtBA2twxpEzqOcc28pvOFLTAWBcjgPVsUDVJP8mgE=
+=HpzL
+-----END PGP SIGNATURE-----
 
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+--6QEpjAXU69jL13kX--
 
