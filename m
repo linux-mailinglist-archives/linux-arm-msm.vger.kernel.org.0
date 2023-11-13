@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C018C7E9BBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:01:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53D297E9BC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:02:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5FDE5B20926
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:01:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83C5F1C20955
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:02:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83A751CAB8;
-	Mon, 13 Nov 2023 12:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A0F41D53C;
+	Mon, 13 Nov 2023 12:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C5kOCoEW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L05S2HZL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A7F1CA90
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 12:01:33 +0000 (UTC)
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75EB7D6F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:01:31 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-5409bc907edso6777489a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:01:31 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1E01CA90
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 12:02:10 +0000 (UTC)
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18812D73
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:02:09 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9ae2cc4d17eso661852566b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 04:02:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699876890; x=1700481690; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1699876927; x=1700481727; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pkZ6cA4cMHe+Ceeg+2GaQCm9Fag2JCuu8fJ9Ds5khcs=;
-        b=C5kOCoEWpXHuvorejOeeIhX38Mmz4IGoibmobff/gsMsrzMWrvrStD9C15ZSml9YSr
-         TQzTBMJBzLrDm33rruL9ZbniQgYkGG8WCWajYOPgV3Mz30ujUyrxSP+rx1BuxEyeppts
-         aOzrZrdRD5VDX/MMLah4jb7HGvXPLovMSPJPzSjJees66/b1/YI3B+cCA1Wsnhwlmjhb
-         gvl4jKRTylH/1M3zh8Pkq54h0PgaFuc/2wGAgsE1NgwWZhdXj2jJ8uvG2HeQNOK1MdEM
-         x4LE8RJ7tnx5DcT0SzzQZrb3bAmKlTz4ZaqZBCgTk44VBd50/PdrqThMrhqy2ce9r0GG
-         QaDg==
+        bh=LmMMjSnQ3FfpfMMoO/MXG2pkv68SfbKNHw9Dh8U3V8w=;
+        b=L05S2HZLOT3gk7Haxi0oOAc4EMVgTYxSUjuPNxbqiiLC+61k8uhjwXH+c4pv5n9QVu
+         uY0eXF5alBCmTRpVeTup/z5YE+UsZBgVzBG6lPHedhzoTH1NIqYemc/EtAXzjjn6Lnde
+         jSiEBlmxggyg1uD040rRlMKor2m+FcUbKi7apAW/xMsumY52AuVlDcmV3yn+HfITJCo4
+         pQc7iD+UC8z7uYe26aV2J6xvuU9YDZCS2sGf2/KGLbIO7NTu8S3/ZXpY3oqm3VPVWYpY
+         7UbqIWGI9UFFjIJ9CnyrO92wU/REO6EWb7XmqaBSlQKoMt31zAv7yX2BxsrnjgPukjJ1
+         UnLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699876890; x=1700481690;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1699876927; x=1700481727;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pkZ6cA4cMHe+Ceeg+2GaQCm9Fag2JCuu8fJ9Ds5khcs=;
-        b=M50ehuIOtsfMs4Kku1WA9o6DUg9wRpoivMsvxNZ9/tYaLWFNbbLhLE/ky9ppcSYXTP
-         viEi9c5yr7llqVU+RohAkahRmRSUGsVR6NgsT9hAMHIneG1f/WhFhw9KxfVVZJXlrGj4
-         p5e99XCnMvE0wjv3idZq3t4DvJtgijiG7CmtdsZPGoLiTt4RLWiiGrvhlwEqLf/Y2MeN
-         lGo9NS4Xv1noumDD4IHqBQ+7aaJKTfCMGawi80d54XeCRwXWBnULhCknKwfMst73gwLK
-         gUq7KjIJ4DmbZTBLskbBsrKcLKPFiKWvISPd41gJPVv/WYoUcRaN+IPqOBxWKZ2/hGHo
-         Wc2g==
-X-Gm-Message-State: AOJu0YxLMNmp/3i1YKLcAlPIEBDnc/gwcyuaMas6N2KtrRAyNi1ciD+t
-	vHX8e4pw1atAMEUYKE268kJaKg==
-X-Google-Smtp-Source: AGHT+IF1Bi0xL8FY8wgQTx71vGRPgwd+ruuS0/cuagL+qTAsKQYANf5D3D42gDIiK282da+Sll1eSQ==
-X-Received: by 2002:a17:906:3b88:b0:9d2:9dbe:a2f9 with SMTP id u8-20020a1709063b8800b009d29dbea2f9mr4108765ejf.50.1699876889905;
-        Mon, 13 Nov 2023 04:01:29 -0800 (PST)
+        bh=LmMMjSnQ3FfpfMMoO/MXG2pkv68SfbKNHw9Dh8U3V8w=;
+        b=V2F7T4R33Q4fIRnJ5ywcRFf0LrsQsCTMIhGPiYyd/a/sDqKORaWedX5fH6nE4a5qGx
+         9o/+Xpdfd9Nco9bsDUnFqcJxZQqlOQoPAuG9BFP9SYc3dCoLyAkpfoDuw2zIby5d7LtQ
+         qMFI87Ry5JJrlK2ose9g5q/NVsNBQRQZXJJH1iEhtnzOO+hYy36CpiwfTNFmZPsg5kEd
+         rFGxScZwSQLNqowqCHGd9x6BBYocT1R1Z9UVBDKXvdkROT89+Tfr96UDVLIn8V97SYjV
+         ErZAYbXEnPknGJRJLGHWAR4GQ9ZnaC1viAfToq+wDluncMirfmwTgiuZz2Zu6tEx7osd
+         GUGw==
+X-Gm-Message-State: AOJu0YyYpa8lgpTUIAqBY90qot+6QngVfuxz5gZUrn8rTwtM75lE/Yy2
+	HJAnACqFKKA7/VNyD/aoT7T0OA==
+X-Google-Smtp-Source: AGHT+IGn5axedppVHsMFuYtgzLI973+P0NS6t6H0TPgjlsJgb2j3/qELdRmfQuqih3bVVrFek2rC4A==
+X-Received: by 2002:a17:906:4087:b0:9e4:b664:baa8 with SMTP id u7-20020a170906408700b009e4b664baa8mr4427534ejj.7.1699876927584;
+        Mon, 13 Nov 2023 04:02:07 -0800 (PST)
 Received: from [192.168.201.100] (178235177064.dynamic-4-waw-k-1-1-0.vectranet.pl. [178.235.177.64])
-        by smtp.gmail.com with ESMTPSA id gx24-20020a170906f1d800b009c503bf61c9sm3868184ejb.165.2023.11.13.04.01.28
+        by smtp.gmail.com with ESMTPSA id gx24-20020a170906f1d800b009c503bf61c9sm3868184ejb.165.2023.11.13.04.02.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Nov 2023 04:01:29 -0800 (PST)
-Message-ID: <9ae26aec-fcc2-41b4-a4d4-12ab455e7752@linaro.org>
-Date: Mon, 13 Nov 2023 13:01:28 +0100
+        Mon, 13 Nov 2023 04:02:07 -0800 (PST)
+Message-ID: <747afd5a-f20b-4980-9962-ecdb3922227d@linaro.org>
+Date: Mon, 13 Nov 2023 13:02:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,13 +70,15 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] arm64: dts: qcom: Revert "arm64: dts: qcom: qrb5165-rb5:
  enable DP altmode"
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20231111094645.12520-1-krzysztof.kozlowski@linaro.org>
+ <CAA8EJpoK1N1LBY5ZjL7hb0Sqge7iF4X=rm1n9VZPx-0nOm3bkw@mail.gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -113,20 +115,30 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231111094645.12520-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJpoK1N1LBY5ZjL7hb0Sqge7iF4X=rm1n9VZPx-0nOm3bkw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11.11.2023 10:46, Krzysztof Kozlowski wrote:
-> This reverts commit b3dea914127e9065df003002ed13a2ef40d19877.
+On 13.11.2023 11:09, Dmitry Baryshkov wrote:
+> On Sat, 11 Nov 2023 at 11:46, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> This reverts commit b3dea914127e9065df003002ed13a2ef40d19877.
+>>
+>> The commit introduced unsupported and undocumented properties:
+>>
+>>   qrb5165-rb5.dtb: pmic@2: typec@1500:connector: 'altmodes' does not match any of the regexes: 'pinctrl-[0-9]+'
 > 
-> The commit introduced unsupported and undocumented properties:
+> We need this property to enable DP altmode on RB5. It has been parsed
+> by the typec subsystem since the commit 7b458a4c5d73 ("usb: typec: Add
+> typec_port_register_altmodes()"), merged in April 2021.
 > 
->   qrb5165-rb5.dtb: pmic@2: typec@1500:connector: 'altmodes' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Rather than landing this commit, let me propose to send the proper
+> binding instead. If we can not agree on a compatible bindings document
+> within the sensible timeframe (e.g. 1 month), I'm fine with dropping
+> of the altmodes from qrb5156-rb5.
+Right, I'dve imagined this was taken care of.. Retain my r-b but have what
+Dmitry said in mind..
 
 Konrad
 
