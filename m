@@ -1,167 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F0AD7E9C6D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:51:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A36AA7E9D45
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 14:35:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C861B1F20F2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 12:51:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B8072B2095E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 13:35:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A5981D699;
-	Mon, 13 Nov 2023 12:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9A8D208A5;
+	Mon, 13 Nov 2023 13:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cKHDRoqG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MJvRt5fb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AFF1D68D;
-	Mon, 13 Nov 2023 12:51:02 +0000 (UTC)
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B74141722;
-	Mon, 13 Nov 2023 04:51:00 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-280200949c3so3279813a91.0;
-        Mon, 13 Nov 2023 04:51:00 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4488A1DA3F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 13:35:21 +0000 (UTC)
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50D871A6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 05:35:19 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5a82c2eb50cso44710507b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 05:35:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1699879860; x=1700484660; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1699882518; x=1700487318; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=s1u2wgBJR1eY/vvX4BSIn+hcZj98gJmcG5xtzxqEays=;
-        b=cKHDRoqGMroCQXmP4xuO2obx5UlwwMwm4fnl0qnOey3hV05znUB55g79uTWWox+DGW
-         FyUle/BEogkoy8gW389K9EuKxlzoCcBzpCWXkrmXR6EEUFTowvSo9OD2YkbWhQTro41K
-         ZFYThpWvxAE6xm3Dk3Q9DbCoZUaXBW6NiBDhoGUk4UDNkIpgoH/OhhrLM2mbbyHieDis
-         IcEntkYE3Jn0PmxWC+FKmpdwERwvIBTiKwQeyRp9713OqLaFzGpDUu3524MFsV9/ekE+
-         1ZCH1O/EIVKFx4VAUepkpdO1WI701Gv3Q8CD0TS2oWl7XCYPnStA4qkVPq8jqhRWWTAQ
-         lq+g==
+        bh=WxaBetmt1VHQkxFwpab5NRYOQI6Xx5tYoo4BJzlpyR0=;
+        b=MJvRt5fbADU8RJrP8b9qlxdsPqtT6uMryfJBfliBWtKzmnri5+XoL99zl+lI5KRoVd
+         nHuBsluSpH4VUf7YlouQ3CQCSWMDbGZz1TDUNPY1GWXEtBDQjXXIVj/qHeWasDWsHYoi
+         N2pQfZ1d/oZKsTWMs2lVrW2H5566xhqFCYN0ezQNuwKHvftaKXzJAa5GlofisvdCfCpA
+         wI4y0zRDWRU2tZr8OuTdvIeAKiVZp9voA0cIPpCdCSaW4/U0UrHUIko+nWFNFDt9I8ro
+         8BAxNtND0UqkJgXbM6H7mdT9HXqyTRDd4GAv1xKjUdruj+omORfcGTmnnKwpXub+2BhA
+         V34Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699879860; x=1700484660;
+        d=1e100.net; s=20230601; t=1699882518; x=1700487318;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=s1u2wgBJR1eY/vvX4BSIn+hcZj98gJmcG5xtzxqEays=;
-        b=CsuQL2QQavP6cRebYXDvNrigrf5z123wpWNSEA6hYvakjsWsCR7i97jYbUKXrhDT1+
-         rtGe0SVqWAweBQECPO7anbuSWlg3Btsil9E2/xNWvv4hD9B7gQct4al6cWruCfxOn+Bp
-         2I6WyNb/ZCSoLeTeGUZf9nULzIFs0ikOZG+cw8lz6aBg4ISTAvnw9U0hCBd+SKQyZDxA
-         Yl/bD8Ngbobr/b8v6L+IRSe2mk52xv/qV054HpmTfvVK62LdK88AxwU22R9s7pnSlq3r
-         mXcsIfu3p1zieLsMQMpOKH7iEposgl2dx7uar6/AWQAiLNtTiKsienElILYV4JW5vaJg
-         T5Uw==
-X-Gm-Message-State: AOJu0YxvP/wfyXzByA6m9wtwsaGlJBssSVMqQqPNctq0A1hErh0r05rp
-	3+bRxt1WGffjDaL9jjW7xaA62gkX3q9nKiBNDrs=
-X-Google-Smtp-Source: AGHT+IFjsWsacLBDEf3mCA9vW/UukdUhufQXIETHl5zYVqAZBxyiINS3gtbD/tXHvfCFOuUcnyECG4ttZv3zavYrymY=
-X-Received: by 2002:a17:90b:4b4b:b0:280:16bb:8169 with SMTP id
- mi11-20020a17090b4b4b00b0028016bb8169mr3707546pjb.40.1699879860080; Mon, 13
- Nov 2023 04:51:00 -0800 (PST)
+        bh=WxaBetmt1VHQkxFwpab5NRYOQI6Xx5tYoo4BJzlpyR0=;
+        b=RTTt0lMvu9J8Mm4ybduazSnwOVF7OSYINMkS+1Vox4KA7wfloO3lunTz0JhjcfLki9
+         YBtqT2xlUq215FnhOXaRg/478FIdMcJUFoaD7klo0WwIqWxoxaKUiYTennhs3QYPqKeS
+         Qh33LkitpLNEtEbE7KntpTJYkM+vgvalrWvecQy8eD9MQTshDTEUuMIVNaMlGK0s3RRn
+         MMwUREAsBmAVPUOiLEsfE2MlNCgdATivRtLHyC7b4wHglvIDOtMH6hykjGT7dxCVx755
+         2cOqAH0dB+RVgg/o7nd47Z+EDbw1I0rYhRCxRCTAiTCrzcdMlxUf2OwfWZbbA58cACeV
+         W3Hg==
+X-Gm-Message-State: AOJu0Yy+AxmtX2K1BnLQ1NtUA+C65YekyTqGLQV6U8ufY9w7R5PnI3AW
+	5gze2pquoT9P4jLh6TY2N+olE30aTVnYmqbT3h1+lQ==
+X-Google-Smtp-Source: AGHT+IGPu7Rn5TQZs+nbjVZoYL/TJSffa3l5p9Nq+lau/Fo1c7x1h4SnyWxankMCKEl1H6csQ9NB+nxzflMOa4pF/l0=
+X-Received: by 2002:a25:c048:0:b0:da0:69e4:29d5 with SMTP id
+ c69-20020a25c048000000b00da069e429d5mr3641047ybf.43.1699882518441; Mon, 13
+ Nov 2023 05:35:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231025104457.628109-1-robimarko@gmail.com> <20231025104457.628109-2-robimarko@gmail.com>
- <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com>
- <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org> <CAOX2RU5-XFZhGzjigNtu-qFnPWDd2XkpGpY=HXWigRa5SXw4TA@mail.gmail.com>
- <ef377506-4132-4805-a76e-18f241afe319@linaro.org> <CAOX2RU4K67evm10giQvF1rcfqTfR+e--KQT3ZePoHQoqASv_fg@mail.gmail.com>
- <bdf6be0b-c137-48ce-8a3f-ab74bced6f87@linaro.org> <CAOX2RU4z1Dcs7ct0BAaS7wicYVmQEiSe74=w_grFDKQv22uoFg@mail.gmail.com>
- <4243a841-5509-4d04-8ec7-191f2ba5677a@linaro.org>
-In-Reply-To: <4243a841-5509-4d04-8ec7-191f2ba5677a@linaro.org>
-From: Robert Marko <robimarko@gmail.com>
-Date: Mon, 13 Nov 2023 13:50:48 +0100
-Message-ID: <CAOX2RU73n4JUTxGGgN7YOEqjj-1_=n=UZ99xsZ8Easp6O-D_yA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] clk: qcom: ipq6018: add USB GDSCs
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
-	mturquette@baylibre.com, sboyd@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, 
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+References: <20231112184557.3801-1-krzysztof.kozlowski@linaro.org> <20231112184557.3801-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231112184557.3801-2-krzysztof.kozlowski@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 13 Nov 2023 15:35:07 +0200
+Message-ID: <CAA8EJpqGNF=j4Ym-mFGb9XyQkXWd2DWm3MzRKmnQckFkBh1X7w@mail.gmail.com>
+Subject: Re: [PATCH 2/2] dt-bindings: PCI: qcom: correct clocks for SC8180x
+ and SM8150
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 13 Nov 2023 at 12:58, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+On Sun, 12 Nov 2023 at 20:46, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> On 11.11.2023 12:28, Robert Marko wrote:
-> > On Tue, 7 Nov 2023 at 22:51, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>
-> >>
-> >>
-> >> On 10/31/23 10:01, Robert Marko wrote:
-> >>> On Mon, 30 Oct 2023 at 22:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>>
-> >>>> On 30.10.2023 21:37, Robert Marko wrote:
-> >>>>> On Mon, 30 Oct 2023 at 20:37, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>>>>
-> >>>>>> On 29.10.2023 12:04, Robert Marko wrote:
-> >>>>>>> On Wed, 25 Oct 2023 at 12:45, Robert Marko <robimarko@gmail.com> wrote:
-> >>>>>>>>
-> >>>>>>>> IPQ6018 has GDSC-s for each of the USB ports, so lets define them as such
-> >>>>>>>> and drop the curent code that is de-asserting the USB GDSC-s as part of
-> >>>>>>>> the GCC probe.
-> >>>>>>>>
-> >>>>>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >>>>>>>
-> >>>>>>> Unfortunately, after testing on multiple devices I hit the same GDSC
-> >>>>>>> issue I had a long time ago
-> >>>>>>> that was the reason I did not send this upstream.
-> >>>>>>> It seems that USB3 port GDSC (USB0 GDSC in code) works just fine,
-> >>>>>>> however the USB2 one
-> >>>>>>> (USB1 GDSC in code) it is stuck off and USB2 port will fail due to this:
-> >>>>>>>      1.607531] ------------[ cut here ]------------
-> >>>>>>> [    1.607559] usb1_gdsc status stuck at 'off'
-> >>>>>>> [    1.607592] WARNING: CPU: 0 PID: 35 at gdsc_toggle_logic+0x16c/0x174
-> >>>>>>> [    1.615120] Modules linked in:
-> >>>>>> Can you dump GDSCR (the entire 32-bit register) at boot and when toggling?
-> >>>>>
-> >>>>> Sure, here it is:
-> >>>>> [    0.023760] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val: 0x8222004 init
-> >>>>> [    0.023782] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val: 0x8222004 init
-> >>>>> [    0.988626] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-> >>>>> 0x8282000 before toggle
-> >>>>> [    1.202506] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
-> >>>>> 0x8282000 after toggle
-> >>>>> [    1.207208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
-> >>>>> 0xa0282000 before toggle
-> >>>> Any chance
-> >>>>
-> >>>> .en_few_wait_val = 0x2
-> >>>>
-> >>>> (turning BIT(19) into BIT(17))
-> >>>>
-> >>>> will make a difference?
-> >>>
-> >>> Sadly, it makes no difference and GDSC status bit newer comes up which is
-> >>> rather weird as USB0 one seems to work just fine.
-> >> What if you add clk_ignore_unused?
-> >
-> > To the USB1 master clock or?
-> That's a command line parameter, effectively setting it on all clks.
-
-Oh that, I understand now.
-
+> PCI node in Qualcomm SC8180x DTS has 8 clocks, while one on SM8150 has 7
+> clocks:
 >
-> >
-> > There is definitively something broken regarding the GDSC as
-> > GDSC_STATE bits (30-27)
-> > change from 0 to something on the USB0 GDSC but on GDSC1 they are 0 even after
-> > SW_OVERRIDE BIT(2) is set to 1, and the POWER BIT(31) newer changes to 1.
-> >
-> > However, if you manually set BIT(2) to 1 then the USB1 master clock
-> > can come up so
-> > GDSC seems to work.
-> > USB1 (The USB2.0 HS) port is still broken after this if USB mass storage is used
-> > but that was present before the GDSC changes as well and I still need
-> > to figure out
-> > which quirk is missing for this.
-> Please try clk_ignore_unused and see if toggling the GDSC is still broken.
-
-Sadly, passing clk_ignore_unused in the bootargs doesn't help, GDSC is
-still stuck off.
-
-Regards,
-Robert
-
+>   sc8180x-primus.dtb: pci@1c00000: 'oneOf' conditional failed, one must be fixed:
+>     ['pipe', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'ref', 'tbu'] is too short
 >
-> Konrad
+>   sm8150-hdk.dtb: pci@1c00000: 'oneOf' conditional failed, one must be fixed:
+>     ['pipe', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'ref', 'tbu'] is too short
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 58 ++++++++++++++++++-
+>  1 file changed, 57 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 14d25e8a18e4..4c993ea97d7c 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -479,6 +479,35 @@ allOf:
+>            items:
+>              - const: pci # PCIe core reset
+>
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-sc8180x
+> +    then:
+> +      oneOf:
+> +        - properties:
+> +            clocks:
+> +              minItems: 8
+> +              maxItems: 8
+> +            clock-names:
+> +              items:
+> +                - const: pipe # PIPE clock
+> +                - const: aux # Auxiliary clock
+> +                - const: cfg # Configuration clock
+> +                - const: bus_master # Master AXI clock
+> +                - const: bus_slave # Slave AXI clock
+> +                - const: slave_q2a # Slave Q2A clock
+> +                - const: ref # REFERENCE clock
+> +                - const: tbu # PCIe TBU clock
+> +      properties:
+> +        resets:
+> +          maxItems: 1
+> +        reset-names:
+> +          items:
+> +            - const: pci # PCIe core reset
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -527,8 +556,35 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,pcie-sc8180x
+>                - qcom,pcie-sm8150
+> +    then:
+> +      oneOf:
+> +        - properties:
+> +            clocks:
+> +              minItems: 7
+> +              maxItems: 7
+> +            clock-names:
+> +              items:
+> +                - const: pipe # PIPE clock
+> +                - const: aux # Auxiliary clock
+> +                - const: cfg # Configuration clock
+> +                - const: bus_master # Master AXI clock
+> +                - const: bus_slave # Slave AXI clock
+> +                - const: slave_q2a # Slave Q2A clock
+
+Which actually brings up a question, there is the corresponding clkref
+gcc clock.
+Mani, do you know if we should use it on sm8150?
+
+> +                - const: tbu # PCIe TBU clock
+> +      properties:
+> +        resets:
+> +          maxItems: 1
+> +        reset-names:
+> +          items:
+> +            - const: pci # PCIe core reset
+> +
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+>                - qcom,pcie-sm8250
+>      then:
+>        oneOf:
+> --
+> 2.34.1
+>
+>
+
+
+-- 
+With best wishes
+Dmitry
 
