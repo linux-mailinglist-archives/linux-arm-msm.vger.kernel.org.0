@@ -1,154 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7491C7E9F1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 15:47:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FCC27EA025
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 16:38:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04CB5B20A4E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 14:46:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0AE39280DA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 15:38:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3E0D20B2D;
-	Mon, 13 Nov 2023 14:46:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57EC8219E4;
+	Mon, 13 Nov 2023 15:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZpD9H236"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OVppq6+u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9015E20B35
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 14:46:49 +0000 (UTC)
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F7521711
-	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 06:46:47 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-32f7abbb8b4so2750264f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 06:46:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699886806; x=1700491606; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eH/cbv+HTmjd9T6Og+nrY0oFWB621hXpBo6QeBm/lDg=;
-        b=ZpD9H2366KcA0db6Mu4/g0+zwNYDKLjKHr939p5a3t6OPxGoqU5xpCupux0V4GaZG1
-         umko9mVdDObX/FlgIBHZpTGRzSDSSupiQk7Htje2gkF7n4puU1l/0qGECVueI1OVACYw
-         bV4aoVXqswCaW51kd/ZKpkiPfsiKgQnNE461y20xdgnJJx6MUJ6MSC6xmGKCidEIL0W/
-         rg2JJl8S+NOQ1dnBfyH5h3+TuhEzYmpPM+iSshHJLQin61qwt9TiovfCXkt6KSu/e9T8
-         qDhPTAhA3xPmsGrClcDH4QO2LTX4voO6iKMpVn5n1vDULvkBk4+PIYOXQGMnjvYBx+XC
-         dCDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699886806; x=1700491606;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=eH/cbv+HTmjd9T6Og+nrY0oFWB621hXpBo6QeBm/lDg=;
-        b=t9QeKbWJUiimc34QDY85QqqStre3OQ0s2JoivVn/3yRrsdv3sPwrXx8MWh5c3PX2I0
-         TEM2EZTSjJhU+af2SbxgAn9xa+EpEHCb8zvUFbYZ+Tiut8SNbFMoXps6PZiQ0ctyL96X
-         uaEVrjj5pGpdCnPhUhebuFYmTxGsC8CBj/glLvHL+vhKQGZy7SezvNe577ijTXpjCT66
-         VNwcMYvkJYf1Qzhhfn5ld3ZwsEPHUL4UsgmYVKvX7L8n5MEnIEkxf/hBmCRYVPp1kpK3
-         2HAnAZAdqDU6L29270IAzc9QlnY1yZLZJEC7a3lorCZoJ9XFn4btwXBccJNZ3KVTzQs/
-         HjsA==
-X-Gm-Message-State: AOJu0YxAbMefwxtXO1Jl39tFzctJutpcDuqLPGPjnYHbGqsAesUExdku
-	PaSRdKfbMKFuG5yBuD4hCmPwTwA1XuyN8/j+nZS34/7f
-X-Google-Smtp-Source: AGHT+IFElif9cHOC9qe+E7tgITXO3oLS7DlfLfXUb9l/5s3/U7DnGOzL81WwyZYiUMApLuYHuAwrUw==
-X-Received: by 2002:a05:6000:178d:b0:32d:a466:48d8 with SMTP id e13-20020a056000178d00b0032da46648d8mr6597253wrg.69.1699886805912;
-        Mon, 13 Nov 2023 06:46:45 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:1bb7:80e:7bf2:f66c? ([2a01:e0a:982:cbb0:1bb7:80e:7bf2:f66c])
-        by smtp.gmail.com with ESMTPSA id o16-20020adfe810000000b0032326908972sm5587673wrm.17.2023.11.13.06.46.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Nov 2023 06:46:45 -0800 (PST)
-Message-ID: <418b98b5-738b-491d-b5a2-692fd26dbf98@linaro.org>
-Date: Mon, 13 Nov 2023 15:46:44 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B49521358
+	for <linux-arm-msm@vger.kernel.org>; Mon, 13 Nov 2023 15:38:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E4CC433C7;
+	Mon, 13 Nov 2023 15:37:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1699889880;
+	bh=nodC5p6ug9A05wH2ElfMtDXiy9l8bsxSv4FLIQhdg+8=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=OVppq6+u/PyTFjBKZoEW1bZQdrZdfALGvpZuIevND49++UtW0H1PQBT8OCcDyj7bq
+	 6T5Y+bxzkoh05KHmQJ9K+YPcnS5HwNo/MkXw/19RPzalc1SsXBa55IFnnS6utSwk4T
+	 LWx1zxUxsF0cBMcy4y6XyFZhbTV54zaEZ0rHdSR3wwzcGF0qkYK7PLJVjRIQc58rGc
+	 HBmGLRVyXR6LL7h0P4WKnCtSOsuf3xfPbR4Gyn34y4olTQX1rEXeDO4qpMxSHYJIJQ
+	 4HbEF/CEXFjktmfTAOwNIada18f7cLpOQFSxkOuHmFoo6AMffAEDGJ3e2l51Ne9K7k
+	 /GwrwlYSkmdLA==
+From: Kalle Valo <kvalo@kernel.org>
+To: "Luca Weiss" <luca.weiss@fairphone.com>
+Cc: "Jeff Johnson" <quic_jjohnson@quicinc.com>,
+  <~postmarketos/upstreaming@lists.sr.ht>,  <phone-devel@vger.kernel.org>,
+  <ath11k@lists.infradead.org>,  <linux-wireless@vger.kernel.org>,
+  <linux-kernel@vger.kernel.org>,  <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] wifi: ath11k: Defer on rproc_get failure
+References: <20231027-ath11k-rproc-defer-v1-1-f6b6a812cd18@fairphone.com>
+	<87lebowjyf.fsf@kernel.org> <CWJ4ZLEZCKQC.2STOBNUU06B2P@fairphone.com>
+Date: Mon, 13 Nov 2023 17:37:57 +0200
+In-Reply-To: <CWJ4ZLEZCKQC.2STOBNUU06B2P@fairphone.com> (Luca Weiss's message
+	of "Fri, 27 Oct 2023 12:07:09 +0200")
+Message-ID: <87a5rhu0iy.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 0/3] pinctrl: qcom: Introduce Pinctrl/GPIO for SM8650
-Content-Language: en-US, fr
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20231106-topic-sm8650-upstream-tlmm-v3-0-0e179c368933@linaro.org>
- <CACRpkdYB7AQZ7HeNmE5d716sWz5_MHiVtAet6P5XOC1etDKNcw@mail.gmail.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <CACRpkdYB7AQZ7HeNmE5d716sWz5_MHiVtAet6P5XOC1etDKNcw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi Linus,
+"Luca Weiss" <luca.weiss@fairphone.com> writes:
 
-On 13/11/2023 15:06, Linus Walleij wrote:
-> On Mon, Nov 6, 2023 at 9:32 AM Neil Armstrong <neil.armstrong@linaro.org> wrote:
-> 
->> The SM8650 Top Level Mode Multiplexer supports 211 GPIOs,
->> and the usual UFS Reset, SDC Clk/Cmd/Data special pins.
+> On Fri Oct 27, 2023 at 10:25 AM CEST, Kalle Valo wrote:
+>
+>> Luca Weiss <luca.weiss@fairphone.com> writes:
 >>
->> An handful of pins can have their IRQ generated by the PDC
->> module, and for this support for the new wakeup_present &
->> wakeup_enable_bit is required to allow the "wakeup" event
->> to be passed to PDC and generate an interrupt or a wakeup
->> system event.
+>> > If we already have gotten the rproc_handle (meaning the "qcom,rproc"
+>> > property is defined in the devicetree), it's a valid state that the
+>> > remoteproc module hasn't probed yet so we should defer probing instead
+>> > of just failing to probe.
+>> >
+>> > This resolves a race condition when the ath11k driver probes and fails
+>> > before the wpss remoteproc driver has probed, like the following:
+>> >
+>> >   [    6.232360] ath11k 17a10040.wifi: failed to get rproc
+>> >   [    6.232366] ath11k 17a10040.wifi: failed to get rproc: -22
+>> >   [    6.232478] ath11k: probe of 17a10040.wifi failed with error -22
+>> >        ...
+>> >   [    6.252415] remoteproc remoteproc2: 8a00000.remoteproc is available
+>> >   [    6.252776] remoteproc remoteproc2: powering up 8a00000.remoteproc
+>> >   [    6.252781] remoteproc remoteproc2: Booting fw image qcom/qcm6490/fairphone5/wpss.mdt, size 7188
+>> >
+>> > So, defer the probe if we hit that so we can retry later once the wpss
+>> > remoteproc is available.
+>> >
+>> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 >>
->> As SM8550, it also supports the i2c_pull_bit bit to enable the
->> on-SoC load resistor for I2C busses.
+>> Did you test this on a real device? If yes, what ath11k hardware and firmware
+>> did you use? We use Tested-on tag to document that:
 >>
->> Dependencies: None
->>
->> For convenience, a regularly refreshed linux-next based git tree containing
->> all the SM8650 related work is available at:
->> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> Patches applied, unless Bjorn has some last minutes regrets,
-> they are in.
-> 
-> Had to rebase the last patch manually because of Krzysztof's
-> LPASS driver, check the result pls.
+>> https://wireless.wiki.kernel.org/en/users/drivers/ath11k/submittingpatches#tested-on_tag
+>
+> Hi,
+>
+> Yes I tested this on qcm6490-fairphone-fp5 including some extra patches
+> for wpss-pas remoteproc support (nothing special, just adding it to the
+> existing PAS driver) and wifi enablement in dts.
 
-Will check, thanks.
+Nice, do you have a link to the patches or a git tree which has
+everything? And how difficult would it be for me to run vanilla
+kernel.org kernel (no vendor kernels or anything like that) on Fairphone
+5? Any documentation available for that?
 
-Neil
+I'm asking because I don't have a test setup for WCN6750 right now. It
+would be awesome if I could use Fairphone for testing :)
 
-> 
-> Yours,
-> Linus Walleij
+> I built this line from info from the dmesg, hope it's okay:
+>
+> Tested-on: wcn6750 hw1.0 AHB WLAN.MSL.1.0.1-01264-QCAMSLSWPLZ-1.37886.3
 
+Thanks, I added that to the commit message.
+
+> And thinking about it, a Fixes tag would also be appropriate for this
+> patch. The code was moved to a different file in commit ba929d6fe31a
+> ("ath11k: Remove rproc references from common core layer") but I think
+> this tag should be correct.
+>
+> Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+
+Ok, I added that as well.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
