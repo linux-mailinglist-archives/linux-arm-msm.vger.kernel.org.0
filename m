@@ -1,40 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EA5B7E9575
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 04:24:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E4D17E959B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 04:42:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 08D02B20C3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 03:24:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B334B1F2119C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Nov 2023 03:42:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB3F1C12F;
-	Mon, 13 Nov 2023 03:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21F48C2C7;
+	Mon, 13 Nov 2023 03:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XO7mD6UA"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XlxhlH2K"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911958BE1;
-	Mon, 13 Nov 2023 03:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 237CAC43397;
-	Mon, 13 Nov 2023 03:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B8FC132;
+	Mon, 13 Nov 2023 03:42:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3BFD9C43397;
+	Mon, 13 Nov 2023 03:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1699845835;
-	bh=JUnsdCqz3WfcCEsI96srKVFHvE5WeW6CUmBQHypg64Y=;
+	s=k20201202; t=1699846957;
+	bh=cJyTsg2/ykeyXvrK54v0p7rMm498zi6eFEDrVxQoqHU=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=XO7mD6UAKN8nq9R3JWrzb+MBw4dFmYjxoxrNYghN50KIXOlV60EmzVBfvQ0+AlgDc
-	 XfW5zTWEKZPq+rKMzhXIdAt+MO/E0SSsyGPf7VYnsNVTQQp//wiUXSUx6v5CGw9zeq
-	 qp/vpUaxdR7poqBfDmTGDUH8jpnioZBTu6xqlsk+NwKyssls6oUttDfD2hYCpYIX7U
-	 HQe83dMKkKzgxekRaXlogD/lilBR3eWyWxZ4FnrXsjrolDHYDNvofy4MP32EjM96SY
-	 cswxKh4OIVaH/0u+uG5EOjXEvFGrHasdc9yWUpWLrF6ogOLjmthl585KREFlRVmnu5
-	 NoBmqT6APGTPg==
+	b=XlxhlH2Ky0/ppr6cbSjHHpmiaiAVtSAxgBo4szAffgNq3Vw2d4mxasFwD8OxzJ9Zc
+	 f4QvUyLxBzdsORjYJ/jIA3bMgB6rFLhgu9WGPPq6txPrGEpYMonIfKKyLZFKV9Ikgr
+	 i46ejT5aoIaDrxYme/xKHKediCRPVMl04Gq+WxbwWhon8SoJXo7GvqFTX7QGYoTGuv
+	 Q+xiS2gFfR3PcLmP2/s/s4W4dBHixX8YysXwO7Btaoc8ufZji2Kt6zGcmxlXEjGfeS
+	 Tys2pX5hYdkuhdMzwFp19SMxgYZGEqpYnLIzX7HltYLcLL+0OAkYB96UQAAEngliA1
+	 T3cWunvqmrg/g==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0458BE32713;
-	Mon, 13 Nov 2023 03:23:55 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2142AE32714;
+	Mon, 13 Nov 2023 03:42:37 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -47,8 +47,8 @@ Subject: Re: [PATCH 00/52] input: Convert to platform remove callback returning
  void
 From: patchwork-bot+chrome-platform@kernel.org
 Message-Id: 
- <169984583501.27851.815318901545645450.git-patchwork-notify@kernel.org>
-Date: Mon, 13 Nov 2023 03:23:55 +0000
+ <169984695713.27851.5146160260731495399.git-patchwork-notify@kernel.org>
+Date: Mon, 13 Nov 2023 03:42:37 +0000
 References: <20230920125829.1478827-1-u.kleine-koenig@pengutronix.de>
 In-Reply-To: <20230920125829.1478827-1-u.kleine-koenig@pengutronix.de>
 To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig_=3Cu=2Ekleine-koenig=40pengutronix=2Ede=3E?=@codeaurora.org
@@ -74,7 +74,7 @@ Cc: dmitry.torokhov@gmail.com, michael.hennerich@analog.com,
 
 Hello:
 
-This patch was applied to chrome-platform/linux.git (for-kernelci)
+This patch was applied to chrome-platform/linux.git (for-next)
 by Dmitry Torokhov <dmitry.torokhov@gmail.com>:
 
 On Wed, 20 Sep 2023 14:57:37 +0200 you wrote:
