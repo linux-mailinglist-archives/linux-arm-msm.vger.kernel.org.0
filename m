@@ -1,183 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 650937EA999
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 05:35:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 931297EAA12
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 06:24:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A0671F23EC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 04:35:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2B052B20989
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 05:24:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C2A48801;
-	Tue, 14 Nov 2023 04:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F5F7C2C6;
+	Tue, 14 Nov 2023 05:24:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dosNbqsg"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="FgY4eind"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956C853B7;
-	Tue, 14 Nov 2023 04:35:23 +0000 (UTC)
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88584D42;
-	Mon, 13 Nov 2023 20:35:20 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AE2enuY015545;
-	Tue, 14 Nov 2023 04:35:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=mmSUoAY3idS7EMo1OCwa4Vlm1FH71gDEVXdoggFmtBU=;
- b=dosNbqsgW/q1pTNuSCxKi3ZzAxlHAOo7REBG5XPeMeCJzuLZ7+7i8K/P2OsDjs896yvN
- XZSneSk9dAhG6buk8YVksZbnaUMvlnrMHZeWR3Jjib/98/CpeDhxReNq6Z/+SXd8x86i
- LwJHtmEv+MbT9rPNU0wBnvDAFmLBwG+NiTMl7n8ai42ynv8xQdWIQ4LKLWqVPnw51mg8
- hV/rEbLvbiH39HYCRmwOdN7HsPZ7nn0YGXZbj4Xtqyz5Q/r4mMtzwXWb9oFb8k89NWX/
- HBXx+wtNFvR5JlU+WoztxrlF3nUnQaTSmspyZlDEiQ3MjtlgZcMbLfx4fCTArd3Kp7ql QQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ubj731qsb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 Nov 2023 04:35:13 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AE4ZCg4011384
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 14 Nov 2023 04:35:12 GMT
-Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Mon, 13 Nov
- 2023 20:35:08 -0800
-Message-ID: <311c74f4-82ba-9a8e-3351-d9c96a369ec5@quicinc.com>
-Date: Tue, 14 Nov 2023 10:05:04 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABA6D2FF;
+	Tue, 14 Nov 2023 05:24:14 +0000 (UTC)
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1049ADD;
+	Mon, 13 Nov 2023 21:24:13 -0800 (PST)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 969D6408CE;
+	Tue, 14 Nov 2023 10:24:07 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1699939448; bh=RbTQ9Gyko9mWKAoJcs4lYkr1Uh4l+RCsZid+oUd3BdE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=FgY4eindZGM+SNgXzPoSmcUOE8Hj1OlaLA9b2ZwZ6sTxxd9nSjt75D7Sg2sZePxa0
+	 3n+tHROk4Y9HJN0+K2D53RCEjm1L8MVMxOK8o/O4bUjR13RsUtPQvyETViEiZqEGKV
+	 OayAyAkkWq57np0Di2wQ9BRnza3nTWr1l7TbdzKzFn9Vd2y1WZcutRX2POc2s0PpV3
+	 RG41MuRP2nry/mEFMlB/s70YYXq9bi4zyn4Jd8hf+LVhwK5QdRiHWLw/elhay3ujR3
+	 rAOX6oneX/5asBAw3DkXFRvq1xyVf/djCB+f6qrFZU89CFI7CuM6GzGnIp9c7Rg7Ta
+	 cDPIySPMvJzHQ==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v4] bus: mhi: host: Add tracing support
-Content-Language: en-US
-To: Steven Rostedt <rostedt@goodmis.org>
-CC: Manivannan Sadhasivam <mani@kernel.org>,
-        Masami Hiramatsu
-	<mhiramat@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-trace-kernel@vger.kernel.org>,
-        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_parass@quicinc.com>
-References: <20231111-ftrace_support-v4-1-c83602399461@quicinc.com>
- <20231111143710.3474e05a@rorschach.local.home>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20231111143710.3474e05a@rorschach.local.home>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4Wya69WRhd6HbwTtk4tdIMaZsN_sI4l8
-X-Proofpoint-ORIG-GUID: 4Wya69WRhd6HbwTtk4tdIMaZsN_sI4l8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-14_01,2023-11-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- clxscore=1015 malwarescore=0 bulkscore=0 phishscore=0 adultscore=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 impostorscore=0
- mlxlogscore=935 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311140033
+Date: Tue, 14 Nov 2023 10:24:06 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Lee Jones <lee@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof
+ Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley
+ <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: (subset) [PATCH v2 1/3] dt-bindings: mfd: qcom,spmi-pmic: Add
+ pm8916 vm-bms and lbc
+In-Reply-To: <20231031075400.GR8909@google.com>
+References: <20231023-pm8916-dtsi-bms-lbc-v2-0-343e3dbf423e@trvn.ru>
+ <20231023-pm8916-dtsi-bms-lbc-v2-1-343e3dbf423e@trvn.ru>
+ <169824868224.758275.3309948002942732059.b4-ty@kernel.org>
+ <67b0e974-779c-434c-b558-81840ec46cdd@linaro.org>
+ <20231031075400.GR8909@google.com>
+Message-ID: <c72077299f457eabb1b885a5d2353f8c@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-
-On 11/12/2023 1:07 AM, Steven Rostedt wrote:
-> On Sat, 11 Nov 2023 11:25:22 +0530
-> Krishna chaitanya chundru <quic_krichai@quicinc.com> wrote:
->> diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
->> new file mode 100644
->> index 000000000000..0e99318f5d08
->> --- /dev/null
->> +++ b/drivers/bus/mhi/host/trace.h
->> +
->> +TRACE_EVENT(mhi_update_channel_state_start,
->> +
->> +	TP_PROTO(const char *name, int ch_num, int state),
->> +
->> +	TP_ARGS(name, ch_num, state),
->> +
->> +	TP_STRUCT__entry(
->> +		__string(name, name)
->> +		__field(int, ch_num)
->> +		__field(int, state)
->> +	),
->> +
->> +	TP_fast_assign(
->> +		__assign_str(name, name);
->> +		__entry->ch_num = ch_num;
->> +		__entry->state = state;
->> +	),
->> +
->> +	TP_printk("%s: ch%d: Updating state to: %s\n",
->> +		  __get_str(name), __entry->ch_num,
->> +		  TO_CH_STATE_TYPE_STR(__entry->state))
->> +);
->> +
->> +TRACE_EVENT(mhi_update_channel_state_end,
->> +
->> +	TP_PROTO(const char *name, int ch_num, int state),
->> +
->> +	TP_ARGS(name, ch_num, state),
->> +
->> +	TP_STRUCT__entry(
->> +		__string(name, name)
->> +		__field(int, ch_num)
->> +		__field(int, state)
->> +	),
->> +
->> +	TP_fast_assign(
->> +		__assign_str(name, name);
->> +		__entry->ch_num = ch_num;
->> +		__entry->state = state;
->> +	),
->> +
->> +	TP_printk("%s: ch%d: Updated state to: %s\n",
->> +		  __get_str(name), __entry->ch_num,
->> +		  TO_CH_STATE_TYPE_STR(__entry->state))
->> +);
->> +
-> The above three events have the same format. You can save kilobytes of
-> memory by converting them into a DECLARE_EVENT_CLASS() and use
-> DEFINE_EVENT() for each event.
->
-> A TRACE_EVENT() macro is really just a wrapper around
-> DECLARE_EVENT_CLASS() and DEFINE_EVENT(). The DECLARE_EVENT_CLASS()
-> does the bulk of the work and adds the most memory footprint. By
-> breaking it apart for several events, it does save memory.
->
-> Whenever you can use a single DECLARE_EVENT_CLASS() for multiple
-> events, I strongly suggest doing so.
->
-> Thanks,
->
-> -- Steve
-
-Sure steve I will change as suggested in my next patch.
-
-- Krishna Chaitanya.
-
->
->> +#endif
->> +#undef TRACE_INCLUDE_PATH
->> +#define TRACE_INCLUDE_PATH .
->> +#undef TRACE_INCLUDE_FILE
->> +#define TRACE_INCLUDE_FILE trace
->> +
->> +#include <trace/define_trace.h>
+Lee Jones писал(а) 31.10.2023 12:54:
+> On Fri, 27 Oct 2023, Krzysztof Kozlowski wrote:
+> 
+>> On 25/10/2023 17:44, Lee Jones wrote:
+>> > On Mon, 23 Oct 2023 11:20:32 +0500, Nikita Travkin wrote:
+>> >> PM8916 (and probably some other similar pmics) have hardware blocks for
+>> >> battery monitoring and charging. Add patterns for respecive nodes so the
+>> >> devicetree for those blocks can be validated properly.
+>> >>
+>> >>
+>> >
+>> > Applied, thanks!
+>> >
+>> > [1/3] dt-bindings: mfd: qcom,spmi-pmic: Add pm8916 vm-bms and lbc
+>> >       commit: e9aec86e211ee493081e8934b8c821d660b417ee
 >>
->> ---
->> base-commit: 3006adf3be79cde4d14b1800b963b82b6e5572e0
->> change-id: 20231005-ftrace_support-6869d4156139
+>> Hi Lee,
 >>
->> Best regards,
+>> It seems this patch depends on something not in your tree. This should
+>> have been clearly explained in cover letter or this patch changelog, but
+>> wasn't.
+>>
+>> Please drop the patch.
+> 
+> Done.
+
+Hi, v6.7-rc1 now includes the dependencies for this bindings change,
+could you pick it up again? Or maybe I should respin the series
+with it included back?
+
+Sorry for making this inconvenient for you...
+
+Nikita
 
