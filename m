@@ -1,220 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D47A7EB525
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 17:55:41 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A83747EB5B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 18:44:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D7D61C208D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 16:55:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 590E41F22A6C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 17:44:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EF823FE2A;
-	Tue, 14 Nov 2023 16:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6392C1A2;
+	Tue, 14 Nov 2023 17:44:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="FXQ7dxcx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6D63FB1E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 16:55:35 +0000 (UTC)
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTP id 03575B8;
-	Tue, 14 Nov 2023 08:55:34 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E9EE7C15;
-	Tue, 14 Nov 2023 08:56:18 -0800 (PST)
-Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 22B3C3F641;
-	Tue, 14 Nov 2023 08:55:32 -0800 (PST)
-Message-ID: <372885ab-b24d-44ae-afb8-76755bcd6e21@arm.com>
-Date: Tue, 14 Nov 2023 16:55:30 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458B22C1A1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 17:44:03 +0000 (UTC)
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A40694
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 09:44:02 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-778927f2dd3so303723885a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 09:44:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek.ca; s=google; t=1699983841; x=1700588641; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=thGoIvnqITUJB7IQaQsWGdMjOXMrq/akRqtI22GpJyQ=;
+        b=FXQ7dxcxpBSE5zZsFlJRwBYnmmsznxRjIhYT40fqR7x6Yoo/1VV595U4yzi4D9idAt
+         NTZMv5sQPmmA9CWcuAVmjsg6J60Nbjm5mWpmVlsqM8tkOZi60OQypnH4bi6bL7VcvmaL
+         /jGRMbxx8RvMlI/Jo42qIhE0uNlPupx5UxjSlbn5yqr4cfLB5ojoy37+operULioqgWZ
+         ImZIwpjncnWPbjq/QAVrCutJOuk7dSNLzgBL3Kx73PfyaVkod1IO8StGr5YxFrNnL/bl
+         kQ6ZzqHYCBehXckAg+MlHbUmBjnaq1KKqjlsoubk5FCKlz9gjxK6K4OOnG9Orctrc3k7
+         8MJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699983841; x=1700588641;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=thGoIvnqITUJB7IQaQsWGdMjOXMrq/akRqtI22GpJyQ=;
+        b=Y5cnSbcOULnehsXRmrEUgS9XSgfQ8Z4ft61NiOQjd0/Esfrsp59J9mvSKrIYJCkh79
+         yGxDtQo5QWGrrEBIr0Dpc3Wgj9yrXHeD5T3WnCKVNbWh5o8lhyZYeglRXtUJj9aVf4+O
+         bbE1YZjGEtvoGf0EXJjVRDbnrXIV0x85zAhr7YfynT3NJPWfgy5eiGCyeq8vvGtgSUht
+         Zkr4ZWIps+vS2GKGy9SlL92UaN6aURuSlBmq3mY+beShvtkm3AG8SB6NrTUXhlu0iMBa
+         s32vWBbKR4HlCb7r83qIIMyibCcGyvdq2+saAUJKTodIGEmlr+XRJ3Q4btKrEoHfuMmZ
+         SFXw==
+X-Gm-Message-State: AOJu0YygqakgCvRIqh+LkcqnD7T58Jxs0exqzxeQC4fHt7SISztHIlmL
+	jqymWr1d1Oz/6KZvQykVLg8gBQ==
+X-Google-Smtp-Source: AGHT+IHcVT+p/7lEFZr3H2gf88K+Xif9L02wc8rJZEdi8qlawjVvm/vlqEVvJKZyXLD4cXnfklItEg==
+X-Received: by 2002:a05:620a:8c0c:b0:775:7e16:2cdf with SMTP id qz12-20020a05620a8c0c00b007757e162cdfmr2232672qkn.39.1699983841236;
+        Tue, 14 Nov 2023 09:44:01 -0800 (PST)
+Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id bi8-20020a05620a318800b007671cfe8a18sm2833350qkb.13.2023.11.14.09.44.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Nov 2023 09:44:00 -0800 (PST)
+From: Jonathan Marek <jonathan@marek.ca>
+To: freedreno@lists.freedesktop.org
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Jessica Zhang <quic_jesszhan@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Vinod Koul <vkoul@kernel.org>,
+	linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+	dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/4] drm/msm/dsi: set VIDEO_COMPRESSION_MODE_CTRL_WC (fix video mode DSC)
+Date: Tue, 14 Nov 2023 12:42:13 -0500
+Message-Id: <20231114174218.19765-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.26.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-Content-Language: en-GB
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
- joro@8bytes.org, dmitry.baryshkov@linaro.org, a39.skl@gmail.com,
- konrad.dybcio@linaro.org, quic_pkondeti@quicinc.com, quic_molvera@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- qipl.kernel.upstream@quicinc.com
-References: <20231114135654.30475-1-quic_bibekkum@quicinc.com>
- <20231114135654.30475-2-quic_bibekkum@quicinc.com>
-From: Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20231114135654.30475-2-quic_bibekkum@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 14/11/2023 1:56 pm, Bibek Kumar Patro wrote:
-> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
-> the TLB to fetch just the next page table. MMU-500 features ACTLR
-> register which is implementation defined and is used for Qualcomm SoCs
-> to have a prefetch setting of 1/3/7/15 enabling TLB to prefetch
-> the next set of page tables accordingly allowing for faster translations.
-> 
-> ACTLR value is unique for each SMR (Stream matching register) and stored
-> in a pre-populated table. This value is set to the register during
-> context bank initialisation.
-> 
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 41 ++++++++++++++++++++++
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  2 ++
->   drivers/iommu/arm/arm-smmu/arm-smmu.c      |  5 +--
->   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  5 +++
->   4 files changed, 51 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 549ae4dba3a6..578c662c7c30 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -14,6 +14,17 @@
-> 
->   #define QCOM_DUMMY_VAL	-1
-> 
-> +struct actlr_config {
-> +	const struct actlr_data *adata;
-> +	size_t size;
-> +};
-> +
-> +struct actlr_data {
-> +	u16 sid;
-> +	u16 mask;
+Video mode DSC won't work if this field is not set correctly. Set it to fix
+video mode DSC (for slice_per_pkt==1 cases at least).
 
-Do we need to worry about masks? If you're already assuming that any SMR 
-will be programmed to match a superset of the data here, surely a single 
-unique ID per device would suffice?
+Fixes: 08802f515c3 ("drm/msm/dsi: Add support for DSC configuration")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> +	u32 actlr;
-> +};
-> +
->   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->   {
->   	return container_of(smmu, struct qcom_smmu, smmu);
-> @@ -261,9 +272,36 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
->   	{ }
->   };
-> 
-> +static void arm_smmu_set_actlr(struct arm_smmu_device *smmu, int idx,
-> +		const struct actlr_config *actlrcfg)
-> +{
-> +	struct arm_smmu_smr *smr = smmu->smrs;
-> +	int i;
-> +	u16 id;
-> +	u16 mask;
-> +
-> +	for (i = 0; i < actlrcfg->size; ++i) {
-> +		id = actlrcfg->adata[i].sid;
-> +		mask = actlrcfg->adata[i].mask;
-> +		if (!smr_is_subset(*smr, id, mask))
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 9d355cdc3ec1..bddc57726fb9 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -847,6 +847,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 	u32 slice_per_intf, total_bytes_per_intf;
+ 	u32 pkt_per_line;
+ 	u32 eol_byte_num;
++	u32 bytes_per_pkt;
+ 
+ 	/* first calculate dsc parameters and then program
+ 	 * compress mode registers
+@@ -854,6 +855,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
+ 
+ 	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
++	bytes_per_pkt = dsc->slice_chunk_size; /* * slice_per_pkt; */
+ 
+ 	eol_byte_num = total_bytes_per_intf % 3;
+ 
+@@ -891,6 +893,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+ 		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg_ctrl);
+ 		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
+ 	} else {
++		reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_WC(bytes_per_pkt);
+ 		dsi_write(msm_host, REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
+ 	}
+ }
+-- 
+2.26.1
 
-How well have you tested this? ;)
-
-> +			arm_smmu_cb_write(smmu, idx, ARM_SMMU_CB_ACTLR,
-> +					actlrcfg->adata[i].actlr);
-> +	}
-> +}
-> +
->   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->   		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
->   {
-> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
-> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
-> +	const struct actlr_config *actlrcfg;
-> +	int idx = smmu_domain->cfg.cbndx;
-> +
-> +	if (qsmmu->actlrcfg) {
-> +		actlrcfg = qsmmu->actlrcfg;
-> +		arm_smmu_set_actlr(smmu, idx, actlrcfg);
-> +	}
-> +
->   	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
-> 
->   	return 0;
-> @@ -467,6 +505,9 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
->   	qsmmu->smmu.impl = impl;
->   	qsmmu->cfg = data->cfg;
-> 
-> +	if (data->actlrcfg && (data->actlrcfg->size))
-> +		qsmmu->actlrcfg = data->actlrcfg;
-
-Do we really need to replicate multiple parts of the data, or would it 
-be sensible to just replace qsmmu->cfg with qsmmu->data and handle the 
-further dereferences in the places that want them?
-
-> +
->   	return &qsmmu->smmu;
->   }
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-> index 593910567b88..4b6862715070 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-> @@ -9,6 +9,7 @@
->   struct qcom_smmu {
->   	struct arm_smmu_device smmu;
->   	const struct qcom_smmu_config *cfg;
-> +	const struct actlr_config *actlrcfg;
->   	bool bypass_quirk;
->   	u8 bypass_cbndx;
->   	u32 stall_enabled;
-> @@ -25,6 +26,7 @@ struct qcom_smmu_config {
->   };
-> 
->   struct qcom_smmu_match_data {
-> +	const struct actlr_config *actlrcfg;
->   	const struct qcom_smmu_config *cfg;
->   	const struct arm_smmu_impl *impl;
->   	const struct arm_smmu_impl *adreno_impl;
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index d6d1a2a55cc0..8e4faf015286 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -990,9 +990,10 @@ static int arm_smmu_find_sme(struct arm_smmu_device *smmu, u16 id, u16 mask)
->   		 * expect simply identical entries for this case, but there's
->   		 * no harm in accommodating the generalisation.
->   		 */
-> -		if ((mask & smrs[i].mask) == mask &&
-> -		    !((id ^ smrs[i].id) & ~smrs[i].mask))
-> +
-> +		if (smr_is_subset(smrs[i], id, mask))
->   			return i;
-> +
->   		/*
->   		 * If the new entry has any other overlap with an existing one,
->   		 * though, then there always exists at least one stream ID
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> index 703fd5817ec1..b1638bbc41d4 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-> @@ -501,6 +501,11 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
->   		writeq_relaxed(val, arm_smmu_page(smmu, page) + offset);
->   }
-> 
-> +static inline bool smr_is_subset(struct arm_smmu_smr smrs, u16 id, u16 mask)
-
-Hmm, that name reads as implying the opposite of what it actually tests, 
-not to mention that passing structs by value is a bit horrid as well :(
-
-Thanks,
-Robin.
-
-> +{
-> +	return (mask & smrs.mask) == mask && !((id ^ smrs.id) & ~smrs.mask);
-> +}
-> +
->   #define ARM_SMMU_GR0		0
->   #define ARM_SMMU_GR1		1
->   #define ARM_SMMU_CB(s, n)	((s)->numpage + (n))
-> --
-> 2.17.1
-> 
 
