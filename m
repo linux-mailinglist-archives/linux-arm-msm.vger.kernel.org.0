@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E1497EB5BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 18:44:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7178E7EB5C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 18:44:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A56531C20A81
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 17:44:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC288B20B19
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 17:44:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EFBA2C1A1;
-	Tue, 14 Nov 2023 17:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EC672C1A2;
+	Tue, 14 Nov 2023 17:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="NNOlHeT6"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="H46kxdtM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1AB2C194
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 17:44:09 +0000 (UTC)
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3141CD9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 09:44:08 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id af79cd13be357-778a92c06d6so358316785a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 09:44:08 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B292C194
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 17:44:17 +0000 (UTC)
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5ED6192
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 09:44:14 -0800 (PST)
+Received: by mail-qk1-x72a.google.com with SMTP id af79cd13be357-77ba6d5123fso1561585a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 09:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1699983847; x=1700588647; darn=vger.kernel.org;
+        d=marek.ca; s=google; t=1699983853; x=1700588653; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jOopcK9K4HsHFD0FhRzafDXESddDDjm1WV41GtBAoVg=;
-        b=NNOlHeT6V2tk7tkOEN1XsYXa+HDykthr64IZi2AdUKw/5/8FEma3YPdRdmQ8IJr6fV
-         hXPM8nnX3GHmpUjtlj/v6ibTby0lLq6D8kblpw3qpJnQd28gXkZ+BjdvHWuw4N39VsSB
-         RQ0vsTE82U3jG09y+fLfsbhN+foHANDwB1qj+0lPZWAQ0VTflCPFD+TnaieOsCdjNFQh
-         PGeEwafnIGRvX7LJzyEebM3zdanpfWKG1rxd+P7NL6/zBaas09YamM45qBHOdewcVwDI
-         WEooIGlLa6R1/6pJhnM0amgjG8amSgiEHB1XAtOLDOwx+MHIGDS8H7Bz/hsjYGp0TKLs
-         7Wjw==
+        bh=LxJSud2bUpEWb5+zdKhsCdpc+jFCEiyn/rkkbqMyRnU=;
+        b=H46kxdtM39JzFf+LiuZsCA4xkC9uXqQPJJmPtN8byJufdLblbxs8j9x84ekLl5Vd6e
+         aMsG4JU+0vI8Pv/bFXzOx5UoA5+ZTlCkWfQltXAe70Spdhb3h1OetvPcn7QRjcMuhWaX
+         HEQz5WszLmr6TEw6wJosYC3CUwUr8TYJ9EpZ2+WsUXzPrjkyZ2KI1RJCSuNzvs08MkQb
+         CifyUDKl6k5fMz2iP9MRTIHx5Y0G7qXmNLzAW3GUozrRUCCIWCZbt7PCSSHiyUHCq9+u
+         tM6F8UN11YjPbSdBEeZv1tvKToSishGG5eHPImFn7u8vMJz0RowHq4bjEOTKqLxKR7bj
+         6EaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699983847; x=1700588647;
+        d=1e100.net; s=20230601; t=1699983853; x=1700588653;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jOopcK9K4HsHFD0FhRzafDXESddDDjm1WV41GtBAoVg=;
-        b=YUggoDPgezVEYnYSAz31FQPO+Q9fHYK5aFtTFZP9Mscu0lJUYLsRPvmKe+GQU7QggW
-         hOxnjp1svBcCwQO4Nb1J3jsVl7UHUFbt0mJKMcTJE1a3CC+l8/2BvzieJHZOLzisSH0g
-         hQ+ARV7y73vtHnNpVk4Dso1IwE/cQQLuuRd5k2cVBPltz9rKtwObbV2PxbEONaxzgsbG
-         Uic9SlAIlyVt0pCI5sPCmu6YU7CG8m8iEAKxgbuAQnjq4YuDnBCK9rWxhj8j1C5srsHr
-         Yl0EzsdZkAqosgMrf/d39M6JHiI6yyIAJKJtpui28H4QyehcoF28LLUn2bNdxA0X0Z6z
-         9zDw==
-X-Gm-Message-State: AOJu0YwYxp2S0/V8JvZs6GqVi1xXyhS7rZZpz8na+YbQnNFpaWLPAs/Z
-	5sc1BhMQwz0+s2jsosCu0vwaxw==
-X-Google-Smtp-Source: AGHT+IEoUWi2pDWF6jdLsDdB9bo4yCiuTcH+dJCQhosEkkKLGNi7bZ3RwGK2wPPoN9/9Te+GQZRRKg==
-X-Received: by 2002:a05:620a:4453:b0:77b:d90e:dd91 with SMTP id w19-20020a05620a445300b0077bd90edd91mr3857377qkp.46.1699983847240;
-        Tue, 14 Nov 2023 09:44:07 -0800 (PST)
+        bh=LxJSud2bUpEWb5+zdKhsCdpc+jFCEiyn/rkkbqMyRnU=;
+        b=Rk1RzNGMed/TGr+2NKjR3JAL6IOoWAMm83k9UNnxT3166sPrT7HXVwVVHxgQoyqo6I
+         WP9hpPdXTqK0r+h8XF/dji9/DF7LTKH3Yg8tkt8JZm3bTuY3xa79juKj7JAHRuhXEb3v
+         /1lmOjtUD9qx2aW2PjfZ7Lh/6Lzu++8yoVO3iFefBRlbR0NTu81Hxk7Hxk629EQqIfqz
+         EqbyWHB86AeDE0QZfCD8ydaKIQVNAhDEHTXImytJxs3GplSABg5aVjmY7juus8fH8VpS
+         zN/tsRyHTe0px2cQ7lG4NbcO6ApL+MZ8CcFs57nDkIrJ2jone6k4+Pnu00BwhtUt3qPq
+         2k3Q==
+X-Gm-Message-State: AOJu0YxEwFVT88Ug5p56rDjj62mQQm/UYxo4sHuDP2v5LUFtFTv7tShk
+	dOPNEw/Kugcf83TSQgxybK8QdA==
+X-Google-Smtp-Source: AGHT+IFQfSiyA6caJXGmA0kjldo9K1Mp143S3RfZtOQoQPR93hcHUbZgAlUeJDg/XI9hn6gk8MAd8A==
+X-Received: by 2002:a05:620a:1993:b0:76c:b7f0:2bc9 with SMTP id bm19-20020a05620a199300b0076cb7f02bc9mr5333777qkb.16.1699983853651;
+        Tue, 14 Nov 2023 09:44:13 -0800 (PST)
 Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id bi8-20020a05620a318800b007671cfe8a18sm2833350qkb.13.2023.11.14.09.44.06
+        by smtp.gmail.com with ESMTPSA id bi8-20020a05620a318800b007671cfe8a18sm2833350qkb.13.2023.11.14.09.44.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Nov 2023 09:44:07 -0800 (PST)
+        Tue, 14 Nov 2023 09:44:13 -0800 (PST)
 From: Jonathan Marek <jonathan@marek.ca>
 To: freedreno@lists.freedesktop.org
 Cc: Rob Clark <robdclark@gmail.com>,
@@ -67,18 +67,16 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	Marijn Suijten <marijn.suijten@somainline.org>,
 	David Airlie <airlied@gmail.com>,
 	Daniel Vetter <daniel@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
 	Jessica Zhang <quic_jesszhan@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Doug Anderson <dianders@chromium.org>,
 	linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
 	dri-devel@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 3/4] drm/msm/dsi: support DSC configurations with slice_per_pkt > 1
-Date: Tue, 14 Nov 2023 12:42:15 -0500
-Message-Id: <20231114174218.19765-3-jonathan@marek.ca>
+Subject: [PATCH 4/4] drm/msm/dsi: fix DSC for the bonded DSI case
+Date: Tue, 14 Nov 2023 12:42:16 -0500
+Message-Id: <20231114174218.19765-4-jonathan@marek.ca>
 X-Mailer: git-send-email 2.26.1
 In-Reply-To: <20231114174218.19765-1-jonathan@marek.ca>
 References: <20231114174218.19765-1-jonathan@marek.ca>
@@ -90,91 +88,109 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a dsc_slice_per_pkt field to mipi_dsi_device struct and the necessary
-changes to msm driver to support this field.
-
-Note that the removed "pkt_per_line = slice_per_intf * slice_per_pkt"
-comment is incorrect.
+For the bonded DSI case, DSC pic_width and timing calculations should use
+the width of a single panel instead of the total combined width.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 25 ++++++++++---------------
- include/drm/drm_mipi_dsi.h         |  1 +
- 2 files changed, 11 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi.h         |  3 ++-
+ drivers/gpu/drm/msm/dsi/dsi_host.c    | 20 +++++++++++---------
+ drivers/gpu/drm/msm/dsi/dsi_manager.c |  2 +-
+ 3 files changed, 14 insertions(+), 11 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+index 28379b1af63f..3a641e69447c 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -93,7 +93,8 @@ int msm_dsi_host_power_off(struct mipi_dsi_host *host);
+ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
+ 				  const struct drm_display_mode *mode);
+ enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
+-					    const struct drm_display_mode *mode);
++					    const struct drm_display_mode *mode,
++					    bool is_bonded_dsi);
+ unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
+ int msm_dsi_host_register(struct mipi_dsi_host *host);
+ void msm_dsi_host_unregister(struct mipi_dsi_host *host);
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 2ea2fc105fbf..7284346ab787 100644
+index 7284346ab787..a6286eb9d006 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -161,6 +161,7 @@ struct msm_dsi_host {
- 
- 	struct drm_display_mode *mode;
- 	struct drm_dsc_config *dsc;
-+	unsigned int dsc_slice_per_pkt;
- 
- 	/* connected device info */
- 	unsigned int channel;
-@@ -855,17 +856,10 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
- 
- 	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
--	bytes_per_pkt = dsc->slice_chunk_size; /* * slice_per_pkt; */
-+	bytes_per_pkt = dsc->slice_chunk_size * msm_host->dsc_slice_per_pkt;
- 
- 	eol_byte_num = total_bytes_per_intf % 3;
+@@ -938,8 +938,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 			       mode->hdisplay, mode->vdisplay);
+ 			return;
+ 		}
 -
--	/*
--	 * Typically, pkt_per_line = slice_per_intf * slice_per_pkt.
--	 *
--	 * Since the current driver only supports slice_per_pkt = 1,
--	 * pkt_per_line will be equal to slice per intf for now.
--	 */
--	pkt_per_line = slice_per_intf;
-+	pkt_per_line = slice_per_intf / msm_host->dsc_slice_per_pkt;
+-		dsc->pic_width = mode->hdisplay;
++		dsc->pic_width = hdisplay;
+ 		dsc->pic_height = mode->vdisplay;
+ 		DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
  
- 	if (is_cmd_mode) /* packet data type */
- 		reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-@@ -1002,12 +996,8 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		else
- 			/*
- 			 * When DSC is enabled, WC = slice_chunk_size * slice_per_pkt + 1.
--			 * Currently, the driver only supports default value of slice_per_pkt = 1
--			 *
--			 * TODO: Expand mipi_dsi_device struct to hold slice_per_pkt info
--			 *       and adjust DSC math to account for slice_per_pkt.
- 			 */
--			wc = msm_host->dsc->slice_chunk_size + 1;
-+			wc = msm_host->dsc->slice_chunk_size * msm_host->dsc_slice_per_pkt + 1;
+@@ -950,6 +949,11 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 		if (ret)
+ 			return;
  
- 		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
- 			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
-@@ -1634,8 +1624,13 @@ static int dsi_host_attach(struct mipi_dsi_host *host,
- 	msm_host->lanes = dsi->lanes;
- 	msm_host->format = dsi->format;
- 	msm_host->mode_flags = dsi->mode_flags;
--	if (dsi->dsc)
-+	if (dsi->dsc) {
- 		msm_host->dsc = dsi->dsc;
-+		msm_host->dsc_slice_per_pkt = dsi->dsc_slice_per_pkt;
-+		/* for backwards compatibility, assume 1 if not set */
-+		if (!msm_host->dsc_slice_per_pkt)
-+			msm_host->dsc_slice_per_pkt = 1;
-+	}
++		if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
++			dsi_update_dsc_timing(msm_host, false, hdisplay);
++		else
++			dsi_update_dsc_timing(msm_host, true, hdisplay);
++
+ 		/* Divide the display by 3 but keep back/font porch and
+ 		 * pulse width same
+ 		 */
+@@ -966,9 +970,6 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 	}
  
- 	/* Some gpios defined in panel DT need to be controlled by host */
- 	ret = dsi_host_init_panel_gpios(msm_host, &dsi->dev);
-diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-index c9df0407980c..3e32fa52d94b 100644
---- a/include/drm/drm_mipi_dsi.h
-+++ b/include/drm/drm_mipi_dsi.h
-@@ -193,6 +193,7 @@ struct mipi_dsi_device {
- 	unsigned long hs_rate;
- 	unsigned long lp_rate;
- 	struct drm_dsc_config *dsc;
-+	unsigned int dsc_slice_per_pkt;
- };
+ 	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+-		if (msm_host->dsc)
+-			dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
+-
+ 		dsi_write(msm_host, REG_DSI_ACTIVE_H,
+ 			DSI_ACTIVE_H_START(ha_start) |
+ 			DSI_ACTIVE_H_END(ha_end));
+@@ -987,9 +988,6 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
+ 			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+ 	} else {		/* command mode */
+-		if (msm_host->dsc)
+-			dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
+-
+ 		/* image data and 1 byte write_memory_start cmd */
+ 		if (!msm_host->dsc)
+ 			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
+@@ -2487,7 +2485,8 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
+ }
  
- #define MIPI_DSI_MODULE_PREFIX "mipi-dsi:"
+ enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
+-					    const struct drm_display_mode *mode)
++					    const struct drm_display_mode *mode,
++					    bool is_bonded_dsi)
+ {
+ 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
+ 	struct drm_dsc_config *dsc = msm_host->dsc;
+@@ -2497,6 +2496,9 @@ enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
+ 	if (!msm_host->dsc)
+ 		return MODE_OK;
+ 
++	if (is_bonded_dsi)
++		pic_width = mode->hdisplay / 2;
++
+ 	if (pic_width % dsc->slice_width) {
+ 		pr_err("DSI: pic_width %d has to be multiple of slice %d\n",
+ 		       pic_width, dsc->slice_width);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index 896f369fdd53..2ca1a7ca3659 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -455,7 +455,7 @@ static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct drm_bridge *bridge,
+ 			return MODE_ERROR;
+ 	}
+ 
+-	return msm_dsi_host_check_dsc(host, mode);
++	return msm_dsi_host_check_dsc(host, mode, IS_BONDED_DSI());
+ }
+ 
+ static const struct drm_bridge_funcs dsi_mgr_bridge_funcs = {
 -- 
 2.26.1
 
