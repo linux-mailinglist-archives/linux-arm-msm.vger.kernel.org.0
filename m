@@ -1,109 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 149427EAF47
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 12:34:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B90E27EAFCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 13:25:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44AE11C2082D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 11:34:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E91521C2089A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 12:24:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B699BC2E3;
-	Tue, 14 Nov 2023 11:34:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1BD33FB04;
+	Tue, 14 Nov 2023 12:24:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l99rIvbL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3679C2D62E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 11:34:28 +0000 (UTC)
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF8AB192
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 03:34:26 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r2rgI-00066n-9u; Tue, 14 Nov 2023 12:34:10 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r2rgG-008ytE-MN; Tue, 14 Nov 2023 12:34:08 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r2rgG-001K07-Cd; Tue, 14 Nov 2023 12:34:08 +0100
-Date: Tue, 14 Nov 2023 12:34:08 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Devi Priya <quic_devipriy@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-	lee@kernel.org, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	thierry.reding@gmail.com, baruch@tkos.co.il,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-pwm@vger.kernel.org
-Subject: Re: [PATCH 0/4] Enable pwm support for IPQ5332 & IPQ9574 SoCs
-Message-ID: <20231114113408.f7xvbvmhvf256jis@pengutronix.de>
-References: <20231006045317.1056625-1-quic_devipriy@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A223FB03;
+	Tue, 14 Nov 2023 12:24:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195FAC433C8;
+	Tue, 14 Nov 2023 12:24:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1699964697;
+	bh=ncW1jlc+LZFs2wFuphiZQkOpBz6QX6RiQ1j55px9Kao=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=l99rIvbLUJu13ZV4yN+aLpcFrZXEL5au01dh2KnmkkAuL8rJz0BX/tmQCk6CcI85I
+	 K1eORMZkp/Ga3PsGp0pR5FNMk5DFRzzLY+VQZvBD3Vc4Ovg0W9CKVihkTbZ/b6e2NY
+	 zZzg8Yvo8jAh0Q5Bc+kFMBrZ6SG+4IFYbJJ9yDTg=
+Date: Tue, 14 Nov 2023 07:24:55 -0500
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: John Moon <quic_johmoo@quicinc.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Jonathan Corbet <corbet@lwn.net>, linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, kernel@quicinc.com,
+	Randy Dunlap <rdunlap@infradead.org>, Arnd Bergmann <arnd@arndb.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Todd Kjos <tkjos@google.com>,
+	Matthias Maennich <maennich@google.com>,
+	Giuliano Procida <gprocida@google.com>, kernel-team@android.com,
+	libabigail@sourceware.org, Dodji Seketeli <dodji@redhat.com>,
+	Trilok Soni <quic_tsoni@quicinc.com>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Jordan Crouse <jorcrous@amazon.com>
+Subject: Re: [PATCH v6 1/3] check-uapi: Introduce check-uapi.sh
+Message-ID: <2023111421-parish-juice-1932@gregkh>
+References: <20231027193016.27516-1-quic_johmoo@quicinc.com>
+ <20231027193016.27516-2-quic_johmoo@quicinc.com>
+ <CAK7LNATWk8psXZvsHXNwxNt9=sUi3J0qOA-P4ceOKqBuS1_VJQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3wbsy6jm65ldlr2s"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231006045317.1056625-1-quic_devipriy@quicinc.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAK7LNATWk8psXZvsHXNwxNt9=sUi3J0qOA-P4ceOKqBuS1_VJQ@mail.gmail.com>
 
+On Tue, Nov 14, 2023 at 07:10:51PM +0900, Masahiro Yamada wrote:
+> On Sat, Oct 28, 2023 at 4:31 AM John Moon <quic_johmoo@quicinc.com> wrote:
+> >
+> > While the kernel community has been good at maintaining backwards
+> > compatibility with kernel UAPIs, it would be helpful to have a tool
+> > to check if a commit introduces changes that break backwards
+> > compatibility.
+> >
+> > To that end, introduce check-uapi.sh: a simple shell script that
+> > checks for changes to UAPI headers using libabigail.
+> >
+> > libabigail is "a framework which aims at helping developers and
+> > software distributors to spot some ABI-related issues like interface
+> > incompatibility in ELF shared libraries by performing a static
+> > analysis of the ELF binaries at hand."
+> >
+> > The script uses one of libabigail's tools, "abidiff", to compile the
+> > changed header before and after the commit to detect any changes.
+> >
+> > abidiff "compares the ABI of two shared libraries in ELF format. It
+> > emits a meaningful report describing the differences between the two
+> > ABIs."
+> >
+> > The script also includes the ability to check the compatibility of
+> > all UAPI headers across commits. This allows developers to inspect
+> > the stability of the UAPIs over time.
+> >
+> > Signed-off-by: John Moon <quic_johmoo@quicinc.com>
+> > ---
+> >     - Add abidiff suppressions to filter out common things like enum
+> >       variants named .*_MAX being changed and expansion into padding
+> >       fields.
+> >     - Bump minimum abidiff version to 2.4 to accomodate new
+> >       suppressions.
+> >     - Add option (-i) to suppress ambiguous breaking changes.
+> >     - Remove printing of full file diffs when ABI breakage is found
+> >       as this was too noisy.
+> >     - Wait for all files to be checked before printing results as
+> >       printing from parallel threads was garbling output.
+> >     - Suppress all output when -q is passed.
+> >     - Avoid messing up user's git tree by using "git archive" instead
+> >       of checking out references.
+> 
+> 
+> 
+> The code looks almost good to me.
+> 
+> (I left some more comments below, but they are minor).
+> 
+> 
+> 
+> Greg,
+> Could you check the output from the tool?
 
---3wbsy6jm65ldlr2s
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I will, give me a chance to catch up after the merge window and this
+week at Plumbers....  Should be a week or so, thanks.
 
-On Fri, Oct 06, 2023 at 10:23:13AM +0530, Devi Priya wrote:
-> Enable pwm support for IPQ5332 & IPQ9574 SoCs and document the
-> pwm compatibles.
-> While at it, use qcom,ipq6018-pwm as the fallback compatible and extend t=
-he
-> simple-mfd support for ipq5332 & ipq9574 targets.
->=20
-> This series depends on the below series which adds support
-> for the PWM driver on IPQ targets:
-> https://lore.kernel.org/linux-arm-msm/20231005160550.2423075-1-quic_devip=
-riy@quicinc.com/
-
-Given this dependency, I suggest you add the patches from this series to
-the next revision of the IPQ base series.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---3wbsy6jm65ldlr2s
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmVTWy8ACgkQj4D7WH0S
-/k4UvAf7B9DckIZWg1K3ifzsa+9ogP0hip9vJ46qYWw7pn+SwRGNyx/H60eYzD8e
-nLc/dCllG6IvI/JyZSDvBcgZZouKSaeheZpEWRyhcXzRTbJrtFId0gGpSr6fJ2Wx
-rhMSV6isay4bfhkGilPV3ne/iQeEtUl+hoSFkICK7QW1n0yB9stsgXylOhyZsUq5
-DLjIqqGTlTkqUTJqLz/KbEHg71X4XUE8FDIyO/O9DC4joIpXmr9I7g80SZmtRmi7
-eFFRkPzlz7gRoRm6tfmoYaCMNK4y/BLKI0ZBjaqhbSSHRe0PAY8nFEc1JqmT2mk0
-tUsXZm/AjfZWChyV5t/9b57x6Cg2YQ==
-=WCAE
------END PGP SIGNATURE-----
-
---3wbsy6jm65ldlr2s--
+greg k-h
 
