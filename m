@@ -1,65 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5151C7EB38A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 16:28:55 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5625A7EB392
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 16:30:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BAEE28115E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 15:28:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB4A9B20B4A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 15:30:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1066241754;
-	Tue, 14 Nov 2023 15:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB1E341234;
+	Tue, 14 Nov 2023 15:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xG1HpNb5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FgK6mK/0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26D94174C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 15:28:50 +0000 (UTC)
-Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1119C121
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 07:28:49 -0800 (PST)
-Received: by mail-qk1-x72c.google.com with SMTP id af79cd13be357-778a6c440faso295127685a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 07:28:49 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536DD41753
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 15:30:11 +0000 (UTC)
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD82B11A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 07:30:09 -0800 (PST)
+Received: by mail-qk1-x730.google.com with SMTP id af79cd13be357-7789923612dso357797685a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 07:30:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699975728; x=1700580528; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1699975809; x=1700580609; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BGxQDxhwGJ2nh5zs6ScH+LS4hZ552IQoSeqNqLnSUY0=;
-        b=xG1HpNb5FWSBDUdgLc5TREEouOnlWBRjk5Pn05/jlNHRWzw2onyzzdjF5EaNF5yCh6
-         /svpQVvL09O7YLd/Fp9z+bzk0dnHJXkFycskqHR6Y2oFIVy/I6TluJUUYYw+Lzycvo4I
-         HRdz/Y3+5gM3tFMMS78hBydNN5l/0PV8Cy51msxcS1T1hKTGVshcPwzWPBHn7u9aDNar
-         nhHrSwGaXqvrRD4tIII0BJb8WULJ8ZiQlO8Xz1voykN9V2jgGo9JnS5j+QUy9tFZludZ
-         FmGBWuFy7V6Z6tkFSIZK3KDIGNpYSM3BiB2j7GDkkgq2zvmJqjrHM68hjs8e5yw0Ot5b
-         aDOQ==
+        bh=0z8mYGlvzpXltKUUIjDXOzBtwWwYDn4CEpQNJlr626Q=;
+        b=FgK6mK/07LLNZzIB9fM00SQRtAhqiAxJFx+VeogC8sjIyDGaDxIdi4lCXGfGo5/RjH
+         ApcYNUSR6/3gIgNR6h9JlKrRjgqhV4zszwYHzXMv9vVEImGOkcKaOPOkDK4KcaNGJasH
+         fZKDGMfKjgkPK0Jq7dY05UwrGELBBhT0etfqcoCwAmerhRUkI2tFkt4HRI9R3ao5FySd
+         MNiT2wOpUwwmY1U/j18nskTuA5D4bK9HoEIuaLKgmQc6WofSYhSxUDntYOInfHYL8ij3
+         1dyXYadmn2czbwBt+X25kBGGiqxpUS1JIh8pvnSONgosAvKjJAFk7KUsgAvr3uB0Wi2G
+         iCcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699975728; x=1700580528;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1699975809; x=1700580609;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BGxQDxhwGJ2nh5zs6ScH+LS4hZ552IQoSeqNqLnSUY0=;
-        b=CeIdj7fqQc/GYVtem+pLUtj8iMzeKcCRgB5IXwlPVazmHtSUJ2j85Aucw/b41Scael
-         7TnO7Qbt/hh6PCN0Gz17PqBEh5Bx1c+nMwnai+VcdSf6fG6vHb9oYdsEYTKKnCTd2k7O
-         TeV2iJ2dnEgf1H0FjCicZ8LprKPZf/jSUPTIYBQkZ+2lzHGhTYB8m9idg/VEJsX/DxuV
-         /k2ofQpa2sX4CxmS6ZPh6Fp0yt7eHcwBIGvV1VlP33WlXyJitYS4z/B+uu1M8HZEuSio
-         pymSoTiMjBDwJ7mUCtARME4NT3UP5dXow1MxN5QG5A99mnPktvgTcOnqjEOsPzrmnGLa
-         hGig==
-X-Gm-Message-State: AOJu0Ywebyt0RcCrmSoMLfDAQF33uhL6Gtc1w2BND2wh4oXMbU2jiPt3
-	0joRChUd7CX1GZz/6q5cgGCU9w==
-X-Google-Smtp-Source: AGHT+IE+7rw23tKCHEGTWas8bKZs9IJbGI6dJMY/vX5+Ea8ykwZXNrA1jFDtHohlObVIyQwvBkBf2A==
-X-Received: by 2002:a05:620a:1725:b0:774:3963:41a5 with SMTP id az37-20020a05620a172500b00774396341a5mr2820249qkb.13.1699975728151;
-        Tue, 14 Nov 2023 07:28:48 -0800 (PST)
+        bh=0z8mYGlvzpXltKUUIjDXOzBtwWwYDn4CEpQNJlr626Q=;
+        b=MS0UttSu06nbP0MVpcxXrDHuTLc+BmXbiEP4U8W8DXKpgRpY/wNdBaqIUohGQguGoS
+         4pNoxs+wMPHsPMHNJ/Ss4vRZDjnkyxLrZ2xTd3NZ+0mxqTS/4CfarAAoYxHlO/rHxAOc
+         LH1KZfgmHlbyVoaHOl6Y6Kf/SRngyv5KFxgVyadaGUTAnTp3steVyMIxqOt5F3MZg80V
+         zHGdhq5u9ZY0wKnq2m8KEpsfn0NKWSNXHD1mt4aE4ieFDoJsGR1/tOlrLjFua0amXVPd
+         CNgDmJtri05utBiasy2mBTuscaDolUA32JEiRMd5prEnPbd4anIbV0kc7Pu/I5sROjcB
+         Qxeg==
+X-Gm-Message-State: AOJu0YyejqLs5v5d4c/YyPo1g0gHTwrDFeeANE6SM6BaJ1+/SIEAbh7F
+	E/mI3H+UY6iueRxRSF+HZ4Dnvg==
+X-Google-Smtp-Source: AGHT+IHRO/56HZrJWKUmGFoFd9AbhcgDhYOmUVnhf0y4iuYrRDUaH18Q8zY3Sx4CcPySJThyMwfT4A==
+X-Received: by 2002:a05:620a:148b:b0:77b:cc51:822e with SMTP id w11-20020a05620a148b00b0077bcc51822emr2474353qkj.64.1699975808965;
+        Tue, 14 Nov 2023 07:30:08 -0800 (PST)
 Received: from [172.25.83.73] ([12.186.190.2])
-        by smtp.gmail.com with ESMTPSA id bp39-20020a05620a45a700b0076ef004f659sm2734795qkb.1.2023.11.14.07.28.47
+        by smtp.gmail.com with ESMTPSA id bp39-20020a05620a45a700b0076ef004f659sm2734795qkb.1.2023.11.14.07.30.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Nov 2023 07:28:47 -0800 (PST)
-Message-ID: <2323d13a-aa7c-43a9-85e3-95a2d176b990@linaro.org>
-Date: Tue, 14 Nov 2023 16:28:46 +0100
+        Tue, 14 Nov 2023 07:30:08 -0800 (PST)
+Message-ID: <0109c9c9-3556-4b65-83b6-7d8b37b775a0@linaro.org>
+Date: Tue, 14 Nov 2023 16:30:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,17 +67,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Revert "arm64: dts: qcom: qrb5165-rb5:
- enable DP altmode"
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: sm8150: use 'gpios' suffix for PCI
+ GPIOs
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231111094645.12520-1-krzysztof.kozlowski@linaro.org>
- <CAA8EJpoK1N1LBY5ZjL7hb0Sqge7iF4X=rm1n9VZPx-0nOm3bkw@mail.gmail.com>
+References: <20231111164229.63803-1-krzysztof.kozlowski@linaro.org>
+ <20231111164229.63803-3-krzysztof.kozlowski@linaro.org>
+ <81c4d6c3-1fce-4bb2-ad07-89f1482dd686@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -123,32 +123,26 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CAA8EJpoK1N1LBY5ZjL7hb0Sqge7iF4X=rm1n9VZPx-0nOm3bkw@mail.gmail.com>
+In-Reply-To: <81c4d6c3-1fce-4bb2-ad07-89f1482dd686@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 13/11/2023 11:09, Dmitry Baryshkov wrote:
-> On Sat, 11 Nov 2023 at 11:46, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+On 13/11/2023 13:00, Konrad Dybcio wrote:
+> On 11.11.2023 17:42, Krzysztof Kozlowski wrote:
+>> Linux handles both versions, but bindings expect GPIO properties to
+>> have 'gpios' suffix instead of 'gpio':
 >>
->> This reverts commit b3dea914127e9065df003002ed13a2ef40d19877.
+>>   sa8155p-adp.dtb: pci@1c00000: Unevaluated properties are not allowed ('perst-gpio' was unexpected)
 >>
->> The commit introduced unsupported and undocumented properties:
->>
->>   qrb5165-rb5.dtb: pmic@2: typec@1500:connector: 'altmodes' does not match any of the regexes: 'pinctrl-[0-9]+'
-> 
-> We need this property to enable DP altmode on RB5. It has been parsed
-> by the typec subsystem since the commit 7b458a4c5d73 ("usb: typec: Add
-> typec_port_register_altmodes()"), merged in April 2021.
-> 
-> Rather than landing this commit, let me propose to send the proper
-> binding instead. If we can not agree on a compatible bindings document
-> within the sensible timeframe (e.g. 1 month), I'm fine with dropping
-> of the altmodes from qrb5156-rb5.
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> ---
+> What about the 'enable-gpio' right below it?
 
-I agree, sounds good for me. I just want to stir the pot and have the
-issue resolved :)
+It needs to be documented first. enable-gpio/s seems to be missing from
+the bindings and I did not have enough of time to investigate whether
+this is correct in the first place.
 
+That's why I thought about fixing only already accepted perst-gpios.
 
 Best regards,
 Krzysztof
