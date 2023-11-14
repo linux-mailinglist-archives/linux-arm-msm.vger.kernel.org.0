@@ -1,293 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB8AB7EB053
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 13:53:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C1417EB0D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 14:28:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30AEDB20B6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 12:53:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AECB22811A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Nov 2023 13:28:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79BAE3E47D;
-	Tue, 14 Nov 2023 12:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A86B3FE56;
+	Tue, 14 Nov 2023 13:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JKFFwVmw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fWsKGeLF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDDD3A29E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 12:53:33 +0000 (UTC)
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF5E51A5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 04:53:31 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5a87ac9d245so65632487b3.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 04:53:31 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B0D3FE40
+	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 13:28:02 +0000 (UTC)
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DF401A1;
+	Tue, 14 Nov 2023 05:28:01 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id 98e67ed59e1d1-28037d046b0so4612947a91.3;
+        Tue, 14 Nov 2023 05:28:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1699966411; x=1700571211; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=peYBzjEozsW0Bpz59DUMMakO9Y7YA/BG29XZMsT57PU=;
-        b=JKFFwVmwSyxNHd4BucU77jk5tDt9rQhB247sz01VmqrAQtDhKmmpCX9LH4IA90aWNt
-         8kzfe00YlCmOAEdmojLjxHGe2EWujqxbiItXaDdIIGdieEtlkzwE3jTcwc0OJ/oB51bt
-         0yDpGZCG76bxqIom4J30/B6NwMKYTo9ElvKT90VVLJxZ79oDxwNKM5QKdfKIfYnblpic
-         4qyDgN6bGFi6mPI6vpiJrn5JD/LLe0/CQbgGhYglo+O6LQy74OXOYGI2U2wSQrlFMI2v
-         vhZaT1YVuVnHQ3gb5gbCt1hP5mLSKVfQoDLQ8jLdD26QTpld9PpITwUDIeuSnU8/rvtW
-         60BA==
+        d=gmail.com; s=20230601; t=1699968480; x=1700573280; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pJTc18Dq8cauhdDP2mnhlAYqSmKqYG3BV6eLgfA16hg=;
+        b=fWsKGeLFQLm/woc+cXYsoJLi5ffK/Q6s2V7eOvzaP8k8xouglYgBBtu2CZPpaS4XP6
+         G83yxL93fxdR7i0Gvbacd51RC8vr54H9TEDk+HaoQTB64e7eOIahyAhUgGq894KNID/1
+         77HeVyUCESAnwrNxGNibQWcPBYsBb/r1Sc+8bIINZEvxUMzzrDck4c1qvCsYRc2aBfi0
+         j3FrSqf8Q0JqxPP/Grr8VpxuW4KTX1SmHhBimra4N/vPt19t5BkZEfn8G14ANvT1xqCB
+         DIXrDDxmRv5ot8eqfzg2oEumSREGYDI++GrIFWvrmdUBaBA373QdoQcPizTFN3EAtaE8
+         Zifg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1699966411; x=1700571211;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1699968480; x=1700573280;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=peYBzjEozsW0Bpz59DUMMakO9Y7YA/BG29XZMsT57PU=;
-        b=HbWVHbeX7hGEd5xq3COtnOD14UZDT0gvEXYcSRIGrGAi4HxhEjRpIhXadcgLxkBHYr
-         1qHfkj8+K9hoQgzM9LwaZ1bgczmdFxVzRQ6uHxMtPBXIzBCv3bF7PxnsvZ0wtm+Z93ov
-         sEwRc+hwrzZ0tkj7Hlstq0fyO+RN5xiwhg5SGTLsuBmgJL6xSPsQMAPSYfyewLA6ygeU
-         4iow18fLEOmVj4Ebh6ymwK6Ufgg09JRXJX4hQY/huIlmZNMBtOSE6kYXIgnsySc21B9u
-         MYYJ1VwyFEiMFT1oOG1uchZDhvnQYuRVKvcosMILwv9hjxFzcPcFUXwANEwsspHLzITv
-         OlMg==
-X-Gm-Message-State: AOJu0YxixoU+TPTczf3h3VbL2ZiqZu+Ta1+B6J6iipLtzUqsI71rYHlJ
-	iUOks6lcTUAQyu6I/cCZ28Km0Lp7lHcdu83wER++RQ==
-X-Google-Smtp-Source: AGHT+IGL0+DzoobzEQ/opliPH0St2Y7bQGq+JanqN1QzcKghvBVkOV/grI7ukN+CKoX125VRHfiG3qvM64n/wqA5p1I=
-X-Received: by 2002:a81:7189:0:b0:5a7:c8f3:de4b with SMTP id
- m131-20020a817189000000b005a7c8f3de4bmr9506805ywc.8.1699966410780; Tue, 14
- Nov 2023 04:53:30 -0800 (PST)
+        bh=pJTc18Dq8cauhdDP2mnhlAYqSmKqYG3BV6eLgfA16hg=;
+        b=wucSu1/lqTciPTap5ei8EeuVGbOQcbmsdSfewCsBifOF63tqw9F5hdlmQLPXqJimQG
+         raXgA/eXnFsO6EMl3mvxEEyDv0uGixvV8EKTU1rSEEmUiEvVy4+l0AAJgHQU6V6TKp4M
+         qKMxuniyXA5LwS8+JxZjRXSsYl3vm9WI9A/k6hZWzIp/1UMTMpFq9mTxyCa4Mo3AgANH
+         9rMBblcvg9rpNyxPIHnhExEEj+1HbpKIK4FqmSyYm0IpXiX2UJg68QjDYfccidZFbt8Y
+         DY/MXO0+V7380ikekaUx0hEj3kIyQa0NriacSGF5EhuYl5+8sr3Ugq6umA9qFlsu6GHw
+         TAZQ==
+X-Gm-Message-State: AOJu0YySZRFckDSOTZggolTHGsOxCj0cXDaiPAKRl3UCMxGgb84ZErOQ
+	rr4dDd3tKj9CxXv4mJJPv2k=
+X-Google-Smtp-Source: AGHT+IEFXKIj+sDkAvDnBoLBTuw0fzrerZqXQZe0oLFbbujfd/4KdXIpoOLoh0oHAIbyA28Mh549uw==
+X-Received: by 2002:a17:90b:1c82:b0:27c:f80a:2c8a with SMTP id oo2-20020a17090b1c8200b0027cf80a2c8amr6619797pjb.0.1699968480499;
+        Tue, 14 Nov 2023 05:28:00 -0800 (PST)
+Received: from anfanite396-Predator-PH315-51.gateway.iitmandi.ac.in ([14.139.34.151])
+        by smtp.gmail.com with ESMTPSA id 22-20020a17090a001600b0027ceac90684sm5896451pja.18.2023.11.14.05.27.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Nov 2023 05:28:00 -0800 (PST)
+From: Dipam Turkar <dipamt1729@gmail.com>
+To: robdclark@gmail.com
+Cc: quic_abhinavk@quicinc.com,
+	dmitry.baryshkov@linaro.org,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Dipam Turkar <dipamt1729@gmail.com>
+Subject: [PATCH] Remove custom dumb_map_offset implementation in msm driver
+Date: Tue, 14 Nov 2023 18:57:13 +0530
+Message-Id: <20231114132713.403443-1-dipamt1729@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
- <20231103184655.23555-3-quic_kbajaj@quicinc.com> <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
- <1830fc44-7bac-4db5-af59-112410d73a64@linaro.org> <af05dbdb-21bf-34f0-e9b3-9f6b9a0c3115@quicinc.com>
- <CAA8EJpq89g9EeyKcogU+Mt9ie6Bk-rmgi=GqyycYBm_291i1Bw@mail.gmail.com>
- <d5492e4d-6c70-7d6c-3f5b-a0b5d9266ab0@quicinc.com> <CAA8EJpr+8MSEHbziTJhhnkeFhPemRARL_bpWEvHmVvAcbp++Cw@mail.gmail.com>
- <62650f39-9703-fdc5-c72a-801b8e9f6470@quicinc.com> <CWXSYVQ15C8X.2RXH2M2HH62RY@fairphone.com>
- <dffe07e5-a6f5-397a-7715-ffb25474ac84@quicinc.com>
-In-Reply-To: <dffe07e5-a6f5-397a-7715-ffb25474ac84@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 14 Nov 2023 14:53:19 +0200
-Message-ID: <CAA8EJpqJ4+A0a0VyQjTkkcF7R+1WRtgu0JgzrUPZjGzW8GrQ9g@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
- rb3 board
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: Luca Weiss <luca.weiss@fairphone.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Komal Bajaj <quic_kbajaj@quicinc.com>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_nainmeht@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Tue, 14 Nov 2023 at 14:49, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
->
->
->
-> On 11/13/2023 9:21 PM, Luca Weiss wrote:
-> > On Tue Nov 7, 2023 at 9:10 AM CET, Mukesh Ojha wrote:
-> >>
-> >>
-> >> On 11/7/2023 4:02 AM, Dmitry Baryshkov wrote:
-> >>> On Mon, 6 Nov 2023 at 16:46, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
-> >>>>
-> >>>>
-> >>>>
-> >>>> On 11/6/2023 5:24 PM, Dmitry Baryshkov wrote:
-> >>>>> On Mon, 6 Nov 2023 at 13:41, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>> On 11/5/2023 6:38 PM, Krzysztof Kozlowski wrote:
-> >>>>>>> On 03/11/2023 23:22, Dmitry Baryshkov wrote:
-> >>>>>>>> On Fri, 3 Nov 2023 at 20:49, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
-> >>>>>>>>>
-> >>>>>>>>> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
-> >>>>>>>>> platform. QCM6490 is derived from SC7280 meant for various
-> >>>>>>>>> form factor including IoT.
-> >>>>>>>>>
-> >>>>>>>>> Supported features are, as of now:
-> >>>>>>>>> * Debug UART
-> >>>>>>>>> * eMMC (only in IDP)
-> >>>>>>>>> * USB
-> >>>>>>>>>
-> >>>>>>>
-> >>>>>>> ...
-> >>>>>>>
-> >>>>>>>>> +
-> >>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
-> >>>>>>>>> new file mode 100644
-> >>>>>>>>> index 000000000000..01adc97789d0
-> >>>>>>>>> --- /dev/null
-> >>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
-> >>>>>>>>
-> >>>>>>>> I have mixed feelings towards this file. Usually we add such 'common'
-> >>>>>>>> files only for the phone platforms where most of the devices are
-> >>>>>>>> common.
-> >>>>>>>> Do you expect that IDP and RB3 will have a lot of common code other
-> >>>>>>>> than these regulator settings?
-> >>>>>>>
-> >>>>>>> I agree here. What exactly is common in the real hardware between IDP
-> >>>>>>> and RB3? Commit msg does not explain it, so I do not see enough
-> >>>>>>> justification for common file. Just because some DTS looks similar for
-> >>>>>>> different hardware does not mean you should creat common file.
-> >>>>>>
-> >>>>>> @Dmitry/@Krzysztof,
-> >>>>>>
-> >>>>>> Thank you for reviewing the RFC, we wanted to continue the
-> >>>>>> suggestion/discussion given on [1] , where we discussed that this
-> >>>>>> qcm6490 is going to be targeted for IOT segment and will have different
-> >>>>>> memory map and it is going to use some of co-processors like adsp/cdsp
-> >>>>>> which chrome does not use.
-> >>>>>>
-> >>>>>> So to your question what is common between RB3 and IDP, mostly they will
-> >>>>>> share common memory map(similar to [2]) and regulator settings and both
-> >>>>>> will use adsp/cdsp etc., we will be posting the memory map changes as
-> >>>>>> well in coming weeks once this RFC is acked.
-> >>>>>
-> >>>>> Is the memory map going to be the same as the one used on Fairphone5?
-> >>>>
-> >>>> No, Fairphone5 looks to be using chrome memory map and i suggested
-> >>>> here to move them into sc7280.dtsi
-> >>>>
-> >>>> https://lore.kernel.org/lkml/d5d53346-ca3b-986a-e104-d87c37115b62@quicinc.com/
-> >>>>
-> >>>>>
-> >>>>> Are ADSP and CDSP physically present on sc7280?
-> >>>>
-> >>>> Yes, they are present but not used.
-> >>>
-> >>> So ADSP and CDSP should go into sc7280.dtsi. They will anyway have
-> >>> status = "disabled";
-> >>>
-> >>>>
-> >>>>>
-> >>>>> I think that your goal should be to:
-> >>>>> - populate missing device in sc7280.dtsi
-> >>>>> - maybe add qcm6490.dtsi which defines SoC-level common data (e.g. memory map)
-> >>>>> - push the rest to board files.
-> >>>>
-> >>>> Agree to all of the point.
-> >>>> We started with the same thought at[3] but it got lost in discussion
-> >>>> due to its differentiation with mobile counter part(fairphone) which
-> >>>> follow chrome memory map and hence we came up with qcm6490-iot-common.
-> >>>> Do you think, qcm6490-iot.dtsi should be good ?
-> >>>
-> >>> No. DT describes hardware, and -iot is not a hardware abstraction / unification.
-> >>> If you consider your memory map to be generic for the qcm6490 (and FP5
-> >>> being the only exception), add it to the qcm6490.dtsi (and let FP5
-> >>> override it, like some of the phones do). If it can not be considered
-> >>> generic for the SoC, then you have no other choice than to replicate
-> >>> it to all board files.
-> >>
-> >
-> > Hi Mukesh,
-> >
-> >> Thanks for the suggestion.
-> >> Let me add @Luca here for information, if he want to share
-> >> anything about qcm6490 fp5 memory map.
-> >
-> > Not sure I have much to share, just probably that on FP5 the memory
-> > setup and all the basics just come from a standard QCM6490.LA.3.0
-> > release.
-> > I don't see any hint that our ODM changed something in the memory map
-> > for the device either.
-> >
-> > I'm also aware that other phones also use QCM6490 SoC, so I'm still
-> > wondering where the distinction between "FP5/ChromeOS memory map" vs
-> > this new QCM6490 memory map is.
-> > There's also e.g. this phone using QCM6490, I've not looked into this at
-> > all, but I'm guessing that phone uses the same memory map as FP5.
-> > https://www.crosscall.com/en_NL/core-z5-COZ5.MASTER.html
->
-> Was looking for your view on the things about qcm6490.dtsi one common
-> dtsi file for all qcm6490.dtsi suggested in the mail, but looks like FP5
-> is following the memory map based out of sc7280, in that case we have to
-> replicate the new memory map for all our IOT boards(idp/rb3) based on
-> this SoC.
+Make msm use drm_gem_create_map_offset() instead of its custom
+implementation for associating GEM object with a fake offset. Since,
+we already have this generic implementation, we don't need the custom
+implementation and it is better to standardize the code for GEM based drivers.
 
-You can have IoT memory map in the qcm6490.dtsi and have the
-board-specific memory map in the qcm6490-fp5.dtsi, if that makes life
-easier. I think the phone DT already provides the memory map, so you
-just have to add statements to remove conflicting data entries.
+Signed-off-by: Dipam Turkar <dipamt1729@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_drv.c |  2 +-
+ drivers/gpu/drm/msm/msm_gem.c | 21 ---------------------
+ drivers/gpu/drm/msm/msm_gem.h |  2 --
+ 3 files changed, 1 insertion(+), 24 deletions(-)
 
->
-> -Mukesh
-> >
-> > Regards
-> > Luca
-> >
-> >>
-> >> -Mukesh
-> >>>
-> >>>>
-> >>>> [3]
-> >>>> https://lore.kernel.org/linux-arm-msm/20231003175456.14774-3-quic_kbajaj@quicinc.com/
-> >>>>
-> >>>> -Mukesh
-> >>>>>
-> >>>>> I don't think that putting regulators to the common file is a good
-> >>>>> idea. Platforms will further change and limit voltage limits and
-> >>>>> modes, so they usually go to the board file.
-> >>>>>
-> >>>>>>
-> >>>>>>
-> >>>>>> Thanks,
-> >>>>>> Mukesh
-> >>>>>>
-> >>>>>> [1]
-> >>>>>> https://lore.kernel.org/linux-arm-msm/d97ebf74-ad03-86d6-b826-b57be209b9e2@quicinc.com/
-> >>>>>>
-> >>>>>> [2]
-> >>>>>> commit 90c856602e0346ce9ff234062e86a198d71fa723
-> >>>>>> Author: Douglas Anderson <dianders@chromium.org>
-> >>>>>> Date:   Tue Jan 25 14:44:20 2022 -0800
-> >>>>>>
-> >>>>>>         arm64: dts: qcom: sc7280: Factor out Chrome common fragment
-> >>>>>>
-> >>>>>>         This factors out a device tree fragment from some sc7280 device
-> >>>>>>         trees. It represents the device tree bits that should be included for
-> >>>>>>         "Chrome" based sc7280 boards. On these boards the bootloader (Coreboot
-> >>>>>>         + Depthcharge) configures things slightly different than the
-> >>>>>>         bootloader that Qualcomm provides. The modem firmware on these boards
-> >>>>>>         also works differently than on other Qulacomm products and thus the
-> >>>>>>         reserved memory map needs to be adjusted.
-> >>>>>>
-> >>>>>>         NOTES:
-> >>>>>>         - This is _not_ quite a no-op change. The "herobrine" and "idp"
-> >>>>>>           fragments here were different and it looks like someone simply
-> >>>>>>           forgot to update the herobrine version. This updates a few numbers
-> >>>>>>           to match IDP. This will also cause the `pmk8350_pon` to be disabled
-> >>>>>>           on idp/crd, which I belive is a correct change.
-> >>>>>>         - At the moment this assumes LTE skus. Once it's clearer how WiFi SKUs
-> >>>>>>           will work (how much of the memory map they can reclaim) we may add
-> >>>>>>           an extra fragment that will rejigger one way or the other.
-> >>>>>>
-> >>>>>>         Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >>>>>>         Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> >>>>>>         Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> >>>>>>         Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> >>>>>>         Link:
-> >>>>>> https://lore.kernel.org/r/20220125144316.v2.3.Iac012fa8d727be46448d47027a1813ea716423ce@changeid
-> >>>>>>
-> >>>>>>
-> >>>>>>>
-> >>>>>>> Best regards,
-> >>>>>>> Krzysztof
-> >>>>>>>
-> >>>>>
-> >>>>>
-> >>>>>
-> >>>
-> >>>
-> >>>
-> >
-
-
-
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index a428951ee539..86a15992c717 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -1085,7 +1085,7 @@ static const struct drm_driver msm_driver = {
+ 	.open               = msm_open,
+ 	.postclose          = msm_postclose,
+ 	.dumb_create        = msm_gem_dumb_create,
+-	.dumb_map_offset    = msm_gem_dumb_map_offset,
++	.dumb_map_offset    = drm_gem_dumb_map_offset,
+ 	.gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
+ #ifdef CONFIG_DEBUG_FS
+ 	.debugfs_init       = msm_debugfs_init,
+diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
+index db1e748daa75..489694ef79cb 100644
+--- a/drivers/gpu/drm/msm/msm_gem.c
++++ b/drivers/gpu/drm/msm/msm_gem.c
+@@ -671,27 +671,6 @@ int msm_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
+ 			MSM_BO_SCANOUT | MSM_BO_WC, &args->handle, "dumb");
+ }
+ 
+-int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
+-		uint32_t handle, uint64_t *offset)
+-{
+-	struct drm_gem_object *obj;
+-	int ret = 0;
+-
+-	/* GEM does all our handle to object mapping */
+-	obj = drm_gem_object_lookup(file, handle);
+-	if (obj == NULL) {
+-		ret = -ENOENT;
+-		goto fail;
+-	}
+-
+-	*offset = msm_gem_mmap_offset(obj);
+-
+-	drm_gem_object_put(obj);
+-
+-fail:
+-	return ret;
+-}
+-
+ static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
+ {
+ 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+index 8ddef5443140..dc74a0ef865d 100644
+--- a/drivers/gpu/drm/msm/msm_gem.h
++++ b/drivers/gpu/drm/msm/msm_gem.h
+@@ -139,8 +139,6 @@ struct page **msm_gem_pin_pages(struct drm_gem_object *obj);
+ void msm_gem_unpin_pages(struct drm_gem_object *obj);
+ int msm_gem_dumb_create(struct drm_file *file, struct drm_device *dev,
+ 		struct drm_mode_create_dumb *args);
+-int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_device *dev,
+-		uint32_t handle, uint64_t *offset);
+ void *msm_gem_get_vaddr_locked(struct drm_gem_object *obj);
+ void *msm_gem_get_vaddr(struct drm_gem_object *obj);
+ void *msm_gem_get_vaddr_active(struct drm_gem_object *obj);
 -- 
-With best wishes
-Dmitry
+2.34.1
+
 
