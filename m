@@ -1,134 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BB137EC423
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 14:54:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 862B87EC433
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 14:58:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E9D41C203A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 13:54:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 319881F26D1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 13:58:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31B231EB49;
-	Wed, 15 Nov 2023 13:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 854281EB58;
+	Wed, 15 Nov 2023 13:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L1CpFfmY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V9j2CsHI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9781C1EB42
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Nov 2023 13:54:46 +0000 (UTC)
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A31F1AC;
-	Wed, 15 Nov 2023 05:54:45 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AFCSvt4014315;
-	Wed, 15 Nov 2023 13:54:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=oBP2dFBiDbOyaRGMr5yqMC/ir++OPuPgxt40VbUWRc0=;
- b=L1CpFfmYRPRhKAgyw6HYDzRcKbKnt2Clb3UimN6nWZtibNAo9vsacxsfJRnV6gVZiYBi
- Cu+w4Bk9b743I3NedD8rCHf+sUE6YwmunI0RHXpD/kC9mbCUE5twqE0NN8yZ7TLBR835
- 7PsdnTcfokaN2FDIb6o2qloAbAE8Mt7KYuOmJk6oq8VzXqtDl/1ShGkRsFQAZYjvgh6e
- D7sM/oypMjgwK0hmIoayS4k50swoH8Xd5QOuyR6ud5v3jctjQiPbRIxwY0u46gMGAqtn
- dFXH2+jAR0I8V5JLol3+g8WQEdgkBtAShGi5MUkO+5WHKh+kWqWMmHHvjMSjxzwv9InF wg== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ucg2ua0jc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Nov 2023 13:54:24 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AFDsNak027204
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Nov 2023 13:54:23 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 15 Nov
- 2023 05:54:19 -0800
-Message-ID: <40282b6e-9524-4a88-97ca-3ce890317279@quicinc.com>
-Date: Wed, 15 Nov 2023 19:24:16 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160331EB3C;
+	Wed, 15 Nov 2023 13:58:28 +0000 (UTC)
+Received: from mail-vk1-xa2c.google.com (mail-vk1-xa2c.google.com [IPv6:2607:f8b0:4864:20::a2c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41AC6C8;
+	Wed, 15 Nov 2023 05:58:27 -0800 (PST)
+Received: by mail-vk1-xa2c.google.com with SMTP id 71dfb90a1353d-4abf86c5ae1so2837540e0c.3;
+        Wed, 15 Nov 2023 05:58:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700056706; x=1700661506; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wbdCxcW1bM04wm/L/s8Y2gRMdaMFjHOvymiH7hppgtY=;
+        b=V9j2CsHIAvAH/q92nHBJkNQKuQRIToHS5k2JP0PyDl+NZidkS5NR9HYVKt2Dr3bYnj
+         0u4Pj+nOBNq/wjSFYNdZqzf0FRepo0n6n6SUSu3r2FjxKjyFd9whncmwExVqtAGG14Yz
+         xsQRuAPYbv6BG2L5YFxf35MWPjJI512SmZBb8QIZ9z8a68YY8LeCffqarC/uJ3NEdLbF
+         2QQAg6bLaUB0PKLJd+S5tfeI1G9pdDFpxqgQh6glliDubL83MQLTnmNw2fh/7fQMsOpK
+         kxvAaE91C74bUATkh30v1Tc1HCd6YTKqTkTUj3N+8dACf3Fcrb+a3kUZ/OjAOygfb4yr
+         ohbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700056706; x=1700661506;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wbdCxcW1bM04wm/L/s8Y2gRMdaMFjHOvymiH7hppgtY=;
+        b=sqNvLFkwY281FtZ4wD0cgLk9f4Tv4bbV/OXF1xqXefpEYWKJzRsLom0QLP4Hl7Kfae
+         HIUEDcKg6JwiYWtgKvSr8jt16rbKVPyitEBvDuj3kdBwEEGp8E/WilxQ7EvMWY18D81i
+         P1n/UzwgcO3A7e8naa9tgIKM0UBtbaRj/iMeOgH0xLmfELJVQN8HfVmOOsHbUE3p3MnF
+         BkEtk0LYuhTOHotaZvWQIIR4Dg0JoIZ7n+AEhAb/IzNXCXiINNW1lSVQGdcTQU5lVz2N
+         3wrOdAh656pIGpaIhjUD5sMwsJgrzMJUn8m0Qe3THy7iI03/RoP8As05sMPUJJiwW2ds
+         dynQ==
+X-Gm-Message-State: AOJu0YytGr0Nyc5G2wDD82QZxoA0NRTmPdlNVnQufUx+l9JQeAbzcu/g
+	3FbmUpP9fVaHazPzNqpxAqLbsz8g+CdDG8DO12e/z5AEJJLqEd7h8go=
+X-Google-Smtp-Source: AGHT+IG45llVTSM7aCPzbHEMcmkhcPZSZqYorahRKlAy4i7Fc7oXeo0hcYVQiy+3tUKeSk0gbpGXkwD643QbuSi0JeM=
+X-Received: by 2002:a05:6122:788:b0:4ac:6a9d:a51e with SMTP id
+ k8-20020a056122078800b004ac6a9da51emr14199862vkr.9.1700056706261; Wed, 15 Nov
+ 2023 05:58:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-Content-Language: en-US
-To: Robin Murphy <robin.murphy@arm.com>, <will@kernel.org>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <a39.skl@gmail.com>,
-        <konrad.dybcio@linaro.org>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <qipl.kernel.upstream@quicinc.com>
-References: <20231114135654.30475-1-quic_bibekkum@quicinc.com>
- <20231114135654.30475-2-quic_bibekkum@quicinc.com>
- <372885ab-b24d-44ae-afb8-76755bcd6e21@arm.com>
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <372885ab-b24d-44ae-afb8-76755bcd6e21@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Z4WfetCGr6aHoS6udUiamQVWWL3ojOWZ
-X-Proofpoint-GUID: Z4WfetCGr6aHoS6udUiamQVWWL3ojOWZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-15_13,2023-11-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 bulkscore=0 spamscore=0 impostorscore=0 mlxscore=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=958
- adultscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311060000 definitions=main-2311150108
+References: <CACDmYyf4hxbuw+cpKqEDnqmHpS9yPXuE5MPD5_XZ3hjmYuViUQ@mail.gmail.com>
+ <a3e35d3b-906a-4540-924c-0103cf32efa4@linaro.org>
+In-Reply-To: <a3e35d3b-906a-4540-924c-0103cf32efa4@linaro.org>
+From: Legale Legale <legale.legale@gmail.com>
+Date: Wed, 15 Nov 2023 16:58:13 +0300
+Message-ID: <CACDmYydnLQd0n9ACnTQ6P4wYf38eMzokyHrF7r6LisG4oTFtyg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: ipq6018: add QUP5 I2C node
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+update:
+
+---
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+index e59b9df96..822ac51a0 100644
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -506,6 +506,21 @@ blsp1_i2c3: i2c@78b7000 {
+                        dma-names = "tx", "rx";
+                        status = "disabled";
+                };
++
++               blsp1_i2c6: i2c@78ba000 {
++                       compatible = "qcom,i2c-qup-v2.2.1";
++                       #address-cells = <1>;
++                       #size-cells = <0>;
++                       reg = <0x078ba000 0x600>;
++                       interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
++                       clocks = <&gcc GCC_BLSP1_QUP6_I2C_APPS_CLK>,
++                                <&gcc GCC_BLSP1_AHB_CLK>;
++                       clock-names = "core", "iface";
++                       clock-frequency = <400000>;
++                       dmas = <&blsp_dma 22>, <&blsp_dma 23>;
++                       dma-names = "tx", "rx";
++                       status = "disabled";
++               };
+
+                qpic_bam: dma-controller@7984000 {
+                        compatible = "qcom,bam-v1.7.0";
+--
+2.42.0
 
 
->> @@ -467,6 +505,9 @@ static struct arm_smmu_device 
->> *qcom_smmu_create(struct arm_smmu_device *smmu,
->>       qsmmu->smmu.impl = impl;
->>       qsmmu->cfg = data->cfg;
->>
->> +    if (data->actlrcfg && (data->actlrcfg->size))
->> +        qsmmu->actlrcfg = data->actlrcfg;
-> 
-> Do we really need to replicate multiple parts of the data, or would it 
-> be sensible to just replace qsmmu->cfg with qsmmu->data and handle the 
-> further dereferences in the places that want them?
-> 
 
-Mm, could not understand this properly. :( Could you help explain more 
-please?
-As per my understanding aren't data and qsmmu different structures.
-qcom_smmu is a superset of arm_smmu housing additonal properties
-and qcom_smmu_match_data is kind of a superset of arm_smmu_impl with
-additional specific implmentations, so both needs to be in place?
-Apologies if I understood your statement incorrectly.
+On Wed, 15 Nov 2023 at 14:32, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 15/11/2023 09:55, Legale Legale wrote:
+> > Add node to support this bus inside of IPQ6018.
+> > For example, this bus is used to work with the
+> > voltage regulator (mp5496) on the Yuncore AX840 wireless AP.
+> >
+> > Signed-off-by: Isaev Ruslan <legale.legale@gmail.com>
+> > ---
+> >   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 15 +++++++++++++++
+> >   1 file changed, 15 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> > b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> > index e59b9df96c7e..745bfc6e2907 100644
+> > --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> > @@ -507,6 +507,21 @@ blsp1_i2c3: i2c@78b7000 {
+> >                          status = "disabled";
+> >                  };
+> >
+> > +               blsp1_i2c6: i2c@78ba000 {
+> > +                       compatible = "qcom,i2c-qup-v2.2.1";
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <0x078ba000 0x600>;
+>
+> reg = <0x0 0x078ba000 0x0 0x600>;
+> like the other regs here
+>
+> > +                       interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+> > +                       clocks = <&gcc GCC_BLSP1_QUP6_I2C_APPS_CLK>,
+> > +                                <&gcc GCC_BLSP1_AHB_CLK>;
+> > +                       clock-names = "core", "iface";
+> > +                       clock-frequency = <100000>;
+>
+> Why not <400000>; as with other nodes ?
+This is typo.
 
->> +
->>       return &qsmmu->smmu;
->>   }
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h 
->> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> index 593910567b88..4b6862715070 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> @@ -9,6 +9,7 @@
->>   struct qcom_smmu {
->>       struct arm_smmu_device smmu;
->>       const struct qcom_smmu_config *cfg;
->> +    const struct actlr_config *actlrcfg;
->>       bool bypass_quirk;
->>       u8 bypass_cbndx;
->>       u32 stall_enabled;
->> @@ -25,6 +26,7 @@ struct qcom_smmu_config {
->>   };
->>
+>
+> > +                       dmas = <&blsp_dma 22>, <&blsp_dma 23>;
+> > +                       dma-names = "tx", "rx";
+> > +                       status = "disabled";
+> > +               };
+> > +
+> >                  qpic_bam: dma-controller@7984000 {
+> >                          compatible = "qcom,bam-v1.7.0";
+> >                          reg = <0x0 0x07984000 0x0 0x1a000>;
+> > --
+> > 2.42.0
+> >
+>
+> What tree does this apply to ?
+this is master branch
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/snapshot/linux-6.7-rc1.tar.gz
+--branch master --depth=1 ./kernel
+>
+> git checkout -b linux-next-6.7-rc1 v6.7-rc1
+> Switched to a new branch 'linux-next-6.7-rc1'
+>
+> deckard@sagittarius-a:~/Development/qualcomm/qlt-kernel$ b4 shazam
+> CACDmYyf4hxbuw+cpKqEDnqmHpS9yPXuE5MPD5_XZ3hjmYuViUQ@mail.gmail.com
+>
+> Grabbing thread from
+> lore.kernel.org/all/CACDmYyf4hxbuw%2BcpKqEDnqmHpS9yPXuE5MPD5_XZ3hjmYuViUQ@mail.gmail.com/t.mbox.gz
+> Checking for newer revisions
+> Grabbing search results from lore.kernel.org
+> Analyzing 1 messages in the thread
+> Checking attestation on all messages, may take a moment...
+> ---
+>    [PATCH] arm64: dts: qcom: ipq6018: add QUP5 I2C node
+>    ---
+>    NOTE: install dkimpy for DKIM signature verification
+> ---
+> Total patches: 1
+> ---
+> Applying: arm64: dts: qcom: ipq6018: add QUP5 I2C node
+> Patch failed at 0001 arm64: dts: qcom: ipq6018: add QUP5 I2C node
+> When you have resolved this problem, run "git am --continue".
+> If you prefer to skip this patch, run "git am --skip" instead.
+> To restore the original branch and stop patching, run "git am --abort".
+> error: git diff header lacks filename information when removing 1
+> leading pathname component (line 6)
+> hint: Use 'git am --show-current-patch=diff' to see the failed patch
+>
+> ---
+> bod
 
