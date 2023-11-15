@@ -1,201 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-677-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADB467EBE45
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 08:55:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7D697EBE57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 09:06:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E4FA81C203DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 07:55:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49C5AB20AFD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 08:06:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B7E84685;
-	Wed, 15 Nov 2023 07:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C7934436;
+	Wed, 15 Nov 2023 08:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kYVIOtXs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BFIQ3T2d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B194683
-	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Nov 2023 07:55:13 +0000 (UTC)
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AD8CD2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 23:55:12 -0800 (PST)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5a7eef0b931so74695267b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Nov 2023 23:55:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700034911; x=1700639711; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=15PRWbRTiCU1VNIlXZWdSysxSpbXy5GgKNCUAYG7W5w=;
-        b=kYVIOtXsduV0G6R73xeKydwmue26qOc3V94V0DtkpqkS6xKwLVsnD2vOuDc7VSJRo5
-         Pkx4w/YDBPRx0lkQiUcF5Sg9YOR/9A87JQZCKjzpvrk/39gkjJzkRHyagaMymnnmfoHP
-         pV2iehewqEkXV13Xvm26JW+eTA28naUyFPZkFO8aZhZ730+GIIc1izzoQHXAHdPJEpXd
-         zrB5b3bCgtDlwfAAxKxGsb8sSiaoJQb4AfvbOHxxjvQZ3uVPg1GmQMTYB22hqmmpI2H1
-         BC4LeCXUMXP2LGa1rvheW/0hD2v/p0+4tTCDD4J1OY71kgBStn40wyedjCnpn60Dmr82
-         7mTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700034911; x=1700639711;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=15PRWbRTiCU1VNIlXZWdSysxSpbXy5GgKNCUAYG7W5w=;
-        b=ca7CkTQNbB27KhpMrEGgBrh27wZKctboCGWBADQHPFng7HuStJ8ADkElAsKQthbazJ
-         Mmb4DCcX+Y/Qflps3Y25MGx1MnJUxjKdkCr4Q29AryX06WrRa15/s++KARuyszHc8IiQ
-         +vviQUxmWjrw51vV6JXYGp5+OojupXK7bdhObN7bdrNlBFJrMeBI59VyIKfy/3gf4oV9
-         q6Q4hjGNbcHR5GThrV4LV8SqRJUDtRNYIINQouAqKiCkL5x1Ku0/01j3JRSSS6m2Czpx
-         UtTlAaRT3PZAsNNCrnSPz3UBWhuB2Fek4oJLhnszNLdU20rA9g/KpqBf7nPobk47Co2A
-         baqw==
-X-Gm-Message-State: AOJu0YxoSJf461yttLySq2Upr3chAxacIakeNSnRIGH6PvOWzHS7Uu6e
-	B8H3dIZSkv69FcNLrIGqtoInkeaZFGRShFoIr+36cA==
-X-Google-Smtp-Source: AGHT+IGF0QFxsq04qkcDH1xFplg+U57Jq/Gcno4gH3SYxLIhnKNkUwuqZj7ahhye+SflHFUwIXeq6RwbBxjolai3xoI=
-X-Received: by 2002:a81:4f12:0:b0:59a:f131:50fa with SMTP id
- d18-20020a814f12000000b0059af13150famr13475836ywb.47.1700034911416; Tue, 14
- Nov 2023 23:55:11 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D620441A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Nov 2023 08:06:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626C9C433C7;
+	Wed, 15 Nov 2023 08:06:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700035609;
+	bh=Bmygp15x0jLKbjn9WTbAfKcQyxau4Zlf903Qv1K/O8I=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BFIQ3T2dwf0w1oIXpn8Y8M9DFEGPPcPseuED+J2NuDHQDp7xXKZWELKt5PtumWUrj
+	 Dqq/8plMq3XedcbaF2lRvDH8DF36Vb78+kwk90NPwPaYA8rYH6Y17QdCZqi26JzURa
+	 rmJsL+HrjZOUZvUpepdxT8qylfp4Cw6akh7b/cX6y/7DVFxseYiJCJy3/qo0dcMN5s
+	 w9CL3dFjCehFFaS93QBfbwaSGs5Y1lfiDjUCaL2yzEJ8/GkBjN/OcmOlI5YOrvvHVr
+	 5TLah+jo5aSsaLOJRW41vF2j4JTXOCx9TwZetfSeb92Zf24jc0AMw4zzpw8/VVbL5i
+	 HDzQmp1/EhMlw==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r3Av8-0001Yu-0O;
+	Wed, 15 Nov 2023 09:06:46 +0100
+Date: Wed, 15 Nov 2023 09:06:46 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, Abel Vesa <abel.vesa@linaro.org>
+Subject: Re: [PATCH v2 2/2] drm/msm/dp: attach the DP subconnector property
+Message-ID: <ZVR8Flrjxy-wgqgJ@hovoldconsulting.com>
+References: <20231025092711.851168-1-dmitry.baryshkov@linaro.org>
+ <20231025092711.851168-3-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231114225857.19702-1-jonathan@marek.ca> <20231114225857.19702-7-jonathan@marek.ca>
-In-Reply-To: <20231114225857.19702-7-jonathan@marek.ca>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 15 Nov 2023 09:55:00 +0200
-Message-ID: <CAA8EJpr8DhKncsGV3hdtJk9DoTTyhi2x6+o55jTcVUFadfcMbg@mail.gmail.com>
-Subject: Re: [PATCH v2 6/6] drm/msm/dsi: fix DSC for the bonded DSI case
-To: Jonathan Marek <jonathan@marek.ca>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, Jiasheng Jiang <jiasheng@iscas.ac.cn>, 
-	Doug Anderson <dianders@chromium.org>, 
-	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>, 
-	"open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231025092711.851168-3-dmitry.baryshkov@linaro.org>
 
-On Wed, 15 Nov 2023 at 01:00, Jonathan Marek <jonathan@marek.ca> wrote:
->
-> For the bonded DSI case, DSC pic_width and timing calculations should use
-> the width of a single panel instead of the total combined width.
->
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+On Wed, Oct 25, 2023 at 12:23:10PM +0300, Dmitry Baryshkov wrote:
+> While developing and testing the commit bfcc3d8f94f4 ("drm/msm/dp:
+> support setting the DP subconnector type") I had the patch [1] in my
+> tree. I haven't noticed that it was a dependency for the commit in
+> question. Mea culpa.
 
-Fixes tag?
+This also broke boot on the Lenovo ThinkPad X13s.
 
-I'll wait for the Tested-by by Marijn, otherwise LGTM.
+Would be nice to get this fixed ASAP so that further people don't have
+to debug this known regression.
+ 
+> Since the patch has not landed yet (and even was not reviewed)
+> and since one of the bridges erroneously uses USB connector type instead
+> of DP, attach the property directly from the MSM DP driver.
+> 
+> This fixes the following oops on DP HPD event:
+> 
+>  drm_object_property_set_value (drivers/gpu/drm/drm_mode_object.c:288)
+>  dp_display_process_hpd_high (drivers/gpu/drm/msm/dp/dp_display.c:402)
+>  dp_hpd_plug_handle.isra.0 (drivers/gpu/drm/msm/dp/dp_display.c:604)
+>  hpd_event_thread (drivers/gpu/drm/msm/dp/dp_display.c:1110)
+>  kthread (kernel/kthread.c:388)
+>  ret_from_fork (arch/arm64/kernel/entry.S:858)
 
-> ---
->  drivers/gpu/drm/msm/dsi/dsi.h         |  3 ++-
->  drivers/gpu/drm/msm/dsi/dsi_host.c    | 20 +++++++++++---------
->  drivers/gpu/drm/msm/dsi/dsi_manager.c |  2 +-
->  3 files changed, 14 insertions(+), 11 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index 28379b1af63f..3a641e69447c 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -93,7 +93,8 @@ int msm_dsi_host_power_off(struct mipi_dsi_host *host);
->  int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
->                                   const struct drm_display_mode *mode);
->  enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
-> -                                           const struct drm_display_mode *mode);
-> +                                           const struct drm_display_mode *mode,
-> +                                           bool is_bonded_dsi);
->  unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
->  int msm_dsi_host_register(struct mipi_dsi_host *host);
->  void msm_dsi_host_unregister(struct mipi_dsi_host *host);
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 892a463a7e03..cf06736e5a60 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -940,8 +940,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->                                mode->hdisplay, mode->vdisplay);
->                         return;
->                 }
-> -
+This only says where the oops happened, it doesn't necessarily in itself
+indicate an oops at all or that in this case it's a NULL pointer
+dereference.
 
-Nit: keep it please.
+On the X13s I'm seeing the NULL deref in a different path during boot,
+and when this happens after a deferred probe (due to the panel lookup
+mess) it hangs the machine, which makes it a bit of a pain to debug:
 
-> -               dsc->pic_width = mode->hdisplay;
-> +               dsc->pic_width = hdisplay;
->                 dsc->pic_height = mode->vdisplay;
->                 DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
->
-> @@ -952,6 +951,11 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->                 if (ret)
->                         return;
->
-> +               if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
-> +                       dsi_update_dsc_timing(msm_host, false, hdisplay);
-> +               else
-> +                       dsi_update_dsc_timing(msm_host, true, hdisplay);
-> +
->                 /* Divide the display by 3 but keep back/font porch and
->                  * pulse width same
->                  */
-> @@ -968,9 +972,6 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->         }
->
->         if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-> -               if (msm_host->dsc)
-> -                       dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
-> -
->                 dsi_write(msm_host, REG_DSI_ACTIVE_H,
->                         DSI_ACTIVE_H_START(ha_start) |
->                         DSI_ACTIVE_H_END(ha_end));
-> @@ -989,9 +990,6 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->                         DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
->                         DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
->         } else {                /* command mode */
-> -               if (msm_host->dsc)
-> -                       dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
-> -
->                 /* image data and 1 byte write_memory_start cmd */
->                 if (!msm_host->dsc)
->                         wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-> @@ -2479,7 +2477,8 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
->  }
->
->  enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
-> -                                           const struct drm_display_mode *mode)
-> +                                           const struct drm_display_mode *mode,
-> +                                           bool is_bonded_dsi)
->  {
->         struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->         struct drm_dsc_config *dsc = msm_host->dsc;
-> @@ -2489,6 +2488,9 @@ enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
->         if (!msm_host->dsc)
->                 return MODE_OK;
->
-> +       if (is_bonded_dsi)
-> +               pic_width = mode->hdisplay / 2;
-> +
->         if (pic_width % dsc->slice_width) {
->                 pr_err("DSI: pic_width %d has to be multiple of slice %d\n",
->                        pic_width, dsc->slice_width);
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index 896f369fdd53..2ca1a7ca3659 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -455,7 +455,7 @@ static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct drm_bridge *bridge,
->                         return MODE_ERROR;
->         }
->
-> -       return msm_dsi_host_check_dsc(host, mode);
-> +       return msm_dsi_host_check_dsc(host, mode, IS_BONDED_DSI());
->  }
->
->  static const struct drm_bridge_funcs dsi_mgr_bridge_funcs = {
-> --
-> 2.26.1
->
+   Unable to handle kernel NULL pointer dereference at virtual address 0000000000000060
+   ...
+   CPU: 4 PID: 57 Comm: kworker/u16:1 Not tainted 6.7.0-rc1 #4
+   Hardware name: Qualcomm QRD, BIOS 6.0.220110.BOOT.MXF.1.1-00470-MAKENA-1 01/10/2022
+   ...
+   Call trace:
+    drm_object_property_set_value+0x0/0x88 [drm]
+    dp_display_process_hpd_high+0xa0/0x14c [msm]
+    dp_hpd_plug_handle.constprop.0.isra.0+0x90/0x110 [msm]
+    dp_bridge_atomic_enable+0x184/0x21c [msm]
+    edp_bridge_atomic_enable+0x60/0x94 [msm]
+    drm_atomic_bridge_chain_enable+0x54/0xc8 [drm]
+    drm_atomic_helper_commit_modeset_enables+0x194/0x26c [drm_kms_helper]
+    msm_atomic_commit_tail+0x204/0x804 [msm]
+    commit_tail+0xa4/0x18c [drm_kms_helper]
+    drm_atomic_helper_commit+0x19c/0x1b0 [drm_kms_helper]
+    drm_atomic_commit+0xa4/0x104 [drm]
+    drm_client_modeset_commit_atomic+0x22c/0x298 [drm]
+    drm_client_modeset_commit_locked+0x60/0x1c0 [drm]
+    drm_client_modeset_commit+0x30/0x58 [drm]
+    __drm_fb_helper_restore_fbdev_mode_unlocked+0xbc/0xfc [drm_kms_helper]
+    drm_fb_helper_set_par+0x30/0x4c [drm_kms_helper]
+    fbcon_init+0x224/0x49c
+    visual_init+0xb0/0x108
+    do_bind_con_driver.isra.0+0x19c/0x38c
+    do_take_over_console+0x140/0x1ec
+    do_fbcon_takeover+0x6c/0xe4
+    fbcon_fb_registered+0x180/0x1f0
+    register_framebuffer+0x19c/0x228
+    __drm_fb_helper_initial_config_and_unlock+0x2e8/0x4e8 [drm_kms_helper]
+    drm_fb_helper_initial_config+0x3c/0x4c [drm_kms_helper]
+    msm_fbdev_client_hotplug+0x84/0xcc [msm]
+    drm_client_register+0x5c/0xa0 [drm]
+    msm_fbdev_setup+0x94/0x148 [msm]
+    msm_drm_bind+0x3d0/0x42c [msm]
+    try_to_bring_up_aggregate_device+0x1ec/0x2f4
+    __component_add+0xa8/0x194
+    component_add+0x14/0x20
+    dp_display_probe+0x278/0x41c [msm]
 
+> [1] https://patchwork.freedesktop.org/patch/555530/
+> 
+> Fixes: bfcc3d8f94f4 ("drm/msm/dp: support setting the DP subconnector type")
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
--- 
-With best wishes
-Dmitry
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+
+Johan
 
