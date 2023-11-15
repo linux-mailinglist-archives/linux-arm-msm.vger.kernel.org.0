@@ -1,151 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EE8D7ED725
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 23:24:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78FF47ED781
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 23:44:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2766D1F227D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 22:24:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 393981F23CD1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 22:44:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31AD23C484;
-	Wed, 15 Nov 2023 22:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 191F443AA1;
+	Wed, 15 Nov 2023 22:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="G7xDrnHd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bvr6X1ZY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C07531A8;
-	Wed, 15 Nov 2023 14:24:32 -0800 (PST)
-Received: from mercury (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(No client certificate requested)
-	(Authenticated sender: sre)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 3A04C660731B;
-	Wed, 15 Nov 2023 22:24:31 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1700087071;
-	bh=WdfO82We6xf1GigqFgRt6NA0I8OKWnoJqDezVvwjbnA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=G7xDrnHdTlOLbBCoI6tMeK19bQ1k/9Nd3iqyWwOTNOq/5siEqtshuWOJ7ZBH1IQsj
-	 Nf8OwmAiI1MbzsES5J6GLsyJB8vx69MDpRSNGqI3/tZFTqybanba6Jk1Pp8OEDzOKD
-	 qdOSD4OLQ/ljn6IT0QpCbGGUYiIXRrWEKcsZSvOjXoDQ0mlcWIoLwfp59U/awBRhGV
-	 K+XkANefsvqPyemWWzYjnK/X1NltGwwMXgVyLbPnxq8xGUm5QGBlEY3jb4nOXV1u4n
-	 ag/QAemxr1/uGQ08PNi00dYhbT6s8FwlXuTit0QtJruWx9rJblhYuBLyo3uOADNf5M
-	 cLpoN3b1wdALg==
-Received: by mercury (Postfix, from userid 1000)
-	id 7F2A61062B52; Wed, 15 Nov 2023 23:24:28 +0100 (CET)
-Date: Wed, 15 Nov 2023 23:24:28 +0100
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Nikita Kiryushin <kiryushin@ancud.ru>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Stephen Boyd <sboyd@codeaurora.org>,
-	Pramod Gurav <pramod.gurav@smartplayin.com>,
-	Guenter Roeck <linux@roeck-us.net>, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	lvc-project@linuxtesting.org
-Subject: Re: [PATCH] power: reset: msm: Process register_restart_handler()
- error
-Message-ID: <20231115222428.rhykr6e5koyzsyw6@mercury.elektranox.org>
-References: <feeb1a89-59bd-4fd6-81a5-1d828f95b0f0@ancud.ru>
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01DF01B1;
+	Wed, 15 Nov 2023 14:44:19 -0800 (PST)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-1eb7a8e9dd0so71178fac.3;
+        Wed, 15 Nov 2023 14:44:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700088258; x=1700693058; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=x+9rvLvdX2lnfyBf2vZqm86qvEOYTf/3b77ELh1X624=;
+        b=bvr6X1ZYQtDjBvoOu7MgKyONeMF6dWAxg3AJaO0jTNF6GPTJV1ff+k82O9u3jXIOqk
+         6bI/7q94cHJwqICOtxIMAoHHr5JJ7ea1jPRDEIjZh6pMM2Pta6q6nzZLSNgcJDrqV3n4
+         nMs2iEWM7EPIwexaZG9tv7Tk5aq6fTx2RErH3N52Et9WnohImnj8X0eCrMMohQjGqez4
+         qFDOQbYBAHQlUi7MQf75c490SYYgdKwEwbNf8uLjNbl3TVrtXUPfFmfs1zDnPwQEM/nw
+         SvHyeDLZ9UMJW9b7rdSu2ULkmsauvbtNVDfNIGlgnMuOgCy5taKoQxVcBy1EdYA6A57n
+         eRKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700088258; x=1700693058;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x+9rvLvdX2lnfyBf2vZqm86qvEOYTf/3b77ELh1X624=;
+        b=s4kJUBi4wiwIBamx8ZVI8a7gPjm/r0oD8iItTAXSrquWOSJK+49FG7FolSgA/7O5mD
+         4wi5+qSKnH0PXy7MTVRqHNZoRktpVrWASbhl4QUyCdJde6/KjYwptcv676DgquchIP/K
+         CJPLEvMvo8whLcvDq0TqAkSBLSXdvHWhw964jz4UwKleuNKB6yWDjhjGbanW9pJ0tWem
+         EN6U7pH8fovh5iLcrHcGXsJw4HOWO+iy15Q8aX2u2c1Hl1M02M5n9CTaztnGBO1xCz81
+         d0PT1qPf7pwzlcMW2M1McbAu6/mgJJ10lvvw0YPXtutzfBxKOg+MtRqAI6SSuV6qfO+Y
+         tsdA==
+X-Gm-Message-State: AOJu0Yz1GGsS7KG5MuWiYxV0cniO7XFSikxXNZ147+75o/A4Sn0fiZy2
+	IkoMDDEsH8QmS2M4+W4dvlk=
+X-Google-Smtp-Source: AGHT+IGGu9YvLECkiUq/lUX8OxBjWJ2MyG6XyX8H/OEa527Kf4K81t3xUlEcdPUh+ltOWMuaIPKgcg==
+X-Received: by 2002:a05:6870:b48e:b0:1e9:8182:a29d with SMTP id y14-20020a056870b48e00b001e98182a29dmr18474426oap.41.1700088258174;
+        Wed, 15 Nov 2023 14:44:18 -0800 (PST)
+Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
+        by smtp.gmail.com with ESMTPSA id r4-20020aa78b84000000b006870ed427b2sm3358092pfd.94.2023.11.15.14.44.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Nov 2023 14:44:17 -0800 (PST)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Rob Clark <robdclark@chromium.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/gpu: Move gpu devcore's to gpu device
+Date: Wed, 15 Nov 2023 14:44:09 -0800
+Message-ID: <20231115224409.240935-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6ouri3jfeknszkjz"
-Content-Disposition: inline
-In-Reply-To: <feeb1a89-59bd-4fd6-81a5-1d828f95b0f0@ancud.ru>
+Content-Transfer-Encoding: 8bit
 
+From: Rob Clark <robdclark@chromium.org>
 
---6ouri3jfeknszkjz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The dpu devcore's are already associated with the dpu device.  So we
+should associate the gpu devcore's with the gpu device, for easier
+classification.
 
-Hi,
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_gpu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-On Wed, Nov 08, 2023 at 08:27:57PM +0300, Nikita Kiryushin wrote:
-> If registering restart handler fails for msm-restart result is not checke=
-d.
-> It may be irrelevant now (as stated in comment to register_restart_handle=
-r,
-> the function currently always returns zero), but if the behavior changes
-> in the future, an error at registration of handler will be silently skipp=
-ed.
->=20
-> Add return error code and print error message too debug log in case of
-> non-zero result of register_restart_handler.
->=20
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
->=20
-> Fixes: 18a702e0de98 ("power: reset: use restart_notifier mechanism for
-> msm-poweroff")
->=20
-> Signed-off-by: Nikita Kiryushin <kiryushin@ancud.ru>
-> ---
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index cfcb4317afdb..3fad5d58262f 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -292,8 +292,7 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
+ 	/* Set the active crash state to be dumped on failure */
+ 	gpu->crashstate = state;
+ 
+-	/* FIXME: Release the crashstate if this errors out? */
+-	dev_coredumpm(gpu->dev->dev, THIS_MODULE, gpu, 0, GFP_KERNEL,
++	dev_coredumpm(&gpu->pdev->dev, THIS_MODULE, gpu, 0, GFP_KERNEL,
+ 		msm_gpu_devcoredump_read, msm_gpu_devcoredump_free);
+ }
+ #else
+-- 
+2.41.0
 
-If register_restart_handler fails, it might actually be a good idea
-to continue and at least have a poweroff handler :)
-
->  drivers/power/reset/msm-poweroff.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->=20
-> diff --git a/drivers/power/reset/msm-poweroff.c
-> b/drivers/power/reset/msm-poweroff.c
-> index b9a401bd280b..5877a1ba2778 100644
-> --- a/drivers/power/reset/msm-poweroff.c
-> +++ b/drivers/power/reset/msm-poweroff.c
-> @@ -35,11 +35,16 @@ static void do_msm_poweroff(void)
->   static int msm_restart_probe(struct platform_device *pdev)
->  {
-> +	int ret =3D -EINVAL;
-
-no need to initialize, it's overwritten before being used.
-
->  	msm_ps_hold =3D devm_platform_ioremap_resource(pdev, 0);
->  	if (IS_ERR(msm_ps_hold))
->  		return PTR_ERR(msm_ps_hold);
->  -	register_restart_handler(&restart_nb);
-> +	ret =3D register_restart_handler(&restart_nb);
-> +	if (ret) {
-> +		dev_err(&pdev->dev, "unable to register restart handler, %d\n", ret);
-> +		return ret;
-
-There is dev_err_probe() for this, but as mentioned above it's more
-sensible not to fail here.
-
--- Sebastian
-
-> +	}
->   	pm_power_off =3D do_msm_poweroff;
->  -- 2.34.1
->=20
-
---6ouri3jfeknszkjz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmVVRRgACgkQ2O7X88g7
-+pqI/Q//UzlIPHOkLnn8rNBgiRTj+0aHo5M12V75qJoce+s1EPhX1T7XNgtOfZCl
-EYzgc+RgHOI+YpvPM/X07RO8LNubyvjdEBZJdG6LXua5dpxyi0FOhFYM0GJeHH2f
-uP7UP6T0sJeNB3tv2Gy6HzouIcItS1IKJoGiGRHOuyPTR5cojCFbN/hG1TOFNRyp
-gK8mSpeGNVzJtDfAfZgZ7X0gZAKj8tOSemHg397RTOMlMZhdu0aRt7Xx3zryn5SO
-C2QYZjCf5SJ6EFlaoL5aifqBNejppko8rLzRukmh4itKPF7FD20paPUkE5Trr2Ka
-E1IHJ2v02iDqTyMH/tc+lzoQVwq7IVtGWDBGxhtzbMN37ezncEDSL1+xgOwOPo00
-3eq5pHujH0L8kYkZx5Fy9I6AyHiao3GlqC/HRtJF+QqTHMRgtjtI0cJgVVF3P2zE
-vuNpRJ6gh0ekLg5TwnAG/dhM/mh8cA9B1k3CCCiDAlmWMXrYh3iMk76Hxu/MQXb7
-ZVNgHA4qSbqOGxDJyivHHGLw2EEdDQj+EDtJLzzStc7MnNrH1L1/ASjbspN3gQsr
-T2AB7k9p0uaOpGgZhNCRM6y0nI+ecHkxpQUd6kgggGpWdoys4S0VaeJVp6iewEZL
-JGxHgV4/w4zSzNgQqQo8vPrGjVDQFWX83vj0zyD7FbtHaq0wYxg=
-=sYCK
------END PGP SIGNATURE-----
-
---6ouri3jfeknszkjz--
 
