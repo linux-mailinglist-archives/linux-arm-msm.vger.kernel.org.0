@@ -1,217 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 180C17EC99E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 18:24:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7ECD17EC9D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 18:43:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 77AF5B20BB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 17:24:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 311711F24011
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 17:43:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70311381A5;
-	Wed, 15 Nov 2023 17:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C1823EA6B;
+	Wed, 15 Nov 2023 17:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Di5VZkLO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DABC18E;
-	Wed, 15 Nov 2023 09:23:52 -0800 (PST)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 09CA93F8F8;
-	Wed, 15 Nov 2023 18:23:47 +0100 (CET)
-Date: Wed, 15 Nov 2023 18:23:46 +0100
-From: Marijn Suijten <marijn.suijten@somainline.org>
-To: Jonathan Marek <jonathan@marek.ca>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Jiasheng Jiang <jiasheng@iscas.ac.cn>, 
-	Doug Anderson <dianders@chromium.org>, 
-	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>, 
-	"open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>, open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 4/4] drm/msm/dsi: fix DSC for the bonded DSI case
-Message-ID: <74ou4xly7pjnsqbavvt2iuonvpgioznriq2vgbccprn5uagkhm@ntq6sq7ywelv>
-References: <20231114174218.19765-1-jonathan@marek.ca>
- <20231114174218.19765-4-jonathan@marek.ca>
- <eanx45rnasj7lu3r2tfhtg4qkqkcidd6zctsz6ci6jlklu4fgi@3nf73w2ka4li>
- <a9712ef1-5f60-b127-a276-9e437d95914f@marek.ca>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D02E0;
+	Wed, 15 Nov 2023 09:43:05 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AFFvdph011122;
+	Wed, 15 Nov 2023 17:42:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UOYPIh1LCyb4tgGeTSqamCZ1AYWTX2DwLwuQtmS3xnM=;
+ b=Di5VZkLOiNUNShnK0+kkio45XMtR+l6mKWIB+GPlkMV7aTP5D7rdYFraL/qEvTvRcTx6
+ EJ9p8yq6PpF+AJFaVmQoS4SW1ixX4WIuza4b5lLoNkehShvf9u7gKN9GZv8tQe4I8M0Y
+ uSwdsLxUJ/k7NgK0CI+rc4MIwJ7JCAslTjGb2XzvcIQI+zi/kaQZopUhRxMXKWvZfKCy
+ SRrKWyy+TzkHAZYpVmKUXifISRQuBl+5Ymdw1k3fn6/s0IK60i7Mw9e6d/XggMiMkOaq
+ LvMBbtYamfQhAxjGZsngc7aiB1ioMrOUbRSKRl3W/jVXhEBqrnY9BUsyMN3LqKj2bjuX KA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ucfkaakv2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Nov 2023 17:42:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AFHgaT9000825
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 15 Nov 2023 17:42:36 GMT
+Received: from [10.216.42.195] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 15 Nov
+ 2023 09:42:30 -0800
+Message-ID: <6d4d959c-b155-471b-b13d-f6fda557cfe0@quicinc.com>
+Date: Wed, 15 Nov 2023 23:12:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a9712ef1-5f60-b127-a276-9e437d95914f@marek.ca>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+To: Johan Hovold <johan@kernel.org>
+CC: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy
+ Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi
+	<balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
+        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
+References: <20231007154806.605-1-quic_kriskura@quicinc.com>
+ <20231007154806.605-6-quic_kriskura@quicinc.com>
+ <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
+ <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+ <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+ <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+ <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
+ <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
+ <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+ <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cdzl9_JGs7djGz1RV66vjjiOiNGOwtwV
+X-Proofpoint-GUID: cdzl9_JGs7djGz1RV66vjjiOiNGOwtwV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-15_17,2023-11-15_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 spamscore=0 bulkscore=0
+ phishscore=0 mlxscore=0 mlxlogscore=365 priorityscore=1501 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311150137
 
-On 2023-11-14 14:00:19, Jonathan Marek wrote:
-> On 11/14/23 1:28 PM, Marijn Suijten wrote:
-> > On what hardware have you been testing this?  Dmitry and I have a stack of
-> > patches to resolve support for Active CTL programming on newer hardware (DPU
-> > 5.0+ IIRC), where a single CTL is responsible for programming multiple INTF and
-> > DSC blocks as used in bonded DSI.
-> > 
+
+Hi Johan,
+
+> Are you sure there's no support for hs_phy_irq also in the "femto" PHYs
+> and that it's just that there is currently no driver support for using
+> them?
 > 
-> I am also using DPU 6+ but I won't be posting patches for DPU to support 
-> this as I am not using the upstream DPU codebase.
-
-Oh that is an odd situation!  At least glad to hear we aren't completely
-duplicating our efforts :)
-
-> > On 2023-11-14 12:42:16, Jonathan Marek wrote:
-> >> For the bonded DSI case, DSC pic_width and timing calculations should use
-> >> the width of a single panel instead of the total combined width.
-> >>
-> >> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> >> ---
-> >>   drivers/gpu/drm/msm/dsi/dsi.h         |  3 ++-
-> >>   drivers/gpu/drm/msm/dsi/dsi_host.c    | 20 +++++++++++---------
-> >>   drivers/gpu/drm/msm/dsi/dsi_manager.c |  2 +-
-> >>   3 files changed, 14 insertions(+), 11 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> >> index 28379b1af63f..3a641e69447c 100644
-> >> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> >> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> >> @@ -93,7 +93,8 @@ int msm_dsi_host_power_off(struct mipi_dsi_host *host);
-> >>   int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
-> >>   				  const struct drm_display_mode *mode);
-> >>   enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
-> >> -					    const struct drm_display_mode *mode);
-> >> +					    const struct drm_display_mode *mode,
-> >> +					    bool is_bonded_dsi);
-> >>   unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
-> >>   int msm_dsi_host_register(struct mipi_dsi_host *host);
-> >>   void msm_dsi_host_unregister(struct mipi_dsi_host *host);
-> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >> index 7284346ab787..a6286eb9d006 100644
-> >> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >> @@ -938,8 +938,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >>   			       mode->hdisplay, mode->vdisplay);
-> >>   			return;
-> >>   		}
-> >> -
-> >> -		dsc->pic_width = mode->hdisplay;
-> >> +		dsc->pic_width = hdisplay;
-> > 
-> > In my testing and debugging on CMDmode panels downstream this value/register
-> > was always programmed to the _full_ width of the bonded panel.  Is that maybe
-> > different for video mode?
-> > 
+> And why is it defined if there is truly no use for it?
 > 
-> downstream dual DSI panel timings are specified for a single panel 
-> ("qcom,mdss-dsi-panel-width" is for a single panel, not both panels)
 
-_dual panels_?  In my case I have a "single panel" that is driven by two
-"bonded" DSI hosts, just to achieve enough bandwidth.
+We had an internal sync up with HW folks and here is some baseline 
+suggestions we received:
 
-Indeed my downstream DTS has qcom,mdss-dsi-panel-width set to half the total
-panel width, but I recall seeing the full width in the register dump.  I'll scan
-through my logs and see if I can back this up.
+If DP/DM interrupts are defined, then that is the preferred path to 
+used, irrespective if HS Phy irq is defined or not / or whether it is 
+Femto / QUSB2 target. There is no target that has femto phy but misses 
+DP/DM today.
 
-> >>   		dsc->pic_height = mode->vdisplay;
-> >>   		DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
-> >>   
-> >> @@ -950,6 +949,11 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >>   		if (ret)
-> >>   			return;
-> >>   
-> >> +		if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
-> >> +			dsi_update_dsc_timing(msm_host, false, hdisplay);
-> >> +		else
-> >> +			dsi_update_dsc_timing(msm_host, true, hdisplay);
+For cases like sdm660/msm8998/msm8953/msm8956, these targets use 
+hs_phy_irq only and don't rely on DP/DM. So we cannot remove the binding 
+in entirety.
 
-Another thought: it's probably clearer to write:
-
-	bool is_cmd_mode = msm_host->mode_flags & MIPI_DSI_MODE_VIDEO;
-	dsi_update_dsc_timing(msm_host, is_cmd_mode, hdisplay);
-
-> >> +
-> > 
-> > Such cleanups (which appear unrelated) should probably be posted as separate
-> > patches.
-> > 
-> > - Marijn
-> > 
+> Also, if hs_phy_irq and dp/dm_phy_irq were mutually exclusive, why does
+> the following Qualcomm SoCs define all three?
 > 
-> Its not unrelated, dsi_update_dsc_timing call is moved up so it can use 
-> the single-panel "hdisplay" value before it gets adjusted for DSC.
 
-This reply was mostly expected after not looking at the original code folded in
-the diff, and pretty much solidifies my point: it's a hidden semantical change
-that's not immediately obvious from reading the patch, and why I'd like to see
-this split up in a few smaller patches.
+HS Phy Irq is redundant or functionality is mutually exclusive in this 
+case. If there are targets that define all three, then we need to update 
+those to only utilize DP/DM interrupts.
 
-> >>   		/* Divide the display by 3 but keep back/font porch and
-> >>   		 * pulse width same
-> >>   		 */
-> >> @@ -966,9 +970,6 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >>   	}
-> >>   
-> >>   	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-> >> -		if (msm_host->dsc)
-> >> -			dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
-> >> -
-> >>   		dsi_write(msm_host, REG_DSI_ACTIVE_H,
-> >>   			DSI_ACTIVE_H_START(ha_start) |
-> >>   			DSI_ACTIVE_H_END(ha_end));
-> >> @@ -987,9 +988,6 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >>   			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
-> >>   			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
-> >>   	} else {		/* command mode */
-> >> -		if (msm_host->dsc)
-> >> -			dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
-> >> -
-> >>   		/* image data and 1 byte write_memory_start cmd */
-> >>   		if (!msm_host->dsc)
-> >>   			wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-
-Regarding another patch: cmdmode calculates and uses word count here, but video
-mode does it as part of timing calculations?
-
-- Marijn
-
-> >> @@ -2487,7 +2485,8 @@ int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
-> >>   }
-> >>   
-> >>   enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
-> >> -					    const struct drm_display_mode *mode)
-> >> +					    const struct drm_display_mode *mode,
-> >> +					    bool is_bonded_dsi)
-> >>   {
-> >>   	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
-> >>   	struct drm_dsc_config *dsc = msm_host->dsc;
-> >> @@ -2497,6 +2496,9 @@ enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
-> >>   	if (!msm_host->dsc)
-> >>   		return MODE_OK;
-> >>   
-> >> +	if (is_bonded_dsi)
-> >> +		pic_width = mode->hdisplay / 2;
-> >> +
-> >>   	if (pic_width % dsc->slice_width) {
-> >>   		pr_err("DSI: pic_width %d has to be multiple of slice %d\n",
-> >>   		       pic_width, dsc->slice_width);
-> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> >> index 896f369fdd53..2ca1a7ca3659 100644
-> >> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> >> @@ -455,7 +455,7 @@ static enum drm_mode_status dsi_mgr_bridge_mode_valid(struct drm_bridge *bridge,
-> >>   			return MODE_ERROR;
-> >>   	}
-> >>   
-> >> -	return msm_dsi_host_check_dsc(host, mode);
-> >> +	return msm_dsi_host_check_dsc(host, mode, IS_BONDED_DSI());
-> >>   }
-> >>   
-> >>   static const struct drm_bridge_funcs dsi_mgr_bridge_funcs = {
-> >> -- 
-> >> 2.26.1
-> >>
+Regards,
+Krishna,
 
