@@ -1,114 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18B917EC787
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 16:39:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5C857EC824
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 17:06:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BC86A1F279ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 15:39:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5D331C20944
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 16:06:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62BAD33090;
-	Wed, 15 Nov 2023 15:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A67983173A;
+	Wed, 15 Nov 2023 16:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l/yCOwBz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtdBeZPK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CC639FF6;
-	Wed, 15 Nov 2023 15:39:07 +0000 (UTC)
-Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC2C6C2;
-	Wed, 15 Nov 2023 07:39:06 -0800 (PST)
-Received: by mail-vk1-xa2a.google.com with SMTP id 71dfb90a1353d-4ac2c1a4b87so2729598e0c.0;
-        Wed, 15 Nov 2023 07:39:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700062746; x=1700667546; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Ka6oEPkfLKrGnat5klQHHSJAKoZdHvZ4vqzdVi71ZtY=;
-        b=l/yCOwBzS7yxYMWD4KmFnlwyPnqDFYi0T0QNqRUoKH/nOo5AKHeAW4E0sygLRbffRG
-         cY4kAdSbJYkOdxIu01w7Mk5ONd/d2vK6GLzmlten5arLwxX/gHxHhWR4LMvz8tadoWwW
-         +A+wqmim6zy+PRjUlw5P+Q6g1Y7nY4jTX+8mJFQarLVNNMWWhxOfpeWp8QnhhkwreJZG
-         HIEkxOj7vK0KQ7DvcMkRjXK53JmlIj08uXKgTlzmSxC7TS2hMl2tzU/AnNgkzt5C7ybv
-         lsmeUVOJFu65ERNOYl/7EUrTkjoOkqLHrP4cY3P6OxUZFpqmGWBUn3EVkCmgoCa4vhnj
-         /eQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700062746; x=1700667546;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ka6oEPkfLKrGnat5klQHHSJAKoZdHvZ4vqzdVi71ZtY=;
-        b=qT7b4q+D41P9B+qri4ZD3GvAnWZFoud/08ixeIdtoodmOWanJjLsbrhBP9I3C3cD3R
-         NkhS67VS0lIto7qriUjHBV8uJftDXtfrCtDf7bWu07s3xhFC7gXpB9WjhnFc5LMPjEko
-         6+wIEqpWDJpexg5qD3BJPBZij/fImiN7V6Lxg1qjGnUy9unGrrv3BZqTrulW/x+c0RE4
-         j3Pf5cO2xcrVVSbjRLbRMXJ9GovFOF/9UhbS4GDvfkeuWZ50xRGq9SmEwmRlYkYydP9o
-         kigNeSiUhfGsbjfGDijgEjCAWRZ1ro+dH3wyD/wezUc1Fg6prNO7GAwGntStC1gN9t5+
-         ZiEQ==
-X-Gm-Message-State: AOJu0YweRSqswyAf22dMU5Q1lg7XBxLscESF/uNfQJ01qp7JZkcFpeq2
-	UFkOQLbMXXXg+hMGlY9WQ52NAkupS90I/aT3bswH195eDH+RG/a8lZk=
-X-Google-Smtp-Source: AGHT+IF2MHChcNxtzmpKThCzu49QGOdBWtNv/atMno9IuYGomNn4RXZcC8XOgVmbqV/mqWo+mBqJNKMtof6nBXYIDUM=
-X-Received: by 2002:a05:6122:3bd0:b0:4ab:f4e6:7d7 with SMTP id
- ft16-20020a0561223bd000b004abf4e607d7mr16288432vkb.0.1700062745848; Wed, 15
- Nov 2023 07:39:05 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EB13172D;
+	Wed, 15 Nov 2023 16:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE9AC433C7;
+	Wed, 15 Nov 2023 16:06:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700064386;
+	bh=ijFaq7FHZJATJ08s9vGm2iuuP0507mTupYEi1E772CA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XtdBeZPKXhZlQDoGhhsQ6Rg8CPNzLfU8ZiL5xwHilVGxaiNZN0HjUxvrTmx4y/aoj
+	 ZxADUCZzrkVIppV+lpZtMLQyFwC0pTKMQbqH8aeNWQwu5phJ2UMkjRUbPp+Mb6Lzyl
+	 sZVud5XAICOyElMgVWrFskNLrBahx5bhRjMhu9Nx6LVeBwSLZGX2Gkir0pZDxL0DeL
+	 A5Q/OGSG+WlHYxGue9CNqvYnPcmFGRED4xGdvrHhbPmcsQFpjqbZP8y10RV59zFkUv
+	 M27T5yAJQUU6scCQOIRh/YhJBJKcVWMQuQDiUmzfDmYUd6dKOJT7jtoJl32Udfl6IA
+	 48418HHQBwRWA==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r3IPH-0006gS-1F;
+	Wed, 15 Nov 2023 17:06:23 +0100
+Date: Wed, 15 Nov 2023 17:06:23 +0100
+From: Johan Hovold <johan@kernel.org>
+To: kernel test robot <lkp@intel.com>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <helgaas@kernel.org>, oe-kbuild-all@lists.linux.dev,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	Michael Bottini <michael.a.bottini@linux.intel.com>,
+	"David E . Box" <david.e.box@linux.intel.com>
+Subject: Re: [PATCH 1/6] PCI/ASPM: Add locked helper for enabling link state
+Message-ID: <ZVTsf9A05HQ9UYT-@hovoldconsulting.com>
+References: <20231114135553.32301-2-johan+linaro@kernel.org>
+ <202311152225.ZdVv0ufT-lkp@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Isaev Ruslan <legale.legale@gmail.com>
-Date: Wed, 15 Nov 2023 18:38:53 +0300
-Message-ID: <CACDmYyfOe-jcgj4BAD8=pr08sHpOF=+FRcwrouuLAVsa4+zwtw@mail.gmail.com>
-Subject: [PATCH v2] arm64: dts: qcom: ipq6018: add QUP5 I2C node
-To: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org, 
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <202311152225.ZdVv0ufT-lkp@intel.com>
 
-Add node to support this bus inside of IPQ6018.
-For example, this bus is used to work with the
-voltage regulator (mp5496) on the Yuncore AX840 wireless AP.
+On Wed, Nov 15, 2023 at 10:26:40PM +0800, kernel test robot wrote:
+ 
+> >> drivers/pci/pcie/aspm.c:1186: warning: expecting prototype for pci_enable_link_state(). Prototype was for pci_enable_link_state_locked() instead
+> 
+> 
+> vim +1186 drivers/pci/pcie/aspm.c
+> 
+>   1172	
+>   1173	/**
+>   1174	 * pci_enable_link_state - Clear and set the default device link state so that
 
+I apparently forgot to update the name here to
 
-Signed-off-by: Isaev Ruslan <legale.legale@gmail.com>
----
-v1 -> v2: fix clocks typo; fix reg size warning.
+	pci_enable_link_state_locked
 
+[ ... ]
 
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+>   1184	 */
+>   1185	int pci_enable_link_state_locked(struct pci_dev *pdev, int state)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index e59b9df96..00a61de9d 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -506,6 +506,21 @@ blsp1_i2c3: i2c@78b7000 {
-                        dma-names = "tx", "rx";
-                        status = "disabled";
-                };
-+
-+               blsp1_i2c6: i2c@78ba000 {
-+                       compatible = "qcom,i2c-qup-v2.2.1";
-+                       #address-cells = <1>;
-+                       #size-cells = <0>;
-+                       reg = <0x0 0x078ba000 0x0 0x600>;
-+                       interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-+                       clocks = <&gcc GCC_BLSP1_QUP6_I2C_APPS_CLK>,
-+                                <&gcc GCC_BLSP1_AHB_CLK>;
-+                       clock-names = "core", "iface";
-+                       clock-frequency = <400000>;
-+                       dmas = <&blsp_dma 22>, <&blsp_dma 23>;
-+                       dma-names = "tx", "rx";
-+                       status = "disabled";
-+               };
+Perhaps this can be fixed up when applying, or otherwise I'll respin.
 
-                qpic_bam: dma-controller@7984000 {
-                        compatible = "qcom,bam-v1.7.0";
---
-2.42.0
+Johan
 
