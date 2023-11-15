@@ -1,94 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5C857EC824
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 17:06:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D19D37EC846
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 17:17:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E5D331C20944
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 16:06:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D07F1F2453C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 16:17:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A67983173A;
-	Wed, 15 Nov 2023 16:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE17C381AB;
+	Wed, 15 Nov 2023 16:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtdBeZPK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tyUzCfXU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EB13172D;
-	Wed, 15 Nov 2023 16:06:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE9AC433C7;
-	Wed, 15 Nov 2023 16:06:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700064386;
-	bh=ijFaq7FHZJATJ08s9vGm2iuuP0507mTupYEi1E772CA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XtdBeZPKXhZlQDoGhhsQ6Rg8CPNzLfU8ZiL5xwHilVGxaiNZN0HjUxvrTmx4y/aoj
-	 ZxADUCZzrkVIppV+lpZtMLQyFwC0pTKMQbqH8aeNWQwu5phJ2UMkjRUbPp+Mb6Lzyl
-	 sZVud5XAICOyElMgVWrFskNLrBahx5bhRjMhu9Nx6LVeBwSLZGX2Gkir0pZDxL0DeL
-	 A5Q/OGSG+WlHYxGue9CNqvYnPcmFGRED4xGdvrHhbPmcsQFpjqbZP8y10RV59zFkUv
-	 M27T5yAJQUU6scCQOIRh/YhJBJKcVWMQuQDiUmzfDmYUd6dKOJT7jtoJl32Udfl6IA
-	 48418HHQBwRWA==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1r3IPH-0006gS-1F;
-	Wed, 15 Nov 2023 17:06:23 +0100
-Date: Wed, 15 Nov 2023 17:06:23 +0100
-From: Johan Hovold <johan@kernel.org>
-To: kernel test robot <lkp@intel.com>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <helgaas@kernel.org>, oe-kbuild-all@lists.linux.dev,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Jonathan Derrick <jonathan.derrick@linux.dev>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Michael Bottini <michael.a.bottini@linux.intel.com>,
-	"David E . Box" <david.e.box@linux.intel.com>
-Subject: Re: [PATCH 1/6] PCI/ASPM: Add locked helper for enabling link state
-Message-ID: <ZVTsf9A05HQ9UYT-@hovoldconsulting.com>
-References: <20231114135553.32301-2-johan+linaro@kernel.org>
- <202311152225.ZdVv0ufT-lkp@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3A633CD8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Nov 2023 16:17:21 +0000 (UTC)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 587AC83
+	for <linux-arm-msm@vger.kernel.org>; Wed, 15 Nov 2023 08:17:20 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-5099184f8a3so9672703e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Nov 2023 08:17:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700065038; x=1700669838; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3qRdRIQB+SyLD/2SSSnhRbTBC1T+kT3kqoQQAJb6ZGk=;
+        b=tyUzCfXUfjuyWxENabaWJnV2OSyvqNR7EAWA0zT2WntfZHI3s6xG04BXO/R8sk/+YD
+         MXsDRtoBW2LdtRzcmpIk/h/N9xBOCTRkC6sdyqv+pcMpwCWHI8RpfNKosESC9/ca/q1T
+         /mV5SXOA5FvbpJ7WCnt74/AjFRRi1SGDG3deh979EwjPtLFfjpVWCDj3vdD3F6bNhZE8
+         Y+yBlGGVcPbx3gEjSH2NvfnM1WQF5W6jm/9FdhGandDK5j7w1DNn1xFx3okl1Thzft/7
+         XAXqHup/En7RKolTYnwn328dVHmm+2BK/1oHwFX3Z9qqr/bV/yWaUAAruY3OgnZ0LCIB
+         nZhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700065038; x=1700669838;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3qRdRIQB+SyLD/2SSSnhRbTBC1T+kT3kqoQQAJb6ZGk=;
+        b=DXTVvjP8Yan5Um9+Kxg8lf2rZ7ZC1hKM1m2VHsOW3tK9EitBw1VYRYOCCeOiF/M593
+         jNng9qmYNl0eTn/K7d2lFQlCPZ6wJ0rePKLJHOoYbfHgQZlaybSMRsNlsOcMfqW2FEbw
+         UwIqsoCoFuPC84my94XBoatuZaegzxWQaiI74T/vBUHRQuFo+BH7zNqxii7CIfzNqMWP
+         zAqJYPrdwgBuopDPpkQ6s1mJN3YKy8JCTn5UnWcjVMAG27mtGIcX+7O/FC6J7YjnCkke
+         p8Rlv61lFq65XuPZ/Oep26M0BslCvxCbuoPaY+Ymb68I4YabJeJlxp+Kzic2GheAhrDU
+         iCAw==
+X-Gm-Message-State: AOJu0YzAJIdx8CFpA5MfwWBTW1fvy09D1n+rHdxsAtiIHKejkAsuXBEN
+	RPmX/elXH3XB+j1x1PgxJgfB4A==
+X-Google-Smtp-Source: AGHT+IGDqUKQj8i4ksmCvgTifMSpJYI6UUhnm2dFhWerlnxd1hBxKHSzpcMr+i8toBc2SR9Oy0cD/w==
+X-Received: by 2002:ac2:43a3:0:b0:509:3bba:e8a with SMTP id t3-20020ac243a3000000b005093bba0e8amr8552355lfl.39.1700065038548;
+        Wed, 15 Nov 2023 08:17:18 -0800 (PST)
+Received: from [172.30.204.150] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id x17-20020ac24891000000b00507962dd2aesm1692517lfc.207.2023.11.15.08.17.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Nov 2023 08:17:18 -0800 (PST)
+Message-ID: <1df726c4-745c-4b41-be04-d3081525210d@linaro.org>
+Date: Wed, 15 Nov 2023 17:17:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202311152225.ZdVv0ufT-lkp@intel.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qrb5165-rb5: use u16 for DP
+ altmode svid
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Hans de Goede <hdegoede@redhat.com>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Mark Gross <markgross@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-usb@vger.kernel.org
+References: <20231113221528.749481-1-dmitry.baryshkov@linaro.org>
+ <20231113221528.749481-4-dmitry.baryshkov@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20231113221528.749481-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: *
 
-On Wed, Nov 15, 2023 at 10:26:40PM +0800, kernel test robot wrote:
- 
-> >> drivers/pci/pcie/aspm.c:1186: warning: expecting prototype for pci_enable_link_state(). Prototype was for pci_enable_link_state_locked() instead
+
+
+On 11/13/23 23:13, Dmitry Baryshkov wrote:
+> Follow the bindings and use 16-bit value for AltMode SVID instead of
+> using the full u32.
 > 
-> 
-> vim +1186 drivers/pci/pcie/aspm.c
-> 
->   1172	
->   1173	/**
->   1174	 * pci_enable_link_state - Clear and set the default device link state so that
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Fixes: b3dea914127e ("arm64: dts: qcom: qrb5165-rb5: enable DP altmode")
 
-I apparently forgot to update the name here to
+(because it was previously not compliant with bindings)
 
-	pci_enable_link_state_locked
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ ... ]
-
->   1184	 */
->   1185	int pci_enable_link_state_locked(struct pci_dev *pdev, int state)
-
-Perhaps this can be fixed up when applying, or otherwise I'll respin.
-
-Johan
+Konrad
 
