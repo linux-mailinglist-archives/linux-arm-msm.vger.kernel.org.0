@@ -1,185 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59B2F7EE876
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 21:48:29 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E3557EE87C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 21:50:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F1871F247EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 20:48:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 657EBB20A1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 20:50:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25C3E4644F;
-	Thu, 16 Nov 2023 20:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C786495FB;
+	Thu, 16 Nov 2023 20:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Pfry8HUA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OgVTdxBW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E304D1AD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 12:48:21 -0800 (PST)
-Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-dafe04717baso1168541276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 12:48:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700167701; x=1700772501; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3jsteqKoN0WWpHYaZ+5dGYmwGw/oo6WmbF7h43IrO4I=;
-        b=Pfry8HUALyS/Pnsu4MvjCQhVjIAicRPRXtoDx/puCI6Sy1Km49JCXBgNfpXhhN3fsl
-         5MIT70WcPo+UfDz7w10N5S9HyiTndnhSoUSVsf6M7bIIfL7FWkqB6/aH2QpPId9YqMSJ
-         9wgu8vlGxF8ca3mn/UAAAOloE5WnYgcxsj4nEK7fmj+/uztRoWHCGE0BA8Ye55oGag+J
-         IaXAtA4hMELM5cSSPEUUbM/fq0g3UnQScbiFDtUzUk0H4OFnCR7Jdmdgrfa4sQwA4MO9
-         4MQJedDEftCB40TPfdVMI0lOXOBhXgqNtypjJUSYcjUW8WV85yzrBCG+1drwSgjrViAm
-         5sxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700167701; x=1700772501;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3jsteqKoN0WWpHYaZ+5dGYmwGw/oo6WmbF7h43IrO4I=;
-        b=txG50sPRJGq9XpKPmKPrBpfOqtOYEfgaDMNaGRQxQuO+OgRznO4siTQoO4FW9yUW4V
-         NOd5z4NfEdl5Get3fEx0fcsjnXZ/6u2JSfQU9GybQ/5nuYjqM1Tfw8RiCHWK88/Fhwh/
-         FUDKNebih7jk68fRBR3m0Frd6KiKXU43BGPOSIS+frWDfYBLE6OZ17y03+4c10hWr13n
-         C3w6cxzx3BViARzQBuvlbBqPu/LdeomAoNDArmU2+RzickpMzu0rB+fob1IAgupaGCeM
-         a22ndZeWtMH291oaqxTE+NA/saQ0YX+saa+5cZ87wxZuD8dKzhHcEs/7MgH6ipc6u2lA
-         TTOw==
-X-Gm-Message-State: AOJu0YwT/h6FARJaT/UidO9iMKt6zFMzn4+Nc9TyXzsafUJcpaK65ruS
-	ZWdrhU9irLAeVDb7vVSKaRaRTAZhqfWcYys7ofF2zQ==
-X-Google-Smtp-Source: AGHT+IHVTlFJzHDjToNpFdQnCvZKDQ+PQ1znp3kQQkzNq4tHUtFVV9wom8RYAW3XYC8nyPrjocgkBKXNLOvWzbyPg+k=
-X-Received: by 2002:a25:bd8f:0:b0:d80:4533:9556 with SMTP id
- f15-20020a25bd8f000000b00d8045339556mr15904655ybh.63.1700167700968; Thu, 16
- Nov 2023 12:48:20 -0800 (PST)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 520BDD4A;
+	Thu, 16 Nov 2023 12:50:09 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AGFwFI9012491;
+	Thu, 16 Nov 2023 20:49:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=yas7iHHEDuHCRMzzPg2KEmibRFAd4NpCF4nIuDlDRnI=;
+ b=OgVTdxBWDAkCAnTprrKYfmEmNZdkbkRVHYBFw+iGA0C1LHerOcoJA6EMy7+wtoKUBs7K
+ Kgod9Rr3tUAe3cSYOLolb2SnjWHZhqYdjNixclj1Ly1nutQXDx0OvZO9tAh2zAsT+nBK
+ fG8RLkdRRSdKSMOlrDMPTQiyvVxQrLoDg5IzqLKJPq7FliHG/xn3UJqyFoIoKFc+xLqZ
+ qA5FZdd3Gki1KN+qR/f7xVg4U8FkWudVTiwlqzCQ+hvXzFVLMFnSY0BLkHhCfp4Vc3st
+ /Qd/Ln+KwOOZ/QX/7Yc1N3SUGrXwEtmG8KHOHafH055s+WeqC7Fj1cYGTMjPeNTRbsuk 3Q== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udeww9s3q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Nov 2023 20:49:57 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AGKnuep005382
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Nov 2023 20:49:56 GMT
+Received: from [10.110.71.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 16 Nov
+ 2023 12:49:55 -0800
+Message-ID: <14cc8193-25cb-668b-f778-beea95e7ccf7@quicinc.com>
+Date: Thu, 16 Nov 2023 12:49:55 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231113221528.749481-1-dmitry.baryshkov@linaro.org>
- <20231113221528.749481-2-dmitry.baryshkov@linaro.org> <20231116183802.GB2742530-robh@kernel.org>
-In-Reply-To: <20231116183802.GB2742530-robh@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 16 Nov 2023 22:48:09 +0200
-Message-ID: <CAA8EJpoJzGWM_1DDY1AfB35qFz+58LVhO+L7t5fKC9HoUsR0sg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: connector: usb: add altmodes description
-To: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Hans de Goede <hdegoede@redhat.com>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Gross <markgross@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Thu, 16 Nov 2023 at 20:38, Rob Herring <robh@kernel.org> wrote:
->
-> On Tue, Nov 14, 2023 at 12:13:27AM +0200, Dmitry Baryshkov wrote:
-> > Add description of the USB-C AltModes supported on the particular USB-C
-> > connector. This is required for devices like Qualcomm Robotics RB5,
-> > which have no other way to express alternative modes supported by the
-> > hardware platform.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../bindings/connector/usb-connector.yaml     | 36 +++++++++++++++++++
-> >  1 file changed, 36 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > index 7c8a3e8430d3..1bd51b86906f 100644
-> > --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > @@ -14,6 +14,31 @@ description:
-> >    of a USB interface controller or a separate node when it is attached to both
-> >    MUX and USB interface controller.
-> >
-> > +$defs:
->
-> I fail to see why we need to use $defs here.
-
-I had an idea of defining a schema piece that can later be referenced
-from any other place. If you think this is an overkill, I can drop
-them.
-
->
-> > +  altmode-desc:
-> > +    type: object
-> > +    description:
-> > +      A single USB-C Alternative Mode as supported by the USB-C connector logic.
-> > +    properties:
-> > +      svid:
-> > +        $ref: /schemas/types.yaml#/definitions/uint16
-> > +        description: Unique value assigned by USB-IF to the Vendor / AltMode.
-> > +      vdo:
-> > +        $ref: /schemas/types.yaml#/definitions/uint32
-> > +        description: VDO returned by Discover Modes USB PD command.
->
-> What's VDO?
-
-Ack, I'll expand it in v3
-
->
-> These names are a bit short. Types for property names are global
-> (mostly). Though this patch doesn't make it clear these were already in
-> use.
->
-> > +
-> > +  altmodes-list:
-> > +    type: object
-> > +    description: List of Alternative Modes supported by the schematics on the
-> > +      particular device. This is only necessary if there are no other means to
-> > +      discover supported alternative modes (e.g. through the UCSI firmware
-> > +      interface).
-> > +
-> > +    patternProperties:
-> > +      "^[a-z][a-z0-9]*$":
->
-> Are there standard id's and names? Should we define some so we don't get
-> 'dp', 'displayport', etc.
-
-Indeed it might be better to enumerate them via string enumeration.
-
->
->
-> > +        $ref: "#/$defs/altmode-desc"
-> > +        unevaluatedProperties: false
-> > +
-> >  properties:
-> >    compatible:
-> >      oneOf:
-> > @@ -171,6 +196,10 @@ properties:
-> >        offer the power, Capability Mismatch is set. Required for power sink and
-> >        power dual role.
-> >
-> > +  altmodes:
-> > +    $ref: "#/$defs/altmodes-list"
-> > +    unevaluatedProperties: false
-> > +
-> >    port:
-> >      $ref: /schemas/graph.yaml#/properties/port
-> >      description: OF graph bindings modeling a data bus to the connector, e.g.
-> > @@ -289,6 +318,13 @@ examples:
-> >              compatible = "usb-c-connector";
-> >              label = "USB-C";
-> >
-> > +            altmodes {
-> > +                displayport {
-> > +                    svid = /bits/ 16 <0xff01>;
-> > +                    vdo = <0x00001c46>;
-> > +                };
-> > +            };
-> > +
-> >              ports {
-> >                  #address-cells = <1>;
-> >                  #size-cells = <0>;
-> > --
-> > 2.42.0
-> >
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH v2] drm/msm/dsi: use the correct VREG_CTRL_1
+ value for 4nm cphy
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+To: Jonathan Marek <jonathan@marek.ca>, <freedreno@lists.freedesktop.org>
+CC: Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss
+	<rfoss@kernel.org>, David Airlie <airlied@gmail.com>,
+        Konrad Dybcio
+	<konrad.dybcio@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:DRM
+ DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>,
+        open list
+	<linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU"
+	<linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>
+References: <20231110000216.29979-1-jonathan@marek.ca>
+ <01b9bc3f-2afb-bd33-1212-d1dc7999b2bc@quicinc.com>
+In-Reply-To: <01b9bc3f-2afb-bd33-1212-d1dc7999b2bc@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: M_p3D44TFCtBNFGUR99xPok0HlNGrhjO
+X-Proofpoint-GUID: M_p3D44TFCtBNFGUR99xPok0HlNGrhjO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-16_23,2023-11-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 mlxscore=0 adultscore=0 mlxlogscore=919 phishscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311160162
 
 
 
--- 
-With best wishes
-Dmitry
+On 11/16/2023 12:36 PM, Abhinav Kumar wrote:
+> 
+> 
+> On 11/9/2023 4:02 PM, Jonathan Marek wrote:
+>> Use the same value as the downstream driver. This change is needed for 
+>> CPHY
+>> mode to work correctly.
+>>
+>> Fixes: 8b034e6771113 ("drm/msm/dsi: add support for DSI-PHY on SM8550")
+
+One error here. We need 12 chars of SHA but you have 13 otherwise 
+checkpatch cries
+
+Fixes: 8b034e677111 ("drm/msm/dsi: add support for DSI-PHY on SM8550")
+
+Will fix this up while applying.
+
+>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>> ---
+>> v2: fixed the Fixes: line
+>>
+>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+> 
+> Good catch !
+> 
+> LGTM
+> 
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c 
+>> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> index 3b1ed02f644d..89a6344bc865 100644
+>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+>> @@ -918,7 +918,7 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy 
+>> *phy,
+>>       if ((phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V5_2)) {
+>>           if (phy->cphy_mode) {
+>>               vreg_ctrl_0 = 0x45;
+>> -            vreg_ctrl_1 = 0x45;
+>> +            vreg_ctrl_1 = 0x41;
+>>               glbl_rescode_top_ctrl = 0x00;
+>>               glbl_rescode_bot_ctrl = 0x00;
+>>           } else {
 
