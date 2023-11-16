@@ -1,181 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F4697EDB71
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 07:10:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF0017EDB90
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 07:30:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C02141C20443
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 06:10:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A88B280F5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 06:30:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0484E4596F;
-	Thu, 16 Nov 2023 06:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF03EFBED;
+	Thu, 16 Nov 2023 06:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hYdbF0VG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="P41VhJ4F"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D0B1B8;
-	Wed, 15 Nov 2023 22:10:30 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD78A4;
+	Wed, 15 Nov 2023 22:30:43 -0800 (PST)
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AG4k2Ch015880;
-	Thu, 16 Nov 2023 06:10:05 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AG5fPto019356;
+	Thu, 16 Nov 2023 06:30:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=9obdCHhOsHKQSrc5yPYTvhHbe8XgAVHrOqsoefI79hs=;
- b=hYdbF0VGbaokNyuFu6kIl/43wBlmHbT+mnaBKeEouXrVSKG3XEff4opM+kTQ3hY7hDsX
- nwfvbuah59x9yeFqJqeJ5z8f1X4fkS+0tpS9hyBLVRYc63FKkpHxmx6HpoAv6M2zpZ0j
- GbZvELaRBYP9vAWng3IzU/WcaYh5vUafven/RLZiKpZpK/WaIXN5OHEB/7QWDmxIYZQs
- J2khaTPW8QUFBlrVEW43gHTIm2tkg/lP56YtFnHWRMQW02Fq/fUh1qBtXvHfw7XnJD00
- Ofbx8XomKgn3JciTSLLyk1Y1ZCA7aYLcVhDxuzjjI2yYPZTJbCvc+9OT5Icnqd9udi8h Zg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ud6ecgsem-1
+ bh=lJBWb0DFVaqBPn5WS2xIqEkp3Evqw9zDxdFgf67KCDo=;
+ b=P41VhJ4FWvC3R/tlx2/fjOppb0a7ygI7oPFOOnIq3PGdAUBFnQLz0KLwh5RDpJB+sOH2
+ /Hiop52rgGkF7KB5IMwl1Q9p18e1dlqqAsrE6SWoFTZU80N0NlgFK6PpKa78V2oRvW0k
+ njcJM+hKtKcKEaWsv5rMc22+B7OSvSfU2LyTccaXV2vWhEtxa9k65fRvdasTgT3im0bH
+ 8CfpUO9pJ3D+e0M8m1X+3dFcoasXryjHVc7kyiw+xOawV8rhXlNHAHaBFHbkiL9WOudY
+ iM5JRfL8rwLo/9DoSyPurWF50/j3Xioqi2dU23v3Jr5JbvFseUTv/fIkkp6wQOOZMh/N dg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ud6ecgtwm-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Nov 2023 06:10:05 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AG6A4lY006811
+	Thu, 16 Nov 2023 06:30:17 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AG6UGH3014552
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Nov 2023 06:10:04 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 16 Nov 2023 06:30:16 GMT
+Received: from [10.216.41.162] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 15 Nov
- 2023 22:09:59 -0800
-Message-ID: <61d2885a-50f9-419f-8473-10308baed493@quicinc.com>
-Date: Thu, 16 Nov 2023 11:39:49 +0530
+ 2023 22:30:02 -0800
+Message-ID: <5a476b51-5916-74f8-0395-60d94f210aa0@quicinc.com>
+Date: Thu, 16 Nov 2023 11:59:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] iommu/arm-smmu: add ACTLR data and support for
- SM8550
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH V2 0/3] iio: adc: Add support for QCOM SPMI PMIC5 Gen3 ADC
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <jic23@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <daniel.lezcano@linaro.org>,
+        <linus.walleij@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <andriy.shevchenko@linux.intel.com>, <quic_subbaram@quicinc.com>,
+        <quic_collinsd@quicinc.com>, <quic_amelende@quicinc.com>,
+        <quic_kamalw@quicinc.com>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
+        <lars@metafoo.de>, <luca@z3ntu.xyz>, <linux-iio@vger.kernel.org>,
+        <lee@kernel.org>, <rafael@kernel.org>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <cros-qcom-dts-watchers@chromium.org>,
+        <sboyd@kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-arm-msm-owner@vger.kernel.org>, <kernel@quicinc.com>
+References: <20231116032530.753192-1-quic_jprakash@quicinc.com>
+ <CAA8EJprJuiFq5UXc9weNr1hy2vW_10TaQweN_ZW5XW=3LKrgtA@mail.gmail.com>
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <a39.skl@gmail.com>, <quic_pkondeti@quicinc.com>,
-        <quic_molvera@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <qipl.kernel.upstream@quicinc.com>
-References: <20231114135654.30475-1-quic_bibekkum@quicinc.com>
- <20231114135654.30475-3-quic_bibekkum@quicinc.com>
- <CAA8EJpr1NzqiuNVZ0YcLpJ=yeOYFbLouAFgN9VMOiKpmoGVdtQ@mail.gmail.com>
- <7edad996-f148-42d5-8e72-0334d3b9101f@quicinc.com>
- <CAA8EJpqzEvC-LEjJrOk6Ed8utFNnqgP=qkb0mq-dOfMZd5ij4Q@mail.gmail.com>
- <dba223a1-0456-40b8-b295-ea960867dcf9@quicinc.com>
- <CAA8EJpqvXb_Zdmq0O0KEA8mn5UkSriCZ02w16dts7Gd84R30oQ@mail.gmail.com>
- <aebdf7f6-48b7-43d3-95af-83859ddc593f@quicinc.com>
- <be9675a6-a01e-4cf7-95b3-174220d4a042@linaro.org>
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <be9675a6-a01e-4cf7-95b3-174220d4a042@linaro.org>
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
+In-Reply-To: <CAA8EJprJuiFq5UXc9weNr1hy2vW_10TaQweN_ZW5XW=3LKrgtA@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6FGLHcVjYsQa_nW4-MOERmnWMQ5ie_py
-X-Proofpoint-ORIG-GUID: 6FGLHcVjYsQa_nW4-MOERmnWMQ5ie_py
+X-Proofpoint-GUID: DV90G0dLrhL99O234ZHLt0xsMNWcxz9J
+X-Proofpoint-ORIG-GUID: DV90G0dLrhL99O234ZHLt0xsMNWcxz9J
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-16_03,2023-11-15_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 malwarescore=0 mlxscore=0 mlxlogscore=859 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
  suspectscore=0 phishscore=0 priorityscore=1501 spamscore=0 impostorscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311160046
+ definitions=main-2311160049
 
+Hi Dmitry,
 
-
-On 11/15/2023 10:12 PM, Konrad Dybcio wrote:
-> 
-> 
-> On 11/15/23 13:49, Bibek Kumar Patro wrote:
+On 11/16/2023 10:52 AM, Dmitry Baryshkov wrote:
+> On Thu, 16 Nov 2023 at 05:26, Jishnu Prakash <quic_jprakash@quicinc.com> wrote:
+>> PMIC5 Gen3 has a similar ADC architecture to that on PMIC5 Gen2,
+>> with all SW communication to ADC going through PMK8550 which
+>> communicates with other PMICs through PBS. The major difference is
+>> that the register interface used here is that of an SDAM present on
+>> PMK8550, rather than a dedicated ADC peripheral. There may be more than one
+>> SDAM used for ADC5 Gen3. Each ADC SDAM has eight channels, each of which may
+>> be used for either immediate reads (same functionality as previous PMIC5 and
+>> PMIC5 Gen2 ADC peripherals) or recurring measurements (same as PMIC5 and PMIC5
+>> Gen2 ADC_TM functionality). In this case, we have VADC and ADC_TM functionality
+>> combined into the same driver.
 >>
+>> Patches 1 adds bindings for ADC5 Gen3 peripheral.
 >>
->> On 11/15/2023 4:15 PM, Dmitry Baryshkov wrote:
->>> On Wed, 15 Nov 2023 at 11:51, Bibek Kumar Patro
->>> <quic_bibekkum@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 11/15/2023 3:08 PM, Dmitry Baryshkov wrote:
->>>>> On Wed, 15 Nov 2023 at 11:22, Bibek Kumar Patro
->>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 11/14/2023 7:42 PM, Dmitry Baryshkov wrote:
->>>>>>> On Tue, 14 Nov 2023 at 15:57, Bibek Kumar Patro
->>>>>>> <quic_bibekkum@quicinc.com> wrote:
->>>>>>>>
->>>>>>>> Add ACTLR data table for SM8550 along with support for
->>>>>>>> same including SM8550 specific implementation operations.
->>>>>>>>
->>>>>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>>>>>> ---
->>>>>>>>     drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 92 
->>>>>>>> +++++++++++++++++++++-
->>>>>>>>     1 file changed, 88 insertions(+), 4 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
->>>>>>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>> index 578c662c7c30..0eaf6f2a2e49 100644
->>>>>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>>>>> @@ -25,6 +25,70 @@ struct actlr_data {
->>>>>>>>            u32 actlr;
->>>>>>>>     };
->>>>>>>>
->>>>>>>> +#define PRE_FETCH_1    0
->>>>>>>> +#define PRE_FETCH_2    BIT(8)
->>>>>>>> +#define PRE_FETCH_3    (BIT(9) | BIT(8))
->>>>>>>
->>>>>>> What is the difference between PRE_FETCH_3 and PRE_FETCH_2? And
->>>>>>> PRE_FETCH_1? Are these real numbers that refer to some amount / 
->>>>>>> count
->>>>>>> or just dummy names?
->>>>>>>
->>>>>>
->>>>>> No,these are not real numbers, but prefetch settings for a particular
->>>>>> perfect configuration.
->>>>>
->>>>> Then I'd ask for some better names or descriptions.
->>>>>
->>>>
->>>> Noted, PREFETCH_SETTING_n / PREFETCH_OPTION_n sounds like a better name
->>>> in the following case. Would it be okay to use this name instead?
->>>
->>> Not really.
->>>
+>> Patches 2 adds driver support for ADC5 Gen3.
+> For some reason I don't see this patch in my inbox. Maybe it will
+> arrive later. Immediate response: please add
+> devm_thermal_add_hwmon_sysfs().
+
+
+Yes, I'll check and add this in the next patch series, I'll wait for 
+some more comments on the existing patches for now.
+
+I ran into some error after sending the first two mails (cover letter 
+and patch 1), so I sent patches 2 and 3 separately after it, I think you 
+may have received them separately.
+
+
+>
+>> Patch 3 is a cleanup, to move the QCOM ADC dt-bindings files from
+>> dt-bindings/iio to dt-bindings/iio/adc folder, as they are
+>> specifically for ADC devices. It also fixes all compilation errors
+>> with this change in driver and devicetree files and similar errors
+>> in documentation for dtbinding check.
+> NAK. The kernel is expected to build and work after each commit.
+> Otherwise git-bisecting the kernel becomes impossible.
+> So, please rework your series in a way that there are no compilation
+> errors after any of the patches. The easiest way would be to rearrange
+> your patches in 3-1-2 order.
+
+
+I think you may have misunderstood the meaning here, I had verified 
+compilation works each time after applying each of the three patches in 
+this series. It's not that this last patch fixes compilation errors 
+caused by the first two, this is a completely separate patch which 
+affects existing QCOM ADC code (driver and devicetree) including ADC5 Gen3.
+
+
+This patch does two things mainly:
+
+Move the ADC binding files from dt-bindings/iio folder to 
+dt-bindings/iio/adc folder (this would naturally cause some errors in 
+driver and devicetree code due to path update)
+
+Fix all compilation and dtbinding errors generated by the move
+
+
+I added this change at the end of the series as I was not completely 
+sure if it could get picked, just wanted to make it easier to drop if 
+that is the final decision.
+
+
+Thanks,
+
+Jishnu
+
+
+>
+>
+>> Changes since v1:
+>> - Dropped patches 1-5 for changing 'ADC7' peripheral name to 'ADC5 Gen2'.
+>> - Addressed reviewer comments for binding and driver patches for ADC5 Gen3.
+>> - Combined patches 8-11 into a single patch as requested by reviewers to make
+>>    the change clearer and made all fixes required in same patch.
 >>
->> Any suggestion you have in mind, if not this nomenclature?
-> Dmitry's concern seems to be that you provide:
-> 
-> PRE_FETCH_1 /* prefetcher with settings preset no. 1 */
-> PRE_FETCH_2 /* prefetcher with settings preset no. 2 */
-> PRE_FETCH_3 /* prefetcher with settings preset no. 3 */
-> 
-> whereas it would be both useful and interesting to see what these
-> settings mean, i.e. what differences there are between all of
-> these presets.
-> 
-
-Ah, okay got it now from Dimitry and yours' response.
-But we exactly won't be able to reveal what each of these settings
-mean, as this might risk of revealing IP as ACTLR bits are
-implementation defined (except CPRE and CMTLB) which other SoC vendors
-might be using it in different manner(or different purpose) in their
-downstream implementation.
-We can name it like (e.g PREFETCH_DISABLE, PREFETCH_SHALLOW,
-PREFETCH_DEEP) to indicate the behaviour, but won't be exactly
-name/describe it to explain what it does with a particular setting.
-
-> Konrad
+>>   .../iio/{ => adc}/qcom,spmi-adc7-pm8350b.h    |    2 +-
+>>   .../iio/{ => adc}/qcom,spmi-adc7-pmk8350.h    |    2 +-
+>>   .../iio/{ => adc}/qcom,spmi-adc7-pmr735a.h    |    2 +-
+>>   .../iio/{ => adc}/qcom,spmi-adc7-pmr735b.h    |    0
+>>   .../iio/{ => adc}/qcom,spmi-vadc.h            |   81 ++
+>>   46 files changed, 1725 insertions(+), 61 deletions(-)
+>>   create mode 100644 drivers/iio/adc/qcom-spmi-adc5-gen3.c
+>>   create mode 100644 include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8550.h
+>>   create mode 100644 include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8550b.h
+>>   create mode 100644 include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pm8550vx.h
+>>   create mode 100644 include/dt-bindings/iio/adc/qcom,spmi-adc5-gen3-pmk8550.h
+>>   rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350.h (98%)
+>>   rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350b.h (99%)
+>>   rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmk8350.h (97%)
+>>   rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735a.h (95%)
+>>   rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735b.h (100%)
+>>   rename include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h (77%)
+>>
+>> --
+>> 2.25.1
+>>
+>
+> --
+> With best wishes
+> Dmitry
 
