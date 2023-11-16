@@ -1,49 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52DD37EDDBC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 10:36:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A08E67EDE0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 10:55:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 837AC1C2095F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 09:36:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 24C74B209C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 09:55:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9825A28E00;
-	Thu, 16 Nov 2023 09:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32EF22941F;
+	Thu, 16 Nov 2023 09:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ePhMpjb+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PKNH0bJ8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 354C01BC0;
-	Thu, 16 Nov 2023 01:36:10 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AG5AkBw032381;
-	Thu, 16 Nov 2023 09:35:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=GEuP6Rpji2X+1oMcUTO94Nar7xPCb3N4/EUxMMrf/9g=;
- b=ePhMpjb+EHMZuVH+IIKJnXvKthI7OxRzandm8JFsCLlW7ZWEDuXik7els5LAUytggbkx
- j8djCv7k4gTwFdD/U3yAjnyB+RmbD+EKpxvvi62YmvTmxynOwRMmHZ35OLLMecdMYB0K
- isjUeDf8u2SdQCzILgzexB2hYz7ZQ4PGyMKTYMESGY0udqT/divkIbKV8buQmXAdBlFx
- 8lVQxLT3SSw1nJ0Xd3loQYbCw1ok+AJF1JyDlVz8zLMthNj7zfL+WLjl0Npbp+w8LK4k
- suxENXthknOakvv0sNewPJs8JYSf5BhrBwOULXP8OeJjTbCxYrrvQ8QRc1DmEifmUYG+ 6A== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ud1k51vg8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Nov 2023 09:35:57 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AG9Ztg8028243
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Nov 2023 09:35:55 GMT
-Received: from [10.253.72.184] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 16 Nov
- 2023 01:35:52 -0800
-Message-ID: <ccb4bdbd-b7d7-49f0-b8f4-6ea13a4ab407@quicinc.com>
-Date: Thu, 16 Nov 2023 17:35:49 +0800
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B21811AD
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 01:55:18 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-4083f613272so5201765e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 01:55:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700128517; x=1700733317; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E1oRsx0JkrJpAxhu0TG6CzqhEt1GaBKEgIlWIAk646w=;
+        b=PKNH0bJ8OhT8Yed/uUcTzytBOLIyPy5UjBY4fG7B4PEtm17I2Jcn3i+sfZ3LLkrFuA
+         dwxia2gw8oVJ+kmyM2Bda/W0dp4X2k/br980zJ+qlBojbb4h07yHqpSFz6NodIG2vh4/
+         8+yy8qeBKCkY1xcN2idv06kG+nkQbaKuWTW8PDHshvywF/hTXkZ+4RJxzpHLK1izRW0e
+         yU7vVxR1N08tGazriUdMOChtcyhsihUuByeUij5KE2W3PnJT5JHmMdOTTN28jlUnqRI1
+         I0+xsLP/lEQEcA4GfnO2DwMBcMw+zoN3+UC06cWpkGwfn970Qk7055bfMi/WLdxIcMmW
+         GGPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700128517; x=1700733317;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E1oRsx0JkrJpAxhu0TG6CzqhEt1GaBKEgIlWIAk646w=;
+        b=xLNkFsdc6LIqnPI/m0Y+upsg0F9JwQFBtMSBFVI2uIDy0CXUxGrOn+nOMlpqjOZFuR
+         UtAE6sFuQAiSlAli8fjLe6Qs197X/fpocu2mbAG1geHlQDhVhMwispcZLU3P47fbZ6j6
+         +oZ+tLs3h3dEU7kRTb+Da4HbMuUEMi8g2ps/bQT1KDGbPiH8XCc38TvnHy3ZAH4fi6dR
+         FOypXS+6x4+zKGQFgLnF3YyFnR4sXdR9mcJLD+x6Xu96sbAXgRmaFNyqtQDKc4/906Sd
+         2axBb7viqdNHO5e8tJbzaB5/MXE90aJe1DO73YohtGA+ONBSbe6NOeDvsgpxkRhd8cwo
+         sisQ==
+X-Gm-Message-State: AOJu0YzioSUZ4UFhaUfqP5mbk++BY7Ytr/SYWcRI74ggNhgV4tINolqD
+	hRo3bEfXwAIRt9PlEE7Jr+b8tA==
+X-Google-Smtp-Source: AGHT+IFC0ufUujVImIIcEUUJStMAApGOKU2C7zQcbgEAamM2TCYN0xyoQv6pa0YlLg2206Tv9B8xyA==
+X-Received: by 2002:a05:600c:4ec6:b0:409:3f53:c9c7 with SMTP id g6-20020a05600c4ec600b004093f53c9c7mr11485099wmq.35.1700128517136;
+        Thu, 16 Nov 2023 01:55:17 -0800 (PST)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id y14-20020a05600c2b0e00b0040644e699a0sm2793102wme.45.2023.11.16.01.55.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 16 Nov 2023 01:55:16 -0800 (PST)
+Message-ID: <3db4549e-9707-48f1-a199-d0155f3ebc16@linaro.org>
+Date: Thu, 16 Nov 2023 09:55:15 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,69 +62,49 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] net: mdio: ipq4019: increase eth_ldo_rdy for ipq5332
- platform
+Subject: Re: [PATCH 2/4] clk: qcom: videocc-sm8150: Update the videocc resets
 Content-Language: en-US
-To: Andrew Lunn <andrew@lunn.ch>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
-        <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
-References: <20231115032515.4249-1-quic_luoj@quicinc.com>
- <20231115032515.4249-2-quic_luoj@quicinc.com>
- <c7ae6561-fbcc-40d9-a02c-61fc76e089d0@lunn.ch>
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <c7ae6561-fbcc-40d9-a02c-61fc76e089d0@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20231110065029.2117212-1-quic_skakitap@quicinc.com>
+ <20231110065029.2117212-3-quic_skakitap@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20231110065029.2117212-3-quic_skakitap@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TH3DcYruvcjW6eYr3stYd3ERefWUPhEi
-X-Proofpoint-ORIG-GUID: TH3DcYruvcjW6eYr3stYd3ERefWUPhEi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-16_07,2023-11-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=592 bulkscore=0
- spamscore=0 suspectscore=0 clxscore=1015 malwarescore=0 priorityscore=1501
- impostorscore=0 phishscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311160076
 
-
-
-On 11/15/2023 9:44 PM, Andrew Lunn wrote:
->> +	for (ret = 0; ret < ETH_LDO_RDY_CNT; ret++) {
->> +		if (priv->eth_ldo_rdy[ret]) {
->> +			val = readl(priv->eth_ldo_rdy[ret]);
->> +			val |= BIT(0);
->> +			writel(val, priv->eth_ldo_rdy[ret]);
->> +			fsleep(IPQ_PHY_SET_DELAY_US);
->> +		}
+On 10/11/2023 06:50, Satya Priya Kakitapalli wrote:
+> Add all the available resets for the video clock controller
+> on sm8150.
 > 
-> Please add a new variable, rather than use ret this way.
-
-OK, will add it in the next patch set.
-
-> 
->> +	for (ret = 0; ret < ETH_LDO_RDY_CNT; ret++) {
->> +		res = platform_get_resource(pdev, IORESOURCE_MEM, ret + 1);
->> +		if (res)
->> +			priv->eth_ldo_rdy[ret] = devm_ioremap(&pdev->dev,
-> 
-> same here.
-
-Ok.
-
-> 
->      Andrew
-> 
+> Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver for SM8150")
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 > ---
-> pw-bot: cr
+>   drivers/clk/qcom/videocc-sm8150.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/videocc-sm8150.c b/drivers/clk/qcom/videocc-sm8150.c
+> index 1afdbe4a249d..6a5f89f53da8 100644
+> --- a/drivers/clk/qcom/videocc-sm8150.c
+> +++ b/drivers/clk/qcom/videocc-sm8150.c
+> @@ -214,6 +214,10 @@ static const struct regmap_config video_cc_sm8150_regmap_config = {
+>   
+>   static const struct qcom_reset_map video_cc_sm8150_resets[] = {
+>   	[VIDEO_CC_MVSC_CORE_CLK_BCR] = { 0x850, 2 },
+> +	[VIDEO_CC_INTERFACE_BCR] = { 0x8f0 },
+> +	[VIDEO_CC_MVS0_BCR] = { 0x870 },
+> +	[VIDEO_CC_MVS1_BCR] = { 0x8b0 },
+> +	[VIDEO_CC_MVSC_BCR] = { 0x810 },
+>   };
+>   
+>   static const struct qcom_cc_desc video_cc_sm8150_desc = {
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
