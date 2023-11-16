@@ -1,133 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 407067EDF3B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 12:11:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47D507EDF4C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 12:14:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B9061C2083D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 11:11:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAAC4280D15
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 11:14:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A277415482;
-	Thu, 16 Nov 2023 11:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78A0E2DF67;
+	Thu, 16 Nov 2023 11:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kFY3JkEN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LJeIhkqj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870861426C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 11:11:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C03C433C7;
-	Thu, 16 Nov 2023 11:11:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700133076;
-	bh=S39I4q3Z2eyaTdKnVU0kVAHPshukGXcnGgf90hu5hNI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=kFY3JkENtL0CxjTkP/J8DwUB+SNQglfyJDHH7+sTiuRn0h/RUE7p3oaQ9qmm2EqUz
-	 lJ8fKPSOka5GNjCzNZHxSf7AG6Gxycoolw68U9X3zNLhbf+PorV19XXd+0AJ9dW/Xv
-	 Rs1D2g3X/xGGTH1hLuNRHeoRpA6X+9eMtKXDG3WLqM4c7l+4a5VetChSvtL3/ZQrwI
-	 U355iW85fbSl1wMHuMOjIACUU9o+H6yzVw3tyyJmpQB9iKCoTXzWcBj5tSPrEMsbRa
-	 JotGEznqCUVHoaEh6BM6b7ygvXrc8KQcKlmNu5a3klH/eu9lvDm5WiyUxcJJGGmqV1
-	 WVw+8Ya70CViw==
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2c6b5841f61so7347201fa.0;
-        Thu, 16 Nov 2023 03:11:15 -0800 (PST)
-X-Gm-Message-State: AOJu0Ywscy8wiDPGFjgcafrbTxcYyYihQieq1sou7jrvNexEPYYivadF
-	zHsROOAexZil6XVizYMZPVhrmr2PpdWU8Lrqst4=
-X-Google-Smtp-Source: AGHT+IFuerTCkQll0+xraF3KBCWCtKLNVm468vnWCiWQYEjYBagDH99HbCteNccZAey1E04nPRwuluu4JS60wiQzko0=
-X-Received: by 2002:a05:651c:20b:b0:2c6:edf1:b05e with SMTP id
- y11-20020a05651c020b00b002c6edf1b05emr580932ljn.15.1700133074166; Thu, 16 Nov
- 2023 03:11:14 -0800 (PST)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FED485;
+	Thu, 16 Nov 2023 03:14:37 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AG7fxpb001720;
+	Thu, 16 Nov 2023 11:14:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=WG+vTW6SxUmCCV/6GleBb07NZzuJmnHKZogC3uQzSVg=;
+ b=LJeIhkqjABZNoBIdh0rf0XtzpcTY+tSctWQpzGB5uay0odDBIKNlQK+IUUMSJv67Cm57
+ 6Az1aSIQBhwr805xVqXC5lmkSfg1W7UaQYuaNT5KJenk5fikT4vQYi4dwjyhX8fJl7oT
+ K5Guqj7yopy8qfM+2RrN8Ln0ekX7dATkrZ4Z+aB0WK6r3Gp9AkiFX+B9bt8Bi7WgCYe2
+ q1NRFMpuWLNFZAi3wWAYE3EjWK4e6mFx0HPKh0tkyQdbuEjvqUTpDksTbc/BcWNcO+tk
+ HUH8ekI9CsRyq7YJCDWFOH/PcSQHGqcqPQFfE/ylE5M4yKh1nObaPCSW4nBHrvseMbVR 7w== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udeww8e95-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Nov 2023 11:14:23 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AGBDsN2021454
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 16 Nov 2023 11:13:54 GMT
+Received: from [10.253.72.184] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 16 Nov
+ 2023 03:13:50 -0800
+Message-ID: <33246b49-2579-4889-9fcb-babec5003a88@quicinc.com>
+Date: Thu, 16 Nov 2023 19:13:47 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231115095830.20607-1-quic_aiquny@quicinc.com>
-In-Reply-To: <20231115095830.20607-1-quic_aiquny@quicinc.com>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Thu, 16 Nov 2023 21:11:03 +1000
-X-Gmail-Original-Message-ID: <CAMj1kXEHjY2NmEztvfQR34k903Jgx_4fqgHpkxq4YAiTc5szyA@mail.gmail.com>
-Message-ID: <CAMj1kXEHjY2NmEztvfQR34k903Jgx_4fqgHpkxq4YAiTc5szyA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] ARM: kprobes: Explicitly reserve r7 for local variables
-To: Maria Yu <quic_aiquny@quicinc.com>
-Cc: linux@armlinux.org.uk, mhiramat@kernel.org, kernel@quicinc.com, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_lijuang@quicinc.com, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/9] net: mdio: ipq4019: Enable GPIO reset for ipq5332
+ platform
+Content-Language: en-US
+To: Andrew Lunn <andrew@lunn.ch>
+CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <20231115032515.4249-1-quic_luoj@quicinc.com>
+ <20231115032515.4249-4-quic_luoj@quicinc.com>
+ <e740a206-37af-49b1-a6b6-baa3c99165c0@lunn.ch>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <e740a206-37af-49b1-a6b6-baa3c99165c0@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 46NsgQtgK9drv1wuiyk85wDjaDNh9j8M
+X-Proofpoint-GUID: 46NsgQtgK9drv1wuiyk85wDjaDNh9j8M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-16_09,2023-11-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 mlxscore=0 adultscore=0 mlxlogscore=999 phishscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311160090
 
-On Wed, 15 Nov 2023 at 19:58, Maria Yu <quic_aiquny@quicinc.com> wrote:
->
-> Registers r7 is removed in clobber list, so compiler may choose r7 for
-> local variables usage, while r7 will be actually updated by the inline asm
-> code. This caused the runtime behavior wrong.
-> While those kind of reserved registers cannot be set to clobber list
-> because of error like "inline asm clobber list contains reserved
-> registers".
-> Explicitly reserve r7 by adding attribute no-omit-frame-pointer for needed
-> function, then in T32 asm code r7 is used as a frame pointer and is not
-> available for use as a general-purpose register.
-> Note that "no-omit-frame-pointer" will make the code size a little bigger
-> to store the stack frame pointer. So limited to needed functions can have
-> the less impact than the full source file.
->
-> Fixes: dd12e97f3c72 ("ARM: kprobes: treat R7 as the frame pointer register in Thumb2 builds")
-> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-> Cc: stable@vger.kernel.org
 
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
 
-> ---
->  arch/arm/probes/kprobes/actions-thumb.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/arch/arm/probes/kprobes/actions-thumb.c b/arch/arm/probes/kprobes/actions-thumb.c
-> index 51624fc263fc..c2fdaf9f6dba 100644
-> --- a/arch/arm/probes/kprobes/actions-thumb.c
-> +++ b/arch/arm/probes/kprobes/actions-thumb.c
-> @@ -438,7 +438,7 @@ t16_simulate_branch(probes_opcode_t insn,
->         regs->ARM_pc = pc + (offset * 2);
->  }
->
-> -static unsigned long __kprobes
-> +static unsigned long __kprobes __attribute__((optimize("no-omit-frame-pointer")))
->  t16_emulate_loregs(probes_opcode_t insn,
->                    struct arch_probes_insn *asi, struct pt_regs *regs)
->  {
-> @@ -521,7 +521,7 @@ t16_decode_hiregs(probes_opcode_t insn, struct arch_probes_insn *asi,
->         return INSN_GOOD;
->  }
->
-> -static void __kprobes
-> +static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
->  t16_emulate_push(probes_opcode_t insn,
->                 struct arch_probes_insn *asi, struct pt_regs *regs)
->  {
-> @@ -557,7 +557,7 @@ t16_decode_push(probes_opcode_t insn, struct arch_probes_insn *asi,
->         return INSN_GOOD;
->  }
->
-> -static void __kprobes
-> +static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
->  t16_emulate_pop_nopc(probes_opcode_t insn,
->                 struct arch_probes_insn *asi, struct pt_regs *regs)
->  {
-> @@ -576,7 +576,7 @@ t16_emulate_pop_nopc(probes_opcode_t insn,
->                 );
->  }
->
-> -static void __kprobes
-> +static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
->  t16_emulate_pop_pc(probes_opcode_t insn,
->                 struct arch_probes_insn *asi, struct pt_regs *regs)
->  {
->
-> base-commit: 9bacdd8996c77c42ca004440be610692275ff9d0
-> --
-> 2.17.1
->
+On 11/15/2023 11:11 PM, Andrew Lunn wrote:
+> On Wed, Nov 15, 2023 at 11:25:09AM +0800, Luo Jie wrote:
+>> Before doing GPIO reset on the MDIO slave devices, the common clock
+>> output to MDIO slave device should be enabled, and the related GCC
+>> clocks also need to be configured.
+>>
+>> Because of these extra configurations, the MDIO bus level GPIO and
+>> PHY device level GPIO can't be leveraged.
+> 
+> Its not clear to me why the normal reset cannot be used. The MBIO bus
+> driver can probe, setup the clocks, and then register the MDIO bus to
+> the core. The core can then use the GPIO resets.
+> 
+> What am i missing?
+> 
+>       Andrew
+
+Hi Andrew,
+Looks we can leverage the MDIO bus GPIO to reset qca8084 PHY, but the
+mdio bus gpio only supports one GPIO number.
+
+Here are the reasons i put the GPIO reset here.
+1. Currently one MDIO bus instance only connects one qca8084 PHY as
+MDIO slave device on IPQ5332 platform, since the MDIO address
+occupied by qca8084. if the other type PHY also needs to use MDIO
+bus GPIO reset, then we can't cover this case.
+
+2. Before doing the GPIO reset on qca8084, we need to enable the clock
+output to qca8084 by configuring eth_ldo_rdy register, and the mdio
+bus->reset is called after the mdio bus level reset.
+
+3. program the mdio address of qca8084 PHY and the initialization
+configurations needed before the registers of qca8084 can be accessed.
+if we take the PHY level GPIO reset for qca8084, there is no call point
+to do the initialization configurations and programing PHY address in
+the MDIO driver code.
+
+i will check the feasibility of taking the PHY level GPIO reset and do
+the initial configurations in the PHY probe function.
+
+FYI, here is the sequence to bring up qca8084.
+a. enable clock output to qca8084.
+b. do gpio reset of qca8084.
+c. customize MDIO address and initialization configurations.
+d. the PHY ID can be acquired.
+
+
+Thanks,
+Jie.
 
