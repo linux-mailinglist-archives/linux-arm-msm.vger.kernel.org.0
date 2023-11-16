@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFCA27EDD99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 10:30:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 279257EDDA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 10:32:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 71D341F231FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 09:30:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE6611F23A46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 09:32:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEC9F182D4;
-	Thu, 16 Nov 2023 09:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACE491119D;
+	Thu, 16 Nov 2023 09:32:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ElZ2WzzG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YclG/s+0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36E549C;
-	Thu, 16 Nov 2023 01:29:57 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AG8iKDA007049;
-	Thu, 16 Nov 2023 09:29:52 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34B361A3;
+	Thu, 16 Nov 2023 01:32:11 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AG96aDp007732;
+	Thu, 16 Nov 2023 09:32:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qQM2FnTXeGFHjIXM8bHi3GTM4JALf37Zt+qMG2bajKQ=;
- b=ElZ2WzzGClHcUaaUQy7T73WBRhk3UB9K/35Qnix3OtvxZeMcXJJHPXuNB9z0HKcLFA6L
- iESBxRPQtMwtt+QOilsD3mlczjEBzFwedQpl86qIALSR85Cdwu7+t9ZnjvGLBwZYQZ4g
- pKLQXWVmYOQhkCp77cuj006X3m5IJM6nWihktwZMDS3Fhl6b4DG3Ppy1v5vJZ7hsG7tc
- DtPTfhAL7C72GKDk8YKfVjnwD89LTd0ZQXId4SXm/6VHiHpgmCGRoyeobW2LBwr3hPEj
- IRPoZYMX/LcC0ShgyZMj4JccbZNJBrL0eH/GzJv8SsWtU3QgVlYnkZuAVauOWvTdI9Fw rg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ucrb2k8de-1
+ bh=dUkYPespAQaJg5xtS6/bbkbiwvOohnbVFTSW2JL3fU0=;
+ b=YclG/s+0KZsF7nwanuVTT/4FMfvSuo+If08jc5rbKwhyVQrcd0lC8Tkrexx+/KEMJX3K
+ Cr+eRRC7/igfkxaoyUXUa2m+6BogYliQvFfjR7KOTWfkLDML508V+1xFDnlDaKdaMWNB
+ 61vbpvq5huZVRoVRRcoVgrA3edo4XMwR4GCMZcMZ48ftwXev1hbd9Alqb4a6TlwyBv5q
+ OD84AeMc4+BoYcbpOld1C2o3j2wju1Htp9MtqTXES8JWcPyxVQZ8shbgP7In1JvW0Byw
+ ciOC4j1SmGM8ZmajLoGsXrLUV1Dpav6y7Q7HLlFqwIqHOYGoxG0mP/HIm1N2y8HXHZql kQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ud5fhhb65-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Nov 2023 09:29:52 +0000
+	Thu, 16 Nov 2023 09:32:07 +0000
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AG9Tpwd016546
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AG9W5aO003619
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 16 Nov 2023 09:29:51 GMT
+	Thu, 16 Nov 2023 09:32:05 GMT
 Received: from [10.218.19.46] (10.80.80.8) by nasanex01c.na.qualcomm.com
  (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 16 Nov
- 2023 01:29:47 -0800
-Message-ID: <0c1d1ccd-fff8-fb4f-12c0-8b60f3e5c3e2@quicinc.com>
-Date: Thu, 16 Nov 2023 14:59:42 +0530
+ 2023 01:32:01 -0800
+Message-ID: <91261b98-6bbd-b1d8-4fc8-96387bbcaba4@quicinc.com>
+Date: Thu, 16 Nov 2023 15:01:58 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,16 +52,17 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.0
-Subject: Re: [PATCH 2/4] clk: qcom: videocc-sm8150: Update the videocc resets
+Subject: Re: [PATCH 3/4] clk: qcom: videocc-sm8150: Update the
+ video_pll0_config
 Content-Language: en-US
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael
+ Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob
+ Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski
 	<krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
@@ -69,56 +70,71 @@ CC: Bjorn Andersson <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         <devicetree@vger.kernel.org>
 References: <20231110065029.2117212-1-quic_skakitap@quicinc.com>
- <20231110065029.2117212-3-quic_skakitap@quicinc.com>
- <31dac823-cc46-401e-85f8-d04544bd38c3@linaro.org>
- <2c5dae0f-5bd4-4fed-ba47-1175eba07207@linaro.org>
- <bee6062d-55ad-4577-8478-d20881c5047d@linaro.org>
+ <20231110065029.2117212-4-quic_skakitap@quicinc.com>
+ <8457b113-bef2-47e4-a138-0f92a4f5798a@linaro.org>
 From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-In-Reply-To: <bee6062d-55ad-4577-8478-d20881c5047d@linaro.org>
+In-Reply-To: <8457b113-bef2-47e4-a138-0f92a4f5798a@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MUZYZkBjfoc71qjXBwiJoN5Ej71gxJOc
-X-Proofpoint-ORIG-GUID: MUZYZkBjfoc71qjXBwiJoN5Ej71gxJOc
+X-Proofpoint-GUID: tgnYhZD5NZI0_OnC_ScqY51i_j5nejGy
+X-Proofpoint-ORIG-GUID: tgnYhZD5NZI0_OnC_ScqY51i_j5nejGy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-16_07,2023-11-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- clxscore=1011 impostorscore=0 spamscore=0 adultscore=0 mlxlogscore=578
- phishscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 mlxlogscore=999
+ suspectscore=0 phishscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311060000 definitions=main-2311160076
 
 
-On 11/15/2023 10:39 PM, Bryan O'Donoghue wrote:
-> On 15/11/2023 16:48, Konrad Dybcio wrote:
->>> +    [VIDEO_CC_INTERFACE_BCR] = { 0x9ac },
->>> +    [VIDEO_CC_MVS0_BCR] = { 0x870 },
->>> +    [VIDEO_CC_MVS1_BCR] = { 0x8b0 },
->>> +    [VIDEO_CC_MVSC_BCR] = { 0x810 },
->> FWIW this seems to be a copypaste from
+On 11/10/2023 4:46 PM, Bryan O'Donoghue wrote:
+> On 10/11/2023 06:50, Satya Priya Kakitapalli wrote:
+>> Update the video_pll0_config to configure the test_ctl_hi and
+>> test_ctl_hi1 values.
 >>
->> https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blame/92b31370d31d22e910120f6a875bf0919b3f1773/drivers/clk/qcom/videocc-sm8150.c 
+>> Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver 
+>> for SM8150")
+>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> ---
+>>   drivers/clk/qcom/videocc-sm8150.c | 2 ++
+>>   1 file changed, 2 insertions(+)
 >>
->>
->> so if it's an issue, it should probably be fixed downstream too
+>> diff --git a/drivers/clk/qcom/videocc-sm8150.c 
+>> b/drivers/clk/qcom/videocc-sm8150.c
+>> index 6a5f89f53da8..ddfe784fb9e1 100644
+>> --- a/drivers/clk/qcom/videocc-sm8150.c
+>> +++ b/drivers/clk/qcom/videocc-sm8150.c
+>> @@ -33,6 +33,8 @@ static struct alpha_pll_config video_pll0_config = {
+>>       .config_ctl_val = 0x20485699,
+>>       .config_ctl_hi_val = 0x00002267,
+>>       .config_ctl_hi1_val = 0x00000024,
+>> +    .test_ctl_hi_val = 0x00000002,
+>> +    .test_ctl_hi1_val = 0x00000020,
+>>       .user_ctl_val = 0x00000000,
+>>       .user_ctl_hi_val = 0x00000805,
+>>       .user_ctl_hi1_val = 0x000000D0,
 >
-> More of a question than a gotcha - 0x9ac is valid for sm8250 so 
-> curious to me that its a different address on sm8150.
+> It would be nice to get a better description of this change.
+>
+> Reading this - I can see it does an update but, the commit log should 
+> contain what it is updating and why plus what effect the update will 
+> have.
+>
+> Please update the commit log to capture that data and +cc me on the V2.
+>
+
+Sure will check and update.
 
 
-I have re-checked the offset values, as per the HW plan for SM8150 below 
-values are correct:
+Thanks,
 
-+    [VIDEO_CC_INTERFACE_BCR] = { 0x8f0 },
-+    [VIDEO_CC_MVS0_BCR] = { 0x870 },
-+    [VIDEO_CC_MVS1_BCR] = { 0x8b0 },
-+    [VIDEO_CC_MVSC_BCR] = { 0x810 },
-
+Satya Priya
 
 > ---
 > bod
