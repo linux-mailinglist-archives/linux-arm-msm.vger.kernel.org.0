@@ -1,153 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8271D7EE5D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 18:22:21 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23F167EE5E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 18:24:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A73A1C208B8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 17:22:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C6D4E1F241F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 17:24:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69A42381C7;
-	Thu, 16 Nov 2023 17:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28818364BC;
+	Thu, 16 Nov 2023 17:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QjR7Ffec"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HSrRtPnD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A416D1A5
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 09:22:13 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id d75a77b69052e-4219f89ee21so5866381cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 09:22:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700155333; x=1700760133; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+OCrm0wdm2w6X5LkdluUlem8xt9m30lXYkWHLUzHIKo=;
-        b=QjR7FfeckjXSm86LwQqOuxYLB9l6TQcioAjq9BHkA1Zfg5j4nfI21WKdg6uMN8//pU
-         neYP7XM2tkELmUaEE2sToS2QILjTtaIa1+QI19IqOKLHB1bsG1IPQmcba/3wlYEqGnH6
-         rp1Vapu3WwhXoYZUJNGOmrMhDCBKs0Mhsjfnlnc2vqZtZFEwTG2fnlb9Zxcz+cau3P7p
-         LMgeu7s3ksIeQEm2UWTPynVRO0DWsMKpNghfqh8qTB6RGorkXoWt3iT+zQ+9DSVDrgfZ
-         9gaFI3FkFieG9qSzvgX7mBZ4VE1QCgPMJENjuqrmnZCHcKsMGxAl3PF9aQT0nqPwb19B
-         9Q1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700155333; x=1700760133;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+OCrm0wdm2w6X5LkdluUlem8xt9m30lXYkWHLUzHIKo=;
-        b=X3IV8Hh+fdxyNW4+uSCasDmmgXvNnBIqyueYXSoP8q2no+BLTJ4GggYk25mksuZ9PS
-         Lc44t7ofgeFyNLHxc2nl92FzjqfljUVOmyL+eLM+1PwO0iq1UrvMaGC3Ftve2N7ipS2L
-         j/OtmO8GJyeNwUQ/mlISiyeuGEGcslU+nPimSb6iAI5pXgWJFpQBAhORlawUut5zPJDM
-         nTVz8h+DcW3AmBOYCMcA06JDUxn+NaZJWc/FCQcGjGnD+T8KjPTvkIUhf+cCk9UOuf+B
-         GEluW7VgWvAXGD2Tz1d/isZLMh3uxbW2DWNjISKRkXX2zjTk7fzcJjcM17Pfn8xHr5SI
-         9TVg==
-X-Gm-Message-State: AOJu0YxlesmhgH6s1/soQ4VcvU9k9LEgPTg1hFYuJ96e40U3rR+a3nAx
-	9gmQoQOMvwnpmJEaA8+pJznWdQ==
-X-Google-Smtp-Source: AGHT+IHxbF0F7JkXcq69USa45sOSaCpFo5cV7BF4urizfSXYcBp1PIHDPUiXyDW0wrzcaRQZKDywXg==
-X-Received: by 2002:a05:622a:13:b0:403:b645:86fa with SMTP id x19-20020a05622a001300b00403b64586famr11213614qtw.24.1700155332804;
-        Thu, 16 Nov 2023 09:22:12 -0800 (PST)
-Received: from [10.44.189.251] ([12.161.6.169])
-        by smtp.gmail.com with ESMTPSA id fu23-20020a05622a5d9700b00421ae93b7a5sm4474462qtb.2.2023.11.16.09.22.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Nov 2023 09:22:12 -0800 (PST)
-Message-ID: <10afe65f-4e86-4127-9f8d-b4e3f5ee8a3a@linaro.org>
-Date: Thu, 16 Nov 2023 18:22:11 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4DD30666
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 17:24:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD37C433CA;
+	Thu, 16 Nov 2023 17:24:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700155460;
+	bh=/B6JGyRiiov2KpkuJVzSZzJhSDEp4Byf+qHwBNlACac=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HSrRtPnDzSFpOZws4iU58xlCoKdKfHVEATrGDQoZ7zBqsZL7Es+u3steobl56VqfZ
+	 8ELEuvzzClmT+SoR4pdB19wuF4Nn2HSOtq4C0uPT+Tx4AXcu5zzpPc8grHLpndzIZp
+	 djb0lFqTpdT6cn2K195abD6J9Al5uHiWDHoBTMpBbrqAw3+bZCuyfG3OAwBokreVk8
+	 9hR7CYqoYNKQyGRsK1ecx40zKzTz0iIvKAFLYTfDSA5aXl0NcQ3YgSkFfyHh/xoB2f
+	 dx91geI8UZP+gi53v6IzL/AgKyeT/MwKp7SU9YnBswZfbgmqJ+1ZrHFeLkADPHNb2k
+	 GE/sk4hP9xHsg==
+Date: Thu, 16 Nov 2023 10:24:18 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Maria Yu <quic_aiquny@quicinc.com>
+Cc: linux@armlinux.org.uk, ardb@kernel.org, mhiramat@kernel.org,
+	kernel@quicinc.com, linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_lijuang@quicinc.com, stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] ARM: kprobes: Explicitly reserve r7 for local
+ variables
+Message-ID: <20231116172418.GA174808@dev-arch.thelio-3990X>
+References: <20231115095830.20607-1-quic_aiquny@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] dt-bindings: arm: Add remote etm driver
-Content-Language: en-US
-To: Mao Jinlong <quic_jinlmao@quicinc.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Trilok Soni <quic_tsoni@quicinc.com>
-Cc: linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>
-References: <20231107060939.13449-1-quic_jinlmao@quicinc.com>
- <20231107060939.13449-3-quic_jinlmao@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231107060939.13449-3-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231115095830.20607-1-quic_aiquny@quicinc.com>
 
-On 07/11/2023 07:09, Mao Jinlong wrote:
-> Add new coresight-remote-etm.yaml file describing the bindings required
-> to define coresight remote etm in the device trees.
+On Wed, Nov 15, 2023 at 05:58:30PM +0800, Maria Yu wrote:
+> Registers r7 is removed in clobber list, so compiler may choose r7 for
+> local variables usage, while r7 will be actually updated by the inline asm
+> code. This caused the runtime behavior wrong.
+> While those kind of reserved registers cannot be set to clobber list
+> because of error like "inline asm clobber list contains reserved
+> registers".
+> Explicitly reserve r7 by adding attribute no-omit-frame-pointer for needed
+> function, then in T32 asm code r7 is used as a frame pointer and is not
+> available for use as a general-purpose register.
+> Note that "no-omit-frame-pointer" will make the code size a little bigger
+> to store the stack frame pointer. So limited to needed functions can have
+> the less impact than the full source file.
 > 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> Fixes: dd12e97f3c72 ("ARM: kprobes: treat R7 as the frame pointer register in Thumb2 builds")
+> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+> Cc: stable@vger.kernel.org
 
-+Cc Trilok,
+This causes warnings with clang:
 
-Several Qualcomm boards have warnings coming from Coresight bindings.
-These are big, fat warnings coming usually from ARM bindings (e.g.
-dynamic funnel, TMC). I don't know Coresight good enough to fix them by
-myself.
+  arch/arm/probes/kprobes/actions-thumb.c:441:47: warning: unknown attribute 'optimize' ignored [-Wunknown-attributes]
+    441 | static unsigned long __kprobes __attribute__((optimize("no-omit-frame-pointer")))
+        |                                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  arch/arm/probes/kprobes/actions-thumb.c:524:38: warning: unknown attribute 'optimize' ignored [-Wunknown-attributes]
+    524 | static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
+        |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  arch/arm/probes/kprobes/actions-thumb.c:560:38: warning: unknown attribute 'optimize' ignored [-Wunknown-attributes]
+    560 | static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
+        |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  arch/arm/probes/kprobes/actions-thumb.c:579:38: warning: unknown attribute 'optimize' ignored [-Wunknown-attributes]
+    579 | static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
+        |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  4 warnings generated.
 
-I would prefer not to take any new Qualcomm specific Coresight bindings
-and definitely no new Coresight device nodes in Qualcomm boards, before
-these are fixed.
+Furthermore, as far as I am aware, the optimize attribute has other issues so
+its use is discouraged, see commits 080b6f407635 ("bpf: Don't rely on GCC
+__attribute__((optimize)) to disable GCSE") and a7223f5bfcae ("powerpc: Avoid
+broken GCC __attribute__((optimize))").
 
-Therefore I kindly ask to fix all warnings in Qualcomm boards coming
-from existing Coresight bindings.
+Cheers,
+Nathan
 
-Best regards,
-Krzysztof
-
+> ---
+>  arch/arm/probes/kprobes/actions-thumb.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm/probes/kprobes/actions-thumb.c b/arch/arm/probes/kprobes/actions-thumb.c
+> index 51624fc263fc..c2fdaf9f6dba 100644
+> --- a/arch/arm/probes/kprobes/actions-thumb.c
+> +++ b/arch/arm/probes/kprobes/actions-thumb.c
+> @@ -438,7 +438,7 @@ t16_simulate_branch(probes_opcode_t insn,
+>  	regs->ARM_pc = pc + (offset * 2);
+>  }
+>  
+> -static unsigned long __kprobes
+> +static unsigned long __kprobes __attribute__((optimize("no-omit-frame-pointer")))
+>  t16_emulate_loregs(probes_opcode_t insn,
+>  		   struct arch_probes_insn *asi, struct pt_regs *regs)
+>  {
+> @@ -521,7 +521,7 @@ t16_decode_hiregs(probes_opcode_t insn, struct arch_probes_insn *asi,
+>  	return INSN_GOOD;
+>  }
+>  
+> -static void __kprobes
+> +static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
+>  t16_emulate_push(probes_opcode_t insn,
+>  		struct arch_probes_insn *asi, struct pt_regs *regs)
+>  {
+> @@ -557,7 +557,7 @@ t16_decode_push(probes_opcode_t insn, struct arch_probes_insn *asi,
+>  	return INSN_GOOD;
+>  }
+>  
+> -static void __kprobes
+> +static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
+>  t16_emulate_pop_nopc(probes_opcode_t insn,
+>  		struct arch_probes_insn *asi, struct pt_regs *regs)
+>  {
+> @@ -576,7 +576,7 @@ t16_emulate_pop_nopc(probes_opcode_t insn,
+>  		);
+>  }
+>  
+> -static void __kprobes
+> +static void __kprobes __attribute__((optimize("no-omit-frame-pointer")))
+>  t16_emulate_pop_pc(probes_opcode_t insn,
+>  		struct arch_probes_insn *asi, struct pt_regs *regs)
+>  {
+> 
+> base-commit: 9bacdd8996c77c42ca004440be610692275ff9d0
+> -- 
+> 2.17.1
+> 
+> 
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
 
