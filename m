@@ -1,102 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C2167EE408
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 16:18:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBDBA7EE42B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 16:25:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BE801F24587
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 15:18:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1482280A91
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 15:25:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B126430CEA;
-	Thu, 16 Nov 2023 15:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 285912C865;
+	Thu, 16 Nov 2023 15:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t9h81Cn6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Lb7MCzE0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDDA7195
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 07:17:54 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-507a0907896so1314011e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 07:17:54 -0800 (PST)
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA59A19D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 07:25:11 -0800 (PST)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-d865854ef96so865069276.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 07:25:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700147873; x=1700752673; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c86qO4XwJ1JxYo95YcC/cJ889pUl6EruyihJzXoM0Hw=;
-        b=t9h81Cn6XW8J0eKo2E9Narw0Plr0+RWdXP7GgJllmWOTF4R1Bz+1n5Vh1Yi4mKPcbq
-         iER3z0D3oV+FdZsDiGRbU2x48hKKx2q8nKBELfz6sJF9AdIK6awBEifJc5aD15zZ1893
-         NA4TsrQwEiyVOecMh9tfJ4U6PUbQ0ss+0ZIX1l22fntv9p2b3BYq0/MO3p5Iz4JWCHWN
-         Yq4c0RPc7JiJLiUi+OFXumoemCjg2C319hSAKjtXu7J5Nqa2S4+uRFwp2PJmDfLKhOeF
-         0pGb+yu0LF/t/D0ZB5TTrcu1L4Cmb6X9NWcI4yj6XiU31niQihkZYEaRTkNM29RTjF4J
-         gCCQ==
+        d=linaro.org; s=google; t=1700148311; x=1700753111; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yoms34FsK4SCyToEqB/I9dPW/3PKklM8+dwv2tCvAnA=;
+        b=Lb7MCzE0SxQ3Ua3/bPJ4EVpPMCcmzztOlY0013ddU4Al9iXQQbpuXVgXUixbxW4a/h
+         KR7RatDMtKTrx0fZ0uzeR7BLOnTySJxomDXdTTmF7J7gpo3XTFWuIdgOdI3E4QjrULtL
+         uwUFanfcu4LqGFC7ZJvZ4PuDXs7/68OKyOiMdBSHMqpAh/cwWcbR3hwW8gvRa3hGPPWC
+         LAe8uUQ2wC9K9t3HFP2JS9W0/K6/0yus1cY0CVVpSwuFdhWXWvVxGa/a3TvSEHdp9jb2
+         RQ60i1JtqurM5JkymGQ4Mli8xzrOvXjHh87YT9YqCq98pJCGy0l0jGLRp/Ab+MKg+kK7
+         WCag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700147873; x=1700752673;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c86qO4XwJ1JxYo95YcC/cJ889pUl6EruyihJzXoM0Hw=;
-        b=a6XdsgN4pFian8bnOiMft/mdRJQ25Q++WZgdZ55dNEyLWYRi1ixkDMCQYruixMQPZb
-         Ygv0FxDphSVaqJ0AYS2F3bfBvlSsGJ9kO5SvNQYR3qfVbOWtbmKKfukkXzD/DCUthlbi
-         gKXSq4UH8U7GC0JHaAxid8C09g4m1RBPJo1ouaikmViNAAOwtUrswbl/dGctQh6r+5bs
-         6cUHEO1TWsDLF5zyrtnlu8HCRa+KJg1Uryo718rW8p5E1xtRJerk21AnLKK4FUQa4vgP
-         IKHT6dcw76C0+yTFDPQL56JDnAQNqG0Izr+AbjGYQms9d7rSC5Xks67V87TTs7quu7uz
-         j3ow==
-X-Gm-Message-State: AOJu0YzBJOnwNe5tV0M6f0mLNCE8G6Ww6sgKNpVQlfKBzeGDa4ewz/t9
-	oE634WBKIh6UCTnuWKBcjHoPfg==
-X-Google-Smtp-Source: AGHT+IGCynGKBV2xfjm3/F22zFoI2s5tPIReaIcXe1jrsp/JQdWKJTZfqSlwxIOf0g1DRrLOUyhTtA==
-X-Received: by 2002:a05:6512:60d:b0:507:f0f2:57b1 with SMTP id b13-20020a056512060d00b00507f0f257b1mr10401985lfe.15.1700147873129;
-        Thu, 16 Nov 2023 07:17:53 -0800 (PST)
-Received: from [172.30.204.128] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id y22-20020a199156000000b00507f1c8040fsm24856lfj.58.2023.11.16.07.17.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Nov 2023 07:17:52 -0800 (PST)
-Message-ID: <8f13d5d7-a8fa-49ea-bd34-4bbe89261faf@linaro.org>
-Date: Thu, 16 Nov 2023 16:17:51 +0100
+        d=1e100.net; s=20230601; t=1700148311; x=1700753111;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Yoms34FsK4SCyToEqB/I9dPW/3PKklM8+dwv2tCvAnA=;
+        b=UTSUUPN+J43ugQw6Gnq6ONP3irEp21h9SRmT5WCw3OjLc/nznUUEQclo71HRqDQZxM
+         YKwm1kaX1kktCg8GMQQpF/MX8eHTgqQLkPq51cVfhVV/dv05K//KqmEbbr2ixMAhuwrs
+         xT1kc5cuIoMqfZHtBbJqpTlSW6ELYflQpIDoddUd9A8aB//7P+fuRUOpNwTR88VVQzfF
+         U1igQA2QnMUD/R2mBKH9BcHhFzsD+V54gizZ2FWsgKT+HVvBNWhDNQzcDLNYxmnCyQUp
+         wcvUzq1FdlugzGz6dcmPx4+1CTCU7C21mqa4GBvDxx0YJf12J/9n9s/Qcz4ift2uMuE6
+         cZHw==
+X-Gm-Message-State: AOJu0YyirTsMhhY273cYwaFHWQdkB42cvH/MBiUW6X8QIX536jbAOEnt
+	nfPpkv5Ch3x8tZiWXwO7GmM6jz8RXArsodKJac8xOw==
+X-Google-Smtp-Source: AGHT+IEdrGI2GaaFm4NnHJNyeJQd7vfEPu7GnR/TVL6G1x7zK7jKjjfDyMj7aIw96WZz5PeFM6EmB66JQ2RRuAuL0Jw=
+X-Received: by 2002:a25:e751:0:b0:da0:514a:8f42 with SMTP id
+ e78-20020a25e751000000b00da0514a8f42mr14661508ybh.32.1700148311009; Thu, 16
+ Nov 2023 07:25:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/6] arm64: dts: qcom: sm8350: Fix remoteproc interrupt
- type
-Content-Language: en-US
-To: Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
- Lars-Peter Clausen <lars@metafoo.de>, Rob Herring <robh+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
- Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
- <gpiccoli@igalia.com>, Vinod Koul <vkoul@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- devicetree@vger.kernel.org, phone-devel@vger.kernel.org, Rob <Me@orbit.sh>,
- Clayton Craft <clayton@igalia.com>,
- Caleb Connolly <caleb.connolly@linaro.org>,
- Luca Weiss <luca.weiss@fairphone.com>, ~postmarketos/upstreaming@lists.sr.ht
-References: <20231111-nia-sm8350-for-upstream-v4-0-3a638b02eea5@igalia.com>
- <20231111-nia-sm8350-for-upstream-v4-4-3a638b02eea5@igalia.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231111-nia-sm8350-for-upstream-v4-4-3a638b02eea5@igalia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Level: *
+References: <20231114135654.30475-1-quic_bibekkum@quicinc.com>
+ <20231114135654.30475-4-quic_bibekkum@quicinc.com> <CAA8EJpoRmm42aAvyX61o3tMWXszUZmfFvJEtnNDEfYdDqy4Y0g@mail.gmail.com>
+ <72b30354-0497-45cf-8b71-e4f265eb0005@quicinc.com> <CAA8EJprPE=z2VN5LkaUyLyvYpx6i1eF9dyxOzN_L86pi5tmU-Q@mail.gmail.com>
+ <0d290a5c-081f-4dfa-af9a-b061e6134662@quicinc.com>
+In-Reply-To: <0d290a5c-081f-4dfa-af9a-b061e6134662@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 16 Nov 2023 17:24:59 +0200
+Message-ID: <CAA8EJprHppoN6rg8-rS1F+4kynQqmV1L3OiHFnJ0HyrshywFig@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] iommu/arm-smmu: re-enable context caching in smmu
+ reset operation
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, a39.skl@gmail.com, 
+	konrad.dybcio@linaro.org, quic_pkondeti@quicinc.com, quic_molvera@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	iommu@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	qipl.kernel.upstream@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+
+On Thu, 16 Nov 2023 at 14:45, Bibek Kumar Patro
+<quic_bibekkum@quicinc.com> wrote:
+>
+>
+>
+> On 11/15/2023 4:33 PM, Dmitry Baryshkov wrote:
+> > On Wed, 15 Nov 2023 at 11:45, Bibek Kumar Patro
+> > <quic_bibekkum@quicinc.com> wrote:
+> >>
+> >> On 11/14/2023 7:45 PM, Dmitry Baryshkov wrote:
+> >>> On Tue, 14 Nov 2023 at 15:57, Bibek Kumar Patro
+> >>> <quic_bibekkum@quicinc.com> wrote:
+> >>>>
+> >>>> Context caching is re-enabled in the prefetch buffer for Qualcomm SoCs
+> >>>> through SoC specific reset ops, which is disabled in the default MMU-500
+> >>>> reset ops, but is expected for context banks using ACTLR register to
+> >>>> retain the prefetch value during reset and runtime suspend.
+> >>>
+> >>> Please refer to Documentation/process/submitting-patches.rst and
+> >>> rephrase this following the rules there.
+> >>>
+> >>
+> >> Noted, will go through the description once and rephrase it
+> >> in next version complying with rules.
+> >>
+> >>>>
+> >>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> >>>> ---
+> >>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 25 ++++++++++++++++++----
+> >>>>    1 file changed, 21 insertions(+), 4 deletions(-)
+> >>>>
+> >>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>> index 0eaf6f2a2e49..fa867b1d9d16 100644
+> >>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> >>>> @@ -478,11 +478,28 @@ static int qcom_smmu_def_domain_type(struct device *dev)
+> >>>>           return match ? IOMMU_DOMAIN_IDENTITY : 0;
+> >>>>    }
+> >>>>
+> >>>> +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
+> >>>> +{
+> >>>> +       int i;
+> >>>> +       u32 reg;
+> >>>> +
+> >>>> +       arm_mmu500_reset(smmu);
+> >>>> +
+> >>>> +       /* Re-enable context caching after reset */
+> >>>> +       for (i = 0; i < smmu->num_context_banks; ++i) {
+> >>>> +               reg = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
+> >>>> +               reg |= CPRE;
+> >>>> +               arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_ACTLR, reg);
+> >>>> +       }
+> >>>> +
+> >>>> +       return 0;
+> >>>> +}
+> >>>> +
+> >>>>    static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
+> >>>>    {
+> >>>>           int ret;
+> >>>>
+> >>>> -       arm_mmu500_reset(smmu);
+> >>>> +       qcom_smmu500_reset(smmu);
+> >>>
+> >>> Is this applicable for sdm845? For all other platforms supported by
+> >>> qcom_smmu_500 implementation?
+> >>>
+> >>
+> >> In arm_mmu500_reset operation drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+> >> CPRE bit is reset for all SoC based on mmu500 platform, hence for all
+> >> Qualcomm SoCs including sm845 we are setting back the CPRE bit.
+> >
+> > The errata for the CoreLink MMU-500 requires CPRE to be disabled for
+> > all revisions before r2p2. Do we know whether these SoC used CoreLink
+> > MMU-500 and which version of it?
+> >
+>
+> Just checked all these SoCs are using r2p4 revision.
+> So CPRE needs to be enabled back here then?
+
+can be enabled, yes.
+
+>
+> >>
+> >>>>
+> >>>>           /*
+> >>>>            * To address performance degradation in non-real time clients,
+> >>>> @@ -509,7 +526,7 @@ static const struct arm_smmu_impl qcom_smmu_500_impl = {
+> >>>>           .init_context = qcom_smmu_init_context,
+> >>>>           .cfg_probe = qcom_smmu_cfg_probe,
+> >>>>           .def_domain_type = qcom_smmu_def_domain_type,
+> >>>> -       .reset = arm_mmu500_reset,
+> >>>> +       .reset = qcom_smmu500_reset,
+> >>>>           .write_s2cr = qcom_smmu_write_s2cr,
+> >>>>           .tlb_sync = qcom_smmu_tlb_sync,
+> >>>>    };
+> >>>> @@ -528,7 +545,7 @@ static const struct arm_smmu_impl sm8550_smmu_500_impl = {
+> >>>>           .init_context = qcom_smmu_init_context,
+> >>>>           .cfg_probe = qcom_smmu_cfg_probe,
+> >>>>           .def_domain_type = qcom_smmu_def_domain_type,
+> >>>> -       .reset = arm_mmu500_reset,
+> >>>> +       .reset = qcom_smmu500_reset,
+> >>>>           .write_s2cr = qcom_smmu_write_s2cr,
+> >>>>           .tlb_sync = qcom_smmu_tlb_sync,
+> >>>>    };
+> >>>> @@ -544,7 +561,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_v2_impl = {
+> >>>>    static const struct arm_smmu_impl qcom_adreno_smmu_500_impl = {
+> >>>>           .init_context = qcom_adreno_smmu_init_context,
+> >>>>           .def_domain_type = qcom_smmu_def_domain_type,
+> >>>> -       .reset = arm_mmu500_reset,
+> >>>> +       .reset = qcom_smmu500_reset,
+> >>>>           .alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
+> >>>>           .write_sctlr = qcom_adreno_smmu_write_sctlr,
+> >>>>           .tlb_sync = qcom_smmu_tlb_sync,
+> >>>> --
+> >>>> 2.17.1
+> >>>>
+> >>>
+> >>>
+> >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
 
 
-On 11/11/23 23:07, Nia Espera wrote:
-> In a similar vein to
-> https://lore.kernel.org/lkml/20220530080842.37024-3-manivannan.sadhasivam@linaro.org/,
-> the remote processors on sm8350 fail to initialize with the 'correct'
-> (i.e., specified in downstream) IRQ type. Change this to EDGE_RISING.
-> 
-> Signed-off-by: Nia Espera <nespera@igalia.com>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
+-- 
+With best wishes
+Dmitry
 
