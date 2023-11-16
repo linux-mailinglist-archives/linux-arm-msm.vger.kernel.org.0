@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F30A87ED7AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 23:58:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE6527EDA03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 04:23:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8E1AEB20A6D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Nov 2023 22:58:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6E482B20C3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Nov 2023 03:23:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71E3943ABE;
-	Wed, 15 Nov 2023 22:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6F1A7476;
+	Thu, 16 Nov 2023 03:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fqaoueza"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CzcD0bnL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 941FFE0;
-	Wed, 15 Nov 2023 14:58:49 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AFMwdK5028464;
-	Wed, 15 Nov 2023 22:58:39 GMT
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 995F11A4;
+	Wed, 15 Nov 2023 19:23:35 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AG1spf6000357;
+	Thu, 16 Nov 2023 03:23:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
+ mime-version : from : subject : to : cc : references : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=CFFe/tma71Nzm3q3uaEi+UNcsA+0+RvIe/Hg4W4Uqfw=;
- b=fqaoueza1F/suuwguRjXD7k00aRheUhfjwOotGj7FeulqxNHGKBlFETDlkJZnz7tLw0j
- hKniqcYFQCLqDNsaUJqwzLkpXx7NF9n3BZvtwebbFK/xv1Pwztyk4JwmE7IhQzVZD1CA
- B3TQaSNoS3nl/R1buF5qBTq2kngD4FatyfOQg0iqKLavQX8CmrDxGft8eG5iZjPmU2Uq
- OD2g1O7xbYEhk5D+oiW7Ne6c3gDOG2YcJbv+PsHB2UZuBAhLm7LWRQNoofzrgDMpj+9c
- KsObaj1c7IHwHOHzsI2nNf0iO8xt5eMdcRacDWz2VE9d8VcUHQEDbq9uZefWSv9aUqic 5Q== 
+ bh=ZJHZ0hYzA9hL5E4FTKSXb/MkIlhg4z+4Eg5vBs84CWU=;
+ b=CzcD0bnLVUI7v5UoeXwP90mPYMrSo4zJlOshDfe5BMrbwW9Ehjexo2/21m0OjAtweCge
+ s3l29tgnEhqzn3Bj6VXN9K2sD6IfCwEmXVfV2t4NJ+e0gaxMBKKQ3PSJyx75b8TxRAkk
+ IXeOy3XRYb56QBY1L5YEPR3QCNumrG8GIdK4OxAwI7qx3vCV8fyRGslgFUSy6YTA8AtL
+ 8mSF1dpcAU+mbUfXeShBkBPyOZrzIhFZVQpEXyD5B/y/HBpzVP6SHKjmWhpIooeXm08m
+ HKRVHx143Thd/WbOsNz4EsfRjHXXR7cGmgARocnQJmUjU9AGXckLPOO6oDJssa2PeIiL zA== 
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ud5fhg6rh-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ud41f8ts9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Nov 2023 22:58:39 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AFMwcnd000884
+	Thu, 16 Nov 2023 03:23:22 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AG3NK9S002852
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 15 Nov 2023 22:58:38 GMT
-Received: from [10.110.71.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Thu, 16 Nov 2023 03:23:20 GMT
+Received: from [10.216.41.162] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Wed, 15 Nov
- 2023 14:58:37 -0800
-Message-ID: <6107757c-1217-1759-8bcf-7dbce6f2e730@quicinc.com>
-Date: Wed, 15 Nov 2023 14:58:37 -0800
+ 2023 19:23:13 -0800
+Message-ID: <823317c7-7076-7f54-bb23-9e05c4a3ba87@quicinc.com>
+Date: Thu, 16 Nov 2023 08:53:09 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,52 +51,82 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/gpu: Move gpu devcore's to gpu device
+ Thunderbird/102.10.1
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
+Subject: Re: [PATCH 03/11] ARM: dts: qcom: Update devicetree for ADC7 rename
+ for QCOM PMICs
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linus.walleij@linaro.org>, <Jonathan.Cameron@huawei.com>,
+        <sboyd@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_subbaram@quicinc.com>, <quic_collinsd@quicinc.com>,
+        <quic_kamalw@quicinc.com>, <marijn.suijten@somainline.org>,
+        <andriy.shevchenko@linux.intel.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>
+CC: <linux-iio@vger.kernel.org>, <linux-arm-msm-owner@vger.kernel.org>
+References: <20230708072835.3035398-1-quic_jprakash@quicinc.com>
+ <20230708072835.3035398-4-quic_jprakash@quicinc.com>
+ <839cfac2-8f74-3386-5854-e3fb2ba4e07f@linaro.org>
+ <27b5806f-ef15-7a90-5adc-5ee12690f2ca@quicinc.com>
+ <7af782f3-fe6c-415b-a993-55962845a102@linaro.org>
+ <7ccaf08e-0add-33e5-fbea-ce737e53fa28@quicinc.com>
+ <8114d2f9-43d8-4761-adfa-aad9ae249cbc@linaro.org>
 Content-Language: en-US
-To: Rob Clark <robdclark@gmail.com>, <dri-devel@lists.freedesktop.org>
-CC: <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-        Rob
- Clark <robdclark@chromium.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20231115224409.240935-1-robdclark@gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231115224409.240935-1-robdclark@gmail.com>
+In-Reply-To: <8114d2f9-43d8-4761-adfa-aad9ae249cbc@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5XK6lS6q0-sL_QiRoX8dL9aKXLnOdp0s
-X-Proofpoint-ORIG-GUID: 5XK6lS6q0-sL_QiRoX8dL9aKXLnOdp0s
+X-Proofpoint-GUID: I7vMNTuFf4imOtkJde7sKj7OtMAwTQuJ
+X-Proofpoint-ORIG-GUID: I7vMNTuFf4imOtkJde7sKj7OtMAwTQuJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-15_20,2023-11-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 mlxlogscore=700
- suspectscore=0 phishscore=0 priorityscore=1501 impostorscore=0 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311150181
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ phishscore=0 spamscore=0 suspectscore=0 clxscore=1015 lowpriorityscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 mlxlogscore=381 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311160025
+
+Hi Krzysztof,
+
+On 11/10/2023 4:29 PM, Krzysztof Kozlowski wrote:
+> On 09/11/2023 09:22, Jishnu Prakash wrote:
+>> Hi Krzysztof,
+>>
+>> On 10/23/2023 12:02 PM, Krzysztof Kozlowski wrote:
+>>
+>> Since you do not want us to modify the existing bindings, is it fine if
+>> I just add a new compatible for ADC5 Gen2 and comments to indicate the
+>> ADC7 compatible should be considered deprecated?
+> No, because adc7 compatible is valid and there is no reason to replace
+> it. Just because you changed naming does not matter for compatibles.
+> It's just unique string, that's it. Don't touch it.
+>
+>
+>> If you are not convinced, we can drop the Gen2 name related changes from
+>> the patch series.
+> Feel free to add comments or descriptions, if you want to map some
+> marketing name to real hardware or to compatibles.
+
+Yes, I'll just add a line in the documentation to mention ADC7 goes 
+between ADC5 and ADC5 Gen3.
+
+Thanks,
+
+Jishnu
 
 
-
-On 11/15/2023 2:44 PM, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> The dpu devcore's are already associated with the dpu device.  So we
-> should associate the gpu devcore's with the gpu device, for easier
-> classification.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Best regards,
+> Krzysztof
+>
 
