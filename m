@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0665D7EFC32
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:40:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CD217EFC3B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:47:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A42EF1F22A5E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 23:40:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73247281331
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 23:47:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFD3D47765;
-	Fri, 17 Nov 2023 23:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A944646553;
+	Fri, 17 Nov 2023 23:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iqFv1s5b"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YITZQTWl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC5B510E5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 15:40:18 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-543456dbd7bso7042175a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 15:40:18 -0800 (PST)
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B3A10C6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 15:47:34 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-507e85ebf50so3360373e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 15:47:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700264417; x=1700869217; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700264852; x=1700869652; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OlqVaq6D41QiTKqXp+cP559TOMOF0nz23L1kNSeWPn4=;
-        b=iqFv1s5berimbDCqL3GM2It6vnp5LMLhb1UJWyHfazF0ULJ+xakbq+YE65trFt7LrK
-         4CieDymQWjHMfh50k07tCR0vycJkSd2oShIAWj/I8/IQhHjGeIVw6aEtcXC9Czbd36MH
-         oJjH77awIrgKebNhX2YFyPOfiFDawx2/iU/AZnulsTFM/NWXOKJnlh/F9ISaKTOC1Sm+
-         tktVmByWFzvKMKRsRVL26U7JUoqGNgffJA+IVYM9YgN7b5RoPgnStnzkIunctdZUsWmy
-         vXVvgGcx3jSHaIx/eWJGKxZkDH4fw4nubPK/Lodd4nU3Ojc0A9+xOBuyFJFrMQ5pg5Z+
-         9wrw==
+        bh=8wM1V3uKaxmMfTVNrngWaOySMlzElI42CeEpsG+l1pg=;
+        b=YITZQTWlANVnWGW8Ochntl6IgCfSOeYbxCZulV+blBKr664tkfZV75r/n513c231Mc
+         XUqsfW3fnH3ormjillLoept7DhRXOLKjoOlSA1Fbbm1IlSRW12D5pBMRMkVTKs8JEFrs
+         gnYALStXuc+pGf+lr1JqvUpExmmAZv99VZ7f6Dx0moXBIJHlvkTDGT/iAxw/+QJo2ssW
+         1ZmlXOGFLj4MJ/x8t0VaQ0slm8xgdyXi3i7DNmVPXuQvaYh1A6ZpWLRS7ZZJRjqVys/G
+         GVaDXIdghcadJ/fsr+Q6Tl5ONiJ+jHxTrja5VH34TwhNuzjaaRY+Og54nrpqIuq6zpMG
+         T9Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700264417; x=1700869217;
+        d=1e100.net; s=20230601; t=1700264852; x=1700869652;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OlqVaq6D41QiTKqXp+cP559TOMOF0nz23L1kNSeWPn4=;
-        b=DpAFEmecCCJ2fOn/hDMsUqMCH0bH8oZRiihTnqzSqoJp9TFYlSlGduDiKBtZS25+bg
-         v39MDDqQkZ1pBvECVZtRS2oMtq3sRJ0Og5ZeHkSRpPSOPXRHMbEJVtZdxYe/TIn8fJiw
-         Ytvk19QC9bPT0DpKp9FgkWrcUUPsbE8fg8jJchE2nk4oV2SbOskuw0TJqPDo5GzWuSIE
-         4WSRnYWi+06ssFjRYeLHfvnSXX+IjN+DhLgCS2YSJq0kBlhuWmMk2l7+ksnlavlnDqRf
-         GRSPC1I8UdrUbYxjpvQxfYOOfR4lznDwJUnxbPRxlhYdK1QBIJFiKP6vyPTukyNMzCqv
-         F9Qw==
-X-Gm-Message-State: AOJu0Ywuk/+GpjMbulYq343ofa81Ti7AGH6VL32199/Aca1y8BlBMRTI
-	K4GhrK6Pj6RGRYNfs0KNJHMXsg==
-X-Google-Smtp-Source: AGHT+IGE5JB/nYaBzZXWXm85KHIOGc2UA6YFUsCTrsBvUGlcytqCP9PDGe4vWuZPvrJe3cpJJOwG6Q==
-X-Received: by 2002:a17:906:6810:b0:9c7:6523:407b with SMTP id k16-20020a170906681000b009c76523407bmr5633991ejr.17.1700264416891;
-        Fri, 17 Nov 2023 15:40:16 -0800 (PST)
+        bh=8wM1V3uKaxmMfTVNrngWaOySMlzElI42CeEpsG+l1pg=;
+        b=v1d79xwzyTu/CmPHJEb5qQy8f1UbU2PviLTYdQ6G+Wpyu9+j64zMTTwKNZNHPHW242
+         lYwUV6645+V1n09u30/cAD/gyAzagblyeCB8C0saQAnVkyuqXPwk3nHuCKv1PdfsvVHb
+         0GTrDeI+dv2vAcsCYCF0rg/sKXns7NlziIoOZFDKti93Hg2eXktQ/QFnMJ86O2TeSAX7
+         7cDrg/qyHr5908n2YCchjqMxNyRNkOuREAoYh/dMbMRYDJfnnNjlSQ6L/ES5pV3hNaeW
+         iWZ/xdYFM1YH+as9RwH47QL+09HCfXTp8mgLlBRe/RwrRnY2l3mhI9Y8o1mqzxsSlMvK
+         nQ9g==
+X-Gm-Message-State: AOJu0Yyf/hU1B0S25CBD0btB8C/MFPbuHxebY+cbuoqJcCdyKKbUsgh2
+	XF+n/iUe9F5rPUURI86aF15/zg==
+X-Google-Smtp-Source: AGHT+IGIKfxOtqgZs5izGy55HN7ISDuZsGjfLyFS5WhsxYavC1F0ubnkuOIXAgsoQLeJG7M7YVnV6Q==
+X-Received: by 2002:ac2:54a4:0:b0:507:9a49:2d3d with SMTP id w4-20020ac254a4000000b005079a492d3dmr766293lfk.31.1700264852473;
+        Fri, 17 Nov 2023 15:47:32 -0800 (PST)
 Received: from [192.168.201.100] (178235187040.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.40])
-        by smtp.gmail.com with ESMTPSA id lt16-20020a170906fa9000b009e71efcce28sm1269357ejb.210.2023.11.17.15.40.14
+        by smtp.gmail.com with ESMTPSA id s16-20020aa7cb10000000b00544f8271b5fsm1168871edt.8.2023.11.17.15.47.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 15:40:16 -0800 (PST)
-Message-ID: <796fd7be-2008-460e-acf7-e335de780104@linaro.org>
-Date: Sat, 18 Nov 2023 00:40:13 +0100
+        Fri, 17 Nov 2023 15:47:31 -0800 (PST)
+Message-ID: <041f239f-7b40-4681-8c6c-2268f9c2c684@linaro.org>
+Date: Sat, 18 Nov 2023 00:47:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,21 +62,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: power: rpmpd: Update part number to
- X1E80100
+Subject: Re: [PATCH 0/3] USB: dwc3: qcom: fix resource leaks on probe deferral
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- ulf.hansson@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc: agross@kernel.org, conor+dt@kernel.org, quic_rjendra@quicinc.com,
- abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, quic_tsoni@quicinc.com, neil.armstrong@linaro.org
-References: <20231117104254.28862-1-quic_sibis@quicinc.com>
- <20231117104254.28862-2-quic_sibis@quicinc.com>
- <8fafbba6-86de-4ddc-966e-48e2152f6b1a@linaro.org>
- <97216704-a102-532d-1039-c9342a19e2fd@quicinc.com>
- <81a1bfee-851c-4f05-b816-47abcebed99c@linaro.org>
+To: Johan Hovold <johan+linaro@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+ Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231117173650.21161-1-johan+linaro@kernel.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -113,35 +108,32 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <81a1bfee-851c-4f05-b816-47abcebed99c@linaro.org>
+In-Reply-To: <20231117173650.21161-1-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17.11.2023 13:39, Krzysztof Kozlowski wrote:
-> On 17/11/2023 12:46, Sibi Sankar wrote:
->> Hey Krzysztof,
->>
->> Thanks for taking time to review the series.
->>
->> On 11/17/23 16:35, Krzysztof Kozlowski wrote:
->>> On 17/11/2023 11:42, Sibi Sankar wrote:
->>>> Replace SC8380xp with the updated part number (X1E80100).
->>>>
->>>
->>> You need to explain why. We don't update compatibles based on marketing
->>> wishes.
->>
->> What we imply is that X1E80100 is the part number you would get when you
->> read out from a Snapdragon X Elite device in the wild, when it is
->> available and we didn't have this information when we posted out v1.
+On 17.11.2023 18:36, Johan Hovold wrote:
+> When reviewing the recently submitted series which reworks the dwc3 qcom
+> glue implementation [1], I noticed that the driver's tear down handling
+> is currently broken, something which can lead to memory leaks and
+> potentially use-after-free issues on probe deferral and on driver
+> unbind.
 > 
-> The commit msg must explain why.
-(what Krzysztof meant is that your explanation is ok but it needs to be
-part of the commit message and not just a reply here)
+> Let's get this sorted before reworking driver.
+> 
+> Note that the last patch has only been compile tested as I don't have
+> access to a sdm845 device.
+> 
+> Johan
+I'll sound like a broken record, but:
 
-Moreover, it would also be good to say something like "this binding has
-no users and has been erroneusly introduced very recently, so it was
-decided that changing it is okay", as this is a rather special case.
+is there anyone in the world that is actively benefiting from this failed
+experiment of using the ACPI tables that were shipped with these SoCs?
+
+There are so so so many shortcomings associated with it due to how Windows
+drivers on these platforms know waaaay too much and largely use ACPI to
+"bind driver x" and I simply think it doesn't make sense to continue
+carrying this code forward given little use and no testing.
 
 Konrad
 
