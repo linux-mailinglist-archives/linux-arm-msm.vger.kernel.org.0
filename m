@@ -1,132 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-858-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A81267EED86
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:28:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E6767EEE0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:04:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BEBC1F22936
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 08:28:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE2761C2082F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:04:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D501E56B;
-	Fri, 17 Nov 2023 08:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC275DF53;
+	Fri, 17 Nov 2023 09:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nJ3J8n+a"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KRV/UNxM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 202A6B3;
-	Fri, 17 Nov 2023 00:28:51 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AH7auqO019415;
-	Fri, 17 Nov 2023 08:28:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding;
- s=qcppdkim1; bh=km0xHQOEYSbU7+jwvtfV4jBETkktVgWD47hMaDXCG/M=;
- b=nJ3J8n+aXOP4KX1pqlCVPe+8zJUm1rVkjWo34tQbnG/Z5riHP0bB+z5u6Tl+5KlQMARl
- wMDfiJccBx8HQDcTM+PIhImxbe33nHWfRK3ujgaLMizRrll3Hj2urdWgli/jzf5ncq3P
- wiC4V7OXDi5B7XtwRS1gtwjvmh/O0a6kG2S29dL5jIv3DfOnhDr8bgoL32U+bFuIwQUI
- ocHN0otcZgtFGW3QnDBhZmowmJUGkfCjuEXW0JHRz2thvUEfb6i8FYD1dWrN0iR4eij+
- fBVvBxH+TUmJst0Ewa5/f8uzIk3dOs4ahXSrMLzjAOQuWNvGXRNDytYPNx7tD0/Q9d7g mQ== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udmw424vr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 08:28:35 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3AH8SV68020822;
-	Fri, 17 Nov 2023 08:28:31 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3ua2pmpsw7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 08:28:31 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3AH8SVel020816;
-	Fri, 17 Nov 2023 08:28:31 GMT
-Received: from hu-devc-hyd-u20-c-new.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.147.246.70])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 3AH8SVsC020810
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 08:28:31 +0000
-Received: by hu-devc-hyd-u20-c-new.qualcomm.com (Postfix, from userid 3970568)
-	id 1787E2204F; Fri, 17 Nov 2023 13:58:30 +0530 (+0530)
-From: Rohit Agarwal <quic_rohiagar@quicinc.com>
-To: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        tglx@linutronix.de, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Rohit Agarwal <quic_rohiagar@quicinc.com>,
-        Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH v5] dt-bindings: interrupt-controller: Add SDX75 PDC compatible
-Date: Fri, 17 Nov 2023 13:58:29 +0530
-Message-Id: <20231117082829.609882-1-quic_rohiagar@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4652711F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 01:03:58 -0800 (PST)
+Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1cc1ee2d8dfso15603115ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 01:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700211836; x=1700816636; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+a/E73oKPUIpqCJpWkfrUK2tYAxoil+7+qeJQEo9/6E=;
+        b=KRV/UNxMVozR3SgGWNRkF+8KmXKiyHcs5wzL8F08b5nFnD+CTsPLOXU5mAMytb0gnj
+         BocBX+nQyJjnIR2DfhTowuV48shRyf+pDUIhq9irTEQRZG3fDC+ufGOfY1nAZUUVNUqA
+         +MmagW6+3rd3JBXfDpjrD9d0putr4wOkdhjSCLI4EF4ncYw0vTVg+VSi5isHLFJXHheH
+         NRNZ/Juyb/nFz1cj87SKeyTr5I9z7TW5Qk4QXR0oAMN5+qFQcaAVOoTSTQD1gs3h40m2
+         K/42xKCJbMTrTpuMsm1TL3MI1ApfygBFa/KOLzUW5VcQBGmGrgFeRyBM8ZEu8X2o2oZ5
+         S3HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700211836; x=1700816636;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+a/E73oKPUIpqCJpWkfrUK2tYAxoil+7+qeJQEo9/6E=;
+        b=b0oaq8j98tG5wesR67LW04ornqOSN2UXRtbdzfAvCZPmP8PmsE8nrDT0KZBx+NGhep
+         kjLgblHIHzJftYpuBshUX4kCv2Wi84BYJwbWY4ubCuyn2Dzv0GwfWgdKOSxsI1pHbzVQ
+         +G3AmnoSMNOE+fPyC0x+qoH10v6sNSTBPXn5LXs5eOGlbBXseMDt8m6KtBEBLLeBaDsA
+         Oqo8XlP8BM7r5iADCZ8gURLy/Di8/ky3PaqEIGSlQEpKu+8abRNMh3mOgQA0Ele/fN8o
+         8vYDVxbhfbowAFiPmSdCme47mFvxfTDvMQmuqirS2rOONbhr2B9UgErN4JT0VhLXwR94
+         3ztw==
+X-Gm-Message-State: AOJu0YwbzRL4yPptJMZMBcIXBZQuHzs8WUDXJZJoekHIQKd36TFgHVnM
+	Jt/1JdPRv/cSgLKK0xO0xIep
+X-Google-Smtp-Source: AGHT+IFja+WtC2OS4zhsenW8j0sFIeX9xO+zebfk77FBON46A04n4N2e+BUmVOq8jwsyvcPLOH/0Ew==
+X-Received: by 2002:a17:903:2343:b0:1ca:1be4:bda4 with SMTP id c3-20020a170903234300b001ca1be4bda4mr13259932plh.4.1700211836575;
+        Fri, 17 Nov 2023 01:03:56 -0800 (PST)
+Received: from thinkpad ([103.28.246.177])
+        by smtp.gmail.com with ESMTPSA id i4-20020a170902eb4400b001c62e3e1286sm944986pli.166.2023.11.17.01.03.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Nov 2023 01:03:56 -0800 (PST)
+Date: Fri, 17 Nov 2023 14:33:49 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc: catalin.marinas@arm.com, will@kernel.org, quic_bjorande@quicinc.com,
+	geert+renesas@glider.be, konrad.dybcio@linaro.org, arnd@arndb.de,
+	krzysztof.kozlowski@linaro.org, neil.armstrong@linaro.org,
+	dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+	m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH v3] arm64: defconfig: Enable GCC, pinctrl and
+ interconnect for SDX75
+Message-ID: <20231117090349.GA244633@thinkpad>
+References: <20231117055849.534671-1-quic_rohiagar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: sZC3GK9LM07SO2CBOBZSEkBCBRuQeYqH
-X-Proofpoint-ORIG-GUID: sZC3GK9LM07SO2CBOBZSEkBCBRuQeYqH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-17_05,2023-11-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=511
- clxscore=1011 suspectscore=0 mlxscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311170061
+In-Reply-To: <20231117055849.534671-1-quic_rohiagar@quicinc.com>
 
-Add device tree bindings for PDC on SDX75 SOC.
+On Fri, Nov 17, 2023 at 11:28:49AM +0530, Rohit Agarwal wrote:
+> Enable Global Clock controller, pinctrl and interconnect framework
+> support for Qualcomm's SDX75 SoC which is required to boot to
+> console on sdx75-idp platform.
+> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+> 
+> Hi,
+> 
+> Changes in v3:
+>  - Clubbed all the three patches in a single patch.
+>  - Link to v2: https://lore.kernel.org/all/20231116093513.14259-1-quic_rohiagar@quicinc.com/
+> 
+> Changes in v2:
+>  - Updated the commit message for the patches.
+> 
+> Thanks,
+> Rohit.
+> 
+>  arch/arm64/configs/defconfig | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index b60aa1f89343..4c0cd428d073 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -599,6 +599,7 @@ CONFIG_PINCTRL_SC8280XP=y
+>  CONFIG_PINCTRL_SDM660=y
+>  CONFIG_PINCTRL_SDM670=y
+>  CONFIG_PINCTRL_SDM845=y
+> +CONFIG_PINCTRL_SDX75=y
+>  CONFIG_PINCTRL_SM6115=y
+>  CONFIG_PINCTRL_SM6115_LPASS_LPI=m
+>  CONFIG_PINCTRL_SM6125=y
+> @@ -1252,6 +1253,7 @@ CONFIG_SDM_GPUCC_845=y
+>  CONFIG_SDM_VIDEOCC_845=y
+>  CONFIG_SDM_DISPCC_845=y
+>  CONFIG_SDM_LPASSCC_845=m
+> +CONFIG_SDX_GCC_75=y
+>  CONFIG_SM_CAMCC_8250=m
+>  CONFIG_SM_DISPCC_6115=m
+>  CONFIG_SM_DISPCC_8250=y
+> @@ -1519,6 +1521,7 @@ CONFIG_INTERCONNECT_QCOM_SC7280=y
+>  CONFIG_INTERCONNECT_QCOM_SC8180X=y
+>  CONFIG_INTERCONNECT_QCOM_SC8280XP=y
+>  CONFIG_INTERCONNECT_QCOM_SDM845=y
+> +CONFIG_INTERCONNECT_QCOM_SDX75=y
 
-Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
----
+Is there any criteria to make ICC built-in? I'd vote for built-in on all
+platforms to keep it aligned eventhough old platforms do not require it for
+booting.
 
-Hi,
+- Mani
 
-Changes in v5:
- - Rebased on 6.7-rc1
- - Removed all the applied patches from this series.
- - Link to v4: https://lore.kernel.org/all/1686311438-24177-1-git-send-email-quic_rohiagar@quicinc.com/
+>  CONFIG_INTERCONNECT_QCOM_SM8150=m
+>  CONFIG_INTERCONNECT_QCOM_SM8250=m
+>  CONFIG_INTERCONNECT_QCOM_SM8350=m
+> -- 
+> 2.25.1
+> 
+> 
 
-Changes in v4:
- - Addressed some of the dt bindings check mentioned by Krzysztof.
-
-Changes in v3:
- - Clubbed all the dt node into a single patch as suggested by Krzysztof.
- - Removed the applied patch.
- - Addressed some comments from Konrad and Dmitry.
-
-Changes in v2:
- - Added the CPUFreq support patch.
- - Collected the Acked by tags.
- - Addressed some minor comments from Konrad.
-
-Thanks,
-Rohit.
-
- .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-index 86d61896f591..9342fe510598 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-@@ -35,6 +35,7 @@ properties:
-           - qcom,sdm845-pdc
-           - qcom,sdx55-pdc
-           - qcom,sdx65-pdc
-+          - qcom,sdx75-pdc
-           - qcom,sm4450-pdc
-           - qcom,sm6350-pdc
-           - qcom,sm8150-pdc
 -- 
-2.25.1
-
+மணிவண்ணன் சதாசிவம்
 
