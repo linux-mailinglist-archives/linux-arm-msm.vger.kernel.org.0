@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 121FE7EF384
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 14:09:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46D517EF3AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 14:26:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 107AA1C20ADE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 13:09:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 715AAB20B42
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 13:26:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D1F619452;
-	Fri, 17 Nov 2023 13:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19F4030F93;
+	Fri, 17 Nov 2023 13:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vxwRiPya"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WoWRHiCe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28F0DD5E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 05:09:44 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40859dee28cso16210715e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 05:09:44 -0800 (PST)
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34E11D56
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 05:26:33 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-9d2e7726d5bso261785166b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 05:26:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700226582; x=1700831382; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1700227591; x=1700832391; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RZ861qPhmcYLNIPpFrmLJFMqjIODRETy69SyllrTHqQ=;
-        b=vxwRiPyaS3h2h4HTsgARVjVfAMwQz2AD5sQp0cMqYNkRIRlIVab9YakRTPHZHjqJwr
-         l+S4KBc1XTKTJtCtoue4mdstKStsANlp1JEyqAZ/H+U9B0mo2+OvY08jpBBoZzHj/vnQ
-         QLgpC6nTe2uLT8z8NMT4dh+2q3cCHEBgVanc9GHa68LsS6bSsT+fvL9FQGejPhZCeiTa
-         iP1zbVBZsXchfQilHSf793Yc4V2e2/feHORAEW9NB+L00JZtGYJLLjtSNUv/dmK0tEkm
-         DRH8KVJKrN4zbzQ9Z1kSolzCKhMdMkoQ7jUtA8VAq58zJnR/pWBk/QqMZ69uBIn8+dv2
-         YzCA==
+        bh=ABUOU8VLEcpuYbTNVJB08d5jU4yF9glHzA9lcTvgLI0=;
+        b=WoWRHiCe3HFDF8sJSfeUcc+1ldn8j3nm7WulsQd4BOYTnBOXzIUVzBnWYEO0MaCInK
+         sM4guZY9diGUAzd8oRzR/hz2/0/Y9Q8TeMt6PruMtjsoMI3KxMPp5hajwMJZmKvFxV7j
+         abU35QTk4RYch8KSLvNf/D4GZjxUt/YEndguGfznWyQwVOklwlW5PsTFz0YyAMEriNEv
+         fAFKyvEHzrH6G/gu4UwaEOzDUDbn+Wme/5FLLZywgnFn16T2574VryL7MnZIxT7tiZhf
+         R3QRB37gSlR6oKrp/QvSuN1Ru4Fvz0F29q24CygKj4odxq3oBovsucqg6Ig2byJ7xXrO
+         pNlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700226582; x=1700831382;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1700227591; x=1700832391;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RZ861qPhmcYLNIPpFrmLJFMqjIODRETy69SyllrTHqQ=;
-        b=tDQHficLZhvD1zKz4CYJVYdam1paZr0dcNhU1wXRYwCKn7V5/QNXMVlsOSafq+f4SH
-         eel0FI2RAoqj/j7fnlpdZ/lBB/2aspQl/CEr9hwvli3sywpdnvG7rqUwdEAhumg7hBZi
-         0owwZzbojek1IMLa/5dhx4u280EhI7sv+AJKYH1aA/Sz37RVb4gNt0yXaQQpJtNIicIB
-         zr+TxwZW14RSgko3FYgMRlVDERGZlqf22yP3BtFCfOWjmVxMHMrTY3O9cQJb1gKrEGZm
-         F4gFcRxPMERMvtkYxUs4reQMEpB4O6Our0UCgikThvbUpp6ES1jSxLMZ1Hnuz5GMbMN3
-         vnXA==
-X-Gm-Message-State: AOJu0YyEpRGMqMNeBCzCncZguFNwHsdCQlDY9WMQHgctCk7AWiwWfkcg
-	NA8GNVtpLj6oraVJFJ3ASWmlQg==
-X-Google-Smtp-Source: AGHT+IFSYsD8mfV/aod6CYLaYG6GTod1TTdOQpxt/uCTP6yIBkKg9enjuJlCoWHYfmvxtPYno8wSxw==
-X-Received: by 2002:a1c:4b0d:0:b0:40a:48af:4821 with SMTP id y13-20020a1c4b0d000000b0040a48af4821mr15767333wma.31.1700226582412;
-        Fri, 17 Nov 2023 05:09:42 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id p13-20020a05600c358d00b0040841e79715sm2734381wmq.27.2023.11.17.05.09.30
+        bh=ABUOU8VLEcpuYbTNVJB08d5jU4yF9glHzA9lcTvgLI0=;
+        b=mby0QwqJqb3O18jV29Who6qvjfaEiyilcqQQnSnjEz+46N0KANurPudg/4XtAlZVLo
+         tr/sXUGutiqXv6rep3wht9v0mxHKRHdOLo5IYzfJz/WiLp7wNshU0owcAjs++NiwOw4s
+         6V+FM756OlCgI3F+sMg2huHVMh1IiSYsLsYrCQgIFJi/UH8MdC+KSYv693laPkMhQRLe
+         4CTokETavYCEA8Cm/AIBM63etpLwW0WYZbLKz/Ps4pyilpTq0I5PwMDRt1r0qWuRww3M
+         07k13CZW6xYswN2oCzkJfmQmV8GmBE4l0Qw/ChlATSF+D+F520AvPsVkbkHI1X8V5tL9
+         Ubvg==
+X-Gm-Message-State: AOJu0YzvpXt9zvcjwMEAApBYzZBx+ZMri0bsxq5a56sHgHfLWzyUx7yJ
+	HJdOKpFLKmoXZ6mOhUvqEAZS2ckI16dUvqk6V8c=
+X-Google-Smtp-Source: AGHT+IFewvmPX+g10sI5CiLoO3CT69uLSUmBI1V9Jnbk0Uyrod1XOK/kdXjF8iQ5VlLc/S1nUZYE9g==
+X-Received: by 2002:a17:906:471a:b0:9e2:a56b:a941 with SMTP id y26-20020a170906471a00b009e2a56ba941mr15526001ejq.21.1700227591645;
+        Fri, 17 Nov 2023 05:26:31 -0800 (PST)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id p20-20020a170906a01400b009adc77fe164sm789874ejy.66.2023.11.17.05.26.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 05:09:37 -0800 (PST)
-Message-ID: <9c025d37-50c5-4951-9b50-ef11ab2e2351@linaro.org>
-Date: Fri, 17 Nov 2023 14:09:30 +0100
+        Fri, 17 Nov 2023 05:26:31 -0800 (PST)
+Message-ID: <db6fb37a-d931-4771-85f8-b922c5027bc0@linaro.org>
+Date: Fri, 17 Nov 2023 13:26:29 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,83 +62,186 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/2] dt-bindings: pinctrl: qcom: Add X1E80100 pinctrl
+Subject: Re: [PATCH v2 3/4] ASoC: qcom: q6afe-dai: check ADSP version when
+ setting sysclk
 Content-Language: en-US
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, linus.walleij@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org
-Cc: agross@kernel.org, conor+dt@kernel.org, quic_rjendra@quicinc.com,
- abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, quic_tsoni@quicinc.com, neil.armstrong@linaro.org
-References: <20231117093921.31968-1-quic_sibis@quicinc.com>
- <20231117093921.31968-2-quic_sibis@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231117093921.31968-2-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
+ linux-arm-msm@vger.kernel.org
+Cc: Banajit Goswami <bgoswami@quicinc.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ linux-sound@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <20231029165716.69878-1-otto.pflueger@abscue.de>
+ <20231029165716.69878-4-otto.pflueger@abscue.de>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20231029165716.69878-4-otto.pflueger@abscue.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 17/11/2023 10:39, Sibi Sankar wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+Thanks Otto for the patches.
+
+On 29/10/2023 16:57, Otto Pflüger wrote:
+> Some older DSP firmware versions only provide AFE_PARAM_ID_*_CLK_CONFIG
+> requests for setting clocks, while newer ones only provide the
+> incompatible AFE_PARAM_ID_CLOCK_SET. The q6afe driver implements both,
+> but requires different clock IDs for the different firmware versions.
 > 
-> Add device tree binding Documentation details for Qualcomm X1E80100 TLMM
-> device.
+> Implement the LPAIF_*_CLK clocks using newer clock IDs when the DSP
+> firmware does not support the old clocks so that users don't have to
+> care about the firmware version when setting clocks.
 > 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
 > ---
+>   sound/soc/qcom/qdsp6/q6afe-dai.c | 98 +++++++++++++++++++++++++++-----
+>   1 file changed, 84 insertions(+), 14 deletions(-)
 > 
+> diff --git a/sound/soc/qcom/qdsp6/q6afe-dai.c b/sound/soc/qcom/qdsp6/q6afe-dai.c
+> index a9c4f896a7df..c66f8ab41d5e 100644
+> --- a/sound/soc/qcom/qdsp6/q6afe-dai.c
+> +++ b/sound/soc/qcom/qdsp6/q6afe-dai.c
+> @@ -14,6 +14,7 @@
+>   #include <sound/pcm_params.h>
+>   #include "q6dsp-lpass-ports.h"
+>   #include "q6dsp-common.h"
+> +#include "q6core.h"
+>   #include "q6afe.h"
+>   
+>   
+> @@ -443,36 +444,105 @@ static int q6slim_set_channel_map(struct snd_soc_dai *dai,
+>   	return 0;
+>   }
+>   
+> +static int q6afe_get_bit_clk_id(unsigned int dai_id)
+> +{
+> +	switch (dai_id) {
+> +	case PRIMARY_MI2S_RX:
+> +	case PRIMARY_MI2S_TX:
+> +		return Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT;
+> +	case SECONDARY_MI2S_RX:
+> +	case SECONDARY_MI2S_TX:
+> +		return Q6AFE_LPASS_CLK_ID_SEC_MI2S_IBIT;
+> +	case TERTIARY_MI2S_RX:
+> +	case TERTIARY_MI2S_TX:
+> +		return Q6AFE_LPASS_CLK_ID_TER_MI2S_IBIT;
+> +	case QUATERNARY_MI2S_RX:
+> +	case QUATERNARY_MI2S_TX:
+> +		return Q6AFE_LPASS_CLK_ID_TER_MI2S_IBIT;
+> +	case QUINARY_MI2S_RX:
+> +	case QUINARY_MI2S_TX:
+> +		return Q6AFE_LPASS_CLK_ID_QUI_MI2S_IBIT;
+> +
+> +	case PRIMARY_TDM_RX_0 ... PRIMARY_TDM_TX_7:
+> +		return Q6AFE_LPASS_CLK_ID_PRI_TDM_IBIT;
+> +	case SECONDARY_TDM_RX_0 ... SECONDARY_TDM_TX_7:
+> +		return Q6AFE_LPASS_CLK_ID_SEC_TDM_IBIT;
+> +	case TERTIARY_TDM_RX_0 ... TERTIARY_TDM_TX_7:
+> +		return Q6AFE_LPASS_CLK_ID_TER_TDM_IBIT;
+> +	case QUATERNARY_TDM_RX_0 ... QUATERNARY_TDM_TX_7:
+> +		return Q6AFE_LPASS_CLK_ID_QUAD_TDM_IBIT;
+> +	case QUINARY_TDM_RX_0 ... QUINARY_TDM_TX_7:
+> +		return Q6AFE_LPASS_CLK_ID_QUIN_TDM_IBIT;
+> +
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +}
+> +
+> +static int q6afe_get_osr_clk_id(unsigned int dai_id)
+> +{
+> +	switch (dai_id) {
+> +	case QUINARY_MI2S_RX:
+> +	case QUINARY_MI2S_TX:
+> +		return Q6AFE_LPASS_CLK_ID_QUI_MI2S_OSR;
+> +
+> +	case QUINARY_TDM_RX_0 ... QUINARY_TDM_TX_7:
+> +		return Q6AFE_LPASS_CLK_ID_QUIN_TDM_OSR;
+> +
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +}
+> +
+>   static int q6afe_mi2s_set_sysclk(struct snd_soc_dai *dai,
+>   		int clk_id, unsigned int freq, int dir)
+>   {
+>   	struct q6afe_dai_data *dai_data = dev_get_drvdata(dai->dev);
+>   	struct q6afe_port *port = dai_data->port[dai->id];
+> +	int clk_src;
+> +	int clk_root;
+> +	bool use_new_clks = q6core_get_adsp_version() >= Q6_ADSP_VERSION_2_7;
+>   
+>   	switch (clk_id) {
+>   	case LPAIF_DIG_CLK:
+> -		return q6afe_port_set_sysclk(port, clk_id, 0, 5, freq, dir);
+> +		if (use_new_clks) {
+> +			clk_src = Q6AFE_LPASS_CLK_ATTRIBUTE_COUPLE_NO;
+> +			clk_root = Q6AFE_LPASS_CLK_ROOT_DEFAULT;
+> +			clk_id = Q6AFE_LPASS_CLK_ID_INTERNAL_DIGITAL_CODEC_CORE;
+Why clk id is changed ? isn't machine driver passing the correct clk id?
+
+> +		} else {
+> +			clk_src = 0;
+> +			clk_root = 5;
+> +		}
+
+> +		break;
+>   	case LPAIF_BIT_CLK:
+>   	case LPAIF_OSR_CLK:
+> -		return q6afe_port_set_sysclk(port, clk_id,
+> -					     Q6AFE_LPASS_CLK_SRC_INTERNAL,
+> -					     Q6AFE_LPASS_CLK_ROOT_DEFAULT,
+> -					     freq, dir);
+> +		if (use_new_clks) {
+> +			clk_src = Q6AFE_LPASS_CLK_ATTRIBUTE_COUPLE_NO;
+> +			clk_root = Q6AFE_LPASS_CLK_ROOT_DEFAULT;
+> +			if (clk_id == LPAIF_OSR_CLK)
+> +				clk_id = q6afe_get_osr_clk_id(dai->id);
+> +			else
+> +				clk_id = q6afe_get_bit_clk_id(dai->id);
+
+same comment, why cant the machine driver pass correct clk id?
+
+This exactly like calling
+
+snd_soc_dai_set_sysclk(cpu_dai, 
+Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT, 
+MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
+
+from machine driver for PRIM_MI2S bit clk and simillar for OSR.
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+--srini
 
-Best regards,
-Krzysztof
 
+> +		} else {
+> +			clk_src = Q6AFE_LPASS_CLK_SRC_INTERNAL;
+> +			clk_root = Q6AFE_LPASS_CLK_ROOT_DEFAULT;
+> +		}
+> +		break;
+>   	case Q6AFE_LPASS_CLK_ID_PRI_MI2S_IBIT ... Q6AFE_LPASS_CLK_ID_QUI_MI2S_OSR:
+>   	case Q6AFE_LPASS_CLK_ID_MCLK_1 ... Q6AFE_LPASS_CLK_ID_INT_MCLK_1:
+>   	case Q6AFE_LPASS_CLK_ID_WSA_CORE_MCLK ... Q6AFE_LPASS_CLK_ID_VA_CORE_2X_MCLK:
+> -		return q6afe_port_set_sysclk(port, clk_id,
+> -					     Q6AFE_LPASS_CLK_ATTRIBUTE_COUPLE_NO,
+> -					     Q6AFE_LPASS_CLK_ROOT_DEFAULT,
+> -					     freq, dir);
+> +		clk_src = Q6AFE_LPASS_CLK_ATTRIBUTE_COUPLE_NO;
+> +		clk_root = Q6AFE_LPASS_CLK_ROOT_DEFAULT;
+> +		break;
+>   	case Q6AFE_LPASS_CLK_ID_PRI_TDM_IBIT ... Q6AFE_LPASS_CLK_ID_QUIN_TDM_EBIT:
+> -		return q6afe_port_set_sysclk(port, clk_id,
+> -					     Q6AFE_LPASS_CLK_ATTRIBUTE_INVERT_COUPLE_NO,
+> -					     Q6AFE_LPASS_CLK_ROOT_DEFAULT,
+> -					     freq, dir);
+> +		clk_src = Q6AFE_LPASS_CLK_ATTRIBUTE_INVERT_COUPLE_NO;
+> +		clk_root = Q6AFE_LPASS_CLK_ROOT_DEFAULT;
+> +		break;
+> +	default:
+> +		return 0;
+>   	}
+>   
+> -	return 0;
+> +	return q6afe_port_set_sysclk(port, clk_id, clk_src, clk_root, freq, dir);
+>   }
+>   
+>   static const struct snd_soc_dapm_route q6afe_dapm_routes[] = {
 
