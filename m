@@ -1,72 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-859-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E6767EEE0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:04:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5C827EEE14
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:05:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE2761C2082F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:04:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9AE72280EEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:05:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC275DF53;
-	Fri, 17 Nov 2023 09:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 114A7DF68;
+	Fri, 17 Nov 2023 09:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KRV/UNxM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kXqyJl2c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4652711F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 01:03:58 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id d9443c01a7336-1cc1ee2d8dfso15603115ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 01:03:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700211836; x=1700816636; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+a/E73oKPUIpqCJpWkfrUK2tYAxoil+7+qeJQEo9/6E=;
-        b=KRV/UNxMVozR3SgGWNRkF+8KmXKiyHcs5wzL8F08b5nFnD+CTsPLOXU5mAMytb0gnj
-         BocBX+nQyJjnIR2DfhTowuV48shRyf+pDUIhq9irTEQRZG3fDC+ufGOfY1nAZUUVNUqA
-         +MmagW6+3rd3JBXfDpjrD9d0putr4wOkdhjSCLI4EF4ncYw0vTVg+VSi5isHLFJXHheH
-         NRNZ/Juyb/nFz1cj87SKeyTr5I9z7TW5Qk4QXR0oAMN5+qFQcaAVOoTSTQD1gs3h40m2
-         K/42xKCJbMTrTpuMsm1TL3MI1ApfygBFa/KOLzUW5VcQBGmGrgFeRyBM8ZEu8X2o2oZ5
-         S3HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700211836; x=1700816636;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+a/E73oKPUIpqCJpWkfrUK2tYAxoil+7+qeJQEo9/6E=;
-        b=b0oaq8j98tG5wesR67LW04ornqOSN2UXRtbdzfAvCZPmP8PmsE8nrDT0KZBx+NGhep
-         kjLgblHIHzJftYpuBshUX4kCv2Wi84BYJwbWY4ubCuyn2Dzv0GwfWgdKOSxsI1pHbzVQ
-         +G3AmnoSMNOE+fPyC0x+qoH10v6sNSTBPXn5LXs5eOGlbBXseMDt8m6KtBEBLLeBaDsA
-         Oqo8XlP8BM7r5iADCZ8gURLy/Di8/ky3PaqEIGSlQEpKu+8abRNMh3mOgQA0Ele/fN8o
-         8vYDVxbhfbowAFiPmSdCme47mFvxfTDvMQmuqirS2rOONbhr2B9UgErN4JT0VhLXwR94
-         3ztw==
-X-Gm-Message-State: AOJu0YwbzRL4yPptJMZMBcIXBZQuHzs8WUDXJZJoekHIQKd36TFgHVnM
-	Jt/1JdPRv/cSgLKK0xO0xIep
-X-Google-Smtp-Source: AGHT+IFja+WtC2OS4zhsenW8j0sFIeX9xO+zebfk77FBON46A04n4N2e+BUmVOq8jwsyvcPLOH/0Ew==
-X-Received: by 2002:a17:903:2343:b0:1ca:1be4:bda4 with SMTP id c3-20020a170903234300b001ca1be4bda4mr13259932plh.4.1700211836575;
-        Fri, 17 Nov 2023 01:03:56 -0800 (PST)
-Received: from thinkpad ([103.28.246.177])
-        by smtp.gmail.com with ESMTPSA id i4-20020a170902eb4400b001c62e3e1286sm944986pli.166.2023.11.17.01.03.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Nov 2023 01:03:56 -0800 (PST)
-Date: Fri, 17 Nov 2023 14:33:49 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc: catalin.marinas@arm.com, will@kernel.org, quic_bjorande@quicinc.com,
-	geert+renesas@glider.be, konrad.dybcio@linaro.org, arnd@arndb.de,
-	krzysztof.kozlowski@linaro.org, neil.armstrong@linaro.org,
-	dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-	m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH v3] arm64: defconfig: Enable GCC, pinctrl and
- interconnect for SDX75
-Message-ID: <20231117090349.GA244633@thinkpad>
-References: <20231117055849.534671-1-quic_rohiagar@quicinc.com>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E122BDF60;
+	Fri, 17 Nov 2023 09:05:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F46FC433C7;
+	Fri, 17 Nov 2023 09:05:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700211930;
+	bh=CRcBtu19n+PndQnrzEF4vcUcLQOW1EwvMXHrCXvikac=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kXqyJl2c200zNl9Fb+ks/yfpk04iMRehm+4xpX8AAc+7ZEBB3DOEtHpp4kxZ2X59T
+	 +gQlHr/8WBht8H8aq2wT5Dcchk7n7oKAbRoV4xVqs24Q/NHHy44+/onhCOJrJsYWlo
+	 /1FEoXoVzTirhxrZv9kLPc8peuPHqQzq+LZcAyNU5CzeYxDgcdgTCyK2BYuuU+3T6B
+	 wgrrybCZ0DFNrWbEHjWWxYGzl74uz6FKhlqMMmCu3dSp7z9gPQmVCrPDjc/O6G/yPj
+	 1VgfYojN7Bp6hVspr3g0e3/sr8yeJ1ye952uiLFe5GutIt6Z72F3ZuuvzMmmrO89hT
+	 saGBuERF72nYw==
+Date: Fri, 17 Nov 2023 14:35:19 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	konrad.dybcio@linaro.org, mani@kernel.org, robh+dt@kernel.org,
+	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+	dmitry.baryshkov@linaro.org, robh@kernel.org,
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+	quic_parass@quicinc.com, quic_schintav@quicinc.com,
+	quic_shijjose@quicinc.com,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] PCI: qcom-ep: Enable cache coherency for SA8775P
+ EP
+Message-ID: <20231117090519.GA250770@thinkpad>
+References: <1700051821-1087-1-git-send-email-quic_msarkar@quicinc.com>
+ <1700051821-1087-3-git-send-email-quic_msarkar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,69 +63,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231117055849.534671-1-quic_rohiagar@quicinc.com>
+In-Reply-To: <1700051821-1087-3-git-send-email-quic_msarkar@quicinc.com>
 
-On Fri, Nov 17, 2023 at 11:28:49AM +0530, Rohit Agarwal wrote:
-> Enable Global Clock controller, pinctrl and interconnect framework
-> support for Qualcomm's SDX75 SoC which is required to boot to
-> console on sdx75-idp platform.
+On Wed, Nov 15, 2023 at 06:07:00PM +0530, Mrinmay Sarkar wrote:
+> This change will enable cache snooping logic to support
+> cache coherency for 8775 EP platform.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> ---
-> 
-> Hi,
-> 
-> Changes in v3:
->  - Clubbed all the three patches in a single patch.
->  - Link to v2: https://lore.kernel.org/all/20231116093513.14259-1-quic_rohiagar@quicinc.com/
-> 
-> Changes in v2:
->  - Updated the commit message for the patches.
-> 
-> Thanks,
-> Rohit.
-> 
->  arch/arm64/configs/defconfig | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index b60aa1f89343..4c0cd428d073 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -599,6 +599,7 @@ CONFIG_PINCTRL_SC8280XP=y
->  CONFIG_PINCTRL_SDM660=y
->  CONFIG_PINCTRL_SDM670=y
->  CONFIG_PINCTRL_SDM845=y
-> +CONFIG_PINCTRL_SDX75=y
->  CONFIG_PINCTRL_SM6115=y
->  CONFIG_PINCTRL_SM6115_LPASS_LPI=m
->  CONFIG_PINCTRL_SM6125=y
-> @@ -1252,6 +1253,7 @@ CONFIG_SDM_GPUCC_845=y
->  CONFIG_SDM_VIDEOCC_845=y
->  CONFIG_SDM_DISPCC_845=y
->  CONFIG_SDM_LPASSCC_845=m
-> +CONFIG_SDX_GCC_75=y
->  CONFIG_SM_CAMCC_8250=m
->  CONFIG_SM_DISPCC_6115=m
->  CONFIG_SM_DISPCC_8250=y
-> @@ -1519,6 +1521,7 @@ CONFIG_INTERCONNECT_QCOM_SC7280=y
->  CONFIG_INTERCONNECT_QCOM_SC8180X=y
->  CONFIG_INTERCONNECT_QCOM_SC8280XP=y
->  CONFIG_INTERCONNECT_QCOM_SDM845=y
-> +CONFIG_INTERCONNECT_QCOM_SDX75=y
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 
-Is there any criteria to make ICC built-in? I'd vote for built-in on all
-platforms to keep it aligned eventhough old platforms do not require it for
-booting.
+Same comment as patch 1/3.
 
 - Mani
 
->  CONFIG_INTERCONNECT_QCOM_SM8150=m
->  CONFIG_INTERCONNECT_QCOM_SM8250=m
->  CONFIG_INTERCONNECT_QCOM_SM8350=m
-> -- 
-> 2.25.1
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 3a53d97..ee99fb1 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -47,6 +47,7 @@
+>  #define PARF_DBI_BASE_ADDR_HI			0x354
+>  #define PARF_SLV_ADDR_SPACE_SIZE		0x358
+>  #define PARF_SLV_ADDR_SPACE_SIZE_HI		0x35c
+> +#define PCIE_PARF_NO_SNOOP_OVERIDE		0x3d4
+>  #define PARF_ATU_BASE_ADDR			0x634
+>  #define PARF_ATU_BASE_ADDR_HI			0x638
+>  #define PARF_SRIS_MODE				0x644
+> @@ -86,6 +87,10 @@
+>  #define PARF_DEBUG_INT_CFG_BUS_MASTER_EN	BIT(2)
+>  #define PARF_DEBUG_INT_RADM_PM_TURNOFF		BIT(3)
+>  
+> +/* PARF_NO_SNOOP_OVERIDE register fields */
+> +#define WR_NO_SNOOP_OVERIDE_EN                 BIT(1)
+> +#define RD_NO_SNOOP_OVERIDE_EN                 BIT(3)
+> +
+>  /* PARF_DEVICE_TYPE register fields */
+>  #define PARF_DEVICE_TYPE_EP			0x0
+>  
+> @@ -489,6 +494,11 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+>  	val |= BIT(8);
+>  	writel_relaxed(val, pcie_ep->parf + PARF_LTSSM);
+>  
+> +	/* Enable cache snooping for SA8775P */
+> +	if (of_device_is_compatible(dev->of_node, "qcom,sa8775p-pcie-ep"))
+> +		writel_relaxed(WR_NO_SNOOP_OVERIDE_EN | RD_NO_SNOOP_OVERIDE_EN,
+> +				pcie_ep->parf + PCIE_PARF_NO_SNOOP_OVERIDE);
+> +
+>  	return 0;
+>  
+>  err_disable_resources:
+> -- 
+> 2.7.4
 > 
 
 -- 
