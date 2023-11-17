@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE5CD7EF097
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:33:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D9747EF098
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:34:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49021B20C61
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:33:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC6DA1F287C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:34:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86F7619BD2;
-	Fri, 17 Nov 2023 10:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32EE31A5AD;
+	Fri, 17 Nov 2023 10:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vKAYlRhf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eo1U1Gr3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8C98D5A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:33:46 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-5437269a661so5781230a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:33:46 -0800 (PST)
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93F3FB9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:34:05 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-53dfc28a2afso2666344a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:34:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700217225; x=1700822025; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700217244; x=1700822044; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3PVz9oUBz6UKWoa9bXIHRoQt+ZeQmFOVB2d/MLepVFE=;
-        b=vKAYlRhfHVm0ZqRHq3WgEMPynuVoTKIKyIHavtzegclSi0dpuXApTaXTubRasEeChR
-         WI00zaTTztjZ4FsbXqRrQSkRQTTkQ0ZUApnf62+tXOFiexUSaQm8fZYbACal/hlImpJj
-         qXLZ2D/BO+e4BKyoXpqAO4gwKCqAZFeq9b7E8w/9j2Zos1tRiRWiEfg2HE5/U+pNSXln
-         zOBjxWFQTvugUJlyhEaQvPRdphW/Ej9BqKhC+yMEjaFXqhbgGiDwgJv5MHOLNbx8QOJJ
-         o262YNRJyl8P+r2XDu04TYoY40DsRpAsk7wo6Da68ME5WZmJEzd99TDbDUT0Ctu+qhkD
-         GBDQ==
+        bh=HxOuufywEajkYM6/wgah/JZfYCf4bTazRLFP/0q5GEI=;
+        b=eo1U1Gr32tcFF5vG8VltqjiTKxfUH1VKW/2GlPX2lT/ofcR4uvqvx3kE3bmEtNd5WN
+         V3WXTur90Eam2trLWUMUgzDYTeGE34ZT5f8tUDGmdumS05kxWR5bOXeDe/BqWAg0KmEe
+         rOZLnk6yv+R2TqkY4HJCTCGh3Ruqh+AEOWCnBmDyJc74cEA2cHulPbDSwmJccLcX1XsB
+         6M/9wRpE3KnR3u9XTaJWCtYAeg5hn9He45eSaJ5tAO9PmVMyocSha7swG76G+f8LQtlM
+         8A74/PHT+PjFBQ9F9SLya1gjQysYJB879RphQcVF+KpnnhGgYvlsVA/As3MLsAU4APgG
+         ginQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700217225; x=1700822025;
+        d=1e100.net; s=20230601; t=1700217244; x=1700822044;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3PVz9oUBz6UKWoa9bXIHRoQt+ZeQmFOVB2d/MLepVFE=;
-        b=CHZgrrn5EwmOIKd/dhWtOZW2N80TgsRg7VZl8nlsG97BlqaBUlaR/vEfH9A2D15IKN
-         puqApMmlYb1qFCBoG7tl3GaVPKz5jaNItUNL8i/wY6JyNkTLOhpve2VILf1SgQOqbL0V
-         Zthc5YENQSEOjAlS95VlwktojQVoRj3H3L7pdyNOHbKXHIeYUOIXAmX1PGeFinhZdXHY
-         u8Qbh1P7VGwrF7iOCAA/JVUaNti8+UKFNNXUi1M7zk+R9WGV+Q1Umd0DtWVay6UcBk8w
-         BLctbfB0Bh6WYKFPz5C9JwIcsw+JH8oiHvsGjtLtFaAqhBS1nTVoCdVdvtmnvbAagsn4
-         8H+g==
-X-Gm-Message-State: AOJu0YxdYle+Q18UTk8i8xAA2hfDdz9SMhQG8t4Exwf5KLIOc5NZqawj
-	WfWnMLPzryiUdIvswfK7peCmvA==
-X-Google-Smtp-Source: AGHT+IETkKLM8yGXmKGQozPW80Ffssr4Wyfu1RIZchmwd4vHsxAGdjMLXk3gNDGyrrbN73VOc3qGag==
-X-Received: by 2002:a05:6402:441:b0:545:3b25:d142 with SMTP id p1-20020a056402044100b005453b25d142mr4386173edw.15.1700217225374;
-        Fri, 17 Nov 2023 02:33:45 -0800 (PST)
+        bh=HxOuufywEajkYM6/wgah/JZfYCf4bTazRLFP/0q5GEI=;
+        b=kZgp7r1WAty/YO6GiPJNpe4O4dvg7lC9l9mJ5RrH6qnk7lzjZA/NWPMo5uU/5JN+Ax
+         LsY0mqZ0M20xo4ijLqD1Oq7KmUwBtOElgPNj8TJeu0HdVDbg2SxMoVrT8ZULWfiE4rFQ
+         oxZWEl9OYYpVjYCZu6UeotRCbNGcaPAz+kAkJCougoebfbQ/nnviw6D6airfx1iA0+Fj
+         /9z0FIwxHJZA1Em1SUVdzQQwLree3N54t0z8syMHP+OjEQmtXkU6qR/KgyECxFQwttzq
+         5I9ExlC9hDH68GMPuNBGzkLqbNrV1oJgO/dX/GGS5p/M78If7qMUOg0dMZfrmJ3H8gYA
+         kGtg==
+X-Gm-Message-State: AOJu0Yw+OaxeU0GGTYwdTaCOC9vBNyj4OGCWIH29H4J9GEbagPqyRkI0
+	lLodltCUP/9s3EQRV9WRPR17GQ==
+X-Google-Smtp-Source: AGHT+IFTv6N55Sm1yOUpEKA0yM/VfQmkXyt05hU9WNNPjkW24upAz9IaGtDYsAELzW+Xnn4S6xoKew==
+X-Received: by 2002:a05:6402:1015:b0:543:ba03:9b3b with SMTP id c21-20020a056402101500b00543ba039b3bmr13400531edu.25.1700217244070;
+        Fri, 17 Nov 2023 02:34:04 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id v27-20020aa7cd5b000000b0053e43492ef1sm567026edw.65.2023.11.17.02.33.43
+        by smtp.gmail.com with ESMTPSA id v27-20020aa7cd5b000000b0053e43492ef1sm567026edw.65.2023.11.17.02.34.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 02:33:44 -0800 (PST)
-Message-ID: <6b2b9ea8-d771-4d7a-88c6-a75b70804139@linaro.org>
-Date: Fri, 17 Nov 2023 11:33:42 +0100
+        Fri, 17 Nov 2023 02:34:02 -0800 (PST)
+Message-ID: <5fcd89c4-8603-4569-a77d-cfcfa1ad0b4f@linaro.org>
+Date: Fri, 17 Nov 2023 11:34:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/16] arm64: dts: qcom: sm8550-aim300: add sound card
+Subject: Re: [PATCH 09/16] arm64: dts: qcom: sm8550-aim300: add flash LEDs
 Content-Language: en-US
 To: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
  andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
@@ -70,7 +70,7 @@ To: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, -cc=kernel@quicinc.com
 References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
- <20231117101817.4401-15-quic_tengfan@quicinc.com>
+ <20231117101817.4401-10-quic_tengfan@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -116,24 +116,23 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231117101817.4401-15-quic_tengfan@quicinc.com>
+In-Reply-To: <20231117101817.4401-10-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 17/11/2023 11:18, Tengfei Fan wrote:
-> Add the sound card node with tested playback over WSA8845 speakers and
-> WCD9385 headset over USB Type-C.
+> Enable PM8550 PMIC flash LED controller and add two flash LEDs using
+> four current outputs.
 > 
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 82 ++++++++++++++++++++++
->  1 file changed, 82 insertions(+)
-> 
 
 NAK, it's initial submission.
 
 Stop useless splitting of work which is done. You cannot have "release
 late, release often". The rule is: "release early, release often".
+
+Or you want to split DTS per each line?
 
 Best regards,
 Krzysztof
