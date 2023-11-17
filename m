@@ -1,127 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-988-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF2787EF3F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 15:03:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BA787EF45D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 15:24:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5DF74B20B17
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 14:03:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DE97DB20C61
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 14:24:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DA8730FB9;
-	Fri, 17 Nov 2023 14:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C617D321AF;
+	Fri, 17 Nov 2023 14:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jDU74y+5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xaeaZIYn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2286530FAF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 14:03:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8321EC433C8;
-	Fri, 17 Nov 2023 14:03:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700229801;
-	bh=+YyWYw/YzYJ+SPOs/yiZevHVY0O0qocR6W15SI2TW+U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jDU74y+5cXrh06NB2CxYyBRr1mU1l22/wxgbBKqx0psUVhiEdgtG2EervVZOQg1zD
-	 H9NTbgQzvCFrY0t6SMhJUhJCeswoZ05RkCu+Y+oYqJIvJcXyEqeMToJbi1r0gYnKg8
-	 lPhPbOKBw29M+ITZOsdBV1c9OhJ7ZwrlI0IImxDVRJ77HMdeZGycumPmA233Wi8I97
-	 DYGPfSaT2CCIAy41n1FXeNKbArse/uxSwpkvoCirBDD8TcFG+DVLFc76ftKHMl5qF1
-	 XLYLIsEvSvmuxx3GFo0zJSKhsaBIYVbLkMyUj6RJxmtjcmV6q9arbWNYkiiKMshd4O
-	 C4TodqHX9b+TQ==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1r3zRM-0004DS-17;
-	Fri, 17 Nov 2023 15:03:24 +0100
-Date: Fri, 17 Nov 2023 15:03:24 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Jonathan Derrick <jonathan.derrick@linux.dev>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/6] PCI: qcom: Clean up ASPM comment
-Message-ID: <ZVdyrGXyahM7bxwh@hovoldconsulting.com>
-References: <20231114135553.32301-1-johan+linaro@kernel.org>
- <20231114135553.32301-5-johan+linaro@kernel.org>
- <20231117103227.GM250770@thinkpad>
- <ZVdE6nqanqcaL8sO@hovoldconsulting.com>
- <20231117105404.GR250770@thinkpad>
- <ZVdH3GkzWupoxyzJ@hovoldconsulting.com>
- <20231117112352.GS250770@thinkpad>
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BA2FD5B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 06:24:04 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-40838915cecso16337055e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 06:24:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700231043; x=1700835843; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CKxOTnv9JfSvH6BdnkUvc5Oor+bZOeZyCbGjkcr5HZ4=;
+        b=xaeaZIYnVAGCE87yBecmhqhDtOxX79ERrX+VwNQVUizfiAaHy9WEFwNnlT8m3jsfzN
+         JMUFFwX5GpGKQ+hqDQgzz+AU6H0b1015ZIgT7DZ+TFATCWxxD1Kw9yJdUA9LCHVsmsRY
+         Ams9FLtDjIvFNK5yzXlu71HNNUWb4OlExN14ESrcqdzELMK0U9c+hW3OGU2/NBqzgBau
+         PFqQUXub+kDHcrlj9zv5HNt7k5XiDIRtqJFwlRWFHpqLQ9UMkYhX6GC/XasW1uhbRzB2
+         a5z/ucYZ3l7uruOZGOI6+jXJuREFBAvk0Nt173bqnyny10frnRXx1hyfVrn7wWoudPej
+         JCIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700231043; x=1700835843;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CKxOTnv9JfSvH6BdnkUvc5Oor+bZOeZyCbGjkcr5HZ4=;
+        b=ei8RVCiJniuVYtdveCGDhK+Ejfst95C/C3UDFlJVH3MEZTigY/XJV2M8gYtay+RAY/
+         cys+jSkrdifsgncHnEWecV1SEH85FZ3CjsJMd6lKetW6ImNrH/DW93A1Cepw6g6rk+9c
+         HNWAieDF7CgLm2uOeeZwucIVmjGpt/i2Ai8oCSgJ8zexnZMNfEAKmVAzKUuYRJsTOj18
+         YXRfFWuKHCscffuSlUFE457al3/2xXWs+F23bvUN1Q8CgrSQmoRlU1aZDqNH1qiOGl0c
+         P3wtnEpSPQ55xthTX+3HnL4x62PixqqZY+484wbAgre+gdxmHYbkwbhlKBAQUEFdORQc
+         zzaw==
+X-Gm-Message-State: AOJu0YxEb5lZoWbaoriO8homRUFOn7RsMi9eGGqAxN/qOFOExVvR5HNl
+	ThacAGxHxKXTeiJnRMo/J1SiGA==
+X-Google-Smtp-Source: AGHT+IFv9leUNZjNiQIqzlf8v4RMlj/DsgqhXWvcBbAW4P9cdbHdvPz7XGByDyW708WTbz3Wmi+1zA==
+X-Received: by 2002:a05:600c:350f:b0:405:49aa:d578 with SMTP id h15-20020a05600c350f00b0040549aad578mr15287501wmq.37.1700231042824;
+        Fri, 17 Nov 2023 06:24:02 -0800 (PST)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id y3-20020a05600c17c300b0040586360a36sm7047867wmo.17.2023.11.17.06.24.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Nov 2023 06:24:02 -0800 (PST)
+Message-ID: <3d980823-29d5-44a7-9cf2-4246c8ae3c83@linaro.org>
+Date: Fri, 17 Nov 2023 14:24:01 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231117112352.GS250770@thinkpad>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] clk: qcom: Add Global Clock controller (GCC) driver
+ for SC8380XP
+Content-Language: en-US
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, mturquette@baylibre.com, sboyd@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+Cc: agross@kernel.org, conor+dt@kernel.org, quic_tdas@quicinc.com,
+ quic_rjendra@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, neil.armstrong@linaro.org,
+ abel.vesa@linaro.org, quic_tsoni@quicinc.com
+References: <20231025133320.4720-1-quic_sibis@quicinc.com>
+ <20231025133320.4720-3-quic_sibis@quicinc.com>
+ <483c4de3-951c-4ba4-89fb-36fcd44fa99f@linaro.org>
+ <e857c853-51ef-8314-2a21-fa6fd25162ca@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <e857c853-51ef-8314-2a21-fa6fd25162ca@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Nov 17, 2023 at 04:53:52PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Nov 17, 2023 at 12:00:44PM +0100, Johan Hovold wrote:
-> > On Fri, Nov 17, 2023 at 04:24:04PM +0530, Manivannan Sadhasivam wrote:
-> > > On Fri, Nov 17, 2023 at 11:48:10AM +0100, Johan Hovold wrote:
-
-> > > > The coding style clearly states:
-> > > > 
-> > > > 	The preferred limit on the length of a single line is 80 columns.
-> > > > 
-> > > > 	Statements longer than 80 columns should be broken into sensible chunks,
-> > > > 	unless exceeding 80 columns significantly increases readability and does
-> > > > 	not hide information.
-> > > > 
-> > > > Going beyond 80 chars may sometimes be warranted for code, but the
-> > > > exception is not intended for comments.
-> > > 
-> > > Breaking the comment here is indeed making it hard to read. It's just one word
-> > > that needs to be broken if we go by 80 column limit and I won't prefer that,
-> > > sorry!
-> > 
-> > Please read the above quote again, it is as clear as it gets. 80 chars
-> > is the preferred limit unless (for code) exceeding it *significantly*
+On 17/11/2023 03:56, Sibi Sankar wrote:
+>>
+>> This is another discontinuinty with sc8280xp.
+>>
+>> Could you have a look through the sc8280xp gcc and do an aduit for 
+>> clk_rcg2_shared_ops as against sc8380xp ?
 > 
-> Where does it say "code" in the Documentation? As I read it, the doc weighs both
-> code and comment as "statement".
+> ack, will do a quick audit before the re-spin.
 
-No, comments are not statements (in C).
+A best guess will do, we will "shake out the bugs" through 
+suspend/resume real use cases anyway but, worth a quick pass since you 
+are doing a v2 for the SoC name.
 
-You'd also never even consider interpreting it that way if you knew
-where that exception comes from (namely that people break long
-*statements* just to fit under 80 chars, thereby sometimes making the
-*code* unnecessarily hard to read).
-
-> And how on the world that breaking a single word to the next line improves
-> readability? I fail to get it :/
-
-You got it backwards; you should only go *beyond* 80 chars if it
-"significantly increases readability".
-
-But again, this does NOT apply to comments in the first place.
-
-> > increases readability, which clearly isn't the case here (even if this
-> > exception applied to comments).
-> > 
-> > I really don't understand why you keep insisting on this. Just fix your
-> > editor.
-
-> But I do not want to get into a spat here. Checkpatch, the tool supposed to
-> check for the kernel coding style is not complaining and I do not want a patch
-> that _fixes_ a coding style that is not an issue.
-
-Checkpatch is just a tool, not the standard, and knowing when it is ok
-to break the 80 column rule for code requires human judgement.
-
-Johan
+---
+bod
 
