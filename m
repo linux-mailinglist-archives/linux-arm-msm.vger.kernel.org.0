@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 712197EF017
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4D6D7EF018
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:19:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BC243B20C49
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:19:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 835A31F2872F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:19:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31F7F18B06;
-	Fri, 17 Nov 2023 10:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A500918C11;
+	Fri, 17 Nov 2023 10:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="foUy/uke"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Td/EJHr5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 443A01723;
-	Fri, 17 Nov 2023 02:19:38 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AH9SBl8031529;
-	Fri, 17 Nov 2023 10:19:32 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E8BBD6C;
+	Fri, 17 Nov 2023 02:19:40 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AH9aCpN023980;
+	Fri, 17 Nov 2023 10:19:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-type; s=qcppdkim1;
- bh=RsChYDWMkOVrJHQxBZT4p8taBcUGAl8Q1dcX5YppBmE=;
- b=foUy/ukeocGf+E3YemI2np5BwaisoMcOuqqrhMYhxulgZ6l7/az3qLaNY8sWDVvMhmeq
- D+8zjCA/HAtx+MlN+brVN7wOeDl0ro9BlmHKTNHUgZsKifsG4byXcR4cMAmfN6daSzsh
- bQUIewG34ocEJ7tQa31y72zVvNSJWN2d5XT48XZMFvtgbJvW3eCWE6uTEPWIGSMICPDq
- n4kYUvfm23bID3K3gegRbDJB311Y7fSzTHTSyD4MdBON/+XIp89U6Z5LOsRXpTx3GtMh
- ci7ACENGNptjKkEAPyE37MDAUKNYM+d3H6bBEYWsJETJdiCmmn27UutaRNUH5gXud/Jf 7Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udmw42cs8-1
+ bh=n9xCiAAkP1ei2U4Nbz7Oc3igifK+7eScPyLV21qrCVg=;
+ b=Td/EJHr5eBgYjQGPcNeVlqgk6HXZPdJTUefRu8gd1p729HEixnuRP0nL+aiQvRk1QWzh
+ KWWKla0owJhT8QVAAdxPpvaeCLwznJigdfrm2mD5Y/oqkkspi79dqY5DlGRnINBXBCmX
+ b87XPhPCchthbGmCimJv+UpP9qXG3q82zs6luXp9o4ncuEOq094/SY2K9HORAXodjsus
+ 10G876fT90wiAN4XevKl9Yo+/6leUJlMoRIBMOYlOyJ6HCBrDX4PFjlDsB2byrlcOsvz
+ XIRz8K5+uI7Jfksz+hRcoeCVCkmK1ym0nvGZ8r/e7K3lTGXazXajmWrJDBdGqQDmOXun Ag== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ue5per2sa-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 10:19:32 +0000
+	Fri, 17 Nov 2023 10:19:35 +0000
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AHAJW3Y023093
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AHAJZfq012722
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 10:19:32 GMT
+	Fri, 17 Nov 2023 10:19:35 GMT
 Received: from tengfan2-gv.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Fri, 17 Nov 2023 02:19:28 -0800
+ 15.2.1118.39; Fri, 17 Nov 2023 02:19:31 -0800
 From: Tengfei Fan <quic_tengfan@quicinc.com>
 To: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
         <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
@@ -50,9 +50,9 @@ CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <-cc=kernel@quicinc.com>,
         Tengfei Fan
 	<quic_tengfan@quicinc.com>
-Subject: [PATCH 15/16] arm64: dts: qcom: sm8550-aim300: add pmic glink port/endpoints
-Date: Fri, 17 Nov 2023 18:18:16 +0800
-Message-ID: <20231117101817.4401-16-quic_tengfan@quicinc.com>
+Subject: [PATCH 16/16] arm64: dts: qcom: sm8550-aim300: add bluetooth support
+Date: Fri, 17 Nov 2023 18:18:17 +0800
+Message-ID: <20231117101817.4401-17-quic_tengfan@quicinc.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20231117101817.4401-1-quic_tengfan@quicinc.com>
 References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
@@ -68,146 +68,99 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GmPXurubAkUAU3eOhKJ8FiAzW1Z1I2V_
-X-Proofpoint-ORIG-GUID: GmPXurubAkUAU3eOhKJ8FiAzW1Z1I2V_
+X-Proofpoint-GUID: H6SAYjSkbeDy6wxx0uV8DkuHA8ulTgbd
+X-Proofpoint-ORIG-GUID: H6SAYjSkbeDy6wxx0uV8DkuHA8ulTgbd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-17_08,2023-11-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=734
- clxscore=1015 suspectscore=0 mlxscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311170076
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ mlxscore=0 suspectscore=0 mlxlogscore=824 clxscore=1015 lowpriorityscore=0
+ malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311170076
 
-Add nodes to support Type-C USB/DP functionality.
-
-On this platform, a Type-C redriver is added to the SuperSpeed graph.
+Enable the WCN7850 bluetooth over the UART14 link.
 
 Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 88 +++++++++++++++++++++-
- 1 file changed, 87 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 43 ++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
-index 6dc3040b9f76..f3c558dd40f1 100644
+index f3c558dd40f1..8129d57c4af1 100644
 --- a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
 +++ b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
-@@ -100,7 +100,15 @@
- 					reg = <1>;
+@@ -23,6 +23,7 @@
  
- 					pmic_glink_ss_in: endpoint {
--						remote-endpoint = <&usb_1_dwc3_ss>;
-+						remote-endpoint = <&redriver_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_sbu: endpoint {
-+						remote-endpoint = <&fsa4480_sbu_mux>;
- 					};
- 				};
- 			};
-@@ -519,6 +527,62 @@
+ 	aliases {
+ 		serial0 = &uart7;
++		serial1 = &uart14;
  	};
+ 
+ 	wcd938x: audio-codec {
+@@ -764,6 +765,10 @@
+ 	status = "okay";
  };
  
-+&i2c_master_hub_0 {
++&qupv3_id_1 {
 +	status = "okay";
 +};
 +
-+&i2c_hub_2 {
-+	status = "okay";
+ &remoteproc_adsp {
+ 	firmware-name = "qcom/sm8550/adsp.mbn",
+ 			"qcom/sm8550/adsp_dtb.mbn";
+@@ -841,6 +846,21 @@
+ &tlmm {
+ 	gpio-reserved-ranges = <32 8>;
+ 
++	bt_default: bt-default-state {
++		bt-en-pins {
++			pins = "gpio81";
++			function = "gpio";
++			drive-strength = <16>;
++			bias-disable;
++		};
 +
-+	typec-mux@42 {
-+		compatible = "fcs,fsa4480";
-+		reg = <0x42>;
-+
-+		vcc-supply = <&vreg_bob1>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			fsa4480_sbu_mux: endpoint {
-+				remote-endpoint = <&pmic_glink_sbu>;
-+			};
++		sw-ctrl-pins {
++			pins = "gpio82";
++			function = "gpio";
++			bias-pull-down;
 +		};
 +	};
 +
-+	typec-retimer@1c {
-+		compatible = "onnn,nb7vpq904m";
-+		reg = <0x1c>;
+ 	sde_dsi_active: sde-dsi-active-state {
+ 		pins = "gpio133";
+ 		function = "gpio";
+@@ -882,6 +902,29 @@
+ 	status = "okay";
+ };
+ 
++&uart14 {
++	status = "okay";
 +
-+		vcc-supply = <&vreg_l15b_1p8>;
++	bluetooth {
++		compatible = "qcom,wcn7850-bt";
 +
-+		orientation-switch;
-+		retimer-switch;
++		enable-gpios = <&tlmm 81 GPIO_ACTIVE_HIGH>;
++		swctrl-gpios = <&tlmm 82 GPIO_ACTIVE_HIGH>;
 +
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
++		max-speed = <3200000>;
 +
-+			port@0 {
-+				reg = <0>;
++		pinctrl-0 = <&bt_default>;
++		pinctrl-names = "default";
 +
-+				redriver_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				redriver_ss_in: endpoint {
-+					data-lanes = <3 2 1 0>;
-+					remote-endpoint = <&usb_dp_qmpphy_out>;
-+				};
-+			};
-+		};
++		vddio-supply = <&vreg_l15b_1p8>;
++		vddaon-supply = <&vreg_s4e_0p95>;
++		vdddig-supply = <&vreg_s4e_0p95>;
++		vddrfa0p8-supply = <&vreg_s4e_0p95>;
++		vddrfa1p2-supply = <&vreg_s4g_1p25>;
++		vddrfa1p9-supply = <&vreg_s6g_1p86>;
 +	};
 +};
 +
- &gcc {
- 	clocks = <&bi_tcxo_div2>, <&sleep_clk>,
- 		 <&pcie0_phy>,
-@@ -552,6 +616,16 @@
- 	status = "okay";
- };
- 
-+&mdss_dp0 {
-+	status = "okay";
-+};
-+
-+&mdss_dp0_out {
-+	data-lanes = <0 1>;
-+	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
-+};
-+
-+
- &mdss_dsi0 {
- 	vdda-supply = <&vreg_l3e_1p2>;
- 	status = "okay";
-@@ -861,6 +935,18 @@
- 	status = "okay";
- };
- 
-+&usb_dp_qmpphy_dp_in {
-+	remote-endpoint = <&mdss_dp0_out>;
-+};
-+
-+&usb_dp_qmpphy_out {
-+	remote-endpoint = <&redriver_ss_in>;
-+};
-+
-+&usb_dp_qmpphy_usb_ss_in {
-+	remote-endpoint = <&usb_1_dwc3_ss>;
-+};
-+
- &xo_board {
- 	clock-frequency = <76800000>;
- };
+ &ufs_mem_hc {
+ 	reset-gpios = <&tlmm 210 GPIO_ACTIVE_LOW>;
+ 	vcc-supply = <&vreg_l17b_2p5>;
 -- 
 2.17.1
 
