@@ -1,46 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 588EA7EF1F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 12:40:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5A677EF1F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 12:40:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1559B209AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:40:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3680EB20996
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:40:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C9FB12E79;
-	Fri, 17 Nov 2023 11:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EE3030351;
+	Fri, 17 Nov 2023 11:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YmX2uRDQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OB/CgF+e"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850F0D56;
-	Fri, 17 Nov 2023 03:40:24 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AHBRika005588;
-	Fri, 17 Nov 2023 11:40:00 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC80210D0;
+	Fri, 17 Nov 2023 03:40:26 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AHBWCxr022071;
+	Fri, 17 Nov 2023 11:40:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=zTZJi7EnLk1lHJmph3SFPSN9oW4rOikhO8rYh4OFqc4=;
- b=YmX2uRDQsdzamh32CRAI0CRI5fpj2JTNA6hpz61d/AnGEO3XGT0kF1z79dDgObqvj4O9
- AJCsvWHe/pceM+dk2KVGSlN0DnSjFFQdR29/bg4jaKUM58Tnh3L9dOllh/CBx+34Fv2R
- ZE4QxdUTuiY5XV271k7/6iWSsTAML+zZCBV9E5SEAzQgQItm45GFlEkkd/eHOjuHDeqf
- r6r8Oo/TxLej6mqvel9E6x5wjAyJ6v55nPrgJvz8NBYvZo+A4z0fdliMgaayc/AzchzY
- vJ9Ewg6gg/NCtFDFiuAxa7oZEh1bTFVC+O+q1NPRpQ5ChNHVUfb4VomBoKUpGzlGFLlT 2g== 
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=qcppdkim1;
+ bh=DMO9sdxCWv8v9C039iwN8zfvNxuK1oQLOqIAhJMRyII=;
+ b=OB/CgF+eaJOSu7Ovzg7hn/OTVoF1MHjZRHZ1Ayn3ST7z046P9ebzSOP93BoLKtm1+mZj
+ Yn7CnC9HkDfcylU93nv/hp+XBe0ZRQLaA055q9Hd+foh0hcNM8YAKV6nG7winrNmQECy
+ ccn8/5JdGMJ4CN/6yCVvS4h3CLx/GiUWoU0lKHsBD38tY+LBTKJ51ZMy1C2ViyFqNcSA
+ QND1l+TqKBHkXd591iP9+eU3V6/gG+R50Orbyr744flYysY9IgZU5/0sRgefZF7UsYVK
+ GFPRcGMvJy/4Zx/ar5E5Ws7v3s99oeaBEVaSxHLB6R7t6/vym9m8Y82B7rZvYh/ZUbcy 2Q== 
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ue6var2cd-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udpqq26f8-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 11:40:00 +0000
+	Fri, 17 Nov 2023 11:40:07 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AHBdwCg004382
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AHBe6WD004639
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 11:39:58 GMT
+	Fri, 17 Nov 2023 11:40:06 GMT
 Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 17 Nov 2023 03:39:51 -0800
+ 15.2.1118.40; Fri, 17 Nov 2023 03:39:59 -0800
 From: Sibi Sankar <quic_sibis@quicinc.com>
 To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
         <krzysztof.kozlowski+dt@linaro.org>, <catalin.marinas@arm.com>,
@@ -55,10 +56,12 @@ CC: <agross@kernel.org>, <conor+dt@kernel.org>, <ayan.kumar.halder@amd.com>,
         <quic_tsoni@quicinc.com>, <neil.armstrong@linaro.org>,
         Sibi Sankar
 	<quic_sibis@quicinc.com>
-Subject: [PATCH V2 0/5] dts: qcom: Introduce X1E80100 platforms device tree
-Date: Fri, 17 Nov 2023 17:09:26 +0530
-Message-ID: <20231117113931.26660-1-quic_sibis@quicinc.com>
+Subject: [PATCH V2 1/5] dt-bindings: arm: cpus: Add qcom,oryon compatible
+Date: Fri, 17 Nov 2023 17:09:27 +0530
+Message-ID: <20231117113931.26660-2-quic_sibis@quicinc.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20231117113931.26660-1-quic_sibis@quicinc.com>
+References: <20231117113931.26660-1-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,71 +74,43 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fdz1zCHqMhuvRpwAjQL-idsBaHSBgTjd
-X-Proofpoint-ORIG-GUID: fdz1zCHqMhuvRpwAjQL-idsBaHSBgTjd
+X-Proofpoint-GUID: s80nqTBJnEBahMXAxwu36mvX3eUwVz8b
+X-Proofpoint-ORIG-GUID: s80nqTBJnEBahMXAxwu36mvX3eUwVz8b
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-17_09,2023-11-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 malwarescore=0
- phishscore=0 impostorscore=0 mlxlogscore=999 adultscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311170087
+ definitions=2023-11-17_08,2023-11-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 phishscore=0 spamscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 mlxlogscore=956 impostorscore=0 suspectscore=0
+ mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311170087
 
-This series adds the initial (clocks, pinctrl, rpmhpd, regulator, interconnect,
-CPU, SoC and board compatibles) device tree support to boot to shell on the
-Qualcomm X1E80100 platform, aka Snapdragon X Elite.
+From: Rajendra Nayak <quic_rjendra@quicinc.com>
 
-Our v1 post of the patchsets adding support for Snapdragon X Elite SoC had
-the part number sc8380xp which is now updated to the new part number x1e80100
-based on the new branding scheme and refers to the exact same SoC.
+These are the CPU cores in Qualcomm's X1E80100 SoC.
+
+Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+---
 
 v2:
 * Update the part number from sc8380xp to x1e80100.
-* Fixup ordering in the SoC/board bindings. [Krzysztof]
-* Add pdc node and add wakeup tlmm parent. [Rajendra]
-* Add cpu/cluster idle states. [Bjorn]
-* Document reserved gpios. [Konrad]
-* Remove L1 and add missing props to L2. [Konrad]
-* Remove region suffix. [Konrad]
-* Append digits to gcc node. [Konrad]
-* Add ICC_TAGS instead of leaving it unspecified. [Konrad]
-* Remove double space. [Konrad]
-* Leave the size index of memory node untouched. [Konrad]
-* Override the serial uart with "qcom,geni-debug-uart" in the board files. [Rajendra]
-* Add additional details to patch 5 commit message. [Konrad/Krzysztof]
 
-Dependencies:
-clks: https://lore.kernel.org/lkml/20231117092737.28362-1-quic_sibis@quicinc.com/
-interconnect: https://lore.kernel.org/lkml/20231117103035.25848-1-quic_sibis@quicinc.com/
-llcc: https://lore.kernel.org/lkml/20231117095315.2087-1-quic_sibis@quicinc.com/
-misc-bindings: https://lore.kernel.org/lkml/20231117105635.343-1-quic_sibis@quicinc.com/
-pinctrl: https://lore.kernel.org/lkml/20231117093921.31968-1-quic_sibis@quicinc.com/
-rpmhpd: https://lore.kernel.org/lkml/20231117104254.28862-1-quic_sibis@quicinc.com/
+ Documentation/devicetree/bindings/arm/cpus.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Release Link: https://www.qualcomm.com/news/releases/2023/10/qualcomm-unleashes-snapdragon-x-elite--the-ai-super-charged-plat
-
-Rajendra Nayak (4):
-  dt-bindings: arm: cpus: Add qcom,oryon compatible
-  dt-bindings: arm: qcom: Document X1E80100 SoC and boards
-  arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts
-  arm64: defconfig: Enable X1E80100 SoC base configs
-
-Sibi Sankar (1):
-  arm64: dts: qcom: x1e80100: Add Compute Reference Device
-
- .../devicetree/bindings/arm/cpus.yaml         |    1 +
- .../devicetree/bindings/arm/qcom.yaml         |    8 +
- arch/arm64/boot/dts/qcom/Makefile             |    2 +
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts     |  425 ++
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts     |  400 ++
- arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 3509 +++++++++++++++++
- arch/arm64/configs/defconfig                  |    3 +
- 7 files changed, 4348 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-crd.dts
- create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
- create mode 100644 arch/arm64/boot/dts/qcom/x1e80100.dtsi
-
+diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+index ffd526363fda..cc5a21b47e26 100644
+--- a/Documentation/devicetree/bindings/arm/cpus.yaml
++++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+@@ -198,6 +198,7 @@ properties:
+       - qcom,kryo660
+       - qcom,kryo685
+       - qcom,kryo780
++      - qcom,oryon
+       - qcom,scorpion
+ 
+   enable-method:
 -- 
 2.17.1
 
