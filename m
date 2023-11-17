@@ -1,89 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C7D87EEE1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:06:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B8A77EEE20
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:06:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 443E91F22A7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:06:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 560AF280ED9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:06:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ECE8D296;
-	Fri, 17 Nov 2023 09:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E08ADEAF9;
+	Fri, 17 Nov 2023 09:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="puCuLAK5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ph8JTNUw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7826192
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 01:06:36 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5a84204e7aeso19801327b3.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 01:06:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700211995; x=1700816795; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7M4IZAQ9+XnnOMIQTa5CdmsUeDB/YjFOMkhJk8m36U8=;
-        b=puCuLAK50vv6TomWvohI6jd6pNVl/IJilCOgRPAaTfWut6WhfilDeCknRCnjqaMvfB
-         GUgnNetzoTXR31sd8ZfaVqAICicPsc7M9CavGggXJ5iz2nQHeZX4pyVC2rDJcMQM7OAl
-         bVQ1ga5oLmVXG9JvSKBY4Ce706JFuOWaqcJztBuww8mooRqsxvNz8meWrcaeW4aZlR6M
-         HR/vGRkuH7wUVAAvsRRGfSWE6Crelr23Pt67+DmvUnLTS4hI9rLfTPJNOygA05dIqLxv
-         L8BduMTCFPTe3cUhy9+Vxg0mcZaSGyfk7UJnCPPrZ9nbw5ZuLx/p6jSoMCBUIrKwmt/p
-         ZH4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700211995; x=1700816795;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7M4IZAQ9+XnnOMIQTa5CdmsUeDB/YjFOMkhJk8m36U8=;
-        b=r7X9zULWoLlGPyqLd0J0rKOcyJZhYCJ5FNnfwYWUnOaI+uOmrKD/CRadOEXogwlwvR
-         LBh66DvzLuw70KExT/Q48MCWmL8xXXGjNTOhV5thFLU1Zr/SeTNB9qItCfOtmG1iag1m
-         BQGE6XcCjS9JHKvYy3WOaI/evKsNdJc+DeK8JHjGC5hyovrMG5WHO0njHw/VPmh9kpTp
-         Vi4U+QyAYQjvl4s+KZsqOXBgzoe8yzi3iZs1tiIfJASJ7FYx1cCg2chyZ2o7UBgHJBwU
-         0mFzElN4lhm8mal3JHZPq2vWCQfp+J3qNeozlEMj34xmA15oyvQ0vzl2ZCexOA234K/2
-         HWzA==
-X-Gm-Message-State: AOJu0YxUPEaXXCsFqsUaVW424ODWAe4KHig+z/4410CaAKi689iNOiET
-	GCd+WAC0M6TNciO8yMia8F+sDFmjD48uzjlbsMTaIA==
-X-Google-Smtp-Source: AGHT+IHvocYihGXhsoXfu9oZPl3MGyCmjSepLGXk4+LJxU49mkOxTdvhOtaUaUzIwDCfjQrpBN+oiNjND7EMB8oHRdk=
-X-Received: by 2002:a81:8357:0:b0:5ad:cd52:d6f0 with SMTP id
- t84-20020a818357000000b005adcd52d6f0mr21344300ywf.45.1700211995690; Fri, 17
- Nov 2023 01:06:35 -0800 (PST)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A6CD296;
+	Fri, 17 Nov 2023 09:06:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F80DC433C8;
+	Fri, 17 Nov 2023 09:06:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700212012;
+	bh=T2mILB6OLuIKTcfZr2BT0zwlCFYVwcwy0W1B4jyIbBE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ph8JTNUwYgHtIXJfkfXPfLie5d2K5Wq7VgxuXrBZHlXit6KamtJbUtOoX5xMiPa8A
+	 WUCPHw0FLlH3j9CX/vgJ0uRohjNxLdFFxSGyDhtENnG9sBVOFPm43vcBFvbG7vg906
+	 dzRvI4DM9urmNNRj8LcfFjxtK3QS1gOYduKIgsi9zbWQv2bVMGtRqIt/tmLQaSGu9p
+	 a3JFTg6j8ArUTbhERl+jSspESFJ9ii/zQmyBECMLfRy5x+JUlYNZWVY3R++zwMP7qk
+	 /0aXsEY+KOV1XzaN+8F8S2DXZVPP6IyhZK26tvXj29oTozCor0sD7ocf5KCzN8nOg3
+	 jgUt9gI0Rabrw==
+Date: Fri, 17 Nov 2023 14:36:40 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+	dmitry.baryshkov@linaro.org, robh@kernel.org,
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+	quic_parass@quicinc.com, quic_schintav@quicinc.com,
+	quic_shijjose@quicinc.com,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sa8775p: Mark PCIe controller
+ as cache coherent
+Message-ID: <20231117090640.GB250770@thinkpad>
+References: <1700051821-1087-1-git-send-email-quic_msarkar@quicinc.com>
+ <1700051821-1087-4-git-send-email-quic_msarkar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231117055849.534671-1-quic_rohiagar@quicinc.com>
-In-Reply-To: <20231117055849.534671-1-quic_rohiagar@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 17 Nov 2023 11:06:24 +0200
-Message-ID: <CAA8EJpq0M3ykX0DsdHoMnqs8EAfU98w2Ky350Sgi9_AWpTHB1w@mail.gmail.com>
-Subject: Re: [PATCH v3] arm64: defconfig: Enable GCC, pinctrl and interconnect
- for SDX75
-To: Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc: catalin.marinas@arm.com, will@kernel.org, quic_bjorande@quicinc.com, 
-	geert+renesas@glider.be, konrad.dybcio@linaro.org, arnd@arndb.de, 
-	krzysztof.kozlowski@linaro.org, neil.armstrong@linaro.org, 
-	nfraprado@collabora.com, m.szyprowski@samsung.com, u-kumar1@ti.com, 
-	peng.fan@nxp.com, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	kernel@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1700051821-1087-4-git-send-email-quic_msarkar@quicinc.com>
 
-On Fri, 17 Nov 2023 at 07:59, Rohit Agarwal <quic_rohiagar@quicinc.com> wrote:
->
-> Enable Global Clock controller, pinctrl and interconnect framework
-> support for Qualcomm's SDX75 SoC which is required to boot to
-> console on sdx75-idp platform.
->
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+On Wed, Nov 15, 2023 at 06:07:01PM +0530, Mrinmay Sarkar wrote:
+> The PCIe controller on SA8775P supports cache coherency, hence add the
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+"PCIe RC controller" both in subject and description.
 
+> "dma-coherent" property to mark it as such.
+> 
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+
+With that,
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 7eab458..ab01efe 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -3620,6 +3620,7 @@
+>  				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
+>  		interconnect-names = "pcie-mem", "cpu-pcie";
+>  
+> +		dma-coherent;
+>  		iommus = <&pcie_smmu 0x0000 0x7f>;
+>  		resets = <&gcc GCC_PCIE_0_BCR>;
+>  		reset-names = "core";
+> -- 
+> 2.7.4
+> 
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
