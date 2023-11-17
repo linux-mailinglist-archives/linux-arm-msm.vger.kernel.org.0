@@ -1,157 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B38117EF537
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 16:24:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCB557EF5CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 17:03:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6AED280DCA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 15:24:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6070DB20C0F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 16:03:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2CE6328CA;
-	Fri, 17 Nov 2023 15:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C70E3EA6A;
+	Fri, 17 Nov 2023 16:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OaFko0/q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jOyDALbl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4795EA6;
-	Fri, 17 Nov 2023 07:24:32 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1cc316ccc38so18961505ad.1;
-        Fri, 17 Nov 2023 07:24:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700234672; x=1700839472; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uBvEQIGbC4HURF/ntUyUlcav9b00XtnohKM7H7UZq1s=;
-        b=OaFko0/qtrAFxBOJmfA0XFJ32AcaZ5bQvg8MUpcvjBYE8zEnHS0jZWAZ2wa/IXrLst
-         e+1fgoOotAPqD/W1mQLqUmyvJY3TPg95nIn85iNj6/50ptRjlb26IXY+FHoQDhnJMoIc
-         oQ1ryjkOK/Z8cdxj48G0T+sPO6A5DGIlxlGDDX0kZaVa7WNiO5ZVzcDiXPYWpeYo03Pg
-         vYsTmxesQDdZuWdiAqyCaBS7RfaN3BLG/nUPAq2qDQJ5sDwCngfVQ2D9m4AHFTyG2YUm
-         96hJYdvpbhdMljRUcQILB+4upC1LYvtWL7nr/hlrwDzpVqJmHf2dJWMzEkl6Fxq1Ef4t
-         RYhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700234672; x=1700839472;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uBvEQIGbC4HURF/ntUyUlcav9b00XtnohKM7H7UZq1s=;
-        b=UkgvfHVbSn7g3W1Nae9hDq/axGQbJbfo0L1+9POSeWT2Q4teqF5h2bPevfWXGv0FUF
-         U/XzcNxeB9wjexERjTWg5b48gxFXCOg/MaqotJ948CLgTlwWHCYts2Eylo7EYQtdTjQa
-         r8hZZ4I8bUKkPHr55uUIBavFFW3wFfIthvuoHGZ7TXikmFZKJGKDC8hfJ7A5UCDwd6Q2
-         HQ8HvihsgAaGdznf8HE20Ah/I8RzjJfCxCbquSg90cOiJJbYx4lJYohwQSQiTeSD9OEm
-         XaznHL+iHi3bwARzBhyr3Z61FIT2Oh9tJZwu+/LcImIYH7Pls25vnqpQLN+RUtd2QcXy
-         Em4g==
-X-Gm-Message-State: AOJu0Yzza17JwhK0g82NKmFRCOqnrhYkFcZF/bK2dsup1JYbs3ag487e
-	cnT0g3se5zEn+WRiyNPjVAQ=
-X-Google-Smtp-Source: AGHT+IGTPCDBXhcUUjrXC4Dbd4cFWutY1Bl9KA7ZGsMeXgRJUlzNmkIzq5Rli0oYI5LYgJOwaYw/Zw==
-X-Received: by 2002:a17:902:e5c3:b0:1ce:5b6d:e6b1 with SMTP id u3-20020a170902e5c300b001ce5b6de6b1mr3482012plf.17.1700234671579;
-        Fri, 17 Nov 2023 07:24:31 -0800 (PST)
-Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
-        by smtp.gmail.com with ESMTPSA id d12-20020a170902cecc00b001c73f3a9b88sm1504162plg.110.2023.11.17.07.24.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Nov 2023 07:24:31 -0800 (PST)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] drm/msm/gpu: Skip retired submits in recover worker
-Date: Fri, 17 Nov 2023 07:24:28 -0800
-Message-ID: <20231117152428.367592-1-robdclark@gmail.com>
-X-Mailer: git-send-email 2.41.0
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CB1E1;
+	Fri, 17 Nov 2023 08:02:53 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AHCv0fl014041;
+	Fri, 17 Nov 2023 16:02:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=x0M3wklGqflq1G+DQ/EFE56suGOIsWSY/I+nLdmUqqo=;
+ b=jOyDALbl6JXQ7g5iwKBUMsdapWtX53GmIZx696gE3wnpWDE+yfLmrmQJsa6YFpeacj2w
+ /arnCpHAh3lfTZXYHVIOBEzRtnvcUOhPC8aMVS3570iAw0uZCz4ydTmsBrAOSM++YUHh
+ ykEstO0jTkVHXOy2DWnFkPGXIVY+wRtw/Dr+ClnN69KqF1+bn7+gJtb5aeuP/ciWRPJJ
+ 3lqCi5RkM0pbJEXLDGEY+pyUGkOuSxooyDf2skpEvaJX4hEsxK9A5Lu6loQCSHSkpqWV
+ RdSoLBPS6Oom3kMD3I6UarqS/X6589JPeOylR2gu77cj5rnJkxJppJiyhhdYnRHvHVyk jg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udkkuu75v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Nov 2023 16:02:25 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AHG2OZg001517
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Nov 2023 16:02:24 GMT
+Received: from [10.79.43.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 17 Nov
+ 2023 08:02:17 -0800
+Message-ID: <045261f7-ec6d-7c90-bdbe-3cd1a58143b7@quicinc.com>
+Date: Fri, 17 Nov 2023 21:32:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V2 4/4] dt-bindings: interrupt-controller: qcom,pdc:
+ document pdc on X1E80100
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <will@kernel.org>,
+        <robin.murphy@arm.com>, <joro@8bytes.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC: <agross@kernel.org>, <vkoul@kernel.org>, <quic_gurus@quicinc.com>,
+        <conor+dt@kernel.org>, <quic_rjendra@quicinc.com>,
+        <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dmaengine@vger.kernel.org>, <iommu@lists.linux.dev>,
+        <quic_tsoni@quicinc.com>, <neil.armstrong@linaro.org>
+References: <20231117105635.343-1-quic_sibis@quicinc.com>
+ <20231117105635.343-5-quic_sibis@quicinc.com>
+ <67e7df38-d0a9-4513-9eb8-1114a9ecc3b3@linaro.org>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <67e7df38-d0a9-4513-9eb8-1114a9ecc3b3@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: YYKJT12kYHoQtWKXUVMdTT2tt_zrJJyC
+X-Proofpoint-ORIG-GUID: YYKJT12kYHoQtWKXUVMdTT2tt_zrJJyC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-17_14,2023-11-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ mlxlogscore=498 clxscore=1015 spamscore=0 impostorscore=0
+ lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311170119
 
-From: Rob Clark <robdclark@chromium.org>
+On 11/17/23 18:37, Krzysztof Kozlowski wrote:
+> On 17/11/2023 11:56, Sibi Sankar wrote:
+>> The X1E80100 SoC includes a PDC, document it.
+>>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+> 
+> Please rebase on next.
 
-If we somehow raced with submit retiring, either while waiting for
-worker to have a chance to run or acquiring the gpu lock, then the
-recover worker should just bail.
+This series was based on lnext-20231117.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gpu.c | 41 +++++++++++++++++++----------------
- 1 file changed, 22 insertions(+), 19 deletions(-)
+-Sibi
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 3fad5d58262f..fd3dceed86f8 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -365,29 +365,31 @@ static void recover_worker(struct kthread_work *work)
- 	DRM_DEV_ERROR(dev->dev, "%s: hangcheck recover!\n", gpu->name);
- 
- 	submit = find_submit(cur_ring, cur_ring->memptrs->fence + 1);
--	if (submit) {
--		/* Increment the fault counts */
--		submit->queue->faults++;
--		if (submit->aspace)
--			submit->aspace->faults++;
- 
--		get_comm_cmdline(submit, &comm, &cmd);
-+	/*
-+	 * If the submit retired while we were waiting for the worker to run,
-+	 * or waiting to acquire the gpu lock, then nothing more to do.
-+	 */
-+	if (!submit)
-+		goto out_unlock;
- 
--		if (comm && cmd) {
--			DRM_DEV_ERROR(dev->dev, "%s: offending task: %s (%s)\n",
--				gpu->name, comm, cmd);
-+	/* Increment the fault counts */
-+	submit->queue->faults++;
-+	if (submit->aspace)
-+		submit->aspace->faults++;
- 
--			msm_rd_dump_submit(priv->hangrd, submit,
--				"offending task: %s (%s)", comm, cmd);
--		} else {
--			msm_rd_dump_submit(priv->hangrd, submit, NULL);
--		}
-+	get_comm_cmdline(submit, &comm, &cmd);
-+
-+	if (comm && cmd) {
-+		DRM_DEV_ERROR(dev->dev, "%s: offending task: %s (%s)\n",
-+			      gpu->name, comm, cmd);
-+
-+		msm_rd_dump_submit(priv->hangrd, submit,
-+				   "offending task: %s (%s)", comm, cmd);
- 	} else {
--		/*
--		 * We couldn't attribute this fault to any particular context,
--		 * so increment the global fault count instead.
--		 */
--		gpu->global_faults++;
-+		DRM_DEV_ERROR(dev->dev, "%s: offending task: unknown\n", gpu->name);
-+
-+		msm_rd_dump_submit(priv->hangrd, submit, NULL);
- 	}
- 
- 	/* Record the crash state */
-@@ -440,6 +442,7 @@ static void recover_worker(struct kthread_work *work)
- 
- 	pm_runtime_put(&gpu->pdev->dev);
- 
-+out_unlock:
- 	mutex_unlock(&gpu->lock);
- 
- 	msm_gpu_retire(gpu);
--- 
-2.41.0
-
+> 
+> Best regards,
+> Krzysztof
+> 
 
