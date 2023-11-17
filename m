@@ -1,159 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6AF87EEECF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:38:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C54297EEEC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:33:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D85D01C20905
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:38:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7BE95280D8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:33:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E75614284;
-	Fri, 17 Nov 2023 09:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEAE11426A;
+	Fri, 17 Nov 2023 09:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pFxot3H/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AbJpxXIK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71DFEC4;
-	Fri, 17 Nov 2023 01:38:35 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AH8h2G5009158;
-	Fri, 17 Nov 2023 09:38:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=AMbbiu9sNr2NWbbmpOhk/Q3RiJu55M9uGg3d6nn2ijk=;
- b=pFxot3H/RmFIQ0TNv4Ozkyk2xe99mVfiYPZNpV2xKp4O0fa+lzHtZ8iTMJMB55YYJb35
- 9+6SzrcRRQmSuTxaX9X2vWopgMBUeQ6Z3iD4FGn39ghT4zCAkf4bN9J/TJkLaTwo3Ur+
- LJnCtkJXCIrn9Pamx7UZa9+oR6n/vTo9KC8ZjUhItsm3Krny0nxnF0aewznqtKH7JcJq
- ALxSHf88Iiv8KuyVcfJRu9QZTm1Xwi+LzsjpomChKZ68ZvT2tsO749MIAqh7cP/H1EQS
- gRQc7uBEMESh/HFkSysFvR/WX4WDxBckfDvdL4AXToXXPVVMR8rBFJ0AXHbEL3ur3s6Z bQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udms92aww-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 09:38:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AH9cTMR028066
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 09:38:30 GMT
-Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Fri, 17 Nov 2023 01:28:23 -0800
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC: <agross@kernel.org>, <conor+dt@kernel.org>, <quic_tdas@quicinc.com>,
-        <quic_rjendra@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <neil.armstrong@linaro.org>,
-        <abel.vesa@linaro.org>, <quic_tsoni@quicinc.com>,
-        Sibi Sankar
-	<quic_sibis@quicinc.com>
-Subject: [PATCH V2 4/4] clk: qcom: rpmh: Add support for X1E80100 rpmh clocks
-Date: Fri, 17 Nov 2023 14:57:37 +0530
-Message-ID: <20231117092737.28362-5-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231117092737.28362-1-quic_sibis@quicinc.com>
-References: <20231117092737.28362-1-quic_sibis@quicinc.com>
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2076D4E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 01:33:30 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5be6d6c04bfso19022027b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 01:33:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700213610; x=1700818410; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=v760LgpcfQOP0YeuG/30ZJ0hYcCt31Y4fxVmQiAp9qA=;
+        b=AbJpxXIKhs5PE+dfsniMzY02N9ojS6WFDP3EZX41VNtFg/xjoVu0PD67zZia3ZLcgx
+         dUdQgkDKlXxdzp/orUKj/A7hzP1Sz4AXiYH+tdHciedS8XsNyQ8FUm7EJ9NsF8TG7ybp
+         1Niy3XIf3/spEW6v2jT5W0OyftXYghhu0/BXfqdcjd8bA8YMRD8ZahLpPdqiCLoO5gjk
+         sIsLWZ7GLxUsmf38dMs6LsynWQEHn8kCXZCx6be1p0YmFfl0i48qGNVhEDdEPfWgehq3
+         Ztr8EgW6//kIQKHokvgwjqPhwUQDUeiu6bi0i7ZEGN5b5foiuYZQn6fSVg6rbFzvKcjO
+         TIuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700213610; x=1700818410;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=v760LgpcfQOP0YeuG/30ZJ0hYcCt31Y4fxVmQiAp9qA=;
+        b=FthIR8o0rxZpEHFmZH3J1huYOjoS2yImh0EcTOfuHsqmq3WrN/qOCnmjqlWGr138Jm
+         iJmUME5F2AuKr4V6QaCHLiaugikqTUprPfmaeRtDZtL2e0000e4fhJvB8i25BElV2tFG
+         pb1LpljNJ0o3+u2OjaZyz0YTym7cNUDwMlalzjdRuv+jgOFkBzkJlRxrMzJutzUe20lq
+         NftBm+5/REQzFncCeJeqa6OnmpIS7VlLC0zREuHy5FYXH1EI46IC5QyljZvxAki27rp1
+         xxWAzrDEV3vR/S58yuFgbrpVH7eQLQhosP9aO4KzaoGlNkeGdWRMmyCYp5sp2LS1LNAK
+         tNrg==
+X-Gm-Message-State: AOJu0YwE9qHKYL1/GX2c1V2H7pYJV/X0k/khDkpE4Hey3o+I5yCp1qOY
+	VQ4b9rtSd+GrW9Dav20X8HdgGjLubH8cx3Lxdo9s+Q==
+X-Google-Smtp-Source: AGHT+IFK3e0M4t/vG0KKQGcetbavVwPTP98E38NRyc8wthbNVKwBEsAsuMN/W/rfY75Lu6AiZ0ieKM7si7+AeZXz+wU=
+X-Received: by 2002:a81:9c52:0:b0:5c6:9488:4c99 with SMTP id
+ n18-20020a819c52000000b005c694884c99mr1803791ywa.18.1700213610008; Fri, 17
+ Nov 2023 01:33:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VVTv3h6XDhFy7KsJyNUPqVPdSfoBGXAy
-X-Proofpoint-ORIG-GUID: VVTv3h6XDhFy7KsJyNUPqVPdSfoBGXAy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-17_07,2023-11-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 spamscore=0
- lowpriorityscore=0 clxscore=1015 malwarescore=0 impostorscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 bulkscore=0 adultscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311170070
+References: <20231103184655.23555-1-quic_kbajaj@quicinc.com>
+ <20231103184655.23555-3-quic_kbajaj@quicinc.com> <CAA8EJprNyu0r_mV9hbKA1fSvoEvTHuk5umxU8H64Voj_cnZcFQ@mail.gmail.com>
+ <4d8c094f-07b0-2b38-4680-145eb2d7c4f5@quicinc.com>
+In-Reply-To: <4d8c094f-07b0-2b38-4680-145eb2d7c4f5@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 17 Nov 2023 11:33:18 +0200
+Message-ID: <CAA8EJpr_PwD0kD0RdgcwLCGaCdau+3EUPAQd32hxccNbtoKaKg@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: qcm6490: Add qcm6490 idp and
+ rb3 board
+To: Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_nainmeht@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-From: Rajendra Nayak <quic_rjendra@quicinc.com>
+On Fri, 17 Nov 2023 at 08:53, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
 
-Adds the RPMH clocks present in X1E80100 SoC
+No HTML mail on kernel mailing lists, please. Some developers can have
+'MIME => junk' mail filters.
+And replying to the HTML mail messes up quotation level.
 
-Co-developed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
+> On 11/4/2023 3:52 AM, Dmitry Baryshkov wrote:
+>
+> On Fri, 3 Nov 2023 at 20:49, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
+>
+> Add qcm6490 devicetree file for QCM6490 IDP and QCM6490 RB3
+> platform. QCM6490 is derived from SC7280 meant for various
+> form factor including IoT.
+>
+> Supported features are, as of now:
+> * Debug UART
+> * eMMC (only in IDP)
+> * USB
+>
+> Co-developed-by: Naina Mehta <quic_nainmeht@quicinc.com>
+> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile             |   2 +
+>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts      |  33 ++
+>  .../boot/dts/qcom/qcm6490-iot-common.dtsi     | 291 ++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/qcm6490-rb3.dts      |  26 ++
+>  4 files changed, 352 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-iot-common.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-rb3.dts
+>
+>
+> [...]
+>
+>
+> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-rb3.dts b/arch/arm64/boot/dts/qcom/qcm6490-rb3.dts
+> new file mode 100644
+> index 000000000000..5b4c2826ac5c
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/qcm6490-rb3.dts
+> @@ -0,0 +1,26 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +/* PM7250B is configured to use SID8/9 */
+> +#define PM7250B_SID 8
+> +#define PM7250B_SID1 9
+> +
+> +#include "qcm6490-iot-common.dtsi"
+> +#include "pm7250b.dtsi"
+> +
+> +/ {
+> +       model = "Qualcomm Technologies, Inc. QCM6490 RB3";
+>
+> Is this a marketing name of the platform?
+>
+>
+> Sorry for the confusion, QCS6490 RB3gen2 is the correct marketing name for this board.
+> Will correct this in the next patchset.
 
-v2:
-* Update the part number from sc8380xp to x1e80100.
-* Pick-up Rbs from the list.
+Then it is probably "Qualcomm Technologies, Inc. Robotics RB3gen2"?
 
- drivers/clk/qcom/clk-rpmh.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+> +       compatible = "qcom,qcm6490-rb3", "qcom,qcm6490";
+>
+> chassis-type = ?
+>
+>
+> No, this won't be needed as it is an evaluation board and will be used for multiple use cases.
+> So, we don't want to mark it to any specific type.
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 5d853fd43294..ce6f4363d2f7 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -372,6 +372,9 @@ DEFINE_CLK_RPMH_VRM(clk3, _a1, "clka3", 1);
- DEFINE_CLK_RPMH_VRM(clk4, _a1, "clka4", 1);
- DEFINE_CLK_RPMH_VRM(clk5, _a1, "clka5", 1);
- 
-+DEFINE_CLK_RPMH_VRM(clk3, _a2, "clka3", 2);
-+DEFINE_CLK_RPMH_VRM(clk4, _a2, "clka4", 2);
-+DEFINE_CLK_RPMH_VRM(clk5, _a2, "clka5", 2);
- DEFINE_CLK_RPMH_VRM(clk6, _a2, "clka6", 2);
- DEFINE_CLK_RPMH_VRM(clk7, _a2, "clka7", 2);
- DEFINE_CLK_RPMH_VRM(clk8, _a2, "clka8", 2);
-@@ -737,6 +740,28 @@ static const struct clk_rpmh_desc clk_rpmh_sm4450 = {
- 	.num_clks = ARRAY_SIZE(sm4450_rpmh_clocks),
- };
- 
-+static struct clk_hw *x1e80100_rpmh_clocks[] = {
-+	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div2.hw,
-+	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div2_ao.hw,
-+	[RPMH_LN_BB_CLK1]	= &clk_rpmh_clk6_a2.hw,
-+	[RPMH_LN_BB_CLK1_A]	= &clk_rpmh_clk6_a2_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a2.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a2_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a2.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a2_ao.hw,
-+	[RPMH_RF_CLK3]		= &clk_rpmh_clk3_a2.hw,
-+	[RPMH_RF_CLK3_A]	= &clk_rpmh_clk3_a2_ao.hw,
-+	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a2.hw,
-+	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a2_ao.hw,
-+	[RPMH_RF_CLK5]		= &clk_rpmh_clk5_a2.hw,
-+	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a2_ao.hw,
-+};
-+
-+static const struct clk_rpmh_desc clk_rpmh_x1e80100 = {
-+	.clks = x1e80100_rpmh_clocks,
-+	.num_clks = ARRAY_SIZE(x1e80100_rpmh_clocks),
-+};
-+
- static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
- 					 void *data)
- {
-@@ -838,6 +863,7 @@ static const struct of_device_id clk_rpmh_match_table[] = {
- 	{ .compatible = "qcom,sm8450-rpmh-clk", .data = &clk_rpmh_sm8450},
- 	{ .compatible = "qcom,sm8550-rpmh-clk", .data = &clk_rpmh_sm8550},
- 	{ .compatible = "qcom,sc7280-rpmh-clk", .data = &clk_rpmh_sc7280},
-+	{ .compatible = "qcom,x1e80100-rpmh-clk", .data = &clk_rpmh_x1e80100},
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, clk_rpmh_match_table);
+Then it is "embedded". We should probably update existing
+dragonboards/RB boards to have this type too.
+
 -- 
-2.17.1
-
+With best wishes
+Dmitry
 
