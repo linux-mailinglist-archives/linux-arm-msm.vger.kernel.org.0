@@ -1,128 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 820087EF1AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 12:24:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 588EA7EF1F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 12:40:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2AF17B20981
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:24:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1559B209AA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:40:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 443F41A588;
-	Fri, 17 Nov 2023 11:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C9FB12E79;
+	Fri, 17 Nov 2023 11:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fTH939ox"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YmX2uRDQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28509171CB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 11:24:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A0EC433C7;
-	Fri, 17 Nov 2023 11:23:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700220241;
-	bh=cp8VziTtK0TOxFkKNawLZ53dTtyMX5RViHDft5lzhT0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fTH939oxoK3MWuqep/YigvFHO3T4TD63gQEuSrw296AwMhHtHgP19cq8x/jSrb8QR
-	 NOXdeYYjc74PhlJl93orKukm6kQhkX0+wX2FTxuTtEr232Ft7qDGgVhmwh8Oz/x48d
-	 T0GrHo0BtVIc29otBpwwW1FC+k9rHg1NxI8LXS7HbyPZ+sATahagy5qeRLJAM+iMk1
-	 1qQiY0LrjiCX/FXnq4esEkdHl4wHuUEfqiF1oSzs93FPKlNpm2vMqlDPiCs1NAkJFu
-	 0JPM4hcMZ/A1+ogBsUDhe6vDvs0F70wUOg3b6wVfBRXAuMBurASuT0/i2p4YVd+d5f
-	 Sstevwc+ceecQ==
-Date: Fri, 17 Nov 2023 16:53:52 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Jonathan Derrick <jonathan.derrick@linux.dev>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 4/6] PCI: qcom: Clean up ASPM comment
-Message-ID: <20231117112352.GS250770@thinkpad>
-References: <20231114135553.32301-1-johan+linaro@kernel.org>
- <20231114135553.32301-5-johan+linaro@kernel.org>
- <20231117103227.GM250770@thinkpad>
- <ZVdE6nqanqcaL8sO@hovoldconsulting.com>
- <20231117105404.GR250770@thinkpad>
- <ZVdH3GkzWupoxyzJ@hovoldconsulting.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850F0D56;
+	Fri, 17 Nov 2023 03:40:24 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AHBRika005588;
+	Fri, 17 Nov 2023 11:40:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=zTZJi7EnLk1lHJmph3SFPSN9oW4rOikhO8rYh4OFqc4=;
+ b=YmX2uRDQsdzamh32CRAI0CRI5fpj2JTNA6hpz61d/AnGEO3XGT0kF1z79dDgObqvj4O9
+ AJCsvWHe/pceM+dk2KVGSlN0DnSjFFQdR29/bg4jaKUM58Tnh3L9dOllh/CBx+34Fv2R
+ ZE4QxdUTuiY5XV271k7/6iWSsTAML+zZCBV9E5SEAzQgQItm45GFlEkkd/eHOjuHDeqf
+ r6r8Oo/TxLej6mqvel9E6x5wjAyJ6v55nPrgJvz8NBYvZo+A4z0fdliMgaayc/AzchzY
+ vJ9Ewg6gg/NCtFDFiuAxa7oZEh1bTFVC+O+q1NPRpQ5ChNHVUfb4VomBoKUpGzlGFLlT 2g== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ue6var2cd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Nov 2023 11:40:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AHBdwCg004382
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Nov 2023 11:39:58 GMT
+Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 17 Nov 2023 03:39:51 -0800
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <catalin.marinas@arm.com>,
+        <ulf.hansson@linaro.org>
+CC: <agross@kernel.org>, <conor+dt@kernel.org>, <ayan.kumar.halder@amd.com>,
+        <j@jannau.net>, <dmitry.baryshkov@linaro.org>,
+        <nfraprado@collabora.com>, <m.szyprowski@samsung.com>,
+        <u-kumar1@ti.com>, <peng.fan@nxp.com>, <lpieralisi@kernel.org>,
+        <quic_rjendra@quicinc.com>, <abel.vesa@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_tsoni@quicinc.com>, <neil.armstrong@linaro.org>,
+        Sibi Sankar
+	<quic_sibis@quicinc.com>
+Subject: [PATCH V2 0/5] dts: qcom: Introduce X1E80100 platforms device tree
+Date: Fri, 17 Nov 2023 17:09:26 +0530
+Message-ID: <20231117113931.26660-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZVdH3GkzWupoxyzJ@hovoldconsulting.com>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: fdz1zCHqMhuvRpwAjQL-idsBaHSBgTjd
+X-Proofpoint-ORIG-GUID: fdz1zCHqMhuvRpwAjQL-idsBaHSBgTjd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-17_09,2023-11-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 malwarescore=0
+ phishscore=0 impostorscore=0 mlxlogscore=999 adultscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311170087
 
-On Fri, Nov 17, 2023 at 12:00:44PM +0100, Johan Hovold wrote:
-> On Fri, Nov 17, 2023 at 04:24:04PM +0530, Manivannan Sadhasivam wrote:
-> > On Fri, Nov 17, 2023 at 11:48:10AM +0100, Johan Hovold wrote:
-> > > On Fri, Nov 17, 2023 at 04:02:27PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Tue, Nov 14, 2023 at 02:55:51PM +0100, Johan Hovold wrote:
-> > > > > Break up the newly added ASPM comment so that it fits within the soft 80
-> > > > > character limit and becomes more readable.
-> > > > > 
-> > > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > > 
-> > > > I think we discussed (80column soft limit for comments) in the past, but I don't
-> > > > think breaking here makes the comment more readable.
-> > > 
-> > > The coding style clearly states:
-> > > 
-> > > 	The preferred limit on the length of a single line is 80 columns.
-> > > 
-> > > 	Statements longer than 80 columns should be broken into sensible chunks,
-> > > 	unless exceeding 80 columns significantly increases readability and does
-> > > 	not hide information.
-> > > 
-> > > Going beyond 80 chars may sometimes be warranted for code, but the
-> > > exception is not intended for comments.
-> > 
-> > Breaking the comment here is indeed making it hard to read. It's just one word
-> > that needs to be broken if we go by 80 column limit and I won't prefer that,
-> > sorry!
-> 
-> Please read the above quote again, it is as clear as it gets. 80 chars
-> is the preferred limit unless (for code) exceeding it *significantly*
+This series adds the initial (clocks, pinctrl, rpmhpd, regulator, interconnect,
+CPU, SoC and board compatibles) device tree support to boot to shell on the
+Qualcomm X1E80100 platform, aka Snapdragon X Elite.
 
-Where does it say "code" in the Documentation? As I read it, the doc weighs both
-code and comment as "statement".
+Our v1 post of the patchsets adding support for Snapdragon X Elite SoC had
+the part number sc8380xp which is now updated to the new part number x1e80100
+based on the new branding scheme and refers to the exact same SoC.
 
-And how on the world that breaking a single word to the next line improves
-readability? I fail to get it :/
+v2:
+* Update the part number from sc8380xp to x1e80100.
+* Fixup ordering in the SoC/board bindings. [Krzysztof]
+* Add pdc node and add wakeup tlmm parent. [Rajendra]
+* Add cpu/cluster idle states. [Bjorn]
+* Document reserved gpios. [Konrad]
+* Remove L1 and add missing props to L2. [Konrad]
+* Remove region suffix. [Konrad]
+* Append digits to gcc node. [Konrad]
+* Add ICC_TAGS instead of leaving it unspecified. [Konrad]
+* Remove double space. [Konrad]
+* Leave the size index of memory node untouched. [Konrad]
+* Override the serial uart with "qcom,geni-debug-uart" in the board files. [Rajendra]
+* Add additional details to patch 5 commit message. [Konrad/Krzysztof]
 
-> increases readability, which clearly isn't the case here (even if this
-> exception applied to comments).
-> 
-> I really don't understand why you keep insisting on this. Just fix your
-> editor.
-> 
+Dependencies:
+clks: https://lore.kernel.org/lkml/20231117092737.28362-1-quic_sibis@quicinc.com/
+interconnect: https://lore.kernel.org/lkml/20231117103035.25848-1-quic_sibis@quicinc.com/
+llcc: https://lore.kernel.org/lkml/20231117095315.2087-1-quic_sibis@quicinc.com/
+misc-bindings: https://lore.kernel.org/lkml/20231117105635.343-1-quic_sibis@quicinc.com/
+pinctrl: https://lore.kernel.org/lkml/20231117093921.31968-1-quic_sibis@quicinc.com/
+rpmhpd: https://lore.kernel.org/lkml/20231117104254.28862-1-quic_sibis@quicinc.com/
 
-May you should fix yours to extend the limit to 100?
+Release Link: https://www.qualcomm.com/news/releases/2023/10/qualcomm-unleashes-snapdragon-x-elite--the-ai-super-charged-plat
 
-But I do not want to get into a spat here. Checkpatch, the tool supposed to
-check for the kernel coding style is not complaining and I do not want a patch
-that _fixes_ a coding style that is not an issue.
+Rajendra Nayak (4):
+  dt-bindings: arm: cpus: Add qcom,oryon compatible
+  dt-bindings: arm: qcom: Document X1E80100 SoC and boards
+  arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts
+  arm64: defconfig: Enable X1E80100 SoC base configs
 
-And I do not want to argue more on this. If the PCI maintainers are comfortable
-with this patch, they can apply it, but I'm not.
+Sibi Sankar (1):
+  arm64: dts: qcom: x1e80100: Add Compute Reference Device
 
-- Mani
-
-> Johan
+ .../devicetree/bindings/arm/cpus.yaml         |    1 +
+ .../devicetree/bindings/arm/qcom.yaml         |    8 +
+ arch/arm64/boot/dts/qcom/Makefile             |    2 +
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts     |  425 ++
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts     |  400 ++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 3509 +++++++++++++++++
+ arch/arm64/configs/defconfig                  |    3 +
+ 7 files changed, 4348 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/x1e80100.dtsi
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.17.1
+
 
