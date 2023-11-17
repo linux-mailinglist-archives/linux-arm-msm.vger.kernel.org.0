@@ -1,154 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4663C7EEF76
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:57:02 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F39847EEF9E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:00:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DAEF91F27B0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 09:57:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE303281364
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:00:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E204718039;
-	Fri, 17 Nov 2023 09:56:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cHxEdEru"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33A69182AB;
+	Fri, 17 Nov 2023 10:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 857C110E0;
-	Fri, 17 Nov 2023 01:56:44 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AH9XDQJ007104;
-	Fri, 17 Nov 2023 09:56:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=MBwQNnrP/VoAcmnLrs6vo1SDNvrC8nNxML8vPT+zO5s=;
- b=cHxEdEruI4S98eFsBMjPeWOSOt4i/ANGXHbwaVFGFoCTFbpW36cV/HqbpnK3yHLUKWUr
- H7RISv4qYe0UToETdFyCf5H5nIkjFvOyyQ8eJOc9fY53u4EdvIBgosQssYBs3xU3WYMZ
- Zp19V0IXjTk6FEDxExTyD1CecyZY/k9YqF7oV7gtxvyjn+rtlinWFqUQ8quwUnxPnHeX
- No2msSBW/9U67shr2z8sV5+RrA/aJcQm87zm8nSQQ9VqGDA8zU8JErEVIdHDHb9o3lkl
- Iuig1bFqSadUIYIo5TT8WcJsN4Q+s6osMqTr1gCoPMRrLI53tdtqEWEuSFNwjs4rWOU0 cQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udpqq205v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 09:56:32 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AH9uVKB030753
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 09:56:31 GMT
-Received: from [10.253.8.81] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Fri, 17 Nov
- 2023 01:56:26 -0800
-Message-ID: <dd8260ce-3cbe-42f5-bc58-51730cd5dabd@quicinc.com>
-Date: Fri, 17 Nov 2023 17:56:24 +0800
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4A3A85
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:00:52 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r3vdd-0000CZ-8i; Fri, 17 Nov 2023 10:59:49 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r3vda-009eFY-MI; Fri, 17 Nov 2023 10:59:46 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r3vda-002zVo-C1; Fri, 17 Nov 2023 10:59:46 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Alex Elder <elder@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Dawei Li <set_pte_at@outlook.com>,
+	=?utf-8?b?Q2zDqW1lbnQgTMOpZ2Vy?= <clement.leger@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Zhao Qiang <qiang.zhao@nxp.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+	Alexander Aring <alex.aring@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: netdev@vger.kernel.org,
+	kernel@pengutronix.de,
+	linux-renesas-soc@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-arm-msm@vger.kernel.org,
+	linux-wpan@vger.kernel.org
+Subject: [PATCH net-next 00/10] net*: Convert to platform remove callback returning void
+Date: Fri, 17 Nov 2023 10:59:23 +0100
+Message-ID: <20231117095922.876489-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] net: mdio: ipq4019: increase eth_ldo_rdy for ipq5332
- platform
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
-        <robert.marko@sartura.hr>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>
-References: <20231115032515.4249-1-quic_luoj@quicinc.com>
- <20231115032515.4249-2-quic_luoj@quicinc.com>
- <7786f8e0-2395-4bb6-bc29-071ed637611f@linaro.org>
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <7786f8e0-2395-4bb6-bc29-071ed637611f@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nvHhsVaDEiLh6-yQu5letGiCWdpGE7Yo
-X-Proofpoint-ORIG-GUID: nvHhsVaDEiLh6-yQu5letGiCWdpGE7Yo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-17_07,2023-11-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 phishscore=0 spamscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 suspectscore=0
- mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311170073
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2113; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=9oXuqsWt/RvURX9K94NXCtM0NJ0gIte8yeS/fqhGQB0=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlVzl7texqFwXoT5gAbvyECD9jkLIXHxLs+T/Jr /qMt/rFfeOJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZVc5ewAKCRCPgPtYfRL+ TvahB/wJQF9QJN/JIp3OWpqrOqErXY/3mGrH+LrcSAyWTQmW3IbON/tzsf0OudQ3GS4JGLYwrwf lr86btNOOf5otyzkyde9JO4eLJ8avvimGDtuJVCJeaYTcGT6IlHjm21zCMoNIxH3XlKMkrUmMYH 0oqnlR2AfeZP6cAxUjo5jJP1AG1OJ/Xt8losaCvn7bsz0CB5zYnZLJq+MNrGc9F0Bf/31+nYK54 8M2gDMXOJ3xh7IST9jk8chwWjoFy2mfa/rYWeB+ctDGzmvj2yQT+QW8WTFasq3UdajLrFen0s7I UHp9cIprBwWEtE2SBKNHHSiRAX7ph979/7RuQaY5V4oAWRFf
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
+Hello,
 
+this series converts the platform drivers below drivers/net that are not
+covered in the two other series converting drivers/net/ethernet and
+drivers/net/wireless. I put them all in a single series even though they
+are not maintained together. I thought that to be better than sending
+them out individually, I hope you agree.
 
-On 11/16/2023 7:57 PM, Krzysztof Kozlowski wrote:
-> On 15/11/2023 04:25, Luo Jie wrote:
->> There are two PCS(UNIPHY) supported in SOC side on ipq5332,
->> and three PCS(UNIPHY) supported on ipq9574.
->>
->> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->> ---
->>   drivers/net/mdio/mdio-ipq4019.c | 55 +++++++++++++++++++--------------
->>   1 file changed, 32 insertions(+), 23 deletions(-)
->>
->> diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
->> index abd8b508ec16..9d444f5f7efb 100644
->> --- a/drivers/net/mdio/mdio-ipq4019.c
->> +++ b/drivers/net/mdio/mdio-ipq4019.c
->> @@ -18,28 +18,31 @@
->>   #define MDIO_DATA_WRITE_REG			0x48
->>   #define MDIO_DATA_READ_REG			0x4c
->>   #define MDIO_CMD_REG				0x50
->> -#define MDIO_CMD_ACCESS_BUSY		BIT(16)
->> -#define MDIO_CMD_ACCESS_START		BIT(8)
->> -#define MDIO_CMD_ACCESS_CODE_READ	0
->> -#define MDIO_CMD_ACCESS_CODE_WRITE	1
->> -#define MDIO_CMD_ACCESS_CODE_C45_ADDR	0
->> -#define MDIO_CMD_ACCESS_CODE_C45_WRITE	1
->> -#define MDIO_CMD_ACCESS_CODE_C45_READ	2
->> +#define MDIO_CMD_ACCESS_BUSY			BIT(16)
->> +#define MDIO_CMD_ACCESS_START			BIT(8)
->> +#define MDIO_CMD_ACCESS_CODE_READ		0
->> +#define MDIO_CMD_ACCESS_CODE_WRITE		1
->> +#define MDIO_CMD_ACCESS_CODE_C45_ADDR		0
->> +#define MDIO_CMD_ACCESS_CODE_C45_WRITE		1
->> +#define MDIO_CMD_ACCESS_CODE_C45_READ		2
-> 
-> Where is anything related to ipq5332 here?
+See commit 5c5a7680e67b ("platform: Provide a remove callback that
+returns no value") for an extended explanation and the eventual goal.
+The TL;DR; is to make it harder for driver authors to leak resources
+without noticing.
 
-This is for alignment format, will keep it untouched in the next
-patch set.
+The first patch is a fix, but I don't think it's worth to add that to
+stable, it was broken since v5.7-rc1 and nobody seems to have hit the
+problem.
 
-> 
-> 
-> ..
-> 
->>   	bus->name = "ipq4019_mdio";
->>   	bus->read = ipq4019_mdio_read_c22;
->> @@ -288,6 +296,7 @@ static void ipq4019_mdio_remove(struct platform_device *pdev)
->>   static const struct of_device_id ipq4019_mdio_dt_ids[] = {
->>   	{ .compatible = "qcom,ipq4019-mdio" },
->>   	{ .compatible = "qcom,ipq5018-mdio" },
->> +	{ .compatible = "qcom,ipq5332-mdio" },
-> 
-> How user comes before binding?
+Best regards
+Uwe
 
-The new added compatible is for the GCC uniphy AHB/SYS clocks configured
-on the ipq5332 platform, will move this change into the following patch
-that involves the ipq5332 to make it clear.
+Uwe Kleine-König (10):
+  net: ipa: Don't error out in .remove()
+  net: ipa: Convert to platform remove callback returning void
+  net: fjes: Convert to platform remove callback returning void
+  net: pcs: rzn1-miic: Convert to platform remove callback returning
+    void
+  net: sfp: Convert to platform remove callback returning void
+  net: wan/fsl_ucc_hdlc: Convert to platform remove callback returning
+    void
+  net: wan/ixp4xx_hss: Convert to platform remove callback returning
+    void
+  net: wwan: qcom_bam_dmux: Convert to platform remove callback
+    returning void
+  ieee802154: fakelb: Convert to platform remove callback returning void
+  ieee802154: hwsim: Convert to platform remove callback returning void
 
-<net: mdio: ipq4019: Enable the clocks for ipq5332 platform>.
+ drivers/net/fjes/fjes_main.c             |  6 ++----
+ drivers/net/ieee802154/fakelb.c          |  5 ++---
+ drivers/net/ieee802154/mac802154_hwsim.c |  6 ++----
+ drivers/net/ipa/ipa_main.c               | 20 +++++---------------
+ drivers/net/pcs/pcs-rzn1-miic.c          |  6 ++----
+ drivers/net/phy/sfp.c                    |  6 ++----
+ drivers/net/wan/fsl_ucc_hdlc.c           |  6 ++----
+ drivers/net/wan/ixp4xx_hss.c             |  5 ++---
+ drivers/net/wwan/qcom_bam_dmux.c         |  6 ++----
+ 9 files changed, 21 insertions(+), 45 deletions(-)
 
-> 
-> Best regards,
-> Krzysztof
-> 
+base-commit: eff99d8edbed7918317331ebd1e365d8e955d65e
+-- 
+2.42.0
+
 
