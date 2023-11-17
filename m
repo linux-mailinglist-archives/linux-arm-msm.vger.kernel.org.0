@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E23E47EFC28
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:38:00 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0665D7EFC32
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:40:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BC1D28131A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 23:37:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A42EF1F22A5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 23:40:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2546E46554;
-	Fri, 17 Nov 2023 23:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFD3D47765;
+	Fri, 17 Nov 2023 23:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VK0qcSeF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iqFv1s5b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14CF6D7A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 15:37:55 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-53e70b0a218so3721646a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 15:37:55 -0800 (PST)
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC5B510E5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 15:40:18 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-543456dbd7bso7042175a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 15:40:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700264273; x=1700869073; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700264417; x=1700869217; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=A25D6ggkoNW90LjYyuTw2q8pPKvjgicUz5kbDZSG93Q=;
-        b=VK0qcSeFiEJgwwUTm6oKPJZK2VB4yu/kcUI/WCLr3342eWRBz0qZDhlZUnxmv/YUzL
-         tuGOp7l0eNp1TQZiPCv1EigQUAPeC39lJT1g1i/FezUkzERkKsfA0XWnrHPe6jecJHVo
-         8ZztSM2umaXKfkBcYhysANiBwnbWN4BDKMGmfi8Qxhqt8tzE55x0pTpCs8lw4jwkuoGq
-         EK3EM8FJLscGNJCsX896IEdu14Af49VvmdOC+MiAmWlIdTbVAXvler2sPkNmtfJIru2z
-         byBgo6TWl0Ift/KaFK3EgSF4GBeIqgRmvogrrTE/+4HT2ntzYkF6zF9F0vTMzFvOr+Vo
-         jQBw==
+        bh=OlqVaq6D41QiTKqXp+cP559TOMOF0nz23L1kNSeWPn4=;
+        b=iqFv1s5berimbDCqL3GM2It6vnp5LMLhb1UJWyHfazF0ULJ+xakbq+YE65trFt7LrK
+         4CieDymQWjHMfh50k07tCR0vycJkSd2oShIAWj/I8/IQhHjGeIVw6aEtcXC9Czbd36MH
+         oJjH77awIrgKebNhX2YFyPOfiFDawx2/iU/AZnulsTFM/NWXOKJnlh/F9ISaKTOC1Sm+
+         tktVmByWFzvKMKRsRVL26U7JUoqGNgffJA+IVYM9YgN7b5RoPgnStnzkIunctdZUsWmy
+         vXVvgGcx3jSHaIx/eWJGKxZkDH4fw4nubPK/Lodd4nU3Ojc0A9+xOBuyFJFrMQ5pg5Z+
+         9wrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700264273; x=1700869073;
+        d=1e100.net; s=20230601; t=1700264417; x=1700869217;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=A25D6ggkoNW90LjYyuTw2q8pPKvjgicUz5kbDZSG93Q=;
-        b=DGkrL0vZqbaV5u2PxfgXOoQ9J9lm5ubgZn2qKJ8goHyCnHTef+2wWLh8wJVByf4ToW
-         +kXawrhbe1yLS9HwVGVIWEwGPp1FYuNBUmxBf5B710fUXh6BL7A/TiQAXt7odu4W598L
-         bJUD4thdbF8ywNw6Bz4hK2AGTNCU0bBCUlKqDCPTsRKbi0NcKaoY+69o/MUxzviUTlXG
-         C++Ao+4d7RoyVZqy6rcw528ysTX7qNGzLvsHsAa+cX1dJlPKRtC9Lp6srdgzhTFMk5D6
-         0IwIf8c961K6pLBHGTcppsKMos1cQd7tFVWnRPtOcECjPs99OoDqKeu6Q6E+s3sremAQ
-         ZB9A==
-X-Gm-Message-State: AOJu0Yz6WMfsMrx6mxfWlqrXdHVjhZlYOzZbb5qNESWJr9ikCSA+oSbN
-	uXyzzaFfwz+wcGfzJOkStHEJsA==
-X-Google-Smtp-Source: AGHT+IGfRt8oCOT4epkz4iPgnJ9uCpElQEYq/+Co49w+zFHH+qRMrbtjNL4zYlLjru/w1waE7Bte+Q==
-X-Received: by 2002:a17:906:6a1f:b0:9f8:af63:ff30 with SMTP id qw31-20020a1709066a1f00b009f8af63ff30mr598310ejc.71.1700264273277;
-        Fri, 17 Nov 2023 15:37:53 -0800 (PST)
+        bh=OlqVaq6D41QiTKqXp+cP559TOMOF0nz23L1kNSeWPn4=;
+        b=DpAFEmecCCJ2fOn/hDMsUqMCH0bH8oZRiihTnqzSqoJp9TFYlSlGduDiKBtZS25+bg
+         v39MDDqQkZ1pBvECVZtRS2oMtq3sRJ0Og5ZeHkSRpPSOPXRHMbEJVtZdxYe/TIn8fJiw
+         Ytvk19QC9bPT0DpKp9FgkWrcUUPsbE8fg8jJchE2nk4oV2SbOskuw0TJqPDo5GzWuSIE
+         4WSRnYWi+06ssFjRYeLHfvnSXX+IjN+DhLgCS2YSJq0kBlhuWmMk2l7+ksnlavlnDqRf
+         GRSPC1I8UdrUbYxjpvQxfYOOfR4lznDwJUnxbPRxlhYdK1QBIJFiKP6vyPTukyNMzCqv
+         F9Qw==
+X-Gm-Message-State: AOJu0Ywuk/+GpjMbulYq343ofa81Ti7AGH6VL32199/Aca1y8BlBMRTI
+	K4GhrK6Pj6RGRYNfs0KNJHMXsg==
+X-Google-Smtp-Source: AGHT+IGE5JB/nYaBzZXWXm85KHIOGc2UA6YFUsCTrsBvUGlcytqCP9PDGe4vWuZPvrJe3cpJJOwG6Q==
+X-Received: by 2002:a17:906:6810:b0:9c7:6523:407b with SMTP id k16-20020a170906681000b009c76523407bmr5633991ejr.17.1700264416891;
+        Fri, 17 Nov 2023 15:40:16 -0800 (PST)
 Received: from [192.168.201.100] (178235187040.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.40])
-        by smtp.gmail.com with ESMTPSA id h14-20020a170906590e00b009b2b47cd757sm1278055ejq.9.2023.11.17.15.37.51
+        by smtp.gmail.com with ESMTPSA id lt16-20020a170906fa9000b009e71efcce28sm1269357ejb.210.2023.11.17.15.40.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 15:37:52 -0800 (PST)
-Message-ID: <f3cd8531-faa8-4ec4-b1b8-ba327b7df5cd@linaro.org>
-Date: Sat, 18 Nov 2023 00:37:49 +0100
+        Fri, 17 Nov 2023 15:40:16 -0800 (PST)
+Message-ID: <796fd7be-2008-460e-acf7-e335de780104@linaro.org>
+Date: Sat, 18 Nov 2023 00:40:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,17 +62,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/2] dt-bindings: cache: qcom,llcc: Add X1E80100
- compatible
+Subject: Re: [PATCH 1/2] dt-bindings: power: rpmpd: Update part number to
+ X1E80100
 Content-Language: en-US
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ ulf.hansson@linaro.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
 Cc: agross@kernel.org, conor+dt@kernel.org, quic_rjendra@quicinc.com,
  abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_tsoni@quicinc.com, neil.armstrong@linaro.org
-References: <20231117095315.2087-1-quic_sibis@quicinc.com>
- <20231117095315.2087-2-quic_sibis@quicinc.com>
+ linux-pm@vger.kernel.org, quic_tsoni@quicinc.com, neil.armstrong@linaro.org
+References: <20231117104254.28862-1-quic_sibis@quicinc.com>
+ <20231117104254.28862-2-quic_sibis@quicinc.com>
+ <8fafbba6-86de-4ddc-966e-48e2152f6b1a@linaro.org>
+ <97216704-a102-532d-1039-c9342a19e2fd@quicinc.com>
+ <81a1bfee-851c-4f05-b816-47abcebed99c@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -109,23 +113,35 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231117095315.2087-2-quic_sibis@quicinc.com>
+In-Reply-To: <81a1bfee-851c-4f05-b816-47abcebed99c@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17.11.2023 10:53, Sibi Sankar wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+On 17.11.2023 13:39, Krzysztof Kozlowski wrote:
+> On 17/11/2023 12:46, Sibi Sankar wrote:
+>> Hey Krzysztof,
+>>
+>> Thanks for taking time to review the series.
+>>
+>> On 11/17/23 16:35, Krzysztof Kozlowski wrote:
+>>> On 17/11/2023 11:42, Sibi Sankar wrote:
+>>>> Replace SC8380xp with the updated part number (X1E80100).
+>>>>
+>>>
+>>> You need to explain why. We don't update compatibles based on marketing
+>>> wishes.
+>>
+>> What we imply is that X1E80100 is the part number you would get when you
+>> read out from a Snapdragon X Elite device in the wild, when it is
+>> available and we didn't have this information when we posted out v1.
 > 
-> Add the compatible for X1E80100 platforms.
-> 
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Unrelated to this patch alone, but I noticed that with this new naming
-scheme, patterns in Documentation/devicetree/bindings/arm/qcom-soc.yaml will
-require an update as well.
+> The commit msg must explain why.
+(what Krzysztof meant is that your explanation is ok but it needs to be
+part of the commit message and not just a reply here)
+
+Moreover, it would also be good to say something like "this binding has
+no users and has been erroneusly introduced very recently, so it was
+decided that changing it is okay", as this is a rather special case.
 
 Konrad
 
