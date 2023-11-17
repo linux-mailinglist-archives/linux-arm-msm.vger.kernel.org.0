@@ -1,145 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4463C7EEC74
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 08:06:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F51E7EEC80
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 08:16:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5AC8A2811EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 07:06:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 552A61C20938
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 07:16:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72172B663;
-	Fri, 17 Nov 2023 07:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 087F3DDB7;
+	Fri, 17 Nov 2023 07:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Rk/Ufp4i"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bzoedOpd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1B19129
-	for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 23:06:08 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-6b2018a11efso1738194b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Nov 2023 23:06:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700204768; x=1700809568; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BFhGxb0d8TVHFbBvoHAaCR3/jKcNUFSpf4eO7oktV0o=;
-        b=Rk/Ufp4id45FS1KHVTcsmp8qVJOK0u75InRd9TU06rhk27DweuT3NdJKbhmciYNAi5
-         AYTYzw1pX2svy2/V8mnzV2872pW/i7RlV0OV4J+VWi3UTxfUrioqteRAbpKz3uBXWgQS
-         nJsIn29P/C65JSPJvrBJMEW97pFrD/HEApoQW9VoqmrP1SJeYayDyt+UKp0IcggEcV8Y
-         WNvzC5Zr6UAm23MKpq+P1N+E/U52qjWpQfJ3dIEZzhqMNaPQgrTIduYcZrrs1hD+vaYT
-         IOsHUT/1BEKQUtRyqtt5avbhmZjwwoRZ+Jc+GHdGP6Gk2hpH/SPUAKx5AdddW3XK+1Zg
-         A+eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700204768; x=1700809568;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BFhGxb0d8TVHFbBvoHAaCR3/jKcNUFSpf4eO7oktV0o=;
-        b=hS5vXCmwvuxzO+KHDFeZpfxZw787a5+dL5Gf/Xws8kQaIx7cOQJaXMTdx3QpkBCxYa
-         sJitvJ0QHgMcrQfFMQzGblzPTNl+vxxMu4eIEzh+Gq7Awr5NR30gDVszbctzN0tKbCPj
-         MQYaoh5V1sIjFdcRQd9LWbpKSOQ11QaqA0PlQLeS2bTBh9hfh27wNIMqqO2IZ+cfdUax
-         lBp6+iykSZHbB/ykgr3NdnT1qUp5mMyrV7jc/NTS57kIEoGo2SXz8WCBM8t0Sb7O0G+O
-         QLPuLDgEXpN+9hqe8TsTBO3ONAH22Z85USwlHsc3YEQgKNGwNDsQIvfIgtku+cl1CcTt
-         1WAA==
-X-Gm-Message-State: AOJu0YwxzfjSWtlgutrR38vmbsyPILEJPl7GS8KEW4LfnQW+W0pZHgnk
-	fS2HxmMnvlfzg2DaUpTjpGaG
-X-Google-Smtp-Source: AGHT+IGfIVkXhPOQhA7r6TpFkqTZFEQ5G2MrI3+aG3pqqr9Ey+8Q4SuY6v/Fxjje7LBfSrP37jc2EQ==
-X-Received: by 2002:a05:6a21:6d96:b0:186:4430:5d16 with SMTP id wl22-20020a056a216d9600b0018644305d16mr19580645pzb.61.1700204768220;
-        Thu, 16 Nov 2023 23:06:08 -0800 (PST)
-Received: from thinkpad ([103.28.246.177])
-        by smtp.gmail.com with ESMTPSA id z13-20020a056a00240d00b006c320b9897fsm785013pfh.126.2023.11.16.23.06.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Nov 2023 23:06:07 -0800 (PST)
-Date: Fri, 17 Nov 2023 12:36:02 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-	loic.poulain@linaro.org
-Subject: Re: [PATCH v2 0/2] Add MHI Endpoint network driver
-Message-ID: <20231117070602.GA10361@thinkpad>
-References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
- <20230607094922.43106896@kernel.org>
- <20230607171153.GA109456@thinkpad>
- <20230607104350.03a51711@kernel.org>
- <20230608123720.GC5672@thinkpad>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF454194;
+	Thu, 16 Nov 2023 23:16:30 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AH6eQuk011693;
+	Fri, 17 Nov 2023 07:16:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=i1ovUif6eJCX2viZU9GHW5+dl22Rd3wZG3iOri/yqjw=;
+ b=bzoedOpd3EVcAooCyf4/qwHtrph7lYmr4U3Qa9BgRteSfQrddJ9E4ITt0+6ZPD7mhKQh
+ rgEfVnWbE9dAu0UVTSVAgsTee3l2Zn5BKDKtucnuzcVieUQ9+877aIvgmLXSfqdGBf3z
+ ITUt+pxHBamsXUI00AtEhvTGxA+NbMv9Sex3iQIitnp99aQBpMYTXK3SxVZNKlo8yD5E
+ imWfa7GDcO/wd9qSMzbheF7vXETgvvbw817TI4w3O5R1Tglw4PPeN3GGW7s6w+dUh9yz
+ JWdPBRumWLVtm83qX0i6neORaYc8AL7x0TdIg4w1ZEP+0wHclYMunstX3huAb8OHJIKR Rg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udt8bs1a2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Nov 2023 07:16:05 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AH7G4Yj032531
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Nov 2023 07:16:04 GMT
+Received: from [10.214.227.50] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.39; Thu, 16 Nov
+ 2023 23:15:59 -0800
+Message-ID: <dab82933-4383-4277-9cff-90cba6231b54@quicinc.com>
+Date: Fri, 17 Nov 2023 12:45:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230608123720.GC5672@thinkpad>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] iommu/arm-smmu: re-enable context caching in smmu
+ reset operation
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <will@kernel.org>,
+        <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <dmitry.baryshkov@linaro.org>, <a39.skl@gmail.com>,
+        <quic_pkondeti@quicinc.com>, <quic_molvera@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <qipl.kernel.upstream@quicinc.com>
+References: <20231114135654.30475-1-quic_bibekkum@quicinc.com>
+ <20231114135654.30475-4-quic_bibekkum@quicinc.com>
+ <e5b0d8c7-82cf-4a3a-9a6e-28e7b468df8d@linaro.org>
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <e5b0d8c7-82cf-4a3a-9a6e-28e7b468df8d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: T1UlbemtRDwpaktjWt03nFsUnxAG5Iyq
+X-Proofpoint-GUID: T1UlbemtRDwpaktjWt03nFsUnxAG5Iyq
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-17_05,2023-11-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 suspectscore=0 mlxscore=0 mlxlogscore=778 adultscore=0
+ bulkscore=0 malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311170051
 
-Hi Jakub,
 
-On Thu, Jun 08, 2023 at 06:07:20PM +0530, Manivannan Sadhasivam wrote:
-> On Wed, Jun 07, 2023 at 10:43:50AM -0700, Jakub Kicinski wrote:
-> > On Wed, 7 Jun 2023 22:41:53 +0530 Manivannan Sadhasivam wrote:
-> > > > In any case, I'm opposed to reuse of the networking stack to talk
-> > > > to firmware. It's a local device. The networking subsystem doesn't
-> > > > have to cater to fake networks. Please carry:
-> > > > 
-> > > > Nacked-by: Jakub Kicinski <kuba@kernel.org>
-> > > > 
-> > > > if there are future submissions.  
-> > > 
-> > > Why shouldn't it be? With this kind of setup one could share the data connectivity
-> > > available in the device with the host over IP tunneling. If the IP source in the
-> > > device (like modem DSP) has no way to be shared with the host, then those IP
-> > > packets could be tunneled through this interface for providing connectivity to
-> > > the host.
-> > > 
-> > > I believe this is a common usecase among the PCIe based wireless endpoint
-> > > devices.
-> > 
-> > We can handwave our way into many scenarios and terrible architectures.
-> > I don't see any compelling reason to merge this.
+
+On 11/15/2023 10:13 PM, Konrad Dybcio wrote:
 > 
-> These kind of usecases exist in the products out there in the market. Regarding
-> your comment on "opposed to reuse of the network stack to talk to firmware", it
-> not the just the firmware, it is the device in general that is talking to the
-> host over this interface. And I don't see how different it is from the host
-> perspective.
 > 
-> And these kind of scenarios exist with all types of interfaces like usb-gadget,
-> virtio etc... So not sure why the rule is different for networking subsystem.
+> On 11/14/23 14:56, Bibek Kumar Patro wrote:
+>> Context caching is re-enabled in the prefetch buffer for Qualcomm SoCs
+>> through SoC specific reset ops, which is disabled in the default MMU-500
+>> reset ops, but is expected for context banks using ACTLR register to
+>> retain the prefetch value during reset and runtime suspend.
+>>
+>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>> ---
+> And I assume that goes for all SMMU500 implementations?
 > 
 
-Sorry to revive this old thread, this discussion seems to have fell through the
-cracks...
+Right, for all SMMU500 implementation for Qualcomm SoCs.
+Hence implemented this enablement with Qualcomm specific reset operation.
 
-As I explained above, other interfaces also expose this kind of functionality
-between host and the device. One of the credible usecase with this driver is
-sharing the network connectivity available in either host or the device with the
-other end.
-
-To make it clear, we have 2 kind of channels exposed by MHI for networking.
-
-1. IP_SW0
-2. IP_HW0
-
-IP_SW0 is useful in scenarios I explained above and IP_HW0 is purely used to
-provide data connectivity to the host machines with the help of modem IP in the
-device. And the host side stack is already well supported in mainline. With the
-proposed driver, Linux can run on the device itself and it will give Qcom a
-chance to get rid of their proprietary firmware used on the PCIe endpoint
-devices like modems, etc...
-
-- Mani
-
-> - Mani
+> Looking at the 8550 ACTRL array from patch 2, CPRE is not enabled
+> at all times.. Is that because of performance, or some other
+> technical reason?
 > 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+> Will this regress platforms without ACTRL tables?
+> 
 
--- 
-மணிவண்ணன் சதாசிவம்
+It should not regress, If you check my recent reply on Dimitry's
+response, the Corelink revision is r2p4 and it can be enabled.
+On the Robin's mentioned errata workarounds, let me check once.
+
+Thanks & regards,
+Bibek
+
+> Konrad
 
