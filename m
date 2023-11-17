@@ -1,60 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 466C47EF0B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:40:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D090C7EF0BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:41:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 95BD8B20A1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:40:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F4021F28868
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:41:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D24D41A705;
-	Fri, 17 Nov 2023 10:40:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6D4312E54;
+	Fri, 17 Nov 2023 10:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GiUnUcD3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CAjeTB/0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99FADB9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:40:09 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c742186a3bso23288051fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:40:09 -0800 (PST)
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A63EB1AD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:41:07 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c50cf61f6dso23906081fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 02:41:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700217608; x=1700822408; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N1LKHWofL2jd0zTzkWIHIphiswe2t8sV9Iu0y2Wbw/0=;
-        b=GiUnUcD3/ps3qD+3BZxOrT4fmgoHr2T1bZGWq2/5TZ73PQBXMxiEYYKqEjIIbcegYO
-         pSo+sGIwBR1FxM5LQ95V5Pkd0cAX5hhQJVYUKo0YgDA3kFO8ZcviFBuk6Pp8oXBh+drp
-         isN5o6QsnkWB5JJOjzc3Ppksqgq4jiiroXmqitG7yaZjED/4StPZOWvO9dn+GTze6OJo
-         Kojcs67f1XLY45seoByA9zr2tQcEQpO40qEFXPdOA7YDYu+ao6WTNlDndca3q8OlQOdo
-         K4C3fE3ScOeDW7cYmY8F8WWk1Wz1Wk+/85NZGzpoLS08eMqu2iDWoXCvC6YANFpJKIpM
-         IABA==
+        d=linaro.org; s=google; t=1700217666; x=1700822466; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mw4HRiUCk/Doy4cjgHODSEEb9fobmzOoP3kKgYZym14=;
+        b=CAjeTB/0cVq5thlYdwcM0cN2d0m+21XgekVP9d9r9qC+fgc5JtGDWWzVpRmtZpNVml
+         cvIwI5lIasBgTkQw5Op3FkSGckI9cSB/jLGWj0djd8b0Cm1pgUBZuGB3RBoW3IBwPvR8
+         JBJFnqQDpkfrai8zARbW9yQdQ9VuOGeyLcIA45puWTYVDuCHcO7dWGOlSc7pMtVI3X5s
+         BBSsRpJLnUVAcyRnfMlAwuSb66ulMP+ZdceHLw7avdGgsjWkZagZhB+WHHgoZDi57Nig
+         iWUj1iVT3oxgFhOosmyitdRqnqUW5EAHT0gc4Gal/jCLYi1sMsNJjFqx5iTToQC8WfQC
+         yR/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700217608; x=1700822408;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N1LKHWofL2jd0zTzkWIHIphiswe2t8sV9Iu0y2Wbw/0=;
-        b=asx2nyf14O5UDUEfs0m9bSGuY/158U51HKCi33x/vWZ6fdVjFnCtILe7HeyBvL9b10
-         jc5EjPVHuGWK/BXX1s6lOYJDQYRwgIY0/73SMRpnvZUAAUUI+HMzpAXr1P1JUy4h0Ywb
-         Xj+nr544evDgjY7iNt9ff6FMdaVz/HJMINXkuOFSO8oTpq0sL63Q4spZxtZM4aFkrbsb
-         sWbITKfica/mxTFVPf/5MOBuHG2QTMkJr8xvuHGsBnNkhnzSmdzeZI/zwJafU8AiPiGr
-         ZJ4aa8td4VCZCVOBZS4xJoMYV8zLBsoom/e6X66wZd0OnO/P5wLF4bPKV6dhi1kdi7ko
-         k2dw==
-X-Gm-Message-State: AOJu0Ywcjm3k7Wc0bHk9qTAMN2HGufPPJ/NkOX4FYwhdw2VdvekdnCZO
-	bW//L8KmkGdwGkWgG/85V8ryVg==
-X-Google-Smtp-Source: AGHT+IGAL9LhFsPgyz7T+TllHXbvYqC1T9/bvScqEhv7e+waeqJIOUAKvy4OsxU3VVEblxJE4pUurg==
-X-Received: by 2002:a2e:b285:0:b0:2c5:2d16:6d93 with SMTP id 5-20020a2eb285000000b002c52d166d93mr8864245ljx.28.1700217607859;
-        Fri, 17 Nov 2023 02:40:07 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id s26-20020a7bc39a000000b004064741f855sm2175059wmj.47.2023.11.17.02.40.05
+        d=1e100.net; s=20230601; t=1700217666; x=1700822466;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mw4HRiUCk/Doy4cjgHODSEEb9fobmzOoP3kKgYZym14=;
+        b=vCHimqhv5io7ScVyZVr/fqKHNn7Mu2HufRkqrOqNlDL8o66Ji4zQmSXssxT2T0k/1l
+         o1tH3M+zNzl1p7sLtXdONjJ4y9+nFDbPMT46zrdUlg8B/dK3PejA6yXqbrS0EGmP8e9W
+         /jCUYdsp39hlMTyMSTS7mT3f6doRmywMOYKeRRwDwyYsn7xfkL6L/2vEji+MTBVqSVIe
+         2+d6ewjmShUYZ0ZHE1yo7DLyoN+ay8wPVTR2LGtXhhdiwK/MjcqMMWGwA3PDTp7js3IA
+         qIuBtsBxr7BDw5IUAUXQs/MEf8V8X5Tu/6WbdTFkAw/An2K73CDUdZ4GRaVhuXsUNlld
+         ZpUg==
+X-Gm-Message-State: AOJu0YwxwPiFbDYIHeo28/5CJl+XLoIaGOVQtHrTN3DeG36cdIzqNJms
+	At8iRehV8E4gAlyrtXB5H8YAGg==
+X-Google-Smtp-Source: AGHT+IGIqp9+SOQlbf1VSxJyUVykN8s+rSSZd9z9CNa3yPMJGm2Wwo3Xl7+OnSLwDaVGp6wVzgC7VA==
+X-Received: by 2002:a05:651c:20c:b0:2c6:f711:cea1 with SMTP id y12-20020a05651c020c00b002c6f711cea1mr10048056ljn.39.1700217665860;
+        Fri, 17 Nov 2023 02:41:05 -0800 (PST)
+Received: from [192.168.7.188] (679773502.box.freepro.com. [212.114.21.58])
+        by smtp.gmail.com with ESMTPSA id p6-20020a05600c358600b0040a45fffd27sm6751494wmq.10.2023.11.17.02.41.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 02:40:06 -0800 (PST)
-Message-ID: <2a9bb683-da73-47af-8800-f14a833e8ee4@linaro.org>
-Date: Fri, 17 Nov 2023 11:40:04 +0100
+        Fri, 17 Nov 2023 02:41:04 -0800 (PST)
+Message-ID: <247f4654-ec65-4857-8b35-1a79088e8b87@linaro.org>
+Date: Fri, 17 Nov 2023 11:41:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,134 +64,108 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] dt-bindings: net: ipq4019-mdio: Document ipq5332
- platform
-Content-Language: en-US
-To: Jie Luo <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
- konrad.dybcio@linaro.org, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, andrew@lunn.ch,
- hkallweit1@gmail.com, linux@armlinux.org.uk, robert.marko@sartura.hr
-Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_srichara@quicinc.com
-References: <20231115032515.4249-1-quic_luoj@quicinc.com>
- <20231115032515.4249-10-quic_luoj@quicinc.com>
- <834cbb58-3a88-4ba6-8db6-10440a4d0893@linaro.org>
- <76e081ba-9d5a-41df-9c1b-d782e5656973@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <76e081ba-9d5a-41df-9c1b-d782e5656973@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 07/16] arm64: dts: qcom: sm8550-aim300: add PCIe0
+Content-Language: en-US, fr
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, tglx@linutronix.de
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, -cc=kernel@quicinc.com
+References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
+ <20231117101817.4401-8-quic_tengfan@quicinc.com>
+ <37a3a407-07e7-49d8-bbce-b1dac8cfcf5a@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <37a3a407-07e7-49d8-bbce-b1dac8cfcf5a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 17/11/2023 11:36, Jie Luo wrote:
->>>     clocks:
->>> -    items:
->>> -      - description: MDIO clock source frequency fixed to 100MHZ
->>> +    minItems: 1
->>> +    maxItems: 5
->>> +    description:
+On 17/11/2023 11:29, Dmitry Baryshkov wrote:
+> On 17/11/2023 12:18, Tengfei Fan wrote:
+>> Add PCIe0 nodes used with WCN7851 device.  The PCIe1 is not connected,
+>> thus skip pcie_1_phy_aux_clk input clock to GCC.
 >>
->> Doesn't this make all other variants with incorrect constraints?
+>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 32 ++++++++++++++++++++++
+>>   1 file changed, 32 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>> index 202b979da8ca..3aca0a433a00 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>> @@ -393,6 +393,38 @@
+>>       };
+>>   };
+>> +&gcc {
+>> +    clocks = <&bi_tcxo_div2>, <&sleep_clk>,
+>> +         <&pcie0_phy>,
+>> +         <&pcie1_phy>,
+>> +         <0>,
+>> +         <&ufs_mem_phy 0>,
+>> +         <&ufs_mem_phy 1>,
+>> +         <&ufs_mem_phy 2>,
+>> +         <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+>> +};
 > 
-> There are 5 clock items, the first one is the legacy MDIO clock, the
-> other clocks are new added for ipq5332 platform, will describe it more
-> clearly in the next patch set.
+> NAK, this should go to sm8550.dtsi unless there is a good reason.
 
-OTHER variants. Not this one.
+Actually this is how QRD8550 was designed, so it's fine to mimic.
+
+Neil
 
 > 
->>
->>> +      MDIO system clock frequency fixed to 100MHZ, and the GCC uniphy
->>> +      clocks enabled for resetting ethernet PHY.
->>>   
->>>     clock-names:
->>> -    items:
->>> -      - const: gcc_mdio_ahb_clk
->>> +    minItems: 1
->>> +    maxItems: 5
->>> +
->>> +  phy-reset-gpio:
->>
->> No, for multiple reasons. It's gpios first of all. Where do you see such
->> property? Where is the existing definition?
+>> +
+>> +&pcie_1_phy_aux_clk {
+>> +    status = "disabled";
+>> +};
+>> +
+>> +&pcie0 {
+>> +    perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
+>> +    wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+>> +
+>> +    pinctrl-0 = <&pcie0_default_state>;
+>> +    pinctrl-names = "default";
+>> +
+>> +    status = "okay";
+>> +};
+>> +
+>> +&pcie0_phy {
+>> +    vdda-phy-supply = <&vreg_l1e_0p88>;
+>> +    vdda-pll-supply = <&vreg_l3e_1p2>;
+>> +
+>> +    status = "okay";
+>> +};
+>> +
+>>   &pm8550b_eusb2_repeater {
+>>       vdd18-supply = <&vreg_l15b_1p8>;
+>>       vdd3-supply = <&vreg_l5b_3p1>;
 > 
-> will remove this property, and update to use the exited PHY GPIO reset.
-> 
->>
->> Then it is "reset-gpios" if this is MDIO. Why do you put phy properties
->> in MDIO?
->>
->>> +    minItems: 1
->>> +    maxItems: 3
->>> +    description:
->>> +      GPIO used to reset the PHY, each GPIO is for resetting the connected
->>> +      ethernet PHY device.
->>> +
->>> +  phyaddr-fixup:
->>> +    description: Register address for programing MDIO address of PHY devices
->>
->> You did not test code which you sent.
-> 
-> Hi Krzysztof,
-> This patch is passed with the following command in my workspace.
-> i will upgrade and install yamllint to make sure there is no
-> warning reported anymore.
-> 
-> make dt_bg_check 
-
-No clue what's this, but no, I do not believe you tested it at all. It's
-not about yamllint. It's was not tested. Look at errors reported on
-mailing list.
-
-> DT_SCHEMA_FILES=Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-
-
-Best regards,
-Krzysztof
 
 
