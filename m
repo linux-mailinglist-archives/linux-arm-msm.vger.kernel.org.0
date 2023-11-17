@@ -1,138 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E3C97EF0D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:43:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2440A7EF0EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 11:48:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8F1421C20A85
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:43:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFE7F280F69
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 10:47:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 531A719468;
-	Fri, 17 Nov 2023 10:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 760F518C3D;
+	Fri, 17 Nov 2023 10:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CErGZh15"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="arvcMNsW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CFB4194;
-	Fri, 17 Nov 2023 02:43:31 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AH9aVIH013102;
-	Fri, 17 Nov 2023 10:43:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=TPtLCEPu4isugSYmiQrugFcZCXkM8tpMGDtpsJOlZSY=;
- b=CErGZh159cLgzTM6sU6X9dCkrGwFj395p6dEnCtiLbZg7lgzhEfCfupMKG3ASV7R4Ke8
- jyxnvnJUW8+fvgOSWhyJcM8nVp7TIq7AtG8qN78tg0TpWqqxEynTyOE8/yTp3bArsGvY
- 4iexRK+KGAEik69ROevdyQ/ySM8ZshNDfl5hd2m7qUf3pVJH+ngg0UE1uxlXLegA8GKu
- gThxRVEGUszE8kPGExX7sHASJ9xNBCc4cKoDbpJdaWZx1h9QlOoeUYv4cGOjUTmiraPM
- br8PBAys0eNoTaCmMojiLlAaWWFJI1uMVuIv/8n1B1WMesb6Sbf7di11wxuOpN/GWNQ2 TA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udpqq2373-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 10:43:27 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AHAhQUl019520
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 10:43:26 GMT
-Received: from blr-ubuntu-87.ap.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.39; Fri, 17 Nov 2023 02:43:21 -0800
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <ulf.hansson@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC: <agross@kernel.org>, <conor+dt@kernel.org>, <quic_rjendra@quicinc.com>,
-        <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <quic_tsoni@quicinc.com>,
-        <neil.armstrong@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH 2/2] pmdomain: qcom: rpmhpd: Update part number to X1E80100
-Date: Fri, 17 Nov 2023 16:12:54 +0530
-Message-ID: <20231117104254.28862-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231117104254.28862-1-quic_sibis@quicinc.com>
-References: <20231117104254.28862-1-quic_sibis@quicinc.com>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541361A592;
+	Fri, 17 Nov 2023 10:47:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B167C433C8;
+	Fri, 17 Nov 2023 10:47:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700218075;
+	bh=7g4hbHLfUyULJOVW3vf8Sh7y3UZATocPdgH7ZaOrhwk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=arvcMNsWuLaHFNnEDXLSxBRNuDbZEj3hNQtXWVgddTf9FmfRlhGjqo5Djz7zD3pqg
+	 OopSyBIWu14DRhP8byFeQ/BySIPGnPXFUE7vOv3GuIYJKpiTOIbcpyzOxO6DHEvROj
+	 VbbL5rkzUMA7tRaUVh7Giuu6iEue+dpW0G31Mevq7+Db0blEd1SEnszvQcA0Icouyz
+	 h9zTbBlE5xIlG9NEFxUWUhBo20gk0a6kgBsJApu8ma0W/hb9UKmB+oYQwmSo7lVP/q
+	 4UxWMUEgwgN/lyiqp0FXvCqkXrUno38OnT1qVDbct+H3JoLtU2v8U8UIsH5pmoKNwZ
+	 0hi3osb5uJI+Q==
+Date: Fri, 17 Nov 2023 16:17:48 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: correct LED panic
+ indicator
+Message-ID: <20231117104748.GP250770@thinkpad>
+References: <20231111094623.12476-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: irju9lyAWALdr30tO9TreW9d5bT0KiTi
-X-Proofpoint-ORIG-GUID: irju9lyAWALdr30tO9TreW9d5bT0KiTi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-17_08,2023-11-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 phishscore=0 spamscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 suspectscore=0
- mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311170079
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231111094623.12476-1-krzysztof.kozlowski@linaro.org>
 
-Replace SC8380xp with the updated part number (X1E80100).
+On Sat, Nov 11, 2023 at 10:46:23AM +0100, Krzysztof Kozlowski wrote:
+> There is no "panic-indicator" default trigger but a property with that
+> name:
+> 
+>   qrb5165-rb5.dtb: leds: led-user4: Unevaluated properties are not allowed ('linux,default-trigger' was unexpected)
+> 
+> Fixes: b5cbd84e499a ("arm64: dts: qcom: qrb5165-rb5: Add onboard LED support")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Fixes: 2050c9bc4f7b ("pmdomain: qcom: rpmhpd: Add SC8380XP power domains")
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- drivers/pmdomain/qcom/rpmhpd.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
-index f2e64324deb8..3078896b1300 100644
---- a/drivers/pmdomain/qcom/rpmhpd.c
-+++ b/drivers/pmdomain/qcom/rpmhpd.c
-@@ -598,8 +598,8 @@ static const struct rpmhpd_desc sc8280xp_desc = {
- 	.num_pds = ARRAY_SIZE(sc8280xp_rpmhpds),
- };
- 
--/* SC8380xp RPMH powerdomains */
--static struct rpmhpd *sc8380xp_rpmhpds[] = {
-+/* X1E80100 RPMH powerdomains */
-+static struct rpmhpd *x1e80100_rpmhpds[] = {
- 	[RPMHPD_CX] = &cx,
- 	[RPMHPD_CX_AO] = &cx_ao,
- 	[RPMHPD_EBI] = &ebi,
-@@ -615,9 +615,9 @@ static struct rpmhpd *sc8380xp_rpmhpds[] = {
- 	[RPMHPD_GMXC] = &gmxc,
- };
- 
--static const struct rpmhpd_desc sc8380xp_desc = {
--	.rpmhpds = sc8380xp_rpmhpds,
--	.num_pds = ARRAY_SIZE(sc8380xp_rpmhpds),
-+static const struct rpmhpd_desc x1e80100_desc = {
-+	.rpmhpds = x1e80100_rpmhpds,
-+	.num_pds = ARRAY_SIZE(x1e80100_rpmhpds),
- };
- 
- static const struct of_device_id rpmhpd_match_table[] = {
-@@ -629,7 +629,6 @@ static const struct of_device_id rpmhpd_match_table[] = {
- 	{ .compatible = "qcom,sc7280-rpmhpd", .data = &sc7280_desc },
- 	{ .compatible = "qcom,sc8180x-rpmhpd", .data = &sc8180x_desc },
- 	{ .compatible = "qcom,sc8280xp-rpmhpd", .data = &sc8280xp_desc },
--	{ .compatible = "qcom,sc8380xp-rpmhpd", .data = &sc8380xp_desc },
- 	{ .compatible = "qcom,sdm670-rpmhpd", .data = &sdm670_desc },
- 	{ .compatible = "qcom,sdm845-rpmhpd", .data = &sdm845_desc },
- 	{ .compatible = "qcom,sdx55-rpmhpd", .data = &sdx55_desc},
-@@ -643,6 +642,7 @@ static const struct of_device_id rpmhpd_match_table[] = {
- 	{ .compatible = "qcom,sm8450-rpmhpd", .data = &sm8450_desc },
- 	{ .compatible = "qcom,sm8550-rpmhpd", .data = &sm8550_desc },
- 	{ .compatible = "qcom,sm8650-rpmhpd", .data = &sm8650_desc },
-+	{ .compatible = "qcom,x1e80100-rpmhpd", .data = &x1e80100_desc },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, rpmhpd_match_table);
+- Mani
+
+> ---
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index 3bd0c06e7315..e43f73f1be1b 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -64,8 +64,8 @@ led-user4 {
+>  			function = LED_FUNCTION_INDICATOR;
+>  			color = <LED_COLOR_ID_GREEN>;
+>  			gpios = <&pm8150_gpios 10 GPIO_ACTIVE_HIGH>;
+> -			linux,default-trigger = "panic-indicator";
+>  			default-state = "off";
+> +			panic-indicator;
+>  		};
+>  
+>  		led-wlan {
+> -- 
+> 2.34.1
+> 
+
 -- 
-2.17.1
-
+மணிவண்ணன் சதாசிவம்
 
