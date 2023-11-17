@@ -1,108 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCB557EF5CD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 17:03:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCE9A7EF717
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 18:38:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6070DB20C0F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 16:03:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 19C201C20ADC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 17:38:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C70E3EA6A;
-	Fri, 17 Nov 2023 16:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB39643169;
+	Fri, 17 Nov 2023 17:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jOyDALbl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mtKlfPUJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CB1E1;
-	Fri, 17 Nov 2023 08:02:53 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AHCv0fl014041;
-	Fri, 17 Nov 2023 16:02:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=x0M3wklGqflq1G+DQ/EFE56suGOIsWSY/I+nLdmUqqo=;
- b=jOyDALbl6JXQ7g5iwKBUMsdapWtX53GmIZx696gE3wnpWDE+yfLmrmQJsa6YFpeacj2w
- /arnCpHAh3lfTZXYHVIOBEzRtnvcUOhPC8aMVS3570iAw0uZCz4ydTmsBrAOSM++YUHh
- ykEstO0jTkVHXOy2DWnFkPGXIVY+wRtw/Dr+ClnN69KqF1+bn7+gJtb5aeuP/ciWRPJJ
- 3lqCi5RkM0pbJEXLDGEY+pyUGkOuSxooyDf2skpEvaJX4hEsxK9A5Lu6loQCSHSkpqWV
- RdSoLBPS6Oom3kMD3I6UarqS/X6589JPeOylR2gu77cj5rnJkxJppJiyhhdYnRHvHVyk jg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3udkkuu75v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 16:02:25 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AHG2OZg001517
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Nov 2023 16:02:24 GMT
-Received: from [10.79.43.91] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 17 Nov
- 2023 08:02:17 -0800
-Message-ID: <045261f7-ec6d-7c90-bdbe-3cd1a58143b7@quicinc.com>
-Date: Fri, 17 Nov 2023 21:32:14 +0530
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C428F14F90;
+	Fri, 17 Nov 2023 17:38:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A95C433C9;
+	Fri, 17 Nov 2023 17:38:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700242689;
+	bh=EUDBFroF5TjmYX0MrqbQ4lm7E/YuA+W3eE3VkPGKcm4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=mtKlfPUJjJanONH237bSO3hOyU3SFX6xd57lxI10FihF5J/Mibv8D4PbuIiO4F5iy
+	 d4WA6/sHLhtXtn85tmoz8qRflR9TgpG14tbbU/u2a+SMRM04OTf2y5kJnuo0mfTcaE
+	 gQEg3YiAE39DARcXgaIYF5Ia1GBGkJ168le7YTOy0vg6tGGvcbwVyn7HDnnam8h3LV
+	 zJcX6KP7XzZSux28CArPbMBqEOCUU/OawwwhIYsz5NMxZWpfI21s3i3LoJkBgHAJ2H
+	 AYbrHhzqOdeRqKQjNWy+AcyBPetP5rOABkVxIGI+Tc5v3faQwuhgO9stvbnF/Q9zUT
+	 9E3RhmkCzm4fA==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1r42nF-0005Vo-0K;
+	Fri, 17 Nov 2023 18:38:13 +0100
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/3] USB: dwc3: qcom: fix resource leaks on probe deferral
+Date: Fri, 17 Nov 2023 18:36:47 +0100
+Message-ID: <20231117173650.21161-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V2 4/4] dt-bindings: interrupt-controller: qcom,pdc:
- document pdc on X1E80100
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <will@kernel.org>,
-        <robin.murphy@arm.com>, <joro@8bytes.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC: <agross@kernel.org>, <vkoul@kernel.org>, <quic_gurus@quicinc.com>,
-        <conor+dt@kernel.org>, <quic_rjendra@quicinc.com>,
-        <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <iommu@lists.linux.dev>,
-        <quic_tsoni@quicinc.com>, <neil.armstrong@linaro.org>
-References: <20231117105635.343-1-quic_sibis@quicinc.com>
- <20231117105635.343-5-quic_sibis@quicinc.com>
- <67e7df38-d0a9-4513-9eb8-1114a9ecc3b3@linaro.org>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <67e7df38-d0a9-4513-9eb8-1114a9ecc3b3@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YYKJT12kYHoQtWKXUVMdTT2tt_zrJJyC
-X-Proofpoint-ORIG-GUID: YYKJT12kYHoQtWKXUVMdTT2tt_zrJJyC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-17_14,2023-11-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- mlxlogscore=498 clxscore=1015 spamscore=0 impostorscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311170119
+Content-Transfer-Encoding: 8bit
 
-On 11/17/23 18:37, Krzysztof Kozlowski wrote:
-> On 17/11/2023 11:56, Sibi Sankar wrote:
->> The X1E80100 SoC includes a PDC, document it.
->>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
-> 
-> Please rebase on next.
+When reviewing the recently submitted series which reworks the dwc3 qcom
+glue implementation [1], I noticed that the driver's tear down handling
+is currently broken, something which can lead to memory leaks and
+potentially use-after-free issues on probe deferral and on driver
+unbind.
 
-This series was based on lnext-20231117.
+Let's get this sorted before reworking driver.
 
--Sibi
+Note that the last patch has only been compile tested as I don't have
+access to a sdm845 device.
 
-> 
-> Best regards,
-> Krzysztof
-> 
+Johan
+
+[1] https://lore.kernel.org/lkml/20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com/
+
+
+Johan Hovold (3):
+  USB: dwc3: qcom: fix resource leaks on probe deferral
+  USB: dwc3: qcom: fix software node leak on probe errors
+  USB: dwc3: qcom: fix ACPI platform device leak
+
+ drivers/usb/dwc3/dwc3-qcom.c | 57 +++++++++++++++++++++++++++---------
+ 1 file changed, 43 insertions(+), 14 deletions(-)
+
+-- 
+2.41.0
+
 
