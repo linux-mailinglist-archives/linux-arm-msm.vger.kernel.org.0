@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0057D7EF36C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 14:08:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C67E27EF370
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 14:08:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ACE612813D8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 13:08:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80D6C2814F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Nov 2023 13:08:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C7963172E;
-	Fri, 17 Nov 2023 13:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30DA0315B3;
+	Fri, 17 Nov 2023 13:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bIRHtF9s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pRYcXeJx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34E691987
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 05:07:40 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c5039d4e88so25669371fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 05:07:40 -0800 (PST)
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F7F1BF8
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 05:07:58 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-40891d38e3fso14466765e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 05:07:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700226458; x=1700831258; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700226477; x=1700831277; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=87taNeY1lLsyPJK/v5xNwqcmdMotLyQvNLIBX8Ge5qo=;
-        b=bIRHtF9ssPy5tlGRqN6OxFH11EsxKHs0FD+C5/pSVJET7i6u+GT1Nu5KnRY+vaUXNt
-         1qvd2n9MHCbv6zPCJFIAnyFzg+cmg/C/AJlm/7s5OVo9jREUMBgzfMjkSVJFKfh8ZCLY
-         QaZGaqxhfhiwUs6qDFtCBlfbEuWBLpu9nfpndBF1u/mU7DcP87B+xqLlGDz6IK+ze5ci
-         aU+NcJybETMjUnoH0EiBY8CHUqVWBGfiub6twCzlbQHuDFdDdjYElm3i/bw0RF6+1Wg6
-         fj9VOMzvHu+IKpKLduOmsMAxw3b+1E6pDKPMjeqis9D7c37SdWMul2v58DTnaOCJQgoO
-         fILQ==
+        bh=e91SbzALxQldxJ9V/d8kZXCTDZXdfOgieUU/YY5gexc=;
+        b=pRYcXeJxH6ScMByPMXW3xbhpks4L2ByOJXmgnPse5t7DmasJS4svXDqcZd0EbO5/Cq
+         PKz1PAg1SkbXRRfvs1BqIaXQTLQP8lBBDRyVX/xnj7E56celo32E6pxHGGeoIoiuL1uF
+         ISGyu7vxw9EVbKDqwfbH7u/h4+QVLNij+ULncLHsSI9fwc0aVXFrFZCH1OboCns9cfeV
+         EEI7gFWiYD93TUEO3PpCXSVaeGUDxYIRh0nTd7n3HwUhadje0kiAuUMKsByWV6xZhU3Q
+         +B/0ScCnJa6ppr6oEpi505fjLBZTg9Z3J1sGfBw2Uq3yyCLKam+GJ5ctx04wxq0jEvc4
+         bwnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700226458; x=1700831258;
+        d=1e100.net; s=20230601; t=1700226477; x=1700831277;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=87taNeY1lLsyPJK/v5xNwqcmdMotLyQvNLIBX8Ge5qo=;
-        b=cqDc3ZFrVHDwlZgY4f/2sewBZBgwBsg7DmrEgUnHlsA+XTw4RnC/Gm11zJVBtsB/Qc
-         4/Je+KADPtNQZ4vrNCbar4aA/G0Rn++nnBJ/WAEknO0mZi7QgVa83Hpy8/Ctf1gRdpr2
-         O1htakNYoPvsQ54zD5tXSmwvfQvi4j4nkLphEYgdRRv52Hw1EPq/YysZTcaVaxvX2oYS
-         4NkpK90clGB+50BjlgrjL/GTphk1qRXe/xNI6QYuF5FV44BCjLyUONGG413e7VRK6Aim
-         cCsqJyTWq8vYDkUXeL2D9JioP2S51Q+i2azYP1c2+KHmMKgZmN6fBQGQEWPrySGOqFp+
-         4z3Q==
-X-Gm-Message-State: AOJu0YxP0cI/Sba/xiEgxfuBJ1E8DWdvA31G5dt8Ntmd4coJZhPMjV0k
-	Q9ogG2J8EvUxhARas/eFBKVHwQ==
-X-Google-Smtp-Source: AGHT+IGgSDOfkQ29QWDZpIP+BROXAKqMiX+Ij8nRfgtEraU6Ia41ooi8X1hBQLNY5gidNHz6uG8nmw==
-X-Received: by 2002:a2e:5cc2:0:b0:2c6:f4b8:1d88 with SMTP id q185-20020a2e5cc2000000b002c6f4b81d88mr9555970ljb.20.1700226458420;
-        Fri, 17 Nov 2023 05:07:38 -0800 (PST)
+        bh=e91SbzALxQldxJ9V/d8kZXCTDZXdfOgieUU/YY5gexc=;
+        b=SkRzHuqs0PbIfa/PkUCIcpUmP5CvEmiyA2aopAlCafk0OQsr3Jmpc2n42bIJQjdkFt
+         v2DARSazZyY/ai1QyLxqvN6SGB1aBot6KOmEoC78saGI5OzlHAH3lvP+xC7E50mUztTh
+         N9c/3bnRLWLZFViXeYrVLlSckrS1JeiKRPfR6YdTqo4MFllAOGlzu7KEYNlXYNBt6ihW
+         jY46/e78/rH7yTpLYjlH9bDur2Dyx0ofgTkHzgTQQBY14piBsPwe/+jpc0ip1PNMR9Xm
+         O+y/m3UICAXx8x6LWaZJa0x5aw1MzCjscttIxZwbwDVsQrrqAfmcSHbK5Y7UOr5ztNQg
+         ELDg==
+X-Gm-Message-State: AOJu0YyPUWeZWY6/YbJSJPJFr02ZR8QT0dUgwws7e2WAkyFCSkMHWNlg
+	vpqmKb9iUShwjPHizowpBavjjA==
+X-Google-Smtp-Source: AGHT+IHURfaR8H2SRq7h1GBOjWKMYkoI/+unkSyOhnTUWLBZ+fCkp08Feq8kkt2GKEdUp3gfMZ+y/A==
+X-Received: by 2002:a05:600c:1552:b0:40a:4609:9c97 with SMTP id f18-20020a05600c155200b0040a46099c97mr14446732wmg.20.1700226476953;
+        Fri, 17 Nov 2023 05:07:56 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.126])
-        by smtp.gmail.com with ESMTPSA id p13-20020a05600c358d00b0040841e79715sm2734381wmq.27.2023.11.17.05.07.32
+        by smtp.gmail.com with ESMTPSA id p13-20020a05600c358d00b0040841e79715sm2734381wmq.27.2023.11.17.05.07.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 05:07:34 -0800 (PST)
-Message-ID: <0370e477-388b-40a3-81b1-d11359496f7a@linaro.org>
-Date: Fri, 17 Nov 2023 14:07:29 +0100
+        Fri, 17 Nov 2023 05:07:53 -0800 (PST)
+Message-ID: <67e7df38-d0a9-4513-9eb8-1114a9ecc3b3@linaro.org>
+Date: Fri, 17 Nov 2023 14:07:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,8 +62,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 3/4] dt-bindings: firmware: qcom,scm: document SCM on
- X1E80100 SoCs
+Subject: Re: [PATCH V2 4/4] dt-bindings: interrupt-controller: qcom,pdc:
+ document pdc on X1E80100
 Content-Language: en-US
 To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
  konrad.dybcio@linaro.org, will@kernel.org, robin.murphy@arm.com,
@@ -74,7 +74,7 @@ Cc: agross@kernel.org, vkoul@kernel.org, quic_gurus@quicinc.com,
  linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org,
  iommu@lists.linux.dev, quic_tsoni@quicinc.com, neil.armstrong@linaro.org
 References: <20231117105635.343-1-quic_sibis@quicinc.com>
- <20231117105635.343-4-quic_sibis@quicinc.com>
+ <20231117105635.343-5-quic_sibis@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -120,17 +120,17 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231117105635.343-4-quic_sibis@quicinc.com>
+In-Reply-To: <20231117105635.343-5-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 17/11/2023 11:56, Sibi Sankar wrote:
-> Document scm compatible for X1E80100 SoCs.
+> The X1E80100 SoC includes a PDC, document it.
 > 
 > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Reviewed-by: Guru Das Srinagesh <quic_gurus@quicinc.com>
+> ---
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Please rebase on next.
 
 Best regards,
 Krzysztof
