@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BF087EFC76
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 01:08:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 542B37EFC7E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 01:22:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F9FC2813A7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:08:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70F301C2093C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:22:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C64D376;
-	Sat, 18 Nov 2023 00:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F92E653;
+	Sat, 18 Nov 2023 00:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Thn8FfCf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fKbkDTKe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 401C910C6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:08:39 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-5435336ab0bso3822346a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:08:39 -0800 (PST)
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3595610CE
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:21:59 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9becde9ea7bso729028966b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700266118; x=1700870918; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700266917; x=1700871717; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2nwpOE763xNMRQa+zeSB+8/G6OMMU3oC8obNn/im3SM=;
-        b=Thn8FfCfvOZgfKRNxPP3bXjJRpuJfPJPZT3+YCjU9S3jYT26N9USjQiIK49Ik5SC8S
-         kOQIJWyM27aYX1LON4MaNq9GZP5vy0GhW1/TWiJAFcrgCKdzDN6+Rt1ANbuDCs5KIxmb
-         qKl5t0SAIPSlK3G4hFYBiF6a2SDOpEfaYs2s34WfHz/p6GZ+ZPugaLq+qvdHn+C0pQAS
-         qxaY3XfrKdjPPEPtSk0q93liPRY+E11o5ie4nTa2rQQI/g7ZzasK/57hl3j4BB0UHYNO
-         8hO2WDC5pxCVEgszO4SE/XTHIhhsRgOyas2XX01hBFjZRT1LxANUUqD/rHFiTQCKFG6x
-         lJVQ==
+        bh=RA8ky1PcdBHxs0AtI5Bw11j01B38AUPYJDp6Hyg1kFE=;
+        b=fKbkDTKeyQayR0SZQtvkcciMQApzhjoeV3/cwgH2Hddqqz5y9xste1TmsBCp/9gr9M
+         SHT1fX1hGilmNb6yWIvJMExN/zfOzTffwBlCr9bcsyjf3wf/9UYMLvxibV1Y4/524Rdo
+         pPG/YzeMyscoC6eLf2L9tAPx9dnQTWipnS+uUGFhZypoyWPdxTRY9TlcUDlxf3M/dGTC
+         GeRB5A7oW7S5CI7aFrsJ6T3526uhtccegco9NIBLkxrfAkha7NYiDDBReJhj3JDKd80S
+         fzqHww1yejGuuENPc8XLd7ORlfzhEBgtQqX9I9ShIygwroetBr+ayvVigZv+RoW8HDoB
+         TX4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700266118; x=1700870918;
+        d=1e100.net; s=20230601; t=1700266917; x=1700871717;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2nwpOE763xNMRQa+zeSB+8/G6OMMU3oC8obNn/im3SM=;
-        b=NHjXftTeA/7/UPA4LkINTmm9yqM7eSL8AgBx3TVqVM0kB6huMzGAnj3ENLQipFHsta
-         6lhY2u74Jd3bFMLZ4wrRhacPdICc8Elk7iTsxNSiy/HnIYeLAeKiHuAZlJPvTmLXgdmW
-         WMglwb7bqm3cCd3iLbSuNNR+IMs7gu0pAIaFK3/BohQE7NgCDvG97btQWRFg1tWRLgpL
-         CPUXmg+2hBKS87re6FX4jMuhQQeU02YclJimG8vjH3767NfLUOb39QJCa+Z83xmXiaMk
-         pK8OkcfKjDJXAf4QSIIB7cbT862ye99XgrAbiy4jKwd69iKcbnTO4/Dd7dgS0k0MqhNt
-         W7wQ==
-X-Gm-Message-State: AOJu0YwP9/DMj/dvN2ekEjM/7FwT8G4gi7XwMl10s9Z2ZLtR+AJYe57X
-	PUMJJ7FfQQXFc62JkmY9zSVRKQ==
-X-Google-Smtp-Source: AGHT+IG421y36aItmwl9ECsNxuvFSHfk2KFYMVAs3T5gUuhnwOlUwBqCiV7eaM48Z10vFIZ5E28sjw==
-X-Received: by 2002:a05:6402:1a54:b0:53b:3225:93c2 with SMTP id bf20-20020a0564021a5400b0053b322593c2mr498037edb.8.1700266117740;
-        Fri, 17 Nov 2023 16:08:37 -0800 (PST)
+        bh=RA8ky1PcdBHxs0AtI5Bw11j01B38AUPYJDp6Hyg1kFE=;
+        b=q/doKX7TIk61bm5kIbu7iFv+e0QrO3284f+bUum4gv90eMO5ewmje+EYCV3G6h8Bp0
+         nsDt/1yTNOclgB8rgrmUozZNGASX1uCL5RBsLriHNqQbJ858JQu7HRd6KqBO+QEkmdqG
+         adXsI+gt0fXOMBiAPa93wIkCdJu5FYDUcYjw0bqMOaDxH6Xv1jvCzY3PUiCpcF4nAFWB
+         Ox2RydrNJf9g8Tc5p6UIX5Ib2IIPlO8GBSPN9jX+lSQczPrISZFDlcpAxfMepcQ9dzQN
+         hoeWkaVCmyboU8a1GFPQQPCD0LjgPORaQxarfkjqBRXAWU+vaR6S1GvkWxU5UXWinJ1V
+         oZVg==
+X-Gm-Message-State: AOJu0Yz7lBadzZk+/yNTxiaWOZaiKrmGoeYRWErcPqMBb21n9XoS4AOJ
+	s37m7hAyCd3LivBsSMsSKyn2Ow==
+X-Google-Smtp-Source: AGHT+IExMQuDC0BLuseOoXaeQotQo76MyLnj82ezCiCWlRcorNLcWupNZoCQNZYtDbwP9xEnfevpqw==
+X-Received: by 2002:a17:906:b384:b0:9ae:5a56:be32 with SMTP id uh4-20020a170906b38400b009ae5a56be32mr6022764ejc.38.1700266917697;
+        Fri, 17 Nov 2023 16:21:57 -0800 (PST)
 Received: from [192.168.201.100] (178235187040.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.40])
-        by smtp.gmail.com with ESMTPSA id q1-20020aa7da81000000b0053e625da9absm1173383eds.41.2023.11.17.16.08.35
+        by smtp.gmail.com with ESMTPSA id g25-20020a1709064e5900b009e7e7c0d1a9sm1308513ejw.185.2023.11.17.16.21.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 16:08:37 -0800 (PST)
-Message-ID: <1ae2da80-77e8-487a-a94d-b329e6f48360@linaro.org>
-Date: Sat, 18 Nov 2023 01:08:34 +0100
+        Fri, 17 Nov 2023 16:21:57 -0800 (PST)
+Message-ID: <5b1d2eff-d328-4bb2-b255-b5913e1700f5@linaro.org>
+Date: Sat, 18 Nov 2023 01:21:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,18 +62,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/16] arm64: dts: qcom: sm8550-aim300: add PCIe0
+Subject: Re: [PATCH v2 2/8] arm64: dts: qcom: add initial SM8650 dtsi
 Content-Language: en-US
-To: neil.armstrong@linaro.org, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, Tengfei Fan <quic_tengfan@quicinc.com>,
- agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, tglx@linutronix.de
+To: Neil Armstrong <neil.armstrong@linaro.org>, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, -cc=kernel@quicinc.com
-References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
- <20231117101817.4401-8-quic_tengfan@quicinc.com>
- <37a3a407-07e7-49d8-bbce-b1dac8cfcf5a@linaro.org>
- <247f4654-ec65-4857-8b35-1a79088e8b87@linaro.org>
+ linux-kernel@vger.kernel.org
+References: <20231106-topic-sm8650-upstream-dt-v2-0-44d6f9710fa7@linaro.org>
+ <20231106-topic-sm8650-upstream-dt-v2-2-44d6f9710fa7@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,43 +109,88 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <247f4654-ec65-4857-8b35-1a79088e8b87@linaro.org>
+In-Reply-To: <20231106-topic-sm8650-upstream-dt-v2-2-44d6f9710fa7@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 17.11.2023 11:41, neil.armstrong@linaro.org wrote:
-> On 17/11/2023 11:29, Dmitry Baryshkov wrote:
->> On 17/11/2023 12:18, Tengfei Fan wrote:
->>> Add PCIe0 nodes used with WCN7851 device.  The PCIe1 is not connected,
->>> thus skip pcie_1_phy_aux_clk input clock to GCC.
->>>
->>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 32 ++++++++++++++++++++++
->>>   1 file changed, 32 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
->>> index 202b979da8ca..3aca0a433a00 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
->>> +++ b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
->>> @@ -393,6 +393,38 @@
->>>       };
->>>   };
->>> +&gcc {
->>> +    clocks = <&bi_tcxo_div2>, <&sleep_clk>,
->>> +         <&pcie0_phy>,
->>> +         <&pcie1_phy>,
->>> +         <0>,
->>> +         <&ufs_mem_phy 0>,
->>> +         <&ufs_mem_phy 1>,
->>> +         <&ufs_mem_phy 2>,
->>> +         <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
->>> +};
->>
->> NAK, this should go to sm8550.dtsi unless there is a good reason.
+On 6.11.2023 09:39, Neil Armstrong wrote:
+> Add initial DTSI for the Qualcomm SM8650 platform,
+> only contains nodes which doesn't depend on interconnect.
 > 
-> Actually this is how QRD8550 was designed, so it's fine to mimic.
-Does CCF not handle this gracefully?
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+Just a couple nits
+
+[...]
+
+> +		cpu2-bottom-thermal {
+> +			polling-delay-passive = <0>;
+> +			polling-delay = <0>;
+> +			thermal-sensors = <&tsens0 6>;
+> +
+> +			trips {
+> +				trip-point0 {
+> +					temperature = <90000>;
+> +					hysteresis = <2000>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip-point1 {
+> +					temperature = <95000>;
+> +					hysteresis = <2000>;
+> +					type = "passive";
+> +				};
+> +
+> +				 cpu-critical {
+indentation
+
+> +					temperature = <110000>;
+> +					hysteresis = <1000>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
+[...]
+> +
+> +		nsphmx-0-thermal {
+> +			polling-delay-passive = <10>;
+> +			polling-delay = <0>;
+> +			thermal-sensors = <&tsens2 8>;
+> +
+> +			trips {
+> +				thermal-engine-config {
+> +					temperature = <125000>;
+> +					hysteresis = <1000>;
+> +					type = "passive";
+> +				};
+> +
+> +				thermal-hal-config {
+> +					temperature = <125000>;
+> +					hysteresis = <1000>;
+> +					type = "passive";
+> +				};
+The two above nodes (which are repeated under many tzones) sound made up
+just to be consumed by a bunch of android binaries
+
+Or at least the second one, maybe "thermal engine" is some hw/fw part?
+
+> +
+> +				reset-mon-config {
+"reset mon" is not a very enticing name either..
+
+> +					temperature = <115000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
+> +
+> +				junction-config {
+...which leads me to believe only this one is meaningful
+
+same goes for all tzones that have a similar mess :/
+> +					temperature = <95000>;
+> +					hysteresis = <5000>;
+> +					type = "passive";
+> +				};
 
 Konrad
 
