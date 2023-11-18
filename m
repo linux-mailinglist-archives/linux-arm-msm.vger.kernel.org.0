@@ -1,131 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-1070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E2207F0113
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 17:23:40 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F3B07F0160
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 18:42:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 042D6280F48
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 16:23:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A22EDB20975
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 17:42:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25E751804D;
-	Sat, 18 Nov 2023 16:23:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C0BA10A21;
+	Sat, 18 Nov 2023 17:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XnnARijD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F46C5;
-	Sat, 18 Nov 2023 08:23:32 -0800 (PST)
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-1cf52e5e07eso2356725ad.0;
-        Sat, 18 Nov 2023 08:23:32 -0800 (PST)
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B1DDC0;
+	Sat, 18 Nov 2023 09:42:28 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-40838915cecso4678365e9.2;
+        Sat, 18 Nov 2023 09:42:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700329346; x=1700934146; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4/UMvWLGwbB65y4MgNgbTrhLeriroJNqxOaU5RBpd/A=;
+        b=XnnARijDh1M/UQgQZs9Z/DUnt/ayVcFB3fjt9I0JChHWd4ePxAQPF3MhJgdHrvxlxp
+         4YZLRIy03ZEV0LARepP5UyMfgg0gxM9xqAoTE89OB5+/cV0EhIJiSB04TjAbLUYFazHW
+         OhbWrnfzjd1/gvpV+i4bfxgFfoA7ezkLLJ4/UwkAudF7ccEx/Zz5AVAaposwTvhTBlum
+         iHqi/wF78iBrw0TYyVj8FlofFZFFjSzoo5vKY3KC3ybWLB19vxHSiUDTB0UMYT1FKKEj
+         9QAWjVPbU2eXcfUVq8HIBuih8lR1WN3o1vFIgjqWA1+QnrqbZo6Zlsogqk9Lr5y81P8P
+         /cPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700324612; x=1700929412;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2erzZFOyxOrSdjM/KpGdx3oacnKwVcss5FA960Pxu5w=;
-        b=fYqqCdMKOD5hcFS+Pcb3HrknnLjiaxbOO5e4YVeP4FvvFzmD68K0T/fVY5rqvkB/z1
-         8K0Ez2Sap8pkqkVUaJhQkP4xz1r4DGnwtXtmM5hVyUI02rapghbUrXG3HdWrVXk3VQNg
-         vN9dcZycZJACeTuGiw9LY/RN74GwRadhRZGRX+feZunbiVY06owKpBy0NDpqh1cvH3sX
-         +dybOGVGL++XVvQ4LS3GPJMBHWbN/Bqi0GjqSZ22idjdggvGVqIsFQPt5k93I2HbTqJR
-         u7lLYaTbIohcO9sSRcALX6J7CTIYxnWZ/QI5zVmJU99Kji/Q4/EHzh3yijGQVY9oiQev
-         WYPQ==
-X-Gm-Message-State: AOJu0YxqrpdyoiEsZK64HSkNuYVjWMly5Z6GlC6YjejWvfM9OnqKsy+l
-	Ca/aK/JyHgxk/FKsDuHdxBY=
-X-Google-Smtp-Source: AGHT+IFxNCOe1hV/UN7ql6AF5ylF4cLl3KjxD1pwBtnSiRvXE7Ae8L1R6+CdLXdA7EoHYLiLeUL3Gw==
-X-Received: by 2002:a17:902:6844:b0:1cf:5197:25ac with SMTP id f4-20020a170902684400b001cf519725acmr2006009pln.12.1700324611982;
-        Sat, 18 Nov 2023 08:23:31 -0800 (PST)
-Received: from ?IPV6:2601:647:4d7e:54f3:667:4981:ffa1:7be1? ([2601:647:4d7e:54f3:667:4981:ffa1:7be1])
-        by smtp.gmail.com with ESMTPSA id u18-20020a170902e81200b001ce64bdfa19sm2051042plg.45.2023.11.18.08.23.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Nov 2023 08:23:31 -0800 (PST)
-Message-ID: <91a32cd2-903a-43df-8067-510c6c431ec7@acm.org>
-Date: Sat, 18 Nov 2023 08:23:20 -0800
+        d=1e100.net; s=20230601; t=1700329346; x=1700934146;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4/UMvWLGwbB65y4MgNgbTrhLeriroJNqxOaU5RBpd/A=;
+        b=hjM7/cMSPMiIFrhkPxJ8aVdgZkn9CHvYJx8XhR2meDUWs32LL35PszwWL8ZKn7ExJl
+         0noq58aNYhCEf4QE25O3XgS0FGY+rcelo1SsuWTLHpRdYZV5aMQI1LPO5tsA5PW2jvKY
+         ndFf7qMdZvDniINnmvcu68OAU06lQu2T8NSwh/gT66eX9OdawxGS8kdlQrEIdb2+yDgD
+         aNkWhCKlgHGVI4IYtJNP0e+PsPX6WoxW7MTTo2cEHqBT5VRjSP2fRhTbJsHOb6bqlGfY
+         UHpnwVMSHXctoT+zojVlMIeRGXhfEO97ToByq9Nz8LA7Map3Q8+ox0TFZw3L0E8P1+1f
+         E2ZA==
+X-Gm-Message-State: AOJu0YzJhqzPfuK8rlr/mnLP0U2d+R1SA/aM5UA5gDLarzLTaC6xnp6u
+	Nk91CyO5traHgdX8l2gWfu8=
+X-Google-Smtp-Source: AGHT+IGJBMJGBtOSgxjPC+wTqBOjKUX0OkeFIG96ALnW2TXBuODjpDTjYiE8IirfVuZmHsPbu37kWw==
+X-Received: by 2002:a05:600c:46cd:b0:407:7ea1:e9a4 with SMTP id q13-20020a05600c46cd00b004077ea1e9a4mr2170232wmo.5.1700329345971;
+        Sat, 18 Nov 2023 09:42:25 -0800 (PST)
+Received: from zotac.lan. (dynamic-2a01-0c22-77bf-8300-2223-08ff-fe18-0310.c22.pool.telefonica.de. [2a01:c22:77bf:8300:2223:8ff:fe18:310])
+        by smtp.gmail.com with ESMTPSA id y10-20020a05600c340a00b004068de50c64sm6964211wmp.46.2023.11.18.09.42.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 18 Nov 2023 09:42:25 -0800 (PST)
+From: Heiner Kallweit <hkallweit1@gmail.com>
+To: Wolfram Sang <wsa@kernel.org>,
+	intel-gfx@lists.freedesktop.org
+Cc: linux-i2c@vger.kernel.org,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	linux-fbdev@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	linux-sunxi@lists.linux.dev,
+	linux-mediatek@lists.infradead.org,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	John Stultz <jstultz@google.com>
+Subject: [PATCH 00/20] remove I2C_CLASS_DDC support
+Date: Sat, 18 Nov 2023 18:42:00 +0100
+Message-ID: <20231118174221.851-1-hkallweit1@gmail.com>
+X-Mailer: git-send-email 2.42.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/34] lib/find: add atomic find_bit() primitives
-Content-Language: en-US
-To: Yury Norov <yury.norov@gmail.com>, linux-kernel@vger.kernel.org,
- "David S. Miller" <davem@davemloft.net>, "H. Peter Anvin" <hpa@zytor.com>,
- "James E.J. Bottomley" <jejb@linux.ibm.com>,
- "K. Y. Srinivasan" <kys@microsoft.com>,
- "Md. Haris Iqbal" <haris.iqbal@ionos.com>,
- Akinobu Mita <akinobu.mita@gmail.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Bjorn Andersson <andersson@kernel.org>, Borislav Petkov <bp@alien8.de>,
- Chaitanya Kulkarni <kch@nvidia.com>, Christian Brauner <brauner@kernel.org>,
- Damien Le Moal <damien.lemoal@opensource.wdc.com>,
- Dave Hansen <dave.hansen@linux.intel.com>, David Disseldorp <ddiss@suse.de>,
- Edward Cree <ecree.xilinx@gmail.com>, Eric Dumazet <edumazet@google.com>,
- Fenghua Yu <fenghua.yu@intel.com>, Geert Uytterhoeven
- <geert@linux-m68k.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Gregory Greenman <gregory.greenman@intel.com>,
- Hans Verkuil <hverkuil@xs4all.nl>, Hans de Goede <hdegoede@redhat.com>,
- Hugh Dickins <hughd@google.com>, Ingo Molnar <mingo@redhat.com>,
- Jakub Kicinski <kuba@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>,
- Jiri Pirko <jiri@resnulli.us>, Jiri Slaby <jirislaby@kernel.org>,
- Kalle Valo <kvalo@kernel.org>, Karsten Graul <kgraul@linux.ibm.com>,
- Karsten Keil <isdn@linux-pingi.de>, Kees Cook <keescook@chromium.org>,
- Leon Romanovsky <leon@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Martin Habets <habetsm.xilinx@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <monstr@monstr.eu>,
- Nicholas Piggin <npiggin@gmail.com>, Oliver Neukum <oneukum@suse.com>,
- Paolo Abeni <pabeni@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Zijlstra <peterz@infradead.org>, Ping-Ke Shih <pkshih@realtek.com>,
- Rich Felker <dalias@libc.org>, Rob Herring <robh@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>,
- Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
- Sean Christopherson <seanjc@google.com>,
- Shuai Xue <xueshuai@linux.alibaba.com>, Stanislaw Gruszka <stf_xl@wp.pl>,
- Steven Rostedt <rostedt@goodmis.org>,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Thomas Gleixner <tglx@linutronix.de>,
- Valentin Schneider <vschneid@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, Wenjia Zhang <wenjia@linux.ibm.com>,
- Will Deacon <will@kernel.org>, Yoshinori Sato <ysato@users.sourceforge.jp>,
- GR-QLogic-Storage-Upstream@marvell.com, alsa-devel@alsa-project.org,
- ath10k@lists.infradead.org, dmaengine@vger.kernel.org,
- iommu@lists.linux.dev, kvm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-block@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- linux-hyperv@vger.kernel.org, linux-m68k@lists.linux-m68k.org,
- linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-net-drivers@amd.com, linux-pci@vger.kernel.org,
- linux-rdma@vger.kernel.org, linux-s390@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-sh@vger.kernel.org, linux-sound@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, mpi3mr-linuxdrv.pdl@broadcom.com,
- netdev@vger.kernel.org, sparclinux@vger.kernel.org, x86@kernel.org
-Cc: Jan Kara <jack@suse.cz>, Mirsad Todorovac
- <mirsad.todorovac@alu.unizg.hr>, Matthew Wilcox <willy@infradead.org>,
- Rasmus Villemoes <linux@rasmusvillemoes.dk>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
- Alexey Klimov <klimov.linux@gmail.com>
-References: <20231118155105.25678-1-yury.norov@gmail.com>
- <20231118155105.25678-2-yury.norov@gmail.com>
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20231118155105.25678-2-yury.norov@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/18/23 07:50, Yury Norov wrote:
-> Add helpers around test_and_{set,clear}_bit() that allow to search for
-> clear or set bits and flip them atomically.
+After removal of the legacy EEPROM driver and I2C_CLASS_DDC support in
+olpc_dcon there's no i2c client driver left supporting I2C_CLASS_DDC.
+Class-based device auto-detection is a legacy mechanism and shouldn't
+be used in new code. So we can remove this class completely now.
 
-Has it been considered to add kunit tests for the new functions?
+Preferably this series should be applied via the i2c tree.
 
-Thanks,
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 
-Bart.
+---
 
+ drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.c           |    1 -
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 -
+ drivers/gpu/drm/ast/ast_i2c.c                     |    1 -
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi.c         |    1 -
+ drivers/gpu/drm/display/drm_dp_helper.c           |    1 -
+ drivers/gpu/drm/display/drm_dp_mst_topology.c     |    1 -
+ drivers/gpu/drm/gma500/cdv_intel_dp.c             |    1 -
+ drivers/gpu/drm/gma500/intel_gmbus.c              |    1 -
+ drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c        |    1 -
+ drivers/gpu/drm/gma500/psb_intel_sdvo.c           |    1 -
+ drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_i2c.c   |    1 -
+ drivers/gpu/drm/i915/display/intel_gmbus.c        |    1 -
+ drivers/gpu/drm/i915/display/intel_sdvo.c         |    1 -
+ drivers/gpu/drm/loongson/lsdc_i2c.c               |    1 -
+ drivers/gpu/drm/mediatek/mtk_hdmi_ddc.c           |    1 -
+ drivers/gpu/drm/mgag200/mgag200_i2c.c             |    1 -
+ drivers/gpu/drm/msm/hdmi/hdmi_i2c.c               |    1 -
+ drivers/gpu/drm/radeon/radeon_i2c.c               |    1 -
+ drivers/gpu/drm/rockchip/inno_hdmi.c              |    1 -
+ drivers/gpu/drm/rockchip/rk3066_hdmi.c            |    1 -
+ drivers/gpu/drm/sun4i/sun4i_hdmi_i2c.c            |    1 -
+ drivers/video/fbdev/core/fb_ddc.c                 |    1 -
+ drivers/video/fbdev/cyber2000fb.c                 |    1 -
+ drivers/video/fbdev/i740fb.c                      |    1 -
+ drivers/video/fbdev/intelfb/intelfb_i2c.c         |   15 +++++----------
+ drivers/video/fbdev/matrox/i2c-matroxfb.c         |   12 ++++--------
+ drivers/video/fbdev/s3fb.c                        |    1 -
+ drivers/video/fbdev/tdfxfb.c                      |    1 -
+ drivers/video/fbdev/tridentfb.c                   |    1 -
+ drivers/video/fbdev/via/via_i2c.c                 |    1 -
+ include/linux/i2c.h                               |    1 -
+ 31 files changed, 9 insertions(+), 47 deletions(-)
 
