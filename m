@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC5697EFC6B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 01:06:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BF087EFC76
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 01:08:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80A721F27AB4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:06:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F9FC2813A7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:08:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 984E936D;
-	Sat, 18 Nov 2023 00:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C64D376;
+	Sat, 18 Nov 2023 00:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LZRZKrJ8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Thn8FfCf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3326410D0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:06:11 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-5079f6efd64so3368568e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:06:11 -0800 (PST)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 401C910C6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:08:39 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-5435336ab0bso3822346a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:08:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700265969; x=1700870769; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700266118; x=1700870918; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BkuSxfBC4F+DNLrW68HIrLQZh2sF2jMkW+/1oAq+d0E=;
-        b=LZRZKrJ8BEjwR1LlXQQhr49mBNtLxYqUPbXDOS+b2mXWH9cJaAXWM2vWMrrDhTRTj7
-         bSRcRl7bbbmuCeAI5JbqXG+BxoMZHMX9oBRmujnUBhxGdmLC+ZTTNGr6bKEh37nPDf/Y
-         WQ+hcXlK+m2N5k9VLidoFBnxVNVsp+268v3AqQDi5ZMKTraNsriOaHljwKjn0OqXC9yz
-         TTdwqqsq8L+6ZjcMGilQIcFGoa5ph36oNc4lZAYsnHCxYkrzS5PE5HnRDBpF5sVi6Pdf
-         J+HNZgICbLM+tActzsrNUJsK67SwJjVLnguZ8tJela3fjuB5+nastQt3o6xsWoakqa3n
-         FT0A==
+        bh=2nwpOE763xNMRQa+zeSB+8/G6OMMU3oC8obNn/im3SM=;
+        b=Thn8FfCfvOZgfKRNxPP3bXjJRpuJfPJPZT3+YCjU9S3jYT26N9USjQiIK49Ik5SC8S
+         kOQIJWyM27aYX1LON4MaNq9GZP5vy0GhW1/TWiJAFcrgCKdzDN6+Rt1ANbuDCs5KIxmb
+         qKl5t0SAIPSlK3G4hFYBiF6a2SDOpEfaYs2s34WfHz/p6GZ+ZPugaLq+qvdHn+C0pQAS
+         qxaY3XfrKdjPPEPtSk0q93liPRY+E11o5ie4nTa2rQQI/g7ZzasK/57hl3j4BB0UHYNO
+         8hO2WDC5pxCVEgszO4SE/XTHIhhsRgOyas2XX01hBFjZRT1LxANUUqD/rHFiTQCKFG6x
+         lJVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700265969; x=1700870769;
+        d=1e100.net; s=20230601; t=1700266118; x=1700870918;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BkuSxfBC4F+DNLrW68HIrLQZh2sF2jMkW+/1oAq+d0E=;
-        b=jFq/HGu2fy0ntCCh5Ycva0Pqf54pJJutPHvl5yjV4brKWK3+Ua281x4w66Pj2c4gY5
-         EPZJBRtPPK6pngi9jZEb4K7sf9q9aYj5+w/+ijPYdNjHGeqHC8IELTZhsTLYad7bZ7MB
-         QF2QZXPzHf+1ZrrqQxU+cLPnXUdh4N1DAkZGB3GMAZIfUreTcHny4U33UCyJ/n4fr+YZ
-         JttuUzYLtU7rriXoB4JneHvILlEElFy3k5UHvcYG7Q/AkqnqSupReZXzn/IX92PU0NuU
-         j8749Efn1TtzAPFL5rl+m8wsXEornGYezIXMgiO7Ig6w9FjUjZ5u1/Ik3Kh1bbSKAey2
-         tFBw==
-X-Gm-Message-State: AOJu0YxxGhb8iZhAFzlNv2oCpAx0YExb42Dxspqyj9S0yhFLbhV3G/oP
-	r8EoYYlKQ7qXBrXOX6E+uuM3dQ==
-X-Google-Smtp-Source: AGHT+IF3EYLf/B1NjPvHxo4zxynXWYMW6ljJWIj9L+81F5pUXD3r1olmF3CI8NaR46EVAodUBTG9AQ==
-X-Received: by 2002:a05:6512:480f:b0:509:489f:d84e with SMTP id eo15-20020a056512480f00b00509489fd84emr845440lfb.37.1700265969447;
-        Fri, 17 Nov 2023 16:06:09 -0800 (PST)
+        bh=2nwpOE763xNMRQa+zeSB+8/G6OMMU3oC8obNn/im3SM=;
+        b=NHjXftTeA/7/UPA4LkINTmm9yqM7eSL8AgBx3TVqVM0kB6huMzGAnj3ENLQipFHsta
+         6lhY2u74Jd3bFMLZ4wrRhacPdICc8Elk7iTsxNSiy/HnIYeLAeKiHuAZlJPvTmLXgdmW
+         WMglwb7bqm3cCd3iLbSuNNR+IMs7gu0pAIaFK3/BohQE7NgCDvG97btQWRFg1tWRLgpL
+         CPUXmg+2hBKS87re6FX4jMuhQQeU02YclJimG8vjH3767NfLUOb39QJCa+Z83xmXiaMk
+         pK8OkcfKjDJXAf4QSIIB7cbT862ye99XgrAbiy4jKwd69iKcbnTO4/Dd7dgS0k0MqhNt
+         W7wQ==
+X-Gm-Message-State: AOJu0YwP9/DMj/dvN2ekEjM/7FwT8G4gi7XwMl10s9Z2ZLtR+AJYe57X
+	PUMJJ7FfQQXFc62JkmY9zSVRKQ==
+X-Google-Smtp-Source: AGHT+IG421y36aItmwl9ECsNxuvFSHfk2KFYMVAs3T5gUuhnwOlUwBqCiV7eaM48Z10vFIZ5E28sjw==
+X-Received: by 2002:a05:6402:1a54:b0:53b:3225:93c2 with SMTP id bf20-20020a0564021a5400b0053b322593c2mr498037edb.8.1700266117740;
+        Fri, 17 Nov 2023 16:08:37 -0800 (PST)
 Received: from [192.168.201.100] (178235187040.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.40])
-        by smtp.gmail.com with ESMTPSA id l19-20020aa7c313000000b0052ffc2e82f1sm1190361edq.4.2023.11.17.16.06.07
+        by smtp.gmail.com with ESMTPSA id q1-20020aa7da81000000b0053e625da9absm1173383eds.41.2023.11.17.16.08.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 16:06:09 -0800 (PST)
-Message-ID: <2e0d2c55-fb2f-4903-a555-f51019942c6e@linaro.org>
-Date: Sat, 18 Nov 2023 01:06:06 +0100
+        Fri, 17 Nov 2023 16:08:37 -0800 (PST)
+Message-ID: <1ae2da80-77e8-487a-a94d-b329e6f48360@linaro.org>
+Date: Sat, 18 Nov 2023 01:08:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,22 +62,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/4] clk: qcom: Add Global Clock controller (GCC)
- driver for X1E80100
+Subject: Re: [PATCH 07/16] arm64: dts: qcom: sm8550-aim300: add PCIe0
 Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: agross@kernel.org, conor+dt@kernel.org, quic_tdas@quicinc.com,
- quic_rjendra@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, neil.armstrong@linaro.org,
- abel.vesa@linaro.org, quic_tsoni@quicinc.com
-References: <20231117092737.28362-1-quic_sibis@quicinc.com>
- <20231117092737.28362-3-quic_sibis@quicinc.com>
- <ec9d03f7-7158-4309-9a04-b08c69b89f39@linaro.org>
+To: neil.armstrong@linaro.org, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>, Tengfei Fan <quic_tengfan@quicinc.com>,
+ agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, tglx@linutronix.de
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, -cc=kernel@quicinc.com
+References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
+ <20231117101817.4401-8-quic_tengfan@quicinc.com>
+ <37a3a407-07e7-49d8-bbce-b1dac8cfcf5a@linaro.org>
+ <247f4654-ec65-4857-8b35-1a79088e8b87@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -114,24 +110,43 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ec9d03f7-7158-4309-9a04-b08c69b89f39@linaro.org>
+In-Reply-To: <247f4654-ec65-4857-8b35-1a79088e8b87@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 17.11.2023 21:50, Bryan O'Donoghue wrote:
-> On 17/11/2023 09:27, Sibi Sankar wrote:
->> * Use shared ops in the x1e80100 gcc driver [Bryan].
+On 17.11.2023 11:41, neil.armstrong@linaro.org wrote:
+> On 17/11/2023 11:29, Dmitry Baryshkov wrote:
+>> On 17/11/2023 12:18, Tengfei Fan wrote:
+>>> Add PCIe0 nodes used with WCN7851 device.  The PCIe1 is not connected,
+>>> thus skip pcie_1_phy_aux_clk input clock to GCC.
+>>>
+>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 32 ++++++++++++++++++++++
+>>>   1 file changed, 32 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>>> index 202b979da8ca..3aca0a433a00 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>>> @@ -393,6 +393,38 @@
+>>>       };
+>>>   };
+>>> +&gcc {
+>>> +    clocks = <&bi_tcxo_div2>, <&sleep_clk>,
+>>> +         <&pcie0_phy>,
+>>> +         <&pcie1_phy>,
+>>> +         <0>,
+>>> +         <&ufs_mem_phy 0>,
+>>> +         <&ufs_mem_phy 1>,
+>>> +         <&ufs_mem_phy 2>,
+>>> +         <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+>>> +};
+>>
+>> NAK, this should go to sm8550.dtsi unless there is a good reason.
 > 
-> This looks better to me now / more consistent with what we have in sc8280xp - where we do try to hit suspend and => retention/parking matters.
-Parking the clock is separate from putting the system to sleep.
-
-IIUC we usually use shared ops on clocks that may have different users
-(e.g. not only controlled by Linux) and/or that are crucial to the
-functioning of hardware (like AXI clocks, which if gated would make
-the system crash on any access attempt, from any subsystem, unless
-turned on beforehand)
-
-Perhaps Dmitry can use some clearer wording than me..
+> Actually this is how QRD8550 was designed, so it's fine to mimic.
+Does CCF not handle this gracefully?
 
 Konrad
 
