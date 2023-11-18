@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5815E7EFF3A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 12:21:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A1F47EFF42
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 12:30:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CD711B209D1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 11:21:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A3DBB209C8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 11:30:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E03E31097D;
-	Sat, 18 Nov 2023 11:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C12F9D294;
+	Sat, 18 Nov 2023 11:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EqcpG5e3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bqbnVh2+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x442.google.com (mail-wr1-x442.google.com [IPv6:2a00:1450:4864:20::442])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B502D71
-	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Nov 2023 03:21:15 -0800 (PST)
-Received: by mail-wr1-x442.google.com with SMTP id ffacd0b85a97d-32fa7d15f4eso2083032f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Nov 2023 03:21:15 -0800 (PST)
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 533BF1AD
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Nov 2023 03:30:02 -0800 (PST)
+Received: by mail-wm1-x344.google.com with SMTP id 5b1f17b1804b1-40838915cecso2931415e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Nov 2023 03:30:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700306474; x=1700911274; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700307001; x=1700911801; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=mPUyKTXXSta6O2fovS/Sd+lPKUPKukl6VDR0zfaqpOc=;
-        b=EqcpG5e3AgyxxGbrAqhoABqyQQf23sBgO6d/56Jdbai2pAc/mD3+olAcmhtlF2jt7l
-         0xg8TVOuqVsNLnXTeU9EyLRkaTfbb3TgqlX42ft30zomvUxmTEDtMXpK6VzYMNZpP8dy
-         OVGsV9v7bO2zO7yZ5Um4UHv9CZmLDzCQVJB1WCPYZ/kw/e9rTU83yfIyo/pcu3o4Auyp
-         8fmQoSLoyZfAZlHzHfG7zXHW0o0F1iH/N/8nPLoCZWexutXwGhAFdx/yEN346Ph05ZQ+
-         9SsqV6B1KShUBMAX2mwFzpmpTlg5sctMNI+E/QUIVj7Lf+r+Ky+7ZzLoS/NnYqsLJMEG
-         bjow==
+        bh=I05hizi/ziQIYj44ryTJSTiDmdIMI2fLRCRgol7O9do=;
+        b=bqbnVh2+2ZquxsoTXdQHewg/IsptQlBZSCXH6cI56CIq9Cwox+zR/hhOWU6VdmrThu
+         EtKHvmTcjhL32xt67NGyY3fngjF0DUQHV8Z/tvAsWGx+7h++gE8vjbuHin23ySsH1HZr
+         PDw9BPS6ZFf+L2imXaqRs54veJY5Fd0e5VRX2H2aE3/+CwJmNX65lOaGAXVocwglTBIk
+         qq6PKTbv+g8D46pS+GfMPdoc5NsWBCfU+IAAFMf1L/Pm9zGfDHIebIcwwJf4j7WKMIXd
+         Jjk0jFxyYum0nXFO0QYsmX8toW0eL+n6Y1KRhM/tKdvkqD9X1plsZzhI/pMQj3FnRpY6
+         CBWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700306474; x=1700911274;
+        d=1e100.net; s=20230601; t=1700307001; x=1700911801;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mPUyKTXXSta6O2fovS/Sd+lPKUPKukl6VDR0zfaqpOc=;
-        b=AODugk7onGAja4yyxARwVdrVzQt+9nPAFlKCNvBX2RAKfufljG/rTC6I2f2Jqu4SX6
-         Ia8gu/htSpvXUpI0vAbDxonuljAv17BPUIFkaYYgU+Zug/7h2eSeuMul0KSlMGFBBKqI
-         rk8ZD2x8vtbbjeA8YPww92dnj8jKrngrOp7QlC4/zc2VURcEqIQRHLXUtkE3/Q5rWS8B
-         GkBCQutVsfpELd8Xr6IcngrolkYhbZ7IxqxJMeZPRKAvf30nxJwwi2ot0p6otXr7iPQB
-         C+peQ6pC3aefv5SoWV3nhC7Bb8AD4C7lXlBjz/d7qq2wKNjmOmz7qtvPQYooBjF1ZSb/
-         WFXg==
-X-Gm-Message-State: AOJu0YzUIUZRF57L9WYzrANrW/LWAMBf0U0jdOHZynqaS4hmZOcJneCr
-	gkiyJ6wMunVIPQP2C6YgSLcHtw==
-X-Google-Smtp-Source: AGHT+IGlRDKm9rqnOd1dR8K6pxIjfQMraB1ziQN/o0o+0J4lvPN9D0qU3XUhj/DS3Uy0+DQDIsEarA==
-X-Received: by 2002:a5d:64ee:0:b0:32d:aa56:c0c7 with SMTP id g14-20020a5d64ee000000b0032daa56c0c7mr1242475wri.54.1700306473449;
-        Sat, 18 Nov 2023 03:21:13 -0800 (PST)
+        bh=I05hizi/ziQIYj44ryTJSTiDmdIMI2fLRCRgol7O9do=;
+        b=cGCA9iqzMeFf6YBIsfgIqPR3w3ijWZhA5Q93jrqCglUoArhsPsjLXs1cMAypbhG1UK
+         RxrmmOwn2VeSRtYCgdutYRL5h73PhJVow9zGtiW6c8hBrWpXvnLqpslGmShB7OhI5uWX
+         wt4kUdg6oVYvj2C+r8NUybHoIKo2rAvBPsWcXQ39QCD4QpGUEcZqp48VKwgnrfKaT/+n
+         rHxelcDeEPWICgwqJfYVjOaN4OYwYXl7kJ+00sOo2Nh3nlyWdCaggD2WUOFuPvDf2vo5
+         z9VQRfKQwZ6/1FWJtRPwHgnmFxM544lTrXtOaM5roQAd4zvwzC8AWHtRSfxs+SvMV2o3
+         HRRg==
+X-Gm-Message-State: AOJu0YxBBpR/6TZv2qyt1aid4ZavE7dLnzykfpPyZSXROnxpTU9fxbz+
+	cUP7DXsXdcLGCF/UwMveKvHJuQ==
+X-Google-Smtp-Source: AGHT+IHXRPdTBeCZwvX5z2lN8s7sgQIAOPmxapzZDUOSqb/DBt8xN/LwehbOdqPRjfGrH960hvtUQA==
+X-Received: by 2002:a05:600c:3b27:b0:405:a30:151e with SMTP id m39-20020a05600c3b2700b004050a30151emr1563466wms.12.1700307000180;
+        Sat, 18 Nov 2023 03:30:00 -0800 (PST)
 Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id p6-20020a5d68c6000000b0032fdcbfb093sm5109586wrw.81.2023.11.18.03.21.12
+        by smtp.gmail.com with ESMTPSA id y4-20020a5d4ac4000000b003316c8ad545sm4008051wrs.76.2023.11.18.03.29.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Nov 2023 03:21:12 -0800 (PST)
-Message-ID: <fe74b1ab-078d-4c53-9133-cf7ab00a656d@linaro.org>
-Date: Sat, 18 Nov 2023 11:21:11 +0000
+        Sat, 18 Nov 2023 03:29:59 -0800 (PST)
+Message-ID: <715fd71e-89c7-4332-9c45-361f6562b1b7@linaro.org>
+Date: Sat, 18 Nov 2023 11:29:58 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,55 +62,44 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] Add support for Translation Buffer Units
+Subject: Re: [PATCH v4 0/4] Add sc8280xp CCI and CAMSS core dtsi
 Content-Language: en-US
-To: Georgi Djakov <quic_c_gdjako@quicinc.com>, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, will@kernel.org,
- robin.murphy@arm.com, joro@8bytes.org
-Cc: devicetree@vger.kernel.org, andersson@kernel.org,
- konrad.dybcio@linaro.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, quic_cgoldswo@quicinc.com,
- quic_sukadev@quicinc.com, quic_pdaly@quicinc.com, quic_sudaraja@quicinc.com,
- djakov@kernel.org
-References: <20231118042730.2799-1-quic_c_gdjako@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, andersson@kernel.org,
+ agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, jonathan@marek.ca,
+ quic_tdas@quicinc.com, vladimir.zapolskiy@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231012113100.3656480-1-bryan.odonoghue@linaro.org>
+ <e59569d3-cb49-4e11-8bd8-f814f369aaa7@linaro.org>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20231118042730.2799-1-quic_c_gdjako@quicinc.com>
+In-Reply-To: <e59569d3-cb49-4e11-8bd8-f814f369aaa7@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 18/11/2023 04:27, Georgi Djakov wrote:
-> The TCUs (Translation Control Units) and TBUs (Translation Buffer
-> Units) are key components of the MMU-500. Multiple TBUs are connected
-> to a single TCU over an interconnect. Each TBU contains a TLB that
-> caches page tables. The MMU-500 implements a TBU for each connected
-> master, and the TBU is designed, so that it is local to the master.
+On 18/11/2023 00:51, Konrad Dybcio wrote:
+> On 12.10.2023 13:30, Bryan O'Donoghue wrote:
+>> V4:
+>> - Adds RB - Krzysztof
+>> - Drops indicated newline - Krzysztof
+>> - Moves "This patch depends-on" below the "---" - Krsysztof
+> Just a note for Bjorn, this series is likely on hold as we iron out the
+> driver details.. e.g. _src clocks were dropped since this submission.
 > 
-> The Qualcomm SDM845 platform has an implementation of the SMMU-500,
-> that has multiple TBUs. A DT schema is added to describe the resources
-> for each TBU (register space, power-domains, interconnects and clocks).
-> 
-> The TBU driver will manage the resources and allow the system to
-> operate the TBUs during a context fault to obtain details by doing
-> s1 inv, software + hardware page table walks etc. This is implemented
-> with ATOS/eCATs as the ATS feature is not supported. Being able to
-> query the TBUs is useful for debugging various hardware/software
-> issues on these platforms.
-> 
-> v2:
-> - Improve DT binding description, add full example. (Konrad)
-> - Drop Qcom specific stuff from the generic binding. (Rob)
-> - Unconditionally try to populate subnodes. (Konrad)
-> - Improve TBU driver commit text, remove memory barriers. (Bjorn)
-> - Move TBU stuff into separate file. Make the driver builtin.
-> - TODO: Evaluate whether to keep TBU support as a separate driver
->    or just instantiate things from qcom_smmu_impl_init()
-> 
-> v1: https://lore.kernel.org/r/20231019021923.13939-1-quic_c_gdjako@quicinc.com
+> Konrad
 
-What is your suggested way to test this series ?
+Eh yes.
+
+Let me take the opportunity to plug the series/patches I'm targeting 
+that Bjorn can merge
+
+The CAMCC controller
+https://lore.kernel.org/lkml/20231026105345.3376-1-bryan.odonoghue@linaro.org/
+
+The first patch here
+https://lore.kernel.org/lkml/20231110-b4-camss-sc8280xp-v5-1-7f4947cc59c8@linaro.org/T/
 
 ---
 bod
-
 
