@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB9BA7EFCB4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 01:45:24 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15C657EFCC3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 01:49:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 824BF1F21EB0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:45:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B44D21F28163
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:49:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70106A3C;
-	Sat, 18 Nov 2023 00:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E7ECEBF;
+	Sat, 18 Nov 2023 00:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V7z/TACV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D2ZhqhFy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9549F93
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:45:18 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9de7a43bd1aso352787166b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:45:18 -0800 (PST)
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED4410C6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:49:00 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-507bd64814fso3683976e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:49:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700268317; x=1700873117; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1700268539; x=1700873339; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=m+Yal7n1L1DW4bj3Z0sdG+mTZ83GeTrR4A2Ul6jZ8S8=;
-        b=V7z/TACVT6Facv+NTozs2nEcDxuf5ko+PelBsxF7c+uve10E23JSu3JkDLmZUm3F1K
-         g1ezYk4e26cNJhTEN8yr7APukPJxNn/rLhHdHUffJuFBfHxYeSf5zNdGlc8dIy3toghy
-         HVdj3bvLT6zGz8I6O3z10IdSYKXPbwU0tZcBxqMTLRAV3JDGeoyskPNrFfjGdGWF7tr/
-         CrCyixhsyfT8G2h6Tv2LYprWHsgYsNrwIg9i1s3sy8seDlt94Im26mZVft248z16AsFk
-         2t5DqtwpxOWY6voFeHyx1miEqVcBSDT8q+L2MFl1jviZAW33EXuRVEm7160/QfR7cXGR
-         CmYA==
+        bh=yJXzr0OE2tNPiyGJ3aKzCqrkEywUIhP19xPsryf4etM=;
+        b=D2ZhqhFy2k22qdWyPiSYxVPXl16y1F+ceBW0mxtE8bDnXmcVP+N+H8eJ8kMe2ufOpG
+         ZR3Npqf/gPntk6c+4w59EEzkURBD6EsAOsAXI7tqqSZRj1vOokOZKWyzt29W3XeURR2v
+         VQ9qTrSgzLNeYoL/uZjxMJ/KRoM3ekeEdgCgDyqMm5FdpaCQKvAnwoKXu4MsTnN2nKBo
+         oCUN9+GF6tqwq5wQZrQqDYjbStSMhAPckpjolj7PJ+OFDBP2LP5/vVe+PplHYh1r3gCx
+         z/ssPJLwznalHA9sXUGyCpGJ+S2iwbdS32iraaA8aEnk2dCY+qOdmgBi9jbMxOFR+WGi
+         49Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700268317; x=1700873117;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1700268539; x=1700873339;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m+Yal7n1L1DW4bj3Z0sdG+mTZ83GeTrR4A2Ul6jZ8S8=;
-        b=Cze/ln76RnvomsRsm+w48FWYZe38gC3BVoJ29Zb14H9xQ/yZx5y9LhTu+9tel4quYR
-         XqXDig3L3sLrVUgHiLhA/Ln2ZzEDVx2GQI54+DYWDbU1zOiD5dfSoE4pf69PdYKUAY44
-         7g42ByFheI2FjShH6QUJHChvxfHXNi+ClonYHvLsuaPU0FxQyB6C4yPB201hKQzihrks
-         LnII/+IUb8oFYgwWTk11G/ce/YdGHP3wy3NpESBTxQ1VA68TLP1H7R77MXWFhA0IVycL
-         D7wMNynPfocLwHiFsnk38AmzF52J0q3gYtYwMFYstmkDOUvgvKA8DnC/dNieTsechX9W
-         KcJw==
-X-Gm-Message-State: AOJu0YzEzonVVMfzmabaIJ/puohXt5pL13T0z6PJD/ykuB1Sffc2VHPo
-	OwNBKJgdYrmlTQTpGCO0rAKuGQ==
-X-Google-Smtp-Source: AGHT+IG8c9l29Omc6OmtWR7a50pKhBZldQIo4VnBfKDL8KM+pJZK7QT1MVS6xFA20v0oFWqqOPwxwA==
-X-Received: by 2002:a17:906:5345:b0:9b2:6d09:847c with SMTP id j5-20020a170906534500b009b26d09847cmr554768ejo.10.1700268316970;
-        Fri, 17 Nov 2023 16:45:16 -0800 (PST)
+        bh=yJXzr0OE2tNPiyGJ3aKzCqrkEywUIhP19xPsryf4etM=;
+        b=NSAyu6mMvQnIvrSzuel+/k6jB55OqeyShOveqpT/cyG2M5I5pDoVdpnOS54rStKjtR
+         InXLhKKnMW/MpPSQj1ypqNQkn7XtNaT3MQFfAPqI7aTc6yVuVwU+SY78xzm7T727sQ9B
+         fZKl3WgIC9oqcPVw/NejX3lbuCsD6YfnvV2+A4iK9nzUkGb8qolf3b60TQ5JxjuC/PwQ
+         dkiz2HQkFYT54xrc6f3zyl2VjKwAF2R4OdbvafaE2+YEMLulSAv/ZqDEef1na/DGLdJ+
+         +aVSMzcjtfr3yu+xfe5hK4eK2VYahwIYKnax17XjYqYc0PFZdasR0M2mLjR4nUAZcYs7
+         cxrg==
+X-Gm-Message-State: AOJu0Ywn1Eb3sCUJlNw1zdxTdTHuku9xmXyEJzTPXYvJwqKVIpdRy5dO
+	1rhT3OI2FOLW+9pvlJQPUysXtsF1AFnKkY2GeU0=
+X-Google-Smtp-Source: AGHT+IGB4OCk+u4eoWOqFWAYCeveslUtHEDKr++sqaTQ5SRyj4P3pZsb6CsDwkGfGDTQRgYjxxNqBg==
+X-Received: by 2002:a19:7616:0:b0:50a:a2cb:cd72 with SMTP id c22-20020a197616000000b0050aa2cbcd72mr719279lff.68.1700268538923;
+        Fri, 17 Nov 2023 16:48:58 -0800 (PST)
 Received: from [192.168.201.100] (178235187040.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.40])
-        by smtp.gmail.com with ESMTPSA id mc16-20020a170906eb5000b009b2c9476726sm1327577ejb.21.2023.11.17.16.45.13
+        by smtp.gmail.com with ESMTPSA id y2-20020a056402134200b0054873a656d0sm120563edw.45.2023.11.17.16.48.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 16:45:16 -0800 (PST)
-Message-ID: <6a799fc7-8d7d-4035-8e7e-458f9a61bf4e@linaro.org>
-Date: Sat, 18 Nov 2023 01:45:13 +0100
+        Fri, 17 Nov 2023 16:48:58 -0800 (PST)
+Message-ID: <64a9d171-377c-48df-bdcd-1ac6d13c2da6@linaro.org>
+Date: Sat, 18 Nov 2023 01:48:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,21 +62,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/6] arm64: dts: qcom: sm4450-qrd: mark QRD4450
- reserved gpios
+Subject: Re: [PATCH] clk: qcom: gcc-msm8953: fix stuck gcc_usb30_master_clk
 Content-Language: en-US
-To: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
- andersson@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org, catalin.marinas@arm.com, will@kernel.org
-Cc: geert+renesas@glider.be, arnd@arndb.de, neil.armstrong@linaro.org,
- dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
- m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_tsoni@quicinc.com,
- quic_shashim@quicinc.com, quic_kaushalk@quicinc.com, quic_tdas@quicinc.com,
- quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com, kernel@quicinc.com
-References: <20231031075004.3850-1-quic_tengfan@quicinc.com>
- <20231031075004.3850-6-quic_tengfan@quicinc.com>
+To: Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+ =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231002170021.192740-1-trabarni@gmail.com>
+ <0eebfc14-dbcd-4987-9e94-ea5630b6c268@linaro.org>
+ <07937184481af74c65108bae26526605.sboyd@kernel.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -113,35 +108,65 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231031075004.3850-6-quic_tengfan@quicinc.com>
+In-Reply-To: <07937184481af74c65108bae26526605.sboyd@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 31.10.2023 08:50, Tengfei Fan wrote:
-> Some gpios are reserved for other subsystems, so mark these reserved
-> gpios.
+On 24.10.2023 04:59, Stephen Boyd wrote:
+> Quoting Konrad Dybcio (2023-10-06 16:50:18)
+>> On 2.10.2023 19:00, Barnabás Czémán wrote:
+>>> According to downstream dwc3-msm source this clock has FSM dependency on
+>>> gcc_pcnoc_usb30_clk so enabling it would fail if latter isn't enabled.
+>>> This patch add works around this issue by changing parent of
+>>> gcc_usb30_master_clk to gcc_pcnoc_usb30_clk. This is acceptable because
+>>> both clocks have same parent and are branches/gates.
+>>>
+>>> Signed-off-by: Barnabás Czémán <trabarni@gmail.com>
+>>> ---
+>> "meh"
+>>
+>> There are multiple cases, especially with qcom, where there are some
+>> magic "dependencies" without parent-child relationship. The common
+>> clock framework doesn't currently have any good way to handle this,
+>> other than some mind gymnastics like you had to do here with matching
+>> them against a common parent/ancestor..
+>>
+>> Stephen, what do you say?
+>>
 > 
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm4450-qrd.dts | 5 +++++
->  1 file changed, 5 insertions(+)
+> You can't change the parent to be not the actual parent. The consumer of
+> the branch probably wants to call clk_set_rate() on the branch and have
+> it propagate up to the parent to set the actual rate. Can the axi clk
+> simply be left enabled all the time? That seems simpler. Otherwise we
+> probably need to leave the axi clk control to the interconnect driver
+> and make sure drivers enable interconnects before enabling this branch.
+Yeah I'm almost inclined to think adding even more ifs to the icc driver
+will consume more power than just leaving the AXI hanging..
+
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm4450-qrd.dts b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
-> index bb8c58fb4267..e354bad57a9e 100644
-> --- a/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm4450-qrd.dts
-> @@ -23,6 +23,11 @@
->  	status = "okay";
->  };
->  
-> +&tlmm {
-> +	/* Reserved for other subsystems */
-that much we can guess :D
+> When things start to get this tangled I tend to think that we need to
+> remove control of the clk from the general drivers and put the logic to
+> control interconnects and clks into some SoC glue driver and expose a
+> single interface, like genpd power_on/power_off so that general drivers
+> can't get the sequence of steps wrong. Instead all they can do is "power
+> on" their device, and the SoC glue driver can do the proper sequence of
+> framework calls to power up the device.
+That too, given the structure of qcom SoCs, it should almost look like:
 
-it would be very appreciated if you could do e.g.
+xyznoc-bus {
+	compatible = "simple-pm-bus";
+	clocks = <&gcc xyznoc_ahb>,
+		 <&gcc xyznoc_axi>;
+	...
 
-<0 4>, /* fingerprint scanner */
-<136 1>; /* coffee machine trigger */
+	xyznoc-node@abcd {};
+}
+
+etc.
+
+I've actually discussed this with Bjorn, but we came to a conclusion
+that it's not trivial to determine which peripheral lives on which NoC
++ many of them seem to sorta overlap more than one..
 
 Konrad
 
