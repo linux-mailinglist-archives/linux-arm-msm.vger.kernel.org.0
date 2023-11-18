@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A1F47EFF42
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 12:30:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E5347EFF4B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 12:35:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A3DBB209C8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 11:30:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 19B4BB209BF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 11:35:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C12F9D294;
-	Sat, 18 Nov 2023 11:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1917A10A31;
+	Sat, 18 Nov 2023 11:35:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bqbnVh2+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jusyyr7h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com [IPv6:2a00:1450:4864:20::344])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 533BF1AD
-	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Nov 2023 03:30:02 -0800 (PST)
-Received: by mail-wm1-x344.google.com with SMTP id 5b1f17b1804b1-40838915cecso2931415e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Nov 2023 03:30:02 -0800 (PST)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C5410CE
+	for <linux-arm-msm@vger.kernel.org>; Sat, 18 Nov 2023 03:35:33 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-4079ed65582so2346005e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Nov 2023 03:35:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700307001; x=1700911801; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700307332; x=1700912132; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=I05hizi/ziQIYj44ryTJSTiDmdIMI2fLRCRgol7O9do=;
-        b=bqbnVh2+2ZquxsoTXdQHewg/IsptQlBZSCXH6cI56CIq9Cwox+zR/hhOWU6VdmrThu
-         EtKHvmTcjhL32xt67NGyY3fngjF0DUQHV8Z/tvAsWGx+7h++gE8vjbuHin23ySsH1HZr
-         PDw9BPS6ZFf+L2imXaqRs54veJY5Fd0e5VRX2H2aE3/+CwJmNX65lOaGAXVocwglTBIk
-         qq6PKTbv+g8D46pS+GfMPdoc5NsWBCfU+IAAFMf1L/Pm9zGfDHIebIcwwJf4j7WKMIXd
-         Jjk0jFxyYum0nXFO0QYsmX8toW0eL+n6Y1KRhM/tKdvkqD9X1plsZzhI/pMQj3FnRpY6
-         CBWA==
+        bh=44TB2Q4xVBrawfbtki6oGL++4vEDUXWgPnAMX9eIRIg=;
+        b=Jusyyr7hwHGPh9Eo1RMQt6rniM3X+ZgjMxeHleJ6HktP5HCmHw282YIBd09Kef7z65
+         eGqjPT0ILbew6vUEuZ6MVLeyIYqJ9ndnLWz7fik4TV+0X6wpGiYeOIeRJD2JuE/63FNT
+         QDVpgODvagQP3xe+SNltqWIgiTfeMza9bJA/KkvK5ej4S//KonOhddrWj7sg+/vobVce
+         i/pKRQZ26ZlJvg7hWwoP3XY2+5FdQtXl1dN8/p1oBMT/LecgH4wrOE0K+ZiEBjbzjefZ
+         J7fJq46LLTyJMku0U9olkjgA7KrB4+6QdKm+xX37gDDEqcohLiOAvckndUTqe92V1hdN
+         MMOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700307001; x=1700911801;
+        d=1e100.net; s=20230601; t=1700307332; x=1700912132;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I05hizi/ziQIYj44ryTJSTiDmdIMI2fLRCRgol7O9do=;
-        b=cGCA9iqzMeFf6YBIsfgIqPR3w3ijWZhA5Q93jrqCglUoArhsPsjLXs1cMAypbhG1UK
-         RxrmmOwn2VeSRtYCgdutYRL5h73PhJVow9zGtiW6c8hBrWpXvnLqpslGmShB7OhI5uWX
-         wt4kUdg6oVYvj2C+r8NUybHoIKo2rAvBPsWcXQ39QCD4QpGUEcZqp48VKwgnrfKaT/+n
-         rHxelcDeEPWICgwqJfYVjOaN4OYwYXl7kJ+00sOo2Nh3nlyWdCaggD2WUOFuPvDf2vo5
-         z9VQRfKQwZ6/1FWJtRPwHgnmFxM544lTrXtOaM5roQAd4zvwzC8AWHtRSfxs+SvMV2o3
-         HRRg==
-X-Gm-Message-State: AOJu0YxBBpR/6TZv2qyt1aid4ZavE7dLnzykfpPyZSXROnxpTU9fxbz+
-	cUP7DXsXdcLGCF/UwMveKvHJuQ==
-X-Google-Smtp-Source: AGHT+IHXRPdTBeCZwvX5z2lN8s7sgQIAOPmxapzZDUOSqb/DBt8xN/LwehbOdqPRjfGrH960hvtUQA==
-X-Received: by 2002:a05:600c:3b27:b0:405:a30:151e with SMTP id m39-20020a05600c3b2700b004050a30151emr1563466wms.12.1700307000180;
-        Sat, 18 Nov 2023 03:30:00 -0800 (PST)
+        bh=44TB2Q4xVBrawfbtki6oGL++4vEDUXWgPnAMX9eIRIg=;
+        b=IPTI6Y+j4m8ddQNdnH67XNKeSUvvzOSXTVJmGNiGaSoMRJ3ZJWVGB0UAlYEvbQH40k
+         0VoWa58WyZ/FVXZDT98EYGx5UJHgWbqf+p5QwtCo5qC20QDN7c5lN8EuubAz/f1ZUICm
+         sm7D7BbUhPLmtBH+ReVFq1zPmcxbqtMfS6fQH6PPd2VqRg7OlPhGNwY5NUH5JL+Ai6WA
+         JIUiZz635tymX2aPzfAb2SO6imlfIt9oc4uW5pKoMZDjvhuPiWFPvorOmOKDXcgtx8LR
+         Cd+QP3rHleZ3CvCdEkRH1/HGTE77edIQ+rv5pg9Z6aHJF3+DTHnJTW6J8IQlwaaNu7hH
+         kfYw==
+X-Gm-Message-State: AOJu0Yz1/1AEF38lh3x6dosOp5XLNQ3qU2v27ezih/ehnOKWUQ92VWY5
+	MaJr1JVqEuYfIzYMkwEKXBvZ7A==
+X-Google-Smtp-Source: AGHT+IH45WnOTljmI1rzZoyBuGD11rEpJzz1WSRqMnUWf3O1tSvVnk0jrE9ZNWS/nxCHkc+DlvJ/lA==
+X-Received: by 2002:a05:600c:5487:b0:40a:43eb:b752 with SMTP id iv7-20020a05600c548700b0040a43ebb752mr1805937wmb.34.1700307332257;
+        Sat, 18 Nov 2023 03:35:32 -0800 (PST)
 Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id y4-20020a5d4ac4000000b003316c8ad545sm4008051wrs.76.2023.11.18.03.29.59
+        by smtp.gmail.com with ESMTPSA id t4-20020a5d4604000000b0032fbd0c7d04sm5101992wrq.55.2023.11.18.03.35.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 18 Nov 2023 03:29:59 -0800 (PST)
-Message-ID: <715fd71e-89c7-4332-9c45-361f6562b1b7@linaro.org>
-Date: Sat, 18 Nov 2023 11:29:58 +0000
+        Sat, 18 Nov 2023 03:35:31 -0800 (PST)
+Message-ID: <57c9b7e8-bb0e-4d31-adeb-19a83137c082@linaro.org>
+Date: Sat, 18 Nov 2023 11:35:30 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,43 +62,65 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] Add sc8280xp CCI and CAMSS core dtsi
+Subject: Re: [PATCH v4 4/7] media: qcom: camss: Move VFE power-domain
+ specifics into vfe.c
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, andersson@kernel.org,
- agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, jonathan@marek.ca,
- quic_tdas@quicinc.com, vladimir.zapolskiy@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231012113100.3656480-1-bryan.odonoghue@linaro.org>
- <e59569d3-cb49-4e11-8bd8-f814f369aaa7@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
+ laurent.pinchart@ideasonboard.com, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, matti.lehtimaki@gmail.com,
+ quic_grosikop@quicinc.com
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231103-b4-camss-named-power-domains-v4-0-33a905359dbc@linaro.org>
+ <20231103-b4-camss-named-power-domains-v4-4-33a905359dbc@linaro.org>
+ <0fbef967-62db-4c5f-8108-2c545c53a39e@linaro.org>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <e59569d3-cb49-4e11-8bd8-f814f369aaa7@linaro.org>
+In-Reply-To: <0fbef967-62db-4c5f-8108-2c545c53a39e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 18/11/2023 00:51, Konrad Dybcio wrote:
-> On 12.10.2023 13:30, Bryan O'Donoghue wrote:
->> V4:
->> - Adds RB - Krzysztof
->> - Drops indicated newline - Krzysztof
->> - Moves "This patch depends-on" below the "---" - Krsysztof
-> Just a note for Bjorn, this series is likely on hold as we iron out the
-> driver details.. e.g. _src clocks were dropped since this submission.
+On 18/11/2023 00:32, Konrad Dybcio wrote:
+>> +	/* count the # of VFEs which have flagged power-domain */
+> [...]
 > 
-> Konrad
+> Personal peeve, but this comment seems a bit excessive
 
-Eh yes.
+Well, to me this code "does stuff" that isn't terribly obvious. It took 
+a while to understand the Gordian knot so its worthwhile documenting it 
+inline until we can use named pds to make it all go away forever.
 
-Let me take the opportunity to plug the series/patches I'm targeting 
-that Bjorn can merge
+> 
+>> +	for (vfepd_num = i = 0; i < camss->vfe_total_num; i++) {
+>> +		if (res->vfe_res[i].has_pd)
+>> +			vfepd_num++;
+>> +	}
+>>   
+>> -	camss->genpd_link = devm_kmalloc_array(dev, camss->genpd_num,
+>> -					       sizeof(*camss->genpd_link),
+>> -					       GFP_KERNEL);
+>> -	if (!camss->genpd_link)
+>> -		return -ENOMEM;
+>> +	/*
+>> +	 * If the number of power-domains is greater than the number of VFEs
+>> +	 * then the additional power-domain is for the entire CAMSS block the
+>> +	 * 'top' power-domain.
+> the last 3 words seem out of place
 
-The CAMCC controller
-https://lore.kernel.org/lkml/20231026105345.3376-1-bryan.odonoghue@linaro.org/
 
-The first patch here
-https://lore.kernel.org/lkml/20231110-b4-camss-sc8280xp-v5-1-7f4947cc59c8@linaro.org/T/
+> 
+>> +	 */
+>> +	if (camss->genpd_num <= vfepd_num)
+>> +		return 0;
+> if (!(camss->genpd_num > vfepd_num))
+> 
+> would probably be easier to follow given your comment above
+
+Sure, if its easier to read/understand for you, then it is probably so 
+for others.
+
+I will V5 this.
 
 ---
 bod
