@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4C427EFCC7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 01:51:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F56E7EFCD4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 02:06:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7290D1F262B7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 00:51:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 353231C2085A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 18 Nov 2023 01:06:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5006DEC4;
-	Sat, 18 Nov 2023 00:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E88E9EC8;
+	Sat, 18 Nov 2023 01:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w3e8d76Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dufXGQ2X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FE3D7E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:51:13 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9f282203d06so366201666b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 16:51:13 -0800 (PST)
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F0A610C6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 17:06:23 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9fa45e75ed9so24579466b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Nov 2023 17:06:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700268672; x=1700873472; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700269582; x=1700874382; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JkQFDUSjgWW+uNRlfQApC/QxGhsTFKT2t0xTRRH0asM=;
-        b=w3e8d76QGQzdax5gyHXQE1vLWdqK04RC6R9lj26gx8/NikhVxZWANY9ZVcJcr7cOgU
-         x1ZQoHmwawmvVnB786GZytvEwl82SN7CzPJoIxwLSHZyNERmyZp6SJHgTh50ssdXbCBU
-         VGjZLoy/nJ05yw8MlTOz4CAwAMP17jG/2lqw3UR+4fULw1vs2ZmTg5zfTtsJjILCx+ew
-         qt+gDOoc0ATqrC5v1GbMJ2eX/QYU8SYlwpYjYqwI8ffX/fdDm2zkwGMNsJxBzJKlLNTw
-         ARf9zQb/ox3fZG3TZIMIEPemOqL9UkU4YFaDqntTFZ8vxiWMC7ncczRdgb7samolDOl0
-         obpA==
+        bh=4O9Y1/hJUXa+2KCBVAziPC7SkkcerSExCPCyWU7zFNI=;
+        b=dufXGQ2XX84Lb//713+FThDcSRDpD+bfZpmjyGfDaLOxOp/jHe6CvegA5qLbcblWPj
+         H3ktJ5aBWNu435Jzyibi67qABfkrdHOQuEoPIbLmn3wgAVaukq46047yHjWQy5vTzoB6
+         0N7oOIKPvIt6CBn7COio8vgjU4bV1hTA6D3PAHVaMe8XrFTPLhFeD1vxhvfyhmi6x68z
+         Pp2C5KjF1YJdqauFrQUsU/O27N7pYnX4pG2fLsCmq50QZPDEUP8qmoftk9Vo06ZyTp/8
+         YKzy5+lNV5vmpGh8zx+c0ifOrx0AiUYJrPQbRBRHQNUggk8nS/+67W5xq6uGhph28h1p
+         CigA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700268672; x=1700873472;
+        d=1e100.net; s=20230601; t=1700269582; x=1700874382;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JkQFDUSjgWW+uNRlfQApC/QxGhsTFKT2t0xTRRH0asM=;
-        b=t+WB5417CIBGujWFpVK33BjlI3KW+azidAcwJDEMXjwe3NNVU8Utm1/x7Q0tO2i6UG
-         NXA+RHE2mBVX7VCH5wP2+LeljKJs+Gf3ZD8+dXpBqMRPOEUJqB7sELReSkvG00XpIya9
-         xk5jX+8qzT05QFKmEVfdViRKv7IWOIStsrOIVQYNWBC+HBIfLQN8Aimx2FttpFw2mko6
-         jLSy9rBoDVIbS/ZMRDjC/uHCsffiMnMHEsQGw/e9xvAeOPfcpTHEeYvlmu4PRyGFl/n7
-         9OhvrlTXpK+dB0tQ+i/7we24Ia3SSgxZYKG5cNDoTHWEhege9WqOJLcK1SEQ9k6jpiCx
-         hiVw==
-X-Gm-Message-State: AOJu0Yw5AP9aR0TdZS6fv1HwEEeRYbABlta0iYxn45ZTDAJXAvWUogsM
-	SMQxMBpF2QuTAJ/GAJLGPdlhwg==
-X-Google-Smtp-Source: AGHT+IET83DijHTWtN5lzHCglHbTO1pZbQRbcUOVERi7k5OxILFZVKFItJpXx5iOUdN56TkjExvrfg==
-X-Received: by 2002:a17:906:224d:b0:9bf:2f84:5de7 with SMTP id 13-20020a170906224d00b009bf2f845de7mr492003ejr.4.1700268671779;
-        Fri, 17 Nov 2023 16:51:11 -0800 (PST)
+        bh=4O9Y1/hJUXa+2KCBVAziPC7SkkcerSExCPCyWU7zFNI=;
+        b=IzrgoERIUIX7ofmtYPhnvZHfr8nhtBD+Gc5QYF5OY08kHjoyG22CfIgNvq6F3CR6oS
+         5fR0mqYgItUIrE7vCc5ZY35NPIy59Tl84/7Jobvrh+wfHeVBT2pSx7WoqkGDo1bIBrb5
+         f6X8HF0OZObWZAKqqD4jFoI5dtXTVIKSSivK6S6ywyuK5V4iAGl4oSOgjFKhsi3oZAWu
+         m57IV4gDqrEVAySKs4IyzZ8qv+mTusOV8HEosI7LG5ReJMd/8MABB/md74CbQdKcAdy/
+         w8EXKVvQjPo1upRnAWZdq/tkRh8lmfZ8GLbk35JrBM+ZmoKXmdfdBQHHrEAnMt8LiVNs
+         uaqQ==
+X-Gm-Message-State: AOJu0YzlPGCt8SJRKKQwRFE3EsfjZ4krh2XXPeTZEcWfyN6RkI9Wa3K1
+	xShRDXHgIenmqIqnQyxN1elfsA==
+X-Google-Smtp-Source: AGHT+IGD5VqU/VikH08bv6P2ZemTESCQQPO/BcUy7UKQJCy4Lh6+IFe/6TG47Ps/J21C1Xmse/dYOw==
+X-Received: by 2002:a17:906:5357:b0:9bf:20e0:bfe9 with SMTP id j23-20020a170906535700b009bf20e0bfe9mr701024ejo.15.1700269581768;
+        Fri, 17 Nov 2023 17:06:21 -0800 (PST)
 Received: from [192.168.201.100] (178235187040.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.40])
-        by smtp.gmail.com with ESMTPSA id bo14-20020a170906d04e00b009c3f8f46c22sm1341061ejb.77.2023.11.17.16.51.09
+        by smtp.gmail.com with ESMTPSA id v12-20020a1709060b4c00b009b928eb8dd3sm1327704ejg.163.2023.11.17.17.06.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Nov 2023 16:51:11 -0800 (PST)
-Message-ID: <e59569d3-cb49-4e11-8bd8-f814f369aaa7@linaro.org>
-Date: Sat, 18 Nov 2023 01:51:08 +0100
+        Fri, 17 Nov 2023 17:06:21 -0800 (PST)
+Message-ID: <918ff1f5-ce01-43ea-b034-e69fbb31f495@linaro.org>
+Date: Sat, 18 Nov 2023 02:06:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,16 +62,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] Add sc8280xp CCI and CAMSS core dtsi
+Subject: Re: [PATCH V2 3/5] arm64: dts: qcom: Add base X1E80100 dtsi and the
+ QCP dts
 Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, andersson@kernel.org,
- agross@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- dmitry.baryshkov@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, jonathan@marek.ca,
- quic_tdas@quicinc.com, vladimir.zapolskiy@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231012113100.3656480-1-bryan.odonoghue@linaro.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ catalin.marinas@arm.com, ulf.hansson@linaro.org
+Cc: agross@kernel.org, conor+dt@kernel.org, ayan.kumar.halder@amd.com,
+ j@jannau.net, dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+ m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
+ lpieralisi@kernel.org, quic_rjendra@quicinc.com, abel.vesa@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ quic_tsoni@quicinc.com, neil.armstrong@linaro.org
+References: <20231117113931.26660-1-quic_sibis@quicinc.com>
+ <20231117113931.26660-4-quic_sibis@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -108,17 +113,85 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231012113100.3656480-1-bryan.odonoghue@linaro.org>
+In-Reply-To: <20231117113931.26660-4-quic_sibis@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 12.10.2023 13:30, Bryan O'Donoghue wrote:
-> V4:
-> - Adds RB - Krzysztof
-> - Drops indicated newline - Krzysztof
-> - Moves "This patch depends-on" below the "---" - Krsysztof
-Just a note for Bjorn, this series is likely on hold as we iron out the
-driver details.. e.g. _src clocks were dropped since this submission.
+On 17.11.2023 12:39, Sibi Sankar wrote:
+> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+> 
+> Add base dtsi and QCP board (Qualcomm Compute Platform) dts file for
+> X1E80100 SoC, describing the CPUs, GCC and RPMHCC clock controllers,
+> geni UART, interrupt controller, TLMM, reserved memory, interconnects,
+> SMMU and LLCC nodes.
+> 
+> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+[...]
+
+> +&tlmm {
+> +	gpio-reserved-ranges = <33 3>, <44 4>, /* SPI (TPM) */
+Surely SPI doesn't use 7 wires! :D
+
+[...]
+
+> +			L2_0: l2-cache-0 {
+the cache device is distinguishable by its parent, so "l2-cache" is enough
+
+
+> +				compatible = "cache";
+> +				cache-level = <2>;
+> +				cache-unified;
+> +			};
+> +		};
+> +
+[...]
+
+> +		idle-states {
+> +			entry-method = "psci";
+> +
+> +			CLUSTER_C4: cpu-sleep-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "ret";
+> +				arm,psci-suspend-param = <0x00000004>;
+These suspend parameters look funky.. is this just a PSCI sleep
+implementation that strays far away from Arm's suggested guidelines?
+
+[...]
+
+
+> +		CPU_PD11: power-domain-cpu11 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_PD>;
+> +		};
+> +
+> +		CLUSTER_PD: power-domain-cpu-cluster {
+> +			#power-domain-cells = <0>;
+> +			domain-idle-states = <&CLUSTER_CL4>, <&CLUSTER_CL5>;
+> +		};
+So, can the 3 clusters not shut down their L2 and PLLs (if separate?)
+on their own?
+
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		gunyah_hyp_mem: gunyah-hyp@80000000 {
+> +			reg = <0x0 0x80000000 0x0 0x800000>;
+> +			no-map;
+> +		};
+> +
+> +		hyp_elf_package_mem: hyp-elf_package@80800000 {
+no underscores in node names, use hyphens
+
+The rest looks OK I think
 
 Konrad
 
