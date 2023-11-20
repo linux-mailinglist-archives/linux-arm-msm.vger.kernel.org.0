@@ -1,98 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-1127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B9AC7F113C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 12:03:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B19007F1201
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 12:31:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B38F1C20BAD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 11:03:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E28371C2174D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 11:31:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA5E812B71;
-	Mon, 20 Nov 2023 11:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2855114AA9;
+	Mon, 20 Nov 2023 11:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kWsUuo/O"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LiqgaJ2m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E7E5A0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 03:03:47 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-32ddfb38c02so2803486f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 03:03:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700478226; x=1701083026; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SJvB4sdAi/jLk1JCRFuGNm+4SWox2Y2BPXbersr3knw=;
-        b=kWsUuo/Odrw8SDtRiiK62UnDFFLceWJzOtkC0dRy6QnCUg4+l1OJS91k2pXt01ySO4
-         Ce5mYbO6xwjI9fv43hdFkZdXSKEGSJ8hWnluuEKK3U3VoiGRc5ouOxeJH/JNtoJ2RPkR
-         3uGcuU7ZqRyaohHdH/6GS9ErmEXAp5DOKlAlEiteezbAI8bNxVWoUJzljn7FXDMAmUI1
-         LD4fOj8ZNxil0/bQhdXZZJqGPDoxVMoAuttkw2neJhGE+PBUhm10ZR7oEmRXAsEl1Qxg
-         b6dX3jNXb5Kz9/3yCiHYEYNywcpSL5o9waofxYfapYx3M77oeukYsjgdWiEMLXxvV5Wx
-         CSJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700478226; x=1701083026;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SJvB4sdAi/jLk1JCRFuGNm+4SWox2Y2BPXbersr3knw=;
-        b=e57GpDBZQpfQOE5M08mYh7SQ/FCb+JUheS9Rw4dguO1kjVEmMN+/lj/RMfs68w5xVA
-         R4/9p3Db1KIowW10ztmitLmkIolr/wh+R7w8MeL17okujEyBicfnoFneaU3svDouejRv
-         cRiZHEzt7HlcuNeGOLv25rkXuk9RiNImcWlbMevpfw9CkrANVRlEIf+APFRExR7EoiP3
-         lnF/9VZ8ZnkFfyrWKfEgn4lc7oh+G6ZsimmCZR1SrM8Up7Rz/VPO26UE6yXc39k0kU2F
-         aaw4uaLs+hLqFpdlXdKcz/FzhX8NqB55knu4n5gDG0zPFVHsExWg6eZCMJYNAJ8eyIVs
-         siJQ==
-X-Gm-Message-State: AOJu0YzDSD2MEpK6D4kELCIKi9F3UKKydzpByNeNHmCJC0zYr0l4dtTm
-	wd2pdMTtLo7MSHPkc2xsvvthzA==
-X-Google-Smtp-Source: AGHT+IHljDZI7pMKErfkRq93NyuVgn+V5paosGBX7S0hIYwBfzX+b8EbFcZhgq/wqFr4EgRY+Lj48Q==
-X-Received: by 2002:a5d:694f:0:b0:32f:99f4:ebac with SMTP id r15-20020a5d694f000000b0032f99f4ebacmr4497109wrw.18.1700478225919;
-        Mon, 20 Nov 2023 03:03:45 -0800 (PST)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id b11-20020a05600010cb00b00332c0d256c5sm5916490wrx.80.2023.11.20.03.03.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 03:03:45 -0800 (PST)
-Message-ID: <2a912e97-c0e5-47b2-9e3c-99f675283650@linaro.org>
-Date: Mon, 20 Nov 2023 11:03:44 +0000
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE4190;
+	Mon, 20 Nov 2023 03:31:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1700479874; x=1732015874;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=M5VyfO4HyHA+7dmKhfXxCvmtDyHikTHOa2LFJQGtoFw=;
+  b=LiqgaJ2mh9t0Z9Y1moEBpuc1q+0/L2qhQX0GMcI5D1EBWMBL9U3/K+xy
+   yg+MGLhXGsJ2B5Rjtp2msbuIRyA7pfD/i8NSVxk9EX1eb/uQriOPEaZ+2
+   xcc8jsLLFeb89yWXgVei6n/kAt0K8dtGXdZ2PintVfdPNdiM1ByOZjRdz
+   utLgntNmXSO0R/hMMDSkqyzaHN0IM2FnL//zhOh7aHI5NpHI/cfnhRR1q
+   bc0KANT5sshzoGg4WUKc7/0/C6QBW3LdX2Zast+cZ3CPvbym0S7RP8WWO
+   oL4SQAmOQxbhBQFs8N5wRloDlELdfKPfe+PKOJMSUoYVE92BJmZWSxu6n
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10899"; a="458097875"
+X-IronPort-AV: E=Sophos;i="6.04,213,1695711600"; 
+   d="scan'208";a="458097875"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2023 03:31:13 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10899"; a="910079573"
+X-IronPort-AV: E=Sophos;i="6.04,213,1695711600"; 
+   d="scan'208";a="910079573"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2023 03:31:06 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1r52UZ-0000000FXEw-1BiL;
+	Mon, 20 Nov 2023 13:31:03 +0200
+Date: Mon, 20 Nov 2023 13:31:03 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Jishnu Prakash <quic_jprakash@quicinc.com>
+Cc: jic23@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+	konrad.dybcio@linaro.org, daniel.lezcano@linaro.org,
+	dmitry.baryshkov@linaro.org, linus.walleij@linaro.org,
+	linux-arm-msm@vger.kernel.org, quic_subbaram@quicinc.com,
+	quic_collinsd@quicinc.com, quic_amelende@quicinc.com,
+	quic_kamalw@quicinc.com, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
+	lars@metafoo.de, luca@z3ntu.xyz, linux-iio@vger.kernel.org,
+	lee@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
+	lukasz.luba@arm.com, cros-qcom-dts-watchers@chromium.org,
+	sboyd@kernel.org, linux-pm@vger.kernel.org,
+	linux-arm-msm-owner@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH V2 0/3] iio: adc: Add support for QCOM SPMI PMIC5 Gen3 ADC
+Message-ID: <ZVtDdySmDUmgUDlm@smile.fi.intel.com>
+References: <20231116032530.753192-1-quic_jprakash@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/4] clk: qcom: Add Global Clock controller (GCC)
- driver for X1E80100
-Content-Language: en-US
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, mturquette@baylibre.com, sboyd@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc: agross@kernel.org, conor+dt@kernel.org, quic_tdas@quicinc.com,
- quic_rjendra@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, neil.armstrong@linaro.org,
- abel.vesa@linaro.org, quic_tsoni@quicinc.com
-References: <20231117092737.28362-1-quic_sibis@quicinc.com>
- <20231117092737.28362-3-quic_sibis@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20231117092737.28362-3-quic_sibis@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231116032530.753192-1-quic_jprakash@quicinc.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On 17/11/2023 09:27, Sibi Sankar wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+On Thu, Nov 16, 2023 at 08:55:27AM +0530, Jishnu Prakash wrote:
+> PMIC5 Gen3 has a similar ADC architecture to that on PMIC5 Gen2,
+> with all SW communication to ADC going through PMK8550 which
+> communicates with other PMICs through PBS. The major difference is
+> that the register interface used here is that of an SDAM present on
+> PMK8550, rather than a dedicated ADC peripheral. There may be more than one
+> SDAM used for ADC5 Gen3. Each ADC SDAM has eight channels, each of which may
+> be used for either immediate reads (same functionality as previous PMIC5 and
+> PMIC5 Gen2 ADC peripherals) or recurring measurements (same as PMIC5 and PMIC5
+> Gen2 ADC_TM functionality). In this case, we have VADC and ADC_TM functionality
+> combined into the same driver.
 > 
-> Add support for the global clock controller found on X1E80100
-> based devices.
+> Patches 1 adds bindings for ADC5 Gen3 peripheral.
 > 
-> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
+> Patches 2 adds driver support for ADC5 Gen3.
+> 
+> Patch 3 is a cleanup, to move the QCOM ADC dt-bindings files from
+> dt-bindings/iio to dt-bindings/iio/adc folder, as they are
+> specifically for ADC devices. It also fixes all compilation errors
+> with this change in driver and devicetree files and similar errors
+> in documentation for dtbinding check.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Something wrong with the email chaining.
+Please be sure you are using --thread when preparing emails.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
 
