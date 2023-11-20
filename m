@@ -1,51 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-1213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 741557F1A30
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 18:34:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE1D07F1A84
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 18:37:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A395A1C210B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 17:34:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1D24281DA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 17:37:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F416C2230F;
-	Mon, 20 Nov 2023 17:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9E1B22320;
+	Mon, 20 Nov 2023 17:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e+0FbClZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Elh8y6kW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81171124
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 09:34:26 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AKHGjDA012529
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 17:34:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to; s=qcppdkim1;
- bh=EbzvNwj4CIbtC07B2c+ircX4/1kNKJO9XKufiyTSIJ0=;
- b=e+0FbClZV4eA1BqtcibvUpMVvzqz+y4tBcl5WJzCXQMJ7qjoJB4xrH+qUOJo/vM/CfYD
- OQH4AAMiBvBXU1uwSKIkXKMnEaJhnT4V3r7PYmLfu11a/VVs2+jojkrx8Iw9MQEK9gY8
- +pcUQMNbpMXqYQoLNRHrmIEAfQPhPdNiVCflhhxmaTq6W0aqcDnk08FTqgNJvaSqgsSP
- QURploIItXaos8BIXKF3EZCZ+PwhBNmD0r9XMII4EW0lrVDOvb00QVyJt9R6V280hNx6
- fSboMt83A2RwuCfuO421dTSU8c8PJUyy4oCf4k2tJb2mx59g8AAbu4D/3f6y7ZZXWIkZ 9A== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ug53713t8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 17:34:26 +0000
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCE7B132;
+	Mon, 20 Nov 2023 09:36:54 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AKHQn2A002178;
+	Mon, 20 Nov 2023 17:36:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=Y4hKSC8osUSLbhShv+siTVPHh9deWzSVjPWV2cjpYt4=;
+ b=Elh8y6kWZWbUH8nxcojfCFGnaAltxyVKyptAfngX8J7vH/3cD7UFtAZPbvB1rKx+vZNy
+ rNUWtpJkQKq3rU/TXREwySrbjFTT15fYLOMYadSSYYxaHYRi954oYMFd3/yWvMS5K89H
+ zUWkSNvvmX0TII4zhbovyK2Z1PJJSRHrvquzcBd3zFdFhWTC6/q0ACDeQrj223l6mS2L
+ Fz7/6AA+AWd2LmldoG6FLjzdWP4FIr8E2GVqEZ7xfnPWK2VZ19aNl0O0xQRco2O42vqt
+ mhdsXPi5I6jhjNf2zLgmaBUZJJanrlAsMPybtx/PU3S/591/cv37sO7lRRYcy5qE4NuI jg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ug7ea8rjm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Nov 2023 17:36:44 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AKHYIIc020684
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 17:34:18 GMT
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AKHahZg026197
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Nov 2023 17:36:43 GMT
 Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 20 Nov 2023 09:34:18 -0800
+ 15.2.1118.40; Mon, 20 Nov 2023 09:36:42 -0800
 From: Elliot Berman <quic_eberman@quicinc.com>
-Date: Mon, 20 Nov 2023 09:34:09 -0800
-Subject: [PATCH 2/2] freezer,sched: clean saved_state when restoring it
- during thaw
+Subject: [PATCH 0/2] freezer,sched: do not restore saved_state of a thawed
+ task
+Date: Mon, 20 Nov 2023 09:36:30 -0800
+Message-ID: <20231120-freezer-state-multiple-thaws-v1-0-f2e1dd7ce5a2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,53 +55,78 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20231120-freezer-state-multiple-thaws-v1-2-a4c453f50745@quicinc.com>
-References: <20231120-freezer-state-multiple-thaws-v1-0-a4c453f50745@quicinc.com>
-In-Reply-To: <20231120-freezer-state-multiple-thaws-v1-0-a4c453f50745@quicinc.com>
-To: <linux-arm-msm@vger.kernel.org>,
+X-B4-Tracking: v=1; b=H4sIAB6ZW2UC/4XNuxKCMBCF4VdxUrtOlpBBrXwPhyIkG9kZBUwCX
+ hjeXbw0Nlr+p/jOKCIFpii2i1EEGjhy28yBy4WwtWkOBOzmFpnMFKJcgw9EdwoQk0kEp/6YuDs
+ SpNpcIhRGmbXbOOMqJWaiC+T5+uL35dw1x9SG2+ttwOf6gVH/hgcEBK8yVyB5qSu5O/dsubEr2
+ 56eT28mk38ZCSa3uVZeyyLXX0w5TdMD4/4tfhEBAAA=
+To: "Rafael J. Wysocki" <rafael@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        "Ingo Molnar" <mingo@kernel.org>,
+        "Peter Zijlstra (Intel)"
+	<peterz@infradead.org>
+CC: <linux-arm-msm@vger.kernel.org>,
         Pavan Kondeti
 	<quic_pkondeti@quicinc.com>,
         "Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>
+        <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Elliot Berman
+	<quic_eberman@quicinc.com>,
+        Abhijeet Dharmapurikar
+	<quic_adharmap@quicinc.com>
 X-Mailer: b4 0.13-dev
 X-Originating-IP: [10.49.16.6]
 X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ifa6FjJlsDDz16GUvhuLOdwhbMTWn6YJ
-X-Proofpoint-GUID: ifa6FjJlsDDz16GUvhuLOdwhbMTWn6YJ
+X-Proofpoint-GUID: 2xFWSMeQIEmKN960l1nM2d2mIlfA7_ql
+X-Proofpoint-ORIG-GUID: 2xFWSMeQIEmKN960l1nM2d2mIlfA7_ql
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-20_17,2023-11-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 suspectscore=0 adultscore=0
- mlxlogscore=629 spamscore=0 malwarescore=0 mlxscore=0 clxscore=1015
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 suspectscore=0
+ phishscore=0 mlxscore=0 spamscore=0 malwarescore=0 priorityscore=1501
+ mlxlogscore=575 bulkscore=0 impostorscore=0 adultscore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311060000 definitions=main-2311200126
 
-Clean saved_state after using it during thaw. Cleaning the saved_state
-allows us to avoid some unnecessary branches in ttwu_state_match.
+This series applies couple fixes to commit 8f0eed4a78a8 ("freezer,sched:
+Use saved_state to reduce some spurious wakeups") which was found while
+testing with legacy cgroup freezer. My original testing was only with
+system-wide freezer. We found that thaw_task could be called on a task
+which was already frozen. Prior to commit 8f0eed4a78a8 ("freezer,sched:
+Use saved_state to reduce some spurious wakeups"), this wasn't an issue
+as kernel would try to wake up TASK_FROZEN, which wouldn't match the
+thawed task state, and no harm done to task. After commit 8f0eed4a78a8
+("freezer,sched: Use saved_state to reduce some spurious wakeups"), it
+was possible to overwrite the state of thawed task.
 
+To: Rafael J. Wysocki <rafael@kernel.org>
+To: Pavel Machek <pavel@ucw.cz>
+To: Ingo Molnar <mingo@kernel.org>
+To: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc:  <linux-arm-msm@vger.kernel.org>
+Cc: Pavan Kondeti <quic_pkondeti@quicinc.com>
+Cc: Aiqun Yu (Maria) <quic_aiquny@quicinc.com>
+Cc:  <linux-pm@vger.kernel.org>
+Cc:  <linux-kernel@vger.kernel.org>
 Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+
+Originally sent to only linux-arm-msm, resending to correct authors.
+- Link to v1: https://lore.kernel.org/r/20231120-freezer-state-multiple-thaws-v1-0-a4c453f50745@quicinc.com
+
 ---
- kernel/freezer.c | 1 +
- 1 file changed, 1 insertion(+)
+Elliot Berman (2):
+      freezer,sched: do not restore saved_state of a thawed task
+      freezer,sched: clean saved_state when restoring it during thaw
 
-diff --git a/kernel/freezer.c b/kernel/freezer.c
-index 759006a9a910..f57aaf96b829 100644
---- a/kernel/freezer.c
-+++ b/kernel/freezer.c
-@@ -187,6 +187,7 @@ static int __restore_freezer_state(struct task_struct *p, void *arg)
- 
- 	if (state != TASK_RUNNING) {
- 		WRITE_ONCE(p->__state, state);
-+		p->saved_state = TASK_RUNNING;
- 		return 1;
- 	}
- 
+ kernel/freezer.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+---
+base-commit: 6d7e4782bcf549221b4ccfffec2cf4d1a473f1a3
+change-id: 20231108-freezer-state-multiple-thaws-7a3a8d9dadb3
 
+Best regards,
 -- 
-2.41.0
+Elliot Berman <quic_eberman@quicinc.com>
 
 
