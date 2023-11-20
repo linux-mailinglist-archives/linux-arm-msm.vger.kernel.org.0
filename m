@@ -1,132 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-1119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F8AD7F0FCD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 11:06:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 531377F0FD2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 11:07:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C67482820EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 10:06:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F3582820AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 10:07:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A2AB10795;
-	Mon, 20 Nov 2023 10:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6079F12B6F;
+	Mon, 20 Nov 2023 10:07:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B/PEQ78m"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UGzWZYy6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62893A7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 02:06:23 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9c603e2354fso787365966b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 02:06:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700474782; x=1701079582; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BNQ2xPx++wH1nrxiKy++CwCgkNUnb0789llzrpG+llY=;
-        b=B/PEQ78mZuZ9GPtvo69D+zfDxtXZpG6/YYWVQDWwrR96Sizzr8tqpKqpw3norQCpuS
-         Woa7VCgJRDEMkNZOxA0K6nTp77oxLY9A2IRRHrPNR+g4aodiHNcTa4sWrKb3ylL6hlU+
-         vGBM1r4kFWThlbrIn1pWe26dkyssodLoi9+wQHzZj+atb9qmgXJ0ExbhoLMAEFL7mxNR
-         v8pmys9p5bW4ztMSDsyOszXBbCFTjp3gmrNW2cxYKEmZaMRQR4pENQRPGbR+H/2s7y1o
-         aHGmRnLPOQPqkJkL7Lg6bpW6skVFTElHsiYBDIJXXtlxTlk3vCFch0u0S9OzSaWx+KNp
-         SHOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700474782; x=1701079582;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BNQ2xPx++wH1nrxiKy++CwCgkNUnb0789llzrpG+llY=;
-        b=j8PRxE9zl+GTJUk2REhJ+E+dAXyXKNnd46inrG/TBE+DpBz6x4SGQiBOl7Sm95YSQM
-         87430Zj9g4j92LZNMGNW6PQIHqiYmxVmLSJGQnUr1+YMhNtKN66sY718uozZLaKM03X5
-         qjwknarfY513yKgcoXyVj1sEXO+Ndb978ZK6PlkHKWmtqzl8gZqTJUDAdz2aJsfWSjX2
-         JrA96s6ryR1lrBIK6AAjjmjUxJplNq6pqf6cW4rlH/gIwlBQMDad5XNWyKTDrf1R1lnv
-         ND1yWBSvGiS+8DWQIAq2+bhM8hw9H+ww3tzvukNnG9WMZ7O+JSKDNn0otXr2rHmdie9/
-         7lcw==
-X-Gm-Message-State: AOJu0YxWxkWvav3g8qxzqJoeE5nxRW+HtwiyxpQ9LMCl64welubqr2Lz
-	7VnLd1/CVN0cg9KTvD+qlnc/jTIC5fQulUFx4QA=
-X-Google-Smtp-Source: AGHT+IHAYX5jbEOAAbb7JbyibH41NWLc5m7fX4drhHV55VH6R4hupBnKsasjqhtvfqGrVuuzbd1fDw==
-X-Received: by 2002:a17:906:74d1:b0:9c7:59ff:b7fd with SMTP id z17-20020a17090674d100b009c759ffb7fdmr1311917ejl.28.1700474781661;
-        Mon, 20 Nov 2023 02:06:21 -0800 (PST)
-Received: from krzk-bin.. ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id f16-20020a170906391000b009fe16be6a65sm1075022eje.63.2023.11.20.02.06.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Nov 2023 02:06:20 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH] dt-bindings: arm: qcom-soc: extend pattern for matching existing SoCs
-Date: Mon, 20 Nov 2023 11:06:17 +0100
-Message-Id: <20231120100617.47156-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BCA118;
+	Mon, 20 Nov 2023 02:07:08 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AK9a2mg031485;
+	Mon, 20 Nov 2023 10:06:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8XNRTI3wuGd4bf5ULCxy9o5QTqPSUb8wRanCjXpoxCg=;
+ b=UGzWZYy6jso/o0gUOyLQVkzgpQ8GTShn4455r+cJQ4SvScoPKKVjr8ufR5gvY2uUzBIH
+ Z+tsjzOHq8ZBUPwO5xL2zCjQTLheWKVSBavddKygR7Dbr495aX1IpvP3NXJD73jMPKq+
+ HSDpve5STvFPDWo7EtVQ1RnBHh5lq3yLzskkycpCS540P7+f6hIE2v5sSSH3kz4cmH28
+ bP7R+XGQiWvsDKiDyhpi7on00f69MuPJMPjptMiOv1A14lAt2dsywKUfLvJwoSr3gWOQ
+ F33JdSTYXQAJgEkrEaynXJ0eTGzqiRjBfWWGR69pHKOJ78+OOaRomVAgcjWk73q2KSbS dw== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ug2ax8gme-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Nov 2023 10:06:52 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AKA6plj004941
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Nov 2023 10:06:51 GMT
+Received: from [10.218.10.86] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 20 Nov
+ 2023 02:06:43 -0800
+Message-ID: <5eae728f-f052-f2aa-7876-cb2421191fc9@quicinc.com>
+Date: Mon, 20 Nov 2023 15:36:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v8 0/5] arm64: qcom: sa8775p: add support for EP PCIe
+To: <agross@kernel.org>, <andersson@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <konrad.dybcio@linaro.org>, <mani@kernel.org>, <robh+dt@kernel.org>
+CC: <quic_shazhuss@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nayiluri@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <robh@kernel.org>,
+        <quic_krichai@quicinc.com>, <quic_vbadigan@quicinc.com>,
+        <quic_parass@quicinc.com>, <quic_schintav@quicinc.com>,
+        <quic_shijjose@quicinc.com>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
+	<kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        <linux-pci@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <mhi@lists.linux.dev>
+References: <1699669982-7691-1-git-send-email-quic_msarkar@quicinc.com>
+Content-Language: en-US
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+In-Reply-To: <1699669982-7691-1-git-send-email-quic_msarkar@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 2-nfT9vuu7uZY3tK0yJaMkHsOmhBRX83
+X-Proofpoint-ORIG-GUID: 2-nfT9vuu7uZY3tK0yJaMkHsOmhBRX83
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-20_08,2023-11-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0 phishscore=0
+ mlxlogscore=823 impostorscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311060000 definitions=main-2311200068
 
-Add missing QDU, QRU and SDA platform names to the pattern matching all
-Qualcomm compatibles.
+Some of the patches are reviewed. Please apply in linux-next.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Thanks,
+Mrinmay
 
----
-
-Cc: Sibi Sankar <quic_sibis@quicinc.com>
----
- .../devicetree/bindings/arm/qcom-soc.yaml        | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/arm/qcom-soc.yaml b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-index 97621c92a1ab..09db42456c12 100644
---- a/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom-soc.yaml
-@@ -23,7 +23,7 @@ description: |
- select:
-   properties:
-     compatible:
--      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      pattern: "^qcom,.*(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$"
-   required:
-     - compatible
- 
-@@ -31,17 +31,17 @@ properties:
-   compatible:
-     oneOf:
-       # Preferred naming style for compatibles of SoC components:
--      - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+(pro)?-.*$"
-+      - pattern: "^qcom,(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+(pro)?-.*$"
-       - pattern: "^qcom,(sa|sc)8[0-9]+[a-z][a-z]?-.*$"
- 
-       # Legacy namings - variations of existing patterns/compatibles are OK,
-       # but do not add completely new entries to these:
--      - pattern: "^qcom,[ak]pss-wdt-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
--      - pattern: "^qcom,gcc-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
--      - pattern: "^qcom,mmcc-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
--      - pattern: "^qcom,pcie-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
--      - pattern: "^qcom,rpm-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
--      - pattern: "^qcom,scm-(apq|ipq|mdm|msm|qcm|qcs|sa|sc|sdm|sdx|sm)[0-9]+.*$"
-+      - pattern: "^qcom,[ak]pss-wdt-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$"
-+      - pattern: "^qcom,gcc-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$"
-+      - pattern: "^qcom,mmcc-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$"
-+      - pattern: "^qcom,pcie-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$"
-+      - pattern: "^qcom,rpm-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$"
-+      - pattern: "^qcom,scm-(apq|ipq|mdm|msm|qcm|qcs|q[dr]u|sa|sc|sd[amx]|sm)[0-9]+.*$"
-       - enum:
-           - qcom,dsi-ctrl-6g-qcm2290
-           - qcom,gpucc-sdm630
--- 
-2.34.1
-
+On 11/11/2023 8:02 AM, Mrinmay Sarkar wrote:
+> This series adds the relavent DT bindings, new compatible string,
+> add support to EPF driver and add EP PCIe node in dtsi file for
+> ep pcie0 controller.
+>
+> v7 -> v8:
+> - Add new patch PCI: epf-mhi: Add "pci_epf_mhi_" prefix to the function
+>    names
+> - Update PCI: epf-mhi: Add support for SA8775P patch on top of the new
+>    patch and update commit message.
+>
+> v6 -> v7:
+> - add reviewed by tag in commit message in all patches.
+> - update commit message in patch 2 as per comment.
+> - update reason for reusing PID in commit message.
+>
+> v5 -> v6:
+> - update cover letter.
+>
+> v4 -> v5:
+> - add maxItems to the respective field to constrain io space and
+>    interrupt in all variants.
+>
+> v3 -> v4:
+> - add maxItems field in dt bindings
+> - update comment in patch2
+> - dropped PHY driver patch as it is already applied [1]
+> - update comment in EPF driver patch
+> - update commect in dtsi and add iommus instead of iommu-map
+>
+> [1] https://lore.kernel.org/all/169804254205.383714.18423881810869732517.b4-ty@kernel.org/
+>
+> v2 -> v3:
+> - removed if/then schemas, added minItems for reg,
+>    reg-bnames, interrupt and interrupt-names instead.
+> - adding qcom,sa8775p-pcie-ep compitable for sa8775p
+>    as we have some specific change to add.
+> - reusing sm8450's pcs_misc num table as it is same as sa8775p.
+>    used appropriate namespace for pcs.
+> - remove const from sa8775p_header as kernel test robot
+>    throwing some warnings due to this.
+> - remove fallback compatiable as we are adding compatiable for sa8775p.
+>
+> v1 -> v2:
+> - update description for dma
+> - Reusing qcom,sdx55-pcie-ep compatibe so remove compaitable
+>    for sa8775p
+> - sort the defines in phy header file and remove extra defines
+> - add const in return type pci_epf_header and remove MHI_EPF_USE_DMA
+>    flag as hdma patch is not ready
+> - add fallback compatiable as qcom,sdx55-pcie-ep, add iommu property
+>
+>
+> Mrinmay Sarkar (5):
+>    dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
+>    PCI: qcom-ep: Add support for SA8775P SOC
+>    PCI: epf-mhi: Add "pci_epf_mhi_" prefix to the function names
+>    PCI: epf-mhi: Add support for SA8775P
+>    arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
+>
+>   .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 64 +++++++++++++++++++++-
+>   arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 46 ++++++++++++++++
+>   drivers/pci/controller/dwc/pcie-qcom-ep.c          |  1 +
+>   drivers/pci/endpoint/functions/pci-epf-mhi.c       | 21 ++++++-
+>   4 files changed, 128 insertions(+), 4 deletions(-)
+>
 
