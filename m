@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B33CA7F1630
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 15:49:26 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2727E7F1669
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 15:53:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E53791C21594
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 14:49:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A973A1F24DD2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 14:53:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C58513FFC;
-	Mon, 20 Nov 2023 14:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A282E18E12;
+	Mon, 20 Nov 2023 14:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EJkBVUr2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G8KOGDNC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2C0E3593
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 06:48:01 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-32df66c691dso2848313f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 06:48:01 -0800 (PST)
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32CA83256
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 06:53:33 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-5480edd7026so5672776a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 06:53:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700491680; x=1701096480; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1700492011; x=1701096811; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tJJwbkqvfCRGn7qw4NUfbsptbvx8KM0jIDYK6bPqbHI=;
-        b=EJkBVUr2+c3RAcw3VxduyTHIuIf1REIdnsgjfdk7u9UZ0PWKofiZsx2aypG+vLYMKC
-         mLx39ZH3p7Q+WkVjQZ0n2kA7JQFaKv68JvR9/ceABCzsIQa8qWEdukoyXdBtonlrinnx
-         MZTsPFhG77igmZLOI9Og1zd7SblfbOfPoSVuBf2SQX33rfveXiw9jX9AmEnr77X6Inb8
-         oEhBihbNzSa2G2sZcXLFs3zqC3qeTRvWT2onn9mVFz3Kbi7JYtcFD3PyqgS5RTt7V73d
-         hiPH1P617/9ILHoet9GDWOd9WjajxZvlpq63l7lx/UtSy1bSUm+LpTcAfTFHlIZEZFJJ
-         l06Q==
+        bh=ET7XZBuYSIsGm9CmNHfDH0i0uNlWweXSO9s0Phl8jmQ=;
+        b=G8KOGDNC2GPE4Oe5Ed8Rz72LIR+1xnWFJDYRi3KffyMW5Uej193i1DILprSIsLRvtF
+         33bKUVpd11am5xY2IIuYjTJDKLQk5al9/4vUWT+XEwbQE7NQZY6IakIIoSz51pwsZJ1D
+         60IJYAkNADXmII+Qw22z+bjiyX0/vzorJegrlqF7AyitpEB+7PRufL4cySZcxzf/JRej
+         QEHGfpkcJ8NLiQxrVgMG6uS1KtjhTBo6oO7BrdE+cKHJj6ps7QCL9FSoVWNjtNl1AY1s
+         Yf83fDi2kiiLHg0W6lfxNVBcp26Az8Q+LjHZGtTJKvC9oNesLQKMWQJfFrzswXNaAAMU
+         dCrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700491680; x=1701096480;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1700492011; x=1701096811;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tJJwbkqvfCRGn7qw4NUfbsptbvx8KM0jIDYK6bPqbHI=;
-        b=wOWbjF+sMJnRbuwlJM/I7Dtxxk3RF17CuSqxftDi3UtVsDht0RLoc+R3o+PiwMH+cc
-         /DLj9F+et7Ntm7c1AVmftqG54/rDIK6ekLEukrTM5jli8J5smyeNhcvDrBxK2E0TzBmQ
-         eM6KGIpE0k0Yaa+12wdU6pXt22FhFw0XNLOKrWo8yxurSR4MXiqMIpIKZd6LWBIssHYc
-         fFLY3PgzLsalLVQWGKasruP31pqtxboysG3KzU50t7CzHrvtUgbHiPacEUUJ9L5emzHR
-         U06U8GFWULYSLxbuCxItyyGfpxs9niG5h4ldldO5HrwbOto1+fcPfPokUDUKtYsfbTD1
-         aCRQ==
-X-Gm-Message-State: AOJu0YxUkzj6WLmw7y4XupKgTDF2olH9aEQJ2Tpe5eRnjKyUlFrIcKBA
-	VoJJVHY73yDzLDn7jStWe49aiQ==
-X-Google-Smtp-Source: AGHT+IHn58Rb64JPIzwX0eVZAztbDRegFkKUvEvegsNvzVuqU2Md/M8OBOctHAEzcu9bHb7VRuEF9g==
-X-Received: by 2002:a05:6000:2c7:b0:32f:7cfd:4522 with SMTP id o7-20020a05600002c700b0032f7cfd4522mr4655078wry.70.1700491680256;
-        Mon, 20 Nov 2023 06:48:00 -0800 (PST)
-Received: from [192.168.1.7] ([79.79.179.141])
-        by smtp.gmail.com with ESMTPSA id j3-20020a056000124300b0032f7e832cabsm11385126wrx.90.2023.11.20.06.47.59
+        bh=ET7XZBuYSIsGm9CmNHfDH0i0uNlWweXSO9s0Phl8jmQ=;
+        b=jUJJO4uqkXcLm6U3K+cQegohmiwlgmycwj006bd8DWqz5YFRwykbTG/dCxQnoT26Ln
+         ypR12xftEAcpF7GGBHb/+4/Rhce0ZU6gfHqTxb1OFBWuHivgho2SR4mEtpPHC5TQ3pI8
+         +8Km3V466u00RpkDFaoQtfxABSg2D3SB4LyQ9BhmxDL61Jz+2uICo7qaNgo/Z+2jwE9z
+         V5yo7tADGReexdQdDoX86aMF6nQYO3tUTITfHa0SwTRGKb3Y7ybhFBHRUA2uhimXy0yJ
+         UoTaosqF4qVJhA+9y+7wnBcuWCtyAfQeAd7lkeLff7VNN3tkOJJOtElwXQYvrtQUSwti
+         Tb2Q==
+X-Gm-Message-State: AOJu0YxYtkSIiBv73EbNapZsJzE8i7sylMsM/3NT8Qa+grWfVKyfGUT9
+	11572q9d+QjnbgEaYacJCZbWmg==
+X-Google-Smtp-Source: AGHT+IEiFXQNRTpLbffWwIB/ESoK8FBLpW5+d9rBzMckIo8AyjTDOyxsOL6c6QHe60c5kV4WSWbqHA==
+X-Received: by 2002:aa7:c588:0:b0:548:e8aa:dfc8 with SMTP id g8-20020aa7c588000000b00548e8aadfc8mr291110edq.32.1700492011605;
+        Mon, 20 Nov 2023 06:53:31 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.11])
+        by smtp.gmail.com with ESMTPSA id q3-20020aa7cc03000000b0054847e78203sm3387002edt.29.2023.11.20.06.53.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 06:47:59 -0800 (PST)
-Message-ID: <70402702-84d3-4577-9fd2-9e87add4283b@linaro.org>
-Date: Mon, 20 Nov 2023 14:47:58 +0000
+        Mon, 20 Nov 2023 06:53:31 -0800 (PST)
+Message-ID: <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
+Date: Mon, 20 Nov 2023 15:53:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,118 +62,361 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: Add base qcs6490-rb3gen2 board
- dts
+Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
 Content-Language: en-US
-To: Komal Bajaj <quic_kbajaj@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+To: Michal Simek <michal.simek@amd.com>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Naina Mehta <quic_nainmeht@quicinc.com>
-References: <20231120134754.9526-1-quic_kbajaj@quicinc.com>
- <20231120134754.9526-4-quic_kbajaj@quicinc.com>
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20231120134754.9526-4-quic_kbajaj@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
+ <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
+Cc: Andrew Davis <afd@ti.com>, Arnd Bergmann <arnd@arndb.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Heiko Stuebner <heiko@sntech.de>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>,
+ Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org
+References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+ <19358871-009d-4498-9c13-90d5338b1e9f@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <19358871-009d-4498-9c13-90d5338b1e9f@amd.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
+On 20/11/2023 15:01, Michal Simek wrote:
+> 
+> 
+> On 11/20/23 09:40, Krzysztof Kozlowski wrote:
+>> Document preferred coding style for Devicetree sources (DTS and DTSI),
+>> to bring consistency among all (sub)architectures and ease in reviews.
+>>
+>> Cc: Andrew Davis <afd@ti.com>
+>> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>> Cc: Arnd Bergmann <arnd@arndb.de>
+>> Cc: Bjorn Andersson <andersson@kernel.org>
+>> Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+>> Cc: Heiko Stuebner <heiko@sntech.de>
+>> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> Cc: Matthias Brugger <matthias.bgg@gmail.com>
+>> Cc: Michal Simek <michal.simek@amd.com>
+>> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+>> Cc: Nishanth Menon <nm@ti.com>
+>> Cc: Olof Johansson <olof@lixom.net>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Merging idea: Rob/DT bindings
+>>
+>> Changes in v2
+>> =============
+>> 1. Hopefully incorporate entire feedback from comments:
+>> a. Fix \ { => / { (Rob)
+>> b. Name: dts-coding-style (Rob)
+>> c. Exceptions for ordering nodes by name for Renesas and pinctrl (Geert,
+>>     Konrad)
+>> d. Ordering properties by common/vendor (Rob)
+>> e. Array entries in <> (Rob)
+>>
+>> 2. New chapter: Organizing DTSI and DTS
+>>
+>> 3. Several grammar fixes (missing articles)
+>>
+>> Cc: linux-rockchip@lists.infradead.org
+>> Cc: linux-mediatek@lists.infradead.org
+>> Cc: linux-samsung-soc@vger.kernel.org
+>> Cc: linux-amlogic@lists.infradead.org
+>> Cc: linux-arm-kernel@lists.infradead.org
+>> Cc: linux-arm-msm@vger.kernel.org
+>> ---
+>>   .../devicetree/bindings/dts-coding-style.rst  | 163 ++++++++++++++++++
+>>   Documentation/devicetree/bindings/index.rst   |   1 +
+>>   2 files changed, 164 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/dts-coding-style.rst
+>>
+>> diff --git a/Documentation/devicetree/bindings/dts-coding-style.rst b/Documentation/devicetree/bindings/dts-coding-style.rst
+>> new file mode 100644
+>> index 000000000000..cc7e3b4d1b92
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/dts-coding-style.rst
+>> @@ -0,0 +1,163 @@
+>> +.. SPDX-License-Identifier: GPL-2.0
+>> +.. _dtscodingstyle:
+>> +
+>> +=====================================
+>> +Devicetree Sources (DTS) Coding Style
+>> +=====================================
+>> +
+>> +When writing Devicetree Sources (DTS) please observe below guidelines.  They
+>> +should be considered complementary to any rules expressed already in Devicetree
+>> +Specification and dtc compiler (including W=1 and W=2 builds).
+>> +
+>> +Individual architectures and sub-architectures can add additional rules, making
+>> +the style stricter.
+>> +
+>> +Naming and Valid Characters
+>> +---------------------------
+>> +
+>> +1. Node and property names are allowed to use only:
+>> +
+>> +   * lowercase characters: [a-z]
+>> +   * digits: [0-9]
+>> +   * dash: -
+> 
+> device-tree specification v0.4. Chapter 2.2.1/Table 2.1 is describing much more
+> valid characters for node names.
+> It means above description is not accurate or DT spec should be updated.
 
+Spec allows way to much. dtc doesn't. One thing is the spec, second
+thing is coding style.
 
-On 20/11/2023 13:47, Komal Bajaj wrote:
-> Add DTS for Qualcomm qcs6490-rb3gen2 board which uses
-> QCS6490 SoC. This adds debug uart and usb support along
-> with regulators found on this board.
+> 
+> 
+>> +
+>> +2. Labels are allowed to use only:
+>> +
+>> +   * lowercase characters: [a-z]
+>> +   * digits: [0-9]
+>> +   * underscore: _
+> 
+> based on dt spec uppercase is also valid char in label.
 
-Hi,
+Which we do not want in the DTS.
 
-I understand there was a lot of previous discussion around these two
-boards, sorry to be bringing it up again here, but I have a few more
-questions.
+> 
+> 
+>> +
+>> +3. Unit addresses should use lowercase hex, without leading zeros (padding).
+>> +
+>> +4. Hex values in properties, e.g. "reg", should use lowercase hex.  The address
+>> +   part can be padded with leading zeros.
+>> +
+>> +Example::
+>> +
+>> +	gpi_dma2: dma-controller@800000 {
+>> +		compatible = "qcom,sm8550-gpi-dma", "qcom,sm6350-gpi-dma";
+>> +		reg = <0x0 0x00800000 0x0 0x60000>;
+> 
+> Is 0x0 recommended or 0 is enough?
 
-How similar are these two boards in terms of design? If they're derived
-from the same reference schematic then I think this is a good
-justification to de-duplicate the common DTS parts.
+I don't want to impose any rule on that, because someone would like to
+argue that hex should be also in SPI chip-select reg.
 
-Dropping them in a diff tool [1] it seems as though the only changes are
-the modem reserved memory for the IDP board, some minor regulator
-changes, and the sdcard on the IDP board being enabled. However it's
-important to differentiate between these just, being the same, vs them
-being based on the same reference design.
+> 
+>> +	}
+>> +
+>> +Order of Nodes
+>> +--------------
+>> +
+>> +1. Nodes within any bus, thus using unit addresses for children, shall be
+>> +   ordered incrementally by unit address.
+>> +   Alternatively for some sub-architectures, nodes of the same type can be
+>> +   grouped together (e.g. all I2C controllers one after another even if this
+>> +   breaks unit address ordering).
+>> +
+>> +2. Nodes without unit addresses should be ordered alpha-numerically by the node
+>> +   name.  For a few types of nodes, they can be ordered by the main property
+>> +   (e.g. pin configuration states ordered by value of "pins" property).
+>> +
+>> +3. When extending nodes in the board DTS via &label, the entries should be
+>> +   ordered alpha-numerically.
+>> +
+>> +Example::
+>> +
+>> +	// SoC DTSI
+> 
+> Same comment about /* */ as was mentioned in another thread.
+> 
+>> +
+>> +	/ {
+>> +		cpus {
+>> +			// ...
+>> +		};
+>> +
+>> +		psci {
+>> +			// ...
+>> +		};
+>> +
+>> +		soc@ {
+>> +			dma: dma-controller@10000 {
+>> +				// ...
+>> +			};
+>> +
+>> +			clk: clock-controller@80000 {
+>> +				// ...
+>> +			};
+>> +		};
+>> +	};
+>> +
+>> +	// Board DTS
+>> +
+>> +	&clk {
+>> +		// ...
+>> +	};
+>> +
+>> +	&dma {
+>> +		// ...
+>> +	};
+>> +
+>> +
+>> +Order of Properties in Device Node
+>> +----------------------------------
+>> +
+>> +Following order of properties in device nodes is preferred:
+>> +
+>> +1. compatible
+>> +2. reg
+>> +3. ranges
+>> +4. Standard/common properties (defined by common bindings, e.g. without
+>> +   vendor-prefixes)
+>> +5. Vendor-specific properties
+>> +6. status (if applicable)
+>> +7. Child nodes, where each node is preceded with a blank line
+> 
+> Isn't the order already defined in DT spec in 2.3 in chapters?
 
-I left some comments on the parts that differ between the boards below,
-but basically my question is: do these boards share enough of the same
-*design* that it would make sense to have a "qcm6490-iot.dtsi" file with
-the common reserved memory and regulators?
+Where is it defined as this is preferred order?
 
-The IDP and rb3 boards would then inherit from there, avoiding a lot of
-duplication and weirdness where some boards have certain regulator
-properties that others don't with it being hard to tell if this is
-intentional or not (this is the case with a lot of the existing upstream
-devices).
+> compatible
+> model
+> status
+> #address/size cells
+> reg
+> virtual-reg
+> ranges
+> dma-ranges
+> dma-coherent
+> dma-non-coherent
+> 
+> Again I am fine with whatever order but I think we should reflect it in the spec 
 
-On a related note, should we further split the rb3 board into a
-qcs6490-whatever-som.dtsi file which may define the SoM specific parts?
-This would undoubtebly make it easier for other boards based on the same
-SoM to be bought up and kept up to date.
+Spec is not a coding style.
 
-[1]: https://quickdiff.net/?unique_id=630F6851-C750-839E-1651-4CA6D997A74D
+> too. Especially status property is for my taste too low simply because you start 
+> to read and then you will find that IP is disabled.
 
+Which is exactly what you want. status is irrelevant for hardware
+description, so should be the last item.
 
-[...]
+> 
+> And are you describing all properties starting with # as standard properties?
 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> new file mode 100644
-> index 000000000000..f023dcf768f1
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -0,0 +1,410 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-[...]
-> +
-> +		vreg_l7b_2p952: ldo7 {
+Yes.
 
-The IDP board defined voltages here for the sdcard, does the rb3 board
-have an sdcard slot (if so which regulator does it use)?
+> 
+> 
+>> +
+>> +The "status" property is by default "okay", thus it can be omitted.
+>> +
+>> +Example::
+>> +
+>> +	// SoC DTSI
+> 
+> 
+> /* */
+> 
+>> +
+>> +	usb_1_hsphy: phy@88e3000 {
+>> +		compatible = "qcom,sm8550-snps-eusb2-phy";
+>> +		reg = <0x0 0x088e3000 0x0 0x154>;
+>> +		#phy-cells = <0>;
+>> +		resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+>> +		status = "disabled";
+>> +	};
+>> +
+>> +	// Board DTS
+>> +
+>> +	&usb_1_hsphy {
+>> +		clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
+>> +		clock-names = "ref";
+>> +		status = "okay";
+>> +	};
+>> +
+>> +
+>> +Indentation
+>> +-----------
+>> +
+>> +1. Use indentation according to :ref:`codingstyle`.
+>> +2. For arrays spanning across lines, it is preferred to align the continued
+>> +   entries with opening < from the first line.
+>> +3. Each entry in arrays with multiple cells (e.g. "reg" with two IO addresses)
+>> +   should be enclosed in <>.
+>> +
+>> +Example::
+>> +
+>> +	thermal-sensor@c271000 {
+>> +		compatible = "qcom,sm8550-tsens", "qcom,tsens-v2";
+>> +		reg = <0x0 0x0c271000 0x0 0x1000>,
+>> +		      <0x0 0x0c222000 0x0 0x1000>;
+>> +	};
+>> +
+>> +Organizing DTSI and DTS
+>> +-----------------------
+>> +
+>> +The DTSI and DTS files should be organized in a way representing the common
+>> +(and re-usable) parts of the hardware.  Typically this means organizing DTSI
+>> +and DTS files into several files:
+>> +
+>> +1. DTSI with contents of the entire SoC (without nodes for hardware not present
+>> +   on the SoC).
+>> +2. If applicable: DTSI with common or re-usable parts of the hardware (e.g.
+>> +   entire System-on-Module).
+> 
+> DTS/DTSI - SOMs can actually run as they are that's why it is fair to say that
+> there doesn't need to be DTS representing the board.
 
-Is there a reason not to define the same voltage range for this board?
-> +			regulator-allow-set-load;
+I have never seen a SoM which can run without elaborate hardware-hacking
+(e.g. connecting multiple wires to the SoM pins). The definition of the
+SoM is that it is a module. Module can be re-used, just like SoC.
 
-This property is set for rb3 but not for the idp board, even though this
-regulator is unused, should this be set?
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-[...]
-> +
-> +		vreg_l9b_1p2: ldo9 {
-Same question as above
-> +			regulator-allow-set-load;
-Same question
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-[...]
-> +		vreg_l19b_1p8: ldo19 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-The IDP board has the regulator-allow-set-load property here, as well as
-regulator-allowed-modes. This regulator is used for the sdcard on that
-board. Is it used for anything on rb3? Can these properties be the same?
-> +		};
-> +	};
-> +
+Best regards,
+Krzysztof
 
-
-Thanks and regards,
--- 
-// Caleb (they/them)
 
