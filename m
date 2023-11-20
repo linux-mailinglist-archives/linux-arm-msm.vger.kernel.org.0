@@ -1,131 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-1184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB6E97F16FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 16:15:03 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B5737F1729
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 16:23:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 664462825E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 15:15:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCD311C21767
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 15:23:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE05B1CFBD;
-	Mon, 20 Nov 2023 15:14:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D10D31D522;
+	Mon, 20 Nov 2023 15:23:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="C4nROWAr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98772D7C;
-	Mon, 20 Nov 2023 07:14:51 -0800 (PST)
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-35930447ae9so13859275ab.2;
-        Mon, 20 Nov 2023 07:14:51 -0800 (PST)
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C22CCF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 07:22:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1700493778;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZxbmrPGylWswXo8aLH4U/JNxik/OiDDURPN0WtCCdCc=;
+	b=C4nROWAr2KGnlJPp9FMUz20XjlBa8u2li08DX94FBwrF8RXvlTlJV06zeDzkDlfopm1iqH
+	qAOtz+VedgNtQUcyP/VIjCm8Uk5P0sCpUcLZ/hSWfOO91JfHzZk4NmstYUp3KVuMqJc+26
+	TPynsKI4X9RnO99EKHbrBcZ5TM7v3D4=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-274-lJvrP7QrMvScjeZ1Os-0aQ-1; Mon, 20 Nov 2023 10:22:57 -0500
+X-MC-Unique: lJvrP7QrMvScjeZ1Os-0aQ-1
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-421acfe16f6so51062621cf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 07:22:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700493290; x=1701098090;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pvyuBwDWjlua8KTa1tSkZYuhpwaN2g16l8i+kRkooGI=;
-        b=F9TYe0EE6EbiJk0bO+xVpdtrHDV/yE5IE3/WpSTzRVJ6WyIJbSa9l3FgfRsIG/HrCn
-         dRarfRq+i9me5Prl6FDBx920EKe3MR8HRPyTkxFWJeOtd6uc9Mx8hUB7L2xejFRk+xfW
-         /0qdpWA8pYvrcDbbWQcONH//qiXe2yJP5DOPsD5hCTP6Dcq4VuS+EMZzijoBs3mZHY3m
-         qts4qpClVuJJfzE8lJ8QLJZ/LJVnwCIOc/F2baGHo5ImkdMm2ECW7EL74Z4ZPjDBf0q2
-         YdMSt8fmNRDL2RKQQJCHEeOkZ4HqrVxyPWtUQ3/csSgUhaODyGsSdh1nM5RBN2F5B3ZP
-         y6pg==
-X-Gm-Message-State: AOJu0YyF16Kx8c77XWTwZGzjn4qbNxE056ZMaLpgBnw+DQorFvUGF4OK
-	wYsX8ODoaRE1G2rZUFMSjA==
-X-Google-Smtp-Source: AGHT+IG7xvPwlp/b4aE9KUp1vczIEf4+6xwXP9on7fUf1y2nYNw0P+9020srGtfv0qnr6wMJ5vQlPQ==
-X-Received: by 2002:a92:dd8f:0:b0:35b:380:88d2 with SMTP id g15-20020a92dd8f000000b0035b038088d2mr3993458iln.22.1700493290338;
-        Mon, 20 Nov 2023 07:14:50 -0800 (PST)
-Received: from herring.priv ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id j16-20020a056e02219000b0034fd4562accsm2484574ila.28.2023.11.20.07.14.11
+        d=1e100.net; s=20230601; t=1700493777; x=1701098577;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZxbmrPGylWswXo8aLH4U/JNxik/OiDDURPN0WtCCdCc=;
+        b=BU8njl3j0WVYmqTathAtjd80vSRFdfkLje0KSSqn7OX8fxVZLju0S/XP3in4L8Ez2W
+         MX2PyJ8BeF2gMWaRpgvf/n4loxTpU7Dkg2ZrUgGViFOuIpkOORHwPLZPqWkU7AJ/Gh38
+         3GUM55bjYD2rcOKO664O8MJsvWzglE6kfCt/aSt1CBRsqcctaFxiXUdS3rzJIjMzeloW
+         lw8o7bloDRtylUGCCogVw88IA+NuFABBEjXaND6svo8ZAWUcQOWS/BZqxZXuyDHoYU7Y
+         xQhD1/uzJdL6uB50geWVtsYcJFI8iis0SVa/jwbgmwyEd87Od/i9iG8D2FgyBkXSB/Fl
+         FAyw==
+X-Gm-Message-State: AOJu0YydK0l+AzvMfy7PCrUDwn7F6RAy2I41Kc/SUZi3PCCe3q0e2RSE
+	hYcSJ5PalBVdR71VyiKD4g8KtgbyeYwIXnSIc5TFWGYmGYGMEzc9TAseokSDGcMDERK00Fn8kNF
+	vaHAduLeMK9qbFIH0FAi8EYpR2Q==
+X-Received: by 2002:ac8:5b84:0:b0:41e:1cd3:2ae9 with SMTP id a4-20020ac85b84000000b0041e1cd32ae9mr8941100qta.64.1700493776776;
+        Mon, 20 Nov 2023 07:22:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFywBJRydhvu1dXvc1nv2EDgslOpX/xHYvPFOD5M1Uz1taB2jzWvRwaRdsYzsY10DnCgAtv1A==
+X-Received: by 2002:ac8:5b84:0:b0:41e:1cd3:2ae9 with SMTP id a4-20020ac85b84000000b0041e1cd32ae9mr8941086qta.64.1700493776436;
+        Mon, 20 Nov 2023 07:22:56 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id jr44-20020a05622a802c00b0041519614354sm2730324qtb.7.2023.11.20.07.22.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Nov 2023 07:14:30 -0800 (PST)
-Received: (nullmailer pid 2026531 invoked by uid 1000);
-	Mon, 20 Nov 2023 15:14:02 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Mon, 20 Nov 2023 07:22:56 -0800 (PST)
+Date: Mon, 20 Nov 2023 09:22:54 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
+	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] USB: dwc3: qcom: fix resource leaks on probe deferral
+Message-ID: <74cswe5tivcctmnty3gfavzsxdvjz5m4rktyj5auzwvrndninm@dah4h2fdj3zv>
+References: <20231117173650.21161-1-johan+linaro@kernel.org>
+ <041f239f-7b40-4681-8c6c-2268f9c2c684@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: netdev@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, 
-	Harini Katakam <harini.katakam@amd.com>, Andrew Lunn <andrew@lunn.ch>, devicetree@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, 
-	Florian Fainelli <florian.fainelli@broadcom.com>, Paolo Abeni <pabeni@redhat.com>, 
-	Qingfang Deng <dqfext@gmail.com>, Andy Gross <agross@kernel.org>, 
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, Eric Dumazet <edumazet@google.com>, 
-	Russell King <linux@armlinux.org.uk>, 
-	David Epping <david.epping@missinglinkelectronics.com>, 
-	Vladimir Oltean <olteanv@gmail.com>, SkyLake Huang <SkyLake.Huang@mediatek.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, Robert Marko <robert.marko@sartura.hr>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Simon Horman <horms@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, linux-kernel@vger.kernel.org, 
-	Jakub Kicinski <kuba@kernel.org>, linux-mediatek@lists.infradead.org, 
-	"David S. Miller" <davem@davemloft.net>, Daniel Golle <daniel@makrotopia.org>, 
-	linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20231120135041.15259-3-ansuelsmth@gmail.com>
-References: <20231120135041.15259-1-ansuelsmth@gmail.com>
- <20231120135041.15259-3-ansuelsmth@gmail.com>
-Message-Id: <170049324201.2026498.15592956023583173731.robh@kernel.org>
-Subject: Re: [net-next RFC PATCH 02/14] dt-bindings: net: move PHY modes to
- common PHY mode types definition
-Date: Mon, 20 Nov 2023 08:14:02 -0700
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <041f239f-7b40-4681-8c6c-2268f9c2c684@linaro.org>
 
-
-On Mon, 20 Nov 2023 14:50:29 +0100, Christian Marangi wrote:
-> Move PHY modes from ethernet-controller schema to dedicated common PHY
-> mode types definition. This is needed to have a centralized place to
-> define PHY interface mode and permit usage and reference of these modes
-> in other schemas.
+On Sat, Nov 18, 2023 at 12:47:30AM +0100, Konrad Dybcio wrote:
+> On 17.11.2023 18:36, Johan Hovold wrote:
+> > When reviewing the recently submitted series which reworks the dwc3 qcom
+> > glue implementation [1], I noticed that the driver's tear down handling
+> > is currently broken, something which can lead to memory leaks and
+> > potentially use-after-free issues on probe deferral and on driver
+> > unbind.
+> > 
+> > Let's get this sorted before reworking driver.
+> > 
+> > Note that the last patch has only been compile tested as I don't have
+> > access to a sdm845 device.
+> > 
+> > Johan
+> I'll sound like a broken record, but:
 > 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> ---
->  .../bindings/net/ethernet-controller.yaml     |  47 +------
->  .../bindings/net/ethernet-phy-mode-types.yaml | 132 ++++++++++++++++++
->  2 files changed, 133 insertions(+), 46 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/net/ethernet-phy-mode-types.yaml
+> is there anyone in the world that is actively benefiting from this failed
+> experiment of using the ACPI tables that were shipped with these SoCs?
+> 
+> There are so so so many shortcomings associated with it due to how Windows
+> drivers on these platforms know waaaay too much and largely use ACPI to
+> "bind driver x" and I simply think it doesn't make sense to continue
+> carrying this code forward given little use and no testing.
+> 
+> Konrad
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+For what it is worth, I have agreed with your opinion on this every time
+I've read it. I am not the target audience of the question, but I'll at
+least give my personal (interpreted: uneducated? undesired?) opinion
+that the ACPI support in here adds little value and extra burden.
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/net/ethernet-phy-mode-types.yaml:21:9: [warning] wrong indentation: expected 10 but found 8 (indentation)
+Of course that topic is a bit independent of this series, but I'd be
+curious if a patchset removing the support would be welcomed or not by
+maintainers, so I'm stirring the pot by replying here :)
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/ethernet-phy-mode-types.yaml: 'oneOf' conditional failed, one must be fixed:
-	'unevaluatedProperties' is a required property
-	'additionalProperties' is a required property
-	hint: Either unevaluatedProperties or additionalProperties must be present
-	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/ethernet-phy-mode-types.yaml: 'anyOf' conditional failed, one must be fixed:
-	'properties' is a required property
-	'patternProperties' is a required property
-	hint: Metaschema for devicetree binding documentation
-	from schema $id: http://devicetree.org/meta-schemas/core.yaml#
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20231120135041.15259-3-ansuelsmth@gmail.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Thanks,
+Andrew
 
 
