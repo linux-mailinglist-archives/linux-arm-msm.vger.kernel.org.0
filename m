@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-1238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E502A7F1F8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 22:46:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 104107F20A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 23:49:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A47E1C2167A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 21:46:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6FAD9B21A6E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 22:49:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A52F39850;
-	Mon, 20 Nov 2023 21:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE2B73985E;
+	Mon, 20 Nov 2023 22:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L1NgYdSJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b3b9FYMu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BF74188;
-	Mon, 20 Nov 2023 13:46:42 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-332cb136335so707202f8f.0;
-        Mon, 20 Nov 2023 13:46:42 -0800 (PST)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C17CD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 14:49:23 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507bd64814fso6890347e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 14:49:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700516801; x=1701121601; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EQ/FEK2mYsIsrLAMj1ftUkEFHG7z/MaBn+ksqWZD4+o=;
-        b=L1NgYdSJ5vHAYv8WXWbb3tRRgaBIt8tv75t1HggQer8whwgI8I8U1XOn3L7+0z+bI9
-         XnZZsrOWaFWbVv6uNNBAwWnmrlbq+JJAqa6ODU2AZUbveSokB+eqxY7MMfFZ4Hpk1aKp
-         inKviwfftIsb6sYq/mLtaIahtvJ4AexEgKR/9Xn89GmubcxjBO/V0Ur3t0YtBKNYEwWT
-         8g/7VW5SAgfSNH7Qejm6yjmzInsZl3G/AWdDuBXZpZIGshwhxmNPakNmVqSX0/2gnflt
-         oGuGZ3dx9XrKOwTSwJ1kKjkQZrH83XqlK28oZsHvPq9l0j7JomS8JI9KAk5fRe+SGy8j
-         LUtA==
+        d=linaro.org; s=google; t=1700520561; x=1701125361; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0SqPAnw0QpKcg0zC6uM3+YKsZ1Rv+zntSbyUGLhP8hE=;
+        b=b3b9FYMulndAe7UFDMMRx1bRJ8lKGoutoLhUCrx8feNQL0BB+KrI9YNB8YOtjJZ4OP
+         niLUXtIjy183SjsIV9OjMqRcCe2t23kIrygPlyFDH/FhIavLxO5wAwLehZB8QGGtib8V
+         LT8TyKX0XNdUsrn8ogjLvhIM1n2Z98vU7SMgLPRjbppsQHJRD4tCpVj/no/jgQxfSFF+
+         k6xcOxRVCWcY1rcbTvl+rTChngajAzMOHS35SOdZsV63eQX32mcPP59VHEKnGyedqn0s
+         qkZ0d2P4MWNtGqlSajecx1waC5DI+hdJdXFs1jM3+ye8riSGF/E7j1/dPOefktzu9gAx
+         Lasg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700516801; x=1701121601;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EQ/FEK2mYsIsrLAMj1ftUkEFHG7z/MaBn+ksqWZD4+o=;
-        b=NKcQCmKJIkzsO5X3Y2P9GsO/CLXD5BOeqtrqfX5sgbOCLQg0tVBdWERD1EX4UmYrJA
-         7smrDsmuc9QvXUDJBD+26Yu45dJt4QWq7MCxiouB6qD4Kv1nXJX1k2EDsM2ppQg4KmbJ
-         RVp0drt0x8DwxupqyVg6MiF1VIe00KygmttRp74RKunkgDVkn4geYpylbN/pIHoprJqP
-         Poea0vrET+ufxy8J+o0eViYrCe6x7EEN/LJ4m3WEUN2XwUkQbcU4iCgv3kUuMNHHHKwF
-         BMa5FgKbSTFeucQu6jx85p6wHm2Z+oB98U5w9BkA+2y5KTUQyZc3bmYfEr1EeVV5PBsy
-         kKTQ==
-X-Gm-Message-State: AOJu0YwyfA/2EpiQEdAKPAuaX40LXgI9gRvSEvlL7HMp1pWSi+684W4J
-	5FyX1PYbnDqDoumLkZf9Ts0=
-X-Google-Smtp-Source: AGHT+IEJmFFE3EHKXQ4RGWFBYumObm40aSlus52AgE+TXXlh+CCacbrX+eglWn0cbPoyet+nNAcCRg==
-X-Received: by 2002:a05:6000:4010:b0:332:c1da:4cca with SMTP id cp16-20020a056000401000b00332c1da4ccamr4845981wrb.14.1700516800595;
-        Mon, 20 Nov 2023 13:46:40 -0800 (PST)
-Received: from zotac.lan. (dynamic-2a02-3100-9030-5a00-2223-08ff-fe18-0310.310.pool.telefonica.de. [2a02:3100:9030:5a00:2223:8ff:fe18:310])
-        by smtp.gmail.com with ESMTPSA id i13-20020a5d584d000000b00332cb0937f4sm2667052wrf.33.2023.11.20.13.46.39
+        d=1e100.net; s=20230601; t=1700520561; x=1701125361;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0SqPAnw0QpKcg0zC6uM3+YKsZ1Rv+zntSbyUGLhP8hE=;
+        b=EUODZtnE6xlmmfTBWVudBUX81Juac55N9w+cVry/K0BkvmZplAkXtqZJ1qssjR36q2
+         tJz0BVeVFa5KXqbaDFcYuop3c3pZB7wyYWa3y0EyIB+7we2p5PQchGvUzqACiJfFfJzO
+         TqtcF3dO1ERziWJttKs0rJLamNFwgdYWAmuYniIhSAkgREUL96bn/nnnr10RkEo5r0xD
+         y/m3SbGm0BWOhgOCWLL/Gx99nLPa6x85psSuIXM6pEB8Fim9D269kZGQO2HraaxQ8APb
+         /5YYazy3rqz7QGJUB5owqAbu1glCWkUyQN9gCZtCuPxjqW3ePJRudVqEG+ceFxdUYWpT
+         cDzw==
+X-Gm-Message-State: AOJu0Yybn8OGPk45yGJdzjJLq9ONW5BWV1qj6BoNY4N+BpKZnrEYRG/a
+	fMuSzb3Odokg9MP0g7hwcEqvHZtdcL1aQyfhtPYRQ8Ps
+X-Google-Smtp-Source: AGHT+IHTbjSayWigF0siBEmx2UcusxW01ObJc5vC7FIWm7CrcH6uqemKAgtjbHSoxxVi021tZT0VuQ==
+X-Received: by 2002:a05:6512:3b2a:b0:50a:aa7d:2c18 with SMTP id f42-20020a0565123b2a00b0050aaa7d2c18mr6095443lfv.61.1700520561236;
+        Mon, 20 Nov 2023 14:49:21 -0800 (PST)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id c26-20020ac25f7a000000b00503189d8b8csm1297756lfc.198.2023.11.20.14.49.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Nov 2023 13:46:40 -0800 (PST)
-From: Heiner Kallweit <hkallweit1@gmail.com>
-To: Wolfram Sang <wsa@kernel.org>,
-	Rob Clark <robdclark@gmail.com>
-Cc: linux-i2c@vger.kernel.org,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
+        Mon, 20 Nov 2023 14:49:20 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Mark Gross <markgross@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v4 14/20] drivers/gpu/drm/msm/hdmi/hdmi_i2c.c: remove I2C_CLASS_DDC support
-Date: Mon, 20 Nov 2023 22:46:17 +0100
-Message-ID: <20231120214624.9378-15-hkallweit1@gmail.com>
-X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20231120214624.9378-1-hkallweit1@gmail.com>
-References: <20231120214624.9378-1-hkallweit1@gmail.com>
+	platform-driver-x86@vger.kernel.org,
+	linux-usb@vger.kernel.org
+Subject: [PATCH v3 0/3] dt-bindings: connector: usb: provide bindings for altmodes
+Date: Tue, 21 Nov 2023 00:00:17 +0200
+Message-ID: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,31 +81,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-After removal of the legacy EEPROM driver and I2C_CLASS_DDC support in
-olpc_dcon there's no i2c client driver left supporting I2C_CLASS_DDC.
-Class-based device auto-detection is a legacy mechanism and shouldn't
-be used in new code. So we can remove this class completely now.
+In some cases we need a way to specify USB-C AltModes that can be
+supportd on the particular USB-C connector. For example, x86 INT33FE
+driver does this by populating fwnode properties internally. For the
+Qualcomm Robotics RB5 platform (and several similar devices which use
+Qualcomm PMIC TCPM) we have to put this information to the DT.
 
-Preferably this series should be applied via the i2c tree.
+Provide the DT bindings for this kind of information and while we are at
+it, change svid property to be 16-bit unsigned integer instead of a
+simple u32.
 
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+NOTE: usage of u16 is not compatible with the recenty extended
+qcom/qrb5165-rb5.dts DT file. I'm looking for the guidance from DT and
+USB maintainers whether to retain u32 usage or it's better to switch to
+u16.
 
----
- drivers/gpu/drm/msm/hdmi/hdmi_i2c.c |    1 -
- 1 file changed, 1 deletion(-)
+Changes since v2:
+- Inlined altmode definitions instead of having them under $defs (Rob)
+- Explicity list permitted AltMode names (currenty only displayport is
+  allowed) (Rob)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-index de182c004..7aa500d24 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_i2c.c
-@@ -249,7 +249,6 @@ struct i2c_adapter *msm_hdmi_i2c_init(struct hdmi *hdmi)
- 
- 
- 	i2c->owner = THIS_MODULE;
--	i2c->class = I2C_CLASS_DDC;
- 	snprintf(i2c->name, sizeof(i2c->name), "msm hdmi i2c");
- 	i2c->dev.parent = &hdmi->pdev->dev;
- 	i2c->algo = &msm_hdmi_i2c_algorithm;
+Changes since v1:
+- Added type:object and fixed 'description' string in the altmodes-list
+  definition.
+
+Dmitry Baryshkov (3):
+  dt-bindings: connector: usb: add altmodes description
+  usb: typec: change altmode SVID to u16 entry
+  arm64: dts: qcom: qrb5165-rb5: use u16 for DP altmode svid
+
+ .../bindings/connector/usb-connector.yaml     | 29 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  2 +-
+ drivers/platform/x86/intel/chtwc_int33fe.c    |  2 +-
+ drivers/usb/typec/class.c                     |  5 ++--
+ 4 files changed, 34 insertions(+), 4 deletions(-)
+
+-- 
+2.42.0
 
 
