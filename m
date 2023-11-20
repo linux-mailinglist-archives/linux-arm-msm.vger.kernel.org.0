@@ -1,57 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-1241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 104107F20A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 23:49:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC1517F20A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 23:49:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6FAD9B21A6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 22:49:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 97D7C282832
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 22:49:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE2B73985E;
-	Mon, 20 Nov 2023 22:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08D943A8EE;
+	Mon, 20 Nov 2023 22:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b3b9FYMu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z+dM2Gfb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07C17CD
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DECE9DC
 	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 14:49:23 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-507bd64814fso6890347e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 14:49:22 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-50a938dda08so6987796e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 14:49:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700520561; x=1701125361; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0SqPAnw0QpKcg0zC6uM3+YKsZ1Rv+zntSbyUGLhP8hE=;
-        b=b3b9FYMulndAe7UFDMMRx1bRJ8lKGoutoLhUCrx8feNQL0BB+KrI9YNB8YOtjJZ4OP
-         niLUXtIjy183SjsIV9OjMqRcCe2t23kIrygPlyFDH/FhIavLxO5wAwLehZB8QGGtib8V
-         LT8TyKX0XNdUsrn8ogjLvhIM1n2Z98vU7SMgLPRjbppsQHJRD4tCpVj/no/jgQxfSFF+
-         k6xcOxRVCWcY1rcbTvl+rTChngajAzMOHS35SOdZsV63eQX32mcPP59VHEKnGyedqn0s
-         qkZ0d2P4MWNtGqlSajecx1waC5DI+hdJdXFs1jM3+ye8riSGF/E7j1/dPOefktzu9gAx
-         Lasg==
+        d=linaro.org; s=google; t=1700520562; x=1701125362; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hTZE+Yyh5kIyB1ncprfjmtJf/HhgeQFmAHJ18g9kLYU=;
+        b=Z+dM2GfbMb9MkZJGoomW+/RFhjH3ISvghR7CKm28zzYJz62samQIA1mcUk6eMcs1rp
+         hWKE13y/OIO7E1g+Ux+whMdk1lssRtf32iSYuMAtrOUwZcoiSoqoRAuXdPWpjm+Gi0X3
+         vjeM5TbMh+6DxK2TaWl/n3YkikR6xH1ocB4uOQ99qOwYazFD/G14brbwmEW7CeRV5+/1
+         98BXGpxqLfwwVs4cmo7KX8oYge9e1D3V7qsQ/SjemFcEJbKJ06cqs2U87nGIxOV8S/AT
+         LXFSWWS4F8v1mAMSHLZZm/eMVcyr5IL9xrto0xOi9Z1ItELqGSOOutsypp/KpetuGDir
+         K3wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700520561; x=1701125361;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0SqPAnw0QpKcg0zC6uM3+YKsZ1Rv+zntSbyUGLhP8hE=;
-        b=EUODZtnE6xlmmfTBWVudBUX81Juac55N9w+cVry/K0BkvmZplAkXtqZJ1qssjR36q2
-         tJz0BVeVFa5KXqbaDFcYuop3c3pZB7wyYWa3y0EyIB+7we2p5PQchGvUzqACiJfFfJzO
-         TqtcF3dO1ERziWJttKs0rJLamNFwgdYWAmuYniIhSAkgREUL96bn/nnnr10RkEo5r0xD
-         y/m3SbGm0BWOhgOCWLL/Gx99nLPa6x85psSuIXM6pEB8Fim9D269kZGQO2HraaxQ8APb
-         /5YYazy3rqz7QGJUB5owqAbu1glCWkUyQN9gCZtCuPxjqW3ePJRudVqEG+ceFxdUYWpT
-         cDzw==
-X-Gm-Message-State: AOJu0Yybn8OGPk45yGJdzjJLq9ONW5BWV1qj6BoNY4N+BpKZnrEYRG/a
-	fMuSzb3Odokg9MP0g7hwcEqvHZtdcL1aQyfhtPYRQ8Ps
-X-Google-Smtp-Source: AGHT+IHTbjSayWigF0siBEmx2UcusxW01ObJc5vC7FIWm7CrcH6uqemKAgtjbHSoxxVi021tZT0VuQ==
-X-Received: by 2002:a05:6512:3b2a:b0:50a:aa7d:2c18 with SMTP id f42-20020a0565123b2a00b0050aaa7d2c18mr6095443lfv.61.1700520561236;
-        Mon, 20 Nov 2023 14:49:21 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700520562; x=1701125362;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hTZE+Yyh5kIyB1ncprfjmtJf/HhgeQFmAHJ18g9kLYU=;
+        b=BGZ3x+x7USAgfN8kF2xPgdUPhvoPhq2ISbb9+IE8OV1fBwuZUSua/I+p35x6nZAWqC
+         h2xC/7x0PyFZ4/ivJpjyzswCVz7NhgczuVG5eO+mTB+TTtKI3eDLgIQc4c7mhQL9cCki
+         lGu4TZeM6SdnfVpE+j39Vt9CQLMXBtEs4cCm1byL6MvucsXlom4V+RfRNMXh/UpxAV1n
+         rG5dfdXwIWIvM+n7wNOJ8NIMrt+6qzP4Xb2aQDlDtdmhCxeLjO4YNWiEJ2jD8cwDIcZk
+         4jcgL5Mc3mf296Z0prYyYYDaIiWzsc5UZL12c+z3hShJUh83KGIByHEoPzosUPUBMoTc
+         UF1w==
+X-Gm-Message-State: AOJu0Yx+7howh7DywJapxiYOWvgqQKhjpA4qFZJuyfRupaAIbtoKjwRG
+	GZZ6n1Z32NsNVVNnLfbcynIftQ==
+X-Google-Smtp-Source: AGHT+IET8ZFead2qL40qpVsAg7bFbRz1l/L2umnEoT+GoBgTHa6uj75zEbiibhyfKA16qDxUC9hLjA==
+X-Received: by 2002:ac2:43a5:0:b0:501:c406:c296 with SMTP id t5-20020ac243a5000000b00501c406c296mr6204735lfl.31.1700520562151;
+        Mon, 20 Nov 2023 14:49:22 -0800 (PST)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id c26-20020ac25f7a000000b00503189d8b8csm1297756lfc.198.2023.11.20.14.49.20
+        by smtp.gmail.com with ESMTPSA id c26-20020ac25f7a000000b00503189d8b8csm1297756lfc.198.2023.11.20.14.49.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Nov 2023 14:49:20 -0800 (PST)
+        Mon, 20 Nov 2023 14:49:21 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -69,10 +70,12 @@ Cc: devicetree@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	platform-driver-x86@vger.kernel.org,
 	linux-usb@vger.kernel.org
-Subject: [PATCH v3 0/3] dt-bindings: connector: usb: provide bindings for altmodes
-Date: Tue, 21 Nov 2023 00:00:17 +0200
-Message-ID: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 1/3] dt-bindings: connector: usb: add altmodes description
+Date: Tue, 21 Nov 2023 00:00:18 +0200
+Message-ID: <20231120224919.2293730-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
+References: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,41 +84,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In some cases we need a way to specify USB-C AltModes that can be
-supportd on the particular USB-C connector. For example, x86 INT33FE
-driver does this by populating fwnode properties internally. For the
-Qualcomm Robotics RB5 platform (and several similar devices which use
-Qualcomm PMIC TCPM) we have to put this information to the DT.
+Add description of the USB-C AltModes supported on the particular USB-C
+connector. This is required for devices like Qualcomm Robotics RB5,
+which have no other way to express alternative modes supported by the
+hardware platform.
 
-Provide the DT bindings for this kind of information and while we are at
-it, change svid property to be 16-bit unsigned integer instead of a
-simple u32.
-
-NOTE: usage of u16 is not compatible with the recenty extended
-qcom/qrb5165-rb5.dts DT file. I'm looking for the guidance from DT and
-USB maintainers whether to retain u32 usage or it's better to switch to
-u16.
-
-Changes since v2:
-- Inlined altmode definitions instead of having them under $defs (Rob)
-- Explicity list permitted AltMode names (currenty only displayport is
-  allowed) (Rob)
-
-Changes since v1:
-- Added type:object and fixed 'description' string in the altmodes-list
-  definition.
-
-Dmitry Baryshkov (3):
-  dt-bindings: connector: usb: add altmodes description
-  usb: typec: change altmode SVID to u16 entry
-  arm64: dts: qcom: qrb5165-rb5: use u16 for DP altmode svid
-
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
  .../bindings/connector/usb-connector.yaml     | 29 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      |  2 +-
- drivers/platform/x86/intel/chtwc_int33fe.c    |  2 +-
- drivers/usb/typec/class.c                     |  5 ++--
- 4 files changed, 34 insertions(+), 4 deletions(-)
+ 1 file changed, 29 insertions(+)
 
+diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+index 7c8a3e8430d3..c1aaac861d9d 100644
+--- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
++++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+@@ -171,6 +171,28 @@ properties:
+       offer the power, Capability Mismatch is set. Required for power sink and
+       power dual role.
+ 
++  altmodes:
++    type: object
++    description: List of Alternative Modes supported by the schematics on the
++      particular device. This is only necessary if there are no other means to
++      discover supported alternative modes (e.g. through the UCSI firmware
++      interface).
++
++    patternProperties:
++      "^(displayport)$":
++        type: object
++        description:
++          A single USB-C Alternative Mode as supported by the USB-C connector logic.
++        properties:
++          svid:
++            $ref: /schemas/types.yaml#/definitions/uint16
++            description: Unique value assigned by USB-IF to the Vendor / AltMode.
++          vdo:
++            $ref: /schemas/types.yaml#/definitions/uint32
++            description: VDO returned by Discover Modes USB PD command.
++        additionalProperties: false
++    additionalProperties: false
++
+   port:
+     $ref: /schemas/graph.yaml#/properties/port
+     description: OF graph bindings modeling a data bus to the connector, e.g.
+@@ -289,6 +311,13 @@ examples:
+             compatible = "usb-c-connector";
+             label = "USB-C";
+ 
++            altmodes {
++                displayport {
++                    svid = /bits/ 16 <0xff01>;
++                    vdo = <0x00001c46>;
++                };
++            };
++
+             ports {
+                 #address-cells = <1>;
+                 #size-cells = <0>;
 -- 
 2.42.0
 
