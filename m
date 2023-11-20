@@ -1,142 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-1224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8000E7F1D39
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 20:19:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A8E8E7F1D6D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 20:41:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6E761C21833
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 19:19:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C96921C214E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 19:41:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F12934571;
-	Mon, 20 Nov 2023 19:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBB15358AB;
+	Mon, 20 Nov 2023 19:41:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="DNMpM+4L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C692DC;
-	Mon, 20 Nov 2023 11:18:58 -0800 (PST)
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-5ca164bc0bbso16086097b3.3;
-        Mon, 20 Nov 2023 11:18:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700507937; x=1701112737;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GifO7/JOpk0NmY1mNUiYBsJ2MaEkt42xKaLVw+ulB/A=;
-        b=j/X/pu4PsJt1neN8AhYk+mvnpLy3S5NCW/fMYBYEGUGD6YwXWv0JdJLeDTXfgsWm8v
-         ZKO/l4rcY+DN9YWHyHiLBcNCTTI1Bst1+1H3UhJ7Kv2Ce/p2Qf5yTa9QQ/tO587789ni
-         m1s8wjINWe6tPNf/oY3F7jI+dQ2bpJKXGNgKRzqN0IgBMFsq69fs4TGHcVW5hsfvUUI6
-         kbKVSliKLR8ww+UIjErdUFxw4g2nhZjTkNx/KUBHsor1tqKQbmTLah50DyhcehcqL4pr
-         gw5BzyH2b6WhlT/8rO6aP/KmN05ZVGvdRHeJMjFy3LttoDxurc992p6AkQgFHZfFhtKF
-         TfbQ==
-X-Gm-Message-State: AOJu0YyJLL0KoJf3mIbDST8xun+fle994yo+g5jd4e9nIRYsLB16MCZ1
-	w6SHNpnv1AhI4TWwFtwYrkGuKlq7JucuXQ==
-X-Google-Smtp-Source: AGHT+IEKdxVslAs4lK2SU9f3DeKTzFiFHV1s9HlcTDGXfGnuFAe2XPArvKNPLD8UxlJgQor2VqYq8Q==
-X-Received: by 2002:a81:7e10:0:b0:5ca:67e8:4fab with SMTP id o16-20020a817e10000000b005ca67e84fabmr3717057ywn.8.1700507937165;
-        Mon, 20 Nov 2023 11:18:57 -0800 (PST)
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com. [209.85.219.182])
-        by smtp.gmail.com with ESMTPSA id z126-20020a816584000000b0059b50f126fbsm2527313ywb.114.2023.11.20.11.18.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 11:18:55 -0800 (PST)
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-d9a518d66a1so4334191276.0;
-        Mon, 20 Nov 2023 11:18:54 -0800 (PST)
-X-Received: by 2002:a5b:f4a:0:b0:da0:c49a:5103 with SMTP id
- y10-20020a5b0f4a000000b00da0c49a5103mr7300082ybr.47.1700507934171; Mon, 20
- Nov 2023 11:18:54 -0800 (PST)
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60ED391;
+	Mon, 20 Nov 2023 11:41:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1700509268; x=1732045268;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=cwIrP8xSl17q1ERD81V8W8TIDeksLzSBAeCjh3kGnLY=;
+  b=DNMpM+4Lkw3KYtjcBvsTV9Ht0vAU4044QxcTBkJ8YAz0M2Wd3bMMyRUx
+   N5smE6/GxVnaUJ3/g5ENeSf6p4iHIdQO8CC/KKc8AKkg+OTktQ469HwFo
+   pmqwJzY/buxTeat/X3Ir6aVhzD13m9f9qL9nFaMLoV5mqYmjcb6Z5Gdsn
+   8fdO6kxIcvBWWMQq1o3HW0TcasHvhswsSSg+3/M34oyTcjIBBDWM2+S9Y
+   S8g6yJImf6j0paWr5dbjouiKGFEh4LwMT8LKOllOhYyMscvI3+5xOgM+F
+   HkHCmByMmKe3EOp4Dv58qTQufvHzqPpHVNAB+OvbWh++0e8y/dE3fMSr3
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10900"; a="376727999"
+X-IronPort-AV: E=Sophos;i="6.04,214,1695711600"; 
+   d="scan'208";a="376727999"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2023 11:41:07 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10900"; a="795562857"
+X-IronPort-AV: E=Sophos;i="6.04,214,1695711600"; 
+   d="scan'208";a="795562857"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orsmga008.jf.intel.com with ESMTP; 20 Nov 2023 11:41:05 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+	id D21936B; Mon, 20 Nov 2023 21:33:54 +0200 (EET)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [rft, PATCH v1 1/1] pinctrl: qcom: lpass-lpi: Remove unused member in struct lpi_pingroup
+Date: Mon, 20 Nov 2023 21:26:08 +0200
+Message-ID: <20231120193353.1670732-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.43.0.rc1.1.gbec44491f096
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
- <19358871-009d-4498-9c13-90d5338b1e9f@amd.com> <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
-In-Reply-To: <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Mon, 20 Nov 2023 20:18:42 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdW4WPJT0Km7w8RWrGJaztk6QDGoFAn0bdGbrEsw81R1FA@mail.gmail.com>
-Message-ID: <CAMuHMdW4WPJT0Km7w8RWrGJaztk6QDGoFAn0bdGbrEsw81R1FA@mail.gmail.com>
-Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Michal Simek <michal.simek@amd.com>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, 
-	Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Krzysztof,
+The group is not used anywhere, remove it. And if needed, it should be
+struct pingroup anyway.
 
-On Mon, Nov 20, 2023 at 3:53=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
-> On 20/11/2023 15:01, Michal Simek wrote:> >
-> > On 11/20/23 09:40, Krzysztof Kozlowski wrote:
-> >> Document preferred coding style for Devicetree sources (DTS and DTSI),
-> >> to bring consistency among all (sub)architectures and ease in reviews.
+While at it, replace kernel.h with what exactly being used.
 
-> >> +Organizing DTSI and DTS
-> >> +-----------------------
-> >> +
-> >> +The DTSI and DTS files should be organized in a way representing the =
-common
-> >> +(and re-usable) parts of the hardware.  Typically this means organizi=
-ng DTSI
-> >> +and DTS files into several files:
-> >> +
-> >> +1. DTSI with contents of the entire SoC (without nodes for hardware n=
-ot present
-> >> +   on the SoC).
-> >> +2. If applicable: DTSI with common or re-usable parts of the hardware=
- (e.g.
-> >> +   entire System-on-Module).
-> >
-> > DTS/DTSI - SOMs can actually run as they are that's why it is fair to s=
-ay that
-> > there doesn't need to be DTS representing the board.
->
-> I have never seen a SoM which can run without elaborate hardware-hacking
-> (e.g. connecting multiple wires to the SoM pins). The definition of the
-> SoM is that it is a module. Module can be re-used, just like SoC.
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
 
-/me looks at his board farm...
+_Seems_ like this (I only read the code), hence rft.
 
-The Renesas White-Hawk CPU board can be used standalone, and has a
-separate power input connector for this operation mode.  As it has RAM,
-Ethernet, serial console, eMMC, and even mini-DP, it can serve useful
-purposes on its own.
-I agree it's not a super-good example, as the board is not really a
-"SoM", and we currently don't have r8a779g0-white-hawk-cpu.dts, only
-r8a779g0-white-hawk-cpu.dtsi.
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.h      |  6 +----
+ .../pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c   | 16 -------------
+ .../pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c | 20 ----------------
+ .../pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c   | 20 ----------------
+ .../pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c   | 15 ------------
+ .../pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c   | 16 -------------
+ .../pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c   | 24 -------------------
+ 7 files changed, 1 insertion(+), 116 deletions(-)
 
-The RZ/A2M CPU Board is a real SoM, which can be powered over USB.
-It has less standard connectors (microSD, USB, MIPI CSI-2), but still
-sufficient features to be usable on its own.
-Again, we're doing a bad job, as we only have a DTS for the full eval
-board (r7s9210-rza2mevb.dts).
+diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+index 206b2c0ca828..a9b2f65c1ebe 100644
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+@@ -6,8 +6,8 @@
+ #ifndef __PINCTRL_LPASS_LPI_H__
+ #define __PINCTRL_LPASS_LPI_H__
+ 
++#include <linux/array_size.h>
+ #include <linux/bits.h>
+-#include <linux/kernel.h>
+ 
+ #include "../core.h"
+ 
+@@ -45,11 +45,8 @@ struct pinctrl_pin_desc;
+ 
+ #define LPI_PINGROUP(id, soff, f1, f2, f3, f4)		\
+ 	{						\
+-		.group.name = "gpio" #id,			\
+-		.group.pins = gpio##id##_pins,		\
+ 		.pin = id,				\
+ 		.slew_offset = soff,			\
+-		.group.num_pins = ARRAY_SIZE(gpio##id##_pins),	\
+ 		.funcs = (int[]){			\
+ 			LPI_MUX_gpio,			\
+ 			LPI_MUX_##f1,			\
+@@ -67,7 +64,6 @@ struct pinctrl_pin_desc;
+ #define LPI_FLAG_SLEW_RATE_SAME_REG			BIT(0)
+ 
+ struct lpi_pingroup {
+-	struct group_desc group;
+ 	unsigned int pin;
+ 	/* Bit offset in slew register for SoundWire pins only */
+ 	int slew_offset;
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+index 99156217c6a5..6bb39812e1d8 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+@@ -36,22 +36,6 @@ enum lpass_lpi_functions {
+ 	LPI_MUX__,
+ };
+ 
+-static int gpio0_pins[] = { 0 };
+-static int gpio1_pins[] = { 1 };
+-static int gpio2_pins[] = { 2 };
+-static int gpio3_pins[] = { 3 };
+-static int gpio4_pins[] = { 4 };
+-static int gpio5_pins[] = { 5 };
+-static int gpio6_pins[] = { 6 };
+-static int gpio7_pins[] = { 7 };
+-static int gpio8_pins[] = { 8 };
+-static int gpio9_pins[] = { 9 };
+-static int gpio10_pins[] = { 10 };
+-static int gpio11_pins[] = { 11 };
+-static int gpio12_pins[] = { 12 };
+-static int gpio13_pins[] = { 13 };
+-static int gpio14_pins[] = { 14 };
+-
+ static const struct pinctrl_pin_desc sc7280_lpi_pins[] = {
+ 	PINCTRL_PIN(0, "gpio0"),
+ 	PINCTRL_PIN(1, "gpio1"),
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c
+index b33483056f42..c0369baf3398 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c
+@@ -45,26 +45,6 @@ enum lpass_lpi_functions {
+ 	LPI_MUX__,
+ };
+ 
+-static int gpio0_pins[] = { 0 };
+-static int gpio1_pins[] = { 1 };
+-static int gpio2_pins[] = { 2 };
+-static int gpio3_pins[] = { 3 };
+-static int gpio4_pins[] = { 4 };
+-static int gpio5_pins[] = { 5 };
+-static int gpio6_pins[] = { 6 };
+-static int gpio7_pins[] = { 7 };
+-static int gpio8_pins[] = { 8 };
+-static int gpio9_pins[] = { 9 };
+-static int gpio10_pins[] = { 10 };
+-static int gpio11_pins[] = { 11 };
+-static int gpio12_pins[] = { 12 };
+-static int gpio13_pins[] = { 13 };
+-static int gpio14_pins[] = { 14 };
+-static int gpio15_pins[] = { 15 };
+-static int gpio16_pins[] = { 16 };
+-static int gpio17_pins[] = { 17 };
+-static int gpio18_pins[] = { 18 };
+-
+ static const struct pinctrl_pin_desc sc8280xp_lpi_pins[] = {
+ 	PINCTRL_PIN(0, "gpio0"),
+ 	PINCTRL_PIN(1, "gpio1"),
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c
+index e8a6f6f6af54..316d6fc69131 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c
+@@ -36,26 +36,6 @@ enum lpass_lpi_functions {
+ 	LPI_MUX__,
+ };
+ 
+-static int gpio0_pins[] = { 0 };
+-static int gpio1_pins[] = { 1 };
+-static int gpio2_pins[] = { 2 };
+-static int gpio3_pins[] = { 3 };
+-static int gpio4_pins[] = { 4 };
+-static int gpio5_pins[] = { 5 };
+-static int gpio6_pins[] = { 6 };
+-static int gpio7_pins[] = { 7 };
+-static int gpio8_pins[] = { 8 };
+-static int gpio9_pins[] = { 9 };
+-static int gpio10_pins[] = { 10 };
+-static int gpio11_pins[] = { 11 };
+-static int gpio12_pins[] = { 12 };
+-static int gpio13_pins[] = { 13 };
+-static int gpio14_pins[] = { 14 };
+-static int gpio15_pins[] = { 15 };
+-static int gpio16_pins[] = { 16 };
+-static int gpio17_pins[] = { 17 };
+-static int gpio18_pins[] = { 18 };
+-
+ static const struct pinctrl_pin_desc sm6115_lpi_pins[] = {
+ 	PINCTRL_PIN(0, "gpio0"),
+ 	PINCTRL_PIN(1, "gpio1"),
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
+index cb10ce8d5d28..9791d9ba5087 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c
+@@ -36,21 +36,6 @@ enum lpass_lpi_functions {
+ 	LPI_MUX__,
+ };
+ 
+-static int gpio0_pins[] = { 0 };
+-static int gpio1_pins[] = { 1 };
+-static int gpio2_pins[] = { 2 };
+-static int gpio3_pins[] = { 3 };
+-static int gpio4_pins[] = { 4 };
+-static int gpio5_pins[] = { 5 };
+-static int gpio6_pins[] = { 6 };
+-static int gpio7_pins[] = { 7 };
+-static int gpio8_pins[] = { 8 };
+-static int gpio9_pins[] = { 9 };
+-static int gpio10_pins[] = { 10 };
+-static int gpio11_pins[] = { 11 };
+-static int gpio12_pins[] = { 12 };
+-static int gpio13_pins[] = { 13 };
+-
+ static const struct pinctrl_pin_desc sm8250_lpi_pins[] = {
+ 	PINCTRL_PIN(0, "gpio0"),
+ 	PINCTRL_PIN(1, "gpio1"),
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
+index 297cc95ac3c0..5b9a2cb216bd 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
+@@ -36,22 +36,6 @@ enum lpass_lpi_functions {
+ 	LPI_MUX__,
+ };
+ 
+-static int gpio0_pins[] = { 0 };
+-static int gpio1_pins[] = { 1 };
+-static int gpio2_pins[] = { 2 };
+-static int gpio3_pins[] = { 3 };
+-static int gpio4_pins[] = { 4 };
+-static int gpio5_pins[] = { 5 };
+-static int gpio6_pins[] = { 6 };
+-static int gpio7_pins[] = { 7 };
+-static int gpio8_pins[] = { 8 };
+-static int gpio9_pins[] = { 9 };
+-static int gpio10_pins[] = { 10 };
+-static int gpio11_pins[] = { 11 };
+-static int gpio12_pins[] = { 12 };
+-static int gpio13_pins[] = { 13 };
+-static int gpio14_pins[] = { 14 };
+-
+ static const struct pinctrl_pin_desc sm8350_lpi_pins[] = {
+ 	PINCTRL_PIN(0, "gpio0"),
+ 	PINCTRL_PIN(1, "gpio1"),
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c
+index 2e7896791fc0..a028cbb49947 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c
+@@ -52,30 +52,6 @@ enum lpass_lpi_functions {
+ 	LPI_MUX__,
+ };
+ 
+-static int gpio0_pins[] = { 0 };
+-static int gpio1_pins[] = { 1 };
+-static int gpio2_pins[] = { 2 };
+-static int gpio3_pins[] = { 3 };
+-static int gpio4_pins[] = { 4 };
+-static int gpio5_pins[] = { 5 };
+-static int gpio6_pins[] = { 6 };
+-static int gpio7_pins[] = { 7 };
+-static int gpio8_pins[] = { 8 };
+-static int gpio9_pins[] = { 9 };
+-static int gpio10_pins[] = { 10 };
+-static int gpio11_pins[] = { 11 };
+-static int gpio12_pins[] = { 12 };
+-static int gpio13_pins[] = { 13 };
+-static int gpio14_pins[] = { 14 };
+-static int gpio15_pins[] = { 15 };
+-static int gpio16_pins[] = { 16 };
+-static int gpio17_pins[] = { 17 };
+-static int gpio18_pins[] = { 18 };
+-static int gpio19_pins[] = { 19 };
+-static int gpio20_pins[] = { 20 };
+-static int gpio21_pins[] = { 21 };
+-static int gpio22_pins[] = { 22 };
+-
+ static const struct pinctrl_pin_desc sm8450_lpi_pins[] = {
+ 	PINCTRL_PIN(0, "gpio0"),
+ 	PINCTRL_PIN(1, "gpio1"),
+-- 
+2.43.0.rc1.1.gbec44491f096
 
-I guess there are (many) other examples...
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
 
