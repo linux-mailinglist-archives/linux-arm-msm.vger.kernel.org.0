@@ -1,127 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-1091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1090-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 615987F0B01
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 04:30:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF2B07F0AFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 04:29:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 92B501C203A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 03:30:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59DC3280BEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 03:29:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AC321FC2;
-	Mon, 20 Nov 2023 03:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 802351FB3;
+	Mon, 20 Nov 2023 03:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lZPl1trH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ixn1s+IH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0E95D50;
-	Sun, 19 Nov 2023 19:29:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700450998; x=1731986998;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=09C+JX3EQpOVjp6ooinVdw2ACy+xGuGZ0pAKM2YA3j0=;
-  b=lZPl1trHmEvNeqjAX7wGG7erTxukPH1LWf1QNb+czaXb1+aNjq8qkjSZ
-   cFx9hTOIakCtN01noRxkI3XxDVF7ccBo306sazkKgY9NF+rQ3jL0O0Hdl
-   jmk4fgvF89dxAhQJCoSurgvSzZA/CcUHRuD9rDb6tMPBsyFfPg9Fp3XFS
-   2bhXVXW1prXWgGjJ1MLa2OLulnZ9V9kTsokC17nyJ8Sf+Q7wTDV883hzN
-   o4pgke8qXzdhCgsMyFy0jPHcOC0v6Z/Ex65jHPP1wwXC/v6lNrpfVvdbC
-   ZRYQcXsaQqzgoNMIeLxPNORPGJbAgF+W00WGcV0bUG7Lj8jtE84Ofry1W
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10899"; a="455865175"
-X-IronPort-AV: E=Sophos;i="6.04,212,1695711600"; 
-   d="scan'208";a="455865175"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Nov 2023 19:29:23 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10899"; a="1097630069"
-X-IronPort-AV: E=Sophos;i="6.04,212,1695711600"; 
-   d="scan'208";a="1097630069"
-Received: from lkp-server02.sh.intel.com (HELO b8de5498638e) ([10.239.97.151])
-  by fmsmga005.fm.intel.com with ESMTP; 19 Nov 2023 19:29:21 -0800
-Received: from kbuild by b8de5498638e with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1r4uyM-0005tX-2L;
-	Mon, 20 Nov 2023 03:29:18 +0000
-Date: Mon, 20 Nov 2023 11:28:42 +0800
-From: kernel test robot <lkp@intel.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 4/8] arm64: dts: qcom: sm8650: add initial SM8650 MTP
- dts
-Message-ID: <202311201131.R9DpSKl2-lkp@intel.com>
-References: <20231106-topic-sm8650-upstream-dt-v2-4-44d6f9710fa7@linaro.org>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A667194;
+	Sun, 19 Nov 2023 19:29:43 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AK3CHTS018348;
+	Mon, 20 Nov 2023 03:29:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=MXZb06dO0e5VghAyynbrHW/Ridb0Wla0tD7TN/K48VU=;
+ b=Ixn1s+IHueCaAZ9vsiRKzv9XnqXnhCuJWVV320N00kpBi4AJvBK1V8GvyK3Atr9NxV2R
+ e9XShkuHfcaVioiuLev4OSpBtluwhYsGOqDqxBKNbxi76KHuS6ZtPQVVwWQ7hWHZICsP
+ SdfMlhE0+ZHvFiahOLFKU+kUhm+vZfTwcVB5dNBtrOREUdBXaeiMzQzrdm/N+5oV5vp+
+ ZR66TNmacWXqbd1jsD+irMeN3tzEBCseu2lDe8mS0tQP4OudAaq16Y12zX8Amx9q3dD7
+ wDehqtj5ZZvPCYHSpbvij88UcL9IuBX+65/4uzs9MVu38x/yeNQI2bMSPWe32537pGU+ Ow== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uemks2rng-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Nov 2023 03:29:31 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AK3TUpr032694
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Nov 2023 03:29:30 GMT
+Received: from aiquny2-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Sun, 19 Nov 2023 19:29:24 -0800
+From: Maria Yu <quic_aiquny@quicinc.com>
+To: Nathan Chancellor <nathan@kernel.org>, <linux@armlinux.org.uk>,
+        <ardb@kernel.org>, <mhiramat@kernel.org>
+CC: Maria Yu <quic_aiquny@quicinc.com>, <kernel@quicinc.com>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_lijuang@quicinc.com>, <stable@vger.kernel.org>
+Subject: [PATCH v3 1/1] ARM: kprobes: Explicitly reserve r7 for local variables
+Date: Mon, 20 Nov 2023 11:29:09 +0800
+Message-ID: <20231120032909.19186-1-quic_aiquny@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231106-topic-sm8650-upstream-dt-v2-4-44d6f9710fa7@linaro.org>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nXIc84DIJG67fapBTqJd7EOTyenoPWSf
+X-Proofpoint-ORIG-GUID: nXIc84DIJG67fapBTqJd7EOTyenoPWSf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-19_21,2023-11-17_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 mlxscore=0 adultscore=0
+ malwarescore=0 mlxlogscore=561 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311200024
 
-Hi Neil,
+Registers r7 is removed in clobber list, so compiler may choose r7 for
+local variables usage, while r7 will be actually updated by the inline asm
+code. This caused the runtime behavior wrong.
+While those kind of reserved registers cannot be set to clobber list
+because of error like "inline asm clobber list contains reserved
+registers".
+Explicitly reserve r7 by adding attribute no-omit-frame-pointer for this
+file, then in T32 asm code r7 is used as a frame pointer and is not
+available for use as a general-purpose register.
+Note that "no-omit-frame-pointer" will make the code size a little bigger
+to store the stack frame pointer.
 
-kernel test robot noticed the following build errors:
+Fixes: dd12e97f3c72 ("ARM: kprobes: treat R7 as the frame pointer register in Thumb2 builds")
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+Cc: stable@vger.kernel.org
+---
+ arch/arm/probes/kprobes/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-[auto build test ERROR on fe1998aa935b44ef873193c0772c43bce74f17dc]
+diff --git a/arch/arm/probes/kprobes/Makefile b/arch/arm/probes/kprobes/Makefile
+index 6159010dac4a..b1f21e78950b 100644
+--- a/arch/arm/probes/kprobes/Makefile
++++ b/arch/arm/probes/kprobes/Makefile
+@@ -8,6 +8,7 @@ test-kprobes-objs		:= test-core.o
+ 
+ ifdef CONFIG_THUMB2_KERNEL
+ obj-$(CONFIG_KPROBES)		+= actions-thumb.o checkers-thumb.o
++CFLAGS_actions-thumb.o		+= -fno-omit-frame-pointer
+ test-kprobes-objs		+= test-thumb.o
+ else
+ obj-$(CONFIG_KPROBES)		+= actions-arm.o checkers-arm.o
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Neil-Armstrong/dt-bindings-arm-qcom-document-SM8650-and-the-reference-boards/20231106-170959
-base:   fe1998aa935b44ef873193c0772c43bce74f17dc
-patch link:    https://lore.kernel.org/r/20231106-topic-sm8650-upstream-dt-v2-4-44d6f9710fa7%40linaro.org
-patch subject: [PATCH v2 4/8] arm64: dts: qcom: sm8650: add initial SM8650 MTP dts
-config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20231120/202311201131.R9DpSKl2-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231120/202311201131.R9DpSKl2-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311201131.R9DpSKl2-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/boot/dts/qcom/sm8650-mtp.dts:9:
->> arch/arm64/boot/dts/qcom/sm8650.dtsi:7:10: fatal error: 'dt-bindings/clock/qcom,sm8650-dispcc.h' file not found
-       7 | #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   1 error generated.
-
-
-vim +7 arch/arm64/boot/dts/qcom/sm8650.dtsi
-
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  @7  #include <dt-bindings/clock/qcom,sm8650-dispcc.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06   8  #include <dt-bindings/clock/qcom,sm8650-gcc.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06   9  #include <dt-bindings/clock/qcom,sm8650-gpucc.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  10  #include <dt-bindings/clock/qcom,sm8650-tcsr.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  11  #include <dt-bindings/dma/qcom-gpi.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  12  #include <dt-bindings/firmware/qcom,scm.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  13  #include <dt-bindings/gpio/gpio.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  14  #include <dt-bindings/interrupt-controller/arm-gic.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  15  #include <dt-bindings/mailbox/qcom-ipcc.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  16  #include <dt-bindings/phy/phy-qcom-qmp.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  17  #include <dt-bindings/power/qcom,rpmhpd.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  18  #include <dt-bindings/power/qcom-rpmpd.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  19  #include <dt-bindings/reset/qcom,sm8650-gpucc.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  20  #include <dt-bindings/soc/qcom,gpr.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  21  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  22  #include <dt-bindings/thermal/thermal.h>
-e7ea17c3abdf54 Neil Armstrong 2023-11-06  23  
-
+base-commit: 98b1cc82c4affc16f5598d4fa14b1858671b2263
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.17.1
+
 
