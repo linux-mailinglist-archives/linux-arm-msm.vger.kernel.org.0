@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FD8C7F1596
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 15:22:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C53517F15B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 15:30:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DDFBE2825D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 14:22:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0253A1C21815
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 14:30:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 862EF1C6B2;
-	Mon, 20 Nov 2023 14:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 180681A714;
+	Mon, 20 Nov 2023 14:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="geChQ2qN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O3XXXkxJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FACC10C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 06:22:13 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-53e70b0a218so6431609a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 06:22:13 -0800 (PST)
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97A6C100
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 06:30:22 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-9e1fb7faa9dso603921966b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 06:30:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700490132; x=1701094932; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1700490621; x=1701095421; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cZQIuPK229h/rgcRWK4xDP2y2LX7BP7lfAx4sG2QoMQ=;
-        b=geChQ2qNL0kQc7J2zvWkk3mcpXnnaMIRr0duooFTzRugGMMzYGemmxTz1rCP4NXfSZ
-         /9m/Kc5rRm/pngb3lBzXE1uCpOs9eYDCZ0pJ3Kcp4FgRZ2oDoY3XKbjSeQMqvz5RdIPQ
-         evBf2KE3b3WEuqnUVLGNKGH6vGNyvo7r5xmrStVsKixREJsV4a9JPGAE4YENwd614io3
-         JkBDA4JztPd0rp5I2W7yhrid1VQZlbh/DV2Wez7clfY1hIQxrGhaiBlgp5XuvZeaFbiW
-         VQQtCvNa0YPu5M34bJhHm2Pvjwy5Xz4WKyo+3oySs1SOs1MkJHIM5Ol8W5wkRz3Z9n+L
-         O6aQ==
+        bh=O2HbC/VopNY1IV2jIP8X31m8Zh4hzxb9EKfxsgSbhlM=;
+        b=O3XXXkxJtHSw0yMX6SPYlBwc4kuj9H3yydGf+Xn2JjLTXWSWCIDxLdQRP149IzCsJH
+         DoVGDeO305GhGdcAtD2CdTC09kihU4UMJEO4WsmYndZTlRVUPxzuKU8+wN0tQF390m7L
+         A9zqA3lT4iTnXF2rNijBpTfEzL7Z8lFTk4hBVRFY2080IvUI5wS0vit/iLcctfKOsInL
+         AH7YEq92h4FOatEoeRSwDttzGrPjEi9m/p+TLis+xX3tJfwmvv5cISfug/t+D6fzp9HN
+         td4nsrAxMZNuRcp0fThiC1XAOeB+rerQ0xu+BZJKvQYz7QkjYC3JKIHlxYYHHX5owkJs
+         OJJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700490132; x=1701094932;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1700490621; x=1701095421;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cZQIuPK229h/rgcRWK4xDP2y2LX7BP7lfAx4sG2QoMQ=;
-        b=NxwiaqfO/3zB+H7JoHiX3fm5yCRal0vvnFevB9N6DgfbtOdzCvQcU8IVZp1wOW5R/H
-         fQ7TYdsCu/TBMQnbVoOF30eFIUyUcEv0b61CG+/qdvCsPhU1/ohZUYVKWhtMSbazIeep
-         Wa353x9ge24VqVaJs10bPoFFUmMLQynT6LK9shQV10c9CIJxpkei1MRxrb/9jHeNPZ/v
-         nlm+6Y++1qZGO9r++F1o3/JsMCgnkmsdEg4qRD9rMzkPOXMG76Yjjb3KnPQbvOOILAE4
-         YPKrwIflilGVwYYsFvTL1kn2Qm6PVRGAtxuHp6DvurrCCsQ9X58bOhRZAZq5RCEWuKqI
-         /76g==
-X-Gm-Message-State: AOJu0Yw1B+lKenmJHrpml4l3qqc7kvHD+1g+jyehK0l7ANwua9vipjm1
-	w79yWcQZrwANsdRUHpBMSeVtbw==
-X-Google-Smtp-Source: AGHT+IE/63QjYOZe7XTDmHiKSmQP0pwu5jCqTNBHPW13CP9eV453g3SUyQgky9XTo4Zw3wJWDDkz+Q==
-X-Received: by 2002:a17:906:4a50:b0:9c2:a072:78bf with SMTP id a16-20020a1709064a5000b009c2a07278bfmr5527291ejv.26.1700490131960;
-        Mon, 20 Nov 2023 06:22:11 -0800 (PST)
+        bh=O2HbC/VopNY1IV2jIP8X31m8Zh4hzxb9EKfxsgSbhlM=;
+        b=pOxyv5nj4rohIBG9OvQp6WNsRw09pLoEnJrFwa3jhBUkwW1MaBAq90VtS09IZdJsXH
+         wfvh7JQULcM33zTJ36Rh1JPGImRSYSF0eoXVGaM24nIDrRIFAvfU4WVqFqjRsT4yoJld
+         z2B8LcMgy3z0yVr4ZGMAAX/dcS5imXeKr3aQoP+/QVdOWRQ8Z0HcCBC85EM7zJv0HkZR
+         XrSk18G2DrWPAorNSlczXDS9XbEiSoaRE61gP9W6JWMddykuS0FwL/wq1u34UEnB7jxC
+         spqhD1UhZlfWuqieMguwUR02dXKSv2nMUG+w7BS0x7hYC3rC/CrnUOBlrNsthsxk9nKz
+         098g==
+X-Gm-Message-State: AOJu0YzHjV4et3P64njKnJPsVA534cMlesn71MT2RXggKQ3dSPrewSWk
+	ayLxbo2y+kBDU4KgwosRjx/jsA==
+X-Google-Smtp-Source: AGHT+IGPNPjAufJGG7kQfgOTZQFzxxOpHHZaOICe6MzY0XqMW84/s3rZg46UYHp2NjPxxOTVWzW9ow==
+X-Received: by 2002:a17:906:8e:b0:9fb:248:2d4e with SMTP id 14-20020a170906008e00b009fb02482d4emr4627202ejc.12.1700490621091;
+        Mon, 20 Nov 2023 06:30:21 -0800 (PST)
 Received: from [192.168.201.100] (178235187204.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.204])
-        by smtp.gmail.com with ESMTPSA id lx23-20020a170906af1700b009b65a834dd6sm3897400ejb.215.2023.11.20.06.22.08
+        by smtp.gmail.com with ESMTPSA id m8-20020a170906160800b009fad1dfe472sm2599927ejd.153.2023.11.20.06.30.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 06:22:11 -0800 (PST)
-Message-ID: <10dc0fff-fc00-4c1f-97cf-30c5e5e8f983@linaro.org>
-Date: Mon, 20 Nov 2023 15:22:08 +0100
+        Mon, 20 Nov 2023 06:30:20 -0800 (PST)
+Message-ID: <1ab4e5a0-dd6b-4b74-90ab-12e7a15153d7@linaro.org>
+Date: Mon, 20 Nov 2023 15:30:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +62,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/9] net: mdio: ipq4019: Enable the clocks for ipq5332
- platform
+Subject: Re: [PATCH v9 2/2] arm64: dts: qcom: sm8250-xiaomi-pipa: Add initial
+ device tree
 Content-Language: en-US
-To: Luo Jie <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org, andrew@lunn.ch, hkallweit1@gmail.com,
- linux@armlinux.org.uk, robert.marko@sartura.hr
-Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+To: Luka Panio <lukapanio@gmail.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
+ Tony Luck <tony.luck@intel.com>, "Guilherme G . Piccoli"
+ <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_srichara@quicinc.com
-References: <20231115032515.4249-1-quic_luoj@quicinc.com>
- <20231115032515.4249-3-quic_luoj@quicinc.com>
+ linux-hardening@vger.kernel.org
+References: <20231024063740.4975-1-lukapanio@gmail.com>
+ <20231024063740.4975-2-lukapanio@gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,28 +111,30 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231115032515.4249-3-quic_luoj@quicinc.com>
+In-Reply-To: <20231024063740.4975-2-lukapanio@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 15.11.2023 04:25, Luo Jie wrote:
-> For the platform ipq5332, the related GCC clocks need to be enabled
-> to make the GPIO reset of the MDIO slave devices taking effect.
+On 24.10.2023 08:37, Luka Panio wrote:
+> Initial support for Xiaomi Pad 6 tablet, that have sm8250 soc.
 > 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> Signed-off-by: Luka Panio <lukapanio@gmail.com>
+> ---
 [...]
 
->  static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
-> @@ -212,6 +231,38 @@ static int ipq_mdio_reset(struct mii_bus *bus)
->  	u32 val;
->  	int ret;
->  
-> +	/* For the platform ipq5332, there are two uniphy available to connect the
-> +	 * ethernet devices, the uniphy gcc clock should be enabled for resetting
-> +	 * the connected device such as qca8386 switch or qca8081 PHY effectively.
-> +	 */
-> +	if (of_device_is_compatible(bus->parent->of_node, "qcom,ipq5332-mdio")) {
-Would that not also be taken care of in the phy driver?
+> +
+> +	gpio_keys: gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&vol_up_n>;
+property-n
+property-names
+
+other than that lgtm
+
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
+
 
