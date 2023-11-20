@@ -1,134 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-1188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F85A7F1845
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 17:16:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 798F47F1885
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 17:22:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 609521C21594
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 16:16:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AAECF1C21253
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 16:22:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E44871DFD8;
-	Mon, 20 Nov 2023 16:16:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pOZXQteg"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50A711CFBE;
+	Mon, 20 Nov 2023 16:22:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF501DFC4;
-	Mon, 20 Nov 2023 16:16:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC8FC433C8;
-	Mon, 20 Nov 2023 16:16:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700496979;
-	bh=cp9VBVhfKB1W6Ax326oY4P4qaJJhzvjhHmBuHx1mN3s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOZXQtegp1iz8hawwcJUqLwUvss7v0jB4bYt2liRYvbs73NbGkLN7lGl7ot2Hx0xz
-	 YGfdqVAZ4QNU8a08GLx6DHxUd1nbYkmNjaaXhc2vWfZefNx3cGkVFSNa/PtEk8vkTR
-	 keCxY8TrkyjVCt3rlhTkyyIubDu9n6eGDrNKZynJYMHvdtbt3O4NTQsHkFauyb9egy
-	 ErbMrqLb8xiBUhBT8w9+EVdJ7HVtT5vvd6eKJ5fs0FuTCq2P3Zf6XOlyZkZ7oihlHD
-	 KcgK+2wCpKwRv7BdeQ4Yga3zbBt8LIcClKUQi0lJPgUIK6icBwnLt5t+IJcLlPzBTY
-	 9gvfh/VboAHxA==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1r56wm-0001vq-2D;
-	Mon, 20 Nov 2023 17:16:28 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1357100
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 08:21:58 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r571A-0004hc-4H; Mon, 20 Nov 2023 17:21:00 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r5715-00AOMM-7d; Mon, 20 Nov 2023 17:20:55 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r5714-004V52-S7; Mon, 20 Nov 2023 17:20:54 +0100
+Date: Mon, 20 Nov 2023 17:20:54 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Borislav Petkov <bp@alien8.de>, Tony Luck <tony.luck@intel.com>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, linux-aspeed@lists.ozlabs.org,
+	Tali Perry <tali.perry1@gmail.com>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
+	Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>,
+	Khuong Dinh <khuong@os.amperecomputing.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Dinh Nguyen <dinguyen@kernel.org>, openbmc@lists.ozlabs.org,
+	Nancy Yuen <yuenn@google.com>, Andy Gross <agross@kernel.org>,
+	Joel Stanley <joel@jms.id.au>, linux-arm-msm@vger.kernel.org,
+	Stanley Chu <yschu@nuvoton.com>, Robert Richter <rric@kernel.org>,
+	Jan Luebbe <jlu@pengutronix.de>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Michal Simek <michal.simek@amd.com>,
+	linux-arm-kernel@lists.infradead.org, linux-edac@vger.kernel.org,
+	Johannes Thumshirn <morbidrsa@gmail.com>,
+	Tero Kristo <kristo@kernel.org>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Patrick Venture <venture@google.com>,
+	Bjorn Andersson <andersson@kernel.org>, linux-mips@vger.kernel.org,
+	Ralf Baechle <ralf@linux-mips.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 3/3] USB: dwc3: qcom: simplify wakeup interrupt setup
-Date: Mon, 20 Nov 2023 17:16:07 +0100
-Message-ID: <20231120161607.7405-4-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231120161607.7405-1-johan+linaro@kernel.org>
-References: <20231120161607.7405-1-johan+linaro@kernel.org>
+	Andrew Jeffery <andrew@aj.id.au>, James Morse <james.morse@arm.com>,
+	kernel@pengutronix.de, Lei Wang <lewan@microsoft.com>,
+	Stefan Schaeckeler <sschaeck@cisco.com>,
+	Marvin Lin <kflin@nuvoton.com>
+Subject: Re: [PATCH 00/21] EDAC: Convert to platform remove callback
+ returning void
+Message-ID: <20231120162054.haryuye4qedlfd7j@pengutronix.de>
+References: <20231004131254.2673842-1-u.kleine-koenig@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bdo7vk2aw267ud5x"
+Content-Disposition: inline
+In-Reply-To: <20231004131254.2673842-1-u.kleine-koenig@pengutronix.de>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-Use the IRQF_NO_AUTOEN irq flag when requesting the wakeup interrupts
-instead of setting it separately.
 
-No functional change intended.
+--bdo7vk2aw267ud5x
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/usb/dwc3/dwc3-qcom.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+Hello Boris, hello Tony,
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 82544374110b..fdf6d5d3c2ad 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -546,10 +546,9 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- 				pdata ? pdata->hs_phy_irq_index : -1);
- 	if (irq > 0) {
- 		/* Keep wakeup interrupts disabled until suspend */
--		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_ONESHOT,
-+					IRQF_ONESHOT | IRQF_NO_AUTOEN,
- 					"qcom_dwc3 HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "hs_phy_irq failed: %d\n", ret);
-@@ -561,10 +560,9 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- 	irq = dwc3_qcom_get_irq(pdev, "dp_hs_phy_irq",
- 				pdata ? pdata->dp_hs_phy_irq_index : -1);
- 	if (irq > 0) {
--		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_ONESHOT,
-+					IRQF_ONESHOT | IRQF_NO_AUTOEN,
- 					"qcom_dwc3 DP_HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "dp_hs_phy_irq failed: %d\n", ret);
-@@ -576,10 +574,9 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- 	irq = dwc3_qcom_get_irq(pdev, "dm_hs_phy_irq",
- 				pdata ? pdata->dm_hs_phy_irq_index : -1);
- 	if (irq > 0) {
--		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_ONESHOT,
-+					IRQF_ONESHOT | IRQF_NO_AUTOEN,
- 					"qcom_dwc3 DM_HS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "dm_hs_phy_irq failed: %d\n", ret);
-@@ -591,10 +588,9 @@ static int dwc3_qcom_setup_irq(struct platform_device *pdev)
- 	irq = dwc3_qcom_get_irq(pdev, "ss_phy_irq",
- 				pdata ? pdata->ss_phy_irq_index : -1);
- 	if (irq > 0) {
--		irq_set_status_flags(irq, IRQ_NOAUTOEN);
- 		ret = devm_request_threaded_irq(qcom->dev, irq, NULL,
- 					qcom_dwc3_resume_irq,
--					IRQF_ONESHOT,
-+					IRQF_ONESHOT | IRQF_NO_AUTOEN,
- 					"qcom_dwc3 SS", qcom);
- 		if (ret) {
- 			dev_err(qcom->dev, "ss_phy_irq failed: %d\n", ret);
--- 
-2.41.0
+On Wed, Oct 04, 2023 at 03:12:33PM +0200, Uwe Kleine-K=F6nig wrote:
+> this series converts all platform drivers below drivers/edac to use
+> .remove_new(). The motivation is to get rid of an integer return code
+> that is (mostly) ignored by the platform driver core and error prone on
+> the driver side. However none of the edac drivers suffered from the easy
+> to make bug, so all drivers are converted in a trivial way.
+>=20
+> See commit 5c5a7680e67b ("platform: Provide a remove callback that
+> returns no value") for an extended explanation and the eventual goal.
+>=20
+> The patch for npcm was already sent back in June
+> (https://lore.kernel.org/linux-edac/20230628071354.665300-1-u.kleine-koen=
+ig@pengutronix.de)
+> but didn't result in enthusiastic review comments and it wasn't picked
+> up.
+>=20
+> There are no interdependencies between the patches. As there are still
+> quite a few drivers to convert, I'm happy about every patch that makes
+> it in. So even if there is a merge conflict with one patch until you
+> apply, please apply the remainder of this series anyhow. I'll come back
+> to the part that you (maybe) skipped at a later point.
 
+Any news on this series? Would a resend help?
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--bdo7vk2aw267ud5x
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmVbh2UACgkQj4D7WH0S
+/k6t1gf+IirGoYLuqK5VC0fzJxyTYO4mc7qBgbuVM3P88Pu7qVConC4mkUSNPgCW
+a7DFKrJNIsbwS61Eghc30hxINTLVzt+m50w6+m2eY4Crm6LkSu18fuweiDte3B8B
+ECiAFB0EvPbNR8tv4Javms5+AKRVP5bAdREtoIeRWgFglceoVXOx/6NB//OwwPDp
+1owt4JZbVUJH0axsnyKBzt5PMXyo3thq6Y7eTqQIjikbEvBA9tvA3PN51btMbJsO
+6ttXmOnx7UO99+rXeL6VaKUzyRPTVvJxR3O70xJA36pnmSwm4oJ/LCcN/vX2kZpb
+TeEQgFrvHjNBLraJcD3rqO+wNIxdXQ==
+=WE4E
+-----END PGP SIGNATURE-----
+
+--bdo7vk2aw267ud5x--
 
