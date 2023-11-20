@@ -1,135 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-1222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54B867F1D16
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 20:07:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8000E7F1D39
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 20:19:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0EBFD281694
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 19:07:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6E761C21833
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 19:19:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E2F4328DB;
-	Mon, 20 Nov 2023 19:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="f35kR+nN"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F12934571;
+	Mon, 20 Nov 2023 19:19:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 523419C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 11:07:46 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9e1021dbd28so646757066b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 11:07:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700507265; x=1701112065; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fcghsarjrS3tHRySGsk8wGm4K++pTmTjyafJFK3g/Cs=;
-        b=f35kR+nNnKF+FPTdCG1sKB/Lf7bbiCp5lEm6ewPm3RLyGjyTvsg0JpHxOH/1WK8+u8
-         /USDkwM1FmL7bNOtE44bi4vKmV3cyXml23u+dyVLZ9L8qPZJMDqwnCxIFS6eiPlMazZJ
-         GHVYPhk+frGXbYTlJBBE7RGdLCWudqojLL8KpcadfKBHbKwftIl4sF+jyhEOJ3NkwURU
-         DxzDG10X0cPY7g/xXxdyD1KrKRJCXvhEjkI2/7O4ew5DTs4x7QCHp7jwxuhuur4YgON9
-         OmRcC/GKWatrR/CxtHwrQ6mpBH1NFEKaGGfrNCrubzpzQdfG04lCpCM+/Zn/HT5WJwMp
-         veiA==
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C692DC;
+	Mon, 20 Nov 2023 11:18:58 -0800 (PST)
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-5ca164bc0bbso16086097b3.3;
+        Mon, 20 Nov 2023 11:18:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700507265; x=1701112065;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1700507937; x=1701112737;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fcghsarjrS3tHRySGsk8wGm4K++pTmTjyafJFK3g/Cs=;
-        b=WKomsq6OFlQl4RVaEObKHBOPnV167j264aPRypPy+mKOchmx/ysG8FJi7Glvp51+s8
-         Wb3H38765ITgw2a5L9lxLAPav7MiA+OfqDaNp0TldmxAWibHFfD5Y5SPrsc8UomE/4xI
-         86xv+WhIjpZlwB1Iu7lEY/58wl18S5wDkWIi/2U9CoO07aektq7tlSvU7w8GqN34uX1o
-         g/y2sSX0ni6ytJvh6CxkeoT006FUSf7mLCy/TScbudQ1Wu0aqhVy/tK9TddzBkOaZfB4
-         KNLyzPAMxGKDyPlwvHkln32DfFLx9h2a0O+FoKuMW0rwtO/UeLQ6spETp/JBhhO4wD/m
-         7Ifw==
-X-Gm-Message-State: AOJu0Yyjw5Fk7M5uNQ88GjbTH4T3gFBQV6Dl1horHayVgh3IlM9WPzqJ
-	ixCv36qYfFGyQXtZMNzLHIjhmQ==
-X-Google-Smtp-Source: AGHT+IFzePfbHnSU85wD/UiMsfBrFBH+dK0SBJM1TR0leyATrt8D374mvtWaZJyFxdwoOqbJ+3B6KA==
-X-Received: by 2002:a17:906:3f18:b0:9fe:aacb:bf6a with SMTP id c24-20020a1709063f1800b009feaacbbf6amr2737368ejj.69.1700507264786;
-        Mon, 20 Nov 2023 11:07:44 -0800 (PST)
-Received: from krzk-bin.. ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id a18-20020a1709066d5200b00977cad140a8sm4177521ejt.218.2023.11.20.11.07.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Nov 2023 11:07:44 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Sanyog Kale <sanyog.r.kale@intel.com>,
-	linux-arm-msm@vger.kernel.org,
-	alsa-devel@alsa-project.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] soundwire: qcom: move sconfig in qcom_swrm_stream_alloc_ports() out of critical section
-Date: Mon, 20 Nov 2023 20:07:40 +0100
-Message-Id: <20231120190740.339350-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231120190740.339350-1-krzysztof.kozlowski@linaro.org>
-References: <20231120190740.339350-1-krzysztof.kozlowski@linaro.org>
+        bh=GifO7/JOpk0NmY1mNUiYBsJ2MaEkt42xKaLVw+ulB/A=;
+        b=j/X/pu4PsJt1neN8AhYk+mvnpLy3S5NCW/fMYBYEGUGD6YwXWv0JdJLeDTXfgsWm8v
+         ZKO/l4rcY+DN9YWHyHiLBcNCTTI1Bst1+1H3UhJ7Kv2Ce/p2Qf5yTa9QQ/tO587789ni
+         m1s8wjINWe6tPNf/oY3F7jI+dQ2bpJKXGNgKRzqN0IgBMFsq69fs4TGHcVW5hsfvUUI6
+         kbKVSliKLR8ww+UIjErdUFxw4g2nhZjTkNx/KUBHsor1tqKQbmTLah50DyhcehcqL4pr
+         gw5BzyH2b6WhlT/8rO6aP/KmN05ZVGvdRHeJMjFy3LttoDxurc992p6AkQgFHZfFhtKF
+         TfbQ==
+X-Gm-Message-State: AOJu0YyJLL0KoJf3mIbDST8xun+fle994yo+g5jd4e9nIRYsLB16MCZ1
+	w6SHNpnv1AhI4TWwFtwYrkGuKlq7JucuXQ==
+X-Google-Smtp-Source: AGHT+IEKdxVslAs4lK2SU9f3DeKTzFiFHV1s9HlcTDGXfGnuFAe2XPArvKNPLD8UxlJgQor2VqYq8Q==
+X-Received: by 2002:a81:7e10:0:b0:5ca:67e8:4fab with SMTP id o16-20020a817e10000000b005ca67e84fabmr3717057ywn.8.1700507937165;
+        Mon, 20 Nov 2023 11:18:57 -0800 (PST)
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com. [209.85.219.182])
+        by smtp.gmail.com with ESMTPSA id z126-20020a816584000000b0059b50f126fbsm2527313ywb.114.2023.11.20.11.18.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Nov 2023 11:18:55 -0800 (PST)
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-d9a518d66a1so4334191276.0;
+        Mon, 20 Nov 2023 11:18:54 -0800 (PST)
+X-Received: by 2002:a5b:f4a:0:b0:da0:c49a:5103 with SMTP id
+ y10-20020a5b0f4a000000b00da0c49a5103mr7300082ybr.47.1700507934171; Mon, 20
+ Nov 2023 11:18:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+ <19358871-009d-4498-9c13-90d5338b1e9f@amd.com> <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
+In-Reply-To: <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 20 Nov 2023 20:18:42 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdW4WPJT0Km7w8RWrGJaztk6QDGoFAn0bdGbrEsw81R1FA@mail.gmail.com>
+Message-ID: <CAMuHMdW4WPJT0Km7w8RWrGJaztk6QDGoFAn0bdGbrEsw81R1FA@mail.gmail.com>
+Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Michal Simek <michal.simek@amd.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Setting members of local variable "sconfig" in
-qcom_swrm_stream_alloc_ports() does not depend on any earlier code in
-this function, so can be moved up before the critical section.  This
-makes the code a bit easier to follow because critical section is
-smaller.
+Hi Krzysztof,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/soundwire/qcom.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+On Mon, Nov 20, 2023 at 3:53=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+> On 20/11/2023 15:01, Michal Simek wrote:> >
+> > On 11/20/23 09:40, Krzysztof Kozlowski wrote:
+> >> Document preferred coding style for Devicetree sources (DTS and DTSI),
+> >> to bring consistency among all (sub)architectures and ease in reviews.
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 754870a4a047..e9a52c1bd359 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1160,6 +1160,17 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
- 	int maxport, pn, nports = 0, ret = 0;
- 	unsigned int m_port;
- 
-+	if (direction == SNDRV_PCM_STREAM_CAPTURE)
-+		sconfig.direction = SDW_DATA_DIR_TX;
-+	else
-+		sconfig.direction = SDW_DATA_DIR_RX;
-+
-+	/* hw parameters wil be ignored as we only support PDM */
-+	sconfig.ch_count = 1;
-+	sconfig.frame_rate = params_rate(params);
-+	sconfig.type = stream->type;
-+	sconfig.bps = 1;
-+
- 	mutex_lock(&ctrl->port_lock);
- 	list_for_each_entry(m_rt, &stream->master_list, stream_node) {
- 		if (m_rt->direction == SDW_DATA_DIR_RX) {
-@@ -1193,16 +1204,6 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
- 		}
- 	}
- 
--	if (direction == SNDRV_PCM_STREAM_CAPTURE)
--		sconfig.direction = SDW_DATA_DIR_TX;
--	else
--		sconfig.direction = SDW_DATA_DIR_RX;
--
--	/* hw parameters wil be ignored as we only support PDM */
--	sconfig.ch_count = 1;
--	sconfig.frame_rate = params_rate(params);
--	sconfig.type = stream->type;
--	sconfig.bps = 1;
- 	sdw_stream_add_master(&ctrl->bus, &sconfig, pconfig,
- 			      nports, stream);
- out:
--- 
-2.34.1
+> >> +Organizing DTSI and DTS
+> >> +-----------------------
+> >> +
+> >> +The DTSI and DTS files should be organized in a way representing the =
+common
+> >> +(and re-usable) parts of the hardware.  Typically this means organizi=
+ng DTSI
+> >> +and DTS files into several files:
+> >> +
+> >> +1. DTSI with contents of the entire SoC (without nodes for hardware n=
+ot present
+> >> +   on the SoC).
+> >> +2. If applicable: DTSI with common or re-usable parts of the hardware=
+ (e.g.
+> >> +   entire System-on-Module).
+> >
+> > DTS/DTSI - SOMs can actually run as they are that's why it is fair to s=
+ay that
+> > there doesn't need to be DTS representing the board.
+>
+> I have never seen a SoM which can run without elaborate hardware-hacking
+> (e.g. connecting multiple wires to the SoM pins). The definition of the
+> SoM is that it is a module. Module can be re-used, just like SoC.
 
+/me looks at his board farm...
+
+The Renesas White-Hawk CPU board can be used standalone, and has a
+separate power input connector for this operation mode.  As it has RAM,
+Ethernet, serial console, eMMC, and even mini-DP, it can serve useful
+purposes on its own.
+I agree it's not a super-good example, as the board is not really a
+"SoM", and we currently don't have r8a779g0-white-hawk-cpu.dts, only
+r8a779g0-white-hawk-cpu.dtsi.
+
+The RZ/A2M CPU Board is a real SoM, which can be powered over USB.
+It has less standard connectors (microSD, USB, MIPI CSI-2), but still
+sufficient features to be usable on its own.
+Again, we're doing a bad job, as we only have a DTS for the full eval
+board (r7s9210-rza2mevb.dts).
+
+I guess there are (many) other examples...
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
 
