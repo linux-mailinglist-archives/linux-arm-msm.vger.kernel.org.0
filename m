@@ -1,113 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-1244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0912A7F20B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 23:49:48 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E497F7F206E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 23:37:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 85631B21A75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 22:49:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A01C1C21242
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 22:37:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7494B3AC32;
-	Mon, 20 Nov 2023 22:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77B4A34CF3;
+	Mon, 20 Nov 2023 22:37:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M4w6FHVX"
+	dkim=fail reason="signature verification failed" (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="dg1hNBY0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9D6CCF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 14:49:25 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-5098e423ba2so6869570e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 14:49:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700520564; x=1701125364; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7w3IPGNvRYti0737C04DV640y8lLrN0zZWGxZvPfBuQ=;
-        b=M4w6FHVX3LRUMRClON2OC7B5vpY/nKiTmNJrkxPFvvIBoz89qgubpOUxrk0oJgvSLu
-         VyJr2k/b7HlVaSOYMFwtGuwK1wLYbl7K3AsOXkAMeblID7QfTA/2QBCoxh8ABE0k22TS
-         MMYIaKOw1EsXEZZrM8YOwGzI2HyVk3qOxS5AtHZZcA1QssoJLboXBsxe9crtZWhD37UD
-         GUSDO4QJXumQWyv1bueA3fwR9lyOjamhjK8xFynenM+WUpuP2DsHICtExWD0l9JLoDGv
-         q+b3rJZihnY7M5Jbrk//Fj6bI1B+I4qQbc09ju7hzSH6ErMc6P0rkp9zdv3pP0l+lm9E
-         OZHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700520564; x=1701125364;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7w3IPGNvRYti0737C04DV640y8lLrN0zZWGxZvPfBuQ=;
-        b=VziQGJ3EfXdLeCcOC0w76wvDK61xskduG5o2aIaIQunQWfYiBmNOb3iJmKBB+JK+z0
-         3W2Wb36hZsfZJU7XtgRsmQY4tBQdpQbSEXFyJEBl+VhtO4G7ucPvILnUaZfgHJb1rjSb
-         VyAt78EhrPordYwv59jNYJ4/Kqhx6SDC5d1abl5bKOoDyCPxNXzNMQPtKqGWdLqAughJ
-         WonZiHaFFB9EWNbGO1fJzhHoKEssdPzRzAtsFGWy1hgAtPEXdpZDWV0dQJPxTEHYwIQD
-         PRsJrYjUFHQLwHAXvAMI9jwydAV7wGtiBbKhpK+mZK9ea0jXurgm/hWH11E88CZ5SJMT
-         dG5Q==
-X-Gm-Message-State: AOJu0Yy44DhquZvfKCnWfJMt++0tHGhQPfsTIcxLGQbtLHW1dbNjkKKM
-	wr7CKX/tpxnw0v1DTM6mbtgXvQ==
-X-Google-Smtp-Source: AGHT+IFD8UwHvlZIXLl531QOdo6XgS1ewvLFiSPtvmWi8CMmPCZ9J2HRygNxOeDgJlm3R/0ER3Qymw==
-X-Received: by 2002:ac2:549c:0:b0:509:46ff:6e57 with SMTP id t28-20020ac2549c000000b0050946ff6e57mr6342427lfk.8.1700520564046;
-        Mon, 20 Nov 2023 14:49:24 -0800 (PST)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id c26-20020ac25f7a000000b00503189d8b8csm1297756lfc.198.2023.11.20.14.49.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Nov 2023 14:49:23 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08863A2;
+	Mon, 20 Nov 2023 14:37:42 -0800 (PST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 2A8FC40E0031;
+	Mon, 20 Nov 2023 22:37:40 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Received: from mail.alien8.de ([127.0.0.1])
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Qlr3bOPqbg-W; Mon, 20 Nov 2023 22:37:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
+	t=1700519856; bh=x9IsRR5+1IkHxb6g4ZF6VKh5RWuwsZ6e/RDXJfhFiD8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dg1hNBY0wesA8gF8gY062vLM00Xkf87s/irWgAp0+1T2yNZoU2eVnkYYyVrxkfpHz
+	 v/CDNxZDsCqarhLXL027s+pfyo+cb00NQ+heMcdDK5qHf4eCmwP5AC8Ko4XXrEvh0h
+	 qy5WiIgPjMvMtCy9MzPe9CYO9L00hoz00Ae8YDNpQaCpMJbiDtn3ldGtOYWTHCJcOd
+	 POUfqOEZmCTk+RCnJetbB71ya+N0vBNuO4UOEIjbyEAX7/qMJhNBUyhUeOKBaWpdr9
+	 YXlgbmJesULfeTbywn5O1jZW+CDsSN28Moe7bkZurTMsNjeVqFfIeDunus09ODlB+9
+	 fEfyLgKfgFGkHZ6pJpHYRJey0eezKUVcZ8Qc59gKQ92a1zr76WREbMpAypqCcPtj97
+	 vg1YoUfOfTbsDQ+D2jCCoGLNi+iEV1PzyzEn3Z73VmCGWfY4BbSsFShjd77tGlbqKQ
+	 izFw8wSSMT1BGhfp+Ro1kCZ/D2RdiArgVse5ESOch3H+PRJc2DiRB/eSKimWYc0Imc
+	 51ftFCVoExnkhJIHP6oIv23Ozazu8LiNp7aCnA5yDl3BAJl0GeAJMZXNjZcEFeADub
+	 rKKadA08E2hrF5E+9USWuVi6IRhECjsE9szf2Lan9eZJvUIChphm7NPyJeVdCD+kcQ
+	 vrlIcs/4QTTXJRxGHEKkBd/w=
+Received: from zn.tnic (pd95304da.dip0.t-ipconnect.de [217.83.4.218])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
+	(No client certificate requested)
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id EC2FE40E01AD;
+	Mon, 20 Nov 2023 22:36:56 +0000 (UTC)
+Date: Mon, 20 Nov 2023 23:36:51 +0100
+From: Borislav Petkov <bp@alien8.de>
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc: Tony Luck <tony.luck@intel.com>, Dinh Nguyen <dinguyen@kernel.org>,
+	James Morse <james.morse@arm.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Robert Richter <rric@kernel.org>, linux-edac@vger.kernel.org,
+	kernel@pengutronix.de, Jan Luebbe <jlu@pengutronix.de>,
+	Stefan Schaeckeler <sschaeck@cisco.com>,
+	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	Lei Wang <lewan@microsoft.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Johannes Thumshirn <morbidrsa@gmail.com>,
+	Avi Fishman <avifishman70@gmail.com>,
+	Tomer Maimon <tmaimon77@gmail.com>,
+	Tali Perry <tali.perry1@gmail.com>,
+	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
+	Benjamin Fair <benjaminfair@google.com>,
+	Marvin Lin <kflin@nuvoton.com>, Stanley Chu <yschu@nuvoton.com>,
+	openbmc@lists.ozlabs.org, Ralf Baechle <ralf@linux-mips.org>,
+	linux-mips@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>,
 	Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Mark Gross <markgross@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	linux-usb@vger.kernel.org
-Subject: [PATCH v3 3/3] arm64: dts: qcom: qrb5165-rb5: use u16 for DP altmode svid
-Date: Tue, 21 Nov 2023 00:00:20 +0200
-Message-ID: <20231120224919.2293730-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
-References: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
+	linux-arm-msm@vger.kernel.org, Michal Simek <michal.simek@amd.com>,
+	Tero Kristo <kristo@kernel.org>,
+	Khuong Dinh <khuong@os.amperecomputing.com>,
+	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
+	Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
+Subject: Re: [PATCH 00/21] EDAC: Convert to platform remove callback
+ returning void
+Message-ID: <20231120223651.GIZVvfg1amJyXdmYKQ@fat_crate.local>
+References: <20231004131254.2673842-1-u.kleine-koenig@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231004131254.2673842-1-u.kleine-koenig@pengutronix.de>
+Content-Transfer-Encoding: quoted-printable
 
-Follow the bindings and use 16-bit value for AltMode SVID instead of
-using the full u32.
+On Wed, Oct 04, 2023 at 03:12:33PM +0200, Uwe Kleine-K=C3=B6nig wrote:
+> Uwe Kleine-K=C3=B6nig (21):
+>   EDAC/altera: Convert to platform remove callback returning void
+>   EDAC/armada_xp: Convert to platform remove callback returning void
+>   EDAC/aspeed: Convert to platform remove callback returning void
+>   EDAC/bluefield: Convert to platform remove callback returning void
+>   EDAC/cell: Convert to platform remove callback returning void
+>   EDAC/cpc925: Convert to platform remove callback returning void
+>   EDAC/dmc520: Convert to platform remove callback returning void
+>   EDAC/highbank_l2: Convert to platform remove callback returning void
+>   EDAC/highbank_mc: Convert to platform remove callback returning void
+>   EDAC/mpc85xx: Convert to platform remove callback returning void
+>   EDAC/npcm: Convert to platform remove callback returning void
+>   EDAC/octeon-l2c: Convert to platform remove callback returning void
+>   EDAC/octeon-lmc: Convert to platform remove callback returning void
+>   EDAC/octeon-pc: Convert to platform remove callback returning void
+>   EDAC/octeon-pci: Convert to platform remove callback returning void
+>   EDAC/ppc4xx: Convert to platform remove callback returning void
+>   EDAC/qcom: Convert to platform remove callback returning void
+>   EDAC/synopsys: Convert to platform remove callback returning void
+>   EDAC/ti: Convert to platform remove callback returning void
+>   EDAC/xgene: Convert to platform remove callback returning void
+>   EDAC/zynqmp: Convert to platform remove callback returning void
 
-Fixes: b3dea914127e ("arm64: dts: qcom: qrb5165-rb5: enable DP altmode")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+All applied, thanks.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index c8cd40a462a3..88b37ceb13ed 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1425,7 +1425,7 @@ PDO_FIXED_USB_COMM |
- 
- 		altmodes {
- 			displayport {
--				svid = <0xff01>;
-+				svid = /bits/ 16 <0xff01>;
- 				vdo = <0x00001c46>;
- 			};
- 		};
--- 
-2.42.0
+--=20
+Regards/Gruss,
+    Boris.
 
+https://people.kernel.org/tglx/notes-about-netiquette
 
