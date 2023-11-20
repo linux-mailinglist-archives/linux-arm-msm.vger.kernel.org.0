@@ -1,125 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-1239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E497F7F206E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 23:37:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E1367F2077
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 23:39:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A01C1C21242
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 22:37:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DAEB22827DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 22:39:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77B4A34CF3;
-	Mon, 20 Nov 2023 22:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 803C637172;
+	Mon, 20 Nov 2023 22:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=alien8.de header.i=@alien8.de header.b="dg1hNBY0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kt0KD54q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.alien8.de (mail.alien8.de [65.109.113.108])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08863A2;
-	Mon, 20 Nov 2023 14:37:42 -0800 (PST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTP id 2A8FC40E0031;
-	Mon, 20 Nov 2023 22:37:40 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
-Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id Qlr3bOPqbg-W; Mon, 20 Nov 2023 22:37:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1700519856; bh=x9IsRR5+1IkHxb6g4ZF6VKh5RWuwsZ6e/RDXJfhFiD8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dg1hNBY0wesA8gF8gY062vLM00Xkf87s/irWgAp0+1T2yNZoU2eVnkYYyVrxkfpHz
-	 v/CDNxZDsCqarhLXL027s+pfyo+cb00NQ+heMcdDK5qHf4eCmwP5AC8Ko4XXrEvh0h
-	 qy5WiIgPjMvMtCy9MzPe9CYO9L00hoz00Ae8YDNpQaCpMJbiDtn3ldGtOYWTHCJcOd
-	 POUfqOEZmCTk+RCnJetbB71ya+N0vBNuO4UOEIjbyEAX7/qMJhNBUyhUeOKBaWpdr9
-	 YXlgbmJesULfeTbywn5O1jZW+CDsSN28Moe7bkZurTMsNjeVqFfIeDunus09ODlB+9
-	 fEfyLgKfgFGkHZ6pJpHYRJey0eezKUVcZ8Qc59gKQ92a1zr76WREbMpAypqCcPtj97
-	 vg1YoUfOfTbsDQ+D2jCCoGLNi+iEV1PzyzEn3Z73VmCGWfY4BbSsFShjd77tGlbqKQ
-	 izFw8wSSMT1BGhfp+Ro1kCZ/D2RdiArgVse5ESOch3H+PRJc2DiRB/eSKimWYc0Imc
-	 51ftFCVoExnkhJIHP6oIv23Ozazu8LiNp7aCnA5yDl3BAJl0GeAJMZXNjZcEFeADub
-	 rKKadA08E2hrF5E+9USWuVi6IRhECjsE9szf2Lan9eZJvUIChphm7NPyJeVdCD+kcQ
-	 vrlIcs/4QTTXJRxGHEKkBd/w=
-Received: from zn.tnic (pd95304da.dip0.t-ipconnect.de [217.83.4.218])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
-	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id EC2FE40E01AD;
-	Mon, 20 Nov 2023 22:36:56 +0000 (UTC)
-Date: Mon, 20 Nov 2023 23:36:51 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: Tony Luck <tony.luck@intel.com>, Dinh Nguyen <dinguyen@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Robert Richter <rric@kernel.org>, linux-edac@vger.kernel.org,
-	kernel@pengutronix.de, Jan Luebbe <jlu@pengutronix.de>,
-	Stefan Schaeckeler <sschaeck@cisco.com>,
-	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
-	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-	Shravan Kumar Ramani <shravankr@nvidia.com>,
-	Lei Wang <lewan@microsoft.com>,
-	Andre Przywara <andre.przywara@arm.com>,
-	Johannes Thumshirn <morbidrsa@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Marvin Lin <kflin@nuvoton.com>, Stanley Chu <yschu@nuvoton.com>,
-	openbmc@lists.ozlabs.org, Ralf Baechle <ralf@linux-mips.org>,
-	linux-mips@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org, Michal Simek <michal.simek@amd.com>,
-	Tero Kristo <kristo@kernel.org>,
-	Khuong Dinh <khuong@os.amperecomputing.com>,
-	Shubhrajyoti Datta <shubhrajyoti.datta@amd.com>,
-	Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>
-Subject: Re: [PATCH 00/21] EDAC: Convert to platform remove callback
- returning void
-Message-ID: <20231120223651.GIZVvfg1amJyXdmYKQ@fat_crate.local>
-References: <20231004131254.2673842-1-u.kleine-koenig@pengutronix.de>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E3B597;
+	Mon, 20 Nov 2023 14:39:50 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AKLvlTp007578;
+	Mon, 20 Nov 2023 22:39:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=f8L9nhtIuJda89+/HgbEISF8b2edhNC6k49x6R/K4ow=;
+ b=Kt0KD54qwEeAg33D+pcYQXBM9nr9fS2HzuCD7j8Wc5cTEsXT0E2S3vtYT6J7xU4qoPRD
+ NcEANm1ciEOwkPcUmAyv0DzYy3thSW2HuF4dk3W0TED8KK7SyJxwbdrqKQQclTJfPBBO
+ r64P5naM0sL5rfSEthp/OObOVkmpD99H4VW69UwVKUviMAYgD8UATehAgUY8HXrGVCsq
+ UIkmUupXSCT9X1FCSkBa12lhS2RQkHml4QewYSM3Nta+W0pigbS7JrM1Zdd1sS43XvRh
+ CnKZN+t/gNAja+Fo6XU2HESqu7LN5dQODArqVC7PTJc0j2rXI0zQyxcocsLLzYEHnq5D uQ== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ug37mj0nm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Nov 2023 22:39:35 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AKMdY6Q016666
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 20 Nov 2023 22:39:34 GMT
+Received: from [10.110.29.191] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 20 Nov
+ 2023 14:39:33 -0800
+Message-ID: <bf6c628d-132c-296b-b29a-dc7be4390578@quicinc.com>
+Date: Mon, 20 Nov 2023 14:39:33 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20231004131254.2673842-1-u.kleine-koenig@pengutronix.de>
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v1 2/2] dt-bindings: arm: Add remote etm driver
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Mao Jinlong
+	<quic_jinlmao@quicinc.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        "Mike
+ Leach" <mike.leach@linaro.org>,
+        James Clark <james.clark@arm.com>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        "Tao Zhang" <quic_taozha@quicinc.com>
+References: <20231107060939.13449-1-quic_jinlmao@quicinc.com>
+ <20231107060939.13449-3-quic_jinlmao@quicinc.com>
+ <10afe65f-4e86-4127-9f8d-b4e3f5ee8a3a@linaro.org>
+Content-Language: en-US
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <10afe65f-4e86-4127-9f8d-b4e3f5ee8a3a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: M1hrlZSwaz4MWX8VnvJbfsHWvi3NLK-j
+X-Proofpoint-ORIG-GUID: M1hrlZSwaz4MWX8VnvJbfsHWvi3NLK-j
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-20_22,2023-11-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0 mlxscore=0
+ impostorscore=0 clxscore=1011 mlxlogscore=549 malwarescore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311200166
 
-On Wed, Oct 04, 2023 at 03:12:33PM +0200, Uwe Kleine-K=C3=B6nig wrote:
-> Uwe Kleine-K=C3=B6nig (21):
->   EDAC/altera: Convert to platform remove callback returning void
->   EDAC/armada_xp: Convert to platform remove callback returning void
->   EDAC/aspeed: Convert to platform remove callback returning void
->   EDAC/bluefield: Convert to platform remove callback returning void
->   EDAC/cell: Convert to platform remove callback returning void
->   EDAC/cpc925: Convert to platform remove callback returning void
->   EDAC/dmc520: Convert to platform remove callback returning void
->   EDAC/highbank_l2: Convert to platform remove callback returning void
->   EDAC/highbank_mc: Convert to platform remove callback returning void
->   EDAC/mpc85xx: Convert to platform remove callback returning void
->   EDAC/npcm: Convert to platform remove callback returning void
->   EDAC/octeon-l2c: Convert to platform remove callback returning void
->   EDAC/octeon-lmc: Convert to platform remove callback returning void
->   EDAC/octeon-pc: Convert to platform remove callback returning void
->   EDAC/octeon-pci: Convert to platform remove callback returning void
->   EDAC/ppc4xx: Convert to platform remove callback returning void
->   EDAC/qcom: Convert to platform remove callback returning void
->   EDAC/synopsys: Convert to platform remove callback returning void
->   EDAC/ti: Convert to platform remove callback returning void
->   EDAC/xgene: Convert to platform remove callback returning void
->   EDAC/zynqmp: Convert to platform remove callback returning void
+On 11/16/2023 9:22 AM, Krzysztof Kozlowski wrote:
+> On 07/11/2023 07:09, Mao Jinlong wrote:
+>> Add new coresight-remote-etm.yaml file describing the bindings required
+>> to define coresight remote etm in the device trees.
+>>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> 
+> +Cc Trilok,
+> 
+> Several Qualcomm boards have warnings coming from Coresight bindings.
+> These are big, fat warnings coming usually from ARM bindings (e.g.
+> dynamic funnel, TMC). I don't know Coresight good enough to fix them by
+> myself.
+> 
+> I would prefer not to take any new Qualcomm specific Coresight bindings
+> and definitely no new Coresight device nodes in Qualcomm boards, before
+> these are fixed.
+> 
+> Therefore I kindly ask to fix all warnings in Qualcomm boards coming
+> from existing Coresight bindings.
 
-All applied, thanks.
+Thanks Krzysztof, we can look into it as first thing to fix. 
+ 
+-- 
+---Trilok Soni
 
---=20
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
 
