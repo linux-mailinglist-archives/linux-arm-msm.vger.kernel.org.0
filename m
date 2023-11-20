@@ -1,109 +1,380 @@
-Return-Path: <linux-arm-msm+bounces-1128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B19007F1201
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 12:31:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 739777F125B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 12:43:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E28371C2174D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 11:31:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB028B2143C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 11:43:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2855114AA9;
-	Mon, 20 Nov 2023 11:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3131B15ACB;
+	Mon, 20 Nov 2023 11:43:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LiqgaJ2m"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="BnVe493h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE4190;
-	Mon, 20 Nov 2023 03:31:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700479874; x=1732015874;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=M5VyfO4HyHA+7dmKhfXxCvmtDyHikTHOa2LFJQGtoFw=;
-  b=LiqgaJ2mh9t0Z9Y1moEBpuc1q+0/L2qhQX0GMcI5D1EBWMBL9U3/K+xy
-   yg+MGLhXGsJ2B5Rjtp2msbuIRyA7pfD/i8NSVxk9EX1eb/uQriOPEaZ+2
-   xcc8jsLLFeb89yWXgVei6n/kAt0K8dtGXdZ2PintVfdPNdiM1ByOZjRdz
-   utLgntNmXSO0R/hMMDSkqyzaHN0IM2FnL//zhOh7aHI5NpHI/cfnhRR1q
-   bc0KANT5sshzoGg4WUKc7/0/C6QBW3LdX2Zast+cZ3CPvbym0S7RP8WWO
-   oL4SQAmOQxbhBQFs8N5wRloDlELdfKPfe+PKOJMSUoYVE92BJmZWSxu6n
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10899"; a="458097875"
-X-IronPort-AV: E=Sophos;i="6.04,213,1695711600"; 
-   d="scan'208";a="458097875"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2023 03:31:13 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10899"; a="910079573"
-X-IronPort-AV: E=Sophos;i="6.04,213,1695711600"; 
-   d="scan'208";a="910079573"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Nov 2023 03:31:06 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1r52UZ-0000000FXEw-1BiL;
-	Mon, 20 Nov 2023 13:31:03 +0200
-Date: Mon, 20 Nov 2023 13:31:03 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Jishnu Prakash <quic_jprakash@quicinc.com>
-Cc: jic23@kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
-	konrad.dybcio@linaro.org, daniel.lezcano@linaro.org,
-	dmitry.baryshkov@linaro.org, linus.walleij@linaro.org,
-	linux-arm-msm@vger.kernel.org, quic_subbaram@quicinc.com,
-	quic_collinsd@quicinc.com, quic_amelende@quicinc.com,
-	quic_kamalw@quicinc.com, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, marijn.suijten@somainline.org,
-	lars@metafoo.de, luca@z3ntu.xyz, linux-iio@vger.kernel.org,
-	lee@kernel.org, rafael@kernel.org, rui.zhang@intel.com,
-	lukasz.luba@arm.com, cros-qcom-dts-watchers@chromium.org,
-	sboyd@kernel.org, linux-pm@vger.kernel.org,
-	linux-arm-msm-owner@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH V2 0/3] iio: adc: Add support for QCOM SPMI PMIC5 Gen3 ADC
-Message-ID: <ZVtDdySmDUmgUDlm@smile.fi.intel.com>
-References: <20231116032530.753192-1-quic_jprakash@quicinc.com>
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9BF783;
+	Mon, 20 Nov 2023 03:43:17 -0800 (PST)
+Received: from [100.107.97.3] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id 271DA6601711;
+	Mon, 20 Nov 2023 11:43:15 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1700480596;
+	bh=x4MLXpWO/aV1ogNe5RsuKzP1dqnIZbDxe0lhCiPQNfs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BnVe493hgYdndPFbDTUozDRDDmiAT45LJkGDzvbyox3bTl5POLPTy/r0MVZKhn15m
+	 gWoMCo+N6Pn+qwxRVI9ChGCwPaH8X0L4BQ05z4zMQmLzzbZVLy9u6SbxhKm2/lHQa9
+	 0ASp9J1xveFvuhX7Of2bTQbG5YpBpMzadwgmdNhx2OJGnFh4RZko+Ezqqb4KqFQttw
+	 eRCkKpc1+A3ZoD/1Qu14IUY8pJ1azwa/c3qwfw4PcZbCoDaHu6J6Wom0E0sq1MJUSS
+	 H46h6POobMJaxHwi/QDziqB5/neK5zIVcVRGshPzNNQ/5cIqiochdmK6Kf6H15Y50y
+	 QrgyVzhRUmKqg==
+Message-ID: <92cf3bcc-18e7-40ba-a082-1b8b6bea0dee@collabora.com>
+Date: Mon, 20 Nov 2023 12:43:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231116032530.753192-1-quic_jprakash@quicinc.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
+ <matthias.bgg@gmail.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org
+Cc: Andrew Davis <afd@ti.com>, Arnd Bergmann <arnd@arndb.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Heiko Stuebner <heiko@sntech.de>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michal Simek <michal.simek@amd.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>,
+ Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org
+References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 16, 2023 at 08:55:27AM +0530, Jishnu Prakash wrote:
-> PMIC5 Gen3 has a similar ADC architecture to that on PMIC5 Gen2,
-> with all SW communication to ADC going through PMK8550 which
-> communicates with other PMICs through PBS. The major difference is
-> that the register interface used here is that of an SDAM present on
-> PMK8550, rather than a dedicated ADC peripheral. There may be more than one
-> SDAM used for ADC5 Gen3. Each ADC SDAM has eight channels, each of which may
-> be used for either immediate reads (same functionality as previous PMIC5 and
-> PMIC5 Gen2 ADC peripherals) or recurring measurements (same as PMIC5 and PMIC5
-> Gen2 ADC_TM functionality). In this case, we have VADC and ADC_TM functionality
-> combined into the same driver.
+Il 20/11/23 09:40, Krzysztof Kozlowski ha scritto:
+> Document preferred coding style for Devicetree sources (DTS and DTSI),
+> to bring consistency among all (sub)architectures and ease in reviews.
 > 
-> Patches 1 adds bindings for ADC5 Gen3 peripheral.
+> Cc: Andrew Davis <afd@ti.com>
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+> Cc: Heiko Stuebner <heiko@sntech.de>
+> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Cc: Matthias Brugger <matthias.bgg@gmail.com>
+> Cc: Michal Simek <michal.simek@amd.com>
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> Cc: Nishanth Menon <nm@ti.com>
+> Cc: Olof Johansson <olof@lixom.net>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> Patches 2 adds driver support for ADC5 Gen3.
+> ---
 > 
-> Patch 3 is a cleanup, to move the QCOM ADC dt-bindings files from
-> dt-bindings/iio to dt-bindings/iio/adc folder, as they are
-> specifically for ADC devices. It also fixes all compilation errors
-> with this change in driver and devicetree files and similar errors
-> in documentation for dtbinding check.
+> Merging idea: Rob/DT bindings
+> 
+> Changes in v2
+> =============
+> 1. Hopefully incorporate entire feedback from comments:
+> a. Fix \ { => / { (Rob)
+> b. Name: dts-coding-style (Rob)
+> c. Exceptions for ordering nodes by name for Renesas and pinctrl (Geert,
+>     Konrad)
+> d. Ordering properties by common/vendor (Rob)
+> e. Array entries in <> (Rob)
+> 
+> 2. New chapter: Organizing DTSI and DTS
+> 
+> 3. Several grammar fixes (missing articles)
+> 
+> Cc: linux-rockchip@lists.infradead.org
+> Cc: linux-mediatek@lists.infradead.org
+> Cc: linux-samsung-soc@vger.kernel.org
+> Cc: linux-amlogic@lists.infradead.org
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: linux-arm-msm@vger.kernel.org
+> ---
+>   .../devicetree/bindings/dts-coding-style.rst  | 163 ++++++++++++++++++
+>   Documentation/devicetree/bindings/index.rst   |   1 +
+>   2 files changed, 164 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/dts-coding-style.rst
+> 
+> diff --git a/Documentation/devicetree/bindings/dts-coding-style.rst b/Documentation/devicetree/bindings/dts-coding-style.rst
+> new file mode 100644
+> index 000000000000..cc7e3b4d1b92
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/dts-coding-style.rst
+> @@ -0,0 +1,163 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +.. _dtscodingstyle:
+> +
+> +=====================================
+> +Devicetree Sources (DTS) Coding Style
+> +=====================================
+> +
+> +When writing Devicetree Sources (DTS) please observe below guidelines.  They
+> +should be considered complementary to any rules expressed already in Devicetree
+> +Specification and dtc compiler (including W=1 and W=2 builds).
+> +
+> +Individual architectures and sub-architectures can add additional rules, making
+> +the style stricter.
+> +
+> +Naming and Valid Characters
+> +---------------------------
+> +
+> +1. Node and property names are allowed to use only:
+> +
+> +   * lowercase characters: [a-z]
+> +   * digits: [0-9]
+> +   * dash: -
+> +
+> +2. Labels are allowed to use only:
+> +
+> +   * lowercase characters: [a-z]
+> +   * digits: [0-9]
+> +   * underscore: _
+> +
+> +3. Unit addresses should use lowercase hex, without leading zeros (padding).
 
-Something wrong with the email chaining.
-Please be sure you are using --thread when preparing emails.
+This is imperative, so: s/should/shall/g
 
--- 
-With Best Regards,
-Andy Shevchenko
+> +
+> +4. Hex values in properties, e.g. "reg", should use lowercase hex.  The address
+> +   part can be padded with leading zeros.
+> +
 
+Same here, I'd say.... :-)
+
+> +Example::
+> +
+> +	gpi_dma2: dma-controller@800000 {
+> +		compatible = "qcom,sm8550-gpi-dma", "qcom,sm6350-gpi-dma";
+> +		reg = <0x0 0x00800000 0x0 0x60000>;
+> +	}
+> +
+> +Order of Nodes
+> +--------------
+> +
+> +1. Nodes within any bus, thus using unit addresses for children, shall be
+> +   ordered incrementally by unit address.
+> +   Alternatively for some sub-architectures, nodes of the same type can be
+> +   grouped together (e.g. all I2C controllers one after another even if this
+> +   breaks unit address ordering).
+> +
+> +2. Nodes without unit addresses should be ordered alpha-numerically by the node
+> +   name.  For a few types of nodes, they can be ordered by the main property
+> +   (e.g. pin configuration states ordered by value of "pins" property).
+> +
+> +3. When extending nodes in the board DTS via &label, the entries should be
+> +   ordered alpha-numerically.
+> +
+> +Example::
+> +
+
+Hmm, comments!
+
+> +	// SoC DTSI
+
+....speaking of commenting, should we at least suggest to use C-style comments?
+
+	/* SoC DTSI */
+
+> +
+> +	/ {
+> +		cpus {
+> +			// ...
+> +		};
+> +
+> +		psci {
+> +			// ...
+> +		};
+> +
+> +		soc@ {
+> +			dma: dma-controller@10000 {
+> +				// ...
+> +			};
+> +
+> +			clk: clock-controller@80000 {
+> +				// ...
+> +			};
+> +		};
+> +	};
+> +
+> +	// Board DTS
+> +
+> +	&clk {
+> +		// ...
+> +	};
+> +
+> +	&dma {
+> +		// ...
+> +	};
+> +
+> +
+> +Order of Properties in Device Node
+> +----------------------------------
+> +
+> +Following order of properties in device nodes is preferred:
+> +
+> +1. compatible
+> +2. reg
+> +3. ranges
+> +4. Standard/common properties (defined by common bindings, e.g. without
+> +   vendor-prefixes)
+> +5. Vendor-specific properties
+> +6. status (if applicable)
+> +7. Child nodes, where each node is preceded with a blank line
+> +
+> +The "status" property is by default "okay", thus it can be omitted.
+> +
+> +Example::
+> +
+> +	// SoC DTSI
+> +
+> +	usb_1_hsphy: phy@88e3000 {
+> +		compatible = "qcom,sm8550-snps-eusb2-phy";
+> +		reg = <0x0 0x088e3000 0x0 0x154>;
+> +		#phy-cells = <0>;
+> +		resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
+> +		status = "disabled";
+> +	};
+
+Since this describes vendor-specific properties and vendor prefixes as well
+as standard properties, I think it would be clearer if we use something more
+complex that actually contains those as an example.
+
+There's a few. One is MediaTek:
+
+	vdo1_rdma0: dma-controller@1c104000 {
+		compatible = "mediatek,mt8195-vdo1-rdma";
+		reg = <0 0x1c104000 0 0x1000>;
+		#dma-cells = <1>;
+		clocks = <&vdosys1 CLK_VDO1_MDP_RDMA0>;
+		interrupts = <GIC_SPI 495 IRQ_TYPE_LEVEL_HIGH 0>;
+		iommus = <&iommu_vdo M4U_PORT_L2_MDP_RDMA0>;
+		power-domains = <&spm MT8195_POWER_DOMAIN_VDOSYS1>;
+		mediatek,gce-client-reg = <&gce0 SUBSYS_1c10XXXX 0x4000 0x1000>;
+	};
+
+...or other one can be nVidia:
+
+	mipi: mipi@700e3000 {
+		compatible = "nvidia,tegra210-mipi";
+		reg = <0x0 0x700e3000 0x0 0x100>;
+		clocks = <&tegra_car TEGRA210_CLK_MIPI_CAL>;
+		clock-names = "mipi-cal";
+		power-domains = <&pd_sor>;
+		#nvidia,mipi-calibrate-cells = <1>;
+	};
+
+...or we could make an example out of fantasy, which could work even better
+as far as describing goes.
+
+	/* SoC DTSI */
+
+	device_node: device-class@6789abc {
+		compatible = "vendor,device";
+		reg = <0 0x06789abc 0 0xa123>;
+		ranges = <0 0 0x6789abc 0x1000>;
+		#dma-cells = <1>;
+		clocks = <&clock_controller SOC_CLOCK>;
+		clock-names = "dev-clk";
+		#vendor,custom-cells = <2>;
+		status = "disabled";
+
+		child_node: child-class@100 {
+			reg = <0x100 0x200>;
+			/* ... */
+		};
+	};
+
+	/* Board DTS */
+
+	&device_node {
+		device-supply = <&board_vreg1>;
+		status = "okay";
+	}
+
+> +
+> +	// Board DTS
+> +
+> +	&usb_1_hsphy {
+> +		clocks = <&tcsr TCSR_USB2_CLKREF_EN>;
+> +		clock-names = "ref";
+> +		status = "okay";
+> +	};
+> +
+> +
+> +Indentation
+> +-----------
+> +
+> +1. Use indentation according to :ref:`codingstyle`.
+> +2. For arrays spanning across lines, it is preferred to align the continued
+> +   entries with opening < from the first line.
+> +3. Each entry in arrays with multiple cells (e.g. "reg" with two IO addresses)
+> +   should be enclosed in <>.
+> +
+> +Example::
+> +
+> +	thermal-sensor@c271000 {
+> +		compatible = "qcom,sm8550-tsens", "qcom,tsens-v2";
+> +		reg = <0x0 0x0c271000 0x0 0x1000>,
+> +		      <0x0 0x0c222000 0x0 0x1000>;
+> +	};
+> +
+> +Organizing DTSI and DTS
+> +-----------------------
+> +
+> +The DTSI and DTS files should be organized in a way representing the common
+> +(and re-usable) parts of the hardware.  Typically this means organizing DTSI
+
+                                         ^^^^
+There's a double space here, it was probably unintentional.
+
+
+Cheers,
+Angelo
+
+> +and DTS files into several files:
+> +
+> +1. DTSI with contents of the entire SoC (without nodes for hardware not present
+> +   on the SoC).
+> +2. If applicable: DTSI with common or re-usable parts of the hardware (e.g.
+> +   entire System-on-Module).
+> +3. DTS representing the board.
+> +
+> +Hardware components which are present on the board should be placed in the
+> +board DTS, not in the SoC or SoM DTSI.  A partial exception is a common
+> +external reference SoC-input clock, which could be coded as a fixed-clock in
+> +the SoC DTSI with its frequency provided by each board DTS.
+> diff --git a/Documentation/devicetree/bindings/index.rst b/Documentation/devicetree/bindings/index.rst
+> index d9002a3a0abb..cc1fbdc05657 100644
+> --- a/Documentation/devicetree/bindings/index.rst
+> +++ b/Documentation/devicetree/bindings/index.rst
+> @@ -4,6 +4,7 @@
+>      :maxdepth: 1
+>   
+>      ABI
+> +   dts-coding-style
+>      writing-bindings
+>      writing-schema
+>      submitting-patches
 
 
