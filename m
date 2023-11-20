@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 222E37F126D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 12:49:40 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 408457F1282
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 12:55:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52E621C21813
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 11:49:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFF3C1F213FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 11:55:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D74C1803B;
-	Mon, 20 Nov 2023 11:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83A4B18AE9;
+	Mon, 20 Nov 2023 11:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jg36lNw7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ByluDlkb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E630AF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 03:49:32 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-53e2308198eso6080919a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 03:49:32 -0800 (PST)
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D86E19F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 03:54:58 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-9fd0059a967so205689366b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 03:54:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700480970; x=1701085770; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700481297; x=1701086097; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6dt6TxgkZUyaol+ajrgk0s+rPtbTscXXlynar7VCyeE=;
-        b=jg36lNw7ROTSDI0rth2W1fEkupU4Np2rNCdcJkk+Wjxsbi0/fjX+6iP0g4l9FoRnfD
-         y0UKANE5/LpOm/FBJOVUfWJbCnvbictFmq5oj2CASuy5cwKsuHKmSSFD6H/q+QCg8G/4
-         lryCIVNMYka4cmRKDTwyny8g2Obf2IaNmBgItdv187KwItb19GQilHHOGAyEEP53Z55k
-         TAVvkAG6RKCNDgkZXwVqGeuI+nG0/gkeceZbD6RTL6te8TAYEpn3F6wOcjX+olR3MxZu
-         O/twyIL8WAMuFB+YQBh4kmzHlhfZVOyRize3P35v6pf4P6aQ9V0tf3W0++Rcd4E4Khh7
-         X3Mw==
+        bh=b8AWhfE2Dwm0+sDgL8vznseiQagZPvxsot2/ITuX5H8=;
+        b=ByluDlkbOBwkhYo1GxP0QM+b56eMpz+r/EIbFxjSCCLmGdeW1jLhob8FqnksXo1NyG
+         58GxcVgGcYnl0JnvuAd9AGMJR0jBdyjUn40SwrHtfGeVN9yL9od99tB3OrAKQfqYf9BK
+         HFZGxlQPHnicdvErJuPa9XKK89trRRqXkAmUEeDB1O0sTowYrJfXK3OTQVVlvJOeRM9l
+         3aeOhCCzOF3JmHmGd1YWacKnR3/X2N/QZW8xaadvT/a+vSzTUYckesAlfYtts2/2a/Up
+         I9XN7tFdulSKsZz2FWCDdtxwHOMIxiQoSdB8v08b6leyjovNE0PA52Ivbp6LWX5ZpIxA
+         Jacg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700480970; x=1701085770;
+        d=1e100.net; s=20230601; t=1700481297; x=1701086097;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6dt6TxgkZUyaol+ajrgk0s+rPtbTscXXlynar7VCyeE=;
-        b=B98eyG01Wi9DXtHTa3EUucaLRJj5Im9xbQ7yd+q/vjj7kwOxEuS9+NVhvkGJ0fPiux
-         p9RN7HbO/6TD1ubBexyQ/o7DlTjo4gqCrwSo9ro/uKVlnPQGj5S1VA+61jODdeRylrsG
-         0gtkyxPOA5/Y30bdWz0Xe+g/TsMkioqWn+nrkJmmG3OUSo7ryq5mWRqx5JvG2jSHwoh4
-         h5dVzHtcxiQqrMJQ+R7FYJ04j/BxZFCi/MkCh+5m/fk55XFg2uBxyR9llww5gcNnuiyD
-         ICI3g82jb5nQ3ShVRVov2ibab3zZssaael3L0naowjAC7TUWflWRSmzWaNP2FsX/6J7m
-         z9Rg==
-X-Gm-Message-State: AOJu0Yy3YxG1MrwW6O3G2w6KYv7M1Wb3ZkINqOZ49DEILOXD6+fqb16U
-	WUq6m7DKi5FsET5WDq75pEZKJA==
-X-Google-Smtp-Source: AGHT+IGZIik/IPksvZFCFTpPNmHEa28/lyymkt0bWH/bzXAdjzPzdZ2kFieehajp04z/82oOSgsI7A==
-X-Received: by 2002:aa7:c513:0:b0:53f:6ed5:4dab with SMTP id o19-20020aa7c513000000b0053f6ed54dabmr5759445edq.24.1700480970418;
-        Mon, 20 Nov 2023 03:49:30 -0800 (PST)
+        bh=b8AWhfE2Dwm0+sDgL8vznseiQagZPvxsot2/ITuX5H8=;
+        b=U9s0CggLsSyzJJMotk/FMb/4EqpLrVIoedUaUK/gA1i2eqoFzTtEYi4cSuY+btF5xO
+         bn77Kvg4F/foYmpCOkAWPhxjgTcQ8OHowI+ZFb5EGXMXd07PkuJAIPiYH9Elgvg9812j
+         sBkfwiIkRyjOe59dIff2ZItb03X7pHbbz2/BeBobWmFMAxUEn0F4IoguD90PyChqnQcl
+         ipBKbPKoLBmh8C9aDQ/bv20frRXTm4xGKGEjzEx/1eq+iwRrHuew3I0aZNDGhq0LReOt
+         3LfXVx0Y8gbmoZbjUJKjdbO+2KLfnpYs7BE9a4igOvihJ8SmKQ0COph+oo1GTBy7BDIR
+         rGzA==
+X-Gm-Message-State: AOJu0YxqGW/ecp3xgpdxkbhc4vbxCTHTTLqdvXtpB40k6cm+/FOHMiro
+	ni6FVIHATDbkEnaQgK93ENxecg==
+X-Google-Smtp-Source: AGHT+IEzLPWn2u7c9HHqsIH3EHpB9pMu/RGqFN3K+HoqrZsTn0D/IslSTkjemZgxB6Hyhsbz+7LzYw==
+X-Received: by 2002:a17:906:bc4f:b0:9da:de23:738e with SMTP id s15-20020a170906bc4f00b009dade23738emr1451191ejv.37.1700481297322;
+        Mon, 20 Nov 2023 03:54:57 -0800 (PST)
 Received: from [192.168.201.100] (178235187204.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.204])
-        by smtp.gmail.com with ESMTPSA id n6-20020aa7c786000000b005434095b179sm3472684eds.92.2023.11.20.03.49.28
+        by smtp.gmail.com with ESMTPSA id a11-20020a1709066d4b00b009fd1a5fe9dcsm1497900ejt.86.2023.11.20.03.54.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 03:49:29 -0800 (PST)
-Message-ID: <82ffe906-a633-4606-abd4-96d7e72ba391@linaro.org>
-Date: Mon, 20 Nov 2023 12:49:27 +0100
+        Mon, 20 Nov 2023 03:54:56 -0800 (PST)
+Message-ID: <ca66e0e6-2c24-4dce-9464-7d4464b6b8ef@linaro.org>
+Date: Mon, 20 Nov 2023 12:54:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,20 +62,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 3/4] clk: qcom: videocc-sm8150: Add missing PLL config
- property
+Subject: Re: [PATCH V2 4/5] arm64: dts: qcom: x1e80100: Add Compute Reference
+ Device
 Content-Language: en-US
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Andy Gross <agross@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20231118123944.2202630-1-quic_skakitap@quicinc.com>
- <20231118123944.2202630-4-quic_skakitap@quicinc.com>
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ catalin.marinas@arm.com, ulf.hansson@linaro.org
+Cc: agross@kernel.org, conor+dt@kernel.org, ayan.kumar.halder@amd.com,
+ j@jannau.net, dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+ m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
+ lpieralisi@kernel.org, quic_rjendra@quicinc.com, abel.vesa@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ quic_tsoni@quicinc.com, neil.armstrong@linaro.org
+References: <20231117113931.26660-1-quic_sibis@quicinc.com>
+ <20231117113931.26660-5-quic_sibis@quicinc.com>
+ <bded087f-6601-48d8-af7e-9120955127df@linaro.org>
+ <3cb43c28-7333-936f-96d6-1c85aea46cfc@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,18 +115,20 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231118123944.2202630-4-quic_skakitap@quicinc.com>
+In-Reply-To: <3cb43c28-7333-936f-96d6-1c85aea46cfc@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 18.11.2023 13:39, Satya Priya Kakitapalli wrote:
-> When the driver was ported upstream, PLL test_ctl_hi1 register value
-> was omitted. Add it to ensure the PLLs are fully configured.
-> 
-> Fixes: 5658e8cf1a8a ("clk: qcom: add video clock controller driver for SM8150")
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 20.11.2023 07:51, Sibi Sankar wrote:
+> Hey Konrad,
+> Thanks for taking time to review the series.
+While it's rude to complain about somebody saying kind things, I have to
+do it :D
+
+top-posting (replying at the beginning of email) is discouraged and will
+earn you grumpy replies, see the beginning of this message from GK-H:
+
+https://lore.kernel.org/linux-nfs/YH%2FfM%2FTsbmcZzwnX@kroah.com/
 
 Konrad
 
