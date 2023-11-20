@@ -1,188 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-1101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83E177F0C89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 08:09:31 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 262427F0D3A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 09:11:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 25312B210D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 07:09:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AAE92281963
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Nov 2023 08:11:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7F3C63BA;
-	Mon, 20 Nov 2023 07:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4A6DDDB1;
+	Mon, 20 Nov 2023 08:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LaRHv4HA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jrgTFYWH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD29FB7
-	for <linux-arm-msm@vger.kernel.org>; Sun, 19 Nov 2023 23:09:18 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-53e70b0a218so5701054a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Nov 2023 23:09:18 -0800 (PST)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5262C0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 00:11:39 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-408425c7c10so13798495e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 00:11:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700464157; x=1701068957; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6laP/QeQ8ZkNdY+I7g66zga8GNt1LoZIWkuM0YaBrIE=;
-        b=LaRHv4HACu2w7RpKBmj9nr5IR1qElkq6oW4JgK0ak/Ox/R0qfvBi29cyOuKI9ODN4W
-         0DIb90S4QxZdG25nuJXsOBH6INWLL/eweOGyQmdWkzf2S4svJ/q3XPXU8OV3+uERPbUF
-         ejOhTOGk5Tc92yw9mOBFSvQ2ixIG1MpmgvMISrcyosWfOQm/zHi88/YWVm0cTZAiS1fV
-         dhtO1CfztH5ffxc3JhIfZhj6VQ65ZTMs6APE0NIhHiIwQYko2HlS8AVl07b03Z6ajKM7
-         l2c0a/2jizysm5CixxeGacRYYbbEmclK/M6wN6ZL3IniQxAMfiBjmYM6Dftb5callqvG
-         MWQw==
+        d=linaro.org; s=google; t=1700467898; x=1701072698; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fcUuuNi+u/xKZe4/lMw1EaVmTDsSwUBnZFGw/iTPhBg=;
+        b=jrgTFYWHZ3g5BZ98zz9W8lEUY41u9N5QUwsx2MfOQLzVJVTrWFnnfPSn808O2Vmjvb
+         kyjAoUuPWk9PiRMGtlz3GFXek51ZQ9SttIdg7fnqhrQaHGKsea9H3zuWt5ipp2U90CBl
+         Xwwd1E14bhuh3kEMg7iykHBEOdSG4O0rSiMqHeM4vGxfiVOw45dr9PCV+z/Ngbx9M0Fd
+         WTXXIC3Wk2IxJwd3XYtrOXMQyLz+lI9wPMSTHvyZvMTTxVCGoPOaeLGDTAXq09Xp2Pn2
+         eUVyvyLW2nbcFQaDbKYaVOHhs0tqsO637jaVDS5qSOlsUXkCkQyzHbfnyDjSX2HscFVx
+         LKlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700464157; x=1701068957;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6laP/QeQ8ZkNdY+I7g66zga8GNt1LoZIWkuM0YaBrIE=;
-        b=Gclkp5JEq2G6l/bcCtEWbdYldONeVEKoPwPCGUQON8+Wh6BRDFvUgA2V0BY4CaIuO1
-         5ZlIkv9ibmqc+a9CWF1F6+MGWLqjfwYTEqJQr9jELkC6eagpQMY8n9MQqc2lsZMrmXJv
-         7jsw+MC2GZ3WW+a7RDszAnJWDBH+D7jU2MYkoh/uRJzGmEWwxc51krFDLbM7JsSxXIYJ
-         1Jtu8J53aALBCJkZPv+2sEGO5dmMJORxn8YszK3yAo/G9hIy/qqQUWGYDL6JXTkX7JJh
-         JWLZ9pYhKW/RdEDVad4yaihyVAkLDTIST+bf3Exlz2t3opAGSYr11SYWqCNGuNoWJ95C
-         XePw==
-X-Gm-Message-State: AOJu0Yz8OFY1oS1LyLVZU6/z6BnTf45aYs7v/XzaeS2BRR1/W+Pm66g4
-	xTAz3ZyeQ/t00EgENvPRRDGAMQ==
-X-Google-Smtp-Source: AGHT+IGnSpGLDhGj8nPBUxiGsT/wU1tVvYfXN3TxpwhKJ+R5n5vOwx8YbFTgOFcBuhLAy8fmL2wVLw==
-X-Received: by 2002:a17:907:29d7:b0:9df:4232:5276 with SMTP id ev23-20020a17090729d700b009df42325276mr4154859ejc.76.1700464157199;
-        Sun, 19 Nov 2023 23:09:17 -0800 (PST)
-Received: from krzk-bin.. ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id d2-20020a170906640200b0099bd7b26639sm3570500ejm.6.2023.11.19.23.09.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Nov 2023 23:09:16 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v2 2/2] dt-bindings: PCI: qcom: correct clocks for SC8180x and SM8150
-Date: Mon, 20 Nov 2023 08:09:10 +0100
-Message-Id: <20231120070910.16697-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231120070910.16697-1-krzysztof.kozlowski@linaro.org>
-References: <20231120070910.16697-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20230601; t=1700467898; x=1701072698;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fcUuuNi+u/xKZe4/lMw1EaVmTDsSwUBnZFGw/iTPhBg=;
+        b=rJJPMM+IoEmrLjoKZzwtb6ybFd39Zxi0xgx4nzffNPn0t/1jEdVqoKyKsXB8sdhRdO
+         hRvFI04/AtwRr20RiPEcsQQtV0c4z8cOuBGz0h7fFX34VOf19YVDIFqPlJir5mSveXEv
+         snbZgH3nzhbCWT2PKPtm5BJ0wxkvuvR00Udscf3HXvBvTAZsOkzYAMG5WzH097faER/T
+         Ltcv2fE0yO6KQ4iHx5DbYVZOkYQG+88lDjZeEcmludK1irf23bBfUmAUENz7JE88KyuA
+         CuRywBc/3sZy3WBiZBojCMRh4X6aP3ypSmwAAcjyQDdShKz0QfDgvOa5AGmcPs24OutP
+         21mA==
+X-Gm-Message-State: AOJu0YzBpZ91lteGkvOpAax8RuClbjRRGPy5B7I8ToDFv4rgCynPm/dP
+	ZRqqhCol0SZztQf0oLE1Tykirg==
+X-Google-Smtp-Source: AGHT+IFw7EeRhj7JxE3HkKK1fMaQo4ZJRm9ZMXgx89CxzuXxbSCE0/pSwxmZk/2IWdTiXV1kPh584Q==
+X-Received: by 2002:a05:600c:1f94:b0:401:b6f6:d8fd with SMTP id je20-20020a05600c1f9400b00401b6f6d8fdmr4575322wmb.6.1700467898303;
+        Mon, 20 Nov 2023 00:11:38 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:f04:f84b:d87d:1d06? ([2a01:e0a:982:cbb0:f04:f84b:d87d:1d06])
+        by smtp.gmail.com with ESMTPSA id p13-20020a05600c358d00b0040841e79715sm12714341wmq.27.2023.11.20.00.11.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Nov 2023 00:11:37 -0800 (PST)
+Message-ID: <5f18ab4a-e4b0-48ef-946e-524e8dadf7ce@linaro.org>
+Date: Mon, 20 Nov 2023 09:11:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: sm8650-mtp: add interconnect
+ dependent device nodes
+Content-Language: en-US, fr
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231106-topic-sm8650-upstream-dt-v2-0-44d6f9710fa7@linaro.org>
+ <20231106-topic-sm8650-upstream-dt-v2-7-44d6f9710fa7@linaro.org>
+ <3f3f7c21-0d03-4b59-b12c-a72e1d2b82af@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <3f3f7c21-0d03-4b59-b12c-a72e1d2b82af@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-PCI node in Qualcomm SC8180x DTS has 8 clocks, while one on SM8150 has 7
-clocks:
+On 18/11/2023 01:25, Konrad Dybcio wrote:
+> On 6.11.2023 09:39, Neil Armstrong wrote:
+>> Now interconnect dependent devices are added in sm8650 DTSI,
+>> now enable more devices for the Qualcomm SM8650 MTP board:
+>> - PCIe
+>> - Display
+>> - DSPs
+>> - SDCard
+>> - UFS
+>> - USB role switch with PMIC Glink
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+> Little nits:
+> 
+> [...]
+> 
+>>   &tlmm {
+>>   	gpio-reserved-ranges = <32 8>;
+>> +
+>> +	sde_dsi_active: sde-dsi-active-state {
+> Dmitry voiced concerns about having the "SDE_" part here lately
+> is it part of the actual pin name (in the schematic)?
 
-  sc8180x-primus.dtb: pci@1c00000: 'oneOf' conditional failed, one must be fixed:
-    ['pipe', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'ref', 'tbu'] is too short
+Indeed, names and DISP0_RESET_N and MDP_VSYNC, will rename.
 
-  sm8150-hdk.dtb: pci@1c00000: 'oneOf' conditional failed, one must be fixed:
-    ['pipe', 'aux', 'cfg', 'bus_master', 'bus_slave', 'slave_q2a', 'tbu'] is too short
+> 
+> [...]
+> 
+>>   
+>>   &usb_1_dwc3 {
+>> -	dr_mode = "peripheral";
+>> +	dr_mode = "otg";
+> Isn't that the default?
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Without PMIC GLINK/UCSI, there's no mode switch source, so otg is not possible,
+and bootloader leaves the PMIC power state in peripheral mode.
 
----
+On the other side with the next patch, we add pmic-glink and we add
+"usb-role-switch" making it switchable.
 
-Changes in v2:
-1. Add Acs/Rb.
-2. Correct error message for sm8150.
----
- .../devicetree/bindings/pci/qcom,pcie.yaml    | 58 ++++++++++++++++++-
- 1 file changed, 57 insertions(+), 1 deletion(-)
+Neil
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-index 14d25e8a18e4..4c993ea97d7c 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-@@ -479,6 +479,35 @@ allOf:
-           items:
-             - const: pci # PCIe core reset
- 
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - qcom,pcie-sc8180x
-+    then:
-+      oneOf:
-+        - properties:
-+            clocks:
-+              minItems: 8
-+              maxItems: 8
-+            clock-names:
-+              items:
-+                - const: pipe # PIPE clock
-+                - const: aux # Auxiliary clock
-+                - const: cfg # Configuration clock
-+                - const: bus_master # Master AXI clock
-+                - const: bus_slave # Slave AXI clock
-+                - const: slave_q2a # Slave Q2A clock
-+                - const: ref # REFERENCE clock
-+                - const: tbu # PCIe TBU clock
-+      properties:
-+        resets:
-+          maxItems: 1
-+        reset-names:
-+          items:
-+            - const: pci # PCIe core reset
-+
-   - if:
-       properties:
-         compatible:
-@@ -527,8 +556,35 @@ allOf:
-         compatible:
-           contains:
-             enum:
--              - qcom,pcie-sc8180x
-               - qcom,pcie-sm8150
-+    then:
-+      oneOf:
-+        - properties:
-+            clocks:
-+              minItems: 7
-+              maxItems: 7
-+            clock-names:
-+              items:
-+                - const: pipe # PIPE clock
-+                - const: aux # Auxiliary clock
-+                - const: cfg # Configuration clock
-+                - const: bus_master # Master AXI clock
-+                - const: bus_slave # Slave AXI clock
-+                - const: slave_q2a # Slave Q2A clock
-+                - const: tbu # PCIe TBU clock
-+      properties:
-+        resets:
-+          maxItems: 1
-+        reset-names:
-+          items:
-+            - const: pci # PCIe core reset
-+
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-               - qcom,pcie-sm8250
-     then:
-       oneOf:
--- 
-2.34.1
+> 
+> Konrad
 
 
