@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61E897F2649
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:24:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49F677F264C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:24:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B4AC1C20959
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:24:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DEE9DB210B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:24:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF38220B1F;
-	Tue, 21 Nov 2023 07:24:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB1A81BDFB;
+	Tue, 21 Nov 2023 07:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hLW5jiLd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i3W3IoBD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E3E59D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:24:10 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-549070a04baso211965a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:24:10 -0800 (PST)
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09BDEFA
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:24:32 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-53e2308198eso7368106a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:24:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700551449; x=1701156249; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700551470; x=1701156270; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=IViNcGhKai0vnFNqekdX0IZziv2iQWgpb9GTiX7pJhI=;
-        b=hLW5jiLdDiqvYa6Z2mXK24EPBsd0l0dAqe/j5YdzgiR3B8Nk9bJAY7f8ibPzownWpe
-         tiEkurfX/MkAGXTcKpg2btgxrDNV0+UkNUVSwZD1DbvqO6Pay27Aq16oNU3KTrrnxkLD
-         aE0NYdd/4b/fUGm4mlK9B+0pLtTojQ9C0DKmCOwYBbmSTinAGgB/wWXrUbCtGPR8USAz
-         UZIx8JTmsoRd+32JwmkjxIZscH9+tBq1x97W2EFQbw2aJZ4m4ND2cR9sO+9OKRZjIv8Y
-         fHZ7QlZ62IlZ+0z+x2gg/lCaEaGcP6hANvfaSmHWXe5hMXXHTYxqlCZ47AouRIErM0P3
-         k+7Q==
+        bh=wakYiQ6qwcwURyr+1NPRGuqbAe6RtUDoLgBbFW5wxOc=;
+        b=i3W3IoBD8dnkl8k04pyvWoGu7towyKn3jZUpe9w/POYL2c8hTShq4M60PRHJTwBNwH
+         qfFTJn0LsyoD/rn72QLWC1PHYEofu8WOvt6qvlvtq1IgG+XHXgI2pN/3IWsiFhxNBfqz
+         HHpofYzQaQUOeyc6znvGzC3OO2QlV2pRcQ2w1TjUGKUqgZyj0JH0e8e2g2Jm13FiFWL6
+         Af2Abeo2nx1+Rg5gmXdOpGCk6QPJ/wjIkytnNrI4PIR02ROeB0a2JnQqG5tpVFMAjhDE
+         28t2lKg6j2ws2z1/lmT/qO7UbfLmWUTlUdfcFUp7iZUO/Jeno1rRUZgq6on76yJPcRSd
+         WbFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700551449; x=1701156249;
+        d=1e100.net; s=20230601; t=1700551470; x=1701156270;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IViNcGhKai0vnFNqekdX0IZziv2iQWgpb9GTiX7pJhI=;
-        b=CmMrBWlD30oGPeUxFSFKW+LLWYNJvNJ9VStFoBej0Wui9mkAnIbT3Of2opoRKQLZvg
-         n1X7McZ5lvGhLhuqtwjJzuEhwcnYyZFcMfMZ+4lpXqg4V/tZWPH/j8JmMoX+vOsniarm
-         7g0UwhxXYiC5Roju984G2Bek1dnhSD0geFacMYAQ5sjV8Op/xKdnBHO4etOlHNRkrALI
-         gNpkZ/AZdLqZa3DFa2Ddqem52d5o/pUCdXfvuUY+Q+DkuXbAJRz9Y+F7zcrzNKBjRwZE
-         MImMDJj+JrWbE6S4WTjjWdViNJtPQ1Q8nagKbqtKXfuo6Rae7vJnh/XdrekUFsilvraW
-         0PRA==
-X-Gm-Message-State: AOJu0YxSBXdA/52Ko9FbW+tTT1HRblcXHlJqL5DxDx5VOTyP7ZT4GIyZ
-	7mA/isRQ8RTpGS+PCG+17/E83g==
-X-Google-Smtp-Source: AGHT+IHz+2Ene6ij5ii9GjD9KJWJ/jYTXM9KyXM4yHeJ1u/166UT3BNHvFcjKqxktB21Q40wqezD4A==
-X-Received: by 2002:a05:6402:1296:b0:53f:ba1a:800d with SMTP id w22-20020a056402129600b0053fba1a800dmr1025400edv.14.1700551448841;
-        Mon, 20 Nov 2023 23:24:08 -0800 (PST)
+        bh=wakYiQ6qwcwURyr+1NPRGuqbAe6RtUDoLgBbFW5wxOc=;
+        b=tW7zlqVmP+bRj0qNTIKDDcUSNCjKRem2gfshNkPBwW9QFtXpamgROqpWqZbfT0QsDS
+         8EX6MxHm2/KB4YqUU8MmKZ/4ugM+Dub3ZMnjTZnS8P+HTFlUfgzvvAvbWu3Sb+636niW
+         KYGG1ukiY2S+rldztrOeNJCABTsap4BrtEfHAaMxwtH9MgqghBn/X335ovK7T2tFbOp2
+         f25D8e3xLQwfE/sKjcbJxqGSDIA72GeyYgJuw0wTTszx1OjzwyJ6wHsOK7KnL5JPhDSM
+         OYkkhkeV6RP+Xqn2CLJE+gZFoE76F1k4uROBOxI2fRjfy9gEiYG7gWyEFHH3LQgy1kqj
+         SOhw==
+X-Gm-Message-State: AOJu0YyKxIEUmbYEjTxwNumLaNncNLmsLRgVm1SyzNqy98SxNc6EM7CV
+	S7OyP6p0eJVzEX1U3HOljC7gkA==
+X-Google-Smtp-Source: AGHT+IHhdyaLvXAfUMMfZaSILNCsq/U0qfTRq39FDF7LoY5X3f8HMS/nGFlJrbKEW3JrcpYX3DYMqQ==
+X-Received: by 2002:a50:8e57:0:b0:53f:7199:f442 with SMTP id 23-20020a508e57000000b0053f7199f442mr1312079edx.3.1700551470495;
+        Mon, 20 Nov 2023 23:24:30 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id t14-20020a056402020e00b00537963f692esm4473699edv.0.2023.11.20.23.24.06
+        by smtp.gmail.com with ESMTPSA id t14-20020a056402020e00b00537963f692esm4473699edv.0.2023.11.20.23.24.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 23:24:08 -0800 (PST)
-Message-ID: <270d759f-74b3-42f0-96ec-f97bee7116b8@linaro.org>
-Date: Tue, 21 Nov 2023 08:24:05 +0100
+        Mon, 20 Nov 2023 23:24:30 -0800 (PST)
+Message-ID: <e5fbbfab-02bf-4eda-8353-87c54c307af1@linaro.org>
+Date: Tue, 21 Nov 2023 08:24:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] dt-bindings: arm: Add support for CMB element size
+Subject: Re: [PATCH v3 7/8] dt-bindings: arm: Add support for TPDM CMB MSR
+ register
 Content-Language: en-US
 To: Tao Zhang <quic_taozha@quicinc.com>,
  Mathieu Poirier <mathieu.poirier@linaro.org>,
@@ -79,7 +80,7 @@ Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
  Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
  linux-arm-msm@vger.kernel.org, andersson@kernel.org
 References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
- <1700533494-19276-2-git-send-email-quic_taozha@quicinc.com>
+ <1700533494-19276-8-git-send-email-quic_taozha@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -125,38 +126,23 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1700533494-19276-2-git-send-email-quic_taozha@quicinc.com>
+In-Reply-To: <1700533494-19276-8-git-send-email-quic_taozha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/11/2023 03:24, Tao Zhang wrote:
-> Add property "qcom,cmb-elem-size" to support CMB(Continuous
-> Multi-Bit) element for TPDM. The associated aggregator will read
-> this size before it is enabled. CMB element size currently only
-> supports 32-bit and 64-bit.
+> Add property "qcom,cmb_msr_num" to support CMB MSR(mux select register)
+> for TPDM. It specifies the number of CMB MSR registers supported by
+> the TDPM.
+> 
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
 
-
->    qcom,dsb-msrs-num:
->      description:
->        Specifies the number of DSB(Discrete Single Bit) MSR(mux select register)
-> @@ -110,4 +119,23 @@ examples:
->        };
->      };
->  
-> +    tpdm@6c29000 {
-> +      compatible = "qcom,coresight-tpdm", "arm,primecell";
-> +      reg = <0x06c29000 0x1000>;
-> +      reg-names = "tpdm-base";
-> +
-> +      qcom,cmb-element-size = /bits/ 8 <64>;
-
-One new property usually does not justify new example. Why it cannot be
-added to existing example?
-
-Anyway, I prefer not to take any new Qualcomm Coresight bindings or
-Qualcomm SoC DTS nodes with Coresight till we fix all existing warnings.
-I don't know how to fix them, so I need help with them. No such fixing
-happened so far from Qcom, so pushback is my only way to get any attention.
+I prefer not to take any new Qualcomm Coresight bindings or Qualcomm SoC
+DTS nodes with Coresight till we fix all existing warnings. I don't know
+how to fix them, so I need help with them. No such fixing happened so
+far from Qcom, so pushback is my only way to get any attention.
 
 I already commented on this in other email thread.
 
