@@ -1,132 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-1362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A69A17F3052
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 15:08:50 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6A397F308F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 15:20:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46E0D1F22C69
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:08:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C880FB21E38
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:20:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88ECA54F97;
-	Tue, 21 Nov 2023 14:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8AA654FA5;
+	Tue, 21 Nov 2023 14:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qp7XNg9Y"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kkQgLeMV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2BA5122;
-	Tue, 21 Nov 2023 06:08:41 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ALE3BQd003689;
-	Tue, 21 Nov 2023 14:08:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=POpR3zBeE/oq6Awlmfos35Xeq30KeghiCZoFjDFpWoc=;
- b=Qp7XNg9YBUTHvs9EeaEW6fccrXMgVNjjYNF+a3pepF2PSuGb+F6NZTwzRu8Ppxf6O4db
- pYeLMrw86Ow62TMPrh4SAs827vvv0iXO23hr5AlCUklN2KWbLHk9bzCNyT9J7ypp2o5C
- eMel6jEYBfr3xS1o4eqT4nqwFZ+J52NC7L/3jGViNpUMrRBGyuVadke8msuC3VxRrma8
- TUIDhNAaumgE/EeL/FfaDfyin3zmUMNr9Uuwp37LlpZkCxS8N3sWN70Nf7Jwm/BHN8gD
- ySaiI5jqY9tL50rYroQTVQAju+DKUkkNnf+4Zn4YG8KOEEUeFSAjn9SHpMZGi/jiEF3I Eg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ugcqs2qtr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 14:08:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ALE8R0q012819
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 14:08:27 GMT
-Received: from [10.216.58.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 21 Nov
- 2023 06:08:22 -0800
-Message-ID: <ac838113-501a-4f2b-b858-c59f586a9f35@quicinc.com>
-Date: Tue, 21 Nov 2023 19:38:18 +0530
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A01A9D7E;
+	Tue, 21 Nov 2023 06:20:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1700576406; x=1732112406;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=N0wFReOzgNDh2Uw8c3ueRDTaTSNzFrAmGUI7D1PGMVM=;
+  b=kkQgLeMVL7RTSonUefRoFXrx9FUnD3NYCWnOfH3lEAWr7xeMpKt/X8oS
+   L0NGI7Vo31zC7yhaF4dkS4AeWOMQzPn11BunuTRDAH7Ei9Iqbql6Fil9V
+   y0k91fV38Sb/0WDUh6bQGc/TQ8UlWlaLAMvm7lEWNV06nX49UTBuLk8fU
+   Ux4HdDP2RDtadtJgYOgCdM+P1vEVK9FezWeOLxp4RC/bGALUSU1KW5U21
+   9vqkE8j7DscKjVXvWdM8Gcc3mqA9pSGhz+0YjVBT4KjdaP25gEcwuGhH9
+   qckU/paRKcBu4E61axGT1GsS9Q3Hi79eU/irjZ5Ns9aWaG2/A8BTm2AeP
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10901"; a="372022143"
+X-IronPort-AV: E=Sophos;i="6.04,215,1695711600"; 
+   d="scan'208";a="372022143"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2023 06:20:06 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10901"; a="760114797"
+X-IronPort-AV: E=Sophos;i="6.04,215,1695711600"; 
+   d="scan'208";a="760114797"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by orsmga007.jf.intel.com with SMTP; 21 Nov 2023 06:20:01 -0800
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 21 Nov 2023 16:20:00 +0200
+Date: Tue, 21 Nov 2023 16:20:00 +0200
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 2/3] USB: dwc3: qcom: fix software node leak on probe
+ errors
+Message-ID: <ZVy7z5ZAm+IqzvM/@kuha.fi.intel.com>
+References: <20231117173650.21161-1-johan+linaro@kernel.org>
+ <20231117173650.21161-3-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] USB: dwc3: qcom: fix wakeup after probe deferral
-To: Johan Hovold <johan@kernel.org>
-CC: Andrew Halaney <ahalaney@redhat.com>,
-        Johan Hovold
-	<johan+linaro@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <stable@vger.kernel.org>
-References: <20231120161607.7405-1-johan+linaro@kernel.org>
- <20231120161607.7405-3-johan+linaro@kernel.org>
- <pgmtla6j3dshuq5zdxstszbkkssxcthtzelv2etcbrlstdw4nu@wixz6v5dfpum>
- <3ff65t36p6n3k7faw2z75t2vfi6rb5p64x7wqosetsksbhhwli@5xaxnm7zz4tu>
- <ZVx1wRefjNaN0byk@hovoldconsulting.com>
- <0b627853-78fb-4320-84e4-f88695ac6a9e@quicinc.com>
- <ZVy1kAslWYOQ6n9q@hovoldconsulting.com>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZVy1kAslWYOQ6n9q@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YeSi6sONWbW_gTpRreo2ZTUy8U9Np8im
-X-Proofpoint-GUID: YeSi6sONWbW_gTpRreo2ZTUy8U9Np8im
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-21_05,2023-11-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 phishscore=0 bulkscore=0 clxscore=1015 mlxlogscore=420
- mlxscore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311210110
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231117173650.21161-3-johan+linaro@kernel.org>
 
->>    Just one query. Even if it wakes up after closing the lid and removing
->> the mouse, wouldn't pm suspend be triggered again later by the system
->> once it sees that usb is also good to be suspended again ? I presume a
->> laptop form factor would be having this facility of re-trigerring
->> suspend. Let me know if this is not the case.
+On Fri, Nov 17, 2023 at 06:36:49PM +0100, Johan Hovold wrote:
+> Make sure to remove the software node also on (ACPI) probe errors to
+> avoid leaking the underlying resources.
 > 
-> No, we generally don't use opportunistic suspend (e.g. unlike android)
-> so the laptop will not suspend again.
+> Note that the software node is only used for ACPI probe so the driver
+> unbind tear down is updated to match probe.
 > 
-> So this is an actual bug affecting, for example, the Lenovo ThinkPad
-> X13s.
-> 
-Thanks for the clarification. I was thinking in android perspective 
-only. But if we don't wake up the system upon disconnect, wouldn't the 
-controller still be under the assumption that device is connected when 
-it is actually not and only realise this when we resume later ?
+> Fixes: 8dc6e6dd1bee ("usb: dwc3: qcom: Constify the software node")
+> Cc: stable@vger.kernel.org      # 5.12
+> Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
->> Also, the warning you are mentioning in [1] comes because this is a
->> laptop form factor and we have some firmware running (I don't know much
->> about ACPI and stuff) ?
-> 
-> No, the "firmware" in this case is just the devicetree which has the
-> DP/DM interrupts defined as edge-triggered while the driver requests
-> them as level triggered.
-> 
-> (It would look similar with ACPI firmware which also has these declared
-> as edge triggered.)
-> 
-Got it. Thanks for the clarification.
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-Regards,
-Krishna,
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 00c3021b43ce..0703f9b85cda 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -932,10 +932,12 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  interconnect_exit:
+>  	dwc3_qcom_interconnect_exit(qcom);
+>  depopulate:
+> -	if (np)
+> +	if (np) {
+>  		of_platform_depopulate(&pdev->dev);
+> -	else
+> +	} else {
+> +		device_remove_software_node(&qcom->dwc3->dev);
+>  		platform_device_del(qcom->dwc3);
+> +	}
+>  	platform_device_put(qcom->dwc3);
+>  clk_disable:
+>  	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+> @@ -955,11 +957,12 @@ static void dwc3_qcom_remove(struct platform_device *pdev)
+>  	struct device *dev = &pdev->dev;
+>  	int i;
+>  
+> -	device_remove_software_node(&qcom->dwc3->dev);
+> -	if (np)
+> +	if (np) {
+>  		of_platform_depopulate(&pdev->dev);
+> -	else
+> +	} else {
+> +		device_remove_software_node(&qcom->dwc3->dev);
+>  		platform_device_del(qcom->dwc3);
+> +	}
+>  	platform_device_put(qcom->dwc3);
+>  
+>  	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+> -- 
+> 2.41.0
+
+-- 
+heikki
 
