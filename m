@@ -1,70 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-1397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 054797F35E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 19:29:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84CCB7F35FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 19:33:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35DB01C208CE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 18:29:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F274281841
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 18:33:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0953D487BC;
-	Tue, 21 Nov 2023 18:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D30B651012;
+	Tue, 21 Nov 2023 18:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RRpmmxdF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="piN9+EZ7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7120D12E;
-	Tue, 21 Nov 2023 10:29:37 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ALGv1Tp013725;
-	Tue, 21 Nov 2023 18:29:27 GMT
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B7DC188
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 10:33:39 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ALGcHfj001708;
+	Tue, 21 Nov 2023 18:33:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=vG3SezDCYdIrXFGfXmFE+x/MXOvguDKneXltb/Dvw+g=;
- b=RRpmmxdFIfyV8sEAJLOrFChD0W4qpxdp0YQuaDTMrpROjnu6DWwRFWx0BJyOEENoorDs
- 45orMk4v8ae88bK34aGrDpcTV6UyvoBjXC8MQTI/EJ1dzroMG2o5TNG7NU8+CC0OEeI5
- 8gAoLlZ0FnP76FIe97fvsu2a1PCilwakZKSGjVgns3pyuQjtPshKnwYKziahtXfpQLxm
- 7vq9U183wbKN4AMxs6G6lVUyuZcUxCeTQAhvYZna8xUu0/QsJjwwWDYYZdd6SmN4lsXB
- oBJUzKufaNtRIhxWBRSuK2zHKsUTw0pXz3ZsnPeH5QIaannocI7cI/xxJNNlU5FB8mZe wA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ugu549g21-1
+ bh=52NiMWbzxDkTY1pJ7ExmU4D33d3aCocf4IH259Rraks=;
+ b=piN9+EZ7U+vzw1SqLyVHxd0pJhEQISkPHCmVeKIbj5WfDOKwQ8FoFZJvtFW+jjoyQJAR
+ /1s7bDPNckCKvdUe0nU0y6R+jNCELdwLoHhqq3DBzz5TV6yZYewodzMrHjXQpz0mU+wv
+ LHBSqmsoiJUTVtHw3ZvOOyL3RcWB6EPgEN+U4rs3Qk+7AzJmgyDbUx/CCyo+ihtEPeyX
+ sasW4RWw8Z26U900QKpNyVS3kKvZsO7dE2r9pKBDF819UecfXlpktyjQDSTdN8picmqx
+ +/0MhfvUWxeY+WlF+fB2Ky22EIPoZ12M9c/jUsqc4+/4n2SuFZiS2F/NI68tHuNb6hnW cQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ugssksqwj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 18:29:26 +0000
+	Tue, 21 Nov 2023 18:33:27 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ALITPEY021725
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ALIXRg7029936
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 18:29:25 GMT
+	Tue, 21 Nov 2023 18:33:27 GMT
 Received: from abhinavk-linux.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 21 Nov 2023 10:29:25 -0800
+ 15.2.1118.40; Tue, 21 Nov 2023 10:33:26 -0800
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-To: <freedreno@lists.freedesktop.org>, Jonathan Marek <jonathan@marek.ca>
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
 CC: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Rob Clark
-	<robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean
- Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Konrad
- Dybcio <konrad.dybcio@somainline.org>,
-        Vinod Koul <vkoul@kernel.org>, Robert
- Foss <rfoss@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
+        Stephen Boyd
+	<swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter
+	<daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
         <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] drm/msm/dsi: use the correct VREG_CTRL_1 value for 4nm cphy
-Date: Tue, 21 Nov 2023 10:29:03 -0800
-Message-ID: <170059072153.29644.6387537767336695325.b4-ty@quicinc.com>
+        <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH] drm/msm: remove exra drm_kms_helper_poll_init() call
+Date: Tue, 21 Nov 2023 10:33:17 -0800
+Message-ID: <170059152901.8368.6408183714962644374.b4-ty@quicinc.com>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231110000216.29979-1-jonathan@marek.ca>
-References: <20231110000216.29979-1-jonathan@marek.ca>
+In-Reply-To: <20231107111413.2212942-1-dmitry.baryshkov@linaro.org>
+References: <20231107111413.2212942-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,28 +75,30 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PvQBdut0lXxlf4nWVQaud8WOdkgd3nJl
-X-Proofpoint-ORIG-GUID: PvQBdut0lXxlf4nWVQaud8WOdkgd3nJl
+X-Proofpoint-GUID: B7rwARA7P5hyZQuhikkYD-HHR9Er29FZ
+X-Proofpoint-ORIG-GUID: B7rwARA7P5hyZQuhikkYD-HHR9Er29FZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-21_10,2023-11-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 phishscore=0 impostorscore=0 priorityscore=1501 spamscore=0
- lowpriorityscore=0 mlxlogscore=379 adultscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311210144
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ mlxscore=0 spamscore=0 clxscore=1015 malwarescore=0 mlxlogscore=420
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311210145
 
 
-On Thu, 09 Nov 2023 19:02:14 -0500, Jonathan Marek wrote:
-> Use the same value as the downstream driver. This change is needed for CPHY
-> mode to work correctly.
+On Tue, 07 Nov 2023 13:14:13 +0200, Dmitry Baryshkov wrote:
+> It seems during rebases I have left a call to drm_kms_helper_poll_init()
+> which is not guarded by the (priv->kms_init) check. This leads to the
+> crash for the boards which don't have KMS output. Drop this call, as
+> there is a correctly guarded one next to the one being removed.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] drm/msm/dsi: use the correct VREG_CTRL_1 value for 4nm cphy
-      https://gitlab.freedesktop.org/drm/msm/-/commit/b3e0f94d1570
+[1/1] drm/msm: remove exra drm_kms_helper_poll_init() call
+      https://gitlab.freedesktop.org/drm/msm/-/commit/3944e343e54b
 
 Best regards,
 -- 
