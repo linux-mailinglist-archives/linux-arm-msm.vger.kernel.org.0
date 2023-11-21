@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C92AB7F26A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:47:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 804657F26C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:58:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EBD221C213C1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:47:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3AF6C282644
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:58:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3389328D5;
-	Tue, 21 Nov 2023 07:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B42A6374D1;
+	Tue, 21 Nov 2023 07:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xxL10NUn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="t/FFsngs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C77112
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:47:49 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-5440f25dcc7so7398588a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:47:49 -0800 (PST)
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F04E6D9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:58:35 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40b2b3da41eso898835e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:58:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700552868; x=1701157668; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700553514; x=1701158314; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TmiocgWVUHJm0ZVecWFSig6IiGg3Msxyl8SKRRupJjA=;
-        b=xxL10NUnEyBCxd3mlcivlXeFVXVJ7EYT+NqDaiKDbfeDzrBqN36ZKMVMlZJwKkhuhA
-         A/8Y7qiObt9wuba+Whbs6UmTWh14TMNmZYqBHdVWEBW1otwqWL0DLSX/XZRPq+qd5rdw
-         fgF2JRXpBJBq4Np5/YAyeJ6FmOowK/U6wygktt7ZRKVA8yOL1J7Pfsro97GfU2TlnH6X
-         I0H8UEl7nZs3iPgs2a1XKbK6kz9mliYj5M1o1j+qRQx6mRbFqKM+KM91GEdyFJx5r7XZ
-         kf0m+mx1FAFOyJ3lmLaNogJDp1DiygDNmJ1RynxrKoCCDSVObsqzR4r/afxL6iV4VSqS
-         SwLA==
+        bh=oJuNEGqlnS+pUr1m/+KruHzTMkQlpu3jVo3/XXLiyM0=;
+        b=t/FFsngsFnw184L/V3tn0tBMRcQ1tPrYapwE/JAyJTjTDnqwzRykSNKToUxfhyJ0E0
+         ZNFP7RREFUQdb4BgH7VoyHkT2M0+gPOQsvEDQ5Q3K5e8aRmOg12vGJGrsivM31Y2lZHo
+         11oll0pWrQHMnel+2lZtfITtJcrLmDP0TirO7LaxJ0Sq1yDQy4Qlusq8xA+StreMbD43
+         XdZsyeispGCliyotqkvWgo63Kk6uWmoCn3sGWL4m+KFePNdDOPGHgw8Wr+kG9ysCRo11
+         me7lRZGNNtIuGYkaOtykuNmNiFJgYrtUWguTCev3C6AbpbMQqXR1NLOTGcxcAmTiCBFU
+         ri6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700552868; x=1701157668;
+        d=1e100.net; s=20230601; t=1700553514; x=1701158314;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TmiocgWVUHJm0ZVecWFSig6IiGg3Msxyl8SKRRupJjA=;
-        b=HCUEy49Qpa6wTkEFM232O+VxpWAK+Inc8jNuPxY1mtcVMqaBkAcvFn4daiW4ZmjdMF
-         mZmEyMudxcZF0b4gJiq0UQafwM4/vf1CvVKyGPOvlOXleciuNZ/lZHLYbnxr6TrFLKDn
-         YSEqn/BtVHvRNywGdUiVV0xSja/w6iYv20orpn1zp38NOOhqVhW2Azh2hdc11d9BfvKZ
-         JCSnjLQtHPNglpZ2fDOKi5/RAFri3eVkXX5St4RpZynhRjhHE7TbCo5LbqDcqwKRFNfj
-         WGmE/NrbyZalOHMwxt9P8LCwbiEstalGwQsxScgeLPwIUsxSVMbxYhAAHLa6JcqZmfnr
-         78mA==
-X-Gm-Message-State: AOJu0Ywwi0nxa/pOcg08ZZF6jQ+cjw8p6mz9RvdDV3pvw+Cba/tdsRbz
-	vMF7Q2uB6Zf4m2kISvwkMPKLkQ==
-X-Google-Smtp-Source: AGHT+IE/ryIFFXRtcdPlnGO+HGiheve5UvNwXGz0AUkcFXfXA0zX6H0fGrp/KbgbJj9M5p0o6Usniw==
-X-Received: by 2002:a17:906:51d8:b0:a02:abc1:1911 with SMTP id v24-20020a17090651d800b00a02abc11911mr170546ejk.7.1700552868117;
-        Mon, 20 Nov 2023 23:47:48 -0800 (PST)
+        bh=oJuNEGqlnS+pUr1m/+KruHzTMkQlpu3jVo3/XXLiyM0=;
+        b=LlfmOf9pEZCXq4KBb+6Ap5rebOaBBQWeOuQ5LhbYlfCnxEY2wQEiPj6cVccVF81t7I
+         KhkjrMlbUCzan5Of9vpJx2q+9yS3X807ZiVT6GmXW01ZRWzT+pz3W4e6Yf7U3X6aT6ps
+         IuexDTyyj3dKLPg5EC61rawSh+y7Kd+kflGXgr2L+xN/gAh5SLw7ldwO4PnUKPfWhmIX
+         KSWH3zfvbtU1ZN6D4Zd4cTFXBWKjKLA5/ulQmd1mdB8L16qQndf5BbEmiOGsFToTrDj0
+         cqhaGDPID7Bpda4wZLjgmUQ/9jP00r3EzYBTUBrSEF6BGU1WOSxl3vsDtdirfGUVqgQQ
+         I6ow==
+X-Gm-Message-State: AOJu0Ywq7ci03r80YCvAHqTiPvnEUryBXX38+NXkAl3uOu18CryWq8AH
+	LJnf09jLbLvkAms9v9Z6KvT6Ww==
+X-Google-Smtp-Source: AGHT+IEc9ighI2jnXI3OONs+u5iK6kPWU973JWyjxNk8IREKkRgasteP2ZIJ6h7NyU4JNUzAPqf4sA==
+X-Received: by 2002:a05:6000:156c:b0:32d:9fc9:d14a with SMTP id 12-20020a056000156c00b0032d9fc9d14amr10272568wrz.12.1700553514083;
+        Mon, 20 Nov 2023 23:58:34 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id n21-20020a1709062bd500b00a015eac52dcsm752988ejg.108.2023.11.20.23.47.45
+        by smtp.gmail.com with ESMTPSA id d8-20020adffbc8000000b003316aeb280esm12851648wrs.104.2023.11.20.23.58.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 23:47:47 -0800 (PST)
-Message-ID: <16cba31d-534a-4658-868a-c1ff3165cf11@linaro.org>
-Date: Tue, 21 Nov 2023 08:47:45 +0100
+        Mon, 20 Nov 2023 23:58:33 -0800 (PST)
+Message-ID: <6ecd783e-4c3c-4294-b55a-bec5015e7aec@linaro.org>
+Date: Tue, 21 Nov 2023 08:58:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,27 +62,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
+Subject: Re: [PATCH v4 1/3] dt-bindings: mfd: qcom,spmi-pmic: Add pm8916
+ vm-bms and lbc
 Content-Language: en-US
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
- <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- Andrew Davis <afd@ti.com>, Arnd Bergmann <arnd@arndb.de>,
+To: Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Heiko Stuebner <heiko@sntech.de>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michal Simek <michal.simek@amd.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>,
- Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-arm-msm@vger.kernel.org
-References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
- <14c3900f-8f2e-4614-8317-f85763d1d953@lunn.ch>
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Stephen Boyd <sboyd@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231120-pm8916-dtsi-bms-lbc-v4-0-4f91056c8252@trvn.ru>
+ <20231120-pm8916-dtsi-bms-lbc-v4-1-4f91056c8252@trvn.ru>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -128,48 +120,21 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <14c3900f-8f2e-4614-8317-f85763d1d953@lunn.ch>
+In-Reply-To: <20231120-pm8916-dtsi-bms-lbc-v4-1-4f91056c8252@trvn.ru>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/11/2023 21:15, Andrew Lunn wrote:
->> +Naming and Valid Characters
->> +---------------------------
->> +
->> +1. Node and property names are allowed to use only:
->> +
->> +   * lowercase characters: [a-z]
->> +   * digits: [0-9]
->> +   * dash: -
->> +
->> +2. Labels are allowed to use only:
->> +
->> +   * lowercase characters: [a-z]
->> +   * digits: [0-9]
->> +   * underscore: _
->> +
->> +3. Unit addresses should use lowercase hex, without leading zeros (padding).
->> +
->> +4. Hex values in properties, e.g. "reg", should use lowercase hex.  The address
->> +   part can be padded with leading zeros.
->> +
->> +Example::
->> +
->> +	gpi_dma2: dma-controller@800000 {
->> +		compatible = "qcom,sm8550-gpi-dma", "qcom,sm6350-gpi-dma";
->> +		reg = <0x0 0x00800000 0x0 0x60000>;
->> +	}
+On 20/11/2023 15:03, Nikita Travkin wrote:
+> PM8916 (and probably some other similar pmics) have hardware blocks for
+> battery monitoring and charging. Add patterns for respecive nodes so the
+> devicetree for those blocks can be validated properly.
 > 
-> Hi Krzysztof
-> 
-> What i like about the Linux Coding Style is that most sections have a
-> Rationale. I like the way it explains the 'Why?'. It makes it feel
-> less arbitrary. When it does not seem arbitrary, but reasoned, i find
-> it easier to follow.
-> 
-> Could you add rationale like the Coding Style?
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
-I did not do it on purpose because it would grow too much.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
