@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A99E7F2620
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:07:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4424C7F262F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:14:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B0E41C2048C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:07:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 670641C208D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:14:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC19116435;
-	Tue, 21 Nov 2023 07:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 505A81F95F;
+	Tue, 21 Nov 2023 07:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BYZYu4Ok"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q1MjXk70"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB875125
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:07:04 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-548f6f3cdc9so712882a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:07:04 -0800 (PST)
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D384C8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:14:13 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9fffa4c4f43so182756366b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:14:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700550423; x=1701155223; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700550851; x=1701155651; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=FrokW0Nl9xuh4DziWldK3A7Rlx6bt8feILtugT29ZAI=;
-        b=BYZYu4OkHivNqzaM6VzJLRQhvNwtEQfsRXQQe3rRuVrYBnRd5lcEclrKSRDD6IIxL5
-         E3dzaIx58C/ASK4ZD4bQEqq0xYr30G5k67BfUdofpcI5xe36VqW0GegKKtsuD5TIO0mm
-         2KWzPSsjswjPHsX+7GjXw7OnpeIVlhWWLhyVZaAIkGdGi6rN6kH92o207YFqZxCZmr4t
-         SMR43eP4RfZbos72wr9A5bs3mvkYc3azkpMpKBlXRJJGRUxS2cnE9A8AlhYaT45QJwIb
-         1BqpgrJHfeU/se4lj3jivhVm8HQAG2O3zwJQUJm/F4fZDlwl6ge5cOEMWX4kldgUmtUI
-         eyIA==
+        bh=0qazkUkCGgv5sfVY1VHiC2TdShNHpB3pRIRbc6XsuWk=;
+        b=Q1MjXk70i/DV+Qj3rKMl1DR92XsGo/IWwaGHpghvoln3Xu3kvd3IN4Dq+DTVaBRzuN
+         okw0PrGlZF6Lz9W0IgHPBEMX49l6ehmKCXQcbkPYSp/p/kNVqwWJ0sVfttXomwGGGEA5
+         WhxhRB0NJ7zoZfEPqxZd2GjdpXGQCLt2TdCjrwdhDU1WQ0LXKOYi54+9UzefRS4MaElv
+         nfdpm0kb//4JkN6Kw+Y5Ts26+CH//aveG6SfV0mFc32YstQ1FAcowJvBsrUiDMXUqHZY
+         XjQWqsreZPmnT2i3+6CCpn0ZdXXHGTC9fbBVMr41ctrkCl8H9Huvm8nNhdGLKibE22uW
+         EV+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700550423; x=1701155223;
+        d=1e100.net; s=20230601; t=1700550851; x=1701155651;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FrokW0Nl9xuh4DziWldK3A7Rlx6bt8feILtugT29ZAI=;
-        b=jK0yYg9fij4mboE5M5uRI2s4loRzvMTK9LZtX7n545nm6whF9Js75E5pEbfCAON+IV
-         HVxxuAvCBBcA3NX9qpvsxVfbDyUsGtypjYR4qi1bopc7jy5UeQ6ls2b1a5IsQEJixVOa
-         efMyU0FFqNRQTf48FN2suMbUmlQk2+p+62BCp1Ifny2kPt+1VeIvMBXfBYFR8E1OEvBR
-         Qxf7N6J06JsDl9ZLltRA+fUx0qRQQONJXWuu2BdvczGZqGZQLybUl/ayCbDk5EiOSVDB
-         f9pKi06SZkiTMmX1X1x1JEQkFe+eg2G7fz6/k7LNoNmM7wlXlwAlyy6twHrBmObPeo+H
-         hkVQ==
-X-Gm-Message-State: AOJu0Yz4OCzs2lAnURO4aa7+2EEqXhyvBxYPs2GYhH3nOEGIJCFdtLKj
-	INqxaky2lFMdGsEqkVHJ83WS+w==
-X-Google-Smtp-Source: AGHT+IFLkVCMG1fnQx3ZK5hE5ylIzX8wN/whxnhiyu0oSsdqqaC14vSVxfEPVKtrrhs+grxrFMb0dw==
-X-Received: by 2002:aa7:da06:0:b0:548:55aa:a592 with SMTP id r6-20020aa7da06000000b0054855aaa592mr1124490eds.9.1700550423177;
-        Mon, 20 Nov 2023 23:07:03 -0800 (PST)
+        bh=0qazkUkCGgv5sfVY1VHiC2TdShNHpB3pRIRbc6XsuWk=;
+        b=NHo2/VrKBP+g/OA2gUx8Fes7B8y6iyG6aj4TYVTvIWLIS+XpqauY0cyaduxQKXcjiX
+         aHifhkClrmJjHE2mtyJ/EdbK/+a8bts2NMfyXAzYHzVdXafnM6Ne+nWIwMaaJmvPTeMy
+         e6pUz8JUqfOeplnINKHlEfbdslqzsLig3IQ22o3u1JgxdNXukH1CkIsudSiJeBtNC0+6
+         FAWXVz+xiR9tcnV0BJW8weVUt98sbiK+5q5yufBfYUss2AsxBRtcnu7rY3cFgrq0cHnh
+         waQD7HBcjO7nBc7HQDxY+OxngI9KGNNVkRHPSrw268UzOxHtLVjtr66RlQ9WsqBT3OCS
+         aB9w==
+X-Gm-Message-State: AOJu0YzcufHamT4RcYKeKnVoe+coDY95HpgSbPTMa0GEy2K0VyKM2FX2
+	R+CcNbXFeOyJEbEdDvZftZxt6A==
+X-Google-Smtp-Source: AGHT+IHuS+qXtmjZh5mZ4sU/5nD1p0e12yGf9KNTJtYYjKAIBNUiyns7xdbXtfYT+i4gapbvq2vjgQ==
+X-Received: by 2002:a17:906:90b:b0:9bd:b8d0:c096 with SMTP id i11-20020a170906090b00b009bdb8d0c096mr6920259ejd.21.1700550851491;
+        Mon, 20 Nov 2023 23:14:11 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id c17-20020a056402101100b0054851cd28d2sm4011789edu.79.2023.11.20.23.07.02
+        by smtp.gmail.com with ESMTPSA id g1-20020a170906538100b009fef7d22c98sm1814674ejo.35.2023.11.20.23.14.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 23:07:02 -0800 (PST)
-Message-ID: <e7565064-42a4-43fd-82f7-2e84066bee55@linaro.org>
-Date: Tue, 21 Nov 2023 08:07:01 +0100
+        Mon, 20 Nov 2023 23:14:11 -0800 (PST)
+Message-ID: <c622c2a5-665f-4ee3-b3dd-fafb3adf6191@linaro.org>
+Date: Tue, 21 Nov 2023 08:14:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,17 +62,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] firmware: qcom: qcm: fix unused
- qcom_scm_qseecom_allowlist
+Subject: Re: [rft, PATCH v1 1/1] pinctrl: qcom: lpass-lpi: Remove unused
+ member in struct lpi_pingroup
 Content-Language: en-US
-To: Maximilian Luz <luzmaximilian@gmail.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+ linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Cc: kernel test robot <lkp@intel.com>
-References: <20231120185623.338608-1-krzysztof.kozlowski@linaro.org>
- <2f14aab8-a5bb-4af4-9475-afe6b678a7fd@gmail.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Linus Walleij <linus.walleij@linaro.org>
+References: <20231120193353.1670732-1-andriy.shevchenko@linux.intel.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -118,51 +118,59 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <2f14aab8-a5bb-4af4-9475-afe6b678a7fd@gmail.com>
+In-Reply-To: <20231120193353.1670732-1-andriy.shevchenko@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 20/11/2023 20:56, Maximilian Luz wrote:
-> On 11/20/23 19:56, Krzysztof Kozlowski wrote:
->> For !OF builds, the qcom_scm_qseecom_allowlist is unused:
->>
->>    drivers/firmware/qcom/qcom_scm.c:1652:34: error: ‘qcom_scm_qseecom_allowlist’ defined but not used [-Werror=unused-const-variable=]
->>
->> Fixes: 00b1248606ba ("firmware: qcom_scm: Add support for Qualcomm Secure Execution Environment SCM interface")
->> Reported-by: kernel test robot <lkp@intel.com>
->> Closes: https://lore.kernel.org/oe-kbuild-all/202311191654.S4wlVUrz-lkp@intel.com/
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   drivers/firmware/qcom/qcom_scm.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index 520de9b5633a..ecdb367dc9b8 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -1649,7 +1649,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
->>    * We do not yet support re-entrant calls via the qseecom interface. To prevent
->>    + any potential issues with this, only allow validated machines for now.
->>    */
->> -static const struct of_device_id qcom_scm_qseecom_allowlist[] = {
->> +static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
->>   	{ .compatible = "lenovo,thinkpad-x13s", },
->>   	{ }
->>   };
+On 20/11/2023 20:26, Andy Shevchenko wrote:
+> The group is not used anywhere, remove it. And if needed, it should be
+> struct pingroup anyway.
 > 
-> Thanks! Given that we're right now only allowing qseecom clients to load
-> on devices within that list, maybe it would be cleaner to make
-> QCOM_QSEECOM depend on OF explicitly instead?
+> While at it, replace kernel.h with what exactly being used.
 
-There is no code dependency here. The driver should already depend on
-ARCH_QCOM which select OF. Are you saying it does not depend on
-ARCH_QCOM? Why?
+Missing Reported-by and Closes by for LKP... Unless you discovered it
+without its report?
 
 > 
-> Anyway, I'm also fine with this solution.
+> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+> ---
 > 
-> Acked-by: Maximilian Luz <luzmaximilian@gmail.com>
+> _Seems_ like this (I only read the code), hence rft.
 > 
+>  drivers/pinctrl/qcom/pinctrl-lpass-lpi.h      |  6 +----
+>  .../pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c   | 16 -------------
+>  .../pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c | 20 ----------------
+>  .../pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c   | 20 ----------------
+>  .../pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c   | 15 ------------
+>  .../pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c   | 16 -------------
+>  .../pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c   | 24 -------------------
+
+Missing sm8550.
+
+>  7 files changed, 1 insertion(+), 116 deletions(-)
+> 
+> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+> index 206b2c0ca828..a9b2f65c1ebe 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
+> @@ -6,8 +6,8 @@
+>  #ifndef __PINCTRL_LPASS_LPI_H__
+>  #define __PINCTRL_LPASS_LPI_H__
+>  
+> +#include <linux/array_size.h>
+>  #include <linux/bits.h>
+> -#include <linux/kernel.h>
+>  
+>  #include "../core.h"
+>  
+> @@ -45,11 +45,8 @@ struct pinctrl_pin_desc;
+>  
+>  #define LPI_PINGROUP(id, soff, f1, f2, f3, f4)		\
+>  	{						\
+> -		.group.name = "gpio" #id,			\
+> -		.group.pins = gpio##id##_pins,		\
+
+Aren't these used by core pinctrl code?
 
 Best regards,
 Krzysztof
