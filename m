@@ -1,152 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-1300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49F677F264C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:24:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2191C7F2665
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:33:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DEE9DB210B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:24:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C338A2829BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:33:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB1A81BDFB;
-	Tue, 21 Nov 2023 07:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9F4C225D7;
+	Tue, 21 Nov 2023 07:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="i3W3IoBD"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="YR0UOdeg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09BDEFA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:24:32 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-53e2308198eso7368106a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:24:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700551470; x=1701156270; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wakYiQ6qwcwURyr+1NPRGuqbAe6RtUDoLgBbFW5wxOc=;
-        b=i3W3IoBD8dnkl8k04pyvWoGu7towyKn3jZUpe9w/POYL2c8hTShq4M60PRHJTwBNwH
-         qfFTJn0LsyoD/rn72QLWC1PHYEofu8WOvt6qvlvtq1IgG+XHXgI2pN/3IWsiFhxNBfqz
-         HHpofYzQaQUOeyc6znvGzC3OO2QlV2pRcQ2w1TjUGKUqgZyj0JH0e8e2g2Jm13FiFWL6
-         Af2Abeo2nx1+Rg5gmXdOpGCk6QPJ/wjIkytnNrI4PIR02ROeB0a2JnQqG5tpVFMAjhDE
-         28t2lKg6j2ws2z1/lmT/qO7UbfLmWUTlUdfcFUp7iZUO/Jeno1rRUZgq6on76yJPcRSd
-         WbFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700551470; x=1701156270;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wakYiQ6qwcwURyr+1NPRGuqbAe6RtUDoLgBbFW5wxOc=;
-        b=tW7zlqVmP+bRj0qNTIKDDcUSNCjKRem2gfshNkPBwW9QFtXpamgROqpWqZbfT0QsDS
-         8EX6MxHm2/KB4YqUU8MmKZ/4ugM+Dub3ZMnjTZnS8P+HTFlUfgzvvAvbWu3Sb+636niW
-         KYGG1ukiY2S+rldztrOeNJCABTsap4BrtEfHAaMxwtH9MgqghBn/X335ovK7T2tFbOp2
-         f25D8e3xLQwfE/sKjcbJxqGSDIA72GeyYgJuw0wTTszx1OjzwyJ6wHsOK7KnL5JPhDSM
-         OYkkhkeV6RP+Xqn2CLJE+gZFoE76F1k4uROBOxI2fRjfy9gEiYG7gWyEFHH3LQgy1kqj
-         SOhw==
-X-Gm-Message-State: AOJu0YyKxIEUmbYEjTxwNumLaNncNLmsLRgVm1SyzNqy98SxNc6EM7CV
-	S7OyP6p0eJVzEX1U3HOljC7gkA==
-X-Google-Smtp-Source: AGHT+IHhdyaLvXAfUMMfZaSILNCsq/U0qfTRq39FDF7LoY5X3f8HMS/nGFlJrbKEW3JrcpYX3DYMqQ==
-X-Received: by 2002:a50:8e57:0:b0:53f:7199:f442 with SMTP id 23-20020a508e57000000b0053f7199f442mr1312079edx.3.1700551470495;
-        Mon, 20 Nov 2023 23:24:30 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id t14-20020a056402020e00b00537963f692esm4473699edv.0.2023.11.20.23.24.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 23:24:30 -0800 (PST)
-Message-ID: <e5fbbfab-02bf-4eda-8353-87c54c307af1@linaro.org>
-Date: Tue, 21 Nov 2023 08:24:28 +0100
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2075.outbound.protection.outlook.com [40.107.244.75])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A7E0E7;
+	Mon, 20 Nov 2023 23:33:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=kZDtXcrEQ7VmNbZklY8E24magCvyUCV4I18DaPz0CoV+DDejjDN8Cr3RgsF6O9/aPkNwDdBlpA5Ccx+r3sDhCVxXw9qkcNnjxr8IEYslCFATZrwTKUlLTTJS+bpMH4mFj+TkcmomYe4SOtof/Hrc6FjtbZTCsI7ol7V2xVAPcNRlq5yhz2WLJfu4JF/CxDFVDNq/50QPMw4u9dXSBZwbEOS+nPrsOvmpbem8R1CHMvPeCgQpCQpZH/lw9KaSnQzCzHV52cNbAM/tWpAvi0Dnj0oa+EKmHrOHerEJpdMWC0tmnXPUWZ+UALX1g8vW4ikP1AV8pmFYzgnZNakqcMfBMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5ezZipQm0TiYn50WZP0b9WGZ1zBEzj5ziV2/ciaWcAI=;
+ b=bQ8cjX61OwjIsRko9qwEg3OqhAvqg9fMsYE37j/fo3KiCcYu+gy+pCf6Z5Aw0px32UGfa084WUzu+Fj7bntH3WnjbfT2eVVVVkzJeU16ZedEtuyIbwTSReAMfqC/iEKc/x7a4Y2XfkSPP2Pus1hgN7WgO1EfB9bFIBfuNxehCgtSVKQRZPruHo/Th6EascFrSODb59Tcl6Jb8XV6/xbT4rzk4xlbhD9T8Ass7efEszPTh0ah0LyGQxxQQ0o47TtK1a2ayerVKZAoZqF7tklFIZN2fGFXGgCvWz23KtsiWhDJwKTUrnxASB3aN8T9qHBqANrswFydEyWppi4TsWWbww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5ezZipQm0TiYn50WZP0b9WGZ1zBEzj5ziV2/ciaWcAI=;
+ b=YR0UOdeg8YJIRfwlEI2wh/620/25qbpcuQzmhMYilnzBEV0yVzqqrx6UrwCG8f+uzf35nwy205HGVXpWqEBwTuVBqodnnMu10eDZ2ZpbBjTAulrTVgzxOjKflnb9crFSTepODMoX7qhoPwGPOss+lNB6KdXQUx+B14TYOJoOydg=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BYAPR12MB4758.namprd12.prod.outlook.com (2603:10b6:a03:a5::28)
+ by DS0PR12MB9059.namprd12.prod.outlook.com (2603:10b6:8:c5::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7002.27; Tue, 21 Nov
+ 2023 07:33:34 +0000
+Received: from BYAPR12MB4758.namprd12.prod.outlook.com
+ ([fe80::39a2:42da:ea20:3349]) by BYAPR12MB4758.namprd12.prod.outlook.com
+ ([fe80::39a2:42da:ea20:3349%5]) with mapi id 15.20.7002.028; Tue, 21 Nov 2023
+ 07:33:34 +0000
+Message-ID: <bd49f17c-7ebf-4e19-b77b-b5ec95375f7d@amd.com>
+Date: Tue, 21 Nov 2023 08:33:15 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
+ <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
+ Andrew Davis <afd@ti.com>, Arnd Bergmann <arnd@arndb.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Heiko Stuebner <heiko@sntech.de>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>,
+ Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org
+References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+ <19358871-009d-4498-9c13-90d5338b1e9f@amd.com>
+ <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
+ <CAMuHMdW4WPJT0Km7w8RWrGJaztk6QDGoFAn0bdGbrEsw81R1FA@mail.gmail.com>
+ <acfdce81-f117-4a1a-a9fe-e2b4b8922adb@linaro.org>
+From: Michal Simek <michal.simek@amd.com>
+Autocrypt: addr=michal.simek@amd.com; keydata=
+ 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
+ 3i3l5DA=
+In-Reply-To: <acfdce81-f117-4a1a-a9fe-e2b4b8922adb@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: VI1PR0102CA0071.eurprd01.prod.exchangelabs.com
+ (2603:10a6:803::48) To BYAPR12MB4758.namprd12.prod.outlook.com
+ (2603:10b6:a03:a5::28)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/8] dt-bindings: arm: Add support for TPDM CMB MSR
- register
-Content-Language: en-US
-To: Tao Zhang <quic_taozha@quicinc.com>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Suzuki K Poulose <suzuki.poulose@arm.com>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Konrad Dybcio <konradybcio@gmail.com>, Mike Leach <mike.leach@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Jinlong Mao <quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, coresight@lists.linaro.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Trilok Soni <quic_tsoni@quicinc.com>, Song Chai <quic_songchai@quicinc.com>,
- linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
- <1700533494-19276-8-git-send-email-quic_taozha@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <1700533494-19276-8-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR12MB4758:EE_|DS0PR12MB9059:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6fc86bc5-4175-420c-307b-08dbea642af5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	sTTS9Zoh6/4tc4DcdUXN8C96BKDvLe4+zT9nzzIyX/LByDQEkk2geg4i3+hosAhoU+Iiohw+PhvmDj1OSQhSPHtxBpelunzOGpe1vOCjXeqalheb56EZSuvc3lFtH+oboDC9YXdVjc8H2JV3LAjhxQg9evcf/uM9G1rHW/O1fnbCcCglYFzK6ozuD20gW8F1LYeebCt6gUKka10/eA9TuCXZQBN3KbihouR6jtIRI5bZ43ZYmRmxF7NJZ7q+YDoazza0F3pENyNMpGp2WlmkWbDEFTIhZ+i0N3ysTdR66Ol9sdHwobeUhsE6ETvuXp+bFtMZxJAQfQU09DBGM7AD6OWgHlZjODpo5V5EomsKTPZPwGSMqg51aM6VerDQw3AWow/sbls5RxhOmBYmMfUEJ6PiObjMOoW2Sw3NUHK+AN5egOYjTyPoHhTgeD8gE32ojs88TgRr28E8zNI4eGdWF+qHvuBFunJMG4kToZiFr+rAKKpfVJKVFIxOdQ3XlUedsEmayyx8EpC3vGfl7UXRnLzarlAJsYdyJcMcSKHquQtCWFEgOS47HaVuCYPvTyO4QpiJ+FCjGS5tGwaCU6KobeCTghOznIbfitFnzvU5HKf3Ij4ocrJUbzopCJnp4gB0qKflTPwNVT/AserHeIIXtQ==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB4758.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(376002)(136003)(366004)(396003)(39860400002)(230922051799003)(186009)(64100799003)(451199024)(1800799012)(66556008)(66476007)(66946007)(110136005)(316002)(54906003)(53546011)(6512007)(36756003)(6666004)(6506007)(2616005)(26005)(478600001)(6486002)(38100700002)(31696002)(86362001)(44832011)(5660300002)(7416002)(31686004)(2906002)(8676002)(4326008)(8936002)(41300700001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VFdJMlA0Uk00NkJscFp4dktmY1hZckdLbU5xMFdFaHFURmNBN0YreHVFYWMx?=
+ =?utf-8?B?SVY4VSt5QWtFSjdNV210MU9qeGN4MTdtMGsrSndGRTIra2k2UzR3RWo4N1ZX?=
+ =?utf-8?B?Y3laS3E5L2N0Y0hGZWtzQUpqWFA0d011ak52WnNieWZoT0crSDFNL3hyTTFC?=
+ =?utf-8?B?bzFRVGkwazJXc2tIZXNTdndXNnRUb2hTNnlxK2lYNnRPc1JLY1B4a1VtNklG?=
+ =?utf-8?B?MkhhZnNPaUM0RFdzQm9SVk9pNGl2QTAyVTExcm9vT29QSUVpUlpEbnltZHZ6?=
+ =?utf-8?B?d3ErblJlQlhsblluR3p5cUJRL1NlajBkQ2VEQjlSRFB0T1RLUkE5cG1Qdk1X?=
+ =?utf-8?B?TTVxVFdzZnhVVmFjU2MwblFObmNwZGVoWkdDQk90a2tvWDBEZUtFb0luY05G?=
+ =?utf-8?B?a3hEanpwUHR6K28vS2t2MUVtWkpieGc5WFNrbjFWcmVSVHRPZ0liZE5vU2RN?=
+ =?utf-8?B?aE4reGFCVkhLcExWdXcxU1oxZWtWZUhLNTluQVM0WE5NUmU1TlpKK01SdE5Z?=
+ =?utf-8?B?NEpjTUw3TGt1Nk4xVUNxbmtTcGJRTFY5c2pHbW84M29YVmN4d3hQTnFuRFI0?=
+ =?utf-8?B?eG54TDJNWndWT2xNOTk1bU5pY1VuUlpxRXVEeEU0clVUcHY2MnNyVHpNbW40?=
+ =?utf-8?B?YTVHU1ZDVmFZbjR2L1REZ0NPWms3TnNrUFVScmZhMjhId3lXVm9RMGducWxJ?=
+ =?utf-8?B?bnlnWnI5dlg3ME5DYzVuZjI4eXhISDRwL1JLazlPV3ozRGcyR3hYTHA0dmdQ?=
+ =?utf-8?B?djVIUlVmcVZVdysyTExnREw5Nko3OExEUTlYU2JvSG5rUk1hQUx0Rk81eFRs?=
+ =?utf-8?B?MGZlM0p5RVAwMi8vbDZyWmlid2NUa3dCSy96UU9CMnhDT3Q2MTFJWEY0TmVl?=
+ =?utf-8?B?a0dQSlpwT1NoNlpsTzFCZXRFZUp5enZ0eVpoR2FVem4wbFF4aVNRWUN2U1lD?=
+ =?utf-8?B?RmNTQ2VQTk53T2gxdHY3KzlOZy9KUUJvNDVDd2lXSnQrWkdIczBPSVhGNFVw?=
+ =?utf-8?B?N0dqYXRNM2pSVWVGb0lzTDJMK2c4aG1jQXNVYnVlNThRNFQvdlhDUWhqbVBy?=
+ =?utf-8?B?aEswMXBKR0pJNnR0bVdDWGdvanIzNGp2c3JidEVYTXZnTm5leGYzU0t3dTlB?=
+ =?utf-8?B?dnMwcmRYd1VuVXdvUjlPZEl3alVlZHdMY3FDUEt0NTI3ZVBBb1BxSnpSU2VH?=
+ =?utf-8?B?RFFTcEhoTEowVFI1ZG9wMjd6MFlOS3dlOUQyRm5xazVEY1ZLQmpBZXVGWGZk?=
+ =?utf-8?B?dEdwczB1UkFmQm1QVkVMZURyVWxld0pycEcyS05BVkxpSkFLRUFFd2V3ODRP?=
+ =?utf-8?B?RnhNMkV1NzFpMXkwci92NlpNSVpBbkFjQ0JDSEdhSGg2dHI1USs5eHM1d0N2?=
+ =?utf-8?B?bkJaZDBHSExrWnprVUlkRmxEWjdQNUNYbnhrTGtmNzdXQ2g2SGNZeUNxRVJv?=
+ =?utf-8?B?Rnd4T1YzOWRUYXhEQlJSQ0IzcUpEcTBuWk40ZGlvYmY4Nmg0YUtLdTdVcEMw?=
+ =?utf-8?B?clZnV0piSUNQYjR3R0FiM1d1WmxRcHByK1RWaG9SREhQSTl0VW93dUdzRzdS?=
+ =?utf-8?B?SFhiLzY1R21oVThWaWZsNGVXR3UrcGdlNDZkVzIxZ2d4TjFIcW9rS2tzL0Mv?=
+ =?utf-8?B?c0diZ0xmVk9KUCtwQVF3NThNcWVialJYaG9jc0swaHBTcUxkckZUQnNaaW9H?=
+ =?utf-8?B?Zmd2S01QQmZPTWc0emk4aWRZY0NnSUhqejViMVRLdEs3bzhZR0NYM2ZXWDJH?=
+ =?utf-8?B?bkFaNjZ5a1FUZ01OZ2NHQ3hCYTc5TThvQmZDMkVUUnpubk5yZzljOEdCUGQ2?=
+ =?utf-8?B?WnhUeVpGdGtBdjh2MmRkU0UzdU5IRllVemJQcXNuTFR4N2JaUVlacXU4cDY1?=
+ =?utf-8?B?ckNmZFc2Z3hDbnZKbEZCaElCY2lqSTdXWUxEK2tUTHF4R2tGQXFkdm5qNHlU?=
+ =?utf-8?B?anVVWDlMNlYvcC9wYmh4a2FZVWhLZ3lDVjRiQ3puRjAwVWVuR1ZrVzJYc0JR?=
+ =?utf-8?B?TUNKMHdGdk0zUkR5S1pESWRlZ0FoL0dROXpVUEJLelhZZXZxQkR2U0FxbnRl?=
+ =?utf-8?B?U3JsbHNyRmVIbUtqWDFGZXpNSGMrd1h5RndxY3BKQS91S0xWTUxVMTZXQkdp?=
+ =?utf-8?Q?fFrRom4kn8c6upatQXKUqm0eq?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6fc86bc5-4175-420c-307b-08dbea642af5
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB4758.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2023 07:33:34.4001
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kUuRIiaOVgPGNsLTgCqxlQf/WmbdjaJCutmUN5Smqoj+iI8Hpti9rgn++fd6pAjA
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9059
 
-On 21/11/2023 03:24, Tao Zhang wrote:
-> Add property "qcom,cmb_msr_num" to support CMB MSR(mux select register)
-> for TPDM. It specifies the number of CMB MSR registers supported by
-> the TDPM.
+
+
+On 11/20/23 20:31, Krzysztof Kozlowski wrote:
+> On 20/11/2023 20:18, Geert Uytterhoeven wrote:
+>> Hi Krzysztof,
+>>
+>> On Mon, Nov 20, 2023 at 3:53 PM Krzysztof Kozlowski
+>> <krzysztof.kozlowski@linaro.org> wrote:
+>>> On 20/11/2023 15:01, Michal Simek wrote:> >
+>>>> On 11/20/23 09:40, Krzysztof Kozlowski wrote:
+>>>>> Document preferred coding style for Devicetree sources (DTS and DTSI),
+>>>>> to bring consistency among all (sub)architectures and ease in reviews.
+>>
+>>>>> +Organizing DTSI and DTS
+>>>>> +-----------------------
+>>>>> +
+>>>>> +The DTSI and DTS files should be organized in a way representing the common
+>>>>> +(and re-usable) parts of the hardware.  Typically this means organizing DTSI
+>>>>> +and DTS files into several files:
+>>>>> +
+>>>>> +1. DTSI with contents of the entire SoC (without nodes for hardware not present
+>>>>> +   on the SoC).
+>>>>> +2. If applicable: DTSI with common or re-usable parts of the hardware (e.g.
+>>>>> +   entire System-on-Module).
+>>>>
+>>>> DTS/DTSI - SOMs can actually run as they are that's why it is fair to say that
+>>>> there doesn't need to be DTS representing the board.
+>>>
+>>> I have never seen a SoM which can run without elaborate hardware-hacking
+>>> (e.g. connecting multiple wires to the SoM pins). The definition of the
+>>> SoM is that it is a module. Module can be re-used, just like SoC.
+>>
+>> /me looks at his board farm...
+>>
+>> The Renesas White-Hawk CPU board can be used standalone, and has a
+>> separate power input connector for this operation mode.  As it has RAM,
+>> Ethernet, serial console, eMMC, and even mini-DP, it can serve useful
+>> purposes on its own.
+>> I agree it's not a super-good example, as the board is not really a
+>> "SoM", and we currently don't have r8a779g0-white-hawk-cpu.dts, only
+>> r8a779g0-white-hawk-cpu.dtsi.
+>>
+>> The RZ/A2M CPU Board is a real SoM, which can be powered over USB.
+>> It has less standard connectors (microSD, USB, MIPI CSI-2), but still
+>> sufficient features to be usable on its own.
+>> Again, we're doing a bad job, as we only have a DTS for the full eval
+>> board (r7s9210-rza2mevb.dts).
+>>
+>> I guess there are (many) other examples...
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
+> OK, I never had such in my hands. Anyway, the SoM which can run
+> standalone  has a meaning of a board, so how exactly you want to
+> rephrase the paragraph?
 
-I prefer not to take any new Qualcomm Coresight bindings or Qualcomm SoC
-DTS nodes with Coresight till we fix all existing warnings. I don't know
-how to fix them, so I need help with them. No such fixing happened so
-far from Qcom, so pushback is my only way to get any attention.
+What about?
 
-I already commented on this in other email thread.
+2. If applicable: DTSI with common or re-usable parts of the hardware (e.g.
+entire System-on-Module). DTS if runs standalone.
 
-Best regards,
-Krzysztof
+Thanks,
+Michal
+
+
 
 
