@@ -1,334 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-1324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44AE37F294A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 10:49:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 226F27F295B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 10:51:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 684BE1C215BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 09:49:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 517151C20946
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 09:51:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2CDA3C07E;
-	Tue, 21 Nov 2023 09:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70F9A3C081;
+	Tue, 21 Nov 2023 09:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KS9Mh2sM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pqYNozjj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 775C5136;
-	Tue, 21 Nov 2023 01:49:07 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AL9HEmP031563;
-	Tue, 21 Nov 2023 09:49:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=vEltVJinW3eU8qaHD9E2kOlua4I5vuIh5vyOxB/sHS0=;
- b=KS9Mh2sM+FEKgyJ5cW0kKczoCO6LrB1R/9kmhIT1lBJadnxgN9+lEc39E8DF2gOnlO4I
- Belao7v+paiLnPIlYg4akOMBaX9EzVDNqFGW16AoThBlGJ9n2SeJc4EO9R6IdVXUPeCP
- 5YfDw2LvkfKYXDjDg9QYyBiW+PPl5m+kQ/UaF2DulhKr3c7ZUlTl+973o4ucleypzqZx
- Bf7rMgPo4tUAKNlejLXS3DUAch85aHPa1RPN4UNOtokNY9DRC6r8UBCt0wb1UMvwmYfS
- MKnUhjZ8hOpMlloruCV8Q5ItTWZ9qs2v2uI9FDm2ijnO0j66+eQNPbnVYD8vOdgeHaV3 AA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ugsskr1wq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 09:49:05 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AL9n4Nl017525
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 09:49:04 GMT
-Received: from hu-ekangupt-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 21 Nov 2023 01:49:02 -0800
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC: <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v7 5/5] misc: fastrpc: Add support to allocate shared context bank
-Date: Tue, 21 Nov 2023 15:18:44 +0530
-Message-ID: <20231121094844.5764-6-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231121094844.5764-1-quic_ekangupt@quicinc.com>
-References: <20231121094844.5764-1-quic_ekangupt@quicinc.com>
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32D71F4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 01:51:15 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-40b2afd049aso1591465e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 01:51:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700560273; x=1701165073; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gp2TNSI1Gs2EmPQurEidEEep2Vv4EbZ/khjCjjp1jWY=;
+        b=pqYNozjj9hZKvmDxdKVcFuzgCwQ4MfYiF5NrC+oxQH6LFcHVJAgZbkzlDxB1JpOuBP
+         ZVpjsa4xTWZ3aJXFtbJlVKNlKJ/jiM11tOkWT95BImoI3IS9VuBqt6EydDzpCVzGoIFP
+         3UAWGU3gfW8JwRsmu28xaxtN55P4ujbSJldE+RaK7lnahvX95NBMIz3VeXLc/m2GaiFC
+         fpnLiREIFTyc72hT2Qz5cMZmyEdRYf45vFT2aEvDgv5w5hoS0aW4y91a/R55l7n+i1WA
+         9F4faLFDuAT4nE7/nFu+/9DpiShfgX/7ku/8kD5rcWunsxLDed7TwTas5O0yYEJO7LCr
+         mbiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700560273; x=1701165073;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gp2TNSI1Gs2EmPQurEidEEep2Vv4EbZ/khjCjjp1jWY=;
+        b=GouLZL7VAWRkQ8YkG7ri1g1aBcnuNY4ZAd2QUDgVs2aYhR7QIhe63hn6KB3dLtLBul
+         mbXyVnkyaWf3/PoXfBNnbF9jYVV6SHNjg+yD+sC0GU6PV89DqVQbKlZMXaNTPeb6hvq7
+         /yJzBY0bU2DRjilOgx7MoYkI1ZMs1F0AqNBCfFWOT6VshZUfbxnH3IRIreAe0hEKlRmh
+         HEccIHDTrpa8pCdwK/JOnmUop37xWKgKrg6C/OLcQkhMGMn0vIXm7H/PHy/yxD8TZkmQ
+         1KyBAPlwigCXR0wQ2j7NlwrBHUq1PRakHvnAN7AOmNVimEuIvqUinyxFwCql3/Qba3Yp
+         tSxA==
+X-Gm-Message-State: AOJu0YxlMtnAt9n+Z3tCWm0kr0wbiHEfCAQIvw8vRaebs26Qy7qbOfYF
+	kJZTqoPy0qBV0oRQXbfN5pWgjw==
+X-Google-Smtp-Source: AGHT+IEqchWEaRf3vJf2eHIgK1W8abA02a8geVzEjClI8ifbluQO1t7DjZuFrXzY4FpXunUKLKJj/Q==
+X-Received: by 2002:a05:600c:358c:b0:405:7b92:453e with SMTP id p12-20020a05600c358c00b004057b92453emr7881425wmq.37.1700560273592;
+        Tue, 21 Nov 2023 01:51:13 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id z16-20020a05600c221000b0040472ad9a3dsm16105068wml.14.2023.11.21.01.51.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Nov 2023 01:51:13 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Tue, 21 Nov 2023 10:51:11 +0100
+Subject: [PATCH] arm64: deconfig: enable Qualcomm SM8650 SoC drivers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qQScA2cp1K-fA-DDSQEvE9FFFOp2SETq
-X-Proofpoint-ORIG-GUID: qQScA2cp1K-fA-DDSQEvE9FFFOp2SETq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-21_03,2023-11-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- mlxscore=0 spamscore=0 clxscore=1015 malwarescore=0 mlxlogscore=995
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311210076
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231121-topic-sm8650-upstream-defconfig-v1-1-2500565fc21b@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAI59XGUC/x3NQQqEMAxA0atI1gbaDhZnriIupE00C9vS6DAg3
+ n2Ky7f5/wKlKqTw6S6o9BWVnBps30HYlrQSSmwGZ9zLWmfxyEUC6j76weBZ9Ki07BiJQ04sK0Z
+ m8mze3gcDrVIqsfyewzTf9x+k/hgOcQAAAA==
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2066;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=duoOtpjsw8oDmAagwU+LZ25wk3WFADYydw5Bw8RpyHw=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlXH2QHLIE9nmslVg2Ia/r5d1ICCytU9AjNhX2Ieqn
+ oWg0xMiJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZVx9kAAKCRB33NvayMhJ0WVXEA
+ Cjw6+Eo3bg1Wr8n87y1cN9ktauAR3wIYl9CsKRmbvOGjbpGWKk5yeNsctI7dFBL3ABYKLIUZRhgYGe
+ iVOnsLY4B3Lg4li1nSIatXseI1PF3u7HaH6VlPRZaE4zGZbRpJyPvlk/BdJM0En/hNtUKXHjJfPjNs
+ 5Utdx8XNrfcw58WQFklm22bmXV28S3AmlM0DlTHXAcuUrvTKjH3/XL+POoRq3OekVL3jIeYpW/ehTP
+ r+Tl3GbzgmjCW3oLHA8nkUxF8x/TSPywKFnANGU1h7vg5Cyx0Co72lHYyhG76ipl6vYeEEKlptgDY5
+ 0/kc/ciai9SbD3df+wEN0747+0ucElWbxu0Z7yufTT/2VFWVjFf9DwzBLxaPhaXCkp7bUjGN/2gsEu
+ DZ+Zlm4c+ug8pPU//8U67uJi9LhPSWfIY2IDI2xDM//mUfVXoukIs617DUesbC8fGYd7LDsWOLy9+l
+ I/rwktaM6GbQOokeCkr0pmn3xbA5T/0yzHPk1vJKpn0GesbygxFWNbrh8f6ZLwuM/CVkMxB8sBikbf
+ lTRrShvopgnrlLP1g86164aFBQPzXQpo5qWK2f6M3GzOgQ528c4FubLEaaW+nXK/OO59gP/kNgBcBN
+ K7DsZQxvpQ/u0mDQnmn7ZTgXsS2TUuxaIHxjzVWzkFUXya1ocnuHpXv88WMA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Context banks could be set as a shared one using a DT propery
-"qcom,nsessions". The property takes the number of session to
-be created of the context bank. This change provides a control
-mechanism for user to use shared context banks for light weight
-processes. The session is set as shared while its creation and if
-a user requests for shared context bank, the same will be allocated
-during process initialization.
+Enable Clocks, Pinctrl and Interconnect drivers in the ARM64
+defconfig for the Qualcomm SM8650 SoC to boot the SM8650 MTP
+(Mobile Test Platform) and QRD (Qualcomm Reference Device) boards.
 
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+TCSRCC, GCC, Interconnect, and Pinctrl config are marked as builtin and
+not modules due to boot dependencies.
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Changes in v7:
-  - Rebase the patch to latest kernel version
+For convenience, a regularly refreshed linux-next based git tree containing
+all the SM8650 related work is available at:
+https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm85650/upstream/integ
+---
+ arch/arm64/configs/defconfig | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
- drivers/misc/fastrpc.c      | 122 ++++++++++++++++++++++++------------
- include/uapi/misc/fastrpc.h |  12 ++++
- 2 files changed, 95 insertions(+), 39 deletions(-)
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index b60aa1f89343..55a196a49c34 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -613,6 +613,7 @@ CONFIG_PINCTRL_SM8450=y
+ CONFIG_PINCTRL_SM8450_LPASS_LPI=m
+ CONFIG_PINCTRL_SC8280XP_LPASS_LPI=m
+ CONFIG_PINCTRL_SM8550=y
++CONFIG_PINCTRL_SM8650=y
+ CONFIG_PINCTRL_SM8550_LPASS_LPI=m
+ CONFIG_PINCTRL_LPASS_LPI=m
+ CONFIG_GPIO_AGGREGATOR=m
+@@ -1257,14 +1258,18 @@ CONFIG_SM_DISPCC_6115=m
+ CONFIG_SM_DISPCC_8250=y
+ CONFIG_SM_DISPCC_8450=m
+ CONFIG_SM_DISPCC_8550=m
++CONFIG_SM_DISPCC_8650=m
+ CONFIG_SM_GCC_6115=y
+ CONFIG_SM_GCC_8350=y
+ CONFIG_SM_GCC_8450=y
+ CONFIG_SM_GCC_8550=y
++CONFIG_SM_GCC_8650=y
+ CONFIG_SM_TCSRCC_8550=y
++CONFIG_SM_TCSRCC_8650=y
+ CONFIG_SM_GPUCC_6115=m
+ CONFIG_SM_GPUCC_8150=y
+ CONFIG_SM_GPUCC_8250=y
++CONFIG_SM_GPUCC_8650=m
+ CONFIG_SM_VIDEOCC_8250=y
+ CONFIG_QCOM_HFPLL=y
+ CONFIG_CLK_GFM_LPASS_SM8250=m
+@@ -1524,6 +1529,7 @@ CONFIG_INTERCONNECT_QCOM_SM8250=m
+ CONFIG_INTERCONNECT_QCOM_SM8350=m
+ CONFIG_INTERCONNECT_QCOM_SM8450=y
+ CONFIG_INTERCONNECT_QCOM_SM8550=y
++CONFIG_INTERCONNECT_QCOM_SM8650=y
+ CONFIG_COUNTER=m
+ CONFIG_RZ_MTU3_CNT=m
+ CONFIG_HTE=y
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index aa0695f9576e..8e77beb3a693 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -297,6 +297,7 @@ struct fastrpc_session_ctx {
- 	int sid;
- 	bool used;
- 	bool valid;
-+	bool sharedcb;
- };
- 
- struct fastrpc_channel_ctx {
-@@ -344,12 +345,22 @@ struct fastrpc_user {
- 	int tgid;
- 	int pd;
- 	bool is_secure_dev;
-+	bool sharedcb;
- 	/* Lock for lists */
- 	spinlock_t lock;
- 	/* lock for allocations */
- 	struct mutex mutex;
- };
- 
-+struct fastrpc_ctrl_smmu {
-+	u32 sharedcb;	/* Set to SMMU share context bank */
-+};
-+
-+struct fastrpc_internal_control {
-+	u32 req;
-+	struct fastrpc_ctrl_smmu smmu;
-+};
-+
- static inline int64_t getnstimediff(struct timespec64 *start)
- {
- 	int64_t ns;
-@@ -851,6 +862,37 @@ static const struct dma_buf_ops fastrpc_dma_buf_ops = {
- 	.release = fastrpc_release,
- };
- 
-+static struct fastrpc_session_ctx *fastrpc_session_alloc(
-+					struct fastrpc_channel_ctx *cctx, bool sharedcb)
-+{
-+	struct fastrpc_session_ctx *session = NULL;
-+	unsigned long flags;
-+	int i;
-+
-+	spin_lock_irqsave(&cctx->lock, flags);
-+	for (i = 0; i < cctx->sesscount; i++) {
-+		if (!cctx->session[i].used && cctx->session[i].valid &&
-+			cctx->session[i].sharedcb == sharedcb) {
-+			cctx->session[i].used = true;
-+			session = &cctx->session[i];
-+			break;
-+		}
-+	}
-+	spin_unlock_irqrestore(&cctx->lock, flags);
-+
-+	return session;
-+}
-+
-+static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
-+				 struct fastrpc_session_ctx *session)
-+{
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&cctx->lock, flags);
-+	session->used = false;
-+	spin_unlock_irqrestore(&cctx->lock, flags);
-+}
-+
- static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
- 			      u64 len, u32 attr, struct fastrpc_map **ppmap)
- {
-@@ -1448,6 +1490,10 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 		goto err_name;
- 	}
- 
-+	fl->sctx = fastrpc_session_alloc(fl->cctx, fl->sharedcb);
-+	if (!fl->sctx)
-+		return -EBUSY;
-+
- 	if (!fl->cctx->remote_heap) {
- 		err = fastrpc_remote_heap_alloc(fl, fl->sctx->dev, init.memlen,
- 						&fl->cctx->remote_heap);
-@@ -1570,6 +1616,10 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 		goto err;
- 	}
- 
-+	fl->sctx = fastrpc_session_alloc(fl->cctx, fl->sharedcb);
-+	if (!fl->sctx)
-+		return -EBUSY;
-+
- 	inbuf.pgid = fl->tgid;
- 	inbuf.namelen = strlen(current->comm) + 1;
- 	inbuf.filelen = init.filelen;
-@@ -1644,36 +1694,6 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 	return err;
- }
- 
--static struct fastrpc_session_ctx *fastrpc_session_alloc(
--					struct fastrpc_channel_ctx *cctx)
--{
--	struct fastrpc_session_ctx *session = NULL;
--	unsigned long flags;
--	int i;
--
--	spin_lock_irqsave(&cctx->lock, flags);
--	for (i = 0; i < cctx->sesscount; i++) {
--		if (!cctx->session[i].used && cctx->session[i].valid) {
--			cctx->session[i].used = true;
--			session = &cctx->session[i];
--			break;
--		}
--	}
--	spin_unlock_irqrestore(&cctx->lock, flags);
--
--	return session;
--}
--
--static void fastrpc_session_free(struct fastrpc_channel_ctx *cctx,
--				 struct fastrpc_session_ctx *session)
--{
--	unsigned long flags;
--
--	spin_lock_irqsave(&cctx->lock, flags);
--	session->used = false;
--	spin_unlock_irqrestore(&cctx->lock, flags);
--}
--
- static void fastrpc_context_list_free(struct fastrpc_user *fl)
- {
- 	struct fastrpc_invoke_ctx *ctx, *n;
-@@ -1777,15 +1797,6 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
- 	fl->cctx = cctx;
- 	fl->is_secure_dev = fdevice->secure;
- 
--	fl->sctx = fastrpc_session_alloc(cctx);
--	if (!fl->sctx) {
--		dev_err(&cctx->rpdev->dev, "No session available\n");
--		mutex_destroy(&fl->mutex);
--		kfree(fl);
--
--		return -EBUSY;
--	}
--
- 	spin_lock_irqsave(&cctx->lock, flags);
- 	list_add_tail(&fl->user, &cctx->users);
- 	spin_unlock_irqrestore(&cctx->lock, flags);
-@@ -1844,6 +1855,10 @@ static int fastrpc_init_attach(struct fastrpc_user *fl, int pd)
- 	struct fastrpc_enhanced_invoke ioctl;
- 	int tgid = fl->tgid;
- 
-+	fl->sctx = fastrpc_session_alloc(fl->cctx, fl->sharedcb);
-+	if (!fl->sctx)
-+		return -EBUSY;
-+
- 	args[0].ptr = (u64)(uintptr_t) &tgid;
- 	args[0].length = sizeof(tgid);
- 	args[0].fd = -1;
-@@ -1890,11 +1905,33 @@ static int fastrpc_invoke(struct fastrpc_user *fl, char __user *argp)
- 	return err;
- }
- 
-+static int fastrpc_internal_control(struct fastrpc_user *fl,
-+					struct fastrpc_internal_control *cp)
-+{
-+	int err = 0;
-+
-+	if (!fl)
-+		return -EBADF;
-+	if (!cp)
-+		return -EINVAL;
-+
-+	switch (cp->req) {
-+	case FASTRPC_CONTROL_SMMU:
-+		fl->sharedcb = cp->smmu.sharedcb;
-+		break;
-+	default:
-+		err = -EBADRQC;
-+		break;
-+	}
-+	return err;
-+}
-+
- static int fastrpc_multimode_invoke(struct fastrpc_user *fl, char __user *argp)
- {
- 	struct fastrpc_enhanced_invoke einv;
- 	struct fastrpc_invoke_args *args = NULL;
- 	struct fastrpc_ioctl_multimode_invoke invoke;
-+	struct fastrpc_internal_control cp = {0};
- 	u32 nscalars;
- 	u64 *perf_kernel;
- 	int err, i;
-@@ -1938,6 +1975,12 @@ static int fastrpc_multimode_invoke(struct fastrpc_user *fl, char __user *argp)
- 		err = fastrpc_internal_invoke(fl, false, &einv);
- 		kfree(args);
- 		break;
-+	case FASTRPC_INVOKE_CONTROL:
-+		if (copy_from_user(&cp, (void __user *)(uintptr_t)invoke.invparam, sizeof(cp)))
-+			return  -EFAULT;
-+
-+		err = fastrpc_internal_control(fl, &cp);
-+		break;
- 	default:
- 		err = -ENOTTY;
- 		break;
-@@ -2440,6 +2483,7 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
- 	if (sessions > 0) {
- 		struct fastrpc_session_ctx *dup_sess;
- 
-+		sess->sharedcb = true;
- 		for (i = 1; i < sessions; i++) {
- 			if (cctx->sesscount >= FASTRPC_MAX_SESSIONS)
- 				break;
-diff --git a/include/uapi/misc/fastrpc.h b/include/uapi/misc/fastrpc.h
-index 074675ee646f..3dfd8e95eda8 100644
---- a/include/uapi/misc/fastrpc.h
-+++ b/include/uapi/misc/fastrpc.h
-@@ -166,6 +166,18 @@ struct fastrpc_ioctl_capability {
- 	__u32 reserved[4];
- };
- 
-+enum fastrpc_control_type {
-+	FASTRPC_CONTROL_LATENCY		=	1,
-+	FASTRPC_CONTROL_SMMU		=	2,
-+	FASTRPC_CONTROL_KALLOC		=	3,
-+	FASTRPC_CONTROL_WAKELOCK	=	4,
-+	FASTRPC_CONTROL_PM		=	5,
-+	FASTRPC_CONTROL_DSPPROCESS_CLEAN	=	6,
-+	FASTRPC_CONTROL_RPC_POLL	=	7,
-+	FASTRPC_CONTROL_ASYNC_WAKE	=	8,
-+	FASTRPC_CONTROL_NOTIF_WAKE	=	9,
-+};
-+
- enum fastrpc_perfkeys {
- 	PERF_COUNT = 0,
- 	PERF_RESERVED1 = 1,
+---
+base-commit: 07b677953b9dca02928be323e2db853511305fa9
+change-id: 20231121-topic-sm8650-upstream-defconfig-dffe6f0966c0
+
+Best regards,
 -- 
-2.17.1
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
