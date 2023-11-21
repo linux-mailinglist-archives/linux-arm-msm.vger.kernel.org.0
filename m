@@ -1,115 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-1274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 829787F2379
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 03:02:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6730D7F23D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 03:25:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 789601C21902
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 02:01:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93B661C216AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 02:25:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3360A125B3;
-	Tue, 21 Nov 2023 02:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56FA814F63;
+	Tue, 21 Nov 2023 02:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qo4VpbIx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fSbqzSAJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A375100;
-	Mon, 20 Nov 2023 18:01:30 -0800 (PST)
-Received: by mail-qv1-xf2a.google.com with SMTP id 6a1803df08f44-66d0ceba445so13691316d6.0;
-        Mon, 20 Nov 2023 18:01:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700532089; x=1701136889; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ud2wbnDHnTrARrEBLi1hXnjXYj97H/dIcLoVNVIK3P4=;
-        b=Qo4VpbIxb5wlMARFUrDm6Jg5qG2tQBDi1AeAMq0w8eOGKIMYH6E1Wcff6BjZOqQCpc
-         YvEoNoJc7F7PrQVWwhxVZrR8Zn0HHA6x7WPQp8orldqx37hMxJi7NTtDz8RXkU8N7dWx
-         gJZxN51eclznOBT63M9t84MmZ2MvyTWhXfnU3WUgv0jWHE3rdqt2qLIYQW0LswU5D1yl
-         xlyAeWL+7EqUF/7N+8w13MwBv4pWRnO4f4nsGuc0c+gDE8f1sc7mEbkgVV1U0Ub2HE0T
-         5HqmanDWxbKAtmslEo44uD6o0sHDfUe+xRe/HRE++LQn8SpQe88heFm1Qr5mm21pm4+8
-         n06Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700532089; x=1701136889;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ud2wbnDHnTrARrEBLi1hXnjXYj97H/dIcLoVNVIK3P4=;
-        b=Pm+Wl1RbEhQem8wpeYRqvmS+Ab9XLnU5GlKog2OdB7a14sc0nT+4xmWgwYfnP88WwW
-         9Co5gIinZ2ZeWKSlwVGu0UOGwsLcXV6OxLUrque83PKtYBI+fUJUpUJfUTHpnp/rRs3N
-         owCbRUkq61KcSSW5O75AXAHmaTMnNuyfoNrEjsTaG0buIJk2CJBIH3PMmLvPpGL551+b
-         y10UcdxzE4IMnqwQ3IL7/LpIPdtYOrDqJGNFo6v6mbXgOrOIM41/mDtiQbjSwWLR9wEe
-         XtuxQ6q+u9Ekjz9PjfCoarVzFfP81A/F10+cg9UmnXUVe4sctPLdAOIc5gwkcTBFPvy6
-         eE1w==
-X-Gm-Message-State: AOJu0YwqOz22mEMQlauggAwHjImx/HiEvV5r5uGlzTeFK8c2Le20DnKS
-	zu+LmQ6rgTpLS5J2q0jxFVcp4COdfs+Xuw==
-X-Google-Smtp-Source: AGHT+IG3r61SWPQbDOGF+sdTnp+vfRXsKvmLw2YQ3Rx/gPRU/Ji7LfmlJdQ1x8w81yw48pn4BL8QHA==
-X-Received: by 2002:a05:6214:2b0e:b0:677:f341:c5a1 with SMTP id jx14-20020a0562142b0e00b00677f341c5a1mr10715687qvb.30.1700532089431;
-        Mon, 20 Nov 2023 18:01:29 -0800 (PST)
-Received: from localhost ([2607:fea8:529e:7800::80ec])
-        by smtp.gmail.com with ESMTPSA id j16-20020a0cc350000000b0066cf2423c79sm3509228qvi.139.2023.11.20.18.01.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Nov 2023 18:01:28 -0800 (PST)
-Date: Mon, 20 Nov 2023 21:01:27 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 07/11] arm64: dts: qcom: sdm670: fix USB wakeup interrupt
- types
-Message-ID: <ZVwPd8OmjwMjtB3k@radian>
-References: <20231120164331.8116-1-johan+linaro@kernel.org>
- <20231120164331.8116-8-johan+linaro@kernel.org>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25775AA;
+	Mon, 20 Nov 2023 18:25:36 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AL0OY5c028552;
+	Tue, 21 Nov 2023 02:25:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=kU6bepyHJLPXRb3yHjWtij7AyNrmvADA0jgdZ3VliRw=;
+ b=fSbqzSAJJRlAPbpzNNlJgElQ1BVpxWm625IMaV/wASqTCKeFqOJuOtTcSBqPRfhRiXok
+ N/szzfh7UuVQhgUSeggvALMFiF9qKtyEVAH5UV2FOJ6n+1985C3rvlC3A0TYRspIIMv3
+ +8cgFBnyOSjWkFED+fFpA1RY0fl0f0H27FlaTuieluiL6VLAYubrEd1wDpFp7hWViC+F
+ +uh1Jh5XUIf8p9yM/Q4vVbsqkB5xhciX/ooapvz5IA/CK2XoH/qvdZy+4XxyVE8AuRQZ
+ 8tY1SF8cwJmqRBiosM+WW7zyul8eCTLsv8RKvaTtp4Mofs+Yr3BBOqrzsmKnmexUIHSu Cg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uge000mg2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Nov 2023 02:25:19 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AL2PJnf010513
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Nov 2023 02:25:19 GMT
+Received: from taozha-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 20 Nov 2023 18:25:14 -0800
+From: Tao Zhang <quic_taozha@quicinc.com>
+To: Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC: Tao Zhang <quic_taozha@quicinc.com>,
+        Jinlong Mao
+	<quic_jinlmao@quicinc.com>, Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <andersson@kernel.org>
+Subject: [PATCH v3 0/8] Add support to configure TPDM CMB subunit
+Date: Tue, 21 Nov 2023 10:24:46 +0800
+Message-ID: <1700533494-19276-1-git-send-email-quic_taozha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231120164331.8116-8-johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EYnhZk_CW4ybUR8zOvCgVi3rPLIX2fa7
+X-Proofpoint-ORIG-GUID: EYnhZk_CW4ybUR8zOvCgVi3rPLIX2fa7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-20_22,2023-11-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ bulkscore=0 malwarescore=0 spamscore=0 clxscore=1011 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=999 impostorscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311210015
 
-On Mon, Nov 20, 2023 at 05:43:27PM +0100, Johan Hovold wrote:
-> The DP/DM wakeup interrupts are edge triggered and which edge to trigger
-> on depends on use-case and whether a Low speed or Full/High speed device
-> is connected.
->
-> Fixes: 07c8ded6e373 ("arm64: dts: qcom: add sdm670 and pixel 3a device trees")
-> Cc: stable@vger.kernel.org      # 6.2
-> Cc: Richard Acayan <mailingradian@gmail.com>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
+Introduction of TPDM CMB(Continuous Multi Bit) subunit
+CMB subunit is responsible for creating a dataset element, and is also
+optionally responsible for packing it to fit multiple elements on a
+single ATB transfer if possible in the configuration. The TPDM Core
+Datapath requests timestamps be stored by the TPDA and then delivering
+ATB sized data (depending on ATB width and element size, this could
+be smaller or larger than a dataset element) to the ATB Mast FSM.
+The CMB makes trace elements in two modes. In ‘continuous’ mode, every
+valid data cycle creates an element. In ‘trace on change’ mode, when
+valid data changes on the bus, a trace element is created. In
+continuous mode, all cycles where this condition is true create trace
+elements. In trace on change mode, a data element is only when the
+previously sampled input is different from the current sampled input.
 
-Acked-by: Richard Acayan <mailingradian@gmail.com>
+The CMB subunit must be configured prior to enablement. This series
+adds support for TPDM to configure the configure CMB subunit.
 
->  arch/arm64/boot/dts/qcom/sdm670.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> index ba2043d67370..c873560ae9d5 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> @@ -1297,8 +1297,8 @@ usb_1: usb@a6f8800 {
->  
->  			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
-> +				     <GIC_SPI 488 IRQ_TYPE_EDGE_BOTH>,
-> +				     <GIC_SPI 489 IRQ_TYPE_EDGE_BOTH>;
->  			interrupt-names = "hs_phy_irq", "ss_phy_irq",
->  					  "dm_hs_phy_irq", "dp_hs_phy_irq";
->  
-> -- 
-> 2.41.0
->
+Once this series patches are applied properly, the new tpdm nodes for
+should be observed at the tpdm path /sys/bus/coresight/devices/tpdm*
+which supports CMB subunit.
+e.g.
+root@qemuarm64:/sys/devices/platform/soc@0/684c000.tpdm/tpdm0# ls -l
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 cmb_mode
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 cmb_msr
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 cmb_patt
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 cmb_trig_patt
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 cmb_trig_ts
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 cmb_ts_all
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 connections
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_edge
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_msr
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_patt
+drwxr-xr-x    2 root     root             0 Jan  1 00:00 dsb_trig_patt
+-rw-r--r--    1 root     root          4096 Jan  1 00:00 enable_source
+--w-------    1 root     root          4096 Jan  1 00:00 integration_test
+drwxr-xr-x    2 root     root             0 Ja?  1 00:00 power
+--w-------    1 root     root          4096 Jan  1 00:00 reset_dataset
+lrwxrwxrwx    1 root     root             0 Apr  5  2021 subsystem -> ../../../../../bus/coresight
+-rw-r--r--    1 root     root          4096 Apr  5  2021 uevent
+-r--r--r--    1 root     root          4096 Jan  1 00:00 waiting_for_supplier
+
+We can use the commands are similar to the below to configure the
+TPDMs which support CMB subunit. Enable coresight sink first.
+echo 1 > /sys/bus/coresight/devices/tmc_etf0/enable_sink
+echo 1 > /sys/bus/coresight/devices/tpdm0/reset_dataset
+echo 1 > /sys/bus/coresight/devices/tpdm0/cmb_mode
+echo 1 > /sys/bus/coresight/devices/tpdm0/cmb_patt/enable_ts
+echo 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm0/cmb_patt/tpmr0
+echo 0 > /sys/bus/coresight/devices/tpdm0/cmb_trig_ts
+echo 0xFFFFFFFF > /sys/bus/coresight/devices/tpdm0/cmb_trig_patt/xpr1
+echo 1 > /sys/bus/coresight/devices/tpdm0/enable_source
+
+codelinaro link:
+https://git.codelinaro.org/clo/linux-kernel/coresight/-/commits/tpdm-cmb-v3
+
+Changes in V3:
+1. Add 8-bit support to the description in the TPDM devicetree document.
+-- Rob Herring
+2. Change how the result is produced in "tpdm_read_element_size".
+-- James Clark
+3. Calling "tpdm_clear_element_size" at the beginning of
+"tpda_enable_port".
+-- James Clark
+4. Use "dsb_esize" and "cmb_esize" to determine whether multiple TPDMs
+are detected on a TPDA input port in "tpda_get_element_size".
+-- James Clark
+5. Modify the judgment logic in "tpda_enable_port".
+-- James Clark
+6. Add more description of "cmb_mode" to TPDM SysFS document.
+-- James Clark
+
+Changes in V2:
+1. Optimizate and modify this patch series based on the patch series
+"Add support to configure TPDM CMB subunit".
+2. Modify the functions that read the element size of DSB/CMB in TPDA driver.
+
+Tao Zhang (8):
+  dt-bindings: arm: Add support for CMB element size
+  coresight-tpda: Add support to configure CMB element
+  coresight-tpdm: Add CMB dataset support
+  coresight-tpdm: Add support to configure CMB
+  coresight-tpdm: Add pattern registers support for CMB
+  coresight-tpdm: Add timestamp control register support for the CMB
+  dt-bindings: arm: Add support for TPDM CMB MSR register
+  coresight-tpdm: Add msr register support for CMB
+
+ .../testing/sysfs-bus-coresight-devices-tpdm  |  87 ++++
+ .../bindings/arm/qcom,coresight-tpdm.yaml     |  38 ++
+ drivers/hwtracing/coresight/coresight-tpda.c  | 117 +++---
+ drivers/hwtracing/coresight/coresight-tpda.h  |   6 +
+ drivers/hwtracing/coresight/coresight-tpdm.c  | 390 +++++++++++++++++-
+ drivers/hwtracing/coresight/coresight-tpdm.h  |  87 ++++
+ 6 files changed, 673 insertions(+), 52 deletions(-)
+
+-- 
+2.17.1
+
 
