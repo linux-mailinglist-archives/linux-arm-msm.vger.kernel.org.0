@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4424C7F262F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:14:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B80537F2637
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:18:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 670641C208D2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:14:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 34D77B20FB2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 07:18:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 505A81F95F;
-	Tue, 21 Nov 2023 07:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC40D1F5F5;
+	Tue, 21 Nov 2023 07:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q1MjXk70"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Dn/h90Sb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D384C8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:14:13 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9fffa4c4f43so182756366b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:14:13 -0800 (PST)
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A76A4F5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:18:12 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-32d9effe314so3718411f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 23:18:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700550851; x=1701155651; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700551091; x=1701155891; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0qazkUkCGgv5sfVY1VHiC2TdShNHpB3pRIRbc6XsuWk=;
-        b=Q1MjXk70i/DV+Qj3rKMl1DR92XsGo/IWwaGHpghvoln3Xu3kvd3IN4Dq+DTVaBRzuN
-         okw0PrGlZF6Lz9W0IgHPBEMX49l6ehmKCXQcbkPYSp/p/kNVqwWJ0sVfttXomwGGGEA5
-         WhxhRB0NJ7zoZfEPqxZd2GjdpXGQCLt2TdCjrwdhDU1WQ0LXKOYi54+9UzefRS4MaElv
-         nfdpm0kb//4JkN6Kw+Y5Ts26+CH//aveG6SfV0mFc32YstQ1FAcowJvBsrUiDMXUqHZY
-         XjQWqsreZPmnT2i3+6CCpn0ZdXXHGTC9fbBVMr41ctrkCl8H9Huvm8nNhdGLKibE22uW
-         EV+g==
+        bh=8HoVmjfTjn11C7ZWvO4bbvYEFdCIkHws4Ufe3fbidic=;
+        b=Dn/h90SbK6fZCyMU9Qy3DUYZltlp7ulA52RjeWVTWiIMcI2yBJ0yY8hFY+YJb2C1ok
+         R7ZZcSIMbAN9eyyRzW4DdY1eNz7z4x+iL+qXaRVhpvkjACX8Psi/+cni4jIH9niT31rp
+         EMj6F4PgcRVMR4BknknLp7HhhUWJMpdGbQYzaDegFy+7+aoMyv5z8jfz9DgGRtkNTjFD
+         oppViqUlftAll5te6oz66PocUcTAJijQwQ0JeC/5+BkqDhfLgcvHQWlG7qf9T0lGiMsT
+         bPX1ffASLDNcHIms3LK0glirUKJtymJZEt4fol+nVqnAh7m20B2UVVu1ZPS75x5D5rbL
+         3BbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700550851; x=1701155651;
+        d=1e100.net; s=20230601; t=1700551091; x=1701155891;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0qazkUkCGgv5sfVY1VHiC2TdShNHpB3pRIRbc6XsuWk=;
-        b=NHo2/VrKBP+g/OA2gUx8Fes7B8y6iyG6aj4TYVTvIWLIS+XpqauY0cyaduxQKXcjiX
-         aHifhkClrmJjHE2mtyJ/EdbK/+a8bts2NMfyXAzYHzVdXafnM6Ne+nWIwMaaJmvPTeMy
-         e6pUz8JUqfOeplnINKHlEfbdslqzsLig3IQ22o3u1JgxdNXukH1CkIsudSiJeBtNC0+6
-         FAWXVz+xiR9tcnV0BJW8weVUt98sbiK+5q5yufBfYUss2AsxBRtcnu7rY3cFgrq0cHnh
-         waQD7HBcjO7nBc7HQDxY+OxngI9KGNNVkRHPSrw268UzOxHtLVjtr66RlQ9WsqBT3OCS
-         aB9w==
-X-Gm-Message-State: AOJu0YzcufHamT4RcYKeKnVoe+coDY95HpgSbPTMa0GEy2K0VyKM2FX2
-	R+CcNbXFeOyJEbEdDvZftZxt6A==
-X-Google-Smtp-Source: AGHT+IHuS+qXtmjZh5mZ4sU/5nD1p0e12yGf9KNTJtYYjKAIBNUiyns7xdbXtfYT+i4gapbvq2vjgQ==
-X-Received: by 2002:a17:906:90b:b0:9bd:b8d0:c096 with SMTP id i11-20020a170906090b00b009bdb8d0c096mr6920259ejd.21.1700550851491;
-        Mon, 20 Nov 2023 23:14:11 -0800 (PST)
+        bh=8HoVmjfTjn11C7ZWvO4bbvYEFdCIkHws4Ufe3fbidic=;
+        b=BAKRVzLbU4zOBxY2RkOdkGUNfZLTUf0pToD1WF1dgrelScMTIEC0w7W1NIv62PPXJU
+         tp2UwuN6HSghkJXbCY0681HkD9G/40ldozyg9eM4lPPAXfQkSlMiRzNnEPVREyT8MMub
+         zCrR8AU/9wCLWzgBX65WJJecFbYBg41PBIH9inKzKmNZb4noevjwp0sM0LmGqJa8tL3W
+         mHSY6h2FDJVQw4lDAF09EQUQNYDugXS0zL8gT+Q3lTWxunpP2eZ0SmqMki1z4zGf5y3J
+         D7lJKgmkwBX22z2fHd/aDu9gMzM2KbRvgfjC8Afq3RLh+/CfrVGxXU/JZqr8kKFVUToW
+         fqTg==
+X-Gm-Message-State: AOJu0YxhU1rihZTwNsMxDCnNXF6yXD/lbCGWh9pz8muVX1M1m3W9/AnT
+	yj+UBBfX5u2JmBIbGek82uxhCw==
+X-Google-Smtp-Source: AGHT+IHa0MkohC9s0+slwVtzcSpiDQWT8Xl93O7l3L/eZMcuGxDO/zlPxS2e2rzb3xNrghz/QX4Ygg==
+X-Received: by 2002:a5d:6d88:0:b0:332:cad3:ae79 with SMTP id l8-20020a5d6d88000000b00332cad3ae79mr3467943wrs.3.1700551090949;
+        Mon, 20 Nov 2023 23:18:10 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id g1-20020a170906538100b009fef7d22c98sm1814674ejo.35.2023.11.20.23.14.10
+        by smtp.gmail.com with ESMTPSA id v6-20020adfedc6000000b00326dd5486dcsm13443336wro.107.2023.11.20.23.18.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Nov 2023 23:14:11 -0800 (PST)
-Message-ID: <c622c2a5-665f-4ee3-b3dd-fafb3adf6191@linaro.org>
-Date: Tue, 21 Nov 2023 08:14:09 +0100
+        Mon, 20 Nov 2023 23:18:10 -0800 (PST)
+Message-ID: <4eb76d38-93b5-424b-adce-3cc296fa03fb@linaro.org>
+Date: Tue, 21 Nov 2023 08:18:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,17 +62,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [rft, PATCH v1 1/1] pinctrl: qcom: lpass-lpi: Remove unused
- member in struct lpi_pingroup
+Subject: Re: [PATCH 01/16] dt-bindings: arm: qcom: add SM8550 AIM300
 Content-Language: en-US
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
- linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Linus Walleij <linus.walleij@linaro.org>
-References: <20231120193353.1670732-1-andriy.shevchenko@linux.intel.com>
+To: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, tglx@linutronix.de
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, -cc=kernel@quicinc.com
+References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
+ <20231117101817.4401-2-quic_tengfan@quicinc.com>
+ <519b89a2-550e-44a2-bff0-a6a86c50d073@linaro.org>
+ <54b68923-f670-482b-b4a2-ff5f5c867a91@linaro.org>
+ <7bf18b1e-463d-4030-99cd-4fcf2126fda2@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -118,59 +119,41 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231120193353.1670732-1-andriy.shevchenko@linux.intel.com>
+In-Reply-To: <7bf18b1e-463d-4030-99cd-4fcf2126fda2@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 20/11/2023 20:26, Andy Shevchenko wrote:
-> The group is not used anywhere, remove it. And if needed, it should be
-> struct pingroup anyway.
+On 21/11/2023 01:30, Tengfei Fan wrote:
 > 
-> While at it, replace kernel.h with what exactly being used.
+> 
+> 在 11/20/2023 4:53 PM, Krzysztof Kozlowski 写道:
+>> On 17/11/2023 11:22, Krzysztof Kozlowski wrote:
+>>> On 17/11/2023 11:18, Tengfei Fan wrote:
+>>>> Add board compatible for SM8550 AIM300.
+>>>
+>>> Subject, commit msg and compatible tell basically the same... and none
+>>> of them tell me what is AIM300.
+>>
+>> Due to lack of explanation it is difficult to judge what's this. However
+>> based on pieces of information I got, it looks like it is not a board,
+>> so it is not suitable to be DTS, but DTSI. You still need a board...
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> 
+> Hi Krzysztof,
+> AIM (Artificial Intelligence Module). This hardware platform can be used 
+> to develop AI related software based on Qualcomm chipset. I also will 
+> update this message to patch commit message.
 
-Missing Reported-by and Closes by for LKP... Unless you discovered it
-without its report?
+Does "Module" means it is physical module?
 
 > 
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-> ---
-> 
-> _Seems_ like this (I only read the code), hence rft.
-> 
->  drivers/pinctrl/qcom/pinctrl-lpass-lpi.h      |  6 +----
->  .../pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c   | 16 -------------
->  .../pinctrl/qcom/pinctrl-sc8280xp-lpass-lpi.c | 20 ----------------
->  .../pinctrl/qcom/pinctrl-sm6115-lpass-lpi.c   | 20 ----------------
->  .../pinctrl/qcom/pinctrl-sm8250-lpass-lpi.c   | 15 ------------
->  .../pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c   | 16 -------------
->  .../pinctrl/qcom/pinctrl-sm8450-lpass-lpi.c   | 24 -------------------
+> I also will sync with internal team about if we should create DTSI file 
+> as your suggestion.
 
-Missing sm8550.
-
->  7 files changed, 1 insertion(+), 116 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-> index 206b2c0ca828..a9b2f65c1ebe 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-> +++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.h
-> @@ -6,8 +6,8 @@
->  #ifndef __PINCTRL_LPASS_LPI_H__
->  #define __PINCTRL_LPASS_LPI_H__
->  
-> +#include <linux/array_size.h>
->  #include <linux/bits.h>
-> -#include <linux/kernel.h>
->  
->  #include "../core.h"
->  
-> @@ -45,11 +45,8 @@ struct pinctrl_pin_desc;
->  
->  #define LPI_PINGROUP(id, soff, f1, f2, f3, f4)		\
->  	{						\
-> -		.group.name = "gpio" #id,			\
-> -		.group.pins = gpio##id##_pins,		\
-
-Aren't these used by core pinctrl code?
+Do they know how DTS should be organized upstream (not downstream)?
 
 Best regards,
 Krzysztof
