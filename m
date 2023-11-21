@@ -1,114 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-1382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71D087F31A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 15:52:55 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F3837F30C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 15:31:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A2A831C21CFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:52:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F4801C21ABC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:31:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 402982772A;
-	Tue, 21 Nov 2023 14:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93C9854F98;
+	Tue, 21 Nov 2023 14:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2gHM6UF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RRqmT+ch"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3ED47791;
-	Tue, 21 Nov 2023 14:52:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B304C433C8;
-	Tue, 21 Nov 2023 14:52:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700578369;
-	bh=rNlyvCw5x32s1ebD0KePvpkxtBbyfn+ji6MmU3mcRAQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=T2gHM6UFMFzRmutgrsyf7yRC2fXIRsiO8maYams1+wZMPHMO132ZRWU8UqpmhJAm1
-	 VLfKVCJWme3hWCFx0juIA9I6is/9qxQs1s2d/HqfKuDn+y27guJ9W8MQphMUufpkfL
-	 hugawSjsZFnRhjCVBGSZ7Hnr/TgIWcwyT06bG8fg=
-Date: Tue, 21 Nov 2023 15:21:34 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Andrew Halaney <ahalaney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] USB: dwc3: qcom: fix resource leaks on probe deferral
-Message-ID: <2023112124-duckling-absinthe-2167@gregkh>
-References: <20231117173650.21161-1-johan+linaro@kernel.org>
- <041f239f-7b40-4681-8c6c-2268f9c2c684@linaro.org>
- <74cswe5tivcctmnty3gfavzsxdvjz5m4rktyj5auzwvrndninm@dah4h2fdj3zv>
- <ZVuO9qj3SRHAS4qm@hovoldconsulting.com>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA86E90;
+	Tue, 21 Nov 2023 06:31:19 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ALE2LG1024641;
+	Tue, 21 Nov 2023 14:31:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=mS5lpO1pQal3MndLWJq7JlecLvEPze68AS+UktMGphA=;
+ b=RRqmT+chsmkCLIjqq4O/5Ikar+e3jPjVaq6yLtFmxTK5Sqpade/KR03pLk00DMRIKxkB
+ 3fHA4s7/PZRjQIsySy0nydTZTbyQq5xi5r/PzndkkxisCyMK6JpUqTMaPfl5zERHqeTI
+ KR4gvL+KRJhZiHTaFieap8XHx4WjMV7xoKlYKTyPBZ2WZ/nC8YG9aKq0x5fXhBCHcHGC
+ tREzy1A8++sHSvlFb4EagexpGO4l3YYiIE8B8xAEOLeadiiwO5S6+GQ2LMB3uybBNs3h
+ mr3tu7gyjwiAE5IRM8bH4xr5ufot04Z4GqzjwH7tEI+P9zA/0CUH2ZApEUlxsFHUSnlb dg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ugdxmjknm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Nov 2023 14:31:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ALEV6O0027329
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Nov 2023 14:31:06 GMT
+Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 21 Nov 2023 06:31:01 -0800
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Subject: [PATCH v2 0/9] Add NSS clock controller support for Qualcomm
+ IPQ5332
+Date: Tue, 21 Nov 2023 20:00:42 +0530
+Message-ID: <20231121-ipq5332-nsscc-v2-0-a7ff61beab72@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZVuO9qj3SRHAS4qm@hovoldconsulting.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABK/XGUC/3XMQQ7CIBCF4as0sxYDg5DoynuYLsg4tbOQtlCJp
+ uHuYvcu/5e8b4PMSTjDpdsgcZEsU2yBhw5oDPHBSu6tATVao61WMi/OWlQxZyIVONCZjbP65KB
+ 95sSDvHfv1rceJa9T+ux8wd/6TypGaeWNx4Dk3aDDdXkJSaQjTU/oa61fCwFL1qwAAAA=
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Catalin Marinas
+	<catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        "Kathiravan
+ Thirumoorthy" <quic_kathirav@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1700577061; l=2190;
+ i=quic_kathirav@quicinc.com; s=20230906; h=from:subject:message-id;
+ bh=V3e9HOo0Prh+0sVYu6OBkKtzBPya9k/mvTsnXsdzeBQ=;
+ b=092KjIA5Vs8qRQVNaXEaZ41a3/A47dax2I/FKKYeXpok7/16wTnAVmhSbhzOXYn2iETsF6T72
+ hnMDTWbjdP8AsPds5oDXvVUYvrNzw0sCeqWnHQv9n0B6K4MYM4lZUJs
+X-Developer-Key: i=quic_kathirav@quicinc.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 7B7Si-JmLaceIE4wPKn33xd8EEVAOSWw
+X-Proofpoint-ORIG-GUID: 7B7Si-JmLaceIE4wPKn33xd8EEVAOSWw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-21_07,2023-11-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ phishscore=0 clxscore=1011 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 impostorscore=0
+ mlxlogscore=999 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311060000 definitions=main-2311210114
 
-On Mon, Nov 20, 2023 at 05:53:10PM +0100, Johan Hovold wrote:
-> On Mon, Nov 20, 2023 at 09:22:54AM -0600, Andrew Halaney wrote:
-> > On Sat, Nov 18, 2023 at 12:47:30AM +0100, Konrad Dybcio wrote:
-> > > On 17.11.2023 18:36, Johan Hovold wrote:
-> > > > When reviewing the recently submitted series which reworks the dwc3 qcom
-> > > > glue implementation [1], I noticed that the driver's tear down handling
-> > > > is currently broken, something which can lead to memory leaks and
-> > > > potentially use-after-free issues on probe deferral and on driver
-> > > > unbind.
-> > > > 
-> > > > Let's get this sorted before reworking driver.
-> > > > 
-> > > > Note that the last patch has only been compile tested as I don't have
-> > > > access to a sdm845 device.
-> 
-> > > I'll sound like a broken record, but:
-> > > 
-> > > is there anyone in the world that is actively benefiting from this failed
-> > > experiment of using the ACPI tables that were shipped with these SoCs?
-> > > 
-> > > There are so so so many shortcomings associated with it due to how Windows
-> > > drivers on these platforms know waaaay too much and largely use ACPI to
-> > > "bind driver x" and I simply think it doesn't make sense to continue
-> > > carrying this code forward given little use and no testing.
-> 
-> > For what it is worth, I have agreed with your opinion on this every time
-> > I've read it. I am not the target audience of the question, but I'll at
-> > least give my personal (interpreted: uneducated? undesired?) opinion
-> > that the ACPI support in here adds little value and extra burden.
-> > 
-> > Of course that topic is a bit independent of this series, but I'd be
-> > curious if a patchset removing the support would be welcomed or not by
-> > maintainers, so I'm stirring the pot by replying here :)
-> 
-> I agree that if we can remove the ACPI hacks in here, we should try do
-> so (e.g. given that no one really uses it anymore).
-> 
-> As Andrew already mentioned, that is a separate issue not directly
-> related to this series, though.
-> 
-> Removing it before reworking the dwc3 binding [1] and adding multiport
-> support [2] should simplify both of those series quite a bit, however.
-> 
-> Johan
-> 
-> [1] https://lore.kernel.org/all/20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com/
-> [2] https://lore.kernel.org/all/20231007154806.605-1-quic_kriskura@quicinc.com/
-> 
+Add bindings, driver and devicetree node for networking sub system clock
+controller on IPQ5332. Some of the nssnoc clocks present in GCC driver is
+enabled by default and its RCG is configured by bootloaders, so enable
+those clocks in driver probe.
 
-So should I apply this series now or not?
+The NSS clock controller driver depends on the below patchset which adds
+support for multiple configurations for same frequency.
+https://lore.kernel.org/linux-arm-msm/20230531222654.25475-1-ansuelsmth@gmail.com/
 
-confused,
+Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+---
+Changes in v2:
+- Change logs are in respective patches
+- Link to v1: https://lore.kernel.org/r/20231030-ipq5332-nsscc-v1-0-6162a2c65f0a@quicinc.com
 
-greg k-h
+---
+Kathiravan Thirumoorthy (9):
+      clk: qcom: ipq5332: add const qualifier to the clk_init_data structure
+      clk: qcom: ipq5332: enable few nssnoc clocks in driver probe
+      dt-bindings: clock: ipq5332: drop the few nss clocks definition
+      dt-bindings: clock: ipq5332: add definition for GPLL0_OUT_AUX clock
+      clk: qcom: ipq5332: add gpll0_out_aux clock
+      dt-bindings: clock: add Qualcomm IPQ5332 NSSCC clock and reset definitions
+      clk: qcom: add NSS clock Controller driver for Qualcomm IPQ5332
+      arm64: dts: qcom: ipq5332: add support for the NSSCC
+      arm64: defconfig: build NSS Clock Controller driver for Qualcomm IPQ5332
+
+ .../bindings/clock/qcom,ipq5332-nsscc.yaml         |   60 ++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi              |   28 +
+ arch/arm64/configs/defconfig                       |    1 +
+ drivers/clk/qcom/Kconfig                           |    7 +
+ drivers/clk/qcom/Makefile                          |    1 +
+ drivers/clk/qcom/gcc-ipq5332.c                     |  122 +--
+ drivers/clk/qcom/nsscc-ipq5332.c                   | 1035 ++++++++++++++++++++
+ include/dt-bindings/clock/qcom,ipq5332-gcc.h       |    4 +-
+ include/dt-bindings/clock/qcom,ipq5332-nsscc.h     |   86 ++
+ 9 files changed, 1264 insertions(+), 80 deletions(-)
+---
+base-commit: 07b677953b9dca02928be323e2db853511305fa9
+change-id: 20231030-ipq5332-nsscc-aeac9e153045
+
+Best regards,
+-- 
+Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+
 
