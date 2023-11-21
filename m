@@ -1,127 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-1315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F3677F2894
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 10:20:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 941C37F28D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 10:24:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CDE14B207B1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 09:20:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C55A21C214F6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 09:24:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE1AE321B8;
-	Tue, 21 Nov 2023 09:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A90E33B29C;
+	Tue, 21 Nov 2023 09:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JCKgJlqf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/Alva4C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07147CA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 01:20:03 -0800 (PST)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-d9beb865a40so4975868276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 01:20:02 -0800 (PST)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BE32D79;
+	Tue, 21 Nov 2023 01:24:32 -0800 (PST)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-507bd644a96so7497654e87.3;
+        Tue, 21 Nov 2023 01:24:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700558402; x=1701163202; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=e0GnsYSjmMnnlfj2CWEXFz1CqUs2uGzKvSRcvkw5bjs=;
-        b=JCKgJlqfNrr/Kd0IbU4DXNllY54+Wjs3TBNKIPViw27VRn7QzfehGURVE/BCq6khIH
-         SRFGCXovd0ZCX5fdajIY4jn2R6KVA2Yx193y33q8+SX8Iw7mv5yK/Y47Iu4Ybdi1yG0R
-         pL9ySpMhZLFXOtY8CaqreGe9URFLWEKvUmQlsB7/OXAR8nOQtyp5H96H4lg7XfnDlbEG
-         h9LoMTmNnROteLbb/WjWYHDRpOjYq+nTt4yRyB+ljOP0SCfBvO29CC+nyAhX6hGNlDu0
-         VOARcusWCH3R6sdUGQ2na0xqZOItV+Y9E3deHI94trQ3mYYOsvdXFAv31d0ORwlxGzRT
-         7nFQ==
+        d=gmail.com; s=20230601; t=1700558670; x=1701163470; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lQ6DLGxkIkFU3HRsA7T5dzcptPhq9KaRwLqwuRCVi+Q=;
+        b=E/Alva4CwFKMvAWUp/f1lLb5d8v7JiFjfA9hD31zzV2Q/1vIwHLBojW5RVQfnQisL2
+         eN2E732R7ie/fL6+fVairMOQp1iuAxxq0MDmEKk9uxDKkjuP4bR/yjIz4wlgzNPjTDp4
+         nD+/0uE20UXNrb7ptWocQOuqrycXnc2/F/A5NSJNBn6dVlrn1BgmNLQht6UWURVP3ox+
+         gvhRVa1zgaGVHwfU5gdIoKgQ7t1ctJFe5qOnQhRhXUvAekhy9H//2sWt5b7KgwLrX+T1
+         4OH/Hddr1Rb5dczAi0hRrAZZxDbDTWGlpdTcSBRtuj0JmylygPY4JUotoPP+tbECld9n
+         f/Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700558402; x=1701163202;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e0GnsYSjmMnnlfj2CWEXFz1CqUs2uGzKvSRcvkw5bjs=;
-        b=GiKA0hAZsxGcbK26+K9Ml/aQrX6pvThzYphmK006eDA7njnREI2bcNm3xHZxd5TvWm
-         +ai1dw71lGyaZ+u4xikfwAaObp/PG+e0F/cX7iKkrA40Or9oh+WzXGqxOuAF6uk4SpRT
-         UXgdNZxfHxXS5lzbzSQhpLzAtrXk7HNLZpsp8xzVwVQMGPQs0m5dbGGJUjGvzMSyQZSM
-         L/xe0mAg3umEPRyX26LEu8buLTOioQgb4pm4wg4901S2DFu2xx5x2yvQHOQXbTfmihCu
-         jSKcqE/BM9olpLjSTm6T04Ia0hu0w3ajwX+BFXQBDvXZ7nTo0QL12uJlvPr5T3cMpwk5
-         mXUw==
-X-Gm-Message-State: AOJu0YzhS7DCO94P8Y75KQUShRCa91wp4nBQNvefyAqo+WF0VEJZePX1
-	GpHNNoUeQH0RJBlOJ9F3BAZbZoK3T7965eYecJU1tA==
-X-Google-Smtp-Source: AGHT+IGGKp46rrXxTxtTOtiXmo2Li35FgNeYDd8e5HO6aCQZjqPditR2ptVz6cb2AzXxBDV7hw/hT+XOKdph+CuSf5Y=
-X-Received: by 2002:a25:ae03:0:b0:db0:2161:5950 with SMTP id
- a3-20020a25ae03000000b00db021615950mr10361703ybj.63.1700558402174; Tue, 21
- Nov 2023 01:20:02 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700558670; x=1701163470;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lQ6DLGxkIkFU3HRsA7T5dzcptPhq9KaRwLqwuRCVi+Q=;
+        b=bBLNIJvdwTvDQYUP7qHKvVE8fcRX2IDRbz4PH51FJH/2kiCX/JMlAh1FgHrHWb+nSd
+         HQXL6lH+4a4DhPTc/U3UXi+VfGU3tbmnQnjFuO99PN6E+PdZNrINsnjZjkh3my9qgyRy
+         pAhSH/mpDKJHME8/DIIhDI97d7nqGoXP9sQHomIrPC/7hGP9TfEP/5ioV3ntxo9hJujx
+         vcsAzcmtGu8mwOUZOxvZSypL3AWCJxrLXmLQMrxdRhMs2Sl5tNo4SGJnke+7MAehe0Mc
+         7g6moUhQ4MYghAcG/ks51ecMLNRcaZisdvCj9qP5I+DfpmoFXJ6T1c4CY/BPxeBqnAme
+         jpwg==
+X-Gm-Message-State: AOJu0Yy+YmipjX/nifkpeuiy/0n1Cz9eov4fk0LGhMwati7dwIIvK2pp
+	1NHPoDCCO0ACsTVJGKSyv8wcJbKZRYH4Nw==
+X-Google-Smtp-Source: AGHT+IH3NsigeAnMIUBIcoWP9F71idnAemVeO7dDHXF12jSgtDL5pYx+JievGI704BmzgB/y3zDLqA==
+X-Received: by 2002:a19:c217:0:b0:507:aa44:28fa with SMTP id l23-20020a19c217000000b00507aa4428famr7202181lfc.26.1700558670135;
+        Tue, 21 Nov 2023 01:24:30 -0800 (PST)
+Received: from [192.168.1.103] ([31.173.81.93])
+        by smtp.gmail.com with ESMTPSA id p20-20020ac24ed4000000b00507b869b068sm1466248lfr.302.2023.11.21.01.24.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Nov 2023 01:24:29 -0800 (PST)
+Subject: Re: [PATCH 2/2] usb: typec: tcpm: Parse Accessory Mode information
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Hans de Goede
+ <hdegoede@redhat.com>, =?UTF-8?Q?Ilpo_J=c3=a4rvinen?=
+ <ilpo.jarvinen@linux.intel.com>, Mark Gross <markgross@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-usb@vger.kernel.org
+References: <20231120231757.2309482-1-dmitry.baryshkov@linaro.org>
+ <20231120231757.2309482-3-dmitry.baryshkov@linaro.org>
+From: Sergei Shtylyov <sergei.shtylyov@gmail.com>
+Message-ID: <1421f23b-20c5-dbdd-8964-4c4cb37b1a96@gmail.com>
+Date: Tue, 21 Nov 2023 12:24:27 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
- <20231120224919.2293730-2-dmitry.baryshkov@linaro.org> <ac3f3304-6dcd-470a-907c-32a63d3c39cf@linaro.org>
-In-Reply-To: <ac3f3304-6dcd-470a-907c-32a63d3c39cf@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 21 Nov 2023 11:19:50 +0200
-Message-ID: <CAA8EJppOGsc1+iw-YB9FBEm2UPpyAB_4cQg94Ob4swPzXheQ7A@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] dt-bindings: connector: usb: add altmodes description
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Hans de Goede <hdegoede@redhat.com>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Gross <markgross@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20231120231757.2309482-3-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 
-On Tue, 21 Nov 2023 at 10:31, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 20/11/2023 23:00, Dmitry Baryshkov wrote:
-> > Add description of the USB-C AltModes supported on the particular USB-C
-> > connector. This is required for devices like Qualcomm Robotics RB5,
-> > which have no other way to express alternative modes supported by the
-> > hardware platform.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  .../bindings/connector/usb-connector.yaml     | 29 +++++++++++++++++++
-> >  1 file changed, 29 insertions(+)
-> >
-> > diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > index 7c8a3e8430d3..c1aaac861d9d 100644
-> > --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> > @@ -171,6 +171,28 @@ properties:
-> >        offer the power, Capability Mismatch is set. Required for power sink and
-> >        power dual role.
-> >
-> > +  altmodes:
-> > +    type: object
-> > +    description: List of Alternative Modes supported by the schematics on the
-> > +      particular device. This is only necessary if there are no other means to
-> > +      discover supported alternative modes (e.g. through the UCSI firmware
-> > +      interface).
-> > +
-> > +    patternProperties:
-> > +      "^(displayport)$":
->
-> This is just a property, so should be under "properties:".
+On 11/21/23 2:11 AM, Dmitry Baryshkov wrote:
 
-Having it under properties would make adding new altmodes harder.
+> Some of the boards supported by the TCPM drivers can support USB-C
+> Accessory Modes (Analog Audio, Debug). Parse information about supported
+> modes from the device tree.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/usb/typec/tcpm/tcpm.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
+> index 6e843c511b85..6297f803de53 100644
+> --- a/drivers/usb/typec/tcpm/tcpm.c
+> +++ b/drivers/usb/typec/tcpm/tcpm.c
+> @@ -6114,6 +6114,7 @@ static int tcpm_fw_get_caps(struct tcpm_port *port,
+>  {
+>  	const char *opmode_str;
+>  	int ret;
+> +	int mode;
+>  	u32 mw, frs_current;
+>  
+>  	if (!fwnode)
+> @@ -6132,6 +6133,12 @@ static int tcpm_fw_get_caps(struct tcpm_port *port,
+>  	if (ret < 0)
+>  		return ret;
+>  
+> +	if (fwnode_property_read_bool(fwnode, "accessory-mode-audio"))
+> +		port->typec_caps.accessory[mode++] = TYPEC_ACCESSORY_AUDIO;
+> +
+> +	if (fwnode_property_read_bool(fwnode, "accessory-mode-debug"))
+> +		port->typec_caps.accessory[mode++] = TYPEC_ACCESSORY_DEBUG;
+> +
 
-Inherently it should become something like
-"^(displayport|virtuallink|thunderbolt)$".
+   Hm, I don't see where that mode variable is initialized?
 
->
-> The rest looks good to me, but I don't know USB that much to judge.
->
-> Best regards,
-> Krzysztof
->
+[...]
 
-
--- 
-With best wishes
-Dmitry
+MBR, Sergey
 
