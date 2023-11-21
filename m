@@ -1,64 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-1349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 562067F2C19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 12:54:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 963E17F2C41
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 12:56:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0ABEA2816A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 11:54:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E4839B21B6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 11:56:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B990F487BE;
-	Tue, 21 Nov 2023 11:54:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C114248CC2;
+	Tue, 21 Nov 2023 11:56:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="keL8kOK3"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="SXcbsdC0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2060.outbound.protection.outlook.com [40.107.92.60])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC83123;
-	Tue, 21 Nov 2023 03:54:12 -0800 (PST)
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2047.outbound.protection.outlook.com [40.107.220.47])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61DC710F9;
+	Tue, 21 Nov 2023 03:56:16 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DoIHV2AYx0OdxDyjxZ+R0yanDdGPtdP29RtyPbDN2NvgPp1W+rhrt35LTlfmlMrpPZPH0xFFtBlTldud8CuvblBcx4x/7PD7tma6QfTILlxgwFM5unkik/lJonhSO3xNajeZFYnnGX6KtX+QMFO+7hWrJuGUc/M1yyLfaVSgocvomX9YyAf2vFps4T60aY4lPVP0vw860+Rv1Q2ZralifHslc7hSnOPMKOj7B6huxwygIi3bFcSkDEXyo6kSqFwWTmYT+eyR2TUL+OjAxFY7Y6mnGhzZt3D1fEeTGtZ3yxXn4zBCX4KuV/Y/3BV82oqeKpJa8PAhzoJbyLJ6WJoA1g==
+ b=Lg//Tnh1EizOQd6MoMwr9Nv/lbiOarMWz97gO23TMhEMunGWEtvHfuEz3bAIvGLYECC8Kg0CRdN7lRLn1KjoohHHj1nb1To0Huqg0Pd98UUVTwZA9k1ufMYTPF1405xzJmanyvsECNOlyg0BD/1PkwD7H3q5DBiow7NoGPQwJYUVoJuybGFPROBY30aO3kI5NdnVVdr6Agw/LO4UyMmNb70U34rkl3g+ribhewexR6CU8ViInKFeF03EnJZXPaJbOJn5Xkl1W8k4dSpVKbUrdtLgVXUk00e6GSYcSGupbjXY94uNiT6UtjWpxSuSZZBgTWabGTm38tIuznznX9f6kA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5lStOlIlqfirhdnpECXOEIXymXzsntWjoyR48zuzVr4=;
- b=gNO08g4D7A8IFhPl1s94Iwcl3lK8K1+lQrza7J0DeXo0KK6ACUozeX4vy2TPFH7hsiWAGmOzYdwsFBxPHev6rbhbwGAicowLoFtJKDkMWIUd64Q6BEi66WjI4nQwePmbvTzhnIG1lAPxRwvdnBE9At4UFT5uvZWlkko7kQRe/ul2L4b3u9sO3qe4rjOZXteXqlIriMYf9lNo3BVWjDaFDGSWRorjF0htpqWRwWSGXjANqYNuEzJOoP13StUNLjBgA8nsKkIeKgvKxTgT1qZe2eGquVIv+b8AQkLRFgX4hQ0hBFwx5qt7A5ENGseX2Gb++7SVI8JJ1kSXRwV7MEumWA==
+ bh=XZRlSME+QBGPrb5NqwslcXfCpqfYObjope25DcU/PTQ=;
+ b=W6zzHzj+BD7Q/wHl3O92wbrdgdhmPxnXO/kYyXKw9jpDLa+G0RbJuovmmxx6JkRMfXmqMj6IpoTZmnRlzN47RalmhcIEvv0GS2HfXWdMoBxZl7vibRxHW4Bb8aJKn0wb+NNHMnqkrvyZrvJ4KN6ZsHrkDCG4X/Zbm9CawkKBX1663Sa0urqWqoOmhxtNiSNmDWOdCPAEDwR+jCJWU4tF00xl5W7VVhzl24IAoNdTaLdiOdlPjW0Rt9xxIG2GVDJUjIBu2ekS+0dDb2VLkpf7oVO/ZbX0tGt3hcwumR6i9ovOqJg1N7fYIev0sHljw13Om8QoEAAsC8z4HYCPTm2xgQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5lStOlIlqfirhdnpECXOEIXymXzsntWjoyR48zuzVr4=;
- b=keL8kOK3mxRhQmwWHVp358X9dy11arW0h4rQTrCrXgwdcJ0Wm+YOAc9HCAphsbvNtfloTtGnzQqFSokGLs2IjZazvSJGAbpbBSyhfj0Vzln0mFI9WiM08cJGmRPAvhxNzamWtIKFenyY8vVepLX4DlscvsvT3s7Bsj6sWgAeaRY=
+ bh=XZRlSME+QBGPrb5NqwslcXfCpqfYObjope25DcU/PTQ=;
+ b=SXcbsdC0wfZrkZT2ysKjk6lLzos1F183QqULNh8yaSagi0Ajylm+YCHc5xNKSnIehfftQX5uIHUH8aUS24G4vLfCYVydy88SbvL09JC304nWz4mSzZxJ+kMyNU1aYZ0gPQja3LFNOLli9ssnQgpu4+/OmIl0qzPIPY3DR2o55dU=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
 Received: from BYAPR12MB4758.namprd12.prod.outlook.com (2603:10b6:a03:a5::28)
- by MN6PR12MB8514.namprd12.prod.outlook.com (2603:10b6:208:474::16) with
+ by BL1PR12MB5047.namprd12.prod.outlook.com (2603:10b6:208:31a::6) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7002.27; Tue, 21 Nov
- 2023 11:54:07 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7002.28; Tue, 21 Nov
+ 2023 11:56:13 +0000
 Received: from BYAPR12MB4758.namprd12.prod.outlook.com
  ([fe80::39a2:42da:ea20:3349]) by BYAPR12MB4758.namprd12.prod.outlook.com
  ([fe80::39a2:42da:ea20:3349%5]) with mapi id 15.20.7002.028; Tue, 21 Nov 2023
- 11:54:07 +0000
-Message-ID: <fb2d5246-93c3-4bb1-a2e6-1c2c653604b2@amd.com>
-Date: Tue, 21 Nov 2023 12:53:48 +0100
+ 11:56:13 +0000
+Message-ID: <6c80a285-27fc-4d61-9eef-af4744a9decc@amd.com>
+Date: Tue, 21 Nov 2023 12:55:54 +0100
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
 Content-Language: en-US
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Rob Herring <robh+dt@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
  <matthias.bgg@gmail.com>,
  AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- Andrew Davis <afd@ti.com>, Arnd Bergmann <arnd@arndb.de>,
+ linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
+Cc: Andrew Davis <afd@ti.com>, Arnd Bergmann <arnd@arndb.de>,
  Bjorn Andersson <andersson@kernel.org>,
  Geert Uytterhoeven <geert+renesas@glider.be>,
  Heiko Stuebner <heiko@sntech.de>, Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -69,13 +67,6 @@ Cc: Rob Herring <robh+dt@kernel.org>,
 References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
  <19358871-009d-4498-9c13-90d5338b1e9f@amd.com>
  <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
- <CAMuHMdW4WPJT0Km7w8RWrGJaztk6QDGoFAn0bdGbrEsw81R1FA@mail.gmail.com>
- <acfdce81-f117-4a1a-a9fe-e2b4b8922adb@linaro.org>
- <bd49f17c-7ebf-4e19-b77b-b5ec95375f7d@amd.com>
- <b48293f3-16e3-4980-b900-add0cb7d69f6@linaro.org>
- <CAMuHMdV_gqmf2=cXmZmYgE3aLxvPBr1DVp0cz0C+YrfBVG-8mg@mail.gmail.com>
- <CAA8EJpo6w9N_opJkfDaF-20zwZmn6JHrYYhakqzLFqVtgXaV=Q@mail.gmail.com>
- <6513aefa-b0be-4a29-8c9c-483822217ebf@linaro.org>
 From: Michal Simek <michal.simek@amd.com>
 Autocrypt: addr=michal.simek@amd.com; keydata=
  xsFNBFFuvDEBEAC9Amu3nk79+J+4xBOuM5XmDmljuukOc6mKB5bBYOa4SrWJZTjeGRf52VMc
@@ -121,11 +112,11 @@ Autocrypt: addr=michal.simek@amd.com; keydata=
  y7RkYPOpmElF2pwWI/SXKOgMUgigedGCl1QRUio7iifBmXHkRrTgNT0PWQmeGsWTmfRit2+i
  l2dpB2lxha72cQ6MTEmL65HaoeANhtfO1se2R9dej57g+urO9V2v/UglZG1wsyaP/vOrgs+3
  3i3l5DA=
-In-Reply-To: <6513aefa-b0be-4a29-8c9c-483822217ebf@linaro.org>
+In-Reply-To: <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: VI1PR04CA0121.eurprd04.prod.outlook.com
- (2603:10a6:803:f0::19) To BYAPR12MB4758.namprd12.prod.outlook.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: VI1PR09CA0177.eurprd09.prod.outlook.com
+ (2603:10a6:800:120::31) To BYAPR12MB4758.namprd12.prod.outlook.com
  (2603:10b6:a03:a5::28)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -134,168 +125,165 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR12MB4758:EE_|MN6PR12MB8514:EE_
-X-MS-Office365-Filtering-Correlation-Id: ec841a30-c643-45bf-1a84-08dbea8890ea
+X-MS-TrafficTypeDiagnostic: BYAPR12MB4758:EE_|BL1PR12MB5047:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9eb2a737-5b5a-4c56-d5ac-08dbea88dc08
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	U7MAA1CSEj0IxFb9fm7Z/QGAgrUZeaoiT1TpDw01WNiYtEeQe3xjIiWADAimbrInqSS9Sfp/DhHgBxiS7QwJhtteim5HhUMiC5QA4sWEnuMsG0bVbIAlxJpghxl5kkyX8BXdwlmRuKtQNHzSi0y/0y1w49ySCDooDs/X4MEDyIYsLiZqTY1DzD9QOs9WYj4EVZPcviUZP3NZxpA/ClrIXs2Yzy/oZro7E67lfTBPHy8kqiXaN4gZigB9wGwxlM5Ow/fHdjlph1A0i+IzqW9aKIfQF6t3ZH5cAh3ZmxCDZeuE6Lk3xfagiOsrqfwbeZlcXAbkA2QbxOhgS61YURV0tVMX8CgD9gmmf4t2qs875SIRrQhpxLArEVrzHxH92YRHyO7pXk+IPRDgivMQG3AwjRfa2EB+cZs37McNosEK2GsIRXRMhSjwyK++KOms6xc6mt0k8JqMd44pi4i6I6gjQx24feGDGfR31jYlkI0gb2Vox8HPLg2P4e/Aup7URVfKKnpG/4HBcR2cePBm6ZF0P/z7L6p648YTNG1vc+gVGhsMemQGhi9+NlAzpKV1gkJKzdxr9TvEkVzQG1Wqs08G2Mz6/HeLUL1RDBT9bqMaL7P2TNYq9K8hXsnWX/NAxaV/EKuu14/wB7tlgEN+rUINnqwvV3ALwIiFfOnSu4TX1n9I2Hxm2Lm0YlrLzwYwJKOiBMSgz1si0F3dAbsYT5TgxfyUuA8ACctgeJNC6bSOr+M=
+	vycOCg2PFVzSFV6swQjhifjx+X41B4i8z7RMXfmvn9Y17LBNB11kLiE6fPWlBHu1WxsoxIrcuY6R3nuwgHLMGmJ+QzuOBpAi1BdqMCYANWPy73QR9mOT0m9hYDVFp45R6iXfUunTzC41t0sv9WedxNMbvBlEuTorvS0aatN2baZDizySe+/IUXECjwZ3JEvU0he16NymrQre5Aj/7cfaUGc4J23DjV7AUulAwQuSrw49uO3+0j/0wQUc1pqUWhnXbmb+LRTs+cHhLBhxy19F++wPfFrEJgGZVxJ61YanaysNjFzYKqczevtBKDeNCmo6N0AWSxhVsG/gIQjo/oD9n2Znn3DjwCbwCIPeIqbGdm2KKOaSZO4dmFRKIrcphbj2vGbTUyIHaxAeDg+jN9BgB0yngD0iHs3poMyampR2CJCOL0BPxKRe1atfEtaXh7Lhv+GoLWs0OAFvCNR0kyle9QvwnfD+JUIyB7hDSTaSt5iEvdVJgl7wMUlOUq9XtP/uPLsQH19zjuEwkGg0iGTdNWjF3YdabS6hkKi4ApjSZDakrxi84njCacvz/ncVV7I9Pm0wLwUessTZ4F0zTZ7GfzXa80jM0ia0T/LUFx1CqdBk/8neJGsmf5aYI5Q3bYjQGVTDZFw/56o+uqRbGplCqm0hyHNPcmjkbAdzMJdyvDo=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB4758.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(136003)(366004)(376002)(39860400002)(346002)(230922051799003)(230173577357003)(230273577357003)(451199024)(64100799003)(186009)(1800799012)(83380400001)(6512007)(53546011)(26005)(41300700001)(4326008)(8676002)(8936002)(38100700002)(7416002)(2906002)(44832011)(5660300002)(478600001)(6486002)(6506007)(6666004)(966005)(110136005)(66556008)(66476007)(66946007)(54906003)(316002)(36756003)(31696002)(86362001)(31686004)(2616005)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB4758.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(136003)(366004)(396003)(346002)(376002)(230922051799003)(186009)(64100799003)(1800799012)(451199024)(2616005)(86362001)(31696002)(31686004)(110136005)(6486002)(6666004)(6506007)(66476007)(66556008)(66946007)(316002)(54906003)(36756003)(921008)(6512007)(53546011)(26005)(83380400001)(7416002)(2906002)(44832011)(478600001)(41300700001)(5660300002)(38100700002)(8936002)(8676002)(4326008)(45980500001)(43740500002);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?YmdHcWxTZ2JaVEFJb2c3RGExRHpmbllMZ2MxbjFKdnhNck9mNnhEZnRqWHhP?=
- =?utf-8?B?RU9QaXdDTzhSNitQdlZsaVlRNkVBVVJiMm5IWnJUdXBMYUc0RnlFYVA1OXJR?=
- =?utf-8?B?YzNOV3orR1Z3YWxmQVhWMEd6L1JzaUpQaVNTL3lMdysyZ042YzdzblF3cklx?=
- =?utf-8?B?V3dKWFh3bVRYVjhycytZN21WRFVzRWs4emxLcXN4ZXBrT3FrbXJVYWs4all1?=
- =?utf-8?B?d2t2ai8zbkNHalZGelFDZUFWcGhIcTJ5NW5MclRYc0t2T0Q2bzhNbThXM3ZH?=
- =?utf-8?B?V2phRi9nUE5ONHVvYjN4K1NveGsvRXpCOUt5cUorUXJTKzI2YTd0bnQ2MU1j?=
- =?utf-8?B?and6c01tYVNSam80UjdvMEN4SnpvNFhUWURreWdEcDZkQ0h4ZEUrRjVRU1Z1?=
- =?utf-8?B?QmNESzVkcnAzOHAzcDBOQmU0eE82ZFQ1L1p4blZhNHRubDRzb0FBZkZzTzFT?=
- =?utf-8?B?VDY3Tmphem5TNjNhMHRxK0I2VzNPNVJyUVI0eDIrbFZqYjVsSTVNVHJ0R3Fs?=
- =?utf-8?B?MGZaVkVNTEhCdGRFL2FkUWpMRWNLUVo0K2hJaXhNV0cxZXFLRWl1VDVUTXB5?=
- =?utf-8?B?WFkzSXk4RnZqTUxEQ3ZWSzRkZFJGZDUvRWx1a2hnZCttdG92d3Fub3RjMlFI?=
- =?utf-8?B?UzIyMTZpUkR1dG4xa2JsRWM2TFpmTkt2RUpTWVNseUhsWXBOdituSGsva2NN?=
- =?utf-8?B?dm5sUm5vWm9MQ0J2bi9ySENNWGVjSWhxb1hUVWFsRi9BMWlMMjBoaktLWTZ1?=
- =?utf-8?B?eHo1SStLT0JlZ3pKUmZ1NnhyaS8wVHQxek82WUhhL0RDU0NhSU5nQStjcHls?=
- =?utf-8?B?aWtmZzhQOGVOakZ5cTFjV0wvdVFwRWlzZEJqN3cwKzB5Z29XQlJmMDRqK0pv?=
- =?utf-8?B?TUErWE1zRDQ2eXlNV25leHNiNGJoeGhuVjY2bzNIQmdXTVYzZldwZTZCZkFG?=
- =?utf-8?B?Z0dEdEMxREpua3kxcFl1OUdlQlRwYlhuVmlqNHJldW1iN3JLWUVlREFPYndT?=
- =?utf-8?B?Q1pleXZSeUpDTjNiS2Z4amFPekpyRzFYUzlrb2M0UmRHQk5pVVA1TGY4ZDVQ?=
- =?utf-8?B?Ymp5UGUza01ER0Y2elUwZlhINjBybFlWejhEcVVDRTdSRVRvcEpoMExyMjMx?=
- =?utf-8?B?VEg2enZmL2V2aU5NWGhmblBDZEhMb3kvcUNiNkpMTTBlZ2ViY0kxbHNUdU14?=
- =?utf-8?B?dE44TFJxZm0rVWU2UEdRZDVVMTEza3RPSEpSU0tjc0w0MDRYbmluQlloZTVZ?=
- =?utf-8?B?bys3LzBKZVJwKzJ2amUrczIrM09qT21yYk5IMGluUDVVTmNrbXVTa0x5ejR3?=
- =?utf-8?B?ZHZkczl3Vk95ZUhieHp4TkFtM2pxTmZseVpyUnlrS3hxSldrR0Q0L1RpNzdh?=
- =?utf-8?B?YUJCZmhUcDZyUTJJcC9hUXc2YnZNekNhSU42dThVRTZKZ3FTZXM5WG9WWVI5?=
- =?utf-8?B?QUZhVGlyYTk5a1plYUtlWGNjdFdycU5vdEdQWWt2dUVNRmtFL3NtQUlnL3Q3?=
- =?utf-8?B?RXFkcXhPVVNHSHdEdHQyYUxFRDVBVk10cGpNTXZpbC9xdGZaTXQzeE9RUWhB?=
- =?utf-8?B?V2M5czIrTkNKUWF4ZEJGek1EdU9SN1Q3OWxyR1VtZE9TTTZmSlM4UVZQUytu?=
- =?utf-8?B?MHdRM3ExeHlBTEs0dnQ0S25aaEZzNG9yZkUrNWFIa0ZwUnZYSTl5U0F6WDVk?=
- =?utf-8?B?Vyt1THZHd3B6TmovOTJFQlZuNmUrYXMyOEdyb0wxTXJoanBoVVJ0dXJEd1hT?=
- =?utf-8?B?VnV2R3Y4ckJRRmozdi9IQjhVOTRuY2wwYWlsVnlBWW1WVGphUnVuRHBOYjBk?=
- =?utf-8?B?WVlBQWNuaFhxbzljQnR2L2xhcndacXRlbUxYNW1uekFJME1jbUJHZTh2R2Z6?=
- =?utf-8?B?TS9UdTV6UklBcHQ5RCtBMUZwVTZtTkl2UUdvWWFDS0ZoSUVaeUU3WVd2NStq?=
- =?utf-8?B?OUprT0FIRmFsa3E0djR1Z2dpWjIrSUZZaVBpbTVZNkUzNGRMY3VLcTNTU0Fv?=
- =?utf-8?B?V2dtY05obW94cERoTEptQ0MzVGdpSHBrVldXS3psaGVNVWxpTHNJcklmdGNF?=
- =?utf-8?B?N0dKSlMvbndUMS9qNFBIV2JpUitUK2RzN1RIdlJ2T2laTkJCdzFndThHNVZn?=
- =?utf-8?Q?krEIFDhD6DcNHme5JQf8UBW7E?=
+	=?utf-8?B?V2lPd1lTSGdweVNjQ3NMV1hoZCszVVNvTUtlTm8vS2dDVzdvMVVMOWo4cGI5?=
+ =?utf-8?B?Tjc3bm5EVXVvMEMwakNoMnRDVmpJYVdHU0ZjRzZtMGc2K3NacTVFNTNuVCtC?=
+ =?utf-8?B?NmxucERDajllNTRTRXgxSVlLODRCK3EybWRGVVNueG8vRElqQzU2NlZMdldl?=
+ =?utf-8?B?djBCOGdGQ1lSOTlOeXd4N0pkZWdYbS83alpTNzdEbzRTUHpmU1UxN2dHeHFN?=
+ =?utf-8?B?WjhGc0puekNlNUFOUnNuNG1ZYjJaVDlGMGE2OVBaRDNmNW8wdGJnWnFweWN1?=
+ =?utf-8?B?Y0Q1ZWNWcVZSdUR2TVN3ZHc4UC8ybysraDQ2cExVUE13MUZNU3dGQ0x1cU9F?=
+ =?utf-8?B?TkZPRlpyUFFzNlVOZEZ0YkpUZkJYNU5lckpWYkNabUFFcms2Vm56Y3c4MG03?=
+ =?utf-8?B?cjkxYXFFZElxKzRMVk9mYmtTdk5MWkpxenp6Tm5OVmI5cUVjelpSNmJxZ3Fh?=
+ =?utf-8?B?ZzlwcEJrNXdCcjh1V1Urc1ZlVzdSdFZFbWZBQ0p1YkliOFBRenA2MlFOUzJ4?=
+ =?utf-8?B?bk1VUWEzZ093aUlCalFMK2tiK1crekVOWVNCVkNscGdOaGFGTDYrUkNlSng5?=
+ =?utf-8?B?a21LWWtVamV4ZDJ1MFR6cmd2dUIxVEU2NDRUSzNtK2xZT2UxV1g2S2xaRUww?=
+ =?utf-8?B?QjJvc05vTldVa3lqZnBCempYZFdmS1dDUEF1dFhuakZad3ArdkxKYUlCMEtu?=
+ =?utf-8?B?N2R6OGRMUW5xRVQ4bzhscDJEUTZIZEFlaUhMKzVuVWVHcll0TDRneS85MFNB?=
+ =?utf-8?B?Skc1c2piSFhTWHlOQzcwbXFiNHlhL1VTQjBVWEpDSjBzWVkyWnl2Z3RvUnF2?=
+ =?utf-8?B?VGhiSGcvTTJzdUU5RzJFY2gvTkZ1czVSU3lDTlhBM1p5U2xoNE5KNDZrMnVT?=
+ =?utf-8?B?Ly8rRUlUa3pmZUEwcEtpeUhzdHl6SnVLMTRYQ3Y1NVBncWpNSnJhZ0hIWHNu?=
+ =?utf-8?B?dnRVK2owZCtpU0Y0MTl4dGIyR1kxNVgrb1h1djRndkNReE42WjZYYXhIZitW?=
+ =?utf-8?B?VlNQVjJ5ajI2K3lta0YxTmtGN2xKT1ptRUpNalU0SXhvdERWWGYyalBVbXlh?=
+ =?utf-8?B?bUI2ak9STjA4Slk4OUE4Wm1ZcFdEK2dBc21MSUNnSWpvNDlsQk1vdzFPcG92?=
+ =?utf-8?B?YnJ1ejlhdjZjT1kwMzRqU1U1QWpJU0l2eVFDaGU5WThNbWV4aWp6ejN5WnVq?=
+ =?utf-8?B?cnh2aUdCMndtb2wwVlhCWGVoUEkzdEJlNitCNTY5Q1BTcW1tejBnYWRqcExF?=
+ =?utf-8?B?MnpwOTN4L0lQQ0V2OHMxSytBN1JvWEU1OU4vbjhja2R3VHVLSkdPSUxLdGN2?=
+ =?utf-8?B?NzIxcXpzNE1WUVdPakQ2OTZWdzUyT1RlbnZ2Mk41M3VZbjhCYXZNMCtOeWp6?=
+ =?utf-8?B?MXlHMXJVdFZOZ1VLSXpkQXFudGZneVhXK1EweFBDSDBIN09zMDA3NkNCZDdp?=
+ =?utf-8?B?ZmNoR1F4RjNHQTVLRUZpblpxajRyNnZlSk5KbVVPejZFOEdpSEdSKzVHZjMz?=
+ =?utf-8?B?aFNlRDdvcGpSYmNrbEVUVjhrclU4ZXJ3OGZaamlsaEdKU0J3YlY5OWJrVC9R?=
+ =?utf-8?B?NGQ4MVlKVVRQWFhGR2pNOWgwdzN2WC85RkFHT2tmYkpnNFZuMFpLcDlJU2lN?=
+ =?utf-8?B?cW5DcDZ5M3ltTnhLTndYYnVXbUVzcDB4ZUtqQUdJVndtRGNFODFWN3dJbzBL?=
+ =?utf-8?B?R1dwSUZoNEttVi84TDNGMnJmcmNwWEFGdStDaSs2Qk5INU85ZnlxYUF2S2pu?=
+ =?utf-8?B?YURaRTJUc1hVQk1laFFHc0k4RVM4Sk5jOS9pWG9oQ1p4dk1jUWI4NVdOTGpl?=
+ =?utf-8?B?akhTMnF5ZkQzenk3b3pIamVxVXdIVE11Nkkra0VJWmNhS293ZGpUTWk5dFJL?=
+ =?utf-8?B?TUVnSG5FdUxZUHRhNFR5SjZMbTVxRlNBZFRhTUJFRkszRjFueks1U2RRcFNE?=
+ =?utf-8?B?RGM5am5lU3J5OGdteFRlVjR0NEtTbytaOU94cUlNYUFITDhXTmVhNGhmbWRt?=
+ =?utf-8?B?S1J3STFXRXJEN09RKzV1NWVwK1RYSG9waWRQNzVnSWs1L05pR3ROT1l1eVRh?=
+ =?utf-8?B?TytjK0hDMUZrSkdBazNJMktwYjZrUjQyM3RPb2ppRFYzdWpGM3FPMS84RjRP?=
+ =?utf-8?Q?jQxoNZNMmhqGADxQYiO4K3ckz?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ec841a30-c643-45bf-1a84-08dbea8890ea
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9eb2a737-5b5a-4c56-d5ac-08dbea88dc08
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB4758.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2023 11:54:07.3691
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2023 11:56:13.3718
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EyYNb9Lbf1n++TJh76p/BGx1z6BKpu7MIhitec7TYEKeXpPNTePH86pMF5oMBsnH
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8514
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2w4Hh1GOKZiNrFU2BX5B0ZjZ1ZqRz5CFq81X8ZN6itO62LJf4YtIV9fHiThEmXlf
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5047
 
 
 
-On 11/21/23 11:28, Krzysztof Kozlowski wrote:
-> On 21/11/2023 11:13, Dmitry Baryshkov wrote:
->> On Tue, 21 Nov 2023 at 10:09, Geert Uytterhoeven <geert@linux-m68k.org> wrote:
->>>
->>> Hi Krzysztof,
->>>
->>> On Tue, Nov 21, 2023 at 8:47 AM Krzysztof Kozlowski
->>> <krzysztof.kozlowski@linaro.org> wrote:
->>>> On 21/11/2023 08:33, Michal Simek wrote:
->>>>> On 11/20/23 20:31, Krzysztof Kozlowski wrote:
->>>>>> On 20/11/2023 20:18, Geert Uytterhoeven wrote:
->>>>>>> On Mon, Nov 20, 2023 at 3:53 PM Krzysztof Kozlowski
->>>>>>> <krzysztof.kozlowski@linaro.org> wrote:
->>>>>>>> On 20/11/2023 15:01, Michal Simek wrote:> >
->>>>>>>>> On 11/20/23 09:40, Krzysztof Kozlowski wrote:
->>>>>>>>>> Document preferred coding style for Devicetree sources (DTS and DTSI),
->>>>>>>>>> to bring consistency among all (sub)architectures and ease in reviews.
->>>>>>>
->>>>>>>>>> +Organizing DTSI and DTS
->>>>>>>>>> +-----------------------
->>>>>>>>>> +
->>>>>>>>>> +The DTSI and DTS files should be organized in a way representing the common
->>>>>>>>>> +(and re-usable) parts of the hardware.  Typically this means organizing DTSI
->>>>>>>>>> +and DTS files into several files:
->>>>>>>>>> +
->>>>>>>>>> +1. DTSI with contents of the entire SoC (without nodes for hardware not present
->>>>>>>>>> +   on the SoC).
->>>>>>>>>> +2. If applicable: DTSI with common or re-usable parts of the hardware (e.g.
->>>>>>>>>> +   entire System-on-Module).
->>>>>>>>>
->>>>>>>>> DTS/DTSI - SOMs can actually run as they are that's why it is fair to say that
->>>>>>>>> there doesn't need to be DTS representing the board.
->>>>>>>>
->>>>>>>> I have never seen a SoM which can run without elaborate hardware-hacking
->>>>>>>> (e.g. connecting multiple wires to the SoM pins). The definition of the
->>>>>>>> SoM is that it is a module. Module can be re-used, just like SoC.
->>>>>>>
->>>>>>> /me looks at his board farm...
->>>
->>>>>>> I guess there are (many) other examples...
->>>>>>
->>>>>> OK, I never had such in my hands. Anyway, the SoM which can run
->>>>>> standalone  has a meaning of a board, so how exactly you want to
->>>>>> rephrase the paragraph?
->>>>>
->>>>> What about?
->>>>>
->>>>> 2. If applicable: DTSI with common or re-usable parts of the hardware (e.g.
->>>>> entire System-on-Module). DTS if runs standalone.
->>>>
->>>> OK, but then it's duplicating the option 3. It also suggests that SoM
->>>> should be a DTS, which is not what we want for such case. Such SoMs must
->>>> have DTSI+DTS.
->>>
->>> So you want us to have a one-line <SoM>.dts, which just includes <SoM>.dtsi?
+On 11/20/23 15:53, Krzysztof Kozlowski wrote:
+> On 20/11/2023 15:01, Michal Simek wrote:
 >>
->> Well, I think it is impossible to run SoM directly. There is a carrier
->> board anyway, which includes at least regulators. So, I guess, the
->> SoM.dts will not be a oneline file.
+>>
+>> On 11/20/23 09:40, Krzysztof Kozlowski wrote:
+>>> Document preferred coding style for Devicetree sources (DTS and DTSI),
+>>> to bring consistency among all (sub)architectures and ease in reviews.
+>>>
+>>> Cc: Andrew Davis <afd@ti.com>
+>>> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+>>> Cc: Arnd Bergmann <arnd@arndb.de>
+>>> Cc: Bjorn Andersson <andersson@kernel.org>
+>>> Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+>>> Cc: Heiko Stuebner <heiko@sntech.de>
+>>> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>> Cc: Matthias Brugger <matthias.bgg@gmail.com>
+>>> Cc: Michal Simek <michal.simek@amd.com>
+>>> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+>>> Cc: Nishanth Menon <nm@ti.com>
+>>> Cc: Olof Johansson <olof@lixom.net>
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>
+>>> ---
+>>>
+>>> Merging idea: Rob/DT bindings
+>>>
+>>> Changes in v2
+>>> =============
+>>> 1. Hopefully incorporate entire feedback from comments:
+>>> a. Fix \ { => / { (Rob)
+>>> b. Name: dts-coding-style (Rob)
+>>> c. Exceptions for ordering nodes by name for Renesas and pinctrl (Geert,
+>>>      Konrad)
+>>> d. Ordering properties by common/vendor (Rob)
+>>> e. Array entries in <> (Rob)
+>>>
+>>> 2. New chapter: Organizing DTSI and DTS
+>>>
+>>> 3. Several grammar fixes (missing articles)
+>>>
+>>> Cc: linux-rockchip@lists.infradead.org
+>>> Cc: linux-mediatek@lists.infradead.org
+>>> Cc: linux-samsung-soc@vger.kernel.org
+>>> Cc: linux-amlogic@lists.infradead.org
+>>> Cc: linux-arm-kernel@lists.infradead.org
+>>> Cc: linux-arm-msm@vger.kernel.org
+>>> ---
+>>>    .../devicetree/bindings/dts-coding-style.rst  | 163 ++++++++++++++++++
+>>>    Documentation/devicetree/bindings/index.rst   |   1 +
+>>>    2 files changed, 164 insertions(+)
+>>>    create mode 100644 Documentation/devicetree/bindings/dts-coding-style.rst
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/dts-coding-style.rst b/Documentation/devicetree/bindings/dts-coding-style.rst
+>>> new file mode 100644
+>>> index 000000000000..cc7e3b4d1b92
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/dts-coding-style.rst
+>>> @@ -0,0 +1,163 @@
+>>> +.. SPDX-License-Identifier: GPL-2.0
+>>> +.. _dtscodingstyle:
+>>> +
+>>> +=====================================
+>>> +Devicetree Sources (DTS) Coding Style
+>>> +=====================================
+>>> +
+>>> +When writing Devicetree Sources (DTS) please observe below guidelines.  They
+>>> +should be considered complementary to any rules expressed already in Devicetree
+>>> +Specification and dtc compiler (including W=1 and W=2 builds).
+>>> +
+>>> +Individual architectures and sub-architectures can add additional rules, making
+>>> +the style stricter.
+>>> +
+>>> +Naming and Valid Characters
+>>> +---------------------------
+>>> +
+>>> +1. Node and property names are allowed to use only:
+>>> +
+>>> +   * lowercase characters: [a-z]
+>>> +   * digits: [0-9]
+>>> +   * dash: -
+>>
+>> device-tree specification v0.4. Chapter 2.2.1/Table 2.1 is describing much more
+>> valid characters for node names.
+>> It means above description is not accurate or DT spec should be updated.
 > 
-> Geert claims he has SoM with an USB connector which can run when power
-> is supplied by that USB connector. I can imagine a CPU board (so a SoM
-> in format of a board, not small DIMM-card) which has connectors e.g. for
-> power and a slot for external motherboard for additional, optional
-> interfaces.
-> 
-> Look at picture on 14th page:
-> https://www.renesas.com/us/en/document/mat/rza2m-cpu-board-users-manual
-> 
-> This looks like some case of SoM, although maybe not that popular
-> outside of Renesas :)
+> Spec allows way to much. dtc doesn't. 
+> One thing is the spec, second
+> thing is coding style.
 
-In our case we have SOMs
-https://www.xilinx.com/products/som/kria.html#portfolio
+ From my point of view spec is primary source of truth. If spec is saying name 
+can use upper case then I can use it. If upper case is not 
+recommended/deprecated because of whatever reason spec should be updated to 
+reflect it.
+I know that DTC is reporting other issues but isn't it the right way to reflect 
+it back to the spec?
 
-and also carrier cards (CC) like this
-https://www.xilinx.com/products/som/kria/kv260-vision-starter-kit.html
-
-and we also have debug boards.
-
-There must be a carrier card in our case and there is power connector (with also 
-non sw accessible regulators), jtag, boot pins and for example ttl to usb 
-connector for UART but SOM spec describe directly which peripherals are on 
-certain pins by default.
-It means we have CC card but there is nothing on it to describe for SOM itself.
-
-Our default boot process is to boot with SOM peripherals described by spec. And 
-then do CC identification and switching to SOM+CC dtb description at U-Boot.
-
-Some combinations are described here.
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/xilinx/Makefile?h=v6.7-rc2#n21
-
-We can create dtsi for SOM and then dts which just one line which includes SOM dtsi.
+No doubt that it is nice to see to have guide like this.
 
 Thanks,
 Michal
-
-
-
-
-
-
-
 
