@@ -1,149 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-1354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D0647F2E38
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:25:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0E817F2E1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:14:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4118D2812F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 13:25:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4E910B21B65
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 13:14:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3C9D51C28;
-	Tue, 21 Nov 2023 13:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA00C48CD2;
+	Tue, 21 Nov 2023 13:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W7mHQi8a"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wk96o3fk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C351BB;
-	Tue, 21 Nov 2023 05:25:21 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-548f0b7ab9eso1538886a12.3;
-        Tue, 21 Nov 2023 05:25:21 -0800 (PST)
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E16119F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 05:14:40 -0800 (PST)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5ca77fc0f04so19514207b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 05:14:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700573120; x=1701177920; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=m92K+MDAt/mcnsYqpnD286mgL18e1jbSNxgzizE2vc0=;
-        b=W7mHQi8aZJ2Nznt/WNs2ca+gIJIpgdRsuk1a4k8DDHissX1pw1e0UITDIaxR7uBHBE
-         Zu4XVCaBtyGefLzZcwtC2DTEXJNVuAC+4oSsHNLte6FLzP8ti2zIhW5f9/yci1l9l/Ua
-         BJgrJnOdePfgiezEhXlzkZ1e4GME8dMucjFcu12zKjSsnNVCR4wP0iECbmqVTCRsXoYG
-         19czRi2Kmu/h4mV9Lxu4KIni2Y//d3EnQZyPDbECWhmp2ucvySmta5ymT+MrQp/jcsl7
-         f3+FSF8YONGOmx/8lA43Ju152/dr2+EJ8qhM2FkblIuwIHIqvawaNBq3JeHM7ZX3TrpP
-         dZ4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700573120; x=1701177920;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1700572479; x=1701177279; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m92K+MDAt/mcnsYqpnD286mgL18e1jbSNxgzizE2vc0=;
-        b=jV+F4J0aEI+AjAv8uCi9vCHPiHmumkl8gLp6W06gnaPw0MGFkUYVZW62hFUeuZEeDP
-         DRxOuko5763ABSMROmGaE+nHtULTc7u9vPJWrX82YRksuRQ3W80Wl8XGvqc25D3cboUe
-         g6fi392llOhm64rk608H/0L6mrMnpJhecWjyw7P06aYydfD9qcLEPSEfdUghzmcQ9nZU
-         TVt+gvzmTly+vVy5Jt3BqQKjW28Cf2lmojtlJ0QFvQVIJmBkF90XbvIHlExaTzz8URMN
-         IsxqJv37jd1fi8hBXLjqf2WjLGp69nGVk6dEiWzrkisk6lFMWDkPCycbgCLJ3JlhhviR
-         2NLg==
-X-Gm-Message-State: AOJu0YyhOU8sqWG5UKPFyUdGuQ1ZPIlEpmTkKYK1fpb0xgwIGUBuyURH
-	WcuaOZHRPPJAOz7CzA/7qyg=
-X-Google-Smtp-Source: AGHT+IFeVg0d+ORZfLoV2hl/dUB5IqhT2S/nhE3hYYfAZSZypJJtkrq2Fw+2ndptvfPv114T0zoi/Q==
-X-Received: by 2002:aa7:d8cc:0:b0:540:97b5:3719 with SMTP id k12-20020aa7d8cc000000b0054097b53719mr1597855eds.25.1700573119970;
-        Tue, 21 Nov 2023 05:25:19 -0800 (PST)
-Received: from ?IPV6:2a01:c23:c095:ed00:bc3d:5c69:4067:a24b? (dynamic-2a01-0c23-c095-ed00-bc3d-5c69-4067-a24b.c23.pool.telefonica.de. [2a01:c23:c095:ed00:bc3d:5c69:4067:a24b])
-        by smtp.googlemail.com with ESMTPSA id j19-20020aa7ca53000000b005488ae52752sm3212156edt.18.2023.11.21.05.25.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Nov 2023 05:25:19 -0800 (PST)
-Message-ID: <c636a24f-0390-49a2-9012-9abf9794abc3@gmail.com>
-Date: Tue, 21 Nov 2023 13:25:18 +0100
+        bh=T1FVx31ny1UIsUYTN0FvTESgACbfkRrXqAtlZm7hdMQ=;
+        b=wk96o3fkJaxwTwxESfaLw91TAWzPE1mwY9IeWR7R5ED0LiNjXTeN8gM867VHuiT1Ok
+         zW6n3sbU1sAMqmlo4ehmAMSjhCJJuacXksllhjcyjXsf5uVmxS5Id1+dBvAH/ietSTvt
+         bzN0OFoRxJVxke07DHCToUA4lSwH4lwHrsQezABoPCf6Pm1E9YC5MN1wtGhodpDfX0AX
+         WUbw0qUA3UgJTuwLff+fyO8NarRKM1NWKS46Vhf38kNO6pBywqPnnnNi4oo8OmTV7/6y
+         xnEbSA9oRghfY2z/Iw+8lpH89BZhgpT2hxGpCKNyFb+lT/JQT4hT2rrfUJaU95OpBjuX
+         OYWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700572479; x=1701177279;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T1FVx31ny1UIsUYTN0FvTESgACbfkRrXqAtlZm7hdMQ=;
+        b=tuMADT/pu1AtCj9W1KpFUfm2zJimMqlfb3bay77ZMM+Qj7QoEbxJSqbRbW5ZRCmTmf
+         jAawj+hhscgS29GA58TXxVyB2klSOoZh0oZ/lnWR97vF7HwkSxsZKKJndDF4lJWRnH3d
+         mTqaCQWm9yBGU9I50Vk0nPJ0sA9lLYXWrpLWjocZ98f/CZHJtk/78fZlkJZlBKVA8gR4
+         gtomCK9znBqkLJMATq6yXFlQ826b1asbKgFqHBH9HrMCUDKya1UX+F99tJSVM1gYfZ6+
+         SJi6eCqwVCpjoQ6RwR3ariJKz64nTVozrJhm/4XtxYNDf7J9IDQCa5idRqMrcW/ftkhi
+         Ghig==
+X-Gm-Message-State: AOJu0YxV2Zz3RMCPb38gXOYuEitpv31U5AWCRbkA9V6b8bpcFgkAUJU/
+	sZEZ5JM0RterHYKE737eQS5C5GpSaiEqKjkn4oGAgA==
+X-Google-Smtp-Source: AGHT+IGdy0glLtv5dcrxHz/dOPuR1DdG5UQYfnJPpwRpz2KnBMCt7ft48fu4aJhKTM32UX2jKzQNfexAUsNEH1vJArE=
+X-Received: by 2002:a81:5342:0:b0:5c8:d81d:763d with SMTP id
+ h63-20020a815342000000b005c8d81d763dmr7840991ywb.44.1700572479464; Tue, 21
+ Nov 2023 05:14:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Intel-gfx] [PATCH v4 00/20] remove I2C_CLASS_DDC support
-To: Jani Nikula <jani.nikula@linux.intel.com>, Wolfram Sang <wsa@kernel.org>,
- intel-gfx@lists.freedesktop.org
-Cc: linux-fbdev@vger.kernel.org, dri-devel@lists.freedesktop.org,
- Yongqin Liu <yongqin.liu@linaro.org>,
- Jernej Skrabec <jernej.skrabec@gmail.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Sumit Semwal <sumit.semwal@linaro.org>, amd-gfx@lists.freedesktop.org,
- linux-rockchip@lists.infradead.org,
- Xinwei Kong <kong.kongxinwei@hisilicon.com>, linux-sunxi@lists.linux.dev,
- Jonas Karlman <jonas@kwiboo.se>, linux-arm-msm@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
- Jocelyn Falempe <jfalempe@redhat.com>, linux-kernel@vger.kernel.org,
- linux-i2c@vger.kernel.org, Thomas Zimmermann <tzimmermann@suse.de>,
- John Stultz <jstultz@google.com>, freedreno@lists.freedesktop.org,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-References: <20231120214624.9378-1-hkallweit1@gmail.com>
- <87h6lfo53n.fsf@intel.com>
-Content-Language: en-US
-From: Heiner Kallweit <hkallweit1@gmail.com>
-Autocrypt: addr=hkallweit1@gmail.com; keydata=
- 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
-In-Reply-To: <87h6lfo53n.fsf@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20231115141928.429688-1-dipamt1729@gmail.com> <CAA8EJprqnUGQxmj4Y=qttVuj0zJxdD9B6neHa6sPseLLETpk5A@mail.gmail.com>
+ <CALHmwsoC5h7_w9OzpUS_-xM6x5WF5V-vFExLEf4y99b2eCcqGQ@mail.gmail.com>
+ <CAA8EJpoyC=paF1ZuznXgJAkT1fne0RwYfqJh-cdz0WLt02i+bw@mail.gmail.com> <CAF6AEGtdKD6-xA+AeZDXuKc+k4MnP8Ba4-12hHxt00bXLhJ7Eg@mail.gmail.com>
+In-Reply-To: <CAF6AEGtdKD6-xA+AeZDXuKc+k4MnP8Ba4-12hHxt00bXLhJ7Eg@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 21 Nov 2023 15:14:28 +0200
+Message-ID: <CAA8EJprj7F_K1zxnGdz1ReLNMR2CiYfRxWHUmudTZC+qjKA+kA@mail.gmail.com>
+Subject: Re: [PATCH v2] Remove custom dumb_map_offset implementation in msm driver
+To: Rob Clark <robdclark@gmail.com>
+Cc: Dipam Turkar <dipamt1729@gmail.com>, quic_abhinavk@quicinc.com, sean@poorly.run, 
+	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 21.11.2023 09:58, Jani Nikula wrote:
-> On Mon, 20 Nov 2023, Heiner Kallweit <hkallweit1@gmail.com> wrote:
->> v4:
->> - more ack and review tags
-> 
-> Please do not send new versions just to record the acks and
-> reviews. They should be added while applying the patches.
-> 
-Right, typically also patchwork interprets and shows A-b and R-b when
-sent as a reply to a patch of the series. I sent a new version because
-an A-b covered multiple patches and was sent as reply to the cover letter.
+On Tue, 21 Nov 2023 at 04:26, Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Wed, Nov 15, 2023 at 11:33=E2=80=AFAM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Wed, 15 Nov 2023 at 20:46, Dipam Turkar <dipamt1729@gmail.com> wrote=
+:
+> > >
+> > > They are not outdated, my bad. I went through the locks' code and saw=
+ that they have been updated. But they are probably not necessary here as m=
+ost of the drivers do not use any form of locking in their implementations.=
+ The generic implementations drm_gem_dumb_map_offset() and drm_gem_ttm_dumb=
+_map_offset() do not have any locking mechanisms either.
+> >
+> > Excuse me, but this doesn't sound right to me. There are different
+> > drivers with different implementations. So either we'd need a good
+> > explanation of why it is not necessary, or this patch is NAKed.
+>
+> Digging a bit thru history, it looks like commit 0de23977cfeb
+> ("drm/gem: convert to new unified vma manager") made external locking
+> unnecessary, since the vma mgr already had it's own internal locking.
 
-> Thanks,
-> Jani.
-> 
-Heiner
+So, should we drop our own locking system?
+
+>
+> BR,
+> -R
+>
+> > >
+> > > Thanks and regards
+> > > Dipam Turkar
+> > >
+> > > On Wed, Nov 15, 2023 at 8:37=E2=80=AFPM Dmitry Baryshkov <dmitry.bary=
+shkov@linaro.org> wrote:
+> > >>
+> > >> On Wed, 15 Nov 2023 at 16:30, Dipam Turkar <dipamt1729@gmail.com> wr=
+ote:
+> > >> >
+> > >> > Make msm use drm_gem_create_map_offset() instead of its custom
+> > >> > implementation for associating GEM object with a fake offset. Sinc=
+e,
+> > >> > we already have this generic implementation, we don't need the cus=
+tom
+> > >> > implementation and it is better to standardize the code for GEM ba=
+sed
+> > >> > drivers. This also removes the outdated locking leftovers.
+> > >>
+> > >> Why are they outdated?
+> > >>
+> > >> >
+> > >> > Signed-off-by: Dipam Turkar <dipamt1729@gmail.com>
+> > >> > ---
+> > >> >  drivers/gpu/drm/msm/msm_drv.c |  2 +-
+> > >> >  drivers/gpu/drm/msm/msm_gem.c | 21 ---------------------
+> > >> >  drivers/gpu/drm/msm/msm_gem.h |  2 --
+> > >> >  3 files changed, 1 insertion(+), 24 deletions(-)
+> > >> >
+> > >> > Changes in v2:
+> > >> > Modify commit message to include the absence of internal locking l=
+eftovers
+> > >> > around allocating a fake offset in msm_gem_mmap_offset() in the ge=
+neric
+> > >> > implementation drm_gem_create_map_offset().
+> > >> >
+> > >> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/m=
+sm_drv.c
+> > >> > index a428951ee539..86a15992c717 100644
+> > >> > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > >> > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > >> > @@ -1085,7 +1085,7 @@ static const struct drm_driver msm_driver =
+=3D {
+> > >> >         .open               =3D msm_open,
+> > >> >         .postclose          =3D msm_postclose,
+> > >> >         .dumb_create        =3D msm_gem_dumb_create,
+> > >> > -       .dumb_map_offset    =3D msm_gem_dumb_map_offset,
+> > >> > +       .dumb_map_offset    =3D drm_gem_dumb_map_offset,
+> > >> >         .gem_prime_import_sg_table =3D msm_gem_prime_import_sg_tab=
+le,
+> > >> >  #ifdef CONFIG_DEBUG_FS
+> > >> >         .debugfs_init       =3D msm_debugfs_init,
+> > >> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/m=
+sm_gem.c
+> > >> > index db1e748daa75..489694ef79cb 100644
+> > >> > --- a/drivers/gpu/drm/msm/msm_gem.c
+> > >> > +++ b/drivers/gpu/drm/msm/msm_gem.c
+> > >> > @@ -671,27 +671,6 @@ int msm_gem_dumb_create(struct drm_file *file=
+, struct drm_device *dev,
+> > >> >                         MSM_BO_SCANOUT | MSM_BO_WC, &args->handle,=
+ "dumb");
+> > >> >  }
+> > >> >
+> > >> > -int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_dev=
+ice *dev,
+> > >> > -               uint32_t handle, uint64_t *offset)
+> > >> > -{
+> > >> > -       struct drm_gem_object *obj;
+> > >> > -       int ret =3D 0;
+> > >> > -
+> > >> > -       /* GEM does all our handle to object mapping */
+> > >> > -       obj =3D drm_gem_object_lookup(file, handle);
+> > >> > -       if (obj =3D=3D NULL) {
+> > >> > -               ret =3D -ENOENT;
+> > >> > -               goto fail;
+> > >> > -       }
+> > >> > -
+> > >> > -       *offset =3D msm_gem_mmap_offset(obj);
+> > >> > -
+> > >> > -       drm_gem_object_put(obj);
+> > >> > -
+> > >> > -fail:
+> > >> > -       return ret;
+> > >> > -}
+> > >> > -
+> > >> >  static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
+> > >> >  {
+> > >> >         struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
+> > >> > diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/m=
+sm_gem.h
+> > >> > index 8ddef5443140..dc74a0ef865d 100644
+> > >> > --- a/drivers/gpu/drm/msm/msm_gem.h
+> > >> > +++ b/drivers/gpu/drm/msm/msm_gem.h
+> > >> > @@ -139,8 +139,6 @@ struct page **msm_gem_pin_pages(struct drm_gem=
+_object *obj);
+> > >> >  void msm_gem_unpin_pages(struct drm_gem_object *obj);
+> > >> >  int msm_gem_dumb_create(struct drm_file *file, struct drm_device =
+*dev,
+> > >> >                 struct drm_mode_create_dumb *args);
+> > >> > -int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_dev=
+ice *dev,
+> > >> > -               uint32_t handle, uint64_t *offset);
+> > >> >  void *msm_gem_get_vaddr_locked(struct drm_gem_object *obj);
+> > >> >  void *msm_gem_get_vaddr(struct drm_gem_object *obj);
+> > >> >  void *msm_gem_get_vaddr_active(struct drm_gem_object *obj);
+> > >> > --
+> > >> > 2.34.1
+> > >> >
+> > >>
+> > >>
+> > >> --
+> > >> With best wishes
+> > >> Dmitry
+> >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
+
+
+
+--=20
+With best wishes
+Dmitry
 
