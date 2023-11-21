@@ -1,327 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-1260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D31B7F2266
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 01:40:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB28D7F226A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 01:41:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3129D1C21620
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 00:40:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75232280E3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 00:41:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC55B15B4;
-	Tue, 21 Nov 2023 00:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C91311380;
+	Tue, 21 Nov 2023 00:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fEln3ZDf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VYD4rZaz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8710D49;
-	Mon, 20 Nov 2023 16:40:32 -0800 (PST)
-Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-1f066fc2a28so3108796fac.0;
-        Mon, 20 Nov 2023 16:40:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700527232; x=1701132032; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AxPjYZ32BBCzKXQ5KBeoAc5/CWYpCWybJmLe95iBq8c=;
-        b=fEln3ZDfwiwCzzicDTpFbD2F/grxJZscS9b5PFUr9SVgv1yyGXoBKQuY9QZ1nBUHoA
-         hXNdWY4Z1s4swxu9SWuCgVXd/+Tnn54zYdATIYRVfJz9q+RlKe1dHn2ByrOd4PrTOeQj
-         h4f7TIebfZqqeUriXmZ6fjWVkSDMdg2Odn0z28lhZW2t3SculodHlLWRCcImM/ok90d9
-         JJ/gVWPdkApQu/+Xqn+YjwssjUXZqj4L00nvN3jwr2mh6ivKd0J0litRKOtCnKZIMKcA
-         U/cbGdR4O7LEO1nhqmY5DnK1K9q7M2BIM3EIjNB3CQkfgOTSrgWDEv0Jqtpkf4gTVi56
-         yyJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700527232; x=1701132032;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AxPjYZ32BBCzKXQ5KBeoAc5/CWYpCWybJmLe95iBq8c=;
-        b=rdB2HyZa6HnewnPnIoySDX/OrWzv/ZUFz5bzU9VYIqmYzFpGbdEKj4TuaurvKzt44X
-         YCSi8CYuTPcjS8t6L8mo8zuho2qostLkbI+e7z43+R+mvMW6bB+Onb5A4ohTZfK8aDxL
-         vK1IIbHhNJ0DZV9a/v8HKd8ejvDzcfmyVuQA3P+uNebDcQ4778G1Kj7z7rQda64poyqX
-         EfJ2OGzFVD1QCv4duNhNVo/WeRQMFK0g1QQONbzujd4kZfdo++j2F5Am5cEfxPp6MQfI
-         v2UfHFFIuqpo2K9lWJWq/oxdapb17G5QRXiWgS3ffp0zXUG1q756VyYXUk6LT/xEgTkC
-         YA0A==
-X-Gm-Message-State: AOJu0YyEQBCICPVNmr5GufaN+SjSB8gRIMqCDRLLL9RILr8Kr2cKYlkS
-	814gE+JareozzjCL1+NUGG8=
-X-Google-Smtp-Source: AGHT+IF2yrgKf/ZIhHKifS6sSdREvPsGKX1yzt0OjmXQKViCC55+Hz1UC/MRYTiAmp2IJVBFZ86a0Q==
-X-Received: by 2002:a05:6871:8184:b0:1f9:4aee:6ef6 with SMTP id so4-20020a056871818400b001f94aee6ef6mr4200177oab.53.1700527232001;
-        Mon, 20 Nov 2023 16:40:32 -0800 (PST)
-Received: from localhost ([47.215.232.245])
-        by smtp.gmail.com with ESMTPSA id c10-20020a631c4a000000b005b82611378bsm6610476pgm.52.2023.11.20.16.40.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Nov 2023 16:40:31 -0800 (PST)
-From: Rob Clark <robdclark@gmail.com>
-To: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Rob Clark <robdclark@chromium.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 7/7] drm/msm/gem: Convert to drm_exec
-Date: Mon, 20 Nov 2023 16:38:51 -0800
-Message-ID: <20231121003935.5868-8-robdclark@gmail.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231121003935.5868-1-robdclark@gmail.com>
-References: <20231121003935.5868-1-robdclark@gmail.com>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD81410F1;
+	Mon, 20 Nov 2023 16:41:10 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AL0Zd8O016973;
+	Tue, 21 Nov 2023 00:41:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=X8xZvS6shZckfz0tektajGeeKEM/8ral5kfB64Bb0jE=;
+ b=VYD4rZazIwewET3s7EeayauIg2O/Dkc029yQE9TyMlkgf/9uifEgCjsnZggyqbm+cSH9
+ 88wr1nmx+wlqdTcdi2yyW7sr9z+Sb257OBUiI6o35mni+mZfIiFt/y8+9GSRTxhJQecr
+ lwvujBfCWDiTnw0RKBScAh6IYGr71XAAY0SbK00rpujCM0iJeQVO+CY1/OsVTRARXAIO
+ eF35+61ZgqygRw9Uw02LvUOFxd3BSgWJnE1acSl5JgfZkRWEtxCXclAZH8bPphsJYu/N
+ rbH+EGJS3qfyvbYxjAhq3gxU5X9wI6ur8yh2hGkkJCaDzt9vEFICvLcaGpDbQ1hGsBjs lg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ug5371vme-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Nov 2023 00:41:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AL0f2Hr022514
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Nov 2023 00:41:02 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 20 Nov
+ 2023 16:40:56 -0800
+Message-ID: <5a98975e-d11c-43b8-ad95-1a2633733a19@quicinc.com>
+Date: Tue, 21 Nov 2023 08:40:54 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/16] arm64: dts: qcom: sm8550-aim300: add PCIe0
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <tglx@linutronix.de>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
+ <20231117101817.4401-8-quic_tengfan@quicinc.com>
+ <37a3a407-07e7-49d8-bbce-b1dac8cfcf5a@linaro.org>
+ <247f4654-ec65-4857-8b35-1a79088e8b87@linaro.org>
+ <1ae2da80-77e8-487a-a94d-b329e6f48360@linaro.org>
+ <26df42ac-edb0-ac72-d5cb-4a4ae6819736@linaro.org>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <26df42ac-edb0-ac72-d5cb-4a4ae6819736@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BcXLPgx7PBaSS9C0AX8IGK_-WW4j0xW5
+X-Proofpoint-GUID: BcXLPgx7PBaSS9C0AX8IGK_-WW4j0xW5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-20_22,2023-11-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=927 spamscore=0 malwarescore=0 mlxscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311210001
 
-From: Rob Clark <robdclark@chromium.org>
 
-Replace the ww_mutex locking dance with the drm_exec helper.
 
-v2: Error path fixes, move drm_exec_fini so we only call it once (and
-    only if we have drm_exec_init()
+在 11/20/2023 1:59 AM, Neil Armstrong 写道:
+> Le 18/11/2023 à 01:08, Konrad Dybcio a écrit :
+>> On 17.11.2023 11:41, neil.armstrong@linaro.org wrote:
+>>> On 17/11/2023 11:29, Dmitry Baryshkov wrote:
+>>>> On 17/11/2023 12:18, Tengfei Fan wrote:
+>>>>> Add PCIe0 nodes used with WCN7851 device.  The PCIe1 is not connected,
+>>>>> thus skip pcie_1_phy_aux_clk input clock to GCC.
+>>>>>
+>>>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>>>> ---
+>>>>>    arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 32 
+>>>>> ++++++++++++++++++++++
+>>>>>    1 file changed, 32 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts 
+>>>>> b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>>>>> index 202b979da8ca..3aca0a433a00 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>>>>> @@ -393,6 +393,38 @@
+>>>>>        };
+>>>>>    };
+>>>>> +&gcc {
+>>>>> +    clocks = <&bi_tcxo_div2>, <&sleep_clk>,
+>>>>> +         <&pcie0_phy>,
+>>>>> +         <&pcie1_phy>,
+>>>>> +         <0>,
+>>>>> +         <&ufs_mem_phy 0>,
+>>>>> +         <&ufs_mem_phy 1>,
+>>>>> +         <&ufs_mem_phy 2>,
+>>>>> +         <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+>>>>> +};
+>>>>
+>>>> NAK, this should go to sm8550.dtsi unless there is a good reason.
+>>>
+>>> Actually this is how QRD8550 was designed, so it's fine to mimic.
+>> Does CCF not handle this gracefully?
+> 
+> CCF handles this very gracefully and it's a perfectly valid DT in regard
+> to the bindings...
+> 
+> neil
+> 
+>>
+>> Konrad
+> 
+Thanks Konrad and Neil comments and disscusion this patch, I also will 
+confirm this with internal team.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/Kconfig          |   1 +
- drivers/gpu/drm/msm/msm_gem.h        |   5 +-
- drivers/gpu/drm/msm/msm_gem_submit.c | 119 +++++----------------------
- 3 files changed, 24 insertions(+), 101 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index 6309a857ca31..f91d87afc0d3 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -16,6 +16,7 @@ config DRM_MSM
- 	select DRM_DP_AUX_BUS
- 	select DRM_DISPLAY_DP_HELPER
- 	select DRM_DISPLAY_HELPER
-+	select DRM_EXEC
- 	select DRM_KMS_HELPER
- 	select DRM_PANEL
- 	select DRM_BRIDGE
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index af884ced7a0d..7f34263048a3 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -9,6 +9,7 @@
- 
- #include <linux/kref.h>
- #include <linux/dma-resv.h>
-+#include "drm/drm_exec.h"
- #include "drm/gpu_scheduler.h"
- #include "msm_drv.h"
- 
-@@ -254,7 +255,7 @@ struct msm_gem_submit {
- 	struct msm_gpu *gpu;
- 	struct msm_gem_address_space *aspace;
- 	struct list_head node;   /* node in ring submit list */
--	struct ww_acquire_ctx ticket;
-+	struct drm_exec exec;
- 	uint32_t seqno;		/* Sequence number of the submit on the ring */
- 
- 	/* Hw fence, which is created when the scheduler executes the job, and
-@@ -287,8 +288,6 @@ struct msm_gem_submit {
- 		struct drm_msm_gem_submit_reloc *relocs;
- 	} *cmd;  /* array of size nr_cmds */
- 	struct {
--/* make sure these don't conflict w/ MSM_SUBMIT_BO_x */
--#define BO_LOCKED	0x4000	/* obj lock is held */
- 		uint32_t flags;
- 		union {
- 			struct drm_gem_object *obj;
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 603f04d851d9..40878c26a749 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -248,85 +248,30 @@ static int submit_lookup_cmds(struct msm_gem_submit *submit,
- 	return ret;
- }
- 
--static void submit_unlock_bo(struct msm_gem_submit *submit, int i)
--{
--	struct drm_gem_object *obj = submit->bos[i].obj;
--	unsigned cleanup_flags = BO_LOCKED;
--	unsigned flags = submit->bos[i].flags & cleanup_flags;
--
--	/*
--	 * Clear flags bit before dropping lock, so that the msm_job_run()
--	 * path isn't racing with submit_cleanup() (ie. the read/modify/
--	 * write is protected by the obj lock in all paths)
--	 */
--	submit->bos[i].flags &= ~cleanup_flags;
--
--	if (flags & BO_LOCKED)
--		dma_resv_unlock(obj->resv);
--}
--
- /* This is where we make sure all the bo's are reserved and pin'd: */
- static int submit_lock_objects(struct msm_gem_submit *submit)
- {
--	int contended, slow_locked = -1, i, ret = 0;
--
--retry:
--	for (i = 0; i < submit->nr_bos; i++) {
--		struct drm_gem_object *obj = submit->bos[i].obj;
--
--		if (slow_locked == i)
--			slow_locked = -1;
-+	int ret;
- 
--		contended = i;
-+	drm_exec_init(&submit->exec, DRM_EXEC_INTERRUPTIBLE_WAIT, submit->nr_bos);
- 
--		if (!(submit->bos[i].flags & BO_LOCKED)) {
--			ret = dma_resv_lock_interruptible(obj->resv,
--							  &submit->ticket);
-+	drm_exec_until_all_locked (&submit->exec) {
-+		for (unsigned i = 0; i < submit->nr_bos; i++) {
-+			struct drm_gem_object *obj = submit->bos[i].obj;
-+			ret = drm_exec_prepare_obj(&submit->exec, obj, 1);
-+			drm_exec_retry_on_contention(&submit->exec);
- 			if (ret)
--				goto fail;
--			submit->bos[i].flags |= BO_LOCKED;
-+				goto error;
- 		}
- 	}
- 
--	ww_acquire_done(&submit->ticket);
--
- 	return 0;
- 
--fail:
--	if (ret == -EALREADY) {
--		SUBMIT_ERROR(submit, "handle %u at index %u already on submit list\n",
--			     submit->bos[i].handle, i);
--		ret = -EINVAL;
--	}
--
--	for (; i >= 0; i--)
--		submit_unlock_bo(submit, i);
--
--	if (slow_locked > 0)
--		submit_unlock_bo(submit, slow_locked);
--
--	if (ret == -EDEADLK) {
--		struct drm_gem_object *obj = submit->bos[contended].obj;
--		/* we lost out in a seqno race, lock and retry.. */
--		ret = dma_resv_lock_slow_interruptible(obj->resv,
--						       &submit->ticket);
--		if (!ret) {
--			submit->bos[contended].flags |= BO_LOCKED;
--			slow_locked = contended;
--			goto retry;
--		}
--
--		/* Not expecting -EALREADY here, if the bo was already
--		 * locked, we should have gotten -EALREADY already from
--		 * the dma_resv_lock_interruptable() call.
--		 */
--		WARN_ON_ONCE(ret == -EALREADY);
--	}
--
-+error:
- 	return ret;
- }
- 
--static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
-+static int submit_fence_sync(struct msm_gem_submit *submit)
- {
- 	int i, ret = 0;
- 
-@@ -334,22 +279,6 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
- 		struct drm_gem_object *obj = submit->bos[i].obj;
- 		bool write = submit->bos[i].flags & MSM_SUBMIT_BO_WRITE;
- 
--		/* NOTE: _reserve_shared() must happen before
--		 * _add_shared_fence(), which makes this a slightly
--		 * strange place to call it.  OTOH this is a
--		 * convenient can-fail point to hook it in.
--		 */
--		ret = dma_resv_reserve_fences(obj->resv, 1);
--		if (ret)
--			return ret;
--
--		/* If userspace has determined that explicit fencing is
--		 * used, it can disable implicit sync on the entire
--		 * submit:
--		 */
--		if (no_implicit)
--			continue;
--
- 		/* Otherwise userspace can ask for implicit sync to be
- 		 * disabled on specific buffers.  This is useful for internal
- 		 * usermode driver managed buffers, suballocation, etc.
-@@ -529,17 +458,14 @@ static int submit_reloc(struct msm_gem_submit *submit, struct drm_gem_object *ob
-  */
- static void submit_cleanup(struct msm_gem_submit *submit, bool error)
- {
--	unsigned i;
--
--	if (error)
-+	if (error) {
- 		submit_unpin_objects(submit);
--
--	for (i = 0; i < submit->nr_bos; i++) {
--		struct drm_gem_object *obj = submit->bos[i].obj;
--		submit_unlock_bo(submit, i);
--		if (error)
--			drm_gem_object_put(obj);
-+		/* job wasn't enqueued to scheduler, so early retirement: */
-+		msm_submit_retire(submit);
- 	}
-+
-+	if (submit->exec.objects)
-+		drm_exec_fini(&submit->exec);
- }
- 
- void msm_submit_retire(struct msm_gem_submit *submit)
-@@ -733,7 +659,6 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	struct msm_submit_post_dep *post_deps = NULL;
- 	struct drm_syncobj **syncobjs_to_reset = NULL;
- 	int out_fence_fd = -1;
--	bool has_ww_ticket = false;
- 	unsigned i;
- 	int ret;
- 
-@@ -839,15 +764,15 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 		goto out;
- 
- 	/* copy_*_user while holding a ww ticket upsets lockdep */
--	ww_acquire_init(&submit->ticket, &reservation_ww_class);
--	has_ww_ticket = true;
- 	ret = submit_lock_objects(submit);
- 	if (ret)
- 		goto out;
- 
--	ret = submit_fence_sync(submit, !!(args->flags & MSM_SUBMIT_NO_IMPLICIT));
--	if (ret)
--		goto out;
-+	if (!(args->flags & MSM_SUBMIT_NO_IMPLICIT)) {
-+		ret = submit_fence_sync(submit);
-+		if (ret)
-+			goto out;
-+	}
- 
- 	ret = submit_pin_objects(submit);
- 	if (ret)
-@@ -978,8 +903,6 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 
- out:
- 	submit_cleanup(submit, !!ret);
--	if (has_ww_ticket)
--		ww_acquire_fini(&submit->ticket);
- out_unlock:
- 	mutex_unlock(&queue->lock);
- out_post_unlock:
 -- 
-2.42.0
-
+Thx and BRs,
+Tengfei Fan
 
