@@ -1,164 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-1314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D49697F288A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 10:17:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F3677F2894
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 10:20:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F281D1C210B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 09:17:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CDE14B207B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 09:20:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55D22321A4;
-	Tue, 21 Nov 2023 09:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE1AE321B8;
+	Tue, 21 Nov 2023 09:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EY9G3e//"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JCKgJlqf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE3930FA5;
-	Tue, 21 Nov 2023 09:17:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96403C433C7;
-	Tue, 21 Nov 2023 09:17:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700558262;
-	bh=KiJ/ru65Ua8lo4s4fh4OjLQfr8e6MLSoBb/RDxWensY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EY9G3e//vJF7k13VmW76Yg4tqo4bYwC2YfDojOjvxuSr9VIw4idRrZhBvYcNt5EFP
-	 SHaFaNcHn3iQA/LpGwavpXPMJMW19y14mBeHfC8DLz/r8WAZBA3w6hBwEMwd3H3qVh
-	 9ZKHx6kkjJ81fj5Dj5azu2nLiIaxaSeFlZWd9KFEosC8kjJPW6B3C9xuKYC8b3ETnh
-	 VcyG/gcTVUImvNkZpZx881dhtUmhnH6cnWL+a5f/U4Q6n0otk6WOinYAZyvLu79cqT
-	 +NdLMfiSgo7tuW7fllRQflnxVNvgMN2UX85GgfSolv6r7erH4kW+9Bux8cWc3ECHPp
-	 SjA5WXIvgy4LQ==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1r5MtF-00047b-1C;
-	Tue, 21 Nov 2023 10:17:53 +0100
-Date: Tue, 21 Nov 2023 10:17:53 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Andrew Halaney <ahalaney@redhat.com>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 2/3] USB: dwc3: qcom: fix wakeup after probe deferral
-Message-ID: <ZVx1wRefjNaN0byk@hovoldconsulting.com>
-References: <20231120161607.7405-1-johan+linaro@kernel.org>
- <20231120161607.7405-3-johan+linaro@kernel.org>
- <pgmtla6j3dshuq5zdxstszbkkssxcthtzelv2etcbrlstdw4nu@wixz6v5dfpum>
- <3ff65t36p6n3k7faw2z75t2vfi6rb5p64x7wqosetsksbhhwli@5xaxnm7zz4tu>
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07147CA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 01:20:03 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-d9beb865a40so4975868276.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 01:20:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700558402; x=1701163202; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=e0GnsYSjmMnnlfj2CWEXFz1CqUs2uGzKvSRcvkw5bjs=;
+        b=JCKgJlqfNrr/Kd0IbU4DXNllY54+Wjs3TBNKIPViw27VRn7QzfehGURVE/BCq6khIH
+         SRFGCXovd0ZCX5fdajIY4jn2R6KVA2Yx193y33q8+SX8Iw7mv5yK/Y47Iu4Ybdi1yG0R
+         pL9ySpMhZLFXOtY8CaqreGe9URFLWEKvUmQlsB7/OXAR8nOQtyp5H96H4lg7XfnDlbEG
+         h9LoMTmNnROteLbb/WjWYHDRpOjYq+nTt4yRyB+ljOP0SCfBvO29CC+nyAhX6hGNlDu0
+         VOARcusWCH3R6sdUGQ2na0xqZOItV+Y9E3deHI94trQ3mYYOsvdXFAv31d0ORwlxGzRT
+         7nFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700558402; x=1701163202;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=e0GnsYSjmMnnlfj2CWEXFz1CqUs2uGzKvSRcvkw5bjs=;
+        b=GiKA0hAZsxGcbK26+K9Ml/aQrX6pvThzYphmK006eDA7njnREI2bcNm3xHZxd5TvWm
+         +ai1dw71lGyaZ+u4xikfwAaObp/PG+e0F/cX7iKkrA40Or9oh+WzXGqxOuAF6uk4SpRT
+         UXgdNZxfHxXS5lzbzSQhpLzAtrXk7HNLZpsp8xzVwVQMGPQs0m5dbGGJUjGvzMSyQZSM
+         L/xe0mAg3umEPRyX26LEu8buLTOioQgb4pm4wg4901S2DFu2xx5x2yvQHOQXbTfmihCu
+         jSKcqE/BM9olpLjSTm6T04Ia0hu0w3ajwX+BFXQBDvXZ7nTo0QL12uJlvPr5T3cMpwk5
+         mXUw==
+X-Gm-Message-State: AOJu0YzhS7DCO94P8Y75KQUShRCa91wp4nBQNvefyAqo+WF0VEJZePX1
+	GpHNNoUeQH0RJBlOJ9F3BAZbZoK3T7965eYecJU1tA==
+X-Google-Smtp-Source: AGHT+IGGKp46rrXxTxtTOtiXmo2Li35FgNeYDd8e5HO6aCQZjqPditR2ptVz6cb2AzXxBDV7hw/hT+XOKdph+CuSf5Y=
+X-Received: by 2002:a25:ae03:0:b0:db0:2161:5950 with SMTP id
+ a3-20020a25ae03000000b00db021615950mr10361703ybj.63.1700558402174; Tue, 21
+ Nov 2023 01:20:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3ff65t36p6n3k7faw2z75t2vfi6rb5p64x7wqosetsksbhhwli@5xaxnm7zz4tu>
+References: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
+ <20231120224919.2293730-2-dmitry.baryshkov@linaro.org> <ac3f3304-6dcd-470a-907c-32a63d3c39cf@linaro.org>
+In-Reply-To: <ac3f3304-6dcd-470a-907c-32a63d3c39cf@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 21 Nov 2023 11:19:50 +0200
+Message-ID: <CAA8EJppOGsc1+iw-YB9FBEm2UPpyAB_4cQg94Ob4swPzXheQ7A@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] dt-bindings: connector: usb: add altmodes description
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Hans de Goede <hdegoede@redhat.com>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Gross <markgross@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Nov 20, 2023 at 02:50:52PM -0600, Andrew Halaney wrote:
-> On Mon, Nov 20, 2023 at 11:39:07AM -0600, Andrew Halaney wrote:
-> > On Mon, Nov 20, 2023 at 05:16:06PM +0100, Johan Hovold wrote:
-> > > The Qualcomm glue driver is overriding the interrupt trigger types
-> > > defined by firmware when requesting the wakeup interrupts during probe.
-> > > 
-> > > This can lead to a failure to map the DP/DM wakeup interrupts after a
-> > > probe deferral as the firmware defined trigger types do not match the
-> > > type used for the initial mapping:
-> > > 
-> > > 	irq: type mismatch, failed to map hwirq-14 for interrupt-controller@b220000!
-> > > 	irq: type mismatch, failed to map hwirq-15 for interrupt-controller@b220000!
-> > > 
-> > > Fix this by not overriding the firmware provided trigger types when
-> > > requesting the wakeup interrupts.
-> > 
-> > This series looks good to me and makes sense except for one point that
-> > I'm struggling to understand. What exactly is the relationship with this
-> > failure and probe deferral?
-> 
-> Eric Chanudet pointed out to me (thanks!) offlist that if you:
-> 
->     1. Probe
->     2. Grab the IRQ
->     3. Request it (and muck with the trigger from the firmware default)
->     4. Defer out
->     5. Reprobe
->     6. Grab the IRQ again
-> 
-> You get that error, which I played with some this afternoon...
-> and can confirm.
-> 
-> It really seems like maybe we should consider reworking messing with the
-> trigger type at all (which is done later for runtime/system suspend)
-> in a follow-up series?
-> 
-> As far as I can tell if you were to remove the driver and reprobe after
-> a suspend you'd hit similar.
+On Tue, 21 Nov 2023 at 10:31, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 20/11/2023 23:00, Dmitry Baryshkov wrote:
+> > Add description of the USB-C AltModes supported on the particular USB-C
+> > connector. This is required for devices like Qualcomm Robotics RB5,
+> > which have no other way to express alternative modes supported by the
+> > hardware platform.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../bindings/connector/usb-connector.yaml     | 29 +++++++++++++++++++
+> >  1 file changed, 29 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > index 7c8a3e8430d3..c1aaac861d9d 100644
+> > --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > @@ -171,6 +171,28 @@ properties:
+> >        offer the power, Capability Mismatch is set. Required for power sink and
+> >        power dual role.
+> >
+> > +  altmodes:
+> > +    type: object
+> > +    description: List of Alternative Modes supported by the schematics on the
+> > +      particular device. This is only necessary if there are no other means to
+> > +      discover supported alternative modes (e.g. through the UCSI firmware
+> > +      interface).
+> > +
+> > +    patternProperties:
+> > +      "^(displayport)$":
+>
+> This is just a property, so should be under "properties:".
 
-Correct, but people don't go around unloading modules (unlike probe
-deferral which anyone can hit). It's a development (debugging) feature
-so there being some corner cases are not that big of a deal.
+Having it under properties would make adding new altmodes harder.
 
-> I've been sitting here scratching my head a
-> bit trying to reason out why keeping it as IRQ_TYPE_EDGE_BOTH isn't
-> acceptable in dwc3_qcom_enable_interrupts()... Correct me if you think
-> that playing with the trigger there is really ok, but it seems like you
-> run the same risks if you do that and then modprobe -r dwc3-qcom.
+Inherently it should become something like
+"^(displayport|virtuallink|thunderbolt)$".
 
-Changing the trigger type during runtime depending on use-case should be
-fine. It just doesn't play well with the kernel's interrupt mapping
-code, which assumes that if an interrupt already has a mapping then it
-is a shared interrupt.
+>
+> The rest looks good to me, but I don't know USB that much to judge.
+>
+> Best regards,
+> Krzysztof
+>
 
-I considered addressing that in the core code, but yeah, I don't want
-too much time since the remaining issue only affects module unload and
-there are other ways to avoid that issue too.
 
-> I get that dwc3_qcom_enable_interrupts() limits the scope of what wakes us
-> up to what we expect given the current device (or lack thereof), but it
-> doesn't seem like you're really meant to play with the IRQ triggers,
-> or at least the warning you shared makes me think it is not a great idea
-> if you plan to probe the device ever again in the future.
-> 
-> I'll post the current comment in dwc3_qcom_enable_interrupts() to
-> explain the "limits the scope of what wakes us up" a bit more clearly:
-> 
-> 	/*
-> 	 * Configure DP/DM line interrupts based on the USB2 device attached to
-> 	 * the root hub port. When HS/FS device is connected, configure the DP line
-> 	 * as falling edge to detect both disconnect and remote wakeup scenarios. When
-> 	 * LS device is connected, configure DM line as falling edge to detect both
-> 	 * disconnect and remote wakeup. When no device is connected, configure both
-> 	 * DP and DM lines as rising edge to detect HS/HS/LS device connect scenario.
-> 	 */
-
-Yes, that is how it is currently implemented and I intend to change that
-shortly. I just wanted to get the fixes out first.
-
-Specifically, I consider the current implementation to be broken in that
-it generates wakeup events on disconnect which is generally not want you
-want. Consider closing the lid of your laptop and disconnecting a USB
-mouse before putting it in your backpack. Now it's no longer suspended
-as you would expect it to be.
-
-With the devictrees soon fixed, we could also do away with changing the
-trigger type, but since this is how it was implemented initially we now
-need to consider backward compatibility with the broken DTs. We've dealt
-with that before, but yeah, getting things right from the start would
-have been so much better.
-
-Johan
+-- 
+With best wishes
+Dmitry
 
