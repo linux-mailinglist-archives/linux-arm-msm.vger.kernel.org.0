@@ -1,104 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-1383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFDB57F31AF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 15:55:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55D297F31CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 16:02:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 84AB81F22062
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:55:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F5902821B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 15:02:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9338E4A985;
-	Tue, 21 Nov 2023 14:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8908255C2A;
+	Tue, 21 Nov 2023 15:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohE6HsT9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mVcQYbmu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEA52772A;
-	Tue, 21 Nov 2023 14:55:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE614C433C7;
-	Tue, 21 Nov 2023 14:55:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700578502;
-	bh=q975IMvHTp904h9O7b2W+x9yRvoCm+xt1tUto3RHfXU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ohE6HsT9sw+OZaAGQxe04Vqxub4vBcXHT/A0cMRrMvn03KPK1kbWQmE8jUXPb7gHV
-	 3TAKuiNmtTdqWNX+6FVBSOzIPAM+O+7UVApq3aXx96TFQkV/YjTRxHTuJA25HYtfHD
-	 /7VpleuYHdh+x8VYrdfAKBNbaQyEP8yB9VFayYdoNKlNMh+vsBs8tvdH2VoSPGuSjA
-	 A7hGhp+4SPYAhMvbdB4yL80v3shwE9gFqwL2KqWOO3NKqtEO1DINXEx1tMPciNhgYx
-	 CtNcLPCTpUVZbqLhhOaH37XV4al0dAjoR89oySpAF8mnlfdtZt7cDaaz1bu+lCaaXE
-	 iWkQfhtbU6B8Q==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1r5S9h-0007vM-0T;
-	Tue, 21 Nov 2023 15:55:13 +0100
-Date: Tue, 21 Nov 2023 15:55:13 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	konrad.dybcio@linaro.org, mani@kernel.org, robh+dt@kernel.org,
-	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-	dmitry.baryshkov@linaro.org, robh@kernel.org,
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-	quic_parass@quicinc.com, quic_schintav@quicinc.com,
-	quic_shijjose@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: sa8775p: Mark PCIe EP
- controller as cache coherent
-Message-ID: <ZVzE0c8UsW4HXV_u@hovoldconsulting.com>
-References: <1700577493-18538-1-git-send-email-quic_msarkar@quicinc.com>
- <1700577493-18538-4-git-send-email-quic_msarkar@quicinc.com>
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FBDFBB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 07:02:31 -0800 (PST)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2c875207626so39564461fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 07:02:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700578950; x=1701183750; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=sloDLsEmB2TKwm2ViP2RRLNphx2l9PZeRzjesFN9aZQ=;
+        b=mVcQYbmuKS20ZKdLpEQAVQyWOm/ZS5yUihgJ63uDM8Wav8qLnHi1thJva6/Se022Ds
+         GaKcvz4rr2YgMaPI2IeRqMbGY6Z0wfZ+9tIfopkdXW6KsvUkNNbI0Te254MbnLle58DH
+         3YgXKZoo0MPxe4vuFZoQ3VWiq14nvQk2OFu3AEVdaUe3BnjYT/dBswlHMve8RP/iCX6q
+         kqHErjWHAf5jDnuxBniUzDyu5iWGops60zsXxZVBQkL2K5bzC3qAZ9kDb58A4zwaU6Nl
+         1LhavKinPCiamyavQTr3YTSVISorm0c9tc9A1nsYLKUKI1ESpbVM5X1hJyn5iCvPllsA
+         Q3BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700578950; x=1701183750;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sloDLsEmB2TKwm2ViP2RRLNphx2l9PZeRzjesFN9aZQ=;
+        b=IcaXGx4D75STuarNTzcm1ODOqhmlE9JYRC+pJM8wmdAEp1pDPtH7NErUYkc9kq6EuF
+         e//XF2KDcFLEU6ynzSp/jpLpMan0DPTy0jNAgbNTbgnT+XWGe9vf9dyWdlRZxZrDpNmH
+         2k8cYwvcyvlpdu2IU5LtMYb9oXXwWI26d1SoQ8v/s48fEfago4CIPwgpp+2lTXzKN01B
+         IRROEThvMssH46Yrl6wqRetKGzI4PO4kCdEn6EdWXdCzq8ZdhFISL2tZ4utJZqkEscnE
+         yJhlKrJcAbDxtpNNzvV124qPCxMGFs68QFz41JXxoA16dHNZH2XHQwF2YP9le8e94gAz
+         utww==
+X-Gm-Message-State: AOJu0Ywztg+GCr54DUMIv6zqXRIsGj8bnj28jhxFB2kdSJzXCaH37OlB
+	Vie1BndDpFSxVmgvWucKxlAWNg==
+X-Google-Smtp-Source: AGHT+IHorN5vh3CA1tWqALgISTN/kB068ziOLX+yVm4tctVyzQ6SgRkw72A6zRWf5lQDmVZ2ES0/Bg==
+X-Received: by 2002:a2e:8847:0:b0:2c8:3531:27d1 with SMTP id z7-20020a2e8847000000b002c8353127d1mr8692368ljj.25.1700578949689;
+        Tue, 21 Nov 2023 07:02:29 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.222.11])
+        by smtp.gmail.com with ESMTPSA id h20-20020a05600c30d400b004060f0a0fdbsm21294750wmn.41.2023.11.21.07.02.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Nov 2023 07:02:29 -0800 (PST)
+Message-ID: <d9e64760-f8a5-4950-ad18-c89f234c356e@linaro.org>
+Date: Tue, 21 Nov 2023 16:02:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1700577493-18538-4-git-send-email-quic_msarkar@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 9/9] arm64: defconfig: build NSS Clock Controller
+ driver for Qualcomm IPQ5332
+To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Richard Cochran <richardcochran@gmail.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20231121-ipq5332-nsscc-v2-0-a7ff61beab72@quicinc.com>
+ <20231121-ipq5332-nsscc-v2-9-a7ff61beab72@quicinc.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231121-ipq5332-nsscc-v2-9-a7ff61beab72@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 21, 2023 at 08:08:13PM +0530, Mrinmay Sarkar wrote:
-> The PCIe EP controller on SA8775P supports cache coherency, hence add
-> the "dma-coherent" property to mark it as such.
+On 21/11/2023 15:30, Kathiravan Thirumoorthy wrote:
+> NSSCC driver is needed to enable the ethernet interfaces and not
+> necessary for the bootup of the SoC, hence build it as a module.
 > 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 7eab458..ab01efe 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -3620,6 +3620,7 @@
->  				<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_PCIE_0 0>;
->  		interconnect-names = "pcie-mem", "cpu-pcie";
->  
-> +		dma-coherent;
->  		iommus = <&pcie_smmu 0x0000 0x7f>;
->  		resets = <&gcc GCC_PCIE_0_BCR>;
->  		reset-names = "core";
 
-What tree is this against? 
 
-Both controllers are already marked as dma-coherent in mainline so this
-patch makes no sense (and the context also looks wrong).
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-It was even you added them apparently:
+Best regards,
+Krzysztof
 
-	489f14be0e0a ("arm64: dts: qcom: sa8775p: Add pcie0 and pcie1 nodes")
-
-Johan
 
