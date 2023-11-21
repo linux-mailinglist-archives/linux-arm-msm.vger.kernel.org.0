@@ -1,214 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-1284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 577AD7F23EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 03:26:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15A317F2467
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 03:52:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7AC781C21684
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 02:26:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 64696B2170D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 02:52:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5708914F91;
-	Tue, 21 Nov 2023 02:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34F16111BF;
+	Tue, 21 Nov 2023 02:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HCT9+oRh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JqGRycEt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E29410C8;
-	Mon, 20 Nov 2023 18:26:31 -0800 (PST)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-548f74348f7so497062a12.2;
-        Mon, 20 Nov 2023 18:26:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700533589; x=1701138389; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FXWC307Dp9u2imlsTZmzROKAzNui6h4OdxHhVZFr+NU=;
-        b=HCT9+oRhmJLnkM8yiFFCIofDPJSDduA8I9QQP7idfvnCO5Fl9LK7JfDk5E19ibOMdk
-         Wy0uh5r6RfPVG+ECj9Ct04+iPqU5nXpbVDV2TM0nVMy59I3bS7CTF8172tcmv4ZY1Jzk
-         7GEtT1JmTvRy+EpNlFBESIVVth5wORgvIU5WQltXRRtLP/P5Jv87fnEUdqFSzObSCwFj
-         2hHLhkpVvoi48gbq/sXd+6A5w2qN3qNlBYrtvmg7Gp3KM1mYSHREn68rcQY3++LcEBXl
-         Q0SfZjvlgGnncSmamb2D6xl1zV6jyKF435XWTwwJ2mBrh3BIj6pxEHxUqgEKFoxzGYLX
-         Dniw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700533589; x=1701138389;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FXWC307Dp9u2imlsTZmzROKAzNui6h4OdxHhVZFr+NU=;
-        b=kHO3U/R3lqDPxlsbYKuEROYppv9qFwvt5PL9RWVLLDlCKw4d6n7CDBStq90Xx4U+5k
-         lvBvkLSst6OSUH5n0xXzVNJ//D/Mzwpgtp9QAV3TI7DPiwtG9RIUhZu3Sks9frErlpb7
-         syQUr0oQqZMhNEdqyM7VIMEy7O8I2gblFIc/fkfH735IYRzD0jc7sDzHaagAe0MVfr/x
-         6JZzeq1TqBb5blWUjSIUefaZIptKOtDUvqtEgc6X6gwd9HjvftT07BIY/XzVxYFKWzlv
-         Me1Z+OD2GF+jCN/wsrf2ldnt+E7FVBu0YEg8nZF3wh9kLuv3kFLBOpifzTBq0tNLRzhC
-         CUhA==
-X-Gm-Message-State: AOJu0YyBEq064QtZbpNuFXFDnRKRZjRl8CYZmYp9QNeRDc58x2FPSFXv
-	miNgPvuIBCAHe3R1yqXh2jKZnq/TUpk2FxV8Y9g=
-X-Google-Smtp-Source: AGHT+IH56yMF3NRERY/qq1l5njWYq3/wuLxXmfWb61dIfzxkRhGLr/bIUHV8Fs6QMEgTumbbTTKDRcPmRVeVTKkOhEY=
-X-Received: by 2002:a50:ba81:0:b0:53e:72be:2b31 with SMTP id
- x1-20020a50ba81000000b0053e72be2b31mr678133ede.42.1700533589077; Mon, 20 Nov
- 2023 18:26:29 -0800 (PST)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20C76BC;
+	Mon, 20 Nov 2023 18:52:19 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AL2j2ns024613;
+	Tue, 21 Nov 2023 02:52:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+nVNOvHCtkUHIbgX2CusJOA/8Vx1olNyNipis6Ay9HM=;
+ b=JqGRycEtK+zLOPuISUoOiWm89mGjY1Kf/lm2AzEP/Y1jzsFfzCldME6SAeGRpoGNKIyy
+ rM0oWUhnnpM4HDA63nEF4dsf2sKAPgaBJhRCW3HscBHGQWsRKfiSEYNB2AknZFPKp/y1
+ H8951vdzyzbjyo0hArbOI1ltx/wCSTNTTaTCT8gc3EMp4kR6xPfe9g4csjFZFnJsYL3U
+ Ei6sVd//61U6/RHUpwRP1q969hXwomDF9KcT1gHgTJnjM3jReXfaiiSIas4M/XDMm784
+ g+H7LP5u5WuTduyOzpYCGEZ5vuOgdmFaMaaFM50opNJdt1PoAMqN1DiXoINypwRahpfK wQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uge000p0f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Nov 2023 02:52:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AL2qBID005840
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 21 Nov 2023 02:52:11 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 20 Nov
+ 2023 18:52:07 -0800
+Message-ID: <b94312ed-4f6f-4eb0-a50f-6f28a25cc198@quicinc.com>
+Date: Tue, 21 Nov 2023 10:52:04 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231115141928.429688-1-dipamt1729@gmail.com> <CAA8EJprqnUGQxmj4Y=qttVuj0zJxdD9B6neHa6sPseLLETpk5A@mail.gmail.com>
- <CALHmwsoC5h7_w9OzpUS_-xM6x5WF5V-vFExLEf4y99b2eCcqGQ@mail.gmail.com> <CAA8EJpoyC=paF1ZuznXgJAkT1fne0RwYfqJh-cdz0WLt02i+bw@mail.gmail.com>
-In-Reply-To: <CAA8EJpoyC=paF1ZuznXgJAkT1fne0RwYfqJh-cdz0WLt02i+bw@mail.gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 20 Nov 2023 18:26:16 -0800
-Message-ID: <CAF6AEGtdKD6-xA+AeZDXuKc+k4MnP8Ba4-12hHxt00bXLhJ7Eg@mail.gmail.com>
-Subject: Re: [PATCH v2] Remove custom dumb_map_offset implementation in msm driver
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Dipam Turkar <dipamt1729@gmail.com>, quic_abhinavk@quicinc.com, sean@poorly.run, 
-	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/16] arm64: dts: qcom: sm8550-aim300: add SM8550 AIM300
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <tglx@linutronix.de>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <-cc=kernel@quicinc.com>
+References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
+ <20231117101817.4401-7-quic_tengfan@quicinc.com>
+ <aecb04cd-805d-4c2d-b6a7-67a47b963ee9@linaro.org>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <aecb04cd-805d-4c2d-b6a7-67a47b963ee9@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LLAtslFsFTtKSxvEniLiwnZ2z-j0jYrr
+X-Proofpoint-ORIG-GUID: LLAtslFsFTtKSxvEniLiwnZ2z-j0jYrr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-20_22,2023-11-20_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ bulkscore=0 malwarescore=0 spamscore=0 clxscore=1015 mlxscore=0
+ lowpriorityscore=0 mlxlogscore=999 impostorscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311210019
 
-On Wed, Nov 15, 2023 at 11:33=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Wed, 15 Nov 2023 at 20:46, Dipam Turkar <dipamt1729@gmail.com> wrote:
-> >
-> > They are not outdated, my bad. I went through the locks' code and saw t=
-hat they have been updated. But they are probably not necessary here as mos=
-t of the drivers do not use any form of locking in their implementations. T=
-he generic implementations drm_gem_dumb_map_offset() and drm_gem_ttm_dumb_m=
-ap_offset() do not have any locking mechanisms either.
->
-> Excuse me, but this doesn't sound right to me. There are different
-> drivers with different implementations. So either we'd need a good
-> explanation of why it is not necessary, or this patch is NAKed.
 
-Digging a bit thru history, it looks like commit 0de23977cfeb
-("drm/gem: convert to new unified vma manager") made external locking
-unnecessary, since the vma mgr already had it's own internal locking.
 
-BR,
--R
+在 11/17/2023 6:28 PM, Dmitry Baryshkov 写道:
+> On 17/11/2023 12:18, Tengfei Fan wrote:
+>> Add a minimal DTS for the new QRD8550 board, serial, UFS and USB should
+>> be working.
+> 
+> An explanation of what is AIM300 would be welcomed.
+> 
+Hi Dmitry,
+AIM means Artificial Intelligence Module. This hardware platform can be 
+used to develop AI related software based on Qualcomm chipset.
+I will also update the explanation of AIM to the new patch series.
 
-> >
-> > Thanks and regards
-> > Dipam Turkar
-> >
-> > On Wed, Nov 15, 2023 at 8:37=E2=80=AFPM Dmitry Baryshkov <dmitry.barysh=
-kov@linaro.org> wrote:
-> >>
-> >> On Wed, 15 Nov 2023 at 16:30, Dipam Turkar <dipamt1729@gmail.com> wrot=
-e:
-> >> >
-> >> > Make msm use drm_gem_create_map_offset() instead of its custom
-> >> > implementation for associating GEM object with a fake offset. Since,
-> >> > we already have this generic implementation, we don't need the custo=
-m
-> >> > implementation and it is better to standardize the code for GEM base=
-d
-> >> > drivers. This also removes the outdated locking leftovers.
-> >>
-> >> Why are they outdated?
-> >>
-> >> >
-> >> > Signed-off-by: Dipam Turkar <dipamt1729@gmail.com>
-> >> > ---
-> >> >  drivers/gpu/drm/msm/msm_drv.c |  2 +-
-> >> >  drivers/gpu/drm/msm/msm_gem.c | 21 ---------------------
-> >> >  drivers/gpu/drm/msm/msm_gem.h |  2 --
-> >> >  3 files changed, 1 insertion(+), 24 deletions(-)
-> >> >
-> >> > Changes in v2:
-> >> > Modify commit message to include the absence of internal locking lef=
-tovers
-> >> > around allocating a fake offset in msm_gem_mmap_offset() in the gene=
-ric
-> >> > implementation drm_gem_create_map_offset().
-> >> >
-> >> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm=
-_drv.c
-> >> > index a428951ee539..86a15992c717 100644
-> >> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> >> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> >> > @@ -1085,7 +1085,7 @@ static const struct drm_driver msm_driver =3D =
-{
-> >> >         .open               =3D msm_open,
-> >> >         .postclose          =3D msm_postclose,
-> >> >         .dumb_create        =3D msm_gem_dumb_create,
-> >> > -       .dumb_map_offset    =3D msm_gem_dumb_map_offset,
-> >> > +       .dumb_map_offset    =3D drm_gem_dumb_map_offset,
-> >> >         .gem_prime_import_sg_table =3D msm_gem_prime_import_sg_table=
-,
-> >> >  #ifdef CONFIG_DEBUG_FS
-> >> >         .debugfs_init       =3D msm_debugfs_init,
-> >> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm=
-_gem.c
-> >> > index db1e748daa75..489694ef79cb 100644
-> >> > --- a/drivers/gpu/drm/msm/msm_gem.c
-> >> > +++ b/drivers/gpu/drm/msm/msm_gem.c
-> >> > @@ -671,27 +671,6 @@ int msm_gem_dumb_create(struct drm_file *file, =
-struct drm_device *dev,
-> >> >                         MSM_BO_SCANOUT | MSM_BO_WC, &args->handle, "=
-dumb");
-> >> >  }
-> >> >
-> >> > -int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_devic=
-e *dev,
-> >> > -               uint32_t handle, uint64_t *offset)
-> >> > -{
-> >> > -       struct drm_gem_object *obj;
-> >> > -       int ret =3D 0;
-> >> > -
-> >> > -       /* GEM does all our handle to object mapping */
-> >> > -       obj =3D drm_gem_object_lookup(file, handle);
-> >> > -       if (obj =3D=3D NULL) {
-> >> > -               ret =3D -ENOENT;
-> >> > -               goto fail;
-> >> > -       }
-> >> > -
-> >> > -       *offset =3D msm_gem_mmap_offset(obj);
-> >> > -
-> >> > -       drm_gem_object_put(obj);
-> >> > -
-> >> > -fail:
-> >> > -       return ret;
-> >> > -}
-> >> > -
-> >> >  static void *get_vaddr(struct drm_gem_object *obj, unsigned madv)
-> >> >  {
-> >> >         struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
-> >> > diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm=
-_gem.h
-> >> > index 8ddef5443140..dc74a0ef865d 100644
-> >> > --- a/drivers/gpu/drm/msm/msm_gem.h
-> >> > +++ b/drivers/gpu/drm/msm/msm_gem.h
-> >> > @@ -139,8 +139,6 @@ struct page **msm_gem_pin_pages(struct drm_gem_o=
-bject *obj);
-> >> >  void msm_gem_unpin_pages(struct drm_gem_object *obj);
-> >> >  int msm_gem_dumb_create(struct drm_file *file, struct drm_device *d=
-ev,
-> >> >                 struct drm_mode_create_dumb *args);
-> >> > -int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_devic=
-e *dev,
-> >> > -               uint32_t handle, uint64_t *offset);
-> >> >  void *msm_gem_get_vaddr_locked(struct drm_gem_object *obj);
-> >> >  void *msm_gem_get_vaddr(struct drm_gem_object *obj);
-> >> >  void *msm_gem_get_vaddr_active(struct drm_gem_object *obj);
-> >> > --
-> >> > 2.34.1
-> >> >
-> >>
-> >>
-> >> --
-> >> With best wishes
-> >> Dmitry
->
->
->
-> --
-> With best wishes
-> Dmitry
+>>
+>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile          |   1 +
+>>   arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 490 +++++++++++++++++++++
+>>   2 files changed, 491 insertions(+)
+>>   create mode 100644 arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/Makefile 
+>> b/arch/arm64/boot/dts/qcom/Makefile
+>> index d6cb840b7050..ea5d4a07671a 100644
+>> --- a/arch/arm64/boot/dts/qcom/Makefile
+>> +++ b/arch/arm64/boot/dts/qcom/Makefile
+>> @@ -229,5 +229,6 @@ dtb-$(CONFIG_ARCH_QCOM)    += sm8450-hdk.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8450-qrd.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8450-sony-xperia-nagara-pdx223.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8450-sony-xperia-nagara-pdx224.dtb
+>> +dtb-$(CONFIG_ARCH_QCOM) += sm8550-aim300.dtb
+> 
+> My email client suggests that alignment is broken here.
+> 
+>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8550-mtp.dtb
+>>   dtb-$(CONFIG_ARCH_QCOM)    += sm8550-qrd.dtb
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts 
+>> b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>> new file mode 100644
+>> index 000000000000..202b979da8ca
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
+>> @@ -0,0 +1,490 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + */
+>> +
+>> +/dts-v1/;
+>> +
+>> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>> +#include "sm8550.dtsi"
+>> +#include "pm8010.dtsi"
+>> +#include "pm8550.dtsi"
+>> +#include "pm8550b.dtsi"
+>> +#include "pm8550ve.dtsi"
+>> +#include "pm8550vs.dtsi"
+>> +#include "pmk8550.dtsi"
+>> +#include "pmr735d_a.dtsi"
+>> +#include "pmr735d_b.dtsi"
+>> +
+>> +/ {
+>> +    model = "Qualcomm Technologies, Inc. SM8550 AIM300";
+>> +    compatible = "qcom,sm8550-aim300", "qcom,sm8550";
+>> +
+>> +    aliases {
+>> +        serial0 = &uart7;
+>> +    };
+>> +
+>> +    chosen {
+>> +        stdout-path = "serial0:115200n8";
+>> +    };
+>> +
+>> +    pmic-glink {
+>> +        compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
+>> +        #address-cells = <1>;
+>> +        #size-cells = <0>;
+>> +        orientation-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
+>> +
+>> +        connector@0 {
+>> +            compatible = "usb-c-connector";
+>> +            reg = <0>;
+>> +            power-role = "dual";
+>> +            data-role = "dual";
+>> +
+>> +            ports {
+>> +                #address-cells = <1>;
+>> +                #size-cells = <0>;
+>> +
+>> +                port@0 {
+>> +                    reg = <0>;
+>> +
+>> +                    pmic_glink_hs_in: endpoint {
+>> +                        remote-endpoint = <&usb_1_dwc3_hs>;
+>> +                    };
+>> +                };
+>> +
+>> +                port@1 {
+>> +                    reg = <1>;
+>> +
+>> +                    pmic_glink_ss_in: endpoint {
+>> +                        remote-endpoint = <&usb_1_dwc3_ss>;
+>> +                    };
+>> +                };
+>> +            };
+>> +        };
+>> +    };
+>> +
+>> +    vph_pwr: vph-pwr-regulator {
+> 
+> It's not demanded, I think, but I'd suggest 'regulator-vph-pwr' to allow 
+> all regulators to be grouped together.
+> 
+>> +        compatible = "regulator-fixed";
+>> +        regulator-name = "vph_pwr";
+>> +        regulator-min-microvolt = <3700000>;
+>> +        regulator-max-microvolt = <3700000>;
+>> +
+>> +        regulator-always-on;
+>> +        regulator-boot-on;
+>> +    };
+>> +};
+> 
+> Other than that looks good to me.
+> 
+
+-- 
+Thx and BRs,
+Tengfei Fan
 
