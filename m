@@ -1,109 +1,365 @@
-Return-Path: <linux-arm-msm+bounces-1272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58B437F22E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 02:07:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A82977F22F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 02:13:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B91C9B20CE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 01:07:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 06FDDB2183C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 01:13:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2FF01C08;
-	Tue, 21 Nov 2023 01:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBD195392;
+	Tue, 21 Nov 2023 01:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YEKkQI6C"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bdPhmdb7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A2DBDC;
-	Mon, 20 Nov 2023 17:07:05 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AKN4bow029277;
-	Tue, 21 Nov 2023 01:07:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DjAK686IwaY7TYo5SPGNQy83Wk8s+2JTIU2aMuGD/zg=;
- b=YEKkQI6CKno3AJCHcRZP8JQKq4bz9hxbPe37qnkTTCxl0uiEvGjR7URHwYPcxWq5giJz
- 0I1uhRJOuLyuzKW8PVjdXv4h/6eqVQ5Dj5dmJ9B94ltoJ0kmPGr244wLjSJAN2g5WFdP
- Ig4V+zSFi0H2TTJuFZoZlMsm48bJZJvWuOuS87mICzTrHMy2AIIxhMjjYLujzEGpN9ZX
- Iny9K4b6Bkuog/cQRSLtOgPdDPRe8k5CHDU5O6gGtX1ehXE8Rv7te6Fgv8KWsFzgBb6S
- xc9Za3FqcCtt+EA/Kl9jVUg0N+0YGB2Q/U+15Nv2k/H1947u5FWQpT7iZigoPzByZsI9 yA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ug5371wy4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 01:07:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AL16xSA007449
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 01:06:59 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 20 Nov
- 2023 17:06:56 -0800
-Message-ID: <877de56b-7ce7-4136-a2ae-fe09ad165229@quicinc.com>
-Date: Tue, 21 Nov 2023 09:06:56 +0800
+Received: from mail-wm1-x341.google.com (mail-wm1-x341.google.com [IPv6:2a00:1450:4864:20::341])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B792791
+	for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 17:13:27 -0800 (PST)
+Received: by mail-wm1-x341.google.com with SMTP id 5b1f17b1804b1-40859c464daso20958505e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 20 Nov 2023 17:13:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700529206; x=1701134006; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d+V8m9rGjlqHOkAe7opi5BbbJj9tL4XyGei+Q738HT0=;
+        b=bdPhmdb7ViYO6KQ5HxaQlDsU3slAlXoMb3osv3rDP5SbAXUDmKGkvAKRjDgudW4oho
+         Mh56xpcliFs/ZWiIFnp8OBW/Skyy1s/ODQdjIB2eU4BGFpS7qaN7ygWlTcMwr/NzHotv
+         UglNIvx1dYNkqK26YvYxC3eDV9Wet51gRxAzeTWRDZzFgReMSe978aMxsguoq1vk7KCR
+         FNXrDib4sGRC7bSjYc4tMYLGdZAMFf7SvfO9RQw0ghgAWUpn776uxf72mWtNpj0AOEHL
+         xv6UF4HXkZv/sHvqygYt1kIyAyayZQEVhrfXxQWEVqp7Z/G+cOtuaYzWCDGWt/r5yy0y
+         OiCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700529206; x=1701134006;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d+V8m9rGjlqHOkAe7opi5BbbJj9tL4XyGei+Q738HT0=;
+        b=gGd8tGD30Q7MUctqPC8IJczaNFM6/fFW0qFsfHauD8fKpnyVMF6PNY9V8nnhIzCvSM
+         QiEDVBH9fOJFSVHPzYYsQuHnzjU8MyHVQpaD5W1/xSu1KzhnVW6yO8YXAr+dZsfVNT/p
+         kEGZXkSkUh3s4lLlr7PsfEd+5f4oCPShnOCp2AB9WJYkcfYI1R2i0Deieuv9bXvOTAM8
+         ImscFLhi1Ew0h1eewiOc2J7kn8iiwTw5aDm2WxofQ0gilgjzeCUvnAnN0C+lrOmRivAo
+         FgEBXhnuXy6jASdjSkfNaFFznz+IC6AT4hj/FQrxuyi35Ngt+BIl0hZ1iM7RoffM7dQN
+         gfQg==
+X-Gm-Message-State: AOJu0YwzpGbQn1JDGlhs3wb8pMWVQ23PnpYWJfniUF0dLtVbUSntFrnO
+	YMS+T+BlvGGFh3USFtjriOwW+w==
+X-Google-Smtp-Source: AGHT+IFEWbryaOwRrgMvz6UDDhe9oJNP3A+S6Hz+hWXIegeS61CWeU0ouIoSH95qIrQIPZ1eh70xgA==
+X-Received: by 2002:a05:600c:1c0a:b0:408:3c8a:65ec with SMTP id j10-20020a05600c1c0a00b004083c8a65ecmr6849421wms.8.1700529206070;
+        Mon, 20 Nov 2023 17:13:26 -0800 (PST)
+Received: from sagittarius-a.nxsw.local ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id 1-20020a05600c230100b003fefb94ccc9sm14913452wmo.11.2023.11.20.17.13.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Nov 2023 17:13:25 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To: hverkuil-cisco@xs4all.nl,
+	laurent.pinchart@ideasonboard.com,
+	rfoss@kernel.org,
+	todor.too@gmail.com,
+	bryan.odonoghue@linaro.org,
+	agross@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	mchehab@kernel.org,
+	matti.lehtimaki@gmail.com,
+	quic_grosikop@quicinc.com
+Cc: linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	kernel test robot <lkp@intel.com>
+Subject: [PATCH v5.1] media: qcom: camss: Flag VFE-lites to support more VFEs
+Date: Tue, 21 Nov 2023 01:13:20 +0000
+Message-ID: <20231121011320.2545959-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20231118-b4-camss-named-power-domains-v5-6-55eb0f35a30a@linaro.org>
+References: <20231118-b4-camss-named-power-domains-v5-6-55eb0f35a30a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/16] arm64: dts: qcom: sm8550-aim300: add bluetooth
- support
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <tglx@linutronix.de>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <-cc=kernel@quicinc.com>
-References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
- <20231117101817.4401-17-quic_tengfan@quicinc.com>
- <42eacc5c-3411-4a1f-8d9c-b1fc43ad470e@linaro.org>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <42eacc5c-3411-4a1f-8d9c-b1fc43ad470e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HCnh6QsOakIHKcUjrtEMyiHnfZvkKOmq
-X-Proofpoint-GUID: HCnh6QsOakIHKcUjrtEMyiHnfZvkKOmq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-20_22,2023-11-20_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 suspectscore=0 adultscore=0
- mlxlogscore=636 spamscore=0 malwarescore=0 mlxscore=0 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311210004
 
+From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
+Some platforms such as SC7280 have three VFEs and two VFE-lites. Current
+code has hard-coded two as the maximum number of VFEs. Remove the
+hard-coded maximum number of VFEs to handle all possible combinations of
+VFEs and VFE-lites.
 
-在 11/17/2023 6:33 PM, Krzysztof Kozlowski 写道:
-> On 17/11/2023 11:18, Tengfei Fan wrote:
->> Enable the WCN7850 bluetooth over the UART14 link.
->>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
-> NAK, it's initial submission.
-> 
-> Stop useless splitting of work which is done. You cannot have "release
-> late, release often". The rule is: "release early, release often".
-> 
-> Best regards,
-> Krzysztof
-> 
+Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202311200405.h6G4L9oe-lkp@intel.com
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ .../media/platform/qcom/camss/camss-vfe-480.c | 33 +++++++++----------
+ drivers/media/platform/qcom/camss/camss-vfe.c |  5 +++
+ drivers/media/platform/qcom/camss/camss-vfe.h | 10 ++++++
+ drivers/media/platform/qcom/camss/camss.c     | 26 +++++++--------
+ drivers/media/platform/qcom/camss/camss.h     |  3 +-
+ 5 files changed, 44 insertions(+), 33 deletions(-)
 
-Hi Krzysztof,
-In next version patch series, I'm going to combine all the splited 
-functions into one patch.
-
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+index 4652e8b4cff58..dc2735476c823 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+@@ -15,31 +15,28 @@
+ #include "camss.h"
+ #include "camss-vfe.h"
+ 
+-/* VFE 2/3 are lite and have a different register layout */
+-#define IS_LITE		(vfe->id >= 2 ? 1 : 0)
+-
+ #define VFE_HW_VERSION			(0x00)
+ 
+-#define VFE_GLOBAL_RESET_CMD		(IS_LITE ? 0x0c : 0x1c)
+-#define	    GLOBAL_RESET_HW_AND_REG	(IS_LITE ? BIT(1) : BIT(0))
++#define VFE_GLOBAL_RESET_CMD		(vfe_is_lite(vfe) ? 0x0c : 0x1c)
++#define	    GLOBAL_RESET_HW_AND_REG	(vfe_is_lite(vfe) ? BIT(1) : BIT(0))
+ 
+-#define VFE_REG_UPDATE_CMD		(IS_LITE ? 0x20 : 0x34)
++#define VFE_REG_UPDATE_CMD		(vfe_is_lite(vfe) ? 0x20 : 0x34)
+ static inline int reg_update_rdi(struct vfe_device *vfe, int n)
+ {
+-	return IS_LITE ? BIT(n) : BIT(1 + (n));
++	return vfe_is_lite(vfe) ? BIT(n) : BIT(1 + (n));
+ }
+ 
+ #define	    REG_UPDATE_RDI		reg_update_rdi
+-#define VFE_IRQ_CMD			(IS_LITE ? 0x24 : 0x38)
++#define VFE_IRQ_CMD			(vfe_is_lite(vfe) ? 0x24 : 0x38)
+ #define     IRQ_CMD_GLOBAL_CLEAR	BIT(0)
+ 
+-#define VFE_IRQ_MASK(n)			((IS_LITE ? 0x28 : 0x3c) + (n) * 4)
+-#define	    IRQ_MASK_0_RESET_ACK	(IS_LITE ? BIT(17) : BIT(0))
+-#define	    IRQ_MASK_0_BUS_TOP_IRQ	(IS_LITE ? BIT(4) : BIT(7))
+-#define VFE_IRQ_CLEAR(n)		((IS_LITE ? 0x34 : 0x48) + (n) * 4)
+-#define VFE_IRQ_STATUS(n)		((IS_LITE ? 0x40 : 0x54) + (n) * 4)
++#define VFE_IRQ_MASK(n)			((vfe_is_lite(vfe) ? 0x28 : 0x3c) + (n) * 4)
++#define	    IRQ_MASK_0_RESET_ACK	(vfe_is_lite(vfe) ? BIT(17) : BIT(0))
++#define	    IRQ_MASK_0_BUS_TOP_IRQ	(vfe_is_lite(vfe) ? BIT(4) : BIT(7))
++#define VFE_IRQ_CLEAR(n)		((vfe_is_lite(vfe) ? 0x34 : 0x48) + (n) * 4)
++#define VFE_IRQ_STATUS(n)		((vfe_is_lite(vfe) ? 0x40 : 0x54) + (n) * 4)
+ 
+-#define BUS_REG_BASE			(IS_LITE ? 0x1a00 : 0xaa00)
++#define BUS_REG_BASE			(vfe_is_lite(vfe) ? 0x1a00 : 0xaa00)
+ 
+ #define VFE_BUS_WM_CGC_OVERRIDE		(BUS_REG_BASE + 0x08)
+ #define		WM_CGC_OVERRIDE_ALL	(0x3FFFFFF)
+@@ -49,13 +46,13 @@ static inline int reg_update_rdi(struct vfe_device *vfe, int n)
+ #define VFE_BUS_IRQ_MASK(n)		(BUS_REG_BASE + 0x18 + (n) * 4)
+ static inline int bus_irq_mask_0_rdi_rup(struct vfe_device *vfe, int n)
+ {
+-	return IS_LITE ? BIT(n) : BIT(3 + (n));
++	return vfe_is_lite(vfe) ? BIT(n) : BIT(3 + (n));
+ }
+ 
+ #define     BUS_IRQ_MASK_0_RDI_RUP	bus_irq_mask_0_rdi_rup
+ static inline int bus_irq_mask_0_comp_done(struct vfe_device *vfe, int n)
+ {
+-	return IS_LITE ? BIT(4 + (n)) : BIT(6 + (n));
++	return vfe_is_lite(vfe) ? BIT(4 + (n)) : BIT(6 + (n));
+ }
+ 
+ #define     BUS_IRQ_MASK_0_COMP_DONE	bus_irq_mask_0_comp_done
+@@ -90,8 +87,8 @@ static inline int bus_irq_mask_0_comp_done(struct vfe_device *vfe, int n)
+ /* for titan 480, each bus client is hardcoded to a specific path
+  * and each bus client is part of a hardcoded "comp group"
+  */
+-#define RDI_WM(n)			((IS_LITE ? 0 : 23) + (n))
+-#define RDI_COMP_GROUP(n)		((IS_LITE ? 0 : 11) + (n))
++#define RDI_WM(n)			((vfe_is_lite(vfe) ? 0 : 23) + (n))
++#define RDI_COMP_GROUP(n)		((vfe_is_lite(vfe) ? 0 : 11) + (n))
+ 
+ #define MAX_VFE_OUTPUT_LINES	4
+ 
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 123e5ead7602d..7bcf9ddb3537a 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -1742,3 +1742,8 @@ void msm_vfe_unregister_entities(struct vfe_device *vfe)
+ 		media_entity_cleanup(&sd->entity);
+ 	}
+ }
++
++bool vfe_is_lite(struct vfe_device *vfe)
++{
++	return vfe->camss->res->vfe_res[vfe->id].is_lite;
++}
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+index cdbe59d8d437e..0572c9b08e112 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.h
++++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+@@ -226,4 +226,14 @@ extern const struct vfe_hw_ops vfe_ops_480;
+ int vfe_get(struct vfe_device *vfe);
+ void vfe_put(struct vfe_device *vfe);
+ 
++/*
++ * vfe_is_lite - Return if VFE is VFE lite.
++ * @vfe: VFE Device
++ *
++ * Some VFE lites have a different register layout.
++ *
++ * Return whether VFE is VFE lite
++ */
++bool vfe_is_lite(struct vfe_device *vfe);
++
+ #endif /* QC_MSM_CAMSS_VFE_H */
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index ee3e8cefa9b1f..ea0038f62b807 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -706,6 +706,7 @@ static const struct camss_subdev_resources vfe_res_845[] = {
+ 				{ 384000000 } },
+ 		.reg = { "vfe_lite" },
+ 		.interrupt = { "vfe_lite" },
++		.is_lite = true,
+ 		.line_num = 4,
+ 		.ops = &vfe_ops_170
+ 	}
+@@ -886,6 +887,7 @@ static const struct camss_subdev_resources vfe_res_8250[] = {
+ 				{ 0 } },
+ 		.reg = { "vfe_lite0" },
+ 		.interrupt = { "vfe_lite0" },
++		.is_lite = true,
+ 		.line_num = 4,
+ 		.ops = &vfe_ops_480
+ 	},
+@@ -905,6 +907,7 @@ static const struct camss_subdev_resources vfe_res_8250[] = {
+ 				{ 0 } },
+ 		.reg = { "vfe_lite1" },
+ 		.interrupt = { "vfe_lite1" },
++		.is_lite = true,
+ 		.line_num = 4,
+ 		.ops = &vfe_ops_480
+ 	},
+@@ -1204,7 +1207,7 @@ static int camss_init_subdevices(struct camss *camss)
+ 	}
+ 
+ 	/* note: SM8250 requires VFE to be initialized before CSID */
+-	for (i = 0; i < camss->vfe_total_num; i++) {
++	for (i = 0; i < camss->res->vfe_num; i++) {
+ 		ret = msm_vfe_subdev_init(camss, &camss->vfe[i],
+ 					  &res->vfe_res[i], i);
+ 		if (ret < 0) {
+@@ -1276,7 +1279,7 @@ static int camss_register_entities(struct camss *camss)
+ 		goto err_reg_ispif;
+ 	}
+ 
+-	for (i = 0; i < camss->vfe_total_num; i++) {
++	for (i = 0; i < camss->res->vfe_num; i++) {
+ 		ret = msm_vfe_register_entities(&camss->vfe[i],
+ 						&camss->v4l2_dev);
+ 		if (ret < 0) {
+@@ -1348,7 +1351,7 @@ static int camss_register_entities(struct camss *camss)
+ 				}
+ 	} else {
+ 		for (i = 0; i < camss->res->csid_num; i++)
+-			for (k = 0; k < camss->vfe_total_num; k++)
++			for (k = 0; k < camss->res->vfe_num; k++)
+ 				for (j = 0; j < camss->vfe[k].line_num; j++) {
+ 					struct v4l2_subdev *csid = &camss->csid[i].subdev;
+ 					struct v4l2_subdev *vfe = &camss->vfe[k].line[j].subdev;
+@@ -1372,7 +1375,7 @@ static int camss_register_entities(struct camss *camss)
+ 	return 0;
+ 
+ err_link:
+-	i = camss->vfe_total_num;
++	i = camss->res->vfe_num;
+ err_reg_vfe:
+ 	for (i--; i >= 0; i--)
+ 		msm_vfe_unregister_entities(&camss->vfe[i]);
+@@ -1411,7 +1414,7 @@ static void camss_unregister_entities(struct camss *camss)
+ 
+ 	msm_ispif_unregister_entities(camss->ispif);
+ 
+-	for (i = 0; i < camss->vfe_total_num; i++)
++	for (i = 0; i < camss->res->vfe_num; i++)
+ 		msm_vfe_unregister_entities(&camss->vfe[i]);
+ }
+ 
+@@ -1509,7 +1512,7 @@ static int camss_configure_pd(struct camss *camss)
+ 		return 0;
+ 
+ 	/* count the # of VFEs which have flagged power-domain */
+-	for (vfepd_num = i = 0; i < camss->vfe_total_num; i++) {
++	for (vfepd_num = i = 0; i < camss->res->vfe_num; i++) {
+ 		if (res->vfe_res[i].has_pd)
+ 			vfepd_num++;
+ 	}
+@@ -1584,7 +1587,7 @@ static void camss_genpd_subdevice_cleanup(struct camss *camss)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < camss->vfe_total_num; i++)
++	for (i = 0; i < camss->res->vfe_num; i++)
+ 		msm_vfe_genpd_cleanup(&camss->vfe[i]);
+ }
+ 
+@@ -1641,8 +1644,7 @@ static int camss_probe(struct platform_device *pdev)
+ 			return -ENOMEM;
+ 	}
+ 
+-	camss->vfe_total_num = camss->res->vfe_num + camss->res->vfe_lite_num;
+-	camss->vfe = devm_kcalloc(dev, camss->vfe_total_num,
++	camss->vfe = devm_kcalloc(dev, camss->res->vfe_num,
+ 				  sizeof(*camss->vfe), GFP_KERNEL);
+ 	if (!camss->vfe)
+ 		return -ENOMEM;
+@@ -1800,8 +1802,7 @@ static const struct camss_resources sdm845_resources = {
+ 	.vfe_res = vfe_res_845,
+ 	.csiphy_num = ARRAY_SIZE(csiphy_res_845),
+ 	.csid_num = ARRAY_SIZE(csid_res_845),
+-	.vfe_num = 2,
+-	.vfe_lite_num = 1,
++	.vfe_num = ARRAY_SIZE(vfe_res_845),
+ };
+ 
+ static const struct camss_resources sm8250_resources = {
+@@ -1813,8 +1814,7 @@ static const struct camss_resources sm8250_resources = {
+ 	.icc_path_num = ARRAY_SIZE(icc_res_sm8250),
+ 	.csiphy_num = ARRAY_SIZE(csiphy_res_8250),
+ 	.csid_num = ARRAY_SIZE(csid_res_8250),
+-	.vfe_num = 2,
+-	.vfe_lite_num = 2,
++	.vfe_num = ARRAY_SIZE(vfe_res_8250),
+ };
+ 
+ static const struct of_device_id camss_dt_match[] = {
+diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+index cd8186fe1797b..a0c2dcc779f05 100644
+--- a/drivers/media/platform/qcom/camss/camss.h
++++ b/drivers/media/platform/qcom/camss/camss.h
+@@ -51,6 +51,7 @@ struct camss_subdev_resources {
+ 	char *pd_name;
+ 	u8 line_num;
+ 	bool has_pd;
++	bool is_lite;
+ 	const void *ops;
+ };
+ 
+@@ -95,7 +96,6 @@ struct camss_resources {
+ 	const unsigned int csiphy_num;
+ 	const unsigned int csid_num;
+ 	const unsigned int vfe_num;
+-	const unsigned int vfe_lite_num;
+ };
+ 
+ struct camss {
+@@ -113,7 +113,6 @@ struct camss {
+ 	struct device_link *genpd_link;
+ 	struct icc_path *icc_path[ICC_SM8250_COUNT];
+ 	const struct camss_resources *res;
+-	unsigned int vfe_total_num;
+ };
+ 
+ struct camss_camera_interface {
 -- 
-Thx and BRs,
-Tengfei Fan
+2.42.0
+
 
