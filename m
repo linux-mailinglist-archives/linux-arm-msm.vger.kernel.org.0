@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1E687F279E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 09:37:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75A3B7F2818
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 09:54:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C55281C21880
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:37:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C425DB219C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 08:54:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F17E11CA95;
-	Tue, 21 Nov 2023 08:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D742031D;
+	Tue, 21 Nov 2023 08:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZAa0zWn9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yEFRsMzS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0F4D10C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 00:37:25 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-4084b0223ccso23184985e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 00:37:25 -0800 (PST)
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B284CE7
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 00:54:19 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50aa8c0af41so2581182e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 00:54:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700555844; x=1701160644; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1700556858; x=1701161658; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=z790m+3SwlbSCiaOH+BvTtx4PQ5yguF5fZQZ5wj8mgY=;
-        b=ZAa0zWn9SSq2EbOweeniQSF6gOCF1RRfI5MHCLpzNwMzAxMZ1Nn4qz00ae3SiCWkSP
-         tTn5bh91c9Pz83fAUXzrMCVelbMt4jK8oUFQUszOJrZBL8SSPkgkYv7dhUzEQkrI0dZh
-         o1RIK4GzMyf4cjKnZpyCEaTRBljzOZGLT57YitQP4GgK7mHJYFGYiDdnVHLvgXbkxZU/
-         uMushnVj9/POzAVdnkpa4hvJtGAQmXnpMfg4sKN2DOmE1v3PEvvezC7KzLngmzRwvYWA
-         0gitZC2Si7DQrvYAWywZKEWtQFKM89O8YgORZ001Qqe53o6rzsPCIEaV0nz/CO8Ad4BW
-         uAwQ==
+        bh=B9xw1X7ZA/w4qP7ewLLpSYyupPFRZNLRs/Ge/9QSmfw=;
+        b=yEFRsMzSgF4f/nRfCL+DH0oaJmMShellPJJ7dsY3gp3JvYr5Lh7S/TWkil5R4Ow2IY
+         VP0BMpRTDp3zAydt4COTTAwuaiIj2vUbOgMLGtYRwXQEWyWmpYS/FQuOH9lNi/vi4ME3
+         gm5Xf8enTYewgGfhPq7Va8G8vPQoTcp3leV8rWcHWiSRFWDRxJ5+HptwvJUOsnHPVH0T
+         NSRbEDMp6VCo/m9ihEGa4BdV8gXtZMU0sqnSpu09JJIwppeTQKm3Id1bpxf5vF1FWFgL
+         MVxN2UsMDrxLDDiCfv4QEiPz2XYv4WDF0N/fggm5dgZ6sgOaDt40ktv9uULDNZpWat1z
+         Sltg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700555844; x=1701160644;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1700556858; x=1701161658;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z790m+3SwlbSCiaOH+BvTtx4PQ5yguF5fZQZ5wj8mgY=;
-        b=WioueurxN4iUiY+tseHTEZZcjMM3EXmAzXG8qXMWBVUGUK2b0Hq8D9jzZja3akUsl1
-         R5YOrQe22Z+uN6bmkL2cyS3/QZZTndxPeA2h1Jj7KgkU5BAl/FHx3RFXI8gKF6jYWhXg
-         tZdShJZzmrRrcOBQuXISquD6nqbOvI/Nak2Sr9l7OIkgox4vWm1vTcFV02W28M/V7OGR
-         H89fCEVjmkEDQ0MUFKBCtYATtYX8MJoKNfIPL26TZ4e+wP71DCvyaYyRCGd0q5OJllGA
-         /3mmknZmBSLD6TzyjRpyZscIGv0/Ee6TyyeUzf1zc57CMhsN+b0WBWWDmjQ2n/dj/+PG
-         1XzQ==
-X-Gm-Message-State: AOJu0Yxoxxd8l/SFcAGDuizgo6pKU3QWHDYTQ2RKnXM4zkOnJjp/oeP/
-	h8ySlpv0uppNfaZhIpECx/BKew==
-X-Google-Smtp-Source: AGHT+IGTBsd87x4sENU/2iwu6uDUJ+64QftToSw0vKAzDaIgWipBD48orJGrEkADIBRkLMNZ/WL5Yw==
-X-Received: by 2002:a05:6000:1566:b0:332:cfbc:cb56 with SMTP id 6-20020a056000156600b00332cfbccb56mr121185wrz.5.1700555844116;
-        Tue, 21 Nov 2023 00:37:24 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.222.11])
-        by smtp.gmail.com with ESMTPSA id d19-20020adf9b93000000b003316eb9db40sm11535730wrc.51.2023.11.21.00.37.21
+        bh=B9xw1X7ZA/w4qP7ewLLpSYyupPFRZNLRs/Ge/9QSmfw=;
+        b=ZGZHGTQ5vftmvTvpqBvL3bOOIA4L3LaRNR4OqJf749nXCP/+jKGlGlrpEwjrRYgds/
+         tsfyRcEQw3d6VQFJ/ot16QJDBYFkQ0R1DHCI/QHZJv63z9RDHew7mgxzMqTyoONwUxRv
+         d/2YJRiUciAmLtxhqoCc/dwhfTXt45ywDF2LMwC6TWT4bjKsi2hx8m0cpj0nQgKR/byV
+         aDZ9KnRIDvyEZRa8AZmT20z+2TYyP2p4FSPwF91NM7SDr1vU3qK/X6aAcYbpXwE7CPVT
+         x/JX76nFm9B3CubRlbqUHCWJTdjtJw0Q9nbpy0TLCYeQvpqlC5sXJ3E+65JnmsG71xKM
+         6eyA==
+X-Gm-Message-State: AOJu0YyDOrKbV3akuT8iJsTSgDG0FAbOjsQ/lmNHXvpunamGEelBIy3J
+	FM6Mj/6NrTEBTC3E1YHWl7o0/A==
+X-Google-Smtp-Source: AGHT+IF1xuQVsWLIefERP/sR6Kn9g3CbTRMtFwzRE/bayjQ5Xh7VoLcJ8SVMJ610YuVMdXcCuAIcKw==
+X-Received: by 2002:a05:6512:3e25:b0:500:acae:30c5 with SMTP id i37-20020a0565123e2500b00500acae30c5mr737235lfv.15.1700556857891;
+        Tue, 21 Nov 2023 00:54:17 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id w3-20020ac25983000000b0050aa51bd5b5sm1150927lfn.136.2023.11.21.00.54.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Nov 2023 00:37:23 -0800 (PST)
-Message-ID: <ec901578-95b6-4fcc-a8dd-e927b7f77ece@linaro.org>
-Date: Tue, 21 Nov 2023 09:37:21 +0100
+        Tue, 21 Nov 2023 00:54:17 -0800 (PST)
+Message-ID: <209eceaa-10b0-47fc-aabf-1cfb0e1c9ce0@linaro.org>
+Date: Tue, 21 Nov 2023 10:54:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,120 +62,145 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
-Content-Language: en-US
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Michal Simek <michal.simek@amd.com>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
- <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- Andrew Davis <afd@ti.com>, Arnd Bergmann <arnd@arndb.de>,
- Bjorn Andersson <andersson@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Heiko Stuebner <heiko@sntech.de>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>,
- Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-arm-msm@vger.kernel.org
-References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
- <19358871-009d-4498-9c13-90d5338b1e9f@amd.com>
- <76fa8f61-fe31-4040-a38d-cc05be3f4f17@linaro.org>
- <CAMuHMdW4WPJT0Km7w8RWrGJaztk6QDGoFAn0bdGbrEsw81R1FA@mail.gmail.com>
- <acfdce81-f117-4a1a-a9fe-e2b4b8922adb@linaro.org>
- <bd49f17c-7ebf-4e19-b77b-b5ec95375f7d@amd.com>
- <b48293f3-16e3-4980-b900-add0cb7d69f6@linaro.org>
- <CAMuHMdV_gqmf2=cXmZmYgE3aLxvPBr1DVp0cz0C+YrfBVG-8mg@mail.gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CAMuHMdV_gqmf2=cXmZmYgE3aLxvPBr1DVp0cz0C+YrfBVG-8mg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v6 6/6] usb: typec: qcom-pmic-typec: switch to
+ DRM_AUX_HPD_BRIDGE
+Content-Language: en-GB
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20231103230414.1483428-1-dmitry.baryshkov@linaro.org>
+ <20231103230414.1483428-7-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231103230414.1483428-7-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 21/11/2023 09:08, Geert Uytterhoeven wrote:
->>>>> I guess there are (many) other examples...
->>>>
->>>> OK, I never had such in my hands. Anyway, the SoM which can run
->>>> standalone  has a meaning of a board, so how exactly you want to
->>>> rephrase the paragraph?
->>>
->>> What about?
->>>
->>> 2. If applicable: DTSI with common or re-usable parts of the hardware (e.g.
->>> entire System-on-Module). DTS if runs standalone.
->>
->> OK, but then it's duplicating the option 3. It also suggests that SoM
->> should be a DTS, which is not what we want for such case. Such SoMs must
->> have DTSI+DTS.
+On 04/11/2023 01:03, Dmitry Baryshkov wrote:
+> Use the freshly defined DRM_AUX_HPD_BRIDGE instead of open-coding the
+> same functionality for the DRM bridge chain termination.
 > 
-> So you want us to have a one-line <SoM>.dts, which just includes <SoM>.dtsi?
-> IMHO that adds more files for no much gain.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Yes, if this is a real SoM, then yes. There is much gain - it clearly
-represents the hardware like we in general expect. It allows re-usage by
-in- and out-tree users, while documenting this possibility.
+Greg, Bryan, could you pease ack merging this patch through the drm-misc 
+tree together with the rest of the series?
 
-We structure DTS according to main components of the hardware, which
-serves as self-documenting, re-usable and easy to grasp solution.
+You have acked patch 3, but since that time I added this one.
 
-> Users of a SoM can easily include <SoM>.dts.
+> ---
+>   drivers/usb/typec/tcpm/Kconfig                |  1 +
+>   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 41 +++----------------
+>   2 files changed, 7 insertions(+), 35 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/tcpm/Kconfig b/drivers/usb/typec/tcpm/Kconfig
+> index 0b2993fef564..64d5421c69e6 100644
+> --- a/drivers/usb/typec/tcpm/Kconfig
+> +++ b/drivers/usb/typec/tcpm/Kconfig
+> @@ -80,6 +80,7 @@ config TYPEC_QCOM_PMIC
+>   	tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
+>   	depends on ARCH_QCOM || COMPILE_TEST
+>   	depends on DRM || DRM=n
+> +	select DRM_AUX_HPD_BRIDGE if DRM_BRIDGE
+>   	help
+>   	  A Type-C port and Power Delivery driver which aggregates two
+>   	  discrete pieces of silicon in the PM8150b PMIC block: the
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> index 581199d37b49..1a2b4bddaa97 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> @@ -18,7 +18,7 @@
+>   #include <linux/usb/tcpm.h>
+>   #include <linux/usb/typec_mux.h>
+>   
+> -#include <drm/drm_bridge.h>
+> +#include <drm/bridge/aux-bridge.h>
+>   
+>   #include "qcom_pmic_typec_pdphy.h"
+>   #include "qcom_pmic_typec_port.h"
+> @@ -36,7 +36,6 @@ struct pmic_typec {
+>   	struct pmic_typec_port	*pmic_typec_port;
+>   	bool			vbus_enabled;
+>   	struct mutex		lock;		/* VBUS state serialization */
+> -	struct drm_bridge	bridge;
+>   };
+>   
+>   #define tcpc_to_tcpm(_tcpc_) container_of(_tcpc_, struct pmic_typec, tcpc)
+> @@ -150,35 +149,6 @@ static int qcom_pmic_typec_init(struct tcpc_dev *tcpc)
+>   	return 0;
+>   }
+>   
+> -#if IS_ENABLED(CONFIG_DRM)
+> -static int qcom_pmic_typec_attach(struct drm_bridge *bridge,
+> -				     enum drm_bridge_attach_flags flags)
+> -{
+> -	return flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR ? 0 : -EINVAL;
+> -}
+> -
+> -static const struct drm_bridge_funcs qcom_pmic_typec_bridge_funcs = {
+> -	.attach = qcom_pmic_typec_attach,
+> -};
+> -
+> -static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
+> -{
+> -	tcpm->bridge.funcs = &qcom_pmic_typec_bridge_funcs;
+> -#ifdef CONFIG_OF
+> -	tcpm->bridge.of_node = of_get_child_by_name(tcpm->dev->of_node, "connector");
+> -#endif
+> -	tcpm->bridge.ops = DRM_BRIDGE_OP_HPD;
+> -	tcpm->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
+> -
+> -	return devm_drm_bridge_add(tcpm->dev, &tcpm->bridge);
+> -}
+> -#else
+> -static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
+> -{
+> -	return 0;
+> -}
+> -#endif
+> -
+>   static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>   {
+>   	struct pmic_typec *tcpm;
+> @@ -186,6 +156,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>   	struct device_node *np = dev->of_node;
+>   	const struct pmic_typec_resources *res;
+>   	struct regmap *regmap;
+> +	struct device *bridge_dev;
+>   	u32 base[2];
+>   	int ret;
+>   
+> @@ -241,14 +212,14 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>   	mutex_init(&tcpm->lock);
+>   	platform_set_drvdata(pdev, tcpm);
+>   
+> -	ret = qcom_pmic_typec_init_drm(tcpm);
+> -	if (ret)
+> -		return ret;
+> -
+>   	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
+>   	if (!tcpm->tcpc.fwnode)
+>   		return -EINVAL;
+>   
+> +	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+> +	if (IS_ERR(bridge_dev))
+> +		return PTR_ERR(bridge_dev);
+> +
+>   	tcpm->tcpm_port = tcpm_register_port(tcpm->dev, &tcpm->tcpc);
+>   	if (IS_ERR(tcpm->tcpm_port)) {
+>   		ret = PTR_ERR(tcpm->tcpm_port);
 
-Which is confusing during review and not a welcomed pattern.
-
-> 'git grep "#include .*dts\>"' tells you we have plenty of users of that scheme.
-
-Yeah, you can put C functions inside header (included only once). You
-can include C file in other C file. But just because you can do it, it
-does not mean you should do it. It's not the way we want to make code
-organized.
-
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
 
