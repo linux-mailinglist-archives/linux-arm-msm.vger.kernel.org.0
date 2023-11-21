@@ -1,102 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-1392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0F5C7F33ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 17:38:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33FD17F34A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 18:13:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 69FC3B2184C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 16:38:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E06792828F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 17:13:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFED95B1E0;
-	Tue, 21 Nov 2023 16:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9841168BD;
+	Tue, 21 Nov 2023 17:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CIuck4j4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XxNBfzrK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48565B1E3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 16:38:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1008C433C8;
-	Tue, 21 Nov 2023 16:38:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700584712;
-	bh=I9ZH/e6KtTHN2UHi0fUQgC/I219UZFtlAoAwKkrjbcE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CIuck4j4FS3Th2Qg6/yfyYjczl8E2bvtKdh8PF0v8/T1n7u5A3PTNFdZmXNNkVwY5
-	 3lRB+7j8NjJHp4GSIMKmhmMO6UZs+6JnKEK4YK6avhOQ7k+Th+QxH9whbGIqzgeFHS
-	 NFZQwEF5iHtTXdRDw1SYU8iSsfejNVCoDA6LSHiBCBT9CL6uQNU49cmrIc2Q6KwLKn
-	 /drPNzhKzZbcBz0MTX9Bh4ek04c6IA887OqF08oLR7WtSdrW4sKrzZK8gm8xMAFGNf
-	 BnQVtsjMLGUnys8OpppGt7itl83rfcA5+hzKjZ5dFi3oagDSHiPwbG7UjCSmyy5ZyX
-	 OX64f7FCJfZAQ==
-Date: Tue, 21 Nov 2023 09:38:30 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: Maria Yu <quic_aiquny@quicinc.com>, linux@armlinux.org.uk,
-	mhiramat@kernel.org, kernel@quicinc.com,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_lijuang@quicinc.com,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v3 1/1] ARM: kprobes: Explicitly reserve r7 for local
- variables
-Message-ID: <20231121163830.GA3437094@dev-arch.thelio-3990X>
-References: <20231120032909.19186-1-quic_aiquny@quicinc.com>
- <CAMj1kXHLT6PhT0v6=9DWS1bXDV+QSZDwnYDo=+KvpzrCBqPNrw@mail.gmail.com>
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 700381711
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 09:13:15 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-543c3756521so8006359a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 09:13:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700586794; x=1701191594; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tfrKxQU+NNoEgEsTzhWUkNf39I3RD72xOvaEb8T1Q6Y=;
+        b=XxNBfzrK5aQMwNa4Y6RJtCXlVMCY/k7RqowwxZ1Fd6Ryp0eMt14y3VvQNFSS0Sb3mw
+         Q3a8dFHwNKnaS8rWo5I91FAsGEpxmoRA6TNCHoiTmgHqUooxXGeA7qpi1TM8rtsbRO0U
+         PgOVJSty31BTL+fo8WcwX0Yrr2dVrNcaK35YwH+rb2VZ2/qRaZzGDd4pQ//9Do53XpN8
+         Q9nbA//69IU0X8zthL+MpjkWQ8D74HBYR1h0A3OoyADouZc2MRSVI6IhgJJ5a+fUW8Q2
+         jNmVd2/zG3P+tGu03qvaWqVekvC2W+IYHVzciueZEjD0G7/hQQveAHLd6DopRZONvcYn
+         pqPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700586794; x=1701191594;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tfrKxQU+NNoEgEsTzhWUkNf39I3RD72xOvaEb8T1Q6Y=;
+        b=r0Ge8FQBFPRFv8P2esLPiGBQhz6Ehh9vNY0NS9DPwmd3xMH0mo4vPfEmoFS/Y2ac8O
+         aCphu548wcv4GHbxXOISpzsakc3Vy19NyRoG4J3X/IfxTxOfqFUiHaZ0uUJuL90BZKT6
+         e5fQG8jhi3r/hDV4JvuFXDMczIFx/ZQu5rbX4byQBXSSXqAMCUA/L7MDwTOr0blfM9Au
+         uq+ywxrNE/jUpb8XWZ0ysshXdlhli2Xo/4PRpmgHUC3J0ZbASv0rpgX7C4cYVzBnVoN/
+         KE6iMYkpPc/+4kBULy/Z1yDpaoejt8yvkOt7BvedJDGZIMmV1HLB94uniC6qCur5n/wm
+         iKRw==
+X-Gm-Message-State: AOJu0YxdzW6eEJirQ/kwHOp4eKeNOJyH4rc/Ehx5cHiqOn9pDxTrk+9Y
+	oFWwFwRxUy950MPCQRFI4Mqv4CaTODQdg9396aA=
+X-Google-Smtp-Source: AGHT+IHVKdbANVF0O868LMUeMnwzlbjGCJCKaJOT2Q+jF/7i+A0oTP25OuFrrkLpZkfRP2d4cGgDDzeMfznicLPIAXA=
+X-Received: by 2002:a05:6402:3d9:b0:548:e8aa:dfc8 with SMTP id
+ t25-20020a05640203d900b00548e8aadfc8mr2020104edw.32.1700586793501; Tue, 21
+ Nov 2023 09:13:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMj1kXHLT6PhT0v6=9DWS1bXDV+QSZDwnYDo=+KvpzrCBqPNrw@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 21 Nov 2023 09:13:01 -0800
+Message-ID: <CAF6AEGtkna3P3mvaF53n2ARJACaXQU+OFfShayTrsUVmqCOmNQ@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2023-11-21 for v6.7-rc3
+To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Nov 21, 2023 at 11:11:56AM -0500, Ard Biesheuvel wrote:
-> On Sun, 19 Nov 2023 at 22:29, Maria Yu <quic_aiquny@quicinc.com> wrote:
-> >
-> > Registers r7 is removed in clobber list, so compiler may choose r7 for
-> > local variables usage, while r7 will be actually updated by the inline asm
-> > code. This caused the runtime behavior wrong.
-> > While those kind of reserved registers cannot be set to clobber list
-> > because of error like "inline asm clobber list contains reserved
-> > registers".
-> > Explicitly reserve r7 by adding attribute no-omit-frame-pointer for this
-> > file, then in T32 asm code r7 is used as a frame pointer and is not
-> > available for use as a general-purpose register.
-> > Note that "no-omit-frame-pointer" will make the code size a little bigger
-> > to store the stack frame pointer.
-> >
-> > Fixes: dd12e97f3c72 ("ARM: kprobes: treat R7 as the frame pointer register in Thumb2 builds")
-> > Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-> > Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-> > Cc: stable@vger.kernel.org
-> > ---
-> >  arch/arm/probes/kprobes/Makefile | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/arch/arm/probes/kprobes/Makefile b/arch/arm/probes/kprobes/Makefile
-> > index 6159010dac4a..b1f21e78950b 100644
-> > --- a/arch/arm/probes/kprobes/Makefile
-> > +++ b/arch/arm/probes/kprobes/Makefile
-> > @@ -8,6 +8,7 @@ test-kprobes-objs               := test-core.o
-> >
-> >  ifdef CONFIG_THUMB2_KERNEL
-> >  obj-$(CONFIG_KPROBES)          += actions-thumb.o checkers-thumb.o
-> > +CFLAGS_actions-thumb.o         += -fno-omit-frame-pointer
-> >  test-kprobes-objs              += test-thumb.o
-> >  else
-> >  obj-$(CONFIG_KPROBES)          += actions-arm.o checkers-arm.o
-> >
-> 
-> If Nathan is happy with this, I think we can drop this into the patch tracker.
+Hi Dave,
 
-I have no qualms with this approach, there are no issues with the couple
-of LLVM versions that I tested.
+A few fixes for v6.7, description below
 
-Cheers,
-Nathan
+The following changes since commit b08d26dac1a1075c874f40ee02ec8ddc39e20146:
+
+  drm/msm/a7xx: actually use a7xx state registers (2023-10-16 09:38:56 -0700)
+
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2023-11-21
+
+for you to fetch changes up to 56466f653cb59a8f46e991ad1e285f43afdca7d4:
+
+  drm/msm: remove unnecessary NULL check (2023-11-17 15:32:49 -0800)
+
+----------------------------------------------------------------
+Fixes for v6.7-rc3:
+
+- Fix the VREG_CTRL_1 for 4nm CPHY to match downstream
+- Remove duplicate call to drm_kms_helper_poll_init() in msm_drm_init()
+- Fix the safe_lut_tbl[] for sc8280xp to match downstream
+- Don't attach the drm_dp_set_subconnector_property() for eDP
+- Fix to attach drm_dp_set_subconnector_property() for DP. Otherwise
+  there is a bootup crash on multiple targets
+- Remove unnecessary NULL check left behind during cleanup
+
+----------------------------------------------------------------
+Abel Vesa (1):
+      drm/msm/dp: don't touch DP subconnector property in eDP case
+
+Bjorn Andersson (1):
+      drm/msm/dpu: Add missing safe_lut_tbl in sc8280xp catalog
+
+Dan Carpenter (1):
+      drm/msm: remove unnecessary NULL check
+
+Dmitry Baryshkov (2):
+      drm/msm: remove exra drm_kms_helper_poll_init() call
+      drm/msm/dp: attach the DP subconnector property
+
+Jonathan Marek (1):
+      drm/msm/dsi: use the correct VREG_CTRL_1 value for 4nm cphy
+
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h |  1 +
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c                 |  3 +--
+ drivers/gpu/drm/msm/dp/dp_display.c                      | 15 ++++++++++-----
+ drivers/gpu/drm/msm/dp/dp_drm.c                          |  3 +++
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c                |  2 +-
+ drivers/gpu/drm/msm/msm_drv.c                            |  2 --
+ 6 files changed, 16 insertions(+), 10 deletions(-)
 
