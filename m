@@ -1,43 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-1287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F3457F2549
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 06:36:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB26A7F254F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 06:36:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 710C81C20B9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 05:35:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 32A8BB21CA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 05:36:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE50E18E31;
-	Tue, 21 Nov 2023 05:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CC4619472;
+	Tue, 21 Nov 2023 05:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="KC8dflPl"
+	dkim=pass (1024-bit key) header.d=riseup.net header.i=@riseup.net header.b="sYZSAqVy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94A82ED;
-	Mon, 20 Nov 2023 21:35:52 -0800 (PST)
+Received: from mx0.riseup.net (mx0.riseup.net [198.252.153.6])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CEF6E7;
+	Mon, 20 Nov 2023 21:35:55 -0800 (PST)
 Received: from fews02-sea.riseup.net (fews02-sea-pn.riseup.net [10.0.1.112])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mx1.riseup.net (Postfix) with ESMTPS id 4SZClW3TvRzDqLd;
-	Tue, 21 Nov 2023 05:35:51 +0000 (UTC)
+	by mx0.riseup.net (Postfix) with ESMTPS id 4SZClZ3tQhz9vYH;
+	Tue, 21 Nov 2023 05:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-	t=1700544951; bh=3aQiV0yYrXDyWJC58/jNq5YnuykrHIOH2V9AQg50cT4=;
-	h=From:Subject:Date:To:Cc:From;
-	b=KC8dflPloQ1Alr9DQLWVy1CbZxB8aafRpVwbfFWCHLo0uy791qwwTjNEaXqGBiRKU
-	 y7MFejJKdXSZMOMxYBnp92E/7o0ffxASEskeqasIazc8leW4TAxVIDv+J+lq1yk+r9
-	 UMhV7Sl98XNMwhjXkBOP6r7qTjp/vpTO+0BCiHH4=
-X-Riseup-User-ID: B606A694CE447639939588235BA6E43D296FDB1170058309B4A4D35D01B5EB12
+	t=1700544954; bh=VWkiyyXi9IiPmSEbuEpdAjgFMlKgangprATD6XDAIOQ=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=sYZSAqVykXpSZoHFriT4k0s7IBNSjNPlrVb5SPaeZDjiVJK4qpIa3zLjNiko0q6Lg
+	 W5fE11beMAuQQNOBD0Bzk099buzYTz7T2Cv6iJxDZIqeSMYM7OdDI2k+ZS3u7M9GHz
+	 3Ur1C/Ki9jTPpJJ/5lis6gxkqmxpgwFzcsNLb3Mg=
+X-Riseup-User-ID: 44156379049542D03EE563A7B28F009519EE46A4C06B28EF74D923BFF33AD523
 Received: from [127.0.0.1] (localhost [127.0.0.1])
-	 by fews02-sea.riseup.net (Postfix) with ESMTPSA id 4SZClR6RkszFrxv;
-	Tue, 21 Nov 2023 05:35:47 +0000 (UTC)
+	 by fews02-sea.riseup.net (Postfix) with ESMTPSA id 4SZClW4Nf3zFvkn;
+	Tue, 21 Nov 2023 05:35:51 +0000 (UTC)
 From: Dang Huynh <danct12@riseup.net>
-Subject: [PATCH v2 0/4] Add PM8937 PMIC support
-Date: Tue, 21 Nov 2023 12:34:58 +0700
-Message-Id: <20231121-pm8937-v2-0-b0171ab62075@riseup.net>
+Date: Tue, 21 Nov 2023 12:34:59 +0700
+Subject: [PATCH v2 1/4] mfd: qcom-spmi-pmic: Add support for PM8937
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -46,9 +45,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIJBXGUC/2WMQQ6CMBREr0L+2prfVkRYeQ/DAmGQv7A0LRIN6
- d2tbF1N3uTlbRQRBJGaYqOAVaLMLoM5FNRPnXtAyZCZDBurNZ+Vf15qWylmxsnYrirHO2XZB4z
- y3kO3NvMkcZnDZ++u+vf+JVatWKEv9VADee01SMTLHx0WalNKXwy+R5udAAAA
+Message-Id: <20231121-pm8937-v2-1-b0171ab62075@riseup.net>
+References: <20231121-pm8937-v2-0-b0171ab62075@riseup.net>
+In-Reply-To: <20231121-pm8937-v2-0-b0171ab62075@riseup.net>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, Lee Jones <lee@kernel.org>, 
  Rob Herring <robh+dt@kernel.org>, 
@@ -56,42 +55,46 @@ To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  devicetree@vger.kernel.org, Dang Huynh <danct12@riseup.net>, 
- Caleb Connolly <caleb.connolly@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ Caleb Connolly <caleb.connolly@linaro.org>
 
-PM8937 is a power management IC. It is used in various boards with
-MSM8917, MSM8937, MSM8940 and APQ variants.
+Add the subtype and compatible strings for PM8937.
 
-This patchset has been tested on Xiaomi Redmi 4X (MSM8940).
+The PM8937 is found in various SoCs, including MSM8917, MSM8937,
+MSM8940 and APQ variants.
 
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 Signed-off-by: Dang Huynh <danct12@riseup.net>
 ---
-Changes in v2:
-- Remove PATCH 3-6 as it has been picked up.
-- Applied suggestions from reviewers.
-- Add VDD, GND to VADC.
-- Link to v1: https://lore.kernel.org/r/20231106-pm8937-v1-0-ec51d9eeec53@riseup.net
+ drivers/mfd/qcom-spmi-pmic.c      | 1 +
+ include/soc/qcom/qcom-spmi-pmic.h | 1 +
+ 2 files changed, 2 insertions(+)
 
----
-Dang Huynh (4):
-      mfd: qcom-spmi-pmic: Add support for PM8937
-      dt-bindings: mfd: qcom-spmi-pmic: Document PM8937 PMIC
-      arm64: dts: qcom: Add PM8937 PMIC
-      soc: qcom: socinfo: Add PM8937 Power IC
+diff --git a/drivers/mfd/qcom-spmi-pmic.c b/drivers/mfd/qcom-spmi-pmic.c
+index 4549fa9f7d4b..eab5bf6cff10 100644
+--- a/drivers/mfd/qcom-spmi-pmic.c
++++ b/drivers/mfd/qcom-spmi-pmic.c
+@@ -53,6 +53,7 @@ static const struct of_device_id pmic_spmi_id_table[] = {
+ 	{ .compatible = "qcom,pm8901", .data = N_USIDS(2) },
+ 	{ .compatible = "qcom,pm8909", .data = N_USIDS(2) },
+ 	{ .compatible = "qcom,pm8916", .data = N_USIDS(2) },
++	{ .compatible = "qcom,pm8937", .data = N_USIDS(2) },
+ 	{ .compatible = "qcom,pm8941", .data = N_USIDS(2) },
+ 	{ .compatible = "qcom,pm8950", .data = N_USIDS(2) },
+ 	{ .compatible = "qcom,pm8994", .data = N_USIDS(2) },
+diff --git a/include/soc/qcom/qcom-spmi-pmic.h b/include/soc/qcom/qcom-spmi-pmic.h
+index c47cc71a999e..17a0a8c3d656 100644
+--- a/include/soc/qcom/qcom-spmi-pmic.h
++++ b/include/soc/qcom/qcom-spmi-pmic.h
+@@ -31,6 +31,7 @@
+ #define PM8998_SUBTYPE		0x14
+ #define PMI8998_SUBTYPE		0x15
+ #define PM8005_SUBTYPE		0x18
++#define PM8937_SUBTYPE		0x19
+ #define PM660L_SUBTYPE		0x1a
+ #define PM660_SUBTYPE		0x1b
+ #define PM8150_SUBTYPE		0x1e
 
- .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    |   1 +
- arch/arm64/boot/dts/qcom/pm8937.dtsi               | 216 +++++++++++++++++++++
- drivers/mfd/qcom-spmi-pmic.c                       |   1 +
- drivers/soc/qcom/socinfo.c                         |   2 +-
- include/soc/qcom/qcom-spmi-pmic.h                  |   1 +
- 5 files changed, 220 insertions(+), 1 deletion(-)
----
-base-commit: 408a8e748eb5f10026ea9d87f8f218e759101c9a
-change-id: 20231106-pm8937-000e423a75fb
-
-Best regards,
 -- 
-Dang Huynh <danct12@riseup.net>
+2.42.1
 
 
