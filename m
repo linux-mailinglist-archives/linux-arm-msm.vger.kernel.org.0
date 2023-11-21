@@ -1,70 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-1360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEED87F3035
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 15:04:59 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92EBE7F3032
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 15:04:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79399282C44
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:04:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 332E4B20EAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 14:04:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89C7F54FA2;
-	Tue, 21 Nov 2023 14:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFFB954F83;
+	Tue, 21 Nov 2023 14:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QUTWQv9/"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="VxINk/VK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627A7D7F;
-	Tue, 21 Nov 2023 06:04:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700575488; x=1732111488;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=XZP4lfw1143zghvYLcKoFwr5cIz7iQ/mX6yCIhP2bbY=;
-  b=QUTWQv9/IdhRz1wW1AaaA10Bu3n/7/cA0NocRpaZsRxjyE8o0w1mdbc/
-   fMQrPdf2YmDoU84WVxjDtkE9W880E9wIOrwe14Gvk/XllKlTKXqJZS4P0
-   GTsbMdxt3PRzcPkkU8nMpY/2Fhc+A8LD4MI/tVmUmgsaqqLcbAnwiTyhj
-   IVPZvd+kZq7KgIsIUCQ8mGMCZHLvQkkrPQYNnjjhWdPYf1f5gsfn0e+RM
-   5R0KRaZx+D+RAieTF54KkUsXHgtZ6sygiYmfgImfb9IPjAiN7IomjDDx/
-   KsFvPmKwbMQJ+KOGnOCMxtlXfDvnUPcBL+swgur1KT2qqQECyeVilbTYB
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10901"; a="422939290"
-X-IronPort-AV: E=Sophos;i="6.04,215,1695711600"; 
-   d="scan'208";a="422939290"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2023 06:04:46 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10901"; a="890261425"
-X-IronPort-AV: E=Sophos;i="6.04,215,1695711600"; 
-   d="scan'208";a="890261425"
-Received: from lkp-server02.sh.intel.com (HELO b8de5498638e) ([10.239.97.151])
-  by orsmga004.jf.intel.com with ESMTP; 21 Nov 2023 06:04:39 -0800
-Received: from kbuild by b8de5498638e with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1r5RMj-0007ta-09;
-	Tue, 21 Nov 2023 14:04:37 +0000
-Date: Tue, 21 Nov 2023 22:03:55 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
-	konrad.dybcio@linaro.org, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, catalin.marinas@arm.com,
-	ulf.hansson@linaro.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev, agross@kernel.org,
-	conor+dt@kernel.org, ayan.kumar.halder@amd.com, j@jannau.net,
-	dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
-	m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
-	lpieralisi@kernel.org, quic_rjendra@quicinc.com,
-	abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, quic_tsoni@quicinc.com,
-	neil.armstrong@linaro.org, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: Re: [PATCH V2 3/5] arm64: dts: qcom: Add base X1E80100 dtsi and the
- QCP dts
-Message-ID: <202311212100.eIdoZhGN-lkp@intel.com>
-References: <20231117113931.26660-4-quic_sibis@quicinc.com>
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E4210CA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 06:04:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1700575484;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Lg4k/3dlZcCU56aN6iGyLYrEU5FjTnslfS62KZBVgEc=;
+	b=VxINk/VKOA4mLSywpJ6z+oR1lRbR4lN7S0uvrb3CcX6USmuOdCry0bUS9ncDSX2kqS/Ifx
+	58cz07kqBjEXEXWR76JipZWlcM/o49+aHy2M4IiF+8foom2wwuwuxURvFRm9a3UhHJlvj3
+	jfi+vrIOA8voI1mpZTLsUZojw3iC+Lc=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-22-S3aSH0knOG6yR6oEgpuqrw-1; Tue, 21 Nov 2023 09:04:33 -0500
+X-MC-Unique: S3aSH0knOG6yR6oEgpuqrw-1
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-670aa377deeso43439076d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 06:04:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700575458; x=1701180258;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Lg4k/3dlZcCU56aN6iGyLYrEU5FjTnslfS62KZBVgEc=;
+        b=wKpboOZC7YfAWklgK0aTYNIHdJEWNEupsDR2Sj4f+eOwO3VirlnJhtxQNEcy1T7C+f
+         vGaouuow3HOB+Lez2+n460uTNBmBYyoHwLISqwNPMWuypqXEV5H8cPPWtGrwcYb9KayB
+         qZ+JyPQqiKe6Ucfv0vx+useiyAB/F+eqGQyB/u3exzhaCOcjihFZrCysGj0AxjTk14Y8
+         r/W95QTWNvEYbbPRf4Gbb192ukLIX2LDShyq1Xsu7TRLVxqdCDaa8pdEivOTAeVwRvRp
+         BscTJfK+FEDJJgACKA40gvEiW2XC0yHTeYQJRPoYzu6dKBEWeU8dYO/l4oOvBM80r/Qt
+         YJtg==
+X-Gm-Message-State: AOJu0YzeQEFlVhHbO4BxeRoHsSudIAgv/5EeQgd3iOuPZVJll68weQO9
+	PwNpzngjgiITVM5TDzHlOQTpE9LmgxGji5sha1Ogymv5nVNHljEQTDSzVml4Z4xpzYHdyjU+QqQ
+	/OIYc/f7s/MbLzhQefDWgX+RwSA==
+X-Received: by 2002:a05:6214:e4f:b0:679:d33e:352a with SMTP id o15-20020a0562140e4f00b00679d33e352amr8633030qvc.1.1700575458632;
+        Tue, 21 Nov 2023 06:04:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEnLik0eV74HqD/F8NKb24Z8lRgzXhSPmwf6CP38CjCe1HMvqTyw81qfCQiYOQyIHdj/5K0Rw==
+X-Received: by 2002:a05:6214:e4f:b0:679:d33e:352a with SMTP id o15-20020a0562140e4f00b00679d33e352amr8632999qvc.1.1700575458385;
+        Tue, 21 Nov 2023 06:04:18 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id b9-20020a0cfe69000000b0065b0554ae78sm3930045qvv.100.2023.11.21.06.04.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Nov 2023 06:04:18 -0800 (PST)
+Date: Tue, 21 Nov 2023 08:04:15 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] USB: dwc3: qcom: fix wakeup after probe deferral
+Message-ID: <syszua6kmso3k4zfvwwsfjaq4ok6gkexhfli34r3dtjhn63vio@dwhhnn5b2s5b>
+References: <20231120161607.7405-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,54 +79,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231117113931.26660-4-quic_sibis@quicinc.com>
+In-Reply-To: <20231120161607.7405-1-johan+linaro@kernel.org>
 
-Hi Sibi,
+On Mon, Nov 20, 2023 at 05:16:04PM +0100, Johan Hovold wrote:
+> When testing a recent series that addresses resource leaks on probe
+> deferral [1] I realised that probe deferral can break wakeup from
+> suspend due to how the wakeup interrupts are currently requested.
+> 
+> I'll send a separate series for the Qualcomm devicetrees that used
+> incorrect trigger types for the wakeup interrupts. Included here is just
+> a patch fixing the binding example which hopefully will make it less
+> likely that more of these gets introduced. Fortunately, there should be
+> no dependency between this series and the devicetree one.
+> 
+> Note also that I decided to include a related trivial cleanup patch.
+> 
+> Johan
+> 
+> 
+> [1] https://lore.kernel.org/lkml/20231117173650.21161-1-johan+linaro@kernel.org/
+> 
+> 
+> Johan Hovold (3):
+>   dt-bindings: usb: qcom,dwc3: fix example wakeup interrupt types
+>   USB: dwc3: qcom: fix wakeup after probe deferral
+>   USB: dwc3: qcom: simplify wakeup interrupt setup
 
-kernel test robot noticed the following build errors:
+For the series:
 
-[auto build test ERROR on v6.7-rc1]
-[also build test ERROR on linus/master next-20231121]
-[cannot apply to robh/for-next arm64/for-next/core]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sibi-Sankar/dt-bindings-arm-cpus-Add-qcom-oryon-compatible/20231117-194253
-base:   v6.7-rc1
-patch link:    https://lore.kernel.org/r/20231117113931.26660-4-quic_sibis%40quicinc.com
-patch subject: [PATCH V2 3/5] arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts
-config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20231121/202311212100.eIdoZhGN-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231121/202311212100.eIdoZhGN-lkp@intel.com/reproduce)
+> 
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml |  4 ++--
+>  drivers/usb/dwc3/dwc3-qcom.c                         | 12 ++++--------
+>  2 files changed, 6 insertions(+), 10 deletions(-)
+> 
+> -- 
+> 2.41.0
+> 
+> 
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311212100.eIdoZhGN-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   In file included from arch/arm64/boot/dts/qcom/x1e80100-qcp.dts:10:
->> arch/arm64/boot/dts/qcom/x1e80100.dtsi:7:10: fatal error: 'dt-bindings/clock/qcom,x1e80100-gcc.h' file not found
-       7 | #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
-         |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   1 error generated.
-
-
-vim +7 arch/arm64/boot/dts/qcom/x1e80100.dtsi
-
-   > 7	#include <dt-bindings/clock/qcom,x1e80100-gcc.h>
-     8	#include <dt-bindings/dma/qcom-gpi.h>
-     9	#include <dt-bindings/interconnect/qcom,icc.h>
-    10	#include <dt-bindings/interconnect/qcom,x1e80100-rpmh.h>
-    11	#include <dt-bindings/interrupt-controller/arm-gic.h>
-    12	#include <dt-bindings/power/qcom,rpmhpd.h>
-    13	#include <dt-bindings/power/qcom-rpmpd.h>
-    14	#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-    15	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
