@@ -1,49 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97F4B7F2A63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 11:29:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 893A67F2AEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 11:46:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52FC4281733
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 10:29:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 190A1B21915
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Nov 2023 10:46:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B78046521;
-	Tue, 21 Nov 2023 10:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33F9047795;
+	Tue, 21 Nov 2023 10:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Jh/aqU1Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q9aSLNdw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67D4AC1;
-	Tue, 21 Nov 2023 02:29:14 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ALA99hV009701;
-	Tue, 21 Nov 2023 10:29:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=d3laBOY3VBa/FKo6wvUDPd9NbPmzQBMNTTTgijWw53Q=;
- b=Jh/aqU1YxpkX6X0hwK7EuvHYGlewXCD+1fdpk4TriHDnowU5IINaqfcd9HwXsdKLQQqG
- IzCbWXP+tj/JMd175+8ukga13e203LkF2bWcnDVYliQy2vwRyZJp/wdKjVFQ7JJnXDoY
- gEAhXTJ3Dyumsjqvf/SKdfn180tPmNj51ya1KZhE+L+sgMfe9k55gLQ4XKjTFCEhn2V5
- X068esLtEfMgD3yvrQuGkAa3p56lsnjxH8V9n/WPWOddIDg8qNDOGOiFdKUjEX1nRamF
- hrQN3QoQxrm4EORY3X74ayoE5LdOVEgI8y3Ll7xkrSvVkTffUCdzhQwvLZqwe0h+qKzB Dg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ugr85rcr8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 10:29:01 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ALAT0VN026093
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 21 Nov 2023 10:29:00 GMT
-Received: from [10.253.72.26] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 21 Nov
- 2023 02:28:56 -0800
-Message-ID: <9acace07-d758-4d5d-8321-de75ee53355d@quicinc.com>
-Date: Tue, 21 Nov 2023 18:28:54 +0800
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6E6BC1
+	for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 02:46:12 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-40907b82ab9so15832185e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Nov 2023 02:46:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700563571; x=1701168371; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9YQ9oHc/Z7VmSRjGiVHn+TQLl6XB6fBGVSa6lAReK2Q=;
+        b=Q9aSLNdw6yAfSioECxmYigf43Sqf8Qf3gce0gwoIcA/Yk29mEoHTP5K89hbYxqdOYu
+         9VPW42ZBNB8nmGuO1ZiuhGvvihXI5zXrNqcre6UZQJ7cAwmZTPLOHEuSOItWSHgN8N7r
+         OKq8I7nEqIo4xXSx3uC6iT9WZNrbVnXAiFKf9NFyRgBkTQG3nvikyMAA7+E5Azczc3R0
+         FwpMogbCuGDiC9pna/ktT36F4U46dSQnkP9A3dhxwXbkfDT7yN8TrdJjrz2KLVKvMVXz
+         wW4/QMywFPvX9ZTmATEi7JdSAZktYBIysTLr75FZ/V4mIPWYlesov/udsHkvJsrCwMf6
+         8KZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700563571; x=1701168371;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9YQ9oHc/Z7VmSRjGiVHn+TQLl6XB6fBGVSa6lAReK2Q=;
+        b=cEmL6ao6zv06vGkwztTRXqqrPevu+OtGsn1C8PgXGpdYJYrTpz8fHLPkbi8qFb1KWJ
+         N4+K2W7riyouX6ei3rQ5LyBr9FXSdhDvwAfqWuH3z15eYQq0XMy+fAMllMt9FUCrloQJ
+         +5nF/HNgw+KFZ1aLrHQBcmwBoKL6/jokgQ0u6uCK+ciAEIlK9gR/BpzB88Oy7SgyhwlV
+         bY5fBugVY/rp4ZNdc33aBXmjgHfiaTkHZfBdTjY4j2E2Yxto2S93JuvA5sOSkKGtqm+N
+         7f7blT0CkZ4imVK5YaAY183a7OJLJGICRSjv4B6caGDbBS4T5mPEU2PYNxfbYOMTXvU0
+         a2+Q==
+X-Gm-Message-State: AOJu0YwWVfJNM6tG4lykFUY9s3F/PHq9FHdCtQTt3CR31KPSth0yZwDG
+	oeAvXp42Tgp/VwpyN9124HClDg==
+X-Google-Smtp-Source: AGHT+IEeZ8W+Q8V/otGe4qIWbM9OBl6X7yXc7iTRxrT4SgTPAzPVtLB58IlgIl50TaKNv0wMDaLYNA==
+X-Received: by 2002:a05:6000:18ae:b0:332:c789:4bed with SMTP id b14-20020a05600018ae00b00332c7894bedmr1937246wri.23.1700563571319;
+        Tue, 21 Nov 2023 02:46:11 -0800 (PST)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id q15-20020adff94f000000b0033169676e83sm14261662wrr.13.2023.11.21.02.46.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Nov 2023 02:46:10 -0800 (PST)
+Message-ID: <e67c00fd-37f2-4ede-983f-c8c46bf847f1@linaro.org>
+Date: Tue, 21 Nov 2023 10:46:08 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,67 +62,45 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/9] net: mdio: ipq4019: Enable the clocks for ipq5332
- platform
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <davem@davemloft.net>, <edumazet@google.com>,
-        <kuba@kernel.org>, <pabeni@redhat.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
-        <robert.marko@sartura.hr>
-CC: <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>
-References: <20231115032515.4249-1-quic_luoj@quicinc.com>
- <20231115032515.4249-3-quic_luoj@quicinc.com>
- <10dc0fff-fc00-4c1f-97cf-30c5e5e8f983@linaro.org>
+Subject: Re: [PATCH v6 6/6] usb: typec: qcom-pmic-typec: switch to
+ DRM_AUX_HPD_BRIDGE
 Content-Language: en-US
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <10dc0fff-fc00-4c1f-97cf-30c5e5e8f983@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20231103230414.1483428-1-dmitry.baryshkov@linaro.org>
+ <20231103230414.1483428-7-dmitry.baryshkov@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20231103230414.1483428-7-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YjbUSm6vdQOT78gkogteKn3mp-3fs216
-X-Proofpoint-ORIG-GUID: YjbUSm6vdQOT78gkogteKn3mp-3fs216
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-21_03,2023-11-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- phishscore=0 suspectscore=0 adultscore=0 malwarescore=0 bulkscore=0
- priorityscore=1501 lowpriorityscore=0 mlxscore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311210081
 
-
-
-On 11/20/2023 10:22 PM, Konrad Dybcio wrote:
-> On 15.11.2023 04:25, Luo Jie wrote:
->> For the platform ipq5332, the related GCC clocks need to be enabled
->> to make the GPIO reset of the MDIO slave devices taking effect.
->>
->> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
-> [...]
+On 03/11/2023 23:03, Dmitry Baryshkov wrote:
+> Use the freshly defined DRM_AUX_HPD_BRIDGE instead of open-coding the
+> same functionality for the DRM bridge chain termination.
 > 
->>   static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
->> @@ -212,6 +231,38 @@ static int ipq_mdio_reset(struct mii_bus *bus)
->>   	u32 val;
->>   	int ret;
->>   
->> +	/* For the platform ipq5332, there are two uniphy available to connect the
->> +	 * ethernet devices, the uniphy gcc clock should be enabled for resetting
->> +	 * the connected device such as qca8386 switch or qca8081 PHY effectively.
->> +	 */
->> +	if (of_device_is_compatible(bus->parent->of_node, "qcom,ipq5332-mdio")) {
-> Would that not also be taken care of in the phy driver?
-> 
-> Konrad
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Hi Konrad,
-These clocks are the SOC clocks that is not related to the PHY type.
-no matter what kind of PHY is connected, we also need to configure
-these clocks.
+> +	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+> +	if (IS_ERR(bridge_dev))
+> +		return PTR_ERR(bridge_dev);
+> +
+
+What is the effect if we never attach any bridged devices ?
+
+We make an aux device that just hangs around and eventually get cleaned 
+up on release ? That's the way I read this code anyway.
+
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
