@@ -1,107 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-1595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2D6B7F5288
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 22:25:15 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72FFD7F5357
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 23:23:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C9B72812F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 21:25:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2BB5B20F5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 22:23:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03F931C681;
-	Wed, 22 Nov 2023 21:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAE3520B22;
+	Wed, 22 Nov 2023 22:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o3ms0IWu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lx8BG/eF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17BF61A5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 13:25:09 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id ca18e2360f4ac-7b074e318b5so7628639f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 13:25:09 -0800 (PST)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3BBA10C;
+	Wed, 22 Nov 2023 14:23:43 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-32f7abbb8b4so150180f8f.0;
+        Wed, 22 Nov 2023 14:23:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700688308; x=1701293108; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OK4yjGOQCQ1Of5MUW9eg8KxwFZFuyIMn1rGG5EPO/5s=;
-        b=o3ms0IWuFUo90hh2SYWVNSjQjcAmVRiY71xmHKlwRjTNy62wmRBTrYtefHtQPahxTu
-         RVjjJHbvW1/t/OG3PJ7VfQBKPYjqw6hSW8LRKaXyN2rSwWy7xFcnJ6SH2dGUPqjxLJfn
-         dNYnFQNR2wbMrNtxbUikkhMXi6AvQW+yGFqFb5MEv6QJBioVVrSzuK8suCHbiFwj1QNo
-         HoBMoDV8+DZhFOpwp14GZBS3KBOiUaZzvTpvqZF0+z7ah1piiEpfX310CDs8wdThLsgN
-         Xjgl4Zt5jFUxvTX8ZDk9WcQdDZHx6sqYH/bx2iJoMwf8FTftQuQ+kfeHu2CbmwjNKGpQ
-         ObLw==
+        d=gmail.com; s=20230601; t=1700691822; x=1701296622; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=h8GK3SyZL3LXcmpfWT45dHGF9tSwy53Cd0hTs0+Vv48=;
+        b=Lx8BG/eFs8FeSzkzYFQu3OGboGR1Ay2XdnvsDVc/wczDW72SblHxGFBvFqMIzXm0b7
+         PpPzKDDz/9YzvdLNXa9Pgohend1r3bQNmkOEJta6FViUpv7wzGkkZcJYoAclEZJP92U/
+         kR/t/G2PW3sDWA9hoLAzLRIawFmBtWMKpaTyeAEvVSlBtbail2DxH6nCZqe31o4fn9tn
+         llfFtpr/adhozmMOSOWINsE3ltUgCZAGquvYmqPz0iLR6cvw4t87OikYzgqy/LHtHV3v
+         in1uFpQOZx6zmCKtRooHy3YR2EH+ebg9v/8BHHYdl8muNZE4OA1XMrDUGFCSV0SVZRT2
+         6kig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700688308; x=1701293108;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OK4yjGOQCQ1Of5MUW9eg8KxwFZFuyIMn1rGG5EPO/5s=;
-        b=szXjZuNYqrWvKrlSsnylxzBN/Leu/CavW2M4QO5QOvJV2iTCm7wpIOXpSUL3HEATqI
-         xxPOR0POceOwtCficf3SMxAGIpD+r3NDdntRsFfxnsc1iaPUr6sDTGKgYQhn0LPg+5lU
-         42/R6BtGsgOk46ZMn5V+xmhKMj6jvxUjlkFs4l/xf4+4GdKIcTnvisDVebNNjq9B0RWv
-         tHBbih8qToXsxginfk0yHwI/VMCKdebtbSK5Loufp12IcizQA1SaM2cLQrV9Z5ldt5D6
-         YcKZBU4YB6CJd5qgbT7xcM3R4tjjfkij8HLDeATvgSSXzwqxivuv44kqKSrRDQoi3IPf
-         2BfA==
-X-Gm-Message-State: AOJu0Yz9rrDyVEkNTq5IVWIBYCxui+CxYJZHYy1rfdhAf9Gr+p4ScXa6
-	5VSZXMesVyRgJnN1Vzk4XQfjBA==
-X-Google-Smtp-Source: AGHT+IGfqWQCALQ2sbl53cSx59NR6o3lXjdDQ8ypxQCzXrbtIkKuIukuNRzmX3tbmVN1WRYaJX1GYQ==
-X-Received: by 2002:a6b:e217:0:b0:785:d5d4:9f26 with SMTP id z23-20020a6be217000000b00785d5d49f26mr719339ioc.9.1700688308378;
-        Wed, 22 Nov 2023 13:25:08 -0800 (PST)
-Received: from localhost.localdomain (c-98-61-227-136.hsd1.mn.comcast.net. [98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id i3-20020a6bf403000000b007a66df53f71sm3591812iog.38.2023.11.22.13.25.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Nov 2023 13:25:08 -0800 (PST)
-From: Alex Elder <elder@linaro.org>
-To: davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com
-Cc: mka@chromium.org,
-	andersson@kernel.org,
-	quic_cpratapa@quicinc.com,
-	quic_avuyyuru@quicinc.com,
-	quic_jponduru@quicinc.com,
-	quic_subashab@quicinc.com,
-	elder@kernel.org,
-	netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH net] net: ipa: fix one GSI register field width
-Date: Wed, 22 Nov 2023 15:25:04 -0600
-Message-Id: <20231122212504.714276-1-elder@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1700691822; x=1701296622;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=h8GK3SyZL3LXcmpfWT45dHGF9tSwy53Cd0hTs0+Vv48=;
+        b=PHctDZWKhdE5qNlYjFsVRRRffipEqRttzee3mIsWboI4KfNEAPGZVVW1ox02iM1MNy
+         H0GFLRMbH1UvysphO7SgM2PBkdi2RspurvqHdXMxfYDJjHliaOeouuQTajFAwgCeJsdg
+         G/WDj7VFmlQrA+yTTnggs0r63eE486wAHUsjTssKTD4BmNQ4PHjf5G3ekaB83hZQqdN5
+         Rg/bhn2S8UF9FRtMmp9nF59FbWkw0K7Am7W7DbrSk/LxCFXd2ewjpl8GIl6fSJcnUHcg
+         bNvyEQPETRbnMKq4LAaK5IGsOj3Siqf6CW7LTTMgwj8qdNpAFq6UTAKmEG1tzmtOML3f
+         bIZw==
+X-Gm-Message-State: AOJu0YyoXmBdhHZgDB26K1WyxYsaKBf5Poibn+ihVqON0b47dsRwJ3TT
+	/FTRXQPl5UGCvSjEutEukTA42nm8oxGMt6sx
+X-Google-Smtp-Source: AGHT+IGysglQixcIO8sz8ophUPUele1QAx7Y0XkHkc7BQ59vqeS0Y2l1dNamG99kZ2xQY2vFDnKBuQ==
+X-Received: by 2002:a5d:584e:0:b0:331:6c3b:4f1e with SMTP id i14-20020a5d584e000000b003316c3b4f1emr2735966wrf.56.1700691822004;
+        Wed, 22 Nov 2023 14:23:42 -0800 (PST)
+Received: from [192.168.0.3] ([69.6.8.124])
+        by smtp.gmail.com with ESMTPSA id t12-20020adfe10c000000b00332cb1bcd01sm437565wrz.86.2023.11.22.14.23.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Nov 2023 14:23:41 -0800 (PST)
+Message-ID: <a62e93f0-7d95-41ee-91c1-cbdd316f94d7@gmail.com>
+Date: Thu, 23 Nov 2023 00:23:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next 08/10] net: wwan: qcom_bam_dmux: Convert to
+ platform remove callback returning void
+Content-Language: en-US
+To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+ Jakub Kicinski <kuba@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Loic Poulain <loic.poulain@linaro.org>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>
+Cc: Andy Gross <agross@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Stephan Gerhold <stephan@gerhold.net>,
+ Johannes Berg <johannes@sipsolutions.net>, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, kernel@pengutronix.de
+References: <20231117095922.876489-1-u.kleine-koenig@pengutronix.de>
+ <20231117095922.876489-9-u.kleine-koenig@pengutronix.de>
+From: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+In-Reply-To: <20231117095922.876489-9-u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-The width of the R_LENGTH field of the EV_CH_E_CNTXT_1 GSI register
-is 24 bits (not 20 bits) starting with IPA v5.0.  Fix this.
+On 17.11.2023 11:59, Uwe Kleine-König wrote:
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is ignored (apart
+> from emitting a warning) and this typically results in resource leaks.
+> 
+> To improve here there is a quest to make the remove callback return
+> void. In the first step of this quest all drivers are converted to
+> .remove_new(), which already returns void. Eventually after all drivers
+> are converted, .remove_new() will be renamed to .remove().
+> 
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-Fixes: 627659d542c5 ("net: ipa: add IPA v5.0 GSI register definitions")
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- drivers/net/ipa/reg/gsi_reg-v5.0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/net/ipa/reg/gsi_reg-v5.0.c b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-index d7b81a36d673b..145eb0bd096d6 100644
---- a/drivers/net/ipa/reg/gsi_reg-v5.0.c
-+++ b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-@@ -78,7 +78,7 @@ REG_STRIDE_FIELDS(EV_CH_E_CNTXT_0, ev_ch_e_cntxt_0,
- 		  0x0001c000 + 0x12000 * GSI_EE_AP, 0x80);
- 
- static const u32 reg_ev_ch_e_cntxt_1_fmask[] = {
--	[R_LENGTH]					= GENMASK(19, 0),
-+	[R_LENGTH]					= GENMASK(23, 0),
- };
- 
- REG_STRIDE_FIELDS(EV_CH_E_CNTXT_1, ev_ch_e_cntxt_1,
--- 
-2.34.1
-
+Reviewed-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
 
