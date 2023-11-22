@@ -1,165 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-1478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A3057F4358
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:12:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 901037F4363
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:16:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5F91B20E24
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:12:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8FCB81C208C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:16:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B777825569;
-	Wed, 22 Nov 2023 10:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D4E321372;
+	Wed, 22 Nov 2023 10:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sSzHWTyG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r8fcXzdJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B3B818C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:12:44 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-3316a4bc37dso3425903f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:12:44 -0800 (PST)
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 988CA110
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:15:55 -0800 (PST)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5b383b4184fso71886207b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:15:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700647963; x=1701252763; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=seKmnP9AHX9tkrlZsmKjZQmrPlkskzDjOIYe+UgARL4=;
-        b=sSzHWTyGh2SWJ5EFDTjNGXEL/VKXPhnC9q8v1wHYAM3/EguJppK7+NLMaarr0Xlipv
-         II7VDbt8AvXwQG1siOZwuciPeOt1CSNCahCOHs90WVSoAnScMJcsDFFHoFqsMY4NJo5h
-         B9s3i5+CRqcZ8NTFmxQkmvh+1I8CsS0vm5N0h5eIxR4r0OyZ+cImJK5UV7hYA2v0xty4
-         PI28B5/zO+Q+BBsQfFnP+MooqwXVLhjZ/PesUK1wcUiby639H2FJ3AFrxq/lm4lf2vE2
-         MVUDj9LWyf7QKil3wArHiBlaoSI1jEQJz5BoeZGo6Dk1yUY1OYRaxC9qmUSOnmUhtLSB
-         yk1Q==
+        d=linaro.org; s=google; t=1700648155; x=1701252955; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PgkvyLwfQR26thZuHZr5M17A0Ohem0nIDMb8RLB6UYs=;
+        b=r8fcXzdJhk4j5jldofapXyE3N/Tyl09fpEUY+m5NqEXEjROz50uKEaTBwMusJufdLa
+         HPR762mdbn5gC3CaTUvaJjPozz5ONmi+GkkFy5Kks8j2ArMz1Qc9vmbaShdMd2B/YlRK
+         Bl7ABymoZKM784c5lGNTBvmajRutsSk0eemoQirByj7Vw7muZWfvnOUgTsMz9jgA+6Z8
+         +gvoThWi4mzO7FHXzjpacUS3Rvg0H2QMbBw5NSiQ0+EWPk8lNTVmmHvmxMlvbaTI2eoB
+         Srd1EctnV1os/5+z0cyGqeK+ZfDTmI8llUyCfoZlwpmCr9lIzxJ0wA35A+ZM/H+Mvtu7
+         i5jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700647963; x=1701252763;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=seKmnP9AHX9tkrlZsmKjZQmrPlkskzDjOIYe+UgARL4=;
-        b=QDjft27WZZ572bg1Kl1p50lOZAGdZAf4XvNO0WE8rHhhWo8dL0OOB8ScLVUFqnrNxi
-         VbcWO5EipeKV6GLojblTRL++8pqUaGFGAnaroQ1dZSECmykbuDjvO+nSeUiu9hpw60K3
-         qU4sCqcvU0zoikVoouWPbbXyXrFWrclTkeightxb2CMjpMNd7wYPxBtZ5WMmI9tnGt4l
-         Fi89UxNbctNsbGBlk1LqU8B3EI9hMif8rMjUHlQJBPsyJ9acgHW6yvtGQ1r4wgJwxEhF
-         j03fIuR0yKpMVOoWVw8VwkeOKBMJrnYw1PrZ4sxDzv9r8MK/Cte7TLci5mdgFZ037FPm
-         DNAw==
-X-Gm-Message-State: AOJu0YxvGnGBqDgCkv9Lf7BFu0Gea+Qz7KtAEOBTqmgLhGVjYLSUjcvL
-	sK6f4OSGmgG1KM0fuQXFGjuoLQ==
-X-Google-Smtp-Source: AGHT+IG1vexOuJLadng7UnbtkrByhtaL1OvaB23WbAQx9Ru5qfHVBXQO9tUoR1xTfz0Qcm9dHT+fXQ==
-X-Received: by 2002:a5d:5f4f:0:b0:32d:b2cf:8ccd with SMTP id cm15-20020a5d5f4f000000b0032db2cf8ccdmr1531359wrb.47.1700647962778;
-        Wed, 22 Nov 2023 02:12:42 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.100])
-        by smtp.gmail.com with ESMTPSA id v9-20020a5d5909000000b0032f9688ea48sm16750214wrd.10.2023.11.22.02.12.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Nov 2023 02:12:42 -0800 (PST)
-Message-ID: <d26eae8d-4968-4ab0-bd9b-696d7b3865ec@linaro.org>
-Date: Wed, 22 Nov 2023 11:12:40 +0100
+        d=1e100.net; s=20230601; t=1700648155; x=1701252955;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PgkvyLwfQR26thZuHZr5M17A0Ohem0nIDMb8RLB6UYs=;
+        b=WQw9dNlYpIW6ThercRWxVeQXAW1NN7KRnZZyOPpudFlquE9sk6NbtJ64WqXWoNbvC3
+         Ey8TsSlHQJoQ6PDiDU5EYU88fPVRfg075iKL2vEU1tAtd2v5zZLgUC+OEnA5fgIMUHAC
+         U66MWgdy2eQ6z2fE4k3QQMrgXeD0mOgPfiF+nP4gvKODIpluG6rbRQWAkVdZ8HoYe5+i
+         mNp0Bd0mpbjUXP7oFTk4ZPaNkOvDos2IiYTD3BilNm8tVsE3wqeOYKw/fxyElop2YAQd
+         QVZBX2Da6DgHguEdjhBNFJ8m+7fwXNWn51S4F3pLYbkYcE50Sb5ivoE5iSeJlnrhHRfV
+         c7qQ==
+X-Gm-Message-State: AOJu0Yy5RnSm6YNb53PacCDQECcafgbRdaAMbpn71d5YU0iNVTEdKIlX
+	Ey3NxCVOZ/8t1xu4k0vyodd/zsfb5MH891EW+zUFqorHkzeI+bCW
+X-Google-Smtp-Source: AGHT+IEkdUG9+zaFUBVAnoJGDXIM87u6PIrFmQ+T/ZMjVtONGnL/iE3hI7EqXnjaRE+awRnTSMD0+xsOQ6T0bnb+1T4=
+X-Received: by 2002:a81:4746:0:b0:5a7:baac:7b34 with SMTP id
+ u67-20020a814746000000b005a7baac7b34mr1621814ywa.28.1700648154790; Wed, 22
+ Nov 2023 02:15:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/9] dt-bindings: clock: ipq5332: drop the few nss
- clocks definition
-Content-Language: en-US
-To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Richard Cochran <richardcochran@gmail.com>,
- Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20231121-ipq5332-nsscc-v2-0-a7ff61beab72@quicinc.com>
- <20231121-ipq5332-nsscc-v2-3-a7ff61beab72@quicinc.com>
- <43376552-7e79-4f34-94ca-63767a95564b@linaro.org>
- <8bb79735-3b5d-4229-b0f4-bc50d61fdba1@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <8bb79735-3b5d-4229-b0f4-bc50d61fdba1@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-0-d9340d362664@linaro.org>
+ <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-3-d9340d362664@linaro.org>
+In-Reply-To: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-3-d9340d362664@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 22 Nov 2023 12:15:43 +0200
+Message-ID: <CAA8EJpq5NdZKaDSjKnJhFBCD+pwb3jaHgsSXAu6ODmSPU+g_ww@mail.gmail.com>
+Subject: Re: [PATCH 3/7] phy: qcom-qmp: pcs: Add v7 register offsets
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 22/11/2023 11:08, Kathiravan Thirumoorthy wrote:
-> 
-> 
-> On 11/21/2023 8:36 PM, Krzysztof Kozlowski wrote:
->> On 21/11/2023 15:30, Kathiravan Thirumoorthy wrote:
->>> In commit 0dd3f263c810 ("clk: qcom: ipq5332: enable few nssnoc clocks in
->>
->> Where is this commit coming from?
->>
->>> driver probe"), gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk,
->>> gcc_nssnoc_nsscc_clk are enabled in driver probe to keep it always-on.
->>
->> Implementation can change and for example bring back these clocks. Are
->> you going to change bindings? No, drop the patch.
->>
->> Bindings should be dropped only in a few rare cases like clocks not
->> available for OS or bugs.
-> 
-> Thanks Krzysztof. Will drop this patch in V3.
-> 
-> One more question to understand further. In IPQ SoCs there are bunch of 
-> coresight / QDSS clocks but coresight framework doesn't handle all 
-> clocks. Those clocks are enabled in bootloader stage itself. In such 
-> case, should I drop the clocks from both binding and driver or only from 
-> driver?
+On Wed, 22 Nov 2023 at 12:04, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> The X1E80100 platform bumps the HW version of QMP phy to v7 for USB,
+> and PCIe. Add the new PCS offsets in a dedicated header file.
+>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v7.h | 28 ++++++++++++++++++++++++++++
+>  drivers/phy/qualcomm/phy-qcom-qmp.h        |  2 ++
+>  2 files changed, 30 insertions(+)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v7.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v7.h
+> new file mode 100644
+> index 000000000000..520f28d802f6
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v7.h
+> @@ -0,0 +1,28 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (c) 2023, Linaro Limited
+> + */
+> +
+> +#ifndef QCOM_PHY_QMP_PCS_V7_H_
+> +#define QCOM_PHY_QMP_PCS_V7_H_
+> +
+> +/* Only for QMP V6 PHY - USB/PCIe PCS registers */
 
-That's not really the reason to drop them at all. Neither from driver,
-nor from bindings. You should not rely on bootloader handling your clocks
+V7
 
-Best regards,
-Krzysztof
+> +
+> +#define QPHY_V7_PCS_LOCK_DETECT_CONFIG1                        0xc4
+> +#define QPHY_V7_PCS_LOCK_DETECT_CONFIG2                        0xc8
+> +#define QPHY_V7_PCS_LOCK_DETECT_CONFIG3                        0xcc
+> +#define QPHY_V7_PCS_LOCK_DETECT_CONFIG6                        0xd8
+> +#define QPHY_V7_PCS_REFGEN_REQ_CONFIG1                 0xdc
+> +#define QPHY_V7_PCS_RX_SIGDET_LVL                      0x188
+> +#define QPHY_V7_PCS_RCVR_DTCT_DLY_P1U2_L               0x190
+> +#define QPHY_V7_PCS_RCVR_DTCT_DLY_P1U2_H               0x194
+> +#define QPHY_V7_PCS_RATE_SLEW_CNTRL1                   0x198
+> +#define QPHY_V7_PCS_RX_CONFIG                          0x1b0
+> +#define QPHY_V7_PCS_ALIGN_DETECT_CONFIG1               0x1c0
+> +#define QPHY_V7_PCS_ALIGN_DETECT_CONFIG2               0x1c4
+> +#define QPHY_V7_PCS_PCS_TX_RX_CONFIG                   0x1d0
+> +#define QPHY_V7_PCS_EQ_CONFIG1                         0x1dc
+> +#define QPHY_V7_PCS_EQ_CONFIG2                         0x1e0
+> +#define QPHY_V7_PCS_EQ_CONFIG5                         0x1ec
+> +
+> +#endif
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
+> index 71f063f4a56e..21f6a56e7ae3 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp.h
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
+> @@ -44,6 +44,8 @@
+>
+>  #include "phy-qcom-qmp-pcs-v6_20.h"
+>
+> +#include "phy-qcom-qmp-pcs-v7.h"
+> +
+>  /* Only for QMP V3 & V4 PHY - DP COM registers */
+>  #define QPHY_V3_DP_COM_PHY_MODE_CTRL                   0x00
+>  #define QPHY_V3_DP_COM_SW_RESET                                0x04
+>
+> --
+> 2.34.1
+>
+>
 
+
+-- 
+With best wishes
+Dmitry
 
