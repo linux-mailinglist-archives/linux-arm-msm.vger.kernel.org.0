@@ -1,109 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-1442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73CEF7F3FA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 09:07:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2ACC7F3FB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 09:09:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 18552B20E98
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 08:07:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D3E5D1C2097C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 08:09:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27179210FB;
-	Wed, 22 Nov 2023 08:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8279D210FB;
+	Wed, 22 Nov 2023 08:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XMm1SaV0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nbJ2SK6l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDC5B1713;
-	Wed, 22 Nov 2023 00:07:17 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM4gH27012024;
-	Wed, 22 Nov 2023 08:07:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=WaNSKnnyasR/yJdql1T0OrXObeKM0bmpGF0qzsXFcIg=;
- b=XMm1SaV0nWHIXXfs5zNpr9zUOW92c02kWjocaNOVxfFDAZrJyINTZMbBAeTfEWvduHN4
- 8e+X3Pw3Rr2XYhHlH/mOzqIRJcLEwGIClsmv+on2syXjPejFvtxYsBvEpAMgiVV/tfIf
- K4U2Kp1/Euj0jxZQUDa+cctDzVC+6ZfU4c2ak1pIjdfCzyGHQo3yHetitgB+L6R9AiBG
- ZxTnvodl/cVGnO3yRlZxzIs9B0/jTjJD6f1rIchVEOGBZAGYYUJnxLYG2Kix0nHhCj2D
- LlbPd9RldiVg9AYOh+BdSMFDg9DNnHihRAvUWroYklh1LSwUgzHIjr5aqPdF8dPVwbug rA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ugssku8ku-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 08:07:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AM87E9R000728
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 08:07:14 GMT
-Received: from [10.216.60.121] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 22 Nov
- 2023 00:07:10 -0800
-Message-ID: <dbf10516-d927-4665-8471-c3126c72454e@quicinc.com>
-Date: Wed, 22 Nov 2023 13:37:07 +0530
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEAF20B22;
+	Wed, 22 Nov 2023 08:09:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2F1C433D9;
+	Wed, 22 Nov 2023 08:09:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700640552;
+	bh=PHQsh6F5XvgFUnaiWxcwLwUn3OBKs5yGFFQ41WrpYbs=;
+	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc:From;
+	b=nbJ2SK6lwZUEu6ZnwTSH+Oa/pBWa+sX/Htt/x2OReGd8JoH8z85C27DzRYTHJBlVi
+	 3wDe3x5yRyGX5qAMhcpfKXHDb9VRNeNThxVKhdlyx1h9TbC6wosV8PHWzu2uTL/7Am
+	 ZWlKfb6oi0Cn+Ic/KuwFQalQJhUOwrmMosWHgVwHC2Cz6C0mqCCOKTxXIRm3FodZqc
+	 a5DVliVMdZJxlKjgLRaCcUtozoEbeFe5NuT8tHE9n86xS+d7H2vfDsWjbaRg0Z56Vf
+	 5KU1r/sIqOWweRJ36Zhtl3j2xC4aB6yAvdaF7pTTjplwjMbpiRtNuVc7wneOEmh45p
+	 iqsEGA8VNAjSA==
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-28098ebd5aeso5197621a91.0;
+        Wed, 22 Nov 2023 00:09:12 -0800 (PST)
+X-Gm-Message-State: AOJu0Yx7odvUu4zERkyhQekrKqkBcCJ348m56meZ7iw4iXyhkBSdkk6f
+	8cpOzvOaK4gnHrY+fkTLZ8IxsErmbn8YrXs/sto=
+X-Google-Smtp-Source: AGHT+IEr9UvTFqYZYbRvMse6NIITfqbwjuUq1G6lDkVVXaxwMJVX1684jPAX+uFy+o0fSjl0iAD8WjSqBj6oqY9ODoU=
+X-Received: by 2002:a17:90b:1d92:b0:27f:ecd9:6d0e with SMTP id
+ pf18-20020a17090b1d9200b0027fecd96d0emr1639810pjb.34.1700640552241; Wed, 22
+ Nov 2023 00:09:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] arm64: dts: qcom: add initial SM8650 dtsi
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Andy Gross
-	<agross@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <20231121-topic-sm8650-upstream-dt-v3-0-db9d0507ffd3@linaro.org>
- <20231121-topic-sm8650-upstream-dt-v3-2-db9d0507ffd3@linaro.org>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20231121-topic-sm8650-upstream-dt-v3-2-db9d0507ffd3@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nCkv5VVtUwksutUDMYtlRJALYNA061nj
-X-Proofpoint-ORIG-GUID: nCkv5VVtUwksutUDMYtlRJALYNA061nj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-22_06,2023-11-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- mlxscore=0 spamscore=0 clxscore=1011 malwarescore=0 mlxlogscore=347
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311220057
+References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+ <6b288a2e-d147-4bd3-b1d4-daf56295d939@gmail.com> <01f9ce3b-e6e5-4b05-bf7f-0b3a5f74910a@linaro.org>
+In-Reply-To: <01f9ce3b-e6e5-4b05-bf7f-0b3a5f74910a@linaro.org>
+Reply-To: wens@kernel.org
+From: Chen-Yu Tsai <wens@kernel.org>
+Date: Wed, 22 Nov 2023 16:09:00 +0800
+X-Gmail-Original-Message-ID: <CAGb2v64Vf5dDwq=KTrxwc=+w+0KUD2KVPMjmHg68Y_yukES5dQ@mail.gmail.com>
+Message-ID: <CAGb2v64Vf5dDwq=KTrxwc=+w+0KUD2KVPMjmHg68Y_yukES5dQ@mail.gmail.com>
+Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>, 
+	Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Michal Simek <michal.simek@amd.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>, 
+	linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +
-> +		usb_1: usb@a6f8800 {
-> +			compatible = "qcom,sm8650-dwc3", "qcom,dwc3";
-> +			reg = <0 0x0a6f8800 0 0x400>;
-> +
-> +			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&pdc 15 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 14 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-names = "hs_phy_irq",
+On Wed, Nov 22, 2023 at 4:05=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 21/11/2023 14:50, Rafa=C5=82 Mi=C5=82ecki wrote:
+> >> +Order of Nodes
+> >> +--------------
+> >> +
+> >> +1. Nodes within any bus, thus using unit addresses for children, shal=
+l be
+> >> +   ordered incrementally by unit address.
+> >> +   Alternatively for some sub-architectures, nodes of the same type c=
+an be
+> >> +   grouped together (e.g. all I2C controllers one after another even =
+if this
+> >> +   breaks unit address ordering).
+> >> +
+> >> +2. Nodes without unit addresses should be ordered alpha-numerically b=
+y the node
+> >> +   name.  For a few types of nodes, they can be ordered by the main p=
+roperty
+> >> +   (e.g. pin configuration states ordered by value of "pins" property=
+).
+> >> +
+> >> +3. When extending nodes in the board DTS via &label, the entries shou=
+ld be
+> >> +   ordered alpha-numerically.
+> >
+> > Just an idea. Would that make (more) sense to make &label-like entries
+> > match order of nodes in included .dts(i)?
+> >
+> > Adventages:
+> > 1. We keep unit address incremental order that is unlikely to change
+> >
+> > Disadventages:
+> > 1. More difficult to verify
+>
+> Rob also proposed this and I believe above disadvantage here is crucial.
+> If you add new SoC with board DTS you are fine. But if you add only new
+> board, the order of entries look random in the diff hunk. Reviewer must
+> open SoC DTSI to be able to review the patch with board DTS.
+>
+> If review is tricky and we do not have tool to perform it automatically,
+> I am sure submissions will have disordered board DTS.
+>
+> >
+> >
+> >> +Example::
+> >> +
+> >> +    // SoC DTSI
+> >> +
+> >> +    / {
+> >> +            cpus {
+> >> +                    // ...
+> >> +            };
+> >> +
+> >> +            psci {
+> >> +                    // ...
+> >> +            };
+> >> +
+> >> +            soc@ {
+> >> +                    dma: dma-controller@10000 {
+> >> +                            // ...
+> >> +                    };
+> >> +
+> >> +                    clk: clock-controller@80000 {
+> >> +                            // ...
+> >> +                    };
+> >> +            };
+> >> +    };
+> >> +
+> >> +    // Board DTS
+> >> +
+> >> +    &clk {
+> >> +            // ...
+> >> +    };
+> >> +
+> >> +    &dma {
+> >> +            // ...
+> >> +    };
+> >> +
+> >> +
+> >> +Order of Properties in Device Node
+> >> +----------------------------------
+> >> +
+> >> +Following order of properties in device nodes is preferred:
+> >> +
+> >> +1. compatible
+> >> +2. reg
+> >> +3. ranges
+> >> +4. Standard/common properties (defined by common bindings, e.g. witho=
+ut
+> >> +   vendor-prefixes)
+> >> +5. Vendor-specific properties
+> >> +6. status (if applicable)
+> >> +7. Child nodes, where each node is preceded with a blank line
+> >> +
+> >> +The "status" property is by default "okay", thus it can be omitted.
+> >
+> > I think it would really help to include position of #address-cells and
+> > #size-cells here. In some files I saw them above "compatible" that seem=
+s
+> > unintuitive. Some prefer putting them at end which I think makes sense
+> > as they affect children nodes.
+> >
+> > Whatever you choose it'd be just nice to have things consistent.
+>
+> This is a standard/common property, thus it goes to (4) above.
 
-Hi Neil,
+It's probably a mix, but AFAIK a lot of the device trees in tree have
+#*-cells after "status". In some cases they are added in the board
+.dts files, not the chip/module .dtsi files.
 
-  This GIC_SPI 130 is actually pwr_event IRQ, not hs_phy_irq.
++1 that it makes sense at the end as they affect child nodes.
 
-> +					  "ss_phy_irq",
-> +					  "dm_hs_phy_irq",
-> +					  "dp_hs_phy_irq";
-> +
-
-Regards,
-Krishna,
+ChenYu
 
