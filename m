@@ -1,143 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-1479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 901037F4363
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:16:10 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5443F7F4386
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:19:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8FCB81C208C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:16:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E790EB20E05
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:19:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D4E321372;
-	Wed, 22 Nov 2023 10:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C07F14A9BA;
+	Wed, 22 Nov 2023 10:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r8fcXzdJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L3k1/h+r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 988CA110
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:15:55 -0800 (PST)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5b383b4184fso71886207b3.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:15:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700648155; x=1701252955; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PgkvyLwfQR26thZuHZr5M17A0Ohem0nIDMb8RLB6UYs=;
-        b=r8fcXzdJhk4j5jldofapXyE3N/Tyl09fpEUY+m5NqEXEjROz50uKEaTBwMusJufdLa
-         HPR762mdbn5gC3CaTUvaJjPozz5ONmi+GkkFy5Kks8j2ArMz1Qc9vmbaShdMd2B/YlRK
-         Bl7ABymoZKM784c5lGNTBvmajRutsSk0eemoQirByj7Vw7muZWfvnOUgTsMz9jgA+6Z8
-         +gvoThWi4mzO7FHXzjpacUS3Rvg0H2QMbBw5NSiQ0+EWPk8lNTVmmHvmxMlvbaTI2eoB
-         Srd1EctnV1os/5+z0cyGqeK+ZfDTmI8llUyCfoZlwpmCr9lIzxJ0wA35A+ZM/H+Mvtu7
-         i5jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700648155; x=1701252955;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PgkvyLwfQR26thZuHZr5M17A0Ohem0nIDMb8RLB6UYs=;
-        b=WQw9dNlYpIW6ThercRWxVeQXAW1NN7KRnZZyOPpudFlquE9sk6NbtJ64WqXWoNbvC3
-         Ey8TsSlHQJoQ6PDiDU5EYU88fPVRfg075iKL2vEU1tAtd2v5zZLgUC+OEnA5fgIMUHAC
-         U66MWgdy2eQ6z2fE4k3QQMrgXeD0mOgPfiF+nP4gvKODIpluG6rbRQWAkVdZ8HoYe5+i
-         mNp0Bd0mpbjUXP7oFTk4ZPaNkOvDos2IiYTD3BilNm8tVsE3wqeOYKw/fxyElop2YAQd
-         QVZBX2Da6DgHguEdjhBNFJ8m+7fwXNWn51S4F3pLYbkYcE50Sb5ivoE5iSeJlnrhHRfV
-         c7qQ==
-X-Gm-Message-State: AOJu0Yy5RnSm6YNb53PacCDQECcafgbRdaAMbpn71d5YU0iNVTEdKIlX
-	Ey3NxCVOZ/8t1xu4k0vyodd/zsfb5MH891EW+zUFqorHkzeI+bCW
-X-Google-Smtp-Source: AGHT+IEkdUG9+zaFUBVAnoJGDXIM87u6PIrFmQ+T/ZMjVtONGnL/iE3hI7EqXnjaRE+awRnTSMD0+xsOQ6T0bnb+1T4=
-X-Received: by 2002:a81:4746:0:b0:5a7:baac:7b34 with SMTP id
- u67-20020a814746000000b005a7baac7b34mr1621814ywa.28.1700648154790; Wed, 22
- Nov 2023 02:15:54 -0800 (PST)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D541ED5C;
+	Wed, 22 Nov 2023 02:19:09 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM4gAAB005014;
+	Wed, 22 Nov 2023 10:18:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=71nQ+y0aV5G11ViRq/c8FveTleKgrOJIHMuQFrseOT0=;
+ b=L3k1/h+rMQmkLKKTIK7qPA/JGmkQF62w02nI4TpsZupHcmjK+5NiqwTL4k9gKpPk9jIw
+ RPl54ppi4gVMRDrmXqYNOFxQKvZAnvJDgqFLMuEldk/rsoKJDqtiBaEe9S1z4R4tRunH
+ ZzlkkNxGWTVpRt6toO2r5rhJhDEcXY1gQ6q9f47/Knd2xc57O+hxOXy3+AxNSff+S/o2
+ ajSsFfTki55tlZlCb3u31jZd4czPscA0RIOnhBRBubHyhnRMOHZ+5+iKkF8egltNoX4R
+ w7QEploL6J0tM+ihQ6BXNOyU0I9AZWE851yCkEjgpgTZiboXlwKdTkLT7gDFlZycUN22 SQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uh0b4a6yf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Nov 2023 10:18:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AMAIqNn007616
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Nov 2023 10:18:52 GMT
+Received: from [10.216.2.74] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 22 Nov
+ 2023 02:18:45 -0800
+Message-ID: <2e357fcf-5348-4fb2-b693-2d6bb4d58b21@quicinc.com>
+Date: Wed, 22 Nov 2023 15:48:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-0-d9340d362664@linaro.org>
- <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-3-d9340d362664@linaro.org>
-In-Reply-To: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-3-d9340d362664@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 22 Nov 2023 12:15:43 +0200
-Message-ID: <CAA8EJpq5NdZKaDSjKnJhFBCD+pwb3jaHgsSXAu6ODmSPU+g_ww@mail.gmail.com>
-Subject: Re: [PATCH 3/7] phy: qcom-qmp: pcs: Add v7 register offsets
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Wed, 22 Nov 2023 at 12:04, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> The X1E80100 platform bumps the HW version of QMP phy to v7 for USB,
-> and PCIe. Add the new PCS offsets in a dedicated header file.
->
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v7.h | 28 ++++++++++++++++++++++++++++
->  drivers/phy/qualcomm/phy-qcom-qmp.h        |  2 ++
->  2 files changed, 30 insertions(+)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v7.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v7.h
-> new file mode 100644
-> index 000000000000..520f28d802f6
-> --- /dev/null
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-v7.h
-> @@ -0,0 +1,28 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2023, Linaro Limited
-> + */
-> +
-> +#ifndef QCOM_PHY_QMP_PCS_V7_H_
-> +#define QCOM_PHY_QMP_PCS_V7_H_
-> +
-> +/* Only for QMP V6 PHY - USB/PCIe PCS registers */
-
-V7
-
-> +
-> +#define QPHY_V7_PCS_LOCK_DETECT_CONFIG1                        0xc4
-> +#define QPHY_V7_PCS_LOCK_DETECT_CONFIG2                        0xc8
-> +#define QPHY_V7_PCS_LOCK_DETECT_CONFIG3                        0xcc
-> +#define QPHY_V7_PCS_LOCK_DETECT_CONFIG6                        0xd8
-> +#define QPHY_V7_PCS_REFGEN_REQ_CONFIG1                 0xdc
-> +#define QPHY_V7_PCS_RX_SIGDET_LVL                      0x188
-> +#define QPHY_V7_PCS_RCVR_DTCT_DLY_P1U2_L               0x190
-> +#define QPHY_V7_PCS_RCVR_DTCT_DLY_P1U2_H               0x194
-> +#define QPHY_V7_PCS_RATE_SLEW_CNTRL1                   0x198
-> +#define QPHY_V7_PCS_RX_CONFIG                          0x1b0
-> +#define QPHY_V7_PCS_ALIGN_DETECT_CONFIG1               0x1c0
-> +#define QPHY_V7_PCS_ALIGN_DETECT_CONFIG2               0x1c4
-> +#define QPHY_V7_PCS_PCS_TX_RX_CONFIG                   0x1d0
-> +#define QPHY_V7_PCS_EQ_CONFIG1                         0x1dc
-> +#define QPHY_V7_PCS_EQ_CONFIG2                         0x1e0
-> +#define QPHY_V7_PCS_EQ_CONFIG5                         0x1ec
-> +
-> +#endif
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> index 71f063f4a56e..21f6a56e7ae3 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-> @@ -44,6 +44,8 @@
->
->  #include "phy-qcom-qmp-pcs-v6_20.h"
->
-> +#include "phy-qcom-qmp-pcs-v7.h"
-> +
->  /* Only for QMP V3 & V4 PHY - DP COM registers */
->  #define QPHY_V3_DP_COM_PHY_MODE_CTRL                   0x00
->  #define QPHY_V3_DP_COM_SW_RESET                                0x04
->
-> --
-> 2.34.1
->
->
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/9] dt-bindings: clock: ipq5332: drop the few nss
+ clocks definition
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof
+ Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Catalin
+ Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+References: <20231121-ipq5332-nsscc-v2-0-a7ff61beab72@quicinc.com>
+ <20231121-ipq5332-nsscc-v2-3-a7ff61beab72@quicinc.com>
+ <43376552-7e79-4f34-94ca-63767a95564b@linaro.org>
+ <8bb79735-3b5d-4229-b0f4-bc50d61fdba1@quicinc.com>
+ <d26eae8d-4968-4ab0-bd9b-696d7b3865ec@linaro.org>
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <d26eae8d-4968-4ab0-bd9b-696d7b3865ec@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WuwKox3A9KgeuJJ07yj-N41Z_moic0lQ
+X-Proofpoint-GUID: WuwKox3A9KgeuJJ07yj-N41Z_moic0lQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-22_06,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=509 malwarescore=0 bulkscore=0 clxscore=1015 phishscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311220071
 
 
--- 
-With best wishes
-Dmitry
+
+On 11/22/2023 3:42 PM, Krzysztof Kozlowski wrote:
+> On 22/11/2023 11:08, Kathiravan Thirumoorthy wrote:
+>>
+>>
+>> On 11/21/2023 8:36 PM, Krzysztof Kozlowski wrote:
+>>> On 21/11/2023 15:30, Kathiravan Thirumoorthy wrote:
+>>>> In commit 0dd3f263c810 ("clk: qcom: ipq5332: enable few nssnoc clocks in
+>>>
+>>> Where is this commit coming from?
+>>>
+>>>> driver probe"), gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk,
+>>>> gcc_nssnoc_nsscc_clk are enabled in driver probe to keep it always-on.
+>>>
+>>> Implementation can change and for example bring back these clocks. Are
+>>> you going to change bindings? No, drop the patch.
+>>>
+>>> Bindings should be dropped only in a few rare cases like clocks not
+>>> available for OS or bugs.
+>>
+>> Thanks Krzysztof. Will drop this patch in V3.
+>>
+>> One more question to understand further. In IPQ SoCs there are bunch of
+>> coresight / QDSS clocks but coresight framework doesn't handle all
+>> clocks. Those clocks are enabled in bootloader stage itself. In such
+>> case, should I drop the clocks from both binding and driver or only from
+>> driver?
+> 
+> That's not really the reason to drop them at all. Neither from driver,
+> nor from bindings. You should not rely on bootloader handling your clocks
+
+
+Thanks, lets say if those clocks are not needed at all by OS since QDSS 
+is not used and needed only for the boot loaders to access the 
+corresponding address space, in such case what can be done? I 
+understand, at first those clocks should not have been added to the driver.
+
+
+> 
+> Best regards,
+> Krzysztof
+> 
 
