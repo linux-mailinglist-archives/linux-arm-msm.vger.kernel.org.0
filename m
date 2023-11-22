@@ -1,143 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-1481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5443F7F4386
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:19:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EA787F4381
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:19:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E790EB20E05
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:19:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37D732815E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:19:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C07F14A9BA;
-	Wed, 22 Nov 2023 10:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4C274A9BA;
+	Wed, 22 Nov 2023 10:19:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L3k1/h+r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BYpeWtKG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D541ED5C;
-	Wed, 22 Nov 2023 02:19:09 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM4gAAB005014;
-	Wed, 22 Nov 2023 10:18:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=71nQ+y0aV5G11ViRq/c8FveTleKgrOJIHMuQFrseOT0=;
- b=L3k1/h+rMQmkLKKTIK7qPA/JGmkQF62w02nI4TpsZupHcmjK+5NiqwTL4k9gKpPk9jIw
- RPl54ppi4gVMRDrmXqYNOFxQKvZAnvJDgqFLMuEldk/rsoKJDqtiBaEe9S1z4R4tRunH
- ZzlkkNxGWTVpRt6toO2r5rhJhDEcXY1gQ6q9f47/Knd2xc57O+hxOXy3+AxNSff+S/o2
- ajSsFfTki55tlZlCb3u31jZd4czPscA0RIOnhBRBubHyhnRMOHZ+5+iKkF8egltNoX4R
- w7QEploL6J0tM+ihQ6BXNOyU0I9AZWE851yCkEjgpgTZiboXlwKdTkLT7gDFlZycUN22 SQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uh0b4a6yf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 10:18:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AMAIqNn007616
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 10:18:52 GMT
-Received: from [10.216.2.74] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 22 Nov
- 2023 02:18:45 -0800
-Message-ID: <2e357fcf-5348-4fb2-b693-2d6bb4d58b21@quicinc.com>
-Date: Wed, 22 Nov 2023 15:48:40 +0530
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11B7C83
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:18:59 -0800 (PST)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-db057de2b77so6031167276.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:18:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700648338; x=1701253138; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9c11pFvupFPnQhEf8NQ0gBbEB8fE0d+93nnxiRUqcLg=;
+        b=BYpeWtKG4FPPf+N/7yMjOQrL26G6lczdxEJyDrRdJaKy2sMRVyk9ra2Zb0Ir8UraU1
+         zRkbX2AVsBzH7voibXe+CtveWstVDh8vU40FpDnpYZOAB4wHJu6nSfBqQ6PurNk5J9mf
+         cQInJWQtuJ/Ds5EkF0Ese2ZfAdOwKSNKum7fYTRtww4llKmIx8CHN0px6j4N+HhbDdtW
+         K+OYJZAvCt6UM1T6eKow//PgRpJDVrvIOKsS21rfHgkb+O83vUukVO0AO2aZ1y1bE/r+
+         NRvwjMoR8gMh69sv0YLICwm+UMmPVUBqN2LLbE2XqurJ9sCQgD8Rf1VbCf3abEIBwF3q
+         3/7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700648338; x=1701253138;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9c11pFvupFPnQhEf8NQ0gBbEB8fE0d+93nnxiRUqcLg=;
+        b=GE+HuMAhmFanGND5FoRBiHFV67fhRB0cqen6gzdJARkIa55o0/ZHvzSubRItaPBXoa
+         Y3wb1MmftdkfutforjE6dqJ1g/l5EciXWJJuGeXO/kKAomtbCdL1xMyp6W0k3U73beZT
+         vLjJ/3gJFY7UxXIjFHX2UudBuahp/ziXvz+xyQv5cVeNnJChh33pPHuIOBBh/BYakqoV
+         d4VPTkv7BuMCPO+xqfTjAOozV6SgDXmlu5CMBAnWKhJdnwDBsqAeGbvMI2Ta51WhaPkK
+         znu1yfOm/mSwBgabNEwQtxQoBMdSFbnpY6V0x2nYZhVeSzsFeYbE/K3DT3jOHd88wkW1
+         UBZg==
+X-Gm-Message-State: AOJu0YxLPXoS4QHXC6Rs0qo2yGgdBGnnVgzyWFsRY0bXT73fwiEA1oOV
+	jDUkCqeV8lYZADfXtUoMehtHoFWS07lUMXTG5Ho0/Q==
+X-Google-Smtp-Source: AGHT+IHbEev2I5tUtnx8XY+aYZY4ijq+jp+sr4M76Qn2LzFRDutzsRzlkmQ4g5DWOee0/SQLVPpI4jwELA55NaoeLVE=
+X-Received: by 2002:a5b:4d1:0:b0:da0:622b:5539 with SMTP id
+ u17-20020a5b04d1000000b00da0622b5539mr1470086ybp.58.1700648338139; Wed, 22
+ Nov 2023 02:18:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/9] dt-bindings: clock: ipq5332: drop the few nss
- clocks definition
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof
- Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Catalin
- Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
-References: <20231121-ipq5332-nsscc-v2-0-a7ff61beab72@quicinc.com>
- <20231121-ipq5332-nsscc-v2-3-a7ff61beab72@quicinc.com>
- <43376552-7e79-4f34-94ca-63767a95564b@linaro.org>
- <8bb79735-3b5d-4229-b0f4-bc50d61fdba1@quicinc.com>
- <d26eae8d-4968-4ab0-bd9b-696d7b3865ec@linaro.org>
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-In-Reply-To: <d26eae8d-4968-4ab0-bd9b-696d7b3865ec@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WuwKox3A9KgeuJJ07yj-N41Z_moic0lQ
-X-Proofpoint-GUID: WuwKox3A9KgeuJJ07yj-N41Z_moic0lQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-22_06,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=509 malwarescore=0 bulkscore=0 clxscore=1015 phishscore=0
- spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311220071
+References: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-0-d9340d362664@linaro.org>
+ <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-4-d9340d362664@linaro.org>
+In-Reply-To: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-4-d9340d362664@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 22 Nov 2023 12:18:47 +0200
+Message-ID: <CAA8EJpouPmst-ZcJSZ-qMPB2regi1saTyjczQnN5E=zE57C-Fg@mail.gmail.com>
+Subject: Re: [PATCH 4/7] phy: qcom-qmp: pcs-usb: Add v7 register offsets
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+On Wed, 22 Nov 2023 at 12:04, Abel Vesa <abel.vesa@linaro.org> wrote:
+>
+> The X1E80100 platform bumps the HW version of QMP phy to v7 for USB.
+> Add the new PCS USB specific offsets in a dedicated header file.
+>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v7.h | 31 ++++++++++++++++++++++++++
+>  1 file changed, 31 insertions(+)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v7.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v7.h
+> new file mode 100644
+> index 000000000000..dbb75964cef7
+> --- /dev/null
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v7.h
+> @@ -0,0 +1,31 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (c) 2023, Linaro Limited
+> + */
+> +
+> +#ifndef QCOM_PHY_QMP_PCS_USB_V7_H_
+> +#define QCOM_PHY_QMP_PCS_USB_V7_H_
+> +
+> +/* Only for QMP V6 PHY - USB3 have different offsets than V5 */
+
+V7
+
+> +#define QPHY_USB_V7_PCS_LOCK_DETECT_CONFIG1            0xc4
+> +#define QPHY_USB_V7_PCS_LOCK_DETECT_CONFIG2            0xc8
+> +#define QPHY_USB_V7_PCS_LOCK_DETECT_CONFIG3            0xcc
+> +#define QPHY_USB_V7_PCS_LOCK_DETECT_CONFIG6            0xd8
+> +#define QPHY_USB_V7_PCS_REFGEN_REQ_CONFIG1             0xdc
+> +#define QPHY_USB_V7_PCS_USB3_POWER_STATE_CONFIG1       0x90
+> +#define QPHY_USB_V7_PCS_RX_SIGDET_LVL                  0x188
+> +#define QPHY_USB_V7_PCS_RCVR_DTCT_DLY_P1U2_L           0x190
+> +#define QPHY_USB_V7_PCS_RCVR_DTCT_DLY_P1U2_H           0x194
+> +#define QPHY_USB_V7_PCS_CDR_RESET_TIME                 0x1b0
+> +#define QPHY_USB_V7_PCS_ALIGN_DETECT_CONFIG1           0x1c0
+> +#define QPHY_USB_V7_PCS_ALIGN_DETECT_CONFIG2           0x1c4
+> +#define QPHY_USB_V7_PCS_PCS_TX_RX_CONFIG               0x1d0
+> +#define QPHY_USB_V7_PCS_EQ_CONFIG1                     0x1dc
+> +#define QPHY_USB_V7_PCS_EQ_CONFIG5                     0x1ec
+
+Some (most) of these registers do not belong here, they are the same
+as the generic PCS register names. Please drop them.
+
+> +
+> +#define QPHY_USB_V7_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL   0x18
+> +#define QPHY_USB_V7_PCS_USB3_RXEQTRAINING_DFE_TIME_S2  0x3c
+> +#define QPHY_USB_V7_PCS_USB3_RCVR_DTCT_DLY_U3_L                0x40
+> +#define QPHY_USB_V7_PCS_USB3_RCVR_DTCT_DLY_U3_H                0x44
+
+Drop the _USB_ part, please, there is already PCS_USB3 prefix.
+
+> +
+> +#endif
+>
+> --
+> 2.34.1
+>
+>
 
 
-
-On 11/22/2023 3:42 PM, Krzysztof Kozlowski wrote:
-> On 22/11/2023 11:08, Kathiravan Thirumoorthy wrote:
->>
->>
->> On 11/21/2023 8:36 PM, Krzysztof Kozlowski wrote:
->>> On 21/11/2023 15:30, Kathiravan Thirumoorthy wrote:
->>>> In commit 0dd3f263c810 ("clk: qcom: ipq5332: enable few nssnoc clocks in
->>>
->>> Where is this commit coming from?
->>>
->>>> driver probe"), gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk,
->>>> gcc_nssnoc_nsscc_clk are enabled in driver probe to keep it always-on.
->>>
->>> Implementation can change and for example bring back these clocks. Are
->>> you going to change bindings? No, drop the patch.
->>>
->>> Bindings should be dropped only in a few rare cases like clocks not
->>> available for OS or bugs.
->>
->> Thanks Krzysztof. Will drop this patch in V3.
->>
->> One more question to understand further. In IPQ SoCs there are bunch of
->> coresight / QDSS clocks but coresight framework doesn't handle all
->> clocks. Those clocks are enabled in bootloader stage itself. In such
->> case, should I drop the clocks from both binding and driver or only from
->> driver?
-> 
-> That's not really the reason to drop them at all. Neither from driver,
-> nor from bindings. You should not rely on bootloader handling your clocks
-
-
-Thanks, lets say if those clocks are not needed at all by OS since QDSS 
-is not used and needed only for the boot loaders to access the 
-corresponding address space, in such case what can be done? I 
-understand, at first those clocks should not have been added to the driver.
-
-
-> 
-> Best regards,
-> Krzysztof
-> 
+-- 
+With best wishes
+Dmitry
 
