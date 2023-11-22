@@ -1,202 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-1473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CF2E7F432F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:04:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 249307F4344
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:09:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 66B7FB20F76
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:04:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D4541281460
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:09:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D61BF4B5C1;
-	Wed, 22 Nov 2023 10:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D6AB21A1C;
+	Wed, 22 Nov 2023 10:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YZjJT1Xr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DZ8GOh8a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60BED53
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:04:18 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-53d8320f0easo9502686a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:04:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700647457; x=1701252257; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aoX5uB+BF3efXMI0yxqwvmNtTa7dNWj91nG0J2f2fYs=;
-        b=YZjJT1Xr79oo3jVpMPQ1a/vcDf5Gq7olN+18mckh8FjnrfJHhqa7ICJ3XOZ0orEJKE
-         PjMbSOhgmcAQGfYE94gAFB2+GrAiZXKqDLs1765HI2c7dO3y1UBfgEAUTJejn+hb0lzJ
-         EtXLJ0/xDTiJq9tlR76DaEAiBwd+z+PdELEmuW0MEfz2dcjFXeFnXcuSDcGWdNIXuN0k
-         ivRFszvE44kheurSObh5sLj7dwqIxbRIJg35f6NI3CqebhE2Bz5YcEa4PLVcsrIEB+44
-         nGaHwywOnZudZEiM3jG62txVUSV7CORedp20PmO81KsgivBaLBCfvdanLtaSQTJJ5u+E
-         xNGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700647457; x=1701252257;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aoX5uB+BF3efXMI0yxqwvmNtTa7dNWj91nG0J2f2fYs=;
-        b=tXROWUxUuXytV6IIemSojS50vZRjT8vhSPxDUtsaMI5ypIxGycSATJtGdsBwRN9R/n
-         NuE6oDXiWMtk7IlL7gBpyF+V+ZPOhgz1WENacDA44/nl0MK3KiFauqDSfvRyvrSFWOpd
-         PWii3DmjbbVl+QJ215bjPMAnEb/scOPA55AyE7SDY6/slFzbMDIcele25nCueeiaW/4P
-         RODlbdmR59zSsDBtZVU+srZbJWHwVVKPBqxKFjokviPrA/NFyLdsNNOrZe3g3UjD/FUb
-         G5JRjM8F2VKwBacta2poFIqL01PKeFw/8jHPWm5S/s0iQpQ1wlyMsWeVFY2OeHa/iRaE
-         RgKw==
-X-Gm-Message-State: AOJu0Yzmy2UKf/I8eCoow/8f9khCFXdNaX+EX4N6/TJ6RfOX8TM1YBJh
-	sie7N5O8A88MXgVigeVZwQCH1Q==
-X-Google-Smtp-Source: AGHT+IFvspBRkaxaPwVPBpdyZPYwvAOthr0IYbioLW5AaJu2Q7WL9YsT7pCXH9vUULGeMERrB5xBow==
-X-Received: by 2002:aa7:cd74:0:b0:543:5f7a:9e27 with SMTP id ca20-20020aa7cd74000000b005435f7a9e27mr1464175edb.12.1700647457211;
-        Wed, 22 Nov 2023 02:04:17 -0800 (PST)
-Received: from [127.0.1.1] ([86.123.99.122])
-        by smtp.gmail.com with ESMTPSA id o9-20020a509b09000000b0053deb97e8e6sm6110456edi.28.2023.11.22.02.04.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Nov 2023 02:04:16 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Wed, 22 Nov 2023 12:03:59 +0200
-Subject: [PATCH 7/7] phy: qcom-qmp: qserdes-txrx: Add v7 register offsets
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B255A100;
+	Wed, 22 Nov 2023 02:09:27 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM9c5hd028838;
+	Wed, 22 Nov 2023 10:09:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TgmvFpfDyjjrjHH2iGALQkRvhXzC2NmU7EN6MHLQb/0=;
+ b=DZ8GOh8axw7+0wCMcuPV2YprThKXfIuP/H9NCD3UjbavQegFrvFzxnZS/suf6cPjCVyR
+ 5nFqXPt2GznIDKdE/ema/UBD11QJTa67nRr+jHprUCtY7eGI5nOb33+/AzoChx8Sr6x7
+ 532hzmBe7lxIuIwv+fbsIUm0LWPcT5MljLcUa1qwJJL3zcx30V7zOkVX6P9BueAS69rP
+ moVexRJMV4YCBDV1ChSQxZpv42dt0n3XFhbFb+IlUnk8beYyXqq3l1S+5BlXyx8xY3P5
+ ZSWPWdm+vV+ydpI28g4bAQlm5srrKR4Jnaxv+8o9z2hayE+n988cNh6DHQvLqSa2o6qo yg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uh477hm9g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Nov 2023 10:09:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AMA9Huf003409
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Nov 2023 10:09:17 GMT
+Received: from [10.216.2.74] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 22 Nov
+ 2023 02:09:09 -0800
+Message-ID: <8bb79735-3b5d-4229-b0f4-bc50d61fdba1@quicinc.com>
+Date: Wed, 22 Nov 2023 15:38:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/9] dt-bindings: clock: ipq5332: drop the few nss
+ clocks definition
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof
+ Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Catalin
+ Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+References: <20231121-ipq5332-nsscc-v2-0-a7ff61beab72@quicinc.com>
+ <20231121-ipq5332-nsscc-v2-3-a7ff61beab72@quicinc.com>
+ <43376552-7e79-4f34-94ca-63767a95564b@linaro.org>
+Content-Language: en-US
+From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+In-Reply-To: <43376552-7e79-4f34-94ca-63767a95564b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-7-d9340d362664@linaro.org>
-References: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-0-d9340d362664@linaro.org>
-In-Reply-To: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-0-d9340d362664@linaro.org>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4580; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=h3a6bhb68prVh8MCjOsfWms2L9QVp3zvpbve1dpq10k=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlXdIW5MVDXZz9L02Q5QkintYeyIvSmnKslK3uI
- ZflrufqAsOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZV3SFgAKCRAbX0TJAJUV
- VmQqEACRJViQeHSrEXByPFue07HDYG6S25m346GXyyWGlOSaqp1OYj9i4Ye5I+4yfjWTK0o8eFh
- swdq+NjBYzE7AKDd9cN0wc+E3Ur7k4JHsP0UGUJEYapSJAGnRQnSkLt2iulkK6T8FZua3SuKU39
- v07zN7Hrq2LCZnjby8+JqUaThm5vFxp0r0nIchrLlfR1pvSbtS4GOA8Wc5t9TXnu1ECSZHQvDR4
- odqiWlSu1VF4SZkYgRJ/EO8WGHo1riQmMH5jtvadU64VNfCe66NZ2yUecr/ZauckjjHT3W2RCMC
- Vf4crB9m7yOcZ7CdhPEILVg+n1NBHsyNm2qa8HhQgr+mu3JS3UDmYA79QoL4k/tbLGD8BQZ0ese
- BUumhCG9CftigBQXA/GihTghEGNustcNShMmZEmWjnvlg2SG66scVMlaOwtCgArIbQiW8dW254L
- MFmN6K5c2U+PqRIe58Cog5JLZcEyuT1NXaqeci4IcIbhiISWpf5Pb4q2GTM7ueJVBGRXa6XTj1Q
- k91KJpvczvilcc2J7F5GSwXrNbwOpTDTqKIjeSmHdEse7yWzBbU8r1yX3sZwOJUOIIOe5C82xKt
- uOIv++Rlbm8O+ggWkpx8ZiBKp3wibiOiZsU9YdWENA/yD+SVbNSGkoxeDbsm/+DjZWv2dt36pyT
- pL1teL6VrgCO2lg==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: vYM6GU4uF4S8RyYM9Bo6aBK6sbTyNKj4
+X-Proofpoint-GUID: vYM6GU4uF4S8RyYM9Bo6aBK6sbTyNKj4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-22_06,2023-11-21_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 mlxlogscore=501 clxscore=1015
+ suspectscore=0 spamscore=0 bulkscore=0 mlxscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311220071
 
-The X1E80100 platform bumps the HW version of QMP phy to v7 for USB and PCIE.
-Add the new qserdes TX RX offsets in a dedicated header file.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- .../phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v7.h    | 78 ++++++++++++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp.h                |  1 +
- 2 files changed, 79 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v7.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v7.h
-new file mode 100644
-index 000000000000..14023f47a95c
---- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v7.h
-@@ -0,0 +1,78 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+/*
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+#ifndef QCOM_PHY_QMP_QSERDES_TXRX_USB_V7_H_
-+#define QCOM_PHY_QMP_QSERDES_TXRX_USB_V7_H_
-+
-+#define QSERDES_V7_TX_CLKBUF_ENABLE				0x08
-+#define QSERDES_V7_TX_RESET_TSYNC_EN				0x1c
-+#define QSERDES_V7_TX_PRE_STALL_LDO_BOOST_EN			0x20
-+#define QSERDES_V7_TX_TX_BAND					0x24
-+#define QSERDES_V7_TX_INTERFACE_SELECT				0x2c
-+#define QSERDES_V7_TX_RES_CODE_LANE_TX				0x34
-+#define QSERDES_V7_TX_RES_CODE_LANE_RX				0x38
-+#define QSERDES_V7_TX_RES_CODE_LANE_OFFSET_TX			0x3c
-+#define QSERDES_V7_TX_RES_CODE_LANE_OFFSET_RX			0x40
-+#define QSERDES_V7_TX_PARRATE_REC_DETECT_IDLE_EN		0x60
-+#define QSERDES_V7_TX_BIST_PATTERN7				0x7c
-+#define QSERDES_V7_TX_LANE_MODE_1				0x84
-+#define QSERDES_V7_TX_LANE_MODE_2				0x88
-+#define QSERDES_V7_TX_LANE_MODE_3				0x8c
-+#define QSERDES_V7_TX_LANE_MODE_4				0x90
-+#define QSERDES_V7_TX_LANE_MODE_5				0x94
-+#define QSERDES_V7_TX_RCV_DETECT_LVL_2				0xa4
-+#define QSERDES_V7_TX_TRAN_DRVR_EMP_EN				0xc0
-+#define QSERDES_V7_TX_TX_INTERFACE_MODE				0xc4
-+#define QSERDES_V7_TX_VMODE_CTRL1				0xc8
-+#define QSERDES_V7_TX_PI_QEC_CTRL				0xe4
-+
-+#define QSERDES_V7_RX_UCDR_FO_GAIN				0x08
-+#define QSERDES_V7_RX_UCDR_SO_GAIN				0x14
-+#define QSERDES_V7_RX_UCDR_FASTLOCK_FO_GAIN			0x30
-+#define QSERDES_V7_RX_UCDR_SO_SATURATION_AND_ENABLE		0x34
-+#define QSERDES_V7_RX_UCDR_FASTLOCK_COUNT_LOW			0x3c
-+#define QSERDES_V7_RX_UCDR_FASTLOCK_COUNT_HIGH			0x40
-+#define QSERDES_V7_RX_UCDR_PI_CONTROLS				0x44
-+#define QSERDES_V7_RX_UCDR_SB2_THRESH1				0x4c
-+#define QSERDES_V7_RX_UCDR_SB2_THRESH2				0x50
-+#define QSERDES_V7_RX_UCDR_SB2_GAIN1				0x54
-+#define QSERDES_V7_RX_UCDR_SB2_GAIN2				0x58
-+#define QSERDES_V7_RX_AUX_DATA_TCOARSE_TFINE			0x60
-+#define QSERDES_V7_RX_TX_ADAPT_POST_THRESH			0xcc
-+#define QSERDES_V7_RX_VGA_CAL_CNTRL1				0xd4
-+#define QSERDES_V7_RX_VGA_CAL_CNTRL2				0xd8
-+#define QSERDES_V7_RX_GM_CAL					0xdc
-+#define QSERDES_V7_RX_RX_EQU_ADAPTOR_CNTRL2			0xec
-+#define QSERDES_V7_RX_RX_EQU_ADAPTOR_CNTRL3			0xf0
-+#define QSERDES_V7_RX_RX_EQU_ADAPTOR_CNTRL4			0xf4
-+#define QSERDES_V7_RX_RX_IDAC_TSETTLE_LOW			0xf8
-+#define QSERDES_V7_RX_RX_IDAC_TSETTLE_HIGH			0xfc
-+#define QSERDES_V7_RX_RX_EQ_OFFSET_ADAPTOR_CNTRL1		0x110
-+#define QSERDES_V7_RX_SIDGET_ENABLES				0x118
-+#define QSERDES_V7_RX_SIGDET_CNTRL				0x11c
-+#define QSERDES_V7_RX_SIGDET_DEGLITCH_CNTRL			0x124
-+#define QSERDES_V7_RX_RX_MODE_00_LOW				0x15c
-+#define QSERDES_V7_RX_RX_MODE_00_HIGH				0x160
-+#define QSERDES_V7_RX_RX_MODE_00_HIGH2				0x164
-+#define QSERDES_V7_RX_RX_MODE_00_HIGH3				0x168
-+#define QSERDES_V7_RX_RX_MODE_00_HIGH4				0x16c
-+#define QSERDES_V7_RX_RX_MODE_01_LOW				0x170
-+#define QSERDES_V7_RX_RX_MODE_01_HIGH				0x174
-+#define QSERDES_V7_RX_RX_MODE_01_HIGH2				0x178
-+#define QSERDES_V7_RX_RX_MODE_01_HIGH3				0x17c
-+#define QSERDES_V7_RX_RX_MODE_01_HIGH4				0x180
-+#define QSERDES_V7_RX_RX_MODE_10_LOW				0x184
-+#define QSERDES_V7_RX_RX_MODE_10_HIGH				0x188
-+#define QSERDES_V7_RX_RX_MODE_10_HIGH2				0x18c
-+#define QSERDES_V7_RX_RX_MODE_10_HIGH3				0x190
-+#define QSERDES_V7_RX_RX_MODE_10_HIGH4				0x194
-+#define QSERDES_V7_RX_DFE_EN_TIMER				0x1a0
-+#define QSERDES_V7_RX_DFE_CTLE_POST_CAL_OFFSET			0x1a4
-+#define QSERDES_V7_RX_DCC_CTRL1					0x1a8
-+#define QSERDES_V7_RX_VTH_CODE					0x1b0
-+#define QSERDES_V7_RX_SIGDET_CAL_CTRL1				0x1e4
-+#define QSERDES_V7_RX_SIGDET_CAL_TRIM				0x1f8
-+
-+#endif
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
-index 63b3cbfcb50f..6923496cbfee 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
-@@ -28,6 +28,7 @@
- #include "phy-qcom-qmp-qserdes-ln-shrd-v6.h"
- 
- #include "phy-qcom-qmp-qserdes-com-v7.h"
-+#include "phy-qcom-qmp-qserdes-txrx-v7.h"
- 
- #include "phy-qcom-qmp-qserdes-pll.h"
- 
+On 11/21/2023 8:36 PM, Krzysztof Kozlowski wrote:
+> On 21/11/2023 15:30, Kathiravan Thirumoorthy wrote:
+>> In commit 0dd3f263c810 ("clk: qcom: ipq5332: enable few nssnoc clocks in
+> 
+> Where is this commit coming from?
+> 
+>> driver probe"), gcc_snoc_nssnoc_clk, gcc_snoc_nssnoc_1_clk,
+>> gcc_nssnoc_nsscc_clk are enabled in driver probe to keep it always-on.
+> 
+> Implementation can change and for example bring back these clocks. Are
+> you going to change bindings? No, drop the patch.
+> 
+> Bindings should be dropped only in a few rare cases like clocks not
+> available for OS or bugs.
 
--- 
-2.34.1
+Thanks Krzysztof. Will drop this patch in V3.
 
+One more question to understand further. In IPQ SoCs there are bunch of 
+coresight / QDSS clocks but coresight framework doesn't handle all 
+clocks. Those clocks are enabled in bootloader stage itself. In such 
+case, should I drop the clocks from both binding and driver or only from 
+driver?
+
+Thanks,
+Kathiravan.
+
+> 
+> Best regards,
+> Krzysztof
+> 
 
