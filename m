@@ -1,341 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-1559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15E217F4EAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:51:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E09B7F4F17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 19:15:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 701D0B20C72
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 17:50:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 407E91C209E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:15:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B230B5811F;
-	Wed, 22 Nov 2023 17:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 720CD4F5E7;
+	Wed, 22 Nov 2023 18:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="NNY0P3nk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GBDRAYtS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF8D1B3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 09:50:49 -0800 (PST)
-Message-ID: <09a78110-99d7-44ca-8558-dd300c353632@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1700675447;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yOw+hHrA4r+TfdEE+WVDT6I3vzKD2GREfHEw4jCowto=;
-	b=NNY0P3nkEdXIvTFdZgaEspupWc3C0vtePf8nbykCdgIOtMGqvdds/UkMdKZrFnfRkqAJpa
-	yGRvRmyTeKle8rm7TxjZmNjkEsL4OYQ2TSRxg/KLwyB+510LT+j1uOjTAtigWzypkOzmnG
-	TtGHevd26yRWoajYzSxHzQSQVkcjYOc=
-Date: Thu, 23 Nov 2023 01:50:37 +0800
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 449BAA4;
+	Wed, 22 Nov 2023 10:15:12 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-32d9effe314so5025482f8f.3;
+        Wed, 22 Nov 2023 10:15:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700676910; x=1701281710; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=NVSrNzLgRvQ4gfVAo/d/ONIYYWbL33zy5cmCQPLiW2M=;
+        b=GBDRAYtSFhR+bsEVzlsLt7J4swhqOU/ikIMR/FRLbm3J+j8aqrlBdQyEn6yr/tb+eb
+         PRxcHEv4/9eSt/xHSxPmBlBlmF7sFfdQtTm24q5DRf/zXM8b5OBnvc+lCu3LlNJ0WpiP
+         dRa+1MUjobKPqm0FnTcIqjGUfFi6r5j96LAy7Ar0PcFeUK6Zqbr+8pTAyITSqoK/BJOb
+         4hx+6wyXE+fhbyPi4lFogGPu/Y1lncj+OqmCaRnWRX4JusaNwJeM+ey0+cL7CI7PJRUF
+         re/jsDR5x/AYFvAdVaChlmjnZTdQPqV9RMuFuWwDCOAv/uVAu91jS3TLIN8BRmjNDHqm
+         YkzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700676910; x=1701281710;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NVSrNzLgRvQ4gfVAo/d/ONIYYWbL33zy5cmCQPLiW2M=;
+        b=AeCnw8BOHzll8Pg8O0mmyKL5JalGbOW4Z+0SMWdBtU4dS8SX9Zo5jxa1Q9mwb0Fcex
+         Fo3wSE8CQK8ca7zfDrQAtOVBvABo5cY298DRwxnbXYoopCd0quVwIo7RBnjVjTQLrwJH
+         32W1Gadx1OkybgCg9hjwW4+tLKUbV/2dJCp8Vmi4ZgnEDqSFL99xMjacujB9oJxYU7mK
+         kdlCoJmCsyFmO1yzJhVHaBKDMzb4kUxW/aIlPvugpVIbXt+S2lQikFOuDjXogn8UvVcg
+         j6wrFsbLiLQOdwZ/D3VHGwCJO78+epv+HF++keFO6ZVm3HfSOZ633CRc/4CwUBvmNvj9
+         J09Q==
+X-Gm-Message-State: AOJu0Ywq14Co4C2+b9AmHHAExc6oU0Bu/UUXvX4dHn3qaR693HfIsAbD
+	6oB5e8fT7CG0f0R/5lMRs5E=
+X-Google-Smtp-Source: AGHT+IE6ao4vkwq952ctFLHc3qQmln2Fu/+DhwMBUg5bDQNU//QHvdiFV9OG3a65EXYc10npzM6zbA==
+X-Received: by 2002:adf:e550:0:b0:331:3b59:3edb with SMTP id z16-20020adfe550000000b003313b593edbmr2507151wrm.42.1700676910297;
+        Wed, 22 Nov 2023 10:15:10 -0800 (PST)
+Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.gmail.com with ESMTPSA id u7-20020a5d5147000000b003316debbde4sm24378wrt.48.2023.11.22.10.15.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Nov 2023 10:15:09 -0800 (PST)
+Message-ID: <655e452d.5d0a0220.61c31.01ae@mx.google.com>
+X-Google-Original-Message-ID: <ZV5FKswuT+PAXpWB@Ansuel-xps.>
+Date: Wed, 22 Nov 2023 19:15:06 +0100
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Simon Horman <horms@kernel.org>
+Cc: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Qingfang Deng <dqfext@gmail.com>,
+	SkyLake Huang <SkyLake.Huang@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	David Epping <david.epping@missinglinkelectronics.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Harini Katakam <harini.katakam@amd.com>,
+	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: Re: [net-next RFC PATCH 04/14] net: phy: add initial support for PHY
+ package in DT
+References: <20231120135041.15259-1-ansuelsmth@gmail.com>
+ <20231120135041.15259-5-ansuelsmth@gmail.com>
+ <20231122105243.GB28959@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [v6,1/6] drm/bridge: add transparent bridge helper
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Maxime Ripard <mripard@kernel.org>
-Cc: linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-usb@vger.kernel.org, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org
-References: <20231103230414.1483428-2-dmitry.baryshkov@linaro.org>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Sui Jingfeng <sui.jingfeng@linux.dev>
-In-Reply-To: <20231103230414.1483428-2-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231122105243.GB28959@kernel.org>
 
-Hi,
-
-
-On 2023/11/4 07:03, Dmitry Baryshkov wrote:
-> Define a helper for creating simple transparent bridges which serve the
-> only purpose of linking devices into the bridge chain up to the last
-> bridge representing the connector.
-
-As far as I can tell, traditionally, transparent display bridges are
-used to refer to the hardware encoders which transform the video signals.
-Such as ADV7123/ADV7125(RGB888 to VGA), TFP410 (RGB888 to DVI) etc.
-Which can be used without the need of software configuration. TFP410
-is a little bit special, it can be configured by I2C interface, but
-TFP410 don't support read edid for the monitor. But at the least,
-there do has a corresponding *hardware entity* working in the chains.
-It is just that it don't need a driver to configure.
-
-Does the "simple transparent bridges" you created has a corresponding
-hardware entity? Are you trying to solve software side problems by
-abusing the device-driver model?
-
-I'm afraid that the written "simple transparent bridges" is not a
-accurate description if you don't really has a hardware entity to
-corresponding with. Because all of the classic drm display bridges
-are able to transform transfer/consume video(and/or audio) data.
-Well, the device you create just can't. Probably, you should call
-it as "simple auxiliary device".
-
-
-> This is especially useful for
-> DP/USB-C bridge chains, which can span across several devices, but do
-> not require any additional functionality from the intermediate bridges.
+On Wed, Nov 22, 2023 at 10:52:43AM +0000, Simon Horman wrote:
+> On Mon, Nov 20, 2023 at 02:50:31PM +0100, Christian Marangi wrote:
+> > Add initial support for PHY package in DT.
+> > 
+> > Make it easier to define PHY package and describe the global PHY
+> > directly in DT by refereincing them by phandles instead of custom
+> > functions in each PHY driver.
+> > 
+> > Each PHY in a package needs to be defined in a dedicated node in the
+> > mdio node. This dedicated node needs to have the compatible set to
+> > "ethernet-phy-package" and define "global-phys" and "#global-phy-cells"
+> > respectively to a list of phandle to the global phy to define for the
+> > PHY package and 0 for cells as the phandle won't take any args.
+> > 
+> > With this defined, the generic PHY probe will join each PHY in this
+> > dedicated node to the package.
+> > 
+> > PHY driver MUST set the required global PHY count in
+> > .phy_package_global_phy_num to correctly verify that DT define the
+> > correct number of phandle to the required global PHY.
+> > 
+> > mdio_bus.c and of_mdio.c is updated to now support and parse also
+> > PHY package subnote that have the compatible "phy-package".
+> > 
+> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> 
+> Hi Christian,
+> 
+> I was a little hasty in hitting send on my previous message.
+> Please find some more minor feedback from my side below.
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->   drivers/gpu/drm/bridge/Kconfig      |   9 ++
->   drivers/gpu/drm/bridge/Makefile     |   1 +
->   drivers/gpu/drm/bridge/aux-bridge.c | 140 ++++++++++++++++++++++++++++
->   include/drm/bridge/aux-bridge.h     |  19 ++++
->   4 files changed, 169 insertions(+)
->   create mode 100644 drivers/gpu/drm/bridge/aux-bridge.c
->   create mode 100644 include/drm/bridge/aux-bridge.h
->
-> diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kconfig
-> index ba82a1142adf..f12eab62799f 100644
-> --- a/drivers/gpu/drm/bridge/Kconfig
-> +++ b/drivers/gpu/drm/bridge/Kconfig
-> @@ -12,6 +12,15 @@ config DRM_PANEL_BRIDGE
->   	help
->   	  DRM bridge wrapper of DRM panels
->   
-> +config DRM_AUX_BRIDGE
-> +	tristate
-> +	depends on DRM_BRIDGE && OF
-> +	select AUXILIARY_BUS
-> +	select DRM_PANEL_BRIDGE
-> +	help
-> +	  Simple transparent bridge that is used by several non-DRM drivers to
-> +	  build bridges chain.
-> +
->   menu "Display Interface Bridges"
->   	depends on DRM && DRM_BRIDGE
->   
-> diff --git a/drivers/gpu/drm/bridge/Makefile b/drivers/gpu/drm/bridge/Makefile
-> index 2b892b7ed59e..918e3bfff079 100644
-> --- a/drivers/gpu/drm/bridge/Makefile
-> +++ b/drivers/gpu/drm/bridge/Makefile
-> @@ -1,4 +1,5 @@
->   # SPDX-License-Identifier: GPL-2.0
-> +obj-$(CONFIG_DRM_AUX_BRIDGE) += aux-bridge.o
->   obj-$(CONFIG_DRM_CHIPONE_ICN6211) += chipone-icn6211.o
->   obj-$(CONFIG_DRM_CHRONTEL_CH7033) += chrontel-ch7033.o
->   obj-$(CONFIG_DRM_CROS_EC_ANX7688) += cros-ec-anx7688.o
-> diff --git a/drivers/gpu/drm/bridge/aux-bridge.c b/drivers/gpu/drm/bridge/aux-bridge.c
-> new file mode 100644
-> index 000000000000..6245976b8fef
-> --- /dev/null
-> +++ b/drivers/gpu/drm/bridge/aux-bridge.c
-> @@ -0,0 +1,140 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Copyright (C) 2023 Linaro Ltd.
-> + *
-> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> + */
-> +#include <linux/auxiliary_bus.h>
-> +#include <linux/module.h>
-> +
-> +#include <drm/drm_bridge.h>
-> +#include <drm/bridge/aux-bridge.h>
-> +
-> +static DEFINE_IDA(drm_aux_bridge_ida);
-> +
-> +static void drm_aux_bridge_release(struct device *dev)
-> +{
-> +	struct auxiliary_device *adev = to_auxiliary_dev(dev);
-> +
-> +	ida_free(&drm_aux_bridge_ida, adev->id);
-> +
-> +	kfree(adev);
-> +}
-> +
-> +static void drm_aux_bridge_unregister_adev(void *_adev)
-> +{
-> +	struct auxiliary_device *adev = _adev;
 
-It seems that the single underscore(prefix) at here is a little bit
-not good in looking, please replace it with 'void *data'.
+Thanks a lot for the initial review and sorry for the various warning
+you had to write about it. I know this was a new concept and that I had
+to discuss a lot about the DT structure so I was a bit relaxed in
+releasing OF node. Will handle all of them in v2. Again thanks! 
 
+> ...
+> 
+> > diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
+> > index 64ebcb6d235c..bb910651118f 100644
+> > --- a/drivers/net/mdio/of_mdio.c
+> > +++ b/drivers/net/mdio/of_mdio.c
+> > @@ -139,6 +139,44 @@ bool of_mdiobus_child_is_phy(struct device_node *child)
+> >  }
+> >  EXPORT_SYMBOL(of_mdiobus_child_is_phy);
+> >  
+> > +static int __of_mdiobus_parse_phys(struct mii_bus *mdio, struct device_node *np,
+> > +				   bool *scanphys)
+> > +{
+> > +	struct device_node *child;
+> > +	int addr, rc;
+> > +
+> > +	/* Loop over the child nodes and register a phy_device for each phy */
+> > +	for_each_available_child_of_node(np, child) {
+> > +		if (of_device_is_compatible(child, "ethernet-phy-package")) {
+> > +			rc = __of_mdiobus_parse_phys(mdio, child, scanphys);
+> > +			if (rc && rc != -ENODEV)
+> > +				return rc;
+> 
+> for_each_available_child_of_node() makes calls to of_node_get() and
+> of_node_put(), so when jumping out of a loop it is necessary to call
+> of_node_put(), in this case of_node_put(child).
+> 
+> As flagged by Coccinelle.
+> 
+> Also flagged in of_mdiobus_find_phy() both before and after this patch.
+> 
+> > +
+> > +			continue;
+> > +		}
+> > +
+> > +		addr = of_mdio_parse_addr(&mdio->dev, child);
+> > +		if (addr < 0) {
+> > +			*scanphys = true;
+> > +			continue;
+> > +		}
+> > +
+> > +		if (of_mdiobus_child_is_phy(child))
+> > +			rc = of_mdiobus_register_phy(mdio, child, addr);
+> > +		else
+> > +			rc = of_mdiobus_register_device(mdio, child, addr);
+> > +
+> > +		if (rc == -ENODEV)
+> > +			dev_err(&mdio->dev,
+> > +				"MDIO device at address %d is missing.\n",
+> > +				addr);
+> > +		else if (rc)
+> > +			return rc;
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >  /**
+> >   * __of_mdiobus_register - Register mii_bus and create PHYs from the device tree
+> >   * @mdio: pointer to mii_bus structure
+> > @@ -180,25 +218,9 @@ int __of_mdiobus_register(struct mii_bus *mdio, struct device_node *np,
+> >  		return rc;
+> >  
+> >  	/* Loop over the child nodes and register a phy_device for each phy */
+> > -	for_each_available_child_of_node(np, child) {
+> > -		addr = of_mdio_parse_addr(&mdio->dev, child);
+> > -		if (addr < 0) {
+> > -			scanphys = true;
+> > -			continue;
+> > -		}
+> > -
+> > -		if (of_mdiobus_child_is_phy(child))
+> > -			rc = of_mdiobus_register_phy(mdio, child, addr);
+> > -		else
+> > -			rc = of_mdiobus_register_device(mdio, child, addr);
+> > -
+> > -		if (rc == -ENODEV)
+> > -			dev_err(&mdio->dev,
+> > -				"MDIO device at address %d is missing.\n",
+> > -				addr);
+> > -		else if (rc)
+> > -			goto unregister;
+> > -	}
+> > +	rc = __of_mdiobus_parse_phys(mdio, np, &scanphys);
+> > +	if (rc)
+> > +		goto unregister;
+> 
+> Jumping to unregister will call of_node_put(child),
+> however child appears to be uninitialised here.
+> 
+> Flagged by clang-16 W=1 build, and Smatch.
+> 
+> >  
+> >  	if (!scanphys)
+> >  		return 0;
+> 
+> ...
 
-> +
-> +	auxiliary_device_delete(adev);
-> +	auxiliary_device_uninit(adev);
-> +}
-> +
-> +/**
-> + * drm_aux_bridge_register - Create a simple bridge device to link the chain
-> + * @parent: device instance providing this bridge
-> + *
-> + * Creates a simple DRM bridge that doesn't implement any drm_bridge
-> + * operations. Such bridges merely fill a place in the bridge chain linking
-> + * surrounding DRM bridges.
-> + *
-> + * Return: zero on success, negative error code on failure
-> + */
-> +int drm_aux_bridge_register(struct device *parent)
-> +{
-> +	struct auxiliary_device *adev;
-> +	int ret;
-> +
-> +	adev = kzalloc(sizeof(*adev), GFP_KERNEL);
-> +	if (!adev)
-> +		return -ENOMEM;
-> +
-> +	ret = ida_alloc(&drm_aux_bridge_ida, GFP_KERNEL);
-> +	if (ret < 0) {
-> +		kfree(adev);
-> +		return ret;
-> +	}
-> +
-> +	adev->id = ret;
-> +	adev->name = "aux_bridge";
-> +	adev->dev.parent = parent;
-> +	adev->dev.of_node = parent->of_node;
-> +	adev->dev.release = drm_aux_bridge_release;
-> +
-> +	ret = auxiliary_device_init(adev);
-> +	if (ret) {
-> +		ida_free(&drm_aux_bridge_ida, adev->id);
-> +		kfree(adev);
-> +		return ret;
-> +	}
-> +
-> +	ret = auxiliary_device_add(adev);
-> +	if (ret) {
-
-kfree(adev)
-
-> +		auxiliary_device_uninit(adev);
-> +		return ret;
-> +	}
-> +
-> +	return devm_add_action_or_reset(parent, drm_aux_bridge_unregister_adev, adev);
-> +}
-> +EXPORT_SYMBOL_GPL(drm_aux_bridge_register);
-
-
-Yet still coupling. Since you choose to export this function symbol,
-then dose this means that the provided approach is still to solve the
-problem by allowing static linking? If so, sorry, I think this does
-not make a difference with my it66121 series.
-
-
-> +
-> +struct drm_aux_bridge_data {
-> +	struct drm_bridge bridge;
-> +	struct drm_bridge *next_bridge;
-> +	struct device *dev;
-> +};
-> +
-> +static int drm_aux_bridge_attach(struct drm_bridge *bridge,
-> +				    enum drm_bridge_attach_flags flags)
-> +{
-> +	struct drm_aux_bridge_data *data;
-> +
-> +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
-> +		return -EINVAL;
-
-Does this flags really useful in practice?
-
-Since this bridge is a identity bridge, intend to be used on middle of the whole
-chain. Display controller drivers which this module work with should definitely
-set the DRM_BRIDGE_ATTACH_NO_CONNECTOR flag. It is definitely a bug if not set.
-It should be found during code review stage, I mean that the enum drm_bridge_attach_flags
-is a compile-time thing, not a runtime thing anymore, Am I correct?
-  
-
-> +	data = container_of(bridge, struct drm_aux_bridge_data, bridge);
-> +
-> +	return drm_bridge_attach(bridge->encoder, data->next_bridge, bridge,
-> +				 DRM_BRIDGE_ATTACH_NO_CONNECTOR);
-> +}
-> +
-> +static const struct drm_bridge_funcs drm_aux_bridge_funcs = {
-> +	.attach	= drm_aux_bridge_attach,
-> +};
-> +
-> +static int drm_aux_bridge_probe(struct auxiliary_device *auxdev,
-> +				   const struct auxiliary_device_id *id)
-> +{
-> +	struct drm_aux_bridge_data *data;
-> +
-> +	data = devm_kzalloc(&auxdev->dev, sizeof(*data), GFP_KERNEL);
-> +	if (!data)
-> +		return -ENOMEM;
-> +
-> +	data->dev = &auxdev->dev;
-> +	data->next_bridge = devm_drm_of_get_bridge(&auxdev->dev, auxdev->dev.of_node, 0, 0);
-> +	if (IS_ERR(data->next_bridge))
-> +		return dev_err_probe(&auxdev->dev, PTR_ERR(data->next_bridge),
-> +				     "failed to acquire drm_bridge\n");
-> +
-> +	data->bridge.funcs = &drm_aux_bridge_funcs;
-> +	data->bridge.of_node = data->dev->of_node;
-> +
-> +	return devm_drm_bridge_add(data->dev, &data->bridge);
-> +}
-> +
-> +static const struct auxiliary_device_id drm_aux_bridge_table[] = {
-> +	{ .name = KBUILD_MODNAME ".aux_bridge" },
-> +	{},
-> +};
-> +MODULE_DEVICE_TABLE(auxiliary, drm_aux_bridge_table);
-> +
-> +static struct auxiliary_driver drm_aux_bridge_drv = {
-> +	.name = "aux_bridge",
-> +	.id_table = drm_aux_bridge_table,
-> +	.probe = drm_aux_bridge_probe,
-> +};
-> +module_auxiliary_driver(drm_aux_bridge_drv);
-
-
-Sorry, I don't understand. In effect, this is still works by export function symbol.
-Why the kernel module related stuff at here make sense in the end?
-Since we are a helper, why we deserve a driver? satisfy the component?
-
-
-> +
-> +MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
-> +MODULE_DESCRIPTION("DRM transparent bridge");
-> +MODULE_LICENSE("GPL");
-> diff --git a/include/drm/bridge/aux-bridge.h b/include/drm/bridge/aux-bridge.h
-> new file mode 100644
-> index 000000000000..441ab3f0e920
-> --- /dev/null
-> +++ b/include/drm/bridge/aux-bridge.h
-> @@ -0,0 +1,19 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Copyright (C) 2023 Linaro Ltd.
-> + *
-> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> + */
-> +#ifndef DRM_AUX_BRIDGE_H
-> +#define DRM_AUX_BRIDGE_H
-> +
-> +#if IS_ENABLED(CONFIG_DRM_AUX_BRIDGE)
-> +int drm_aux_bridge_register(struct device *parent);
-> +#else
-> +static inline int drm_aux_bridge_register(struct device *parent)
-> +{
-> +	return 0;
-> +}
-> +#endif
-> +
-> +#endif
+-- 
+	Ansuel
 
