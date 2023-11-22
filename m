@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-1498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23E737F448F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 12:02:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96A867F44A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 12:03:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 56435B20DDE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:02:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51B0C281548
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:03:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A13B21349;
-	Wed, 22 Nov 2023 11:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77F9C249E5;
+	Wed, 22 Nov 2023 11:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VppQyigM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SrQwfrir"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95908D8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 03:01:55 -0800 (PST)
-Received: by mail-ot1-x331.google.com with SMTP id 46e09a7af769-6cd0963c61cso3521011a34.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 03:01:55 -0800 (PST)
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C70A110
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 03:02:56 -0800 (PST)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-da0cfcb9f40so6446922276.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 03:02:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700650915; x=1701255715; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700650975; x=1701255775; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PFE8V0akmDhV9uHSFYH1mN8FnS2rSR9n1F1LBeYJA20=;
-        b=VppQyigMPmmgIoYBSMyQSC6at4GaNvd3aLegkEeLdEcpHlarqTqS2vvsEd2R9szDMZ
-         BCqm4tEhgloIuj30LC7kXSuDR5sUCRHsSKRe8OPEoDd7OPYcEDdGqZbE/T+hnQ4SYmoT
-         QsjfPKvEzbMpipx0esTqlh7Sxagcn9wd04PPSQbF3qUHcuQ06EJUOvAuz/P7qOdtpZ/G
-         EuSh24fqxsXpzxaDz5mSq24foUE+vm1tpVDzpMIYczRrVPkFaaH4U5YXzALxdablWIxu
-         yHOizt4F2grISZrxt7XRgCDWQIIxKuqmA2jjBs9nkbbhaNE1uEnHPy8+Fifeo5ZX+8Bn
-         yCCA==
+        bh=judoGuVj96yz0cfO1+LrQgdiCfR9oKHOka9ldKzU/iQ=;
+        b=SrQwfrirV/5VWQilXkyfyRtt5jvd+FoLmuNpVWivxbn5oUnX+jRa2MOecV/oU9La3v
+         ZYH3iVBOSwd9FwY+YKEPqVMEUmxNF/GnAmWAsDKXDDwaNg6Wq8KO9yeIB4xqR1UnTmtI
+         qeHFlJmciGDxuNA9QIN3z6uAQ01dbiT7dF2/ILFTee76YpuZMFdn/cW2uTxyfY13LZrx
+         i+M9OAegEWqsVY/mULJWzRt9Qv8qOlbI9MNoAGxB2ZnsG/eayPJhGb8sUyJG/DiqG3Wb
+         EEq2G+u8yh6yu6QTI6YKdnQqNhw9NkNsm29/ccsyPGqxBC/JHEyN5Uzg2DYSuL8Fkjl3
+         gMRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700650915; x=1701255715;
+        d=1e100.net; s=20230601; t=1700650975; x=1701255775;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PFE8V0akmDhV9uHSFYH1mN8FnS2rSR9n1F1LBeYJA20=;
-        b=S+f3gznOpF7ZO0Ln9SmzbfF4aPQn5oEDHO9YIW1LllpoP83vWyy6lUFFRdAS21+96/
-         kXCpBnSDNBpSXro9dHzZa95axt/WS5qzCYNXdFTvAoQ7CgRgtik3Vnk3G4u+Ju7a+KX7
-         1Jf/CpM+91+HJHmayQBSxkFHbl4RgyS/YWGdF+GYgCWOeh2Iq0iSc2tqqxF04qpAj/Tv
-         X3+rE/BDJQKvdFBMu/LqW+3HVew8l2NQQvjH2oolaiatlGElajcm0zU4DGMjWGdlNwmJ
-         hYaB/zlG9lMtsBWs9WkuOLzmP1zkbYFJz1wlYDoDMLwMD+lUmqH+OXjmnCxhE2p+tSz3
-         XCAQ==
-X-Gm-Message-State: AOJu0YwT8pElCeTquIizCVpYiVyRDOVWCl6V2xmtC2AzkSW6LV2Ko/Wk
-	8VSqZduIObBSgHD7Wg3iTfHOA0iMqyIc3V0harn2aQ==
-X-Google-Smtp-Source: AGHT+IFxH7sdOzJBY6zKxWc8FlDU8QSdgfsWOQ/oCSLnXUeoKO4tIZGuybTYw8pZH0Y0CYMbDI2kbVOkLaxffa86JNU=
-X-Received: by 2002:a05:6870:7e13:b0:1f4:ecdb:fb2 with SMTP id
- wx19-20020a0568707e1300b001f4ecdb0fb2mr2651247oab.54.1700650914865; Wed, 22
- Nov 2023 03:01:54 -0800 (PST)
+        bh=judoGuVj96yz0cfO1+LrQgdiCfR9oKHOka9ldKzU/iQ=;
+        b=lrjHIlR15p5BXStdNVpU0qIJn57/q73FCCzdxzHi+oH991xlPmHqLFVWQU59KhxG09
+         fIoLyqKacTBUmw5+XmDNjpPVAZl0MXABIEVKFAGAzpoylZ/lbHJk+MuQWUGDHPo3bIVA
+         q0CI3hCvMHMPf/nuuXBhjaRL9rrVup/qHj3uvL64EBUiUk/LtW1RO3uXsO5Pg2QUxQgs
+         gQvUWI286Ebw57CLCqvbILlWQO1waXiyvK/osSH7XrWtWtebvATNTmZ72BY2CfYS3pEp
+         kCgswRW1jZw5/0ss/H2rUjyt0LPUunl92XOc2K73zu4QSVsKxaUPrV4qPuwXSAFz4okC
+         fK+g==
+X-Gm-Message-State: AOJu0YwwkgkZt/7KCFldFPyQ0c6os2rp2Bwr9NrNlqMjy0m/Dost5Z3E
+	jCALnumSfQcHGnT5CLHP28Bkw82Iv9xu+DInnAzmYw==
+X-Google-Smtp-Source: AGHT+IG7QtdXMD/IbuQvfyaSezE4/wn9Rzi9wEyWCao4R2S63hXyZv7aDlf2lJ46E658E4CV4osFbPqMxC2QwFZs1R8=
+X-Received: by 2002:a81:93c4:0:b0:5a8:2037:36d9 with SMTP id
+ k187-20020a8193c4000000b005a8203736d9mr1961750ywg.25.1700650975747; Wed, 22
+ Nov 2023 03:02:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,12 +56,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20231122-phy-qualcomm-eusb2-x1e80100-v1-0-ce0991161847@linaro.org>
- <20231122-phy-qualcomm-eusb2-x1e80100-v1-2-ce0991161847@linaro.org>
-In-Reply-To: <20231122-phy-qualcomm-eusb2-x1e80100-v1-2-ce0991161847@linaro.org>
+ <20231122-phy-qualcomm-eusb2-x1e80100-v1-1-ce0991161847@linaro.org>
+In-Reply-To: <20231122-phy-qualcomm-eusb2-x1e80100-v1-1-ce0991161847@linaro.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 22 Nov 2023 13:01:44 +0200
-Message-ID: <CAA8EJpoKEd8B7KTwVb0TEk+Yk3kRXfhvtcdk0QUirOOV4wnUYA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] phy: qcom: snps-eusb2: Add X1E80100 Compatible
+Date: Wed, 22 Nov 2023 13:02:44 +0200
+Message-ID: <CAA8EJppov1ZtJvxyiXwik77bs5=dDfE_k_Wv8-DyzYtoEzvv4Q@mail.gmail.com>
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom: snps-eusb2: Document the
+ X1E80100 compatible
 To: Abel Vesa <abel.vesa@linaro.org>
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
@@ -73,31 +74,29 @@ Content-Type: text/plain; charset="UTF-8"
 
 On Wed, 22 Nov 2023 at 12:28, Abel Vesa <abel.vesa@linaro.org> wrote:
 >
-> Add the X1E80100 to the list of supported PHYs for eUSB2
-> SNPS driver.
+> Add the X1E80100 compatible to the list of supported PHYs.
 >
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  drivers/phy/qualcomm/phy-qcom-snps-eusb2.c | 1 +
+>  Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 >
-> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c b/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-> index 1484691a41d5..6420f342dc85 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-> @@ -425,6 +425,7 @@ static int qcom_snps_eusb2_hsphy_probe(struct platform_device *pdev)
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
+> index 8f5d7362046c..ea1809efbf56 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,snps-eusb2-phy.yaml
+> @@ -21,6 +21,7 @@ properties:
+>                - qcom,sm8650-snps-eusb2-phy
+>            - const: qcom,sm8550-snps-eusb2-phy
+
+Ah, I think this answers my question for patch2. Can we instead reuse
+the existing compat string as it was done for sm8650?
+
+>        - const: qcom,sm8550-snps-eusb2-phy
+> +      - const: qcom,x1e80100-snps-eusb2-phy
 >
->  static const struct of_device_id qcom_snps_eusb2_hsphy_of_match_table[] = {
->         { .compatible = "qcom,sm8550-snps-eusb2-phy", },
-> +       { .compatible = "qcom,x1e80100-snps-eusb2-phy", },
-
-Do we need a separate compatible string or is it fully compatible with
-sm8550? If it is the same IP block, maybe you can use a fallback
-compatible instead?
-
->         { },
->  };
->  MODULE_DEVICE_TABLE(of, qcom_snps_eusb2_hsphy_of_match_table);
+>    reg:
+>      maxItems: 1
 >
 > --
 > 2.34.1
