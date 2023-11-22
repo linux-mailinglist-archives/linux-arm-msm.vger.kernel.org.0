@@ -1,159 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-1511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9A967F46F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 13:51:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D6227F472F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 13:56:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 172E01C20A39
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 12:51:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 561051F21F5C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 12:56:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77E753AC0F;
-	Wed, 22 Nov 2023 12:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EF0A4C637;
+	Wed, 22 Nov 2023 12:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LJvl5TlC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E4N6jxHC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADCA118D;
-	Wed, 22 Nov 2023 04:51:24 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM5Vcqs013032;
-	Wed, 22 Nov 2023 12:51:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=27Z8pqIwCURhifVSG9XX//Qs1tVHrqv8hOikZ4CO4PY=;
- b=LJvl5TlCGFNaosRuNZfVGSH7xk+GwH2XL37EmKbaC0SRjyKdgqN5BrdSq3xwgO04BGcU
- xuLqW/Q/C1qwDXDh0fFlC6znlNvQDzn9C8/UngmwE20B1St8+mXt6Fz50Q77+pXbjXsh
- 1R6enMYzurvTKGo9oqLOPy+Em8abG3SdqqAFjkZ5EkFC69Eifs5j2vXp8dCtq91f5tUg
- EkbxDj6MEiPnVSY4W5mg1kj5MYJxQCNrErNK6Zk63yWdhweTb6r+uUvH6uwGOPIdbTKC
- 5gxQn8wYM8fvdmHCPRDOLK4r+/w2wwf+yR7mG1/y3lrg1vlAFEnKmk8UFkLTyDuIS6dh UQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uhbjvh6m3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 12:51:10 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AMCp9tq022472
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 12:51:09 GMT
-Received: from [10.206.101.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 22 Nov
- 2023 04:51:02 -0800
-Message-ID: <4f5d4019-ffae-1eed-be7f-14e68d933063@quicinc.com>
-Date: Wed, 22 Nov 2023 18:20:59 +0530
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFB94C60A;
+	Wed, 22 Nov 2023 12:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D115C433C8;
+	Wed, 22 Nov 2023 12:56:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700657797;
+	bh=FU2GRBpzFMvCFhka/4yUjVC5jdbP1aO+NFWCN0EDrIQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=E4N6jxHCAp4tFCAJNZ7zrrZ9aW5XpMkXkuRi8Yp9MB1itrGb27EWR0AimfSKvrUe+
+	 xIKBWrSUoRPshnpNl/1FbBTjcPt/Cl1VF0vhzco59odzRlZyGwoZRmdMZjOLfPFhmg
+	 rhd6wCVTDYHvqEWbxWu18YI68DOmN2iKp/5KC7ZgoBSiYhZoCFqq90NkNgkLbVufOZ
+	 q9/CcH0gvOYYJMS+j0JhWcnUbX18Dgj2WqBDTMO9yLEHoKizitqAl+ddoLOJORmSPa
+	 IWJTygjglhV4AnSeNAennSuNsqXoua77PVtIPyT4UHBhbMo0josGMwqdZzNhJqI4bQ
+	 ZRy/iwYGuHwRQ==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r5mmh-0001kR-1j;
+	Wed, 22 Nov 2023 13:56:52 +0100
+Date: Wed, 22 Nov 2023 13:56:51 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] phy: qcom-qmp-usb: Add Qualcomm X1E80100 USB3 PHY
+ support
+Message-ID: <ZV36k8AZdy9Zm-rj@hovoldconsulting.com>
+References: <20231122-phy-qualcomm-usb3-uniphy-x1e80100-v1-0-3f5bd223d5b4@linaro.org>
+ <20231122-phy-qualcomm-usb3-uniphy-x1e80100-v1-2-3f5bd223d5b4@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH RESEND v3 4/5] clk: qcom: Use HW_CTRL_TRIGGER flag to
- switch video GDSC to HW mode
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-CC: "Rafael J. Wysocki" <rafael@kernel.org>,
-        Kevin Hilman
-	<khilman@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>, Pavel Machek
-	<pavel@ucw.cz>,
-        Len Brown <len.brown@intel.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Taniya Das <tdas@qti.qualcomm.com>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-media@vger.kernel.org>
-References: <20231101-gdsc-hwctrl-v3-0-0740ae6b2b04@linaro.org>
- <20231101-gdsc-hwctrl-v3-4-0740ae6b2b04@linaro.org>
- <v4dnsawo7s74spccrsvjwmal73tqfq4aptiny25tyyp6ungxha@jlbywvcssqtl>
- <d716fbbe-b681-af41-bfe7-85448cc47c7c@quicinc.com>
-Content-Language: en-US
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <d716fbbe-b681-af41-bfe7-85448cc47c7c@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JOFdN4YIviS_rQmdT3WYhksczd3WaO3o
-X-Proofpoint-ORIG-GUID: JOFdN4YIviS_rQmdT3WYhksczd3WaO3o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-22_08,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 malwarescore=0
- spamscore=0 impostorscore=0 lowpriorityscore=0 mlxlogscore=999
- suspectscore=0 adultscore=0 mlxscore=0 phishscore=0 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311220090
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231122-phy-qualcomm-usb3-uniphy-x1e80100-v1-2-3f5bd223d5b4@linaro.org>
 
-On 11/10/2023 2:02 PM, Jagadeesh Kona wrote:
+On Wed, Nov 22, 2023 at 02:05:22PM +0200, Abel Vesa wrote:
+> The X1E80100 platform has two instances of the USB3 UNI phy attached
+> to the multi-port USB controller, add definition for these.
 > 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 152 ++++++++++++++++++++++++++++++++
+>  1 file changed, 152 insertions(+)
 > 
-> On 11/4/2023 1:45 AM, Bjorn Andersson wrote:
->> On Wed, Nov 01, 2023 at 11:04:10AM +0200, Abel Vesa wrote:
->>> From: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>
->>> The current HW_CTRL flag switches the video GDSC to HW control mode as
->>> part of GDSC enable itself, instead of that use HW_CTRL_TRIGGER flag to
->>> give consumer drivers more control and switch the GDSC mode as and when
->>> required.
->>>
->>> HW_CTRL_TRIGGER flag allows consumer drivers to switch the video GDSC to
->>> HW/SW control modes at runtime using dev_pm_genpd_set_hwmode API.
->>>
->>
->> This states what the code currently does, and what the new code will do.
->> But I don't find that it adequately describes _why_ this is done.
->>
->>
->> In the current implementation, the hardware is might collapse the GDSC
->> anytime between gdsc_enable() and gdsc_disable(). By giving "drivers
->> more control" the time spent in this state is reduced to some fraction
->> of that span, which to me implies higher power consumption.
->>
->> Under the assumption that we don't want to consume more power without
->> reason, I'm forced to guess that there might be some scenarios that we
->> want this feature to keep the GDSC non-collapsed against the indication
->> of the hardware - to avoid some instability somewhere, perhaps?
->>
-> 
-> Thanks Bjorn for your review. Sure, will update commit text with details in next
-> series.
-> 
-> Normally, consumers will enable the GDSC and then the required clocks. If GDSC
-> is moved to HW mode in gdsc_enable() itself, the subsequent clocks enablement
-> that are dependent on GDSC might fail since GDSC could be turned off by HW. The
-> consumers can still switch the GDSC to HW mode with new API right after the
-> clocks are enabled and the control will be taken back to SW mode just before
-> disabling the GDSC, so even with the newer implementation, HW can collapse the
-> GDSC anytime for most of the duration between gdsc_enable() and gdsc_disable().
-> This API adds more flexibility for consumer drivers to control the GDSC mode as
-> per their
-> requirements.
-There is one more scenario where the driver would like GDSC in driver
-controlled. Let say video hardware, which is under vcodec0_gdsc, have registers
-to be programmed by TZ. In such scenario, the GDSC should be non collapsed,
-while TZ programs those registers precisely while loading the firmware and
-bringing hardware out of reset.
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> index 02f156298e77..bbeba5722cf0 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+> @@ -24,6 +24,7 @@
+>  #include "phy-qcom-qmp-pcs-misc-v4.h"
+>  #include "phy-qcom-qmp-pcs-usb-v4.h"
+>  #include "phy-qcom-qmp-pcs-usb-v5.h"
+> +#include "phy-qcom-qmp-pcs-usb-v7.h"
+>  
+>  /* QPHY_SW_RESET bit */
+>  #define SW_RESET				BIT(0)
+> @@ -1138,6 +1139,134 @@ static const struct qmp_phy_init_tbl sc8280xp_usb3_uniphy_pcs_usb_tbl[] = {
+>  	QMP_PHY_INIT_CFG(QPHY_V5_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL, 0xf8),
+>  };
+>  
+> +static const struct qmp_phy_init_tbl x1e80100_usb3_uniphy_serdes_tbl[] = {
 
-Regards,
-Vikash
+These tables and...
 
+> @@ -1411,6 +1540,26 @@ static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
+>  	.regs			= qmp_v5_usb3phy_regs_layout,
+>  };
+>  
+> +static const struct qmp_phy_cfg x1e80100_usb3_uniphy_cfg = {
+> +	.lanes			= 1,
+> +
+> +	.offsets		= &qmp_usb_offsets_v5,
+> +
+> +	.serdes_tbl		= x1e80100_usb3_uniphy_serdes_tbl,
+> +	.serdes_tbl_num		= ARRAY_SIZE(x1e80100_usb3_uniphy_serdes_tbl),
+> +	.tx_tbl			= x1e80100_usb3_uniphy_tx_tbl,
+> +	.tx_tbl_num		= ARRAY_SIZE(x1e80100_usb3_uniphy_tx_tbl),
+> +	.rx_tbl			= x1e80100_usb3_uniphy_rx_tbl,
+> +	.rx_tbl_num		= ARRAY_SIZE(x1e80100_usb3_uniphy_rx_tbl),
+> +	.pcs_tbl		= x1e80100_usb3_uniphy_pcs_tbl,
+> +	.pcs_tbl_num		= ARRAY_SIZE(x1e80100_usb3_uniphy_pcs_tbl),
+> +	.pcs_usb_tbl		= x1e80100_usb3_uniphy_pcs_usb_tbl,
+> +	.pcs_usb_tbl_num	= ARRAY_SIZE(x1e80100_usb3_uniphy_pcs_usb_tbl),
+> +	.vreg_list		= qmp_phy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> +	.regs			= qmp_v5_usb3phy_regs_layout,
+> +};
+
+...this struct no longer looks like they've been added at the right
+places.
+
+> +
+>  static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
+>  	.lanes			= 1,
+>  
+> @@ -2247,6 +2396,9 @@ static const struct of_device_id qmp_usb_of_match_table[] = {
+>  	}, {
+>  		.compatible = "qcom,sc8280xp-qmp-usb3-uni-phy",
+>  		.data = &sc8280xp_usb3_uniphy_cfg,
+> +	}, {
+> +		.compatible = "qcom,x1e80100-qmp-usb3-uni-phy",
+> +		.data = &x1e80100_usb3_uniphy_cfg,
+
+Same here, please keep the entries sorted by compatible (and please
+check your other x1e80100 patches for such issues after changing the SoC
+name).
+
+>  	}, {
+>  		.compatible = "qcom,sdm845-qmp-usb3-uni-phy",
+>  		.data = &qmp_v3_usb3_uniphy_cfg,
+
+Johan
 
