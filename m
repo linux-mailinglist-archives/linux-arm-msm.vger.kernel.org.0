@@ -1,439 +1,336 @@
-Return-Path: <linux-arm-msm+bounces-1520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB4AC7F4805
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 14:42:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0D1D7F48C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 15:20:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30614B21007
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 13:42:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 883F9B2112D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 14:20:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E86D584D6;
-	Wed, 22 Nov 2023 13:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F5DE55773;
+	Wed, 22 Nov 2023 14:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oUlEpnlG"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="FqGHF8Me"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3919ED61
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 05:42:23 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-991c786369cso946028166b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 05:42:23 -0800 (PST)
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB1BD75
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 06:20:23 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-32dc9ff4a8fso4277670f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 06:20:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700660541; x=1701265341; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=H6mwhJa9jnygGPwNgYYVXv0NiFDAvRFSYIV1gmbnIDI=;
-        b=oUlEpnlGNqBKaA4L/oDpvV8+fd10uzxrtRrc5rhHZdtsEWOfn8MwJddXG6ZmZYCq0z
-         t7md5pvrjwSCQ/N2cQ/QoXbND/BMZkGB6KN+42g8Nn/lCCjcNZDYFWtVTyNTHUCo6xVM
-         3hSI8ES8HdbWKHGrkdmXFFxQPk32WYgcTobImcBiOmCCTrYLR8cKP6kX3nghnNUEnTcp
-         QlnQ/N0HbXbyBvd8Htazjzg1u3yfo/QLixfSCEI2PjnuooVSReoTcfsUnr5PRmOJexDe
-         ohb1kNUIJHdL1m0MCCcuiy2Iq2kTspD5Pg/WfLWyEgbgbMuB7P12cKMcD0ZP4JdUtQPW
-         Gr8g==
+        d=fairphone.com; s=fair; t=1700662822; x=1701267622; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BUL3snhs+2QhvhLNvgibL9M8zm24NWKdJWHQAuI96sA=;
+        b=FqGHF8MeUSPhjE53ovM2vWI+h1/ojTHJ41LEoTPiLHlNhY9usIdKxnvaNjPaOVNSsD
+         Hfxp8Y7xp2/7218o0zJR9NJtF8v7AuNlMiwk3SLWjmnM1S0WTeTGmdlE7szoDQ5M7/v1
+         PuK3q+3kp4VPROx1/emqVDdstHI9hNlJEzPc6pjOMOzipMJ7hut9z3FpF0pIa/2vbW0B
+         nolSoM04VmupYpUb4Gm7xBaPkkNWNztqzT24zpEJMrTmHyF6A5jtgmNYWUUC8Ot/G6p8
+         N5euCSMnK1Rlp+KguvQ9jQ3Yi8/f8pNc1a5TsuORjhq+lBFsVppu52HudVJBtkAm5Ly0
+         Mqww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700660541; x=1701265341;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H6mwhJa9jnygGPwNgYYVXv0NiFDAvRFSYIV1gmbnIDI=;
-        b=Zzrm3+fcrpzlz6yIgD+n4f4+dtOtt9xJNe3zsIcnD4SgsBIyL2IdiNvque0ebNTwyv
-         UEqmr/A3Y8R3nted/ZUkgHymCjXBSwU2eimvkYb4S0bFuWtHhCS8mnvG/vjxNwc2IeXJ
-         e7H4WDfjRr9vi0TygRAlhJoq5ZTa0/bDdbec9gvmFTECd9+kxZLgNto4tZdXwk3EEet3
-         LJP5YeCmhVRAqqOCnVC82/tJUxIK3HrVQblgfF1OSx3P2X+IX89hPwSjqFG44KYtZ7TO
-         SSlDRETr6lxJukcZYvSy0beJUW8j9gI/XDxcF9QxdzZ0TgmhiK0azKpHuZQ5zHaFbkU1
-         1/9g==
-X-Gm-Message-State: AOJu0YyZ2UmlXl8l+48AyYLdEmV1+XvtAXm78AfOq/r0rwzTGFFa/l4V
-	8p2ukSc8a06tCvfIsnCT01eUzA==
-X-Google-Smtp-Source: AGHT+IEgnkNC5jhw0DnPblsGP07da0mhG0lItXM+wf1h14Vikn0FyW/oReZcikR0dE2vBMfns6hI9w==
-X-Received: by 2002:a17:906:748f:b0:a04:7e4d:6c19 with SMTP id e15-20020a170906748f00b00a047e4d6c19mr1262653ejl.68.1700660541529;
-        Wed, 22 Nov 2023 05:42:21 -0800 (PST)
-Received: from [127.0.1.1] ([86.123.99.122])
-        by smtp.gmail.com with ESMTPSA id a1-20020a170906190100b009a19701e7b5sm6676797eje.96.2023.11.22.05.42.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Nov 2023 05:42:21 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Wed, 22 Nov 2023 15:42:13 +0200
-Subject: [PATCH 2/2] clk: qcom: Add TCSR clock driver for x1e80100
+        d=1e100.net; s=20230601; t=1700662822; x=1701267622;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BUL3snhs+2QhvhLNvgibL9M8zm24NWKdJWHQAuI96sA=;
+        b=OFbn2kYg4H2vhSo31BBCPXuq0Aazb6GQ+5oJMpxEubAstzM1nJtLA8EXFUiZJ9t9qn
+         DQjS5y4HXcILpy1TTLa/QaIsmZVwmCcoIJVl0W8Fd+BiNV7P0x1LXJCD/J8d3ck4QHoy
+         UqtpwEf227tToNiXuPK4bL2EKzCQJ+Fsn0kW4YZJiuLK/NMaL6fSNR3+IyqGP3cveYBO
+         AvRPl95RPNdMWc5Bk6tsLErkPjQMBdnLzCStlXOO5r+JJlKHm7LWblw/c5RIz3ZsuFqj
+         arMBjOkQwufHE8qaG18D29qdtwBHMF09ZZbwWK4n4t5UnBZCIRFChNthjfmKacRroOzZ
+         RFiw==
+X-Gm-Message-State: AOJu0YyUYVzCJj0+nmtipE3qAVZHqXWsIwz4wGaDETaWd69d0mErhk2s
+	vMZaJXUzGoFNDX/coN8Jo01rew==
+X-Google-Smtp-Source: AGHT+IG1LUHC5pGpTQElp6wOJmfzPipsCJxpTr7DDhvGvDgQMALXyyWyVUbANh48VSHPNBPYRpwyZQ==
+X-Received: by 2002:a5d:45c1:0:b0:32d:701b:a585 with SMTP id b1-20020a5d45c1000000b0032d701ba585mr1308275wrs.69.1700662822099;
+        Wed, 22 Nov 2023 06:20:22 -0800 (PST)
+Received: from localhost ([194.206.60.209])
+        by smtp.gmail.com with ESMTPSA id d12-20020a5d4f8c000000b0032da87e32e2sm17362636wru.4.2023.11.22.06.20.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Nov 2023 06:20:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231122-x1e80100-clk-tcsrcc-v1-2-43078c6d6452@linaro.org>
-References: <20231122-x1e80100-clk-tcsrcc-v1-0-43078c6d6452@linaro.org>
-In-Reply-To: <20231122-x1e80100-clk-tcsrcc-v1-0-43078c6d6452@linaro.org>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9515; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=Esmm2wUqNRcvaHakdFYdG/85Jq1N7KHQoM0n4w+Psoo=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlXgU4ThMIEf2RqEc32R0glteHL9NG9wjaAEF5M
- nTCWUUIzt+JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZV4FOAAKCRAbX0TJAJUV
- Vvm8EADNl/p9Cuhv6uozcS849Yd6Hg6d8BEGawc9l327vcppFQlrdeBoGGpYbepEZ22diIUzh/E
- hKdmfrjkieGSGyTotdXzxcFhlrYRMl645LsuWbDiHhnbOmFU1GRY4kY343RpKPe6fzT7l6awO7P
- zMJLso7XZA30rk0pA7h3nit01GF2JqUKkzan0OpSqcdJTTMfsO/hTQ2Do7XM7hy4Dyp/BmreFWP
- Y0ofgUL25SIJdAI3PCQGBToQeQ7tCAEsOOJWUJ55FXosCSSDkqNWxfRW86/87yE3PgeQ7sKnzKb
- IusBAfHs+sFLM9lcuGpcspvXBV3ZcMXL0nFCtFRv5sSAH7ujDd6YVQZuPXldqYXbXUO5oyJW3+M
- NqVDybeqtrOw9AAftSa49i/nQ84/qJNyFwwmKwhQGZxcMLbUsaEojilyylLUyiOxzFXHfah3BcU
- IbZb22VSrUET8nh7PgiXGmv7JfVnubI1EPC752P4UGobP1Fvz2s8WfnXiZAv5vRBwHVdT2DEV/2
- prlZuUmniHAzgJqwyCJqEhIb2V6gxtmnK1+YIuLMVRABj+pO+VM85I/s0b+2/oX8y7hKTQO+3ev
- dArkDP1ZEVH5nUxhDFC5Vn1dXJf4DQT+S75upcZiR9qGLpjOG30XRIZZA5gbm0bH+lfaZ7bXa7g
- m565ofnzcJohpcg==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 22 Nov 2023 15:20:17 +0100
+Message-Id: <CX5ENKY70B5J.2D6DXKGI4EGX3@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: Move video-firmware to
+ chrome-common
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Vikash Garodia" <quic_vgarodia@quicinc.com>, "Stanimir Varbanov"
+ <stanimir.k.varbanov@gmail.com>, "Bryan O'Donoghue"
+ <bryan.odonoghue@linaro.org>, "Andy Gross" <agross@kernel.org>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+ <cros-qcom-dts-watchers@chromium.org>, "Rob Herring" <robh+dt@kernel.org>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
+ <conor+dt@kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20231002-sc7280-venus-pas-v2-0-bd2408891317@fairphone.com>
+ <20231002-sc7280-venus-pas-v2-2-bd2408891317@fairphone.com>
+ <4cfad910-1821-3a31-c372-3f6b199e8f71@quicinc.com>
+In-Reply-To: <4cfad910-1821-3a31-c372-3f6b199e8f71@quicinc.com>
 
-The TCSR clock controller found on X1E80100 provides refclks
-for PCIE, USB and UFS. Add clock driver for it.
+On Wed Nov 22, 2023 at 2:17 PM CET, Vikash Garodia wrote:
+>
+> On 10/2/2023 7:50 PM, Luca Weiss wrote:
+> > If the video-firmware node is present, the venus driver assumes we're o=
+n
+> > a system that doesn't use TZ for starting venus, like on ChromeOS
+> > devices.
+> >=20
+> > Move the video-firmware node to chrome-common.dtsi so we can use venus
+> > on a non-ChromeOS devices.
+> >=20
+> > At the same time also disable the venus node by default in the dtsi,
+> > like it's done on other SoCs.
+> >=20
+> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 8 ++++++++
+> >  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 6 ++----
+> >  2 files changed, 10 insertions(+), 4 deletions(-)
+> >=20
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/=
+arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> > index 5d462ae14ba1..cd491e46666d 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+> > @@ -104,6 +104,14 @@ &scm {
+> >  	dma-coherent;
+> >  };
+> > =20
+> > +&venus {
+> > +	status =3D "okay";
+> > +
+> > +	video-firmware {
+> > +		iommus =3D <&apps_smmu 0x21a2 0x0>;
+> > +	};
+> > +};
+> > +
+> >  &watchdog {
+> >  	status =3D "okay";
+> >  };
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts=
+/qcom/sc7280.dtsi
+> > index 66f1eb83cca7..fa53f54d4675 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > @@ -3740,6 +3740,8 @@ venus: video-codec@aa00000 {
+> >  				 <&apps_smmu 0x2184 0x20>;
+> >  			memory-region =3D <&video_mem>;
+> > =20
+> > +			status =3D "disabled";
+> > +
+> >  			video-decoder {
+> >  				compatible =3D "venus-decoder";
+> >  			};
+> > @@ -3748,10 +3750,6 @@ video-encoder {
+> >  				compatible =3D "venus-encoder";
+> >  			};
+> > =20
+> > -			video-firmware {
+> > -				iommus =3D <&apps_smmu 0x21a2 0x0>;
+> > -			};
+> > -
+> >  			venus_opp_table: opp-table {
+> >  				compatible =3D "operating-points-v2";
+> > =20
+> >=20
+> Changes look good. Is this tested on SC7280 ?
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/clk/qcom/Kconfig           |   8 +
- drivers/clk/qcom/Makefile          |   1 +
- drivers/clk/qcom/tcsrcc-x1e80100.c | 295 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 304 insertions(+)
+Hi Vikash,
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index ad1acd9b7426..6ed9c89d9070 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -1116,4 +1116,12 @@ config SM_VIDEOCC_8450
- 	  SM8450 devices.
- 	  Say Y if you want to support video devices and functionality such as
- 	  video encode/decode.
-+
-+config X1E_TCSRCC_80100
-+	tristate "X1E80100 TCSR Clock Controller"
-+	depends on ARM64 || COMPILE_TEST
-+	select QCOM_GDSC
-+	help
-+	  Support for the TCSR clock controller on X1E80100 devices.
-+	  Say Y if you want to use peripheral devices such as SD/UFS.
- endif
-diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-index 17edd73f9839..4931a1470137 100644
---- a/drivers/clk/qcom/Makefile
-+++ b/drivers/clk/qcom/Makefile
-@@ -140,3 +140,4 @@ obj-$(CONFIG_SPMI_PMIC_CLKDIV) += clk-spmi-pmic-div.o
- obj-$(CONFIG_KPSS_XCC) += kpss-xcc.o
- obj-$(CONFIG_QCOM_HFPLL) += hfpll.o
- obj-$(CONFIG_KRAITCC) += krait-cc.o
-+obj-$(CONFIG_X1E_TCSRCC_80100) += tcsrcc-x1e80100.o
-diff --git a/drivers/clk/qcom/tcsrcc-x1e80100.c b/drivers/clk/qcom/tcsrcc-x1e80100.c
-new file mode 100644
-index 000000000000..2ec142c3d1f9
---- /dev/null
-+++ b/drivers/clk/qcom/tcsrcc-x1e80100.c
-@@ -0,0 +1,295 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2023, Linaro Limited
-+ */
-+
-+#include <linux/clk-provider.h>
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include <linux/regmap.h>
-+
-+#include <dt-bindings/clock/qcom,x1e80100-tcsr.h>
-+
-+#include "clk-alpha-pll.h"
-+#include "clk-branch.h"
-+#include "clk-pll.h"
-+#include "clk-rcg.h"
-+#include "clk-regmap.h"
-+#include "clk-regmap-divider.h"
-+#include "clk-regmap-mux.h"
-+#include "common.h"
-+#include "reset.h"
-+
-+enum {
-+	DT_BI_TCXO_PAD,
-+};
-+
-+static struct clk_branch tcsr_edp_clkref_en = {
-+	.halt_reg = 0x15130,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15130,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(const struct clk_init_data) {
-+			.name = "tcsr_edp_clkref_en",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_pcie_2l_4_clkref_en = {
-+	.halt_reg = 0x15100,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15100,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_pcie_2l_4_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_pcie_2l_5_clkref_en = {
-+	.halt_reg = 0x15104,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15104,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_pcie_2l_5_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_pcie_8l_clkref_en = {
-+	.halt_reg = 0x15108,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15108,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_pcie_8l_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_usb3_mp0_clkref_en = {
-+	.halt_reg = 0x1510c,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x1510c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_usb3_mp0_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_usb3_mp1_clkref_en = {
-+	.halt_reg = 0x15110,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15110,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_usb3_mp1_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_usb2_1_clkref_en = {
-+	.halt_reg = 0x15114,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15114,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_usb2_1_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_ufs_phy_clkref_en = {
-+	.halt_reg = 0x15118,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15118,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_ufs_phy_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_usb4_1_clkref_en = {
-+	.halt_reg = 0x15120,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15120,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_usb4_1_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_usb4_2_clkref_en = {
-+	.halt_reg = 0x15124,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15124,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_usb4_2_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_usb2_2_clkref_en = {
-+	.halt_reg = 0x15128,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x15128,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_usb2_2_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_branch tcsr_pcie_4l_clkref_en = {
-+	.halt_reg = 0x1512c,
-+	.halt_check = BRANCH_HALT_DELAY,
-+	.clkr = {
-+		.enable_reg = 0x1512c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "tcsr_pcie_4l_clkref_en",
-+			.parent_data = &(const struct clk_parent_data){
-+				.index = DT_BI_TCXO_PAD,
-+			},
-+			.num_parents = 1,
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
-+static struct clk_regmap *tcsr_cc_x1e80100_clocks[] = {
-+	[TCSR_EDP_CLKREF_EN] = &tcsr_edp_clkref_en.clkr,
-+	[TCSR_PCIE_2L_4_CLKREF_EN] = &tcsr_pcie_2l_4_clkref_en.clkr,
-+	[TCSR_PCIE_2L_5_CLKREF_EN] = &tcsr_pcie_2l_5_clkref_en.clkr,
-+	[TCSR_PCIE_8L_CLKREF_EN] = &tcsr_pcie_8l_clkref_en.clkr,
-+	[TCSR_USB3_MP0_CLKREF_EN] = &tcsr_usb3_mp0_clkref_en.clkr,
-+	[TCSR_USB3_MP1_CLKREF_EN] = &tcsr_usb3_mp1_clkref_en.clkr,
-+	[TCSR_USB2_1_CLKREF_EN] = &tcsr_usb2_1_clkref_en.clkr,
-+	[TCSR_UFS_PHY_CLKREF_EN] = &tcsr_ufs_phy_clkref_en.clkr,
-+	[TCSR_USB4_1_CLKREF_EN] = &tcsr_usb4_1_clkref_en.clkr,
-+	[TCSR_USB4_2_CLKREF_EN] = &tcsr_usb4_2_clkref_en.clkr,
-+	[TCSR_USB2_2_CLKREF_EN] = &tcsr_usb2_2_clkref_en.clkr,
-+	[TCSR_PCIE_4L_CLKREF_EN] = &tcsr_pcie_4l_clkref_en.clkr,
-+};
-+
-+static const struct regmap_config tcsr_cc_x1e80100_regmap_config = {
-+	.reg_bits = 32,
-+	.reg_stride = 4,
-+	.val_bits = 32,
-+	.max_register = 0x2f000,
-+	.fast_io = true,
-+};
-+
-+static const struct qcom_cc_desc tcsr_cc_x1e80100_desc = {
-+	.config = &tcsr_cc_x1e80100_regmap_config,
-+	.clks = tcsr_cc_x1e80100_clocks,
-+	.num_clks = ARRAY_SIZE(tcsr_cc_x1e80100_clocks),
-+};
-+
-+static const struct of_device_id tcsr_cc_x1e80100_match_table[] = {
-+	{ .compatible = "qcom,x1e80100-tcsr" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, tcsr_cc_x1e80100_match_table);
-+
-+static int tcsr_cc_x1e80100_probe(struct platform_device *pdev)
-+{
-+	struct regmap *regmap;
-+
-+	regmap = qcom_cc_map(pdev, &tcsr_cc_x1e80100_desc);
-+	if (IS_ERR(regmap))
-+		return PTR_ERR(regmap);
-+
-+	return qcom_cc_really_probe(pdev, &tcsr_cc_x1e80100_desc, regmap);
-+}
-+
-+static struct platform_driver tcsr_cc_x1e80100_driver = {
-+	.probe = tcsr_cc_x1e80100_probe,
-+	.driver = {
-+		.name = "tcsr_cc-x1e80100",
-+		.of_match_table = tcsr_cc_x1e80100_match_table,
-+	},
-+};
-+
-+static int __init tcsr_cc_x1e80100_init(void)
-+{
-+	return platform_driver_register(&tcsr_cc_x1e80100_driver);
-+}
-+subsys_initcall(tcsr_cc_x1e80100_init);
-+
-+static void __exit tcsr_cc_x1e80100_exit(void)
-+{
-+	platform_driver_unregister(&tcsr_cc_x1e80100_driver);
-+}
-+module_exit(tcsr_cc_x1e80100_exit);
-+
-+MODULE_DESCRIPTION("QTI TCSRCC X1E80100 Driver");
-+MODULE_LICENSE("GPL");
+I didn't test it myself on sc7280 (just qcm6490-fp5) but dtx_diff
+reports no differences except for status =3D okay property being added, so
+there should be no change on those boards. See below.
 
--- 
-2.34.1
+Regards
+Luca
+
+
+--- test-pre/sc7280-crd-r3.dtb
++++ test-post/sc7280-crd-r3.dtb
+@@ -5744,6 +5744,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x13b 0x01 0x13b 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-crd.dtb
++++ test-post/sc7280-herobrine-crd.dtb
+@@ -6117,6 +6117,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x147 0x01 0x147 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-crd-pro.dtb
++++ test-post/sc7280-herobrine-crd-pro.dtb
+@@ -6112,6 +6112,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x147 0x01 0x147 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-evoker.dtb
++++ test-post/sc7280-herobrine-evoker.dtb
+@@ -6058,6 +6058,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x14b 0x01 0x14b 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-evoker-lte.dtb
++++ test-post/sc7280-herobrine-evoker-lte.dtb
+@@ -6121,6 +6121,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x151 0x01 0x151 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-herobrine-r1.dtb
++++ test-post/sc7280-herobrine-herobrine-r1.dtb
+@@ -6108,6 +6108,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x14f 0x01 0x14f 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-villager-r0.dtb
++++ test-post/sc7280-herobrine-villager-r0.dtb
+@@ -6049,6 +6049,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x145 0x01 0x145 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-villager-r1.dtb
++++ test-post/sc7280-herobrine-villager-r1.dtb
+@@ -6037,6 +6037,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x142 0x01 0x142 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-villager-r1-lte.dtb
++++ test-post/sc7280-herobrine-villager-r1-lte.dtb
+@@ -6100,6 +6100,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x148 0x01 0x148 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-zombie.dtb
++++ test-post/sc7280-herobrine-zombie.dtb
+@@ -6031,6 +6031,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x146 0x01 0x146 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-zombie-lte.dtb
++++ test-post/sc7280-herobrine-zombie-lte.dtb
+@@ -6094,6 +6094,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x14c 0x01 0x14c 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-zombie-nvme.dtb
++++ test-post/sc7280-herobrine-zombie-nvme.dtb
+@@ -6031,6 +6031,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x146 0x01 0x146 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-herobrine-zombie-nvme-lte.dtb
++++ test-post/sc7280-herobrine-zombie-nvme-lte.dtb
+@@ -6094,6 +6094,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x14c 0x01 0x14c 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-idp2.dtb
++++ test-post/sc7280-idp2.dtb
+@@ -5677,6 +5677,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x138 0x01 0x138 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+--- test-pre/sc7280-idp.dtb
++++ test-post/sc7280-idp.dtb
+@@ -5642,6 +5642,7 @@
+                        power-domain-names =3D "venus\0vcodec0\0cx";
+                        power-domains =3D <0x133 0x01 0x133 0x00 0x34 0x00>=
+;
+                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
++                       status =3D "okay";
+=20
+                        opp-table {
+                                compatible =3D "operating-points-v2";
+
+
+>
+> Regards,
+> Vikash
 
 
