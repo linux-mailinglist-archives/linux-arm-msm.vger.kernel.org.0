@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52CF27F5145
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 21:10:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 650067F5164
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 21:17:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D4B682815F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 20:10:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 209A42813EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 20:17:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52DA85D904;
-	Wed, 22 Nov 2023 20:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10A755D904;
+	Wed, 22 Nov 2023 20:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ewvz7udj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mCt1Ud86"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA231B6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 12:09:59 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c887d1fb8fso2550391fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 12:09:59 -0800 (PST)
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75D861B1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 12:17:39 -0800 (PST)
+Received: by mail-qv1-xf2b.google.com with SMTP id 6a1803df08f44-677fba00a49so1814926d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 12:17:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700683798; x=1701288598; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700684258; x=1701289058; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6oN/ChfT8e0nycA2Y45oH8F8aAL5FUndvODmKzayhWU=;
-        b=Ewvz7udjv2xjoBcffDVT43fZVbbNIRZdQB9wfpXvCspkBa2d3lATT9kZw/OIb4dutO
-         DllBaqmw8lCWEUxBvGRfqaSoXiGw4TgwDmbnZw6GJkmTxgdlnZztWtes9W6pv4wpcjtj
-         rjW+j+5p0xQRYkjsZ1VFIDPkwSdH2SI/MXcnqW230Ltx4+cSyWirKVr17faN2Yjd0IMX
-         SHhKuaec3PBwq7Vw1AGJbk5dOMw0pFBjmCExk+gXYJ5rH8klLwt03cHeY2HE6L8/c0tH
-         NYzRvd5Ou+n/fOOfamIFbXxN53j17DheG5VTfz6pFMIZ4qN9X/HC4jzHRQ9R+O1Wr1Sk
-         tkzg==
+        bh=sfuhOg7fLREVYMm9dTzTXqALWreH+h6p9+qLhzePyFY=;
+        b=mCt1Ud86u/P9z2hfz+yptcH1KYFlAVMJTiESZqHdsmI1s5KJMue65vlEIif8MwRwOF
+         Fc9spZOCFU3TPJ3H7ZsDCS9adqAapWB0BdxfDjyvy2su3LokaH6BODgMnX0D0DAMwF0y
+         iJD6nrATC0sjCYI/FXcl+ZxeiVXXHq+pyVeRvaz+JJbu78Jd4AZzPff8ILgDp/v4Wf3v
+         PHqEZSGvWRrGyqs8tsoGTwZpzVpAUveIoJeFjsBwarvDNHqq5O1OPACBfYlc7iH52kZj
+         kLPhPdU5rOvX4kKs97Ie+PbXOuAub9UTGJ2tvj90hnjWTfBX1czu+1pvbGwBe/x7FEJd
+         MthA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700683798; x=1701288598;
+        d=1e100.net; s=20230601; t=1700684258; x=1701289058;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6oN/ChfT8e0nycA2Y45oH8F8aAL5FUndvODmKzayhWU=;
-        b=sJH8TQ7T+0X0BFw/j8guxvjQ+irM1egZ4pb38MgQa/Tad3r85lTMRSZPnOO/acN4PJ
-         scG1fzEPL9JfUY5xV/BVVyjurL7eMz/v6hfQv5iq/gwc75VlGiKKqNkLj9DGURKrKGgM
-         MbgEsHlySjDugRVWCKtJ1D5J/86uxyqmpy2pDSHwZ91I2fm42XtjsOgfgHaLblVSvT9w
-         r71szCJqEYGIn5rA3v3CCXNyyIFOM8S+lQqbUXc+RqcHDd4G02YvbIKeRzM4nr+KuTsb
-         A5KOzRjbRggxTIOu+vIPtrjD0yY6Ej3fURGH40fh3aD41mXsBqKJLHujjmtdAZMO+A/+
-         hZRg==
-X-Gm-Message-State: AOJu0YyZP1xalZDCPASxKxxwNKwrCwzv1q4+hlsLBwFYT6lLYxktxKc8
-	3MtZJp+hqUsnpoD4zFxvFaUhVg==
-X-Google-Smtp-Source: AGHT+IE/Laar5BAe/Ut2eWzKinuOOq4h3ahqPOZfbrEwTg8LRJ8HKRRN3AqS36Kxn4ieIK8bY/3SVg==
-X-Received: by 2002:a2e:828d:0:b0:2c6:eb1c:10d1 with SMTP id y13-20020a2e828d000000b002c6eb1c10d1mr2244801ljg.25.1700683798165;
-        Wed, 22 Nov 2023 12:09:58 -0800 (PST)
+        bh=sfuhOg7fLREVYMm9dTzTXqALWreH+h6p9+qLhzePyFY=;
+        b=viRME1LiqC/uEfOrvVCb94Z/fUTKCttyJi698Mj98ueomJn2ZE20tjihJRng0/bztf
+         Q67lvspK4SzwC6NzEev01dSrgWnM5J2xnNLjM+kyB47fzE51j/BVYksJ10HBeoymAq+/
+         sp4UZRBmPouXBlFiTZydqUlp/uGgK2pQ5A2Rup+Mw4Y50+jD9rrP2+N1rgfPzvcNmjUU
+         6B/FoOpND5ufuKjYsJ7XX3szL5nPGQm8HEbdbdu+G6s3d2BjZthhvqRUqQYqoPI99lrE
+         Th91gFNRfKqzsRYAGVO4habWr+NOgficMGdNcbTpLwwG/rpxy8OtxUVhbIt+5h1iB2BW
+         TjaQ==
+X-Gm-Message-State: AOJu0Yy7K5VsYxyXJnykgg66TLRm83MPz41l6GLYjRnzApJDDZjWaQe/
+	V7ng8aBiV1ILggNKJ20tlQqSgw==
+X-Google-Smtp-Source: AGHT+IEjLt0uBVJ+8ZR+C83Sz4GO+jKzSD8w4cQPLFvOELzntBpQJthrUn4s2ydIV5pepIe4jVNvkw==
+X-Received: by 2002:a0c:f705:0:b0:670:5242:a6a1 with SMTP id w5-20020a0cf705000000b006705242a6a1mr821580qvn.31.1700684258532;
+        Wed, 22 Nov 2023 12:17:38 -0800 (PST)
 Received: from [172.30.204.74] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id q8-20020a2e9688000000b002bcdbfe36b9sm38083lji.111.2023.11.22.12.09.55
+        by smtp.gmail.com with ESMTPSA id y4-20020a0cd984000000b00679d90922c8sm59479qvj.131.2023.11.22.12.17.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Nov 2023 12:09:57 -0800 (PST)
-Message-ID: <90885d90-2e25-404b-b3a3-13d134801146@linaro.org>
-Date: Wed, 22 Nov 2023 21:09:54 +0100
+        Wed, 22 Nov 2023 12:17:38 -0800 (PST)
+Message-ID: <d35b9250-eddb-4436-8daf-066ec84cf55f@linaro.org>
+Date: Wed, 22 Nov 2023 21:17:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,76 +62,81 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 2/4] clk: qcom: branch: Add mem ops support for branch2
- clocks
+Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: sm8350-lemonade(p): New devices
 Content-Language: en-US
-To: Imran Shaik <quic_imrashai@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
- Ajit Pandey <quic_ajipan@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-References: <20231117095558.3313877-1-quic_imrashai@quicinc.com>
- <20231117095558.3313877-3-quic_imrashai@quicinc.com>
+To: Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
+ Lars-Peter Clausen <lars@metafoo.de>, Rob Herring <robh+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
+ Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
+ <gpiccoli@igalia.com>, Vinod Koul <vkoul@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ devicetree@vger.kernel.org, phone-devel@vger.kernel.org, Rob <Me@orbit.sh>,
+ Clayton Craft <clayton@igalia.com>,
+ Caleb Connolly <caleb.connolly@linaro.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, ~postmarketos/upstreaming@lists.sr.ht
+References: <20231111-nia-sm8350-for-upstream-v4-0-3a638b02eea5@igalia.com>
+ <20231111-nia-sm8350-for-upstream-v4-6-3a638b02eea5@igalia.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231117095558.3313877-3-quic_imrashai@quicinc.com>
+In-Reply-To: <20231111-nia-sm8350-for-upstream-v4-6-3a638b02eea5@igalia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Level: *
 
 
 
-On 11/17/23 10:55, Imran Shaik wrote:
-> From: Taniya Das <quic_tdas@quicinc.com>
+On 11/11/23 23:07, Nia Espera wrote:
+> Device tree files for OnePlus 9 and 9 Pro. Details of supported features
+> mentioned in the cover letter for this patch series, but for
+> accessibility also repeated here:
 > 
-> Add the support for mem ops implementation to handle the sequence of
-> enable/disable of the memories in ethernet PHY, prior to enable/disable
-> of the respective clocks, which helps retain the respecive block's
-> register contents.
+> - USB OTG
+> - UFS
+> - Framebuffer display
+> - Touchscreen (for lemonade)
+> - Power & volume down keys
+> - Battery reading
+> - Modem, IPA, and remoteproc bringup
 > 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-> ---
->   drivers/clk/qcom/clk-branch.c | 39 +++++++++++++++++++++++++++++++++++
->   drivers/clk/qcom/clk-branch.h | 21 +++++++++++++++++++
->   2 files changed, 60 insertions(+)
+> Steps to get booting:
 > 
-> diff --git a/drivers/clk/qcom/clk-branch.c b/drivers/clk/qcom/clk-branch.c
-> index fc4735f74f0f..61bdd2147bed 100644
-> --- a/drivers/clk/qcom/clk-branch.c
-> +++ b/drivers/clk/qcom/clk-branch.c
-> @@ -1,6 +1,7 @@
->   // SPDX-License-Identifier: GPL-2.0
->   /*
->    * Copyright (c) 2013, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->    */
->   
->   #include <linux/kernel.h>
-> @@ -134,6 +135,44 @@ static void clk_branch2_disable(struct clk_hw *hw)
->   	clk_branch_toggle(hw, false, clk_branch2_check_halt);
->   }
->   
-> +static int clk_branch2_mem_enable(struct clk_hw *hw)
-> +{
-> +	struct clk_mem_branch *mem_br = to_clk_mem_branch(hw);
-> +	struct clk_branch branch = mem_br->branch;
-> +	const char *name = clk_hw_get_name(&branch.clkr.hw);
-Bit of a microoptimization, but adding this implicitly in the WARN
-would only execute clk_hw_get_name when necessary
+> - Wipe dtbo partition
+> - Flash vbmeta with disabled verity bit
+> - Flash kernel and initfs to boot partition with CLI args pd_ignore_unused
+> and clk_ignore_unused as v1 bootimg
+> - Flash rootfs to some other partition (probably super or userdata)
+Thanks for including this info here
 
-> +	u32 val;
-> +	int ret;
+> +&pmk8350_vadc {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&gpio1_adc_default>, <&gpio3_adc_default>;
 > +
-> +	regmap_update_bits(branch.clkr.regmap, mem_br->mem_enable_reg,
-> +			mem_br->mem_enable_ack_mask, mem_br->mem_enable_ack_mask);
-It's quite a nit from me, but it would be nice to have the next line aligned
-with the opening brace (with a tab size of 8)
+> +	/* pmk8350-ref-gnd */
+I fail to see the benefit in having this both here and in the label
+
+> +	channel@0 {
+> +		reg = <0x00>;
+> +		qcom,pre-scaling = <1 1>;
+> +		label = "pmk8350_ref_gnd";
+> +	};
+> +
+[...]
+
+> +&tlmm {
+> +	gpio-reserved-ranges = <52 8>;
+Would you know what these are connected to?
+
+[...]
+
+> +&mpss {
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&rf_cable_ant0_active>;
+patch-wide:
+
+property-n
+property-names
 
 Konrad
 
