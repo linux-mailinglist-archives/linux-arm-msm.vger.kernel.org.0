@@ -1,60 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-1572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF5457F5092
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 20:31:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA3457F509B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 20:33:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7ACDD2811FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 19:31:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A80C1C20A7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 19:33:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C76F5E0C5;
-	Wed, 22 Nov 2023 19:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2E055E0C6;
+	Wed, 22 Nov 2023 19:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nkGHURid"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hwev7xaK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E383319D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 11:31:22 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-50aab0ca90aso110281e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 11:31:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700681481; x=1701286281; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/3Hb4WPhSaSPAUoOT6lB75q1bgT44dZFwIpXm+KkGko=;
-        b=nkGHURidAIDei8O3E5usUyMd4izr+Y45af4dYisXNK5Ucfn1/gj6m+kdZVLFBqLXWe
-         5F6EZVtNzFR7Q8QeYQ/vSBLeWGv6rhy+C4DPUdL6VEqi/QKyQ4MKO1fcDsOTPCuTf866
-         hJHkBREZxUS68gI+vKa9XtEeVPuRjt7B6qBmoECCD3Zg3i3i3arYJ+hbo7+ilGWu07s6
-         7YomS69xxuAa9u+YWGY9wTze5n35lwPRo/jhZg27Dr806SafNOGSG+DEXpf0rcCnZoGU
-         Y8S1zBSyhuyd9KA/+FjyggmHwgk3VF/kEFbwmvuHWFRE6D1ctZZkEEpE/7AvVedZEDng
-         mLmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700681481; x=1701286281;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/3Hb4WPhSaSPAUoOT6lB75q1bgT44dZFwIpXm+KkGko=;
-        b=UUAfkjXuLb7hUv5R3IHAY5n2QEvVpe7bzxKSWCkvXLHBo3Mz8IAN3X3rJSns5NS0A6
-         EOL3sP8xLBhBhtz/Pwaeo2jFfaMQ5/C7igqREztJ4FTpi6duxQLoDbAvaHpcrAPpW6Wt
-         oMC8b8ygS1X1wko+6AHZbIQdb1elXm6CDW7YOb9QQq11Atc71g9FKb292nAai0mpqAJh
-         LG+r7EGD70hEVxg/r5gF5PvC+oHF+jMXxnaROWtEDzPu2b8WYbdebMOOmPzhytUoyEhv
-         FEFtWxYDpfLqyLfm7mvZFwLgaU7eIXHmfftczQzMC3jfFrMkzNit7LEYyj004vxQdv76
-         OydQ==
-X-Gm-Message-State: AOJu0Ywg814gZTzJaH8i+qLVw0ygO795zeTVXI73RtPojQkgAZGLVOma
-	Yx3UKidfsVlfUJbGXtBSk0akCA==
-X-Google-Smtp-Source: AGHT+IG9PnDXoY4hN8COg/8KM91F4QysmaB1ycYccER3JxluzECblJt0qpgWnFM6mx7ZjbgcZ5+Ohg==
-X-Received: by 2002:a05:6512:3b9c:b0:503:261d:eab8 with SMTP id g28-20020a0565123b9c00b00503261deab8mr2918554lfv.28.1700681481136;
-        Wed, 22 Nov 2023 11:31:21 -0800 (PST)
-Received: from [172.30.204.74] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id i4-20020a056512318400b005007e7211f7sm1938041lfe.21.2023.11.22.11.31.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Nov 2023 11:31:20 -0800 (PST)
-Message-ID: <675bce4e-1270-4e9e-b520-f3f4c1c5ee8a@linaro.org>
-Date: Wed, 22 Nov 2023 20:31:17 +0100
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC4218E;
+	Wed, 22 Nov 2023 11:32:49 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AMHiFr9022795;
+	Wed, 22 Nov 2023 19:32:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=JzNGPFD86fwsmcahE1+T+6e6VOPxT4djsdC33J37GHE=;
+ b=hwev7xaKWkd9pLH+hxGrw1CtHOBeu8My8O2FOfdkIPt2vUafqIdPntj3FrI1Y+h868M1
+ jzDsGugFC7NzHR2tnLMzXR+VqbMrYd0EMAeWjrnY86jGuBJk0+uuf+p/M89OyUAt6m1v
+ 02OWpTMDOyuswu9uhDlK67b88jEehl9lYLbrb1ebtuKphHTsrtpaJUYXRjUbuZc9L8n5
+ uUAOBZkXuq6pDRVPv1P0pCZUmNOPYDSMpmTAAbPxxIWawKKFEyuYXn1hujf+e0y8YQiv
+ Bw1zKkesQTIkyZ/4nUu7mwhT6kmsIf1I9iX0xQn9mN+qHFrqaw2MPmZqHyBi+lBF/cVv nQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uhgud93ks-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Nov 2023 19:32:38 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AMJWbru028998
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Nov 2023 19:32:37 GMT
+Received: from [10.216.58.33] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 22 Nov
+ 2023 11:32:29 -0800
+Message-ID: <e0789695-43ee-4285-95e9-4cdee24d6ffe@quicinc.com>
+Date: Thu, 23 Nov 2023 01:02:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,37 +51,166 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: pm8916: Add BMS and charger
-To: Nikita Travkin <nikita@trvn.ru>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
- Stephen Boyd <sboyd@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231120-pm8916-dtsi-bms-lbc-v4-0-4f91056c8252@trvn.ru>
- <20231120-pm8916-dtsi-bms-lbc-v4-2-4f91056c8252@trvn.ru>
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+To: Johan Hovold <johan@kernel.org>
+CC: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy
+ Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi
+	<balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>,
+        <ahalaney@redhat.com>, <quic_shazhuss@quicinc.com>
+References: <ZTJ_T1UL8-s2cgNz@hovoldconsulting.com>
+ <14fc724c-bc99-4b5d-9893-3e5eff8895f7@quicinc.com>
+ <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+ <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+ <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
+ <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
+ <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+ <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
+ <6d4d959c-b155-471b-b13d-f6fda557cfe0@quicinc.com>
+ <ZVYTFi3Jnnljl48L@hovoldconsulting.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231120-pm8916-dtsi-bms-lbc-v4-2-4f91056c8252@trvn.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZVYTFi3Jnnljl48L@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Level: *
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: xpDsdrGASeNU_-wpA1IfUi9Is9mQdoCS
+X-Proofpoint-ORIG-GUID: xpDsdrGASeNU_-wpA1IfUi9Is9mQdoCS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-22_14,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 mlxlogscore=999 impostorscore=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 mlxscore=0 adultscore=0 bulkscore=0
+ suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311060000 definitions=main-2311220142
 
 
 
-On 11/20/23 15:03, Nikita Travkin wrote:
-> pm8916 contains some hardware blocks for battery powered devices:
+On 11/16/2023 6:33 PM, Johan Hovold wrote:
+> On Wed, Nov 15, 2023 at 11:12:16PM +0530, Krishna Kurapati PSSNV wrote:
 > 
-> - VM-BMS: Battery voltage monitoring block.
-> - LBC: Linear battery charger.
+>>> Are you sure there's no support for hs_phy_irq also in the "femto" PHYs
+>>> and that it's just that there is currently no driver support for using
+>>> them?
+>>>
+>>> And why is it defined if there is truly no use for it?
 > 
-> Add them to the pmic dtsi so the devices that make use of those blocks
-> can enable them.
+>> We had an internal sync up with HW folks and here is some baseline
+>> suggestions we received:
+>>
+>> If DP/DM interrupts are defined, then that is the preferred path to
+>> used, irrespective if HS Phy irq is defined or not / or whether it is
+>> Femto / QUSB2 target. There is no target that has femto phy but misses
+>> DP/DM today.
 > 
-> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Ok, but just knowing that it is "preferred" does not in itself mean that
+> it should be removed from the binding.
+> 
+> We need to know that it's effectively useless (i.e. that the interrupts
+> are defined but cannot be triggered) for that.
+> 
+> We can still use the DP/DM interrupts in favour of HS in the driver
+> however.
+> 
+>> For cases like sdm660/msm8998/msm8953/msm8956, these targets use
+>> hs_phy_irq only and don't rely on DP/DM. So we cannot remove the binding
+>> in entirety.
+> 
+> I fixed the binding for those specific platforms last year:
+> 
+> 	dd566faebe9f ("dt-bindings: usb: qcom,dwc3: refine interrupt requirements")
+> 
+> But as I mentioned in that commit message the following platforms do not
+> have any wakeup interrupts specified in mainline currently:
+> 
+>        - qcom,ipq4019-dwc3
+>        - qcom,ipq6018-dwc3
+>        - qcom,ipq8064-dwc3
+>        - qcom,ipq8074-dwc3
+>        - qcom,msm8994-dwc3
+>        - qcom,qcs404-dwc3
+> 
+> It would be good to get that cleaned up too (i.e. add the missing
+> interrupt definitions and update the binding to match).
+> 
+>>> Also, if hs_phy_irq and dp/dm_phy_irq were mutually exclusive, why does
+>>> the following Qualcomm SoCs define all three?
+> 
+>> HS Phy Irq is redundant or functionality is mutually exclusive in this
+>> case. If there are targets that define all three, then we need to update
+>> those to only utilize DP/DM interrupts.
+> 
+> No, as I wrote above that depends on if the HS interrupt is truly
+> useless. Otherwise it still belongs in the binding, even if the driver
+> uses DP/DM in place of it.
+> 
+> Again, the binding should describe the hardware, not what a particular
+> OS chooses to use.
+> 
 
-Konrad
+Hi Johan,
+
+  Sorry for delayed response.
+
+  Pushed [1] to address all the queries and comments. I was initially 
+looking at only Femto phy targets, but when I looked at all targets in 
+general, seems there is one irq not defined in bindings. It is qubs2_phy 
+irq which is named as "hs_phy_irq" on QUSB target DT's (both downstream 
+and upstream).
+
+There is one actual "hs_phy_irq" as well but it is not used either by hs 
+validation team or sw team on any target. It was put in for debug 
+purpose only and doesn't have code to trigger it (even downstream never 
+implemented it I suppose) Atleast 4.4 onwards I saw the code but I 
+didn't see the actual hs_phy_irq being used. It was the qusb2_phy irq 
+named as hs_phy_irq.
+
+Even hw folks used it under the same name which is why they recommended 
+using it on qusb2 targets and dp/dm on femto targets.
+
+As we moved from qusb2 to femto phys, since qusb2_phy irq was not 
+present, the actual hs_phy_irq was put in the interrupts although it is 
+never triggered. That is why when I tried to check on sa8295-adp 
+multiport, those 4 hs interrupts never got fired. Hope the explanation 
+clears the confusion present around the interrupts.
+
+On some targets the hs_phy_irq was given vector number of pwr_event irq 
+also like sm8550/sm8450 etc., I tried to address those as well in the 
+series.
+
+Also, per your question as to there are some qusb2 targets having dp/dm 
+interrupts defined... It is only for SDM845/SDM670/SM6350 which were 
+last in line of using qusb2 phy's and they started incorporating dp/dm 
+interrupts.
+
+Also added missing interrupts for qcs404/ipq5332.
+I didn't add missing interrupts on sc8280xp because I see that current 
+interrupts present are working fine (I see ADB working and wakeup 
+working as well), but the interrupt vector numbers are off by "1" 
+between hs specifics and DT (both upstream and downstream). Will sort it 
+out and clean that target up later.
+
+[1]: https://patchwork.kernel.org/project/linux-arm-msm/list/?series=803412
+
+Regards,
+Krishna,
 
