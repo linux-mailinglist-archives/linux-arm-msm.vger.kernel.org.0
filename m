@@ -1,336 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-1521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0D1D7F48C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 15:20:40 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5F697F490A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 15:35:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 883F9B2112D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 14:20:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E6EBC1C20BC1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 14:35:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F5DE55773;
-	Wed, 22 Nov 2023 14:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 244E54C619;
+	Wed, 22 Nov 2023 14:35:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="FqGHF8Me"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dBFU2Dem"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB1BD75
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 06:20:23 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-32dc9ff4a8fso4277670f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 06:20:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1700662822; x=1701267622; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BUL3snhs+2QhvhLNvgibL9M8zm24NWKdJWHQAuI96sA=;
-        b=FqGHF8MeUSPhjE53ovM2vWI+h1/ojTHJ41LEoTPiLHlNhY9usIdKxnvaNjPaOVNSsD
-         Hfxp8Y7xp2/7218o0zJR9NJtF8v7AuNlMiwk3SLWjmnM1S0WTeTGmdlE7szoDQ5M7/v1
-         PuK3q+3kp4VPROx1/emqVDdstHI9hNlJEzPc6pjOMOzipMJ7hut9z3FpF0pIa/2vbW0B
-         nolSoM04VmupYpUb4Gm7xBaPkkNWNztqzT24zpEJMrTmHyF6A5jtgmNYWUUC8Ot/G6p8
-         N5euCSMnK1Rlp+KguvQ9jQ3Yi8/f8pNc1a5TsuORjhq+lBFsVppu52HudVJBtkAm5Ly0
-         Mqww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700662822; x=1701267622;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BUL3snhs+2QhvhLNvgibL9M8zm24NWKdJWHQAuI96sA=;
-        b=OFbn2kYg4H2vhSo31BBCPXuq0Aazb6GQ+5oJMpxEubAstzM1nJtLA8EXFUiZJ9t9qn
-         DQjS5y4HXcILpy1TTLa/QaIsmZVwmCcoIJVl0W8Fd+BiNV7P0x1LXJCD/J8d3ck4QHoy
-         UqtpwEf227tToNiXuPK4bL2EKzCQJ+Fsn0kW4YZJiuLK/NMaL6fSNR3+IyqGP3cveYBO
-         AvRPl95RPNdMWc5Bk6tsLErkPjQMBdnLzCStlXOO5r+JJlKHm7LWblw/c5RIz3ZsuFqj
-         arMBjOkQwufHE8qaG18D29qdtwBHMF09ZZbwWK4n4t5UnBZCIRFChNthjfmKacRroOzZ
-         RFiw==
-X-Gm-Message-State: AOJu0YyUYVzCJj0+nmtipE3qAVZHqXWsIwz4wGaDETaWd69d0mErhk2s
-	vMZaJXUzGoFNDX/coN8Jo01rew==
-X-Google-Smtp-Source: AGHT+IG1LUHC5pGpTQElp6wOJmfzPipsCJxpTr7DDhvGvDgQMALXyyWyVUbANh48VSHPNBPYRpwyZQ==
-X-Received: by 2002:a5d:45c1:0:b0:32d:701b:a585 with SMTP id b1-20020a5d45c1000000b0032d701ba585mr1308275wrs.69.1700662822099;
-        Wed, 22 Nov 2023 06:20:22 -0800 (PST)
-Received: from localhost ([194.206.60.209])
-        by smtp.gmail.com with ESMTPSA id d12-20020a5d4f8c000000b0032da87e32e2sm17362636wru.4.2023.11.22.06.20.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Nov 2023 06:20:21 -0800 (PST)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F022A3D987;
+	Wed, 22 Nov 2023 14:35:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B75C433C8;
+	Wed, 22 Nov 2023 14:35:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700663713;
+	bh=RtXHVojQdii9cypheSJBX00LBuWCbe8gFyZ642oQe6A=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=dBFU2Dem3EzGCXV3Q3tedWG2zrS20A/bGvbdoBmedPEANbbwkpNzyl/M4HioweVGb
+	 BZ3fnadm47uAvJY3apn3f989uSWYz5ONRfJ1zS+0gls0LHlGnFiJSqXSkPoPBYtg+F
+	 lWoW4L18wsGteiHC0Wr/scISvN7KVWVMMxPT/v1vjBH7G3Knl2QSRkRYbyiN3zVi+p
+	 fApO8YOj9xhU5chPpIASR5ijXN/I55LBw+v6S0lJ3o2wcnXinboeFMs+SkErTCpNri
+	 NglxMF0ZEATv4ho4vVWQTGGOToZKxW2gEZn+y/bvi6tY+VPWnPcKdl0sAZVpxKjRyP
+	 Lyz/wtrvTtYYQ==
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-507a62d4788so9689216e87.0;
+        Wed, 22 Nov 2023 06:35:13 -0800 (PST)
+X-Gm-Message-State: AOJu0YyFSrBT4Jg2PKqPlGk+YANH9sMuiP1rL2066+rtI8Djy+akMQpl
+	AGKkQSN5J/wpAM0/WQGAnEnttdKMIKteMmHWCA==
+X-Google-Smtp-Source: AGHT+IEQBg+DK/D3DTxQm+IxmEnOEyd8FYRneZs7dFyJFZUQ30Vu7QNpAPavUGMN4n7otiuBSo5YrTBJtBD/XnkZObs=
+X-Received: by 2002:a05:6512:3c8f:b0:509:2b81:fc40 with SMTP id
+ h15-20020a0565123c8f00b005092b81fc40mr2616195lfv.9.1700663711762; Wed, 22 Nov
+ 2023 06:35:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
+ <6b288a2e-d147-4bd3-b1d4-daf56295d939@gmail.com> <01f9ce3b-e6e5-4b05-bf7f-0b3a5f74910a@linaro.org>
+ <CAGb2v64Vf5dDwq=KTrxwc=+w+0KUD2KVPMjmHg68Y_yukES5dQ@mail.gmail.com>
+ <7232a48b-b9ad-44b5-ae6a-d12dad70b3c4@linaro.org> <58a9caacc1226c7c3a2bdfe73ef1791f@manjaro.org>
+ <cc4c789c-b595-41eb-b543-9e03549c6e61@amd.com> <CAMuHMdWm-gRPHeHyuX3_eR+9chJEw3iiZwCNBnoiRPHzoMAs6w@mail.gmail.com>
+ <808270d3-2274-4fb7-a397-38538503b67c@amd.com>
+In-Reply-To: <808270d3-2274-4fb7-a397-38538503b67c@amd.com>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Wed, 22 Nov 2023 07:34:59 -0700
+X-Gmail-Original-Message-ID: <CAL_JsqKkOjBHrJ0WELq3JnJDqgtA=mdF+EtAxHSCGqZMQ9tuSQ@mail.gmail.com>
+Message-ID: <CAL_JsqKkOjBHrJ0WELq3JnJDqgtA=mdF+EtAxHSCGqZMQ9tuSQ@mail.gmail.com>
+Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
+To: Michal Simek <michal.simek@amd.com>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Dragan Simic <dsimic@manjaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, wens@kernel.org, 
+	=?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>, Heiko Stuebner <heiko@sntech.de>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 22 Nov 2023 15:20:17 +0100
-Message-Id: <CX5ENKY70B5J.2D6DXKGI4EGX3@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: Move video-firmware to
- chrome-common
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Vikash Garodia" <quic_vgarodia@quicinc.com>, "Stanimir Varbanov"
- <stanimir.k.varbanov@gmail.com>, "Bryan O'Donoghue"
- <bryan.odonoghue@linaro.org>, "Andy Gross" <agross@kernel.org>, "Bjorn
- Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konrad.dybcio@linaro.org>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
- <cros-qcom-dts-watchers@chromium.org>, "Rob Herring" <robh+dt@kernel.org>,
- "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
- <conor+dt@kernel.org>
-X-Mailer: aerc 0.15.2
-References: <20231002-sc7280-venus-pas-v2-0-bd2408891317@fairphone.com>
- <20231002-sc7280-venus-pas-v2-2-bd2408891317@fairphone.com>
- <4cfad910-1821-3a31-c372-3f6b199e8f71@quicinc.com>
-In-Reply-To: <4cfad910-1821-3a31-c372-3f6b199e8f71@quicinc.com>
 
-On Wed Nov 22, 2023 at 2:17 PM CET, Vikash Garodia wrote:
+On Wed, Nov 22, 2023 at 1:57=E2=80=AFAM Michal Simek <michal.simek@amd.com>=
+ wrote:
 >
-> On 10/2/2023 7:50 PM, Luca Weiss wrote:
-> > If the video-firmware node is present, the venus driver assumes we're o=
-n
-> > a system that doesn't use TZ for starting venus, like on ChromeOS
-> > devices.
-> >=20
-> > Move the video-firmware node to chrome-common.dtsi so we can use venus
-> > on a non-ChromeOS devices.
-> >=20
-> > At the same time also disable the venus node by default in the dtsi,
-> > like it's done on other SoCs.
-> >=20
-> > Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 8 ++++++++
-> >  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 6 ++----
-> >  2 files changed, 10 insertions(+), 4 deletions(-)
-> >=20
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/=
-arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > index 5d462ae14ba1..cd491e46666d 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> > @@ -104,6 +104,14 @@ &scm {
-> >  	dma-coherent;
-> >  };
-> > =20
-> > +&venus {
-> > +	status =3D "okay";
-> > +
-> > +	video-firmware {
-> > +		iommus =3D <&apps_smmu 0x21a2 0x0>;
-> > +	};
-> > +};
-> > +
-> >  &watchdog {
-> >  	status =3D "okay";
-> >  };
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts=
-/qcom/sc7280.dtsi
-> > index 66f1eb83cca7..fa53f54d4675 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > @@ -3740,6 +3740,8 @@ venus: video-codec@aa00000 {
-> >  				 <&apps_smmu 0x2184 0x20>;
-> >  			memory-region =3D <&video_mem>;
-> > =20
-> > +			status =3D "disabled";
-> > +
-> >  			video-decoder {
-> >  				compatible =3D "venus-decoder";
-> >  			};
-> > @@ -3748,10 +3750,6 @@ video-encoder {
-> >  				compatible =3D "venus-encoder";
-> >  			};
-> > =20
-> > -			video-firmware {
-> > -				iommus =3D <&apps_smmu 0x21a2 0x0>;
-> > -			};
-> > -
-> >  			venus_opp_table: opp-table {
-> >  				compatible =3D "operating-points-v2";
-> > =20
-> >=20
-> Changes look good. Is this tested on SC7280 ?
-
-Hi Vikash,
-
-I didn't test it myself on sc7280 (just qcm6490-fp5) but dtx_diff
-reports no differences except for status =3D okay property being added, so
-there should be no change on those boards. See below.
-
-Regards
-Luca
-
-
---- test-pre/sc7280-crd-r3.dtb
-+++ test-post/sc7280-crd-r3.dtb
-@@ -5744,6 +5744,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x13b 0x01 0x13b 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-crd.dtb
-+++ test-post/sc7280-herobrine-crd.dtb
-@@ -6117,6 +6117,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x147 0x01 0x147 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-crd-pro.dtb
-+++ test-post/sc7280-herobrine-crd-pro.dtb
-@@ -6112,6 +6112,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x147 0x01 0x147 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-evoker.dtb
-+++ test-post/sc7280-herobrine-evoker.dtb
-@@ -6058,6 +6058,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x14b 0x01 0x14b 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-evoker-lte.dtb
-+++ test-post/sc7280-herobrine-evoker-lte.dtb
-@@ -6121,6 +6121,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x151 0x01 0x151 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-herobrine-r1.dtb
-+++ test-post/sc7280-herobrine-herobrine-r1.dtb
-@@ -6108,6 +6108,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x14f 0x01 0x14f 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-villager-r0.dtb
-+++ test-post/sc7280-herobrine-villager-r0.dtb
-@@ -6049,6 +6049,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x145 0x01 0x145 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-villager-r1.dtb
-+++ test-post/sc7280-herobrine-villager-r1.dtb
-@@ -6037,6 +6037,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x142 0x01 0x142 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-villager-r1-lte.dtb
-+++ test-post/sc7280-herobrine-villager-r1-lte.dtb
-@@ -6100,6 +6100,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x148 0x01 0x148 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-zombie.dtb
-+++ test-post/sc7280-herobrine-zombie.dtb
-@@ -6031,6 +6031,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x146 0x01 0x146 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-zombie-lte.dtb
-+++ test-post/sc7280-herobrine-zombie-lte.dtb
-@@ -6094,6 +6094,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x14c 0x01 0x14c 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-zombie-nvme.dtb
-+++ test-post/sc7280-herobrine-zombie-nvme.dtb
-@@ -6031,6 +6031,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x146 0x01 0x146 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-herobrine-zombie-nvme-lte.dtb
-+++ test-post/sc7280-herobrine-zombie-nvme-lte.dtb
-@@ -6094,6 +6094,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x14c 0x01 0x14c 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-idp2.dtb
-+++ test-post/sc7280-idp2.dtb
-@@ -5677,6 +5677,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x138 0x01 0x138 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
---- test-pre/sc7280-idp.dtb
-+++ test-post/sc7280-idp.dtb
-@@ -5642,6 +5642,7 @@
-                        power-domain-names =3D "venus\0vcodec0\0cx";
-                        power-domains =3D <0x133 0x01 0x133 0x00 0x34 0x00>=
-;
-                        reg =3D <0x00 0xaa00000 0x00 0xd0600>;
-+                       status =3D "okay";
-=20
-                        opp-table {
-                                compatible =3D "operating-points-v2";
-
-
+> Hi Geert,
 >
-> Regards,
-> Vikash
+> On 11/22/23 09:53, Geert Uytterhoeven wrote:
+> > Hi Michal,
+> >
+> > On Wed, Nov 22, 2023 at 9:50=E2=80=AFAM Michal Simek <michal.simek@amd.=
+com> wrote:
+> >> On 11/22/23 09:29, Dragan Simic wrote:
+> >>> On 2023-11-22 09:21, Krzysztof Kozlowski wrote:
+> >>>> On 22/11/2023 09:09, Chen-Yu Tsai wrote:
+> >>>>> On Wed, Nov 22, 2023 at 4:05=E2=80=AFPM Krzysztof Kozlowski
+> >>>>> <krzysztof.kozlowski@linaro.org> wrote:
+> >>>>>>
+> >>>>>> On 21/11/2023 14:50, Rafa=C5=82 Mi=C5=82ecki wrote:
+> >>>>>>>> +Order of Properties in Device Node
+> >>>>>>>> +----------------------------------
+> >>>>>>>> +
+> >>>>>>>> +Following order of properties in device nodes is preferred:
+> >>>>>>>> +
+> >>>>>>>> +1. compatible
+> >>>>>>>> +2. reg
+> >>>>>>>> +3. ranges
+> >>>>>>>> +4. Standard/common properties (defined by common bindings, e.g.=
+ without
+> >>>>>>>> +   vendor-prefixes)
+> >>>>>>>> +5. Vendor-specific properties
+> >>>>>>>> +6. status (if applicable)
+> >>>>>>>> +7. Child nodes, where each node is preceded with a blank line
+> >>>>>>>> +
+> >>>>>>>> +The "status" property is by default "okay", thus it can be omit=
+ted.
+> >>>>>>>
+> >>>>>>> I think it would really help to include position of #address-cell=
+s and
+> >>>>>>> #size-cells here. In some files I saw them above "compatible" tha=
+t seems
+> >>>>>>> unintuitive. Some prefer putting them at end which I think makes =
+sense
+> >>>>>>> as they affect children nodes.
+> >>>>>>>
+> >>>>>>> Whatever you choose it'd be just nice to have things consistent.
+> >>>>>>
+> >>>>>> This is a standard/common property, thus it goes to (4) above.
+> >>>>>
+> >>>>> It's probably a mix, but AFAIK a lot of the device trees in tree ha=
+ve
+> >>>>> #*-cells after "status". In some cases they are added in the board
+> >>>>> .dts files, not the chip/module .dtsi files.
+> >>>>
+> >>>> Existing DTS is not a good example :)
+> >>>>
+> >>>>>
+> >>>>> +1 that it makes sense at the end as they affect child nodes.
+> >>>>
+> >>>> I still insist that status must be the last, because:
+> >>>> 1. Many SoC nodes have address/size cells but do not have any childr=
+en
+> >>>> (I2C, SPI), so we put useless information at the end.
+> >>>> 2. Status should be the final information to say whether the node is
+> >>>> ready or is not. I read the node, check properties and then look at =
+the end:
+> >>>> a. Lack of status means it is ready.
+> >>>> b. status=3Ddisabled means device still needs board resources/custom=
+ization
+> >>>
+> >>> I agree with the "status" belonging to the very end, because it's bot=
+h logical
+> >>> and much more readable.  Also, "status" is expected to be modified in=
+ the
+> >>> dependent DT files, which makes it kind of volatile and even more des=
+erving to
+> >>> be placed last.
+> >>
+> >> I am just curious if having status property at the end won't affect
+> >> execution/boot up time. Not sure how it is done in Linux but in U-Boot=
+ at least
+> >> (we want to have DTs in sync between Linux and U-Boot) of_find_propert=
+y is
+> >> pretty much big loop over all properties. And status property defined =
+at the end
+> >> means going over all of them to find it out to if device is present.
+> >> Not sure if Linux works in the same way but at least of_get_property i=
+s done in
+> >> the same way.
+> >
+> > As the default is "okay", you have to loop over all properties anyway.
+>
+> No doubt if you don't define status property that you need to loop over a=
+ll of
+> them. We normally describe the whole SOC with pretty much all IPs status =
+=3D
+> disabled and then in board file we are changing it to okay based on what =
+it is
+> actually wired out.
+> It means on our systems all nodes have status properties. If you have it =
+at
+> first you don't need to go over all.
 
+Order in the source and order in the OS are independent. If checking
+status needs to be optimized, then we could just put it first in the
+property list or make the state a field in struct device_node. But
+provide some data that it matters first.
+
+I've had this idea to randomize the order nodes are processed so
+there's no reliance on the DT order. Maybe I need the same on
+properties...
+
+Rob
 
