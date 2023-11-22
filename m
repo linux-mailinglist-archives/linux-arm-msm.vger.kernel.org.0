@@ -1,184 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-1562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7E717F4F91
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 19:32:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 682687F4F98
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 19:33:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 245BF1C20AC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:32:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B21E1C209DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:33:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D215ABBA;
-	Wed, 22 Nov 2023 18:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF7505C064;
+	Wed, 22 Nov 2023 18:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EEk9gbLz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e4c0/WPH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D97E8B2;
-	Wed, 22 Nov 2023 10:32:27 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-32daeed7771so8935f8f.3;
-        Wed, 22 Nov 2023 10:32:27 -0800 (PST)
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6676FD42
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 10:32:55 -0800 (PST)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-5cc60973b4aso487657b3.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 10:32:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700677946; x=1701282746; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=G82jl5R85KrKlIvXF944oRqyBdLM61l/27VAJKW7ibk=;
-        b=EEk9gbLz27lcdESPHQ/MA/b9inuVANaYxAqC5/a4f3278+XubpgeoqEEhwU45rlOg5
-         A+rt8/U46mbzJtZK7Phj9X4i0DrQgNdyZGodT3BXC7BH19POCwI6RmFNLVIgjUMY1t9d
-         JqUCS9h5f9gQhMrC9NHzeNeZHf/dsyr7z+13jOqECq28GaMW65fNBmsWk3nEDGaKeAGi
-         uJ+CrcYUi2Fve64BVS6EDTXNyeYWEUOjsL/sIrgdG5HBIvAmAgANqE1oAwM3FgfG0Qk5
-         Lcs6Y29+wwzhkhP/NTjYbVC7CjwuyNyHo3RoMzWJSwQzY6ZjXxFNvv1NtEtDAgdYC1Hn
-         t38A==
+        d=linaro.org; s=google; t=1700677974; x=1701282774; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9evLgerhPexVHQkBogiwmvf7m2BOF4vHI4aXwGPPVJ4=;
+        b=e4c0/WPHhHx2qk/e0qrW7JxnvxGiVMuQqy3J9XJQ2dFhrl+rnkFNggaPrHacb/iE0x
+         PO5hdzFfVbl3ZENEK2jrnV0ABP+ZrA0eKMnj30PPc4OD2C/ZjXB0LyJ+oFik+PP0Aqld
+         ecVRx2uek9QTzA32qUQuF1U37Rzz7nJm9NMRdynvlaDr4RktqLsqzVVQ88U2R+lNZgM9
+         CA4CvFd0KWSp2Udo5QNzN4wxRMtbsG1p/mbi/Dx/7rURAI+tMKWoMUE6JbjuxxkT0nfW
+         topLBDAK4h0dPg+/M8nsmBhOLEWXIib0lS+f7gIZ52jTVueweDC2cYCv1qdsQcfvryNY
+         TkSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700677946; x=1701282746;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G82jl5R85KrKlIvXF944oRqyBdLM61l/27VAJKW7ibk=;
-        b=CKWaAebzoOfANrwiyWoTFegAKJWkt1n1e6GW8rI8LPUuoaIoqSTj11M6+Tr08QQJb/
-         wZEf2TtfXY+X+wdTI/YshR5MghjvOU0Zd9v6yDOamRAyZhO9lCM0S3iw+uyan9+DNDdf
-         lT2QbmB5vHOptNLbUvy66Rk2JlxuIEJuBR9KdncDYfH5uuAUdJDYIvPS92OE/Ay/nW3t
-         H7aymzCTKJ3v3ioEctrnG44kXjVpVa1b9RJSQuR0edBYzqA7O/1g3wE8SYzRqK18arDH
-         hd2x0mVG7vfQ5XVwXRtgQd9hPYCai/SbkC8WE0OC81WpIWRoUiGsBFEZFxLvbGSPH07o
-         F81g==
-X-Gm-Message-State: AOJu0YxsUVVRdU/RIQCtk171IP+i017SN0XGDEOpc9Szz5q6mMbF9S1r
-	GEBItRQd5ksCGxBKTt+Lurk=
-X-Google-Smtp-Source: AGHT+IHBQ4JaBRS5h/zdVUY4AjeC4ynRiLMVSh0VKCAq2uaozmjgxsKD4sDol97YRrGQU4AgThlqjA==
-X-Received: by 2002:a5d:6985:0:b0:32d:9a20:c9e0 with SMTP id g5-20020a5d6985000000b0032d9a20c9e0mr2241676wru.61.1700677945993;
-        Wed, 22 Nov 2023 10:32:25 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id b17-20020a5d4b91000000b003316b3d69b3sm63435wrt.46.2023.11.22.10.32.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Nov 2023 10:32:25 -0800 (PST)
-Message-ID: <655e4939.5d0a0220.d9a9e.0491@mx.google.com>
-X-Google-Original-Message-ID: <ZV5JNmi5T7WKMq4t@Ansuel-xps.>
-Date: Wed, 22 Nov 2023 19:32:22 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Rob Herring <robh@kernel.org>, "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Qingfang Deng <dqfext@gmail.com>,
-	SkyLake Huang <SkyLake.Huang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	David Epping <david.epping@missinglinkelectronics.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Harini Katakam <harini.katakam@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [net-next RFC PATCH 03/14] dt-bindings: net: document ethernet
- PHY package nodes
-References: <20231120135041.15259-1-ansuelsmth@gmail.com>
- <20231120135041.15259-4-ansuelsmth@gmail.com>
- <c21ff90d-6e05-4afc-b39c-2c71d8976826@lunn.ch>
- <20231121144244.GA1682395-robh@kernel.org>
- <a85d6d0a-1fc9-4c8e-9f91-5054ca902cd1@lunn.ch>
+        d=1e100.net; s=20230601; t=1700677974; x=1701282774;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9evLgerhPexVHQkBogiwmvf7m2BOF4vHI4aXwGPPVJ4=;
+        b=Vh24w1EjkGeP9uPooMo8GZTlXjMRaiE97xlBseGqU37x1UD/vKgKL8Bh0bPMlHfKl+
+         KDRE/MLI/FbfEL0DvvAkkOfPGE3dxa3x1X9P99xPW5S+UtWr1L5P259aZMgN4LqlbRCs
+         qwV1lZhRvmYOBDVOFyxyjg+LyrJ31JGlKhsuNBr6YQtL61nFx4yIncQfnktdk5wpZoa9
+         ZBVTUHIITHj9B7ZF9NpMOTLeZjsig9HgAP0EWLheme35R7iLruFNY4Qe2eMFYyI4c/ER
+         DYcbVDegnMoucmRPHpRCYBfsL+ieP/lLUDaXyHWJF68Abd/CjQ/kk0ZMQWMjp828GQqD
+         zLiw==
+X-Gm-Message-State: AOJu0YxD6biNbxFxyaZfR8kFTQDIjbX4HxpS9pKvk1BRfHSttutOmoRE
+	a7fgxl74D4ekIXthTEIk/VJEnn3I/GxKuTnBv8KfftUQuicZzZvpKmiMqZrT
+X-Google-Smtp-Source: AGHT+IHyhJSWiia3K3sWSqzs9R4jjq04Y+WIUYIc2Ttxdvr+Ys8bPby4u0SJWAcMZONs2xz0YHXI4buzX0cWSLoaSkQ=
+X-Received: by 2002:a0d:f245:0:b0:5c9:d64e:68c7 with SMTP id
+ b66-20020a0df245000000b005c9d64e68c7mr3050822ywf.35.1700677974461; Wed, 22
+ Nov 2023 10:32:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a85d6d0a-1fc9-4c8e-9f91-5054ca902cd1@lunn.ch>
+References: <20231103230414.1483428-1-dmitry.baryshkov@linaro.org> <7a4a6698-0954-4225-82ff-02dd13bd64bb@linux.dev>
+In-Reply-To: <7a4a6698-0954-4225-82ff-02dd13bd64bb@linux.dev>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Wed, 22 Nov 2023 20:32:45 +0200
+Message-ID: <CAA8EJpoqfwyVYQy17QAOtrGr1AGzFkpKrOM5_F58=A95PoYncQ@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] drm: simplify support for transparent DRM bridges
+To: Sui Jingfeng <sui.jingfeng@linux.dev>
+Cc: David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, linux-phy@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Nov 21, 2023 at 03:45:42PM +0100, Andrew Lunn wrote:
-> > > I do think we need somewhere to put package properties. But i don't
-> > > think phy-mode is such a property. At the moment, i don't have a good
-> > > example of a package property.
-> > 
-> > What about power supplies and reset/enable lines?
-> 
-> Yes, good point. I can imagine some packages sharing regulators. Reset
-> might also be shared, but it makes things messy to handle.
+On Wed, 22 Nov 2023 at 18:03, Sui Jingfeng <sui.jingfeng@linux.dev> wrote:
 >
+> Hi,
+>
+>
+> On 2023/11/4 07:03, Dmitry Baryshkov wrote:
+> > Supporting DP/USB-C can result in a chain of several transparent
+> > bridges (PHY, redrivers, mux, etc). All attempts to implement DP support
+> > in a different way resulted either in series of hacks or in device tree
+> > not reflecting the actual hardware design. This results in drivers
+> > having similar boilerplate code for such bridges.
+>
+> Please improve the written,  "resulted" -> "yield" ?
+>
+> > Next, these drivers are susceptible to -EPROBE_DEFER loops: the next
+> > bridge can either be probed from the bridge->attach callback, when it is
+> > too late to return -EPROBE_DEFER, or from the probe() callback, when the
+> > next bridge might not yet be available, because it depends on the
+> > resources provided by the probing device. Device links can not fully
+> > solve this problem since there are mutual dependencies between adjancent
+> > devices.
+> >
+> > Last, but not least, this results in the the internal knowledge of DRM
+>
+> There is a duplicated "the" word in this sentence.
+>
+> As far as I can understand, nearly all of those troubles are because the display bridges
+> drivers are designed as a kernel module(.ko) instead of making them as static link-able
+> helpers. I means that a display bridge device can not work standalone, as it have to be
+> used with a display controller. So a display bridge is just a slave device or a auxiliary
+> device. My question is: if it can't works by itself, we probably shouldn't design them as
+> kernel modules style. Am I correct?
 
-Sooooo.... Sorry if I insist but I would really love to have something
-""stable"" to move this further. (the changes are easy enough so it's
-really a matter of finding a good DT structure)
+No. This has nothing to do with the driver being a kernel module or built-in.
 
-Maybe a good idea would be summarize the concern and see what solution
-was proposed:
+>
+> > subsystem slowly diffusing into other subsystems, like PHY or USB/TYPEC.
+>
+> Yeah, this indeed a problem.
+>
+> > To solve all these issues, define a separate DRM helper, which creates
+> > separate aux device just for the bridge.
+>
+> I'm supporting you if want to solve all these problems, this is fine and thanks a lot.
+> But I want to ask a question, now that you are solving these problems by creating separate
+> devices, does this manner match the hardware design perfectly? which is the hardware units
+> you newly created device is corresponding to?
 
-Concern list:
-1. ethernet-phy-package MUST be placed in mdio node (not in ethernet,
-   the example was wrong anyway) and MUST have an addr
+Aux devices do not always follow the actual hardware internals. For
+example, see the TI sn65dsi86 driver, which also uses aux devices to
+split dependency and probing chains.
 
-   Current example doesn't have an addr. I would prefer this way but
-   no problem in changing this.
+> > During probe such aux device
+> > doesn't result in the EPROBE_DEFER loops. Instead it allows the device
+> > drivers to probe properly, according to the actual resource
+> > dependencies. The bridge auxdevs are then probed when the next bridge
+> > becomes available, sparing drivers from drm_bridge_attach() returning
+> > -EPROBE_DEFER.
+>
+> OK, as far as I can understand,  in order to solve the mentioned problem
+> you are also retire the defer probe mechanism.
 
-   Solution:
-     - Add reg to the ethernet-phy-package node with the base address of
-       the PHY package (base address = the first PHY address of the
-       package)
+No, I'm not retiring the probe deferral mechanism. Instead I'm
+splitting it into two chains. One going from the controller to the
+usb-c connector for the signal flow, another going from the connector
+back to the drm_encoder for the drm_bridge dependencies.
 
-       We will have a PHY node with the same address of the PHY package
-       node. Each PHY node in the PHY package node will have reg set to
-       the REAL address in the mdio bus.
+>
+>
+> > Changes since v5:
+> >   - Removed extra semicolon in !DRM_AUX_HPD_BRIDGE stubs definition.
+> >
+> > Changes since v4:
+> >   - Added documentation for new API (Sima)
+> >   - Added generic code to handle "last mile" DP bridges implementing just
+> >     the HPD functionality.
+> >   - Rebased on top of linux-next to be able to drop #ifdef's around
+> >     drm_bridge->of_node
+> >
+> > Changes since v3:
+> >   - Moved bridge driver to gpu/drm/bridge (Neil Armstrong)
+> >   - Renamed it to aux-bridge (since there is already a simple_bridge driver)
+> >   - Made CONFIG_OF mandatory for this driver (Neil Armstrong)
+> >   - Added missing kfree and ida_free (Dan Carpenter)
+> >
+> > Changes since v2:
+> >   - ifdef'ed bridge->of_node access (LKP)
+> >
+> > Changes since v1:
+> >   - Added EXPORT_SYMBOL_GPL / MODULE_LICENSE / etc. to drm_simple_bridge
+> >
+> > Dmitry Baryshkov (6):
+> >    drm/bridge: add transparent bridge helper
+> >    phy: qcom: qmp-combo: switch to DRM_AUX_BRIDGE
+> >    usb: typec: nb7vpq904m: switch to DRM_AUX_BRIDGE
+> >    drm/bridge: implement generic DP HPD bridge
+> >    soc: qcom: pmic-glink: switch to DRM_AUX_HPD_BRIDGE
+> >    usb: typec: qcom-pmic-typec: switch to DRM_AUX_HPD_BRIDGE
+> >
+> >   drivers/gpu/drm/bridge/Kconfig                |  17 ++
+> >   drivers/gpu/drm/bridge/Makefile               |   2 +
+> >   drivers/gpu/drm/bridge/aux-bridge.c           | 140 +++++++++++++++
+> >   drivers/gpu/drm/bridge/aux-hpd-bridge.c       | 164 ++++++++++++++++++
+> >   drivers/phy/qualcomm/Kconfig                  |   2 +-
+> >   drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |  44 +----
+> >   drivers/soc/qcom/Kconfig                      |   1 +
+> >   drivers/soc/qcom/pmic_glink_altmode.c         |  33 +---
+> >   drivers/usb/typec/mux/Kconfig                 |   2 +-
+> >   drivers/usb/typec/mux/nb7vpq904m.c            |  44 +----
+> >   drivers/usb/typec/tcpm/Kconfig                |   1 +
+> >   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c |  41 +----
+> >   include/drm/bridge/aux-bridge.h               |  37 ++++
+> >   13 files changed, 383 insertions(+), 145 deletions(-)
+> >   create mode 100644 drivers/gpu/drm/bridge/aux-bridge.c
+> >   create mode 100644 drivers/gpu/drm/bridge/aux-hpd-bridge.c
+> >   create mode 100644 include/drm/bridge/aux-bridge.h
+> >
 
-2. global-phys are redundant and can be dropped.
 
-   They are used to facilitate and make it less obscure how the PHY
-   package is described. Can totally be handled internally by the PHY
-   driver. Still I would prefer to keep them as is.
-
-   Solution:
-     - Drop the thing and leave the PHY driver handle it with hardcoded
-       values.
-       Due to point 1, the shared struct will have the base address of
-       the PHY package and will be handle to reference the global PHY at
-       an offset from the base address.
-
-3. phy-mode is problematic.
-
-   It's an optional value to enforce a specific mode for each PHY in the
-   package. For complex configuration the mode won't be defined.
-
-   Solution:
-    - Rename it to package-phy-mode to make it less confusing.
-
-    - Add an additional function that PHY package can use to make custom
-      validation on the mode for every PHY attached (in the PHY package).
-
-      Would make it less clear but more flexible for complex
-      configuration. Maybe both solution can be implemented and the
-      special function is used if the mode is not defined?
-
-4. Not finding a correct place to put PHY package info.
-
-   I'm still convinced the mdio node is the correct place.
-   - PHY package are PHY in bundle so they are actual PHY
-   - We already have in the mdio node special handling (every DSA switch
-     use custom compatible and PHY ID is not used to probe them
-     normally)
-   - Node this way won't be treated as PHY as they won't match the PHY
-     node name pattern and also won't have the compatible pattern for
-     PHY.
-
-   Solution:
-    - ethernet-phy-package node is OK given a reg is defined.
-
-These are the 4 concern we have currently, hoping I didn't miss any, I
-hope we can sort those so I can send a v2 and make some progress on
-this.
 
 -- 
-	Ansuel
+With best wishes
+Dmitry
 
