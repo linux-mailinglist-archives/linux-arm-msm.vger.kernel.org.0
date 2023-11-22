@@ -1,238 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-1560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E09B7F4F17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 19:15:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED51A7F4F26
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 19:18:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 407E91C209E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:15:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1BC461C209CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:18:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 720CD4F5E7;
-	Wed, 22 Nov 2023 18:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27BA64F5F3;
+	Wed, 22 Nov 2023 18:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GBDRAYtS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lpb9202u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 449BAA4;
-	Wed, 22 Nov 2023 10:15:12 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-32d9effe314so5025482f8f.3;
-        Wed, 22 Nov 2023 10:15:12 -0800 (PST)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72400A4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 10:18:27 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-332c0c32d19so3130278f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 10:18:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700676910; x=1701281710; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=NVSrNzLgRvQ4gfVAo/d/ONIYYWbL33zy5cmCQPLiW2M=;
-        b=GBDRAYtSFhR+bsEVzlsLt7J4swhqOU/ikIMR/FRLbm3J+j8aqrlBdQyEn6yr/tb+eb
-         PRxcHEv4/9eSt/xHSxPmBlBlmF7sFfdQtTm24q5DRf/zXM8b5OBnvc+lCu3LlNJ0WpiP
-         dRa+1MUjobKPqm0FnTcIqjGUfFi6r5j96LAy7Ar0PcFeUK6Zqbr+8pTAyITSqoK/BJOb
-         4hx+6wyXE+fhbyPi4lFogGPu/Y1lncj+OqmCaRnWRX4JusaNwJeM+ey0+cL7CI7PJRUF
-         re/jsDR5x/AYFvAdVaChlmjnZTdQPqV9RMuFuWwDCOAv/uVAu91jS3TLIN8BRmjNDHqm
-         YkzQ==
+        d=linaro.org; s=google; t=1700677106; x=1701281906; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cHYnD0Po/dYKPMMF8EH1EryMVyB3OKYjMgkkFLJ9EPQ=;
+        b=lpb9202uA5jT7c7XbKb63Na4MwxnZ3t8dXHNhEadlEW+YIclMyBLm2viUOG2hMhDGM
+         lgWUET544pvlT0iBrSiOlmSU6PfmDhFV2QyE/BRDucLmypA17+4gW3pmEmOJQMFdQLv5
+         UOOJSlZudx03F6AbQziqEi1tuCVPIgmSBzGI98v8jwvIO+izFbvwx663YjQBZRQtjX8h
+         IByTDT+7u9RQoKmiTemxznwCiUGrtIIDo3LMR/YjnLSZw/K1K0szNTPk63v4QUDc27kC
+         urg4Py+oGNCJz1Snpwg1jKyZPuRU2lxkL89dY4h6ctZ8iIWndB9Xv8ld2a89rQ0ldJP5
+         GXbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700676910; x=1701281710;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NVSrNzLgRvQ4gfVAo/d/ONIYYWbL33zy5cmCQPLiW2M=;
-        b=AeCnw8BOHzll8Pg8O0mmyKL5JalGbOW4Z+0SMWdBtU4dS8SX9Zo5jxa1Q9mwb0Fcex
-         Fo3wSE8CQK8ca7zfDrQAtOVBvABo5cY298DRwxnbXYoopCd0quVwIo7RBnjVjTQLrwJH
-         32W1Gadx1OkybgCg9hjwW4+tLKUbV/2dJCp8Vmi4ZgnEDqSFL99xMjacujB9oJxYU7mK
-         kdlCoJmCsyFmO1yzJhVHaBKDMzb4kUxW/aIlPvugpVIbXt+S2lQikFOuDjXogn8UvVcg
-         j6wrFsbLiLQOdwZ/D3VHGwCJO78+epv+HF++keFO6ZVm3HfSOZ633CRc/4CwUBvmNvj9
-         J09Q==
-X-Gm-Message-State: AOJu0Ywq14Co4C2+b9AmHHAExc6oU0Bu/UUXvX4dHn3qaR693HfIsAbD
-	6oB5e8fT7CG0f0R/5lMRs5E=
-X-Google-Smtp-Source: AGHT+IE6ao4vkwq952ctFLHc3qQmln2Fu/+DhwMBUg5bDQNU//QHvdiFV9OG3a65EXYc10npzM6zbA==
-X-Received: by 2002:adf:e550:0:b0:331:3b59:3edb with SMTP id z16-20020adfe550000000b003313b593edbmr2507151wrm.42.1700676910297;
-        Wed, 22 Nov 2023 10:15:10 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id u7-20020a5d5147000000b003316debbde4sm24378wrt.48.2023.11.22.10.15.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Nov 2023 10:15:09 -0800 (PST)
-Message-ID: <655e452d.5d0a0220.61c31.01ae@mx.google.com>
-X-Google-Original-Message-ID: <ZV5FKswuT+PAXpWB@Ansuel-xps.>
-Date: Wed, 22 Nov 2023 19:15:06 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Simon Horman <horms@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Qingfang Deng <dqfext@gmail.com>,
-	SkyLake Huang <SkyLake.Huang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	David Epping <david.epping@missinglinkelectronics.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Harini Katakam <harini.katakam@amd.com>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [net-next RFC PATCH 04/14] net: phy: add initial support for PHY
- package in DT
-References: <20231120135041.15259-1-ansuelsmth@gmail.com>
- <20231120135041.15259-5-ansuelsmth@gmail.com>
- <20231122105243.GB28959@kernel.org>
+        d=1e100.net; s=20230601; t=1700677106; x=1701281906;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cHYnD0Po/dYKPMMF8EH1EryMVyB3OKYjMgkkFLJ9EPQ=;
+        b=V4vIW95QYpDaauZ2tFfwgx+B0FS9tU9N0Q0/phi1YusRsgwzwfmFFYaYvS10e7dRof
+         /1LvhQiBFIcmbDJElbkGor1arjQ7+lstbOmVp4Vz/Xb5XqFAJbc0/Ky7JylfXRIT+IAM
+         klpJnXZCvDA4Cb4wAKyU0NMq5oMOJx9xI1lk38Usz5htM+TCauCRBf5OBffaDv3ci55X
+         8YyagikocN98b3ju6VJrC6DIeTKiHE/jGxOft34ZBjZOF2wzO3lYB3uJQZcljpDSFhX7
+         aXtXg9IRy+zsdvbTLKbirDJDp2yrZ8vl/VtoII2NfWsFlLb81NKRGeuDwCwiGXhs5qhY
+         +3Mg==
+X-Gm-Message-State: AOJu0YzGMVjWsY/7YJmbTKTJvFHwcsMWsv8QMj8VeVqw9WkrtN+8Pg4F
+	TzAGtKjaPs81lSdQQWvwKBlVvg==
+X-Google-Smtp-Source: AGHT+IGPNGAtOAyMyTkybhU4HYxQ9iIarZYNk96gS0e95g7JSaZVC1yWxBkAafqoah00LLLxbio90w==
+X-Received: by 2002:a5d:6c69:0:b0:332:d33e:6584 with SMTP id r9-20020a5d6c69000000b00332d33e6584mr1939868wrz.45.1700677105921;
+        Wed, 22 Nov 2023 10:18:25 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.100])
+        by smtp.gmail.com with ESMTPSA id q8-20020a05600000c800b00331698cb263sm7672wrx.103.2023.11.22.10.18.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Nov 2023 10:18:25 -0800 (PST)
+Message-ID: <26d9dcdf-d015-493e-b2b0-eeb538e7caf0@linaro.org>
+Date: Wed, 22 Nov 2023 19:18:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231122105243.GB28959@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/7] dt-bindings: leds: leds-qcom-lpg: Add support for
+ LPG PPG
+Content-Language: en-US
+To: Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
+ lee@kernel.org, thierry.reding@gmail.com, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org,
+ andersson@kernel.org
+Cc: luca.weiss@fairphone.com, konrad.dybcio@linaro.org,
+ u.kleine-koenig@pengutronix.de, quic_subbaram@quicinc.com,
+ quic_gurus@quicinc.com, linux-leds@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
+References: <20231020182218.22217-1-quic_amelende@quicinc.com>
+ <20231020182218.22217-3-quic_amelende@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231020182218.22217-3-quic_amelende@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 22, 2023 at 10:52:43AM +0000, Simon Horman wrote:
-> On Mon, Nov 20, 2023 at 02:50:31PM +0100, Christian Marangi wrote:
-> > Add initial support for PHY package in DT.
-> > 
-> > Make it easier to define PHY package and describe the global PHY
-> > directly in DT by refereincing them by phandles instead of custom
-> > functions in each PHY driver.
-> > 
-> > Each PHY in a package needs to be defined in a dedicated node in the
-> > mdio node. This dedicated node needs to have the compatible set to
-> > "ethernet-phy-package" and define "global-phys" and "#global-phy-cells"
-> > respectively to a list of phandle to the global phy to define for the
-> > PHY package and 0 for cells as the phandle won't take any args.
-> > 
-> > With this defined, the generic PHY probe will join each PHY in this
-> > dedicated node to the package.
-> > 
-> > PHY driver MUST set the required global PHY count in
-> > .phy_package_global_phy_num to correctly verify that DT define the
-> > correct number of phandle to the required global PHY.
-> > 
-> > mdio_bus.c and of_mdio.c is updated to now support and parse also
-> > PHY package subnote that have the compatible "phy-package".
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+On 20/10/2023 20:22, Anjelique Melendez wrote:
+> Update leds-qcom-lpg binding to support LPG PPG.
 > 
-> Hi Christian,
-> 
-> I was a little hasty in hitting send on my previous message.
-> Please find some more minor feedback from my side below.
->
+> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../bindings/leds/leds-qcom-lpg.yaml          | 89 ++++++++++++++++++-
 
-Thanks a lot for the initial review and sorry for the various warning
-you had to write about it. I know this was a new concept and that I had
-to discuss a lot about the DT structure so I was a bit relaxed in
-releasing OF node. Will handle all of them in v2. Again thanks! 
+This causes new warnings, for which fixes were not included here, not
+linked in cover letter, not linked in changelog.
 
-> ...
-> 
-> > diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
-> > index 64ebcb6d235c..bb910651118f 100644
-> > --- a/drivers/net/mdio/of_mdio.c
-> > +++ b/drivers/net/mdio/of_mdio.c
-> > @@ -139,6 +139,44 @@ bool of_mdiobus_child_is_phy(struct device_node *child)
-> >  }
-> >  EXPORT_SYMBOL(of_mdiobus_child_is_phy);
-> >  
-> > +static int __of_mdiobus_parse_phys(struct mii_bus *mdio, struct device_node *np,
-> > +				   bool *scanphys)
-> > +{
-> > +	struct device_node *child;
-> > +	int addr, rc;
-> > +
-> > +	/* Loop over the child nodes and register a phy_device for each phy */
-> > +	for_each_available_child_of_node(np, child) {
-> > +		if (of_device_is_compatible(child, "ethernet-phy-package")) {
-> > +			rc = __of_mdiobus_parse_phys(mdio, child, scanphys);
-> > +			if (rc && rc != -ENODEV)
-> > +				return rc;
-> 
-> for_each_available_child_of_node() makes calls to of_node_get() and
-> of_node_put(), so when jumping out of a loop it is necessary to call
-> of_node_put(), in this case of_node_put(child).
-> 
-> As flagged by Coccinelle.
-> 
-> Also flagged in of_mdiobus_find_phy() both before and after this patch.
-> 
-> > +
-> > +			continue;
-> > +		}
-> > +
-> > +		addr = of_mdio_parse_addr(&mdio->dev, child);
-> > +		if (addr < 0) {
-> > +			*scanphys = true;
-> > +			continue;
-> > +		}
-> > +
-> > +		if (of_mdiobus_child_is_phy(child))
-> > +			rc = of_mdiobus_register_phy(mdio, child, addr);
-> > +		else
-> > +			rc = of_mdiobus_register_device(mdio, child, addr);
-> > +
-> > +		if (rc == -ENODEV)
-> > +			dev_err(&mdio->dev,
-> > +				"MDIO device at address %d is missing.\n",
-> > +				addr);
-> > +		else if (rc)
-> > +			return rc;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +
-> >  /**
-> >   * __of_mdiobus_register - Register mii_bus and create PHYs from the device tree
-> >   * @mdio: pointer to mii_bus structure
-> > @@ -180,25 +218,9 @@ int __of_mdiobus_register(struct mii_bus *mdio, struct device_node *np,
-> >  		return rc;
-> >  
-> >  	/* Loop over the child nodes and register a phy_device for each phy */
-> > -	for_each_available_child_of_node(np, child) {
-> > -		addr = of_mdio_parse_addr(&mdio->dev, child);
-> > -		if (addr < 0) {
-> > -			scanphys = true;
-> > -			continue;
-> > -		}
-> > -
-> > -		if (of_mdiobus_child_is_phy(child))
-> > -			rc = of_mdiobus_register_phy(mdio, child, addr);
-> > -		else
-> > -			rc = of_mdiobus_register_device(mdio, child, addr);
-> > -
-> > -		if (rc == -ENODEV)
-> > -			dev_err(&mdio->dev,
-> > -				"MDIO device at address %d is missing.\n",
-> > -				addr);
-> > -		else if (rc)
-> > -			goto unregister;
-> > -	}
-> > +	rc = __of_mdiobus_parse_phys(mdio, np, &scanphys);
-> > +	if (rc)
-> > +		goto unregister;
-> 
-> Jumping to unregister will call of_node_put(child),
-> however child appears to be uninitialised here.
-> 
-> Flagged by clang-16 W=1 build, and Smatch.
-> 
-> >  
-> >  	if (!scanphys)
-> >  		return 0;
-> 
-> ...
+Please test the patches before sending and be sure no new warnings are
+introduced. I should not test it, it's your job.
 
--- 
-	Ansuel
+Best regards,
+Krzysztof
+
 
