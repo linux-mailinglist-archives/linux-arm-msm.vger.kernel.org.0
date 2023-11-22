@@ -1,412 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-1412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D3B67F3AF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 02:00:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EA8E7F3CBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 05:28:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6EA14B20BE9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 01:00:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F2AA1C20DC4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 04:28:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41E6F138D;
-	Wed, 22 Nov 2023 01:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59342C12F;
+	Wed, 22 Nov 2023 04:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DP+Ij6jz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="g4Yj5GAa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A321593;
-	Tue, 21 Nov 2023 17:00:04 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD3E810C;
+	Tue, 21 Nov 2023 20:28:36 -0800 (PST)
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM0OF2A019663;
-	Wed, 22 Nov 2023 00:59:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=at4TJKe5/xTv1ywl/HVRKfJ6QkWba3i5SVFbw7qSANo=;
- b=DP+Ij6jz6i7SWdlWX2Ycn3q9vhHTRIYEMS9vWJ6rdqsytUWjTZBUZffecATHIkFMym9o
- MZqXRc9zEyTrMtS4synjiLtqe8u0jNa5XSnm9F/5ohvsiNI/9rn5u/AWyt74kQhTK7cP
- cxFSV0ASYwmHkJvsIEJBKC8Nky2ADlGCWpCl2ND7bPW2jLYoyTgd5CqnuOXgc4Mf1wG1
- Uk4L2mGDUbiK+MWJ+XWzffwZ4EEUnA510q3Zf+a1b5/cv5WbWHNg2k7+5GRNL/5NMR9K
- cZPz54natW2awGiiwjDAoN+wXPYmUmo7Zs7r8r1fY/b5EzF5Xk4wsvONR0X1mGXXOl6L FQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uh477gccj-1
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM3cps9004449;
+	Wed, 22 Nov 2023 04:28:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=9VQYkMcaLMIVV28dv2nGc5Put+Zl5GtxaKJ+blbPTLQ=;
+ b=g4Yj5GAairI5jb5qKCszpjROOyvtKWB/BV66+HYZ0eP4hMIXKtbVPWTeeoH6yQoMCT8Q
+ JuxivqCQ3JvAL0nNztqrPUi0+sqyxs8Ebz1vB+17qpp7hd1YLkdDye/gmcHAefddo+h1
+ 6PVIKIJoDZ3YayuCs4UKkXvsLSGU+WdXXpAbQidFJnOCBaSanNe77IXdgdyPiZg+5/up
+ G0d4oj+JiqD/6E8cRbyHXOWKAEzOK2XUmgT9j8J/itRwG8QjF1//UqU2KrQCjDg7q+3y
+ TYltmrVFzs2+9j/NB1HtQ8HXuewDHhgz6YMToRBXU494H8J6pf6+STESHG11fbMUwwi/ KA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uh477gphb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 00:59:32 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AM0xWJ9008877
+	Wed, 22 Nov 2023 04:28:32 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AM4SWLU027721
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 00:59:32 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 21 Nov
- 2023 16:59:31 -0800
-Message-ID: <191a3d1a-bcd3-4e0d-360d-61c1c2a61147@quicinc.com>
-Date: Tue, 21 Nov 2023 16:59:30 -0800
+	Wed, 22 Nov 2023 04:28:32 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Tue, 21 Nov 2023 20:28:29 -0800
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+To: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Satya Priya
+ Kakitapalli" <quic_skakitap@quicinc.com>
+Subject: [PATCH] clk: qcom: gpucc-sm8150: Update the gpu_cc_pll1 config
+Date: Wed, 22 Nov 2023 09:58:14 +0530
+Message-ID: <20231122042814.4158076-1-quic_skakitap@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/dpu: Fix encoder CRC to account for CTM
- enablement
-Content-Language: en-US
-To: Rob Clark <robdclark@gmail.com>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@chromium.org>, <freedreno@lists.freedesktop.org>,
-        "Jeykumar
- Sankaran" <quic_jeykumar@quicinc.com>,
-        Kalyan Thota
-	<quic_kalyant@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        Jiasheng Jiang
-	<jiasheng@iscas.ac.cn>, Arnaud Vrac <rawoul@gmail.com>,
-        <dri-devel@lists.freedesktop.org>,
-        Vinod Polimera
-	<quic_vpolimer@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        Jessica Zhang
-	<quic_jesszhan@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, "Sean
- Paul" <sean@poorly.run>,
-        open list <linux-kernel@vger.kernel.org>
-References: <20231023221250.116500-1-robdclark@gmail.com>
- <CAA8EJpqVL5U7yaZsG5F=q7EFP1bsApySdjycywox6cZUd8JqdA@mail.gmail.com>
- <CAF6AEGvbKjHYU6qv4v3017DguEye23yMoYvTbEo=JZ+QW3=Atg@mail.gmail.com>
- <CAA8EJprRdezFBP=+aBinA-=tbTGWPcj-izOthA=cbehes0UYng@mail.gmail.com>
- <d003384d-3b4b-da05-f4b7-8497749fc843@quicinc.com>
- <dd928ef1-e329-37e0-d383-444a64ef2bc5@quicinc.com>
- <CAF6AEGuxoSaX67iYuhWiaoPQMwh_ggE0ZGbgmLZ-QhmS4FYxtg@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAF6AEGuxoSaX67iYuhWiaoPQMwh_ggE0ZGbgmLZ-QhmS4FYxtg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: crbydftlUTBVoJVWlAu6jMsxM9b4MI50
-X-Proofpoint-GUID: crbydftlUTBVoJVWlAu6jMsxM9b4MI50
+X-Proofpoint-ORIG-GUID: if52tZBAd9uHOj5pC-qg4QhJ8BTTme_S
+X-Proofpoint-GUID: if52tZBAd9uHOj5pC-qg4QhJ8BTTme_S
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-21_16,2023-11-21_01,2023-05-22_02
+ definitions=2023-11-22_01,2023-11-21_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- impostorscore=0 malwarescore=0 mlxlogscore=999 clxscore=1015
+ impostorscore=0 malwarescore=0 mlxlogscore=830 clxscore=1015
  suspectscore=0 spamscore=0 bulkscore=0 mlxscore=0 priorityscore=1501
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311220004
+ engine=8.12.0-2311060000 definitions=main-2311220031
 
+Update the test_ctl_hi_val and test_ctl_hi1_val of gpu_cc_pll1
+as per latest HW recommendation.
 
+Fixes: 0cef71f2ccc8 ("clk: qcom: Add graphics clock controller driver for SM8150")
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+---
+ drivers/clk/qcom/gpucc-sm8150.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 11/21/2023 4:27 PM, Rob Clark wrote:
-> On Tue, Nov 21, 2023 at 4:41 PM Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->>
->>
->> On 10/24/2023 12:01 PM, Abhinav Kumar wrote:
->>>
->>>
->>> On 10/23/2023 4:03 PM, Dmitry Baryshkov wrote:
->>>> On Tue, 24 Oct 2023 at 01:36, Rob Clark <robdclark@gmail.com> wrote:
->>>>>
->>>>> On Mon, Oct 23, 2023 at 3:30 PM Dmitry Baryshkov
->>>>> <dmitry.baryshkov@linaro.org> wrote:
->>>>>>
->>>>>> On Tue, 24 Oct 2023 at 01:12, Rob Clark <robdclark@gmail.com> wrote:
->>>>>>>
->>>>>>> From: Rob Clark <robdclark@chromium.org>
->>>>>>>
->>>>>>> Seems like we need to pick INPUT_SEL=1 when CTM is enabled.  But not
->>>>>>> otherwise.
->>>>>>>
->>>>>>> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>>>>>> ---
->>>
->>> I cannot find anything in the docs which suggest this solution is correct.
->>>
->>> Different blocks in the DPU pipeline have their own CRC (MISR) registers
->>> like LM, intf etc.
->>>
->>> We dont need to change INPUT_SEL to tell DPU from which pipeline to take
->>> the CRC from as each of them have their own registers.
->>>
->>> INPUT_SEL is controlling whether the CRC needs to be calculated over the
->>> entire display timings or only the active pixels. I am unable to tell at
->>> the moment why this is making a difference in this use-case.
->>>
->>> Since I am unable to find any documentation proving this solution is
->>> correct so far, unfortunately I would hold this back till then.
->>>
->>> We will investigate this issue and report our findings on this thread on
->>> how to proceed.
->>>
->>
->> Alright, we debugged and also found some more answers.
->>
->> The correct solution is indeed to set INPUT_SEL = 1 but let me explain
->> why and what should be the correct way.
->>
->> INPUT_SEL was indeed telling whether to compute CRC over active pixels
->> or active pixels + timings like I wrote before but this behavior changed
->> since some chipsets.
->>
->> Now, INPUT_SEL = 0 means compute CRC *only* over timings and not the
->> active area (and not display + timings like before) and like mentioned
->> before this has nothing to do with what is the input to the CRC. Not
->> covering the active area will not change the CRC at all as Rob reported
->> but its not specific to CTM.
->>
->> Which means we should have been setting INPUT_SEL=1 whenever we use INTF
->> CRC irrespective of whether CTM is used or not.
->>
->> What this also means is INTF CRC was not working correctly at all so far
->> irrespecive of CTM or not because it was always computing CRC only on
->> the timings (non-active area).
->>
->> This was not caught so far because it looks like IGT's
->> kms_pipe_crc_basic test which was used to validate this only compares
->> CRC between two frames of the same content to match if they were equal
->> and not changing contents and comparing like kms_plane does. It will
->> pass as CRC would not have changed.
->>
->> Now coming to the fix, the reset value of this register INTF_MISR_CTRL
->> already sets the INPUT_SEL bit (or unsets it) correctly based on
->> whichever DPU version is used so we should just change the
->> dpu_hw_setup_misr() to a read on the register followed by ORing the
->> required bits without touching INPUT_SEL and write.
->>
->> That will address this issue and also cover version control since the
->> expected value of this bit has changed across DPU revisions.
-> 
-> Ok, thanks for following up on this.  Mind posting a patch to
-> supersede this one?
-> 
-> BR,
-> -R
-> 
+diff --git a/drivers/clk/qcom/gpucc-sm8150.c b/drivers/clk/qcom/gpucc-sm8150.c
+index 8422fd047493..c89a5b59ddb7 100644
+--- a/drivers/clk/qcom/gpucc-sm8150.c
++++ b/drivers/clk/qcom/gpucc-sm8150.c
+@@ -37,8 +37,8 @@ static struct alpha_pll_config gpu_cc_pll1_config = {
+ 	.config_ctl_hi_val = 0x00002267,
+ 	.config_ctl_hi1_val = 0x00000024,
+ 	.test_ctl_val = 0x00000000,
+-	.test_ctl_hi_val = 0x00000002,
+-	.test_ctl_hi1_val = 0x00000000,
++	.test_ctl_hi_val = 0x00000000,
++	.test_ctl_hi1_val = 0x00000020,
+ 	.user_ctl_val = 0x00000000,
+ 	.user_ctl_hi_val = 0x00000805,
+ 	.user_ctl_hi1_val = 0x000000d0,
+-- 
+2.25.1
 
-Yup, we will.
-
-Thanks
-
-Abhinav
->>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 2 +-
->>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 ++--
->>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 3 ++-
->>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 4 ++--
->>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h | 2 +-
->>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 2 +-
->>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 5 ++++-
->>>>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 3 ++-
->>>>>>>    8 files changed, 15 insertions(+), 10 deletions(-)
->>>>>>>
->>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>>>>>> index 2b83a13b3aa9..d93a92ffd5df 100644
->>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>>>>>> @@ -134,7 +134,7 @@ static void dpu_crtc_setup_encoder_misr(struct
->>>>>>> drm_crtc *crtc)
->>>>>>>           struct drm_encoder *drm_enc;
->>>>>>>
->>>>>>>           drm_for_each_encoder_mask(drm_enc, crtc->dev,
->>>>>>> crtc->state->encoder_mask)
->>>>>>> -               dpu_encoder_setup_misr(drm_enc);
->>>>>>> +               dpu_encoder_setup_misr(drm_enc, !!crtc->state->ctm);
->>>>>>>    }
->>>>>>>
->>>>>>>    static int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const
->>>>>>> char *src_name)
->>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>>> index b0a7908418ed..12ee7acb5ea6 100644
->>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>>>>>> @@ -241,7 +241,7 @@ int dpu_encoder_get_crc_values_cnt(const struct
->>>>>>> drm_encoder *drm_enc)
->>>>>>>           return num_intf;
->>>>>>>    }
->>>>>>>
->>>>>>> -void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc)
->>>>>>> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_enc,
->>>>>>> bool has_ctm)
->>>>>>>    {
->>>>>>>           struct dpu_encoder_virt *dpu_enc;
->>>>>>>
->>>>>>> @@ -255,7 +255,7 @@ void dpu_encoder_setup_misr(const struct
->>>>>>> drm_encoder *drm_enc)
->>>>>>>                   if (!phys->hw_intf || !phys->hw_intf->ops.setup_misr)
->>>>>>>                           continue;
->>>>>>>
->>>>>>> -               phys->hw_intf->ops.setup_misr(phys->hw_intf, true, 1);
->>>>>>> +               phys->hw_intf->ops.setup_misr(phys->hw_intf, true,
->>>>>>> 1, has_ctm);
->>>>>>>           }
->>>>>>>    }
->>>>>>>
->>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>>>>>> index 4c05fd5e9ed1..510783b2fb24 100644
->>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
->>>>>>> @@ -169,8 +169,9 @@ int dpu_encoder_get_crc_values_cnt(const struct
->>>>>>> drm_encoder *drm_enc);
->>>>>>>    /**
->>>>>>>     * dpu_encoder_setup_misr - enable misr calculations
->>>>>>>     * @drm_enc:    Pointer to previously created drm encoder structure
->>>>>>> + * @has_ctm:    Is CTM enabled
->>>>>>>     */
->>>>>>> -void dpu_encoder_setup_misr(const struct drm_encoder *drm_encoder);
->>>>>>> +void dpu_encoder_setup_misr(const struct drm_encoder *drm_encoder,
->>>>>>> bool has_ctm);
->>>>>>>
->>>>>>>    /**
->>>>>>>     * dpu_encoder_get_crc - get the crc value from interface blocks
->>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>>>>>> index e8b8908d3e12..cb06f80cc671 100644
->>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
->>>>>>> @@ -318,9 +318,9 @@ static u32 dpu_hw_intf_get_line_count(struct
->>>>>>> dpu_hw_intf *intf)
->>>>>>>           return DPU_REG_READ(c, INTF_LINE_COUNT);
->>>>>>>    }
->>>>>>>
->>>>>>> -static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool
->>>>>>> enable, u32 frame_count)
->>>>>>> +static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf, bool
->>>>>>> enable, u32 frame_count, bool has_ctm)
->>>>>>>    {
->>>>>>> -       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, enable,
->>>>>>> frame_count);
->>>>>>> +       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, enable,
->>>>>>> frame_count, has_ctm);
->>>>>>
->>>>>> I'm not sure about the dpu_encoder and dpu_hw_intf interfaces. But
->>>>>> dpu_hw_setup_misr definitely needs the `u8 input_sel` parameter
->>>>>> instead of `bool has_ctm`.
->>>>>
->>>>> That seems a bit premature without knowing what the other values are.
->>>>> (And I also question a bit the whole abstraction layer thing if it is
->>>>> taking directly register bitfield enum's..)
->>>>
->>>> dpu_hw_intf and especially dpu_hw_util are not real abstractions. I
->>>> always viewed them as useful low-level helpers.
->>>>
->>>> I think that has_ctm is valid at the dpu_encoder level, which selects
->>>> which input to use. on the lower levels has_ctm doesn't make sense.
->>>> IOW dpu_hw_setup_misr can be used to setup MISR for other blocks,
->>>> where CTM doesn't exist.
->>>>
->>>>>
->>>>> BR,
->>>>> -R
->>>>>
->>>>>> Most likely, I'd use u8 for dpu_hw_intf operation too.
->>>>>>
->>>>>> Could you please adjust?
->>>>>>
->>>>>>>    }
->>>>>>>
->>>>>>>    static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32
->>>>>>> *misr_value)
->>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>>>>>> index c539025c418b..95aafc4cf58e 100644
->>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
->>>>>>> @@ -95,7 +95,7 @@ struct dpu_hw_intf_ops {
->>>>>>>
->>>>>>>           void (*bind_pingpong_blk)(struct dpu_hw_intf *intf,
->>>>>>>                           const enum dpu_pingpong pp);
->>>>>>> -       void (*setup_misr)(struct dpu_hw_intf *intf, bool enable,
->>>>>>> u32 frame_count);
->>>>>>> +       void (*setup_misr)(struct dpu_hw_intf *intf, bool enable,
->>>>>>> u32 frame_count, bool has_ctm);
->>>>>>>           int (*collect_misr)(struct dpu_hw_intf *intf, u32
->>>>>>> *misr_value);
->>>>>>>
->>>>>>>           // Tearcheck on INTF since DPU 5.0.0
->>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->>>>>>> index d1c3bd8379ea..2efe29396c6a 100644
->>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->>>>>>> @@ -83,7 +83,7 @@ static void dpu_hw_lm_setup_border_color(struct
->>>>>>> dpu_hw_mixer *ctx,
->>>>>>>
->>>>>>>    static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx, bool
->>>>>>> enable, u32 frame_count)
->>>>>>>    {
->>>>>>> -       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, enable,
->>>>>>> frame_count);
->>>>>>> +       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, enable,
->>>>>>> frame_count, false);
->>>>>>>    }
->>>>>>>
->>>>>>>    static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32
->>>>>>> *misr_value)
->>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
->>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
->>>>>>> index 9d2273fd2fed..528b8439209f 100644
->>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
->>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
->>>>>>> @@ -483,7 +483,7 @@ void _dpu_hw_setup_qos_lut(struct
->>>>>>> dpu_hw_blk_reg_map *c, u32 offset,
->>>>>>>
->>>>>>>    void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
->>>>>>>                   u32 misr_ctrl_offset,
->>>>>>> -               bool enable, u32 frame_count)
->>>>>>> +               bool enable, u32 frame_count, bool has_ctm)
->>>>>>>    {
->>>>>>>           u32 config = 0;
->>>>>>>
->>>>>>> @@ -496,6 +496,9 @@ void dpu_hw_setup_misr(struct
->>>>>>> dpu_hw_blk_reg_map *c,
->>>>>>>                   config = (frame_count & MISR_FRAME_COUNT_MASK) |
->>>>>>>                           MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK;
->>>>>>>
->>>>>>> +               if (!has_ctm)
->>>>>>> +                       config |= 1 << 24;
->>>>>>
->>>>>> Please define MISR_CTRL_INPUT_SEL instead.
->>>>>>
->>>>>>> +
->>>>>>>                   DPU_REG_WRITE(c, misr_ctrl_offset, config);
->>>>>>>           } else {
->>>>>>>                   DPU_REG_WRITE(c, misr_ctrl_offset, 0);
->>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
->>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
->>>>>>> index 1f6079f47071..e42d9d00e40e 100644
->>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
->>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
->>>>>>> @@ -360,7 +360,8 @@ void _dpu_hw_setup_qos_lut(struct
->>>>>>> dpu_hw_blk_reg_map *c, u32 offset,
->>>>>>>    void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
->>>>>>>                   u32 misr_ctrl_offset,
->>>>>>>                   bool enable,
->>>>>>> -               u32 frame_count);
->>>>>>> +               u32 frame_count,
->>>>>>> +               bool has_ctm);
->>>>>>>
->>>>>>>    int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
->>>>>>>                   u32 misr_ctrl_offset,
->>>>>>> --
->>>>>>> 2.41.0
->>>>>>>
->>>>>>
->>>>>>
->>>>>> --
->>>>>> With best wishes
->>>>>> Dmitry
->>>>
->>>>
->>>>
 
