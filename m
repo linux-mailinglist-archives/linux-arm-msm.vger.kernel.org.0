@@ -1,158 +1,381 @@
-Return-Path: <linux-arm-msm+bounces-1590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EADD7F518A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 21:24:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 210A77F5193
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 21:26:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 243F328127C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 20:24:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8BAD0B20E72
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 20:26:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C2674C617;
-	Wed, 22 Nov 2023 20:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="trJZ9rCt"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E2EA5C914;
+	Wed, 22 Nov 2023 20:25:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4AE19A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 12:24:29 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2c8790474d5so2391831fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 12:24:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700684668; x=1701289468; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pa4PSx1bqwHUNtr2jOQTdwbCw2lGoLr2aW9SF4QV68E=;
-        b=trJZ9rCtBBkRyoW5ItepmGgU4L9zF4BIn6Jin5AdJegD6zRDhSheOjEmmOBTGnwvct
-         lbIB4p0pYlxttSLzDTBxw1YahC1CsTQok0XRB3mGcOKT60/z5Hjas28wV5fY6AOqoR5H
-         NYdwlwGyltCWdTn7ANOjAP3YCA8rwmpEBeAA6iHuyhKhYCcGigvhaP1Ws9nmVWk11iKB
-         UBF+tPS9moJRHWhpYaH54zSfk2vS9xlZw+v7qQSFKcZLsVCqheChyBndgv1dCFyDv4ew
-         ZSeV8pFFlghK2AnvOIsFm+GurSSeVe+Bi+3u59vXVjW9NsjUdcIsI52pXGR4sxU6J3kq
-         qjAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700684668; x=1701289468;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pa4PSx1bqwHUNtr2jOQTdwbCw2lGoLr2aW9SF4QV68E=;
-        b=WtYfTIWx768OLhNqndBU0a8zRH9jWMUU0gzWcgbpPrrnZZVE2KZrNBf9HSoIC/xlvZ
-         Ww2RXHJ7Pi+hulsRf+K8iuuLGz3HSDyDRxGfhHWj6Eu3JMSAAUWWEJCQWe4iel8RnaIQ
-         C8eTjITCMlctVilVYMzpRFKpmfr5ydz3XdpIpDhM6XzSqvnkL8+UaA/gUuPYS/ejUu0k
-         szIaggyZam/kxh2G+c+0/qM8BsoeVhKqjTKwbBcojy0HHSQGMON3OZGaSHmGU7er4D+u
-         VIio7vrGcLnr/ehg0+XDl5klLGnf6BIlZnDnHj/g3GGHbYX7FFR2iI/DhqzxvtGm5bkL
-         SE5g==
-X-Gm-Message-State: AOJu0YxluspqnFpH+NXvqgf+E0lPkX5I3Sw/ESZ8bgocBjC2QcsLt2eA
-	mE00doAqKQ9JE9T3tSqinb4lLwX685B/wU/5OFjMwovA
-X-Google-Smtp-Source: AGHT+IHCqJnqmqruquEzZmPUrGzbkNt3QnbrS5s9HB1QFQs8oQy4JStcei9zVZVifxLEVasGTNqeiw==
-X-Received: by 2002:a2e:920b:0:b0:2c5:23e3:ed11 with SMTP id k11-20020a2e920b000000b002c523e3ed11mr2713058ljg.30.1700684667938;
-        Wed, 22 Nov 2023 12:24:27 -0800 (PST)
-Received: from [172.30.204.74] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id f27-20020a2eb5bb000000b002b9f03729e2sm42821ljn.36.2023.11.22.12.24.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Nov 2023 12:24:27 -0800 (PST)
-Message-ID: <f18b6552-bf8d-4826-969a-a0de60bd0ad3@linaro.org>
-Date: Wed, 22 Nov 2023 21:24:24 +0100
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54FA6D40
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 12:25:51 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 9B8B42012C;
+	Wed, 22 Nov 2023 21:25:47 +0100 (CET)
+Date: Wed, 22 Nov 2023 21:25:46 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+Subject: Re: [PATCH 1/6] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
+ bindings
+Message-ID: <e6qtpkzzugddgy6dkpruecdty73qjbja5wpvrvio53mq3dfd2g@axgmdfw6oywg>
+References: <20231122191335.3058-1-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] net: mdio: ipq4019: configure CMN PLL clock for
- ipq5332
-Content-Language: en-US
-To: Luo Jie <quic_luoj@quicinc.com>, agross@kernel.org, andersson@kernel.org,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
- pabeni@redhat.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- conor+dt@kernel.org, andrew@lunn.ch, hkallweit1@gmail.com,
- linux@armlinux.org.uk, robert.marko@sartura.hr
-Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_srichara@quicinc.com
-References: <20231115032515.4249-1-quic_luoj@quicinc.com>
- <20231115032515.4249-5-quic_luoj@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231115032515.4249-5-quic_luoj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Level: *
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231122191335.3058-1-quic_kriskura@quicinc.com>
 
+Looks like this patch will conflict with:
 
+https://lore.kernel.org/linux-arm-msm/20231111141953.51841-1-krzysztof.kozlowski@linaro.org/
 
-On 11/15/23 04:25, Luo Jie wrote:
-> The reference clock of CMN PLL block is selectable, the internal
-> 48MHZ is used by default.
+On 2023-11-23 00:43:35, Krishna Kurapati wrote:
+> The high speed related interrupts present on QC targets are as follows:
 > 
-> The output clock of CMN PLL block is for providing the clock
-> source of ethernet device(such as qca8084), there are 1 X 25MHZ
-> and 3 x 50MHZ output clocks available.
+> dp/dm Irq's
+
+irqs
+
+> These IRQ's directly reflect changes on the DP/DM pads of the SoC. These
+> are used as wakeup interrupts only on SoCs with non-QUSBb2 targets with
+
+drop -b-: QUSB2?
+
+Perhaps a description like this deserves to live in the yaml?
+
+> exception of SDM670/SDM845/SM6350.
+
+> qusb2_phy irq
+> SoCs with QUSB2 PHY do not have separate DP/DM IRQs and expose only a
+> single IRQ whose behavior can be modified by the QUSB2PHY_INTR_CTRL
+> register. The required DPSE/DMSE configuration is done in
+> QUSB2PHY_INTR_CTRL register of phy address space.
 > 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> hs_phy_irq
+> This is completely different from the above two and is present on all
+> targets with exception of a few IPQ ones. The interrupt is not enabled by
+> default and its functionality is mutually exclusive of qusb2_phy on QUSB
+> targets and DP/DM on femto phy targets.
+> 
+> The DTs of several QUSB2 PHY based SoCs incorrectly define "hs_phy_irq"
+> when they should have been "qusb2_phy_irq". On Femto phy targets, the
+> "hs_phy_irq" mentioned is either the actual "hs_phy_irq" or "pwr_event",
+> neither of which would never be triggered directly are non-functional
+> currently. The implementation tries to clean up this issue by addressing
+> the discrepencies involved and fixing the hs_phy_irq's in respective DT's.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > ---
->   drivers/net/mdio/mdio-ipq4019.c | 81 ++++++++++++++++++++++++++++++++-
->   1 file changed, 80 insertions(+), 1 deletion(-)
+>  .../devicetree/bindings/usb/qcom,dwc3.yaml    | 125 ++++++++++--------
+>  1 file changed, 69 insertions(+), 56 deletions(-)
 > 
-> diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
-> index 93ae4684de31..ca9cda98d1f8 100644
-> --- a/drivers/net/mdio/mdio-ipq4019.c
-> +++ b/drivers/net/mdio/mdio-ipq4019.c
-> @@ -43,6 +43,13 @@
->   /* Maximum SOC PCS(uniphy) number on IPQ platform */
->   #define ETH_LDO_RDY_CNT				3
->   
-> +#define CMN_PLL_REFERENCE_CLOCK			0x784
-> +#define CMN_PLL_REFCLK_INDEX			GENMASK(3, 0)
-> +#define CMN_PLL_REFCLK_EXTERNAL			BIT(9)
-> +
-> +#define CMN_PLL_POWER_ON_AND_RESET		0x780
-> +#define CMN_ANA_EN_SW_RSTN			BIT(6)
-> +
->   enum mdio_clk_id {
->   	MDIO_CLK_MDIO_AHB,
->   	MDIO_CLK_UNIPHY0_AHB,
-> @@ -54,6 +61,7 @@ enum mdio_clk_id {
->   
->   struct ipq4019_mdio_data {
->   	void __iomem *membase;
-> +	void __iomem *cmn_membase;
->   	void __iomem *eth_ldo_rdy[ETH_LDO_RDY_CNT];
->   	struct clk *clk[MDIO_CLK_CNT];
->   	struct gpio_descs *reset_gpios;
-> @@ -227,12 +235,73 @@ static int ipq4019_mdio_write_c22(struct mii_bus *bus, int mii_id, int regnum,
->   	return 0;
->   }
->   
-> +/* For the CMN PLL block, the reference clock can be configured according to
-> + * the device tree property "cmn_ref_clk", the internal 48MHZ is used by default
-> + * on the ipq533 platform.
-> + *
-> + * The output clock of CMN PLL block is provided to the MDIO slave devices,
-> + * threre are 4 CMN PLL output clocks (1x25MHZ + 3x50MHZ) enabled by default.
-> + *
-> + * such as the output 50M clock for the qca8084 PHY.
-> + */
-> +static void ipq_cmn_clock_config(struct mii_bus *bus)
-> +{
-> +	u32 reg_val;
-> +	const char *cmn_ref_clk;
-> +	struct ipq4019_mdio_data *priv = bus->priv;
-> +
-> +	if (priv && priv->cmn_membase) {
-> +		reg_val = readl(priv->cmn_membase + CMN_PLL_REFERENCE_CLOCK);
-> +		reg_val &= ~(CMN_PLL_REFCLK_EXTERNAL | CMN_PLL_REFCLK_INDEX);
-> +
-> +		/* Select reference clock source */
-> +		cmn_ref_clk = of_get_property(bus->parent->of_node, "cmn_ref_clk", NULL);
-> +		if (!cmn_ref_clk) {
-> +			/* Internal 48MHZ selected by default */
-> +			reg_val |= FIELD_PREP(CMN_PLL_REFCLK_INDEX, 7);
-> +		} else {
-> +			if (!strcmp(cmn_ref_clk, "external_25MHz"))
-As pointed out by others, such string properties won't go through
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index e889158ca205..4a46346e2ead 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -17,20 +17,25 @@ properties:
+>            - qcom,ipq5018-dwc3
+>            - qcom,ipq5332-dwc3
+>            - qcom,ipq6018-dwc3
+> +          - qcom,ipq6018-dwc3-sec
+>            - qcom,ipq8064-dwc3
+>            - qcom,ipq8074-dwc3
+>            - qcom,ipq9574-dwc3
+>            - qcom,msm8953-dwc3
+>            - qcom,msm8994-dwc3
+>            - qcom,msm8996-dwc3
+> +          - qcom,msm8996-dwc3-sec
+>            - qcom,msm8998-dwc3
+>            - qcom,qcm2290-dwc3
+>            - qcom,qcs404-dwc3
+>            - qcom,sa8775p-dwc3
+> +          - qcom,sa8775p-dwc3-ter
+>            - qcom,sc7180-dwc3
+>            - qcom,sc7280-dwc3
+> +          - qcom,sc7280-dwc3-sec
+>            - qcom,sc8280xp-dwc3
+>            - qcom,sdm660-dwc3
+> +          - qcom,sdm660-dwc3-sec
+>            - qcom,sdm670-dwc3
+>            - qcom,sdm845-dwc3
+>            - qcom,sdx55-dwc3
+> @@ -98,11 +103,11 @@ properties:
+>  
+>    interrupts:
+>      minItems: 1
+> -    maxItems: 4
+> +    maxItems: 5
+>  
+>    interrupt-names:
+>      minItems: 1
+> -    maxItems: 4
+> +    maxItems: 5
+>  
+>    qcom,select-utmi-as-pipe-clk:
+>      description:
+> @@ -175,10 +180,13 @@ allOf:
+>                - qcom,ipq9574-dwc3
+>                - qcom,msm8953-dwc3
+>                - qcom,msm8996-dwc3
+> +              - qcom,msm8996-dwc3-sec
+>                - qcom,msm8998-dwc3
+>                - qcom,sa8775p-dwc3
+> +              - qcom,sa8775p-dwc3-ter
+>                - qcom,sc7180-dwc3
+>                - qcom,sc7280-dwc3
+> +              - qcom,sc7280-dwc3-sec
+>                - qcom,sdm670-dwc3
+>                - qcom,sdm845-dwc3
+>                - qcom,sdx55-dwc3
+> @@ -203,6 +211,7 @@ allOf:
+>            contains:
+>              enum:
+>                - qcom,ipq6018-dwc3
+> +              - qcom,ipq6018-dwc3-sec
+>      then:
+>        properties:
+>          clocks:
+> @@ -285,6 +294,7 @@ allOf:
+>            contains:
+>              enum:
+>                - qcom,sdm660-dwc3
+> +              - qcom,sdm660-dwc3-sec
+>      then:
+>        properties:
+>          clocks:
+> @@ -357,20 +367,15 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,ipq4019-dwc3
+> -              - qcom,ipq6018-dwc3
+> -              - qcom,ipq8064-dwc3
+> -              - qcom,ipq8074-dwc3
+> -              - qcom,msm8994-dwc3
+> -              - qcom,qcs404-dwc3
+> +              - qcom,sc8280xp-dwc3
+> +              - qcom,sa8775p-dwc3
+>                - qcom,sc7180-dwc3
+> +              - qcom,sc7280-dwc3
+>                - qcom,sdm670-dwc3
+>                - qcom,sdm845-dwc3
+>                - qcom,sdx55-dwc3
+>                - qcom,sdx65-dwc3
+>                - qcom,sdx75-dwc3
+> -              - qcom,sm4250-dwc3
+> -              - qcom,sm6125-dwc3
+>                - qcom,sm6350-dwc3
+>                - qcom,sm8150-dwc3
+>                - qcom,sm8250-dwc3
+> @@ -381,16 +386,37 @@ allOf:
+>        properties:
+>          interrupts:
+>            items:
+> +            - description: Wakeup event on DM line.
+> +            - description: Wakeup event on DP line.
+>              - description: The interrupt that is asserted
+> -                when a wakeup event is received on USB2 bus.
+> +                based on linestates. Is enabled if qscratch
+> +                registers are configured appropirately. This
 
-Konrad
+Arr.
+
+In all seriousness: I think you meant to write "appropriately".
+
+> +                interrupt functionality is mutually exclusive
+> +                to that of {dp/d}_hs_phy_irq)
+
+dm?
+
+- Marijn
+
+> +            - description: Wakeup based on power events.
+>              - description: The interrupt that is asserted
+>                  when a wakeup event is received on USB3 bus.
+> -            - description: Wakeup event on DM line.
+> -            - description: Wakeup event on DP line.
+>          interrupt-names:
+>            items:
+> +            - const: dm_hs_phy_irq
+> +            - const: dp_hs_phy_irq
+>              - const: hs_phy_irq
+> +            - const: pwr_event
+>              - const: ss_phy_irq
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sc7280-dwc3-sec
+> +              - qcom,sa8775p-ter
+> +    then:
+> +      properties:
+> +        interrupt-names:
+> +          items:
+> +            - const: pwr_event
+> +            - const: hs_phy_irq
+>              - const: dm_hs_phy_irq
+>              - const: dp_hs_phy_irq
+>  
+> @@ -399,36 +425,29 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,msm8953-dwc3
+> -              - qcom,msm8996-dwc3
+> -              - qcom,msm8998-dwc3
+> -              - qcom,sm6115-dwc3
+> +              - qcom,ipq6018-dwc3-sec
+>      then:
+>        properties:
+> -        interrupts:
+> -          maxItems: 2
+>          interrupt-names:
+>            items:
+> -            - const: hs_phy_irq
+> -            - const: ss_phy_irq
+> +            - const: pwr_event
+> +            - const: qusb2_phy
+>  
+>    - if:
+>        properties:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,ipq5018-dwc3
+> -              - qcom,ipq5332-dwc3
+> -              - qcom,sdm660-dwc3
+> +              - qcom,ipq6018-dwc3
+> +              - qcom,ipq8074-dwc3
+> +              - qcom,msm8953-dwc3
+> +              - qcom,msm8998-dwc3
+>      then:
+>        properties:
+> -        interrupts:
+> -          minItems: 1
+> -          maxItems: 2
+>          interrupt-names:
+> -          minItems: 1
+>            items:
+> -            - const: hs_phy_irq
+> +            - const: pwr_event
+> +            - const: qusb2_phy
+>              - const: ss_phy_irq
+>  
+>    - if:
+> @@ -436,55 +455,48 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,sc7280-dwc3
+> +              - qcom,msm8996-dwc3
+> +              - qcom,sdm660-dwc3
+> +              - qcom,sm4250-dwc3
+> +              - qcom,sm6115-dwc3
+> +              - qcom,sm6125-dwc3
+>      then:
+>        properties:
+> -        interrupts:
+> -          minItems: 3
+> -          maxItems: 4
+>          interrupt-names:
+> -          minItems: 3
+>            items:
+>              - const: hs_phy_irq
+> -            - const: dp_hs_phy_irq
+> -            - const: dm_hs_phy_irq
+> +            - const: pwr_event
+> +            - const: qusb2_phy
+>              - const: ss_phy_irq
+> -
+>    - if:
+>        properties:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,sc8280xp-dwc3
+> +              - qcom,sdm660-dwc3-sec
+> +              - qcom,msm8996-dwc3-sec
+> +              - qcom,qcs404-dwc3
+>      then:
+>        properties:
+> -        interrupts:
+> -          maxItems: 4
+>          interrupt-names:
+>            items:
+> +            - const: hs_phy_irq
+>              - const: pwr_event
+> -            - const: dp_hs_phy_irq
+> -            - const: dm_hs_phy_irq
+> -            - const: ss_phy_irq
+> +            - const: qusb2_phy
+>  
+>    - if:
+>        properties:
+>          compatible:
+>            contains:
+>              enum:
+> -              - qcom,sa8775p-dwc3
+> +              - qcom,ipq5332-dwc3
+>      then:
+>        properties:
+> -        interrupts:
+> -          minItems: 3
+> -          maxItems: 4
+>          interrupt-names:
+> -          minItems: 3
+>            items:
+> -            - const: pwr_event
+>              - const: dp_hs_phy_irq
+>              - const: dm_hs_phy_irq
+> -            - const: ss_phy_irq
+> +            - const: pwr_event
+>  
+>  additionalProperties: false
+>  
+> @@ -519,12 +531,13 @@ examples:
+>                            <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+>              assigned-clock-rates = <19200000>, <150000000>;
+>  
+> -            interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+> -                         <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+> -                         <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+> -                         <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
+> -            interrupt-names = "hs_phy_irq", "ss_phy_irq",
+> -                          "dm_hs_phy_irq", "dp_hs_phy_irq";
+> +            interrupts = <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>;
+> +            interrupt-names = "dm_hs_phy_irq", "dp_hs_phy_irq",
+> +                              "hs_phy_irq", "pwr_event", "ss_phy_irq";
+>  
+>              power-domains = <&gcc USB30_PRIM_GDSC>;
+>  
+> -- 
+> 2.42.0
+> 
 
