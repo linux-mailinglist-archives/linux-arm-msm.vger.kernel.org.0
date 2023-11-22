@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-1439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 046BC7F3EC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 08:16:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D53C67F3EB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 08:11:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0E79281952
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 07:16:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9122428160D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 07:11:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBA1018628;
-	Wed, 22 Nov 2023 07:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 221981862A;
+	Wed, 22 Nov 2023 07:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WjPDWZKN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YHrVGg+h"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B100B1A8;
-	Tue, 21 Nov 2023 23:16:18 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM4xPue013945;
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FCA610DB;
+	Tue, 21 Nov 2023 23:11:46 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AM6nuw5028736;
 	Wed, 22 Nov 2023 07:11:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
  subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=bOrJSSNFsLGbiSSB8YF589JZQLsAbNb5oTKc3fog6kw=;
- b=WjPDWZKN/09jQNKi0ah89tf8VfXL+XzGG/wO2yVFtESpANDgG/dFj64ETThHf5OJFtRV
- u78Ww2WW1OF4kfnUId1lGZJB9OvuCuz6qZs4xB57bt8bKncnruRuaMLK38SIsFhfkDK6
- i/4wXANO6B+IAYH5zlYX+5wrFSJ++5l6wMyT3v8shpR4niuZmJ0D//lpI+SBGFbM4Iqa
- seHjn7xGtz44B8olkMeSyxK0ZwQITvLzmn1DCds1EZ65gZ9MI4QV892XzB6JL6D3Iolm
- Q0/8uvGq4xx8RX74S7odEsqEnE1waYYJnzp/kLI82rYc5HVoA85q/Vhl89dOA+lqHUys Bw== 
+ bh=IwN62VLEShy+VSKK0jRx0klroKj4fpZ9T+/MVP2hILs=;
+ b=YHrVGg+hSW1nE5WeiOGQgCzjhE96bQJ3HehjglH51FdNm8Jy4Rk+wLyIYRtatWhHn8IT
+ sn9TjMixX1LE5mhDb9Yajf56asOhQprnICAgDQn8/JUs7cn2zpejlNktSLGUzjBS7Ozq
+ k4uVsyfTMcyhBZtW8MgFIat/rre8TBMFMeAbWSM8d9zaSaLQ+Nj1HNd0X8pRfS21smy2
+ owgK4Qa6AiEmzKpicZuLlhn/xzqhalWNkh6iS5nKIItIrbmgDA9yy6IWc7bUb7slzf5O
+ pEBsIKa8xITQwyLfCFltukKZ6LAJQ/eZnpBUluicZI2jhJ21v4QCPOnduw1v9ie4+1Wo MQ== 
 Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ugxn8hy5w-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uh0b49kqp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Wed, 22 Nov 2023 07:11:07 +0000
 Received: from pps.filterd (NASANPPMTA03.qualcomm.com [127.0.0.1])
-	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3AM77S71012224;
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3AM77S72012224;
 	Wed, 22 Nov 2023 07:11:05 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
-	by NASANPPMTA03.qualcomm.com (PPS) with ESMTP id 3uepbmpxr0-1;
+	by NASANPPMTA03.qualcomm.com (PPS) with ESMTP id 3uepbmpxr6-1;
 	Wed, 22 Nov 2023 07:11:05 +0000
 Received: from NASANPPMTA03.qualcomm.com (NASANPPMTA03.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3AM76Fsr010658;
-	Wed, 22 Nov 2023 07:11:04 GMT
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3AM7AcTR017314;
+	Wed, 22 Nov 2023 07:11:05 GMT
 Received: from stor-dylan.qualcomm.com (stor-dylan.qualcomm.com [192.168.140.207])
-	by NASANPPMTA03.qualcomm.com (PPS) with ESMTP id 3AM7B4mO019539;
-	Wed, 22 Nov 2023 07:11:04 +0000
+	by NASANPPMTA03.qualcomm.com (PPS) with ESMTP id 3AM7B5si019556;
+	Wed, 22 Nov 2023 07:11:05 +0000
 Received: by stor-dylan.qualcomm.com (Postfix, from userid 359480)
-	id 2C1EE20A65; Tue, 21 Nov 2023 23:11:04 -0800 (PST)
+	id DF93820A68; Tue, 21 Nov 2023 23:11:04 -0800 (PST)
 From: Can Guo <quic_cang@quicinc.com>
 To: quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
         stanley.chu@mediatek.com, adrian.hunter@intel.com, beanhuo@micron.com,
@@ -55,12 +55,12 @@ To: quic_cang@quicinc.com, bvanassche@acm.org, mani@kernel.org,
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        linux-arm-msm@vger.kernel.org (open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER...),
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
         linux-scsi@vger.kernel.org (open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER...),
         linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 06/11] scsi: ufs: ufs-qcom: Limit HS-G5 Rate-A to hosts with HW version 5
-Date: Tue, 21 Nov 2023 23:10:37 -0800
-Message-Id: <1700637042-11104-7-git-send-email-quic_cang@quicinc.com>
+Subject: [PATCH v3 07/11] scsi: ufs: ufs-qcom: Set initial PHY gear to max HS gear for HW ver 5 and newer
+Date: Tue, 21 Nov 2023 23:10:38 -0800
+Message-Id: <1700637042-11104-8-git-send-email-quic_cang@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1700637042-11104-1-git-send-email-quic_cang@quicinc.com>
 References: <1700637042-11104-1-git-send-email-quic_cang@quicinc.com>
@@ -68,15 +68,15 @@ X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _kxPYoqIHKLwuKA_tJ5i_nnB7zFiYxyw
-X-Proofpoint-GUID: _kxPYoqIHKLwuKA_tJ5i_nnB7zFiYxyw
+X-Proofpoint-ORIG-GUID: Zi5tR-U_dm7ne0i6H3NfCD3y6lQghk6p
+X-Proofpoint-GUID: Zi5tR-U_dm7ne0i6H3NfCD3y6lQghk6p
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-22_04,2023-11-21_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- suspectscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- mlxlogscore=744 clxscore=1015 spamscore=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 malwarescore=0 bulkscore=0 clxscore=1015 phishscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311060000 definitions=main-2311220050
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -84,54 +84,62 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 
-Qcom UFS hosts, with HW ver 5, can only support up to HS-G5 Rate-A due to
-HW limitations. If the HS-G5 PHY gear is used, update host_params->hs_rate
-to Rate-A, so that the subsequent power mode changes shall stick to Rate-A.
+Set the initial PHY gear to max HS gear for hosts with HW ver 5 and newer.
+
+This patch is not changing any functionalities or logic but only a
+preparation patch for the next patch in this series.
 
 Signed-off-by: Can Guo <quic_cang@quicinc.com>
 ---
- drivers/ufs/host/ufs-qcom.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 9613ad9..6756f8d 100644
+index 6756f8d..7bbccf4 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -442,9 +442,25 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
- static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+@@ -1067,6 +1067,20 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
+ 		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
+ }
+ 
++static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
++{
++	struct ufs_host_params *host_params = &host->host_params;
++
++	host->phy_gear = host_params->hs_tx_gear;
++
++	/*
++	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
++	 * Switching to max gear will be performed during reinit if supported.
++	 */
++	if (host->hw_ver.major < 0x5)
++		host->phy_gear = UFS_HS_G2;
++}
++
+ static void ufs_qcom_set_host_params(struct ufs_hba *hba)
  {
  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+	struct ufs_host_params *host_params = &host->host_params;
- 	struct phy *phy = host->generic_phy;
-+	enum phy_mode mode;
- 	int ret;
+@@ -1303,6 +1317,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 	ufs_qcom_set_caps(hba);
+ 	ufs_qcom_advertise_quirks(hba);
+ 	ufs_qcom_set_host_params(hba);
++	ufs_qcom_set_phy_gear(host);
  
-+	/*
-+	 * HW ver 5 can only support up to HS-G5 Rate-A due to HW limitations.
-+	 * If the HS-G5 PHY gear is used, update host_params->hs_rate to Rate-A,
-+	 * so that the subsequent power mode change shall stick to Rate-A.
-+	 */
-+	if (host->hw_ver.major == 0x5) {
-+		if (host->phy_gear == UFS_HS_G5)
-+			host_params->hs_rate = PA_HS_MODE_A;
-+		else
-+			host_params->hs_rate = PA_HS_MODE_B;
-+	}
-+
-+	mode = host_params->hs_rate == PA_HS_MODE_B ? PHY_MODE_UFS_HS_B : PHY_MODE_UFS_HS_A;
-+
- 	/* Reset UFS Host Controller and PHY */
- 	ret = ufs_qcom_host_reset(hba);
- 	if (ret)
-@@ -459,7 +475,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
- 		return ret;
- 	}
+ 	err = ufs_qcom_ice_init(host);
+ 	if (err)
+@@ -1320,12 +1335,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 		dev_warn(dev, "%s: failed to configure the testbus %d\n",
+ 				__func__, err);
  
--	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);
-+	phy_set_mode_ext(phy, mode, host->phy_gear);
+-	/*
+-	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
+-	 * Switching to max gear will be performed during reinit if supported.
+-	 */
+-	host->phy_gear = UFS_HS_G2;
+-
+ 	return 0;
  
- 	/* power on phy - start serdes and phy's power and clocks */
- 	ret = phy_power_on(phy);
+ out_variant_clear:
 -- 
 2.7.4
 
