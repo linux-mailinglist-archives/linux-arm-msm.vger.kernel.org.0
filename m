@@ -1,99 +1,341 @@
-Return-Path: <linux-arm-msm+bounces-1558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 562147F4E9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:44:05 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15E217F4EAD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:51:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EFB7C1F21970
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 17:44:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 701D0B20C72
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 17:50:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A44454BEF;
-	Wed, 22 Nov 2023 17:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B230B5811F;
+	Wed, 22 Nov 2023 17:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oez6Ptxm"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="NNY0P3nk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC60D42;
-	Wed, 22 Nov 2023 09:43:57 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AMHfJYh026759;
-	Wed, 22 Nov 2023 17:43:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ZaNRIg3lKd62YeBy/yihCk/EXDyr33s6vGch1Rp/wgU=;
- b=oez6PtxmupPpXCeqY/gdkqMTddKW4u/Dzc1c+u2sMtXIBqpYf0shkhI7KJZDjbd/dKeU
- JYIlITDtQ0dAPDTkbybzheHmKdkqO9UaqMeqxyi5ViimcePZWUUh3H6O2TK+/22qrCfw
- Fd5KSaORXEdffdgDIHElGYaAAIP09yYoGO5GrD3bEpEPdwVZzwCD5q3BgyDr4cgO4aq4
- XHdPrKhxvgnvCZIWsMIpUtlhZVEnoQavbluwVfQMZmFvUKkGkhs32N+ZJ6uKMx+50XNB
- XjOeK5WPIXUKtnbBxb2nMf9yg9u4yq+KPLiSzEhkgmFjWNQiIPq5lpw81WbGlsexy+wU 7Q== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uhgajrytt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 17:43:54 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AMHhrYU017931
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 22 Nov 2023 17:43:53 GMT
-Received: from [10.110.98.138] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 22 Nov
- 2023 09:43:49 -0800
-Message-ID: <edf9399c-f272-cf2b-15dd-385002fc4fcb@quicinc.com>
-Date: Wed, 22 Nov 2023 09:43:37 -0800
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBF8D1B3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 09:50:49 -0800 (PST)
+Message-ID: <09a78110-99d7-44ca-8558-dd300c353632@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1700675447;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yOw+hHrA4r+TfdEE+WVDT6I3vzKD2GREfHEw4jCowto=;
+	b=NNY0P3nkEdXIvTFdZgaEspupWc3C0vtePf8nbykCdgIOtMGqvdds/UkMdKZrFnfRkqAJpa
+	yGRvRmyTeKle8rm7TxjZmNjkEsL4OYQ2TSRxg/KLwyB+510LT+j1uOjTAtigWzypkOzmnG
+	TtGHevd26yRWoajYzSxHzQSQVkcjYOc=
+Date: Thu, 23 Nov 2023 01:50:37 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v3 02/12] qcom_scm: scm call for deriving a software
- secret
+Subject: Re: [v6,1/6] drm/bridge: add transparent bridge helper
 Content-Language: en-US
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-mmc@vger.kernel.org>, <linux-block@vger.kernel.org>,
-        <linux-fscrypt@vger.kernel.org>, <omprsing@qti.qualcomm.com>,
-        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>,
-        <quic_spuppala@quicinc.com>, <kernel@quicinc.com>
-References: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
- <20231122053817.3401748-3-quic_gaurkash@quicinc.com>
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <20231122053817.3401748-3-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UzMkdLUar2xqfmpaebXBe5jOF_EyfTf3
-X-Proofpoint-ORIG-GUID: UzMkdLUar2xqfmpaebXBe5jOF_EyfTf3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-22_12,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=384
- priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0
- clxscore=1011 impostorscore=0 malwarescore=0 mlxscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311220129
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Maxime Ripard <mripard@kernel.org>
+Cc: linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-usb@vger.kernel.org, freedreno@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org
+References: <20231103230414.1483428-2-dmitry.baryshkov@linaro.org>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Sui Jingfeng <sui.jingfeng@linux.dev>
+In-Reply-To: <20231103230414.1483428-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-On 11/21/2023 9:38 PM, Gaurav Kashyap wrote:
+Hi,
+
+
+On 2023/11/4 07:03, Dmitry Baryshkov wrote:
+> Define a helper for creating simple transparent bridges which serve the
+> only purpose of linking devices into the bridge chain up to the last
+> bridge representing the connector.
+
+As far as I can tell, traditionally, transparent display bridges are
+used to refer to the hardware encoders which transform the video signals.
+Such as ADV7123/ADV7125(RGB888 to VGA), TFP410 (RGB888 to DVI) etc.
+Which can be used without the need of software configuration. TFP410
+is a little bit special, it can be configured by I2C interface, but
+TFP410 don't support read edid for the monitor. But at the least,
+there do has a corresponding *hardware entity* working in the chains.
+It is just that it don't need a driver to configure.
+
+Does the "simple transparent bridges" you created has a corresponding
+hardware entity? Are you trying to solve software side problems by
+abusing the device-driver model?
+
+I'm afraid that the written "simple transparent bridges" is not a
+accurate description if you don't really has a hardware entity to
+corresponding with. Because all of the classic drm display bridges
+are able to transform transfer/consume video(and/or audio) data.
+Well, the device you create just can't. Probably, you should call
+it as "simple auxiliary device".
+
+
+> This is especially useful for
+> DP/USB-C bridge chains, which can span across several devices, but do
+> not require any additional functionality from the intermediate bridges.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>   drivers/gpu/drm/bridge/Kconfig      |   9 ++
+>   drivers/gpu/drm/bridge/Makefile     |   1 +
+>   drivers/gpu/drm/bridge/aux-bridge.c | 140 ++++++++++++++++++++++++++++
+>   include/drm/bridge/aux-bridge.h     |  19 ++++
+>   4 files changed, 169 insertions(+)
+>   create mode 100644 drivers/gpu/drm/bridge/aux-bridge.c
+>   create mode 100644 include/drm/bridge/aux-bridge.h
+>
+> diff --git a/drivers/gpu/drm/bridge/Kconfig b/drivers/gpu/drm/bridge/Kconfig
+> index ba82a1142adf..f12eab62799f 100644
+> --- a/drivers/gpu/drm/bridge/Kconfig
+> +++ b/drivers/gpu/drm/bridge/Kconfig
+> @@ -12,6 +12,15 @@ config DRM_PANEL_BRIDGE
+>   	help
+>   	  DRM bridge wrapper of DRM panels
+>   
+> +config DRM_AUX_BRIDGE
+> +	tristate
+> +	depends on DRM_BRIDGE && OF
+> +	select AUXILIARY_BUS
+> +	select DRM_PANEL_BRIDGE
+> +	help
+> +	  Simple transparent bridge that is used by several non-DRM drivers to
+> +	  build bridges chain.
 > +
-> +	dma_free_coherent(__scm->dev, wkey_size, wkey_buf, wkey_phys);
+>   menu "Display Interface Bridges"
+>   	depends on DRM && DRM_BRIDGE
+>   
+> diff --git a/drivers/gpu/drm/bridge/Makefile b/drivers/gpu/drm/bridge/Makefile
+> index 2b892b7ed59e..918e3bfff079 100644
+> --- a/drivers/gpu/drm/bridge/Makefile
+> +++ b/drivers/gpu/drm/bridge/Makefile
+> @@ -1,4 +1,5 @@
+>   # SPDX-License-Identifier: GPL-2.0
+> +obj-$(CONFIG_DRM_AUX_BRIDGE) += aux-bridge.o
+>   obj-$(CONFIG_DRM_CHIPONE_ICN6211) += chipone-icn6211.o
+>   obj-$(CONFIG_DRM_CHRONTEL_CH7033) += chrontel-ch7033.o
+>   obj-$(CONFIG_DRM_CROS_EC_ANX7688) += cros-ec-anx7688.o
+> diff --git a/drivers/gpu/drm/bridge/aux-bridge.c b/drivers/gpu/drm/bridge/aux-bridge.c
+> new file mode 100644
+> index 000000000000..6245976b8fef
+> --- /dev/null
+> +++ b/drivers/gpu/drm/bridge/aux-bridge.c
+> @@ -0,0 +1,140 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Copyright (C) 2023 Linaro Ltd.
+> + *
+> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> + */
+> +#include <linux/auxiliary_bus.h>
+> +#include <linux/module.h>
 > +
-> +	return ret;
+> +#include <drm/drm_bridge.h>
+> +#include <drm/bridge/aux-bridge.h>
+> +
+> +static DEFINE_IDA(drm_aux_bridge_ida);
+> +
+> +static void drm_aux_bridge_release(struct device *dev)
+> +{
+> +	struct auxiliary_device *adev = to_auxiliary_dev(dev);
+> +
+> +	ida_free(&drm_aux_bridge_ida, adev->id);
+> +
+> +	kfree(adev);
 > +}
-> +EXPORT_SYMBOL(qcom_scm_derive_sw_secret);
+> +
+> +static void drm_aux_bridge_unregister_adev(void *_adev)
+> +{
+> +	struct auxiliary_device *adev = _adev;
 
-GPL please. 
+It seems that the single underscore(prefix) at here is a little bit
+not good in looking, please replace it with 'void *data'.
 
--- 
----Trilok Soni
 
+> +
+> +	auxiliary_device_delete(adev);
+> +	auxiliary_device_uninit(adev);
+> +}
+> +
+> +/**
+> + * drm_aux_bridge_register - Create a simple bridge device to link the chain
+> + * @parent: device instance providing this bridge
+> + *
+> + * Creates a simple DRM bridge that doesn't implement any drm_bridge
+> + * operations. Such bridges merely fill a place in the bridge chain linking
+> + * surrounding DRM bridges.
+> + *
+> + * Return: zero on success, negative error code on failure
+> + */
+> +int drm_aux_bridge_register(struct device *parent)
+> +{
+> +	struct auxiliary_device *adev;
+> +	int ret;
+> +
+> +	adev = kzalloc(sizeof(*adev), GFP_KERNEL);
+> +	if (!adev)
+> +		return -ENOMEM;
+> +
+> +	ret = ida_alloc(&drm_aux_bridge_ida, GFP_KERNEL);
+> +	if (ret < 0) {
+> +		kfree(adev);
+> +		return ret;
+> +	}
+> +
+> +	adev->id = ret;
+> +	adev->name = "aux_bridge";
+> +	adev->dev.parent = parent;
+> +	adev->dev.of_node = parent->of_node;
+> +	adev->dev.release = drm_aux_bridge_release;
+> +
+> +	ret = auxiliary_device_init(adev);
+> +	if (ret) {
+> +		ida_free(&drm_aux_bridge_ida, adev->id);
+> +		kfree(adev);
+> +		return ret;
+> +	}
+> +
+> +	ret = auxiliary_device_add(adev);
+> +	if (ret) {
+
+kfree(adev)
+
+> +		auxiliary_device_uninit(adev);
+> +		return ret;
+> +	}
+> +
+> +	return devm_add_action_or_reset(parent, drm_aux_bridge_unregister_adev, adev);
+> +}
+> +EXPORT_SYMBOL_GPL(drm_aux_bridge_register);
+
+
+Yet still coupling. Since you choose to export this function symbol,
+then dose this means that the provided approach is still to solve the
+problem by allowing static linking? If so, sorry, I think this does
+not make a difference with my it66121 series.
+
+
+> +
+> +struct drm_aux_bridge_data {
+> +	struct drm_bridge bridge;
+> +	struct drm_bridge *next_bridge;
+> +	struct device *dev;
+> +};
+> +
+> +static int drm_aux_bridge_attach(struct drm_bridge *bridge,
+> +				    enum drm_bridge_attach_flags flags)
+> +{
+> +	struct drm_aux_bridge_data *data;
+> +
+> +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
+> +		return -EINVAL;
+
+Does this flags really useful in practice?
+
+Since this bridge is a identity bridge, intend to be used on middle of the whole
+chain. Display controller drivers which this module work with should definitely
+set the DRM_BRIDGE_ATTACH_NO_CONNECTOR flag. It is definitely a bug if not set.
+It should be found during code review stage, I mean that the enum drm_bridge_attach_flags
+is a compile-time thing, not a runtime thing anymore, Am I correct?
+  
+
+> +	data = container_of(bridge, struct drm_aux_bridge_data, bridge);
+> +
+> +	return drm_bridge_attach(bridge->encoder, data->next_bridge, bridge,
+> +				 DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+> +}
+> +
+> +static const struct drm_bridge_funcs drm_aux_bridge_funcs = {
+> +	.attach	= drm_aux_bridge_attach,
+> +};
+> +
+> +static int drm_aux_bridge_probe(struct auxiliary_device *auxdev,
+> +				   const struct auxiliary_device_id *id)
+> +{
+> +	struct drm_aux_bridge_data *data;
+> +
+> +	data = devm_kzalloc(&auxdev->dev, sizeof(*data), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	data->dev = &auxdev->dev;
+> +	data->next_bridge = devm_drm_of_get_bridge(&auxdev->dev, auxdev->dev.of_node, 0, 0);
+> +	if (IS_ERR(data->next_bridge))
+> +		return dev_err_probe(&auxdev->dev, PTR_ERR(data->next_bridge),
+> +				     "failed to acquire drm_bridge\n");
+> +
+> +	data->bridge.funcs = &drm_aux_bridge_funcs;
+> +	data->bridge.of_node = data->dev->of_node;
+> +
+> +	return devm_drm_bridge_add(data->dev, &data->bridge);
+> +}
+> +
+> +static const struct auxiliary_device_id drm_aux_bridge_table[] = {
+> +	{ .name = KBUILD_MODNAME ".aux_bridge" },
+> +	{},
+> +};
+> +MODULE_DEVICE_TABLE(auxiliary, drm_aux_bridge_table);
+> +
+> +static struct auxiliary_driver drm_aux_bridge_drv = {
+> +	.name = "aux_bridge",
+> +	.id_table = drm_aux_bridge_table,
+> +	.probe = drm_aux_bridge_probe,
+> +};
+> +module_auxiliary_driver(drm_aux_bridge_drv);
+
+
+Sorry, I don't understand. In effect, this is still works by export function symbol.
+Why the kernel module related stuff at here make sense in the end?
+Since we are a helper, why we deserve a driver? satisfy the component?
+
+
+> +
+> +MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
+> +MODULE_DESCRIPTION("DRM transparent bridge");
+> +MODULE_LICENSE("GPL");
+> diff --git a/include/drm/bridge/aux-bridge.h b/include/drm/bridge/aux-bridge.h
+> new file mode 100644
+> index 000000000000..441ab3f0e920
+> --- /dev/null
+> +++ b/include/drm/bridge/aux-bridge.h
+> @@ -0,0 +1,19 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Copyright (C) 2023 Linaro Ltd.
+> + *
+> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> + */
+> +#ifndef DRM_AUX_BRIDGE_H
+> +#define DRM_AUX_BRIDGE_H
+> +
+> +#if IS_ENABLED(CONFIG_DRM_AUX_BRIDGE)
+> +int drm_aux_bridge_register(struct device *parent);
+> +#else
+> +static inline int drm_aux_bridge_register(struct device *parent)
+> +{
+> +	return 0;
+> +}
+> +#endif
+> +
+> +#endif
 
