@@ -1,101 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-1597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1599-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72FFD7F5357
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 23:23:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CA157F538F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 23:44:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D2BB5B20F5D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 22:23:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B260EB20E34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 22:44:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAE3520B22;
-	Wed, 22 Nov 2023 22:23:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lx8BG/eF"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19B3E18C32;
+	Wed, 22 Nov 2023 22:44:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3BBA10C;
-	Wed, 22 Nov 2023 14:23:43 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-32f7abbb8b4so150180f8f.0;
-        Wed, 22 Nov 2023 14:23:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700691822; x=1701296622; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h8GK3SyZL3LXcmpfWT45dHGF9tSwy53Cd0hTs0+Vv48=;
-        b=Lx8BG/eFs8FeSzkzYFQu3OGboGR1Ay2XdnvsDVc/wczDW72SblHxGFBvFqMIzXm0b7
-         PpPzKDDz/9YzvdLNXa9Pgohend1r3bQNmkOEJta6FViUpv7wzGkkZcJYoAclEZJP92U/
-         kR/t/G2PW3sDWA9hoLAzLRIawFmBtWMKpaTyeAEvVSlBtbail2DxH6nCZqe31o4fn9tn
-         llfFtpr/adhozmMOSOWINsE3ltUgCZAGquvYmqPz0iLR6cvw4t87OikYzgqy/LHtHV3v
-         in1uFpQOZx6zmCKtRooHy3YR2EH+ebg9v/8BHHYdl8muNZE4OA1XMrDUGFCSV0SVZRT2
-         6kig==
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0375D46;
+	Wed, 22 Nov 2023 14:44:04 -0800 (PST)
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-35b144ba935so928135ab.1;
+        Wed, 22 Nov 2023 14:44:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700691822; x=1701296622;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h8GK3SyZL3LXcmpfWT45dHGF9tSwy53Cd0hTs0+Vv48=;
-        b=PHctDZWKhdE5qNlYjFsVRRRffipEqRttzee3mIsWboI4KfNEAPGZVVW1ox02iM1MNy
-         H0GFLRMbH1UvysphO7SgM2PBkdi2RspurvqHdXMxfYDJjHliaOeouuQTajFAwgCeJsdg
-         G/WDj7VFmlQrA+yTTnggs0r63eE486wAHUsjTssKTD4BmNQ4PHjf5G3ekaB83hZQqdN5
-         Rg/bhn2S8UF9FRtMmp9nF59FbWkw0K7Am7W7DbrSk/LxCFXd2ewjpl8GIl6fSJcnUHcg
-         bNvyEQPETRbnMKq4LAaK5IGsOj3Siqf6CW7LTTMgwj8qdNpAFq6UTAKmEG1tzmtOML3f
-         bIZw==
-X-Gm-Message-State: AOJu0YyoXmBdhHZgDB26K1WyxYsaKBf5Poibn+ihVqON0b47dsRwJ3TT
-	/FTRXQPl5UGCvSjEutEukTA42nm8oxGMt6sx
-X-Google-Smtp-Source: AGHT+IGysglQixcIO8sz8ophUPUele1QAx7Y0XkHkc7BQ59vqeS0Y2l1dNamG99kZ2xQY2vFDnKBuQ==
-X-Received: by 2002:a5d:584e:0:b0:331:6c3b:4f1e with SMTP id i14-20020a5d584e000000b003316c3b4f1emr2735966wrf.56.1700691822004;
-        Wed, 22 Nov 2023 14:23:42 -0800 (PST)
-Received: from [192.168.0.3] ([69.6.8.124])
-        by smtp.gmail.com with ESMTPSA id t12-20020adfe10c000000b00332cb1bcd01sm437565wrz.86.2023.11.22.14.23.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Nov 2023 14:23:41 -0800 (PST)
-Message-ID: <a62e93f0-7d95-41ee-91c1-cbdd316f94d7@gmail.com>
-Date: Thu, 23 Nov 2023 00:23:53 +0200
+        d=1e100.net; s=20230601; t=1700693044; x=1701297844;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XZkFDdPjcBcVfp1fm2YjqN5xwGDpseg/uIenoFVR2Lw=;
+        b=PqJ8J//CYG7OqrfMHlaU80SyQR0Ibc0VReS3lhg6YruHvxGbYjhtslfwuJZ91OAAW7
+         c38ggd9RIP86rzR88t3Af2fb5ZRMqqvlqJggvgED0NgXfxdT1nwPyyikmsA66B7KGdA5
+         RkqIwX12PkQSoQdIZeaBtbt346srNmwxeZJ1wW8nupgU4FzkkBoRvu4rTteofLhBPvoS
+         FGzM6umGue8oiA9wOP1bz7Xk91spfJIQ5bi1lD6jzCOQiMxRa0L6OIQtCvWt+dLgAI5C
+         ly2yp/WdbQnquea3M3/jt4ekbGuQrCbOurcJOin5yWMMeXnT2qkiKPb6DHeo48KvxSuk
+         Z7sA==
+X-Gm-Message-State: AOJu0Yw+7VuXlEsDdluAbsUWQFR9Yu+80ufpj+uq2anLvPELUqnkSaXj
+	MdQFwa5Ol38garo4EItHDw==
+X-Google-Smtp-Source: AGHT+IF6fTuuPgt0NRPsUDTeD8Nz/gX1NLKQZPb1BbfDD8amxSiKaZQV+46egIs8xYOWZBv4J5wfrw==
+X-Received: by 2002:a05:6e02:1044:b0:35a:a534:916a with SMTP id p4-20020a056e02104400b0035aa534916amr2886625ilj.6.1700693044054;
+        Wed, 22 Nov 2023 14:44:04 -0800 (PST)
+Received: from herring.priv ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id be5-20020a056e02304500b00357f979d56csm182648ilb.12.2023.11.22.14.44.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Nov 2023 14:44:03 -0800 (PST)
+Received: (nullmailer pid 2808775 invoked by uid 1000);
+	Wed, 22 Nov 2023 22:44:01 -0000
+From: Rob Herring <robh@kernel.org>
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Philipp Zabel <p.zabel@pengutronix.de>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: reset: qcom: drop unneeded quotes
+Date: Wed, 22 Nov 2023 15:43:52 -0700
+Message-ID: <20231122224352.2808435-1-robh@kernel.org>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 08/10] net: wwan: qcom_bam_dmux: Convert to
- platform remove callback returning void
-Content-Language: en-US
-To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
- Jakub Kicinski <kuba@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Loic Poulain <loic.poulain@linaro.org>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>
-Cc: Andy Gross <agross@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Stephan Gerhold <stephan@gerhold.net>,
- Johannes Berg <johannes@sipsolutions.net>, netdev@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, kernel@pengutronix.de
-References: <20231117095922.876489-1-u.kleine-koenig@pengutronix.de>
- <20231117095922.876489-9-u.kleine-koenig@pengutronix.de>
-From: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-In-Reply-To: <20231117095922.876489-9-u.kleine-koenig@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 17.11.2023 11:59, Uwe Kleine-König wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is ignored (apart
-> from emitting a warning) and this typically results in resource leaks.
-> 
-> To improve here there is a quest to make the remove callback return
-> void. In the first step of this quest all drivers are converted to
-> .remove_new(), which already returns void. Eventually after all drivers
-> are converted, .remove_new() will be renamed to .remove().
-> 
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Drop unneeded quotes over simple string values to fix a soon to be
+enabled yamllint warning:
 
-Reviewed-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+  [error] string value is redundantly quoted with any quotes (quoted-strings)
+
+Signed-off-by: Rob Herring <robh@kernel.org>
+---
+ .../devicetree/bindings/reset/qcom,aoss-reset.yaml     | 10 +++++-----
+ .../devicetree/bindings/reset/qcom,pdc-global.yaml     |  8 ++++----
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/reset/qcom,aoss-reset.yaml b/Documentation/devicetree/bindings/reset/qcom,aoss-reset.yaml
+index d92e2b3cc83f..24beb712b56d 100644
+--- a/Documentation/devicetree/bindings/reset/qcom,aoss-reset.yaml
++++ b/Documentation/devicetree/bindings/reset/qcom,aoss-reset.yaml
+@@ -18,17 +18,17 @@ properties:
+     oneOf:
+       - description: on SC7180 SoCs the following compatibles must be specified
+         items:
+-          - const: "qcom,sc7180-aoss-cc"
+-          - const: "qcom,sdm845-aoss-cc"
++          - const: qcom,sc7180-aoss-cc
++          - const: qcom,sdm845-aoss-cc
+ 
+       - description: on SC7280 SoCs the following compatibles must be specified
+         items:
+-          - const: "qcom,sc7280-aoss-cc"
+-          - const: "qcom,sdm845-aoss-cc"
++          - const: qcom,sc7280-aoss-cc
++          - const: qcom,sdm845-aoss-cc
+ 
+       - description: on SDM845 SoCs the following compatibles must be specified
+         items:
+-          - const: "qcom,sdm845-aoss-cc"
++          - const: qcom,sdm845-aoss-cc
+ 
+   reg:
+     maxItems: 1
+diff --git a/Documentation/devicetree/bindings/reset/qcom,pdc-global.yaml b/Documentation/devicetree/bindings/reset/qcom,pdc-global.yaml
+index ca5d79332189..f514363aa474 100644
+--- a/Documentation/devicetree/bindings/reset/qcom,pdc-global.yaml
++++ b/Documentation/devicetree/bindings/reset/qcom,pdc-global.yaml
+@@ -18,16 +18,16 @@ properties:
+     oneOf:
+       - description: on SC7180 SoCs the following compatibles must be specified
+         items:
+-          - const: "qcom,sc7180-pdc-global"
+-          - const: "qcom,sdm845-pdc-global"
++          - const: qcom,sc7180-pdc-global
++          - const: qcom,sdm845-pdc-global
+ 
+       - description: on SC7280 SoCs the following compatibles must be specified
+         items:
+-          - const: "qcom,sc7280-pdc-global"
++          - const: qcom,sc7280-pdc-global
+ 
+       - description: on SDM845 SoCs the following compatibles must be specified
+         items:
+-          - const: "qcom,sdm845-pdc-global"
++          - const: qcom,sdm845-pdc-global
+ 
+   reg:
+     maxItems: 1
+-- 
+2.42.0
+
 
