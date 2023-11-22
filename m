@@ -1,152 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-1453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 816DB7F40BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 09:59:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68D9D7F4113
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:03:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E229EB20FCC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 08:59:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 243E82815B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 09:03:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D86E43B28E;
-	Wed, 22 Nov 2023 08:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A36F638DD6;
+	Wed, 22 Nov 2023 09:03:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="X+/dx7tW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JRtUjga6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8026A10C;
-	Wed, 22 Nov 2023 00:59:33 -0800 (PST)
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED92135A5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 01:02:40 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-548a2c20f50so4751719a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 01:02:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700643759; x=1701248559; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WVAJl9uglbvTGhaLo4viphdxTulyQeTTf7hqzg6Dhck=;
+        b=JRtUjga6RbDydNJa8htW2OfRuj9AatnPpcBEZ4TqzDvLHu/1LaXBh2PEv2K2xK9DP7
+         zkAbBwsJ9TKSLuZpPF+dr0aQyUx8L+YkOi3KsGu6wPPHc4j540cMi5Tt1Juyu0Zv9G6G
+         coZAZmXJzVdrh/+CPG43ZMGhcqRwUxLeHeBupKBbOr1Xqr/R1Lfu3cytzvYdNHrni3IS
+         6d8InxX6TLoNH+iEAEA/lMtrWmMPnLEG++w7Cn1RZtK1BPuuzAqEcOwQlRsAJ5N+y8ke
+         3q8wLfjrJrlIlrutsr6tDdBJhHwy3aPdolmYD6U4pif9H68hWwzq1j6cMByiJpDSjWqz
+         qkSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700643759; x=1701248559;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WVAJl9uglbvTGhaLo4viphdxTulyQeTTf7hqzg6Dhck=;
+        b=YdeMki+B0UrQhCKbAiC1bGuJY62FpReSVNxRz9bxiTYKk0aN0IqxAPPjdksflMV804
+         h1ZoOv16+xb7EvBhbPH+5CINHHLmnWg56NWG5BLJfj3D1XXxa2dQACwswJjGL/OKKurN
+         ZVaEfn4RH/+ebS9pTH1oQnY5u78lhKeF664i1Xchi3zg/pv8quQ8hvaOmdoGF+Zyc9LB
+         FwrYOhHRV9DUmCl5VEITyYaSKsQKgRa6t3usWJ7PRX6Wa7En+s/meFpe/FKfAKcYQfrz
+         ocX4ikXMwgGw0JVPAtkOcPRb5UNdiIEZfAGyP0TwjUk/oVCrvVkDGObJBxecfHsm21rO
+         lhaw==
+X-Gm-Message-State: AOJu0Ywjbx6yiyDQEKsr48EYA5zkyg/9EVZB5dHkXCvM3aeuDU6pprVq
+	dJwj3j7Mvd9NQXuGYbCJUYzL4tHBjaadwEX5Lew=
+X-Google-Smtp-Source: AGHT+IHUvNB0p3pjPTLNAuD5yzEhkWruucScfm3SgkoaPdwhYN1nGHxSGHwPAZE2ViijHNFsaTVXGA==
+X-Received: by 2002:a50:fb9a:0:b0:53e:58fd:9600 with SMTP id e26-20020a50fb9a000000b0053e58fd9600mr1299683edq.36.1700643759360;
+        Wed, 22 Nov 2023 01:02:39 -0800 (PST)
+Received: from linaro.org ([86.123.99.122])
+        by smtp.gmail.com with ESMTPSA id m24-20020a50ef18000000b00548699fa102sm4909449eds.83.2023.11.22.01.02.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Nov 2023 01:02:38 -0800 (PST)
+Date: Wed, 22 Nov 2023 11:02:36 +0200
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Can Guo <quic_cang@quicinc.com>
+Cc: bvanassche@acm.org, mani@kernel.org, stanley.chu@mediatek.com,
+	adrian.hunter@intel.com, beanhuo@micron.com, avri.altman@wdc.com,
+	junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	"open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+	"open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 08/11] phy: qualcomm: phy-qcom-qmp-ufs: Rectify SM8550
+ UFS HS-G4 PHY Settings
+Message-ID: <ZV3DrPoL/vmb6Cga@linaro.org>
+References: <1700637042-11104-1-git-send-email-quic_cang@quicinc.com>
+ <1700637042-11104-9-git-send-email-quic_cang@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1700643571;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wnDXFhBLQlKfT9VPeq9LXcsvxwXZ+3LJM0WRVA0R01o=;
-	b=X+/dx7tWETvpV6gVT/ojMQT0+o9PIAThm56C4ZtSXKgZB1dvcAJu9Asl9lzeqFNrolWWA/
-	fIfQQeRvQXZQ3PnQbr6r47EdYWVRln1eF6jmC8DPhFCHYnuInvNDEC/EtbQJGqE8LlAI85
-	eLWoEaodlQy7XaKwt1NAO47EQVGOeIUf9C7+eahxyoDG5T0AOzxca0MAbLgAonmNfoGGU6
-	2zQfmtOdDaA/vx49kVM+Gg+TeMx8MFMkBkWsQzEME2otNiDk9cimPFw6RDCWWxWUd6xxdI
-	HWBwUcwJM+c4aSa6N7ASwlI6vVR+x1l9bK2JozzLINjyAXkQOl3FuagPRBXO5A==
-Date: Wed, 22 Nov 2023 09:59:29 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Michal Simek <michal.simek@amd.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, wens@kernel.org,
- =?UTF-8?Q?Rafa=C5=82_Mi=C5=82ecki?= <zajec5@gmail.com>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, Arnd Bergmann
- <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>, Geert Uytterhoeven
- <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>,
- linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] docs: dt-bindings: add DTS Coding Style document
-In-Reply-To: <cc4c789c-b595-41eb-b543-9e03549c6e61@amd.com>
-References: <20231120084044.23838-1-krzysztof.kozlowski@linaro.org>
- <6b288a2e-d147-4bd3-b1d4-daf56295d939@gmail.com>
- <01f9ce3b-e6e5-4b05-bf7f-0b3a5f74910a@linaro.org>
- <CAGb2v64Vf5dDwq=KTrxwc=+w+0KUD2KVPMjmHg68Y_yukES5dQ@mail.gmail.com>
- <7232a48b-b9ad-44b5-ae6a-d12dad70b3c4@linaro.org>
- <58a9caacc1226c7c3a2bdfe73ef1791f@manjaro.org>
- <cc4c789c-b595-41eb-b543-9e03549c6e61@amd.com>
-Message-ID: <c377c23a3c1c58ce16035cb995ef0209@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1700637042-11104-9-git-send-email-quic_cang@quicinc.com>
 
-On 2023-11-22 09:49, Michal Simek wrote:
-> On 11/22/23 09:29, Dragan Simic wrote:
->> On 2023-11-22 09:21, Krzysztof Kozlowski wrote:
->>> On 22/11/2023 09:09, Chen-Yu Tsai wrote:
->>>> On Wed, Nov 22, 2023 at 4:05 PM Krzysztof Kozlowski
->>>> <krzysztof.kozlowski@linaro.org> wrote:
->>>>> 
->>>>> On 21/11/2023 14:50, Rafał Miłecki wrote:
->>>>>>> +Order of Properties in Device Node
->>>>>>> +----------------------------------
->>>>>>> +
->>>>>>> +Following order of properties in device nodes is preferred:
->>>>>>> +
->>>>>>> +1. compatible
->>>>>>> +2. reg
->>>>>>> +3. ranges
->>>>>>> +4. Standard/common properties (defined by common bindings, e.g. 
->>>>>>> without
->>>>>>> +   vendor-prefixes)
->>>>>>> +5. Vendor-specific properties
->>>>>>> +6. status (if applicable)
->>>>>>> +7. Child nodes, where each node is preceded with a blank line
->>>>>>> +
->>>>>>> +The "status" property is by default "okay", thus it can be 
->>>>>>> omitted.
->>>>>> 
->>>>>> I think it would really help to include position of #address-cells 
->>>>>> and
->>>>>> #size-cells here. In some files I saw them above "compatible" that 
->>>>>> seems
->>>>>> unintuitive. Some prefer putting them at end which I think makes 
->>>>>> sense
->>>>>> as they affect children nodes.
->>>>>> 
->>>>>> Whatever you choose it'd be just nice to have things consistent.
->>>>> 
->>>>> This is a standard/common property, thus it goes to (4) above.
->>>> 
->>>> It's probably a mix, but AFAIK a lot of the device trees in tree 
->>>> have
->>>> #*-cells after "status". In some cases they are added in the board
->>>> .dts files, not the chip/module .dtsi files.
->>> 
->>> Existing DTS is not a good example :)
->>> 
->>>> 
->>>> +1 that it makes sense at the end as they affect child nodes.
->>> 
->>> I still insist that status must be the last, because:
->>> 1. Many SoC nodes have address/size cells but do not have any 
->>> children
->>> (I2C, SPI), so we put useless information at the end.
->>> 2. Status should be the final information to say whether the node is
->>> ready or is not. I read the node, check properties and then look at 
->>> the end:
->>> a. Lack of status means it is ready.
->>> b. status=disabled means device still needs board 
->>> resources/customization
->> 
->> I agree with the "status" belonging to the very end, because it's both 
->> logical and much more readable.  Also, "status" is expected to be 
->> modified in the dependent DT files, which makes it kind of volatile 
->> and even more deserving to be placed last.
+On 23-11-21 23:10:39, Can Guo wrote:
+> The registers, which are being touched in current SM8550 UFS PHY settings,
+> and the values being programmed are mainly the ones working for HS-G4 mode,
+> meanwhile, there are also a few ones somehow taken from HS-G5 PHY settings.
+> However, even consider HS-G4 mode only, some of them are incorrect and some
+> are missing. Rectify the HS-G4 PHY settings by strictly aligning with the
+> SM8550 UFS PHY Hardware Programming Guide suggested HS-G4 PHY settings.
 > 
-> I am just curious if having status property at the end won't affect
-> execution/boot up time. Not sure how it is done in Linux but in U-Boot
-> at least (we want to have DTs in sync between Linux and U-Boot)
-> of_find_property is pretty much big loop over all properties. And
-> status property defined at the end means going over all of them to
-> find it out to if device is present.
-> Not sure if Linux works in the same way but at least of_get_property
-> is done in the same way.
-> 
-> It is not big deal on high speed cpus but wanted to point it out.
+> Fixes: 1679bfef906f ("phy: qcom-qmp-ufs: Add SM8550 support")
+> Signed-off-by: Can Guo <quic_cang@quicinc.com>
 
-That's a good point, saving every possible CPU cycle counts, so if we 
-can exit early, why not.  However, that's perhaps something to be 
-handled within the dtc utility, by having it rearrange the properties.  
-I'll investigate that in detail.
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+
+> ---
+>  .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |  3 +++
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 28 +++++++++++++++-------
+>  2 files changed, 22 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+> index 15bcb4b..674f158 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+> @@ -10,9 +10,12 @@
+>  #define QSERDES_UFS_V6_TX_RES_CODE_LANE_RX			0x2c
+>  #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX		0x30
+>  #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX		0x34
+> +#define QSERDES_UFS_V6_TX_LANE_MODE_1				0x7c
+> +#define QSERDES_UFS_V6_TX_FR_DCC_CTRL				0x108
+>  
+>  #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2		0x08
+>  #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4		0x10
+> +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2			0xd4
+>  #define QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL			0x178
+>  #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0			0x208
+>  #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1			0x20c
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> index 3927eba..ad91f92 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+> @@ -658,22 +658,26 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
+>  	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
+>  	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x7f),
+>  	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x06),
+> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x4c),
+> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
+> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
+> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
+> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x99),
+> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x07),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x4c),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x0a),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x14),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x99),
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x07),
+> +};
+> +
+> +static const struct qmp_phy_init_tbl sm8550_ufsphy_hs_b_serdes[] = {
+> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x44),
+>  };
+>  
+>  static const struct qmp_phy_init_tbl sm8550_ufsphy_tx[] = {
+> -	QMP_PHY_INIT_CFG(QSERDES_V6_TX_LANE_MODE_1, 0x05),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_LANE_MODE_1, 0x05),
+>  	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX, 0x07),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_FR_DCC_CTRL, 0x4c),
+>  };
+>  
+>  static const struct qmp_phy_init_tbl sm8550_ufsphy_rx[] = {
+> -	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2, 0x0c),
+> -	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4, 0x0f),
+> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2, 0x0c),
+>  	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x0e),
+>  
+>  	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0, 0xc2),
+> @@ -696,6 +700,8 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_pcs[] = {
+>  	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
+>  	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x2b),
+>  	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
+> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
+>  };
+>  
+>  struct qmp_ufs_offsets {
+> @@ -1157,6 +1163,10 @@ static const struct qmp_phy_cfg sm8550_ufsphy_cfg = {
+>  		.pcs		= sm8550_ufsphy_pcs,
+>  		.pcs_num	= ARRAY_SIZE(sm8550_ufsphy_pcs),
+>  	},
+> +	.tbls_hs_b = {
+> +		.serdes		= sm8550_ufsphy_hs_b_serdes,
+> +		.serdes_num	= ARRAY_SIZE(sm8550_ufsphy_hs_b_serdes),
+> +	},
+>  	.clk_list		= sdm845_ufs_phy_clk_l,
+>  	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+>  	.vreg_list		= qmp_phy_vreg_l,
+> -- 
+> 2.7.4
+> 
 
