@@ -1,104 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-1557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D92377F4E2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:19:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 562147F4E9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 18:44:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5E049B21309
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 17:19:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EFB7C1F21970
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 17:44:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 305FE5B5CD;
-	Wed, 22 Nov 2023 17:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A44454BEF;
+	Wed, 22 Nov 2023 17:44:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S9t4hjh0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oez6Ptxm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65D591A8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 09:18:49 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-5094cb3a036so10022683e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 09:18:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700673527; x=1701278327; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qBb7uvDdpiPhPtfYhGAJokE68U5HdEwFTqReQh4emMQ=;
-        b=S9t4hjh0IGkvOECUN5WpW86UWyFg2iOL1PRLQZRAmsEGyRsDTjPQWlesYlhoxHKzml
-         BLyPCxoOGb00HQ+eQP6gxFNjEWph6CZurjyjZngR0Q8v84mQPzuiHxz4Ff1EOAcVI4yt
-         cvJ+NExGeOI9+tJNvvrO/GryWx8OVq0KSHTPuW17eSgFcRKixMr6tx917dI/pUuHFSwM
-         FE+ZMW7e4j6kV5Ky43Tegug2H6F6x1G+w7UARods5EwRPu7R+7/39CuZ/bFRMkbVhNNN
-         ttC//uNeXdLZbY0BHDg4QK/NifL+1bcn6LlNKsGVGdxqlu4MYEly+1Ca1WOaqoGfSXNb
-         YsEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700673527; x=1701278327;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qBb7uvDdpiPhPtfYhGAJokE68U5HdEwFTqReQh4emMQ=;
-        b=uROsN5A4UsYlFd+1BKg6oZPWkF6ybLpQMQwrBa5xjTyWd157OaLSKt4ZQfJz0aZJMH
-         5tIffzFOEZHh9RHpglxxh8NwGm4V4xG+m0Tn8JrjkjlnwLiRCHX3NzyN6b94OzRJwSXG
-         uP+4CqwYIFXzbxoibATgkwYrhWb+cYbdW41tjAbWf2jKvL2lmc5ut98exbzUJpZIh/XU
-         X/F/HQZS4rM35RzVXDoZTmZI+DXqoap/TupZU9Uhi71GbhvgpEjJngPhaNgexcqLSi/z
-         EgDabipG9aRpZnEufYcru6pdoaMRLOVYe2AlVo9ByHLBe3SyU2IbHlyKR4HyTdA1DT7F
-         b0lQ==
-X-Gm-Message-State: AOJu0YzOSWlKayMIAixoa/EGwTuKN8amHNGcVSA8Pt/XttE3foBLWXmW
-	/vuKn7oM3zdf9Avfjno0u16e1A==
-X-Google-Smtp-Source: AGHT+IE7Lpl8F22WVyua+nXBTNkuJNuj346aRbY/a56nH2yZhpl0Y/3GTRWDi4MXCF7jUctLK5UgqA==
-X-Received: by 2002:a19:4359:0:b0:508:11f5:8953 with SMTP id m25-20020a194359000000b0050811f58953mr2099727lfj.26.1700673527381;
-        Wed, 22 Nov 2023 09:18:47 -0800 (PST)
-Received: from [172.30.204.227] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id a1-20020a19ca01000000b005091492ac3fsm1922005lfg.175.2023.11.22.09.18.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Nov 2023 09:18:46 -0800 (PST)
-Message-ID: <ebed123a-f952-4269-bf2c-0c0cd7d6e049@linaro.org>
-Date: Wed, 22 Nov 2023 18:18:44 +0100
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC60D42;
+	Wed, 22 Nov 2023 09:43:57 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AMHfJYh026759;
+	Wed, 22 Nov 2023 17:43:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ZaNRIg3lKd62YeBy/yihCk/EXDyr33s6vGch1Rp/wgU=;
+ b=oez6PtxmupPpXCeqY/gdkqMTddKW4u/Dzc1c+u2sMtXIBqpYf0shkhI7KJZDjbd/dKeU
+ JYIlITDtQ0dAPDTkbybzheHmKdkqO9UaqMeqxyi5ViimcePZWUUh3H6O2TK+/22qrCfw
+ Fd5KSaORXEdffdgDIHElGYaAAIP09yYoGO5GrD3bEpEPdwVZzwCD5q3BgyDr4cgO4aq4
+ XHdPrKhxvgnvCZIWsMIpUtlhZVEnoQavbluwVfQMZmFvUKkGkhs32N+ZJ6uKMx+50XNB
+ XjOeK5WPIXUKtnbBxb2nMf9yg9u4yq+KPLiSzEhkgmFjWNQiIPq5lpw81WbGlsexy+wU 7Q== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uhgajrytt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Nov 2023 17:43:54 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AMHhrYU017931
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Nov 2023 17:43:53 GMT
+Received: from [10.110.98.138] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 22 Nov
+ 2023 09:43:49 -0800
+Message-ID: <edf9399c-f272-cf2b-15dd-385002fc4fcb@quicinc.com>
+Date: Wed, 22 Nov 2023 09:43:37 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] arm64: dts: qcom: sm6115: align mem timer size cells
- with bindings
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3 02/12] qcom_scm: scm call for deriving a software
+ secret
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231111164229.63803-1-krzysztof.kozlowski@linaro.org>
- <20231111164229.63803-4-krzysztof.kozlowski@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231111164229.63803-4-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Gaurav Kashyap <quic_gaurkash@quicinc.com>, <linux-scsi@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <ebiggers@google.com>,
+        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>
+CC: <linux-mmc@vger.kernel.org>, <linux-block@vger.kernel.org>,
+        <linux-fscrypt@vger.kernel.org>, <omprsing@qti.qualcomm.com>,
+        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>,
+        <quic_spuppala@quicinc.com>, <kernel@quicinc.com>
+References: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
+ <20231122053817.3401748-3-quic_gaurkash@quicinc.com>
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <20231122053817.3401748-3-quic_gaurkash@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Level: *
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: UzMkdLUar2xqfmpaebXBe5jOF_EyfTf3
+X-Proofpoint-ORIG-GUID: UzMkdLUar2xqfmpaebXBe5jOF_EyfTf3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-22_12,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=384
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 bulkscore=0
+ clxscore=1011 impostorscore=0 malwarescore=0 mlxscore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311220129
 
+On 11/21/2023 9:38 PM, Gaurav Kashyap wrote:
+> +
+> +	dma_free_coherent(__scm->dev, wkey_size, wkey_buf, wkey_phys);
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL(qcom_scm_derive_sw_secret);
 
+GPL please. 
 
-On 11/11/23 17:42, Krzysztof Kozlowski wrote:
-> Commit 70d1e09ebf19 ("arm64: dts: qcom: sm6115: Use 64 bit addressing")
-> converted all addresses to 64-bit addressing, but the ARMv7 memory
-> mapped architected timer bindings expect sizes up to 32-bit.  Keep
-> 64-bit addressing but change size of memory mapping to 32-bit
-> (size-cells=1) and adjust the ranges to match this.
-> 
-> This fixes dtbs_check warnings like:
-> 
->    sm6115p-lenovo-j606f.dtb: timer@f120000: #size-cells:0:0: 1 was expected
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> I hope I got the ranges right. Not tested on hardware.
-> ---
-Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+-- 
+---Trilok Soni
 
-Konrad
 
