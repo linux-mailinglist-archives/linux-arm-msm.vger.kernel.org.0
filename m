@@ -1,66 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1A747F4AAD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 16:35:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A96EF7F4B73
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 16:46:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 927B2B2104C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 15:35:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5EEA52813C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 15:46:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 468F74CE04;
-	Wed, 22 Nov 2023 15:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03DA956B7C;
+	Wed, 22 Nov 2023 15:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MpSjPO6R"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GoiuWhP+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 112622D57;
-	Wed, 22 Nov 2023 07:34:49 -0800 (PST)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67E1A47B7;
+	Wed, 22 Nov 2023 07:46:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700667290; x=1732203290;
+  t=1700667992; x=1732203992;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=fOjYqo3PT8YGwRzKUAvwr8hmWkL6CCqgBph732SCw5k=;
-  b=MpSjPO6Rb1tqOTZ4TdzEi2v4R5QnrKZYpnHK28FowPNg2PF4TLRfq4Fu
-   GESPyqF8hGrvQUaMfhbYvbQJv+Bx0JDK6iBc5kB29IIDGL6Wxb0YzkqJ8
-   tdjSGFDjfrDrNvCpeRM2s/8quuQ58nJFTRJwMzYvh4s8nv2wfQMWtHb8i
-   rB0FEnsENNWaRolbeT5ah+XO5cdWC3wFonlqrnNICxWSTC+bpvzr47r5v
-   PtURuvYGxBE9xxolblhru0ILATuBbyLVrP2TVxK6NtJt+1ZVA26rg+MAS
-   h8eXrsRrvVlHA6nmKi2/nH0Ixzpgbv1sZnP2bBngskCBBVeREzG1jfEMp
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10902"; a="396000879"
+  bh=jR7nXrT/MznIEATtzqOZvdfyVsT5TGUuHhBxaf2q+AA=;
+  b=GoiuWhP+3wVQYNbxNbGFJh0NIP5I6uZSMt9BdOT3jIzYqY0WWYNIo5Ps
+   O+VQyD2AZW50rs+ZIaa2ktoNs7iFNFxlAj+G5k6vYWbF/EGiXhqr0nXAE
+   +H3tU2+N3Nz3ZwMS9UHOBjDhAaK+TOCdNirjnFaVuH6rzsf+6UvZS7MuR
+   oFyi06Qj3QliFPaZPgSrT3Tdf3m5fxfkA/SgC6L6rpNuZKrhL9ETmHnNT
+   EqO4PbITI4neSJ/YtCVY0hsTcQWQ8JZmeDGGx8WqB9hwN4ZAA6balJoZN
+   VSUgOfNysdy81MNvNnmtsVn35mo69Ix1eHmcp3jGNY3IGxtFXYIB+iH9m
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10902"; a="13623157"
 X-IronPort-AV: E=Sophos;i="6.04,219,1695711600"; 
-   d="scan'208";a="396000879"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2023 07:34:40 -0800
+   d="scan'208";a="13623157"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2023 07:46:25 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10902"; a="884658912"
 X-IronPort-AV: E=Sophos;i="6.04,219,1695711600"; 
-   d="scan'208";a="884658912"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Nov 2023 07:34:37 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1r5pFL-0000000G85G-0H85;
-	Wed, 22 Nov 2023 17:34:35 +0200
-Date: Wed, 22 Nov 2023 17:34:34 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [rft, PATCH v1 1/1] pinctrl: qcom: lpass-lpi: Remove unused
- member in struct lpi_pingroup
-Message-ID: <ZV4fih9g9isXZRjL@smile.fi.intel.com>
-References: <20231120193353.1670732-1-andriy.shevchenko@linux.intel.com>
- <c622c2a5-665f-4ee3-b3dd-fafb3adf6191@linaro.org>
- <ZVzltQByY1Z0pOGI@smile.fi.intel.com>
+   d="scan'208";a="8510496"
+Received: from lkp-server01.sh.intel.com (HELO d584ee6ebdcc) ([10.239.97.150])
+  by fmviesa002.fm.intel.com with ESMTP; 22 Nov 2023 07:46:23 -0800
+Received: from kbuild by d584ee6ebdcc with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r5pQj-0000dK-0V;
+	Wed, 22 Nov 2023 15:46:21 +0000
+Date: Wed, 22 Nov 2023 23:45:43 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, gregkh@linuxfoundation.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 1/5] misc: fastrpc: Add fastrpc multimode invoke
+ request support
+Message-ID: <202311222004.ycVXExec-lkp@intel.com>
+References: <20231121094844.5764-2-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,44 +63,127 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZVzltQByY1Z0pOGI@smile.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <20231121094844.5764-2-quic_ekangupt@quicinc.com>
 
-On Tue, Nov 21, 2023 at 07:15:33PM +0200, Andy Shevchenko wrote:
-> On Tue, Nov 21, 2023 at 08:14:09AM +0100, Krzysztof Kozlowski wrote:
-> > On 20/11/2023 20:26, Andy Shevchenko wrote:
-> > > The group is not used anywhere, remove it. And if needed, it should be
-> > > struct pingroup anyway.
-> > > 
-> > > While at it, replace kernel.h with what exactly being used.
-> > 
-> > Missing Reported-by and Closes by for LKP... Unless you discovered it
-> > without its report?
-> 
-> It's just at hand discovery.
-> 
-> > Missing sm8550.
-> 
-> And sm8650, but there LPI_FUNCTION(gpio) and I'm wondering why LKP complains
-> about it. It's really a maze to me.
+Hi Ekansh,
 
-Ah, this is _pins, _groups is still in use. Okay, I will remove that in next
-version.
+kernel test robot noticed the following build warnings:
 
-> > >  #define LPI_PINGROUP(id, soff, f1, f2, f3, f4)		\
-> > >  	{						\
-> > > -		.group.name = "gpio" #id,			\
-> > > -		.group.pins = gpio##id##_pins,		\
-> > 
-> > Aren't these used by core pinctrl code?
-> 
-> Only via APIs and pin control registered them also via APIs, so I don't think
-> this is being used directly. But if you see how, tell me! I spent already a few
-> hours on this and haven't got any clear picture in my mind.
+[auto build test WARNING on linus/master]
+[also build test WARNING on v6.7-rc2 next-20231122]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Add-fastrpc-multimode-invoke-request-support/20231121-175147
+base:   linus/master
+patch link:    https://lore.kernel.org/r/20231121094844.5764-2-quic_ekangupt%40quicinc.com
+patch subject: [PATCH v7 1/5] misc: fastrpc: Add fastrpc multimode invoke request support
+config: mips-randconfig-r122-20231122 (https://download.01.org/0day-ci/archive/20231122/202311222004.ycVXExec-lkp@intel.com/config)
+compiler: mips-linux-gcc (GCC) 13.2.0
+reproduce: (https://download.01.org/0day-ci/archive/20231122/202311222004.ycVXExec-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311222004.ycVXExec-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/misc/fastrpc.c:607:59: sparse: sparse: non size-preserving integer to pointer cast
+>> drivers/misc/fastrpc.c:1318:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:1451:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:1515:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:1663:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:1694:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:1741:40: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:1771:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:1874:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:1972:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:2053:33: sparse: sparse: non size-preserving pointer to integer cast
+   drivers/misc/fastrpc.c:2124:33: sparse: sparse: non size-preserving pointer to integer cast
+
+vim +607 drivers/misc/fastrpc.c
+
+   573	
+   574	static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
+   575				struct fastrpc_user *user, u32 kernel, u32 sc,
+   576				struct fastrpc_enhanced_invoke *invoke)
+   577	{
+   578		struct fastrpc_channel_ctx *cctx = user->cctx;
+   579		struct fastrpc_invoke_ctx *ctx = NULL;
+   580		unsigned long flags;
+   581		int ret;
+   582	
+   583		ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+   584		if (!ctx)
+   585			return ERR_PTR(-ENOMEM);
+   586	
+   587		INIT_LIST_HEAD(&ctx->node);
+   588		ctx->fl = user;
+   589		ctx->nscalars = REMOTE_SCALARS_LENGTH(sc);
+   590		ctx->nbufs = REMOTE_SCALARS_INBUFS(sc) +
+   591			     REMOTE_SCALARS_OUTBUFS(sc);
+   592	
+   593		if (ctx->nscalars) {
+   594			ctx->maps = kcalloc(ctx->nscalars,
+   595					    sizeof(*ctx->maps), GFP_KERNEL);
+   596			if (!ctx->maps) {
+   597				kfree(ctx);
+   598				return ERR_PTR(-ENOMEM);
+   599			}
+   600			ctx->olaps = kcalloc(ctx->nscalars,
+   601					    sizeof(*ctx->olaps), GFP_KERNEL);
+   602			if (!ctx->olaps) {
+   603				kfree(ctx->maps);
+   604				kfree(ctx);
+   605				return ERR_PTR(-ENOMEM);
+   606			}
+ > 607			ctx->args = (struct fastrpc_invoke_args *)invoke->inv.args;
+   608			fastrpc_get_buff_overlaps(ctx);
+   609		}
+   610	
+   611		/* Released in fastrpc_context_put() */
+   612		fastrpc_channel_ctx_get(cctx);
+   613	
+   614		ctx->sc = sc;
+   615		ctx->retval = -1;
+   616		ctx->pid = current->pid;
+   617		ctx->tgid = user->tgid;
+   618		ctx->cctx = cctx;
+   619		init_completion(&ctx->work);
+   620		INIT_WORK(&ctx->put_work, fastrpc_context_put_wq);
+   621	
+   622		spin_lock(&user->lock);
+   623		list_add_tail(&ctx->node, &user->pending);
+   624		spin_unlock(&user->lock);
+   625	
+   626		spin_lock_irqsave(&cctx->lock, flags);
+   627		ret = idr_alloc_cyclic(&cctx->ctx_idr, ctx, 1,
+   628				       FASTRPC_CTX_MAX, GFP_ATOMIC);
+   629		if (ret < 0) {
+   630			spin_unlock_irqrestore(&cctx->lock, flags);
+   631			goto err_idr;
+   632		}
+   633		ctx->ctxid = ret << 4;
+   634		spin_unlock_irqrestore(&cctx->lock, flags);
+   635	
+   636		kref_init(&ctx->refcount);
+   637	
+   638		return ctx;
+   639	err_idr:
+   640		spin_lock(&user->lock);
+   641		list_del(&ctx->node);
+   642		spin_unlock(&user->lock);
+   643		fastrpc_channel_ctx_put(cctx);
+   644		kfree(ctx->maps);
+   645		kfree(ctx->olaps);
+   646		kfree(ctx);
+   647	
+   648		return ERR_PTR(ret);
+   649	}
+   650	
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
