@@ -1,130 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-1464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08D097F42EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:55:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 44D0B7F42FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:58:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 36E531C209F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 09:55:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 760F11C208A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 09:58:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44C502554F;
-	Wed, 22 Nov 2023 09:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F9E925547;
+	Wed, 22 Nov 2023 09:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NSVtC1aS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wf1mV/Pk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5D95B216;
-	Wed, 22 Nov 2023 09:55:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40808C433C8;
-	Wed, 22 Nov 2023 09:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9993D992;
+	Wed, 22 Nov 2023 09:58:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149E8C433C8;
+	Wed, 22 Nov 2023 09:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700646948;
-	bh=xQ2l0OO8hQnRjP0JrxXmCo6kVTd11TmtxonALnUORfU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NSVtC1aS7RdZ1PpWbty75WnMOZe2xEvCjVjdeZc+k9bvItpIvzZ0Dpdrub8Fo/Rv2
-	 TJ1Itnjm4dR6qXcaY1s1wrXmsXiNKh25Bdkur6Yclg8DG+r0L+omUndG0qCJmzKBNd
-	 wyNvkeT2C+Q/AHIK0+ukhsxtbnQYL6flMyYF+fqLPS1WgnnDwASUVXOq7WwR1b1YDM
-	 OSZyfTVf+jo33Ucq4VWN0jjq9KF+4eenH6dpUgY08FVY1PZfZj1PPCUs2Tb9FFce01
-	 xmaKxpVh12f1aTdu+fr1/Nqkzi+Xxs9M2Ct4qvjNYcFMO3HGrY+bxqK16xIaKGW5Fm
-	 FHzPqVbuqiHbg==
-Message-ID: <808e5f24-0366-4071-bf97-93611d4ced08@kernel.org>
-Date: Wed, 22 Nov 2023 10:55:40 +0100
+	s=k20201202; t=1700647115;
+	bh=wFOz84X6JQkAzM3R0/wXegUEVDcHqoOwN9/NQtwtvm8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Wf1mV/PkVmEWBKYQSBG9vYSivTRFJ852ePt/q6LjCA0663fSVUQoEc8MSIKQYHi9j
+	 9GQoEiUCuYB0jtaKMyhiCLXyA+HaXSUe5SLGzyyBC4uT6rSV6nav0M4q19s6zEJa1Q
+	 zw4Z3zL1QxYPUIWaX7StTBczTpZGjAGP4/jPmiXOkVLPsUc0CDcc6t2L0e2mv1BMcu
+	 J9YrxCqsGS5I6pUxcX8j5HG13sVGFDJpwmUMrJM9mK4w/Edn0Qdnhyg0+jFYOchkc4
+	 6Kl5aTIT5sgpgBMxPV42UFSGMc0422tlVAZLrg8oXZ9sawdJYHBt2HmJ9efgbfdy3P
+	 YMASud1Mubkcg==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r5k0O-0008Co-2n;
+	Wed, 22 Nov 2023 10:58:49 +0100
+Date: Wed, 22 Nov 2023 10:58:48 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Felipe Balbi <balbi@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Subject: Re: [PATCH 02/12] usb: dwc3: qcom: Rename dwc3 platform_device
+ reference
+Message-ID: <ZV3Q2Fa4KL-0hBE8@hovoldconsulting.com>
+References: <20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com>
+ <20231016-dwc3-refactor-v1-2-ab4a84165470@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/12] Hardware wrapped key support for qcom ice and
- ufs
-Content-Language: en-US
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>, linux-scsi@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, ebiggers@google.com,
- neil.armstrong@linaro.org, srinivas.kandagatla@linaro.org
-Cc: linux-mmc@vger.kernel.org, linux-block@vger.kernel.org,
- linux-fscrypt@vger.kernel.org, omprsing@qti.qualcomm.com,
- quic_psodagud@quicinc.com, abel.vesa@linaro.org, quic_spuppala@quicinc.com,
- kernel@quicinc.com
-References: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231016-dwc3-refactor-v1-2-ab4a84165470@quicinc.com>
 
-On 22/11/2023 06:38, Gaurav Kashyap wrote:
->   ice, ufs, mmc: use blk_crypto_key for program_key
->   qcom_scm: scm call for deriving a software secret
->   soc: qcom: ice: add hwkm support in ice
->   soc: qcom: ice: support for hardware wrapped keys
->   ufs: core: support wrapped keys in ufs core
->   ufs: host: wrapped keys support in ufs qcom
->   qcom_scm: scm call for create, prepare and import keys
->   ufs: core: add support for generate, import and prepare keys
->   soc: qcom: support for generate, import and prepare key
->   ufs: host: support for generate, import and prepare key
->   arm64: dts: qcom: sm8650: add hwkm support to ufs ice
+On Mon, Oct 16, 2023 at 08:11:10PM -0700, Bjorn Andersson wrote:
+> In preparation for the introduction of a direct reference to the struct
+> dwc3 in the dwc3_qcom struct, rename the generically named "dwc3" to
+> reduce the risk for confusion.
+> 
+> No functional change.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>  drivers/usb/dwc3/dwc3-qcom.c | 46 ++++++++++++++++++++++----------------------
+>  1 file changed, 23 insertions(+), 23 deletions(-)
+> 
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 3de43df6bbe8..a31c3bc1f56e 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -67,7 +67,7 @@ struct dwc3_acpi_pdata {
+>  struct dwc3_qcom {
+>  	struct device		*dev;
+>  	void __iomem		*qscratch_base;
+> -	struct platform_device	*dwc3;
+> +	struct platform_device	*dwc_dev;
 
-This is close to a spaghetti patchset. ICE, UFS, MMC, then followed up
-by SoC patches, then UFS, then firmware, then UFS, then again SoC and we
-are back at UFS.
+Since "dev" is so overloaded, please name this one "dwc_pdev" instead.
 
-Crazy dependencies... or you collected unrelated patches into one
-patchset making the merge strategy tricky.
+>  	struct platform_device	*urs_usb;
+>  	struct clk		**clks;
+>  	int			num_clocks;
+ 
+>  static enum usb_device_speed dwc3_qcom_read_usb2_speed(struct dwc3_qcom *qcom)
+>  {
+> -	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc_dev);
+>  	struct usb_device *udev;
+>  	struct usb_hcd __maybe_unused *hcd;
+>  
+> @@ -486,7 +486,7 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom, bool wakeup)
+>  static irqreturn_t qcom_dwc3_resume_irq(int irq, void *data)
+>  {
+>  	struct dwc3_qcom *qcom = data;
+> -	struct dwc3	*dwc = platform_get_drvdata(qcom->dwc3);
+> +	struct dwc3	*dwc = platform_get_drvdata(qcom->dwc_dev);
 
->   dt-bindings: crypto: ice: document the hwkm property
+Perhaps you can drop the tab while changing this line.
 
-Bindings come before users.
-
-Best regards,
-Krzysztof
-
+Johan
 
