@@ -1,167 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-1533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DDA17F4BFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 17:09:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 649CC7F4BEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 17:06:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0D79EB20FDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 16:09:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 66DE91C20846
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 16:06:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2752C4CE14;
-	Wed, 22 Nov 2023 16:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 371DC57861;
+	Wed, 22 Nov 2023 16:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Cb8BhfpI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bkYWOhe1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-X-Greylist: delayed 382 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 22 Nov 2023 08:09:32 PST
-Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EFFBBC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 08:09:32 -0800 (PST)
-Message-ID: <7a4a6698-0954-4225-82ff-02dd13bd64bb@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1700668987;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+zG0kaVtnpV1mCBkeYtmeeP9ZdCmJp4PqJOO3u62dFQ=;
-	b=Cb8BhfpIktRns14fQSXGAH/4j/9ZYiiVeI8I9z+nO7gzTFtcGXMu7ls0oNR2YJKx3dqopS
-	kazLRJ/Gmk4zy4RUqS+Bfu+O4a28AZIAHj/lyNDOukN7UuVL1h/70fkno9SLme+g82q0NQ
-	AFF4KmSe4DaIFbOdt2IHFnBxsnsORP0=
-Date: Thu, 23 Nov 2023 00:02:51 +0800
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B3D2D41
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 08:06:36 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50aab0ca90aso5436835e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 08:06:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700669195; x=1701273995; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2mnjxkuXcJXDP3gMcUiN4SEisCT0v2zuVwcrjlWRarE=;
+        b=bkYWOhe1zQAxdhDha/XA7tBEed59jgBW3wP4X9ukDhRoY0aImCgkA3W9s1LslC0fij
+         DfoGyN69GDgIKeXo1ENUVrmaOlVCBNq3QAVsk9fwjrXWur9R0f+xeSOGWLK0J191MsdB
+         uo50wp2ii1/ndUVB1pPr46vShUtgrE8+JBxuvo5DCYuIEDd+3JBLjwlaE0UALpbiWAmb
+         bHlusiIQ216XekhfmNe21lZNXTXdxUAa2e79TesKG2TRbj8eoLx82cBi83v9olNoA0bA
+         gvY7z9NQ41AXNkoYZpC015c1tF7FzgEq77/GuR22IDgxZ4vR4wrn07jfMAD/BDXjV5vT
+         KqUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700669195; x=1701273995;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2mnjxkuXcJXDP3gMcUiN4SEisCT0v2zuVwcrjlWRarE=;
+        b=dczopTbHZEFVpFF+DtOeOwbNFdOsMWPiaSBXLmDuw9tryHsqvKX5Wr35vId8IZMXo6
+         MxuZF5muNOxSsM6YnLXm1Ox9Nz1K/BEBWVsk+Mo5W6DPuagygYqbd4kIS+AASSCDdvIf
+         Vcr2kxyVGjj1B+LqFq3I/XabOQ8DtOczFOqSp/1mR0EhkhLIZa5Gh2Z/AT6ZHMh14p9q
+         33Xp3k7ZNrskio6coVjVzHWD14xVNYM33gPc++svpmM1/4Xsmd2Yc126MK7wh+AMgxSJ
+         uHmp7sl+0rcwNQsqbj3K33Eun5C1x+ZwuJPR8+0irdjPl6qRGNDvVBNjseKvyh2MS856
+         txWQ==
+X-Gm-Message-State: AOJu0YxCw9oAJexj5Y4cruVxtN1RsFmbE5SHZXYGvjXEe9K6lfkyV4KJ
+	X3Sr4gJPLg7RkBjeHFbTqlUjhw==
+X-Google-Smtp-Source: AGHT+IGaNfHxXIOdW9aMrIlLdqSxyYzkqVLUEMRqiJsmE52M/h5sAhBTzkEagJpEnoMpbW++YBXC0Q==
+X-Received: by 2002:a05:6512:3ca9:b0:503:38f2:6e1 with SMTP id h41-20020a0565123ca900b0050338f206e1mr2232652lfv.5.1700669194676;
+        Wed, 22 Nov 2023 08:06:34 -0800 (PST)
+Received: from [172.30.204.227] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id q20-20020ac24a74000000b0050943cf9cdbsm1878694lfp.307.2023.11.22.08.06.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Nov 2023 08:06:34 -0800 (PST)
+Message-ID: <c1d14c70-6fee-48c3-81b1-cd6d422e31d7@linaro.org>
+Date: Wed, 22 Nov 2023 17:06:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v6 0/6] drm: simplify support for transparent DRM bridges
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-phy@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-usb@vger.kernel.org, freedreno@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org
-References: <20231103230414.1483428-1-dmitry.baryshkov@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/3] arm64: qcom: sa8775p: add cache coherency support
+ for SA8775P
 Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Sui Jingfeng <sui.jingfeng@linux.dev>
-In-Reply-To: <20231103230414.1483428-1-dmitry.baryshkov@linaro.org>
+To: Mrinmay Sarkar <quic_msarkar@quicinc.com>, agross@kernel.org,
+ andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ conor+dt@kernel.org, mani@kernel.org, robh+dt@kernel.org
+Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+ quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+ dmitry.baryshkov@linaro.org, robh@kernel.org, quic_krichai@quicinc.com,
+ quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+ quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org
+References: <1700577493-18538-1-git-send-email-quic_msarkar@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1700577493-18538-1-git-send-email-quic_msarkar@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-
-Hi,
+X-Spam-Level: *
 
 
-On 2023/11/4 07:03, Dmitry Baryshkov wrote:
-> Supporting DP/USB-C can result in a chain of several transparent
-> bridges (PHY, redrivers, mux, etc). All attempts to implement DP support
-> in a different way resulted either in series of hacks or in device tree
-> not reflecting the actual hardware design. This results in drivers
-> having similar boilerplate code for such bridges.
 
-Please improve the written,  "resulted" -> "yield" ?
+On 11/21/23 15:38, Mrinmay Sarkar wrote:
+> In a multiprocessor system cache snooping maintains the consistency
+> of caches. Snooping logic is disabled from HW on this platform.
+> Cache coherency doesn’t work without enabling this logic.
+> 
+> This series is to enable cache snooping logic in both RC and EP
+> driver and add the "dma-coherent" property in dtsi to support
+> cache coherency in 8775 platform.
+> 
+> To verify this series we required [1]
+> 
+> [1] https://lore.kernel.org/all/1699669982-7691-1-git-send-email-quic_msarkar@quicinc.com/
+> 
+> v3 -> v4:
+> - added new cfg(cfg_1_34_0) for SA8775P in both RC and EP driver.
+> - populated a flag in the data structures instead of doing
+>    of_device_is_compatible() in both RC and EP patch.
+> - update commit mesaage and added reveiwed-by tag in commit message
+>    in dtsi patch.
+This series looks good now, thanks!
 
-> Next, these drivers are susceptible to -EPROBE_DEFER loops: the next
-> bridge can either be probed from the bridge->attach callback, when it is
-> too late to return -EPROBE_DEFER, or from the probe() callback, when the
-> next bridge might not yet be available, because it depends on the
-> resources provided by the probing device. Device links can not fully
-> solve this problem since there are mutual dependencies between adjancent
-> devices.
->
-> Last, but not least, this results in the the internal knowledge of DRM
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-There is a duplicated "the" word in this sentence.
-
-As far as I can understand, nearly all of those troubles are because the display bridges
-drivers are designed as a kernel module(.ko) instead of making them as static link-able
-helpers. I means that a display bridge device can not work standalone, as it have to be
-used with a display controller. So a display bridge is just a slave device or a auxiliary
-device. My question is: if it can't works by itself, we probably shouldn't design them as
-kernel modules style. Am I correct?
-
-> subsystem slowly diffusing into other subsystems, like PHY or USB/TYPEC.
-
-Yeah, this indeed a problem.
-
-> To solve all these issues, define a separate DRM helper, which creates
-> separate aux device just for the bridge.
-
-I'm supporting you if want to solve all these problems, this is fine and thanks a lot.
-But I want to ask a question, now that you are solving these problems by creating separate
-devices, does this manner match the hardware design perfectly? which is the hardware units
-you newly created device is corresponding to?
-
-
-> During probe such aux device
-> doesn't result in the EPROBE_DEFER loops. Instead it allows the device
-> drivers to probe properly, according to the actual resource
-> dependencies. The bridge auxdevs are then probed when the next bridge
-> becomes available, sparing drivers from drm_bridge_attach() returning
-> -EPROBE_DEFER.
-
-OK, as far as I can understand,  in order to solve the mentioned problem
-you are also retire the defer probe mechanism.
-
-
-> Changes since v5:
->   - Removed extra semicolon in !DRM_AUX_HPD_BRIDGE stubs definition.
->
-> Changes since v4:
->   - Added documentation for new API (Sima)
->   - Added generic code to handle "last mile" DP bridges implementing just
->     the HPD functionality.
->   - Rebased on top of linux-next to be able to drop #ifdef's around
->     drm_bridge->of_node
->
-> Changes since v3:
->   - Moved bridge driver to gpu/drm/bridge (Neil Armstrong)
->   - Renamed it to aux-bridge (since there is already a simple_bridge driver)
->   - Made CONFIG_OF mandatory for this driver (Neil Armstrong)
->   - Added missing kfree and ida_free (Dan Carpenter)
->
-> Changes since v2:
->   - ifdef'ed bridge->of_node access (LKP)
->
-> Changes since v1:
->   - Added EXPORT_SYMBOL_GPL / MODULE_LICENSE / etc. to drm_simple_bridge
->
-> Dmitry Baryshkov (6):
->    drm/bridge: add transparent bridge helper
->    phy: qcom: qmp-combo: switch to DRM_AUX_BRIDGE
->    usb: typec: nb7vpq904m: switch to DRM_AUX_BRIDGE
->    drm/bridge: implement generic DP HPD bridge
->    soc: qcom: pmic-glink: switch to DRM_AUX_HPD_BRIDGE
->    usb: typec: qcom-pmic-typec: switch to DRM_AUX_HPD_BRIDGE
->
->   drivers/gpu/drm/bridge/Kconfig                |  17 ++
->   drivers/gpu/drm/bridge/Makefile               |   2 +
->   drivers/gpu/drm/bridge/aux-bridge.c           | 140 +++++++++++++++
->   drivers/gpu/drm/bridge/aux-hpd-bridge.c       | 164 ++++++++++++++++++
->   drivers/phy/qualcomm/Kconfig                  |   2 +-
->   drivers/phy/qualcomm/phy-qcom-qmp-combo.c     |  44 +----
->   drivers/soc/qcom/Kconfig                      |   1 +
->   drivers/soc/qcom/pmic_glink_altmode.c         |  33 +---
->   drivers/usb/typec/mux/Kconfig                 |   2 +-
->   drivers/usb/typec/mux/nb7vpq904m.c            |  44 +----
->   drivers/usb/typec/tcpm/Kconfig                |   1 +
->   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c |  41 +----
->   include/drm/bridge/aux-bridge.h               |  37 ++++
->   13 files changed, 383 insertions(+), 145 deletions(-)
->   create mode 100644 drivers/gpu/drm/bridge/aux-bridge.c
->   create mode 100644 drivers/gpu/drm/bridge/aux-hpd-bridge.c
->   create mode 100644 include/drm/bridge/aux-bridge.h
->
+Konrad
 
