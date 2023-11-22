@@ -1,206 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-1492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53FC27F4450
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:52:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 798077F4461
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 11:56:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7AC7A1C209CC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:52:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A6A2B20ED1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Nov 2023 10:56:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B55D04AF8E;
-	Wed, 22 Nov 2023 10:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B69014AF9A;
+	Wed, 22 Nov 2023 10:56:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="geQ+d6ci"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dETIR1Xk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B32225571;
-	Wed, 22 Nov 2023 10:52:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3E9C433CA;
-	Wed, 22 Nov 2023 10:52:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700650372;
-	bh=vg1uuwvQT2sKrRMAHrj+xxj4ykdnjZw0VMW21gcYvUY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=geQ+d6cieEbtA6MuRMTYcrI7LhaZsSiMpF6Z0EmxIjhHp2YFr4y5kS8qQGPHIReOx
-	 Gx/DQ3C+yWG1GL0GjjGldrto/KOVhyORCImcSSnYdzUxWs+Qm7t8ThARNQJtGM+ZJg
-	 +XqEQQ4vGjiD0TCYBukcu8HqtqO/OpbFWMV3SKenBjLcc1921paWbPMp51QrYNOdTi
-	 TAkG25biHSjNdtGJPixedr+oJQM/EI46CyD1CLw+EHpwBxyiVd9S3HLkAuxnLBccfN
-	 HBUxrr4qET/KN5se9nxEXapkamp5Gas3ngegBl2oENiIc1JZ9eccBVbxE9FimJYdrO
-	 +iuhip3TAaSAA==
-Date: Wed, 22 Nov 2023 10:52:43 +0000
-From: Simon Horman <horms@kernel.org>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Qingfang Deng <dqfext@gmail.com>,
-	SkyLake Huang <SkyLake.Huang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	David Epping <david.epping@missinglinkelectronics.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Harini Katakam <harini.katakam@amd.com>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [net-next RFC PATCH 04/14] net: phy: add initial support for PHY
- package in DT
-Message-ID: <20231122105243.GB28959@kernel.org>
-References: <20231120135041.15259-1-ansuelsmth@gmail.com>
- <20231120135041.15259-5-ansuelsmth@gmail.com>
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F956199
+	for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:56:00 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9ffef4b2741so378131066b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Nov 2023 02:56:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700650559; x=1701255359; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HLDI3wzMix+NWssn2rikTDQZvDop8e4c6V7Woh1WHUU=;
+        b=dETIR1Xk1vCA+X7O0cD8zhvZrLymwmDJqT0DygyAdlfieR4z721NSIQ8pzf+ozIIIw
+         BqjrQ0EvtEMRPFA6IdLbKOeMT5sU6/FayyVzWh7/Mb4Dmrx+vr8QN8b/+iWijTMS2nOR
+         ZVKmzn3XA8OaiPMGB5vNxoUurhWSbExEhH+mfrXtgZoQHVC8GunuleznSQUKdN6497yZ
+         w/t3hgmdZeAy/TyRJjqWdXLXLe5PXoLYHM79XAH+0QBNaLB8ZKc+zpEMmBUm/Vbh2dF9
+         8/5w7mMjNTTpJjNrwJ5KBFGc4s8kTK7CJ5qIxaWnDTAq+vf94k9N4JyvxoIcw2RYK1RZ
+         CT7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700650559; x=1701255359;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HLDI3wzMix+NWssn2rikTDQZvDop8e4c6V7Woh1WHUU=;
+        b=unHrZFh2hrE5+xvcNf7veB/vOiRKKBZ3+lH32fPc3yyCPaaHOg4VhqOa8v2VMNuyDo
+         yAvRvEHR/AHIU/XcYsDJkSGrP+ox3CXWELKLHpuib+WgVv4ahv2tmQfRjHB6dYbEZC02
+         C8QwOCJ7CRIPNOCeHuC4eDyjbn01+fYLC7mdfQ5XEG519w9FTOQAeAnVxwH2grDPVrpb
+         rTCWccW9elOLTVuHlhXk6pembp3ILTtVhZ5qiN0Ozo9916Q59sgCTPn73Y96szuPpkSS
+         Nj/ICicEs3K5D4KrTfxjXL+3iFvJs+JNymxwsCed3ggJM68DnJlziCS+EWO3ON/T82P2
+         LL9g==
+X-Gm-Message-State: AOJu0YwKp1myRyaGP7dHOzSoU0W2TW51eWU0rmGLsc1IdUxOSLrxh0K+
+	EBZMdxy/mmsILgEJe+qhihYV6w==
+X-Google-Smtp-Source: AGHT+IEcUs2DzE0DCcfF/Zqi+FS19jJkgid6BYQFfSIGdYh4e0kqwIWPHfhZgF/ve8h/TZgtEuuWDQ==
+X-Received: by 2002:a17:906:2d4:b0:a04:d5e8:cd84 with SMTP id 20-20020a17090602d400b00a04d5e8cd84mr539404ejk.56.1700650558988;
+        Wed, 22 Nov 2023 02:55:58 -0800 (PST)
+Received: from [127.0.1.1] ([86.123.99.122])
+        by smtp.gmail.com with ESMTPSA id mf3-20020a170906cb8300b009f28db2b702sm6423557ejb.209.2023.11.22.02.55.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Nov 2023 02:55:58 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/2] phy: qcom: edp: Add support for X1E80100
+Date: Wed, 22 Nov 2023 12:55:47 +0200
+Message-Id: <20231122-phy-qualcomm-edp-x1e80100-v1-0-a9938990edb3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231120135041.15259-5-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADPeXWUC/x2NQQrCMBBFr1Jm7UBmSlG8irhI0okZSNOYUKmU3
+ t3g8n14/x3QpKo0uA8HVPlo0zV3oMsAPtr8EtS5M7DhkYgZS/zie7PJr8uCMhfcSW6GjEE7XT1
+ NIYSRHXTf2Sboqs0+9oe8pdTHUiXo/g8+nuf5A6sW876AAAAA
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=866; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=6Qe8P7OumubbvMZ9Ocse/XGaxEKzcj9WjK3I0PgWsKE=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlXd42TNpKNmMaTa4qcGZmrA2jYc/smPgdRuMrW
+ v60cO4OVtyJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZV3eNgAKCRAbX0TJAJUV
+ VhmdD/oD6CPBHJwtRsdfJJ7iQXCg85N3wd7U3WD4obqKy6M5x+kTlVi1uW67vDAKI9vFoVMFnBi
+ u5mSHcHcxVzRfvsizSZ0kkLhUTU0iEISy/WCJBr23Uzx/u5C0Ew/4wRwj/LA+nekqZlqmXh+slK
+ Oq0cjxfuAFmlqGBfMLxsPVrtHebmSk3qSetoA9p4x0Djv7bdqhaupitLw1/yGMeIv4zlPxeG9I5
+ 3RxOlffUk3N2ahtdMlnJt6x0LaWtOtBdpZppBTUJ3G/7z5zadLv9o8nxihIOU55BizsM5v0qUcs
+ w0HevtuJEQmy4xdOw/oSsOoBX4F/3843czrKYMEmeYd2AUVQaioZfpxLYREha4bJtGSqZctqqGm
+ 5mmDeH5pWa/TnKDjb9mRemQ7fo/sJR31ROhV2DXub8YnbW+CvGhe7vW+THCyWwiJ/TKdwWLYEn+
+ zvS+lb8Jy4qvgHfn09pTqnUKI6Dkw0VEYFKFoSmUJ+PInsTTMXS3+aHHY1DIeyQza196qWA9XDA
+ CjM+E4RDxU1CBBdBnQalmSt62yldlGHd9KBK3joRkFxZWnPcgbRVV/Ny6QvlIl+YuxQaLnKIKQB
+ J0/uQxM+RiUM9yMzJpA24UzJCIvaGiXr0QHyy0YM/xrjyVkuVRswuQyG5zSo7EgAi9oEVDLCkwr
+ 6vYaEBJmnvim1KA==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Mon, Nov 20, 2023 at 02:50:31PM +0100, Christian Marangi wrote:
-> Add initial support for PHY package in DT.
-> 
-> Make it easier to define PHY package and describe the global PHY
-> directly in DT by refereincing them by phandles instead of custom
-> functions in each PHY driver.
-> 
-> Each PHY in a package needs to be defined in a dedicated node in the
-> mdio node. This dedicated node needs to have the compatible set to
-> "ethernet-phy-package" and define "global-phys" and "#global-phy-cells"
-> respectively to a list of phandle to the global phy to define for the
-> PHY package and 0 for cells as the phandle won't take any args.
-> 
-> With this defined, the generic PHY probe will join each PHY in this
-> dedicated node to the package.
-> 
-> PHY driver MUST set the required global PHY count in
-> .phy_package_global_phy_num to correctly verify that DT define the
-> correct number of phandle to the required global PHY.
-> 
-> mdio_bus.c and of_mdio.c is updated to now support and parse also
-> PHY package subnote that have the compatible "phy-package".
-> 
-> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+This patchset adds support for the X1E80100 eDP/DP PHY and documents its
+compatible.
 
-Hi Christian,
+This patchset depends on the QSERDES_V6_COM_SSC_ADJ_PER1 register offset
+added by the following patchset:
 
-I was a little hasty in hitting send on my previous message.
-Please find some more minor feedback from my side below.
+https://lore.kernel.org/all/20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-0-d9340d362664@linaro.org/
 
-...
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Abel Vesa (2):
+      dt-bindings: phy: qcom-edp: Add X1E80100 PHY compatibles
+      phy: qcom: edp: Add X1E80100 eDP and DP PHYs
 
-> diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
-> index 64ebcb6d235c..bb910651118f 100644
-> --- a/drivers/net/mdio/of_mdio.c
-> +++ b/drivers/net/mdio/of_mdio.c
-> @@ -139,6 +139,44 @@ bool of_mdiobus_child_is_phy(struct device_node *child)
->  }
->  EXPORT_SYMBOL(of_mdiobus_child_is_phy);
->  
-> +static int __of_mdiobus_parse_phys(struct mii_bus *mdio, struct device_node *np,
-> +				   bool *scanphys)
-> +{
-> +	struct device_node *child;
-> +	int addr, rc;
-> +
-> +	/* Loop over the child nodes and register a phy_device for each phy */
-> +	for_each_available_child_of_node(np, child) {
-> +		if (of_device_is_compatible(child, "ethernet-phy-package")) {
-> +			rc = __of_mdiobus_parse_phys(mdio, child, scanphys);
-> +			if (rc && rc != -ENODEV)
-> +				return rc;
+ .../devicetree/bindings/phy/qcom,edp-phy.yaml      |   2 +
+ drivers/phy/qualcomm/phy-qcom-edp.c                | 305 ++++++++++++++++-----
+ 2 files changed, 233 insertions(+), 74 deletions(-)
+---
+base-commit: 07b677953b9dca02928be323e2db853511305fa9
+change-id: 20231122-phy-qualcomm-edp-x1e80100-a57c15fff32b
 
-for_each_available_child_of_node() makes calls to of_node_get() and
-of_node_put(), so when jumping out of a loop it is necessary to call
-of_node_put(), in this case of_node_put(child).
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
-As flagged by Coccinelle.
-
-Also flagged in of_mdiobus_find_phy() both before and after this patch.
-
-> +
-> +			continue;
-> +		}
-> +
-> +		addr = of_mdio_parse_addr(&mdio->dev, child);
-> +		if (addr < 0) {
-> +			*scanphys = true;
-> +			continue;
-> +		}
-> +
-> +		if (of_mdiobus_child_is_phy(child))
-> +			rc = of_mdiobus_register_phy(mdio, child, addr);
-> +		else
-> +			rc = of_mdiobus_register_device(mdio, child, addr);
-> +
-> +		if (rc == -ENODEV)
-> +			dev_err(&mdio->dev,
-> +				"MDIO device at address %d is missing.\n",
-> +				addr);
-> +		else if (rc)
-> +			return rc;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  /**
->   * __of_mdiobus_register - Register mii_bus and create PHYs from the device tree
->   * @mdio: pointer to mii_bus structure
-> @@ -180,25 +218,9 @@ int __of_mdiobus_register(struct mii_bus *mdio, struct device_node *np,
->  		return rc;
->  
->  	/* Loop over the child nodes and register a phy_device for each phy */
-> -	for_each_available_child_of_node(np, child) {
-> -		addr = of_mdio_parse_addr(&mdio->dev, child);
-> -		if (addr < 0) {
-> -			scanphys = true;
-> -			continue;
-> -		}
-> -
-> -		if (of_mdiobus_child_is_phy(child))
-> -			rc = of_mdiobus_register_phy(mdio, child, addr);
-> -		else
-> -			rc = of_mdiobus_register_device(mdio, child, addr);
-> -
-> -		if (rc == -ENODEV)
-> -			dev_err(&mdio->dev,
-> -				"MDIO device at address %d is missing.\n",
-> -				addr);
-> -		else if (rc)
-> -			goto unregister;
-> -	}
-> +	rc = __of_mdiobus_parse_phys(mdio, np, &scanphys);
-> +	if (rc)
-> +		goto unregister;
-
-Jumping to unregister will call of_node_put(child),
-however child appears to be uninitialised here.
-
-Flagged by clang-16 W=1 build, and Smatch.
-
->  
->  	if (!scanphys)
->  		return 0;
-
-...
 
