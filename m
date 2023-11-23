@@ -1,140 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-1696-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1697-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 378087F603A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:28:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FB847F604B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:32:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 690931C20FB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 13:28:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DFF62281984
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 13:32:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E127D22F1D;
-	Thu, 23 Nov 2023 13:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BB94250F1;
+	Thu, 23 Nov 2023 13:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NXjAOvlB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GN91Olpl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86BF6D4E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 05:28:10 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c6b30aca06so10843431fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 05:28:10 -0800 (PST)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F25DFD40
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 05:32:22 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-5079f6efd64so1074162e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 05:32:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700746089; x=1701350889; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GhSFvfpy9cWyHElc04KrxbfIPOEzDLJiSvaFpWPfAfo=;
-        b=NXjAOvlBFNIh3j3Y6gjEGmojHA7eM6dJIbagt8cmFtqCc9qr7NWz1Q09hqwNvpATZm
-         IgZXb1BC80EhLCUdKy0kcK0+xVIG1pXpwb4wivejqb10nNJ2yCQCC6eiMQFb1aobe77d
-         l/rZBuc/wRPIdwBJoVJCNCJnsFe0MgbvQ92idiCcM5DcIG4GNNu4LzRHOQwodpkC+pVc
-         deYTvuFVBdtiXgjv/6woEM8g7PdX1p3CV8LUebOUdjHym1htG8N0F98HE0VhMOMDZ7w7
-         qMpDdMdse7iozmcfGIC9o0RoM+kxlRGnGZ4flxXrV3VPkolm3zOdQ1z0jDFMbyA2RiIw
-         G6rA==
+        d=linaro.org; s=google; t=1700746341; x=1701351141; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=h7Q3RZYDKc2FsZpbY/DwgsOyJU0rLY3O3P98wvrreFk=;
+        b=GN91Olpl6/5oqv4Tu0Bu8IBq9Iv+CY4EJCjk2OoTvz9Bgxvbv8gjo9p7ZTfLSB3o+o
+         ITenqo6/BwFDrtsDICL2xQXeYrmhpVs4JlEI5F/pHKyW5FYWG3pY2lNmk1DlzlovVcnC
+         YlHb1b/LVH+h8uCLMNYjOwlkGkfVXdmF8O/WMG34qein3AjXgGZggWmCu9Jmj7Uc9vAx
+         inp+0HNr58ueOmNRikC8gdYh4zJMjYAei2/nefEZz7ggcQbNam3LzkvwVNL5FGvRFH5O
+         TL6ymqeBF6nHSaHgrLiqvPCNeZy8KRY3dtvea9hmKsr7o1CqV8p0tcH8ae1PJ3nTmY+r
+         Lpug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700746089; x=1701350889;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GhSFvfpy9cWyHElc04KrxbfIPOEzDLJiSvaFpWPfAfo=;
-        b=e/Q3lfv+wk+oYGLSfsdAHu58bw8SmDiEiUN7J6lKDpIDbJm6TTB7Y7mEOLE5ukg9bM
-         qd8X120KObIrPTGLGlqwUxgqJeKYh3AmxGy1YDjCL4D5VDCD9au1pasp8W9Tsl5rMxn3
-         Bwp2hjMge01Kue8VdKgV9at3wZtLrF7CZf8/ONV3yfKx1xdwlh1dyndPGOgVJd++uiZS
-         miN466TUBRaq8BP99Ctlr0m85mxEu8tau7/YCOycPLhb0NDhoRH+lTJojmn1Rzu/gdUy
-         n1xlyKGyQ8z0qJa5gYhxqSupLvr8wVfCXNWvZDmDd4hcA8sjfTwp+POSB816RZY8VqJS
-         TxlA==
-X-Gm-Message-State: AOJu0YzjLaJFLcc9yac7yj9MceHMR/EgH27tHtWk7orFoMnFYE/WnAGS
-	ssQ8xsOHaoYXrVy6JumPni78Gg==
-X-Google-Smtp-Source: AGHT+IHikJAtF8fot11Zw3aw5ER+K4IPY0RS05vwoBfLABFNx3Sc1soHRMEF9M+GtzObWJNcO79SQg==
-X-Received: by 2002:a2e:a4c6:0:b0:2c8:33a6:4df4 with SMTP id p6-20020a2ea4c6000000b002c833a64df4mr3649796ljm.38.1700746088838;
-        Thu, 23 Nov 2023 05:28:08 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:89c5:1f48:b86f:30ba? ([2a01:e0a:982:cbb0:89c5:1f48:b86f:30ba])
-        by smtp.gmail.com with ESMTPSA id p34-20020a05600c1da200b00406408dc788sm2666744wms.44.2023.11.23.05.28.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Nov 2023 05:28:08 -0800 (PST)
-Message-ID: <26da5c1d-e285-4036-9661-4018f977452f@linaro.org>
-Date: Thu, 23 Nov 2023 14:28:06 +0100
+        d=1e100.net; s=20230601; t=1700746341; x=1701351141;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=h7Q3RZYDKc2FsZpbY/DwgsOyJU0rLY3O3P98wvrreFk=;
+        b=Ti1SQYbvDxDj2xy5Bstw5yGvEikNCfUpcn8KURzxxwshI+6hrh3jqJodNkHOrTTVhE
+         SbQtdg/Ll0vvh8DASeR1qtod2oEgKKCUQ6+i53vYEee6LUI3QS/QdVLvVG1lBCJ7uEmd
+         O8EaIj0GTzP0zW+en9aTcKD3RcYgSVwgDGJxLLnazzma++R6Moh1tDB+VglglHhqf9OE
+         drohbGSaQXA6jZH98uaGhfy2+Jm9YVoFJDZt2sTvOCC1juZTjcXSd9PLA3Ti2TxRI8+c
+         JF/VlK3ogDypvXbsWfih3BMWzcsoPDaAPdPCFyRbTGAoyB4IdK/305klHrTo+pVz6VkA
+         s4qg==
+X-Gm-Message-State: AOJu0Yz71bW8d7ogtKgCwmxz8YEW3YZzSXARL0v+uhW/VGYhpVSDuohQ
+	lL3rwckO3gGphT3IcIYVXvKisw==
+X-Google-Smtp-Source: AGHT+IF40R3U2MxW68uTyxmtH1aJIFALjg4sxuSt8tZUriPCQEjkscRmm1ZCvWzkHU54ByIf9xZyKg==
+X-Received: by 2002:a19:e05c:0:b0:507:a0d6:f178 with SMTP id g28-20020a19e05c000000b00507a0d6f178mr3590022lfj.35.1700746341165;
+        Thu, 23 Nov 2023 05:32:21 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id e4-20020a5d65c4000000b003313a1e0ba1sm1647658wrw.89.2023.11.23.05.32.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Nov 2023 05:32:20 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v2 0/2] interconnect: qcom: Introduce support for SM8650
+Date: Thu, 23 Nov 2023 14:32:11 +0100
+Message-Id: <20231123-topic-sm8650-upstream-interconnect-v2-0-7e050874f59b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 2/8] arm64: dts: qcom: add initial SM8650 dtsi
-Content-Language: en-US, fr
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- Andy Gross <agross@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>
-References: <20231121-topic-sm8650-upstream-dt-v3-0-db9d0507ffd3@linaro.org>
- <20231121-topic-sm8650-upstream-dt-v3-2-db9d0507ffd3@linaro.org>
- <dbf10516-d927-4665-8471-c3126c72454e@quicinc.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <dbf10516-d927-4665-8471-c3126c72454e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFtUX2UC/42NSw6CMBQAr0K69pl+UkBX3sOwqOUJL5GWvFaiI
+ dzdSjyAy5nFzCoSMmES52oVjAsliqGAPlTCjy4MCNQXFlpqo6SqIceZPKSpra2E55wyo5uAQkb
+ 2MQT0GVqrdN+a1tuTESU0M97ptU+uXeGRUo783p+L+tpfXtt/8osCCbdGNw1K45zpLw8KjuMx8
+ iC6bds+kYh8aNUAAAA=
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Georgi Djakov <djakov@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1850;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=xj9eEaLtiaHWn0GWa1onMQEQ+NWKsOyiMFekEju5+wg=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlX1Ri8Lf52DJM+paX1tAzv50+Vjq7jvSF9RTJfmtG
+ 4MIwTB+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZV9UYgAKCRB33NvayMhJ0VcFD/
+ 0U9Xo4OUpX2uri9oaJq6iX1GZbIp3PQw1fFV/FJqsiIA8b2qZb98iHhZfqip/UHRPkBjF0sPPM4r1A
+ WuswVNHBrRgEP2FBnA7YTjoI+qZ4Ew41oEDZ2Y0GBB0X4yXGTP2VJigVRrczIMu8D9SS+ClkkXtYOe
+ z7ZHGxSjuWPEHBBwNfQlJLuu0poNgfoOd2G/Rq47U2dk16xlfQNZSCJ7grXEd7v1OIBnpRphFcmPJ1
+ eghpiq4AjtKg2WmyMayMzJ1/x6dYMwwPWnsN2fD/t/2kVxjFtgRx/lWHP98hbIKcnMqi9M848HlIUA
+ 5dyXe1uGQbyvoRADM3LhqO6LUXQliXQIYZ4336HxgVDZLo1vFtbIlox7XUyM9YEbjmXf38/v/RUOws
+ h+BZ+ZvzU1vWcP0Ym1p2Eh6E2rzkqQtBiKTh4KahPRjae8EVfjk8XQLFkgcKKJ8jtEUwUAfONGRxPi
+ YvCLJ5HaQekoq0iR+8ZcnSwaIquNozVvLXiwi/Rt329xrTovLApN3HpoXxEyxj5/ErOAmUvILAXvRC
+ Zwt6rrUFYuHl7lT9OfBYSWVFegRUKdGQmU0L/h3hLQuRDFU0159pT3sn3SoDR3S+oZoHFa96uVaQ78
+ kpfGgxFSnJeTv3QAi8WAjnVkdQ38uG+9Rs288/V2D73hpYYoiDmHWG1T71zA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 22/11/2023 09:07, Krishna Kurapati PSSNV wrote:
->> +
->> +        usb_1: usb@a6f8800 {
->> +            compatible = "qcom,sm8650-dwc3", "qcom,dwc3";
->> +            reg = <0 0x0a6f8800 0 0x400>;
->> +
->> +            interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
->> +                          <&pdc 17 IRQ_TYPE_LEVEL_HIGH>,
->> +                          <&pdc 15 IRQ_TYPE_EDGE_RISING>,
->> +                          <&pdc 14 IRQ_TYPE_EDGE_RISING>;
->> +            interrupt-names = "hs_phy_irq",
-> 
-> Hi Neil,
-> 
->   This GIC_SPI 130 is actually pwr_event IRQ, not hs_phy_irq.
+This covers the RPMh Network-On-Chip Interconnect bindings
+and driver for the interconnect framework.
 
-Thanks,
-Will fix in v4
+As reported for earlier Interconnect drivers, the IDs
+for multi-rsc voting has been removed from this driver
+so the proper solution can be developed without having
+to remove entries later on.
 
-Neil
+To easy Bjorn into merging the DT bits, would it be possible
+to have an immutable branch with bindings shared with Bjorn once
+this patchset have been properly reviewed and accepted ?
 
-> 
->> +                      "ss_phy_irq",
->> +                      "dm_hs_phy_irq",
->> +                      "dp_hs_phy_irq";
->> +
-> 
-> Regards,
-> Krishna,
+Dependencies: None
+
+For convenience, a regularly refreshed linux-next based git tree containing
+all the SM8650 related work is available at:
+https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Collected Reviewed-by
+- Moved required block in bindings as requested by Krzysztof
+- Link to v1: https://lore.kernel.org/r/20231025-topic-sm8650-upstream-interconnect-v1-0-b7277e03aa3d@linaro.org
+
+---
+Neil Armstrong (2):
+      dt-bindings: interconnect: document the RPMh Network-On-Chip Interconnect in Qualcomm SM8650 SoC
+      interconnect: qcom: introduce RPMh Network-On-Chip Interconnect on SM8650 SoC
+
+ .../bindings/interconnect/qcom,sm8650-rpmh.yaml    |  136 ++
+ drivers/interconnect/qcom/Kconfig                  |    9 +
+ drivers/interconnect/qcom/Makefile                 |    2 +
+ drivers/interconnect/qcom/sm8650.c                 | 1674 ++++++++++++++++++++
+ drivers/interconnect/qcom/sm8650.h                 |  143 ++
+ .../dt-bindings/interconnect/qcom,sm8650-rpmh.h    |  154 ++
+ 6 files changed, 2118 insertions(+)
+---
+base-commit: 07b677953b9dca02928be323e2db853511305fa9
+change-id: 20231016-topic-sm8650-upstream-interconnect-8512d838c593
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
