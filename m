@@ -1,207 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-1692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 167C77F5EB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 13:04:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77A8E7F5ED0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 13:13:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7366FB21521
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 12:04:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A92071C20F36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 12:13:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6674224209;
-	Thu, 23 Nov 2023 12:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF08A2420F;
+	Thu, 23 Nov 2023 12:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vlgx7y45"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LtfsVzEL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0018311F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 04:04:37 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50aab3bf71fso982770e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 04:04:37 -0800 (PST)
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E92FC11F;
+	Thu, 23 Nov 2023 04:13:29 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-548f74348f7so1150907a12.2;
+        Thu, 23 Nov 2023 04:13:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700741076; x=1701345876; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ff20L7uFDpZRo7krlqV3HLTPchR47Ag5cWaCM9fPD6g=;
-        b=vlgx7y45Olt3kw1TNz95/2YiGJayqTvcXi+Y3SUDA340JwO6n4yFNcMIpCaJxT7T7A
-         K1nXSehDnkMTcyNErTtoZOOCpn0414fPWnuZcIKoaWw63XJ0pVOyNHQqJBwnuF4B1uvL
-         H/LwTKMv7506UbX0ZVfLwPBFD2ayd0g4hk+myDKXQAF09ppWLwiYB+n8mQYhQEsAc3Ey
-         rm9ZVdAQ4A/5qTdQY+LRkZniCYsrmo8H4sCAXSksCk2xNJ8iE1saEfqN22Q7pqDCBksK
-         KDrBnHECV/kpQvtjiJ+OTWpHRlQFc0vgqVmyWS4fck9cF2xnbFU8nRjAtdMUxiz9bfQp
-         iqhg==
+        d=gmail.com; s=20230601; t=1700741608; x=1701346408; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lEDS1xDbHv2bX/Af0XP8lgFHd9wrBccG/R9qGzxmb30=;
+        b=LtfsVzEL+U6XXigthT3aNp6Dgr7jKM8OB7M4GTmpLZ8Z9FdKdDFEJsvbQ3ZEtnGVBS
+         mbK72HEKfwgpOkcfF6CI8UlMcjhEar4lu+7KhNQI8p3sa0whF74adPNFqF7aBk9ZnIRT
+         xahxzEcInPRjNtIE+gQ3X47gsQ4d4iAkV158wLJ7A+laPHZ+OXTwU1o6kmC3gwf6VLZE
+         xeUJjbne6lwbcIQTuLreoXEAsNl82zhlckgGQQ1s2RGWYtTURg/42oRD6izDRY0F0m96
+         WPguEbNk78vmNc8dBdXRJK3XiUBZRrc29vuGgnCAqMTttsF1/N9zpW52c5HT4Y6uuvew
+         Ipxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700741076; x=1701345876;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ff20L7uFDpZRo7krlqV3HLTPchR47Ag5cWaCM9fPD6g=;
-        b=c8Efp+vAfpNhzyr/a/AM9VcCWq0c1UrR03u8VjkagU0QfK6H0gTh5vj2qW3UBfTLnv
-         b9PUe0fAuylH24O/ZhtIlZZ7EYk6X80MezsEusGzStSHKDTttDroDXpPIg8eNk0i26We
-         95Morc4dWGQY2X9BDXLTwtF8rFAcvWANoM/IGX9eKJkN1464f362S9MGcLrUs5jRrkHl
-         9/Ab5B1HjFdraDNTqPMhjdRVpEggW8i/H1SAiKTwXTiOs3ZHEzqnW2MxVflNblke+Zv8
-         cDPEoeXMLkIcXKoAhL2FP0LdmHvdsxnEtN+YGoFoFvf94j97xdtoOxIAWR4OY6bj6dCu
-         cQhQ==
-X-Gm-Message-State: AOJu0YzvQ/i2qhz0LHnV9H+ArT15fL4pJ1NigSenTDWEfLU/AlfJaa+2
-	+1Gfi4k35+tgQINes6G7OXx6fA==
-X-Google-Smtp-Source: AGHT+IEwYG/SbSC3Sw94iuFLx+tG2uSUti7Wr4GzwU7IAkuFM+DgS1L4qHKbRUNmwdyTbnN3J7MH3Q==
-X-Received: by 2002:a05:651c:306:b0:2c8:878e:9d40 with SMTP id a6-20020a05651c030600b002c8878e9d40mr3439166ljp.13.1700741075933;
-        Thu, 23 Nov 2023 04:04:35 -0800 (PST)
-Received: from [172.30.204.221] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id r18-20020a2e80d2000000b002b70a64d4desm170764ljg.46.2023.11.23.04.04.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Nov 2023 04:04:35 -0800 (PST)
-Message-ID: <84a97960-dfef-4d2f-8462-d3acb6f5a125@linaro.org>
-Date: Thu, 23 Nov 2023 13:04:34 +0100
+        d=1e100.net; s=20230601; t=1700741608; x=1701346408;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lEDS1xDbHv2bX/Af0XP8lgFHd9wrBccG/R9qGzxmb30=;
+        b=Qzg/6IUz2Ot3g8hoLeNguvPX+meoRJghFxbEhhcgw8FC6XB+j+5PMEGZ+wGMttm4VC
+         Q00Krtuv4kOiPabBtCIHJrC+qedZbM3bTouRQ/N5hZ3yR9Mv0InEfLN5CVnLViv3uFMG
+         XzsTpffeqBHLBpfx+4VPWe+n9TnK4pbO6OJKnBDyJp2UV2N77fE7kqoUGp20bmg2rrBn
+         2pNMVCuPN04CsvVrWbK+NoUVEceptFux8k04X4UUJRCq4gCJLCMk9bTNw2Y99NL3GxK9
+         /1qADfAad84Ut+OT5Emg0T4lPDyJpGI7dnBESWL3MVc1Y4MFvT3Wx5iGqm3ZVk/5SeyG
+         wOFw==
+X-Gm-Message-State: AOJu0YxwxjyRRDn7WJoA7aWrw0aj7ICcwdEHU/MCVE3QZl0y93h5qhGr
+	aKAr5KZ+3UfC8dJE4g2nHoTRAPcMtMM=
+X-Google-Smtp-Source: AGHT+IFU08KnhdZcRouB/Uhp9IfkcPQcB/iEiRn39XYcoO3ubI7l6bxVHt4kxeSzgbITJsxT8WP31Q==
+X-Received: by 2002:aa7:d9d5:0:b0:548:89b7:f590 with SMTP id v21-20020aa7d9d5000000b0054889b7f590mr4373603eds.35.1700741608161;
+        Thu, 23 Nov 2023 04:13:28 -0800 (PST)
+Received: from fedora.. (dh207-99-119.xnet.hr. [88.207.99.119])
+        by smtp.googlemail.com with ESMTPSA id by10-20020a0564021b0a00b0054868b36118sm580678edb.32.2023.11.23.04.13.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Nov 2023 04:13:27 -0800 (PST)
+From: Robert Marko <robimarko@gmail.com>
+To: agross@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Robert Marko <robimarko@gmail.com>
+Subject: [PATCH] arm64: dts: qcom: ipq8074: Add QUP4 SPI node
+Date: Thu, 23 Nov 2023 13:12:54 +0100
+Message-ID: <20231123121324.1046164-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/7] media: qcom: camss: Move VFE power-domain
- specifics into vfe.c
-Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, hverkuil-cisco@xs4all.nl,
- laurent.pinchart@ideasonboard.com, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, matti.lehtimaki@gmail.com,
- quic_grosikop@quicinc.com
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231118-b4-camss-named-power-domains-v5-0-55eb0f35a30a@linaro.org>
- <20231118-b4-camss-named-power-domains-v5-4-55eb0f35a30a@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231118-b4-camss-named-power-domains-v5-4-55eb0f35a30a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Level: *
 
+Add node to support the QUP4 SPI controller inside of IPQ8074.
+Some devices use this bus to communicate to a Bluetooth controller.
 
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-On 11/18/23 13:11, Bryan O'Donoghue wrote:
-> Moving the location of the hooks to VFE power domains has several
-> advantages.
-> 
-> 1. Separation of concerns and functional decomposition.
->     vfe.c should be responsible for and know best how manage
->     power-domains for a VFE, excising from camss.c follows this
->     principle.
-> 
-> 2. Embedding a pointer to genpd in struct camss_vfe{} meas that we can
->     dispense with a bunch of kmalloc array inside of camss.c.
-> 
-> 3. Splitting up titan top gdsc from vfe/ife gdsc provides a base for
->     breaking up magic indexes in dtsi.
-> 
-> Suggested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> Tested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->   drivers/media/platform/qcom/camss/camss-vfe.c | 24 +++++++++-
->   drivers/media/platform/qcom/camss/camss-vfe.h |  2 +
->   drivers/media/platform/qcom/camss/camss.c     | 67 ++++++++++++++-------------
->   drivers/media/platform/qcom/camss/camss.h     |  4 +-
->   4 files changed, 62 insertions(+), 35 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index 5172eb5612a1c..defff24f07ce3 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -14,6 +14,7 @@
->   #include <linux/mutex.h>
->   #include <linux/of.h>
->   #include <linux/platform_device.h>
-> +#include <linux/pm_domain.h>
->   #include <linux/pm_runtime.h>
->   #include <linux/spinlock_types.h>
->   #include <linux/spinlock.h>
-> @@ -1381,8 +1382,13 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
->   	if (!res->line_num)
->   		return -EINVAL;
->   
-> -	if (res->has_pd)
-> -		vfe->genpd = camss->genpd[id];
-> +	if (res->has_pd) {
-> +		vfe->genpd = dev_pm_domain_attach_by_id(camss->dev, id);
-> +		if (IS_ERR(vfe->genpd)) {
-> +			ret = PTR_ERR(vfe->genpd);
-> +			return ret;
-Can't help but notice the two lines above could become one
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index d8e8a5cded64..1b9e50edc892 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -744,6 +744,20 @@ blsp1_i2c3: i2c@78b7000 {
+ 			status = "disabled";
+ 		};
+ 
++		blsp1_spi4: spi@78b8000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0x78b8000 0x600>;
++			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP4_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 18>, <&blsp_dma 19>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
+ 		blsp1_i2c5: i2c@78b9000 {
+ 			compatible = "qcom,i2c-qup-v2.2.1";
+ 			#address-cells = <1>;
+-- 
+2.42.0
 
-[...]
-
-> +/*
-> + * msm_vfe_genpd_cleanup - Cleanup VFE genpd linkages
-> + * @vfe: VFE device
-> + *
-stray newline?
-
-> + */
-> +void msm_vfe_genpd_cleanup(struct vfe_device *vfe)
-> +{
-> +	if (vfe->genpd_link)
-> +		device_link_del(vfe->genpd_link);
-> +
-> +	if (vfe->genpd)
-> +		dev_pm_domain_detach(vfe->genpd, true);
-> +}
-> +
->   /*
->    * vfe_link_setup - Setup VFE connections
->    * @entity: Pointer to media entity structure
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-> index 992a2103ec44c..cdbe59d8d437e 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-> @@ -159,6 +159,8 @@ struct camss_subdev_resources;
->   int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
->   			const struct camss_subdev_resources *res, u8 id);
->   
-> +void msm_vfe_genpd_cleanup(struct vfe_device *vfe);
-> +
->   int msm_vfe_register_entities(struct vfe_device *vfe,
->   			      struct v4l2_device *v4l2_dev);
->   
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index ed01a3ac7a38e..5f7a3b17e25d7 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -1487,7 +1487,9 @@ static const struct media_device_ops camss_media_ops = {
->   static int camss_configure_pd(struct camss *camss)
->   {
->   	struct device *dev = camss->dev;
-> +	const struct camss_resources *res = camss->res;
->   	int i;
-> +	int vfepd_num;
->   	int ret;
-Reverse-Christmas-tree, please
-
-[...]
-
-> +static void camss_genpd_cleanup(struct camss *camss)
-> +{
->   	if (camss->genpd_num == 1)
->   		return;
->   
-> -	if (camss->genpd_num > camss->res->vfe_num)
-> -		device_link_del(camss->genpd_link[camss->genpd_num - 1]);
-> +	if (camss->genpd_link)
-> +		device_link_del(camss->genpd_link);
-> +
-> +	dev_pm_domain_detach(camss->genpd, true);
->   
-> -	for (i = 0; i < camss->genpd_num; i++)
-> -		dev_pm_domain_detach(camss->genpd[i], true);
-> +	camss_genpd_subdevice_cleanup(camss);
-This changes the behavior, previously CAMSS_TOP was shut down last
-(which makes more sense to me, anyway)
-
-otherwise, I think this lgtm
-
-Konrad
 
