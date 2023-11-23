@@ -1,170 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-1740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D1357F64D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 18:06:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89B567F64FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 18:14:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B04AE1C20B7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 17:06:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 408C9281B61
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 17:14:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7204E3FB32;
-	Thu, 23 Nov 2023 17:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E90313FB23;
+	Thu, 23 Nov 2023 17:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="J4i8Mhui"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NOdAwhwf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine.igalia.com [178.60.130.6])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B9E1B3;
-	Thu, 23 Nov 2023 09:06:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=vr+lIUE48EiaMmm3K/kGj77WRtOkOjRn/VOxNXh3gYI=; b=J4i8Mhui6IKuHMj/fdwD8XkeCm
-	Oz6ziuQPmUlTWllIWSox2ftFTTZnVqdxZJUskAlpFQnBj3bNgD/o+OSzZwTh0WmRyCuOEYdVnBjFp
-	57GRV5fVZoSU0iXIS+qH01sDAzL0d6sm48F8mi62S4eFMkalBwKHphA3CCWSZ1nblOR3o1MM1tUsr
-	1WF7FALHxXv5gZtJ+wDV9ubJb/yQghTX3dE0KI4MyRI9QbiARQJ6ILeVgq+YjhfKoIbG75YQuS2j6
-	jrNXp2rfZD42jIuSBmi4q0Xa/N9wYeOFwHWDOYw6mht6EqCnwemtHWSXPQwOvm4Ea/y+DLDSpKukB
-	kA3l00Qw==;
-Received: from i73190.upc-i.chello.nl ([62.195.73.190] helo=[192.168.68.110])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1r6D9J-006Tcm-7x; Thu, 23 Nov 2023 18:05:57 +0100
-Message-ID: <1e45a031-080d-4cbe-9741-182524227124@igalia.com>
-Date: Thu, 23 Nov 2023 18:05:54 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB493FE34;
+	Thu, 23 Nov 2023 17:14:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B13C433CC;
+	Thu, 23 Nov 2023 17:14:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700759669;
+	bh=trQue5vt4vNug0lKdIifZG1U/sc0mMPLn521Cnxbi8A=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=NOdAwhwfhaybbj5HEJr6Qhi+fejV93baYjH8jDhcjY3Nh2+cG5MNdp+wOq8pG0A5k
+	 ZwOATpEZ3Wy4bBea/ZwdMcxFWdtfm3LRS923s+zCT8yQtAJyYDBc+hBuUhwv3H2P8e
+	 H9UBVlNTtcfEWppuxCz1hHHrZbY350a2m94KnF/QzWsNnQdvtcoueMnqd5a3nOebPc
+	 91RDbDBj47fJdqzt1CXk3pha1EJmoujk/gcj8buNYkCmtGGiAPe+8u2NnqwHoyn+0A
+	 fsb0dLmm42ew0AnhAvgXCvL3Ir82fNE/RItduAYxSOLm3jwSTy2XC4/H2ZvnyRXlAT
+	 8RkgBnCtoX2mg==
+From: Lee Jones <lee@kernel.org>
+To: Lee Jones <lee@kernel.org>, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc: Linus Walleij <linus.walleij@linaro.org>, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
+ chrome-platform@lists.linux.dev, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, linux-samsung-soc@vger.kernel.org, 
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, 
+ Tony Lindgren <tony@atomide.com>, linux-omap@vger.kernel.org, 
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
+ Fabrice Gasnier <fabrice.gasnier@foss.st.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ linux-stm32@st-md-mailman.stormreply.com
+In-Reply-To: <20231123165627.492259-1-u.kleine-koenig@pengutronix.de>
+References: <20231123165627.492259-1-u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH v2 00/18] mfd: Convert to platform remove callback
+ returning void
+Message-Id: <170075966425.1458093.5482638425880756985.b4-ty@kernel.org>
+Date: Thu, 23 Nov 2023 17:14:24 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Thunderbird Daily
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: sm8350-lemonade(p): New devices
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
- Lars-Peter Clausen <lars@metafoo.de>, Rob Herring <robh+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
- Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
- <gpiccoli@igalia.com>, Vinod Koul <vkoul@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- devicetree@vger.kernel.org, phone-devel@vger.kernel.org, Rob <Me@orbit.sh>,
- Clayton Craft <clayton@igalia.com>,
- Caleb Connolly <caleb.connolly@linaro.org>,
- Luca Weiss <luca.weiss@fairphone.com>, ~postmarketos/upstreaming@lists.sr.ht
-References: <20231111-nia-sm8350-for-upstream-v4-0-3a638b02eea5@igalia.com>
- <20231111-nia-sm8350-for-upstream-v4-6-3a638b02eea5@igalia.com>
- <d35b9250-eddb-4436-8daf-066ec84cf55f@linaro.org>
-Content-Language: en-US
-From: Nia Espera <nespera@igalia.com>
-Autocrypt: addr=nespera@igalia.com; keydata=
- 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
- T+I7o407lOB8a/PJA2YXM4VVC/iyMBM=
-In-Reply-To: <d35b9250-eddb-4436-8daf-066ec84cf55f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.12.3
 
-
-
-On 11/22/23 21:17, Konrad Dybcio wrote:
+On Thu, 23 Nov 2023 17:56:28 +0100, Uwe Kleine-König wrote:
+> this series converts all platform drivers below drivers/mfd to use
+> .remove_new(). Compared to the traditional .remove() callback
+> .remove_new() returns no value. This is a good thing because the driver
+> core doesn't (and cannot) cope for errors during remove. The only effect
+> of a non-zero return value in .remove() is that the driver core emits a
+> warning. The device is removed anyhow and an early return from .remove()
+> usually yields resource leaks and/or use-after-free bugs.
 > 
-> 
-> On 11/11/23 23:07, Nia Espera wrote:
->> Device tree files for OnePlus 9 and 9 Pro. Details of supported features
->> mentioned in the cover letter for this patch series, but for
->> accessibility also repeated here:
->>
->> - USB OTG
->> - UFS
->> - Framebuffer display
->> - Touchscreen (for lemonade)
->> - Power & volume down keys
->> - Battery reading
->> - Modem, IPA, and remoteproc bringup
->>
->> Steps to get booting:
->>
->> - Wipe dtbo partition
->> - Flash vbmeta with disabled verity bit
->> - Flash kernel and initfs to boot partition with CLI args 
->> pd_ignore_unused
->> and clk_ignore_unused as v1 bootimg
->> - Flash rootfs to some other partition (probably super or userdata)
-> Thanks for including this info here
-> 
->> +&pmk8350_vadc {
->> +    pinctrl-names = "default";
->> +    pinctrl-0 = <&gpio1_adc_default>, <&gpio3_adc_default>;
->> +
->> +    /* pmk8350-ref-gnd */
-> I fail to see the benefit in having this both here and in the label
-
-Oops, removed.
-
->> +    channel@0 {
->> +        reg = <0x00>;
->> +        qcom,pre-scaling = <1 1>;
->> +        label = "pmk8350_ref_gnd";
->> +    };
->> +
 > [...]
-> 
->> +&tlmm {
->> +    gpio-reserved-ranges = <52 8>;
-> Would you know what these are connected to?
-> 
 
-Judging from the line names on the hdk dtsi, 4 seem to be connected to 
-the fingerprint (FP_SPI_*) and the other 4 are NFC-related 
-(NFC_ESE_SPI_*). I can clarify this with a comment if necessary.
+Applied, thanks!
 
-> [...]
-> 
->> +&mpss {
->> +    pinctrl-names = "default";
->> +    pinctrl-0 = <&rf_cable_ant0_active>;
-> patch-wide:
-> 
-> property-n
-> property-names
-> 
-> Konrad
+[01/18] mfd: ab8500-sysctrl: Convert to platform remove callback returning void
+        commit: 05ce16c1303acaf2094f55ea248fd0d14119ed8f
+[02/18] mfd: cros_ec_dev: Convert to platform remove callback returning void
+        commit: c86e0818174f506e77dcb7ca0251f18269d79219
+[03/18] mfd: exynos-lpass: Convert to platform remove callback returning void
+        commit: e3468e03a63e8c24a8b2f9f84ed8443268dcccf4
+[04/18] mfd: fsl-imx25-tsadc: Convert to platform remove callback returning void
+        commit: 05d78da532ededbc11889ca5a22b302aaa8b9e1e
+[05/18] mfd: hi655x-pmic: Convert to platform remove callback returning void
+        commit: 30441c456171723d4d40ea86fdc7675a630cb5f8
+[06/18] mfd: intel-lpss-acpi: Convert to platform remove callback returning void
+        commit: 8b7ffe18eb0bf86b21d558c739279a9cb349b78d
+[07/18] mfd: kempld-core: Convert to platform remove callback returning void
+        commit: 5c9d52223920a70becbbdf67cce192917f997319
+[08/18] mfd: mcp-sa11x0: Convert to platform remove callback returning void
+        commit: 0082e145163801002a257c2cbaf2982192ab761e
+[09/18] mfd: mxs-lradc: Convert to platform remove callback returning void
+        commit: f9714ad21b8c01e6964e0638858d37f941dc19ba
+[10/18] mfd: omap-usb-host: Convert to platform remove callback returning void
+        commit: 7e5e828e1fef60673c20b47573054eaa036d1980
+[11/18] mfd: omap-usb-tll: Convert to platform remove callback returning void
+        commit: 6ee0e1844c917fb4e5f314aec2b780f1641375f0
+[12/18] mfd: pcf50633-adc: Convert to platform remove callback returning void
+        commit: 3e6eccaca6923e8d1ac4a0913b3367b5ab94f95c
+[13/18] mfd: qcom-pm8xxx: Convert to platform remove callback returning void
+        commit: 31b895f2528bda4db526dee1942f915f8f34091b
+[14/18] mfd: sm501: Convert to platform remove callback returning void
+        commit: 69fbad222c5caad34f777da33271ccdad3d9504c
+[15/18] mfd: stm32-timers: Convert to platform remove callback returning void
+        commit: 59569bc36fcec1cd62bd2f639784126c87c6fd1e
+[16/18] mfd: ti_am335x_tscadc: Convert to platform remove callback returning void
+        commit: 1dbe13baca338502bf741bbe3b199c07c7d1c5bc
+[17/18] mfd: tps65911-comparator: Convert to platform remove callback returning void
+        commit: 4aa72c8515734c2edf4c6c264aee4925efd97366
+[18/18] mfd: twl4030-audio: Convert to platform remove callback returning void
+        commit: db1e0b072da189db99f905b758676a81bb796a1a
 
-Many thanks!
+--
+Lee Jones [李琼斯]
+
 
