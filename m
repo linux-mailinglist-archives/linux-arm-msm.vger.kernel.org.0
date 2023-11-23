@@ -1,165 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-1661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25BBB7F5B2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 10:39:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46B667F5B36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 10:40:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AA57CB20EEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 09:39:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B0E29B20F51
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 09:40:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEF2521112;
-	Thu, 23 Nov 2023 09:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 825E521114;
+	Thu, 23 Nov 2023 09:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="m146CrM2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YRH8dsZZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D858D41;
-	Thu, 23 Nov 2023 01:39:11 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AN99CdQ010829;
-	Thu, 23 Nov 2023 09:39:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=fVu0Dv71kyMzuO2gCH1AEla4mWG8l3Rv8Z188wvB89Y=;
- b=m146CrM2qH5TPAfkyhORRyjbm1EygISNXHUk5lEUMCObTswmphdCg6ZjBPpkKFH3vti3
- PHjZ5JnWRZRbYcMHXrTuZGXyPR92kMf1URDEnUJRw8uv/l1WNUG9uz4PB+3ZDpw1nrwf
- LDM+W9ITtBNbS3IoiyZ+yTFixfy8jZWg28wRdsGUJj6wjegpkUdoPmPcxLeSDjvALc2T
- YtbfkQAcZAmqhyI6kST3zNsGiAq9tlBBn78uD//mrdTQtEzm/Vx/+5UwFHvUgR+c5b/x
- Rqo3Vu6gEil8WQoa6f1ReeNCN42TXnCXVtp9AqJ9n+/OQB3jFg2fDqzl9b1huQOWbTZT pw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj30x859y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Nov 2023 09:39:07 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AN9d6vN005836
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Nov 2023 09:39:06 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 23 Nov
- 2023 01:39:02 -0800
-Message-ID: <b79e8a80-4ee3-e20a-cccf-5ed219072c1d@quicinc.com>
-Date: Thu, 23 Nov 2023 15:08:47 +0530
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CAE3BA;
+	Thu, 23 Nov 2023 01:40:46 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-a02ba1f500fso90820566b.0;
+        Thu, 23 Nov 2023 01:40:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700732445; x=1701337245; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NrHROUSPlT4bN2lnsfzxw2GPuZ9Bx12dzaePQbmqgMk=;
+        b=YRH8dsZZk9QnOAjpL+Bw8Bdsz+fwftkhXCrw5yvpX4ix/rCwoVVTpEh3y4q0hUx7Ym
+         3pn1d2GyeELiSW3O/4eYHW8rd5z02SURbiu6by+8i3+Yq/l5VZEuYgzapG6bDIqC5Uzl
+         Xf9v/LZJfAJYcSSiJNFk3Cc1MFLNB6sS6KHQrx+KgmtkfC77+e/K7BSCT40olvzWSg4P
+         DdFerLQknXvU3nK91kIRDYwwNs4jeeWVLlhIM8nt2PiRVFankhNFNrUYo1PjlFbZ7Kxu
+         usdRP7bAS8KiLMJf/FauUyisdsnmzJlHVOS74eA2j3ceuNxETf00LWFT9T+4rhnnZyel
+         Oprg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700732445; x=1701337245;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NrHROUSPlT4bN2lnsfzxw2GPuZ9Bx12dzaePQbmqgMk=;
+        b=S/YxKJzfQlexp7Jc4goQwd5Fzww7imgsgWzDyRSJJFThsUI8BRR8odwWcPauJLr7Xd
+         7rE31cDT6koIdkl0aWk7/yiyn2RjT2ICq9MYbqvKeKWNYFEhSkKTV1kqpQEj2fTwcSQb
+         5lavIuDaRCndseIJVm4BhSJ4z++i6xooePE6An0QDDOwWUsAjBhhSAwvuHfRAGPBtPv8
+         /VY8DNTb+DVTxhpMKSt2bmz1Rv9nJ7ltr548GS0gILRlRCvkBsAmMuJTALf8oH6mOWdJ
+         Fzs9XpYzBk8Acpo1D/Trew0So+dRQaUGh+ci+KKBQMHnaBxC/osl5nMhD5fIRsoJ8z5e
+         4nmA==
+X-Gm-Message-State: AOJu0YwjnkDMK0GZCpF+YreMO6KEN8V8I3MXaNF/Kykgr6aQCGvAZBq9
+	rfHEqZFc24PG4VDH+/QRfJU=
+X-Google-Smtp-Source: AGHT+IH3UA4nrdAqScERrRmQjf0/m1eRztQQIu3xcCY1PXQ8GvVHymqtee93zJ05NL2jqGs5ig2nmA==
+X-Received: by 2002:a17:906:290:b0:a01:b9bd:878 with SMTP id 16-20020a170906029000b00a01b9bd0878mr3573689ejf.14.1700732444513;
+        Thu, 23 Nov 2023 01:40:44 -0800 (PST)
+Received: from zotac.lan. (dynamic-2a01-0c23-c0f2-3200-2223-08ff-fe18-0310.c23.pool.telefonica.de. [2a01:c23:c0f2:3200:2223:8ff:fe18:310])
+        by smtp.gmail.com with ESMTPSA id s9-20020a1709066c8900b009e5ce1acb01sm546199ejr.103.2023.11.23.01.40.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Nov 2023 01:40:44 -0800 (PST)
+From: Heiner Kallweit <hkallweit1@gmail.com>
+To: Wolfram Sang <wsa@kernel.org>,
+	intel-gfx@lists.freedesktop.org
+Cc: linux-i2c@vger.kernel.org,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	linux-fbdev@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	linux-sunxi@lists.linux.dev,
+	linux-mediatek@lists.infradead.org,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	John Stultz <jstultz@google.com>
+Subject: [PATCH v5 00/20] remove I2C_CLASS_DDC support
+Date: Thu, 23 Nov 2023 10:40:20 +0100
+Message-ID: <20231123094040.592-1-hkallweit1@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: [PATCH V2 1/2] dt-bindings: interconnect: Add Qualcomm X1E80100
- SoC
-Content-Language: en-US
-To: Georgi Djakov <djakov@kernel.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
-CC: <agross@kernel.org>, <conor+dt@kernel.org>, <quic_rjendra@quicinc.com>,
-        <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
-        <neil.armstrong@linaro.org>
-References: <20231117103035.25848-1-quic_sibis@quicinc.com>
- <20231117103035.25848-2-quic_sibis@quicinc.com>
- <77f39971-6d8a-4e1a-b7e6-bffb5fbf74db@kernel.org>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <77f39971-6d8a-4e1a-b7e6-bffb5fbf74db@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: DyrWU_syZ-AVBiFUFwyXhAqM93AZHLqv
-X-Proofpoint-GUID: DyrWU_syZ-AVBiFUFwyXhAqM93AZHLqv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-23_07,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- mlxscore=0 bulkscore=0 phishscore=0 adultscore=0 clxscore=1015
- mlxlogscore=999 lowpriorityscore=0 impostorscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311230068
 
+After removal of the legacy EEPROM driver and I2C_CLASS_DDC support in
+olpc_dcon there's no i2c client driver left supporting I2C_CLASS_DDC.
+Class-based device auto-detection is a legacy mechanism and shouldn't
+be used in new code. So we can remove this class completely now.
 
+Preferably this series should be applied via the i2c tree.
 
-On 11/22/23 20:22, Georgi Djakov wrote:
-> Hi Sibi,
+v2:
+- change tag in commit subject of patch 03
+- add ack tags
+v3:
+- fix a compile error in patch 5
+v4:
+- more ack and review tags
+v5:
+- more acks
 
-Hey Georgi,
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 
-Thanks for taking time to review the series!
+---
 
-> On 17.11.23 12:30, Sibi Sankar wrote:
->> From: Rajendra Nayak <quic_rjendra@quicinc.com>
->>
->> The Qualcomm X1E80100 SoC has several bus fabrics that could be 
->> controlled
->> and tuned dynamically according to the bandwidth demand.
->>
->> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
->> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
->> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>
->> v2:
->> * Update the part number from sc8380xp to x1e80100.
->> * Fixup required property ordering [Krzysztof]
->> * Pickup Rbs.
->>
->>   .../interconnect/qcom,x1e80100-rpmh.yaml      |  83 +++++++
->>   .../interconnect/qcom,x1e80100-rpmh.h         | 207 ++++++++++++++++++
->>   2 files changed, 290 insertions(+)
->>   create mode 100644 
->> Documentation/devicetree/bindings/interconnect/qcom,x1e80100-rpmh.yaml
->>   create mode 100644 
->> include/dt-bindings/interconnect/qcom,x1e80100-rpmh.h
-> 
-> [..]
-> 
->> +#define MASTER_AV1_ENC                0
->> +#define MASTER_CAMNOC_HF            1
->> +#define MASTER_CAMNOC_ICP            2
->> +#define MASTER_CAMNOC_SF            3
->> +#define MASTER_EVA                4
->> +#define MASTER_MDP                5
->> +#define MASTER_VIDEO                6
->> +#define MASTER_VIDEO_CV_PROC            7
->> +#define MASTER_VIDEO_V_PROC            8
->> +#define MASTER_CNOC_MNOC_CFG            9
->> +#define SLAVE_MNOC_HF_MEM_NOC            10
->> +#define SLAVE_MNOC_SF_MEM_NOC            11
->> +#define SLAVE_SERVICE_MNOC            12
->> +#define MASTER_MDP_DISP                13
->> +#define SLAVE_MNOC_HF_MEM_NOC_DISP        14
->> +
->> +#define MASTER_CDSP_PROC            0
->> +#define SLAVE_CDSP_MEM_NOC            1
->> +
->> +#define MASTER_PCIE_NORTH            0
->> +#define MASTER_PCIE_SOUTH            0
-> 
-> This duplicate index looks like a typo?
-
-Thanks for catching ^^. Will fix it in the next re-spin.
-
--Sibi
-
-> 
->> +#define SLAVE_ANOC_PCIE_GEM_NOC            3
->> +#define MASTER_PCIE_NORTH_PCIE            4
->> +#define MASTER_PCIE_SOUTH_PCIE            5
->> +#define SLAVE_ANOC_PCIE_GEM_NOC_PCIE        6
-> [..]
-> 
-> Thanks,
-> Georgi
-> 
-> 
+ drivers/gpu/drm/amd/amdgpu/amdgpu_i2c.c           |    1 -
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 -
+ drivers/gpu/drm/ast/ast_i2c.c                     |    1 -
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi.c         |    1 -
+ drivers/gpu/drm/display/drm_dp_helper.c           |    1 -
+ drivers/gpu/drm/display/drm_dp_mst_topology.c     |    1 -
+ drivers/gpu/drm/gma500/cdv_intel_dp.c             |    1 -
+ drivers/gpu/drm/gma500/intel_gmbus.c              |    1 -
+ drivers/gpu/drm/gma500/oaktrail_hdmi_i2c.c        |    1 -
+ drivers/gpu/drm/gma500/psb_intel_sdvo.c           |    1 -
+ drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_i2c.c   |    1 -
+ drivers/gpu/drm/i915/display/intel_gmbus.c        |    1 -
+ drivers/gpu/drm/i915/display/intel_sdvo.c         |    1 -
+ drivers/gpu/drm/loongson/lsdc_i2c.c               |    1 -
+ drivers/gpu/drm/mediatek/mtk_hdmi_ddc.c           |    1 -
+ drivers/gpu/drm/mgag200/mgag200_i2c.c             |    1 -
+ drivers/gpu/drm/msm/hdmi/hdmi_i2c.c               |    1 -
+ drivers/gpu/drm/radeon/radeon_i2c.c               |    1 -
+ drivers/gpu/drm/rockchip/inno_hdmi.c              |    1 -
+ drivers/gpu/drm/rockchip/rk3066_hdmi.c            |    1 -
+ drivers/gpu/drm/sun4i/sun4i_hdmi_i2c.c            |    1 -
+ drivers/video/fbdev/core/fb_ddc.c                 |    1 -
+ drivers/video/fbdev/cyber2000fb.c                 |    1 -
+ drivers/video/fbdev/i740fb.c                      |    1 -
+ drivers/video/fbdev/intelfb/intelfb_i2c.c         |   15 +++++----------
+ drivers/video/fbdev/matrox/i2c-matroxfb.c         |   12 ++++--------
+ drivers/video/fbdev/s3fb.c                        |    1 -
+ drivers/video/fbdev/tdfxfb.c                      |    1 -
+ drivers/video/fbdev/tridentfb.c                   |    1 -
+ drivers/video/fbdev/via/via_i2c.c                 |    1 -
+ include/linux/i2c.h                               |    1 -
+ 31 files changed, 9 insertions(+), 47 deletions(-)
 
