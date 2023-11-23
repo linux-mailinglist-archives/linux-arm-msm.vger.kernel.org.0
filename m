@@ -1,102 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-1723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69B007F624F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 16:07:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B43D7F62AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 16:24:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24103281D83
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 15:07:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB3FC281FAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 15:24:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A4CE2FC39;
-	Thu, 23 Nov 2023 15:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66B6E36B15;
+	Thu, 23 Nov 2023 15:24:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="ljBTLiaf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OGQl0c5O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE43D41;
-	Thu, 23 Nov 2023 07:07:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=9Ianm+oK/3Nrdav46TrJiBmP/52mNqCzayho+jiWIkU=; b=ljBTLiaf1hJ76JNKk8LoCzMwbV
-	ZcJZ6xDa65NxGWrtUcU+4hzgpRmHVIZ6Fceuf3Ba86xE0awdKaDt9XttJ7Q5OMuZ6zw8weIkusY+o
-	ZacLC42AjFuLQvez3RIj8MXx51Ugy6QIp0O9ZhH0Rw5N/CQ74oOBupwnOruQ313iegow=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1r6BIQ-0010N2-G5; Thu, 23 Nov 2023 16:07:14 +0100
-Date: Thu, 23 Nov 2023 16:07:14 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Qingfang Deng <dqfext@gmail.com>,
-	SkyLake Huang <SkyLake.Huang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	David Epping <david.epping@missinglinkelectronics.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Harini Katakam <harini.katakam@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [net-next RFC PATCH 03/14] dt-bindings: net: document ethernet
- PHY package nodes
-Message-ID: <6eb2e061-5fcb-434a-ad43-370788075597@lunn.ch>
-References: <20231120135041.15259-1-ansuelsmth@gmail.com>
- <20231120135041.15259-4-ansuelsmth@gmail.com>
- <c21ff90d-6e05-4afc-b39c-2c71d8976826@lunn.ch>
- <20231121144244.GA1682395-robh@kernel.org>
- <a85d6d0a-1fc9-4c8e-9f91-5054ca902cd1@lunn.ch>
- <655e4939.5d0a0220.d9a9e.0491@mx.google.com>
- <6a030399-b8ed-4e2c-899f-d82eb437aafa@lunn.ch>
- <655f2ba9.5d0a0220.294f3.38d8@mx.google.com>
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E1ED10FA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 07:24:11 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-332c46d5988so629180f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 07:24:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700753050; x=1701357850; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qEinn40liA1Wq5VZRVw57Dr0obouosWn9g7g0dlK6JY=;
+        b=OGQl0c5ODriWH9Idn9Depm4X0hGii8sSYPfyBXkfxNAB9bBNaUX/fXi/tZgZMyfHrH
+         adhe1JLHXd1sDjXPwUGyO+kUVcF461SLrRP1343CLrFOBmDv0u54uL6ODquq0jdasBGT
+         dA9E/7YwJboDhNgccLH1Gnss9jbIPpX5jmxCfsoFrCPoU/cJ+pF5YNCpbXEQ9cnqIKSq
+         tdbdoOAOFxG0eLk1gBVux+2AAkS3zFzK5d3bggRj+tDl3GLZcUHpZfyuHwCluqjqCHTM
+         UdazQm06dBHVHdKwoYI6udf6x0ByLIwAR365jLn65gsoHhvX5nGR5o92S6jCoIBSRNx0
+         zo/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700753050; x=1701357850;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qEinn40liA1Wq5VZRVw57Dr0obouosWn9g7g0dlK6JY=;
+        b=irQIK/sRPqjeDvtzRuQCndF27CXeoLL4pZ/U8uHgsGZHxcQIqeFUMKKH1TuBiM/hzM
+         toaCLLqqr0kKF+32QFQDzBzprzHWLk4ACBseutT2Eht2GzScZpeNk4G7XjVaDXIfUniV
+         cyEHR5ety0VY1xJkzGUaN3v6XbTgekJvsEwccDPy669EuaLk2d9UWWuOPHYs+tujQqiW
+         zM/xNiaI/mBvwLAXVyAfr27NudSlxZRS5Fy7snLK8g+O1ZM60IWMzyCWWslyZel1VAmH
+         mx4smubDqGcV/VoA09WX/rJgxdTSjEk9bX/HESKr9eoXfpOmuoC2l1VJhEmnglMr6Jeu
+         a6Ug==
+X-Gm-Message-State: AOJu0YxvEHQ97gGlzxApA6+ltvohpCxwSvV8tS7SjgbP8deULaxK2cVj
+	PrM3+1JHC2FXQ25pP8zq+4xOuw==
+X-Google-Smtp-Source: AGHT+IH7pTy4FnZhd4fKfF3loD/98TfZSI67b0QPFriXigNT+iLnOj7QEw2V/Yr34spAxJ4w73j4Og==
+X-Received: by 2002:a05:6000:4028:b0:332:c593:16c with SMTP id cp40-20020a056000402800b00332c593016cmr3974822wrb.45.1700753049772;
+        Thu, 23 Nov 2023 07:24:09 -0800 (PST)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id n7-20020adff087000000b003316d1a3b05sm1880623wro.78.2023.11.23.07.24.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Nov 2023 07:24:09 -0800 (PST)
+Message-ID: <754f279b-dbe4-46fa-95c9-2cae0481584c@linaro.org>
+Date: Thu, 23 Nov 2023 15:24:08 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <655f2ba9.5d0a0220.294f3.38d8@mx.google.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 4/7] media: qcom: camss: Move VFE power-domain
+ specifics into vfe.c
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
+ laurent.pinchart@ideasonboard.com, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, matti.lehtimaki@gmail.com,
+ quic_grosikop@quicinc.com
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231118-b4-camss-named-power-domains-v5-0-55eb0f35a30a@linaro.org>
+ <20231118-b4-camss-named-power-domains-v5-4-55eb0f35a30a@linaro.org>
+ <84a97960-dfef-4d2f-8462-d3acb6f5a125@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <84a97960-dfef-4d2f-8462-d3acb6f5a125@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> compatible = "ethernet-phy-package", "qca807x-phy-package";
-> 
-> With "ethernet-phy-package" a must and "qca807x-phy-package" used only
-> if additional property are used.
-> 
-> My current idea was to use select and base everything on the possible
-> PHY compatible (and it does work, tested by adding bloat in the DT
-> example and seeing if the schema was rejected). Had this idea since the
-> compatible would never be used.
+On 23/11/2023 12:04, Konrad Dybcio wrote:
+>> +    const struct camss_resources *res = camss->res;
+>>       int i;
+>> +    int vfepd_num;
+>>       int ret;
+> Reverse-Christmas-tree, please
 
-The DT people are unhappy with PHYs don't use compatibles, so
-validation does not work. It probably too late to add compatibles to
-very PHY driver. But this is new development work, we don't have any
-history. So we can add a compatible per package to make the validation
-tools work.
-
-So for parsing the tree in the kernel we look for
-'ethernet-phy-package'. For validating the tree using the yaml tools
-we use the 'qca807x-phy-package'.
-
-	   Andrew
+yes but ret last
 
