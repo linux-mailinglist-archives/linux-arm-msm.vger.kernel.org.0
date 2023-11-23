@@ -1,96 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-1727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2ADD07F6415
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 17:39:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F6367F6488
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 17:57:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1957281AD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 16:39:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23724B20E57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 16:57:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A26B63E468;
-	Thu, 23 Nov 2023 16:39:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tp3RPnxg"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 410F42FC2C;
+	Thu, 23 Nov 2023 16:57:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5215D43
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 08:39:15 -0800 (PST)
-Received: by mail-yb1-xb33.google.com with SMTP id 3f1490d57ef6-db4422fff15so541568276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 08:39:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700757555; x=1701362355; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0eTdj9miWeM4U+bp189+wCGxZuG/z71lDB6h3m9Wk18=;
-        b=tp3RPnxgavkp+8Ls+BdGNu+yTGMAMwPL1bsD7oxXawfeMMySkuamNgStNXIqUv3KLE
-         l5dsXwuDKPLCMC2aSG2D1L4wWm+kKbJ/uJlnxX/uqTq6RYG+qhGITTyQ8WCiveud1waf
-         fcJTtWoEDfhehzOW/zhaO3dXye9wvfIOmQ3vUrhInnImmCPKY/6mpL4xHSDqAtkQpCjt
-         lckXAc8HQL+KFIfHuMrPSCItsihpI6Xad9gWmW3BLHLl6Rhe7v/Ut4YNa3O2mLwdTTCq
-         jCZCxJhay8p8mrb4t/ZivakfTqG3yg2Lc+i4z8+LAFWwZ3Dn59FJ3D3YKnwFP4WTDigP
-         3rIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700757555; x=1701362355;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0eTdj9miWeM4U+bp189+wCGxZuG/z71lDB6h3m9Wk18=;
-        b=sC5WZC64etd89qi8R+C/HS2K+7Rysz8VQa/WFe7Kmuq2z6BWrgA/weLYxuuJghN4+f
-         iY2jK9QlbMf17lZX+RYyYKcd6Bj+jYtwfefqLAQJE0RVKgBaVLVKltbF3WhcG5mJEvbp
-         8JbsLsY0dlsXMDYqnxEBZlfH5P1HNtRpjU/gXpalUkh1KbBUn77nDVMgjwkKQCmm8vXi
-         xecyGfJecBhDQr4vToY4nx8PM4Jo9las1N6axfyOxFkokOo1naPqkv3T3FmIzc+/ogEP
-         fS4f01NDWTpoxdq3I+wjvucZKmuRwXcSmsbh+nQrAs0m3ic1ecm+NqvMHBL1kwgSc0p+
-         rU1A==
-X-Gm-Message-State: AOJu0Yxz1TDNLw5paJtQqMFaqwH6nYs3hHGBFXv3oPE5j15pHP5Nng44
-	kIsQHMZbhU3n82OpnHFprBp44sTDnQH/eHhknnVExA==
-X-Google-Smtp-Source: AGHT+IEvXn81cNYK+IH1RhWt+nLuhiDh2Z0MjG/kWfFXbI01hwighqvsvEk41nf/V7A86F7avZeTYr0TTKlSd1xH90o=
-X-Received: by 2002:a25:d08b:0:b0:da0:470c:868f with SMTP id
- h133-20020a25d08b000000b00da0470c868fmr5952168ybg.51.1700757554924; Thu, 23
- Nov 2023 08:39:14 -0800 (PST)
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B89E21BCC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 08:57:21 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r6D0e-0004y4-H4; Thu, 23 Nov 2023 17:57:00 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r6D0c-00B54T-1D; Thu, 23 Nov 2023 17:56:58 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1r6D0b-006oyt-MO; Thu, 23 Nov 2023 17:56:57 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Lee Jones <lee@kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Benson Leung <bleung@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	chrome-platform@lists.linux.dev,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	linux-samsung-soc@vger.kernel.org,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Tony Lindgren <tony@atomide.com>,
+	linux-omap@vger.kernel.org,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	linux-stm32@st-md-mailman.stormreply.com
+Subject: [PATCH v2 00/18] mfd: Convert to platform remove callback returning void
+Date: Thu, 23 Nov 2023 17:56:28 +0100
+Message-ID: <20231123165627.492259-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231123100021.10918-1-quic_sibis@quicinc.com>
-In-Reply-To: <20231123100021.10918-1-quic_sibis@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Thu, 23 Nov 2023 17:38:39 +0100
-Message-ID: <CAPDyKFo5Jb=YWCZ9QvVScUDpbLAFehuXs4BBAHuCERsGFrdS_g@mail.gmail.com>
-Subject: Re: [PATCH V2 0/2] pmdomain: qcom: Update part number to X1E80100
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, agross@kernel.org, conor+dt@kernel.org, 
-	quic_rjendra@quicinc.com, abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, quic_tsoni@quicinc.com, neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3352; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=Q2ANcXWy9TC81erakNzOyDSTdR+/U1VFHGOAdofAsV8=; b=owGbwMvMwMXY3/A7olbonx/jabUkhtT4FutYj8mdnjlcu3aa+Ft1S9SnzrXmZiri0Fqz9Yqkp G5vV0EnozELAyMXg6yYIot945pMqyq5yM61/y7DDGJlApnCwMUpABN59JODoc+rL23LJtbpW6Yf XeWk7h3bY+jUahfzU3diuLGe88F88yT2yspFn/40pCvKe7F0924zjVXtvXRzytJg0Wl3JwjZflo gavhwZs2r1uAn28qUnjmfmn8jSHu6fRq3yx+OxssmHq7XJKMPr5bsePTq5OLO9PxZjad7NlnVBD DKl8Y90TcUWX39doAHg2bWk8C821wuG7oXGMitPzSRcWdVBvM+HotPK/NOeh5eKfLR7Plhs7lrt lYe0Hz+ov09e7pG0U9Zv/abtfvWqJgafWjwW55jOePN8rN+AfX6vpfa+DQrtp1+xTb1yYJdaRxS DzI5Hmk5epjYs6S5vu77F2r/urq51mzGkQtzfp7658sIAA==
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Nov 2023 at 11:00, Sibi Sankar <quic_sibis@quicinc.com> wrote:
->
-> Our v1 post of the patchsets adding support for Snapdragon X Elite SoC had
-> the part number sc8380xp which is now updated to the new part number x1e80100
-> based on the new branding scheme and refers to the exact same SoC.
->
-> V2:
-> * Add more details to the commit message on both the patches. [Krzysztof/Konrad]
->
-> Sibi Sankar (2):
->   dt-bindings: power: rpmpd: Update part number to X1E80100
->   pmdomain: qcom: rpmhpd: Update part number to X1E80100
->
->  .../devicetree/bindings/power/qcom,rpmpd.yaml        |  2 +-
->  drivers/pmdomain/qcom/rpmhpd.c                       | 12 ++++++------
->  2 files changed, 7 insertions(+), 7 deletions(-)
->
+Hello,
 
-Applied for next, thanks!
+this series converts all platform drivers below drivers/mfd to use
+.remove_new(). Compared to the traditional .remove() callback
+.remove_new() returns no value. This is a good thing because the driver
+core doesn't (and cannot) cope for errors during remove. The only effect
+of a non-zero return value in .remove() is that the driver core emits a
+warning. The device is removed anyhow and an early return from .remove()
+usually yields resource leaks and/or use-after-free bugs.
 
-Note the DT patch is shared via the immutable "dt" branch.
+See commit 5c5a7680e67b ("platform: Provide a remove callback that
+returns no value") for an extended explanation and the eventual goal.
 
-Kind regards
-Uffe
+All drivers converted here already returned zero unconditionally in
+.remove(), so they are converted here trivially.
+
+Compared to the (implicit) v1[1] I added two review tags and rebased to
+today's next/master. Also I failed to Cc: all patches of v1 to lkml.
+
+Best regards
+Uwe
+
+[1] https://lore.kernel.org/all/20231106171708.3892347-1-u.kleine-koenig@pengutronix.de
+
+Uwe Kleine-König (18):
+  mfd: ab8500-sysctrl: Convert to platform remove callback returning
+    void
+  mfd: cros_ec_dev: Convert to platform remove callback returning void
+  mfd: exynos-lpass: Convert to platform remove callback returning void
+  mfd: fsl-imx25-tsadc: Convert to platform remove callback returning
+    void
+  mfd: hi655x-pmic: Convert to platform remove callback returning void
+  mfd: intel-lpss-acpi: Convert to platform remove callback returning
+    void
+  mfd: kempld-core: Convert to platform remove callback returning void
+  mfd: mcp-sa11x0: Convert to platform remove callback returning void
+  mfd: mxs-lradc: Convert to platform remove callback returning void
+  mfd: omap-usb-host: Convert to platform remove callback returning void
+  mfd: omap-usb-tll: Convert to platform remove callback returning void
+  mfd: pcf50633-adc: Convert to platform remove callback returning void
+  mfd: qcom-pm8xxx: Convert to platform remove callback returning void
+  mfd: sm501: Convert to platform remove callback returning void
+  mfd: stm32-timers: Convert to platform remove callback returning void
+  mfd: ti_am335x_tscadc: Convert to platform remove callback returning
+    void
+  mfd: tps65911-comparator: Convert to platform remove callback
+    returning void
+  mfd: twl4030-audio: Convert to platform remove callback returning void
+
+ drivers/mfd/ab8500-sysctrl.c      | 6 ++----
+ drivers/mfd/cros_ec_dev.c         | 5 ++---
+ drivers/mfd/exynos-lpass.c        | 6 ++----
+ drivers/mfd/fsl-imx25-tsadc.c     | 6 ++----
+ drivers/mfd/hi655x-pmic.c         | 5 ++---
+ drivers/mfd/intel-lpss-acpi.c     | 6 ++----
+ drivers/mfd/kempld-core.c         | 6 ++----
+ drivers/mfd/mcp-sa11x0.c          | 6 ++----
+ drivers/mfd/mxs-lradc.c           | 6 ++----
+ drivers/mfd/omap-usb-host.c       | 5 ++---
+ drivers/mfd/omap-usb-tll.c        | 5 ++---
+ drivers/mfd/pcf50633-adc.c        | 6 ++----
+ drivers/mfd/qcom-pm8xxx.c         | 6 ++----
+ drivers/mfd/sm501.c               | 6 ++----
+ drivers/mfd/stm32-timers.c        | 6 ++----
+ drivers/mfd/ti_am335x_tscadc.c    | 6 ++----
+ drivers/mfd/tps65911-comparator.c | 6 ++----
+ drivers/mfd/twl4030-audio.c       | 6 ++----
+ 18 files changed, 36 insertions(+), 68 deletions(-)
+
+base-commit: 4e87148f80d198ba5febcbcc969c6b9471099a09
+-- 
+2.42.0
+
 
