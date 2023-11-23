@@ -1,107 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-1664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD15D7F5B80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 10:42:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E18377F5BC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 11:00:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AD7D1C20D91
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 09:42:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F1A71C20D1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 10:00:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBB9F2111A;
-	Thu, 23 Nov 2023 09:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10CEB22338;
+	Thu, 23 Nov 2023 10:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Wi8ibNjO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CKkK3ZPK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F35402689;
-	Thu, 23 Nov 2023 01:42:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=c9A0h9EHjn+9AK2XEWtAOPekKI3L68PN3h1Lyx81LzI=; b=Wi8ibNjOcLiDxxs7I2oPO2AfTG
-	Zh3wJihGah/S0cfIggBM2XksRyJtEP5he1QDJCY1RC/KB/Y/QqIJlM+B3rfmuu1dC2al16jToQv4l
-	5Rlzt0G/PLFcWlzRw/+nbg84Q0eW/1SZxP+ppOTrFcf5B39Im7nZzfFzXAN5QmpzrYe5UzLsWVa5c
-	X14XaU0b8HNWFrPFy2XlWTh+IfsP5hjllp2VmCOsUVvZZNuhsWHhXLARAz9qpJcpc1y/5aMIWs5rH
-	1y3N4K7Gx11mm5+bh1aJjBsXe+/wRh2CRwMNVxzJ1WVeNoSf/hZWVV0qtb/kgODBvNUKzV4SvxayP
-	XDlSogHA==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:38192)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1r66DR-0001LI-1F;
-	Thu, 23 Nov 2023 09:41:45 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1r66DO-000673-Lq; Thu, 23 Nov 2023 09:41:42 +0000
-Date: Thu, 23 Nov 2023 09:41:42 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Christian Marangi <ansuelsmth@gmail.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Qingfang Deng <dqfext@gmail.com>,
-	SkyLake Huang <SkyLake.Huang@mediatek.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	David Epping <david.epping@missinglinkelectronics.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Harini Katakam <harini.katakam@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [net-next RFC PATCH 12/14] dt-bindings: net: Document Qcom
- QCA807x PHY package
-Message-ID: <ZV8eVj0YzwF+lxrd@shell.armlinux.org.uk>
-References: <20231120135041.15259-1-ansuelsmth@gmail.com>
- <20231120135041.15259-13-ansuelsmth@gmail.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FBC4D44;
+	Thu, 23 Nov 2023 02:00:52 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AN5gmA2010451;
+	Thu, 23 Nov 2023 10:00:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=hA5KSiU0C9jV6QoJUqCTPpqw8hw3q80zXx+l2BQ7g+A=;
+ b=CKkK3ZPKd0sxsD15/pOjPxcI3XOMNUe3zIb1wFuSFHmmCIw8EXnK7igClUgUoEUu5/uZ
+ KyVPimoDutwhg5APKws85hhJXr0W1JWd9ncIineXEmvj5AhCJE5vKl2h2DQfqcvWB4nE
+ otzTkn0VhI3547wvAs3KcSR03s4MBvUA6PL7Yg7YD8CIt2vyrNQjLCnBp8AaFx6shWlu
+ rnFXXCbOMi2gJedw4PWBt+j+7VyLtzccdGS6RUHyFtSbwS9s2Bk9M4QYwjV3em1k3b/+
+ aqGCaQvjr7S5iBfqmNBClDynCdxAsgtliTN4ulgloGH5fHVdYazfzkcaaa63sj9ZH7Ah yw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uhey5aygb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Nov 2023 10:00:47 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ANA0kRk026264
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Nov 2023 10:00:46 GMT
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 23 Nov 2023 02:00:41 -0800
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <ulf.hansson@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC: <agross@kernel.org>, <conor+dt@kernel.org>, <quic_rjendra@quicinc.com>,
+        <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <neil.armstrong@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V2 0/2] pmdomain: qcom: Update part number to X1E80100
+Date: Thu, 23 Nov 2023 15:30:19 +0530
+Message-ID: <20231123100021.10918-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231120135041.15259-13-ansuelsmth@gmail.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: O4kcg85nPFD9TZT_Weo01N8sRG5a6iD_
+X-Proofpoint-GUID: O4kcg85nPFD9TZT_Weo01N8sRG5a6iD_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-23_07,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=932
+ lowpriorityscore=0 spamscore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311230070
 
-On Mon, Nov 20, 2023 at 02:50:39PM +0100, Christian Marangi wrote:
-> +examples:
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    mdio {
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        ethernet-phy-package {
-> +            compatible = "ethernet-phy-package";
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            global-phys = <&qca8075_4>, <&qca8075_psgmii>;
+Our v1 post of the patchsets adding support for Snapdragon X Elite SoC had
+the part number sc8380xp which is now updated to the new part number x1e80100
+based on the new branding scheme and refers to the exact same SoC.
 
-Should the second one be &qca8075_pqsgmii ? (note the addition of 'q').
+V2:
+* Add more details to the commit message on both the patches. [Krzysztof/Konrad]
+
+Sibi Sankar (2):
+  dt-bindings: power: rpmpd: Update part number to X1E80100
+  pmdomain: qcom: rpmhpd: Update part number to X1E80100
+
+ .../devicetree/bindings/power/qcom,rpmpd.yaml        |  2 +-
+ drivers/pmdomain/qcom/rpmhpd.c                       | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+2.17.1
+
 
