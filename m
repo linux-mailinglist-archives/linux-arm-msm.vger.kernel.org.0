@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D98007F5E81
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 12:57:57 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B8837F5E8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 12:58:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93F64281CF4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 11:57:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B039EB212F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 11:58:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9439241ED;
-	Thu, 23 Nov 2023 11:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE78F2377F;
+	Thu, 23 Nov 2023 11:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RXsw4eQf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G3L6YooF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0B29D49
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 03:57:49 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-5079f9ec8d9so844667e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 03:57:49 -0800 (PST)
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC3DD67
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 03:57:57 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-507975d34e8so1042299e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 03:57:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700740668; x=1701345468; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700740675; x=1701345475; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GQKfSQzvl6n50M4875CnD5xT+T/rNm01RbmwONA33QU=;
-        b=RXsw4eQfbefoggqIdo/NjV3dj1Cfogs0lDj3vVTfE12CAjuR4RkoRPwtPtDHaGIpqm
-         QiS6fg7zfyvjouoJW6hK6S7gFYYssJ8ormWSWJwh/1qOacejZHmT8iTJMc4cvn68gVju
-         pV7YWSW6UgHxOERcbDAaDRd0BK9tC/rHjGKr2HOnAwvNW8koCmEg04E4beKhZnrCTLbb
-         PSgnnwiLP6sTryEQ//04uHmzNGYSjYuOhrFLwmzbu3snaFjvbPkDK6JV0VSoLCVPgP75
-         0vETqvpUAi2+MFa/Dwm0faJdE3fZyyYmsULnKhHuybZZSiQCI0rZ0azi68fSoQvWNhgM
-         v7ig==
+        bh=1PIIYPDZcaUUtbo5ldUSpIo3Jpbx+2SXqPzhdvBEuU0=;
+        b=G3L6YooF1ZayRNxRr3E/4rHAzdFlAVRnYgCn2GGvqzzr+LaQyBi1LeYjXz9xaS2Uhp
+         ZmhiJ2Dk2ozUH1mRD09uFdyfDT5iwn9/5FWD54YUjRsKxx4rB6CqJP0QUfxdVnsn9Dr6
+         ae62hPqryDDW7HOc2mnlnHZnCy+4K5zwoc760/AfyCQgraEjvorw+I7Z9tR+FfK9bvHs
+         FXT8EjVjRUQTEIOgyomuN1RJzo1Fh4k7eQU8Fql+AuTSk0jSKZK32xZvJ9VzUjbOync9
+         bAOc5DAa+ttACNbkPIl6DOzuVOGH5112Rr2Q70/RJ5rBuiN1F7/SjiF4ZQNDInUpkRZK
+         2pnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700740668; x=1701345468;
+        d=1e100.net; s=20230601; t=1700740675; x=1701345475;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GQKfSQzvl6n50M4875CnD5xT+T/rNm01RbmwONA33QU=;
-        b=BnOg/jzOLTsgWcX1YfPx6OIJrJBOCc+iSztGUhW0F/eOUBeDl2WZfuOaVDyYCith7+
-         xJpJNC5l8rqNSVsMCZqBz4Xj1zoosANDwXjTR9mHL1FQYNRqKcU8z3nks62uC1Ka41xH
-         RTRu7krdAxuoR60WzDTWxzjhpmC1LNwKQGeWLcikfACj1lDd8R+7ukLjkebo6j1mZ7QC
-         gX48gvFWaexzeTgo+LKWs6NT+TFOy6Xn4ym8TlKMZTxS+SZMGOLeuZIqFuXrs+w/mIHs
-         8GIQPZDetpgmc3lPDIqxDhABb+9NaGDauxGt6qYlgyjI6pSRivVwxv+UOKwj993qpdl6
-         0Wlw==
-X-Gm-Message-State: AOJu0Yw3XNcKTvBI07N17dLWJk6fZSiXpYc9D1reQG0xGd0TjF/ghX1G
-	OaA8gUgMrsdfqRixPMUGYqU0ug==
-X-Google-Smtp-Source: AGHT+IE+19JiYtimOS/PBEDLWjSlimik3++amKqAhSSo37eVU9RxdRbmAlBsZzwdcxUkAGtJ0DjG8g==
-X-Received: by 2002:a05:6512:3710:b0:507:9b69:6028 with SMTP id z16-20020a056512371000b005079b696028mr738559lfr.24.1700740667712;
-        Thu, 23 Nov 2023 03:57:47 -0800 (PST)
+        bh=1PIIYPDZcaUUtbo5ldUSpIo3Jpbx+2SXqPzhdvBEuU0=;
+        b=AFOvsf5RB2A5aOHXHmRtDMZLMlbtJ7CILHXOxDyB61h7ZJmiCutVM3wVtgfavQ8PaP
+         OHL/XLlqXRUOam+nnJ9CtB7JAnZ2lKxGn0ExgX8mnt4RyyncWfICeQuaDNDJ7y2dV9BH
+         Z1GxIZOmA4zGV0ZbeDQ8h0zX/oJOJZpZjj/CUCAWd5SZZSnIgLTJSrC3wQBwl89Gu7Tu
+         IMvSJ7b0oCjH2VEMH9cTbpBDoKbGEnJbdoTBbeALTwSdyGRy0Y96sijQJczQhERvLIJr
+         1pt0Y63vrMnyDTKVp9OqFDzzI62t61HGTfT2HBo8Uol5+lxqiy+uWkipWBBHO2j28DbW
+         lvIA==
+X-Gm-Message-State: AOJu0YxAEUSTUwbfn+XrEFBiVP+kpR/ai9KW8uf2d7g0gLpUYtdAdTu6
+	2ljlem6Tsd4Pn7le0llJ0U/52w==
+X-Google-Smtp-Source: AGHT+IHEzwFsSiUrHxerkzp2AE6ef97hiVMKuGwN8td7j6ph1CSPFLbE8yWNAIQwxbq6Fe3tMk0EHw==
+X-Received: by 2002:a05:6512:3d0a:b0:50a:aa30:f9d7 with SMTP id d10-20020a0565123d0a00b0050aaa30f9d7mr4942548lfv.67.1700740675512;
+        Thu, 23 Nov 2023 03:57:55 -0800 (PST)
 Received: from [172.30.204.221] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id w28-20020a05651204dc00b0050a71f99960sm167359lfq.197.2023.11.23.03.57.46
+        by smtp.gmail.com with ESMTPSA id w28-20020a05651204dc00b0050a71f99960sm167359lfq.197.2023.11.23.03.57.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Nov 2023 03:57:47 -0800 (PST)
-Message-ID: <1846a5c7-da25-4cc8-992a-3898bbf403d5@linaro.org>
-Date: Thu, 23 Nov 2023 12:57:45 +0100
+        Thu, 23 Nov 2023 03:57:55 -0800 (PST)
+Message-ID: <3cb4834f-18c0-43d6-8c81-5689df7b1d60@linaro.org>
+Date: Thu, 23 Nov 2023 12:57:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,19 +87,13 @@ X-Spam-Level: *
 
 
 
-On 11/23/23 12:53, Suraj Jaiswal wrote:
+On 11/23/23 12:38, Suraj Jaiswal wrote:
 > Suraj Jaiswal (3):
 >    dt-bindings: net: qcom,ethqos: add binding doc for fault IRQ for
 >      sa8775p
 >    arm64: dts: qcom: sa8775p: enable Fault IRQ
 >    net: stmmac: Add driver support for DWMAC5 fault IRQ Support
-You resent this series 15 minutes after the last submission,
-with no changelog, with no increased revision number and no explanations.
-
-Please refer to the following documents:
-
-[1] https://www.kernel.org/doc/html/latest/process/submitting-patches.html
-[2] https://b4.docs.kernel.org/
+Missing cover letter with explanations/an abstract
 
 Konrad
 
