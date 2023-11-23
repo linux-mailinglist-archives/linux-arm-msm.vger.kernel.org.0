@@ -1,61 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-1718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A00007F61F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 15:49:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A7FD7F61F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 15:49:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DFDB4B2172E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:49:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DD501C2117A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:49:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A05FF1C26;
-	Thu, 23 Nov 2023 14:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86A7A33CD6;
+	Thu, 23 Nov 2023 14:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j++kzYK5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H1O4kHLn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2AD3D65
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 06:49:23 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2c88b7e69dfso11531911fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 06:49:23 -0800 (PST)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DE01D72
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 06:49:24 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-40b36e31b57so4801725e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 06:49:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700750962; x=1701355762; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700750963; x=1701355763; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BbT4SM/ON1fCDmJeJzaowQV/y/xYkwz5XqPAyX1wOkE=;
-        b=j++kzYK5W41fsmkStcsk8yAHHPzR6nqeGU0+IiJgB5CkWhj+8x5XQwy0jS2+CpIntA
-         EShxFsAbVE7UoOkiKUCtR6wehqUAvV3uFUyTBqPeTn7Aep9FI1r89iyTykTi6vpGsVOC
-         0wBKaBVA6jyMJX4guCxyvgc3z64pj7We0rynBjtviSM+U3HjK5nqPnZC4WRUq9Qrv2y7
-         xgiysz1kd8V9yTL73T9nlRbNS60wOoMfkpOrvP4ve91K3H8IvB7F3I/qfdYDkbIe4NtA
-         LVXAso8Q+CcBsC09xViir/r8eatYRH+eExm/yvjWIn6dzr5+VBdhA8zw89cR2EOyY4ic
-         Sl5Q==
+        bh=J9ndyHXaMvaVKRns2AOlXlAEQtZKYOHXwO+0q/tooKc=;
+        b=H1O4kHLnKXatojnu9XyswuvS2jAoKG5AOyWUsJWMAUM/lP8oszs/qBmcX2sIWuvMot
+         C5gEJRG5XTwOR2MtjVxcQ7gid+CtEtddEZ6mDtqLdqLBg5MfkiTtacS3C3WW3Lu9YUOz
+         wuj7qUz00noxFlotHEmtPCpcMa/rNC9RmKW7RssSp7RcrsCXuxmFTa7d+1RXEeF4bIh2
+         +EBvpS/ayYBMqEkBjT/6L0/8eN8KK5JYrn5DXm5w/FN9WlBw/+1WAV/WbCiBBYPMSNka
+         4ZSJMAToF59D4EKlYmEuthr0+33Xbf6Kl3ZK3pBHpfMrFB/+2RA6DLShmLPiLMiHIjn4
+         S6Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700750962; x=1701355762;
+        d=1e100.net; s=20230601; t=1700750963; x=1701355763;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BbT4SM/ON1fCDmJeJzaowQV/y/xYkwz5XqPAyX1wOkE=;
-        b=w8GB9jtfRyvl/aqHvEsdrfVerUDEdbzZSSuQG/EbHpKV/esvi2dkTyW/qDpusNUDkB
-         BRRAC8FOcqa2KeQEI0rE3fVGw9zJ8qyUFHwOJNs19K+w1f+j1lBdn3v4b0oupRzOoxtx
-         HrcD6N8hYRR1bluHPy+Y7q3zF1+3rIDayxCLsqarukh0YsFsoFvEXDLOmZxsAnqq4ksM
-         6NVkQd0giFUCSjXr/iWoms4YY8sbxeqJI2eE8OmNyxZSu9zDpMnzKrf+cAC/7unHxC/w
-         TdLlvFrQKXNbiEz6/DcPUUOOoxiMbvXO6NCSYrA60Wi/0dC8WP01bVQr3A/l8ZVvX258
-         co1w==
-X-Gm-Message-State: AOJu0YzNJTfq0RHrGab78xBIrwBAU2MxIiF0m1knv4VVHkWGg+J1nP3Y
-	dF5gJeKHeGxkFbwItHGnlWAcAUJPXQjdDpEMpf4pA4Gv
-X-Google-Smtp-Source: AGHT+IHZBJb0pGqihr+j1ZdR1L8Y3ZoR7gyEvPbnBZxUyAfpmn7rAtd3hJi7YAP8z2twRupv25QkSA==
-X-Received: by 2002:a2e:7a0f:0:b0:2c8:87d6:1fbb with SMTP id v15-20020a2e7a0f000000b002c887d61fbbmr3663797ljc.31.1700750961976;
-        Thu, 23 Nov 2023 06:49:21 -0800 (PST)
+        bh=J9ndyHXaMvaVKRns2AOlXlAEQtZKYOHXwO+0q/tooKc=;
+        b=kjZyYwDSQYQqb1pLAt0rxbVmSBqYoBEz3+ZcUaBeZGR+N5I3s8TO6OZ2XMperpRgPa
+         0Vvr0aDfYOLmTYtF5vVHRahH29J5LQlp/xdD8bQCEN0DYOHuYZ1lxX0lpiFnSBTnl28M
+         iVombeyhrK/LNtDKJWr5LDz52bJ/5w4B2ZABfq0fUv3IuEhCZhZWzIcoj3iCbchXxZZn
+         r/q+X552MSFdJjdi6JwQvQMaUenEGQUHYvFI8kvaKhIetPoYwsIjKEKXtbaW5U8j0kq0
+         zit9r+Q4P6+PafBa5aWXLVN/dMIuTWr4u24WI1E+RJx6OisAK5h01kVNagKAqpbgymLa
+         DFhw==
+X-Gm-Message-State: AOJu0YzArJBLzhICLtuXO20Was0vKheEinhO2a4+co6qBgRmLHYhp8tD
+	X55dMzlWOXXwOTZRbDWtJdHg+A==
+X-Google-Smtp-Source: AGHT+IE0Zy2dvO4dXl+0ZtKOr5IVy1sAog9UxOrsGINN+LOWsZrZMObc94GNrbJmnARimkUAvFI8og==
+X-Received: by 2002:a05:600c:1d03:b0:408:3696:3d51 with SMTP id l3-20020a05600c1d0300b0040836963d51mr4591288wms.4.1700750963089;
+        Thu, 23 Nov 2023 06:49:23 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b004094d4292aesm2256135wmo.18.2023.11.23.06.49.20
+        by smtp.gmail.com with ESMTPSA id r4-20020a05600c458400b004094d4292aesm2256135wmo.18.2023.11.23.06.49.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Nov 2023 06:49:21 -0800 (PST)
+        Thu, 23 Nov 2023 06:49:22 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Thu, 23 Nov 2023 15:49:12 +0100
-Subject: [PATCH 2/5] ASoC: dt-bindings: document WCD939x Audio Codec
+Date: Thu, 23 Nov 2023 15:49:13 +0100
+Subject: [PATCH 3/5] ASoC: codec: wcd-mbhc-v2: add support when connected
+ behind an USB-C audio mux
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,7 +65,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-2-21d4ad9276de@linaro.org>
+Message-Id: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-3-21d4ad9276de@linaro.org>
 References: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-0-21d4ad9276de@linaro.org>
 In-Reply-To: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-0-21d4ad9276de@linaro.org>
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
@@ -80,221 +81,257 @@ Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
  linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6327;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8587;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=oHPZkGB2+lxc+Hu7wE58PGrnkLEAPNKccodV0RWgue4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlX2Zt9JH1UOmqaZsEEAIMwtoKeYIrJNN/hAds9sns
- pzsO3hqJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZV9mbQAKCRB33NvayMhJ0Q20D/
- 9jaKFy3eXEBgNMRJ0QYmLMcilCqvGjvP3oiJsqz4yVGzG3+dmvtl4InLV0euJ+9fk5OLC0JXTgSy+r
- TL1Lgj7Y9COniVlLlX/BVzI5X8myL5Tvl6L4yASDx44QppNw377YlD/ZaEkH7Akf8r3Af+y1c6fDA1
- uGq5FPcXRh0zbzZ5adM/wNpibl5ef1BScs6M8JQmvKe6u9yHziJJgbrQtcFIo1t5iNCxaiLl5WmZ68
- NcDNY527101/eRVfxsT4iAsbrCFC6G3Pib/S/mSF8DxKCVf9zU2+2qMCORwPgD2v9UoBjgkUzQ12r2
- /E7ofwWT96A2+KAIsXSlhbRBx+EhBDreH+VjmgFJZWbFa+pc/MQPpO06ajFs+9QgT3+nirgoOTBde8
- vtnHJfICjd49KvlB0KXbOw9EvPEbU2GOGKvAjfzpxForcA8Ib+BMcW+3hUV8uPSob5dlNAjBVUICf2
- cVdbxQEhFC1s5icwCQeNiyaRRyt2JUQnWzPp1LjZpyEglXQY5VtevkHHrvilsM/BR/Y9WL73QOqqcP
- eacdWrKrE0WEdwOHrVxD2GXB1jiHketAIF6QvttbcNWHmgeGzuLKP3IxlFGG1aXgBraUq8eF+FdK4R
- mkT5nQ1FNGPloMP+MHo5vtyYKIkp8bFDbsPM2nS55U0Hp3OfdK47qyGR3pGA==
+ bh=sAgDV8HFhBFSp6K7ER1dImIX7RO3kV2hZs/XTxnrQ5E=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlX2Zt19ZiQTpsBumNaqGuRqJPkaKReQ0KbYk19oGw
+ xOqa8iiJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZV9mbQAKCRB33NvayMhJ0Vq7D/
+ 4nHKUtASqNfh4HpI2GkwVyukjO3/iOB5XOJq43fUUiMaw5tzhvSq7mRO1z1KH5B5AQJK5E+Z5NveLb
+ xwg9WH+h6a3uDEq8WQkmlNK4UZWLrFJ0v2IzLW/lCf8ECwgA4i0zYXfuwHk6JuTRgCVgzKlERhnwQg
+ MXsQABtsTj8wfMH9DfSK6g+kdc2QJWE99/QLq0sLsi7UtjUY+eRMtAFR0g6s1w9jO4G++mlORpOsVX
+ eGdFhaUpjD2aFxSMKusw5fB91bKI1Kj7kbNKaXrhObYnyTOhxKvZ0vDrlAbGEad2tKoh/a87EUCypm
+ 3eM5FPK2vtYwDeoDwtYBT2rqHElKkF3/AifBx2y/XksTI4gLixY+naDgN93QEgizD+o2ldDKYcDlEK
+ TTWPaq1hS+KFo7uJVh7YRK3MQ8XxmzICqYKu5O8S1CTqsWQjZpWSXAYpssv+N506vEAvTwd7zNgjLw
+ /qmcnuQqlub0w6P1fzSA3tu0jJyft5kUgTy8qVO/9m2PyiAvrnCUgaOHcBdYFpg6f2o6rHxRn6/2O6
+ a5hDHmQaXIlw+ppah7X+Vd/TOncyE5gU/ByU7occTkjJyR+SrvFCYvSuYliT039EjL3tikBubEabu6
+ dYsrgZmSn/BRxyZVys9Cs9tIXY0al+BKBvitezNLyWn9fS7b8bvUAAfbYCIg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Document the Qualcomm WCD9390/WCD9395 Audio Codec and the
-Soundwire slaves than can be found on Qualcomm SM8650 based platforms.
-
-The Qualcomm WCD9390/WCD9395 Audio Codec communicates
-with the host SoC over 2 Soundwire links to provide:
-- 4 ADC inputs for up to 5 Analog Microphones
-- 4 DMIC inputs for up to 8 Digital Microphones
-- 4 Microphone BIAS
-- Stereo Headphone output
-- Mono EAR output
-- MBHC engine for Headset Detection
-
-The WCD9390/WCD9395 IC has separate I2C subsystem for USB-C
-DP Altmode/Audio Accessory mode Mux which is not documented
-here but requires port/endpoint graph and properties to handle
-Altmode/Audio Accessory switch and orientation.
+When the WCD codec is connected behind an USB-C audio mux,
+plug/unplug events, clock control, pull-up and treshold are
+different.
+Add a typec_analog_mux config enabling those changes and add
+two callbacks to trigger plug/unplug events from USB-C events.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- .../bindings/sound/qcom,wcd939x-sdw.yaml           | 70 ++++++++++++++++
- .../devicetree/bindings/sound/qcom,wcd939x.yaml    | 93 ++++++++++++++++++++++
- 2 files changed, 163 insertions(+)
+ sound/soc/codecs/wcd-mbhc-v2.c | 95 +++++++++++++++++++++++++++++++++++-------
+ sound/soc/codecs/wcd-mbhc-v2.h |  3 ++
+ 2 files changed, 83 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd939x-sdw.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd939x-sdw.yaml
-new file mode 100644
-index 000000000000..7528c8b100a1
---- /dev/null
-+++ b/Documentation/devicetree/bindings/sound/qcom,wcd939x-sdw.yaml
-@@ -0,0 +1,70 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/sound/qcom,wcd939x-sdw.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v2.c
+index 5da1934527f3..35dc0b13fb47 100644
+--- a/sound/soc/codecs/wcd-mbhc-v2.c
++++ b/sound/soc/codecs/wcd-mbhc-v2.c
+@@ -16,6 +16,7 @@
+ #define HS_DETECT_PLUG_TIME_MS		(3 * 1000)
+ #define MBHC_BUTTON_PRESS_THRESHOLD_MIN	250
+ #define GND_MIC_SWAP_THRESHOLD		4
++#define GND_MIC_USBC_SWAP_THRESHOLD	2
+ #define WCD_FAKE_REMOVAL_MIN_PERIOD_MS	100
+ #define HPHL_CROSS_CONN_THRESHOLD	100
+ #define HS_VREF_MIN_VAL			1400
+@@ -52,12 +53,15 @@ struct wcd_mbhc {
+ 	struct wcd_mbhc_field *fields;
+ 	/* Delayed work to report long button press */
+ 	struct delayed_work mbhc_btn_dwork;
++	/* Work to handle plug report */
++	struct work_struct mbhc_plug_detect_work;
+ 	/* Work to correct accessory type */
+ 	struct work_struct correct_plug_swch;
+ 	struct mutex lock;
+ 	int buttons_pressed;
+ 	u32 hph_status; /* track headhpone status */
+ 	u8 current_plug;
++	unsigned int swap_thr;
+ 	bool is_btn_press;
+ 	bool in_swch_irq_handler;
+ 	bool hs_detect_work_stop;
+@@ -506,14 +510,13 @@ static void wcd_mbhc_adc_detect_plug_type(struct wcd_mbhc *mbhc)
+ 	}
+ }
+ 
+-static irqreturn_t wcd_mbhc_mech_plug_detect_irq(int irq, void *data)
++static void mbhc_plug_detect_fn(struct work_struct *work)
+ {
+-	struct snd_soc_component *component;
++	struct wcd_mbhc *mbhc = container_of(work, struct wcd_mbhc, mbhc_plug_detect_work);
++	struct snd_soc_component *component = mbhc->component;
+ 	enum snd_jack_types jack_type;
+-	struct wcd_mbhc *mbhc = data;
+ 	bool detection_type;
+ 
+-	component = mbhc->component;
+ 	mutex_lock(&mbhc->lock);
+ 
+ 	mbhc->in_swch_irq_handler = true;
+@@ -576,9 +579,51 @@ static irqreturn_t wcd_mbhc_mech_plug_detect_irq(int irq, void *data)
+ exit:
+ 	mbhc->in_swch_irq_handler = false;
+ 	mutex_unlock(&mbhc->lock);
++}
 +
-+title: Qualcomm SoundWire Slave devices on WCD9390/WCD9395
++static irqreturn_t wcd_mbhc_mech_plug_detect_irq(int irq, void *data)
++{
++	struct wcd_mbhc *mbhc = data;
 +
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
++	if (!mbhc->cfg->typec_analog_mux)
++		schedule_work(&mbhc->mbhc_plug_detect_work);
 +
-+description: |
-+  Qualcomm WCD9390/WCD9395 Codec is a standalone Hi-Fi audio codec IC.
-+  It has RX and TX Soundwire slave devices. This bindings is for the
-+  slave devices.
+ 	return IRQ_HANDLED;
+ }
+ 
++int wcd_mbhc_typec_report_unplug(struct wcd_mbhc *mbhc)
++{
 +
-+properties:
-+  compatible:
-+    const: sdw20217010e00
++	if (!mbhc || !mbhc->cfg->typec_analog_mux)
++		return -EINVAL;
 +
-+  reg:
-+    maxItems: 1
++	if (mbhc->mbhc_cb->clk_setup)
++		mbhc->mbhc_cb->clk_setup(mbhc->component, false);
 +
-+  qcom,tx-port-mapping:
-+    description: |
-+      Specifies static port mapping between slave and master tx ports.
-+      In the order of slave port index.
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 4
-+    maxItems: 4
++	wcd_mbhc_write_field(mbhc, WCD_MBHC_L_DET_EN, 0);
++	wcd_mbhc_write_field(mbhc, WCD_MBHC_MECH_DETECTION_TYPE, 0);
 +
-+  qcom,rx-port-mapping:
-+    description: |
-+      Specifies static port mapping between slave and master rx ports.
-+      In the order of slave port index.
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 6
-+    maxItems: 6
++	schedule_work(&mbhc->mbhc_plug_detect_work);
 +
-+required:
-+  - compatible
-+  - reg
++	return 0;
++}
++EXPORT_SYMBOL(wcd_mbhc_typec_report_unplug);
 +
-+additionalProperties: false
++int wcd_mbhc_typec_report_plug(struct wcd_mbhc *mbhc)
++{
++	if (!mbhc || !mbhc->cfg->typec_analog_mux)
++		return -EINVAL;
 +
-+examples:
-+  - |
-+    soundwire@3210000 {
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+        reg = <0x03210000 0x2000>;
-+        wcd938x_rx: codec@0,4 {
-+            compatible = "sdw20217010e00";
-+            reg  = <0 4>;
-+            qcom,rx-port-mapping = <1 2 3 4 5 6>;
-+        };
-+    };
++	if (mbhc->mbhc_cb->clk_setup)
++		mbhc->mbhc_cb->clk_setup(mbhc->component, true);
++	wcd_mbhc_write_field(mbhc, WCD_MBHC_L_DET_EN, 1);
 +
-+    soundwire@3230000 {
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+        reg = <0x03230000 0x2000>;
-+        wcd938x_tx: codec@0,3 {
-+            compatible = "sdw20217010e00";
-+            reg  = <0 3>;
-+            qcom,tx-port-mapping = <2 3 4 5>;
-+        };
-+    };
++	schedule_work(&mbhc->mbhc_plug_detect_work);
 +
-+...
-diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd939x.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd939x.yaml
-new file mode 100644
-index 000000000000..39c1de6961ea
---- /dev/null
-+++ b/Documentation/devicetree/bindings/sound/qcom,wcd939x.yaml
-@@ -0,0 +1,93 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/sound/qcom,wcd939x.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++	return 0;
++}
++EXPORT_SYMBOL(wcd_mbhc_typec_report_plug);
 +
-+title: Qualcomm WCD9380/WCD9385 Audio Codec
+ static int wcd_mbhc_get_button_mask(struct wcd_mbhc *mbhc)
+ {
+ 	int mask = 0;
+@@ -725,14 +770,23 @@ static int wcd_mbhc_initialise(struct wcd_mbhc *mbhc)
+ 
+ 	mutex_lock(&mbhc->lock);
+ 
+-	/* enable HS detection */
++	if (mbhc->cfg->typec_analog_mux)
++		mbhc->swap_thr = GND_MIC_USBC_SWAP_THRESHOLD;
++	else
++		mbhc->swap_thr = GND_MIC_SWAP_THRESHOLD;
 +
-+maintainers:
-+  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-+
-+description: |
-+  Qualcomm WCD9390/WCD9395 Codec is a standalone Hi-Fi audio codec IC.
-+  It has RX and TX Soundwire slave devices.
-+  The WCD9390/WCD9395 IC has a functionally separate USB-C Mux subsystem
-+  accessible over an I2C interface.
-+  The Audio Headphone and Microphone data path between the Codec and the USB-C Mux
-+  subsystems are external to the IC, thus requiring DT port-endpoint graph description
-+  to handle USB-C altmode & orientation switching for Audio Accessory Mode.
-+
-+allOf:
-+  - $ref: dai-common.yaml#
-+  - $ref: qcom,wcd93xx-common.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - qcom,wcd9390-codec
-+      - qcom,wcd9395-codec
-+
-+  mode-switch:
-+    description: Flag the port as possible handle of altmode switching
-+    type: boolean
-+
-+  orientation-switch:
-+    description: Flag the port as possible handler of orientation switching
-+    type: boolean
-+
-+  port:
-+    $ref: /schemas/graph.yaml#/properties/port
-+    description:
-+      A port node to link the WCD939x Codec node to USB MUX subsystems for the
-+      purpose of handling altmode muxing and orientation switching to detecte and
-+      enable Audio Accessory Mode.
-+
-+required:
-+  - compatible
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    codec {
-+        compatible = "qcom,wcd9390-codec";
-+        reset-gpios = <&tlmm 32 0>;
-+        #sound-dai-cells = <1>;
-+        qcom,tx-device = <&wcd939x_tx>;
-+        qcom,rx-device = <&wcd939x_rx>;
-+        qcom,micbias1-microvolt = <1800000>;
-+        qcom,micbias2-microvolt = <1800000>;
-+        qcom,micbias3-microvolt = <1800000>;
-+        qcom,micbias4-microvolt = <1800000>;
-+        qcom,hphl-jack-type-normally-closed;
-+        qcom,ground-jack-type-normally-closed;
-+        qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+        qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+    };
-+
-+    /* ... */
-+
-+    soundwire@3210000 {
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+        reg = <0x03210000 0x2000>;
-+        wcd939x_rx: codec@0,4 {
-+            compatible = "sdw20217010e00";
-+            reg  = <0 4>;
-+            qcom,rx-port-mapping = <1 2 3 4 5 6>;
-+        };
-+    };
-+
-+    soundwire@3230000 {
-+        #address-cells = <2>;
-+        #size-cells = <0>;
-+        reg = <0x03230000 0x2000>;
-+        wcd938x_tx: codec@0,3 {
-+            compatible = "sdw20217010e00";
-+            reg  = <0 3>;
-+            qcom,tx-port-mapping = <2 3 4 5>;
-+        };
-+    };
-+
-+...
++	/* setup HS detection */
+ 	if (mbhc->mbhc_cb->hph_pull_up_control_v2)
+ 		mbhc->mbhc_cb->hph_pull_up_control_v2(component,
+-						      HS_PULLUP_I_DEFAULT);
++				mbhc->cfg->typec_analog_mux ?
++					HS_PULLUP_I_OFF : HS_PULLUP_I_DEFAULT);
+ 	else if (mbhc->mbhc_cb->hph_pull_up_control)
+-		mbhc->mbhc_cb->hph_pull_up_control(component, I_DEFAULT);
++		mbhc->mbhc_cb->hph_pull_up_control(component,
++				mbhc->cfg->typec_analog_mux ?
++					I_OFF : I_DEFAULT);
+ 	else
+-		wcd_mbhc_write_field(mbhc, WCD_MBHC_HS_L_DET_PULL_UP_CTRL, 3);
++		wcd_mbhc_write_field(mbhc, WCD_MBHC_HS_L_DET_PULL_UP_CTRL,
++				mbhc->cfg->typec_analog_mux ? 0 : 3);
+ 
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_HPHL_PLUG_TYPE, mbhc->cfg->hphl_swh);
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_GND_PLUG_TYPE, mbhc->cfg->gnd_swh);
+@@ -741,10 +795,18 @@ static int wcd_mbhc_initialise(struct wcd_mbhc *mbhc)
+ 		mbhc->mbhc_cb->mbhc_gnd_det_ctrl(component, true);
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_HS_L_DET_PULL_UP_COMP_CTRL, 1);
+ 
+-	wcd_mbhc_write_field(mbhc, WCD_MBHC_L_DET_EN, 1);
++	/* Plug detect is triggered manually if analog goes through USBCC */
++	if (mbhc->cfg->typec_analog_mux)
++		wcd_mbhc_write_field(mbhc, WCD_MBHC_L_DET_EN, 0);
++	else
++		wcd_mbhc_write_field(mbhc, WCD_MBHC_L_DET_EN, 1);
+ 
+-	/* Insertion debounce set to 96ms */
+-	wcd_mbhc_write_field(mbhc, WCD_MBHC_INSREM_DBNC, 6);
++	if (mbhc->cfg->typec_analog_mux)
++		/* Insertion debounce set to 48ms */
++		wcd_mbhc_write_field(mbhc, WCD_MBHC_INSREM_DBNC, 4);
++	else
++		/* Insertion debounce set to 96ms */
++		wcd_mbhc_write_field(mbhc, WCD_MBHC_INSREM_DBNC, 6);
+ 
+ 	/* Button Debounce set to 16ms */
+ 	wcd_mbhc_write_field(mbhc, WCD_MBHC_BTN_DBNC, 2);
+@@ -753,7 +815,8 @@ static int wcd_mbhc_initialise(struct wcd_mbhc *mbhc)
+ 	mbhc->mbhc_cb->mbhc_bias(component, true);
+ 	/* enable MBHC clock */
+ 	if (mbhc->mbhc_cb->clk_setup)
+-		mbhc->mbhc_cb->clk_setup(component, true);
++		mbhc->mbhc_cb->clk_setup(component,
++				mbhc->cfg->typec_analog_mux ? false : true);
+ 
+ 	/* program HS_VREF value */
+ 	wcd_program_hs_vref(mbhc);
+@@ -1115,7 +1178,7 @@ static void wcd_correct_swch_plug(struct work_struct *work)
+ 	do {
+ 		cross_conn = wcd_check_cross_conn(mbhc);
+ 		try++;
+-	} while (try < GND_MIC_SWAP_THRESHOLD);
++	} while (try < mbhc->swap_thr);
+ 
+ 	if (cross_conn > 0) {
+ 		plug_type = MBHC_PLUG_TYPE_GND_MIC_SWAP;
+@@ -1183,7 +1246,7 @@ static void wcd_correct_swch_plug(struct work_struct *work)
+ 			cross_conn = wcd_check_cross_conn(mbhc);
+ 			if (cross_conn > 0) { /* cross-connection */
+ 				pt_gnd_mic_swap_cnt++;
+-				if (pt_gnd_mic_swap_cnt < GND_MIC_SWAP_THRESHOLD)
++				if (pt_gnd_mic_swap_cnt < mbhc->swap_thr)
+ 					continue;
+ 				else
+ 					plug_type = MBHC_PLUG_TYPE_GND_MIC_SWAP;
+@@ -1194,7 +1257,7 @@ static void wcd_correct_swch_plug(struct work_struct *work)
+ 			} else /* Error if (cross_conn < 0) */
+ 				continue;
+ 
+-			if (pt_gnd_mic_swap_cnt == GND_MIC_SWAP_THRESHOLD) {
++			if (pt_gnd_mic_swap_cnt == mbhc->swap_thr) {
+ 				/* US_EU gpio present, flip switch */
+ 				if (mbhc->cfg->swap_gnd_mic) {
+ 					if (mbhc->cfg->swap_gnd_mic(component, true))
+@@ -1473,6 +1536,7 @@ struct wcd_mbhc *wcd_mbhc_init(struct snd_soc_component *component,
+ 	mutex_init(&mbhc->lock);
+ 
+ 	INIT_WORK(&mbhc->correct_plug_swch, wcd_correct_swch_plug);
++	INIT_WORK(&mbhc->mbhc_plug_detect_work, mbhc_plug_detect_fn);
+ 
+ 	ret = request_threaded_irq(mbhc->intr_ids->mbhc_sw_intr, NULL,
+ 					wcd_mbhc_mech_plug_detect_irq,
+@@ -1562,6 +1626,7 @@ void wcd_mbhc_deinit(struct wcd_mbhc *mbhc)
+ 
+ 	mutex_lock(&mbhc->lock);
+ 	wcd_cancel_hs_detect_plug(mbhc,	&mbhc->correct_plug_swch);
++	cancel_work_sync(&mbhc->mbhc_plug_detect_work);
+ 	mutex_unlock(&mbhc->lock);
+ 
+ 	kfree(mbhc);
+diff --git a/sound/soc/codecs/wcd-mbhc-v2.h b/sound/soc/codecs/wcd-mbhc-v2.h
+index 006118f3e81f..df68e99c81a3 100644
+--- a/sound/soc/codecs/wcd-mbhc-v2.h
++++ b/sound/soc/codecs/wcd-mbhc-v2.h
+@@ -193,6 +193,7 @@ struct wcd_mbhc_config {
+ 	int v_hs_max;
+ 	int num_btn;
+ 	bool mono_stero_detection;
++	bool typec_analog_mux;
+ 	bool (*swap_gnd_mic)(struct snd_soc_component *component, bool active);
+ 	bool hs_ext_micbias;
+ 	bool gnd_det_en;
+@@ -273,6 +274,8 @@ int wcd_mbhc_start(struct wcd_mbhc *mbhc, struct wcd_mbhc_config *mbhc_cfg,
+ void wcd_mbhc_stop(struct wcd_mbhc *mbhc);
+ void wcd_mbhc_set_hph_type(struct wcd_mbhc *mbhc, int hph_type);
+ int wcd_mbhc_get_hph_type(struct wcd_mbhc *mbhc);
++int wcd_mbhc_typec_report_plug(struct wcd_mbhc *mbhc);
++int wcd_mbhc_typec_report_unplug(struct wcd_mbhc *mbhc);
+ struct wcd_mbhc *wcd_mbhc_init(struct snd_soc_component *component,
+ 		      const struct wcd_mbhc_cb *mbhc_cb,
+ 		      const struct wcd_mbhc_intr *mbhc_cdc_intr_ids,
 
 -- 
 2.34.1
