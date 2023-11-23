@@ -1,135 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-1701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD65A7F60A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:44:34 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ABA77F60CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:51:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6DEA6B20D3C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 13:44:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9F81CB214B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 13:51:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8C1725574;
-	Thu, 23 Nov 2023 13:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4673B224D5;
+	Thu, 23 Nov 2023 13:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O0iR60nv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bl1iqIqJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEB725561;
-	Thu, 23 Nov 2023 13:44:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A349C433C8;
-	Thu, 23 Nov 2023 13:44:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700747068;
-	bh=trYkMaqpWLmDB4oJKoY1+CJr1bJOUKmTS9Un+OPmKFg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O0iR60nvxcY0qV3BXuSd3E3+kk2rlD00vl2QflXaT3x8kIjB3SH99q8WMPevw7P5E
-	 bNTm+mpm2pxNjC9xPQbuB3x/IKG4XnGufxHxD0iPOVHnVf1qPad2Bt1F4ESuWukMIH
-	 zvQ8zPwGph1R53DSx9un/SlNOkzSAXkKp0xh0xk6rUGb65WCyv0z/P0dTdiq7zRwAb
-	 CTKBQ6oHAsCAFRSnhDdYtR8O5uU9e48wZ4zgyJezTH+vV3idEiozG5qFRTMOHj5wNQ
-	 G3Uu/R1HLqXLaR9+ZOOtCtOfDY5XW7AyRE0PCrCuk3pXAsCguNnFb4gx19DVMiSclI
-	 YxGgbMmcx8fpQ==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1r6A0b-0004vo-0K;
-	Thu, 23 Nov 2023 14:44:45 +0100
-Date: Thu, 23 Nov 2023 14:44:45 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Felipe Balbi <balbi@kernel.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
-	ahalaney@redhat.com, quic_shazhuss@quicinc.com
-Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
- Glue driver
-Message-ID: <ZV9XTU-q038BaWn3@hovoldconsulting.com>
-References: <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
- <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
- <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
- <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
- <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
- <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
- <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
- <6d4d959c-b155-471b-b13d-f6fda557cfe0@quicinc.com>
- <ZVYTFi3Jnnljl48L@hovoldconsulting.com>
- <e0789695-43ee-4285-95e9-4cdee24d6ffe@quicinc.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35A2FBA;
+	Thu, 23 Nov 2023 05:50:54 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ANCRMkX017382;
+	Thu, 23 Nov 2023 13:50:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=oZXD2fFXsHF5yC43lnl3y8lNittg+JTRjRA3khNNHHo=;
+ b=bl1iqIqJm9sStgYQqVPd+TXdlj+H1S1lv2FyKix0e8d80IcMqY44Mmt4QOle94DE4jz0
+ jHSKW5iWIpcidV8ebMuzLv0kXhpjkUzxobw3/WISuEZrdlbhTMH2j1wgQ1Dmglak3hz3
+ WY2WVOpNL5mjRt4ee89y8oP6OcjYp6G/QEiaoUNTqiRUEQtwV1zttHGh2Iwg7GTxKuUJ
+ GzsTDnGpzsNZhKSKRCY6FpuhJ2yZ7Zp4GvRNpP7pg6OM26379i5fYXbWLyZgXsvFSaoK
+ Menlwo1/oxJxen/SBtd5crV/v0A6mciAn2Pg5shrLG8s3vjL3vRZNngXR6M1URWK+cEF oA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj4hwgdfj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Nov 2023 13:50:50 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ANDonBC023871
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Nov 2023 13:50:49 GMT
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 23 Nov 2023 05:50:44 -0800
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <andersson@kernel.org>, <djakov@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+CC: <agross@kernel.org>, <conor+dt@kernel.org>, <quic_rjendra@quicinc.com>,
+        <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <neil.armstrong@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V3 0/2] interconnect: qcom: Introduce interconnect drivers for X1E80100
+Date: Thu, 23 Nov 2023 19:20:26 +0530
+Message-ID: <20231123135028.29433-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e0789695-43ee-4285-95e9-4cdee24d6ffe@quicinc.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zEdJoelmjJw1LI26UaZtQV8E6x4p4G4M
+X-Proofpoint-ORIG-GUID: zEdJoelmjJw1LI26UaZtQV8E6x4p4G4M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-23_12,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 mlxscore=0 mlxlogscore=704
+ suspectscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311230099
 
-On Thu, Nov 23, 2023 at 01:02:24AM +0530, Krishna Kurapati PSSNV wrote:
+This series adds interconnect support for the Qualcomm X1E80100 platform,
+aka Snapdragon X Elite.
 
->   Pushed [1] to address all the queries and comments. I was initially 
-> looking at only Femto phy targets, but when I looked at all targets in 
-> general, seems there is one irq not defined in bindings. It is qubs2_phy 
-> irq which is named as "hs_phy_irq" on QUSB target DT's (both downstream 
-> and upstream).
->
-> There is one actual "hs_phy_irq" as well but it is not used either by hs 
-> validation team or sw team on any target. It was put in for debug 
-> purpose only and doesn't have code to trigger it (even downstream never 
-> implemented it I suppose) Atleast 4.4 onwards I saw the code but I 
-> didn't see the actual hs_phy_irq being used. It was the qusb2_phy irq 
-> named as hs_phy_irq.
-> 
-> Even hw folks used it under the same name which is why they recommended 
-> using it on qusb2 targets and dp/dm on femto targets.
+Our v1 post of the patchsets adding support for Snapdragon X Elite SoC had
+the part number sc8380xp which is now updated to the new part number x1e80100
+based on the new branding scheme and refers to the exact same SoC.
 
-Ah, thanks for getting to the bottom of this.
+V3:
+* Fix the index numbers of pcie_center_anoc nodes. [Georgi]
 
-> On some targets the hs_phy_irq was given vector number of pwr_event irq 
-> also like sm8550/sm8450 etc., I tried to address those as well in the 
-> series.
+v2:
+* Update the part number from sc8380xp to x1e80100.
+* Fixup required property ordering [Krzysztof]
+* Pickup Rbs.
 
-I can imagine that we have a number of such issues.
+Dependencies: None
+Release Link: https://www.qualcomm.com/news/releases/2023/10/qualcomm-unleashes-snapdragon-x-elite--the-ai-super-charged-plat
 
-> Also, per your question as to there are some qusb2 targets having dp/dm 
-> interrupts defined... It is only for SDM845/SDM670/SM6350 which were 
-> last in line of using qusb2 phy's and they started incorporating dp/dm 
-> interrupts.
 
-Ok.
+Rajendra Nayak (2):
+  dt-bindings: interconnect: Add Qualcomm X1E80100 SoC
+  interconnect: qcom: Add X1E80100 interconnect provider driver
 
-> Also added missing interrupts for qcs404/ipq5332.
+ .../interconnect/qcom,x1e80100-rpmh.yaml      |   83 +
+ drivers/interconnect/qcom/Kconfig             |    9 +
+ drivers/interconnect/qcom/Makefile            |    2 +
+ drivers/interconnect/qcom/x1e80100.c          | 2328 +++++++++++++++++
+ drivers/interconnect/qcom/x1e80100.h          |  192 ++
+ .../interconnect/qcom,x1e80100-rpmh.h         |  207 ++
+ 6 files changed, 2821 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,x1e80100-rpmh.yaml
+ create mode 100644 drivers/interconnect/qcom/x1e80100.c
+ create mode 100644 drivers/interconnect/qcom/x1e80100.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,x1e80100-rpmh.h
 
-Thanks.
+-- 
+2.17.1
 
-> I didn't add missing interrupts on sc8280xp because I see that current 
-> interrupts present are working fine (I see ADB working and wakeup 
-> working as well), but the interrupt vector numbers are off by "1" 
-> between hs specifics and DT (both upstream and downstream). Will sort it 
-> out and clean that target up later.
-
-Which interrupt numbers are off by one here?
- 
-> [1]: https://patchwork.kernel.org/project/linux-arm-msm/list/?series=803412
-
-I took a quick look at the series, and it looks like this will
-eventually clean things up a lot. We should probably define a generic
-order for the interrupts with the sometimes optional SS interrupts last.
-
-Side note: It looks like the threading in that series is broken.
-Consider using git-send-email for sending series as it takes care of
-things like that.
-
-Johan
 
