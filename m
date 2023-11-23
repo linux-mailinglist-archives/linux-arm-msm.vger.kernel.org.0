@@ -1,65 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-1746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DAA87F6723
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 20:33:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1570F7F679A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 20:36:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E71E1C20EBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 19:33:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6130281E3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 19:36:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 792174C3AB;
-	Thu, 23 Nov 2023 19:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C4DD4C3D9;
+	Thu, 23 Nov 2023 19:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FAGRUWPC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVoD2rHp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29558D47;
-	Thu, 23 Nov 2023 11:33:28 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c876f1e44dso14938081fa.0;
-        Thu, 23 Nov 2023 11:33:27 -0800 (PST)
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DA401FF6;
+	Thu, 23 Nov 2023 11:36:07 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-32deb2809daso783629f8f.3;
+        Thu, 23 Nov 2023 11:36:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700768006; x=1701372806; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700768164; x=1701372964; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:subject:cc
          :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/hq7LNXGTuldiV4ecttMMHQLmxEW4ioDA8UB5OvVq6I=;
-        b=FAGRUWPCXyj6exxd8QaqT3B9IdqRb54vWGM/tMjKTawkrYUcK7C0tSoTGfbsMjVpRo
-         4dVDLMpwFBZQpjuPUShK62PMEP1VHEEGr0mVWO0x0NvQKTvBd+D2BZoDhY3Thq5DfNdr
-         TCBAqMqQAi740vulbw7u15kw/5GH6MlN0H9sDjnlBw+I5xWMo0niJEIJCB7gGRnNX/he
-         1t9ZpzDLeNUpsXYByRdwOlwD7+7nMCdaljBAwRQ4spqfyEhoSzDP/Ews2UUrqbgC4XYP
-         J/ZRBOKqtdB1R3foyTwpnfz4yiUhTpmw9xQGVuOHeBPkgUe5OPQNoIGYiL9x6NvZe3U+
-         kExw==
+        bh=QW6tI0VHpBIjgHCH5Ff0+qLlXVxkpAX7d83oOLeIsRI=;
+        b=VVoD2rHpP/xg5wqXa/vJa8LYEmWtbTEu8hDlYL6wYWFaZOko0n6Ib9FPi35TvP4ocI
+         A1s8Gg3wGfGijeadt0LMFjde6PclDduAbG1JrJj2dCAMubt9gpQYX0kARADuhgbFgBWR
+         NoWD68pk0gNYMv7DzrVRMyo3ZajKxBsBk7SvTPXcJNt9QpBuHvHImCrokZkj7KJFtij2
+         qnntrtaMFWkfDg0k3kgj6nrIee9gfSFnSDH+nE3NG9DGhaugRmz4ZOYZw9+fpyr9ajG8
+         brLzTdsRV6P2lRuD+4BpnUxtF7mjoH5VT5VV2WWEUYb2trvhOHk+KLE/9F6cTqpWhvg9
+         PKpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700768006; x=1701372806;
+        d=1e100.net; s=20230601; t=1700768164; x=1701372964;
         h=in-reply-to:content-disposition:mime-version:references:subject:cc
          :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/hq7LNXGTuldiV4ecttMMHQLmxEW4ioDA8UB5OvVq6I=;
-        b=ORI4NU2QgMN1qQegL3AtgOX+2BKRogKqJKavZb+ECssQfxpBTmzfHcxfYnv/KS17xy
-         SL4/hUySM/TJ2pczrDTXyKuZ2DNp926o1rbqEt+/D4Vbq7YMgGT5xpyhIW4DPF8iYWMb
-         RoiSDNRntk3DesphtOQE+TtCHGorHLguIV2Bj+h95IZ08MZGcesbpY57d7+3vCGPVKf8
-         DsmsLaWeFeNJVC9G/ZXVhdlQdXiO+qpMvJutviJsf00Rb4DMLX88Yixwnrcku4TyMA5V
-         1MRxejgHWqOiTrBVLOl5Cv0Q9L36cbSpwHUHsTIChLHAjoJRiO7A+zdJjaulpXUt4/my
-         UJaA==
-X-Gm-Message-State: AOJu0YwHs1yDMG98avfdHWwMinNzTFy3HnTxdbPEmlUBkSw2Nl3U2UcR
-	o92CbHoTQcStMVegHaKltKg=
-X-Google-Smtp-Source: AGHT+IEpZV8AAS3AX/kSyCq/TvjTy4lvHHyqL6QV8NqZ0ODQESSmWB93J1AVOkRbP2EeuZ27xtYNUg==
-X-Received: by 2002:a2e:3a0f:0:b0:2c8:7962:cdc2 with SMTP id h15-20020a2e3a0f000000b002c87962cdc2mr223068lja.3.1700768005622;
-        Thu, 23 Nov 2023 11:33:25 -0800 (PST)
+        bh=QW6tI0VHpBIjgHCH5Ff0+qLlXVxkpAX7d83oOLeIsRI=;
+        b=kQL2dMEZzygiZwwzDpYgI5BWED8ASYkHUjrarHFmNyWGPVsi6Z7rYLEZ+4f0ZliZZe
+         BehPk9IugmIADnODcVqioHIpaW7HIcAbu08P0k0NFUSRH7aAdVp5T068bMiSz/Z7QOEV
+         Kxp3Z7hEbjxBbDogZu4Z0/8Yzy9jlVStefG5/UZ3UlAkAWvcxqXsjZzAF/WjjGLJ+vD5
+         PXv5fi+2DE+RlTIw5rcmHa5MEtEqbhkcm/QoB1Xyj5xUVLmW3d3c7bNy4icW9UmA0vm0
+         Lv0vxiUAenLchsWsF6Wy2xUEeSZc2gYrFQhkx2pKj78hu9YkUVrZalY5eLaEEas0NyKf
+         t33w==
+X-Gm-Message-State: AOJu0YzdkNIDRZByohNng65C57wAiYoF74czB8XArP7Nkr0+XBueIHzt
+	ilL5Qy2QgqCJpWUxnSy2oXL4JOtnjR/PNQ==
+X-Google-Smtp-Source: AGHT+IGTnewfVDDU26YNpIgEsAKe25Oi3ZbRjAwSfLwOCZVIekJqTG1IwEOPirisjxnLfXVeZzk89Q==
+X-Received: by 2002:a5d:5384:0:b0:332:cc7b:8484 with SMTP id d4-20020a5d5384000000b00332cc7b8484mr377488wrv.48.1700768164315;
+        Thu, 23 Nov 2023 11:36:04 -0800 (PST)
 Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id a4-20020adfeec4000000b0033130644c87sm2442265wrp.54.2023.11.23.11.33.24
+        by smtp.gmail.com with ESMTPSA id e2-20020a5d4e82000000b00323293bd023sm2465891wru.6.2023.11.23.11.36.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Nov 2023 11:33:25 -0800 (PST)
-Message-ID: <655fa905.df0a0220.49d9b.7afd@mx.google.com>
-X-Google-Original-Message-ID: <ZV+pAo5jt0N9/AE2@Ansuel-xps.>
-Date: Thu, 23 Nov 2023 20:33:22 +0100
+        Thu, 23 Nov 2023 11:36:04 -0800 (PST)
+Message-ID: <655fa9a4.5d0a0220.b01e8.7f5b@mx.google.com>
+X-Google-Original-Message-ID: <ZV+poTDVxDA0g9LE@Ansuel-xps.>
+Date: Thu, 23 Nov 2023 20:36:01 +0100
 From: Christian Marangi <ansuelsmth@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>
-Cc: "Russell King (Oracle)" <linux@armlinux.org.uk>,
-	Jie Luo <quic_luoj@quicinc.com>, Rob Herring <robh@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+Cc: Rob Herring <robh@kernel.org>, "David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -67,6 +65,7 @@ Cc: "Russell King (Oracle)" <linux@armlinux.org.uk>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
 	Daniel Golle <daniel@makrotopia.org>,
@@ -76,6 +75,7 @@ Cc: "Russell King (Oracle)" <linux@armlinux.org.uk>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	David Epping <david.epping@missinglinkelectronics.com>,
 	Vladimir Oltean <olteanv@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Harini Katakam <harini.katakam@amd.com>,
 	Simon Horman <horms@kernel.org>,
 	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
@@ -84,16 +84,15 @@ Cc: "Russell King (Oracle)" <linux@armlinux.org.uk>,
 	linux-mediatek@lists.infradead.org
 Subject: Re: [net-next RFC PATCH 03/14] dt-bindings: net: document ethernet
  PHY package nodes
-References: <20231120135041.15259-4-ansuelsmth@gmail.com>
+References: <20231120135041.15259-1-ansuelsmth@gmail.com>
+ <20231120135041.15259-4-ansuelsmth@gmail.com>
  <c21ff90d-6e05-4afc-b39c-2c71d8976826@lunn.ch>
  <20231121144244.GA1682395-robh@kernel.org>
  <a85d6d0a-1fc9-4c8e-9f91-5054ca902cd1@lunn.ch>
  <655e4939.5d0a0220.d9a9e.0491@mx.google.com>
  <6a030399-b8ed-4e2c-899f-d82eb437aafa@lunn.ch>
  <655f2ba9.5d0a0220.294f3.38d8@mx.google.com>
- <c697488a-d34c-4c98-b4c7-64aef2fe583f@lunn.ch>
- <ZV9jM7ve3Kl6ZxSl@shell.armlinux.org.uk>
- <e32d5c84-7a88-4d9f-868f-98514deae6e9@lunn.ch>
+ <6eb2e061-5fcb-434a-ad43-370788075597@lunn.ch>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,74 +101,38 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e32d5c84-7a88-4d9f-868f-98514deae6e9@lunn.ch>
+In-Reply-To: <6eb2e061-5fcb-434a-ad43-370788075597@lunn.ch>
 
-On Thu, Nov 23, 2023 at 03:57:58PM +0100, Andrew Lunn wrote:
-> On Thu, Nov 23, 2023 at 02:35:31PM +0000, Russell King (Oracle) wrote:
-> > On Thu, Nov 23, 2023 at 03:27:05PM +0100, Andrew Lunn wrote:
-> > > > Just to be more precise qca807x can operate in 3 different mode:
-> > > > (this is controlled by the MODE_CFG bits)
-> > > 
-> > > > - QSGMII: 5 copper port
-> > > 
-> > > 4 slots over QSGMII, plus the second SERDES is connected to the MAC
-> > > using SGMII/1000BaseX?
-> > > 
-> > > > - PSGMII: 5 copper port
-> > > 
-> > > 5 slots over QSGMII, the second SERDES is idle?
-> > > 
-> > > > - PSGMII: 4 copper port + 1 combo (that can be both fiber or copper)
-> > > 
-> > > 5 slots over QSGMII, with the second SERDES connected to an SFP cage.
-> > > 
-> > > Are ports 1-4 always connected to the P/Q SGMII. Its only port 5 which
-> > > can use the second SERDES?
+On Thu, Nov 23, 2023 at 04:07:14PM +0100, Andrew Lunn wrote:
+> > compatible = "ethernet-phy-package", "qca807x-phy-package";
 > > 
-> > I think what would really help here is if there was an ascii table to
-> > describe the configurations, rather than trying to put it into words.
+> > With "ethernet-phy-package" a must and "qca807x-phy-package" used only
+> > if additional property are used.
+> > 
+> > My current idea was to use select and base everything on the possible
+> > PHY compatible (and it does work, tested by adding bloat in the DT
+> > example and seeing if the schema was rejected). Had this idea since the
+> > compatible would never be used.
 > 
-> Yes.
+> The DT people are unhappy with PHYs don't use compatibles, so
+> validation does not work. It probably too late to add compatibles to
+> very PHY driver. But this is new development work, we don't have any
+> history. So we can add a compatible per package to make the validation
+> tools work.
 > 
-> And also for ipq4019. We need to merge these two threads of
-> conversation, since in the end they are probably the same driver, same
-> device tree etc.
+> So for parsing the tree in the kernel we look for
+> 'ethernet-phy-package'. For validating the tree using the yaml tools
+> we use the 'qca807x-phy-package'.
 >
 
-For everyone that missed Robert response in patch 12 let me quote him
-also here.
+Ok clear, what about the generic ethernet-phy-package.yaml?
 
-"
-Hi Andrew,
-I think that the description is confusing.
-QCA807x supports 3 different modes:
-1. PSGMII (5 copper ports)
-2. PSGMII (4 copper ports + 1 combo port)
-3. QSGMII+SGMII
-
-So, in case option 2 is selected then the combo port can also be used for
-1000Base-X and 100Base-FX modules or copper and it will autodetect the
-exact media.
-This is supported via the SFP op-s and I have been using it without issues
-for a while.
-
-I have not tested option 3 in combination with SFP to the copper
-module so I cant
-say whether that works.
-From what I can gather from the typical usage examples in the
-datasheet, this QSMII+SGMII
-mode is basically intended as a backward compatibility thing as only
-QCA SoC-s have PSGMII
-support so that you could still use SoC-s with QSGMII and SGMII support only.
-
-So there is no way to control the SerDes-es individually, only the
-global mode can be changed via
-the Chip configuration register in the Combo port.
-
-You can see the block diagram of this PHY in this public PDF on page 2[1].
-
-[1] https://content.codico.com/fileadmin/media/download/datasheets/qualcomm/qualcomm_qca8075.pdf
-"
+Idea was to describe common properties there and then specific PHY
+package would add every common property with $ref and add their special
+ones on top of that. Would that be ok? (similar to the current
+implementation with ethernet-phy-package and qcom,qca807x with the only
+difference that qcom,qca807x.yaml would also have the compatible set
+(currently missing from this RFC)
 
 -- 
 	Ansuel
