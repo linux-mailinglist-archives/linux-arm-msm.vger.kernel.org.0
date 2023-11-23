@@ -1,80 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-1771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 656DD7F67FC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 21:02:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CA977F68AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 22:33:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9666F1C20983
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 20:02:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9847D1C20CE6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 21:33:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAA4C4D122;
-	Thu, 23 Nov 2023 20:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16E5314F72;
+	Thu, 23 Nov 2023 21:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="V0qjOBP1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QX5gnL6J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDD4B0;
-	Thu, 23 Nov 2023 12:02:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=vvGpKeVBKct7mdmTRc3KhUoKAd20inhURZrMxjX4/5E=; b=V0qjOBP1Ij+ha4/POp+VZeQR//
-	UdKuun1a7BjxgkPtpTT0nsDtpZ2UK+2ls8JYdZdIr/RBhKBgCU8XTotvz1jZs5vQd+D7itwEzW5Wk
-	hTg7DwCY4w/jTODhGDoKlzb9uLZIWldL8VJ32CJzcFd62+63feQBO4Org7+ZzrZQCTJw=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1r6Ftk-0011vP-30; Thu, 23 Nov 2023 21:02:04 +0100
-Date: Thu, 23 Nov 2023 21:02:04 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Prasad Sodagudi <psodagud@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>, kernel@quicinc.com
-Subject: Re: [PATCH net-next v3 3/3] net: stmmac: Add driver support for
- DWMAC5 fault IRQ Support
-Message-ID: <f5438fff-9682-42d4-822d-4f4f7020e114@lunn.ch>
-References: <cover.1700737841.git.quic_jsuraj@quicinc.com>
- <62eaaace3713751cb1ecac3163e857737107ca0e.1700737841.git.quic_jsuraj@quicinc.com>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D897C18056;
+	Thu, 23 Nov 2023 21:33:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BADBCC433C7;
+	Thu, 23 Nov 2023 21:33:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700775224;
+	bh=nmgRXoCC/6bVdvvn+DsQpOtnPLlwkOcJBQD/gcvPILU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QX5gnL6JXj8vwBd2hjrgTWmiQNvpaIU3ub8DZJit9Gh0ljsPaGJPx49AWqTyKl4EA
+	 MxLsTmaI0J08GfBbNmZjOMk5kO/qqeDp4cbPt3UIxlPrCxNX9Ybbo8D/5zN6YIT/c5
+	 Hnj6bfqt1z0klQSfKgjf1u2TKv2FBCx5URjphkB83BntI5fFoPmHmoZCLyARPTWK6O
+	 tphuxc8VElCdY2DqFnyhtojL941RLPd+x7YqE3ObFsb0vpG92ljXG0z8CMOuNRgrow
+	 rasw3VtSw505b5SaknZkPzLjb2F1Etfd4VuPA9L3fLwdIadEeib6E5YIE9YSMXlWfX
+	 3WbVK/7XEz8bA==
+Date: Thu, 23 Nov 2023 22:33:41 +0100
+From: Wolfram Sang <wsa@kernel.org>
+To: Heiner Kallweit <hkallweit1@gmail.com>
+Cc: intel-gfx@lists.freedesktop.org, linux-i2c@vger.kernel.org,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	linux-fbdev@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>, linux-sunxi@lists.linux.dev,
+	linux-mediatek@lists.infradead.org, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	John Stultz <jstultz@google.com>
+Subject: Re: [PATCH v5 00/20] remove I2C_CLASS_DDC support
+Message-ID: <ZV/FNWfw0jdXSglr@ninjato>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	intel-gfx@lists.freedesktop.org, linux-i2c@vger.kernel.org,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	linux-fbdev@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>, linux-sunxi@lists.linux.dev,
+	linux-mediatek@lists.infradead.org, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Yongqin Liu <yongqin.liu@linaro.org>,
+	John Stultz <jstultz@google.com>
+References: <20231123094040.592-1-hkallweit1@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="xLjxEuZaeN8xgDN1"
+Content-Disposition: inline
+In-Reply-To: <20231123094040.592-1-hkallweit1@gmail.com>
+
+
+--xLjxEuZaeN8xgDN1
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <62eaaace3713751cb1ecac3163e857737107ca0e.1700737841.git.quic_jsuraj@quicinc.com>
+Content-Transfer-Encoding: quoted-printable
 
-> @@ -702,6 +718,10 @@ int stmmac_get_platform_resources(struct platform_device *pdev,
->  	if (stmmac_res->irq < 0)
->  		return stmmac_res->irq;
->  
-> +	ret = stmmac_get_fault_intr_config(pdev, stmmac_res);
-> +	if (ret)
-> +		dev_err(&pdev->dev, "Fault interrupt not present\n");
+On Thu, Nov 23, 2023 at 10:40:20AM +0100, Heiner Kallweit wrote:
+> After removal of the legacy EEPROM driver and I2C_CLASS_DDC support in
+> olpc_dcon there's no i2c client driver left supporting I2C_CLASS_DDC.
+> Class-based device auto-detection is a legacy mechanism and shouldn't
+> be used in new code. So we can remove this class completely now.
+>=20
+> Preferably this series should be applied via the i2c tree.
+>=20
+> v2:
+> - change tag in commit subject of patch 03
+> - add ack tags
+> v3:
+> - fix a compile error in patch 5
+> v4:
+> - more ack and review tags
+> v5:
+> - more acks
+>=20
+> Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 
-This fault/saftey/foobar interrupt is optional? So printing any error
-message it is missing does not seem like a good idea.
+I created an immutable branch for this which the buildbots will
+hopefully check over night. I will reply with comments tomorrow when I
+got the buildbot results.
 
-	Andrew
+
+--xLjxEuZaeN8xgDN1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmVfxTEACgkQFA3kzBSg
+KbarPBAAkN43LMGC9b1vpMsl5y6W1jnEMTjSF+7tzpFga/xsqL+jL9B/h0bO4NQ4
+ATDYno+0o6BwCEUeBSgYEs7/gNJHlWCq2SisLmhVXXOTzWZ09VRSPaXU49gXviog
+LZbTffK3ABbQSCBbzAhx6/Aog9BH2md1QBdbrCmkf/+i8OOhDUzPiyz6txmIimC2
+6YRBRpLdY1cnme1uvNPJv8GI8UYUgdrYeFQQd4qbPsz5WIzl5/MbMeev4jtUzXC0
+exE4jjPds5scEDyf7QdoeOsHRxZ5pGEu6/luiIhN+SFolyYWzX3Yun37Ac1WWmnR
+Wo97HN7iUlhAQVQ6phTbiVCp8HISNGiWkh/Z0/NoMPO21Vr4WV1/p4TX+5shPicc
+OhBT1NydXft0pPSmT0adOalbsEv4x4P3Oa0I6A+HQCea7Acsz5Ya1+AxY2LehDKz
+lyYnz7L0pcF+k3II/wqSeiK8CidamPnVPamCG+Df3F/NDBXEih9jaI23Hkjyp8xM
+7AO5GH/0ihgont0oYMIl6bAeK9BGrKOt0AM+fF0dC+byFDGxffRvFwYnPIqJfxCr
+6NKvDBM37nY4pHxbDu1b9iamk8WN3tpdrC/XZ8BxqKaciOF+w52ac/v4+znNeo2X
+J9U48VknVCyH0l1Fpph+/ukvqwpdWMVtk4GI2wgR7mdFp8c44Z8=
+=oQZk
+-----END PGP SIGNATURE-----
+
+--xLjxEuZaeN8xgDN1--
 
