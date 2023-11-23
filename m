@@ -1,110 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-1728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 450827F647A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 17:57:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CDC37F649B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 18:00:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 76C3C1C20D1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 16:57:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1049B20ED9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 17:00:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01BEC25546;
-	Thu, 23 Nov 2023 16:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8AB23FB2C;
+	Thu, 23 Nov 2023 17:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IiF42eD/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 664AD10E0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 08:57:10 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r6D0f-00058H-Lr; Thu, 23 Nov 2023 17:57:01 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r6D0f-00B55H-8o; Thu, 23 Nov 2023 17:57:01 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r6D0e-006ozs-W1; Thu, 23 Nov 2023 17:57:01 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Lee Jones <lee@kernel.org>
-Cc: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel@pengutronix.de
-Subject: [PATCH v2 13/18] mfd: qcom-pm8xxx: Convert to platform remove callback returning void
-Date: Thu, 23 Nov 2023 17:56:41 +0100
-Message-ID: <20231123165627.492259-14-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
-In-Reply-To: <20231123165627.492259-1-u.kleine-koenig@pengutronix.de>
-References: <20231123165627.492259-1-u.kleine-koenig@pengutronix.de>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49763E485;
+	Thu, 23 Nov 2023 17:00:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8D322C433CD;
+	Thu, 23 Nov 2023 17:00:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700758826;
+	bh=FvTcFGdL8EM0GPsWwPRvCVD/NzmnOuJxQCI1KGpza40=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=IiF42eD/jiBs9TaoiaHIhLbpzrx9VgYxuGEUS/26W8+bDx2T4yhhA06hJVdo55z2i
+	 jsl3MSii0ySB9RuDr5qKZJ1mrjbr1qCPn5QKRRMeefJBRFjYCG6gkfYJGHDoRrxEF5
+	 U9BNEiCvShPNASe7vghWqz8VJNOMG4hlyBGXogPsi6TDDTJk9hINVdjRDfmYJEY022
+	 ubLJUjfoKVtJzYzOKnF9EqspW50vbt1+pjP8ylRHWqupWMN1i6fkiM4DsMReA22W2j
+	 Z6AJmT3VbVDxATe8s7nQkkf2kSqJqOyZxVm6AT8tnckpdzyhMU8XRGeTlpPwF4k463
+	 wCeYPIRZ0JDBg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6C2F7C595D0;
+	Thu, 23 Nov 2023 17:00:26 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1720; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=kmmW3jQ8i81KFfqYxB0Ki4v/E6hUWk+ecQRLAZOVMi0=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlX4RKkkPvevqUyzElWksaJzFiy57xDrcoz/rI+ 5duKyqUVSGJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZV+ESgAKCRCPgPtYfRL+ Tos1CACw6arTk6jUW66Qko52akt9RHWRZbEU2z8w3FWnWDZ8FtMaRviddYr5vLNJkH8REHMKo59 luR8nZFEKsyzNBUKWMOFKsuY48gaVCYtOBgvZceoEGfAZK+DwX4gW6rw68yxAcIXsxZFV9fvfCa fkSK4SOlXt0J49eWjKFFKah99rcOD4wrm5Q9ODvI7ASlwEGgW6/8f8iU7Y2D+v33zFwmVbDqPLQ rumhqaQFkSFO9l+2yWuOvTIq7boaWo/vVwzev02a+2yt+MNeQBJLhaU080mT2KeMl+KAiLr3T7/ 74ZxAAx+1HKJIcTOFil15pq6m5TYfI9DKo7N1HeRwwgKQDIy
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH net v2] net: ipa: fix one GSI register field width
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <170075882643.541.6637672358181350446.git-patchwork-notify@kernel.org>
+Date: Thu, 23 Nov 2023 17:00:26 +0000
+References: <20231122231708.896632-1-elder@linaro.org>
+In-Reply-To: <20231122231708.896632-1-elder@linaro.org>
+To: Alex Elder <elder@linaro.org>
+Cc: davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+ pabeni@redhat.com, mka@chromium.org, andersson@kernel.org,
+ quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
+ quic_jponduru@quicinc.com, quic_subashab@quicinc.com, elder@kernel.org,
+ netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+Hello:
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+This patch was applied to netdev/net.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+On Wed, 22 Nov 2023 17:17:08 -0600 you wrote:
+> The width of the R_LENGTH field of the EV_CH_E_CNTXT_1 GSI register
+> is 24 bits (not 20 bits) starting with IPA v5.0.  Fix this.
+> 
+> Fixes: faf0678ec8a0 ("net: ipa: add IPA v5.0 GSI register definitions")
+> Signed-off-by: Alex Elder <elder@linaro.org>
+> ---
+> v2: Fixed erroneous commit hash in the "Fixes" tag.
+> 
+> [...]
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/mfd/qcom-pm8xxx.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+Here is the summary with links:
+  - [net,v2] net: ipa: fix one GSI register field width
+    https://git.kernel.org/netdev/net/c/37f0205538ba
 
-diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index 07c531bd1236..8b6285f687da 100644
---- a/drivers/mfd/qcom-pm8xxx.c
-+++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -585,19 +585,17 @@ static int pm8xxx_remove_child(struct device *dev, void *unused)
- 	return 0;
- }
- 
--static int pm8xxx_remove(struct platform_device *pdev)
-+static void pm8xxx_remove(struct platform_device *pdev)
- {
- 	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
- 
- 	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
- 	irq_domain_remove(chip->irqdomain);
--
--	return 0;
- }
- 
- static struct platform_driver pm8xxx_driver = {
- 	.probe		= pm8xxx_probe,
--	.remove		= pm8xxx_remove,
-+	.remove_new	= pm8xxx_remove,
- 	.driver		= {
- 		.name	= "pm8xxx-core",
- 		.of_match_table = pm8xxx_id_table,
+You are awesome, thank you!
 -- 
-2.42.0
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
