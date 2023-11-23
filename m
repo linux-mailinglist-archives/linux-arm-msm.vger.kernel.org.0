@@ -1,143 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-1660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9AE37F5AE3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 10:13:18 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25BBB7F5B2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 10:39:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 61BEC1F20EDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 09:13:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AA57CB20EEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 09:39:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CD6B1DFD1;
-	Thu, 23 Nov 2023 09:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEF2521112;
+	Thu, 23 Nov 2023 09:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e0OtR3Ep"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="m146CrM2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B87110;
-	Thu, 23 Nov 2023 01:13:10 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AN5e16q023357;
-	Thu, 23 Nov 2023 09:13:06 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D858D41;
+	Thu, 23 Nov 2023 01:39:11 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AN99CdQ010829;
+	Thu, 23 Nov 2023 09:39:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=R1MstDJ8CIIiWC33qCoujysCOOyU8yLgfVLN1jiD2TE=;
- b=e0OtR3EpVCON1pYiS0IZ/hi7colb1Jdk8vidZ2C1mtI2HHZvGhC6349Klw+Ndq4eJeLQ
- ZVr1mIA4I7HqvUFy/KFI3VluDP4wiR78j39U0Yy1VV7kOqF6hT36LWpOl87QIaRRMLU7
- 8lBv0N/JM5oPgfWyWONrbPGPg6aNmn42yYouwLlYB9zO3rMOy0Z5ig0P3EEruLWphG2Z
- jrUULSQBD+B3IhLk/h8JfHuUCQtUxBjDBOCBF2b7L8UOT5tEKQw5O4qbTyBVt9gr3isJ
- Grwnj6LK6829TYXPJI3d2ok7Ox9p+rF0xQagu2vFWrq7PUoGBa4Sjx6oqq7eXwad4arZ Ow== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uhf6ktvdp-1
+ bh=fVu0Dv71kyMzuO2gCH1AEla4mWG8l3Rv8Z188wvB89Y=;
+ b=m146CrM2qH5TPAfkyhORRyjbm1EygISNXHUk5lEUMCObTswmphdCg6ZjBPpkKFH3vti3
+ PHjZ5JnWRZRbYcMHXrTuZGXyPR92kMf1URDEnUJRw8uv/l1WNUG9uz4PB+3ZDpw1nrwf
+ LDM+W9ITtBNbS3IoiyZ+yTFixfy8jZWg28wRdsGUJj6wjegpkUdoPmPcxLeSDjvALc2T
+ YtbfkQAcZAmqhyI6kST3zNsGiAq9tlBBn78uD//mrdTQtEzm/Vx/+5UwFHvUgR+c5b/x
+ Rqo3Vu6gEil8WQoa6f1ReeNCN42TXnCXVtp9AqJ9n+/OQB3jFg2fDqzl9b1huQOWbTZT pw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj30x859y-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Nov 2023 09:13:06 +0000
+	Thu, 23 Nov 2023 09:39:07 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AN9D5Gf005021
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AN9d6vN005836
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 23 Nov 2023 09:13:05 GMT
-Received: from [10.216.59.116] (10.80.80.8) by nalasex01a.na.qualcomm.com
+	Thu, 23 Nov 2023 09:39:06 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 23 Nov
- 2023 01:13:01 -0800
-Message-ID: <a717ac7d-a112-4259-b28f-17a79069c766@quicinc.com>
-Date: Thu, 23 Nov 2023 14:42:57 +0530
+ 2023 01:39:02 -0800
+Message-ID: <b79e8a80-4ee3-e20a-cccf-5ed219072c1d@quicinc.com>
+Date: Thu, 23 Nov 2023 15:08:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] arm64: dts: qcom: Fix hs_phy_irq for
- SDM670/SDM845/SM6350
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_wcheng@quicinc.com>
-References: <20231122191452.3183-1-quic_kriskura@quicinc.com>
- <640523aa-6b14-417c-8a62-e02d17a26ce7@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH V2 1/2] dt-bindings: interconnect: Add Qualcomm X1E80100
+ SoC
 Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <640523aa-6b14-417c-8a62-e02d17a26ce7@linaro.org>
+To: Georgi Djakov <djakov@kernel.org>, <andersson@kernel.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
+CC: <agross@kernel.org>, <conor+dt@kernel.org>, <quic_rjendra@quicinc.com>,
+        <abel.vesa@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_tsoni@quicinc.com>,
+        <neil.armstrong@linaro.org>
+References: <20231117103035.25848-1-quic_sibis@quicinc.com>
+ <20231117103035.25848-2-quic_sibis@quicinc.com>
+ <77f39971-6d8a-4e1a-b7e6-bffb5fbf74db@kernel.org>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <77f39971-6d8a-4e1a-b7e6-bffb5fbf74db@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6hKz-unZF0ZBTsiw3422jSb4vadf7zOE
-X-Proofpoint-ORIG-GUID: 6hKz-unZF0ZBTsiw3422jSb4vadf7zOE
+X-Proofpoint-ORIG-GUID: DyrWU_syZ-AVBiFUFwyXhAqM93AZHLqv
+X-Proofpoint-GUID: DyrWU_syZ-AVBiFUFwyXhAqM93AZHLqv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-23_06,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- mlxlogscore=790 spamscore=0 suspectscore=0 impostorscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311230065
+ definitions=2023-11-23_07,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ mlxscore=0 bulkscore=0 phishscore=0 adultscore=0 clxscore=1015
+ mlxlogscore=999 lowpriorityscore=0 impostorscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311230068
 
 
 
-On 11/23/2023 2:21 PM, Krzysztof Kozlowski wrote:
-> On 22/11/2023 20:14, Krishna Kurapati wrote:
->> For sm6350/sdm670/sdm845, although they are qusb2 phy targets, dp/dm
->> interrupts are used for wakeup instead of qusb2_phy irq. These targets
->> were part of a generation that were the last ones to implement QUSB2 PHY
->> and the design incorporated dedicated DP/DM interrupts which eventually
->> carried forward to the newer femto based targets.
+On 11/22/23 20:22, Georgi Djakov wrote:
+> Hi Sibi,
+
+Hey Georgi,
+
+Thanks for taking time to review the series!
+
+> On 17.11.23 12:30, Sibi Sankar wrote:
+>> From: Rajendra Nayak <quic_rjendra@quicinc.com>
 >>
->> Add the missing pwr_event irq for these targets.
+>> The Qualcomm X1E80100 SoC has several bus fabrics that could be 
+>> controlled
+>> and tuned dynamically according to the bandwidth demand.
 >>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
+>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >> ---
->>   arch/arm64/boot/dts/qcom/sdm670.dtsi |  5 ++++-
->>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 10 ++++++++--
->>   arch/arm64/boot/dts/qcom/sm6350.dtsi |  7 +++++--
->>   3 files changed, 17 insertions(+), 5 deletions(-)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
->> index 6d9843d05cb3..b8888f71b1d6 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
->> @@ -1296,10 +1296,13 @@ usb_1: usb@a6f8800 {
->>   			assigned-clock-rates = <19200000>, <150000000>;
->>   
->>   			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
->> +				     <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
->>   				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
->>   				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
->>   				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
->> -			interrupt-names = "hs_phy_irq", "ss_phy_irq",
->> +			interrupt-names = "hs_phy_irq",
->> +					  "pwr_event",
->> +					  "ss_phy_irq",
->>   					  "dm_hs_phy_irq", "dp_hs_phy_irq";
+>> v2:
+>> * Update the part number from sc8380xp to x1e80100.
+>> * Fixup required property ordering [Krzysztof]
+>> * Pickup Rbs.
+>>
+>>   .../interconnect/qcom,x1e80100-rpmh.yaml      |  83 +++++++
+>>   .../interconnect/qcom,x1e80100-rpmh.h         | 207 ++++++++++++++++++
+>>   2 files changed, 290 insertions(+)
+>>   create mode 100644 
+>> Documentation/devicetree/bindings/interconnect/qcom,x1e80100-rpmh.yaml
+>>   create mode 100644 
+>> include/dt-bindings/interconnect/qcom,x1e80100-rpmh.h
 > 
-> New entries should be added usually to the end of the list. Commit msg
-> does not explain this to me why new entry is in the middle of the list.
+> [..]
 > 
+>> +#define MASTER_AV1_ENC                0
+>> +#define MASTER_CAMNOC_HF            1
+>> +#define MASTER_CAMNOC_ICP            2
+>> +#define MASTER_CAMNOC_SF            3
+>> +#define MASTER_EVA                4
+>> +#define MASTER_MDP                5
+>> +#define MASTER_VIDEO                6
+>> +#define MASTER_VIDEO_CV_PROC            7
+>> +#define MASTER_VIDEO_V_PROC            8
+>> +#define MASTER_CNOC_MNOC_CFG            9
+>> +#define SLAVE_MNOC_HF_MEM_NOC            10
+>> +#define SLAVE_MNOC_SF_MEM_NOC            11
+>> +#define SLAVE_SERVICE_MNOC            12
+>> +#define MASTER_MDP_DISP                13
+>> +#define SLAVE_MNOC_HF_MEM_NOC_DISP        14
+>> +
+>> +#define MASTER_CDSP_PROC            0
+>> +#define SLAVE_CDSP_MEM_NOC            1
+>> +
+>> +#define MASTER_PCIE_NORTH            0
+>> +#define MASTER_PCIE_SOUTH            0
+> 
+> This duplicate index looks like a typo?
 
-Actually there is no proper rationale from my end why I added them in 
-middle. The only reason I did it was that because in many places the 
-interrupt was mis-named or missing. So when making changes, I just put 
-the missing interrupt next to hs_phy_irq. But my reasoning doesn't make 
-much sense. Sorry for that.
+Thanks for catching ^^. Will fix it in the next re-spin.
 
-Thanks for the review. Will put the extra interrupt at the end.
+-Sibi
 
-Regards,
-Krishna,
+> 
+>> +#define SLAVE_ANOC_PCIE_GEM_NOC            3
+>> +#define MASTER_PCIE_NORTH_PCIE            4
+>> +#define MASTER_PCIE_SOUTH_PCIE            5
+>> +#define SLAVE_ANOC_PCIE_GEM_NOC_PCIE        6
+> [..]
+> 
+> Thanks,
+> Georgi
+> 
+> 
 
