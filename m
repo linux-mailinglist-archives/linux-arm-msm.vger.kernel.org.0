@@ -1,137 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-1700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77C887F6097
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:43:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD65A7F60A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:44:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A8DC21C21042
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 13:43:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6DEA6B20D3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 13:44:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 458CE25570;
-	Thu, 23 Nov 2023 13:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8C1725574;
+	Thu, 23 Nov 2023 13:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D2uOT1hL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O0iR60nv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com [IPv6:2a00:1450:4864:20::143])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47231D7E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 05:42:55 -0800 (PST)
-Received: by mail-lf1-x143.google.com with SMTP id 2adb3069b0e04-50abb83866bso1081997e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 05:42:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700746973; x=1701351773; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WIX6Y6OmD18tbJ/H2yRFYnNOAfgH4KdfJCuauNIg3HA=;
-        b=D2uOT1hLKrvZJBqbjWGSL7egFYpFSU8XxQdqC9em6RL8EKY2eW+LSOKvPIklt/Ef7j
-         kr3e2YPMxl7H5uYUVqR4rfTZjkGpHw1ozxrMNyChrx9dnxoCb+FwNoB+8W5pAhcozlYB
-         CsFr2jHHg/yOADB2Plk8xCQ/heJFUTOyMGgZ2qIOPwSlj0AHfJYXLQ2mR5IbPHqRFDuo
-         n0hX8eKAtkBUili8y3We0E3FteID7jm3ck3fdCDBqcfID2Awdz+0ak1Z6TQVwck+XBBq
-         JWvSd3OYCFSKixj/O27P5DMQXAP/P4jH5G1YTbv5iZaP+R0ON0xrjydieUV2gBo1ihgC
-         Q3tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700746973; x=1701351773;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WIX6Y6OmD18tbJ/H2yRFYnNOAfgH4KdfJCuauNIg3HA=;
-        b=tNcfLKbTK8rnZf4cCfUFgzBCGv2s+CU+vofFgU7uBRxuQKT6BDO8IabPLl1yd5Dagf
-         0NWYb5LT1j6TPnTUIMHvqVqVMkXHroSg1WTkSDpierCfP6Rs3P/rnogRvBZGUZNFGelv
-         IcScnBrYb/lN9RkPT8gHauF0UbJxHpkZJeaczUcLv6pMIH4zkXmbBOTCvU9td+jsIefv
-         3sLYvCB8b+nkwbEjm0ID02Tb3KkUo8uvhBi03RsRmrDSfTIyoAFCb32MBKiMfeOdAz3u
-         JHVpAj0luRJNjcMjt2BpMnSKKaW+IGnNyBi2Zgevz6UakFqAyM9FM1W/TwbHIrUoOC1S
-         Fh3w==
-X-Gm-Message-State: AOJu0YzuMklmAD1uK9i9nwehJehJVEAmBUJXBwL87YzdnWf0D2iv4siM
-	snMBVSF4bK9ntFcX+v7IXRYUGw==
-X-Google-Smtp-Source: AGHT+IG0uOhnZ0oXGp4jok8uSMhhwwR3X72qhblR6OJOvkgTiQCc/tbk0F5CdiH2tbybJtIGVJbw+A==
-X-Received: by 2002:a05:6512:32a7:b0:509:f68:ed8 with SMTP id q7-20020a05651232a700b005090f680ed8mr3763564lfe.61.1700746973454;
-        Thu, 23 Nov 2023 05:42:53 -0800 (PST)
-Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id w21-20020a05600c475500b0040b2976eb02sm2067241wmo.10.2023.11.23.05.42.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Nov 2023 05:42:52 -0800 (PST)
-Message-ID: <ee3f943d-3f29-415f-bcb0-94e6c8972597@linaro.org>
-Date: Thu, 23 Nov 2023 13:42:51 +0000
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EEB725561;
+	Thu, 23 Nov 2023 13:44:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A349C433C8;
+	Thu, 23 Nov 2023 13:44:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700747068;
+	bh=trYkMaqpWLmDB4oJKoY1+CJr1bJOUKmTS9Un+OPmKFg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O0iR60nvxcY0qV3BXuSd3E3+kk2rlD00vl2QflXaT3x8kIjB3SH99q8WMPevw7P5E
+	 bNTm+mpm2pxNjC9xPQbuB3x/IKG4XnGufxHxD0iPOVHnVf1qPad2Bt1F4ESuWukMIH
+	 zvQ8zPwGph1R53DSx9un/SlNOkzSAXkKp0xh0xk6rUGb65WCyv0z/P0dTdiq7zRwAb
+	 CTKBQ6oHAsCAFRSnhDdYtR8O5uU9e48wZ4zgyJezTH+vV3idEiozG5qFRTMOHj5wNQ
+	 G3Uu/R1HLqXLaR9+ZOOtCtOfDY5XW7AyRE0PCrCuk3pXAsCguNnFb4gx19DVMiSclI
+	 YxGgbMmcx8fpQ==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r6A0b-0004vo-0K;
+	Thu, 23 Nov 2023 14:44:45 +0100
+Date: Thu, 23 Nov 2023 14:44:45 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Felipe Balbi <balbi@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com,
+	ahalaney@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH v13 05/10] usb: dwc3: qcom: Refactor IRQ handling in QCOM
+ Glue driver
+Message-ID: <ZV9XTU-q038BaWn3@hovoldconsulting.com>
+References: <ZTY7Lwjd3_8NlfEi@hovoldconsulting.com>
+ <cabf24d0-8eea-4eb5-8205-bf7fe6017ec2@quicinc.com>
+ <ZTZ-EvvbuA6HpycT@hovoldconsulting.com>
+ <fb5e5e1d-520c-4cbc-adde-f30e853421a1@quicinc.com>
+ <ZTdqnSHq_Jo8AuPW@hovoldconsulting.com>
+ <04615205-e380-4719-aff1-f32c26004b14@quicinc.com>
+ <ZUz4RD3MjnLlPn6V@hovoldconsulting.com>
+ <6d4d959c-b155-471b-b13d-f6fda557cfe0@quicinc.com>
+ <ZVYTFi3Jnnljl48L@hovoldconsulting.com>
+ <e0789695-43ee-4285-95e9-4cdee24d6ffe@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 5/7] media: qcom: camss: Add support for named
- power-domains
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, hverkuil-cisco@xs4all.nl,
- laurent.pinchart@ideasonboard.com, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, matti.lehtimaki@gmail.com,
- quic_grosikop@quicinc.com
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231118-b4-camss-named-power-domains-v5-0-55eb0f35a30a@linaro.org>
- <20231118-b4-camss-named-power-domains-v5-5-55eb0f35a30a@linaro.org>
- <6e66875a-5cb1-42bc-86e0-b69cf73981c0@linaro.org>
- <339c3efd-8d2b-4b71-8dc1-cdc30ab7bb8a@linaro.org>
- <2628b928-248b-41c7-81e2-4e4252d2b0f7@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <2628b928-248b-41c7-81e2-4e4252d2b0f7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e0789695-43ee-4285-95e9-4cdee24d6ffe@quicinc.com>
 
-On 23/11/2023 11:49, Konrad Dybcio wrote:
-> 
-> 
-> On 11/22/23 21:55, Bryan O'Donoghue wrote:
->> On 22/11/2023 19:55, Konrad Dybcio wrote:
->>>
->>>
->>> On 11/18/23 13:11, Bryan O'Donoghue wrote:
->>>> Right now we use fixed indexes to assign power-domains, with a
->>>> requirement for the TOP GDSC to come last in the list.
->>>>
->>>> Adding support for named power-domains means the declaration in the 
->>>> dtsi
->>>> can come in any order.
->>>>
->>>> After this change we continue to support the old indexing - if a SoC
->>>> resource declaration or the in-use dtb doesn't declare power-domain 
->>>> names
->>>> we fall back to the default legacy indexing.
->>>>
->>>>  From this point on though new SoC additions should contain named
->>>> power-domains, eventually we will drop support for legacy indexing.
->>>>
->>>> Tested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
->>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>> ---
->>> So, this commit should be a NOP within this series?
->>>
->>> res->pd_name isn't defined anywhere afaics
->>>
->>> Konrad
->>
->> This series is mergeable though the linux-media tree standalone, yes.
->>
->> Once merged, the dtsi change given in the cover letter will be submitted.
-> What I meant to say is that something similar to [1] is missing to
-> make use of the infra introduced with this patch.
-> 
-> Konrad
-> 
-> [1] 
-> https://git.codelinaro.org/bryan.odonoghue/kernel/-/commit/f43942091c01c1f263a6e7adbcd0ed8ce723a303
+On Thu, Nov 23, 2023 at 01:02:24AM +0530, Krishna Kurapati PSSNV wrote:
 
-Yeah, to be honest I debated with myself whether or not to include that 
-patch since once defined the code here will execute looking for named pd.
+>   Pushed [1] to address all the queries and comments. I was initially 
+> looking at only Femto phy targets, but when I looked at all targets in 
+> general, seems there is one irq not defined in bindings. It is qubs2_phy 
+> irq which is named as "hs_phy_irq" on QUSB target DT's (both downstream 
+> and upstream).
+>
+> There is one actual "hs_phy_irq" as well but it is not used either by hs 
+> validation team or sw team on any target. It was put in for debug 
+> purpose only and doesn't have code to trigger it (even downstream never 
+> implemented it I suppose) Atleast 4.4 onwards I saw the code but I 
+> didn't see the actual hs_phy_irq being used. It was the qusb2_phy irq 
+> named as hs_phy_irq.
+> 
+> Even hw folks used it under the same name which is why they recommended 
+> using it on qusb2 targets and dp/dm on femto targets.
 
-I'm not opposed to sending a v6 to include this additional change 
-though, I've thoroughly tested on rb5.
+Ah, thanks for getting to the bottom of this.
 
----
-bod
+> On some targets the hs_phy_irq was given vector number of pwr_event irq 
+> also like sm8550/sm8450 etc., I tried to address those as well in the 
+> series.
+
+I can imagine that we have a number of such issues.
+
+> Also, per your question as to there are some qusb2 targets having dp/dm 
+> interrupts defined... It is only for SDM845/SDM670/SM6350 which were 
+> last in line of using qusb2 phy's and they started incorporating dp/dm 
+> interrupts.
+
+Ok.
+
+> Also added missing interrupts for qcs404/ipq5332.
+
+Thanks.
+
+> I didn't add missing interrupts on sc8280xp because I see that current 
+> interrupts present are working fine (I see ADB working and wakeup 
+> working as well), but the interrupt vector numbers are off by "1" 
+> between hs specifics and DT (both upstream and downstream). Will sort it 
+> out and clean that target up later.
+
+Which interrupt numbers are off by one here?
+ 
+> [1]: https://patchwork.kernel.org/project/linux-arm-msm/list/?series=803412
+
+I took a quick look at the series, and it looks like this will
+eventually clean things up a lot. We should probably define a generic
+order for the interrupts with the sometimes optional SS interrupts last.
+
+Side note: It looks like the threading in that series is broken.
+Consider using git-send-email for sending series as it takes care of
+things like that.
+
+Johan
 
