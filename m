@@ -1,152 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-1712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74A587F6159
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 15:24:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 51F117F6170
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 15:27:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 30518281B2B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:24:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 093AD281B6A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:27:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DD842FC47;
-	Thu, 23 Nov 2023 14:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94ED42FC50;
+	Thu, 23 Nov 2023 14:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VfSdJkXJ"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="I0uTW84K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BDA2FC42;
-	Thu, 23 Nov 2023 14:24:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DD5C433C8;
-	Thu, 23 Nov 2023 14:24:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700749488;
-	bh=qOdkWYm5UvV/HgiRSNx6MF2oGmugCohlm/2HC3o1mdI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VfSdJkXJvS+mtHT+AedviFCC5Fwt7buyviGMcgvclSiCLKck5taZwx6DN7+Vr8MhP
-	 bYybYMtsQZTERqVPVgMzznDeOf1dNbqGyLHKosiiJddBeeR+pcMCKhChs5saZodgtZ
-	 qyuOks1rpFxXU6apAiooZehcQudKVAwdNiPDZaWfLE22Q80auZXKk+Z5MWpQeEeLVd
-	 SVLaM9SA30kKgY3eDmsV2p9GzukXkgY/P/tyu7qwoaae1qytqDsCUX57l6Dwo3pBXd
-	 87u7lO+IrutWC/ytZT/CL1hhgVXrrI+WvBUmrLKbuvHvqeL5lShciRRRquuZ8UrG+D
-	 SyqprgaqzmibQ==
-Date: Thu, 23 Nov 2023 14:24:41 +0000
-From: Lee Jones <lee@kernel.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	linux-arm-kernel@lists.infradead.org, kernel@pengutronix.de,
-	Benson Leung <bleung@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	chrome-platform@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	linux-samsung-soc@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Tony Lindgren <tony@atomide.com>, linux-omap@vger.kernel.org,
-	Andy Gross <agross@kernel.org>,
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B024D6E;
+	Thu, 23 Nov 2023 06:27:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=M6ECVnm5lgJVKodC0naisWfJUSuAnOVd88vm1FjK2XM=; b=I0uTW84KZwen/D/8drpmgWT+jO
+	tsfe8n/9Ooc8sjh12y9g0EpHz4/sDdjvPgmjtt7tAS87ULOgEuYGAv/TOIiweJxQgfq1spPWwD5QW
+	pcKsN9q2rzfa+vW9hMxtj0lM+4vE9SkZ8lnRpdlrQ1Mcno/YIaCvBNIzPeqOjLv1BSBE=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1r6AfZ-00105f-3x; Thu, 23 Nov 2023 15:27:05 +0100
+Date: Thu, 23 Nov 2023 15:27:05 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	linux-stm32@st-md-mailman.stormreply.com
-Subject: Re: [PATCH 00/18] mfd: Convert to platform remove callback returning
- void
-Message-ID: <20231123142441.GA1354538@google.com>
-References: <20231106171708.3892347-1-u.kleine-koenig@pengutronix.de>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Qingfang Deng <dqfext@gmail.com>,
+	SkyLake Huang <SkyLake.Huang@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	David Epping <david.epping@missinglinkelectronics.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Harini Katakam <harini.katakam@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: Re: [net-next RFC PATCH 03/14] dt-bindings: net: document ethernet
+ PHY package nodes
+Message-ID: <c697488a-d34c-4c98-b4c7-64aef2fe583f@lunn.ch>
+References: <20231120135041.15259-1-ansuelsmth@gmail.com>
+ <20231120135041.15259-4-ansuelsmth@gmail.com>
+ <c21ff90d-6e05-4afc-b39c-2c71d8976826@lunn.ch>
+ <20231121144244.GA1682395-robh@kernel.org>
+ <a85d6d0a-1fc9-4c8e-9f91-5054ca902cd1@lunn.ch>
+ <655e4939.5d0a0220.d9a9e.0491@mx.google.com>
+ <6a030399-b8ed-4e2c-899f-d82eb437aafa@lunn.ch>
+ <655f2ba9.5d0a0220.294f3.38d8@mx.google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231106171708.3892347-1-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <655f2ba9.5d0a0220.294f3.38d8@mx.google.com>
 
-On Mon, 06 Nov 2023, Uwe Kleine-König wrote:
+> Just to be more precise qca807x can operate in 3 different mode:
+> (this is controlled by the MODE_CFG bits)
 
-> Hello,
-> 
-> this series converts all platform drivers below drivers/mfd to use
-> .remove_new(). Compared to the traditional .remove() callback
-> .remove_new() returns no value. This is a good thing because the driver
-> core doesn't (and cannot) cope for errors during remove. The only effect
-> of a non-zero return value in .remove() is that the driver core emits a
-> warning. The device is removed anyhow and an early return from .remove()
-> usually yields resource leaks and/or use-after-free bugs.
-> 
-> See commit 5c5a7680e67b ("platform: Provide a remove callback that
-> returns no value") for an extended explanation and the eventual goal.
-> 
-> All drivers converted here already returned zero unconditionally in
-> .remove(), so they are converted here trivially.
-> 
-> Best regards
-> Uwe
-> 
-> Uwe Kleine-König (18):
->   mfd: ab8500-sysctrl: Convert to platform remove callback returning
->     void
->   mfd: cros_ec_dev: Convert to platform remove callback returning void
->   mfd: exynos-lpass: Convert to platform remove callback returning void
->   mfd: fsl-imx25-tsadc: Convert to platform remove callback returning
->     void
->   mfd: hi655x-pmic: Convert to platform remove callback returning void
->   mfd: intel-lpss-acpi: Convert to platform remove callback returning
->     void
->   mfd: kempld-core: Convert to platform remove callback returning void
->   mfd: mcp-sa11x0: Convert to platform remove callback returning void
->   mfd: mxs-lradc: Convert to platform remove callback returning void
->   mfd: omap-usb-host: Convert to platform remove callback returning void
->   mfd: omap-usb-tll: Convert to platform remove callback returning void
->   mfd: pcf50633-adc: Convert to platform remove callback returning void
->   mfd: qcom-pm8xxx: Convert to platform remove callback returning void
->   mfd: sm501: Convert to platform remove callback returning void
->   mfd: stm32-timers: Convert to platform remove callback returning void
->   mfd: ti_am335x_tscadc: Convert to platform remove callback returning
->     void
->   mfd: tps65911-comparator: Convert to platform remove callback
->     returning void
->   mfd: twl4030-audio: Convert to platform remove callback returning void
+> - QSGMII: 5 copper port
 
-Looks like you missed the mailing list on a bunch of these.
+4 slots over QSGMII, plus the second SERDES is connected to the MAC
+using SGMII/1000BaseX?
 
-I'm going to remove this set for now.
+> - PSGMII: 5 copper port
 
-Could you please resubmit it and Cc: LKML?
+5 slots over QSGMII, the second SERDES is idle?
 
->  drivers/mfd/ab8500-sysctrl.c      | 6 ++----
->  drivers/mfd/cros_ec_dev.c         | 5 ++---
->  drivers/mfd/exynos-lpass.c        | 6 ++----
->  drivers/mfd/fsl-imx25-tsadc.c     | 6 ++----
->  drivers/mfd/hi655x-pmic.c         | 5 ++---
->  drivers/mfd/intel-lpss-acpi.c     | 6 ++----
->  drivers/mfd/kempld-core.c         | 6 ++----
->  drivers/mfd/mcp-sa11x0.c          | 6 ++----
->  drivers/mfd/mxs-lradc.c           | 6 ++----
->  drivers/mfd/omap-usb-host.c       | 5 ++---
->  drivers/mfd/omap-usb-tll.c        | 5 ++---
->  drivers/mfd/pcf50633-adc.c        | 6 ++----
->  drivers/mfd/qcom-pm8xxx.c         | 6 ++----
->  drivers/mfd/sm501.c               | 6 ++----
->  drivers/mfd/stm32-timers.c        | 6 ++----
->  drivers/mfd/ti_am335x_tscadc.c    | 6 ++----
->  drivers/mfd/tps65911-comparator.c | 6 ++----
->  drivers/mfd/twl4030-audio.c       | 6 ++----
->  18 files changed, 36 insertions(+), 68 deletions(-)
-> 
-> base-commit: 3ff7a5781ceee3befb9224d29cef6e6a4766c5fe
-> -- 
-> 2.42.0
-> 
+> - PSGMII: 4 copper port + 1 combo (that can be both fiber or copper)
 
--- 
-Lee Jones [李琼斯]
+5 slots over QSGMII, with the second SERDES connected to an SFP cage.
+
+Are ports 1-4 always connected to the P/Q SGMII. Its only port 5 which
+can use the second SERDES?
+
+Does changing between QSGMII and PSGMII really change the protocol run
+over the multiplex link? The clock rate is slower, there are only 4
+multiplexed slots vs five? Or does it keep using PSGMII and leaves one slot
+
+I can see how it is messy to validate, if you only have phy-mode. So
+maybe MODE_CFG is a package property. You then can validate the
+phy-mode against MODE_CFG.
+
+	 Andrew
 
