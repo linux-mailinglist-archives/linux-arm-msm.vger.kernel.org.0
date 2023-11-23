@@ -1,60 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-1658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 894D27F5A95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 09:52:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9AE37F5AE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 10:13:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B4ADF1C20CD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 08:52:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 61BEC1F20EDC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 09:13:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 686DF1CA9C;
-	Thu, 23 Nov 2023 08:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CD6B1DFD1;
+	Thu, 23 Nov 2023 09:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nsgrYWxW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e0OtR3Ep"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F076D46
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 00:52:27 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2c503dbe50dso7380221fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 00:52:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700729545; x=1701334345; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qXo/YwiaoH5ZvC/irA/vClrOryNWgMZU2qBtzv9XxzA=;
-        b=nsgrYWxWxDgR/pF66mVsDVH0kMhmqtx4JXk4ofZznvcZTH3yz6Aey/3X017N7aMVDf
-         iuHvR7L1PdK4Allkj2kPXzzwv13HLzQohz2HMp6hIQQuJl7S55YMewsm/a6HjfJdyjZi
-         dcYUZYeK5YiPc8bkWQgXVQpxfZ+4w1z393/FxalcvrJR6w2ezzhVRSyrzCrnRicO4SNC
-         RjpsN004/w5kS019OatoHlnGzmWqyQskcW0D+zXnRDPigaeDbgLxHTYUBKZYtVVEPnMl
-         KC3TJrRtCFcCcUvDlihmT862UJMxpnIxdHg0xgwD+pWRoHueTDCsYNeGyemr7aw4Gx3y
-         MaDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700729545; x=1701334345;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qXo/YwiaoH5ZvC/irA/vClrOryNWgMZU2qBtzv9XxzA=;
-        b=gU8lr3LuoKgu7kxOMlP2usZ4l0dd8IkSDXQnql5WKfRcBNRGCGDsQlpNPsQb0XbDPu
-         k/SW+3ls89u3rEvfmNG9tk0qq6QmzAYP94Pf/tdVkNBrKSV5KofAnHwjO5UYxXGkKYIc
-         9bW5Dm8BjD2KNJvTm9ciQdjUBgssHWXqRueMZQafnYLN6ahSSK3k2YP1b5Bj33t+SLlI
-         eCJJUi+rp8Ndpsz5MWWvWtK4b4+Gb0K5RKJ92EezYgR4FlpKqVr1YmDGrhIYpdnLYP8i
-         lcxyx3I34q8ejwVijk6d/bpFpC/ZhlGzlofh6eUEXPMWEI4ghNLsR6SddlYcg744jSLR
-         eWXQ==
-X-Gm-Message-State: AOJu0YxP6rcIJq4rJxpkv7lJBgMd2WvZmIsoIpDfvHA/LiC3e+v/JtJ3
-	cDAEAzF3YULhMtI0Rgysutp8BA==
-X-Google-Smtp-Source: AGHT+IHy/ImZJuYXxyfJvxeB1/O8OaiVG0GJaAlH7y+ZfVjGQyRkcCAN32SZNj8E1YUUJbBcvnBO+A==
-X-Received: by 2002:a2e:5443:0:b0:2c8:84ff:4a25 with SMTP id y3-20020a2e5443000000b002c884ff4a25mr3115144ljd.5.1700729545620;
-        Thu, 23 Nov 2023 00:52:25 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.100])
-        by smtp.gmail.com with ESMTPSA id h4-20020a05600c350400b0040b34720206sm1236285wmq.12.2023.11.23.00.52.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Nov 2023 00:52:25 -0800 (PST)
-Message-ID: <11233920-aaae-4256-b0a5-f283f710cd2b@linaro.org>
-Date: Thu, 23 Nov 2023 09:52:23 +0100
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B87110;
+	Thu, 23 Nov 2023 01:13:10 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AN5e16q023357;
+	Thu, 23 Nov 2023 09:13:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=R1MstDJ8CIIiWC33qCoujysCOOyU8yLgfVLN1jiD2TE=;
+ b=e0OtR3EpVCON1pYiS0IZ/hi7colb1Jdk8vidZ2C1mtI2HHZvGhC6349Klw+Ndq4eJeLQ
+ ZVr1mIA4I7HqvUFy/KFI3VluDP4wiR78j39U0Yy1VV7kOqF6hT36LWpOl87QIaRRMLU7
+ 8lBv0N/JM5oPgfWyWONrbPGPg6aNmn42yYouwLlYB9zO3rMOy0Z5ig0P3EEruLWphG2Z
+ jrUULSQBD+B3IhLk/h8JfHuUCQtUxBjDBOCBF2b7L8UOT5tEKQw5O4qbTyBVt9gr3isJ
+ Grwnj6LK6829TYXPJI3d2ok7Ox9p+rF0xQagu2vFWrq7PUoGBa4Sjx6oqq7eXwad4arZ Ow== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uhf6ktvdp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Nov 2023 09:13:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AN9D5Gf005021
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Nov 2023 09:13:05 GMT
+Received: from [10.216.59.116] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 23 Nov
+ 2023 01:13:01 -0800
+Message-ID: <a717ac7d-a112-4259-b28f-17a79069c766@quicinc.com>
+Date: Thu, 23 Nov 2023 14:42:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,77 +51,93 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 1/5] dt-bindings: net: qcom,ipa: add SM8550
- compatible
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: Fix hs_phy_irq for
+ SDM670/SDM845/SM6350
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_wcheng@quicinc.com>
+References: <20231122191452.3183-1-quic_kriskura@quicinc.com>
+ <640523aa-6b14-417c-8a62-e02d17a26ce7@linaro.org>
 Content-Language: en-US
-To: Alex Elder <elder@linaro.org>, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com
-Cc: andersson@kernel.org, konrad.dybcio@linaro.org, agross@kernel.org,
- mka@chromium.org, quic_cpratapa@quicinc.com, quic_avuyyuru@quicinc.com,
- quic_jponduru@quicinc.com, quic_subashab@quicinc.com, elder@kernel.org,
- netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231122230909.895482-1-elder@linaro.org>
- <20231122230909.895482-2-elder@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231122230909.895482-2-elder@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <640523aa-6b14-417c-8a62-e02d17a26ce7@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6hKz-unZF0ZBTsiw3422jSb4vadf7zOE
+X-Proofpoint-ORIG-GUID: 6hKz-unZF0ZBTsiw3422jSb4vadf7zOE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-23_06,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ mlxlogscore=790 spamscore=0 suspectscore=0 impostorscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311230065
 
-On 23/11/2023 00:09, Alex Elder wrote:
-> Add support for SM8550, which uses IPA v5.5.
+
+
+On 11/23/2023 2:21 PM, Krzysztof Kozlowski wrote:
+> On 22/11/2023 20:14, Krishna Kurapati wrote:
+>> For sm6350/sdm670/sdm845, although they are qusb2 phy targets, dp/dm
+>> interrupts are used for wakeup instead of qusb2_phy irq. These targets
+>> were part of a generation that were the last ones to implement QUSB2 PHY
+>> and the design incorporated dedicated DP/DM interrupts which eventually
+>> carried forward to the newer femto based targets.
+>>
+>> Add the missing pwr_event irq for these targets.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sdm670.dtsi |  5 ++++-
+>>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 10 ++++++++--
+>>   arch/arm64/boot/dts/qcom/sm6350.dtsi |  7 +++++--
+>>   3 files changed, 17 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+>> index 6d9843d05cb3..b8888f71b1d6 100644
+>> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+>> @@ -1296,10 +1296,13 @@ usb_1: usb@a6f8800 {
+>>   			assigned-clock-rates = <19200000>, <150000000>;
+>>   
+>>   			interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+>>   				     <GIC_SPI 486 IRQ_TYPE_LEVEL_HIGH>,
+>>   				     <GIC_SPI 488 IRQ_TYPE_LEVEL_HIGH>,
+>>   				     <GIC_SPI 489 IRQ_TYPE_LEVEL_HIGH>;
+>> -			interrupt-names = "hs_phy_irq", "ss_phy_irq",
+>> +			interrupt-names = "hs_phy_irq",
+>> +					  "pwr_event",
+>> +					  "ss_phy_irq",
+>>   					  "dm_hs_phy_irq", "dp_hs_phy_irq";
 > 
-> Signed-off-by: Alex Elder <elder@linaro.org>
-> ---
+> New entries should be added usually to the end of the list. Commit msg
+> does not explain this to me why new entry is in the middle of the list.
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Actually there is no proper rationale from my end why I added them in 
+middle. The only reason I did it was that because in many places the 
+interrupt was mis-named or missing. So when making changes, I just put 
+the missing interrupt next to hs_phy_irq. But my reasoning doesn't make 
+much sense. Sorry for that.
 
-Best regards,
-Krzysztof
+Thanks for the review. Will put the extra interrupt at the end.
 
+Regards,
+Krishna,
 
