@@ -1,105 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-1709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FD087F6131
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 15:13:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFDD17F6139
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 15:16:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D04231C2100F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:13:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9594F2810CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Nov 2023 14:16:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A77B2FC27;
-	Thu, 23 Nov 2023 14:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31A1A24A0F;
+	Thu, 23 Nov 2023 14:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZyD0Tn94"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mqaDA+Hi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D8B25555;
-	Thu, 23 Nov 2023 14:13:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D3AC433CA;
-	Thu, 23 Nov 2023 14:13:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700748828;
-	bh=AGcHXRfH/rMMp6hJ33VbDXNVCM278y+An/5lGPmz0s0=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ZyD0Tn94bo2vGeCq3N2ptlQvcAkslri04FYrRMwqbePwZ+mrHfj44rJe0x8L7Fwce
-	 nM70shIvtFAyssZZAbSm2yjkuolfpX77ONc+iFzORXqg6uf2+diIauo4Dp2dpWdFxM
-	 ZsFDThS7tkHIQHJaEDHKac4rgQkJbk8zm2KknhNQIMt0dk7iTD4FpPyFr4fcGnvYoq
-	 X10nmPcEwialBwZ3BDmP2Rt3cXsLBgf17igT9eEH9QEmw2wx4BRe5epvm4wuSoUyQu
-	 MxupRq4LoE4MP56WgzXG1SgKmztvRgpQgIi2+nTIqHFDsXcGurZph1gmaFL2siUG7X
-	 0R8Dzf1MUawjA==
-From: Lee Jones <lee@kernel.org>
-To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc: Linus Walleij <linus.walleij@linaro.org>, 
- linux-arm-kernel@lists.infradead.org, kernel@pengutronix.de, 
- Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, 
- chrome-platform@lists.linux.dev, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, linux-samsung-soc@vger.kernel.org, 
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>, 
- Tony Lindgren <tony@atomide.com>, linux-omap@vger.kernel.org, 
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, 
- Fabrice Gasnier <fabrice.gasnier@foss.st.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- linux-stm32@st-md-mailman.stormreply.com
-In-Reply-To: <20231106171708.3892347-1-u.kleine-koenig@pengutronix.de>
-References: <20231106171708.3892347-1-u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH 00/18] mfd: Convert to platform remove callback
- returning void
-Message-Id: <170074882434.1350828.3000645128153974049.b4-ty@kernel.org>
-Date: Thu, 23 Nov 2023 14:13:44 +0000
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50F39D40;
+	Thu, 23 Nov 2023 06:16:33 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ANCZU3o021136;
+	Thu, 23 Nov 2023 14:16:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=rIZzymLS3Ylg8j6esSrxq5S21SMx81sxQPWuNmJzoJ0=;
+ b=mqaDA+HiacW0dFoqvU1vZaLbJL0GJtXtSvq6iqyiBSqams6lfY1r6Xu4D/EjARz5hMIs
+ bIW5hLRWk1bqPKErhr5M0dgy+Jr3606WVLq2QsgIP4dxAZuRWgukOwcEtaPDdDWYqya4
+ rN5XQKZZd597HiQ2qqo6XvvMcohVJXggJT3/C/jiT5UtnlFo0luSsWgQuymNK0vzca5M
+ R+mPTJcyjqFIVWzHLuiRUfjA7MK1SNsYU7YJFrvoltmuoS2FrdYLPgoEUPDlfpubAV3s
+ QoOueExg8ttZPnogsor6Lbxw5LI2QfbhxMudMs0Nq0cmBWa6m4PKJo0nTtGYsDaFZwL2 xg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj6emr7nb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Nov 2023 14:16:29 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ANEGTZP006361
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 23 Nov 2023 14:16:29 GMT
+Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 23 Nov
+ 2023 06:16:25 -0800
+Message-ID: <9f0d2e6b-2648-083d-955c-484e9d899924@quicinc.com>
+Date: Thu, 23 Nov 2023 19:46:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.3
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: Add base qcs6490-rb3gen2 board
+ dts
+Content-Language: en-US
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Naina Mehta <quic_nainmeht@quicinc.com>
+References: <20231120134754.9526-1-quic_kbajaj@quicinc.com>
+ <20231120134754.9526-4-quic_kbajaj@quicinc.com>
+ <70402702-84d3-4577-9fd2-9e87add4283b@linaro.org>
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <70402702-84d3-4577-9fd2-9e87add4283b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: rWCSSSuUSpCKSNL32kasGDwHHIMIsfZI
+X-Proofpoint-GUID: rWCSSSuUSpCKSNL32kasGDwHHIMIsfZI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-23_12,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311230103
 
-On Mon, 06 Nov 2023 18:17:09 +0100, Uwe Kleine-König wrote:
-> this series converts all platform drivers below drivers/mfd to use
-> .remove_new(). Compared to the traditional .remove() callback
-> .remove_new() returns no value. This is a good thing because the driver
-> core doesn't (and cannot) cope for errors during remove. The only effect
-> of a non-zero return value in .remove() is that the driver core emits a
-> warning. The device is removed anyhow and an early return from .remove()
-> usually yields resource leaks and/or use-after-free bugs.
+Please ignore if received twice.
+
+On 11/20/2023 8:17 PM, Caleb Connolly wrote:
 > 
+> 
+> On 20/11/2023 13:47, Komal Bajaj wrote:
+>> Add DTS for Qualcomm qcs6490-rb3gen2 board which uses
+>> QCS6490 SoC. This adds debug uart and usb support along
+>> with regulators found on this board.
+> 
+> Hi,
+> 
+> I understand there was a lot of previous discussion around these two
+> boards, sorry to be bringing it up again here, but I have a few more
+> questions.
+> 
+> How similar are these two boards in terms of design? If they're derived
+> from the same reference schematic then I think this is a good
+> justification to de-duplicate the common DTS parts.
+
+These two are different boards and they don't follow same schema.
+
+> 
+> Dropping them in a diff tool [1] it seems as though the only changes are
+> the modem reserved memory for the IDP board, some minor regulator
+> changes, and the sdcard on the IDP board being enabled. However it's
+> important to differentiate between these just, being the same, vs them
+> being based on the same reference design.
+
+As I said in the other thread[1], the only difference between these two
+boards is just the memory map, we can always comeback and do refactor if
+there will be more common things to share between these IOT family
+platforms.
+
+[1]https://lore.kernel.org/linux-arm-msm/3d8a8943-af70-c291-d2d8-41067d8404f2@quicinc.com/
+
+> 
+> I left some comments on the parts that differ between the boards below,
+> but basically my question is: do these boards share enough of the same
+> *design* that it would make sense to have a "qcm6490-iot.dtsi" file with
+> the common reserved memory and regulators?
+> 
+> The IDP and rb3 boards would then inherit from there, avoiding a lot of
+> duplication and weirdness where some boards have certain regulator
+> properties that others don't with it being hard to tell if this is
+> intentional or not (this is the case with a lot of the existing upstream
+> devices).
+> 
+> On a related note, should we further split the rb3 board into a
+> qcs6490-whatever-som.dtsi file which may define the SoM specific parts?
+> This would undoubtebly make it easier for other boards based on the same
+> SoM to be bought up and kept up to date.
+> 
+> [1]: https://quickdiff.net/?unique_id=630F6851-C750-839E-1651-4CA6D997A74D
+> 
+> 
+
+I agree with your comment to have a common qcs6490-som.dtsi, but will do
+this once we upstream the other rb boards based this SoM.
+
 > [...]
+> 
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> new file mode 100644
+>> index 000000000000..f023dcf768f1
+>> --- /dev/null
+>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> @@ -0,0 +1,410 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + */
+>> +
+> [...]
+>> +
+>> +		vreg_l7b_2p952: ldo7 {
+> 
+> The IDP board defined voltages here for the sdcard, does the rb3 board
+> have an sdcard slot (if so which regulator does it use)?
+> 
+> Is there a reason not to define the same voltage range for this board?
 
-Applied, thanks!
+This regulator in IDP board is used for mmc (sdhc_1) and rb3 does not
+have it. Although both have sdcard and I have not pushed the support for
+it yet. Will add the voltage ranges here as it was a mistake.
 
-[01/18] mfd: ab8500-sysctrl: Convert to platform remove callback returning void
-        commit: 35cf346f9fa92ceb19c5d2edc4409a7d384da8ee
-[02/18] mfd: cros_ec_dev: Convert to platform remove callback returning void
-        commit: 981c92a1d65a7ccce2d814c66ff2deecca304672
-[03/18] mfd: exynos-lpass: Convert to platform remove callback returning void
-        commit: 2d859aa8e081884c0c02d738925cba23a8cfb1b8
-[04/18] mfd: fsl-imx25-tsadc: Convert to platform remove callback returning void
-        commit: f215b75acc85254a29404b32c871b7ff2ea8da2a
-[09/18] mfd: mxs-lradc: Convert to platform remove callback returning void
-        commit: beb1f9e6382f59339e118594c94ee6b5ac96f3ec
-[10/18] mfd: omap-usb-host: Convert to platform remove callback returning void
-        commit: 231927898ae91049aa35d237c556cc216d80e8f7
-[11/18] mfd: omap-usb-tll: Convert to platform remove callback returning void
-        commit: 83d4e355240147db7597ea1ce64624fcdaaee6ae
-[13/18] mfd: qcom-pm8xxx: Convert to platform remove callback returning void
-        commit: ae3bcd5b09e35f363aa1744d38f90fda2b40e9ca
-[15/18] mfd: stm32-timers: Convert to platform remove callback returning void
-        commit: aeebc47f8d479c363e24fba0201ef8dca417fe6e
-[18/18] mfd: twl4030-audio: Convert to platform remove callback returning void
-        commit: 3716978b584a8baaba16d64c93eb0fed0edcbc3b
+>> +			regulator-allow-set-load;
+> 
+> This property is set for rb3 but not for the idp board, even though this
+> regulator is unused, should this be set?
 
---
-Lee Jones [李琼斯]
+Again this was some downstream hack that got copied. Sorry for this.
+Will remove it.
+
+>> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +		};
+>> +
+> [...]
+>> +
+>> +		vreg_l9b_1p2: ldo9 {
+> Same question as above
+>> +			regulator-allow-set-load;
+> Same question
+>> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>> +		};
+>> +
+> [...]
+>> +		vreg_l19b_1p8: ldo19 {
+>> +			regulator-min-microvolt = <1800000>;
+>> +			regulator-max-microvolt = <2000000>;
+>> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> The IDP board has the regulator-allow-set-load property here, as well as
+> regulator-allowed-modes. This regulator is used for the sdcard on that
+> board. Is it used for anything on rb3? Can these properties be the same?
+
+As explained above, this property is used for mmc and not sdcard. As of
+now, not used.
+
+Thanks,
+Komal.
 
 
