@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-1882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F6D87F7B81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 19:05:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A3527F7DD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 19:27:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D1A82B2153C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 18:05:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15FAD282259
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 18:27:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BF86381D7;
-	Fri, 24 Nov 2023 18:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 304BE3A8E0;
+	Fri, 24 Nov 2023 18:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faYdgmB9"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPNWwE5E"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09240381D5;
-	Fri, 24 Nov 2023 18:05:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66885C433C7;
-	Fri, 24 Nov 2023 18:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B248C39FE3;
+	Fri, 24 Nov 2023 18:27:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE074C433C8;
+	Fri, 24 Nov 2023 18:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700849140;
-	bh=7gn0FXNzKrQDT6LRCYWKaem3vAud75VlTdIO6Jmyw3k=;
+	s=korg; t=1700850469;
+	bh=GNBBjODQIb2KqloBzYRl4FFdR5lyJyOuy0MFkIQECk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=faYdgmB9wWTNOf1QU3ONvuiCUPP5rWT0UNOfFCffj9Opb1wdr1x9a7/9dSwS00KgT
-	 AQTNGNNPQb4oiJGO7o340M98xYo3pvpBNJWQKcN9WdZJ6YCFLund1IljUWx0Av7CX6
-	 dmev10ts3I5laO7AlrQ1TQYyFrMDmqdyQAZ7tXXo=
+	b=LPNWwE5E+4ZiGEWlF68f4ZnldWZj7iovyVK/+NUXSGrFPyvQBTnsy26/hqN18tgeX
+	 xMpr+lmMf7MP3wDE8WjVwJlQa6wPe5LwC+2KnJeLApwMJhDj10naeZTUwoCj0mPTIz
+	 YScq8ru9ihRV28YSxQN37p2MRqGbOna5ZTjdj3Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,12 +45,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Kuogee Hsieh <quic_khsieh@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/530] drm/msm/dp: skip validity check for DP CTS EDID checksum
-Date: Fri, 24 Nov 2023 17:43:50 +0000
-Message-ID: <20231124172030.007562384@linuxfoundation.org>
+Subject: [PATCH 6.5 062/491] drm/msm/dp: skip validity check for DP CTS EDID checksum
+Date: Fri, 24 Nov 2023 17:44:58 +0000
+Message-ID: <20231124172026.517762782@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231124172028.107505484@linuxfoundation.org>
-References: <20231124172028.107505484@linuxfoundation.org>
+In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
+References: <20231124172024.664207345@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -62,7 +62,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.5-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
