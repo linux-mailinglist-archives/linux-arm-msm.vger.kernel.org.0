@@ -1,255 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-1877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 029DB7F7862
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 16:56:23 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 019717F79C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 17:59:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7A9B1B20B02
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:56:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AAEC5281324
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 16:59:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3575333094;
-	Fri, 24 Nov 2023 15:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45ADD2420D;
+	Fri, 24 Nov 2023 16:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="NYuGxzqA"
+	dkim=pass (2048-bit key) header.d=sartura.hr header.i=@sartura.hr header.b="D5dJfcqb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08588199A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 07:56:11 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-a00ac0101d9so288335766b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 07:56:10 -0800 (PST)
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB441988
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 08:59:27 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-5bde80aad05so1456327a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 08:59:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1700841369; x=1701446169; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=sartura.hr; s=sartura; t=1700845166; x=1701449966; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nw3Uf93v4iSEa/tdYMiQyvWyR4Di+Wg4uCLDclNVmg0=;
-        b=NYuGxzqABuzAmy6p/kptBJtRuMvWkMfsoJSnoYeqfe9MFUh4mKd6b/bEJZ5udax3tH
-         xzFWyA7g5o65v9079Tg0tYVMCAa4lfJarcKH3WeNSdycwiz9e2WbTKJV1UOjg16T/en1
-         7Ki9iYsLxkTjD/f+NPFb588cbentamfYG+dIdQ8ZLcW5Pnseoy4X4tfbNgqE48X45FrH
-         LfppJMWeSCpQT2MF7i752EHV8JOiLi9fnd0CRwaVRc991riZEoLhijudpYHv/DewCZ4P
-         u3TTcSZQvFDG1Q1JCdclHRTqon7Rh+YBUlnjnE53cA3h5d3DDEeF+7LpUtTJzIHtZ8MZ
-         g5/A==
+        bh=v0Guy2IikSc5MeYOJiXDfxaB0G9vo7MgKvXYX5tKlvo=;
+        b=D5dJfcqb8mc2kWNs4GeR16/WZyxftYQwMtDG84BUD4zhCLFSCPIvjBpyQsp/ZhzJAV
+         +umFMbNx7B5PZYLdSrk/9k9m2wby2qqYx+tIfHVr0fTEkG0LNrZd3QRnnzNMEwsVxsx3
+         B7raN8eqf6kH4+Ci32JD3GTUxHZvOwt+4ducbkxukE0yqgSeOBq8iARqqiid+/Ir366w
+         q0usQJIvAQQQkso/wTqiC/rCBQpuwXKF2+sQeysInn6vtNgZ1ojYLlURasPUmFaqopO6
+         K7xkB5wd+Ji/6IQ3rDuHFSLErKwhI+0u6aJgDOIXzsqdNPrrn2DBYZlJGerEuRDJG8V8
+         v6Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700841369; x=1701446169;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=nw3Uf93v4iSEa/tdYMiQyvWyR4Di+Wg4uCLDclNVmg0=;
-        b=HXrKc2AlA0m2XIL6FfmwBmP7fYu1eRifklWLQh6JUyoys2YehE4n7Xn0J+XC5JTChR
-         oNNT89UdiiQcu7+r3nnYMXp1/6UaAKrjt3hXk8OxkVtI2mpUP61KPtMF8ke34pRZcbQA
-         ZHj9dXpkAuwXzpfHiggJi/puhQ7Rg6DcijEN9k/p2lARzbNeQzF1snszRF+h7/FtMQ20
-         JnB0+3p2MmOW4LHuAxRN+We5JPf6M95KaNc8G1ZYNymH5Ti30ikPar1ZBQnF97t5sjdj
-         9v/e+Ezcjb5O/DWaEY1dfjZ1fscv4VSj+p5JjYN4V2dNMfa9S228SOMEexRD/fi9kTKv
-         Ezyw==
-X-Gm-Message-State: AOJu0Yw8hC4LOeioa63l/R5GKEyG3kA+A2uUchYSL66Fh92xkuLMhzGK
-	RVtvhmieTmwoqPUVgBgMExwTHA==
-X-Google-Smtp-Source: AGHT+IHdYT+wamtbURTY6Lg3vipmmatxHpZyDbbDEqCD+868icucZy3YUAsomjQh8KBK3Ob6gLqU1Q==
-X-Received: by 2002:a17:906:747:b0:9e2:af47:54c9 with SMTP id z7-20020a170906074700b009e2af4754c9mr2612285ejb.19.1700841369481;
-        Fri, 24 Nov 2023 07:56:09 -0800 (PST)
-Received: from localhost (dhcp-089-099-055-216.chello.nl. [89.99.55.216])
-        by smtp.gmail.com with ESMTPSA id k18-20020a17090646d200b009f826f1238esm2205215ejs.100.2023.11.24.07.56.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Nov 2023 07:56:09 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700845166; x=1701449966;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=v0Guy2IikSc5MeYOJiXDfxaB0G9vo7MgKvXYX5tKlvo=;
+        b=DVzVnOiXwCgs2ux/UBewyx8ALiz3QBrPhQ7grN3+bbIZEDeePUaweDTiRawUu/bsho
+         YeY8XrnUhHpwN7mIVXAKSs+dZ0HOBjLwU+Fnn984HWltAkGsDr//VbnubuziDDwJPG9Y
+         istxe05p/KJs2BEzq6DwOUjMAeZ99Pyl677dvO5IJO1b7uB7Bf5J1DzDSttgwv8lO1Ge
+         52+7MZ+rNVrCoGQhAfhu7J/U+7sB4mSx6knhVfoIA4Pn5otJr2F787sl8SopGWsN77O1
+         yCLfWb7qAujmfbDOPTaTK/nOuWyeh9QGJdgLC2RnYmgG+t0+3rj2Ue6A/fmYaWpgUi9I
+         FtKw==
+X-Gm-Message-State: AOJu0Yyyrq2Ws93wUQaj4f0pxkN9w3z4g2eSd5sKVQdCt/PVPs3Th59g
+	9N2/yWzerWILbxy3XUI1ftgtxfI8XG/Li+AlOZF3Zg==
+X-Google-Smtp-Source: AGHT+IHANFt6j41WeXiCE1lhK/kJd4IBW6feWSz0BdtxnVoWKOJ+Km1T0KP0R8Av6R6bQ+IbTqkv9F2Rqj6LSMBT64Q=
+X-Received: by 2002:a17:90b:1b07:b0:285:9d0d:7e3 with SMTP id
+ nu7-20020a17090b1b0700b002859d0d07e3mr1013190pjb.38.1700845166588; Fri, 24
+ Nov 2023 08:59:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <655e4939.5d0a0220.d9a9e.0491@mx.google.com> <6a030399-b8ed-4e2c-899f-d82eb437aafa@lunn.ch>
+ <655f2ba9.5d0a0220.294f3.38d8@mx.google.com> <c697488a-d34c-4c98-b4c7-64aef2fe583f@lunn.ch>
+ <ZV9jM7ve3Kl6ZxSl@shell.armlinux.org.uk> <e32d5c84-7a88-4d9f-868f-98514deae6e9@lunn.ch>
+ <655fa905.df0a0220.49d9b.7afd@mx.google.com> <367c0aea-b110-4e3f-a161-59d27db11188@quicinc.com>
+ <ZWCQv9oaACowJck0@shell.armlinux.org.uk> <4d159a99-f602-424e-a3c1-259c52e4d543@lunn.ch>
+ <ZWC+PbNjir7rT4MK@shell.armlinux.org.uk>
+In-Reply-To: <ZWC+PbNjir7rT4MK@shell.armlinux.org.uk>
+From: Robert Marko <robert.marko@sartura.hr>
+Date: Fri, 24 Nov 2023 17:59:15 +0100
+Message-ID: <CA+HBbNHkAxnTLo2N_-LtMCPhZLsqPAjpYUKBNoRqKc1qmbg=GQ@mail.gmail.com>
+Subject: Re: [net-next RFC PATCH 03/14] dt-bindings: net: document ethernet
+ PHY package nodes
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Cc: Andrew Lunn <andrew@lunn.ch>, Jie Luo <quic_luoj@quicinc.com>, 
+	Christian Marangi <ansuelsmth@gmail.com>, Rob Herring <robh@kernel.org>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+	Daniel Golle <daniel@makrotopia.org>, Qingfang Deng <dqfext@gmail.com>, 
+	SkyLake Huang <SkyLake.Huang@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	David Epping <david.epping@missinglinkelectronics.com>, 
+	Vladimir Oltean <olteanv@gmail.com>, Harini Katakam <harini.katakam@amd.com>, 
+	Simon Horman <horms@kernel.org>, netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 24 Nov 2023 16:56:08 +0100
-Message-Id: <CX75Y1X2QIN7.1GRH1YI56MMZ@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Vikash Garodia" <quic_vgarodia@quicinc.com>, "Dmitry Baryshkov"
- <dmitry.baryshkov@linaro.org>
-Cc: "Stanimir Varbanov" <stanimir.k.varbanov@gmail.com>, "Bryan O'Donoghue"
- <bryan.odonoghue@linaro.org>, "Andy Gross" <agross@kernel.org>, "Bjorn
- Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konrad.dybcio@linaro.org>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
- <cros-qcom-dts-watchers@chromium.org>, "Rob Herring" <robh+dt@kernel.org>,
- "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
- <conor+dt@kernel.org>, <~postmarketos/upstreaming@lists.sr.ht>,
- <phone-devel@vger.kernel.org>, <linux-media@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: Move video-firmware to
- chrome-common
-X-Mailer: aerc 0.15.2
-References: <20231002-sc7280-venus-pas-v2-0-bd2408891317@fairphone.com>
- <20231002-sc7280-venus-pas-v2-2-bd2408891317@fairphone.com>
- <4cfad910-1821-3a31-c372-3f6b199e8f71@quicinc.com>
- <CX5ENKY70B5J.2D6DXKGI4EGX3@fairphone.com>
- <ff021f49-f81b-0fd1-bd2c-895dbbb03d56@quicinc.com>
- <CX70EBXCOB66.3998C482R86CN@fairphone.com>
- <a29123a3-afe1-8f92-ff6c-835926d411af@quicinc.com>
- <CAA8EJppkjpMmcHCvxomgUMPxGpf77iN9roRvb=NEcxdk237-UA@mail.gmail.com>
- <e6d80982-1674-d0c4-9dbe-94d77079f6ba@quicinc.com>
-In-Reply-To: <e6d80982-1674-d0c4-9dbe-94d77079f6ba@quicinc.com>
 
-On Fri Nov 24, 2023 at 2:35 PM CET, Vikash Garodia wrote:
+On Fri, Nov 24, 2023 at 4:16=E2=80=AFPM Russell King (Oracle)
+<linux@armlinux.org.uk> wrote:
 >
+> On Fri, Nov 24, 2023 at 03:44:20PM +0100, Andrew Lunn wrote:
+> > >             First Serdes mode       Second Serdes mode
+> > > Option 1    PSGMII for copper       Disabled
+> > >             ports 0-4
+> > > Option 2    PSGMII for copper       1000BASE-X / 100BASE-FX
+> > >             ports 0-4
+> > > Option 3    QSGMII for copper       SGMII for
+> > >             ports 0-3               copper port 4
+> >
+> > With option 2, can the second SERDES also do SGMII? You are likely to
+> > need that when a Copper SFP module is inserted into the cage.
 >
-> On 11/24/2023 6:23 PM, Dmitry Baryshkov wrote:
-> > On Fri, 24 Nov 2023 at 14:30, Vikash Garodia <quic_vgarodia@quicinc.com=
-> wrote:
-> >>
-> >> On 11/24/2023 5:05 PM, Luca Weiss wrote:
-> >>> On Fri Nov 24, 2023 at 7:38 AM CET, Vikash Garodia wrote:
-> >>>>
-> >>>> On 11/22/2023 7:50 PM, Luca Weiss wrote:
-> >>>>> On Wed Nov 22, 2023 at 2:17 PM CET, Vikash Garodia wrote:
-> >>>>>>
-> >>>>>> On 10/2/2023 7:50 PM, Luca Weiss wrote:
-> >>>>>>> If the video-firmware node is present, the venus driver assumes w=
-e're on
-> >>>>>>> a system that doesn't use TZ for starting venus, like on ChromeOS
-> >>>>>>> devices.
-> >>>>>>>
-> >>>>>>> Move the video-firmware node to chrome-common.dtsi so we can use =
-venus
-> >>>>>>> on a non-ChromeOS devices.
-> >>>>>>>
-> >>>>>>> At the same time also disable the venus node by default in the dt=
-si,
-> >>>>>>> like it's done on other SoCs.
-> >>>>>>>
-> >>>>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> >>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>>>>>> ---
-> >>>>>>>  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 8 ++++++++
-> >>>>>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 6 ++----
-> >>>>>>>  2 files changed, 10 insertions(+), 4 deletions(-)
-> >>>>>>>
-> >>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b=
-/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>>>>>> index 5d462ae14ba1..cd491e46666d 100644
-> >>>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>>>>>> @@ -104,6 +104,14 @@ &scm {
-> >>>>>>>   dma-coherent;
-> >>>>>>>  };
-> >>>>>>>
-> >>>>>>> +&venus {
-> >>>>>>> + status =3D "okay";
-> >>>>>>> +
-> >>>>>>> + video-firmware {
-> >>>>>>> +         iommus =3D <&apps_smmu 0x21a2 0x0>;
-> >>>>>>> + };
-> >>>>>>> +};
-> >>>>>>> +
-> >>>>>>>  &watchdog {
-> >>>>>>>   status =3D "okay";
-> >>>>>>>  };
-> >>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/bo=
-ot/dts/qcom/sc7280.dtsi
-> >>>>>>> index 66f1eb83cca7..fa53f54d4675 100644
-> >>>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >>>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >>>>>>> @@ -3740,6 +3740,8 @@ venus: video-codec@aa00000 {
-> >>>>>>>                            <&apps_smmu 0x2184 0x20>;
-> >>>> 0x2184 is a secure SID. I think qcm6490-fairphone-fp5.dts needs to o=
-verride the
-> >>>> iommus property as well to retain only the non secure SID i.e 0x2180=
- ? I am
-> >>>> seeing below crash
-> >>>>
-> >>>> Call trace:
-> >>>> [   47.663593]  qcom_smmu_write_s2cr+0x64/0xa4
-> >>>> [   47.663616]  arm_smmu_attach_dev+0x120/0x284
-> >>>> [   47.663647]  __iommu_attach_device+0x24/0xf8
-> >>>> [   47.676845]  __iommu_device_set_domain+0x70/0xd0
-> >>>> [   47.681632]  __iommu_group_set_domain_internal+0x60/0x1b4
-> >>>> [   47.687218]  iommu_setup_default_domain+0x358/0x418
-> >>>> [   47.692258]  __iommu_probe_device+0x3e4/0x404
-> >>>>
-> >>>> Could you please reconfirm if Video SID 0x2184 (and mask) is allowed=
- by the
-> >>>> qcm6490-fairphone-fp5 hardware having TZ ?
-> >>>
-> >>> Hi,
-> >>>
-> >>> On FP5 it seems it's no problem to have both SIDs in there, probe and
-> >>> using venus appears to work fine.
-> >>>
-> >>> Are you using different firmware than QCM6490.LA.3.0 on the device wh=
-ere
-> >>> you tested this?
-> >> I was testing this on RB3 board which uses firmware [1].
-> >=20
-> > There is something wrong here.
-> >=20
-> > RB3 board uses venus-5.2
-> > RB5 board uses vpu-1.0
-> > Only sc7280 uses vpu-2.0
+> The document states "The fiber port supports 1000BASE-X/100BASE-FX".
 >
-> Tested on QCM6490 IDP board, which is QCOM internal board similar to RB3 =
-gen2.
+> The same is true of Marvell 88x3310's fiber port - it supports only
+> fiber not SGMII. This is actually something else that - when the
+> patches for stacked PHYs mature - will need to be addressed. If we
+> have a 1G copper SFP plugged into an interface that only supports
+> 1000base-X then we need a way to switch the PHY on the SFP module
+> to 1000base-X if it's in SGMII mode.
+>
+> Some copper SFPs come up in 1000base-X mode, and we currently rely
+> on the 88e1111 driver to switch them to SGMII mode. Others do want
+> SGMII mode (like Mikrotik RJ01 where the PHY is inaccessible and
+> thus can't be reconfigured.)
 
-In any case, I don't know much about the venus & iommu setup here. I can
-try removing the 0x2184 SID and test if venus still works on FP5.
-Also should the chromebooks keep that iommu entry or not?
+I can confirm that SGMII mode doesn't work with Option 2, I have tested thi=
+s
+a while ago with Mikrotik RJ01 (I think it has AR803x, but its not accessib=
+le as
+you pointed out) and it was somewhat working but in half duplex only
+and dropping
+packets.
+Currently, SFP mode is checked and only 1000Base-X and 100Base-FX are
+accepted, otherwise the module insert will return and error for unsupported
+mode.
 
-Regards
-Luca
+Regards,
+Robert
 
 >
-> >>
-> >> Regards,
-> >> Vikash
-> >>
-> >> [1]
-> >> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmwar=
-e.git/tree/qcom/vpu-2.0
-> >>
-> >>>>
-> >>>>>>>                   memory-region =3D <&video_mem>;
-> >>>>>>>
-> >>>>>>> +                 status =3D "disabled";
-> >>>>>>> +
-> >>>>>>>                   video-decoder {
-> >>>>>>>                           compatible =3D "venus-decoder";
-> >>>>>>>                   };
-> >>>>>>> @@ -3748,10 +3750,6 @@ video-encoder {
-> >>>>>>>                           compatible =3D "venus-encoder";
-> >>>>>>>                   };
-> >>>>>>>
-> >>>>>>> -                 video-firmware {
-> >>>>>>> -                         iommus =3D <&apps_smmu 0x21a2 0x0>;
-> >>>>>>> -                 };
-> >>>>>>> -
-> >>>>>>>                   venus_opp_table: opp-table {
-> >>>>>>>                           compatible =3D "operating-points-v2";
-> >>>>>>>
-> >>>>>>>
-> >>>>>> Changes look good. Is this tested on SC7280 ?
-> >>>>>
-> >>>>> Hi Vikash,
-> >>>>>
-> >>>>> I didn't test it myself on sc7280 (just qcm6490-fp5) but dtx_diff
-> >>>>> reports no differences except for status =3D okay property being ad=
-ded, so
-> >>>>> there should be no change on those boards. See below.
-> >>>>>
-> >>>>> Regards
-> >>>>> Luca
-> >>>>
-> >>>> I tested on SC7280 (herobrine) and all good.
-> >>>
-> >>> Great, thanks!
-> >>>
-> >>> Regards
-> >>> Luca
-> >>>
-> >>>>
-> >>>> Regards,
-> >>>> Vikash
-> >>>
-> >>
-> >=20
-> >=20
+> --
+> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
+
+
+--=20
+Robert Marko
+Staff Embedded Linux Engineer
+Sartura Ltd.
+Lendavska ulica 16a
+10000 Zagreb, Croatia
+Email: robert.marko@sartura.hr
+Web: www.sartura.hr
 
