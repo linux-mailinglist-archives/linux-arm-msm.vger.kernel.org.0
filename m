@@ -1,179 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-1839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F5BB7F734E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:03:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FA757F7383
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:13:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 614BC1C20D2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 12:03:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB6D01C20BF6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 12:13:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0380208BD;
-	Fri, 24 Nov 2023 12:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2D941D69B;
+	Fri, 24 Nov 2023 12:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ILYUcl4L"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XyXTx7gm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F66110E4;
-	Fri, 24 Nov 2023 04:02:54 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AOBfb7q026580;
-	Fri, 24 Nov 2023 12:02:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=i0ZZVH2qdfKzyLqwalxXNwcgDe0aXzPSCoyjnJLopwo=;
- b=ILYUcl4LzaMI2E6uW+yrL2m3ZesUOCI2c34VwUZoUFoyrMYPDQ9RIDMGqE0qUnOr0pAs
- Lgns+x3PRQr6JG6J4bqMwU44qhSN/gXuadYoGrpTEfZKZI4TwrF8JgDwOWGO1/oMQJcF
- qLyVedsFTvxWGyGWUJOAFIdVK+ha87k/FpXcDS32KFL+rJ7XhyQPVraqfYec+OXwaK5d
- TKJWKMs0KgMewskrOkomaOVHOcL+WV8GUc7xuWkVnnlYFHaT3WdbWj6sjGMM3ZpzhY9G
- hs818YwgojKx+jM4zJKr4CaWo/1G2jrGH9kwG4EJ0rLqOsLe3Er3H2k5cIeK9QAJu4cu 2Q== 
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C70D41;
+	Fri, 24 Nov 2023 04:13:31 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AOCAsgl016328;
+	Fri, 24 Nov 2023 12:13:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=rz563YY1JX0b3s/Lk0KhVHF1pD47OgZhG1O1yQT2quc=;
+ b=XyXTx7gmewMOkkKWkwmkgDPr1Hc+c7oeM+rUrak1+zan8ZLnY8HrX+oQnl2b+5BmkDDT
+ 1Si3lUEHB2f2O5xZHcdnvqcCnkcFmeBC3IAPi1FTybXiX13N/0NIDFIz7NDOM/gvoTw8
+ ZylFRyFPWSTM3gJ5vod9SgwRnpOoA7G74pq69XiThBgnqJaZjTBoI+cbI7kclkPjGFy8
+ XMc+2SIuxh8MIMNkCSsJIW0LgG+khNc1L73kIpZOLw+UUltJn6wlzaoyZNeT20Ibkbfe
+ rUYkImjjPX3vZpumyKUFUaZN+q/C0WQAgoVlXkjZXfP2yMAY9YoFBLJJW1yHj7aE/wDS hQ== 
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj4hwjs43-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ujptr0wq6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Nov 2023 12:02:48 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AOC2lee031400
+	Fri, 24 Nov 2023 12:13:28 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AOCDR1S013639
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Nov 2023 12:02:47 GMT
-Received: from [10.216.4.60] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 24 Nov
- 2023 04:02:41 -0800
-Message-ID: <1192d91f-11bf-44af-953a-14e08e2b6ca8@quicinc.com>
-Date: Fri, 24 Nov 2023 17:32:37 +0530
+	Fri, 24 Nov 2023 12:13:27 GMT
+Received: from hu-kbajaj-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 24 Nov 2023 04:13:23 -0800
+From: Komal Bajaj <quic_kbajaj@quicinc.com>
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Komal Bajaj <quic_kbajaj@quicinc.com>
+Subject: [PATCH v6 0/3] Add support for qcm6490 idp and qcs6490 rb3gen2 board
+Date: Fri, 24 Nov 2023 17:43:02 +0530
+Message-ID: <20231124121305.1954-1-quic_kbajaj@quicinc.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
- bindings
-To: Johan Hovold <johan@kernel.org>
-CC: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <quic_wcheng@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-usb@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
-References: <20231122191335.3058-1-quic_kriskura@quicinc.com>
- <ZV9dYpTYRXn63tXe@hovoldconsulting.com>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZV9dYpTYRXn63tXe@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GBPzJtLw6_8qhGlofgmoeSKy4TTdFYeX
-X-Proofpoint-ORIG-GUID: GBPzJtLw6_8qhGlofgmoeSKy4TTdFYeX
+X-Proofpoint-ORIG-GUID: MvwIh52SFoeoPvGpks-vbKJXPgFJrHH9
+X-Proofpoint-GUID: MvwIh52SFoeoPvGpks-vbKJXPgFJrHH9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-23_15,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 priorityscore=1501 bulkscore=0 mlxscore=0 mlxlogscore=820
- suspectscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311240093
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ bulkscore=0 mlxscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 mlxlogscore=568 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311240094
 
-> 
-> Thanks for sorting this out.
-> 
-> It seems like we have a few combinations of these interrupts and we
-> should probably try to define the order for these once and for all and
-> update the current devicetrees to match (even if it means adding new
-> interrupts in the middle).
-> 
-> Instead of adding separate compatibles for the controllers without SS
-> support, I suggest keeping that interrupt last as an optional one.
-> 
-> But IIUC we essentially have something like:
-> 
-> qusb2-:
-> 
-> 	- const: qusb2_phy
-> 	- const: pwr_event
-> 	- const: ss_phy_irq	(optional)
-> 
-> qusb2:
-> 
-> 	- const: hs_phy_irq
-> 	- const: qusb2_phy
-> 	- const: pwr_event
-> 	- const: ss_phy_irq	(optional)
-> 
-> qusb2+:
-> 
-> 	- const: hs_phy_irq
-> 	- const: qusb2_phy
-> 	- const: dp_hs_phy_irq
-> 	- const: dm_hs_phy_irq
-> 	- const: pwr_event
-> 	- const: ss_phy_irq	(optional)
-> 
+This series adds the dt-binding and base devicetree files for
+QCM6490 IDP based off QCM6490 SoC derived from SC7280 meant for
+various form factor including IoT and QCS6490 RB3Gen2 based
+off QCS6490 SoC derivative of QCM6490 without internal modem.
+See more at:
+https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documents/qcs-qcm6490-soc-product-brief_87-28733-1-b.pdf
 
-This combination doesn't exist. So we can skip this one.
+----
+Changes from v5:
+* Added vph-pwr-regulator node and regulator supply
+* Added the voltage range for ldo7 and ldo9 and removed regulator allowed modes for rb3gen2 board
+* Link to v5: https://lore.kernel.org/linux-arm-msm/20231120134754.9526-1-quic_kbajaj@quicinc.com/
 
-> femto-:
-> 	- const: dp_hs_phy_irq
-> 	- const: dm_hs_phy_irq
-> 	- const: pwr_event
-> 	- const: ss_phy_irq	(optional)
-> 
-> femto:
-> 	- const: hs_phy_irq
-> 	- const: dp_hs_phy_irq
-> 	- const: dm_hs_phy_irq
-> 	- const: pwr_event
-> 	- const: ss_phy_irq	(optional)
-> 
-> Does this look like it would cover all of our currents SoCs?
-> 
-> Do all of them have the pwr_event interrupt?
-> 
-Yes. From whatever targets I was able to find, only one of them didn't 
-have the power_event irq. Rest all of them had. I will recheck that 
-particular one again.
+Changes from v4:
+* Described the usecases for gpio-reserved-ranges
+* Added reviewed tag by Konrad in p2 and p3
+* Link to v4: https://lore.kernel.org/linux-arm-msm/20231117125056.32503-1-quic_kbajaj@quicinc.com/
 
-> Note that DP comes before DM above as that seems like the natural order
-> of these (plus before minus).
-> 
-> Now if the HS interrupt is truly unusable, I guess we can consider
-> dropping it throughout and the above becomes just three permutations
-> instead, which can even be expressed along the lines of:
-> 
+Changes from v3:
+* Removed qcm6490.dtsi file and moved all the contents to board file instead
+* Introducing QCS6490-RB3Gen2 board
+* Link to v3: https://lore.kernel.org/linux-arm-msm/20231003175456.14774-1-quic_kbajaj@quicinc.com/
 
-Infact, I wanted to do this but since you mentioned before that if HW 
-has it, we must describe it, I kept it in. But since this functionality 
-is confirmed to be mutually exclusive of qusb2/{dp/dm}, I am aligned to 
-skip it in bindings and drop it in DT.
+Changes from v2:
+* Sorted nodes alphabetically
+* Link to v2: https://lore.kernel.org/all/20231003055655.30994-1-quic_kbajaj@quicinc.com/
 
-> 	- anyOf:
-> 	  - items:
-> 	    - const: qusb2_phy
-> 	  - items:
-> 	    - const: dp_hs_phy_irq
-> 	    - const: dm_hs_phy_irq
-> 	- const: pwr_event
-> 	- const: ss_phy_irq	(optional)
-> 
+Changes from v1:
+* Dropped suffix platform from model name
+* Removed few nodes as they were identical to ones in sc7280
+* Specified regulator-initial-mode property to vregs
+* Dropped deletion of lpass and swr nodes
+* Link to v1: https://lore.kernel.org/lkml/20230928133312.11371-1-quic_kbajaj@quicinc.com/
 
-This must cover all cases AFAIK. How about we keep pwr_event also 
-optional for time being. The ones I am not able to find also would come 
-up under still binding block.
+Komal Bajaj (3):
+  dt-bindings: arm: qcom: Add QCM6490 IDP and QCS6490 RB3Gen2 board
+  arm64: dts: qcom: Add base qcm6490 idp board dts
+  arm64: dts: qcom: Add base qcs6490-rb3gen2 board dts
 
-Regards,
-Krishna,
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts      | 464 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts  | 452 +++++++++++++++++
+ 4 files changed, 920 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+
+--
+2.42.0
+
 
