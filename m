@@ -1,109 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-1822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A27D7F70E9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 11:09:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 81BAC7F70DD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 11:09:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 598F51C20ECF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 10:09:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B330F1C20F38
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 10:09:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C847918636;
-	Fri, 24 Nov 2023 10:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BAE418056;
+	Fri, 24 Nov 2023 10:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CawoYmjb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cx7Vnbda"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6D2A10E6;
-	Fri, 24 Nov 2023 02:09:28 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AO8f786006188;
-	Fri, 24 Nov 2023 10:09:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=QG7QbvcoFmQQG8HsO2lzOqmrQhyiCb3Jh1bIClVtbFg=;
- b=CawoYmjboo9pOtfk/FhfKLm7WQa3cGIvKY+E+Z9xzrTeCxIxS6sLGYnBY77HuRpCDjun
- K/9AfTjjM6BiO15FrOcMp/yfpsZZX2XzpfCvG6ZG6tIpehIZ7WfAo8QXiZ//lDukCPeU
- Bs1k3AzyzPSFb8Kr5DGzvojScIh0v8yU9VPDFISszB+n/Urm+9HJ5P8LJKyEU2JOwJMr
- hM5BFJFpUymkfO2e0S8f4xbo2jdx3k4lGe72Wj+CWZ6UQP4KuibyIcx3/ZgyT5lSLqwK
- k2yH0E1asBrSUAVpWmmLNjEEukfNSDsWlReSSj8IrNWEMj3n5zKfDz5gJIJTeEGHAsW6 lA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj6emt4se-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Nov 2023 10:09:15 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AOA9C44012381
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Nov 2023 10:09:12 GMT
-Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 24 Nov 2023 02:09:06 -0800
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <will@kernel.org>,
-        <robin.murphy@arm.com>, <joro@8bytes.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <agross@kernel.org>, <vkoul@kernel.org>, <quic_gurus@quicinc.com>,
-        <quic_rjendra@quicinc.com>, <abel.vesa@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <iommu@lists.linux.dev>, <quic_tsoni@quicinc.com>,
-        <neil.armstrong@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
-Subject: [PATCH V3 5/5] dt-bindings: interrupt-controller: qcom,pdc: document pdc on X1E80100
-Date: Fri, 24 Nov 2023 15:36:08 +0530
-Message-ID: <20231124100608.29964-6-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20231124100608.29964-1-quic_sibis@quicinc.com>
-References: <20231124100608.29964-1-quic_sibis@quicinc.com>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A57218035;
+	Fri, 24 Nov 2023 10:09:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A744FC433C7;
+	Fri, 24 Nov 2023 10:09:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700820564;
+	bh=79vzGQR14LIqiyrjE435UvwcyEj3FQtGfxLgj0DBfG4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cx7VnbdaZkkZAnBiPxYEIx64Y/JvpJGj5krvPkp1ZM+VpWMBH53OuLhAvX2kOKxy+
+	 8PK0c1nycIfaYd2hb9fAtLgJ65QtsndmtoUTFKSBH71GKd0xPQDwlr+p+oEnRpsp6t
+	 cF3I1ATnBHD9kKQbsLizzRB0az1GF6kWc5CAr1ceeE8PGlDde/l/r5vZ69MnfInUU1
+	 2nT0imREu5j8ABcRI5Bw32GgtSvyvbgVox7WEPwo/c9LeHmngVQm+e3G+bbUOrlCR4
+	 bhIpQRiLSefPtf3miU2GQzqAGi1IHFdmF5melWXbu3Jt6d2GQZLhdEmMc28NlpZzqI
+	 5LUKUc8Akpqig==
+Date: Fri, 24 Nov 2023 15:39:16 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: quic_jhugo@quicinc.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_cang@quicinc.com, quic_mrana@quicinc.com,
+	Hemant Kumar <quic_hemantk@quicinc.com>,
+	Lazarus Motha <quic_lmotha@quicinc.com>
+Subject: Re: [PATCH v4 4/4] bus: mhi: host: Take irqsave lock after TRE is
+ generated
+Message-ID: <20231124100916.GB4536@thinkpad>
+References: <1699939661-7385-1-git-send-email-quic_qianyu@quicinc.com>
+ <1699939661-7385-5-git-send-email-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: vZAhyOENSMSkhwiag__iiIxs5Z-9ArVB
-X-Proofpoint-GUID: vZAhyOENSMSkhwiag__iiIxs5Z-9ArVB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-23_15,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=875 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311240080
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1699939661-7385-5-git-send-email-quic_qianyu@quicinc.com>
 
-The X1E80100 SoC includes a PDC, document it.
+On Tue, Nov 14, 2023 at 01:27:41PM +0800, Qiang Yu wrote:
+> From: Hemant Kumar <quic_hemantk@quicinc.com>
+> 
+> If CONFIG_TRACE_IRQFLAGS is enabled, irq will be enabled once __local_bh_
+> enable_ip is called as part of write_unlock_bh. Hence, let's take irqsave
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
+"__local_bh_enable_ip" is a function name, so you should not break it.
 
-v3
-* Rebased to the latest lnext. [Krzysztof]
+> lock after TRE is generated to avoid running write_unlock_bh when irqsave
+> lock is held.
+> 
 
- .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
- 1 file changed, 1 insertion(+)
+I still don't understand this commit message. Where is the write_unlock_bh()
+being called?
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-index 8473afffce63..2f7320a5537e 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/qcom,pdc.yaml
-@@ -42,6 +42,7 @@ properties:
-           - qcom,sm8350-pdc
-           - qcom,sm8450-pdc
-           - qcom,sm8550-pdc
-+          - qcom,x1e80100-pdc
-       - const: qcom,pdc
- 
-   reg:
+- Mani
+
+> Signed-off-by: Hemant Kumar <quic_hemantk@quicinc.com>
+> Signed-off-by: Lazarus Motha <quic_lmotha@quicinc.com>
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> ---
+>  drivers/bus/mhi/host/main.c | 13 +++++--------
+>  1 file changed, 5 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index 33f27e2..d7abd0b 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -1128,17 +1128,15 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+>  	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
+>  		return -EIO;
+>  
+> -	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+> -
+>  	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
+> -	if (unlikely(ret)) {
+> -		ret = -EAGAIN;
+> -		goto exit_unlock;
+> -	}
+> +	if (unlikely(ret))
+> +		return -EAGAIN;
+>  
+>  	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, buf_info, mflags);
+>  	if (unlikely(ret))
+> -		goto exit_unlock;
+> +		return ret;
+> +
+> +	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+>  
+>  	/* Packet is queued, take a usage ref to exit M3 if necessary
+>  	 * for host->device buffer, balanced put is done on buffer completion
+> @@ -1158,7 +1156,6 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+>  	if (dir == DMA_FROM_DEVICE)
+>  		mhi_cntrl->runtime_put(mhi_cntrl);
+>  
+> -exit_unlock:
+>  	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+>  
+>  	return ret;
+> -- 
+> 2.7.4
+> 
+> 
+
 -- 
-2.17.1
-
+மணிவண்ணன் சதாசிவம்
 
