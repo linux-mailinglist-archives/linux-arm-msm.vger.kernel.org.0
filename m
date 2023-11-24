@@ -1,578 +1,278 @@
-Return-Path: <linux-arm-msm+bounces-1898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1900-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46FB47F85A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 22:51:54 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29A827F85E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 23:21:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F115828398F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 21:51:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 445141C20B12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 22:21:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EAFA3C08A;
-	Fri, 24 Nov 2023 21:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A233F3C684;
+	Fri, 24 Nov 2023 22:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d10Wz9gL"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dTSBcCuH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 229CD1BD0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 13:51:41 -0800 (PST)
-Received: by mail-qk1-x735.google.com with SMTP id af79cd13be357-778a6c440faso112021585a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 13:51:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700862700; x=1701467500; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5Xm1xhJP3anJSFxpLoyZ1zzy/M/WgmhkKvuuwSDDJOk=;
-        b=d10Wz9gL1sJsCFLrbQakoSMsQuYXcayJqPyG8TF0TWQ+rje2Sz03Q+b9Je8RevZUns
-         C8LcHGbzWLJh4Uo1t9Xq0wvDRvOlFBaNyQS3XOAwMoeoyVUV0S9Qma+Zp7Qcsgdw3pcT
-         eVQtXO+GvCElWXdPJW/BK704NlyMvnG/ijEtNlOjphnyk1vkuUXHcRIim+Tgd2yrKtLH
-         KYea0ugfm3Ujjm5AuXjUYLd89L1miruWBDIchamTWqY6EKEAydQqAaD2fM8cwZOyKlKl
-         VmuI7BxBFQMqnO/21KQXKlueB7pfjdp27ZJr0/UdzFDlwhKvuXxxG01FcuIWulVrLBHv
-         a5aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700862700; x=1701467500;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5Xm1xhJP3anJSFxpLoyZ1zzy/M/WgmhkKvuuwSDDJOk=;
-        b=WAJ+HGOkWnK0hbnazukXarurE14kG7S5vZGJcs86UYu3ZAtBtX9S/+wwgT00WAPuAp
-         8rZNcBhldVdJUPSvEdlRmblL8A8FhJEjLmJc7ekQpTKs1Gr6xJXY+oWSKBfKXeuGOQ3m
-         6woba6lC/VH5nRbhVyyq2ffSqoZO9lPdYCV0lOYzD8MEW0P6syKTxnLfWda2nWlhpigw
-         WySrsxTzqBT2zxoPs9oAUVsog/Ls3Gt0u9UuKlFtJtFI3xHgVXxrG3LzBgoUFlyz795T
-         6iSmzpYhxVGxnclR1PWv1sljnXOX+RwEnH4FepT6mjXyJKGKJcTNV5L49z1j0HF3exH3
-         1b4A==
-X-Gm-Message-State: AOJu0YyjZDmThHvGvLF9o7YJg7e5N9IyHCmxQQdF/Q1akgxwXpaqpxa7
-	qkk7XSQ8uyMeyXSN8S1kmHXFaw==
-X-Google-Smtp-Source: AGHT+IEfksZYqlgEngDTt+qIgv/HKyzPyan2Hxv8nWEviEKMAT25v/HiaQuc2umbEooYPfmpfC8Qfw==
-X-Received: by 2002:a05:620a:1b94:b0:778:8676:1dd9 with SMTP id dv20-20020a05620a1b9400b0077886761dd9mr4703045qkb.32.1700862699751;
-        Fri, 24 Nov 2023 13:51:39 -0800 (PST)
-Received: from ?IPV6:2003:e8:4710:ee01::f88? (p200300e84710ee010000000000000f88.dip0.t-ipconnect.de. [2003:e8:4710:ee01::f88])
-        by smtp.gmail.com with ESMTPSA id ro13-20020a05620a398d00b0077d74f884d9sm1420142qkn.117.2023.11.24.13.51.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Nov 2023 13:51:39 -0800 (PST)
-Message-ID: <35c8a100-79a1-4071-a038-36398a298e2f@linaro.org>
-Date: Fri, 24 Nov 2023 21:51:37 +0000
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B3DF10F7;
+	Fri, 24 Nov 2023 14:21:19 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AOMFPBt029499;
+	Fri, 24 Nov 2023 22:20:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=R3S+u3ZeOXdXyzfyx49yFJm2wHGcWXW01GWCrtZL834=;
+ b=dTSBcCuHu+iZT5tWuApQBL5kHUWUO7KsySs9VaeZwaYl2Fg8NzxJokowf6kYfo+sJz3R
+ stqxpVXf+JaouDNXyYokmKx+tlEj+CoDun2x//S4cjTrybQ3D+bJYYT5ZdTwpwvFVz5I
+ knamDNGgxZwz7fWTUMyJtFJq6AS1eLvl/24Lhgt+9xOPMK23cDvqqwuHx2cgtqfNL71f
+ tH3auNVO7gcDQlDseLl2nOziXF9KPqW8Hj7mDsgtQri2x2Wk4NFFnkYJORM/UYwvCrqf
+ w3VwaDECUZnyVacdwq/wd/TZOwL44iDNbcgCRcV3wCqBgk5xPM/V7rdYtwdZot9oTPSJ aA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj4hwm102-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Nov 2023 22:20:25 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AOMKOeh006632
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Nov 2023 22:20:24 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 24 Nov 2023 14:20:14 -0800
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.com>,
+        <mathieu.poirier@linaro.org>, <vigneshr@ti.com>, <nm@ti.com>,
+        <matthias.bgg@gmail.com>, <kgene@kernel.org>,
+        <alim.akhtar@samsung.com>, <bmasney@redhat.com>
+CC: <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>,
+        Mukesh Ojha <quic_mojha@quicinc.com>
+Subject: [Patch v6 00/12] Add Qualcomm Minidump driver related support
+Date: Sat, 25 Nov 2023 03:49:43 +0530
+Message-ID: <1700864395-1479-1-git-send-email-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/3] arm64: dts: qcom: Add base qcs6490-rb3gen2 board
- dts
-Content-Language: en-US
-To: Komal Bajaj <quic_kbajaj@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Naina Mehta <quic_nainmeht@quicinc.com>
-References: <20231124121305.1954-1-quic_kbajaj@quicinc.com>
- <20231124121305.1954-4-quic_kbajaj@quicinc.com>
-From: Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20231124121305.1954-4-quic_kbajaj@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FTtjlgsJs7xJcy_6yFfQJ_f2FygY4iYh
+X-Proofpoint-ORIG-GUID: FTtjlgsJs7xJcy_6yFfQJ_f2FygY4iYh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-24_09,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 mlxscore=0 mlxlogscore=999
+ suspectscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 clxscore=1011
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311240173
 
+Hi,
 
+Just for information,
+We have recently presented at LPC2023
+Abstract and PDF here:
+https://lpc.events/event/17/contributions/1468/
 
-On 24/11/2023 12:13, Komal Bajaj wrote:
-> Add DTS for Qualcomm qcs6490-rb3gen2 board which uses
-> QCS6490 SoC. This adds debug uart and usb support along
-> with regulators found on this board.
-> 
-> Co-developed-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Signed-off-by: Naina Mehta <quic_nainmeht@quicinc.com>
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Video:
+07:09:00 hrs at
+https://www.youtube.com/watch?v=68EBBgEltXA
 
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile            |   1 +
->   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 452 +++++++++++++++++++
->   2 files changed, 453 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 77babebe4904..4c0f9e4a2e5b 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -90,6 +90,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-fairphone-fp5.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-idp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> new file mode 100644
-> index 000000000000..0beab54c051e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> @@ -0,0 +1,452 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +/* PM7250B is configured to use SID8/9 */
-> +#define PM7250B_SID 8
-> +#define PM7250B_SID1 9
-> +
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> +#include "sc7280.dtsi"
-> +#include "pm7250b.dtsi"
-> +#include "pm7325.dtsi"
-> +#include "pm8350c.dtsi"
-> +#include "pmk8350.dtsi"
-> +
-> +/delete-node/ &ipa_fw_mem;
-> +/delete-node/ &remoteproc_mpss;
-> +/delete-node/ &rmtfs_mem;
-> +/delete-node/ &video_mem;
-> +/delete-node/ &wlan_ce_mem;
-> +/delete-node/ &xbl_mem;
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. Robotics RB3gen2";
-> +	compatible = "qcom,qcs6490-rb3gen2", "qcom,qcm6490";
-> +	chassis-type = "embedded";
-> +
-> +	aliases {
-> +		serial0 = &uart5;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +
-> +	reserved-memory {
-> +		xbl_mem: xbl@80700000 {
-> +			reg = <0x0 0x80700000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_secure_heap_mem: cdsp-secure-heap@81800000 {
-> +			reg = <0x0 0x81800000 0x0 0x1e00000>;
-> +			no-map;
-> +		};
-> +
-> +		camera_mem: camera@84300000 {
-> +			reg = <0x0 0x84300000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		wpss_mem: wpss@84800000 {
-> +			reg = <0x0 0x84800000 0x0 0x1900000>;
-> +			no-map;
-> +		};
-> +
-> +		adsp_mem: adsp@86100000 {
-> +			reg = <0x0 0x86100000 0x0 0x2800000>;
-> +			no-map;
-> +		};
-> +
-> +		cdsp_mem: cdsp@88900000 {
-> +			reg = <0x0 0x88900000 0x0 0x1e00000>;
-> +			no-map;
-> +		};
-> +
-> +		video_mem: video@8a700000 {
-> +			reg = <0x0 0x8a700000 0x0 0x700000>;
-> +			no-map;
-> +		};
-> +
-> +		cvp_mem: cvp@8ae00000 {
-> +			reg = <0x0 0x8ae00000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_fw_mem: ipa-fw@8b300000 {
-> +			reg = <0x0 0x8b300000 0x0 0x10000>;
-> +			no-map;
-> +		};
-> +
-> +		ipa_gsi_mem: ipa-gsi@8b310000 {
-> +			reg = <0x0 0x8b310000 0x0 0xa000>;
-> +			no-map;
-> +		};
-> +
-> +		gpu_microcode_mem: gpu-microcode@8b31a000 {
-> +			reg = <0x0 0x8b31a000 0x0 0x2000>;
-> +			no-map;
-> +		};
-> +
-> +		tz_stat_mem: tz-stat@c0000000 {
-> +			reg = <0x0 0xc0000000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
-> +		tags_mem: tags@c0100000 {
-> +			reg = <0x0 0xc0100000 0x0 0x1200000>;
-> +			no-map;
-> +		};
-> +
-> +		qtee_mem: qtee@c1300000 {
-> +			reg = <0x0 0xc1300000 0x0 0x500000>;
-> +			no-map;
-> +		};
-> +
-> +		trusted_apps_mem: trusted_apps@c1800000 {
-> +			reg = <0x0 0xc1800000 0x0 0x1c00000>;
-> +			no-map;
-> +		};
-> +
-> +		debug_vm_mem: debug-vm@d0600000 {
-> +			reg = <0x0 0xd0600000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +	};
-> +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <2500000>;
-> +		regulator-max-microvolt = <4350000>;
-> +	};
-> +};
-> +
-> +&apps_rsc {
-> +	regulators-0 {
-> +		compatible = "qcom,pm7325-rpmh-regulators";
-> +		qcom,pmic-id = "b";
-> +
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s2-supply = <&vph_pwr>;
-> +		vdd-s3-supply = <&vph_pwr>;
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-s6-supply = <&vph_pwr>;
-> +		vdd-s7-supply = <&vph_pwr>;
-> +		vdd-s8-supply = <&vph_pwr>;
-> +		vdd-l1-l4-l12-l15-supply = <&vreg_s7b_0p972>;
-> +		vdd-l2-l7-supply = <&vreg_bob_3p296>;
-> +		vdd-l3-supply = <&vreg_s2b_0p876>;
-> +		vdd-l5-supply = <&vreg_s2b_0p876>;
-> +		vdd-l6-l9-l10-supply = <&vreg_s8b_1p272>;
-> +		vdd-l8-supply = <&vreg_s7b_0p972>;
-> +		vdd-l11-l17-l18-l19-supply = <&vreg_s1b_1p872>;
-> +		vdd-l13-supply = <&vreg_s7b_0p972>;
-> +		vdd-l14-l16-supply = <&vreg_s8b_1p272>;
-> +
-> +		vreg_s1b_1p872: smps1 {
-> +			regulator-min-microvolt = <1840000>;
-> +			regulator-max-microvolt = <2040000>;
-> +		};
-> +
-> +		vreg_s2b_0p876: smps2 {
-> +			regulator-min-microvolt = <570070>;
-> +			regulator-max-microvolt = <1050000>;
-> +		};
-> +
-> +		vreg_s7b_0p972: smps7 {
-> +			regulator-min-microvolt = <535000>;
-> +			regulator-max-microvolt = <1120000>;
-> +		};
-> +
-> +		vreg_s8b_1p272: smps8 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1500000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_RET>;
-> +		};
-> +
-> +		vreg_l1b_0p912: ldo1 {
-> +			regulator-min-microvolt = <825000>;
-> +			regulator-max-microvolt = <925000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l2b_3p072: ldo2 {
-> +			regulator-min-microvolt = <2700000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l3b_0p504: ldo3 {
-> +			regulator-min-microvolt = <312000>;
-> +			regulator-max-microvolt = <910000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l4b_0p752: ldo4 {
-> +			regulator-min-microvolt = <752000>;
-> +			regulator-max-microvolt = <820000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		reg_l5b_0p752: ldo5 {
-> +			regulator-min-microvolt = <552000>;
-> +			regulator-max-microvolt = <832000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l6b_1p2: ldo6 {
-> +			regulator-min-microvolt = <1140000>;
-> +			regulator-max-microvolt = <1260000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l7b_2p952: ldo7 {
-> +			regulator-min-microvolt = <2400000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l8b_0p904: ldo8 {
-> +			regulator-min-microvolt = <870000>;
-> +			regulator-max-microvolt = <970000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l9b_1p2: ldo9 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l11b_1p504: ldo11 {
-> +			regulator-min-microvolt = <1504000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l12b_0p751: ldo12 {
-> +			regulator-min-microvolt = <751000>;
-> +			regulator-max-microvolt = <824000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l13b_0p53: ldo13 {
-> +			regulator-min-microvolt = <530000>;
-> +			regulator-max-microvolt = <824000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l14b_1p08: ldo14 {
-> +			regulator-min-microvolt = <1080000>;
-> +			regulator-max-microvolt = <1304000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l15b_0p765: ldo15 {
-> +			regulator-min-microvolt = <765000>;
-> +			regulator-max-microvolt = <1020000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l16b_1p1: ldo16 {
-> +			regulator-min-microvolt = <1100000>;
-> +			regulator-max-microvolt = <1300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l17b_1p7: ldo17 {
-> +			regulator-min-microvolt = <1700000>;
-> +			regulator-max-microvolt = <1900000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l18b_1p8: ldo18 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l19b_1p8: ldo19 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +
-> +	regulators-1 {
-> +		compatible = "qcom,pm8350c-rpmh-regulators";
-> +		qcom,pmic-id = "c";
-> +
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s2-supply = <&vph_pwr>;
-> +		vdd-s3-supply = <&vph_pwr>;
-> +		vdd-s4-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-s6-supply = <&vph_pwr>;
-> +		vdd-s7-supply = <&vph_pwr>;
-> +		vdd-s8-supply = <&vph_pwr>;
-> +		vdd-s9-supply = <&vph_pwr>;
-> +		vdd-s10-supply = <&vph_pwr>;
-> +		vdd-l1-l12-supply = <&vreg_s1b_1p872>;
-> +		vdd-l2-l8-supply = <&vreg_s1b_1p872>;
-> +		vdd-l3-l4-l5-l7-l13-supply = <&vreg_bob_3p296>;
-> +		vdd-l6-l9-l11-supply = <&vreg_bob_3p296>;
-> +		vdd-l10-supply = <&vreg_s7b_0p972>;
-> +		vdd-bob-supply = <&vph_pwr>;
-> +
-> +		vreg_s1c_2p19: smps1 {
-> +			regulator-min-microvolt = <2190000>;
-> +			regulator-max-microvolt = <2210000>;
-> +		};
-> +
-> +		vreg_s2c_0p752: smps2 {
-> +			regulator-min-microvolt = <750000>;
-> +			regulator-max-microvolt = <800000>;
-> +		};
-> +
-> +		vreg_s5c_0p752: smps5 {
-> +			regulator-min-microvolt = <465000>;
-> +			regulator-max-microvolt = <1050000>;
-> +		};
-> +
-> +		vreg_s7c_0p752: smps7 {
-> +			regulator-min-microvolt = <465000>;
-> +			regulator-max-microvolt = <800000>;
-> +		};
-> +
-> +		vreg_s9c_1p084: smps9 {
-> +			regulator-min-microvolt = <1010000>;
-> +			regulator-max-microvolt = <1170000>;
-> +		};
-> +
-> +		vreg_l1c_1p8: ldo1 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1980000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l2c_1p62: ldo2 {
-> +			regulator-min-microvolt = <1620000>;
-> +			regulator-max-microvolt = <1980000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l3c_2p8: ldo3 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <3540000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l4c_1p62: ldo4 {
-> +			regulator-min-microvolt = <1620000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l5c_1p62: ldo5 {
-> +			regulator-min-microvolt = <1620000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l6c_2p96: ldo6 {
-> +			regulator-min-microvolt = <1650000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l7c_3p0: ldo7 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l8c_1p62: ldo8 {
-> +			regulator-min-microvolt = <1620000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l9c_2p96: ldo9 {
-> +			regulator-min-microvolt = <2700000>;
-> +			regulator-max-microvolt = <35440000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l10c_0p88: ldo10 {
-> +			regulator-min-microvolt = <720000>;
-> +			regulator-max-microvolt = <1050000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l11c_2p8: ldo11 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l12c_1p65: ldo12 {
-> +			regulator-min-microvolt = <1650000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_l13c_2p7: ldo13 {
-> +			regulator-min-microvolt = <2700000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
-> +		vreg_bob_3p296: bob {
-> +			regulator-min-microvolt = <3008000>;
-> +			regulator-max-microvolt = <3960000>;
-> +		};
-> +	};
-> +};
-> +
-> +&qupv3_id_0 {
-> +	status = "okay";
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <32 2>, /* ADSP */
-> +			       <48 4>; /* NFC */
-> +};
-> +
-> +&uart5 {
-> +	compatible = "qcom,geni-debug-uart";
-> +	status = "okay";
-> +};
-> +
-> +&usb_1 {
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_dwc3 {
-> +	dr_mode = "peripheral";
-> +};
-> +
-> +&usb_1_hsphy {
-> +	vdda-pll-supply = <&vreg_l10c_0p88>;
-> +	vdda33-supply = <&vreg_l2b_3p072>;
-> +	vdda18-supply = <&vreg_l1c_1p8>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_1_qmpphy {
-> +	vdda-phy-supply = <&vreg_l6b_1p2>;
-> +	vdda-pll-supply = <&vreg_l1b_0p912>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&wifi {
-> +	memory-region = <&wlan_fw_mem>;
-> +};
-> --
-> 2.42.0
-> 
-> 
+This series should be applied on top of below series of some SCM patches sent here.
+ https://lore.kernel.org/lkml/1698945247-16033-1-git-send-email-quic_mojha@quicinc.com/
+
+Patch 1-2 enable support to enable multiple download mode
+Patch 3 deals in detail documentation on minidump.
+Patch 4-6 refactors minidump existing layout and separate it from remoteproc files.
+Patch 8 is the Qualcomm apss minidump driver.
+Patch 10-12 Enable support to reserve dynamic ramoops and the support to
+  register ramoops region with minidump.
+
+Changes in v6:
+ - Accumalated the feedback received on v5 and rebase v5 versions in v6.
+ - Removed the exported function as there is no current users of them.
+ - Applied [Pavan.K] suggestion on caller/callee placement of dynamic ramoops reserve memory.
+ - Addressed [krzysztof] comment on sizeof() and to have qcom_apss_md_table_exit().
+ - Addressed [Bagas.S] comment on minidump doc.
+ - Tried to implement [Kees] suggestion in slight different way with callback registration
+   with ramoops instead of pstore core.
+
+Change in rebase v5: https://lore.kernel.org/lkml/1694429639-21484-1-git-send-email-quic_mojha@quicinc.com/
+ - Rebased it on latest tag available on linux-next
+ - Added missed Poovendhan sign-off on 15/17 and tested-by tag from
+   Kathiravan. Thanks to him for testing and reminding me of missing sign-off.
+
+Changes in v5: https://lore.kernel.org/lkml/1694290578-17733-1-git-send-email-quic_mojha@quicinc.com/
+ - On suggestion from Pavan.k, to have single function call for minidump collection
+   from remoteproc driver, separated the logic to have separate minidump file called
+   qcom_rproc_minidump.c and also renamed the function from qcom_minidump() to
+   qcom_rproc_minidump(); however, dropped his suggestion about rework on lazy deletion
+   during region unregister in this series, will pursue it in next series.
+
+ - To simplify the minidump driver, removed the complication for frontend and different
+   backend from Greg suggestion, will pursue this once main driver gets mainlined.
+
+ - Move the dynamic ramoops region allocation from Device tree approach to command line
+   approch with the introduction command line parsing and memblock reservation during
+   early boot up; Not added documentation about it yet, will add if it gets positive
+   response.
+
+ - Exporting linux banner from kernel to make minidump build also as module, however,
+   minidump is a debug module and should be kernel built to get most debug information
+   from kernel.
+
+ - Tried to address comments given on dload patch series.
+
+Changes in v4: https://lore.kernel.org/lkml/1687955688-20809-1-git-send-email-quic_mojha@quicinc.com/
+ - Redesigned the driver and divided the driver into front end and backend (smem) so
+   that any new backend can be attached easily to avoid code duplication.
+ - Patch reordering as per the driver and subsystem to easier review of the code.
+ - Removed minidump specific code from remoteproc to minidump smem based driver.
+ - Enabled the all the driver as modules.
+ - Address comments made on documentation and yaml and Device tree file [Krzysztof/Konrad]
+ - Address comments made qcom_pstore_minidump driver and given its Device tree
+   same set of properties as ramoops. [Luca/Kees]
+ - Added patch for MAINTAINER file.
+ - Include defconfig change as one patch as per [Krzysztof] suggestion.
+ - Tried to remove the redundant file scope variables from the module as per [Krzysztof] suggestion.
+ - Addressed comments made on dload mode patch v6 version
+   https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+
+Changes in v3: https://lore.kernel.org/lkml/1683133352-10046-1-git-send-email-quic_mojha@quicinc.com/
+ - Addressed most of the comments by Srini on v2 and refactored the minidump driver.
+    - Added platform device support
+    - Unregister region support.
+ - Added update region for clients.
+ - Added pending region support.
+ - Modified the documentation guide accordingly.
+ - Added qcom_pstore_ramdump client driver which happen to add ramoops platform
+   device and also registers ramoops region with minidump.
+ - Added download mode patch series with this minidump series.
+    https://lore.kernel.org/lkml/1680076012-10785-1-git-send-email-quic_mojha@quicinc.com/
+
+Changes in v2: https://lore.kernel.org/lkml/1679491817-2498-1-git-send-email-quic_mojha@quicinc.com/
+ - Addressed review comment made by [quic_tsoni/bmasney] to add documentation.
+ - Addressed comments made by [srinivas.kandagatla]
+ - Dropped pstore 6/6 from the last series, till i get conclusion to get pstore
+   region in minidump.
+ - Fixed issue reported by kernel test robot.
+
+Changes in v1: https://lore.kernel.org/lkml/1676978713-7394-1-git-send-email-quic_mojha@quicinc.com/
+
+Minidump is a best effort mechanism to collect useful and predefined data
+for first level of debugging on end user devices running on Qualcomm SoCs.
+It is built on the premise that System on Chip (SoC) or subsystem part of
+SoC crashes, due to a range of hardware and software bugs.
+
+Qualcomm devices in engineering mode provides a mechanism for generating
+full system ramdumps for post mortem debugging. But in some cases it's
+however not feasible to capture the entire content of RAM. The minidump
+mechanism provides the means for selecting which snippets should be
+included in the ramdump.
+
+The core of SMEM based minidump feature is part of Qualcomm's boot
+firmware code. It initializes shared memory (SMEM), which is a part of
+DDR and allocates a small section of SMEM to minidump table i.e also
+called global table of content (G-ToC). Each subsystem (APSS, ADSP, ...)
+has their own table of segments to be included in the minidump and all
+get their reference from G-ToC. Each segment/region has some details
+like name, physical address and it's size etc. and it could be anywhere
+scattered in the DDR.
+
+Existing upstream Qualcomm remoteproc driver[1] already supports SMEM
+based minidump feature for remoteproc instances like ADSP, MODEM, ...
+where predefined selective segments of subsystem region can be dumped
+as part of coredump collection which generates smaller size artifacts
+compared to complete coredump of subsystem on crash.
+
+[1]
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/remoteproc/qcom_common.c#n142
+
+In addition to managing and querying the APSS minidump description,
+the Linux driver maintains a ELF header in a segment. This segment
+gets updated with section/program header whenever a new entry gets
+registered.
+
+Testing of these patches has been done on sm8450 target after enabling config like
+CONFIG_PSTORE_RAM/CONFIG_PSTORE_CONSOLE and once the device boots up.
+
+ echo mini > /sys/module/qcom_scm/parameters/download_mode
+
+Try crashing it via devmem2 0xf11c000(this is known to create xpu violation and
+and put the device in download mode) on command prompt.
+
+Default storage type is set to via USB, so minidump would be downloaded with the
+help of x86_64 machine (running PCAT tool) attached to Qualcomm device which has
+backed minidump boot firmware support.
+
+This will make the device go to download mode and collect the minidump on to the
+attached x86 machine running the Qualcomm PCAT tool(This comes as part Qualcomm
+package manager kit).
+
+After that we will see a bunch of predefined registered region as binary blobs files
+starts with md_* downloaded on the x86 machine on given location in PCAT tool from
+the target device, more about this can be found in qualcomm minidump guide patch.
+
+Mukesh Ojha (12):
+  firmware: qcom_scm: Refactor code to support multiple dload mode
+  firmware/qcom: qcom_scm: Add multiple download mode support
+  docs: qcom: Add qualcomm minidump guide
+  soc: qcom: Add qcom_rproc_minidump module
+  remoteproc: qcom_q6v5_pas: Use qcom_rproc_minidump()
+  remoteproc: qcom: Remove minidump related data from qcom_common.c
+  init: export linux_banner data variable
+  soc: qcom: Add Qualcomm APSS minidump kernel driver
+  MAINTAINERS: Add entry for minidump related files
+  pstore/ram: Add dynamic ramoops region support through commandline
+  pstore/ram: Add ramoops ready notifier support
+  soc: qcom: register ramoops region with APSS minidump
+
+ Documentation/admin-guide/index.rst         |   1 +
+ Documentation/admin-guide/qcom_minidump.rst | 272 +++++++++++
+ Documentation/admin-guide/ramoops.rst       |   7 +
+ MAINTAINERS                                 |  10 +
+ drivers/firmware/qcom/Kconfig               |  11 -
+ drivers/firmware/qcom/qcom_scm.c            |  62 ++-
+ drivers/remoteproc/Kconfig                  |   1 +
+ drivers/remoteproc/qcom_common.c            | 160 -------
+ drivers/remoteproc/qcom_q6v5_pas.c          |   3 +-
+ drivers/soc/qcom/Kconfig                    |  23 +
+ drivers/soc/qcom/Makefile                   |   2 +
+ drivers/soc/qcom/qcom_minidump.c            | 668 ++++++++++++++++++++++++++++
+ drivers/soc/qcom/qcom_minidump_internal.h   |  74 +++
+ drivers/soc/qcom/qcom_rproc_minidump.c      | 111 +++++
+ drivers/soc/qcom/smem.c                     |  20 +
+ fs/pstore/Kconfig                           |  15 +
+ fs/pstore/ram.c                             | 139 +++++-
+ include/linux/init.h                        |   3 +
+ include/linux/pstore_ram.h                  |  11 +
+ include/linux/soc/qcom/smem.h               |   2 +
+ include/soc/qcom/qcom_minidump.h            |  41 ++
+ init/main.c                                 |   2 +
+ init/version-timestamp.c                    |   3 +
+ 23 files changed, 1456 insertions(+), 185 deletions(-)
+ create mode 100644 Documentation/admin-guide/qcom_minidump.rst
+ create mode 100644 drivers/soc/qcom/qcom_minidump.c
+ create mode 100644 drivers/soc/qcom/qcom_minidump_internal.h
+ create mode 100644 drivers/soc/qcom/qcom_rproc_minidump.c
+ create mode 100644 include/soc/qcom/qcom_minidump.h
 
 -- 
-// Caleb (they/them)
+2.7.4
+
 
