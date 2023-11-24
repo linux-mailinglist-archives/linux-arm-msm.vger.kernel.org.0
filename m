@@ -1,303 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-1873-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF8F17F7784
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 16:19:10 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B28A77F77AE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 16:24:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B7DB1F20EE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:19:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54EFAB2178C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:24:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 778CE2E84C;
-	Fri, 24 Nov 2023 15:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 980C72EB0B;
+	Fri, 24 Nov 2023 15:23:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bWC1zE/3"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IhP5DcUu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DCB41723;
-	Fri, 24 Nov 2023 07:19:02 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-4079ed65582so13676505e9.1;
-        Fri, 24 Nov 2023 07:19:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700839140; x=1701443940; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R0/dU+s24A21H8KB1oHsdy9DBO1Q1Csxfdq88eybO/s=;
-        b=bWC1zE/3YuRVIpqeRoLz3sIoU0gkXLSPZt5/QZ6Rp5KDSXghKb8H03iEDiaBK5CG+0
-         ioxdjcSjOe61SKBKRklugQFCSCbsZIOSygw1TVfJlKNJu3vFO1U4/CoZTo/8dV/Y32Xb
-         LVvdhAibulc7uORNB5qO0DYjjzjZigUYS/F5FOXeVuX5iyOyvWWb+cYQt628S3kVxW+n
-         YeC9Uqpg4hO5CSwPVbsJ5wpVYp3UofuaMLJ6c2VI2KIGL1R0S+1TvoocJ9E9k/4CXJGC
-         gkojoUlAvNmcB1ZIsm55vycpz5J728voIrm6JIltLFMFyO3fLH7GWkQtQm8GAJcnc8KW
-         dHWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700839140; x=1701443940;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R0/dU+s24A21H8KB1oHsdy9DBO1Q1Csxfdq88eybO/s=;
-        b=cw+bV8I75Wa9nEs+J+zLY9FXta5Vy6wh5BWY6LAJGXVOEDFLXA4KDortIkA/jUA78/
-         LV40xAxZomMi7QwhgMa1WoKmjJUrIEQYdqa5xRe48DUDVogM/Mj/WcTxbjXzH4xLuPad
-         0JYA67PzE8qrP9IQSrNeW4dwQNW5nhhmQ25WTidIDebNb30+SL24+ss5OIe+8leK6/jw
-         FL12mgyttmj+rW5lZkzRDx/WnP9eVTOMRM44kUtDAf6JiO8u89767oWlFt+Gyjs5SdrH
-         EfQe3QOiDJ7X5C9Z/xNlDe7N230gCbCHIKa5vl1wFNDbWUksOlCieGo7CnP/1Afsb15G
-         3nAA==
-X-Gm-Message-State: AOJu0YwTiqgHarYdsOuxv+tH8OfU4iaq8y92gBYsckFZZugxHOoTQa+v
-	ID0ltiXjNH8gkB4PdkD2ftk=
-X-Google-Smtp-Source: AGHT+IEE5YKz/4ooMFfdZ+RwQzm3azmhoIA7WYOU9MXK+PiJoogDpOwVolUwITxe91fc/pyNQB6Luw==
-X-Received: by 2002:a05:600c:4507:b0:40b:338b:5f10 with SMTP id t7-20020a05600c450700b0040b338b5f10mr2815122wmo.32.1700839140192;
-        Fri, 24 Nov 2023 07:19:00 -0800 (PST)
-Received: from localhost.localdomain ([78.209.42.235])
-        by smtp.googlemail.com with ESMTPSA id x12-20020adff64c000000b0032dcb08bf94sm4513699wrp.60.2023.11.24.07.18.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 07:18:59 -0800 (PST)
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23882172A;
+	Fri, 24 Nov 2023 07:23:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1700839436; x=1732375436;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=hjHUasbUvdZyid1X5HvgmpQL0hPNRyInjUAbKjnNwBA=;
+  b=IhP5DcUudeE7JdZfJxS6kIaFYA3ATMgmU30Rst1mxKavhkUbHy4d7wVm
+   6g1i1RlOysSgptmXz6myS5Lsw3S00XnJbFtQFC9O5wumPYa2igtZPdFPa
+   cc/Aj/6U+Vn9w7R0luKH5VLiQtvJMU6RdJS3wlHP3BwyL7Vf+KYLDYmjl
+   RlmL47YhFWvSYAiLZSrSerkJmTLhgSPMKmbMyHHHtWMs46Zb9WhMUna+D
+   LyTJZsxwhTmsVIOFFYdhlqOZ5/sn83Xx0bzVGc3tVS87UGuieQK0vh2Bd
+   7wgJ41DDkXTY4C+85bSGUES2oI5AbUmi0eOCynCupfLRBtXoXvboLUQfu
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="456781780"
+X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
+   d="scan'208";a="456781780"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2023 07:23:55 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="1014935597"
+X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
+   d="scan'208";a="1014935597"
+Received: from lkp-server01.sh.intel.com (HELO d584ee6ebdcc) ([10.239.97.150])
+  by fmsmga006.fm.intel.com with ESMTP; 24 Nov 2023 07:23:50 -0800
+Received: from kbuild by d584ee6ebdcc with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r6Y20-0002wK-0N;
+	Fri, 24 Nov 2023 15:23:48 +0000
+Date: Fri, 24 Nov 2023 23:23:30 +0800
+From: kernel test robot <lkp@intel.com>
+To: Suraj Jaiswal <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
 	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH v7 3/3] clk: qcom: gcc-ipq8074: rework nss_port5/6 clock to multiple conf
-Date: Fri, 24 Nov 2023 16:18:47 +0100
-Message-Id: <20231124151847.1915-4-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231124151847.1915-1-ansuelsmth@gmail.com>
-References: <20231124151847.1915-1-ansuelsmth@gmail.com>
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Prasad Sodagudi <psodagud@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>
+Cc: oe-kbuild-all@lists.linux.dev, netdev@vger.kernel.org,
+	kernel@quicinc.com
+Subject: Re: [PATCH net-next v3 2/3] arm64: dts: qcom: sa8775p: enable Fault
+ IRQ
+Message-ID: <202311241629.yh1clHno-lkp@intel.com>
+References: <66690488f08912698301a2c203d7c562798806a2.1700737841.git.quic_jsuraj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <66690488f08912698301a2c203d7c562798806a2.1700737841.git.quic_jsuraj@quicinc.com>
 
-Rework nss_port5/6 to use the new multiple configuration implementation
-and correctly fix the clocks for these port under some corner case.
+Hi Suraj,
 
-This is particularly relevant for device that have 2.5G or 10G port
-connected to port5 or port 6 on ipq8074. As the parent are shared
-across multiple port it may be required to select the correct
-configuration to accomplish the desired clock. Without this patch such
-port doesn't work in some specific ethernet speed as the clock will be
-set to the wrong frequency as we just select the first configuration for
-the related frequency instead of selecting the best one.
+kernel test robot noticed the following build errors:
 
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
----
- drivers/clk/qcom/gcc-ipq8074.c | 120 +++++++++++++++++++++------------
- 1 file changed, 76 insertions(+), 44 deletions(-)
+[auto build test ERROR on net-next/main]
 
-diff --git a/drivers/clk/qcom/gcc-ipq8074.c b/drivers/clk/qcom/gcc-ipq8074.c
-index 63ac2ced76bb..595cb7bd4834 100644
---- a/drivers/clk/qcom/gcc-ipq8074.c
-+++ b/drivers/clk/qcom/gcc-ipq8074.c
-@@ -1681,15 +1681,23 @@ static struct clk_regmap_div nss_port4_tx_div_clk_src = {
- 	},
- };
- 
--static const struct freq_tbl ftbl_nss_port5_rx_clk_src[] = {
--	F(19200000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY1_RX, 12.5, 0, 0),
--	F(25000000, P_UNIPHY0_RX, 5, 0, 0),
--	F(78125000, P_UNIPHY1_RX, 4, 0, 0),
--	F(125000000, P_UNIPHY1_RX, 2.5, 0, 0),
--	F(125000000, P_UNIPHY0_RX, 1, 0, 0),
--	F(156250000, P_UNIPHY1_RX, 2, 0, 0),
--	F(312500000, P_UNIPHY1_RX, 1, 0, 0),
-+static const struct freq_conf ftbl_nss_port5_rx_clk_src_25[] = {
-+	C(P_UNIPHY1_RX, 12.5, 0, 0),
-+	C(P_UNIPHY0_RX, 5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port5_rx_clk_src_125[] = {
-+	C(P_UNIPHY1_RX, 2.5, 0, 0),
-+	C(P_UNIPHY0_RX, 1, 0, 0),
-+};
-+
-+static const struct freq_multi_tbl ftbl_nss_port5_rx_clk_src[] = {
-+	FMS(19200000, P_XO, 1, 0, 0),
-+	FM(25000000, ftbl_nss_port5_rx_clk_src_25),
-+	FMS(78125000, P_UNIPHY1_RX, 4, 0, 0),
-+	FM(125000000, ftbl_nss_port5_rx_clk_src_125),
-+	FMS(156250000, P_UNIPHY1_RX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY1_RX, 1, 0, 0),
- 	{ }
- };
- 
-@@ -1716,14 +1724,14 @@ gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias_map[] = {
- 
- static struct clk_rcg2 nss_port5_rx_clk_src = {
- 	.cmd_rcgr = 0x68060,
--	.freq_tbl = ftbl_nss_port5_rx_clk_src,
-+	.freq_multi_tbl = ftbl_nss_port5_rx_clk_src,
- 	.hid_width = 5,
- 	.parent_map = gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias_map,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "nss_port5_rx_clk_src",
- 		.parent_data = gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias,
- 		.num_parents = ARRAY_SIZE(gcc_xo_uniphy0_rx_tx_uniphy1_rx_tx_ubi32_bias),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_fm_ops,
- 	},
- };
- 
-@@ -1743,15 +1751,23 @@ static struct clk_regmap_div nss_port5_rx_div_clk_src = {
- 	},
- };
- 
--static const struct freq_tbl ftbl_nss_port5_tx_clk_src[] = {
--	F(19200000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY1_TX, 12.5, 0, 0),
--	F(25000000, P_UNIPHY0_TX, 5, 0, 0),
--	F(78125000, P_UNIPHY1_TX, 4, 0, 0),
--	F(125000000, P_UNIPHY1_TX, 2.5, 0, 0),
--	F(125000000, P_UNIPHY0_TX, 1, 0, 0),
--	F(156250000, P_UNIPHY1_TX, 2, 0, 0),
--	F(312500000, P_UNIPHY1_TX, 1, 0, 0),
-+static const struct freq_conf ftbl_nss_port5_tx_clk_src_25[] = {
-+	C(P_UNIPHY1_TX, 12.5, 0, 0),
-+	C(P_UNIPHY0_TX, 5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port5_tx_clk_src_125[] = {
-+	C(P_UNIPHY1_TX, 2.5, 0, 0),
-+	C(P_UNIPHY0_TX, 1, 0, 0),
-+};
-+
-+static const struct freq_multi_tbl ftbl_nss_port5_tx_clk_src[] = {
-+	FMS(19200000, P_XO, 1, 0, 0),
-+	FM(25000000, ftbl_nss_port5_tx_clk_src_25),
-+	FMS(78125000, P_UNIPHY1_TX, 4, 0, 0),
-+	FM(125000000, ftbl_nss_port5_tx_clk_src_125),
-+	FMS(156250000, P_UNIPHY1_TX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY1_TX, 1, 0, 0),
- 	{ }
- };
- 
-@@ -1778,14 +1794,14 @@ gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias_map[] = {
- 
- static struct clk_rcg2 nss_port5_tx_clk_src = {
- 	.cmd_rcgr = 0x68068,
--	.freq_tbl = ftbl_nss_port5_tx_clk_src,
-+	.freq_multi_tbl = ftbl_nss_port5_tx_clk_src,
- 	.hid_width = 5,
- 	.parent_map = gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias_map,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "nss_port5_tx_clk_src",
- 		.parent_data = gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias,
- 		.num_parents = ARRAY_SIZE(gcc_xo_uniphy0_tx_rx_uniphy1_tx_rx_ubi32_bias),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_fm_ops,
- 	},
- };
- 
-@@ -1805,15 +1821,23 @@ static struct clk_regmap_div nss_port5_tx_div_clk_src = {
- 	},
- };
- 
--static const struct freq_tbl ftbl_nss_port6_rx_clk_src[] = {
--	F(19200000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY2_RX, 5, 0, 0),
--	F(25000000, P_UNIPHY2_RX, 12.5, 0, 0),
--	F(78125000, P_UNIPHY2_RX, 4, 0, 0),
--	F(125000000, P_UNIPHY2_RX, 1, 0, 0),
--	F(125000000, P_UNIPHY2_RX, 2.5, 0, 0),
--	F(156250000, P_UNIPHY2_RX, 2, 0, 0),
--	F(312500000, P_UNIPHY2_RX, 1, 0, 0),
-+static const struct freq_conf ftbl_nss_port6_rx_clk_src_25[] = {
-+	C(P_UNIPHY2_RX, 5, 0, 0),
-+	C(P_UNIPHY2_RX, 12.5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port6_rx_clk_src_125[] = {
-+	C(P_UNIPHY2_RX, 1, 0, 0),
-+	C(P_UNIPHY2_RX, 2.5, 0, 0),
-+};
-+
-+static const struct freq_multi_tbl ftbl_nss_port6_rx_clk_src[] = {
-+	FMS(19200000, P_XO, 1, 0, 0),
-+	FM(25000000, ftbl_nss_port6_rx_clk_src_25),
-+	FMS(78125000, P_UNIPHY2_RX, 4, 0, 0),
-+	FM(125000000, ftbl_nss_port6_rx_clk_src_125),
-+	FMS(156250000, P_UNIPHY2_RX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY2_RX, 1, 0, 0),
- 	{ }
- };
- 
-@@ -1835,14 +1859,14 @@ static const struct parent_map gcc_xo_uniphy2_rx_tx_ubi32_bias_map[] = {
- 
- static struct clk_rcg2 nss_port6_rx_clk_src = {
- 	.cmd_rcgr = 0x68070,
--	.freq_tbl = ftbl_nss_port6_rx_clk_src,
-+	.freq_multi_tbl = ftbl_nss_port6_rx_clk_src,
- 	.hid_width = 5,
- 	.parent_map = gcc_xo_uniphy2_rx_tx_ubi32_bias_map,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "nss_port6_rx_clk_src",
- 		.parent_data = gcc_xo_uniphy2_rx_tx_ubi32_bias,
- 		.num_parents = ARRAY_SIZE(gcc_xo_uniphy2_rx_tx_ubi32_bias),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_fm_ops,
- 	},
- };
- 
-@@ -1862,15 +1886,23 @@ static struct clk_regmap_div nss_port6_rx_div_clk_src = {
- 	},
- };
- 
--static const struct freq_tbl ftbl_nss_port6_tx_clk_src[] = {
--	F(19200000, P_XO, 1, 0, 0),
--	F(25000000, P_UNIPHY2_TX, 5, 0, 0),
--	F(25000000, P_UNIPHY2_TX, 12.5, 0, 0),
--	F(78125000, P_UNIPHY2_TX, 4, 0, 0),
--	F(125000000, P_UNIPHY2_TX, 1, 0, 0),
--	F(125000000, P_UNIPHY2_TX, 2.5, 0, 0),
--	F(156250000, P_UNIPHY2_TX, 2, 0, 0),
--	F(312500000, P_UNIPHY2_TX, 1, 0, 0),
-+static const struct freq_conf ftbl_nss_port6_tx_clk_src_25[] = {
-+	C(P_UNIPHY2_TX, 5, 0, 0),
-+	C(P_UNIPHY2_TX, 12.5, 0, 0),
-+};
-+
-+static const struct freq_conf ftbl_nss_port6_tx_clk_src_125[] = {
-+	C(P_UNIPHY2_TX, 1, 0, 0),
-+	C(P_UNIPHY2_TX, 2.5, 0, 0),
-+};
-+
-+static const struct freq_multi_tbl ftbl_nss_port6_tx_clk_src[] = {
-+	FMS(19200000, P_XO, 1, 0, 0),
-+	FM(25000000, ftbl_nss_port6_tx_clk_src_25),
-+	FMS(78125000, P_UNIPHY1_RX, 4, 0, 0),
-+	FM(125000000, ftbl_nss_port6_tx_clk_src_125),
-+	FMS(156250000, P_UNIPHY1_RX, 2, 0, 0),
-+	FMS(312500000, P_UNIPHY1_RX, 1, 0, 0),
- 	{ }
- };
- 
-@@ -1892,14 +1924,14 @@ static const struct parent_map gcc_xo_uniphy2_tx_rx_ubi32_bias_map[] = {
- 
- static struct clk_rcg2 nss_port6_tx_clk_src = {
- 	.cmd_rcgr = 0x68078,
--	.freq_tbl = ftbl_nss_port6_tx_clk_src,
-+	.freq_multi_tbl = ftbl_nss_port6_tx_clk_src,
- 	.hid_width = 5,
- 	.parent_map = gcc_xo_uniphy2_tx_rx_ubi32_bias_map,
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "nss_port6_tx_clk_src",
- 		.parent_data = gcc_xo_uniphy2_tx_rx_ubi32_bias,
- 		.num_parents = ARRAY_SIZE(gcc_xo_uniphy2_tx_rx_ubi32_bias),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_fm_ops,
- 	},
- };
- 
+url:    https://github.com/intel-lab-lkp/linux/commits/Suraj-Jaiswal/dt-bindings-net-qcom-ethqos-add-binding-doc-for-fault-IRQ-for-sa8775p/20231123-202252
+base:   net-next/main
+patch link:    https://lore.kernel.org/r/66690488f08912698301a2c203d7c562798806a2.1700737841.git.quic_jsuraj%40quicinc.com
+patch subject: [PATCH net-next v3 2/3] arm64: dts: qcom: sa8775p: enable Fault IRQ
+config: arm64-defconfig (https://download.01.org/0day-ci/archive/20231124/202311241629.yh1clHno-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231124/202311241629.yh1clHno-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311241629.yh1clHno-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm64/boot/dts/qcom/sa8775p.dtsi:2344.10-11 syntax error
+   FATAL ERROR: Unable to parse input tree
+
 -- 
-2.40.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
