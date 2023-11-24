@@ -1,114 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-1789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0289F7F6DBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 09:11:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89F167F6DE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 09:18:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B23B028159C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 08:11:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C5D11C20E50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 08:18:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3C88C139;
-	Fri, 24 Nov 2023 08:10:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22A75BA29;
+	Fri, 24 Nov 2023 08:18:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GBTNUlzl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8999110E0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 00:10:48 -0800 (PST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r6RGq-0005NC-BY; Fri, 24 Nov 2023 09:10:40 +0100
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r6RGp-00BDaj-Rb; Fri, 24 Nov 2023 09:10:39 +0100
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1r6RGp-007Hhy-If; Fri, 24 Nov 2023 09:10:39 +0100
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Cc: linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Pengutronix Kernel Team <kernel@pengutronix.de>
-Subject: [PATCH 8/9] pmdomain: qcom-cpr: Convert to platform remove callback returning void
-Date: Fri, 24 Nov 2023 09:06:32 +0100
-Message-ID: <20231124080623.564924-9-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.42.0.586.gbc5204569f7d.dirty
-In-Reply-To: <20231124080623.564924-1-u.kleine-koenig@pengutronix.de>
-References: <20231124080623.564924-1-u.kleine-koenig@pengutronix.de>
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0EA2D48
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 00:18:23 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-a049d19b63bso224825066b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 00:18:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700813902; x=1701418702; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RXYsI3U3Cf5rOwPR0MYwUlHIIqZZ1jITVSihrQ3lNMg=;
+        b=GBTNUlzlaukflyfmJgOtG0uyN0NQDh8smopKmvnQKRjppSXS7G4QAKD4oaH/T4WSOI
+         gPqcg2txQ9w+kW6w1OanNdPmPklUuUifB79te5QgcImFJa+ypM00HgklUbwj16FdILde
+         xzJd/pB4KhkfZE1GrX9ml6EhHg3Jle9Yan+i5U5cYkvupKYMQrmY5yrF5f1QI5Yx+jYi
+         KoxfG2A1NvaoHoIm7OGYiXPYRmtPYnsgE5gGb6dB41lCSJiaSblM+2jpOaEquC8NxZPS
+         MqRHdFA17wu3d8QtNT5H2qG/UkNrBgqrZnqfOTnKfuEH+Ao4lrJ3RUiUNJ3ALWMTTth7
+         qTGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700813902; x=1701418702;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RXYsI3U3Cf5rOwPR0MYwUlHIIqZZ1jITVSihrQ3lNMg=;
+        b=oHl41ZfdkiMTf7TwIRIHB2TfCR1cA2c5tpNZYdj10fEk6PbzStGlGtfBlDrmA4pJOj
+         TvI1bZT2da1zZkPYbpjDrtq+HWLGkknEtchFBuRcOjc7zpO8zjqXnfbyJ7PdXW+gmYxY
+         K8qC8DJIRewqs0J/Mr85CS4QWHIqvVPMS526wtynjk044kV7SzxiHdBl0N89KXmRPa/e
+         ogHq7/ECMMvfyrYtJQRKKovDhwEoU2ear8gsUTxhs41KgUZcjRy2EsgreohyucD4Kdpm
+         GP4JflO5F3dgaW+APw7aDdSP0mEtUApuvlSWzevoi7ZtXg3MSmBYmnNwDXgRnkALNHCc
+         EaaA==
+X-Gm-Message-State: AOJu0Yz4x3vP7rbpmFybmTVU+tSFq39HAgZFwcSDg6ygZJ3u1PnSPrl4
+	RiaIRdx3z9gL3y5l2hi5GHus8w==
+X-Google-Smtp-Source: AGHT+IGi4yefRTEuIbnEmqG6dM6wTx+vJA+iEtdev0YV97uzl13vTqwoGOjEmHrWZnWIvheKEYrdFA==
+X-Received: by 2002:a17:906:c411:b0:a04:e1e7:cce4 with SMTP id u17-20020a170906c41100b00a04e1e7cce4mr1288174ejz.51.1700813902283;
+        Fri, 24 Nov 2023 00:18:22 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.100])
+        by smtp.gmail.com with ESMTPSA id cf16-20020a170906b2d000b0099bd7b26639sm1761699ejb.6.2023.11.24.00.18.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Nov 2023 00:18:21 -0800 (PST)
+Message-ID: <7c9135e0-da6e-4e1a-b673-af6c73d8ee45@linaro.org>
+Date: Fri, 24 Nov 2023 09:18:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v3 1/3] dt-bindings: net: qcom,ethqos: add
+ binding doc for fault IRQ for sa8775p
+Content-Language: en-US
+To: Suraj Jaiswal <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Jose Abreu <joabreu@synopsys.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ Prasad Sodagudi <psodagud@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>
+Cc: kernel@quicinc.com
+References: <cover.1700737841.git.quic_jsuraj@quicinc.com>
+ <ff458955a24c0cb4ba41158b8b53fbef00c8237d.1700737841.git.quic_jsuraj@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <ff458955a24c0cb4ba41158b8b53fbef00c8237d.1700737841.git.quic_jsuraj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1809; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=TvkOctt3AvlLAkuA7GxL6uPUOFK92fQI8cfQjr4qIY4=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlYFmIBeEvg/DyHJK/ahO9lV4PP34uEyctNMj+E cvI46N0asaJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZWBZiAAKCRCPgPtYfRL+ TlbdB/4qFE6/+10hVsz5J3BFePCqlF3xG9CFjV2dCmRPIfeL04RQZck3uHBTNMAWUKaoR+M++um Ncmq54V7xeWL3fIZ87Tukz3BHf8ZWQTJpyVZRWYP2tJknmIoBP5UXR1OjSzNX7pljM1Ke9nal8S Zn7Ql113eqKA/9um2mvKOmA/L4wxLqUsrjJw6krM3bW6UCgXhqOasyYGRFdB7AbS9og1Zq2wqzn ddk1auq9SU6A6ofhsTaKFYB3vX5yykuxbzGis6+GI2QmGOxkJ36wMVddwzmUcI2SrV0MNXV4C+U RInXtGrSPiRXSqCTXLAa1ioghWI9nsvV6FubE8nfuO5VO3Fp
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+Content-Transfer-Encoding: 7bit
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+On 23/11/2023 12:38, Suraj Jaiswal wrote:
+> Add binding doc for fault IRQ. The fault IRQ will be
+> trigger for ECC,DPP,FSM error.
+> 
+> Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> index 7bdb412a0185..e013cb51fb07 100644
+> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+> @@ -37,12 +37,14 @@ properties:
+>      items:
+>        - description: Combined signal for various interrupt events
+>        - description: The interrupt that occurs when Rx exits the LPI state
+> +      - description: The interrupt that occurs when HW fault occurs
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Adding required items is breaking the ABI and introducing new dtbs_check
+warnings. I don't see rationale for this in the commit msg.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+I don't see any fixes for the warnings, either. I am quite picky on this
+part, so to avoid wasting my time - are you 100% sure you do not
+introduce any new warning?
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/pmdomain/qcom/cpr.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
-index e9dd42bded6f..c64e84a27cc7 100644
---- a/drivers/pmdomain/qcom/cpr.c
-+++ b/drivers/pmdomain/qcom/cpr.c
-@@ -1712,7 +1712,7 @@ static int cpr_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int cpr_remove(struct platform_device *pdev)
-+static void cpr_remove(struct platform_device *pdev)
- {
- 	struct cpr_drv *drv = platform_get_drvdata(pdev);
- 
-@@ -1725,8 +1725,6 @@ static int cpr_remove(struct platform_device *pdev)
- 	pm_genpd_remove(&drv->pd);
- 
- 	debugfs_remove_recursive(drv->debugfs);
--
--	return 0;
- }
- 
- static const struct of_device_id cpr_match_table[] = {
-@@ -1737,7 +1735,7 @@ MODULE_DEVICE_TABLE(of, cpr_match_table);
- 
- static struct platform_driver cpr_driver = {
- 	.probe		= cpr_probe,
--	.remove		= cpr_remove,
-+	.remove_new	= cpr_remove,
- 	.driver		= {
- 		.name	= "qcom-cpr",
- 		.of_match_table = cpr_match_table,
--- 
-2.42.0
+Best regards,
+Krzysztof
 
 
