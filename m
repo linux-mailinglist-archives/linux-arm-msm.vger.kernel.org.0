@@ -1,182 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-1875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 781437F77AF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 16:24:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E3E97F785A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 16:54:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33FDA28228A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:24:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F82C1C2096C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:54:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 313062EAF2;
-	Fri, 24 Nov 2023 15:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 629483308C;
+	Fri, 24 Nov 2023 15:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Tv58esZa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tzVOIZeK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D975172A;
-	Fri, 24 Nov 2023 07:23:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700839439; x=1732375439;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rxL2jk4MgQcXj8eN+mwhkKKDZzLlAvvuyE/DYYerPSo=;
-  b=Tv58esZanAkrUjApfYMuR4//jJB40lcHJAaB1BxYwycGxFyk0nSU15Gl
-   SUz96eJC9TL4ofdyawzRTT0p58Jyk6vVciQ2Z2f05l1RWFXFTk17W/bod
-   9qriShqAWI08MVcJ2/O6COivje+GFxRnYB0RAud52hP9cF4Qcrjr6K4Z6
-   X+OnVQJr40fJL2hilKX5dU+QDpf460pb77AqfNKeztTJ+wOS5VfwuMOOW
-   8CZB8MTTTVV7d3E2kbV6TjRo2c28uQoHkG4Upb2URG3xsfT9Mlb4sHbey
-   UjqpYS0pfd9i1FMAyxBl7unzyZuyoJbhQesCS9ctbHWvYflgcCGtu6qqq
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="5660695"
-X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
-   d="scan'208";a="5660695"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2023 07:23:59 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
-   d="scan'208";a="16002353"
-Received: from lkp-server01.sh.intel.com (HELO d584ee6ebdcc) ([10.239.97.150])
-  by fmviesa001.fm.intel.com with ESMTP; 24 Nov 2023 07:23:55 -0800
-Received: from kbuild by d584ee6ebdcc with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1r6Y25-0002wq-09;
-	Fri, 24 Nov 2023 15:23:53 +0000
-Date: Fri, 24 Nov 2023 23:23:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Elliot Berman <quic_eberman@quicinc.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Guru Das Srinagesh <quic_gurus@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	kernel@quicinc.com,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [RESEND PATCH v5 02/12] firmware: qcom: scm: enable the TZ mem
- allocator
-Message-ID: <202311241607.v3tvaLvH-lkp@intel.com>
-References: <20231120132118.30473-3-brgl@bgdev.pl>
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D061E19B5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 07:54:23 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-548f853fc9eso2777162a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 07:54:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700841262; x=1701446062; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=q6zdIV3P/oUPSovR+NhGfJJ7zXCyuBKxOwWKblAxbsI=;
+        b=tzVOIZeKawvbqPV9O8CvubJJsg+wpPddI8Nem9EU41jplHDrel9CnLYf18cGrdr7Xk
+         6rn+dr+DtdYAgyokrG7/ALuZfRCbja9HEU6xx+QKc6JlNHLE8c55VECX393i8xPlQoOG
+         lgRwWGkZw9i6CPZPQ9RcxlO3dqnZTJbQPrBQM+mavq9xYmQhrtQtUa+fiztRk5wgsZu/
+         JItcXAJecmmR90Lep2Tgw4ClH87BPtGUgMDvnf/YEQx2EYONNM8lSOu+71lpO8zt2pu4
+         U1jCFxKSmpVUJWrAUV4hwI6sy7YMxOvmPdWYQ/LvjCqEnHiToi6leEal+Bbo6uZnKIT9
+         H6nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700841262; x=1701446062;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q6zdIV3P/oUPSovR+NhGfJJ7zXCyuBKxOwWKblAxbsI=;
+        b=pF058o+dms3p3jg1BV2NO5D++OtgW/xhCu0MNCE1dxhvy8G7qqb98IJFElyL+c3aKP
+         xBoEORPR9bMJilktT+amM7yt+7XLbBEQWTDcIaz+KBW2pftjNPHpcgiazhYfXvE8tVEo
+         zBiQ2UBjxPeAtyPNNc/8u4oUIV+rvIDRcZyVCyE0xExboLSDHapn1o5QeWyYWbHLIaKs
+         ip89KH8ihqPFFefr9v7ZkER8QGHjJh32lxZXtrhgzDJvjIMtOyRzOC28qDfySJ43A95q
+         wvNdD/Jxt46GOpnbxwWgUFU8kky23l1t+AVpPDAjNHoDhgqOO3yZLbrepAbMDgtKK4Xl
+         pP+Q==
+X-Gm-Message-State: AOJu0YzNshbg2oX1lPhQ2P+8ATr3XweUlaEG0vnREf5yVPthDxvrIfVe
+	yEIRkKROqJ/wi8sRqi+YdfUP2A==
+X-Google-Smtp-Source: AGHT+IHgAAznBIJ0pbN2tfwJr+McdSSdCWVtJ0j0xD/jPnhNIZxResuzgWPkQk6gR7YvV5NtY7RvXg==
+X-Received: by 2002:a17:906:1281:b0:9dd:7133:881 with SMTP id k1-20020a170906128100b009dd71330881mr2448412ejb.40.1700841262362;
+        Fri, 24 Nov 2023 07:54:22 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.100])
+        by smtp.gmail.com with ESMTPSA id o12-20020a1709064f8c00b00a01892903d6sm2191782eju.47.2023.11.24.07.54.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Nov 2023 07:54:21 -0800 (PST)
+Message-ID: <4011c83f-6f3f-426b-9bfc-d0d8f6b01ac0@linaro.org>
+Date: Fri, 24 Nov 2023 16:54:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231120132118.30473-3-brgl@bgdev.pl>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8250-xiaomi-elish: Sort ufs node
+Content-Language: en-US
+To: Jianhua Lu <lujianhua000@gmail.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org
+References: <20231124135713.5610-1-lujianhua000@gmail.com>
+ <20231124135713.5610-2-lujianhua000@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231124135713.5610-2-lujianhua000@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Bartosz,
+On 24/11/2023 14:57, Jianhua Lu wrote:
+> ufs node isn't in a right place, 'f' is front of 's', so move it to
+> above usb node.
 
-kernel test robot noticed the following build errors:
+Please not.
 
-[auto build test ERROR on linus/master]
-[also build test ERROR on v6.7-rc2 next-20231124]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+If we change the order to match DTSI, then this patch would be wrong.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bartosz-Golaszewski/firmware-qcom-add-a-dedicated-TrustZone-buffer-allocator/20231120-213154
-base:   linus/master
-patch link:    https://lore.kernel.org/r/20231120132118.30473-3-brgl%40bgdev.pl
-patch subject: [RESEND PATCH v5 02/12] firmware: qcom: scm: enable the TZ mem allocator
-config: arm-randconfig-r071-20231123 (https://download.01.org/0day-ci/archive/20231124/202311241607.v3tvaLvH-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231124/202311241607.v3tvaLvH-lkp@intel.com/reproduce)
+Best regards,
+Krzysztof
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311241607.v3tvaLvH-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/firmware/qcom/qcom_tzmem.c: In function 'qcom_tzmem_pool_new':
->> drivers/firmware/qcom/qcom_tzmem.c:87:64: error: passing argument 3 of 'dma_alloc_coherent' from incompatible pointer type [-Werror=incompatible-pointer-types]
-      87 |         pool->vbase = dma_alloc_coherent(qcom_tzmem_dev, size, &pool->pbase,
-         |                                                                ^~~~~~~~~~~~
-         |                                                                |
-         |                                                                phys_addr_t * {aka unsigned int *}
-   In file included from drivers/firmware/qcom/qcom_tzmem.c:10:
-   include/linux/dma-mapping.h:429:29: note: expected 'dma_addr_t *' {aka 'long long unsigned int *'} but argument is of type 'phys_addr_t *' {aka 'unsigned int *'}
-     429 |                 dma_addr_t *dma_handle, gfp_t gfp)
-         |                 ~~~~~~~~~~~~^~~~~~~~~~
-   cc1: some warnings being treated as errors
-
-
-vim +/dma_alloc_coherent +87 drivers/firmware/qcom/qcom_tzmem.c
-
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   59  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   60  /**
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   61   * qcom_tzmem_pool_new() - Create a new TZ memory pool.
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   62   * @size: Size of the new pool in bytes.
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   63   *
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   64   * Create a new pool of memory suitable for sharing with the TrustZone.
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   65   *
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   66   * Must not be used in atomic context.
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   67   *
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   68   * Returns:
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   69   * New memory pool address or ERR_PTR() on error.
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   70   */
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   71  struct qcom_tzmem_pool *qcom_tzmem_pool_new(size_t size)
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   72  {
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   73  	struct qcom_tzmem_pool *pool;
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   74  	int ret = -ENOMEM;
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   75  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   76  	if (!size)
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   77  		return ERR_PTR(-EINVAL);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   78  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   79  	size = PAGE_ALIGN(size);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   80  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   81  	pool = kzalloc(sizeof(*pool), GFP_KERNEL);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   82  	if (!pool)
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   83  		return ERR_PTR(-ENOMEM);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   84  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   85  	pool->size = size;
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   86  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  @87  	pool->vbase = dma_alloc_coherent(qcom_tzmem_dev, size, &pool->pbase,
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   88  					 GFP_KERNEL);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   89  	if (!pool->vbase)
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   90  		goto err_kfree_pool;
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   91  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   92  	pool->pool = gen_pool_create(PAGE_SHIFT, -1);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   93  	if (!pool)
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   94  		goto err_dma_free;
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   95  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   96  	gen_pool_set_algo(pool->pool, gen_pool_best_fit, NULL);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   97  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   98  	ret = gen_pool_add_virt(pool->pool, (unsigned long)pool->vbase,
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20   99  				pool->pbase, size, -1);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  100  	if (ret)
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  101  		goto err_destroy_genpool;
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  102  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  103  	ret = qcom_tzmem_init_pool(pool);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  104  	if (ret)
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  105  		goto err_destroy_genpool;
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  106  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  107  	return pool;
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  108  
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  109  err_destroy_genpool:
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  110  	gen_pool_destroy(pool->pool);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  111  err_dma_free:
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  112  	dma_free_coherent(qcom_tzmem_dev, size, pool->vbase, pool->pbase);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  113  err_kfree_pool:
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  114  	kfree(pool);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  115  	return ERR_PTR(ret);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  116  }
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  117  EXPORT_SYMBOL_GPL(qcom_tzmem_pool_new);
-757fc9ecf8f244 Bartosz Golaszewski 2023-11-20  118  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
