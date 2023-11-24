@@ -1,244 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-1860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16E1A7F7552
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:35:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BCCA7F756F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:45:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5DB6281406
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:35:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DC731C20381
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:45:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFDC828E1F;
-	Fri, 24 Nov 2023 13:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D47028E2A;
+	Fri, 24 Nov 2023 13:45:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F858Zkew"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o9CzBtB2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B2F41BDA;
-	Fri, 24 Nov 2023 05:35:20 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AOB66Yc021975;
-	Fri, 24 Nov 2023 13:35:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+R2Z2mui4vhi2W3BWLJFCXxNxKXVWypDUeYDVpwIypo=;
- b=F858ZkewDQJhSnp9iBgQtQmDiD9R4DpEM7wb/4pTqNfLIOQPuoMu4PtlISgIe+TnOisn
- pG448+wfx5cveZovZ4FYN9nSyqN+cHknPfXY4ZB52c8Eizm+Ju/rLOM9zO9+JcObCGJR
- FOrA9MYsQGXWm/t/qpYJNI7GbyiBPLacPN5S9sS34eszRj7d3Q2eImznY+i//iB1xizH
- IDvF/WdCgf2P9k+/pjAAyKDZLh6x8vHE76JkC3ZQMAPupRLcaeimN4PAjec/nHgncqMq
- J0Djf9/u/xaGqxKZt97VxQsB6UY25oj60iHbaPgiSOAb/CF3huvcYr9DaUyVXnumVaEB 1A== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uhwmec377-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Nov 2023 13:35:10 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AODZ9Tt025066
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Nov 2023 13:35:09 GMT
-Received: from [10.216.35.253] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 24 Nov
- 2023 05:35:04 -0800
-Message-ID: <e6d80982-1674-d0c4-9dbe-94d77079f6ba@quicinc.com>
-Date: Fri, 24 Nov 2023 19:05:00 +0530
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43019286B9;
+	Fri, 24 Nov 2023 13:45:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C789FC433C7;
+	Fri, 24 Nov 2023 13:45:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700833541;
+	bh=EzqT4v8vZXGnSVX9M8qsp06zVhLbFhH0kYlZVwhXdTc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=o9CzBtB2XVBvWvf4qEK3/cdglI9Ej7m5YdPkCvTE+vmSq5ifMZ2s4WhZWi1FX+EXn
+	 TRyZ00bY4BMjVSHD4o4EYG5nFg6paKOdsFYqoXpj0ZYYd/4/m6FZN03E28fvxwYaa0
+	 g217e4oJwaTF2ou1LKMh5Fyn0oVi8xOHeExMJ3HE2SKEFeCuj/E/syDZMFAHBvC74o
+	 w3qn/gPd+hCVGb4mXNnmDwlHA4rSNFL5BAY+onlyPUL9JrJp3IbyKG5IMZ7VknUqRe
+	 mi9L9uzoAZY9rvSSx6sh1Nttv1AWD+eMAnnA3MsIXVqT64ts57gqtq0fSmqvnbGmV9
+	 yECsf5Sc3zlRw==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r6WVN-0000to-1Y;
+	Fri, 24 Nov 2023 14:46:02 +0100
+Date: Fri, 24 Nov 2023 14:46:01 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+Subject: Re: [PATCH 1/6] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
+ bindings
+Message-ID: <ZWCpGdJRexnk98IN@hovoldconsulting.com>
+References: <20231122191335.3058-1-quic_kriskura@quicinc.com>
+ <ZV9dYpTYRXn63tXe@hovoldconsulting.com>
+ <1192d91f-11bf-44af-953a-14e08e2b6ca8@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: Move video-firmware to
- chrome-common
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Luca Weiss <luca.weiss@fairphone.com>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro
- Carvalho Chehab <mchehab@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20231002-sc7280-venus-pas-v2-0-bd2408891317@fairphone.com>
- <20231002-sc7280-venus-pas-v2-2-bd2408891317@fairphone.com>
- <4cfad910-1821-3a31-c372-3f6b199e8f71@quicinc.com>
- <CX5ENKY70B5J.2D6DXKGI4EGX3@fairphone.com>
- <ff021f49-f81b-0fd1-bd2c-895dbbb03d56@quicinc.com>
- <CX70EBXCOB66.3998C482R86CN@fairphone.com>
- <a29123a3-afe1-8f92-ff6c-835926d411af@quicinc.com>
- <CAA8EJppkjpMmcHCvxomgUMPxGpf77iN9roRvb=NEcxdk237-UA@mail.gmail.com>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <CAA8EJppkjpMmcHCvxomgUMPxGpf77iN9roRvb=NEcxdk237-UA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TSlz7DsFHz2MxteAoyLfcdPS2NtftLR4
-X-Proofpoint-ORIG-GUID: TSlz7DsFHz2MxteAoyLfcdPS2NtftLR4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-23_15,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1011
- priorityscore=1501 malwarescore=0 mlxlogscore=999 lowpriorityscore=0
- impostorscore=0 mlxscore=0 adultscore=0 bulkscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311240106
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1192d91f-11bf-44af-953a-14e08e2b6ca8@quicinc.com>
 
-
-
-On 11/24/2023 6:23 PM, Dmitry Baryshkov wrote:
-> On Fri, 24 Nov 2023 at 14:30, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
->>
->> On 11/24/2023 5:05 PM, Luca Weiss wrote:
->>> On Fri Nov 24, 2023 at 7:38 AM CET, Vikash Garodia wrote:
->>>>
->>>> On 11/22/2023 7:50 PM, Luca Weiss wrote:
->>>>> On Wed Nov 22, 2023 at 2:17 PM CET, Vikash Garodia wrote:
->>>>>>
->>>>>> On 10/2/2023 7:50 PM, Luca Weiss wrote:
->>>>>>> If the video-firmware node is present, the venus driver assumes we're on
->>>>>>> a system that doesn't use TZ for starting venus, like on ChromeOS
->>>>>>> devices.
->>>>>>>
->>>>>>> Move the video-firmware node to chrome-common.dtsi so we can use venus
->>>>>>> on a non-ChromeOS devices.
->>>>>>>
->>>>>>> At the same time also disable the venus node by default in the dtsi,
->>>>>>> like it's done on other SoCs.
->>>>>>>
->>>>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>>>>> ---
->>>>>>>  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 8 ++++++++
->>>>>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 6 ++----
->>>>>>>  2 files changed, 10 insertions(+), 4 deletions(-)
->>>>>>>
->>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
->>>>>>> index 5d462ae14ba1..cd491e46666d 100644
->>>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
->>>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
->>>>>>> @@ -104,6 +104,14 @@ &scm {
->>>>>>>   dma-coherent;
->>>>>>>  };
->>>>>>>
->>>>>>> +&venus {
->>>>>>> + status = "okay";
->>>>>>> +
->>>>>>> + video-firmware {
->>>>>>> +         iommus = <&apps_smmu 0x21a2 0x0>;
->>>>>>> + };
->>>>>>> +};
->>>>>>> +
->>>>>>>  &watchdog {
->>>>>>>   status = "okay";
->>>>>>>  };
->>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>>>>>> index 66f1eb83cca7..fa53f54d4675 100644
->>>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->>>>>>> @@ -3740,6 +3740,8 @@ venus: video-codec@aa00000 {
->>>>>>>                            <&apps_smmu 0x2184 0x20>;
->>>> 0x2184 is a secure SID. I think qcm6490-fairphone-fp5.dts needs to override the
->>>> iommus property as well to retain only the non secure SID i.e 0x2180 ? I am
->>>> seeing below crash
->>>>
->>>> Call trace:
->>>> [   47.663593]  qcom_smmu_write_s2cr+0x64/0xa4
->>>> [   47.663616]  arm_smmu_attach_dev+0x120/0x284
->>>> [   47.663647]  __iommu_attach_device+0x24/0xf8
->>>> [   47.676845]  __iommu_device_set_domain+0x70/0xd0
->>>> [   47.681632]  __iommu_group_set_domain_internal+0x60/0x1b4
->>>> [   47.687218]  iommu_setup_default_domain+0x358/0x418
->>>> [   47.692258]  __iommu_probe_device+0x3e4/0x404
->>>>
->>>> Could you please reconfirm if Video SID 0x2184 (and mask) is allowed by the
->>>> qcm6490-fairphone-fp5 hardware having TZ ?
->>>
->>> Hi,
->>>
->>> On FP5 it seems it's no problem to have both SIDs in there, probe and
->>> using venus appears to work fine.
->>>
->>> Are you using different firmware than QCM6490.LA.3.0 on the device where
->>> you tested this?
->> I was testing this on RB3 board which uses firmware [1].
+On Fri, Nov 24, 2023 at 05:32:37PM +0530, Krishna Kurapati PSSNV wrote:
+> > 
+> > Thanks for sorting this out.
+> > 
+> > It seems like we have a few combinations of these interrupts and we
+> > should probably try to define the order for these once and for all and
+> > update the current devicetrees to match (even if it means adding new
+> > interrupts in the middle).
+> > 
+> > Instead of adding separate compatibles for the controllers without SS
+> > support, I suggest keeping that interrupt last as an optional one.
+> > 
+> > But IIUC we essentially have something like:
+> > 
+> > qusb2-:
+> > 
+> > 	- const: qusb2_phy
+> > 	- const: pwr_event
+> > 	- const: ss_phy_irq	(optional)
+> > 
+> > qusb2:
+> > 
+> > 	- const: hs_phy_irq
+> > 	- const: qusb2_phy
+> > 	- const: pwr_event
+> > 	- const: ss_phy_irq	(optional)
+> > 
+> > qusb2+:
+> > 
+> > 	- const: hs_phy_irq
+> > 	- const: qusb2_phy
+> > 	- const: dp_hs_phy_irq
+> > 	- const: dm_hs_phy_irq
+> > 	- const: pwr_event
+> > 	- const: ss_phy_irq	(optional)
+> > 
 > 
-> There is something wrong here.
-> 
-> RB3 board uses venus-5.2
-> RB5 board uses vpu-1.0
-> Only sc7280 uses vpu-2.0
+> This combination doesn't exist. So we can skip this one.
 
-Tested on QCM6490 IDP board, which is QCOM internal board similar to RB3 gen2.
+Ok, good. I thought you said some QUSB2 platforms used DP/DM, but I guess
+that means they don't have the qusb2_phy interrupt then.
+ 
+> > femto-:
+> > 	- const: dp_hs_phy_irq
+> > 	- const: dm_hs_phy_irq
+> > 	- const: pwr_event
+> > 	- const: ss_phy_irq	(optional)
+> > 
+> > femto:
+> > 	- const: hs_phy_irq
+> > 	- const: dp_hs_phy_irq
+> > 	- const: dm_hs_phy_irq
+> > 	- const: pwr_event
+> > 	- const: ss_phy_irq	(optional)
+> > 
+> > Does this look like it would cover all of our currents SoCs?
+> > 
+> > Do all of them have the pwr_event interrupt?
+> 
+> Yes. From whatever targets I was able to find, only one of them didn't 
+> have the power_event irq. Rest all of them had. I will recheck that 
+> particular one again.
 
->>
->> Regards,
->> Vikash
->>
->> [1]
->> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/qcom/vpu-2.0
->>
->>>>
->>>>>>>                   memory-region = <&video_mem>;
->>>>>>>
->>>>>>> +                 status = "disabled";
->>>>>>> +
->>>>>>>                   video-decoder {
->>>>>>>                           compatible = "venus-decoder";
->>>>>>>                   };
->>>>>>> @@ -3748,10 +3750,6 @@ video-encoder {
->>>>>>>                           compatible = "venus-encoder";
->>>>>>>                   };
->>>>>>>
->>>>>>> -                 video-firmware {
->>>>>>> -                         iommus = <&apps_smmu 0x21a2 0x0>;
->>>>>>> -                 };
->>>>>>> -
->>>>>>>                   venus_opp_table: opp-table {
->>>>>>>                           compatible = "operating-points-v2";
->>>>>>>
->>>>>>>
->>>>>> Changes look good. Is this tested on SC7280 ?
->>>>>
->>>>> Hi Vikash,
->>>>>
->>>>> I didn't test it myself on sc7280 (just qcm6490-fp5) but dtx_diff
->>>>> reports no differences except for status = okay property being added, so
->>>>> there should be no change on those boards. See below.
->>>>>
->>>>> Regards
->>>>> Luca
->>>>
->>>> I tested on SC7280 (herobrine) and all good.
->>>
->>> Great, thanks!
->>>
->>> Regards
->>> Luca
->>>
->>>>
->>>> Regards,
->>>> Vikash
->>>
->>
+Please do. The driver polls the corresponding status register on all
+platforms currently, and perhaps this interrupt can one day be used to
+get rid of the polling.
+ 
+> > Note that DP comes before DM above as that seems like the natural order
+> > of these (plus before minus).
+> > 
+> > Now if the HS interrupt is truly unusable, I guess we can consider
+> > dropping it throughout and the above becomes just three permutations
+> > instead, which can even be expressed along the lines of:
 > 
+> Infact, I wanted to do this but since you mentioned before that if HW 
+> has it, we must describe it, I kept it in. But since this functionality 
+> is confirmed to be mutually exclusive of qusb2/{dp/dm}, I am aligned to 
+> skip it in bindings and drop it in DT.
+
+As I mentioned elsewhere, it depends on whether it can be used at all.
+Not simply whether there is some other mechanism that can be used in its
+stead. Such a decision should be left up to the implementation.
+
+That's why I said "truly unusable" above. It's still not clear to me
+whether that is the case or not.
+
+> > 	- anyOf:
+> > 	  - items:
+> > 	    - const: qusb2_phy
+> > 	  - items:
+> > 	    - const: dp_hs_phy_irq
+> > 	    - const: dm_hs_phy_irq
+> > 	- const: pwr_event
+> > 	- const: ss_phy_irq	(optional)
+> > 
 > 
+> This must cover all cases AFAIK. How about we keep pwr_event also 
+> optional for time being. The ones I am not able to find also would come 
+> up under still binding block.
+
+No, we should avoid that if we can as with two many optional things,
+these quickly gets messy (one optional interrupt at the end is fine and
+can be expressed using min/maxItems).
+
+If the "qusb2+" combination above isn't needed, then we're down to four
+permutations, which is few enough to be spelled out explicitly even if
+we decide that the hs_phy_irq should be kept in. Without hs_phy_irq, it
+seems there's really only two permutations.
+
+Johan
 
