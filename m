@@ -1,77 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-1866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA6FD7F768A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:40:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 887B37F76CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:44:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95404280D94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:40:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BAABC1C212BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:44:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A870C2D61F;
-	Fri, 24 Nov 2023 14:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6124428DBE;
+	Fri, 24 Nov 2023 14:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T5lEMUYv"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="qYad0eqS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2247119A8;
-	Fri, 24 Nov 2023 06:40:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700836817; x=1732372817;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=/Uxc0d4c4aiMUWgnl/99+3ExpFREygOtI/KFwWyU28A=;
-  b=T5lEMUYvASO9Ieq/q4Syfgrt/7NaS4kz3sqmv/GBozdpMXUxqaHqzrPn
-   Fws9/dpeM7Z8816bzHt0gqqsDLpn3puLcRHbvOI2TfbbtoLR86KefVqF/
-   YOSCVpLwgc2tZS8s8RkuhV1fjBqZlvTfECps2ZKOoS5aoMn5az9EC1ZWx
-   /c7xAflgYncCgl0oe3DUkinZIRZ6xt0zaIRvON2xpvfQDV0XD3JRb2klP
-   062J1JNFjMs1/En5OGxIc+EE6NTMUxDzprYg8FCuU+KRL8Ct3rNpVwWIY
-   78zIYk43cBwNRVyWMcmf569ipaDbFEwQ96h0B6Rs1S+rupfmcJPVk5H+t
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="395249011"
-X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
-   d="scan'208";a="395249011"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2023 06:40:16 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="760975142"
-X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
-   d="scan'208";a="760975142"
-Received: from lkp-server01.sh.intel.com (HELO d584ee6ebdcc) ([10.239.97.150])
-  by orsmga007.jf.intel.com with ESMTP; 24 Nov 2023 06:40:10 -0800
-Received: from kbuild by d584ee6ebdcc with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1r6XLi-0002tp-2p;
-	Fri, 24 Nov 2023 14:40:06 +0000
-Date: Fri, 24 Nov 2023 22:39:38 +0800
-From: kernel test robot <lkp@intel.com>
-To: Suraj Jaiswal <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B28410CA;
+	Fri, 24 Nov 2023 06:44:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=17Pp2N2Up3k+QE70L37qHUzPWH5WYqD3Q42//rZDh9U=; b=qYad0eqSn0G/bC3dntMLicuVFB
+	vGi9j2aVKb5NCY59SLtxyrgxVYuLQUfoq3apeOZrJH9blV05Rcvgao/CpTScaHzEPMAulyBZl5qc1
+	aAuY03oNkK6gfz34+0GeSGJHI/tY8ro0Dy9Xq2P/R+pJmXF44pZMZ62fm9HemnnLU/lk=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1r6XPo-0016Vl-Cc; Fri, 24 Nov 2023 15:44:20 +0100
+Date: Fri, 24 Nov 2023 15:44:20 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Cc: Jie Luo <quic_luoj@quicinc.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Rob Herring <robh@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Prasad Sodagudi <psodagud@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	netdev@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH net-next v3 3/3] net: stmmac: Add driver support for
- DWMAC5 fault IRQ Support
-Message-ID: <202311241513.D6JpHWGg-lkp@intel.com>
-References: <62eaaace3713751cb1ecac3163e857737107ca0e.1700737841.git.quic_jsuraj@quicinc.com>
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Qingfang Deng <dqfext@gmail.com>,
+	SkyLake Huang <SkyLake.Huang@mediatek.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	David Epping <david.epping@missinglinkelectronics.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Harini Katakam <harini.katakam@amd.com>,
+	Simon Horman <horms@kernel.org>,
+	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: Re: [net-next RFC PATCH 03/14] dt-bindings: net: document ethernet
+ PHY package nodes
+Message-ID: <4d159a99-f602-424e-a3c1-259c52e4d543@lunn.ch>
+References: <a85d6d0a-1fc9-4c8e-9f91-5054ca902cd1@lunn.ch>
+ <655e4939.5d0a0220.d9a9e.0491@mx.google.com>
+ <6a030399-b8ed-4e2c-899f-d82eb437aafa@lunn.ch>
+ <655f2ba9.5d0a0220.294f3.38d8@mx.google.com>
+ <c697488a-d34c-4c98-b4c7-64aef2fe583f@lunn.ch>
+ <ZV9jM7ve3Kl6ZxSl@shell.armlinux.org.uk>
+ <e32d5c84-7a88-4d9f-868f-98514deae6e9@lunn.ch>
+ <655fa905.df0a0220.49d9b.7afd@mx.google.com>
+ <367c0aea-b110-4e3f-a161-59d27db11188@quicinc.com>
+ <ZWCQv9oaACowJck0@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,59 +79,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <62eaaace3713751cb1ecac3163e857737107ca0e.1700737841.git.quic_jsuraj@quicinc.com>
+In-Reply-To: <ZWCQv9oaACowJck0@shell.armlinux.org.uk>
 
-Hi Suraj,
+> 		First Serdes mode	Second Serdes mode
+> Option 1	PSGMII for copper	Disabled
+> 		ports 0-4
+> Option 2	PSGMII for copper	1000BASE-X / 100BASE-FX
+> 		ports 0-4
+> Option 3	QSGMII for copper	SGMII for
+> 		ports 0-3		copper port 4
 
-kernel test robot noticed the following build warnings:
+With option 2, can the second SERDES also do SGMII? You are likely to
+need that when a Copper SFP module is inserted into the cage.
 
-[auto build test WARNING on net-next/main]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Suraj-Jaiswal/dt-bindings-net-qcom-ethqos-add-binding-doc-for-fault-IRQ-for-sa8775p/20231123-202252
-base:   net-next/main
-patch link:    https://lore.kernel.org/r/62eaaace3713751cb1ecac3163e857737107ca0e.1700737841.git.quic_jsuraj%40quicinc.com
-patch subject: [PATCH net-next v3 3/3] net: stmmac: Add driver support for DWMAC5 fault IRQ Support
-config: arm-defconfig (https://download.01.org/0day-ci/archive/20231124/202311241513.D6JpHWGg-lkp@intel.com/config)
-compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project.git f28c006a5895fc0e329fe15fead81e37457cb1d1)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231124/202311241513.D6JpHWGg-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311241513.D6JpHWGg-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c:693:5: warning: no previous prototype for function 'stmmac_get_fault_intr_config' [-Wmissing-prototypes]
-   int stmmac_get_fault_intr_config(struct platform_device *pdev, struct stmmac_resources *res)
-       ^
-   drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c:693:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
-   int stmmac_get_fault_intr_config(struct platform_device *pdev, struct stmmac_resources *res)
-   ^
-   static 
-   1 warning generated.
-
-
-vim +/stmmac_get_fault_intr_config +693 drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-
-   692	
- > 693	int stmmac_get_fault_intr_config(struct platform_device *pdev, struct stmmac_resources *res)
-   694	{
-   695		int ret = 0;
-   696	
-   697		res->safety_common_intr = platform_get_irq_byname(pdev, "safety");
-   698	
-   699		if (res->safety_common_intr < 0) {
-   700			if (res->safety_common_intr != -EPROBE_DEFER)
-   701				dev_err(&pdev->dev, "safety IRQ configuration information not found\n");
-   702			ret = 1;
-   703		}
-   704	
-   705		return ret;
-   706	}
-   707	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+     Andrew
 
