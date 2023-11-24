@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-1806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BB0B7F6F5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 10:21:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50DFB7F6F5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 10:21:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C8902B211CC
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1031D281B77
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 09:21:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65CE711735;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E15E511737;
 	Fri, 24 Nov 2023 09:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ImBvoVHk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h/zwxNw9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DA3510C9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 01:20:58 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-332e40315bdso840797f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 01:20:58 -0800 (PST)
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B32ED68
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 01:20:59 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50943ccbbaeso2299745e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 01:20:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1700817657; x=1701422457; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qh57jYizUR6T9htWz0tIFyEV74zQHcgKpTBHSCa9cik=;
-        b=ImBvoVHkBNg4bzE5T6N+gdfKydUeauOgmksrNUQWEOlTe8q7A98tAxFywpdAYu66Zl
-         Blq0AujT3yZhIvXUnXt+oROgqn0KL2NZFR4mWtzRdbYsGgFvHeOpm/Gm0kZv5CoUV8TC
-         k6AG2CxVSdYqQQFuwY/U00gi484ZrGQNJ7d3Wf1bFvesTGHqD94g8qd4CnQSMWBAOcOi
-         dTGMMBRU3L9T40d1BTO99B5ckpX+3EfmqWbODzbBgHk3MwJ4WYOzeQwgU7JaZ7t4dBXO
-         6i0uanilSG+RzSUss8zac0s5lEaSgM2bwfEo55/pIGWN4uLU4LBQXO+vwJDxUMTLVjhw
-         2T0Q==
+        bh=DI2KlLELwTvapyMM7h7b4FNgZM+UKIo5mOqivYRKFcQ=;
+        b=h/zwxNw9wZVEvax5+sr/cST8lUEImYDJX860fA2/p2xguOSxP9fDfV12/AwGwG0Iwy
+         BIXEUGBSaHPQ/rNDSSwHSpzhfPKT5vP28Hmsad6qRTAtTVLLoPZTv1pFr/7MvWwjm82F
+         79oftRNRl4egAHiaP8mbLg6zX8MUsG/HpnRtNbd3rrTIGf9ziEaPKQocO9PU2jUKmD6u
+         8PKPrlW9jaToE4kQFJx4uGbBkJyTfp6Pqa65khJcwROmFp7zPzkTwN38ZVBGGMDf6dVx
+         EpFTpbecg1jkdwUJJ8pWnNcoBaTsK6ce1nZ5AntqKgWpeZRa0VhMFFurUct85mEBVQ12
+         AkpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1700817657; x=1701422457;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qh57jYizUR6T9htWz0tIFyEV74zQHcgKpTBHSCa9cik=;
-        b=oGxxtJYk7R/bqNpFjbFMEguduTvZMZJUUtlIkfwTVwarO2zzi5rbvVueVJrheXD2nG
-         Ml/PQA+9KXmooqaJjbummyNeVlSLcRdXOzKPJi147O8Of46ureCuWFqR+DEquzLmu8Bs
-         uy0TLFvqD+thYjSp8SpKkS1UJQaw20RXWwi0zygnTOVqXN8GhEfsny7Vfz9iYXpY8gZ+
-         IFH80WbRG5vFHECe+UCsundflbXa1awTBHtO9/V9HF1NyjZw4/K6ycUUC4CtxJ401Myi
-         +EhX2a9GvuYZoIKXLu7O2X4uA8DvDa9pAHE4H2cV8BHGm7T6PQ4+RQbxA6Az6wiby1N6
-         qMtQ==
-X-Gm-Message-State: AOJu0YzGTS/DlWI6QX+exL1TGarXbevP+ahoY4pD9zipEEf6KgGSacpw
-	WGsiTrUjs2UHoihI6LWBo8Q9og==
-X-Google-Smtp-Source: AGHT+IHE9M9mC7eD0R7Y2GDrv+D+QNtcI27tqx5RX0gWWEfwQilLN9u9+1mzX6MGQZ71fQ07r9pMqQ==
-X-Received: by 2002:a5d:43d2:0:b0:32d:9f1b:3a1f with SMTP id v18-20020a5d43d2000000b0032d9f1b3a1fmr1578414wrr.31.1700817656767;
-        Fri, 24 Nov 2023 01:20:56 -0800 (PST)
+        bh=DI2KlLELwTvapyMM7h7b4FNgZM+UKIo5mOqivYRKFcQ=;
+        b=ttmnUiQKrFGUEoeGn67+a5DeHqPxDxQf+ytwE9EbNvz4/RRdbyUFPqjPidgKZ3XGRv
+         uhU6MyQ73puqLzHBOuQL6HxqV4uwAnRa4DImVDLmK+ZNzYsQoNF2q/JEJywoIoo10Nc6
+         FWKW6FvDFZLhdjOoQzbCo3iAB9hSxgkLop/Jpwl3Ir74G57kOLfI8ygkhIReA9prYUK1
+         VihXmaQoHtH9VFwuswbL358cNKzh9kaGnl1ELjZbSoHqoA3erXSXwfQBrXlQK79ZLQVq
+         HQOUKeeuXGUotfukXklYmKqRUeYc4N8DOczQNJF7pmIO+/ueRKPpa6ADaiM4X8H9IYvN
+         9z8g==
+X-Gm-Message-State: AOJu0YyRuaPK6PxfimafVg8SKxuOwRGEjjBBxZOizV+sSDLpd1ubmubf
+	Kux2Ic9URQJzeqaD0uJpian9Ng==
+X-Google-Smtp-Source: AGHT+IEB7Eq4ep0Ab/R7JR6XS6dqeeDUqJ35AjhfdJsTkQmgV078tnEcrgwqlG8PCbQWRX55aM92+g==
+X-Received: by 2002:a19:f816:0:b0:508:225e:e79f with SMTP id a22-20020a19f816000000b00508225ee79fmr1282199lff.22.1700817657699;
+        Fri, 24 Nov 2023 01:20:57 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id m23-20020a056000025700b00332ce0d7300sm3805755wrz.92.2023.11.24.01.20.55
+        by smtp.gmail.com with ESMTPSA id m23-20020a056000025700b00332ce0d7300sm3805755wrz.92.2023.11.24.01.20.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 01:20:56 -0800 (PST)
+        Fri, 24 Nov 2023 01:20:57 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 24 Nov 2023 10:20:44 +0100
-Subject: [PATCH v4 7/8] arm64: dts: qcom: sm8650-mtp: add interconnect
+Date: Fri, 24 Nov 2023 10:20:45 +0100
+Subject: [PATCH v4 8/8] arm64: dts: qcom: sm8650-qrd: add interconnect
  dependent device nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -65,7 +65,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231124-topic-sm8650-upstream-dt-v4-7-e402e73cc5f0@linaro.org>
+Message-Id: <20231124-topic-sm8650-upstream-dt-v4-8-e402e73cc5f0@linaro.org>
 References: <20231124-topic-sm8650-upstream-dt-v4-0-e402e73cc5f0@linaro.org>
 In-Reply-To: <20231124-topic-sm8650-upstream-dt-v4-0-e402e73cc5f0@linaro.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -75,43 +75,52 @@ To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6219;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6655;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=lQBCp1m4Jg+eo2PKFFIsdpDkhpzuG5vLXmMIqKfipxY=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlYGrwWfFhG8yF8ENycGFMUSBa3NrSdElEGH3H6R1y
- sldhmomJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZWBq8AAKCRB33NvayMhJ0X1+D/
- 9Fzk4dh71NwGZEZhkhUHz3ZQ1azErl7pAjo7H1lvH1B/qEulRG2lTb6ETV9Se1lnjrgMqyWwndyNUG
- 8fOahhweOMhMm7MDE5Qpzy+4wH5Vk8jr9cKybpjjV/KyEgtaMtgSchtdrgvjPYurHTt4ge2balWNNc
- 72GcwrFHrRJ/AFoosGu99b/go0YtRgnrS/nukpx9+2yh2t4HBIdD1EEgweh/0rC/l5gBUxjRiHahhj
- fp1y8mNH7wvctX2bv8sWITiop1NVGelcR6nIFnLRRtSmQfuBXwrVWJIon6lGHRSr7RfcjjWeeLo/XD
- D8bb7FNPYFEnIY3XJ4Si4nZ3G882RL2+yGUw2tp0nuoY4D3hYSJRL6Ni/sTj4BYSS9FOenooCCR5MB
- 2oOXz0LZHPWQ5QFFDShpA/XL8fC2aLZUCAJ+AWdDUC97aVfRESFRaiYXGsOeMEWI4bdy4E3uD+uM7F
- sS+R1BwqT1T7FhRd5gDKZw34bFbrcdzIu22AwdCx25JhpqOfiZybPpxjF4bo+fAO6ltMI360henxuZ
- fuYk7FswRz6TDxv80fo4vZ/0IlxRt/D2K1HLlR609QRcjhapHCOgsqLTCiuuo0Q04fzuqMiijP3hVI
- 3erzTXxZaJ4fRaLtRZbNmxFgQuF4qzFP2axyrdJwHU8rxGccRP6Ff9c++qBg==
+ bh=Hecb+8Fs+5yMZtc/b7d9bTbZ9Kd5SsXJP66AEs1g8SM=;
+ b=owEBbAKT/ZANAwAKAXfc29rIyEnRAcsmYgBlYGrwHWIFDYtTBNQId9DsaDM1w++0MB5yypT6gqyZ
+ ecYujO2JAjIEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZWBq8AAKCRB33NvayMhJ0e8mD/
+ Yswovctg5yW9pWSIh8nS+XEVW2pZoO3LT8/Ki+sT6qEhIlbOM04KjfmQyYAbIrcelHLCvR9sxwJvTR
+ f8phEioyOd2HLnEiOdQ/mURg7q+u6Oojc1ZNaQnXMsiUjpQluK4HQP84uHazJI8zoLkg8q5QT1PFLR
+ 5h+REd8cyldeqtJr1WbTaPP9Ru7HbUSEkqDbGJDgf9dcPl6HzUFluroN+b3CGmcTvPL+vcWF6+d/ZS
+ wUBjTBo21c2scsygZ4Gui+T2Sy5C7VoTTwpNyN3xRQ1Hf1j2jRllnTV6hHJLSkz081/40NuGIZeFS0
+ unknGgGkhbiWJS8PGai9bSKylDjzrwKBmhaAqC3ecPUZ46E4xr1kMmqvVIvoO6Zwv1xn3BybzQFbpz
+ onYr3RtauJfel+f21aiW9GQ5wFZCuTJjohr9l8QtQK53uSwFOdgK2ZwOZEnmbS7MnvnDePSTDpSSYG
+ Hly2Vr2QRDA8bEMITEGiUAT5LVRaT9mI9javdD6zqKp7KIjGSLntm4uBAsfOZKHMLF65zyBBjPGAO1
+ GhrHuCkUnbzcjQCTlnUnY0hrzTPYwWIbdcjy0Icdd4l2xnggNWcYMGW2X4cl7Oe2lGLGBqgr5CiHW+
+ +w6T82lLR0xX/1qx2OZdCr0VwepPmbOTQIbq23NF55nk5A1qTM5JsWvv4T
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
 Now interconnect dependent devices are added in sm8650 DTSI,
-now enable more devices for the Qualcomm SM8650 MTP board:
+now enable more devices for the Qualcomm SM8650 QRD board:
 - PCIe
 - Display
 - DSPs
 - SDCard
 - UFS
 - USB role switch with PMIC Glink
+- Bluetooth
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650-mtp.dts | 235 +++++++++++++++++++++++++++++++-
- 1 file changed, 234 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 275 +++++++++++++++++++++++++++++++-
+ 1 file changed, 274 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-index 51092d20d610..656cdbc6f234 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-mtp.dts
-@@ -28,6 +28,44 @@ chosen {
- 		stdout-path = "serial0:115200n8";
+diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+index 4738112f7ad2..e69ae61b6111 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
+@@ -23,6 +23,7 @@ / {
+ 
+ 	aliases {
+ 		serial0 = &uart15;
++		serial1 = &uart14;
+ 	};
+ 
+ 	chosen {
+@@ -45,6 +46,44 @@ key-volume-up {
+ 		};
  	};
  
 +	pmic-glink {
@@ -155,21 +164,15 @@ index 51092d20d610..656cdbc6f234 100644
  	vph_pwr: vph-pwr-regulator {
  		compatible = "regulator-fixed";
  
-@@ -77,6 +115,9 @@ vreg_l2b_3p0: ldo2 {
- 			regulator-min-microvolt = <3008000>;
- 			regulator-max-microvolt = <3008000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
-+						   RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l5b_3p1: ldo5 {
-@@ -389,6 +430,106 @@ vreg_l3i_1p2: ldo3 {
+@@ -399,6 +438,81 @@ vreg_l3i_1p2: ldo3 {
  	};
  };
  
 +&dispcc {
++	status = "okay";
++};
++
++&gpi_dma1 {
 +	status = "okay";
 +};
 +
@@ -240,39 +243,18 @@ index 51092d20d610..656cdbc6f234 100644
 +	status = "okay";
 +};
 +
-+&pcie1 {
-+	wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
-+	perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
-+
-+	pinctrl-0 = <&pcie1_default_state>;
-+	pinctrl-names = "default";
-+
+ &pon_pwrkey {
+ 	status = "okay";
+ };
+@@ -479,23 +593,173 @@ &pmk8550_rtc {
+ 	status = "okay";
+ };
+ 
++&qupv3_id_0 {
 +	status = "okay";
 +};
 +
-+&pcie1_phy {
-+	vdda-phy-supply = <&vreg_l3e_0p9>;
-+	vdda-pll-supply = <&vreg_l3i_1p2>;
-+	vdda-qref-supply = <&vreg_l1i_0p88>;
-+
-+	status = "okay";
-+};
-+
-+&pm8550_gpios {
-+	sdc2_card_det_n: sdc2-card-det-state {
-+		pins = "gpio12";
-+		function = "normal";
-+		bias-pull-up;
-+		input-enable;
-+		output-disable;
-+		power-source = <1>; /* 1.8 V */
-+	};
-+};
-+
- &pm8550b_eusb2_repeater {
- 	vdd18-supply = <&vreg_l15b_1p8>;
- 	vdd3-supply = <&vreg_l5b_3p1>;
-@@ -398,6 +539,43 @@ &qupv3_id_1 {
+ &qupv3_id_1 {
  	status = "okay";
  };
  
@@ -297,29 +279,52 @@ index 51092d20d610..656cdbc6f234 100644
 +	status = "okay";
 +};
 +
-+&sdhc_2 {
-+	cd-gpios = <&pm8550_gpios 12 GPIO_ACTIVE_LOW>;
-+
-+	vmmc-supply = <&vreg_l9b_2p9>;
-+	vqmmc-supply = <&vreg_l8b_1p8>;
-+	bus-width = <4>;
-+	no-sdio;
-+	no-mmc;
-+
-+	pinctrl-0 = <&sdc2_default>, <&sdc2_card_det_n>;
-+	pinctrl-1 = <&sdc2_sleep>, <&sdc2_card_det_n>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
  &sleep_clk {
  	clock-frequency = <32000>;
  };
-@@ -405,12 +583,58 @@ &sleep_clk {
+ 
++&spi4 {
++	status = "okay";
++
++	touchscreen@0 {
++		compatible = "goodix,gt9916";
++		reg = <0>;
++
++		interrupt-parent = <&tlmm>;
++		interrupts = <162 IRQ_TYPE_LEVEL_LOW>;
++
++		reset-gpios = <&tlmm 161 GPIO_ACTIVE_LOW>;
++
++		avdd-supply = <&vreg_l14b_3p2>;
++
++		spi-max-frequency = <1000000>;
++
++		touchscreen-size-x = <1080>;
++		touchscreen-size-y = <2400>;
++
++		pinctrl-0 = <&ts_irq>, <&ts_reset>;
++		pinctrl-names = "default";
++	};
++};
++
  &tlmm {
  	/* Reserved I/Os for NFC */
  	gpio-reserved-ranges = <32 8>;
++
++	bt_default: bt-default-state {
++		bt-en-pins {
++			pins = "gpio17";
++			function = "gpio";
++			drive-strength = <16>;
++			bias-disable;
++		};
++
++		sw-ctrl-pins {
++			pins = "gpio18";
++			function = "gpio";
++			bias-pull-down;
++		};
++	};
 +
 +	disp0_reset_n_active: disp0-reset-n-active-state {
 +		pins = "gpio133";
@@ -348,6 +353,46 @@ index 51092d20d610..656cdbc6f234 100644
 +		drive-strength = <2>;
 +		bias-pull-down;
 +	};
++
++	ts_irq: ts-irq-state {
++		pins = "gpio161";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++		output-disable;
++	};
++
++	ts_reset: ts-reset-state {
++		pins = "gpio162";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++	};
++};
++
++&uart14 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn7850-bt";
++
++		clocks = <&rpmhcc RPMH_RF_CLK1>;
++
++		vddio-supply = <&vreg_l3c_1p2>;
++		vddaon-supply = <&vreg_l15b_1p8>;
++		vdddig-supply = <&vreg_s3c_0p9>;
++		vddrfa0p8-supply = <&vreg_s3c_0p9>;
++		vddrfa1p2-supply = <&vreg_s1c_1p2>;
++		vddrfa1p9-supply = <&vreg_s6c_1p8>;
++
++		max-speed = <3200000>;
++
++		enable-gpios = <&tlmm 17 GPIO_ACTIVE_HIGH>;
++		swctrl-gpios = <&tlmm 18 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&bt_default>;
++		pinctrl-names = "default";
++	};
  };
  
  &uart15 {
@@ -374,8 +419,8 @@ index 51092d20d610..656cdbc6f234 100644
 +
  /*
   * DPAUX -> WCD9395 -> USB_SBU -> USB-C
-  * eUSB2 DP/DM -> PM85550HS -> eUSB2 DP/DM -> USB-C
-@@ -422,7 +646,16 @@ &usb_1 {
+  * eUSB2 DP/DM -> PM85550HS -> eUSB2 DP/DM -> WCD9395 -> USB-C
+@@ -507,7 +771,16 @@ &usb_1 {
  };
  
  &usb_1_dwc3 {
