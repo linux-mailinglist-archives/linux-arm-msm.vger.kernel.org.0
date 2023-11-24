@@ -1,177 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-1861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BCCA7F756F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:45:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 01EA87F75CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:57:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9DC731C20381
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:45:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 33B511C20859
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:57:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D47028E2A;
-	Fri, 24 Nov 2023 13:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C66F2C840;
+	Fri, 24 Nov 2023 13:57:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o9CzBtB2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E2g+876a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43019286B9;
-	Fri, 24 Nov 2023 13:45:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C789FC433C7;
-	Fri, 24 Nov 2023 13:45:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700833541;
-	bh=EzqT4v8vZXGnSVX9M8qsp06zVhLbFhH0kYlZVwhXdTc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=o9CzBtB2XVBvWvf4qEK3/cdglI9Ej7m5YdPkCvTE+vmSq5ifMZ2s4WhZWi1FX+EXn
-	 TRyZ00bY4BMjVSHD4o4EYG5nFg6paKOdsFYqoXpj0ZYYd/4/m6FZN03E28fvxwYaa0
-	 g217e4oJwaTF2ou1LKMh5Fyn0oVi8xOHeExMJ3HE2SKEFeCuj/E/syDZMFAHBvC74o
-	 w3qn/gPd+hCVGb4mXNnmDwlHA4rSNFL5BAY+onlyPUL9JrJp3IbyKG5IMZ7VknUqRe
-	 mi9L9uzoAZY9rvSSx6sh1Nttv1AWD+eMAnnA3MsIXVqT64ts57gqtq0fSmqvnbGmV9
-	 yECsf5Sc3zlRw==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1r6WVN-0000to-1Y;
-	Fri, 24 Nov 2023 14:46:02 +0100
-Date: Fri, 24 Nov 2023 14:46:01 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD551739;
+	Fri, 24 Nov 2023 05:57:26 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1cfae5ca719so877735ad.0;
+        Fri, 24 Nov 2023 05:57:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700834246; x=1701439046; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lZfKd9ld8EcpTSh9IkKiwQ19+m7m8h2U5B+9O8cLUt0=;
+        b=E2g+876az5WH8ZNeF2Yj4OEj3RjbFNbWCppFCUNmzgsyQyLKo1j7x0RE+xErl2vvgp
+         9dF0tqP7SmaQg10mTwzbXDIBm9aSqYizG5CrFMXKvn78G3g+qpo3mpoaD2v/qXnoRO8F
+         HmzMlKWJQjnlC+6P9mzQ5jlGTSrPOpmKltj8DXarFxqwT2T6WGQtbVVtzk8UXzcKNXCn
+         RkPQHKJsprtesqfArKB3R/dJUTc0nCwKkvwfpazkybwVpDzTT2eZnB8e4qafjezC49W1
+         myLh2Zs6dmIXSGI76mLDKEk9xXhoRkFCEvh4P7dOQpBTuOMy+cfw/SvCGii0hOK9k9gB
+         rPwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700834246; x=1701439046;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lZfKd9ld8EcpTSh9IkKiwQ19+m7m8h2U5B+9O8cLUt0=;
+        b=A60WE5lkkK849PoQD0Hn3Hh16foFGZK13gm8YQIlzS6HJf+ubXxYBphQ5Annbilu3j
+         LO8rXIHlp89ufCN2D2JA1aVJnc/4HEyqMDRBmh88u9Nz02kwfbM/LTU/XzprW0NoywuK
+         qoivEs4t9MNKBs1CsXB8IBMLYfCtTVVfaG+qSvcX13ALLypoI2CNStoz8c+mO4xMiXun
+         zKi3BQLVzvci46udMuQtm0jTYygEsg9kY5Z5h87jPO+wegWq7PK6dRnb0DXVY3rUEcjA
+         +LOytGoMwVSoMnc6Cv38bJbwr0gfecWTyJgzN0YX/Cw5DaKahmbWTaRHi+6eSC/mv2WP
+         PiHQ==
+X-Gm-Message-State: AOJu0YxSlTl43W+xqc5ZS4HOm7RZ8IPGips3ZXMhQohtf3DyA8kSJFWk
+	p7KWB3HEpxhkfvjjNfO7FzgjWfM55yU=
+X-Google-Smtp-Source: AGHT+IHfZuSyuZePFumVf9GySSD7n+qcNQXMUctv4gMfBPItfnYRDBsORnIEhA/mbCC0XzaUz63wEQ==
+X-Received: by 2002:a17:902:c713:b0:1cf:677b:6c2b with SMTP id p19-20020a170902c71300b001cf677b6c2bmr2419200plp.29.1700834246261;
+        Fri, 24 Nov 2023 05:57:26 -0800 (PST)
+Received: from localhost.localdomain ([192.166.114.90])
+        by smtp.gmail.com with ESMTPSA id o9-20020a170902d4c900b001c3be750900sm3179417plg.163.2023.11.24.05.57.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Nov 2023 05:57:25 -0800 (PST)
+From: Jianhua Lu <lujianhua000@gmail.com>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com,
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-Subject: Re: [PATCH 1/6] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
- bindings
-Message-ID: <ZWCpGdJRexnk98IN@hovoldconsulting.com>
-References: <20231122191335.3058-1-quic_kriskura@quicinc.com>
- <ZV9dYpTYRXn63tXe@hovoldconsulting.com>
- <1192d91f-11bf-44af-953a-14e08e2b6ca8@quicinc.com>
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org,
+	Jianhua Lu <lujianhua000@gmail.com>
+Subject: [PATCH 1/3] arm64: dts: qcom: sm8250-xiaomi-elish: Fix typos
+Date: Fri, 24 Nov 2023 21:57:11 +0800
+Message-ID: <20231124135713.5610-1-lujianhua000@gmail.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1192d91f-11bf-44af-953a-14e08e2b6ca8@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Nov 24, 2023 at 05:32:37PM +0530, Krishna Kurapati PSSNV wrote:
-> > 
-> > Thanks for sorting this out.
-> > 
-> > It seems like we have a few combinations of these interrupts and we
-> > should probably try to define the order for these once and for all and
-> > update the current devicetrees to match (even if it means adding new
-> > interrupts in the middle).
-> > 
-> > Instead of adding separate compatibles for the controllers without SS
-> > support, I suggest keeping that interrupt last as an optional one.
-> > 
-> > But IIUC we essentially have something like:
-> > 
-> > qusb2-:
-> > 
-> > 	- const: qusb2_phy
-> > 	- const: pwr_event
-> > 	- const: ss_phy_irq	(optional)
-> > 
-> > qusb2:
-> > 
-> > 	- const: hs_phy_irq
-> > 	- const: qusb2_phy
-> > 	- const: pwr_event
-> > 	- const: ss_phy_irq	(optional)
-> > 
-> > qusb2+:
-> > 
-> > 	- const: hs_phy_irq
-> > 	- const: qusb2_phy
-> > 	- const: dp_hs_phy_irq
-> > 	- const: dm_hs_phy_irq
-> > 	- const: pwr_event
-> > 	- const: ss_phy_irq	(optional)
-> > 
-> 
-> This combination doesn't exist. So we can skip this one.
+There are two typos in this dtsi, so fix it.
+  classis -> chassis.
+  80700000 -> 80600000
 
-Ok, good. I thought you said some QUSB2 platforms used DP/DM, but I guess
-that means they don't have the qusb2_phy interrupt then.
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+index 85e5cf3dc91e..3d4ea428e4cb 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+@@ -23,7 +23,7 @@
+ /delete-node/ &xbl_aop_mem;
  
-> > femto-:
-> > 	- const: dp_hs_phy_irq
-> > 	- const: dm_hs_phy_irq
-> > 	- const: pwr_event
-> > 	- const: ss_phy_irq	(optional)
-> > 
-> > femto:
-> > 	- const: hs_phy_irq
-> > 	- const: dp_hs_phy_irq
-> > 	- const: dm_hs_phy_irq
-> > 	- const: pwr_event
-> > 	- const: ss_phy_irq	(optional)
-> > 
-> > Does this look like it would cover all of our currents SoCs?
-> > 
-> > Do all of them have the pwr_event interrupt?
-> 
-> Yes. From whatever targets I was able to find, only one of them didn't 
-> have the power_event irq. Rest all of them had. I will recheck that 
-> particular one again.
-
-Please do. The driver polls the corresponding status register on all
-platforms currently, and perhaps this interrupt can one day be used to
-get rid of the polling.
+ / {
+-	classis-type = "tablet";
++	chassis-type = "tablet";
  
-> > Note that DP comes before DM above as that seems like the natural order
-> > of these (plus before minus).
-> > 
-> > Now if the HS interrupt is truly unusable, I guess we can consider
-> > dropping it throughout and the above becomes just three permutations
-> > instead, which can even be expressed along the lines of:
-> 
-> Infact, I wanted to do this but since you mentioned before that if HW 
-> has it, we must describe it, I kept it in. But since this functionality 
-> is confirmed to be mutually exclusive of qusb2/{dp/dm}, I am aligned to 
-> skip it in bindings and drop it in DT.
+ 	/* required for bootloader to select correct board */
+ 	qcom,msm-id = <QCOM_ID_SM8250 0x20001>; /* SM8250 v2.1 */
+@@ -114,7 +114,7 @@ vreg_s6c_0p88: smpc6-regulator {
+ 	};
+ 
+ 	reserved-memory {
+-		xbl_aop_mem: xbl-aop@80700000 {
++		xbl_aop_mem: xbl-aop@80600000 {
+ 			reg = <0x0 0x80600000 0x0 0x260000>;
+ 			no-map;
+ 		};
+-- 
+2.41.0
 
-As I mentioned elsewhere, it depends on whether it can be used at all.
-Not simply whether there is some other mechanism that can be used in its
-stead. Such a decision should be left up to the implementation.
-
-That's why I said "truly unusable" above. It's still not clear to me
-whether that is the case or not.
-
-> > 	- anyOf:
-> > 	  - items:
-> > 	    - const: qusb2_phy
-> > 	  - items:
-> > 	    - const: dp_hs_phy_irq
-> > 	    - const: dm_hs_phy_irq
-> > 	- const: pwr_event
-> > 	- const: ss_phy_irq	(optional)
-> > 
-> 
-> This must cover all cases AFAIK. How about we keep pwr_event also 
-> optional for time being. The ones I am not able to find also would come 
-> up under still binding block.
-
-No, we should avoid that if we can as with two many optional things,
-these quickly gets messy (one optional interrupt at the end is fine and
-can be expressed using min/maxItems).
-
-If the "qusb2+" combination above isn't needed, then we're down to four
-permutations, which is few enough to be spelled out explicitly even if
-we decide that the hs_phy_irq should be kept in. Without hs_phy_irq, it
-seems there's really only two permutations.
-
-Johan
 
