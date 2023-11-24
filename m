@@ -1,161 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-1814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FAFB7F7083
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 10:51:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37AF57F70C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 11:04:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC994281D77
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 09:51:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 949982815A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 10:04:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C0BB179A1;
-	Fri, 24 Nov 2023 09:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE0BB18026;
+	Fri, 24 Nov 2023 10:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wiK3GR4J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fW/cmt1T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAE551724
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 01:50:55 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-a04196fc957so246988166b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 01:50:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700819454; x=1701424254; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dx18rA2y6Wad6extsCB/aaPxXeVqimMyu9sQYRVs6ZU=;
-        b=wiK3GR4Jp0hUfrRS7ZXjDNiDUw+aOi/xz30ckm0+U1IXDi2l1M22covXXUeWQu+1vF
-         YqYpe60INbUrN3Bzz769wmQb26eZwEBp3YcaL4MP8Nw8a29LA4GBjXhIdjFAIFfOBNIf
-         HZ2ICsuxFMiO/NQJ2F5GBbRDUOE85M9P41Z4jEjy921XpCvdaW3gp3hCL5DcyHI3NUgz
-         8Y0bOPpBjWtIZ3VIDKdVBLggHEYBQ7OINIwDjoi4QA1vMtqzq40xJrW8AsJj52YpWBE3
-         0HPBGhDY+bskUZpZZNZgkY0MPpxXCGSs516oS40FkCUophG95WSsAha3sS1apmOlDswm
-         x8Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700819454; x=1701424254;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dx18rA2y6Wad6extsCB/aaPxXeVqimMyu9sQYRVs6ZU=;
-        b=YEugtpIKql6Z7Eetx0NIeIaulHuaTJzRwPImv1pKlWHFVv8auxnvnY4fGx5aTCLz/1
-         ODMqLaYIoy3wpgsY5ioTeF+uSIVlxhj8Bgsj5MPKB1AYFI7a2m6/NNb1ktMc/E2EnDOd
-         9WY0JF5u3mr7/vrJ3nZa7OqYtZUvhLIrBMfXfCPl08epohu43QSksS63m6XPLviYb2CZ
-         Mt5f09HxAY6Jk2nTK5Uk6uT9S7z8eM/RW5P0vt+zdy5VKe4jC1Ec+vfaVprLQrY/JaJC
-         Nm6DrJ6ERrGwqZDNadadM+yoMZU+6gRKKhcOEVH107vW9+/agw1Sv5gENhESQZ/UF1D3
-         CpKA==
-X-Gm-Message-State: AOJu0Yzph64juBBDUcMN04HrF10Ek7xsoyr2p0g+qo1nxp155KubYZ+n
-	koNhr2Im3uqA82x8n9lyFNHnPk8i9hpEZ35HUZU=
-X-Google-Smtp-Source: AGHT+IF/Kj151aZl65Ec3MTWrsorvLgbVuYtcq5C+dh8wsePro42bdrA/qCyqBaitU44u3s3bi7D3w==
-X-Received: by 2002:a17:907:9728:b0:9be:7b67:1673 with SMTP id jg40-20020a170907972800b009be7b671673mr1845816ejc.1.1700819454216;
-        Fri, 24 Nov 2023 01:50:54 -0800 (PST)
-Received: from krzk-bin.. ([178.197.218.100])
-        by smtp.gmail.com with ESMTPSA id w21-20020a170906481500b00977cad140a8sm1854824ejq.218.2023.11.24.01.50.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 01:50:53 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: minor whitespace cleanup around '='
-Date: Fri, 24 Nov 2023 10:50:49 +0100
-Message-Id: <20231124095049.58618-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231124095049.58618-1-krzysztof.kozlowski@linaro.org>
-References: <20231124095049.58618-1-krzysztof.kozlowski@linaro.org>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A755017733;
+	Fri, 24 Nov 2023 10:04:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48068C433C8;
+	Fri, 24 Nov 2023 10:04:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1700820251;
+	bh=odyegxK7uxxBKnGsjhd8OdJQcNHKmuTu63nAYxY3t2E=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fW/cmt1TnBYSriyoDoMYuXJEjNH09il9ygKQUnnl5ODH1Wr4IfG4Y93l6CbHMIkvU
+	 WdRO66wZVI6cOKxPozmzXAtliC+A0SXhgb3rANXFTcpI8DECN74dAXajeWG/4bgXVc
+	 hru+IlPXZuZ7As/Yj8pyZCrhdTzKJ9RnHGTzZoZke5XVwMKib7d/xeqhAKRqgrT7U5
+	 r07Hlt5ewNzEZTaxBK/Kqi+BRziZUliGYLT/327vvKele7g2dQpAif2AbkiQg5cQ+9
+	 ffFrzzCmaOUX3wv6lFkFY9+9myZABvN3CxMgW2FTRNEJVgUyifLQObqRDR0enfupJr
+	 D5aRl8/ymt0oA==
+Date: Fri, 24 Nov 2023 15:34:03 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: quic_jhugo@quicinc.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_cang@quicinc.com, quic_mrana@quicinc.com
+Subject: Re: [PATCH v4 2/4] bus: mhi: host: Drop chan lock before queuing
+ buffers
+Message-ID: <20231124100403.GA4536@thinkpad>
+References: <1699939661-7385-1-git-send-email-quic_qianyu@quicinc.com>
+ <1699939661-7385-3-git-send-email-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <1699939661-7385-3-git-send-email-quic_qianyu@quicinc.com>
 
-The DTS code coding style expects exactly one space before and after '='
-sign.
+On Tue, Nov 14, 2023 at 01:27:39PM +0800, Qiang Yu wrote:
+> Ensure read and write locks for the channel are not taken in succession by
+> dropping the read lock from parse_xfer_event() such that a callback given
+> to client can potentially queue buffers and acquire the write lock in that
+> process. Any queueing of buffers should be done without channel read lock
+> acquired as it can result in multiple locks and a soft lockup.
+> 
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts               | 2 +-
- arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts               | 2 +-
- arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts               | 2 +-
- arch/arm64/boot/dts/qcom/msm8953.dtsi                     | 2 +-
- arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+Is this patch trying to fix an existing issue in client drivers or a potential
+issue in the future drivers?
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-index e89e2e948603..846413817e9a 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
-@@ -15,7 +15,7 @@ / {
- };
- 
- &blsp1_i2c1 {
--	clock-frequency  = <400000>;
-+	clock-frequency = <400000>;
- 	pinctrl-0 = <&i2c_1_pins>;
- 	pinctrl-names = "default";
- 	status = "okay";
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-index efd480a7afdf..ed8a54eb95c0 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-@@ -15,7 +15,7 @@ / {
- };
- 
- &blsp1_i2c1 {
--	clock-frequency  = <400000>;
-+	clock-frequency = <400000>;
- 	pinctrl-0 = <&i2c_1_pins>;
- 	pinctrl-names = "default";
- 	status = "okay";
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
-index eb1fa33d6fe4..d5f99e741ae5 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
-@@ -15,7 +15,7 @@ / {
- };
- 
- &blsp1_i2c1 {
--	clock-frequency  = <400000>;
-+	clock-frequency = <400000>;
- 	pinctrl-0 = <&i2c_1_pins>;
- 	pinctrl-names = "default";
- 	status = "okay";
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index e7de7632669a..ef7a4e285897 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -1004,7 +1004,7 @@ mdss_dsi1_phy: phy@1a96400 {
- 
- 		apps_iommu: iommu@1e20000 {
- 			compatible = "qcom,msm8953-iommu", "qcom,msm-iommu-v1";
--			ranges  = <0 0x01e20000 0x20000>;
-+			ranges = <0 0x01e20000 0x20000>;
- 
- 			clocks = <&gcc GCC_SMMU_CFG_CLK>,
- 				 <&gcc GCC_APSS_TCU_ASYNC_CLK>;
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-index bb149e577914..edc0e42ee017 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5-vision-mezzanine.dts
-@@ -46,7 +46,7 @@ camera@1a {
- 		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
- 		assigned-clock-rates = <24000000>;
- 
--		dovdd-supply  = <&vreg_l7f_1p8>;
-+		dovdd-supply = <&vreg_l7f_1p8>;
- 		avdd-supply = <&vdc_5v>;
- 		dvdd-supply = <&vdc_5v>;
- 
+Even if you take care of disabled channels, "mhi_event->lock" acquired during
+mhi_mark_stale_events() can cause deadlock, since event lock is already held by
+mhi_ev_task().
+
+I'd prefer not to open the window unless this patch is fixing a real issue.
+
+- Mani
+
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> ---
+>  drivers/bus/mhi/host/main.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index 6c6d253..c4215b0 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -642,6 +642,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>  			mhi_del_ring_element(mhi_cntrl, tre_ring);
+>  			local_rp = tre_ring->rp;
+>  
+> +			read_unlock_bh(&mhi_chan->lock);
+> +
+>  			/* notify client */
+>  			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+>  
+> @@ -667,6 +669,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>  					kfree(buf_info->cb_buf);
+>  				}
+>  			}
+> +
+> +			read_lock_bh(&mhi_chan->lock);
+>  		}
+>  		break;
+>  	} /* CC_EOT */
+> -- 
+> 2.7.4
+> 
+> 
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
