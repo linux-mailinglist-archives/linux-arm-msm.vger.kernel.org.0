@@ -1,59 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-1892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC9BF7F81D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 20:02:06 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B5E77F7CC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 19:18:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95FA72833E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 19:02:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46773282058
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 18:18:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0974F2EAEA;
-	Fri, 24 Nov 2023 19:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D48F039FF3;
+	Fri, 24 Nov 2023 18:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCPa/jPD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fpvJBbKC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC33C2E64F;
-	Fri, 24 Nov 2023 19:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1A8C433C8;
-	Fri, 24 Nov 2023 19:02:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700852523;
-	bh=xSX0sPwff08dsrESNGOd4G9Ev6oqhwWl1ekYVtjbHmM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCPa/jPDx0/OkrYj+B9UHUKANkd7aAnNvvDcbsknCpueOW2NtFOPGDJcnAeHQNuG6
-	 RoKjaM/2iVCjydo3pVnB2mDT7JUk+5kq3wqSA/ledoh4fNwz2M29VHtfI3NvphHbvk
-	 IXsQDXbixpHL2JOLzHcpTJhJKiBvHy2hMaHfQpqE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Kuogee Hsieh <khsieh@codeaurora.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Stephen Boyd <swboyd@chromium.org>,
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F1D31BD9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 10:17:22 -0800 (PST)
+Received: by mail-io1-xd29.google.com with SMTP id ca18e2360f4ac-7afff3ea94dso71322239f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 10:17:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700849842; x=1701454642; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZLADupMmiOI/CuFkP9Hg2IYkHX7ypUPKgw9zZKAkI2A=;
+        b=fpvJBbKCHlHCjgDxug3KzmpK54wUIavyxF/EenC9iU7ATUZI1Zd5FMaUNne1s+2GP5
+         8SUuebjzGSeK66Mt6vbrGhWg1miFT84FjcCPzW16oO3bPhhZo7EQjycAePsUawRagCx4
+         TMekY+kPnraeE0gxcA4m0rRVhLShUpfCLZDyN8kxXFqlq0P6A8FBW59eYIZvV9pgp+gL
+         MtjwAItv+7iiC+5QfgsdQZSDq76llxohmD1LYH9E7hJGDq5kAWPAcku1MiSyutcwlsto
+         RBS9xxcTIm5OsK/YoEZK8nHJkW8ZWhRWtlx1nHkp0i+lfymTdG/Or2TnTdTXmqkZq4uH
+         kXRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700849842; x=1701454642;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZLADupMmiOI/CuFkP9Hg2IYkHX7ypUPKgw9zZKAkI2A=;
+        b=qSCxQOuRwJ3Qi209xeP+YCeS8gpZQEtkcsSztIGAYbLY2r2rz63ctPfKbpwvRinxjT
+         tN5TYvypxBxo+X8241wMqTLnu2EEpUQDzezQiu4ZEdqFhQa5KrMqWigQuFBxLG8shDX0
+         H/b9/nf4KolRjHdfPcsy9JifmsMRROZpE+DqXDeOlteNYBHqNyBFSTtravRyhGOkULdn
+         Xp+fT47GEWW+QFlptu705xc7ESF040zV840lBhF2e63t8nW+x3JLqEimr0aZkABDCNVm
+         7FMqSUwb+ID2ibANyterAlZqX3JlSCyjA3e/J/MqOnOZ4Jk1gl6wiqoqzVHe2v5VnIB/
+         nwUw==
+X-Gm-Message-State: AOJu0YzeVlPcfRafXAvlvxhWXNcCsRirqSpeAWw6CL/NE3qscMXexqnv
+	roIijWA5BHUvhNileaR8dSOhBfLLjK+QiBLEVUY=
+X-Google-Smtp-Source: AGHT+IE8paLRQ1z+VbJS//0j9s8uSZfLnbn4pb5jVt8VW26qZ7k45wdDaW9nQ3lb5QTLl6q1IH2Alw==
+X-Received: by 2002:a05:6602:3351:b0:7b0:2027:efda with SMTP id c17-20020a056602335100b007b02027efdamr4350310ioz.5.1700849841819;
+        Fri, 24 Nov 2023 10:17:21 -0800 (PST)
+Received: from localhost.localdomain (c-98-61-227-136.hsd1.mn.comcast.net. [98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id et21-20020a0566382a1500b004665cf3e94dsm937031jab.2.2023.11.24.10.17.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Nov 2023 10:17:21 -0800 (PST)
+From: Alex Elder <elder@linaro.org>
+To: robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	agross@kernel.org
+Cc: mka@chromium.org,
+	quic_cpratapa@quicinc.com,
+	quic_avuyyuru@quicinc.com,
+	quic_jponduru@quicinc.com,
+	quic_subashab@quicinc.com,
+	elder@kernel.org,
+	devicetree@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Jani Nikula <jani.nikula@intel.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/193] drm/msm/dp: skip validity check for DP CTS EDID checksum
-Date: Fri, 24 Nov 2023 17:52:25 +0000
-Message-ID: <20231124171947.904413107@linuxfoundation.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231124171947.127438872@linuxfoundation.org>
-References: <20231124171947.127438872@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/2] arm64: dts: qcom: enable IPA on sm8550
+Date: Fri, 24 Nov 2023 12:17:16 -0600
+Message-Id: <20231124181718.915208-1-elder@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,84 +80,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+Add the basic DTS information for supporting IPA on the Qualcomm
+SM8550 SoC.  Enable IPA on the SM8550 QRD platform; GSI firmware is
+loaded by the AP in this case.
 
-------------------
+					-Alex
 
-From: Jani Nikula <jani.nikula@intel.com>
+Alex Elder (2):
+  arm64: dts: qcom: sm8550: add IPA information
+  arm64: dts: qcom: sm8550-qrd: enable IPA
 
-[ Upstream commit a251c9d8e30833b260101edb9383b176ee2b7cb1 ]
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts |  7 +++++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi    | 39 +++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
-The DP CTS test for EDID last block checksum expects the checksum for
-the last block, invalid or not. Skip the validity check.
-
-For the most part (*), the EDIDs returned by drm_get_edid() will be
-valid anyway, and there's the CTS workaround to get the checksum for
-completely invalid EDIDs. See commit 7948fe12d47a ("drm/msm/dp: return
-correct edid checksum after corrupted edid checksum read").
-
-This lets us remove one user of drm_edid_block_valid() with hopes the
-function can be removed altogether in the future.
-
-(*) drm_get_edid() ignores checksum errors on CTA extensions.
-
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Kuogee Hsieh <khsieh@codeaurora.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/555361/
-Link: https://lore.kernel.org/r/20230901142034.580802-1-jani.nikula@intel.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/gpu/drm/msm/dp/dp_panel.c | 21 ++-------------------
- 1 file changed, 2 insertions(+), 19 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 4e8a19114e87d..93a2ee0f772fc 100644
---- a/drivers/gpu/drm/msm/dp/dp_panel.c
-+++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -264,26 +264,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
- 
- static u8 dp_panel_get_edid_checksum(struct edid *edid)
- {
--	struct edid *last_block;
--	u8 *raw_edid;
--	bool is_edid_corrupt = false;
-+	edid += edid->extensions;
- 
--	if (!edid) {
--		DRM_ERROR("invalid edid input\n");
--		return 0;
--	}
--
--	raw_edid = (u8 *)edid;
--	raw_edid += (edid->extensions * EDID_LENGTH);
--	last_block = (struct edid *)raw_edid;
--
--	/* block type extension */
--	drm_edid_block_valid(raw_edid, 1, false, &is_edid_corrupt);
--	if (!is_edid_corrupt)
--		return last_block->checksum;
--
--	DRM_ERROR("Invalid block, no checksum\n");
--	return 0;
-+	return edid->checksum;
- }
- 
- void dp_panel_handle_sink_request(struct dp_panel *dp_panel)
 -- 
-2.42.0
-
-
-
+2.34.1
 
