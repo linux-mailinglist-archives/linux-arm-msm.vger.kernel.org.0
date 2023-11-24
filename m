@@ -1,110 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-1815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37AF57F70C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 11:04:15 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F4347F70D6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 11:09:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 949982815A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 10:04:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 610431C20E87
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 10:09:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE0BB18026;
-	Fri, 24 Nov 2023 10:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 097C51803D;
+	Fri, 24 Nov 2023 10:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fW/cmt1T"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TfW3XNLB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A755017733;
-	Fri, 24 Nov 2023 10:04:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48068C433C8;
-	Fri, 24 Nov 2023 10:04:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700820251;
-	bh=odyegxK7uxxBKnGsjhd8OdJQcNHKmuTu63nAYxY3t2E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fW/cmt1TnBYSriyoDoMYuXJEjNH09il9ygKQUnnl5ODH1Wr4IfG4Y93l6CbHMIkvU
-	 WdRO66wZVI6cOKxPozmzXAtliC+A0SXhgb3rANXFTcpI8DECN74dAXajeWG/4bgXVc
-	 hru+IlPXZuZ7As/Yj8pyZCrhdTzKJ9RnHGTzZoZke5XVwMKib7d/xeqhAKRqgrT7U5
-	 r07Hlt5ewNzEZTaxBK/Kqi+BRziZUliGYLT/327vvKele7g2dQpAif2AbkiQg5cQ+9
-	 ffFrzzCmaOUX3wv6lFkFY9+9myZABvN3CxMgW2FTRNEJVgUyifLQObqRDR0enfupJr
-	 D5aRl8/ymt0oA==
-Date: Fri, 24 Nov 2023 15:34:03 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: quic_jhugo@quicinc.com, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_cang@quicinc.com, quic_mrana@quicinc.com
-Subject: Re: [PATCH v4 2/4] bus: mhi: host: Drop chan lock before queuing
- buffers
-Message-ID: <20231124100403.GA4536@thinkpad>
-References: <1699939661-7385-1-git-send-email-quic_qianyu@quicinc.com>
- <1699939661-7385-3-git-send-email-quic_qianyu@quicinc.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE401AB;
+	Fri, 24 Nov 2023 02:08:58 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AO6Gsli015529;
+	Fri, 24 Nov 2023 10:08:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=8HF7zz6c/6H2uWG8LyrQ8lCHlmsf5iqtfWUT7ePKpBQ=;
+ b=TfW3XNLBzCeI6C5lkqxv1yC/hokZickGP9zaJEljFt54Wn7P3jjL31CFegwA4jqC7911
+ WfSAfCYikWR3QYerMkVyEWXZQsEuk2E5V/ciITLKQ+qTtq3awByEbaPAUVlRUG7aZuCR
+ Zi8ndy+SDh87SRusW5ox0yUMFFcIw5Q8PT24J8/hDfOqMDzmNKAuYhdWOf5/QhOsRDmp
+ fw7J2EPhhxcu8nz/7t/KjOsGOQbShmZkIQij5aZSFADLQ/bIhcyDNcR2HUTzSxrpzbjH
+ EdoJCNozW8R2hrZo46dBgzCKgwHRDO3NeyJqaoUyeXdFL6vwidDzkTU+8PtMeuZG0YVT xw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj3ec2j0k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Nov 2023 10:08:41 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AOA8d8A021188
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Nov 2023 10:08:39 GMT
+Received: from blr-ubuntu-253.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Fri, 24 Nov 2023 02:08:33 -0800
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <will@kernel.org>,
+        <robin.murphy@arm.com>, <joro@8bytes.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC: <agross@kernel.org>, <vkoul@kernel.org>, <quic_gurus@quicinc.com>,
+        <quic_rjendra@quicinc.com>, <abel.vesa@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <iommu@lists.linux.dev>, <quic_tsoni@quicinc.com>,
+        <neil.armstrong@linaro.org>, Sibi Sankar <quic_sibis@quicinc.com>
+Subject: [PATCH V3 0/5] dt-bindings: Document gpi/pdc/scm/smmu for X1E80100
+Date: Fri, 24 Nov 2023 15:36:03 +0530
+Message-ID: <20231124100608.29964-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1699939661-7385-3-git-send-email-quic_qianyu@quicinc.com>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wm1OaCnBjO1Cq3NJ1TY86h4DIkLKDNvE
+X-Proofpoint-GUID: wm1OaCnBjO1Cq3NJ1TY86h4DIkLKDNvE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-23_15,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ clxscore=1015 mlxlogscore=997 phishscore=0 impostorscore=0
+ priorityscore=1501 mlxscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311240079
 
-On Tue, Nov 14, 2023 at 01:27:39PM +0800, Qiang Yu wrote:
-> Ensure read and write locks for the channel are not taken in succession by
-> dropping the read lock from parse_xfer_event() such that a callback given
-> to client can potentially queue buffers and acquire the write lock in that
-> process. Any queueing of buffers should be done without channel read lock
-> acquired as it can result in multiple locks and a soft lockup.
-> 
+This series documents gpi/pdc/scm/smmu/soc for the Qualcomm X1E80100
+platform, aka Snapdragon X Elite.
 
-Is this patch trying to fix an existing issue in client drivers or a potential
-issue in the future drivers?
+Our v1 post of the patchsets adding support for Snapdragon X Elite SoC had
+the part number sc8380xp which is now updated to the new part number x1e80100
+based on the new branding scheme and refers to the exact same SoC.
 
-Even if you take care of disabled channels, "mhi_event->lock" acquired during
-mhi_mark_stale_events() can cause deadlock, since event lock is already held by
-mhi_ev_task().
+v3:
+* Extend pattern matching support for the X1E platform. [Konrad]
+* Rebased to the latest lnext. [Krzysztof]
+* Pickup Rbs.
 
-I'd prefer not to open the window unless this patch is fixing a real issue.
+v2:
+* Update the part number from sc8380xp to x1e80100.
+* Document PDC bindings as well.
+* List the interconnect requirements in bindings. [Krzysztof]
+* Pickup Rbs.
 
-- Mani
+Dependencies: https://lore.kernel.org/lkml/20231120100617.47156-1-krzysztof.kozlowski@linaro.org/
+Release Link: https://www.qualcomm.com/news/releases/2023/10/qualcomm-unleashes-snapdragon-x-elite--the-ai-super-charged-plat
 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> ---
->  drivers/bus/mhi/host/main.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 6c6d253..c4215b0 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -642,6 +642,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->  			mhi_del_ring_element(mhi_cntrl, tre_ring);
->  			local_rp = tre_ring->rp;
->  
-> +			read_unlock_bh(&mhi_chan->lock);
-> +
->  			/* notify client */
->  			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->  
-> @@ -667,6 +669,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->  					kfree(buf_info->cb_buf);
->  				}
->  			}
-> +
-> +			read_lock_bh(&mhi_chan->lock);
->  		}
->  		break;
->  	} /* CC_EOT */
-> -- 
-> 2.7.4
-> 
-> 
+Rajendra Nayak (1):
+  dt-bindings: arm-smmu: Add compatible for X1E80100 SoC
+
+Sibi Sankar (4):
+  dt-bindings: arm: qcom-soc: extend pattern matching for X1E80100 SoC
+  dt-bindings: dma: qcom: gpi: add compatible for X1E80100
+  dt-bindings: firmware: qcom,scm: document SCM on X1E80100 SoCs
+  dt-bindings: interrupt-controller: qcom,pdc: document pdc on X1E80100
+
+ Documentation/devicetree/bindings/arm/qcom-soc.yaml       | 8 ++++----
+ Documentation/devicetree/bindings/dma/qcom,gpi.yaml       | 1 +
+ Documentation/devicetree/bindings/firmware/qcom,scm.yaml  | 2 ++
+ .../bindings/interrupt-controller/qcom,pdc.yaml           | 1 +
+ Documentation/devicetree/bindings/iommu/arm,smmu.yaml     | 2 ++
+ 5 files changed, 10 insertions(+), 4 deletions(-)
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.17.1
+
 
