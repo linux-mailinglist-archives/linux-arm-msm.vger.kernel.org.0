@@ -1,83 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-1865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AB527F7676
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:38:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DA6FD7F768A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 15:40:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8A7528236C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:38:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95404280D94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:40:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F36A241FC;
-	Fri, 24 Nov 2023 14:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A870C2D61F;
+	Fri, 24 Nov 2023 14:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="L1/kyVmI"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T5lEMUYv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.115])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 875DE19A3;
-	Fri, 24 Nov 2023 06:38:51 -0800 (PST)
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2247119A8;
+	Fri, 24 Nov 2023 06:40:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700836731; x=1732372731;
+  t=1700836817; x=1732372817;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=QKgJEGRCbdv2EWGbewfRTODn2GZOxw9ytLOYIn7uuOQ=;
-  b=L1/kyVmIVn1Dddb4n3hQEVXNkMjvRp0P2uctbs5mnDfvYCF85KU+wWWH
-   X9T+2UrK5KleGAtP+JeWAASN7z4AvjkyXun7uX6Ry12ktp2WFjU1JN3wO
-   SPP8LKF340YlD74jZv6un3ZcdaevZBVgkFlaI37+TiASAHyegMwQ3gpVT
-   wvZ4XXGBZrblSZymOccm7KETGJV0p58RpqcmS7a4Lb8SkG3sSJMh07ZF4
-   di0kBDViFNRNdhDKU4J5A69UltanAMcxXnRkb11d3byVhN329eOsP0lfI
-   QdpVpyeZtzQMsSnFa8OptGY58PPIu/V/SJScVdPNMvC2ecToQqdfIRPx8
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="392198719"
+  bh=/Uxc0d4c4aiMUWgnl/99+3ExpFREygOtI/KFwWyU28A=;
+  b=T5lEMUYvASO9Ieq/q4Syfgrt/7NaS4kz3sqmv/GBozdpMXUxqaHqzrPn
+   Fws9/dpeM7Z8816bzHt0gqqsDLpn3puLcRHbvOI2TfbbtoLR86KefVqF/
+   YOSCVpLwgc2tZS8s8RkuhV1fjBqZlvTfECps2ZKOoS5aoMn5az9EC1ZWx
+   /c7xAflgYncCgl0oe3DUkinZIRZ6xt0zaIRvON2xpvfQDV0XD3JRb2klP
+   062J1JNFjMs1/En5OGxIc+EE6NTMUxDzprYg8FCuU+KRL8Ct3rNpVwWIY
+   78zIYk43cBwNRVyWMcmf569ipaDbFEwQ96h0B6Rs1S+rupfmcJPVk5H+t
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="395249011"
 X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
-   d="scan'208";a="392198719"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2023 06:38:50 -0800
+   d="scan'208";a="395249011"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2023 06:40:16 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="743906526"
+X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="760975142"
 X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
-   d="scan'208";a="743906526"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2023 06:38:42 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1r6XCh-0000000GjtS-2kli;
-	Fri, 24 Nov 2023 16:30:47 +0200
-Date: Fri, 24 Nov 2023 16:30:47 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: kernel test robot <lkp@intel.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+   d="scan'208";a="760975142"
+Received: from lkp-server01.sh.intel.com (HELO d584ee6ebdcc) ([10.239.97.150])
+  by orsmga007.jf.intel.com with ESMTP; 24 Nov 2023 06:40:10 -0800
+Received: from kbuild by d584ee6ebdcc with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r6XLi-0002tp-2p;
+	Fri, 24 Nov 2023 14:40:06 +0000
+Date: Fri, 24 Nov 2023 22:39:38 +0800
+From: kernel test robot <lkp@intel.com>
+To: Suraj Jaiswal <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzk@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Jianlong Huang <jianlong.huang@starfivetech.com>,
-	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
-	openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	oe-kbuild-all@lists.linux.dev, Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Dong Aisheng <aisheng.dong@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Sean Wang <sean.wang@kernel.org>
-Subject: Re: [PATCH v2 06/21] pinctrl: equilibrium: Convert to use struct
- pingroup
-Message-ID: <ZWCzl-EYXdymay4p@smile.fi.intel.com>
-References: <20231123193355.3400852-7-andriy.shevchenko@linux.intel.com>
- <202311241401.ZPILPdov-lkp@intel.com>
+	Conor Dooley <conor+dt@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Prasad Sodagudi <psodagud@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	netdev@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH net-next v3 3/3] net: stmmac: Add driver support for
+ DWMAC5 fault IRQ Support
+Message-ID: <202311241513.D6JpHWGg-lkp@intel.com>
+References: <62eaaace3713751cb1ecac3163e857737107ca0e.1700737841.git.quic_jsuraj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,39 +80,59 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202311241401.ZPILPdov-lkp@intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <62eaaace3713751cb1ecac3163e857737107ca0e.1700737841.git.quic_jsuraj@quicinc.com>
 
-On Fri, Nov 24, 2023 at 09:19:45PM +0800, kernel test robot wrote:
+Hi Suraj,
 
-...
+kernel test robot noticed the following build warnings:
 
-> If you fix the issue in a separate patch/commit (i.e. not just a new version of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202311241401.ZPILPdov-lkp@intel.com/
-> 
-> smatch warnings:
-> drivers/pinctrl/pinctrl-equilibrium.c:719 eqbr_build_groups() warn: unsigned 'grp->npins' is never less than zero.
+[auto build test WARNING on net-next/main]
 
-Thank you for the report!
+url:    https://github.com/intel-lab-lkp/linux/commits/Suraj-Jaiswal/dt-bindings-net-qcom-ethqos-add-binding-doc-for-fault-IRQ-for-sa8775p/20231123-202252
+base:   net-next/main
+patch link:    https://lore.kernel.org/r/62eaaace3713751cb1ecac3163e857737107ca0e.1700737841.git.quic_jsuraj%40quicinc.com
+patch subject: [PATCH net-next v3 3/3] net: stmmac: Add driver support for DWMAC5 fault IRQ Support
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20231124/202311241513.D6JpHWGg-lkp@intel.com/config)
+compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project.git f28c006a5895fc0e329fe15fead81e37457cb1d1)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231124/202311241513.D6JpHWGg-lkp@intel.com/reproduce)
 
-...
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311241513.D6JpHWGg-lkp@intel.com/
 
->    718			grp->npins = of_property_count_u32_elems(np, "pins");
->  > 719			if (grp->npins < 0) {
->    720				dev_err(dev, "No pins in the group: %s\n", prop->name);
->    721				of_node_put(np);
->    722				return -EINVAL;
->    723			}
+All warnings (new ones prefixed by >>):
 
-Surprisingly (to me) the _count_u32_elems() can return a negative error code...
-Fine, I redo a bit the code by introducing a new patch that will use err instead
-of ->npins (which sounds better approach anyway).
+>> drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c:693:5: warning: no previous prototype for function 'stmmac_get_fault_intr_config' [-Wmissing-prototypes]
+   int stmmac_get_fault_intr_config(struct platform_device *pdev, struct stmmac_resources *res)
+       ^
+   drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c:693:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int stmmac_get_fault_intr_config(struct platform_device *pdev, struct stmmac_resources *res)
+   ^
+   static 
+   1 warning generated.
+
+
+vim +/stmmac_get_fault_intr_config +693 drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+
+   692	
+ > 693	int stmmac_get_fault_intr_config(struct platform_device *pdev, struct stmmac_resources *res)
+   694	{
+   695		int ret = 0;
+   696	
+   697		res->safety_common_intr = platform_get_irq_byname(pdev, "safety");
+   698	
+   699		if (res->safety_common_intr < 0) {
+   700			if (res->safety_common_intr != -EPROBE_DEFER)
+   701				dev_err(&pdev->dev, "safety IRQ configuration information not found\n");
+   702			ret = 1;
+   703		}
+   704	
+   705		return ret;
+   706	}
+   707	
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
