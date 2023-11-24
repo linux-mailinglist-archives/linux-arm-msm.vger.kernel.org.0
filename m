@@ -1,210 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-1835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C72EC7F72D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 12:35:31 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 965CC7F72EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 12:40:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EAE211C20DAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 11:35:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 377DCB21416
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 11:40:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 076801C6A1;
-	Fri, 24 Nov 2023 11:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5D531EB52;
+	Fri, 24 Nov 2023 11:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Axl8QWf6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ET9l9D+i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB6510FF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 03:35:19 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-a06e59384b6so202849366b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 03:35:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1700825718; x=1701430518; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mq/q+zSacFh9TwkvYjfDYYCeewexARu63HiKzNInzCg=;
-        b=Axl8QWf6I1f5BuCSu7wW0hMwesL2O6Rw8Ie9uCcVSMVOK2iu+gLW9cr61REERY8qNR
-         +vkXKXdxPmKTp/JUCsZ5qOyduf4PSqqM9wY0dnNqyUxeazCfKos95q+p8DpjmpHTxzag
-         SXUiwBx28Vcg1WSndGJhp7kb7twJZcgNx+AKSWFAIB9Buqlp3j81glnresbLhWZD7VS9
-         DBTQhgbww6nvmJw5xjl6I4ef+rBUqVccmmhX/pohbH8/LbfzY/jFbokP/pZxRUzvheGJ
-         Cs5qpTuFUCKG4ZLgna3TfcndL/BsvLl5h3GgcSL46oVnCQBm9JHQvUAUepC1bSt4CwVC
-         5T8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700825718; x=1701430518;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=mq/q+zSacFh9TwkvYjfDYYCeewexARu63HiKzNInzCg=;
-        b=bvEICE66JQUAc4v/FFStOdYLMxR31Rmmnc3nktgRERdXQPLhTPeQiZ+++DZOIezbke
-         zAxeU/XnbKkbmdV6RvTocr9iC6c9jFQV5x3fiuaFjYNWAIfvZmrnQt1ZSjo5zq98pMQI
-         7AyaVToyPtmbc/89gesHpP+/Fu4Y+DtCTxnUFfJYBJPZBDlOrdlvR1XT1A1n2RFQCwKH
-         3mMkUvF9VQG6kPKNDTGAHtYDKGATN2V8Ww7o+7/szlytazRX9AMBn9w2DhZNg+UVTFwV
-         Rsiaol3x36IiEEXEzYtrqp4UFputTCSggEYu0ILTWjKtEVSGTna5f3U2Eib5y8gNJXeQ
-         Potg==
-X-Gm-Message-State: AOJu0YzVIhjKg8r7jg38kIsy+rTO6rkIkJ5rDsR/NIEAR7MGHi6nJomK
-	sf9Vl1bXUajpeVCGiKlfpOawOg==
-X-Google-Smtp-Source: AGHT+IFuJVLP/ukmcztwl/R4oM89EiqMEKf4bjA/lNBCTCp94tiW6nAOtKOWi35CKmAiFtBuvNehtQ==
-X-Received: by 2002:a17:906:3042:b0:9cf:36be:3b5d with SMTP id d2-20020a170906304200b009cf36be3b5dmr1620418ejd.61.1700825718401;
-        Fri, 24 Nov 2023 03:35:18 -0800 (PST)
-Received: from localhost (dhcp-089-099-055-216.chello.nl. [89.99.55.216])
-        by smtp.gmail.com with ESMTPSA id uz2-20020a170907118200b00a098348d803sm495339ejb.141.2023.11.24.03.35.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Nov 2023 03:35:18 -0800 (PST)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3D41A2;
+	Fri, 24 Nov 2023 03:40:15 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AOB7X0R022990;
+	Fri, 24 Nov 2023 11:39:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=tDHSeIF8klwS9UwzqRebuF+OKf98KYwg7r/Vh86pzKk=;
+ b=ET9l9D+iljpGXhn9t0Umx3d8FRi1HmXdgtnd+/5qwTmCHh6UgBujmAvi1r+Yu954kl0/
+ jGqGldIXSPNxFxXoEwOiNj4Cf7Bp9jSLEGD571XrvGIXdP1u/tPe43tC34/jUUZ7OrF1
+ qJNi9wckmKNHUClJsFgxKnlfkcgVPk64qLaGjVwiNia6Tn2hogIsqLsGWbvXrUp+/qQy
+ H/kVEZZkEsr7uaBU1zg1tpga9vHLgS9xBe9qIIkvmA0NcqsucvyV1ENu+W8nKHN5xkxA
+ mKKT6Qw201rFzGvAH1gDrtfjACzao5X8k+dY66Y7xwSyAYRz7wXMvgi/swwHzfjEpqLS NA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uj4hwjqyh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Nov 2023 11:39:50 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AOBdnr3020020
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Nov 2023 11:39:49 GMT
+Received: from [10.216.4.251] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 24 Nov
+ 2023 03:39:38 -0800
+Message-ID: <735075ee-1145-471e-9dac-9968b02ad35a@quicinc.com>
+Date: Fri, 24 Nov 2023 17:09:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 24 Nov 2023 12:35:17 +0100
-Message-Id: <CX70EBXCOB66.3998C482R86CN@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: Move video-firmware to
- chrome-common
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Vikash Garodia" <quic_vgarodia@quicinc.com>, "Stanimir Varbanov"
- <stanimir.k.varbanov@gmail.com>, "Bryan O'Donoghue"
- <bryan.odonoghue@linaro.org>, "Andy Gross" <agross@kernel.org>, "Bjorn
- Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konrad.dybcio@linaro.org>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
- <cros-qcom-dts-watchers@chromium.org>, "Rob Herring" <robh+dt@kernel.org>,
- "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
- <conor+dt@kernel.org>
-X-Mailer: aerc 0.15.2
-References: <20231002-sc7280-venus-pas-v2-0-bd2408891317@fairphone.com>
- <20231002-sc7280-venus-pas-v2-2-bd2408891317@fairphone.com>
- <4cfad910-1821-3a31-c372-3f6b199e8f71@quicinc.com>
- <CX5ENKY70B5J.2D6DXKGI4EGX3@fairphone.com>
- <ff021f49-f81b-0fd1-bd2c-895dbbb03d56@quicinc.com>
-In-Reply-To: <ff021f49-f81b-0fd1-bd2c-895dbbb03d56@quicinc.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v3 1/3] dt-bindings: net: qcom,ethqos: add
+ binding doc for fault IRQ for sa8775p
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Vinod Koul
+	<vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        "Eric
+ Dumazet" <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>, Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu
+	<joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Prasad Sodagudi
+	<psodagud@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>
+CC: <kernel@quicinc.com>
+References: <cover.1700737841.git.quic_jsuraj@quicinc.com>
+ <ff458955a24c0cb4ba41158b8b53fbef00c8237d.1700737841.git.quic_jsuraj@quicinc.com>
+ <7c9135e0-da6e-4e1a-b673-af6c73d8ee45@linaro.org>
+From: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+In-Reply-To: <7c9135e0-da6e-4e1a-b673-af6c73d8ee45@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: FZYAK8yh1-fNezYLdyWhoJUEJupZisCK
+X-Proofpoint-ORIG-GUID: FZYAK8yh1-fNezYLdyWhoJUEJupZisCK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-23_15,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 mlxscore=0 mlxlogscore=814
+ suspectscore=0 phishscore=0 spamscore=0 lowpriorityscore=0 clxscore=1011
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311240090
 
-On Fri Nov 24, 2023 at 7:38 AM CET, Vikash Garodia wrote:
->
-> On 11/22/2023 7:50 PM, Luca Weiss wrote:
-> > On Wed Nov 22, 2023 at 2:17 PM CET, Vikash Garodia wrote:
-> >>
-> >> On 10/2/2023 7:50 PM, Luca Weiss wrote:
-> >>> If the video-firmware node is present, the venus driver assumes we're=
- on
-> >>> a system that doesn't use TZ for starting venus, like on ChromeOS
-> >>> devices.
-> >>>
-> >>> Move the video-firmware node to chrome-common.dtsi so we can use venu=
-s
-> >>> on a non-ChromeOS devices.
-> >>>
-> >>> At the same time also disable the venus node by default in the dtsi,
-> >>> like it's done on other SoCs.
-> >>>
-> >>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> >>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>> ---
-> >>>  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 8 ++++++++
-> >>>  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 6 ++----
-> >>>  2 files changed, 10 insertions(+), 4 deletions(-)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arc=
-h/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>> index 5d462ae14ba1..cd491e46666d 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> >>> @@ -104,6 +104,14 @@ &scm {
-> >>>  	dma-coherent;
-> >>>  };
-> >>> =20
-> >>> +&venus {
-> >>> +	status =3D "okay";
-> >>> +
-> >>> +	video-firmware {
-> >>> +		iommus =3D <&apps_smmu 0x21a2 0x0>;
-> >>> +	};
-> >>> +};
-> >>> +
-> >>>  &watchdog {
-> >>>  	status =3D "okay";
-> >>>  };
-> >>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/d=
-ts/qcom/sc7280.dtsi
-> >>> index 66f1eb83cca7..fa53f54d4675 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >>> @@ -3740,6 +3740,8 @@ venus: video-codec@aa00000 {
-> >>>  				 <&apps_smmu 0x2184 0x20>;
-> 0x2184 is a secure SID. I think qcm6490-fairphone-fp5.dts needs to overri=
-de the
-> iommus property as well to retain only the non secure SID i.e 0x2180 ? I =
-am
-> seeing below crash
->
-> Call trace:
-> [   47.663593]  qcom_smmu_write_s2cr+0x64/0xa4
-> [   47.663616]  arm_smmu_attach_dev+0x120/0x284
-> [   47.663647]  __iommu_attach_device+0x24/0xf8
-> [   47.676845]  __iommu_device_set_domain+0x70/0xd0
-> [   47.681632]  __iommu_group_set_domain_internal+0x60/0x1b4
-> [   47.687218]  iommu_setup_default_domain+0x358/0x418
-> [   47.692258]  __iommu_probe_device+0x3e4/0x404
->
-> Could you please reconfirm if Video SID 0x2184 (and mask) is allowed by t=
-he
-> qcm6490-fairphone-fp5 hardware having TZ ?
+hi Krzysztof,
+Sure . Will take care of dtbs_check warnings in the next patch .
 
-Hi,
+Thanks
+Suraj
 
-On FP5 it seems it's no problem to have both SIDs in there, probe and
-using venus appears to work fine.
-
-Are you using different firmware than QCM6490.LA.3.0 on the device where
-you tested this?
-
->
-> >>>  			memory-region =3D <&video_mem>;
-> >>> =20
-> >>> +			status =3D "disabled";
-> >>> +
-> >>>  			video-decoder {
-> >>>  				compatible =3D "venus-decoder";
-> >>>  			};
-> >>> @@ -3748,10 +3750,6 @@ video-encoder {
-> >>>  				compatible =3D "venus-encoder";
-> >>>  			};
-> >>> =20
-> >>> -			video-firmware {
-> >>> -				iommus =3D <&apps_smmu 0x21a2 0x0>;
-> >>> -			};
-> >>> -
-> >>>  			venus_opp_table: opp-table {
-> >>>  				compatible =3D "operating-points-v2";
-> >>> =20
-> >>>
-> >> Changes look good. Is this tested on SC7280 ?
-> >=20
-> > Hi Vikash,
-> >=20
-> > I didn't test it myself on sc7280 (just qcm6490-fp5) but dtx_diff
-> > reports no differences except for status =3D okay property being added,=
- so
-> > there should be no change on those boards. See below.
-> >=20
-> > Regards
-> > Luca
->
-> I tested on SC7280 (herobrine) and all good.
-
-Great, thanks!
-
-Regards
-Luca
-
->
-> Regards,
-> Vikash
-
+On 11/24/2023 1:48 PM, Krzysztof Kozlowski wrote:
+> On 23/11/2023 12:38, Suraj Jaiswal wrote:
+>> Add binding doc for fault IRQ. The fault IRQ will be
+>> trigger for ECC,DPP,FSM error.
+>>
+>> Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+>> ---
+>>  Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 7 +++++--
+>>  1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> index 7bdb412a0185..e013cb51fb07 100644
+>> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> @@ -37,12 +37,14 @@ properties:
+>>      items:
+>>        - description: Combined signal for various interrupt events
+>>        - description: The interrupt that occurs when Rx exits the LPI state
+>> +      - description: The interrupt that occurs when HW fault occurs
+> 
+> Adding required items is breaking the ABI and introducing new dtbs_check
+> warnings. I don't see rationale for this in the commit msg.
+> 
+> I don't see any fixes for the warnings, either. I am quite picky on this
+> part, so to avoid wasting my time - are you 100% sure you do not
+> introduce any new warning?
+> 
+> Best regards,
+> Krzysztof
+> 
 
