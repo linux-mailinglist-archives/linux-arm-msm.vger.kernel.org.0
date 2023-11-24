@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE4A17F6DEE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 09:19:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF2C47F6DF8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 09:20:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A96F2817C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 08:19:13 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 188A7B20E24
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 08:20:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55B51B671;
-	Fri, 24 Nov 2023 08:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49ED1BA39;
+	Fri, 24 Nov 2023 08:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RYXFzvoH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MzWYidsy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE04D48
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 00:19:04 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9fd0059a967so522142666b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 00:19:04 -0800 (PST)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582611BD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 00:20:07 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-548a2c20f50so2214519a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 00:20:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700813943; x=1701418743; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700814006; x=1701418806; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xWF0p87fg9Xzl+qFxziESoCjvKijQziJcZDzMVVq7xk=;
-        b=RYXFzvoHHZZ9S8CS2mxHuyVukLabL3+SwtlEjLWLrCtZ5LKMEFg3QTKtFE1y/Wc5fF
-         pbCRQYpeXbKMMNRz8oAg8GUtmbLIy7mEhJsUr6/KqQn0rW9qE1eXhhIatuUlybSQnpQd
-         /sUY5Erq1lNhdghhkjCLu+pAxGDNA6ErHRcCYAN76z6RD8msebNB8ci2z/LfeDlKh2Lg
-         p1/EReBgBwUl0vQWXJ83dxLwibI2ghg+iVZ2Tj7XAmZfNliOdyr9fX610FG07EFeH5cx
-         iblUE8chvyqLaENC2RLxDbu6TyzD66cmYSGq5ZB//iw3ue41/BzcIKxe38lbqSEhG4vl
-         ox4Q==
+        bh=LkVn7M+eAmMguDWpgjWJriPty1JjutndIswZF8OoUS4=;
+        b=MzWYidsym6ZxnnIHcoGrIWBJsJ+MjLGcyyXpw+zh783ZQwiP4+t7iISun4avFwBQWs
+         HPxAwHqGBNGC9fxwYRhRZl1OeT9eQC5btVPpls0jPiqpf9rwgdJC5eAkb4Y3vrcTDkjl
+         GP0TQh/OYOjWnaB83EaV1zDwECnFrqHqxz9bZdUeDdktvEZ9fGrtuGUXN5zeZts/Eauj
+         tlkAq7CIna/nSvG9BkMGUVUgfHOoaHDk2jzg0kBeTIqKtlNtQsSkNif1kP5JIkOmXcAd
+         cjNT8RozznLV6itV//RdkhjYDkv9tWQLL26WJ5987KidtP7ISMQzCpWXEBpEe8CubvhQ
+         G1/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700813943; x=1701418743;
+        d=1e100.net; s=20230601; t=1700814006; x=1701418806;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xWF0p87fg9Xzl+qFxziESoCjvKijQziJcZDzMVVq7xk=;
-        b=VzBXPRxjf6IoGGzc04dL2NH4KfhDQ/hHnXwOsRKIr9JZVsmxd1iewzetHjCotrsc3r
-         opC3n+uhKRWg2pckz7sP09BYmTG8Jm+ljtCBULmW2xVJ0dWnveU404xz95/LsnEpVhbo
-         UDGeK0/9eZOHF43DK8FsrPK22RiKWi+JC0mshsbSsCmHN3yTy7HIw1xSLK8zZH3clYDB
-         5vO8PPu4zI8AtjU2Nx8yvcLYrzT6/fmWmU/Q0zATFvwYv7EdaDxm6adL1FcgnNEvY/BN
-         T/US1r/GszdV6OXLHTEidbDtzTZAp9f53A/XHszsLwMnGieXmAt114fUvS+tGQB3d6w6
-         34Pw==
-X-Gm-Message-State: AOJu0Yw+xS5h/0SKXPwjsKakGxiq5XF5qXM4IYs+LlxvgoAskBkDUVvE
-	gGl/sJYS9seny4aLorKyhPzJAQ==
-X-Google-Smtp-Source: AGHT+IHdokJoETEHvRt5CKNPcyBmp9aF9mNnTLEO7gdmk07wLtr8uj7OlyWt+80DjIu0GwuZ/2FtTA==
-X-Received: by 2002:a17:906:d513:b0:a04:a66b:1ad with SMTP id cq19-20020a170906d51300b00a04a66b01admr3784559ejc.17.1700813943400;
-        Fri, 24 Nov 2023 00:19:03 -0800 (PST)
+        bh=LkVn7M+eAmMguDWpgjWJriPty1JjutndIswZF8OoUS4=;
+        b=wjYvAaYo22sXCWgOWFz3HXlxNpNUJsAiOpPqL4/wXaR8/41od7btsipK8B9rchL8ls
+         2yiIwTrDST3Y+C5U/y/W6ctAfpINYi4SQ1SBOzZzlWTLNl46mEnnP7LZae6eidLwvIUG
+         O5rol5+UfTXoXN04aaG1ohvxq5rJitClnkXhyLjefUnP1eDFgTWfMnUtPIQL8QUNepVk
+         wwei+ql5hPGOPCC4KfCoE0m15BuQYkjYS2cfwkrmy0HTfF0e22Tj3JrkJ2zryTX8e7OL
+         lzxsrouC0K2KBTXs3R3fldMScUB4peOaezkEkK83rr3dt5dDKlLXt/Vn5W4gXTlupB/X
+         yLZA==
+X-Gm-Message-State: AOJu0YwNSxcTV4AurS6KLhGY0uciyyEFtiGgn5hRM9a9XcJ/Z9YLpXwM
+	7vZ6moMtuTbrx/YIKD1Q1jeXaQ==
+X-Google-Smtp-Source: AGHT+IHYTXuH5CEbAHeUCGEkj7ANC7TqgHM9TiqlhjcBuMnOJ4FT8HzQouom2k5x36GuHFG/BnO2LA==
+X-Received: by 2002:a17:906:5299:b0:a00:8706:c82e with SMTP id c25-20020a170906529900b00a008706c82emr1555608ejm.18.1700814005818;
+        Fri, 24 Nov 2023 00:20:05 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.100])
-        by smtp.gmail.com with ESMTPSA id cf16-20020a170906b2d000b0099bd7b26639sm1761699ejb.6.2023.11.24.00.19.01
+        by smtp.gmail.com with ESMTPSA id cf16-20020a170906b2d000b0099bd7b26639sm1761699ejb.6.2023.11.24.00.20.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Nov 2023 00:19:03 -0800 (PST)
-Message-ID: <3ebc54ae-4af4-428c-8dc0-06e836891311@linaro.org>
-Date: Fri, 24 Nov 2023 09:19:01 +0100
+        Fri, 24 Nov 2023 00:20:05 -0800 (PST)
+Message-ID: <e416ab6b-af0a-46d4-ac1f-f78b449e8071@linaro.org>
+Date: Fri, 24 Nov 2023 09:20:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -131,30 +131,14 @@ In-Reply-To: <66690488f08912698301a2c203d7c562798806a2.1700737841.git.quic_jsura
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 23/11/2023 12:38, Suraj Jaiswal wrote:
+On 23/11/2023 12:53, Suraj Jaiswal wrote:
 > Add changes to support fault IRQ Handling
 > Support for ethernet.
 > 
-> Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 13dd44dd9ed1..15155adcd200 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -2394,8 +2394,9 @@ ethernet1: ethernet@23000000 {
->  			      <0x0 0x23016000 0x0 0x100>;
->  			reg-names = "stmmaceth", "rgmii";
->  
-> -			interrupts = <GIC_SPI 929 IRQ_TYPE_LEVEL_HIGH>;
-> -			interrupt-names = "macirq";
-> +			interrupts = <GIC_SPI 929 IRQ_TYPE_LEVEL_HIGH>
-> +				     <GIC_SPI 781 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "macirq", "safety";
+You duplicated all the patches. I already responded to previous
+duplicates set, so also here:
 
-This was not tested... so as I expected - you do introduce new warnings. :/
+NAK, you did not test your patchset.
 
 Best regards,
 Krzysztof
