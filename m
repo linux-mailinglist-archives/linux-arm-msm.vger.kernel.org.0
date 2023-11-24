@@ -1,73 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-1852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42C537F74CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:20:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 720E57F74D1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:21:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 91619B20B1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:20:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15D2028175A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:21:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2712028DB6;
-	Fri, 24 Nov 2023 13:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3359E28DBD;
+	Fri, 24 Nov 2023 13:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cwW0+E/b"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HYqx8wXc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 950BC1724;
-	Fri, 24 Nov 2023 05:20:38 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB11172D;
+	Fri, 24 Nov 2023 05:21:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700832038; x=1732368038;
+  t=1700832080; x=1732368080;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=D6sAom7DCqR1Zyqj6Jdy6bkLwVXib4NKjEjRLqF2SOc=;
-  b=cwW0+E/b/CDSWn2YxcZ3+w3t7cHB9ibez/ry/tuKUxu7XlhCItoK4XAR
-   tQDTwhLJ4fpGa/4dFa1HB+dUyN3/rL8BV3INhkSHcJr4BWDOfyJZj+WgD
-   blQQ+aArXDRzly3mV7rJWR8PS0WP8mAj1yp3rj3/F1BUiY8gKvNthMvj/
-   VSK9DKB2HOrcKIgVAbUTqn7RTg/H7W8eZkAO5Qb6w5m4z4aLYXl0wLXn8
-   KFBitvC1BCgwCl0CQFhxKxZXDU1ff7WWjR0PMWGKke9lFGNEasihhch+y
-   bh9LFXYzD3G6HUaemaeevlBPV0gxmwLyiIoi6c6t7XooGm3cwaNxtrd1P
+  bh=oS8G9RbkHOAGAKexG7oDoBknf5c2EZYgB9loDAbntcE=;
+  b=HYqx8wXcA92WquS+RiF+n51fUu4itig07M6YPyCGpUn1y+oBFQIkq5iC
+   1JSRbRV927sfR1H3RNgDTdKt8S29gqI4ou4vhUAkA4khdQQHPLXtwIYBu
+   P2rk4ZTjt9lFeZzdb7ziKoyFevMPJAQqpAD5XxckfDFUmLoUVRpBKnjhm
+   Dpsw2xDSwi6ZPITjGjQQrGgRcHnirX0AltBVb1lGGptzyyj9BSpXB2Ng4
+   6a6iZCyQ96Zfjho6hrGibL0xgIrjb+U6zFMWMxK0cnP4RRBnu+s407nt5
+   m1ltDBvnw8mMmT1wLwDVNBhKbDAC52ZZIMx0cK92PO63WLWva+xLMYmGJ
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10902"; a="456765084"
+X-IronPort-AV: E=McAfee;i="6600,9927,10904"; a="456765147"
 X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
-   d="scan'208";a="456765084"
+   d="scan'208";a="456765147"
 Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2023 05:20:14 -0800
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2023 05:20:33 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10902"; a="767477050"
+X-IronPort-AV: E=McAfee;i="6600,9927,10902"; a="767477118"
 X-IronPort-AV: E=Sophos;i="6.04,224,1695711600"; 
-   d="scan'208";a="767477050"
+   d="scan'208";a="767477118"
 Received: from lkp-server01.sh.intel.com (HELO d584ee6ebdcc) ([10.239.97.150])
-  by orsmga002.jf.intel.com with ESMTP; 24 Nov 2023 05:20:09 -0800
+  by orsmga002.jf.intel.com with ESMTP; 24 Nov 2023 05:20:25 -0800
 Received: from kbuild by d584ee6ebdcc with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1r6W6J-0002ng-1e;
-	Fri, 24 Nov 2023 13:20:07 +0000
-Date: Fri, 24 Nov 2023 21:19:37 +0800
+	id 1r6W6Z-0002nt-14;
+	Fri, 24 Nov 2023 13:20:23 +0000
+Date: Fri, 24 Nov 2023 21:19:45 +0800
 From: kernel test robot <lkp@intel.com>
-To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
 	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Subject: Re: [PATCH v2 7/9] clk: qcom: add NSS clock Controller driver for
- Qualcomm IPQ5332
-Message-ID: <202311241420.9uiff44i-lkp@intel.com>
-References: <20231121-ipq5332-nsscc-v2-7-a7ff61beab72@quicinc.com>
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Jianlong Huang <jianlong.huang@starfivetech.com>,
+	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, Ray Jui <rjui@broadcom.com>,
+	Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Dong Aisheng <aisheng.dong@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Sean Wang <sean.wang@kernel.org>
+Subject: Re: [PATCH v2 06/21] pinctrl: equilibrium: Convert to use struct
+ pingroup
+Message-ID: <202311241401.ZPILPdov-lkp@intel.com>
+References: <20231123193355.3400852-7-andriy.shevchenko@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,178 +85,111 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231121-ipq5332-nsscc-v2-7-a7ff61beab72@quicinc.com>
+In-Reply-To: <20231123193355.3400852-7-andriy.shevchenko@linux.intel.com>
 
-Hi Kathiravan,
+Hi Andy,
 
-kernel test robot noticed the following build errors:
+kernel test robot noticed the following build warnings:
 
-[auto build test ERROR on 07b677953b9dca02928be323e2db853511305fa9]
+[auto build test WARNING on linusw-pinctrl/devel]
+[also build test WARNING on linusw-pinctrl/for-next next-20231124]
+[cannot apply to geert-renesas-drivers/renesas-pinctrl pinctrl-samsung/for-next linus/master v6.7-rc2]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Kathiravan-Thirumoorthy/clk-qcom-ipq5332-add-const-qualifier-to-the-clk_init_data-structure/20231121-223615
-base:   07b677953b9dca02928be323e2db853511305fa9
-patch link:    https://lore.kernel.org/r/20231121-ipq5332-nsscc-v2-7-a7ff61beab72%40quicinc.com
-patch subject: [PATCH v2 7/9] clk: qcom: add NSS clock Controller driver for Qualcomm IPQ5332
-config: i386-allyesconfig (https://download.01.org/0day-ci/archive/20231124/202311241420.9uiff44i-lkp@intel.com/config)
+url:    https://github.com/intel-lab-lkp/linux/commits/Andy-Shevchenko/pinctrl-qcom-lpass-lpi-Remove-unused-member-in-struct-lpi_pingroup/20231124-043212
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git devel
+patch link:    https://lore.kernel.org/r/20231123193355.3400852-7-andriy.shevchenko%40linux.intel.com
+patch subject: [PATCH v2 06/21] pinctrl: equilibrium: Convert to use struct pingroup
+config: i386-randconfig-141-20231124 (https://download.01.org/0day-ci/archive/20231124/202311241401.ZPILPdov-lkp@intel.com/config)
 compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231124/202311241420.9uiff44i-lkp@intel.com/reproduce)
+reproduce: (https://download.01.org/0day-ci/archive/20231124/202311241401.ZPILPdov-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311241420.9uiff44i-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202311241401.ZPILPdov-lkp@intel.com/
 
-All errors (new ones prefixed by >>):
+smatch warnings:
+drivers/pinctrl/pinctrl-equilibrium.c:719 eqbr_build_groups() warn: unsigned 'grp->npins' is never less than zero.
 
->> drivers/clk/qcom/nsscc-ipq5332.c:161:62: error: array has incomplete element type 'const struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                                                                ^
-   drivers/clk/qcom/nsscc-ipq5332.c:161:21: note: forward declaration of 'struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                       ^
->> drivers/clk/qcom/nsscc-ipq5332.c:162:2: error: call to undeclared function 'C'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-           C(P_UNIPHY0_NSS_RX_CLK, 12.5, 0, 0),
-           ^
-   drivers/clk/qcom/nsscc-ipq5332.c:166:63: error: array has incomplete element type 'const struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_125[] = {
-                                                                 ^
-   drivers/clk/qcom/nsscc-ipq5332.c:161:21: note: forward declaration of 'struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                       ^
->> drivers/clk/qcom/nsscc-ipq5332.c:171:64: error: array has incomplete element type 'const struct freq_multi_tbl'
-   static const struct freq_multi_tbl ftbl_nss_cc_port1_rx_clk_src[] = {
-                                                                  ^
-   drivers/clk/qcom/nsscc-ipq5332.c:171:21: note: forward declaration of 'struct freq_multi_tbl'
-   static const struct freq_multi_tbl ftbl_nss_cc_port1_rx_clk_src[] = {
-                       ^
->> drivers/clk/qcom/nsscc-ipq5332.c:172:2: error: call to undeclared function 'FMS'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-           FMS(24000000, P_XO, 1, 0, 0),
-           ^
->> drivers/clk/qcom/nsscc-ipq5332.c:173:2: error: call to undeclared function 'FM'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-           FM(25000000, ftbl_nss_cc_port1_rx_clk_src_25),
-           ^
->> drivers/clk/qcom/nsscc-ipq5332.c:191:11: error: use of undeclared identifier 'clk_rcg2_fm_ops'; did you mean 'clk_rcg2_ops'?
-                   .ops = &clk_rcg2_fm_ops,
-                           ^~~~~~~~~~~~~~~
-                           clk_rcg2_ops
-   drivers/clk/qcom/clk-rcg.h:170:29: note: 'clk_rcg2_ops' declared here
-   extern const struct clk_ops clk_rcg2_ops;
-                               ^
-   drivers/clk/qcom/nsscc-ipq5332.c:195:62: error: array has incomplete element type 'const struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_tx_clk_src_25[] = {
-                                                                ^
-   drivers/clk/qcom/nsscc-ipq5332.c:161:21: note: forward declaration of 'struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:200:63: error: array has incomplete element type 'const struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_tx_clk_src_125[] = {
-                                                                 ^
-   drivers/clk/qcom/nsscc-ipq5332.c:161:21: note: forward declaration of 'struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:205:64: error: array has incomplete element type 'const struct freq_multi_tbl'
-   static const struct freq_multi_tbl ftbl_nss_cc_port1_tx_clk_src[] = {
-                                                                  ^
-   drivers/clk/qcom/nsscc-ipq5332.c:171:21: note: forward declaration of 'struct freq_multi_tbl'
-   static const struct freq_multi_tbl ftbl_nss_cc_port1_rx_clk_src[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:225:11: error: use of undeclared identifier 'clk_rcg2_fm_ops'; did you mean 'clk_rcg2_ops'?
-                   .ops = &clk_rcg2_fm_ops,
-                           ^~~~~~~~~~~~~~~
-                           clk_rcg2_ops
-   drivers/clk/qcom/clk-rcg.h:170:29: note: 'clk_rcg2_ops' declared here
-   extern const struct clk_ops clk_rcg2_ops;
-                               ^
-   drivers/clk/qcom/nsscc-ipq5332.c:229:62: error: array has incomplete element type 'const struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port2_rx_clk_src_25[] = {
-                                                                ^
-   drivers/clk/qcom/nsscc-ipq5332.c:161:21: note: forward declaration of 'struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:234:63: error: array has incomplete element type 'const struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port2_rx_clk_src_125[] = {
-                                                                 ^
-   drivers/clk/qcom/nsscc-ipq5332.c:161:21: note: forward declaration of 'struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:239:64: error: array has incomplete element type 'const struct freq_multi_tbl'
-   static const struct freq_multi_tbl ftbl_nss_cc_port2_rx_clk_src[] = {
-                                                                  ^
-   drivers/clk/qcom/nsscc-ipq5332.c:171:21: note: forward declaration of 'struct freq_multi_tbl'
-   static const struct freq_multi_tbl ftbl_nss_cc_port1_rx_clk_src[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:259:11: error: use of undeclared identifier 'clk_rcg2_fm_ops'; did you mean 'clk_rcg2_ops'?
-                   .ops = &clk_rcg2_fm_ops,
-                           ^~~~~~~~~~~~~~~
-                           clk_rcg2_ops
-   drivers/clk/qcom/clk-rcg.h:170:29: note: 'clk_rcg2_ops' declared here
-   extern const struct clk_ops clk_rcg2_ops;
-                               ^
-   drivers/clk/qcom/nsscc-ipq5332.c:263:62: error: array has incomplete element type 'const struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port2_tx_clk_src_25[] = {
-                                                                ^
-   drivers/clk/qcom/nsscc-ipq5332.c:161:21: note: forward declaration of 'struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:268:63: error: array has incomplete element type 'const struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port2_tx_clk_src_125[] = {
-                                                                 ^
-   drivers/clk/qcom/nsscc-ipq5332.c:161:21: note: forward declaration of 'struct freq_conf'
-   static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:273:64: error: array has incomplete element type 'const struct freq_multi_tbl'
-   static const struct freq_multi_tbl ftbl_nss_cc_port2_tx_clk_src[] = {
-                                                                  ^
-   drivers/clk/qcom/nsscc-ipq5332.c:171:21: note: forward declaration of 'struct freq_multi_tbl'
-   static const struct freq_multi_tbl ftbl_nss_cc_port1_rx_clk_src[] = {
-                       ^
-   drivers/clk/qcom/nsscc-ipq5332.c:293:11: error: use of undeclared identifier 'clk_rcg2_fm_ops'; did you mean 'clk_rcg2_ops'?
-                   .ops = &clk_rcg2_fm_ops,
-                           ^~~~~~~~~~~~~~~
-                           clk_rcg2_ops
-   drivers/clk/qcom/clk-rcg.h:170:29: note: 'clk_rcg2_ops' declared here
-   extern const struct clk_ops clk_rcg2_ops;
-                               ^
-   19 errors generated.
+vim +719 drivers/pinctrl/pinctrl-equilibrium.c
 
-
-vim +161 drivers/clk/qcom/nsscc-ipq5332.c
-
-   160	
- > 161	static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_25[] = {
- > 162		C(P_UNIPHY0_NSS_RX_CLK, 12.5, 0, 0),
-   163		C(P_UNIPHY0_NSS_RX_CLK, 5, 0, 0),
-   164	};
-   165	
-   166	static const struct freq_conf ftbl_nss_cc_port1_rx_clk_src_125[] = {
-   167		C(P_UNIPHY0_NSS_RX_CLK, 2.5, 0, 0),
-   168		C(P_UNIPHY0_NSS_RX_CLK, 1, 0, 0),
-   169	};
-   170	
- > 171	static const struct freq_multi_tbl ftbl_nss_cc_port1_rx_clk_src[] = {
- > 172		FMS(24000000, P_XO, 1, 0, 0),
- > 173		FM(25000000, ftbl_nss_cc_port1_rx_clk_src_25),
-   174		FMS(78125000, P_UNIPHY0_NSS_RX_CLK, 4, 0, 0),
-   175		FM(125000000, ftbl_nss_cc_port1_rx_clk_src_125),
-   176		FMS(156250000, P_UNIPHY0_NSS_RX_CLK, 2, 0, 0),
-   177		FMS(312500000, P_UNIPHY0_NSS_RX_CLK, 1, 0, 0),
-   178		{ }
-   179	};
-   180	
-   181	static struct clk_rcg2 nss_cc_port1_rx_clk_src = {
-   182		.cmd_rcgr = 0x450,
-   183		.mnd_width = 0,
-   184		.hid_width = 5,
-   185		.parent_map = nss_cc_parent_map_1,
-   186		.freq_multi_tbl = ftbl_nss_cc_port1_rx_clk_src,
-   187		.clkr.hw.init = &(const struct clk_init_data) {
-   188			.name = "nss_cc_port1_rx_clk_src",
-   189			.parent_data = nss_cc_parent_data_1,
-   190			.num_parents = ARRAY_SIZE(nss_cc_parent_data_1),
- > 191			.ops = &clk_rcg2_fm_ops,
-   192		},
-   193	};
-   194	
+   702	
+   703	static int eqbr_build_groups(struct eqbr_pinctrl_drv_data *drvdata)
+   704	{
+   705		struct device *dev = drvdata->dev;
+   706		struct device_node *node = dev->of_node;
+   707		unsigned int *pins, *pinmux, pin_id, pinmux_id;
+   708		struct pingroup group, *grp = &group;
+   709		struct device_node *np;
+   710		struct property *prop;
+   711		int j, err;
+   712	
+   713		for_each_child_of_node(node, np) {
+   714			prop = of_find_property(np, "groups", NULL);
+   715			if (!prop)
+   716				continue;
+   717	
+   718			grp->npins = of_property_count_u32_elems(np, "pins");
+ > 719			if (grp->npins < 0) {
+   720				dev_err(dev, "No pins in the group: %s\n", prop->name);
+   721				of_node_put(np);
+   722				return -EINVAL;
+   723			}
+   724			grp->name = prop->value;
+   725			pins = devm_kcalloc(dev, grp->npins, sizeof(*pins), GFP_KERNEL);
+   726			if (!pins) {
+   727				of_node_put(np);
+   728				return -ENOMEM;
+   729			}
+   730			grp->pins = pins;
+   731	
+   732			pinmux = devm_kcalloc(dev, grp->npins, sizeof(*pinmux), GFP_KERNEL);
+   733			if (!pinmux) {
+   734				of_node_put(np);
+   735				return -ENOMEM;
+   736			}
+   737	
+   738			for (j = 0; j < grp->npins; j++) {
+   739				if (of_property_read_u32_index(np, "pins", j, &pin_id)) {
+   740					dev_err(dev, "Group %s: Read intel pins id failed\n",
+   741						grp->name);
+   742					of_node_put(np);
+   743					return -EINVAL;
+   744				}
+   745				if (pin_id >= drvdata->pctl_desc.npins) {
+   746					dev_err(dev, "Group %s: Invalid pin ID, idx: %d, pin %u\n",
+   747						grp->name, j, pin_id);
+   748					of_node_put(np);
+   749					return -EINVAL;
+   750				}
+   751				pins[j] = pin_id;
+   752				if (of_property_read_u32_index(np, "pinmux", j, &pinmux_id)) {
+   753					dev_err(dev, "Group %s: Read intel pinmux id failed\n",
+   754						grp->name);
+   755					of_node_put(np);
+   756					return -EINVAL;
+   757				}
+   758				pinmux[j] = pinmux_id;
+   759			}
+   760	
+   761			err = pinctrl_generic_add_group(drvdata->pctl_dev,
+   762							grp->name, grp->pins, grp->npins,
+   763							pinmux);
+   764			if (err < 0) {
+   765				dev_err(dev, "Failed to register group %s\n", grp->name);
+   766				of_node_put(np);
+   767				return err;
+   768			}
+   769			memset(&group, 0, sizeof(group));
+   770			pinmux = NULL;
+   771		}
+   772	
+   773		return 0;
+   774	}
+   775	
 
 -- 
 0-DAY CI Kernel Test Service
