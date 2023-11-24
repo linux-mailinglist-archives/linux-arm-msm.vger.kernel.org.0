@@ -1,86 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-1850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80D2B7F74BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:20:25 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5BDA7F74E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 14:26:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B18001C2087D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:20:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A24228121C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 13:26:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AAAE286B1;
-	Fri, 24 Nov 2023 13:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBF8428DBF;
+	Fri, 24 Nov 2023 13:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LwZ1dc09"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hVSHqaM/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A461110FD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 05:20:18 -0800 (PST)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5cc77e23218so18852717b3.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 05:20:18 -0800 (PST)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59805D71
+	for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 05:26:35 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-54a95657df3so2874744a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Nov 2023 05:26:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700832018; x=1701436818; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=duwkvZHrBkTaBuc8LOMphh5Uy/87rU9msacGlhDLoFw=;
-        b=LwZ1dc09aQrh9Yf2fNtFfuaYH/YIP9rA4/XT12K0+39JaMepF6sQfaUxllhH7EPRMQ
-         U5uXHiM6YqyL0Ze+niVd0R8pfOVeDMhXeUHjhTraSGkFnV7foXhE1042thfu/npo7DAl
-         2we+fgEHJXbCOq3zW3rf7VpFLd+WwM+3zMd9ahgf6JKeA14jAxoe2w1yw5DBbfUjWwT7
-         3Gdfe6HwA4mfQRp9KwhzglzxzRBDMX6PypfjkIpQ9cH51oh8u4Mw9d4SBACUSahQ8HnC
-         qPa1KC/dl7fFOzeEUcez5I/HX2dQRAT6ly1ILu9hvNIuzNi2cz4vxwu8fEVpvKWIQs8t
-         yPEg==
+        d=linaro.org; s=google; t=1700832394; x=1701437194; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XG6ADxvx2SdIyRMBAz8RKdfu+PYmXUoQcvqXhk8eodM=;
+        b=hVSHqaM/h1lXrC/Kj3GqLMk7Cwztp7Xhf6hCkTtPhmRGeRCuatrV65yZMRcFYkFe2m
+         cidyH4bEfcW+K2Vb/HTfbhzblY1XWapBI4XsTLVg7X+YGf9blYF0Zik9W2Bv2hjx/Q3N
+         NRg1pwyFA+YntR2HZOCDMIBCsM2SUBwK+A7zAvK4cq0QDQWmq9uPI82gxt6YTIDcNJie
+         sL7p92JL5MKVHgXuzZKA5potKJtAIWZjRZ83boPQgSWy24ebojvbQRPHIm7hMqxJ4TUc
+         vWZTkk8I1x/XXCjQP+kWIKZpvXsUMeOAlwIhZYSviosiBYZONhbmSCNJT9d9UotF3JsD
+         edlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700832018; x=1701436818;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=duwkvZHrBkTaBuc8LOMphh5Uy/87rU9msacGlhDLoFw=;
-        b=ntfo3aajoODtEQfeWSxV2AuHcWsljUd63J5pbnTHrBnrbuVXwL1tsuw2jGx8ZRUKiZ
-         Ez3VReYzeXYMwsvYKmHg6HvwllMffx5cPocyeFkaSTV+JVbVGQdyOBQieUF3nqrW9ZCH
-         DHQ5J5SGD2tWwwgC0HAkg9SZ4d+zzD5Gv8vCKwNQYdxpSxHMKf10EA/+P5JV+CGS84Mh
-         q0ChT1FjJWXOAxQde3iQTCHspthL3yFKsv8/uni0LzIsS8zar5Z74cv4goR+kVOjh936
-         rgX8X/pV2MtIeQd927R2pm4Q5YGQqluT/kgdSanBd12so+4fN8qCEEQQLIL7WZvuRE9H
-         y3EA==
-X-Gm-Message-State: AOJu0YzcVDK9bjbogcDSAzfVWZlXHV9Vg0RScbPtJnQQedKJFyaRagEs
-	B3NKCAqUfhTfNi/nHqHXJMDuwvxohzg1469Ys/zusA==
-X-Google-Smtp-Source: AGHT+IGTMWDoubenznwguJuKisn/kdH02n6RmrB+3SpiznhGgPENvFvkg5/wCeChRLDXvMftBTinfn7BhYh8JQE6sQE=
-X-Received: by 2002:a0d:ead1:0:b0:5cb:464c:ad23 with SMTP id
- t200-20020a0dead1000000b005cb464cad23mr2791623ywe.42.1700832017875; Fri, 24
- Nov 2023 05:20:17 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700832394; x=1701437194;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XG6ADxvx2SdIyRMBAz8RKdfu+PYmXUoQcvqXhk8eodM=;
+        b=VXe7lWSg47nY0SWRUP670qkAoQAz4BTFA0RhlpKOCw/YDBAAmDZP8GmrMN8P0ob7sn
+         D3476XOTkejLNymQv8n0W0ml8Q29aYhPxDJQx3rvFAVUsNk4rveLmVujAdstwyo3nfPm
+         Qi60uIL07+4Cgz7rq6Kbz2wBf0ArAFOjnx7Lex5wHxLgaFUix5NLZH4f4SG6WcdZY3/h
+         I5NFtG9SBtZPz6fnBrLZK/SnT+WHVmmHupilTOGzMrlklk0a/z3vgvxB3nWIRR6aOb0A
+         tJBR9ldO840YHDKY27y/0HIiZmDQguZao28JEmFBL7Mi7+Se1Ts/A5ISU103+nX7Rh/q
+         Sq1A==
+X-Gm-Message-State: AOJu0YyhHnNkJFvEZG6Ksa2hahft7ycUMx0g59rgoh1yRBIrcWvOnV4Y
+	ZOGJ+LHMpYBOq8PArW/DuvgiJg==
+X-Google-Smtp-Source: AGHT+IGToWgMbWtNgAJ4UDGie72Pp8L21PKV0u4mYSlFioL3UdiJi/XQcPo7DTeHDymqZ1l/YeU9bA==
+X-Received: by 2002:a50:ef11:0:b0:54b:f6:fb23 with SMTP id m17-20020a50ef11000000b0054b00f6fb23mr1174153eds.23.1700832393823;
+        Fri, 24 Nov 2023 05:26:33 -0800 (PST)
+Received: from [192.168.86.103] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id o26-20020a056402039a00b005487c48d9ebsm1793399edv.57.2023.11.24.05.26.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Nov 2023 05:26:32 -0800 (PST)
+Message-ID: <b56f7a00-f5e0-4cc7-ad04-33b4981e14b7@linaro.org>
+Date: Fri, 24 Nov 2023 13:26:31 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231124121305.1954-1-quic_kbajaj@quicinc.com> <20231124121305.1954-4-quic_kbajaj@quicinc.com>
-In-Reply-To: <20231124121305.1954-4-quic_kbajaj@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 24 Nov 2023 15:20:07 +0200
-Message-ID: <CAA8EJpruXcpLX=c9o27rqHuh3u_ktqp_a+PN=DcCbq8sWW612w@mail.gmail.com>
-Subject: Re: [PATCH v6 3/3] arm64: dts: qcom: Add base qcs6490-rb3gen2 board dts
-To: Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Naina Mehta <quic_nainmeht@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 5/5] misc: fastrpc: Add support to allocate shared
+ context bank
+Content-Language: en-US
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>, linux-arm-msm@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org
+References: <20231121094844.5764-1-quic_ekangupt@quicinc.com>
+ <20231121094844.5764-6-quic_ekangupt@quicinc.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20231121094844.5764-6-quic_ekangupt@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, 24 Nov 2023 at 14:14, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
 
-[skipped]
 
-> +&wifi {
-> +       memory-region = <&wlan_fw_mem>;
+On 21/11/2023 09:48, Ekansh Gupta wrote:
+>   static int fastrpc_multimode_invoke(struct fastrpc_user *fl, char __user *argp)
+>   {
+>   	struct fastrpc_enhanced_invoke einv;
+>   	struct fastrpc_invoke_args *args = NULL;
+>   	struct fastrpc_ioctl_multimode_invoke invoke;
+> +	struct fastrpc_internal_control cp = {0};
+>   	u32 nscalars;
+>   	u64 *perf_kernel;
+>   	int err, i;
+> @@ -1938,6 +1975,12 @@ static int fastrpc_multimode_invoke(struct fastrpc_user *fl, char __user *argp)
+>   		err = fastrpc_internal_invoke(fl, false, &einv);
+>   		kfree(args);
+>   		break;
+> +	case FASTRPC_INVOKE_CONTROL:
+> +		if (copy_from_user(&cp, (void __user *)(uintptr_t)invoke.invparam, sizeof(cp)))
+> +			return  -EFAULT;
 
-qcom,ath11k-calibration-variant = "Thundercomm_RB3gen2"
+wow, this struct is not even exposed in a uapi header, how come 
+userspace knows about this struct?
 
-Also please cc ath11k mailing list on your next submission.
+Every struct that userspace fills in needs to be part of the UAPI headers.
 
--- 
-With best wishes
-Dmitry
+
+--srini
+
+> +
+> +		err = fastrpc_internal_control(fl, &cp);
+> +		break;
+>   	default:
+>   		err = -ENOTTY;
+>   		break;
+> @@ -2440,6 +2483,7 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
+>   	if (sessions > 0) {
+>   		struct fastrpc_session_ctx *dup_sess;
+>   
+> +		sess->sharedcb = true;
+>   		for (i = 1; i < sessions; i++) {
 
