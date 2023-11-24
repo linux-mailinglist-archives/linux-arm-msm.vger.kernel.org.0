@@ -1,220 +1,285 @@
-Return-Path: <linux-arm-msm+bounces-1786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DE4A7F6D32
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 08:51:01 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 902247F6D49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 08:57:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 91D7B281B3C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 07:50:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7DED1C20E18
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 07:57:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAA198F57;
-	Fri, 24 Nov 2023 07:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB9C89467;
+	Fri, 24 Nov 2023 07:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LLLUza2m"
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="nAfLkAeC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E0FCD64
-	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 23:50:54 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-54af61f2a40so341306a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 23:50:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700812252; x=1701417052; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=t72f4wPL/KQKtbypIvo76yycy/dSaAM33evdOmYUjh8=;
-        b=LLLUza2mP3dr986i9/QUFzxT0Jfof+0DXPbY3p8t47XB4S94UdXhSF+H0Xo09lXKoY
-         jaddfP8eWJPXMrsloOaZVoA0yZlLyBqTmQHYLnX9hNNuuPtljpkYi6TNiYbQwLNAIt81
-         Av8RxEnIRWfmvbRbTDlc/7uhxLJ0EOxdfOGBW2G9IrJWjbK+TvIDF12DdGLdNytujpUI
-         y8FtdKTfNSNI8k2wd1CVjTizSOXTrMpSqRt7xpggzAUjzXZCqqqsgmlMJA+zc9NveX1n
-         +IHDeVV77bKVffMxr+sTuPNiR8reUcbQoN8mCU+Y3hAkV8WMu/vquwI4JL07IZU78dEh
-         gO8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700812252; x=1701417052;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t72f4wPL/KQKtbypIvo76yycy/dSaAM33evdOmYUjh8=;
-        b=JmPK4FbqIhTj9TwXxeoZL7i23KL/IcfgDEqVshsBtrN3f7WC7wMd164APbDut20Jgm
-         AxTTq2nDDljvW4j3qJL1hI72jNalOVQC2UdIS1pDrC7CseAEFUaFiv3lD2rnpQj06fhH
-         FZaLZyeVIjBWALBkJF1K8zB8Tjsa+Oe5N6zgmwRRLgymmVJRkDoQv/pVaudDpzNgO2iF
-         aELnOCrra6NomxkE4MWjKPPOfkXFRZ5kvHW1hiEwLqw/DJxsSWV0s0qtQo+TKMByQ58o
-         xTJh7wqDeLQAdaxT4wq28pV6ZlDg1TIqkBYsfZ9THgeOo5YraqOAJCaPR9ODXRSZjO2h
-         n+9A==
-X-Gm-Message-State: AOJu0YwFzVMwpekiqEXrrD+1Vfbff3HoAFhe2XDHb7IhSUxtto8mJW+j
-	AEoeJpItT9H5/+MRgSEk+FslzA==
-X-Google-Smtp-Source: AGHT+IFTS3GA2nqCP5ApuCMI7aWQTy4ZEQZBx6Y0ZVQJDa4emFpcGOdRBVkg08GRDVlg+VnubJJbrw==
-X-Received: by 2002:aa7:da57:0:b0:54a:f72d:38bc with SMTP id w23-20020aa7da57000000b0054af72d38bcmr816993eds.1.1700812252445;
-        Thu, 23 Nov 2023 23:50:52 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.100])
-        by smtp.gmail.com with ESMTPSA id i1-20020aa7dd01000000b00548657c5efdsm1483540edv.10.2023.11.23.23.50.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Nov 2023 23:50:52 -0800 (PST)
-Message-ID: <47406b19-811f-47ab-8c08-dd8c4cc5d8bd@linaro.org>
-Date: Fri, 24 Nov 2023 08:50:49 +0100
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2040.outbound.protection.outlook.com [40.107.236.40])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E553D64
+	for <linux-arm-msm@vger.kernel.org>; Thu, 23 Nov 2023 23:57:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Ul1eAq5CVsiaY8oUUCWiQPql/bCotcQR8MGqybbPWHQntUdaDIyAsSc68igOZ7V6atfrLiM2uV0SmyTPmcunT1MjJlvgp79anRoWf+RDjCZtEAw9I2qbE2gQ/zoqtrlCSJ6P47i33fKhkH5PLr+cljeOQEEiNR/jyARswgMvNG4xXmudYAyaIkrHlvX7nQ2ZaYxIwhPO44hPz86FIv/+io/dVwhrih7pTANI1vukjCTSg4y1tw5mPhxkapC3hp5/N99cHaGsNe4LWFivFI/BzqbOmMcKUGtJNfA+RTEPUmX7XInRYhxAWRlr4fSjp9OreDC09J+a+j/T8aUk4GIQsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=fqvLCVBSlTx61pZnp2MJifB/YzuNwGQ3JcK4Cz0VNOY=;
+ b=l5oJgZbfYzwrzfg3Eg2DaqHnH1ld6Ks+VGACNGHoZZLGCp4IQW3xmT9IxmofaLxE6xn7cXB13VMo+9kLZEywfW4+BG+LyEKfUL/6i/OnQf2+GQzPz/tSlSvCldELhjLKcu9kAh7lYaN1UU0Cr71Eeg2PEuTZuMZ2fL1v/bsbWhQQ7K7EUp4lwnQgVXpusi+gdpA7BQhqSUoYq8aP8lL+D9e8YylEw+gWInASVXLxL3jhj8eszXAauMGBtlxB2PCnz19t/I1GPNYjX4r62f8dgxia6bHg73QxZP0u/jIROzPwZ1UZrYz0jANLAqLYoiJnaGuUKZaeeJ/EsSN9XJKGzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=fqvLCVBSlTx61pZnp2MJifB/YzuNwGQ3JcK4Cz0VNOY=;
+ b=nAfLkAeCB/eZWvuFuzPObLZsj2sDTXNStwoSUzYxxOA7az3Ej3wIfIKwsNt6nIlr96CX/cGOGcUflcUJKi3oig7q+30k8PFDnqyvEhCB7VIvqPZRPPpwkwEFZvmDmLnkV+kHS/9FTr7JGlp1mGSdyGVuTlokae+U9wNo/HRc3e0=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by MN2PR12MB4552.namprd12.prod.outlook.com (2603:10b6:208:24f::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7025.21; Fri, 24 Nov
+ 2023 07:57:33 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::ca80:8f1c:c11:ded3]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::ca80:8f1c:c11:ded3%7]) with mapi id 15.20.7025.021; Fri, 24 Nov 2023
+ 07:57:33 +0000
+Message-ID: <76749276-dc73-4f6f-a467-aa8a721b0878@amd.com>
+Date: Fri, 24 Nov 2023 08:57:28 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] drm/sched: Rename priority MIN to LOW
+Content-Language: en-US
+To: Luben Tuikov <ltuikov89@gmail.com>,
+ Direct Rendering Infrastructure - Development
+ <dri-devel@lists.freedesktop.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Danilo Krummrich <dakr@redhat.com>, Alex Deucher
+ <alexander.deucher@amd.com>, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20231124052752.6915-4-ltuikov89@gmail.com>
+ <20231124052752.6915-5-ltuikov89@gmail.com>
+From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+In-Reply-To: <20231124052752.6915-5-ltuikov89@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR4P281CA0165.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:ba::20) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: Fix the warnings from coresight
- bindings
-Content-Language: en-US
-To: Mao Jinlong <quic_jinlmao@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>
-References: <20231124061739.2816-1-quic_jinlmao@quicinc.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231124061739.2816-1-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|MN2PR12MB4552:EE_
+X-MS-Office365-Filtering-Correlation-Id: e63a6ebe-76a9-43bf-0058-08dbecc303be
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	Y+ksWNkWdBGo07wxiHrrABjAIQ4+xq/dxuPqhGOxjVNrQC3jL08vVlbOHd7kBub+p1ZGkWhFmI1Xxc4/qxv4FKesPI4mhNOduwaOZdCPmch/vYsFTQd4tw6Dqjhb4PQtETtUALeSd/y9hkzFPngOQ0w3c2BAAX2Q9oKUiSYD9VtB87PY+ue+TcnaP1wgO948OOi0R3Tul9M/UQpiKSijWB+1PpiDuTSrVK5KX5prVnbnN01JK9j5iXaMr0hWA1fo5/j+xuCvGY1m604GD0BTDseHFAgOo25o3BshJl/8C8GgAfRdoOfrz+EDZCRuF6TLzjTcq8ytr2u6Uclu5CwPIRlMowlkd9a117RZPBe8O6RETtsbIYHyKoyRiop+mkM/78mNnyPw0iNz2zw7bT51A/1oC7JFD8IBbLIefbvpYltFSpGkv3UwHPkygyCgcxIt85VYrbVUROhMM6CL9DJPk+7X8B1XZKv4zRcWA4rXRJFqzkP5u3oKSDTxNCEMTOsoYXh+xf6xI8lSXG1yuw5dToC7TkeFszKTYCx+wwOA7vpyPu6Fz1nNBFdzDPMsyyP6q+EzAaOYLSOuZgkIOMGcYWV2wxcwtb5ai0BAm2cEevQ/aAhMsR6cfy2catJoxevVG0t+8ta6r9+ZBPAcROZ9uA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(346002)(396003)(136003)(376002)(39860400002)(366004)(230922051799003)(1800799012)(451199024)(186009)(64100799003)(83380400001)(66574015)(6506007)(26005)(31696002)(41300700001)(6512007)(2616005)(38100700002)(31686004)(36756003)(6486002)(478600001)(6666004)(110136005)(316002)(66946007)(66556008)(66476007)(54906003)(2906002)(8936002)(8676002)(4326008)(5660300002)(86362001)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?QWdjUXBmNXhTVEZ5UnpqWUNLekhMKzJnbzNZTFFkZnNENVVrNWNKeWxNNVVv?=
+ =?utf-8?B?U21QNHdtSUdidTRnRmlMcmVpV0FIYUFYSzRxK2xoTjF4NzJ3MzdlRFFxOEJj?=
+ =?utf-8?B?Qk01bGF3akRvNzlUVEpBUWlCTnF1cTYybUZlZyswbkFsUmMvaHhabHdHTDFM?=
+ =?utf-8?B?R1V3K0MwcjN0NWpCdEZka3pMS1R4UGxxRkI1SVEyL0xCQklxaXl5clVFUVpy?=
+ =?utf-8?B?dFdERUtzTXlCRmJmdmxQMDhTZkxFOVVad3dkelpDR0IxZkVseCsyS3lDbHUy?=
+ =?utf-8?B?YVNhcTNHRlo2NUJxY1hSa251a0FqaEM1MjMvamNsdUVtc2FTVS9rdWhSanJZ?=
+ =?utf-8?B?N1JybjlzTklpSVpDN2tJZFowbDdPalFDNGpsMnp1WU5mSXlBRERFQVppTXdp?=
+ =?utf-8?B?TWdDVWlNa1gwdkVjMURaeXJCV1ZnVFBTUGlyaXJYdnlhQ0JDREVadmN6Y2Zz?=
+ =?utf-8?B?dmF3ZkJWZDhoWTErcjB2U250dER4ZmwwS2VCeStwaFE2NlBDV0tnNlpVQWZC?=
+ =?utf-8?B?Q3VTVS80ZDczZk8zZG9leFIzb3ZmTVNaQ2tjdHIrbHV3TUduY0FMR1A3WS92?=
+ =?utf-8?B?c0swN1dRelpZU3pQVHB6Z3RxSEIxTWUrYlZGMmFGdlZzczVJd0tJeXVuSjlK?=
+ =?utf-8?B?Y0xCRkRSbUNoYmxiaWlYUmExeENhR29YaWRWS3VucXgyWlpxcmE5ZXNaUElD?=
+ =?utf-8?B?ZTE2MlNtWThBZUEyYi9WMU5XMTExd2E4dm9BOHRJZTJqaG5YNVliak90MFI5?=
+ =?utf-8?B?eFgyUWJseGkrVDZiQ3hrZmZRZjdDUWh0cEY3dERJUFV2ejBEa2c3dElqMW5Z?=
+ =?utf-8?B?dFF5MS9KZ0FqdytlNjM1NkpFeVlPVVlha1BYRmI2VUZDU3VGRDYralBqcjlC?=
+ =?utf-8?B?cFdteTFiZ1A4czJpbEttb3EzYUJLalc3SklBK3NNK1U2NURreXgybkdoR3lR?=
+ =?utf-8?B?azhiMUduV3BUUnpROWh1TUNoU0p0d3lsdE4rbFZpVkNraWwyQzFEZVZrMHJa?=
+ =?utf-8?B?S3kvak5iQWhHTzI2MGY0T0RFL1NUQTA3VllhN2MvSExESWRKVjNPL2FTTXIv?=
+ =?utf-8?B?MHBydzJ0dUUrYzBxUVByRmxBR2d5c2ZST0YyWVJwa1FtV2NJaktXOTZkaUZS?=
+ =?utf-8?B?eGpRZWJLQXF5dnVoRU54K2RHTUNjeXJlMmJXa3RJTXNvWWROTjQwU0ZGRmw5?=
+ =?utf-8?B?TklyT1hUQXN2VEVUNHlGbzNLeDJSZnk0STNFaDRBckJEaCtqVkw2ZUMzbU5F?=
+ =?utf-8?B?Q2JCQ0x5NDBSazlsUXI2V3A5azUwV1BaMnNENENGdEc1endxMHdJcTJQZTE1?=
+ =?utf-8?B?L091cExBTWdIbWpGZld0K1ZodW1kbWJ1bVltOGlNYzZXY2kyaTBIVlRvUVE3?=
+ =?utf-8?B?LzZQYU5IWWFuREF5Qm5mdWpJNjIxY05oU1JQNkE2eHd4RGtrU0pvaDhTZll2?=
+ =?utf-8?B?ZDMzZE9RcEhaeGs2ZUhGZGpELzFCdWdIZ1JoSVJIdjYrSm8wRjdENVNiUWVN?=
+ =?utf-8?B?cTVaSjAzcCszeW5BZ1lNQm9rYnFTUDBmbFduVnVKMExZNFZBVHVzYlRvSGM2?=
+ =?utf-8?B?cnJWZ081b0JydjJ2SU1tVGtDRWhEZHRIdHpJTUhyalI1c0krdjJJSmFYRUFn?=
+ =?utf-8?B?YTFadS9CUVhxVjNvMUdCUmw1YmhMN3hIYmp5MWlJMEw5ejV3WlN6WU1QQk93?=
+ =?utf-8?B?Q3FvcmZQQ0k0UGNqTUxvV0xrRDRudUVIK0tmYThoMWVPYVE4d01ndlg0V3E1?=
+ =?utf-8?B?UC9FQUFYaUx0bnFEL256UnVrQjdNRU82T3NhNlA3Q3ZXNGVaRmJKU1R0UDli?=
+ =?utf-8?B?WmVEdk1TdWNRcmE4R01EQVorUkthVW5QOVZhM3VMS3ZjTnlyeGhiY0ErbnZX?=
+ =?utf-8?B?MDJCZmlDN2wrVWFsVFNiZ084MGgrdlQzM05YWjY5cDlwRUtBUVc5NVlxRkE4?=
+ =?utf-8?B?SUgzcXI5SDQ4Z2FQQzBmZURrTlFoTU5YbXRmT1crOGZXNkpXREx4Q0dRTDFr?=
+ =?utf-8?B?ZjJYYUprdHlIeFlFUmlCOFEvbjgxZFdJNSszSFltd3R1eGd5QkNjMUhEeUdV?=
+ =?utf-8?B?eitxS3ZCMU9uRUMzUlN6b2xpTGRGZEJnSVUyc3BnelNwMXhrdzRoK0ZmbUZZ?=
+ =?utf-8?Q?y08q5RwB5k/9Fea9XjByUIVcV?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e63a6ebe-76a9-43bf-0058-08dbecc303be
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2023 07:57:32.9802
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Zkm4nDa4dpnw8PRJWJsNZdACEA/bCPdJG/hLAvfk+xDhujP1X22+1J3nvyTcCDNZ
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4552
 
-On 24/11/2023 07:17, Mao Jinlong wrote:
-> Fix all warnings in Qualcomm boards coming from Coresight bindings.
+Am 24.11.23 um 06:27 schrieb Luben Tuikov:
+> Rename DRM_SCHED_PRIORITY_MIN to DRM_SCHED_PRIORITY_LOW.
+>
+> This mirrors DRM_SCHED_PRIORITY_HIGH, for a list of DRM scheduler priorities
+> in ascending order,
+>    DRM_SCHED_PRIORITY_LOW,
+>    DRM_SCHED_PRIORITY_NORMAL,
+>    DRM_SCHED_PRIORITY_HIGH,
+>    DRM_SCHED_PRIORITY_KERNEL.
+>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Danilo Krummrich <dakr@redhat.com>
+> Cc: Alex Deucher <alexander.deucher@amd.com>
+> Cc: Christian König <christian.koenig@amd.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: dri-devel@lists.freedesktop.org
+> Signed-off-by: Luben Tuikov <ltuikov89@gmail.com>
 
-One logical thing, one patch. That applies not only to Linux kernel, but
-to all software projects.
+Reviewed-by: Christian König <christian.koenig@amd.com>
 
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/msm8996.dtsi | 26 ----------------------
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++----------
->  arch/arm64/boot/dts/qcom/sdm845.dtsi  |  5 +----
->  arch/arm64/boot/dts/qcom/sm8150.dtsi  |  5 +----
->  arch/arm64/boot/dts/qcom/sm8250.dtsi  | 24 ++++----------------
->  5 files changed, 26 insertions(+), 66 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 6ba9da9e6a8b..e42c22b26adc 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -2637,24 +2637,6 @@ funnel1_out: endpoint {
->  			};
->  		};
->  
-> -		funnel@3023000 {
-> -			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
-> -			reg = <0x3023000 0x1000>;
-> -
-> -			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
-> -			clock-names = "apb_pclk", "atclk";
-> -
-> -
-> -			out-ports {
-> -				port {
-> -					funnel2_out: endpoint {
-> -						remote-endpoint =
-> -						  <&merge_funnel_in2>;
-> -					};
-> -				};
-> -			};
-> -		};
-
-Why do you remove nodes? How is this anyhow related to commit msg?
-Nothing here is explained.
-
-> -
->  		funnel@3025000 {
->  			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
->  			reg = <0x3025000 0x1000>;
-> @@ -2681,14 +2663,6 @@ merge_funnel_in1: endpoint {
->  						  <&funnel1_out>;
->  					};
->  				};
-> -
-> -				port@2 {
-> -					reg = <2>;
-> -					merge_funnel_in2: endpoint {
-> -						remote-endpoint =
-> -						  <&funnel2_out>;
-> -					};
-
-Why?
-
-> -				};
->  			};
->  
->  			out-ports {
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index b485bf925ce6..ebc5ba1b369e 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -2031,9 +2031,11 @@ etm5: etm@7c40000 {
->  
->  			cpu = <&CPU4>;
->  
-> -			port {
-> -				etm4_out: endpoint {
-> -					remote-endpoint = <&apss_funnel_in4>;
-> +			out-ports {
-> +				port {
-
-So you want to say out-ports is missing? Commit msg is really not
-explaining anything.
-
-> +					etm4_out: endpoint {
-> +						remote-endpoint = <&apss_funnel_in4>;
-> +					};
->  				};
-
-
-Best regards,
-Krzysztof
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c  |  4 ++--
+>   drivers/gpu/drm/amd/amdgpu/amdgpu_job.c  |  2 +-
+>   drivers/gpu/drm/msm/msm_gpu.h            |  2 +-
+>   drivers/gpu/drm/scheduler/sched_entity.c |  2 +-
+>   drivers/gpu/drm/scheduler/sched_main.c   | 10 +++++-----
+>   include/drm/gpu_scheduler.h              |  2 +-
+>   6 files changed, 11 insertions(+), 11 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
+> index e2ae9ba147ba97..5cb33ac99f7089 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ctx.c
+> @@ -73,10 +73,10 @@ amdgpu_ctx_to_drm_sched_prio(int32_t ctx_prio)
+>   		return DRM_SCHED_PRIORITY_NORMAL;
+>   
+>   	case AMDGPU_CTX_PRIORITY_VERY_LOW:
+> -		return DRM_SCHED_PRIORITY_MIN;
+> +		return DRM_SCHED_PRIORITY_LOW;
+>   
+>   	case AMDGPU_CTX_PRIORITY_LOW:
+> -		return DRM_SCHED_PRIORITY_MIN;
+> +		return DRM_SCHED_PRIORITY_LOW;
+>   
+>   	case AMDGPU_CTX_PRIORITY_NORMAL:
+>   		return DRM_SCHED_PRIORITY_NORMAL;
+> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+> index 62bb7fc7448ad9..1a25931607c514 100644
+> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+> @@ -325,7 +325,7 @@ void amdgpu_job_stop_all_jobs_on_sched(struct drm_gpu_scheduler *sched)
+>   	int i;
+>   
+>   	/* Signal all jobs not yet scheduled */
+> -	for (i = sched->num_rqs - 1; i >= DRM_SCHED_PRIORITY_MIN; i--) {
+> +	for (i = sched->num_rqs - 1; i >= DRM_SCHED_PRIORITY_LOW; i--) {
+>   		struct drm_sched_rq *rq = sched->sched_rq[i];
+>   		spin_lock(&rq->lock);
+>   		list_for_each_entry(s_entity, &rq->entities, list) {
+> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+> index 4252e3839fbc83..eb0c97433e5f8a 100644
+> --- a/drivers/gpu/drm/msm/msm_gpu.h
+> +++ b/drivers/gpu/drm/msm/msm_gpu.h
+> @@ -347,7 +347,7 @@ struct msm_gpu_perfcntr {
+>    * DRM_SCHED_PRIORITY_KERNEL priority level is treated specially in some
+>    * cases, so we don't use it (no need for kernel generated jobs).
+>    */
+> -#define NR_SCHED_PRIORITIES (1 + DRM_SCHED_PRIORITY_HIGH - DRM_SCHED_PRIORITY_MIN)
+> +#define NR_SCHED_PRIORITIES (1 + DRM_SCHED_PRIORITY_HIGH - DRM_SCHED_PRIORITY_LOW)
+>   
+>   /**
+>    * struct msm_file_private - per-drm_file context
+> diff --git a/drivers/gpu/drm/scheduler/sched_entity.c b/drivers/gpu/drm/scheduler/sched_entity.c
+> index 20c9c561843ce1..cb7445be3cbb4e 100644
+> --- a/drivers/gpu/drm/scheduler/sched_entity.c
+> +++ b/drivers/gpu/drm/scheduler/sched_entity.c
+> @@ -88,7 +88,7 @@ int drm_sched_entity_init(struct drm_sched_entity *entity,
+>   			drm_err(sched_list[0], "entity with out-of-bounds priority:%u num_rqs:%u\n",
+>   				entity->priority, sched_list[0]->num_rqs);
+>   			entity->priority = max_t(s32, (s32) sched_list[0]->num_rqs - 1,
+> -						 (s32) DRM_SCHED_PRIORITY_MIN);
+> +						 (s32) DRM_SCHED_PRIORITY_LOW);
+>   		}
+>   		entity->rq = sched_list[0]->sched_rq[entity->priority];
+>   	}
+> diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/scheduler/sched_main.c
+> index 044a8c4875ba64..b6d7bc49ff6ef4 100644
+> --- a/drivers/gpu/drm/scheduler/sched_main.c
+> +++ b/drivers/gpu/drm/scheduler/sched_main.c
+> @@ -1052,7 +1052,7 @@ drm_sched_select_entity(struct drm_gpu_scheduler *sched)
+>   	int i;
+>   
+>   	/* Kernel run queue has higher priority than normal run queue*/
+> -	for (i = sched->num_rqs - 1; i >= DRM_SCHED_PRIORITY_MIN; i--) {
+> +	for (i = sched->num_rqs - 1; i >= DRM_SCHED_PRIORITY_LOW; i--) {
+>   		entity = drm_sched_policy == DRM_SCHED_POLICY_FIFO ?
+>   			drm_sched_rq_select_entity_fifo(sched, sched->sched_rq[i]) :
+>   			drm_sched_rq_select_entity_rr(sched, sched->sched_rq[i]);
+> @@ -1291,7 +1291,7 @@ int drm_sched_init(struct drm_gpu_scheduler *sched,
+>   	if (!sched->sched_rq)
+>   		goto Out_free;
+>   	sched->num_rqs = num_rqs;
+> -	for (i = DRM_SCHED_PRIORITY_MIN; i < sched->num_rqs; i++) {
+> +	for (i = DRM_SCHED_PRIORITY_LOW; i < sched->num_rqs; i++) {
+>   		sched->sched_rq[i] = kzalloc(sizeof(*sched->sched_rq[i]), GFP_KERNEL);
+>   		if (!sched->sched_rq[i])
+>   			goto Out_unroll;
+> @@ -1312,7 +1312,7 @@ int drm_sched_init(struct drm_gpu_scheduler *sched,
+>   	sched->ready = true;
+>   	return 0;
+>   Out_unroll:
+> -	for (--i ; i >= DRM_SCHED_PRIORITY_MIN; i--)
+> +	for (--i ; i >= DRM_SCHED_PRIORITY_LOW; i--)
+>   		kfree(sched->sched_rq[i]);
+>   Out_free:
+>   	kfree(sched->sched_rq);
+> @@ -1338,7 +1338,7 @@ void drm_sched_fini(struct drm_gpu_scheduler *sched)
+>   
+>   	drm_sched_wqueue_stop(sched);
+>   
+> -	for (i = sched->num_rqs - 1; i >= DRM_SCHED_PRIORITY_MIN; i--) {
+> +	for (i = sched->num_rqs - 1; i >= DRM_SCHED_PRIORITY_LOW; i--) {
+>   		struct drm_sched_rq *rq = sched->sched_rq[i];
+>   
+>   		spin_lock(&rq->lock);
+> @@ -1390,7 +1390,7 @@ void drm_sched_increase_karma(struct drm_sched_job *bad)
+>   	if (bad->s_priority != DRM_SCHED_PRIORITY_KERNEL) {
+>   		atomic_inc(&bad->karma);
+>   
+> -		for (i = DRM_SCHED_PRIORITY_MIN;
+> +		for (i = DRM_SCHED_PRIORITY_LOW;
+>   		     i < min_t(typeof(sched->num_rqs), sched->num_rqs, DRM_SCHED_PRIORITY_KERNEL);
+>   		     i++) {
+>   			struct drm_sched_rq *rq = sched->sched_rq[i];
+> diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
+> index 9a50348bd5c04e..d8e2d84d9223e3 100644
+> --- a/include/drm/gpu_scheduler.h
+> +++ b/include/drm/gpu_scheduler.h
+> @@ -63,7 +63,7 @@ struct drm_file;
+>    * to an array, and as such should start at 0.
+>    */
+>   enum drm_sched_priority {
+> -	DRM_SCHED_PRIORITY_MIN,
+> +	DRM_SCHED_PRIORITY_LOW,
+>   	DRM_SCHED_PRIORITY_NORMAL,
+>   	DRM_SCHED_PRIORITY_HIGH,
+>   	DRM_SCHED_PRIORITY_KERNEL,
 
 
