@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-1886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A3527F7DD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 19:27:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F5D67F8031
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 19:47:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15FAD282259
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 18:27:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1A83F282489
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Nov 2023 18:47:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 304BE3A8E0;
-	Fri, 24 Nov 2023 18:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE780381D2;
+	Fri, 24 Nov 2023 18:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPNWwE5E"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPFUAg2X"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B248C39FE3;
-	Fri, 24 Nov 2023 18:27:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE074C433C8;
-	Fri, 24 Nov 2023 18:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7777333CFD;
+	Fri, 24 Nov 2023 18:47:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1023C433C8;
+	Fri, 24 Nov 2023 18:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1700850469;
-	bh=GNBBjODQIb2KqloBzYRl4FFdR5lyJyOuy0MFkIQECk8=;
+	s=korg; t=1700851653;
+	bh=9Eur1v9Zeo/ycYYRJwAoCvrKqqnczaC69baPaW2eWyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LPNWwE5E+4ZiGEWlF68f4ZnldWZj7iovyVK/+NUXSGrFPyvQBTnsy26/hqN18tgeX
-	 xMpr+lmMf7MP3wDE8WjVwJlQa6wPe5LwC+2KnJeLApwMJhDj10naeZTUwoCj0mPTIz
-	 YScq8ru9ihRV28YSxQN37p2MRqGbOna5ZTjdj3Uc=
+	b=rPFUAg2XLzJOtIfenVPZsGJBrbMpHu/6rSpGUU9WcLi3JAgcCUda4uOvDxMQMw/pG
+	 zsYNtHEjpTER9/v1+N1o+ERK0u/G3hbG77xGBY6J3DHw+FQVO1FVm9LYjJFU0dKFp6
+	 puL5lgTt8HYbHlwktZJZg/TDUtUhHQmkSXGp5LtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,12 +45,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Kuogee Hsieh <quic_khsieh@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.5 062/491] drm/msm/dp: skip validity check for DP CTS EDID checksum
-Date: Fri, 24 Nov 2023 17:44:58 +0000
-Message-ID: <20231124172026.517762782@linuxfoundation.org>
+Subject: [PATCH 6.1 042/372] drm/msm/dp: skip validity check for DP CTS EDID checksum
+Date: Fri, 24 Nov 2023 17:47:09 +0000
+Message-ID: <20231124172011.887975634@linuxfoundation.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20231124172024.664207345@linuxfoundation.org>
-References: <20231124172024.664207345@linuxfoundation.org>
+In-Reply-To: <20231124172010.413667921@linuxfoundation.org>
+References: <20231124172010.413667921@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -62,7 +62,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.5-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -105,10 +105,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+), 19 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-index 42d52510ffd4a..86a8e06c7a60f 100644
+index 5149cebc93f61..d38086650fcf7 100644
 --- a/drivers/gpu/drm/msm/dp/dp_panel.c
 +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-@@ -289,26 +289,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
+@@ -266,26 +266,9 @@ int dp_panel_get_modes(struct dp_panel *dp_panel,
  
  static u8 dp_panel_get_edid_checksum(struct edid *edid)
  {
