@@ -1,126 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-2004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA9867F8F26
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 21:49:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 732D27F8F96
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 23:03:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7367528149C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 20:49:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EBEC1C20B48
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 22:03:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69E3330CE9;
-	Sat, 25 Nov 2023 20:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0C430FA6;
+	Sat, 25 Nov 2023 22:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QMg7kcfx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QfiDuN8u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0F53066C;
-	Sat, 25 Nov 2023 20:49:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82379C433C7;
-	Sat, 25 Nov 2023 20:48:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700945343;
-	bh=By6S2NY0eBp0qntAaH6BVeBEX9Zm0qYIHhQZPhrXhuk=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=QMg7kcfxfWqw0cPWEjfDtDjDsnhH6xqQ/g74kyPwOf65WczUoktH8rf7UC1s9rwx1
-	 2BoQBvtaLmDmWwMq4xudZVfUd452/AddQ1o7k/+BieHAJ/RysG5CXslSROe0vseCCN
-	 ztCjymuiTqk2XOtABhYotw1v7Ly7Dp0r7rU/h/QDVABPyQ7r4I8XjWdMKKthjl4FBY
-	 31cKdJ7r2zjqXDrhExCCEvIasXcUaG3/KR3XeFXi2aYucmiXrJay1F3RdkGHmLJ3ZH
-	 6pMJY64+aQGQgTOVXLgJIZVruVAmXalCXX/zndiSsjyiuqE+iGI95OWhIhXJVJzGnt
-	 PR0iSxBWy+04A==
-Date: Sat, 25 Nov 2023 20:48:50 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Nia Espera <nespera@igalia.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Lars-Peter Clausen
- <lars@metafoo.de>, Rob Herring <robh+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>, Tony Luck
- <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>, Vinod
- Koul <vkoul@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski@linaro.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
- phone-devel@vger.kernel.org, Rob <Me@orbit.sh>, Clayton Craft
- <clayton@igalia.com>, Caleb Connolly <caleb.connolly@linaro.org>, Luca
- Weiss <luca.weiss@fairphone.com>, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v4 1/6] dt-bindings: iio: adc: qcom: Add Qualcomm
- smb139x
-Message-ID: <20231125204850.02e0b9a0@jic23-huawei>
-In-Reply-To: <20231111-nia-sm8350-for-upstream-v4-1-3a638b02eea5@igalia.com>
-References: <20231111-nia-sm8350-for-upstream-v4-0-3a638b02eea5@igalia.com>
-	<20231111-nia-sm8350-for-upstream-v4-1-3a638b02eea5@igalia.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A27111;
+	Sat, 25 Nov 2023 14:03:32 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-a00cbb83c80so423367866b.0;
+        Sat, 25 Nov 2023 14:03:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700949811; x=1701554611; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iaSNLjd6qp2TTeM4lQ0nSQjwYYZEfvjgfhn3UAjO2Dc=;
+        b=QfiDuN8uKqiPGC9faoUUMdOx563Qhz6K8URuWInUHZOpD5e6iCo1XzXcjHdr31XT3A
+         apiLx45KCrgcxqejUG5xAao32dkNXHqXmz+IuzyR2wJsb0V8F2yC/PsYslgfPMaNKoE1
+         u7zR2m/f6BkuVaqTbB2wmThDhE7ZL9sp03NylQF2E1imCgIJjt0zhtcWl8B+GLfTRHdB
+         jM1rruf25wwRMOR425Otfw3ZQhXLWRxjC+uNCkGi+/B9pWQV+fa5aZlTasvXgBEfOqQp
+         Y5DjjtOp6u8C0aCwGN02KERR280L1aqTFbi6vs3dubP6hzkMrfVF1K0mp2920FdlTwwY
+         vinA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700949811; x=1701554611;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iaSNLjd6qp2TTeM4lQ0nSQjwYYZEfvjgfhn3UAjO2Dc=;
+        b=In7aG3A7Enc/Se8Z+ER67/6ECZbPiOabFuGlDJe400p5YUKzlDbOQz3Gjc8yC9C3Kz
+         dNqXF1wljFOs8CyCEvrJvq9oFoVOMF/oqrH3eRLFt+kM99ortSFIiNLaeDzZZb8mayQ8
+         g6dXQNVLHbVC3FDqL2wmlfsCdSq1/ofgLoIljWgeYIk9xoU5v2QwAumfPer7LQjswgc0
+         yV2ZH0hD1OOEEpA/TAc3Gy1Oz3oCflj5AJd61d777QRe9JIvOGvvd6kmUJSQW75Ed+3W
+         c5P36bHHv8uBo9WCXrznT8nbe2dWXeQx2iGMUwWg8AdD7nzB4WC4XXX0L48iMk4+pfHz
+         zKrw==
+X-Gm-Message-State: AOJu0Yy3n/Zy5n3an9HSWSvALhcFH+pJO+D3qeFKqTvMy45papqzPJRq
+	LvWIDqkDDY22DSm3TDC5SZ/04ByPP9cOR741
+X-Google-Smtp-Source: AGHT+IEeOqLqN+RKeb41HFX2rR11Y7Z87AtMIyqBSB6RYdVveIEGxvtyiU2EI1tjJpXeaPwXOQ7PkA==
+X-Received: by 2002:a17:906:da:b0:a04:182c:9ea with SMTP id 26-20020a17090600da00b00a04182c09eamr4039459eji.52.1700949810438;
+        Sat, 25 Nov 2023 14:03:30 -0800 (PST)
+Received: from StrangerPC.home.arpa ([2a0d:3344:1730:e300::11a1])
+        by smtp.gmail.com with ESMTPSA id b20-20020a170906195400b009a1dbf55665sm3910731eje.161.2023.11.25.14.03.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 25 Nov 2023 14:03:30 -0800 (PST)
+From: Luka Panio <lukapanio@gmail.com>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Tony Luck <tony.luck@intel.com>,
+	"Guilherme G . Piccoli" <gpiccoli@igalia.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Cc: Luka Panio <lukapanio@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH v11 1/2] dt-bindings: arm: qcom: Add Xiaomi Pad 6 (xiaomi-pipa)
+Date: Sat, 25 Nov 2023 23:03:14 +0100
+Message-ID: <20231125220315.118922-1-lukapanio@gmail.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Sat, 11 Nov 2023 23:07:39 +0100
-Nia Espera <nespera@igalia.com> wrote:
+Add a compatible for Xiaomi Pad 6.
 
-> Bindings for a charger controller chip found on sm8350
-> 
-> Signed-off-by: Nia Espera <nespera@igalia.com>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
->  include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h | 19 +++++++++++++++++++
->  include/dt-bindings/iio/qcom,spmi-vadc.h         |  3 +++
->  2 files changed, 22 insertions(+)
-> 
-> diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h b/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h
-> new file mode 100644
-> index 000000000000..c0680d1285cf
-> --- /dev/null
-> +++ b/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h
-> @@ -0,0 +1,19 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only OR BSD-3-Clause */
-> +/*
-> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
-> +#define _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
-> +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +
-> +#define SMB139x_1_ADC7_SMB_TEMP			(SMB139x_1_SID << 8 | ADC7_SMB_TEMP)
-> +#define SMB139x_1_ADC7_ICHG_SMB			(SMB139x_1_SID << 8 | ADC7_ICHG_SMB)
-> +#define SMB139x_1_ADC7_IIN_SMB			(SMB139x_1_SID << 8 | ADC7_IIN_SMB)
-> +
-> +#define SMB139x_2_ADC7_SMB_TEMP			(SMB139x_2_SID << 8 | ADC7_SMB_TEMP)
-> +#define SMB139x_2_ADC7_ICHG_SMB			(SMB139x_2_SID << 8 | ADC7_ICHG_SMB)
-> +#define SMB139x_2_ADC7_IIN_SMB			(SMB139x_2_SID << 8 | ADC7_IIN_SMB)
-> +
-> +#endif
-> diff --git a/include/dt-bindings/iio/qcom,spmi-vadc.h b/include/dt-bindings/iio/qcom,spmi-vadc.h
-> index 08adfe25964c..ef07ecd4d585 100644
-> --- a/include/dt-bindings/iio/qcom,spmi-vadc.h
-> +++ b/include/dt-bindings/iio/qcom,spmi-vadc.h
-> @@ -239,12 +239,15 @@
->  #define ADC7_GPIO3				0x0c
->  #define ADC7_GPIO4				0x0d
->  
-> +#define ADC7_SMB_TEMP				0x06
->  #define ADC7_CHG_TEMP				0x10
->  #define ADC7_USB_IN_V_16			0x11
->  #define ADC7_VDC_16				0x12
->  #define ADC7_CC1_ID				0x13
->  #define ADC7_VREF_BAT_THERM			0x15
->  #define ADC7_IIN_FB				0x17
-> +#define ADC7_ICHG_SMB				0x18
-> +#define ADC7_IIN_SMB				0x19
->  
->  /* 30k pull-up1 */
->  #define ADC7_AMUX_THM1_30K_PU			0x24
-> 
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Luka Panio <lukapanio@gmail.com>
+
+---
+v2:
+Update commit message
+
+v3:
+Update commit message
+
+v4:
+Update commit message
+
+v5:
+Update commit message
+
+v6:
+Update commit message
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index adbfaea32343..1bfae1b237d2 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -965,6 +965,7 @@ properties:
+               - sony,pdx203-generic
+               - sony,pdx206-generic
+               - xiaomi,elish
++              - xiaomi,pipa
+           - const: qcom,sm8250
+ 
+       - items:
+-- 
+2.42.0
 
 
