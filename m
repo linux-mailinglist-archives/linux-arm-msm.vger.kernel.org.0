@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED1277F8A4D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:46:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0C547F8A52
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:46:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9249CB21178
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 11:46:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83413B21057
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 11:46:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5619EDDB5;
-	Sat, 25 Nov 2023 11:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A76DF5B;
+	Sat, 25 Nov 2023 11:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xXBS5Gfn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CzV1ks7W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BDD110E2
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:45:57 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-507962561adso4116302e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:45:57 -0800 (PST)
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2AF9171D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:46:09 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50ba73196b1so1149372e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:46:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700912755; x=1701517555; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700912768; x=1701517568; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
         bh=U8XXLLLt+yMr+MagO6J18KB+cdnCDtrWIM2r5muvOtY=;
-        b=xXBS5GfnkKn9Ddem+LXQltxE82yW6GuDRsMkpAJlvi0DnxxLHPmjzPEUx07f9nzUD9
-         Z2rRl8KbasQvYErG21XTwycEf6sy4OdRZcrftAP11tHUjtVC8itdlZuG73AQmQR7pOo7
-         dP7Wpv39PXishg9E2dqSsir2lnEAlDRaqRhPT4SQdDUj313PXqs3wOIk9aUygjHeqyJb
-         dhrmEf+anQuOqoaPjyQeQCTsQkcYHgQW130T9+JMcwORexz62BNPDa78OK/126iCLfUE
-         sHxseOp98OTNQldra8b6QypmShCr6rlKZbKTk2uG7cCvviDXMc4lg5wZoxmKN9llf/wu
-         TFNg==
+        b=CzV1ks7WiwehgwSqv87on98kFYZ+jqycNDxQH5jTR5nyxieZS+cHyseCsJH875YwnD
+         E+FYJ+fsyNT6EANcTZqKuri9Jr+u7VJJHyRWpQ6dYKpg4+ux/EWnz7fdfqTkrnuKtNBC
+         mXBah7XbTzpZpdzDOdw7NLnHX/U1hKLzbQ36bUB16vDadk2K9C6tZRovHQ6UtfgUdVyg
+         ZTCFhLAPkItQOacAGGyE6mtfz/jWfJmfDVSalagFhlt0U6h51DqFdTiiM2rZm+Dkrikc
+         EI4QKcdb5vTyD2jQ73q+2NeTsFiE6uvXOPAQs1b7BWJdFu6jXfuvoPO1JveYNJ9/Kz+V
+         mfaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700912755; x=1701517555;
+        d=1e100.net; s=20230601; t=1700912768; x=1701517568;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=U8XXLLLt+yMr+MagO6J18KB+cdnCDtrWIM2r5muvOtY=;
-        b=hpQqkerNZiBWdCeaBInPi17QQ+oRYC9JFcUR/3kf2QciwVIJsau0bvR3zRNCzTuZlU
-         xX5rV57onCCaAg0Zg1VamAqiwAA6rWJWm9QtFd0uYSAa0IMREHcbkMizOVSoklCYO2kZ
-         4rnGrMQtcJ5825OxhJtMj6m+Il8E0lXxqHvrKSBCapBS3TKYM5WVTFEEViA1uIcdLG6t
-         091EhG0QWMVY1gKZc0rHPk4lNnoKSzG0Qa1yd92wRuGGhp2Gs1A3F02Z30b9dOIdFW4V
-         1TYFKJp4twriEYivh5ZwpH1/Hhr50XTsj9xj2Y0oQu0vkpWY2XiyIoXh7STkq1BlhXFc
-         taNg==
-X-Gm-Message-State: AOJu0YzpO/fNpcx37hy9oxyahF5BLlSJkEfAINzHX/VxpLz502PlfOjX
-	SBvbDVhI8HKUPKWt0uS1ilQH2Q==
-X-Google-Smtp-Source: AGHT+IGVTNmgttNhoFp8fswArHdi91yiqlwGIv4/V5yNPqjvlQZWKKCwuED4EMHugXf3TuK+NrTr/Q==
-X-Received: by 2002:ac2:4c55:0:b0:507:a1b3:2d47 with SMTP id o21-20020ac24c55000000b00507a1b32d47mr4341263lfk.17.1700912755427;
-        Sat, 25 Nov 2023 03:45:55 -0800 (PST)
+        b=gmPWz1TIoQnmJQfIvcf7QAZdykLYmCwsRPzkiQvRXGy7gzrHlsIioCeDRIGYm9DcW0
+         1KOTm3g1Btrk/ahOctJ5YUZvMvgB3aK9fPKJFQX9fhKEhFdMHx5IMTyVbFfdQOwNAnKD
+         ZlJZHKFA9v2kj1/aBYp9p6dMb8GqYKC084kdRvjbRgFT8whuB0sunNrTl+DnXnMGjgZK
+         MSgZitSHlzxZfZNCi3J+A7K4K1asl6OAlwx7xoh74WvOpQwK9r3BNEPZIaJbvQl6Uk2G
+         h29ws7ueEKHeRtEHqH/yF3g8fcTLzvDUpnn4MrahXIiLmNENgyWafaVdsA1pLaXMJVFX
+         27mg==
+X-Gm-Message-State: AOJu0Yz8GUe6FfMGlugefkLJfLZKOzZxlKwQeF0yl4tPoWAJRTbgw5Xh
+	BSev60QK4IcU8X0hno1Y1fMF1w==
+X-Google-Smtp-Source: AGHT+IFrvONgH7xLL7WDzK+Uwu9kTBTEWKxgS/rS0EZkjM20J9bT66aG3CDn83780nqQQBgQ2BuEpQ==
+X-Received: by 2002:ac2:5475:0:b0:50b:a816:cc09 with SMTP id e21-20020ac25475000000b0050ba816cc09mr1294602lfn.34.1700912767995;
+        Sat, 25 Nov 2023 03:46:07 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id w5-20020a19c505000000b00507a1df9224sm802131lfe.289.2023.11.25.03.45.53
+        by smtp.gmail.com with ESMTPSA id w5-20020a19c505000000b00507a1df9224sm802131lfe.289.2023.11.25.03.46.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 03:45:55 -0800 (PST)
-Message-ID: <2f7f8bde-e194-43e4-b0aa-da58dda4d7b1@linaro.org>
-Date: Sat, 25 Nov 2023 12:45:52 +0100
+        Sat, 25 Nov 2023 03:46:07 -0800 (PST)
+Message-ID: <f7b98eab-c68a-4527-abb7-ff335ea7f814@linaro.org>
+Date: Sat, 25 Nov 2023 12:46:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] ARM: dts: qcom: minor whitespace cleanup around '='
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: minor whitespace cleanup around '='
 Content-Language: en-US
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -71,6 +71,7 @@ To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20231124095049.58618-1-krzysztof.kozlowski@linaro.org>
+ <20231124095049.58618-2-krzysztof.kozlowski@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -107,7 +108,7 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231124095049.58618-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231124095049.58618-2-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
