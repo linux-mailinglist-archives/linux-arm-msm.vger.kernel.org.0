@@ -1,60 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-1957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F9E17F8AF1
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C64497F8AF2
 	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 13:54:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 96BD6B212BF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:54:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 039101C20A80
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:54:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABF55FC09;
-	Sat, 25 Nov 2023 12:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E9A310961;
+	Sat, 25 Nov 2023 12:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B7Df0Am3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v4PimsF3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDDAF1BDC
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:54:00 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-a03a900956dso525200066b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:54:00 -0800 (PST)
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2614CFD
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:54:26 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5446c9f3a77so3676035a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:54:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700916839; x=1701521639; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=g5upvyQLnMuRo1dbMadphRh3m2TM7U1uw9oHbCa8dgk=;
-        b=B7Df0Am3pyoIQYq0xhvtSjOEXvdbWc09hVJo9c4w74x3Vs6KAOLc7zk7fxHJbCxcul
-         OEB1bup/x7272hkXD2UUbwvnCLKFsMg/1FJqzCDqPnAiMDNF2mNW/KvGkP+sowb5l5g7
-         J9TK668r78b+EUAF95D8FiAs8Lo2BYBDq8MvxC3IhftaQAQsCszjk6mZM6FUlidjWLX9
-         aru+YAYraWxpOT8TIJt2GkjoHVWnYeEYC7jZ3FhVMkG/XqoURMjb3leX1N1AFWIGJLYQ
-         fFmMP2sNZu/Wh//Ra9d3mxK+La/yKVWsTPTxLzZsYTBmHoWvxfts5meC4dF0TZU0vjly
-         MFEQ==
+        d=linaro.org; s=google; t=1700916864; x=1701521664; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=xwsnRDL1c2UPqNmwiMYiMuvGOKXcoVAjfq7yoygNLK8=;
+        b=v4PimsF3mnqAX8t/f2Ull7F7FZ0GWd9gTt3pAJUMsmvO4OoPLKE8naRvRfwZYFDmtI
+         D9Fu6c99DtiMla+JHDH5Nuvb1pj87dL9EUoqeLNm1y9Mln706UbAOTX2pDWo7LofegsD
+         zyg+1hCVajDEZdD05G9tpaI+oZdIezjlDTFKcQtZdEs9DNnLUBVElEEqd9HOqPHEn8AJ
+         5pE1gGeQHuXj+hFddFWuwqvbJ5NG9eM0rF3m/PXtnzfcok7Lp3am3AXCmb79QeQv94MV
+         yUoqZfS3z3Gj4TKHVlV7SJw97gRSVu88fOfY2kjHFGvs/hs7F/lqbYSU8oMVcbP7Uggo
+         1YKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700916839; x=1701521639;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g5upvyQLnMuRo1dbMadphRh3m2TM7U1uw9oHbCa8dgk=;
-        b=uWlTI0XLXVo8zprmUq7CekII9TENkm+9mnxZO6GPOQdXuatOMlrQsTzFo/RP/RY6Gp
-         55JnCgMrz5MGH79RdK2xBgvIA3KI9CbP4xM+eIrs2jIBa6IhsqzNJi57/2DoY2xnupcF
-         WjkZrgTXjU/fOK7qG3vS1n0LTKVh45ShTtYwE4zF58Gz0K22+oovf4I1Cp6s+6C0EgI8
-         s+qGAYrQIRjgTOz9gk3qlQVYF/b81PZBC90mlrFsqJ6dv9J3Sxuo0XUGFJD76orLnlRL
-         B+CrGJH46vdZMwm3lDor1wrQ8xRtwpLJ8pOnckCS+6UlJgLFlh6hth4Q+gzJ4MILnplM
-         vulg==
-X-Gm-Message-State: AOJu0YzZ4hrjTxHOQwcHHNPE69lt7xN6YWyqGpLOVzLQ8KRZBFjEV/t+
-	j6a/GDg9E+f23TiukjQD9k1eaA==
-X-Google-Smtp-Source: AGHT+IGSc5yefHXWkLQTXSaNg4wx9Y+3010q0VXtS0JCv4yg12Ipub8YWCyuolbbylixV9gAb8aohA==
-X-Received: by 2002:a17:907:7da9:b0:9fd:9e54:a4fc with SMTP id oz41-20020a1709077da900b009fd9e54a4fcmr10176305ejc.15.1700916839279;
-        Sat, 25 Nov 2023 04:53:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700916864; x=1701521664;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xwsnRDL1c2UPqNmwiMYiMuvGOKXcoVAjfq7yoygNLK8=;
+        b=YYC1OvF23rAeWv78LC3x1DmLeqN1BYglQ/SHNB7B6PT5MQhgrk7wVLTWkOjSs35tnz
+         aFTMSH6WzI6suus7PvBJz+NZ1yNtwpFp34aKx9WgBmC6x1PDIMPkjvHlEwR5QmCZCltm
+         RltAlSKkfU60EfyjijqrK6h9XN6VhGyaEAllap0C80Exl6bQrVWBhcSkWrY1wvAMmMQT
+         2K6koCA9XE/qodujWL7oqZPQjnhXOlDPlo/gXIk0bBcVyQfUzVMHK+4eiCguCNwQXctV
+         BC8XFsWHecOiGoQxGdtQ5WoEc0KOqA+iXRe3wxU44lTk/L16k84CsvsfdY/cygo4UtiW
+         W4eQ==
+X-Gm-Message-State: AOJu0YyqWpUbDSYBn1BMTd5ja+O74TEDoBjWNGpH0odoFowkzQ8J5FRa
+	dU0O5AANmgckVB040PXPO69hZQ==
+X-Google-Smtp-Source: AGHT+IFE0guTiNzxa6B9t4+k07MBqmi3ApjbPPecevqCqeBKdgV6XBtFgK4hjfYvKY4RhPzCNLz9GQ==
+X-Received: by 2002:a17:906:594c:b0:a04:c787:4117 with SMTP id g12-20020a170906594c00b00a04c7874117mr4721576ejr.19.1700916864595;
+        Sat, 25 Nov 2023 04:54:24 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id uz2-20020a170907118200b00a098348d803sm1983946ejb.141.2023.11.25.04.53.58
+        by smtp.gmail.com with ESMTPSA id uz2-20020a170907118200b00a098348d803sm1983946ejb.141.2023.11.25.04.54.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 04:53:58 -0800 (PST)
-Message-ID: <3b8e6b65-5f37-49e5-b83e-b89726867ed2@linaro.org>
-Date: Sat, 25 Nov 2023 13:53:57 +0100
+        Sat, 25 Nov 2023 04:54:24 -0800 (PST)
+Message-ID: <6b30c1ba-9740-41f7-95c0-cdb1803fe19a@linaro.org>
+Date: Sat, 25 Nov 2023 13:54:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,6 +66,7 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v6 4/8] media: qcom: camss: Move VFE power-domain
  specifics into vfe.c
 Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, hverkuil-cisco@xs4all.nl,
  laurent.pinchart@ideasonboard.com, Robert Foss <rfoss@kernel.org>,
  Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
@@ -75,7 +77,7 @@ Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20231123-b4-camss-named-power-domains-v6-0-3ec2fd9e8e36@linaro.org>
  <20231123-b4-camss-named-power-domains-v6-4-3ec2fd9e8e36@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+ <3b8e6b65-5f37-49e5-b83e-b89726867ed2@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
  BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
@@ -111,30 +113,32 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231123-b4-camss-named-power-domains-v6-4-3ec2fd9e8e36@linaro.org>
+In-Reply-To: <3b8e6b65-5f37-49e5-b83e-b89726867ed2@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 23.11.2023 18:03, Bryan O'Donoghue wrote:
-> Moving the location of the hooks to VFE power domains has several
-> advantages.
-> 
-> 1. Separation of concerns and functional decomposition.
->    vfe.c should be responsible for and know best how manage
->    power-domains for a VFE, excising from camss.c follows this
->    principle.
-> 
-> 2. Embedding a pointer to genpd in struct camss_vfe{} meas that we can
->    dispense with a bunch of kmalloc array inside of camss.c.
-> 
-> 3. Splitting up titan top gdsc from vfe/ife gdsc provides a base for
->    breaking up magic indexes in dtsi.
-> 
-> Suggested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> Tested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybciolinaro.org>
+On 25.11.2023 13:53, Konrad Dybcio wrote:
+> On 23.11.2023 18:03, Bryan O'Donoghue wrote:
+>> Moving the location of the hooks to VFE power domains has several
+>> advantages.
+>>
+>> 1. Separation of concerns and functional decomposition.
+>>    vfe.c should be responsible for and know best how manage
+>>    power-domains for a VFE, excising from camss.c follows this
+>>    principle.
+>>
+>> 2. Embedding a pointer to genpd in struct camss_vfe{} meas that we can
+>>    dispense with a bunch of kmalloc array inside of camss.c.
+>>
+>> 3. Splitting up titan top gdsc from vfe/ife gdsc provides a base for
+>>    breaking up magic indexes in dtsi.
+>>
+>> Suggested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+>> Tested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> ---
+> Reviewed-by: Konrad Dybcio <konrad.dybciolinaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
