@@ -1,61 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C64497F8AF2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 13:54:30 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 658B17F8AFA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 13:56:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 039101C20A80
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:54:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 96A901C20997
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:56:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E9A310961;
-	Sat, 25 Nov 2023 12:54:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D4D5F9FE;
+	Sat, 25 Nov 2023 12:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v4PimsF3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ay4LvuEu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2614CFD
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:54:26 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5446c9f3a77so3676035a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:54:26 -0800 (PST)
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 741F78F
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:56:52 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-548ce28fd23so3619120a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:56:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700916864; x=1701521664; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xwsnRDL1c2UPqNmwiMYiMuvGOKXcoVAjfq7yoygNLK8=;
-        b=v4PimsF3mnqAX8t/f2Ull7F7FZ0GWd9gTt3pAJUMsmvO4OoPLKE8naRvRfwZYFDmtI
-         D9Fu6c99DtiMla+JHDH5Nuvb1pj87dL9EUoqeLNm1y9Mln706UbAOTX2pDWo7LofegsD
-         zyg+1hCVajDEZdD05G9tpaI+oZdIezjlDTFKcQtZdEs9DNnLUBVElEEqd9HOqPHEn8AJ
-         5pE1gGeQHuXj+hFddFWuwqvbJ5NG9eM0rF3m/PXtnzfcok7Lp3am3AXCmb79QeQv94MV
-         yUoqZfS3z3Gj4TKHVlV7SJw97gRSVu88fOfY2kjHFGvs/hs7F/lqbYSU8oMVcbP7Uggo
-         1YKA==
+        d=linaro.org; s=google; t=1700917011; x=1701521811; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=czOs3NcJUUXQ6TvoXbjsk/IbutSpwpgfOeolvWDt+k0=;
+        b=Ay4LvuEuookjeTm9ommK9LkB4M6F/aaLYsKKmT0QIJMcvRAnMzeaPaTxib+VZg+mn7
+         jJJDFpWB9088yV0R+s31RIz45c6xckTegSrnMbJ2xpjyNzd7kkXSK8NdPvXpXXkNts6N
+         h5kaq8FD4O4YQEmunkVK/GGYK3wg20Uch8sJX9xadGByHjJNqizav3kwlgr5zkvthyNH
+         3MTfdmFWW+NEyHRTlDzSTvR2Oe/wfveGDPPlIucWWs5gxeTrA+fiZw9RNGD6UH43wQxP
+         fOYPlvYxNA78FLCxm8CeWVrjU9RiuqvpJSNbaQ9SJYSMMZ8R2m2CeXSaYgYFdZYzvABo
+         3oRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700916864; x=1701521664;
-        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
-         :from:content-language:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xwsnRDL1c2UPqNmwiMYiMuvGOKXcoVAjfq7yoygNLK8=;
-        b=YYC1OvF23rAeWv78LC3x1DmLeqN1BYglQ/SHNB7B6PT5MQhgrk7wVLTWkOjSs35tnz
-         aFTMSH6WzI6suus7PvBJz+NZ1yNtwpFp34aKx9WgBmC6x1PDIMPkjvHlEwR5QmCZCltm
-         RltAlSKkfU60EfyjijqrK6h9XN6VhGyaEAllap0C80Exl6bQrVWBhcSkWrY1wvAMmMQT
-         2K6koCA9XE/qodujWL7oqZPQjnhXOlDPlo/gXIk0bBcVyQfUzVMHK+4eiCguCNwQXctV
-         BC8XFsWHecOiGoQxGdtQ5WoEc0KOqA+iXRe3wxU44lTk/L16k84CsvsfdY/cygo4UtiW
-         W4eQ==
-X-Gm-Message-State: AOJu0YyqWpUbDSYBn1BMTd5ja+O74TEDoBjWNGpH0odoFowkzQ8J5FRa
-	dU0O5AANmgckVB040PXPO69hZQ==
-X-Google-Smtp-Source: AGHT+IFE0guTiNzxa6B9t4+k07MBqmi3ApjbPPecevqCqeBKdgV6XBtFgK4hjfYvKY4RhPzCNLz9GQ==
-X-Received: by 2002:a17:906:594c:b0:a04:c787:4117 with SMTP id g12-20020a170906594c00b00a04c7874117mr4721576ejr.19.1700916864595;
-        Sat, 25 Nov 2023 04:54:24 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700917011; x=1701521811;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=czOs3NcJUUXQ6TvoXbjsk/IbutSpwpgfOeolvWDt+k0=;
+        b=pHd8moADD8KFF91rD4deEBM3NeW92B6kbIV5Lb6HSYEQV5Jbd36grJW1qHFp+y2sLK
+         VBJJncboMvozGrz1ue6YcWGdmxFS+fbibHIJgg5uibd1GtLXt79rGejY9CncKyJTrK+X
+         ulg81MxWcT9QcAbYp1W2dT8SQCW3F33TAdiCZNjF/7DGFH2L34iwcTs3+qvJ/x+aNB6N
+         wgZ1anJzI8FbuQ85+aCFMwZNmvvudpBU63rfE+RX1qr77Fg+/LGfuTLdIjDHXyskjwq0
+         6piJL4zkmYbyUXMf7dTkAdZ66fMf71Cnd0cLg25vyMw6gr6p5D9iBH7errcaqUci0TKv
+         PoTQ==
+X-Gm-Message-State: AOJu0YwIp/9AQdn1Rmn8fpgBuOKzSvVdsy5BewloMapzg/yPHw54SDmx
+	mFo4blZOqHsoFoqlfR26i5mxhg==
+X-Google-Smtp-Source: AGHT+IFdXYKV7LbfzbDEeh71TJ5AUg5pnKtwZk5+IqrMeTYt+hWq78Jf1aravz5shRoRrzmeCUqe+g==
+X-Received: by 2002:a05:6402:31e4:b0:54a:fb41:14c with SMTP id dy4-20020a05640231e400b0054afb41014cmr3470461edb.36.1700917010873;
+        Sat, 25 Nov 2023 04:56:50 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id uz2-20020a170907118200b00a098348d803sm1983946ejb.141.2023.11.25.04.54.22
+        by smtp.gmail.com with ESMTPSA id eh9-20020a0564020f8900b005486f7f654dsm3008547edb.7.2023.11.25.04.56.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 04:54:24 -0800 (PST)
-Message-ID: <6b30c1ba-9740-41f7-95c0-cdb1803fe19a@linaro.org>
-Date: Sat, 25 Nov 2023 13:54:22 +0100
+        Sat, 25 Nov 2023 04:56:50 -0800 (PST)
+Message-ID: <cfcea2d9-7f7b-4434-b3a9-ea2fd1bee965@linaro.org>
+Date: Sat, 25 Nov 2023 13:56:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,21 +62,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/8] media: qcom: camss: Move VFE power-domain
- specifics into vfe.c
+Subject: Re: [PATCH v4 7/8] arm64: dts: qcom: sm8650-mtp: add interconnect
+ dependent device nodes
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, hverkuil-cisco@xs4all.nl,
- laurent.pinchart@ideasonboard.com, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, matti.lehtimaki@gmail.com,
- quic_grosikop@quicinc.com
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+To: Neil Armstrong <neil.armstrong@linaro.org>, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20231123-b4-camss-named-power-domains-v6-0-3ec2fd9e8e36@linaro.org>
- <20231123-b4-camss-named-power-domains-v6-4-3ec2fd9e8e36@linaro.org>
- <3b8e6b65-5f37-49e5-b83e-b89726867ed2@linaro.org>
+References: <20231124-topic-sm8650-upstream-dt-v4-0-e402e73cc5f0@linaro.org>
+ <20231124-topic-sm8650-upstream-dt-v4-7-e402e73cc5f0@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
  BB/OmIWU6X+LZW6P88ZmHe+KeyABLMP5s1tJNK1j4ntT7mECcWZDzafPWF4F6m4WJOG27kTJ
@@ -113,31 +110,22 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <3b8e6b65-5f37-49e5-b83e-b89726867ed2@linaro.org>
+In-Reply-To: <20231124-topic-sm8650-upstream-dt-v4-7-e402e73cc5f0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 25.11.2023 13:53, Konrad Dybcio wrote:
-> On 23.11.2023 18:03, Bryan O'Donoghue wrote:
->> Moving the location of the hooks to VFE power domains has several
->> advantages.
->>
->> 1. Separation of concerns and functional decomposition.
->>    vfe.c should be responsible for and know best how manage
->>    power-domains for a VFE, excising from camss.c follows this
->>    principle.
->>
->> 2. Embedding a pointer to genpd in struct camss_vfe{} meas that we can
->>    dispense with a bunch of kmalloc array inside of camss.c.
->>
->> 3. Splitting up titan top gdsc from vfe/ife gdsc provides a base for
->>    breaking up magic indexes in dtsi.
->>
->> Suggested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
->> Tested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> ---
-> Reviewed-by: Konrad Dybcio <konrad.dybciolinaro.org>
+On 24.11.2023 10:20, Neil Armstrong wrote:
+> Now interconnect dependent devices are added in sm8650 DTSI,
+> now enable more devices for the Qualcomm SM8650 MTP board:
+> - PCIe
+> - Display
+> - DSPs
+> - SDCard
+> - UFS
+> - USB role switch with PMIC Glink
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
