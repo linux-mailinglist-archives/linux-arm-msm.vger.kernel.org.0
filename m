@@ -1,61 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 841217F8A42
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:40:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B02327F8A49
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:44:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A6F151C20B14
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 11:40:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02BCCB2103C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 11:44:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90058D295;
-	Sat, 25 Nov 2023 11:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75FBFDDCB;
+	Sat, 25 Nov 2023 11:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qoWW1Zib"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VeaiDQGV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71ED5D41
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:40:45 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-548d60a4d60so3592255a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:40:45 -0800 (PST)
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06D8B10E7
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:44:06 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-5488bf9e193so3676578a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:44:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700912444; x=1701517244; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PumLW+yDxZ/EbkcbHSkfvm2AU7+9Cl4vHKO664Y9Uss=;
-        b=qoWW1ZibFg2oDfmXXnMi8Q8D6OrueMGF6nWPrR0KMU3IHNOs4dZ6zuFIuIcRL00aFG
-         Nhf3/GHlI1CBpzxS1N2TKmyysqocrX2z5e7D3WtojImDmkyhgCByW2IFpcXo5QoUFOGV
-         Z5fsZY4FZPronrs5mM2BPcVta3qikIrS2xS4eB6RFoYiqGNn3B2LdJc7pzvlsd/CrJeD
-         2XIkO7s/ZjozBc3dhmSP/xkSZbWbVjAR70hJnYd53Crz8Zk5Wpz/7Z26x0f7B4M1Qh/6
-         cXL2Z4ALgTym1ISSyO1Ou9bzjWoMkCKIj8i5VrIusxtj16Xvo1m3Iz+lRhRs1hObyixY
-         +G0A==
+        d=linaro.org; s=google; t=1700912644; x=1701517444; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SdNAHltyzZi3QxE+f9JHuh2c+iylf1qVw4CyLT75QG4=;
+        b=VeaiDQGV4YEKXn5e99F9Bmaq1sQjWIE0CUDJ8ag0+zYSsHNRiVUhIEXASu2XEFsYYj
+         iGUkIVqf7cBK+B2oRB0lr6KPG5K+/5Q+B/8uIzvwA+EMrBkXiwNHv7h3NkWRiLSVPkZp
+         5TdXFzp9sDdehi0OUQtn2aKnT3l2VVdkxN1GtqBqlkd9Z+gKaxCwfeXcSs0Xu4F1LLCK
+         Kg6su6fzInDZfr8jjgb3nvAygdIKRx18OV24gcog2OuUBhJZHwdN42uoJi8Kq0yuvP+M
+         DAiTIQQheOktcoeUgW2ZcSRNNEiWpxDU9AxqP8Var/a+kqeOoHcBd2G/pCS5pBntFTp5
+         vfUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700912444; x=1701517244;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PumLW+yDxZ/EbkcbHSkfvm2AU7+9Cl4vHKO664Y9Uss=;
-        b=xM//3WdVmHUhNuaPf1MQV6fahXyJSVLPGxwuprtmVsP//8OqwI1MNrIHLJ1ESoSIlN
-         /CxpvYlc0q4SYUb4/LWAO+os9eE92ekLyM504LVHc0laI0IFXc/qT8SkG+Ijw0hCLe57
-         pbTfclMS1iE2KUo9/Zw9/9RQk3rkAUgO5hXBxW+v7PhL6dKygx9GUndgb+V9Aatm3vIh
-         dH0d03EcS/p9ShRZyrZaKJtwZ6IdGdlN7drtuYrsIs3skTFSFERRKQXSZbgTv9d0zAFE
-         izgmHUdidFY0Jg6CzJhKTn5jwqrBS0fyHULlgCi/s750xTIee3j0mEZLv9wcUe921kY4
-         RsaA==
-X-Gm-Message-State: AOJu0YyGUwIPcQQYxbIuRMi3EE7Kw/PmQIUpZ4VkAy2iYUuZxDpTXCVW
-	eP8cCpxy5a/1wjEv472Q/14dcg==
-X-Google-Smtp-Source: AGHT+IFqBVsdh0o76qmN+wtVD1l8pCKeP6JfU9XIAzHXoVgjey89blL8+iGjRUsvpGsDuu/dMSOTGA==
-X-Received: by 2002:a05:6402:2207:b0:54b:25e8:c007 with SMTP id cq7-20020a056402220700b0054b25e8c007mr867357edb.2.1700912443857;
-        Sat, 25 Nov 2023 03:40:43 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700912644; x=1701517444;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SdNAHltyzZi3QxE+f9JHuh2c+iylf1qVw4CyLT75QG4=;
+        b=KtgE7LJG4f/kjfHVQ+txeSUZ6K5qt0fgIKw9ezuqp0kRxYbw0ZLbF7ptj766DoEVNH
+         hwo5H0XXFspU2gwRk7idZTYs7La8l+aaP7pdnoGYiUIQo+nQeDX3Jd/XtLv3a/pG1mtm
+         xKQ95HT1FgY0CAdF1dR8MLjLUdbVa12p7ZrbmVsMEEUey5+7t/ZBth61BCDKt3IViJs0
+         UFuvJPjENSkEAkc9AUdphHJGV4NesnxNWPITCKvwongav+5lyCrdDjoe/AX7N0x32p6W
+         kqui9Zu6XPc6CbXpfRnwWy7fO5kdj6A0HdQpZ/FtlgsB0yi6pFG4X34KdrDQ3bX/1J8N
+         GLgg==
+X-Gm-Message-State: AOJu0Yx+yR5JB7rQhf4l5zL3jW7bAIC/F21wjG5/Mx4HtydAG8yX/QDM
+	jjTEh9agbj16ySx2ed+JXhQVXw==
+X-Google-Smtp-Source: AGHT+IGRoDr3JREkINLbE9HNbwdlPj1+NpZu2jqzyjmPzQQL01nxEYHIZx0D5Y7x//5w+SZr3YrOAA==
+X-Received: by 2002:a50:d0d6:0:b0:54b:5a6:d06d with SMTP id g22-20020a50d0d6000000b0054b05a6d06dmr3820138edf.5.1700912644518;
+        Sat, 25 Nov 2023 03:44:04 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id cm26-20020a0564020c9a00b0054ae75dcd6bsm2114552edb.95.2023.11.25.03.40.42
+        by smtp.gmail.com with ESMTPSA id er21-20020a056402449500b0054b2040ea46sm663412edb.61.2023.11.25.03.44.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 03:40:43 -0800 (PST)
-Message-ID: <844cc2e9-d487-4bf2-aa3a-7e0cc51d722e@linaro.org>
-Date: Sat, 25 Nov 2023 12:40:41 +0100
+        Sat, 25 Nov 2023 03:44:04 -0800 (PST)
+Message-ID: <943431f4-6d68-4635-a8f9-710a0d535526@linaro.org>
+Date: Sat, 25 Nov 2023 12:44:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,16 +62,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gpucc-sm8150: Update the gpu_cc_pll1 config
-To: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>,
- Andy Gross <agross@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231122042814.4158076-1-quic_skakitap@quicinc.com>
- <2b619607-1219-46db-a439-0f087b8b5d3b@linaro.org>
- <a2137dac-9660-53ae-8950-4902c05a3f66@quicinc.com>
+Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: sm8350-lemonade(p): New devices
 Content-Language: en-US
+To: Nia Espera <nespera@igalia.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
+ Lars-Peter Clausen <lars@metafoo.de>, Rob Herring <robh+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>,
+ Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
+ <gpiccoli@igalia.com>, Vinod Koul <vkoul@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ devicetree@vger.kernel.org, phone-devel@vger.kernel.org, Rob <Me@orbit.sh>,
+ Clayton Craft <clayton@igalia.com>,
+ Caleb Connolly <caleb.connolly@linaro.org>,
+ Luca Weiss <luca.weiss@fairphone.com>, ~postmarketos/upstreaming@lists.sr.ht
+References: <20231111-nia-sm8350-for-upstream-v4-0-3a638b02eea5@igalia.com>
+ <20231111-nia-sm8350-for-upstream-v4-6-3a638b02eea5@igalia.com>
+ <d35b9250-eddb-4436-8daf-066ec84cf55f@linaro.org>
+ <1e45a031-080d-4cbe-9741-182524227124@igalia.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -109,28 +117,62 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <a2137dac-9660-53ae-8950-4902c05a3f66@quicinc.com>
+In-Reply-To: <1e45a031-080d-4cbe-9741-182524227124@igalia.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 24.11.2023 12:24, Satya Priya Kakitapalli (Temp) wrote:
+On 23.11.2023 18:05, Nia Espera wrote:
 > 
-> On 11/22/2023 9:32 PM, Konrad Dybcio wrote:
+> 
+> On 11/22/23 21:17, Konrad Dybcio wrote:
 >>
 >>
->> On 11/22/23 05:28, Satya Priya Kakitapalli wrote:
->>> Update the test_ctl_hi_val and test_ctl_hi1_val of gpu_cc_pll1
->>> as per latest HW recommendation.
->> IIRC there is SM8150 v2.1 that's there on most devices and v2.2
->> that was used on the Microsoft Duo (or v2.0 and v2.1 respectively,
->> not sure, don't have any device on hand to read it back), do these
->> settings apply to both? Are they different for mobile vs auto?
+>> On 11/11/23 23:07, Nia Espera wrote:
+>>> Device tree files for OnePlus 9 and 9 Pro. Details of supported features
+>>> mentioned in the cover letter for this patch series, but for
+>>> accessibility also repeated here:
+>>>
+>>> - USB OTG
+>>> - UFS
+>>> - Framebuffer display
+>>> - Touchscreen (for lemonade)
+>>> - Power & volume down keys
+>>> - Battery reading
+>>> - Modem, IPA, and remoteproc bringup
+>>>
+>>> Steps to get booting:
+>>>
+>>> - Wipe dtbo partition
+>>> - Flash vbmeta with disabled verity bit
+>>> - Flash kernel and initfs to boot partition with CLI args pd_ignore_unused
+>>> and clk_ignore_unused as v1 bootimg
+>>> - Flash rootfs to some other partition (probably super or userdata)
+>> Thanks for including this info here
+>>
+>>> +&pmk8350_vadc {
+>>> +    pinctrl-names = "default";
+>>> +    pinctrl-0 = <&gpio1_adc_default>, <&gpio3_adc_default>;
+>>> +
+>>> +    /* pmk8350-ref-gnd */
+>> I fail to see the benefit in having this both here and in the label
+> 
+> Oops, removed.
+> 
+>>> +    channel@0 {
+>>> +        reg = <0x00>;
+>>> +        qcom,pre-scaling = <1 1>;
+>>> +        label = "pmk8350_ref_gnd";
+>>> +    };
+>>> +
+>> [...]
+>>
+>>> +&tlmm {
+>>> +    gpio-reserved-ranges = <52 8>;
+>> Would you know what these are connected to?
 >>
 > 
-> Yes these settings apply to all v2.x devices, also they are same for auto and mobile.
-Thanks for confirming!
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Judging from the line names on the hdk dtsi, 4 seem to be connected to the fingerprint (FP_SPI_*) and the other 4 are NFC-related (NFC_ESE_SPI_*). I can clarify this with a comment if necessary.
+Sounds very plausible, thanks!
 
 Konrad
 
