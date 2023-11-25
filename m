@@ -1,96 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-1935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CECBE7F8A0F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:06:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9293E7F8A3A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:37:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B5E41C20B4F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 11:06:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3C551C20BAC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 11:37:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66467CA43;
-	Sat, 25 Nov 2023 11:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B356D2E7;
+	Sat, 25 Nov 2023 11:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GzQAqc91"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iIWVavDM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373882106;
-	Sat, 25 Nov 2023 11:06:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A55C433C7;
-	Sat, 25 Nov 2023 11:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71993D295;
+	Sat, 25 Nov 2023 11:37:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDB5C433C9;
+	Sat, 25 Nov 2023 11:37:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1700910378;
-	bh=a10BKOzNP25vy7u3Wr900/nhqUYn6t0HQHvCMFsPHXM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GzQAqc91AzXTfJr0YMNQk4Fb8ANi3UGp7ws1OpgA134zeMmi16feg/71FpWu/RRad
-	 hgEimPRXrCBFQPja2QUhaktDDe0g3JTP7Lo6sH9/6GXqTybrAoNZWQgTPqocAWw2fR
-	 xKpaN6KhvfkenJnRasNXc+kpv4jHsOpPhVY1FVzjEJd1tKA3A/K2P7enxMj4c18BuT
-	 tP1yhNA8lq5FHA/nmG1RTwfrAROJVllv6hM6Zy7Y+WDjCqFF2YaROv+/jgV6bjtTmH
-	 4JDccMs4Puqv94kUHM+nK/wfz90JM/BkkbRmxra8goAAA6NCb6to4+fU9GVktRb6RR
-	 yv5TIhyGpq7aQ==
-Date: Sat, 25 Nov 2023 11:06:13 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: Luka Panio <lukapanio@gmail.com>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kees Cook <keescook@chromium.org>, Tony Luck <tony.luck@intel.com>,
-	"Guilherme G . Piccoli" <gpiccoli@igalia.com>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH v10 1/2] Add a compatible for Xiaomi Pad 6.
-Message-ID: <20231125-scientist-autograph-a574e56ea955@spud>
-References: <20231124212732.731419-1-lukapanio@gmail.com>
- <2023112529-fetch-unwritten-bdbd@gregkh>
+	s=k20201202; t=1700912230;
+	bh=u3Ud7opf3X4nqSGw+IYKVKYse4XkAAm5XbEyGIYTOsk=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=iIWVavDMX8IIeDCrFAW/9zo0uBiYVTpuBL154mdUZyTf/phmfF6G4/Nr/80KelrKX
+	 ye78qPsyZfB5pF1+3eooBB24/CtiTaA7i8tf1H4UFk0jYR8oaM+8iVF6a9+gmQlHym
+	 HNZ1p5+Z9F/8pua29v34JB4PplpeslfN6VCZ1B9BkgK3K8PAFzjnwwtzoArZFFjBSJ
+	 xoK8/T9rWaKH1INhp5+Fj6Czlgt8Pp7jZJ/pifmAw1wmv5RsePb3TUk/DGIeFlHDT1
+	 c/Hu4vxkMhsW4SJTeaw78VKNQ5gEVUye/ztPBUtc38IYrhIUH/cmJF6s4i9KeY0Hre
+	 MlsikZsY0euQA==
+From: Mark Brown <broonie@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Shenghao Ding <shenghao-ding@ti.com>, Kevin Lu <kevin-lu@ti.com>, 
+ Baojun Xu <baojun.xu@ti.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Magnus Damm <magnus.damm@gmail.com>, Seven Lee <wtli@nuvoton.com>, 
+ Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>, 
+ Alexander Stein <alexander.stein@ew.tq-group.com>, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org, 
+ linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+In-Reply-To: <20231124083803.12773-1-krzysztof.kozlowski@linaro.org>
+References: <20231124083803.12773-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ASoC: dt-bindings: correct white-spaces in examples
+Message-Id: <170091222492.2632109.16193424114633167533.b4-ty@kernel.org>
+Date: Sat, 25 Nov 2023 11:37:04 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ZAE8VA0RYnei4ICF"
-Content-Disposition: inline
-In-Reply-To: <2023112529-fetch-unwritten-bdbd@gregkh>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-0438c
 
+On Fri, 24 Nov 2023 09:38:03 +0100, Krzysztof Kozlowski wrote:
+> Use only one and exactly one space around '=' in DTS example.
+> 
+> 
 
---ZAE8VA0RYnei4ICF
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Applied to
 
-On Sat, Nov 25, 2023 at 06:53:05AM +0000, Greg KH wrote:
-> On Fri, Nov 24, 2023 at 10:27:31PM +0100, Luka Panio wrote:
-> > Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> > Signed-off-by: Luka Panio <lukapanio@gmail.com>
-> >=20
-> > ---
-> > v2:
-> > Update commit message
->=20
-> What commit message?  I know I can't take patches without any changelog
-> text, maybe other maintainers are more loose?
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-It had one when I acked it.
+Thanks!
 
---ZAE8VA0RYnei4ICF
-Content-Type: application/pgp-signature; name="signature.asc"
+[1/1] ASoC: dt-bindings: correct white-spaces in examples
+      commit: 29b0b68f25ae6f9454c3e1c31b054595af0a80fc
 
------BEGIN PGP SIGNATURE-----
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZWHVJQAKCRB4tDGHoIJi
-0u6wAQDJyRyc1NwXIbDW0Y1VdQakWopuCXfjrBNh84wm0Zyt7AD/QNDxBjigVIUH
-AoGUgSjTd+6ukjv5UhZUnzuMhVXs3gs=
-=xDZq
------END PGP SIGNATURE-----
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
---ZAE8VA0RYnei4ICF--
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
