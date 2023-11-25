@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 988097F8C0B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 16:28:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B1F67F8C1D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 16:41:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D6F72815EC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 15:28:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CCD32811DB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 15:41:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 413E228E35;
-	Sat, 25 Nov 2023 15:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE6B628E28;
+	Sat, 25 Nov 2023 15:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="isccZI/o"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pYXm/Qsp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D302FF
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 07:28:44 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c50cf61f6dso34318231fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 07:28:44 -0800 (PST)
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 960FD101
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 07:41:26 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-5482df11e73so3772138a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 07:41:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700926122; x=1701530922; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700926885; x=1701531685; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=y+9qVNr/VUwknbnWPngJyNBv+EpK6pBAV+6jnHif/dw=;
-        b=isccZI/osEFyX5nQzOrrtilKnjmM/b+9gCVzcHMmmtcSWDhB7YwlX1B3zow9Vd34cn
-         v7Niy2+9Xs+Xdi+CaCZ0QJC95beWJ+OCB1b/f1mXyTzzNZGDxrfDgcSrpRIKxhk7YWq0
-         6C3yTOzvbnXIAsH4xkL4NM90qS6pZbhahUhIDbC38I4NXawdpbevyUZIlpbv9C9VGzoE
-         vJ1pup3MxLW7CxU+74CZdbFXJwTuvUoPpzcPyvR4kf97wJcK/+riCUhHiRcg4CB122rP
-         MrgdOlncScbVnbqQZKsP4eziK12lNuCc5MfKc23a96zRnC61Mrjbv7S57ssJLXTVdS6F
-         MT3w==
+        bh=DZPM3fc1sKx4Gg4S7hWUKEhn04fj5QKwM/8vpdwmNFU=;
+        b=pYXm/QspGRx6QRVsuDtOx03EY+AjkRqwAfwRQEK5XxP8ALmm+u4vEn3jHHdMvalMbK
+         fwr+h03WXG03hk9I0BWruk4JgaWinRx29nnvA0FvCpmpR1Geo3ylQeF1KTx4C0Lc4qAz
+         JroU3gVnEIXCHmrngcL7Hl+BK1WgSS+0Oxxatl+8nKiKQ1ND92ca6TQwDyr7izQ/FTDk
+         VmwLqu7HM+l4CuSiPAcjR1Ve/Z60CvttaFPyMgiavV4kRfM9cKAMPfXLYiibFAPM6y8z
+         8JCCnCifHT8gsiRn/S0X2BlmPWbIO9Bi5ng7SMay/3mB7wwmNOKjU1QN3jWVHvJj9E72
+         WTnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700926122; x=1701530922;
+        d=1e100.net; s=20230601; t=1700926885; x=1701531685;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y+9qVNr/VUwknbnWPngJyNBv+EpK6pBAV+6jnHif/dw=;
-        b=U8tXll5XYBVp3H8XFC3oMwWS8y+gbPvysuFL95yu9bXL1jdhoRC74uERdyFcn6joNN
-         /u4C+n8WuBLlNa0mcV7O89ALP/vlYG52wL+1xSP1Whv3vcZ+bfRbnnxgdV/nAI5yxBd2
-         qcJrgXFfKurdICQOtzsYt5dULPnF1wKhOnnUudUE3M3DuhNzPgvqgAUzGKB9PE5qtTnf
-         bCV30bzq6YTEC+JGeww92qenSIAXWKpxD3kc/d54tN2w38BPRPc/PkqnxYdO9Rq0dYWZ
-         D1zbhzhRBMJXPIE0Zb7TL1LLhR6dEikVu97WvNJvMoyGZLoy8ezSEaly+MBil5BJBrjq
-         jzdA==
-X-Gm-Message-State: AOJu0YxBZgnWtFGNA8Hj1R0yGhZNmBynC10jWrwqACzB89pjOiMsSGSm
-	pid1XguKnbOSkhup+UsLsibCIw==
-X-Google-Smtp-Source: AGHT+IFPbgtWDAGY08ECUdPqlroywV9S07BWnQCqgomommRXM48zqKRNXDzARmhlR7L+2P8Diin2zA==
-X-Received: by 2002:a2e:2e19:0:b0:2b9:ee3e:2412 with SMTP id u25-20020a2e2e19000000b002b9ee3e2412mr4828741lju.22.1700926122424;
-        Sat, 25 Nov 2023 07:28:42 -0800 (PST)
+        bh=DZPM3fc1sKx4Gg4S7hWUKEhn04fj5QKwM/8vpdwmNFU=;
+        b=q00pZ2cGuOAOIsyid33xZ+9xEDuaCIRRHeKH79LdzyRyrO4WR6PdqfCpsjrZ0DEh7q
+         3XPKXLigzx0rUcKJ2A9Fsfdf6Cpepkur1u12aIqyquFLvFRtBRRX18t3dKV5dWnKx1RJ
+         4cNGqRx7wpwQ2wuCgCgUBhO1lflNiZo7gr51DUw9CfJ+vHSjIaYUgGyQHLp3pidmxb8F
+         l18axPdSelvU4v4Dfzjk8E2wFBlMZ74mwnIrDqNA0E+6hHlWo//huohGbgztAuVDVRaz
+         lEJpV/WaigRZ8Y/ioF8AYDdB+ySI2KwpWx6/PlPXEY1/BgQ1twGa9vm1u9q6wNCV5Hon
+         O+Nw==
+X-Gm-Message-State: AOJu0Yx0+gkaUtcjuBQ1DhKcT9sGQ628lxNjGHaXR1FpQwsq1U/ZGD4E
+	E1ZVXrjzJli71jiNQ3GJ+Heq1w==
+X-Google-Smtp-Source: AGHT+IGv0MEH8sNlUhtqfKhYJ9Upqi2F+eqUc2Kl8ESIWnUn9KzDFJ0am9U2dyiRdjKXNzSoe+0JMA==
+X-Received: by 2002:a50:aac3:0:b0:544:a153:cd19 with SMTP id r3-20020a50aac3000000b00544a153cd19mr3594225edc.41.1700926884918;
+        Sat, 25 Nov 2023 07:41:24 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id dk12-20020a170906f0cc00b00a0c8cc6fd75sm514133ejb.126.2023.11.25.07.28.41
+        by smtp.gmail.com with ESMTPSA id j26-20020aa7ca5a000000b00548aeeb1a9esm3148429edt.89.2023.11.25.07.41.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 07:28:42 -0800 (PST)
-Message-ID: <36316a86-4ac9-4f4e-a01e-15792a8d71be@linaro.org>
-Date: Sat, 25 Nov 2023 16:28:39 +0100
+        Sat, 25 Nov 2023 07:41:24 -0800 (PST)
+Message-ID: <1a3d840d-50d3-474f-89a6-e36a1cb8f5de@linaro.org>
+Date: Sat, 25 Nov 2023 16:41:22 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +62,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: qrb4210-rb2: Enable bluetooth
+Subject: Re: [PATCH v6 2/2] irqchip: irq-qcom-mpm: Support passing a slice of
+ SRAM as reg space
 Content-Language: en-US
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <maz@kernel.org>,
  Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
+ Shawn Guo <shawn.guo@linaro.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231120-topic-rb2_bt-v1-0-509db2e28e70@linaro.org>
- <20231120-topic-rb2_bt-v1-2-509db2e28e70@linaro.org>
- <d8cd02e7-7e85-4b75-b48c-e9544d03c197@linaro.org>
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20230328-topic-msgram_mpm-v6-0-682e4855b7e2@linaro.org>
+ <20230328-topic-msgram_mpm-v6-2-682e4855b7e2@linaro.org>
+ <44a2b30a-7f8c-44a9-8a74-b09fee2b61b7@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,67 +113,78 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <d8cd02e7-7e85-4b75-b48c-e9544d03c197@linaro.org>
+In-Reply-To: <44a2b30a-7f8c-44a9-8a74-b09fee2b61b7@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 25.11.2023 16:04, Bryan O'Donoghue wrote:
-> On 25/11/2023 13:04, Konrad Dybcio wrote:
->> Enable the QCA bluetooth on RB2. It identifies like the following:
+On 25.11.2023 16:17, Bryan O'Donoghue wrote:
+> On 25/11/2023 14:27, Konrad Dybcio wrote:
+>> The MPM hardware is accessible to us from the ARM CPUs through a shared
+>> memory region (RPM MSG RAM) that's also concurrently accessed by other
+>> kinds of cores on the system (like modem, ADSP etc.). Modeling this
+>> relation in a (somewhat) sane manner in the device tree basically
+>> requires us to either present the MPM as a child of said memory region
+>> (which makes little sense, as a mapped memory carveout is not a bus),
+>> define nodes which bleed their register spaces into one another, or
+>> passing their slice of the MSG RAM through some kind of a property.
 >>
->> Bluetooth: hci0: QCA Product ID   :0x0000000a
->> Bluetooth: hci0: QCA SOC Version  :0x40020150
->> Bluetooth: hci0: QCA ROM Version  :0x00000201
->> Bluetooth: hci0: QCA Patch Version:0x00000001
->> Bluetooth: hci0: QCA controller version 0x01500201
+>> Go with the third option and add a way to map a region passed through
+>> the "qcom,rpm-msg-ram" property as our register space.
 >>
+>> The current way of using 'reg' is preserved for ABI reasons.
+>>
+>> Acked-by: Shawn Guo <shawn.guo@linaro.org>
 >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 >> ---
-[...]
-
->> +
->> +        rx-pins {
->> +            pins = "gpio11";
->> +            function = "gpio";
->> +            bias-pull-up;
->> +        };
->> +    };
->> +
+>>   drivers/irqchip/irq-qcom-mpm.c | 21 ++++++++++++++++++---
+>>   1 file changed, 18 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
+>> index 7124565234a5..7115e3056aa5 100644
+>> --- a/drivers/irqchip/irq-qcom-mpm.c
+>> +++ b/drivers/irqchip/irq-qcom-mpm.c
+>> @@ -14,6 +14,7 @@
+>>   #include <linux/mailbox_client.h>
+>>   #include <linux/module.h>
+>>   #include <linux/of.h>
+>> +#include <linux/of_address.h>
+>>   #include <linux/of_platform.h>
+>>   #include <linux/platform_device.h>
+>>   #include <linux/pm_domain.h>
+>> @@ -322,8 +323,10 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
+>>       struct device *dev = &pdev->dev;
+>>       struct irq_domain *parent_domain;
+>>       struct generic_pm_domain *genpd;
+>> +    struct device_node *msgram_np;
+>>       struct qcom_mpm_priv *priv;
+>>       unsigned int pin_cnt;
+>> +    struct resource res;
+>>       int i, irq;
+>>       int ret;
+>>   @@ -374,9 +377,21 @@ static int qcom_mpm_init(struct device_node *np, struct device_node *parent)
+>>         raw_spin_lock_init(&priv->lock);
+>>   -    priv->base = devm_platform_ioremap_resource(pdev, 0);
+>> -    if (IS_ERR(priv->base))
+>> -        return PTR_ERR(priv->base);
+>> +    /* If we have a handle to an RPM message ram partition, use it. */
+>> +    msgram_np = of_parse_phandle(np, "qcom,rpm-msg-ram", 0);
+>> +    if (msgram_np) {
+>> +        ret = of_address_to_resource(msgram_np, 0, &res);
 > 
-> My reading of downstream has all of these pins drive-strength = <2>.
-Right, I'll fix it up.
-
+> You are capturing the return value but doing nothing with it.
+Oops you're right
 > 
+> One of
 > 
->>       lt9611_rst_pin: lt9611-rst-state {
->>           pins = "gpio41";
->>           function = "gpio";
->> @@ -508,6 +567,26 @@ sdc2_card_det_n: sd-card-det-n-state {
->>       };
->>   };
->>   +&uart3 {
->> +    interrupts-extended = <&intc GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
->> +                  <&tlmm 11 IRQ_TYPE_LEVEL_HIGH>;
->> +    pinctrl-0 = <&uart3_default>;
->> +    pinctrl-1 = <&uart3_sleep>;
->> +    pinctrl-names = "default", "sleep";
->> +    status = "okay";
->> +
->> +    bluetooth {
->> +        compatible = "qcom,wcn3988-bt";
->> +
->> +        vddio-supply = <&vreg_l9a_1p8>;
->> +        vddxo-supply = <&vreg_l16a_1p3>;
->> +        vddrf-supply = <&vreg_l17a_1p3>;
->> +        vddch0-supply = <&vreg_l23a_3p3>;
->> +        enable-gpios = <&tlmm 87 GPIO_ACTIVE_HIGH>;
->> +        max-speed = <3200000>;
->> +    };
->> +};
+> if (ret) {
+>     of_node_put(msgram_np);
+>     return ret;
+> }
 > 
-> Does firmware name not matter here ?
-The driver figures it out, see
-drivers/bluetooth/btqca.c : qca_uart_setup()
+> or just drop the ret =
+> 
+> if you are sure of_address_to_resource() can never return an error for your use-case.
+Never say never!
 
 Konrad
 
