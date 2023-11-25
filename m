@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 349747F8FAF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 23:16:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 581237F8FB5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 23:19:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1F9F2812BB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 22:16:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 04FEA1F20CE1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 22:19:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27C0130FBE;
-	Sat, 25 Nov 2023 22:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AC0130673;
+	Sat, 25 Nov 2023 22:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VfuP0yvr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v+7fEEZ4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 126FC118
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 14:16:44 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-a00cbb83c80so423905466b.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 14:16:43 -0800 (PST)
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1FE5C5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 14:19:45 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50aabfa1b75so4313603e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 14:19:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700950602; x=1701555402; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700950784; x=1701555584; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=F5UmuoyqLYU22WbRQLHQv9DdVyEXzJd3jXlUkopZXFo=;
-        b=VfuP0yvrBLJYFCAMxgnco4td7hSucha4Oz7AwKgD5Vk6I+SdWNUGGItf4KPx+H2Q8I
-         YHB1g0uB3IcTNuZ/yuBYf5fc4l5kd+R286nIIb5StPG8AVmw4KeQbR8XetJn0m80Occa
-         GtEEGffp+DNHy/1ZAcT6HiMJ14wUFJ47BFcDgpYLVyeUVFMmB+m6t4NqYFvogR7Z1DIC
-         hfZlBzWv82QiTvfoamJDl1zo3aP14+e7NfHeCTRFOD1XXvJQZlWtphnPdWsOX+Vl2jra
-         IZjVgUOpGtVaaVbsWEpccve+wKY7ToQg9+eRLqU2+0xHG9ARtn5K7PBZ0gJANTH/7TCU
-         pGIg==
+        bh=q6SbKdQ7lQXf9800oYBDr332T2f2/hW1NVqkx7+W38M=;
+        b=v+7fEEZ4yyetXadqibLeW5WG0hFgRCy0drvjuv4IXJWwRB8ae6bjk+ArOfDAtkjF+N
+         LS4xhQUR+RC2GLSUAyNMu9mE3AracZQDVKgqenqTdOMZtWkwKkR9+biY5ZRNbLtZKkyP
+         zqhDhlHQIpIhgSz/lBmfkKEuu6P+RaIOgzw9Igifidh+ouxb+w8IkiR0gm6xh8UkS2Fd
+         ykCJrqA5JB4FB3lS+ddJJhK9jsefJ9Vgx1LD8p4rZgIlTv+T78OkSu985P/Y7+iiWv/M
+         WWJSHPqZ0DnLX7POf7F4XNGnswYTmyyy+J9/YKewAR6U9Jk97NruEycbaRbygtTW4Y4e
+         YJUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700950602; x=1701555402;
+        d=1e100.net; s=20230601; t=1700950784; x=1701555584;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F5UmuoyqLYU22WbRQLHQv9DdVyEXzJd3jXlUkopZXFo=;
-        b=Cv266ITWVfrxFSMub6QucZb8SgksVCu7AZwdPW9mVc1irW5pt5wGAb3zwB2sero32o
-         c3l77NFqiOt96dHRzTD3OS8Hux/EDP7DAjIzC/ibNbBwsQ2BTUxRypuJGpjd7k7fboIS
-         pnepgDsH6gC/aMA8CM1qxSjXianGwFtCb8JzYeS3r3BYj82dLBKYvUsqYWRvWmi88XvF
-         K9vUEdDsS13fbZKRmbS1QAlXjHphWzMFCuZZK5tH2GzfIfstrn+W7grZ9Z4o3hjYEFcb
-         p5d7JniNohMPIS+ri7G/2PXy4K79PJD2B57/Lu9D20Ew7uQ7+yah26dgrlfMIMmA2try
-         ajZQ==
-X-Gm-Message-State: AOJu0YwWk1pLDqh87Dg8rEOUweF0nklce1kvmtnuhQJNKY9bFqiCvDle
-	gewOfQLGUV9XaGehhn67YofqjQ==
-X-Google-Smtp-Source: AGHT+IEnIXW43aUJS2Tl7xKtLN87uxlxMCj4jhiu+X8wQZaLCC4VkGQ9WIC3iVHewMOEdDarrEnD0g==
-X-Received: by 2002:a17:906:2da:b0:9e4:6500:7540 with SMTP id 26-20020a17090602da00b009e465007540mr5200894ejk.58.1700950601908;
-        Sat, 25 Nov 2023 14:16:41 -0800 (PST)
+        bh=q6SbKdQ7lQXf9800oYBDr332T2f2/hW1NVqkx7+W38M=;
+        b=hwediB7m6uGYJz5qBMEwqyjRWnipfpCwxBLFwnVguTbnsWu65lotepUjxdxjdH4XtB
+         HIyirgR1X3+zxZDsCCp92Re5/VUiwbCq0gXjd36fNbKm6E7ZNtRPM9V9Rate05+9+/Lj
+         1bZBjGihKOpMJWNUxA3F7bHxjUB7QToXrM6lo8/f3N+Qi9f0HgH26I6r6xewF5+5GWlw
+         Iyi76fvuCDO3zp0EdzScTB2VacK5Q0jmOlBrXl5Sbnkb7K7bBRDKK3aeMsvAhmzAllGV
+         wikt+2I62rEdxFIRgzFW3TJ4GDjvAcJZW3Qma6AExmCnmVpUN4s+MYhtKwYEpCocqMJC
+         RzSw==
+X-Gm-Message-State: AOJu0Yy4ibJjU3rI1hO1fsUrff71oFZqmbBDJQV/A7YOwW5G4EEiYnW+
+	R4faEAhzVQXkBHNHMtOKdm+R7Q==
+X-Google-Smtp-Source: AGHT+IHB4Ys5BBphGeNYSrirD0ZD/Br3ORRKCYPNfcsXTRgYRuytxPTCZDF8V/vxxlgYwR8m8BmhNA==
+X-Received: by 2002:ac2:4e08:0:b0:50b:ab5e:2083 with SMTP id e8-20020ac24e08000000b0050bab5e2083mr1490504lfr.21.1700950783900;
+        Sat, 25 Nov 2023 14:19:43 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id cf16-20020a170906b2d000b0099bd7b26639sm3928731ejb.6.2023.11.25.14.16.40
+        by smtp.gmail.com with ESMTPSA id r12-20020aa7cb8c000000b0053deb97e8e6sm3461236edt.28.2023.11.25.14.19.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 14:16:41 -0800 (PST)
-Message-ID: <2bb681c7-8a93-4010-b473-887d68c6a5d2@linaro.org>
-Date: Sat, 25 Nov 2023 23:16:39 +0100
+        Sat, 25 Nov 2023 14:19:43 -0800 (PST)
+Message-ID: <fc91cbb2-2c80-4467-873b-24d5ed606dd9@linaro.org>
+Date: Sat, 25 Nov 2023 23:19:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +62,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add SM6115 interconnect provider
- driver
+Subject: Re: [PATCH v2 1/2] drm/msm/a6xx: Add missing BIT(7) to
+ REG_A6XX_UCHE_CLIENT_PF
 Content-Language: en-US
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- Konrad Dybcio <konradybcio@kernel.org>
-References: <20231125-topic-6115icc-v1-0-fa51c0b556c9@linaro.org>
- <20231125-topic-6115icc-v1-2-fa51c0b556c9@linaro.org>
+To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Danylo Piliaiev <dpiliaiev@igalia.com>, Rob Clark <robdclark@chromium.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Akhil P Oommen <quic_akhilpo@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20231121162137.60488-1-robdclark@gmail.com>
+ <20231125191155.5375-1-robdclark@gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,40 +113,23 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231125-topic-6115icc-v1-2-fa51c0b556c9@linaro.org>
+In-Reply-To: <20231125191155.5375-1-robdclark@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25.11.2023 16:59, Konrad Dybcio wrote:
-> Add a driver for managing NoC providers on SM6115.
+On 25.11.2023 20:11, Rob Clark wrote:
+> From: Danylo Piliaiev <dpiliaiev@igalia.com>
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Downstream always set BIT(7)
+> 
+> Signed-off-by: Danylo Piliaiev <dpiliaiev@igalia.com>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
-The following diff is missing:
+FWIW this was only introduced in:
 
+https://git.codelinaro.org/clo/la/platform/vendor/qcom/opensource/graphics-kernel/-/commit/704575ac510a6de3ae7813a851c942d19fbcb20d
 
-----o<----
-
-diff --git a/drivers/interconnect/qcom/sm6115.c b/drivers/interconnect/qcom/sm6115.c
-index d7600dfe56c0..5b21566d64a5 100644
---- a/drivers/interconnect/qcom/sm6115.c
-+++ b/drivers/interconnect/qcom/sm6115.c
-@@ -609,8 +609,8 @@ static struct qcom_icc_node xm_usb3_0 = {
- static struct qcom_icc_node ebi = {
-        .name = "ebi",
-        .id = SM6115_SLAVE_EBI_CH0,
--       .channels = 1,
--       .buswidth = 8,
-+       .channels = 2,
-+       .buswidth = 4,
-        .mas_rpm_id = -1,
-        .slv_rpm_id = 0,
- };
-
-----o<----
-
-Georgi, if everything else is fine, could you please squash it while
-applying? Otherwise I'll just amend it in v2.
+(around msm-5.15 / sm8550)
 
 Konrad
 
