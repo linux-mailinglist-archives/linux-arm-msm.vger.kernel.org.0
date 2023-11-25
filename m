@@ -1,144 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-1955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0CE77F8ABC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 13:25:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 680F57F8ADA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 13:50:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33F61B2111E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:25:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D87D1C20AE7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:50:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 184D1FBF6;
-	Sat, 25 Nov 2023 12:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B659CEAFA;
+	Sat, 25 Nov 2023 12:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="b3JDi/QH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AgLGP1CU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 162CBBB;
-	Sat, 25 Nov 2023 04:25:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-	t=1700915123; bh=/neb3ai8t+JZrai5HMokEXT4feRyamGmrHQtOs/DwgY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b3JDi/QHwcg4Y2Gx9dp9m8udMhODcQr0cSVQQ4mfzARcHgUVwIyHP8dDL0uuVnNvC
-	 cnB8MFiKKDYpPQApdqCko/NBmsLOipd5yNgAZyywRw8lqGDRAXX/tnjycOTV2s7ynU
-	 A5xGSRLZKUahHpD7z2gQKIZUDYl0+MjSvCa31xyw=
-From: Luca Weiss <luca@z3ntu.xyz>
-To: Loic Poulain <loic.poulain@linaro.org>,
- Stephan Gerhold <stephan@gerhold.net>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
- linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org
-Subject:
- Re: [PATCH 1/4] dt-bindings: remoteproc: qcom: wcnss: Add WCN3680B compatible
-Date: Sat, 25 Nov 2023 13:25:22 +0100
-Message-ID: <1868698.tdWV9SEqCh@z3ntu.xyz>
-In-Reply-To: <ZS1MTAHq6GLW6RAK@gerhold.net>
-References:
- <20231015-fp3-wcnss-v1-0-1b311335e931@z3ntu.xyz>
- <CAMZdPi-S2_UQO-rD38-thwta-YgH3W78Ecd1Du7Q_US=J7k0ew@mail.gmail.com>
- <ZS1MTAHq6GLW6RAK@gerhold.net>
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05280A8
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:49:57 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-54af1daf6a9so2795200a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:49:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1700916595; x=1701521395; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gpAtV0FS3gS4I5s7lG5X3wgMGcSVSh9Gs8Iqyw/MnO8=;
+        b=AgLGP1CUP6EjPA9rrw2Lu/PA1VN4d7PpyT8GT0aGNSgQHsR0QnrJFHO8JB88b0XaN7
+         hFBKBm+DKr0HfX3K3s1TvGMFc0kknHa6K9bkX8GACbfp4HrOTicEnFqKQ7V9JS77pKK0
+         dCBj8QFFKomtMgXEmEA2UlWU+ophjP3rlEZM9zO6m4gYHGqncyVN2fqfihQEj+YFXqQl
+         nYnpRboKQEqA39XOfaLPARtOKdh0eW4YA/28V4tBFUSO/SRjzRasUH5mATKXMDBCNen3
+         kSyWjBAmKhko8l8BJRJMfR9+Q5bK74WNEGDEYTqSdqPVgOLMd7YkjVgRM9osTu/0X9Q7
+         BBLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700916595; x=1701521395;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gpAtV0FS3gS4I5s7lG5X3wgMGcSVSh9Gs8Iqyw/MnO8=;
+        b=an52/KerGUoKlDKp3zGFByscBISl2UoH7NbUYb75jiAOqxaQW6nhovKZKh5aUkYfJW
+         EN4rtqOyYRv0pM7hDpDG5bGPB8tEKXL8hBsguK1MUfa2S/B9qCR/YxNNVa4oIumvzgZK
+         rMVrZn5SAVNigE+1jj8tEnkDIHNKY8c54yyTjZMLIZJS9uXFu0bgKHly7TqqEanwSIk6
+         jUPm8N6TF2uX6KCti4457rSIAGZspy+VUZPhjmUtJVQbo+pfw/snfC+kI9QMuh3iQ9Nq
+         n4TRxpU0UIG9d5J2y+VUQaLCQaMqYaWYpXUNNzmcIGEbf2u/Xyc2kL0JXj/GzONFyP/5
+         /0HQ==
+X-Gm-Message-State: AOJu0Yw2o9Zu6IlGWnZw7B0hGT1NDWPSgDUtDljKgwpB+aAuRHcMlM0I
+	lRCmJ/NptH4z92iwRff/Y7o0pw==
+X-Google-Smtp-Source: AGHT+IH25NLMfB6zeP8SLzWprul/iFntBgIHVCwAHigzP+QC8ru563i6kTL6sxSHOftO02DnXDeY2g==
+X-Received: by 2002:aa7:c608:0:b0:54a:f1db:c2b6 with SMTP id h8-20020aa7c608000000b0054af1dbc2b6mr4675877edq.20.1700916595502;
+        Sat, 25 Nov 2023 04:49:55 -0800 (PST)
+Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
+        by smtp.gmail.com with ESMTPSA id s25-20020a05640217d900b0054b314f8ab1sm240307edy.50.2023.11.25.04.49.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 25 Nov 2023 04:49:55 -0800 (PST)
+Message-ID: <fd075d7b-1cac-4964-bd97-8f481a385bd7@linaro.org>
+Date: Sat, 25 Nov 2023 13:49:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 7/8] media: qcom: camss: Flag CSID-lites to support
+ more CSIDs
+Content-Language: en-US
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, hverkuil-cisco@xs4all.nl,
+ laurent.pinchart@ideasonboard.com, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, matti.lehtimaki@gmail.com,
+ quic_grosikop@quicinc.com
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231123-b4-camss-named-power-domains-v6-0-3ec2fd9e8e36@linaro.org>
+ <20231123-b4-camss-named-power-domains-v6-7-3ec2fd9e8e36@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231123-b4-camss-named-power-domains-v6-7-3ec2fd9e8e36@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Montag, 16. Oktober 2023 16:44:28 CET Stephan Gerhold wrote:
-> On Mon, Oct 16, 2023 at 03:16:14PM +0200, Loic Poulain wrote:
-> > On Mon, 16 Oct 2023 at 07:35, Krzysztof Kozlowski
-> > 
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> > > On 15/10/2023 22:03, Luca Weiss wrote:
-> > > > Add a compatible for the iris subnode in the WCNSS PIL.
-> > > > 
-> > > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > > ---
-> > > > 
-> > > >  Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml | 1
-> > > >  +
-> > > >  1 file changed, 1 insertion(+)
-> > > > 
-> > > > diff --git
-> > > > a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > > b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > > index 45eb42bd3c2c..0e5e0b7a0610 100644
-> > > > --- a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > > 
-> > > > @@ -111,6 +111,7 @@ properties:
-> > > >            - qcom,wcn3660
-> > > >            - qcom,wcn3660b
-> > > >            - qcom,wcn3680
-> > > > 
-> > > > +          - qcom,wcn3680b
-> > > 
-> > > Looks like this should be made as compatible with qcom,wcn3680 (so with
-> > > fallback).
-> > 
-> > Yes, agree, let's do a regular fallback as there is nothing 'b'
-> > specific in the driver:
-> > `compatible = "qcom,wcn3680b", "qcom,wcn3680";`
-> > 
-> > And yes, we should also have done that for qcom,wcn3660b...
+On 23.11.2023 18:03, Bryan O'Donoghue wrote:
+> From: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 > 
-> I don't think this would have worked properly for qcom,wcn3660b:
+> Some platforms such as SC7280 have 3 CSIDs and 2 CSID-lites but current
+> code has hardcoded 2 as the maximum number of CSIDs. Remove the hardcoded
+> maximum number of VFEs to handle all possible combinations of CSIDs and
+> CSID-lites.
 > 
->  - It's not compatible with "qcom,wcn3660", because they have different
->    regulator voltage requirements. wcn3660(a?) needs vddpa with
->    2.9-3.0V, but wcn3660b needs 3.3V. That's why wcn3660b uses the
->    wcn3680_data in qcom_wcnss.iris.c. Otherwise if you would run an
->    older kernel that knows "qcom,wcn3660" but not "qcom,wcn3660b" it
->    would apply the wrong voltage.
-> 
->  - It's not compatible with "qcom,wcn3680" either because that is used
->    as indication if 802.11ac is supported (wcn3660b doesn't).
-> 
-> The main question here is: What does the current "qcom,wcn3680"
-> compatible actually represent? It's defined with vddpa = 3.3V in the
-> driver, which would suggest that:
-> 
->  1. It's actually meant to represent WCN3680B, which needs 3.3V vddpa
->     like WCN3660B, or
-> 
->  2. WCN3680(A?) has different requirements than WCN3660(A?) and also
->     needs 3.3V vddpa. But then what is the difference between
->     WCN3680(A?) and WCN3680B? Is there even a variant without ...B?
-> 
-> There is public documentation for WCN3660B and WCN3680B but the non-B
-> variants are shrouded in mystery.
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Hi Stephan (and everyone),
-
-Do you have a suggestion how to move this patchset forward? Is the fallback 
-compatible that was suggested okay for the wcn3680b situation?
-
-  compatible = "qcom,wcn3680b", "qcom,wcn3680";
-
-If so, I'll make v2 with that implemented.
-
-Regards
-Luca
-
-> 
-> Thanks,
-> Stephan
-
-
-
-
+Konrad
 
