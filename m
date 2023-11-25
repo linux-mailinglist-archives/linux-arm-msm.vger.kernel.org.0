@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1940-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0C547F8A52
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:46:21 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE40C7F8A5F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:55:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83413B21057
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 11:46:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90BDC280AC3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 11:55:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A76DF5B;
-	Sat, 25 Nov 2023 11:46:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9185DF66;
+	Sat, 25 Nov 2023 11:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CzV1ks7W"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bbmw9pH5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2AF9171D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:46:09 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50ba73196b1so1149372e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:46:09 -0800 (PST)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F8410E2
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:55:11 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50baa2a278bso423601e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 03:55:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700912768; x=1701517568; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1700913310; x=1701518110; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=U8XXLLLt+yMr+MagO6J18KB+cdnCDtrWIM2r5muvOtY=;
-        b=CzV1ks7WiwehgwSqv87on98kFYZ+jqycNDxQH5jTR5nyxieZS+cHyseCsJH875YwnD
-         E+FYJ+fsyNT6EANcTZqKuri9Jr+u7VJJHyRWpQ6dYKpg4+ux/EWnz7fdfqTkrnuKtNBC
-         mXBah7XbTzpZpdzDOdw7NLnHX/U1hKLzbQ36bUB16vDadk2K9C6tZRovHQ6UtfgUdVyg
-         ZTCFhLAPkItQOacAGGyE6mtfz/jWfJmfDVSalagFhlt0U6h51DqFdTiiM2rZm+Dkrikc
-         EI4QKcdb5vTyD2jQ73q+2NeTsFiE6uvXOPAQs1b7BWJdFu6jXfuvoPO1JveYNJ9/Kz+V
-         mfaA==
+        bh=VjoAQdrJlyucZgCB5XwzbgMabrtPSPnwCcmkjxg9epU=;
+        b=Bbmw9pH5nZZzTea+vjRB6fF6fvqoJUdmA/g4T9w1OOYuUeRyf/El9L2mdm4/M8GAis
+         mtPdNAk9O856M04VuwFUkPXPSrqpSXCnWj3zPtVtgVmerNMEr07RIiJ6DMRFu4IbN6xe
+         oKF7BNmomzrjDtMSOyzirzl0qofsEEwR1eq55OI4imuiay6PNUWO+B45LBUY2f27nLDN
+         eUCgI/TkJMwk2sbA1lwDjOLe7xM3c1zkDJzIo/pQW3qbPogOfJhGb0kjCbJp0Q1r5O7D
+         VGIvDecg6ugskSSfhiVIVZ0qo6MIejxLytRKCcEBb7cQki6H4bBrr4xmvokppm0arDaR
+         Nb5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700912768; x=1701517568;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1700913310; x=1701518110;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U8XXLLLt+yMr+MagO6J18KB+cdnCDtrWIM2r5muvOtY=;
-        b=gmPWz1TIoQnmJQfIvcf7QAZdykLYmCwsRPzkiQvRXGy7gzrHlsIioCeDRIGYm9DcW0
-         1KOTm3g1Btrk/ahOctJ5YUZvMvgB3aK9fPKJFQX9fhKEhFdMHx5IMTyVbFfdQOwNAnKD
-         ZlJZHKFA9v2kj1/aBYp9p6dMb8GqYKC084kdRvjbRgFT8whuB0sunNrTl+DnXnMGjgZK
-         MSgZitSHlzxZfZNCi3J+A7K4K1asl6OAlwx7xoh74WvOpQwK9r3BNEPZIaJbvQl6Uk2G
-         h29ws7ueEKHeRtEHqH/yF3g8fcTLzvDUpnn4MrahXIiLmNENgyWafaVdsA1pLaXMJVFX
-         27mg==
-X-Gm-Message-State: AOJu0Yz8GUe6FfMGlugefkLJfLZKOzZxlKwQeF0yl4tPoWAJRTbgw5Xh
-	BSev60QK4IcU8X0hno1Y1fMF1w==
-X-Google-Smtp-Source: AGHT+IFrvONgH7xLL7WDzK+Uwu9kTBTEWKxgS/rS0EZkjM20J9bT66aG3CDn83780nqQQBgQ2BuEpQ==
-X-Received: by 2002:ac2:5475:0:b0:50b:a816:cc09 with SMTP id e21-20020ac25475000000b0050ba816cc09mr1294602lfn.34.1700912767995;
-        Sat, 25 Nov 2023 03:46:07 -0800 (PST)
+        bh=VjoAQdrJlyucZgCB5XwzbgMabrtPSPnwCcmkjxg9epU=;
+        b=Sa1KT96o3ZFCYpoI578afkp77NyjgArc/ghsjpJK2C2MiZa5/wVvsAvQZNihdEQOb9
+         lQEpjLWuCqf1Y2HYO/Et4IJnrPNplxeWgKjU+P0rCU34Zn6ysV2E7zXFEztTb6FJEYAi
+         0r3ldnDjMJCSphMTpcoI+wjXsJbXBupiM9n72N7eiqRpiqEwSZKtYJ4wOdf3KUl8AAvm
+         w+71Pni8HdSC0QsJ9D215jm3YFvnxRMzTJQ4Qw0jZASByq6hoBv5d5epB201qy/rXAXt
+         tG4fXJgeUsZKcPwZ516qHpcJH3Ckqa4i/WD6ynX/tFSDoJ0PYOjk6KOUKrO2olvbYoXi
+         Q9Gw==
+X-Gm-Message-State: AOJu0Yy5IWKXbCv2tbnR29D7ahBSB05aN4e6bc4GRcXBOppvgHbcEuCq
+	Js1gfZ/b542euqSDRfH5rrQYVw==
+X-Google-Smtp-Source: AGHT+IEpfEUF2H5QKFf1d+Y7GHXr1irfgb4HzPwZHkRk2yxzLqSU/f+XmRCfwxuxa/YfvKLZt9GCWA==
+X-Received: by 2002:a05:6512:3a85:b0:50b:a6c7:e8b0 with SMTP id q5-20020a0565123a8500b0050ba6c7e8b0mr1102022lfu.26.1700913309934;
+        Sat, 25 Nov 2023 03:55:09 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id w5-20020a19c505000000b00507a1df9224sm802131lfe.289.2023.11.25.03.46.06
+        by smtp.gmail.com with ESMTPSA id a18-20020a170906191200b009e6cedc8bf5sm3348915eje.29.2023.11.25.03.55.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 03:46:07 -0800 (PST)
-Message-ID: <f7b98eab-c68a-4527-abb7-ff335ea7f814@linaro.org>
-Date: Sat, 25 Nov 2023 12:46:06 +0100
+        Sat, 25 Nov 2023 03:55:09 -0800 (PST)
+Message-ID: <a7725504-89fd-4f62-b8d0-6ec863bd059a@linaro.org>
+Date: Sat, 25 Nov 2023 12:55:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,16 +62,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: minor whitespace cleanup around '='
+Subject: Re: [PATCH 4/5] ASoC: codecs: Add WCD939x Soundwire slave driver
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231124095049.58618-1-krzysztof.kozlowski@linaro.org>
- <20231124095049.58618-2-krzysztof.kozlowski@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-0-21d4ad9276de@linaro.org>
+ <20231123-topic-sm8650-upstream-wcd939x-codec-v1-4-21d4ad9276de@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -108,17 +113,113 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231124095049.58618-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-4-21d4ad9276de@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24.11.2023 10:50, Krzysztof Kozlowski wrote:
-> The DTS code coding style expects exactly one space before and after '='
-> sign.
+On 23.11.2023 15:49, Neil Armstrong wrote:
+> Add Soundwire Slave driver for the WCD9390/WCD9395 Audio Codec.
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> The WCD9390/WCD9395 Soundwire Slaves will be used by the
+> main WCD9390/WCD9395 Audio Codec driver to access registers
+> and configure Soundwire RX and TX ports.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+[...]
+
+
+> +static struct wcd939x_sdw_ch_info wcd939x_sdw_tx_ch_info[] = {
+> +	WCD_SDW_CH(WCD939X_ADC1, WCD939X_ADC_1_4_PORT, BIT(0)),
+> +	WCD_SDW_CH(WCD939X_ADC2, WCD939X_ADC_1_4_PORT, BIT(1)),
+> +	WCD_SDW_CH(WCD939X_ADC3, WCD939X_ADC_1_4_PORT, BIT(2)),
+> +	WCD_SDW_CH(WCD939X_ADC4, WCD939X_ADC_1_4_PORT, BIT(3)),
+> +	// TOFIX support ADC3/4 & DMIC0/1 on port 2
+Well, fix it or drop it :D
+
+> +	//WCD_SDW_CH(WCD939X_ADC3, WCD939X_ADC_DMIC_1_2_PORT, BIT(0)),
+> +	//WCD_SDW_CH(WCD939X_ADC4, WCD939X_ADC_DMIC_1_2_PORT, BIT(1)),
+> +	//WCD_SDW_CH(WCD939X_DMIC0, WCD939X_ADC_DMIC_1_2_PORT, BIT(2)),
+> +	//WCD_SDW_CH(WCD939X_DMIC1, WCD939X_ADC_DMIC_1_2_PORT, BIT(3)),
+> +	WCD_SDW_CH(WCD939X_DMIC0, WCD939X_DMIC_0_3_MBHC_PORT, BIT(0)),
+> +	WCD_SDW_CH(WCD939X_DMIC1, WCD939X_DMIC_0_3_MBHC_PORT, BIT(1)),
+> +	WCD_SDW_CH(WCD939X_MBHC, WCD939X_DMIC_0_3_MBHC_PORT, BIT(2)),
+> +	WCD_SDW_CH(WCD939X_DMIC2, WCD939X_DMIC_0_3_MBHC_PORT, BIT(2)),
+> +	WCD_SDW_CH(WCD939X_DMIC3, WCD939X_DMIC_0_3_MBHC_PORT, BIT(3)),
+> +	WCD_SDW_CH(WCD939X_DMIC4, WCD939X_DMIC_3_7_PORT, BIT(0)),
+> +	WCD_SDW_CH(WCD939X_DMIC5, WCD939X_DMIC_3_7_PORT, BIT(1)),
+> +	WCD_SDW_CH(WCD939X_DMIC6, WCD939X_DMIC_3_7_PORT, BIT(2)),
+> +	WCD_SDW_CH(WCD939X_DMIC7, WCD939X_DMIC_3_7_PORT, BIT(3)),
+> +};
+[...]
+
+> +
+> +int wcd939x_swr_get_current_bank(struct sdw_slave *sdev)
+> +{
+> +	int bank;
+> +
+> +	bank = sdw_read(sdev, SDW_SCP_CTRL);
+> +
+> +	return ((bank & 0x40) ? 1 : 0);
+bool conversion?
+
+Also, 0x40 == BIT(6), can you look up what it means and #define it?
+
+[...]
+
+> +
+> +static int wcd9390_bus_config(struct sdw_slave *slave,
+> +			      struct sdw_bus_params *params)
+> +{
+> +	sdw_write(slave, SWRS_SCP_HOST_CLK_DIV2_CTL_BANK(params->next_bank),
+> +		  0x01);
+similar, BIT(0)
+[...]
+
+> +	{ WCD939X_EAR_STATUS_REG_2, 0x08 },
+> +	{ WCD939X_FLYBACK_NEW_CTRL_2, 0x00 }, //??
+> +	{ WCD939X_FLYBACK_NEW_CTRL_3, 0x00 }, //??
+> +	{ WCD939X_FLYBACK_NEW_CTRL_4, 0x44 }, //??
+drop //s
+[...]
+
+> +static bool wcd939x_volatile_register(struct device *dev, unsigned int reg)
+> +{
+> +	if (reg <= WCD939X_BASE)
+> +		return false;
+Maybe move this check to readonly_register
+> +
+> +	if (wcd939x_readonly_register(dev, reg))
+> +		return true;
+and call readonly for .volatile_reg as well?
+[...]
+
+> +	/**
+> +	 * Port map index starts with 0, however the data port for this codec
+> +	 * are from index 1
+> +	 */
+This is not kerneldoc
+
+> +	if (of_property_read_bool(dev->of_node, "qcom,tx-port-mapping")) {
+> +		wcd->is_tx = true;
+> +		ret = of_property_read_u32_array(dev->of_node,
+> +						 "qcom,tx-port-mapping",
+> +						 &pdev->m_port_map[1],
+> +						 WCD939X_MAX_TX_SWR_PORTS);
+> +	} else {
+> +		ret = of_property_read_u32_array(dev->of_node,
+> +						 "qcom,rx-port-mapping",
+> +						 &pdev->m_port_map[1],
+> +						 WCD939X_MAX_RX_SWR_PORTS);
+> +	}
+This is used in wcd9380 and will be used in wcd9370 when that happens some
+day, maybe it'd be worth to commonize it as qcom_{rx/tx}_portmap_get?
+[...]
+
+> +static const struct sdw_device_id wcd9390_slave_id[] = {
+> +	SDW_SLAVE_ENTRY(0x0217, 0x10e, 0),
+0x10e - WCD9380 or 9385 slave? an inline comment at the end of the line
+would be cool!
 
 Konrad
 
