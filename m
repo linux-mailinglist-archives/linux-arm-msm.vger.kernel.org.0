@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-1949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74EC67F8A95
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 13:10:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F07497F8A98
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 13:11:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 07303B209FB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:10:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8AAA28124A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 12:11:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90B6DF9EA;
-	Sat, 25 Nov 2023 12:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1711539F;
+	Sat, 25 Nov 2023 12:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e6F8Uy9g"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FLMtnGvr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAAE8FB
-	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:10:08 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-a0064353af8so732634466b.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:10:08 -0800 (PST)
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A48C3DD
+	for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:10:59 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-548d60a4d60so3613769a12.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Nov 2023 04:10:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1700914207; x=1701519007; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1700914258; x=1701519058; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0ne3LFIkmsbmi3RgcTltZ5JX2XL/7yv4bhm1K2gnu5s=;
-        b=e6F8Uy9gbn4cuQS4XMt2T67CERRGdZ3v6mAxLsVbxKQ/BVuodyhTHWrHA3aKymLMoo
-         Oayi6Fkpa8Mtc4gNZ1v4YyQlo2xS0njXjRJd69IxtZPwfE3r/Y27eB48A53FVOAHJhOZ
-         X71Ahluxfg4NfEtUdJKe402MOGVlGukWJeTxUb0QJx0toCzD+rnfhqbvnWzalMXV2pj+
-         tkylgGMcZdDV1cQFfPLh9SUEWxgOE77bZ9YxVyUQwYne3k1bGTaDzg3TI+LaRYG08iiE
-         A/S8PjI1kp8e0UWwlyN+5WQqeB1XyBqSy9mJsKljTYGF4X5iMrufWbhHjbe65G2GYo86
-         dtow==
+        bh=e+Amqg9FHbKoht5Ud+nnZydf3qC2jMGGuvZ/5rRQA5A=;
+        b=FLMtnGvruMkNxm1DOMl9kECUFlYMynUZlc9N73e8mClSmduZylDaoemTxvAyH1lAI6
+         gLrnMxoO1TPvseINrNZHYb9bjS+U22SH/zynFH7GXoJHfvNzuOAMI0nTGUikmKUY2yGL
+         VtyiH3IZNQZX7IP+vdc0vznU7Y7AjdvL5XEO73Amz3rK90B59BV1f+aAzdnStnDcwHNy
+         Ll+dwrIoFrJkzByC+zz0ATJS3HiTf6mieeo7klvytoJp7gUNaeXg4MnRl3SAx3iw/5Nr
+         DI5RkdyD+16RhIA/DsB/OaK86iTHGGIQ/PkG/IoPYkqQKPCKdWGircbVGRhuWUR+3un+
+         j8zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700914207; x=1701519007;
+        d=1e100.net; s=20230601; t=1700914258; x=1701519058;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ne3LFIkmsbmi3RgcTltZ5JX2XL/7yv4bhm1K2gnu5s=;
-        b=rYL1XCJr9yh6siV7K9X6TFoTGKzunlnfgXQ56TEWdVX9r+KRJ1l6IZT7hK9wK3gizN
-         OG0FjkmDl11hutqn6/n2vltGp+0vEVCUiwbw9mQQ5dpQVYlOgRvIocWQE3ctAg6rQjMY
-         nIJMrOxzoXn/tCJ3j9DlPaeH+hyzhivEMDe9L216I4OHlo1BE+w5EYLHqJ8pr+5OK67v
-         m+LOxz0QcAKh6/kOnS7pnSjhGxenCnacO36+QJb8xoSKAmCDwprQMPYXN+Hgp7Pa1T1Y
-         jNUL1CBAsZYw0NLcFZGgTYcdXYdqKstUYhHiy/rUEQHFcS7qP++m9xkl/pK5ZRJeBpfQ
-         8ipQ==
-X-Gm-Message-State: AOJu0YzcFvMGIps2b4NtvkQ4zkhqo/Psk6KFQ+9bYKh0RmQdKzHOSaPr
-	MdSJoMUsOD6PJLccSNzRj7/n8A==
-X-Google-Smtp-Source: AGHT+IFOmnAkGclZmKq8xPureQ/o4yixSNKuEvy2d7uscr4cLd7TAG1kTSku+5gHPxk8QX6KqfHa3g==
-X-Received: by 2002:a17:906:2088:b0:9ef:b466:abe0 with SMTP id 8-20020a170906208800b009efb466abe0mr5195557ejq.8.1700914207016;
-        Sat, 25 Nov 2023 04:10:07 -0800 (PST)
+        bh=e+Amqg9FHbKoht5Ud+nnZydf3qC2jMGGuvZ/5rRQA5A=;
+        b=KaZuCl97cMThl5k/XdSfVsPki6yHkcCnMu1uoCbIS+oCnVypVK9D1KkfMNWkRaQqN7
+         LrlEz9F6ujB8JuBTFSVraegDZDvIgqunaTvGd4hwbWd4fy91SplJ2pwe6vOhYNJSQWwM
+         n1kQjfgfNeZBWRGZ0E5TEdmbvJBUvy2YMHxY3LodBEdFklffL5R/IbTgf/iSw0Az/JPe
+         Xl52O+0YAp3CGqD0noF+xyRjMTiWU82lHPjSEkySUKISGdlxPSGlFcM/aEqno7D8iKZc
+         gd35H1JB94fuwUHym6J90mpPt9MbrvYAWjZcwVChKvcGQXNW+UTTxlR36y17FdOArvoi
+         QjOw==
+X-Gm-Message-State: AOJu0Yz688cLWMlE+EMc0jOlfRuhI3O41tHUjKxoljCOuS4VGll/xWS0
+	tuGLQ0m0wqqdIf0dqwODVXokwA==
+X-Google-Smtp-Source: AGHT+IGDNxqVlq2BQ+aouPmLDKGU4qmcMspBbSDmnzNRwe/+GYmpxv+JRz5sQUlEuIxQh8J6TTLTPw==
+X-Received: by 2002:a17:906:2c4c:b0:a04:bd7c:b7f7 with SMTP id f12-20020a1709062c4c00b00a04bd7cb7f7mr4277848ejh.64.1700914258072;
+        Sat, 25 Nov 2023 04:10:58 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id gw4-20020a170906f14400b009e6af2efd77sm3347884ejb.45.2023.11.25.04.10.05
+        by smtp.gmail.com with ESMTPSA id gw4-20020a170906f14400b009e6af2efd77sm3347884ejb.45.2023.11.25.04.10.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 25 Nov 2023 04:10:06 -0800 (PST)
-Message-ID: <332b87ca-56af-4eef-93ba-b8b1b17d3470@linaro.org>
-Date: Sat, 25 Nov 2023 13:10:05 +0100
+        Sat, 25 Nov 2023 04:10:57 -0800 (PST)
+Message-ID: <a7dd66b3-460e-47c8-a426-a7f9924874ce@linaro.org>
+Date: Sat, 25 Nov 2023 13:10:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: sm8250-xiaomi-elish: Fix typos
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add pm8150b
+ type-c node
 Content-Language: en-US
 To: Jianhua Lu <lujianhua000@gmail.com>, Andy Gross <agross@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -72,6 +73,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
  phone-devel@vger.kernel.org
 References: <20231125023343.10939-1-lujianhua000@gmail.com>
+ <20231125023343.10939-2-lujianhua000@gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -108,14 +110,12 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231125023343.10939-1-lujianhua000@gmail.com>
+In-Reply-To: <20231125023343.10939-2-lujianhua000@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25.11.2023 03:33, Jianhua Lu wrote:
-> There are two typos in this dtsi, so fix it.
->   classis -> chassis.
->   80700000 -> 80600000
+> Add type-c node to feature otg function.
 > 
 > Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 > ---
