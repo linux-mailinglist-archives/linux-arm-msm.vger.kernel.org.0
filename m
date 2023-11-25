@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-1921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-1922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18CCF7F8750
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 01:36:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D004A7F8753
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 01:36:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 95AA8B214C1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 00:36:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 727C3B217A0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Nov 2023 00:36:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1A0DA21;
-	Sat, 25 Nov 2023 00:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B8DA10EA;
+	Sat, 25 Nov 2023 00:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dunZdKMv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MYNoJ++W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6519A1BDD;
-	Fri, 24 Nov 2023 16:35:31 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-4079ed65582so16486745e9.1;
-        Fri, 24 Nov 2023 16:35:31 -0800 (PST)
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E253F1BD6;
+	Fri, 24 Nov 2023 16:35:32 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40b27726369so17263825e9.0;
+        Fri, 24 Nov 2023 16:35:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700872529; x=1701477329; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1700872531; x=1701477331; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qMmCWPX59UJtqG86RQS8Ot62rGrmo3eqFy3GB/yFnLs=;
-        b=dunZdKMvUh6tiSxtKiyKxXZBJ794T5W3wqeJOrCDCQqmjBQ5PxKJffBVxUvdnshF3q
-         2IyoDP9NOp70LUCD6073STtSFmlI0lBDCfkpl1YNZxCUDx/OSPQn5gVvGWo3kY3BkDI6
-         b/K8pJWtb724d0qu82Afqhn3kftXLi9jR6X4kdml3acahxy7CzOM+/e9YefFkFBg//JL
-         DPMX5ySie4tFVOKtMW9EVyYFty/a7BuWsmBHLo31uibDKhBWZpocnGct92/nVgOOArOM
-         yj2b99C7oIuWfwU/0goPt3i73k8Pq8V+ddpZd2kjTedasNhxM3D9tYksxw4T4iUZNRW0
-         /dmA==
+        bh=MHiLFw1bIGohpGtROyp7CqLCgHPbQhHjoTE9dyN6vFM=;
+        b=MYNoJ++WjyUQR7oZbprPpd/W1kjoOypyR9uH45lgCFTzi8SQn8ORZEswL+5aXmm0YU
+         HYgj1rAMAVESk06onBC66hcftf4FzUAfYa1Wn5t0DT3Q8Ahs5qIR0uHPGMWo5M0tk18+
+         gcoGszax6yWD5xsegyn9jd3F835O4D1T71iDh4woahYsrxadYdRp7RdN4P6FpX2Xl+zH
+         9kJQ32xjrqoEeUzYpa4Wr7oLnadKyk7mbJaxmJls0H2vdTO6OI/jsjuLlF+tfHblXozN
+         BT2+Xpn/bEwt1PXbOAzN4roL/372ceqQvgPHkysLmigGuy3ZwrqdHqdnMQPlGfYnrrxF
+         KRaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700872529; x=1701477329;
+        d=1e100.net; s=20230601; t=1700872531; x=1701477331;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qMmCWPX59UJtqG86RQS8Ot62rGrmo3eqFy3GB/yFnLs=;
-        b=r6/LNxNGsaTedG3Cnz7zRktrfFTiSpxJUb3tbS8eRRBb4ez0K+FMZQIlBkF4TA5VNn
-         vsauzqQ2F5nFqZoOZbiO60tooylew2FiW82uYRasFw4/wOPEO98Ez/nlo8icWA2ge2Xi
-         1gIhn7VZrQsjxEwDxhzEiWj5VqbjwCxj7BnwUK8DbKugUaES8LXLtjrQ0GqZmYrQGYzf
-         +byrOWKhB+5bT5+icd8z0FEuDBQCxvtuqsmRszsh6k4wEtesfT7gLLTMoqqfEf9hdiUk
-         nKRoGtYO8rSKWvPbFByXmkt3EQSEtM3JLt92mQlhTQAkoDoMVhsQJbp+QOlptCXJe9VO
-         4JPg==
-X-Gm-Message-State: AOJu0YyFGCbhsv2cbf1eo7Vlugj1xYNGez9djEGG9TYilzyrvwyYZXyd
-	dHLpnW2oZpRPb7TZ1PzSRK4=
-X-Google-Smtp-Source: AGHT+IFKiEoNKX+AkqKaRb0CQSvaTZ3MufoYCXx4Z6VdVsXI5K9f7c6Uqf9agFzA+WCb4EwraptDVA==
-X-Received: by 2002:a05:600c:3104:b0:406:8496:bd8b with SMTP id g4-20020a05600c310400b004068496bd8bmr3949616wmo.9.1700872529488;
-        Fri, 24 Nov 2023 16:35:29 -0800 (PST)
+        bh=MHiLFw1bIGohpGtROyp7CqLCgHPbQhHjoTE9dyN6vFM=;
+        b=GqCbhCC3OYeKSRmbu6RWKsfev7ffNkNqc+CJ8sMoo9OE89697BovB540sZ/lPJeDyl
+         kUgG5ybSK+VAgfBWckzBJYMzqhg1sgchWAqHV3EFCvWflvNmzwDnTCngGAhyf3Nke/og
+         TsaY919vRP9tk8XLo2ZTH4IJFVO4lxOlgR4qNhP7UcVBijJZtkTIQ/i3hs+9fP2GHOwA
+         2JnudrjQBP6jSDwykWzR8Sg1Q0v/GSYu49gW98vmyeacwXUCuKYEoNSdMStJvuQ487QH
+         oqs2SsN6ZVt399VOVKlO9Q5NqdIV1+841UWob5sXX5JG9pIoALMzIkAyr2MjtJjKNMOX
+         fQKg==
+X-Gm-Message-State: AOJu0YyieQ+9hMfPNbaTTiNw0GRts3VB2DYqpeqFpC7l6HxpfmL/89AG
+	yxtKf+CpsW74QjIniNTsrs4=
+X-Google-Smtp-Source: AGHT+IGLc1mlt385WXqXvC6FEasxlmbyfmfpQzHK0GhuUqCYjrLEyySLW33U0gTDlILd7OygLIsynA==
+X-Received: by 2002:a05:600c:5252:b0:40b:36e7:1edf with SMTP id fc18-20020a05600c525200b0040b36e71edfmr3919226wmb.26.1700872531054;
+        Fri, 24 Nov 2023 16:35:31 -0800 (PST)
 Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.googlemail.com with ESMTPSA id u13-20020a05600c00cd00b00405718cbeadsm4268005wmm.1.2023.11.24.16.35.28
+        by smtp.googlemail.com with ESMTPSA id u13-20020a05600c00cd00b00405718cbeadsm4268005wmm.1.2023.11.24.16.35.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Nov 2023 16:35:29 -0800 (PST)
+        Fri, 24 Nov 2023 16:35:30 -0800 (PST)
 From: Christian Marangi <ansuelsmth@gmail.com>
 To: "David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
@@ -86,9 +86,9 @@ To: "David S. Miller" <davem@davemloft.net>,
 	linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mediatek@lists.infradead.org
-Subject: [net-next RFC PATCH v2 08/11] dt-bindings: net: add QCA807x PHY defines
-Date: Sat, 25 Nov 2023 01:11:24 +0100
-Message-Id: <20231125001127.5674-9-ansuelsmth@gmail.com>
+Subject: [net-next RFC PATCH v2 09/11] dt-bindings: net: Document Qcom QCA807x PHY package
+Date: Sat, 25 Nov 2023 01:11:25 +0100
+Message-Id: <20231125001127.5674-10-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20231125001127.5674-1-ansuelsmth@gmail.com>
 References: <20231125001127.5674-1-ansuelsmth@gmail.com>
@@ -98,57 +98,177 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Marko <robert.marko@sartura.hr>
+Document Qcom QCA807x PHY package.
 
-Add DT bindings defined for Qualcomm QCA807x PHY series related to
-calibration and DAC settings.
+Qualcomm QCA807X Ethernet PHY is PHY package of 2 or 5
+IEEE 802.3 clause 22 compliant 10BASE-Te, 100BASE-TX and
+1000BASE-T PHY-s.
 
-Signed-off-by: Robert Marko <robert.marko@sartura.hr>
+Document the required property to make the PHY package correctly
+configure and work.
+
 Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
- include/dt-bindings/net/qcom-qca807x.h | 30 ++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
- create mode 100644 include/dt-bindings/net/qcom-qca807x.h
+ .../devicetree/bindings/net/qcom,qca807x.yaml | 148 ++++++++++++++++++
+ 1 file changed, 148 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/qcom,qca807x.yaml
 
-diff --git a/include/dt-bindings/net/qcom-qca807x.h b/include/dt-bindings/net/qcom-qca807x.h
+diff --git a/Documentation/devicetree/bindings/net/qcom,qca807x.yaml b/Documentation/devicetree/bindings/net/qcom,qca807x.yaml
 new file mode 100644
-index 000000000000..e7d4d09b7dd4
+index 000000000000..f6f07c77a639
 --- /dev/null
-+++ b/include/dt-bindings/net/qcom-qca807x.h
-@@ -0,0 +1,30 @@
-+/* SPDX-License-Identifier: GPL-2.0-only OR MIT */
-+/*
-+ * Device Tree constants for the Qualcomm QCA807X PHYs
-+ */
++++ b/Documentation/devicetree/bindings/net/qcom,qca807x.yaml
+@@ -0,0 +1,148 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/qcom,qca807x.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+#ifndef _DT_BINDINGS_QCOM_QCA807X_H
-+#define _DT_BINDINGS_QCOM_QCA807X_H
++title: Qualcomm QCA807X Ethernet PHY
 +
-+/* Full amplitude, full bias current */
-+#define QCA807X_CONTROL_DAC_FULL_VOLT_BIAS		0
-+/* Amplitude follow DSP (amplitude is adjusted based on cable length), half bias current */
-+#define QCA807X_CONTROL_DAC_DSP_VOLT_HALF_BIAS		1
-+/* Full amplitude, bias current follow DSP (bias current is adjusted based on cable length) */
-+#define QCA807X_CONTROL_DAC_FULL_VOLT_DSP_BIAS		2
-+/* Both amplitude and bias current follow DSP */
-+#define QCA807X_CONTROL_DAC_DSP_VOLT_BIAS		3
-+/* Full amplitude, half bias current */
-+#define QCA807X_CONTROL_DAC_FULL_VOLT_HALF_BIAS		4
-+/* Amplitude follow DSP setting; 1/4 bias current when cable<10m,
-+ * otherwise half bias current
-+ */
-+#define QCA807X_CONTROL_DAC_DSP_VOLT_QUARTER_BIAS	5
-+/* Full amplitude; same bias current setting with “010” and “011”,
-+ * but half more bias is reduced when cable <10m
-+ */
-+#define QCA807X_CONTROL_DAC_FULL_VOLT_HALF_BIAS_SHORT	6
-+/* Amplitude follow DSP; same bias current setting with “110”, default value */
-+#define QCA807X_CONTROL_DAC_DSP_VOLT_HALF_BIAS_SHORT	7
++maintainers:
++  - Christian Marangi <ansuelsmth@gmail.com>
++  - Robert Marko <robert.marko@sartura.hr>
 +
-+#endif
++description: |
++  Qualcomm QCA807X Ethernet PHY is PHY package of 2 or 5
++  IEEE 802.3 clause 22 compliant 10BASE-Te, 100BASE-TX and
++  1000BASE-T PHY-s.
++
++  They feature 2 SerDes, one for PSGMII or QSGMII connection with
++  MAC, while second one is SGMII for connection to MAC or fiber.
++
++  Both models have a combo port that supports 1000BASE-X and
++  100BASE-FX fiber.
++
++  Each PHY inside of QCA807x series has 4 digitally controlled
++  output only pins that natively drive LED-s for up to 2 attached
++  LEDs. Some vendor also use these 4 output for GPIO usage without
++  attaching LEDs.
++
++  Note that output pins can be set to drive LEDs OR GPIO, mixed
++  definition are not accepted.
++
++allOf:
++  - $ref: ethernet-phy-package.yaml#
++
++select:
++  properties:
++    $nodename:
++      pattern: "^ethernet-phy-package(@[a-f0-9]+)?$"
++
++  patternProperties:
++    ^ethernet-phy(@[a-f0-9]+)?$:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - ethernet-phy-id004d.d0b2
++              - ethernet-phy-id004d.d0b1
++
++      required:
++        - compatible
++
++  required:
++    - $nodename
++
++properties:
++  qcom,package-mode:
++    enum:
++      - qsgmii
++      - psgmii
++
++  qcom,tx-driver-strength:
++    enum: [140, 160, 180, 200, 220
++           240, 260, 280, 300, 320
++           400, 500, 600]
++
++patternProperties:
++  ^ethernet-phy(@[a-f0-9]+)?$:
++    $ref: /schemas/net/ethernet-phy.yaml#
++
++    properties:
++      gpio-controller:
++        description: set the output lines as GPIO instead of LEDs
++        type: boolean
++
++      '#gpio-cells':
++        description: number of GPIO cells for the PHY
++        const: 2
++
++    dependencies:
++      gpio-controller: ['#gpio-cells']
++
++    if:
++      required:
++        - gpio-controller
++    then:
++      properties:
++        leds: false
++
++    unevaluatedProperties: false
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    mdio {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        ethernet-phy-package@0 {
++            #address-cells = <1>;
++            #size-cells = <0>;
++            reg = <0>;
++
++            qcom,package-mode = "qsgmii";
++
++            ethernet-phy@0 {
++                compatible = "ethernet-phy-id004d.d0b2";
++                reg = <0>;
++
++                leds {
++                    #address-cells = <1>;
++                    #size-cells = <0>;
++
++                    led@0 {
++                        reg = <0>;
++                        color = <LED_COLOR_ID_GREEN>;
++                        function = LED_FUNCTION_LAN;
++                        default-state = "keep";
++                    };
++                };
++            };
++
++            ethernet-phy@1 {
++                compatible = "ethernet-phy-id004d.d0b2";
++                reg = <1>;
++            };
++
++            ethernet-phy@2 {
++                compatible = "ethernet-phy-id004d.d0b2";
++                reg = <2>;
++
++                gpio-controller;
++                #gpio-cells = <2>;
++            };
++
++            ethernet-phy@3 {
++                compatible = "ethernet-phy-id004d.d0b2";
++                reg = <3>;
++            };
++
++            ethernet-phy@4 {
++                compatible = "ethernet-phy-id004d.d0b2";
++                reg = <4>;
++            };
++        };
++    };
 -- 
 2.40.1
 
