@@ -1,153 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-2067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8BCD7F9EF1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 12:49:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E38727F9F4D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 13:14:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5975EB20F84
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 11:49:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EF38E1C20B9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 12:14:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A966C1A711;
-	Mon, 27 Nov 2023 11:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB92E1CA9D;
+	Mon, 27 Nov 2023 12:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jWS0lV+z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J11STfDK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5973101;
-	Mon, 27 Nov 2023 03:49:26 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ARB3G7R023323;
-	Mon, 27 Nov 2023 11:49:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=oUuLdVyesXk1FBSpoe8O/kpXBhAsMocetEcxPvq3ts4=;
- b=jWS0lV+zkBQBf+bXkaKipIaaycwYTucVNASnd0mYpw3k1Vo6F+7GLEA82Xbj2HnDRhmx
- mQshqioI1OoYMBjvriowTAbA4v9y/3RrOnxF2C3B4NbOflKViejGz+m+jsEVcqNatCRw
- 28bYTVnymgWGJhZcZm4xRIjhgELYzjbLiACI108MIPiZ+9ciLTadjhiIX2nsUcEu2Fs4
- NfJ8rUWqEeFSBlCNFFWuzUU0qTvWQjxM82WqZ/bq1UXs233Cp+v/nfwqH5Qlp3qZMvEs
- TnrbiK4Kue8hC6J8KxQXBy4xjPJXTxzT8GlxITUjwbsJu0ey1D5mgi020Gan40RMI4wK jg== 
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18D5C101;
+	Mon, 27 Nov 2023 04:14:29 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AR6smjJ008693;
+	Mon, 27 Nov 2023 12:14:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=vClwkOHgG/gZmrqLMBX55wvjdeEUUTVIg+b1zvKB++s=;
+ b=J11STfDKtBtqziczX0qn+/vh0llYGupbAzNauOlICO0M54RqyTa6x/yFvJnlITorlw3r
+ VHnCbH/kTPPrDX6RzzeybasTfSgA/gtJnIfJhQgx+DAQc931WkWysN7EgjiD9OFLw4HD
+ RrkUPP5qvCQ4hPHh9FDhpobJk56NQKuL8/LWSZ45CX7KNC2HU+wPAvFLLpbQ5VM8A0hO
+ OQPcCO6euIm0gpEtjAXUHGh70ABNNXc56tujjgGSgZePNWZKwIJuxq88HnSPK2OmcTXx
+ TklLjkd1uKq2rpd66Za+cSJ6KEWga8OgX4akXBcgg5iI4w9fRVSTu/hks41Rem7E8dJz KA== 
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk9adm17p-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk95cc40w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 11:49:15 +0000
+	Mon, 27 Nov 2023 12:14:23 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ARBnEat016991
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ARCEMCD014861
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 11:49:14 GMT
-Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 27 Nov
- 2023 03:49:08 -0800
-Message-ID: <1341f3d2-f20f-af2b-fd6e-bfe63a32630f@quicinc.com>
-Date: Mon, 27 Nov 2023 17:19:05 +0530
+	Mon, 27 Nov 2023 12:14:22 GMT
+Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 27 Nov 2023 04:14:16 -0800
+From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Subject: [PATCH v3 0/3] phy: qcom-qmp-pcie: Add support to keep refclk
+ always on
+Date: Mon, 27 Nov 2023 17:43:48 +0530
+Message-ID: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
- qcom,refclk-always-on property
-Content-Language: en-US
-To: Conor Dooley <conor@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAP6HZGUC/33NwQ6CMAyA4VchOzvDOmXgyfcwhmxjSCNuuumUE
+ N7dwUkT4/Fv2q8jCcajCWSXjcSbiAGdTcFXGdGdtCdDsUlNIAfOWF5Qb1rdn2vZP+UQamdppYw
+ 0JVRCq5Kks2vawNdCHo6pOwx354flQ2Tz9A8WGc0pE1K0Tam2HNT+9kCNVq+1u5CZi/BJiB8EJ
+ KIxwKsCWr1R/JuYpukNo4RcpvUAAAA=
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
         Kishon Vijay Abraham I <kishon@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley
-	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
-        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_vpernami@quicinc.com>,
-        <quic_parass@quicinc.com>
-References: <20231107-refclk_always_on-v2-0-de23962fc4b3@quicinc.com>
- <20231107-refclk_always_on-v2-1-de23962fc4b3@quicinc.com>
- <CAA8EJpqvCJsft3Y-m2ZYORBg=6P7EhT-PsCSkuQ4xaxuf3KOwA@mail.gmail.com>
- <20231108-surgical-yelling-7314b68c0289@spud>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20231108-surgical-yelling-7314b68c0289@spud>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
+        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
+        <quic_vpernami@quicinc.com>, <quic_parass@quicinc.com>,
+        "Krishna chaitanya
+ chundru" <quic_krichai@quicinc.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.13-dev-83828
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1701087256; l=2204;
+ i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
+ bh=zwRcEn2JJMlI3K+aZ3E+nZH0JUyB40bJf8sdwp5BDSw=;
+ b=Usb4J4AeWk89oDnNxCSO/cdVUIrdxete6ptYyTeN/BoO2w68zTUe37ja+2GgOwTNBfizKAOnl
+ tGbIqNewu65AWSTsnTVULKnNdtsMZ7OQLcX7C/LX6zfvnbYUTAVZ5G3
+X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oB4cY0b_PFjbrYAkkiRiYVDtEAB4y0-X
-X-Proofpoint-GUID: oB4cY0b_PFjbrYAkkiRiYVDtEAB4y0-X
+X-Proofpoint-GUID: e2WlklcLz_SUTI1LgI-FzxXa7P8uAXWz
+X-Proofpoint-ORIG-GUID: e2WlklcLz_SUTI1LgI-FzxXa7P8uAXWz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-27_09,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- clxscore=1011 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 mlxlogscore=999 adultscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311270080
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ adultscore=0 bulkscore=0 suspectscore=0 mlxlogscore=673 spamscore=0
+ lowpriorityscore=0 phishscore=0 mlxscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311270083
 
+This series adds support to provide refclk to endpoint even in low
+power states.
 
-On 11/8/2023 9:22 PM, Conor Dooley wrote:
-> On Tue, Nov 07, 2023 at 03:01:47PM +0200, Dmitry Baryshkov wrote:
->> On Tue, 7 Nov 2023 at 14:26, Krishna chaitanya chundru
->> <quic_krichai@quicinc.com> wrote:
->>> Document qcom,refclk-always-on property which is needed in some platforms
->>> to supply refclk even in PCIe low power states.
->>>
->>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>> ---
->>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 7 +++++++
->>>   1 file changed, 7 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->>> index 2c3d6553a7ba..263291447a5b 100644
->>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->>> @@ -93,6 +93,13 @@ properties:
->>>     "#phy-cells":
->>>       const: 0
->>>
->>> +  qcom,refclk-always-on:
->>> +    type: boolean
->>> +    description: If there is some issues in platform with clkreq signal
->> nit: there are some
->>
->> However this still doesn't describe what kind of issues with clkreq
->> you observe. I mean, clkreq is just a GPIO pin.
->>
->>> +      propagation to the host and due to that host will not send refclk, which
->>> +      results in linkdown in L1.2 or L1.1 exit initiated by EP. This property
->>> +      if set keeps refclk always on even in Low power states (optional).
-> Dimitry's issues with the property aside, putting "(optional)" in the
-> description is meaningless - qcom,refclk-always-on isn't listed in the
-> required properties section, so therefore has to be optional.
->
-> Cheers,
-> Conor.
+Due to some platform specific issues with CLKREQ signal, it is not being
+propagated to the host and as host doesn't know the clkreq signal host is
+not sending refclk. Due to this endpoint is seeing linkdown and going
+to bad state.
+To avoid those ref clk should be provided always to the endpoint. The
+issue is coming only when ep intiates the L1.1 or L1.2 exit and clkreq
+is not being propagated properly to the host. 
 
-I removed the optional flag and updated the description.
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+Changes in v3:
+- Updated the dt-binding description as suggested by Dmitry.
+- Added the new macros for v5_20 and v6_20 as suggested by Dmitry.
+- Link to v2: https://lore.kernel.org/r/20231107-refclk_always_on-v2-0-de23962fc4b3@quicinc.com
 
-- Krishna chaitanya.
+Changes in v2:
+- Added refclk cntrl registers to the applicable phy versions & added reg layout where
+- refclk cntrl offset needs to be updated (Dmitry)
+- Error out if refclk_always_on is set and there is no refclk control register to enable it (Dmitry)
+- updated the dt-binding description & some nit's as suggested by (Bjorn)
+- Link to v1: https://lore.kernel.org/r/20231106-refclk_always_on-v1-0-17a7fd8b532b@quicinc.com
 
->>> +
->>>   required:
->>>     - compatible
->>>     - reg
->>>
->>> --
->>> 2.42.0
->>>
->>>
->>
->> -- 
->> With best wishes
->> Dmitry
+---
+Krishna chaitanya chundru (3):
+      dt-bindings: phy: qcom,qmp: Add PCIe qcom,refclk-always-on property
+      phy: qcom-qmp-pcie: Add endpoint refclk control register offset
+      phy: qcom-qmp-pcie: Add support for keeping refclk always on
+
+ .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   |  7 ++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 40 ++++++++++++++++++++--
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5.h    |  1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h |  1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_20.h |  1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v5_20.h      |  4 +++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_20.h      |  4 +++
+ 7 files changed, 55 insertions(+), 3 deletions(-)
+---
+base-commit: 71e68e182e382e951d6248bccc3c960dcec5a718
+change-id: 20231106-refclk_always_on-9beae8297cb8
+
+Best regards,
+-- 
+Krishna chaitanya chundru <quic_krichai@quicinc.com>
+
 
