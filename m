@@ -1,100 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-2144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80BEB7FA770
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 18:02:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DDF37FA77C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 18:06:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B24031C20A39
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 17:02:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB850281652
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 17:06:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5DB73454F;
-	Mon, 27 Nov 2023 17:02:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27CD01E51A;
+	Mon, 27 Nov 2023 17:06:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FbZrDH8Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE7EB3C16;
-	Mon, 27 Nov 2023 09:02:23 -0800 (PST)
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6ce2b6b3cb6so2739406a34.3;
-        Mon, 27 Nov 2023 09:02:23 -0800 (PST)
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BED43C3C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 09:06:07 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-6cd97c135e8so601439b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 09:06:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701104766; x=1701709566; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GkynhPafPwOqRqHF5n1O8fkNy/FbkoLc3Yb0KUX9jlU=;
+        b=FbZrDH8Y75KE4NAwAXSv0+dEnK9NcR/pbNuWw46ajExInvFDHRoWjBa4t//5iEhGqg
+         Mw17QzE7RvoZUAoD/pZlX85xDUlo19HNoKpOIjDJz/i2XQgXhIFJwRa1fWEJdl3UONrC
+         Jlk6IarBAew/usJeerSDlF7rBIOh0KCYYNg8IlyOOE6CGnz+yRgx41RpTrPU/UiloZ0e
+         pZ+AhaO1ME3NJE2xl6XNxJIh/oDFOQS6trb8cVc4PIF8mzZCMJTG+X6YesIjv0TAq0sz
+         cywBG90OAKQAM/XAKBbIKVJxgVQBOCbNf391ZRoIk/4FtWltjNr/O1t9+nRUGgIr6oog
+         Ibsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701104543; x=1701709343;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=egdCKcTL5F1nxl2XwDwu8DS/+z9OxCWFUwjLPJGVEYM=;
-        b=urHBs7tqGEgjp5TNs8Qa41tId4Fco5Y8T4iJs1dYSx30hJ1duG9k+k28ZrDBi7ofwd
-         hsXtTmrHrOfMAgVLegk4/12Y4+R1+XRmYH/rYW9gt6VG1WLqZLoHE2OoXjbKBWyTR8B5
-         FCCyFIkn5mgALEuY3MoCmrLSptDKBt0bfbbLs+0aXQ+8wylZbxC29HDy7FBiaiZo5Mhq
-         Biuz+MONScMgPud3qt7d7bQGTxvzlDYuPNn8nHRcvJ2988Z7yl9Tm5aUGSv5F/BFTQgu
-         5bj08/r+YshEmVYc2nrYqQ6DLaPj12OwH/wSAqmCSXqXzQs/MGWdwOuzstZVVYY8kWN5
-         CW0Q==
-X-Gm-Message-State: AOJu0YzwORhZKnTfcmW8Cq7mYWKHwsBMdmdk6MasKh3pxtEzNan+9Puo
-	ys31yB0jpJEF//3Oi2E7ZrDJBXXMyA==
-X-Google-Smtp-Source: AGHT+IGu7+X9A7HDeL5cLIqKrFNpUqAS8XGhG7FU7efpiBVxtKmwRfmvKUAtyTz1NNkDSJZWu0usIA==
-X-Received: by 2002:a9d:6944:0:b0:6d8:11f1:de4d with SMTP id p4-20020a9d6944000000b006d811f1de4dmr8299962oto.32.1701104542837;
-        Mon, 27 Nov 2023 09:02:22 -0800 (PST)
-Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id i14-20020a4aab0e000000b0057327cecdd8sm1529024oon.10.2023.11.27.09.02.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Nov 2023 09:02:22 -0800 (PST)
-Received: (nullmailer pid 1424446 invoked by uid 1000);
-	Mon, 27 Nov 2023 17:02:20 -0000
-Date: Mon, 27 Nov 2023 11:02:20 -0600
-From: Rob Herring <robh@kernel.org>
-To: Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc: tglx@linutronix.de, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, Conor Dooley <conor.dooley@microchip.com>, andersson@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, agross@kernel.org, konrad.dybcio@linaro.org
-Subject: Re: [PATCH v5] dt-bindings: interrupt-controller: Add SDX75 PDC
- compatible
-Message-ID: <170110453222.1422827.15955753691131343417.robh@kernel.org>
-References: <20231117082829.609882-1-quic_rohiagar@quicinc.com>
+        d=1e100.net; s=20230601; t=1701104766; x=1701709566;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GkynhPafPwOqRqHF5n1O8fkNy/FbkoLc3Yb0KUX9jlU=;
+        b=a9YC1VAaXIj9BMTcPxFqvUQEn6VpWWpm+pFX7XVVkNUWRxMyUVJ0VXJAtt5OX2JZkE
+         xoVl5CSUoq0AHMXxRqTJkM5IP9SqEo20VNVcB1OTjrvwXFAu59kA+YJhFtm4BFIKThyY
+         kQ/74pIOEUhOuC5F7dRF2ulzw1uVYrGFUTiqYO/d6QGHmnkD3a7fAOj9t+sD+K6LEVwh
+         MSL7GThdIry01Fek8KUxZazSDFWtK00dw0l5JozkDtjcNht8roeKWqx/6ordjlWOl5FR
+         F1d5aw14OiheKAzjp0ix+3a+KEgFPG5KTVDeGNr+DQ4SdWVRT1iieFcfCnEGwc2TIRhM
+         tKjw==
+X-Gm-Message-State: AOJu0YxY3TZIx0kvdLd8xErofbEtkTBC3SyN1ZZNvWTR1yd8td5B+HIf
+	vI7oM0JBkFNP54QjtGwMJyLfKb5im/Q=
+X-Google-Smtp-Source: AGHT+IFyf3QfX74sSFUmAneC52syspupbwDxCKLYXKsrTLuIV2OR08MlsoycA0vyphjChkx0zanxYA==
+X-Received: by 2002:a05:6a20:244c:b0:18b:e692:8f01 with SMTP id t12-20020a056a20244c00b0018be6928f01mr10880081pzc.5.1701104766456;
+        Mon, 27 Nov 2023 09:06:06 -0800 (PST)
+Received: from DESKTOP-6F6Q0LF (static-host119-30-85-97.link.net.pk. [119.30.85.97])
+        by smtp.gmail.com with ESMTPSA id gu23-20020a056a004e5700b006cb6fa32590sm7556922pfb.148.2023.11.27.09.06.04
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Mon, 27 Nov 2023 09:06:05 -0800 (PST)
+Message-ID: <6564cc7d.050a0220.959c9.1b8b@mx.google.com>
+Date: Mon, 27 Nov 2023 09:06:05 -0800 (PST)
+X-Google-Original-Date: 27 Nov 2023 12:06:03 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: arielkiaan528@gmail.com
+To: linux-arm-msm@vger.kernel.org
+Subject: Building Estimates
 Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231117082829.609882-1-quic_rohiagar@quicinc.com>
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Level: **
 
-
-On Fri, 17 Nov 2023 13:58:29 +0530, Rohit Agarwal wrote:
-> Add device tree bindings for PDC on SDX75 SOC.
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> ---
-> 
-> Hi,
-> 
-> Changes in v5:
->  - Rebased on 6.7-rc1
->  - Removed all the applied patches from this series.
->  - Link to v4: https://lore.kernel.org/all/1686311438-24177-1-git-send-email-quic_rohiagar@quicinc.com/
-> 
-> Changes in v4:
->  - Addressed some of the dt bindings check mentioned by Krzysztof.
-> 
-> Changes in v3:
->  - Clubbed all the dt node into a single patch as suggested by Krzysztof.
->  - Removed the applied patch.
->  - Addressed some comments from Konrad and Dmitry.
-> 
-> Changes in v2:
->  - Added the CPUFreq support patch.
->  - Collected the Acked by tags.
->  - Addressed some minor comments from Konrad.
-> 
-> Thanks,
-> Rohit.
-> 
->  .../devicetree/bindings/interrupt-controller/qcom,pdc.yaml       | 1 +
->  1 file changed, 1 insertion(+)
-> 
-
-Applied, thanks!
+Hi,=0D=0A=0D=0AWe provide estimation & quantities takeoff service=
+s. We are providing 98-100 accuracy in our estimates and take-off=
+s. Please tell us if you need any estimating services regarding y=
+our projects.=0D=0A=0D=0ASend over the plans and mention the exac=
+t scope of work and shortly we will get back with a proposal on w=
+hich our charges and turnaround time will be mentioned=0D=0A=0D=0A=
+You may ask for sample estimates and take-offs. Thanks.=0D=0A=0D=0A=
+Kind Regards=0D=0AAriel Kiaan		=0D=0ADreamland Estimation, LLC
 
 
