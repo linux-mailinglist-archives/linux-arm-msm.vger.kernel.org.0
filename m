@@ -1,131 +1,266 @@
-Return-Path: <linux-arm-msm+bounces-2065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B3EC7F9E84
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 12:25:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84F677F9EB2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 12:35:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 357BF2812EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 11:25:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 073A11F20C98
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 11:35:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A1C199D6;
-	Mon, 27 Nov 2023 11:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 734AA1A588;
+	Mon, 27 Nov 2023 11:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OratS9HQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pzOCb5Wh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E27BC1AD
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 03:25:36 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-54b8a4d64b5so439736a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 03:25:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701084335; x=1701689135; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FYU3mJER+mBTApjKSQGc9a9Tb7nCRLtHkpoihYd86cc=;
-        b=OratS9HQBFdhFCkARH79LpQKT3LagoHDYveQTlBXVKu6Fgru3nPxKXr+JtmgowRmmz
-         +XQxisEOcIxwJmpCpLR4+QiypD7YeE8/tp9z3TVJ/rUeQCa4BcMv4iWBxuVqoPacLEne
-         d3HNkhGITDIK3bHzIhIerDi4pzhYTOh+BZUXQGBdfTSXxU/xUw/48tHrbUOUyhdJ7dsf
-         KezA+CbST1dMq8mAbyrwNx7zgcWif79gYYCwtcDLW8EtVVAqw3A4Ot1PU/NAi9c/sOx8
-         Ump/oupVUKNtDY12Z2ebBrRNlTYhu4ln5gUT/+wGD5DlSCmdCgY/tR3wbLGJPMcvOLmz
-         X4pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701084335; x=1701689135;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FYU3mJER+mBTApjKSQGc9a9Tb7nCRLtHkpoihYd86cc=;
-        b=GE7WC4rxGVpIAnPSdKsntGmxCVDC/7g0/qho9+dYimR+M6AhBpeLAHKsG+TEtdNzAN
-         h9O+e2C6VsQYfY0hY2HscQwYjqL0EjSA/IJVrGpzzmdjCgNbB+BFhMjNClMCR2xHIggj
-         6BbdghV5YpHOBe2KxZC4Izhle7JtA8EpCg7OBVMdRtruo0Ua5PnS48QcipxKw07UTfN4
-         btTRsUm0t95T8tz5YuEDyyZ1usKNyy17DrShvZLbRa656XPKyGPbIWnTDYOnka5TOZ9L
-         bHLe0atogzebZP9XZWiLVGXsrigtf2Idpo9WqO0ApTUpHx4nYGUyXywxL6bwTkpoh8z2
-         FNPQ==
-X-Gm-Message-State: AOJu0Yx6+1RAF+lF1u3U0wpxNE61/BG/beOVjR04pnfg0SBfQyiXhAC+
-	XFI5Erv3/A6OMRUMSubnKhW1FA==
-X-Google-Smtp-Source: AGHT+IEKvlsKeSu3rQES6aI2qt/APRHND2bOkZ6qWR8NHr8LdiHhbyJwuMLjVTffoTWif1FWzWAGAA==
-X-Received: by 2002:aa7:cc94:0:b0:54b:8483:7d2e with SMTP id p20-20020aa7cc94000000b0054b84837d2emr760525edt.33.1701084335230;
-        Mon, 27 Nov 2023 03:25:35 -0800 (PST)
-Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id o4-20020aa7dd44000000b00548a3a22d66sm5110993edw.41.2023.11.27.03.25.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Nov 2023 03:25:34 -0800 (PST)
-Message-ID: <5f9ec13b-b056-4d5f-a02d-6ac9a6118aa0@linaro.org>
-Date: Mon, 27 Nov 2023 12:25:31 +0100
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5951133;
+	Mon, 27 Nov 2023 03:35:40 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ARAv6rW024162;
+	Mon, 27 Nov 2023 11:35:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=thltlNEte7wqIEWzvgJuzPrT0P4hiM4udr7oHuK7vgY=;
+ b=pzOCb5WhOzIYaaP5AGgRNCQeuYwj3DkeOfkB4UUWEPqiEy/gFifVHP03+miYQ3a40kaP
+ Ln8MbJx2X5/Sug37juSuUKVfu+JX3o8Qu+bKrK/ZLOfbmUrkiOAFzH10wuX6/1Hg69hp
+ lrQuU7+1QxG7Q0NMwwRIvoU5Up5XIXdx1py4gQePscDLh8vj+ti8r+u04ui28v/WoxAX
+ afl80q0dVRrcF6tCEJchm1tpwqdd1Ip83IykXBbBLV5j3bg7uFO34KoZ5PB2Fe1LVFtv
+ rizOqtfSVyOTJ5M2pbSc0R9yg87LBsGigPCjjS8tddwnXebYro9jjO/7+2xRo4/2QZK0 SA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk95cc1nx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Nov 2023 11:35:13 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ARBZCvS005980
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Nov 2023 11:35:12 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 27 Nov 2023 03:35:02 -0800
+Date: Mon, 27 Nov 2023 17:04:59 +0530
+From: Pavan Kondeti <quic_pkondeti@quicinc.com>
+To: Mukesh Ojha <quic_mojha@quicinc.com>
+CC: <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.com>,
+        <mathieu.poirier@linaro.org>, <vigneshr@ti.com>, <nm@ti.com>,
+        <matthias.bgg@gmail.com>, <kgene@kernel.org>,
+        <alim.akhtar@samsung.com>, <bmasney@redhat.com>,
+        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
+Subject: Re: [Patch v6 10/12] pstore/ram: Add dynamic ramoops region support
+ through commandline
+Message-ID: <ad38fb23-e2a2-448e-bdea-fa0985f82b50@quicinc.com>
+References: <1700864395-1479-1-git-send-email-quic_mojha@quicinc.com>
+ <1700864395-1479-11-git-send-email-quic_mojha@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 8/8] media: qcom: camss: Add sm8250 named power-domain
- support
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, hverkuil-cisco@xs4all.nl,
- laurent.pinchart@ideasonboard.com, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, matti.lehtimaki@gmail.com,
- quic_grosikop@quicinc.com
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231123-b4-camss-named-power-domains-v6-0-3ec2fd9e8e36@linaro.org>
- <20231123-b4-camss-named-power-domains-v6-8-3ec2fd9e8e36@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231123-b4-camss-named-power-domains-v6-8-3ec2fd9e8e36@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1700864395-1479-11-git-send-email-quic_mojha@quicinc.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: gSQpbWT7UNoVWbbqsLNJRqn82Dqqebju
+X-Proofpoint-ORIG-GUID: gSQpbWT7UNoVWbbqsLNJRqn82Dqqebju
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-27_09,2023-11-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
+ adultscore=0 bulkscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
+ lowpriorityscore=0 phishscore=0 mlxscore=0 priorityscore=1501
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311270079
 
-On 23.11.2023 18:03, Bryan O'Donoghue wrote:
-> Declare power-domain names "top", "ife0" and "ife1" eponymously for the
-> power-domains TITAN_TOP_GDSC, IFE_0_GDSC and IFE_1_GDSC respectively.
+On Sat, Nov 25, 2023 at 03:49:53AM +0530, Mukesh Ojha wrote:
+> The reserved memory region for ramoops is assumed to be at a fixed
+> and known location when read from the devicetree. This may not be
+> required for something like Qualcomm's minidump which is interested
+> in knowing addresses of ramoops region but it does not put hard
+> requirement of address being fixed as most of it's SoC does not
+> support warm reset and does not use pstorefs at all instead it has
+> firmware way of collecting ramoops region if it gets to know the
+> address and register it with apss minidump table which is sitting
+> in shared memory region in DDR and firmware will have access to
+> these table during reset and collects it on crash of SoC.
 > 
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> So, add the support of reserving ramoops region to be dynamically
+> allocated early during boot if it is request through command line
+> via 'dyn_ramoops_size=<size>' and fill up reserved resource structure
+> and export the structure, so that it can be read by ramoops driver.
+> 
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > ---
-Not sure if this single case is just for presentation or actually
-meant to be merged as part of this, but either way:
+>  Documentation/admin-guide/ramoops.rst |  7 ++++
+>  fs/pstore/Kconfig                     | 15 +++++++++
+>  fs/pstore/ram.c                       | 62 ++++++++++++++++++++++++++++++++---
+>  include/linux/pstore_ram.h            |  5 +++
+>  init/main.c                           |  2 ++
+>  5 files changed, 87 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/admin-guide/ramoops.rst b/Documentation/admin-guide/ramoops.rst
+> index e9f85142182d..af737adbf079 100644
+> --- a/Documentation/admin-guide/ramoops.rst
+> +++ b/Documentation/admin-guide/ramoops.rst
+> @@ -33,6 +33,13 @@ memory are implementation defined, and won't work on many ARMs such as omaps.
+>  Setting ``mem_type=2`` attempts to treat the memory region as normal memory,
+>  which enables full cache on it. This can improve the performance.
+>  
+> +Ramoops memory region can also be allocated dynamically for a special case where
+> +there is no requirement to access the logs from pstorefs on next boot instead there
+> +is separate backend mechanism like minidump present which has awareness about the
+> +dynamic ramoops region and can recover the logs. This is enabled via command line
+> +parameter ``dyn_ramoops_size=<size>`` and should not be used in absence of
+> +separate backend which knows how to recover this dynamic region.
+> +
+>  The memory area is divided into ``record_size`` chunks (also rounded down to
+>  power of two) and each kmesg dump writes a ``record_size`` chunk of
+>  information.
+> diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
+> index 3acc38600cd1..e13e53d7a225 100644
+> --- a/fs/pstore/Kconfig
+> +++ b/fs/pstore/Kconfig
+> @@ -81,6 +81,21 @@ config PSTORE_RAM
+>  
+>  	  For more information, see Documentation/admin-guide/ramoops.rst.
+>  
+> +config PSTORE_DYNAMIC_RAMOOPS_REGION_RESERVATION
+> +	bool "Reserve ramoops region dynamically"
+> +	select PSTORE_RAM
+> +	help
+> +	  This enables the dynamic reservation of ramoops region for a special case
+> +	  where there is no requirement to access the logs from pstorefs on next boot
+> +	  instead there is separate backend mechanism like minidump present which has
+> +	  awareness about the dynamic ramoops region and can recover the logs. This is
+> +	  enabled via command line parameter dyn_ramoops_size=<size> and should not be
+> +	  used in absence of separate backend which knows how to recover this dynamic
+> +	  region.
+> +
+> +	  Note whenever this config is selected ramoops driver will be build statically
+> +	  into kernel.
+> +
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Is there any advantage if we decouple this memory reservation from
+pstore ram so that pstore ram can still be compiled as module? Asking
+because you explicitly mentioned this limitation.
 
-Konrad
+>  config PSTORE_ZONE
+>  	tristate
+>  	depends on PSTORE
+> diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
+> index 88b34fdbf759..a6c0da8cfdd4 100644
+> --- a/fs/pstore/ram.c
+> +++ b/fs/pstore/ram.c
+> @@ -20,6 +20,7 @@
+>  #include <linux/compiler.h>
+>  #include <linux/of.h>
+>  #include <linux/of_address.h>
+> +#include <linux/memblock.h>
+>  #include <linux/mm.h>
+>  
+>  #include "internal.h"
+> @@ -103,6 +104,55 @@ struct ramoops_context {
+>  };
+>  
+>  static struct platform_device *dummy;
+> +static int dyn_ramoops_size;
+> +/* Location of the reserved area for the dynamic ramoops */
+> +static struct resource dyn_ramoops_res = {
+> +	.name  = "ramoops",
+> +	.start = 0,
+> +	.end   = 0,
+> +	.flags = IORESOURCE_BUSY | IORESOURCE_SYSTEM_RAM,
+> +	.desc  = IORES_DESC_NONE,
+> +};
+> +
+> +static int __init parse_dyn_ramoops_size(char *p)
+> +{
+> +	char *tmp;
+> +
+> +	dyn_ramoops_size = memparse(p, &tmp);
+> +	if (p == tmp) {
+> +		pr_err("ramoops: memory size expected\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	return 0;
+> +}
+> +early_param("dyn_ramoops_size", parse_dyn_ramoops_size);
+
+should not this code be under
+CONFIG_PSTORE_DYNAMIC_RAMOOPS_REGION_RESERVATION?
+
+> +
+> +#ifdef CONFIG_PSTORE_DYNAMIC_RAMOOPS_REGION_RESERVATION
+> +/*
+> + * setup_dynamic_ramoops() - reserves memory for dynamic ramoops
+> + *
+> + * This enable dynamic reserve memory support for ramoops through
+> + * command line.
+> + */
+> +void __init setup_dynamic_ramoops(void)
+> +{
+> +	unsigned long long ramoops_base;
+> +	unsigned long long ramoops_size;
+> +
+> +	ramoops_base = memblock_phys_alloc_range(dyn_ramoops_size, SMP_CACHE_BYTES,
+> +						 0, MEMBLOCK_ALLOC_NOLEAKTRACE);
+> +	if (!ramoops_base) {
+> +		pr_err("cannot allocate ramoops dynamic memory (size:0x%llx).\n",
+> +			ramoops_size);
+> +		return;
+> +	}
+
+This error needs to be propagated to ramoops_register_dummy() since it
+rely on !dyn_ramoops_size . one way is to set dyn_ramoops_size to 0.
+
+> +
+> +	dyn_ramoops_res.start = ramoops_base;
+> +	dyn_ramoops_res.end = ramoops_base + dyn_ramoops_size - 1;
+> +	insert_resource(&iomem_resource, &dyn_ramoops_res);
+> +}
+> +#endif
+>  
+>  static int ramoops_pstore_open(struct pstore_info *psi)
+>  {
+> @@ -915,14 +965,18 @@ static void __init ramoops_register_dummy(void)
+>  
+>  	/*
+>  	 * Prepare a dummy platform data structure to carry the module
+> -	 * parameters. If mem_size isn't set, then there are no module
+> -	 * parameters, and we can skip this.
+> +	 * parameters. If mem_size isn't set, check for dynamic ramoops
+> +	 * size and use if it is set.
+>  	 */
+> -	if (!mem_size)
+> +	if (!mem_size && !dyn_ramoops_size)
+>  		return;
+>  
+
+If mem_size and dyn_ramoops_size are set, you are taking
+dyn_ramoops_size precedence here. The comment is a bit confusing, pls
+review it once.
+
+> -	pr_info("using module parameters\n");
+> +	if (dyn_ramoops_size) {
+> +		mem_size = dyn_ramoops_size;
+> +		mem_address = dyn_ramoops_res.start;
+> +	}
+>  
+
+Overall it Looks good to me. Thanks.
 
