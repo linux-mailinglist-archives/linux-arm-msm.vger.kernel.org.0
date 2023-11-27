@@ -1,88 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-2031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE6327F959A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Nov 2023 22:50:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFD807F981E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 05:06:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 68A8C280D82
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Nov 2023 21:50:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D14B1C20839
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 04:06:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31ADE13AE1;
-	Sun, 26 Nov 2023 21:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E722546B6;
+	Mon, 27 Nov 2023 04:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O3cnkcSE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-X-Greylist: delayed 104 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 26 Nov 2023 13:50:14 PST
-Received: from smtprelay08.ispgateway.de (smtprelay08.ispgateway.de [134.119.228.98])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1BA1F0;
-	Sun, 26 Nov 2023 13:50:14 -0800 (PST)
-Received: from [92.206.191.233] (helo=note-book.lan)
-	by smtprelay08.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96.1)
-	(envelope-from <git@apitzsch.eu>)
-	id 1r7MzJ-0003uK-1g;
-	Sun, 26 Nov 2023 22:48:25 +0100
-From: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Date: Sun, 26 Nov 2023 22:46:20 +0100
-Subject: [PATCH v2] arm64: dts: qcom: msm8939-longcheer-l9100: Add
- proximity-near-level
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30B7318F;
+	Sun, 26 Nov 2023 20:06:25 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AR2vIa7019476;
+	Mon, 27 Nov 2023 04:06:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=qihjlYJ9Zk58q2u/A2EOlARfuTPFniwvFgt/hGDu1KI=;
+ b=O3cnkcSEWkRiwYHkTb++i5wQWN2bLVinivz3FWM4c/xgsAHvsp1dkWBrvqM8yPkE2bUI
+ bNvWyrWxNiFjn/41jik/y4UnKDG99Zmpk11/IBcfpkHvS3eurr9x9LQuq8GeftXZWqJu
+ tg7m4RQrfw2trozboOaospe7UPm+p7irLJ0e+YsifvDU+aCjx/CcokA0vwWa5YFQWV9R
+ sXAdvBN4myPOiiv7M1WBJuFAqq/xNJqT0vNVHj1eJw55Te1T60LkD3pB0Ebj3mPNwmD/
+ Xh8UaZlf0Wlxn0UKoHFSl65bI0TtrUugMLsu4vtGSHACNmxvW64ZTRyTdmvYADuKXAa+ qg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk8h8k5b7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Nov 2023 04:06:22 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AR46K7m010637
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Nov 2023 04:06:20 GMT
+Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 26 Nov
+ 2023 20:06:17 -0800
+Message-ID: <a64ded1e-af5d-481c-b66c-8019b3d1ad5a@quicinc.com>
+Date: Mon, 27 Nov 2023 12:06:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20231126-bqm5_prox-v2-1-b7defc3979ac@apitzsch.eu>
-X-B4-Tracking: v=1; b=H4sIAKu8Y2UC/23MQQ6CMBCF4auQWVtDB4vAynsYYqBMZRbS2mKDE
- u5uZe3yf3n5VgjkmQI02QqeIge2Uwo8ZKDHbrqT4CE1YI6FzGUp+udD3Zy3izjVqjKmzLFSCtL
- feTK87Na1TT1ymK1/73SUv/WfEqWQAjs96HOBPdXDpXM8f4Iej/SCdtu2L6IJnrukAAAA
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-X-Mailer: b4 0.12.4
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: Fix the warnings from coresight
+ bindings
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>
+References: <20231124061739.2816-1-quic_jinlmao@quicinc.com>
+ <47406b19-811f-47ab-8c08-dd8c4cc5d8bd@linaro.org>
+From: Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <47406b19-811f-47ab-8c08-dd8c4cc5d8bd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GY5WYH6PdDb_ygZhnmyOvwpkx-9-jj36
+X-Proofpoint-GUID: GY5WYH6PdDb_ygZhnmyOvwpkx-9-jj36
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-26_25,2023-11-22_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=455 impostorscore=0 bulkscore=0
+ phishscore=0 malwarescore=0 mlxscore=0 adultscore=0 clxscore=1015
+ spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311270029
 
-Consider an object near to the sensor when their distance is about 4 cm
-or below.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
----
-Changes in v2:
-- add R-b
-- Link to v1: https://lore.kernel.org/r/20231016-bqm5_prox-v1-1-2acdc732be9d@apitzsch.eu
----
- arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-index ff532fdc1826..e3404c4455cf 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-@@ -180,6 +180,7 @@ magnetometer@d {
- 	light-sensor@23 {
- 		compatible = "liteon,ltr559";
- 		reg = <0x23>;
-+		proximity-near-level = <75>;
- 
- 		vdd-supply = <&pm8916_l17>;
- 		vddio-supply = <&pm8916_l5>;
+On 11/24/2023 3:50 PM, Krzysztof Kozlowski wrote:
+> On 24/11/2023 07:17, Mao Jinlong wrote:
+>> Fix all warnings in Qualcomm boards coming from Coresight bindings.
+> 
+> One logical thing, one patch. That applies not only to Linux kernel, but
+> to all software projects.
+> 
+>>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/msm8996.dtsi | 26 ----------------------
+>>   arch/arm64/boot/dts/qcom/msm8998.dtsi | 32 +++++++++++++++++----------
+>>   arch/arm64/boot/dts/qcom/sdm845.dtsi  |  5 +----
+>>   arch/arm64/boot/dts/qcom/sm8150.dtsi  |  5 +----
+>>   arch/arm64/boot/dts/qcom/sm8250.dtsi  | 24 ++++----------------
+>>   5 files changed, 26 insertions(+), 66 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>> index 6ba9da9e6a8b..e42c22b26adc 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+>> @@ -2637,24 +2637,6 @@ funnel1_out: endpoint {
+>>   			};
+>>   		};
+>>   
+>> -		funnel@3023000 {
+>> -			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>> -			reg = <0x3023000 0x1000>;
+>> -
+>> -			clocks = <&rpmcc RPM_QDSS_CLK>, <&rpmcc RPM_QDSS_A_CLK>;
+>> -			clock-names = "apb_pclk", "atclk";
+>> -
+>> -
+>> -			out-ports {
+>> -				port {
+>> -					funnel2_out: endpoint {
+>> -						remote-endpoint =
+>> -						  <&merge_funnel_in2>;
+>> -					};
+>> -				};
+>> -			};
+>> -		};
+> 
+> Why do you remove nodes? How is this anyhow related to commit msg?
+> Nothing here is explained.
+> 
+>> -
+>>   		funnel@3025000 {
+>>   			compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
+>>   			reg = <0x3025000 0x1000>;
+>> @@ -2681,14 +2663,6 @@ merge_funnel_in1: endpoint {
+>>   						  <&funnel1_out>;
+>>   					};
+>>   				};
+>> -
+>> -				port@2 {
+>> -					reg = <2>;
+>> -					merge_funnel_in2: endpoint {
+>> -						remote-endpoint =
+>> -						  <&funnel2_out>;
+>> -					};
+> 
+> Why?
+> 
+>> -				};
+>>   			};
+>>   
+>>   			out-ports {
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> index b485bf925ce6..ebc5ba1b369e 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> @@ -2031,9 +2031,11 @@ etm5: etm@7c40000 {
+>>   
+>>   			cpu = <&CPU4>;
+>>   
+>> -			port {
+>> -				etm4_out: endpoint {
+>> -					remote-endpoint = <&apss_funnel_in4>;
+>> +			out-ports {
+>> +				port {
+> 
+> So you want to say out-ports is missing? Commit msg is really not
+> explaining anything.
+> 
+>> +					etm4_out: endpoint {
+>> +						remote-endpoint = <&apss_funnel_in4>;
+>> +					};
+>>   				};
+> 
+> 
+> Best regards,
+> Krzysztof
+Thanks for the review. I will separate the patches and update the commit 
+message.
 
----
-base-commit: 8c9660f6515396aba78d1168d2e17951d653ebf2
-change-id: 20231016-bqm5_prox-4958ff602855
+Thanks
+Jinlong Mao
 
-Best regards,
--- 
-André Apitzsch <git@apitzsch.eu>
-
+> 
 
