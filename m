@@ -1,120 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-2151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7E7C7FA93F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 19:50:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 023D97FAA8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 20:46:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 056611C209A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 18:50:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B19F028193D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 19:46:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B26A364D3;
-	Mon, 27 Nov 2023 18:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B73F231739;
+	Mon, 27 Nov 2023 19:46:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X7+3syIm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA15D53;
-	Mon, 27 Nov 2023 10:50:50 -0800 (PST)
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-1f0f94943d9so2323955fac.2;
-        Mon, 27 Nov 2023 10:50:50 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701111050; x=1701715850;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x3bXET2IS76jIzfigzKYg8jJt8fngAdagUE+PXY9fpw=;
-        b=tbk6JlRpQZDCG4ysF47qaV/ztuKW4SPaz6jjt1rLlosJVIt5D7SQa6Rwb61VTpp81p
-         MLhR5mFxmkzuCke9bGl4bdY5ZJ2/TV21Rh1W1p6skd7rbHhKMrti6nXEU4jfWXzBTy81
-         rZWj+x/wkrELrRPEleljsVTiT2qOAw3sSpkx2ZKZbllVglLq4S8FF0iGCXJlTZKZc98R
-         ffCoyjKQcNAs5SCVuMVgiga11eDMG8e91kVjCf0o1/OmBuBaHmaOUvnYqr5UbYBVMcS2
-         3S3z9EWSgmYieg8r2HEs2JJOd9UGq3egUFEV0SazrrCpZGVEmF4CwiRpM0TgpdTIbqNn
-         lSaw==
-X-Gm-Message-State: AOJu0Yz10ODXHSf7zkMe4AY1bV3X73i64mvHQ+AQZf5IdZ1olglZb8v5
-	0YW8BcbCJnsDM8pheXcXYg==
-X-Google-Smtp-Source: AGHT+IFu6MBtpvG30olCkRcT79pWOuBCeHq2F+wARXLqrblLRPuUmlli51A8gca9rI73GLBTtFURCQ==
-X-Received: by 2002:a05:6870:3308:b0:1f9:efdb:966a with SMTP id x8-20020a056870330800b001f9efdb966amr13405063oae.44.1701111050091;
-        Mon, 27 Nov 2023 10:50:50 -0800 (PST)
-Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id nz4-20020a056871758400b001fa2b18a175sm1288144oac.49.2023.11.27.10.50.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Nov 2023 10:50:49 -0800 (PST)
-Received: (nullmailer pid 2390459 invoked by uid 1000);
-	Mon, 27 Nov 2023 18:50:48 -0000
-Date: Mon, 27 Nov 2023 12:50:48 -0600
-From: Rob Herring <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Hans de Goede <hdegoede@redhat.com>, Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>, Mark Gross <markgross@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] dt-bindings: connector: usb: add altmodes
- description
-Message-ID: <20231127185048.GA2291396-robh@kernel.org>
-References: <20231120224919.2293730-1-dmitry.baryshkov@linaro.org>
- <20231120224919.2293730-2-dmitry.baryshkov@linaro.org>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33E01B8;
+	Mon, 27 Nov 2023 11:45:57 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ARGbiZS003734;
+	Mon, 27 Nov 2023 19:41:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=EaIoIEqK046xrMwErk4Ckbwbd3NmBlrraNfZlHWUlAA=;
+ b=X7+3syImP2B2I6CIg+VZtncwrhMS/C36LuUy/eyEshE0FUScJcy6IRvkwzZ8dVwpDCqL
+ vHA7cK/NxuecXdfFQai65ejXCsyK2li7FUVT/UnEQuTc8bpAv9CDn9x7IYUNFZfqvJ3P
+ TcvN/YzHnAFqulwTM4P1qdBEibsiPc5ORbHpEFZPR86M+eai1vtjo9qVuqlY0BLmkqNj
+ n6S4BQjzKXlSk7xIdinU9FWEcdYn7+t+V0HDe2WzpRR3T6O2hi/SgNqHepLgMqRzQK9p
+ j5R/lJvvBQQxjrU7N1n9ONVos1pUlVuxHrTLgc2TSf/h3XBvlM9lQXjBl6LX7ZlpfI+3 Kg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3umrqq1kbr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Nov 2023 19:41:05 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ARJf4c1026517
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 27 Nov 2023 19:41:04 GMT
+Received: from [10.239.155.136] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 27 Nov
+ 2023 11:41:00 -0800
+Message-ID: <c6a72c38-aa63-79b8-c784-d753749f7272@quicinc.com>
+Date: Tue, 28 Nov 2023 03:40:57 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231120224919.2293730-2-dmitry.baryshkov@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] scsi: ufs: qcom: move ufs_qcom_host_reset() to
+ ufs_qcom_device_reset()
+Content-Language: en-US
+To: Can Guo <quic_cang@quicinc.com>, Manivannan Sadhasivam <mani@kernel.org>
+CC: <quic_asutoshd@quicinc.com>, <bvanassche@acm.org>, <beanhuo@micron.com>,
+        <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
+        <martin.petersen@oracle.com>, <quic_nguyenb@quicinc.com>,
+        <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
+        <linux-scsi@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "James E.J.
+ Bottomley" <jejb@linux.ibm.com>,
+        "open list:ARM/QUALCOMM SUPPORT"
+	<linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1698145815-17396-1-git-send-email-quic_ziqichen@quicinc.com>
+ <20231025074128.GA3648@thinkpad>
+ <85d7a1ef-92c4-49ae-afe0-727c1b446f55@quicinc.com>
+From: Ziqi Chen <quic_ziqichen@quicinc.com>
+In-Reply-To: <85d7a1ef-92c4-49ae-afe0-727c1b446f55@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kXOZ0pAZNqg7YjH4R0nJZIrZROTf-Uiy
+X-Proofpoint-GUID: kXOZ0pAZNqg7YjH4R0nJZIrZROTf-Uiy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-27_18,2023-11-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 mlxscore=0 adultscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 mlxlogscore=999 spamscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2311270136
 
-On Tue, Nov 21, 2023 at 12:00:18AM +0200, Dmitry Baryshkov wrote:
-> Add description of the USB-C AltModes supported on the particular USB-C
-> connector. This is required for devices like Qualcomm Robotics RB5,
-> which have no other way to express alternative modes supported by the
-> hardware platform.
+
+
+On 11/22/2023 2:14 PM, Can Guo wrote:
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../bindings/connector/usb-connector.yaml     | 29 +++++++++++++++++++
->  1 file changed, 29 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> index 7c8a3e8430d3..c1aaac861d9d 100644
-> --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
-> @@ -171,6 +171,28 @@ properties:
->        offer the power, Capability Mismatch is set. Required for power sink and
->        power dual role.
->  
-> +  altmodes:
-> +    type: object
-> +    description: List of Alternative Modes supported by the schematics on the
-> +      particular device. This is only necessary if there are no other means to
-> +      discover supported alternative modes (e.g. through the UCSI firmware
-> +      interface).
+> On 10/25/2023 3:41 PM, Manivannan Sadhasivam wrote:
+>> On Tue, Oct 24, 2023 at 07:10:15PM +0800, Ziqi Chen wrote:
+>>> During PISI test, we found the issue that host Tx still bursting after
+>>
+>> What is PISI test?
 
-Move additionalProperties here.
+SI measurement.
 
-> +
-> +    patternProperties:
-> +      "^(displayport)$":
-> +        type: object
-> +        description:
-> +          A single USB-C Alternative Mode as supported by the USB-C connector logic.
+>>
+>>> H/W reset. Move ufs_qcom_host_reset() to ufs_qcom_device_reset() and
+>>> reset host before device reset to stop tx burst.
+>>>
+>>
+>> device_reset() callback is supposed to reset only the device and not 
+>> the host.
+>> So NACK for this patch.
+> 
+> Agree, the change should come in a more reasonable way.
+> 
+> Actually, similar code is already there in ufs_mtk_device_reset() in 
+> ufs-mediatek.c, I guess here is trying to mimic that fashion.
+> 
+> This change, from its functionality point of view, we do need it, 
+> because I occasionally (2 out of 10) hit PHY error on lane 0 during 
+> reboot test (in my case, I tried SM8350, SM8450 and SM8550， all same).
+> 
+> [    1.911188] [DEBUG]ufshcd_update_uic_error: UECPA:0x80000002
+> [    1.922843] [DEBUG]ufshcd_update_uic_error: UECDL:0x80004000
+> [    1.934473] [DEBUG]ufshcd_update_uic_error: UECN:0x0
+> [    1.944688] [DEBUG]ufshcd_update_uic_error: UECT:0x0
+> [    1.954901] [DEBUG]ufshcd_update_uic_error: UECDME:0x0
+> 
+> I found out that the PHY error pops out right after UFS device gets 
+> reset in the 2nd init. After having this change in place, the PA/DL 
+> errors are gone.
 
-Move additionalProperties here.
+Hi Mani,
 
-And a blank line
+There is another way that adding a new vops that call XXX_host_reset() 
+from soc vendor driver. in this way, we can call this vops in core layer 
+without the dependency of device reset.
+due to we already observed such error and received many same reports 
+from different OEMs, we need to fix it in some way.
+if you think above way is available, I will update new patch in soon. Or 
+could you give us other suggestion?
 
-> +        properties:
-> +          svid:
-> +            $ref: /schemas/types.yaml#/definitions/uint16
-> +            description: Unique value assigned by USB-IF to the Vendor / AltMode.
+-Ziqi
 
-blank line
-
-Since you've constrained the node name, then the only possible value 
-here is 0xff01?
-
-OTOH, I don't know that we want to enumerate all possible values here 
-especially if there could be lots of vendor modes. But then again, maybe 
-better to just wait and see if that becomes a problem.
-
-With those nits fixed,
-
-Reviewed-by: Rob Herring <robh@kernel.org>
+> 
+> Thanks,
+> Can Guo.
+>>
+>> - Mani
+>>
+>>> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+>>> ---
+>>>   drivers/ufs/host/ufs-qcom.c | 13 +++++++------
+>>>   1 file changed, 7 insertions(+), 6 deletions(-)
+>>>
+>>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>>> index 96cb8b5..43163d3 100644
+>>> --- a/drivers/ufs/host/ufs-qcom.c
+>>> +++ b/drivers/ufs/host/ufs-qcom.c
+>>> @@ -445,12 +445,6 @@ static int ufs_qcom_power_up_sequence(struct 
+>>> ufs_hba *hba)
+>>>       struct phy *phy = host->generic_phy;
+>>>       int ret;
+>>> -    /* Reset UFS Host Controller and PHY */
+>>> -    ret = ufs_qcom_host_reset(hba);
+>>> -    if (ret)
+>>> -        dev_warn(hba->dev, "%s: host reset returned %d\n",
+>>> -                  __func__, ret);
+>>> -
+>>>       /* phy initialization - calibrate the phy */
+>>>       ret = phy_init(phy);
+>>>       if (ret) {
+>>> @@ -1709,6 +1703,13 @@ static void ufs_qcom_dump_dbg_regs(struct 
+>>> ufs_hba *hba)
+>>>   static int ufs_qcom_device_reset(struct ufs_hba *hba)
+>>>   {
+>>>       struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>>> +    int ret = 0;
+>>> +
+>>> +    /* Reset UFS Host Controller and PHY */
+>>> +    ret = ufs_qcom_host_reset(hba);
+>>> +    if (ret)
+>>> +        dev_warn(hba->dev, "%s: host reset returned %d\n",
+>>> +                  __func__, ret);
+>>>       /* reset gpio is optional */
+>>>       if (!host->device_reset)
+>>> -- 
+>>> 2.7.4
+>>>
+>>
 
