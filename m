@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-2043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5749A7F9A96
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 08:12:54 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A23C7F9A9D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 08:14:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DBB6DB207AC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 07:12:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2CC8B208A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 07:14:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE3A2170;
-	Mon, 27 Nov 2023 07:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFF03DF6D;
+	Mon, 27 Nov 2023 07:14:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MZeQPEUT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e4Ipqhln"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 362FF12F;
-	Sun, 26 Nov 2023 23:12:45 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AR6KJLx032081;
-	Mon, 27 Nov 2023 07:12:36 GMT
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6706FC3;
+	Sun, 26 Nov 2023 23:14:15 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AR6wq3L002122;
+	Mon, 27 Nov 2023 07:14:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Q2cevitLQJMwXLFs8IRoxaS/CwlcSC8j44PxM5Vgrg0=;
- b=MZeQPEUTtRixwS/Wfv8PJtZEsJBAuks6Q+6j3Xx+efJ/1qUrIdHWf+5nUGiXiyjBg9On
- icwnv70BT3y509DdnTJjlsrUuxebFWipyqa14QR4Qhx66N4LkTUnhL4iohKuzdjej2eR
- edS+Cyikr1uzqHsRYQW7YC1dc6fCf2EKkPKvYYRBwXJLZVLq7gUJmPXW7ObuVKp3nIO8
- Q4lAMR/xe5XdL3u6APOfIcSpd04A6U9BdvrX2jsHZBVEEMTwLmeyEbADYmggly0Wc8Up
- DEDehmSkDqo/t+B9+r+495OIAJutOkvIOaiwCIFXqXTYhOKGguqTDbLJOyczmnWeaps0 BQ== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ukpdh2apw-1
+ bh=yWRDbKWjbkyTrtsBTWPleY96jb2ymjXC2VRjwvDOW7w=;
+ b=e4IpqhlnxoWrjGaf2peVS5k1F0aPBRI3MwQalI8QZQYFF0VkfvlljdPWyz6rAYsHDBwq
+ TS7x6wyrF2/3Mj+fX21sbgi2zs+SpVBBcwvhbAi4aSbT5+4zycO+mU1Gu5I0bHC4wbIB
+ p+kzNaMTmyZC6L+pjvff/uf8pjaY7GWBehxoJczUzPNf1lFz3FfrN8vATu37hiGMqilt
+ 6tP1hQ4xgMf5mLgWcUsbnt3n3JL5SYQjdADMblY6vbowS6xSP2coPiFlfDi0BFkQsYax
+ 0O4Zyxk4osK60wV+M55OC55NVh548NSF+HSDyWEZao3On7zEq2eDfEhhUPF/Mw0xhH9z fw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk8h8kfjg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 07:12:35 +0000
+	Mon, 27 Nov 2023 07:14:03 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AR7CZwP022665
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AR7DwxR016426
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 07:12:35 GMT
+	Mon, 27 Nov 2023 07:13:58 GMT
 Received: from [10.253.15.56] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 26 Nov
- 2023 23:12:33 -0800
-Message-ID: <66d37188-f5e0-4f8a-b190-9b3865876cdd@quicinc.com>
-Date: Mon, 27 Nov 2023 15:12:30 +0800
+ 2023 23:13:55 -0800
+Message-ID: <639d6008-bdfa-4b6e-b622-e916003ec908@quicinc.com>
+Date: Mon, 27 Nov 2023 15:13:55 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,16 +69,16 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -TW-WKks9taKS224oOzF6AEO2RmaUwbT
-X-Proofpoint-ORIG-GUID: -TW-WKks9taKS224oOzF6AEO2RmaUwbT
+X-Proofpoint-ORIG-GUID: -UL4--dwQ8TrXlyhpAiwRjC-fuIDLUGS
+X-Proofpoint-GUID: -UL4--dwQ8TrXlyhpAiwRjC-fuIDLUGS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-27_05,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=754
- priorityscore=1501 clxscore=1015 lowpriorityscore=0 suspectscore=0
- bulkscore=0 phishscore=0 mlxscore=0 spamscore=0 adultscore=0
- impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311060000 definitions=main-2311270049
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=754 impostorscore=0 bulkscore=0
+ phishscore=0 malwarescore=0 mlxscore=0 adultscore=0 clxscore=1015
+ spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311270049
 
 
 On 11/24/2023 6:04 PM, Manivannan Sadhasivam wrote:
@@ -111,7 +111,6 @@ twice.
 
 Sorry for confusing you. Do you think we need to sqush this two patch 
 into one?
->
 >> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 >> ---
 >>   drivers/bus/mhi/host/main.c | 4 ++++
