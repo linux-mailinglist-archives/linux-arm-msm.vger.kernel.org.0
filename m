@@ -1,232 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-2049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B60E7F9C65
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 10:10:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAF197F9CCA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 10:38:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4C5EF1C209EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 09:10:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 965EA1F20C82
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 09:38:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5651A134C2;
-	Mon, 27 Nov 2023 09:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AECC8168B9;
+	Mon, 27 Nov 2023 09:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dD5kiba0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QUwcmB/l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3C88DB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 01:10:42 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40b473dce26so3932435e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 01:10:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701076241; x=1701681041; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hUR2wSeOP6LFGt4qpl7i9vzWxJbRVNeOLPPh4XEQ8eo=;
-        b=dD5kiba0TRgMzObo2+i7/LOfOGSfaYX+nKV+oxsPD85bJQYFQtlxZk9Vh0HGByIDG/
-         iOCYPaWwe6DiQDnRHXs1bofrj6KhXeX1/6wfSL5OJFVYT6PkVID5nK2WJVVQLgk63I9S
-         jR3PES2dbkPP8gCUwmE1kEvpmFSO5WRAhoROVNNScppooeytrdWGt3s4dujPupbym3eO
-         8fGJhzXuIpg+dizGVqJPuZAabVF8LnoUMqrx1XQw5O+QeIqTJe3vnlkO1YH5k8kMmz+Z
-         VKlkZs65dOC3LEEpsvFBkw0XX0YPa9nvWmf/f0xOLwa5AN3SU5DSMg7dVYqq378F67KB
-         vf8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701076241; x=1701681041;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=hUR2wSeOP6LFGt4qpl7i9vzWxJbRVNeOLPPh4XEQ8eo=;
-        b=IaMR8slYaTcx4ETuTv6THpv3zbie93JYunt3tThG1Za2V9FBjMCNwVYwfKDE7/G/6O
-         +ckLla9fjGh2DI8lbYbApLD3Z7k8FZ1XWwTr0bF7nzUXq/y9VONbeKzap8ZEVCRABNUx
-         EI9VX4vAhRsKZKbBfgcCWE+TE2HfKLwosSERI8Bn0uiWXyNLxxi4Z5HEg9smtkNJAJ69
-         J/HZxgms5jkb9twb6BPpgo0Ri/iG2lkjY4nS3dp2Xfvfy9RHoWCxLUY9ALMw7NVgupW3
-         pmstMp1ZsTyEdQr8ld2G1eMvFL6H9VCG7ByuYNwdGa9mdzodDF02Izd/jxjOxkhwXByt
-         JtoQ==
-X-Gm-Message-State: AOJu0YyoPdWQcwy2ZMs/JUmBErUutsr9CZM9tcgf+he/sZA9DPTqau8C
-	SWo+ZkUawgGlQWHf+OwhhgMCqg==
-X-Google-Smtp-Source: AGHT+IFdF9J39dEZvkbZ81hKhdmhhKBkmB1jsS57Ela0Iatt8UvL2WcJf77YPNlkLrIktkxFHD1Y1Q==
-X-Received: by 2002:a05:600c:1384:b0:40b:41c8:f414 with SMTP id u4-20020a05600c138400b0040b41c8f414mr3931901wmf.31.1701076241165;
-        Mon, 27 Nov 2023 01:10:41 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5a15:ac68:b4a4:85ff? ([2a01:e0a:982:cbb0:5a15:ac68:b4a4:85ff])
-        by smtp.gmail.com with ESMTPSA id c37-20020a05600c4a2500b003fee6e170f9sm12942449wmp.45.2023.11.27.01.10.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Nov 2023 01:10:40 -0800 (PST)
-Message-ID: <38d323d0-d8a8-4de7-8db9-57ea488e544e@linaro.org>
-Date: Mon, 27 Nov 2023 10:10:39 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9AC806;
+	Mon, 27 Nov 2023 09:38:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296E3C433C7;
+	Mon, 27 Nov 2023 09:38:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701077886;
+	bh=BN2LicB5jxds9fx+ZEYukWJ29CfaB31EBJL8lQdSPpE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QUwcmB/lgL3jexVnTCttyrHGUr+uCTFiZEZ8hgmdHk2vw9TJmIuIOfHtXWmJ3kQj2
+	 UiSprLMu3oYSCNX9cGfhg53z0BYsdAeosAir6hK4zobLLKVrvOhLBueWWY+ji1oZTz
+	 wrhUZ1tJ4bf8yS/FPSyOp2kLIWgUdWnVbQ3AUiE573G5jCc1y/2qgQbjMg7IIr7jS6
+	 MiLNKThT9h1shVCbDuR47x5Y8Hc2i0We224TqtH2PxEpOZgprzYonlUePKDrdHdDqg
+	 UU73HOpbe5swirTJMn4vf1ae6FJJY09RRNNBLsfJnwgJCh38eX9/M3t+hwlwMnYw0D
+	 qHXYyNHjRPajg==
+Date: Mon, 27 Nov 2023 09:37:59 +0000
+From: Simon Horman <horms@kernel.org>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	andrew@lunn.ch, hkallweit1@gmail.com, linux@armlinux.org.uk,
+	robert.marko@sartura.hr, linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
+Subject: Re: [PATCH 2/9] net: mdio: ipq4019: Enable the clocks for ipq5332
+ platform
+Message-ID: <20231127093759.GD84723@kernel.org>
+References: <20231115032515.4249-1-quic_luoj@quicinc.com>
+ <20231115032515.4249-3-quic_luoj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v4 0/8] arm64: dts: qcom: Introduce SM8650 platforms
- device tree
-Content-Language: en-US, fr
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20231124-topic-sm8650-upstream-dt-v4-0-e402e73cc5f0@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20231124-topic-sm8650-upstream-dt-v4-0-e402e73cc5f0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231115032515.4249-3-quic_luoj@quicinc.com>
 
-Hi Bjorn,
-
-On 24/11/2023 10:20, Neil Armstrong wrote:
-
-<snip>
-
+On Wed, Nov 15, 2023 at 11:25:08AM +0800, Luo Jie wrote:
+> For the platform ipq5332, the related GCC clocks need to be enabled
+> to make the GPIO reset of the MDIO slave devices taking effect.
 > 
-> Bindings Dependencies:
-> - aoss-qmp: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-aoss-qmp-v1-1-8940621d704c@linaro.org/ - Reviewed
-> - bwmon: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-bwmon-v1-1-11efcdd8799e@linaro.org/ - Reviewed
-
-Applied
-
-> - cpufreq: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-cpufreq-v1-1-31dec4887d14@linaro.org/ - Applied
-> - dwc3: https://lore.kernel.org/all/20231030-topic-sm8650-upstream-bindings-dwc3-v2-1-60c0824fb835@linaro.org/ - Applied
-> - gpi: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-gpi-v2-1-4de85293d730@linaro.org/ - Reviewed
-
-Applied
-
-> - ice: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-ice-v1-1-6b2bc14e71db@linaro.org/ - Applied
-> - ipcc: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-ipcc-v1-1-acca4318d06e@linaro.org/ - Reviewed
-
-Applied
-
-> - pcie: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-pcie-v1-1-0e3d6f0c5827@linaro.org/ - Reviewed
-> - pcd: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-pdc-v1-1-42f62cc9858c@linaro.org/ - Reviewed
-> - pmic-glink: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-pmic-glink-v1-1-0c2829a62565@linaro.org/ - Reviewed
-> - qce: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-qce-v1-1-7e30dba20dbf@linaro.org/ - Applied
-> - rng: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-rng-v1-1-6b6a020e3441@linaro.org/ - Applied
-> - scm: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-scm-v2-1-68a8db7ae434@linaro.org/ - Reviewed
-> - sdhci: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-scm-v2-1-68a8db7ae434@linaro.org/ - Applied
-> - smmu: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-smmu-v1-1-bfa25faa061e@linaro.org/ - Reviewed
-> - tsens: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-bindings-tsens-v2-1-5add2ac04943@linaro.org/ - Reviewed
-> - ufs: https://lore.kernel.org/r/20231030-topic-sm8650-upstream-bindings-ufs-v3-1-a96364463fd5@linaro.org - Applied
-> - clocks: https://lore.kernel.org/all/20231106-topic-sm8650-upstream-clocks-v3-0-761a6fadb4c0@linaro.org/
-> - interconnect: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-interconnect-v1-0-b7277e03aa3d@linaro.org/ - Reviewed
-
-Applied
-
-> - llcc: https://lore.kernel.org/r/20231030-topic-sm8650-upstream-llcc-v2-0-f281cec608e2@linaro.org - Reviewed
-> - mdss: https://lore.kernel.org/all/20231030-topic-sm8650-upstream-mdss-v2-0-43f1887c82b8@linaro.org/ - Reviewed
-> - phy: https://lore.kernel.org/all/20231030-topic-sm8650-upstream-phy-v2-0-a543a4c4b491@linaro.org/ - Applied
-> - remoteproc: https://lore.kernel.org/r/20231030-topic-sm8650-upstream-remoteproc-v2-0-609ee572e0a2@linaro.org
-> - rpmpd: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-rpmpd-v1-0-f25d313104c6@linaro.org/ - Applied
-> - tlmm: https://lore.kernel.org/all/20231106-topic-sm8650-upstream-tlmm-v3-0-0e179c368933@linaro.org/ - Applied
-> - goodix: https://lore.kernel.org/all/20231106-topic-goodix-berlin-upstream-initial-v11-0-5c47e9707c03@linaro.org/ - Reviewed
-> 
-> Build Dependencies:
-> - clocks: https://lore.kernel.org/all/20231106-topic-sm8650-upstream-clocks-v3-0-761a6fadb4c0@linaro.org/
-> - interconnect: https://lore.kernel.org/all/20231025-topic-sm8650-upstream-interconnect-v1-0-b7277e03aa3d@linaro.org/ - Reviewed
-
-Interconnect bindings has been merged, Georgi provides an immutable branch at:
-https://git.kernel.org/pub/scm/linux/kernel/git/djakov/icc.git/log/?h=icc-sm8650
-
-Thanks,
-Neil
-
-> 
-> Other:
-> - socinfo: https://lore.kernel.org/all/20231030-topic-sm8650-upstream-socinfo-v2-0-4751e7391dc9@linaro.org/ - Reviewed
-> - defconfig: https://lore.kernel.org/all/20231121-topic-sm8650-upstream-defconfig-v1-1-2500565fc21b@linaro.org/
-
-Reviewed
-
-> 
-> Merge Strategy:
-> - Merge patches 1-5 with Clock bindings immutable branch
-> - Merge patches 6-8 with Interconnect immutable branch
-> 
-> For convenience, a regularly refreshed linux-next based git tree containing
-> all the SM8650 related work is available at:
-> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 > ---
-> Changes in v4:
-> - Collected reviewed-bys
-> - Fixed dwc3 interrupts
-> - Added comment on the reserved i/o ranges
-> - fixed s/resetn/reset-n/
-> - Used minimal patch strategy to make patch 6 readable
-> - Link to v3: https://lore.kernel.org/r/20231121-topic-sm8650-upstream-dt-v3-0-db9d0507ffd3@linaro.org
+>  drivers/net/mdio/mdio-ipq4019.c | 67 +++++++++++++++++++++++++++++----
+>  1 file changed, 60 insertions(+), 7 deletions(-)
 > 
-> Changes in v3:
-> - Cleanup of thermal zones
-> - Rename SDE pinctrl to real signal names
-> - Link to v2: https://lore.kernel.org/r/20231106-topic-sm8650-upstream-dt-v2-0-44d6f9710fa7@linaro.org
-> 
-> Changes in v2:
-> - Drop RFC since most of bindings were reviewed
-> - Collect Reviewed-by/Acked-bys
-> - Remove #ifndef PMK8550VE_SID in favor of #define in sm8550 dts
-> - Add allow-set-load/allowed-modes to LDOs
-> - Add QCOM_ICC_TAG_ALWAYS/QCOM_ICC_TAG_ACTIVE_ONLY to interconnects = <> instead of 0 & 3
-> - minimal sm8650-qrd.dts cleanup
-> - Link to v1: https://lore.kernel.org/r/20231025-topic-sm8650-upstream-dt-v1-0-a821712af62f@linaro.org
-> 
-> ---
-> Neil Armstrong (8):
->        dt-bindings: arm: qcom: document SM8650 and the reference boards
->        arm64: dts: qcom: add initial SM8650 dtsi
->        arm64: dts: qcom: pm8550ve: make PMK8550VE SID configurable
->        arm64: dts: qcom: sm8650: add initial SM8650 MTP dts
->        arm64: dts: qcom: sm8650: add initial SM8650 QRD dts
->        arm64: dts: qcom: sm8650: add interconnect dependent device nodes
->        arm64: dts: qcom: sm8650-mtp: add interconnect dependent device nodes
->        arm64: dts: qcom: sm8650-qrd: add interconnect dependent device nodes
-> 
->   Documentation/devicetree/bindings/arm/qcom.yaml |    7 +
->   arch/arm64/boot/dts/qcom/Makefile               |    2 +
->   arch/arm64/boot/dts/qcom/pm8550ve.dtsi          |    6 +-
->   arch/arm64/boot/dts/qcom/sm8550-mtp.dts         |    1 +
->   arch/arm64/boot/dts/qcom/sm8550-qrd.dts         |    1 +
->   arch/arm64/boot/dts/qcom/sm8650-mtp.dts         |  679 +++
->   arch/arm64/boot/dts/qcom/sm8650-qrd.dts         |  804 ++++
->   arch/arm64/boot/dts/qcom/sm8650.dtsi            | 5384 +++++++++++++++++++++++
->   8 files changed, 6881 insertions(+), 3 deletions(-)
-> ---
-> base-commit: 4e87148f80d198ba5febcbcc969c6b9471099a09
-> change-id: 20231016-topic-sm8650-upstream-dt-ee696999df62
-> 
-> Best regards,
+> diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
+> index 9d444f5f7efb..a77982a1a1e1 100644
+> --- a/drivers/net/mdio/mdio-ipq4019.c
+> +++ b/drivers/net/mdio/mdio-ipq4019.c
 
+...
+
+> +const char *const mdio_clk_name[] = {
+> +	"gcc_mdio_ahb_clk",
+> +	"gcc_uniphy0_ahb_clk",
+> +	"gcc_uniphy0_sys_clk",
+> +	"gcc_uniphy1_ahb_clk",
+> +	"gcc_uniphy1_sys_clk"
+>  };
+
+Hi Luo Jie,
+
+A minor nit from my side: It appears that mdio_clk_name is only
+used in this file. If so it should be declared as static.
+
+...
 
