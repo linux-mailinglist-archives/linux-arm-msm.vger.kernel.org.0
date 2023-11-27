@@ -1,203 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-2104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10AFC7FA270
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 15:20:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C20FE7FA278
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 15:20:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 39A451C20C5F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 14:20:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 37093B20D98
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 14:20:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB31131597;
-	Mon, 27 Nov 2023 14:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E46FA3066D;
+	Mon, 27 Nov 2023 14:20:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="qcGD6XIZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f195.google.com (mail-yw1-f195.google.com [209.85.128.195])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B5D6FA2;
-	Mon, 27 Nov 2023 06:20:06 -0800 (PST)
-Received: by mail-yw1-f195.google.com with SMTP id 00721157ae682-5cbcfdeaff3so42805607b3.0;
-        Mon, 27 Nov 2023 06:20:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701094805; x=1701699605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p8asMA5McnjUqiDsQhrdKj0am/206nD+kU8Fb3R8j7Q=;
-        b=nwYLifb5c03uBSoGy08J+jk4kdSTzWG2HUdNOUK9Toymsx7FNnlAEISUAEKCULXlqi
-         tA/+IdWgjUmuf/Rcij4uv0uwOOBWKluBdcZunKKqrcsnyjygTjxIyFi1i3/mwYIKw2ec
-         69gRtE+3z5VZKi5HxeuuMmqBnLNddnzNOKMAef6ZQEWXTkGgp+356vO7DyHZYDRGeGzx
-         Fcnfy10u5U+afWNGkfOZljZWS5rP0KxPMZcLpKK+Xh2qX91ukBA//5X6WC9R6QOVmWGk
-         kgk/uU/Kh4dGzL7I8WpMh0HQl7OoicB9QVarh4C8n5SVo1tdf6dd5V3Lzr1/Tj4c1oAW
-         8apQ==
-X-Gm-Message-State: AOJu0YwaJcDUgbz1R/iFhh5FhfWvOspgkqE3s8D1wfhBiv73/U7sU0Hj
-	rKnsRD3tFThRLPKxtwZUE7KevIwRevWq0qoG
-X-Google-Smtp-Source: AGHT+IH5EZJ3JXP1ys8qvMygvedokqxnAV2ajL+xIX1xN5Tq5j5zb7onIkAN9QKV3wbGyR2XId9FTA==
-X-Received: by 2002:a0d:d68c:0:b0:5a7:bfbf:691d with SMTP id y134-20020a0dd68c000000b005a7bfbf691dmr11601951ywd.42.1701094804463;
-        Mon, 27 Nov 2023 06:20:04 -0800 (PST)
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com. [209.85.128.175])
-        by smtp.gmail.com with ESMTPSA id v126-20020a818584000000b005c08cfb7cadsm3310487ywf.57.2023.11.27.06.20.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Nov 2023 06:20:04 -0800 (PST)
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-5cc66213a34so42655617b3.1;
-        Mon, 27 Nov 2023 06:20:03 -0800 (PST)
-X-Received: by 2002:a0d:e207:0:b0:5a8:207b:48d with SMTP id
- l7-20020a0de207000000b005a8207b048dmr10958508ywe.11.1701094803713; Mon, 27
- Nov 2023 06:20:03 -0800 (PST)
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2079.outbound.protection.outlook.com [40.107.92.79])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BC6ED5D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 06:20:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SxqCJFhiyk5dRNOrcUK7uwlE8jVDNp2qox1MKGjQKR23+eoG6Y/ViXZPUMIfWfxYWFnJV/N2b87outconJZ6R7cZYSYixcN+D1UDnnT3GcRqZWiUnfXUEINckSxKT0WIlRRhoZ2KnhWfCenbgk78dVt7gf88QMYqw5kgfjPYdkHi9RhJdDBHh5TS1k+F/T90/HhmT2u8Ysw01YFVpNCWkmUgCLjW5ik+r7rsbnVS3PAFuY6UtJ1ndJN/8DVisJjgO9orTJbySD7W/5FWmf/bNEaGLL4qYsoZHeoG+CNx6babCi1jzlh47dg7lxRBNvF+V1aAuURAd/c3/7tyqlQ0sQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=s+QZT+JZqBSUPzmGFHxr6vuenWRoYl6D2W/YWxwYwMA=;
+ b=ICjHOY7W/kiMA6sb4tLi1MXhcdB4kj4s8O1gGqFOOCdyG0hgo2h4VRey55l/+Dcmobnje91tduJ0LTy0sUZhFMsnbhjd/vqNLv9+5OVZIoS/BoOcx2yNwSAkM6HZVRvWJyvV3zQLU+bAz04tXQZMyjfOQmW4wA+qWlcuxzJFTSTic1WktHuPxn3+KzM2t8GZrhBTtXznQOLhUxGQpbRYWBBF2EcMtaTd3Bo8SJUkfuKlRUhPlCxF0ptGVRsK95mFbChaHdzJLqwf7CHh4kqPtU/oUL/0pKjwBxrgeKv/VmPSRg7jUcIFaKBBA2PckA0AKgEl5oyb7l1G8fA/Ds8xow==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=s+QZT+JZqBSUPzmGFHxr6vuenWRoYl6D2W/YWxwYwMA=;
+ b=qcGD6XIZ1tIaWPki2C1u1CtDlJ3Sw3g6q3tcnUJRb66lZKsWOUt+hysMx6S11BbQvShd8CW7lYJHrdpECLFcVTiM8940zjoRds+Gcx4s+WFwB/fOKwNpyIezbCbDXy3VMTGUfCXDg1qRgvk/ZeofEHb8pHAPegMx45z9OwF9EsE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com (2603:10b6:408:43::13)
+ by CH3PR12MB8209.namprd12.prod.outlook.com (2603:10b6:610:123::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7025.28; Mon, 27 Nov
+ 2023 14:20:21 +0000
+Received: from BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::ca80:8f1c:c11:ded3]) by BN8PR12MB3587.namprd12.prod.outlook.com
+ ([fe80::ca80:8f1c:c11:ded3%7]) with mapi id 15.20.7025.022; Mon, 27 Nov 2023
+ 14:20:21 +0000
+Message-ID: <7429262c-6dea-4dcc-bf7e-54d2277dabf1@amd.com>
+Date: Mon, 27 Nov 2023 15:20:16 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] drm/sched: Rename priority MIN to LOW
+Content-Language: en-US
+To: Luben Tuikov <ltuikov89@gmail.com>,
+ Direct Rendering Infrastructure - Development
+ <dri-devel@lists.freedesktop.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Danilo Krummrich <dakr@redhat.com>, Alex Deucher
+ <alexander.deucher@amd.com>, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20231124052752.6915-4-ltuikov89@gmail.com>
+ <20231124052752.6915-5-ltuikov89@gmail.com>
+ <76749276-dc73-4f6f-a467-aa8a721b0878@amd.com>
+ <f5a4d51d-82d6-435d-92cd-fdd2d1683404@amd.com>
+ <49388112-f42a-448c-9f68-e41266c4408c@gmail.com>
+From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+In-Reply-To: <49388112-f42a-448c-9f68-e41266c4408c@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: FR2P281CA0156.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:98::13) To BN8PR12MB3587.namprd12.prod.outlook.com
+ (2603:10b6:408:43::13)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Mon, 27 Nov 2023 15:19:52 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUYEwMuxJ2Xx=KRVKneRT-e+uHz8LE1JVY5zLDkWksqKw@mail.gmail.com>
-Message-ID: <CAMuHMdUYEwMuxJ2Xx=KRVKneRT-e+uHz8LE1JVY5zLDkWksqKw@mail.gmail.com>
-Subject: Re: [PATCH v3] docs: dt-bindings: add DTS Coding Style document
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, 
-	Andrew Lunn <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>, 
-	Chen-Yu Tsai <wens@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
-	Jonathan Corbet <corbet@lwn.net>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Michal Simek <michal.simek@amd.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>, =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>, 
-	linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
-	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	workflows@vger.kernel.org, linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR12MB3587:EE_|CH3PR12MB8209:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8abb31cd-b177-4921-1e14-08dbef53fce2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	6Y16LS7ELd1Fc+P9Qv+0YB+3hGPG+jMOB0qYR1zmodswj/S33nA0U7GehOgf2tpDaPj2jJvd3itDSQTDbWI/8xLgAcu4/u2QmE6n/rn0hF2ejL1ugllPSoA18vSEoyyKESpGNN2ib6lniiYB8g1IwqD2XiG8I0ag9CLNFw6+3EQHyvSYCXpnLfEahLkn0nNPl7oID8/ZogH1GN6+yQjMnGx0S8egWPBf+oyqX5d24hokzfgmwqkLwRy4H4mMYlm9klzgyLHhlhxeX8MG12oa17vLFRH02dcv/ps8+UFWkJ9w6YiFJ0snwGzKrkcVam0WqP0Kg3ssErE4SIvlmkOOXgH0lwtVi+Ig63/WOzH5juSz/I8TJ5p89XsVo1A+fVywfdsFfE/9OdMMqkUzKHOf8h8P1Azjy/c86q0c3QAcN0cwQv9TT9xeKD5h9lnmy7k5nI66ZEif2cow+OUm/jQ7CmRU4gUSQCv6lE/o2ZSj/DLWqFpe7xETZz9+edAAcQCySh6dbx5H0FmfoMgxVG2OahBoXmHfvsP3NaZgKAEY7UnrX52wtD2QXDsR+eKWVqTUJ4B1V5DIeE3tlv3Hgv3bjGLCPzVuVozba5t/By2Iuo5W1g6lCUJOkTLvtcQALHKffuOW7qedSrwsqXU6D52YfA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN8PR12MB3587.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(366004)(396003)(39860400002)(136003)(346002)(230922051799003)(451199024)(64100799003)(186009)(1800799012)(38100700002)(6486002)(966005)(478600001)(41300700001)(8936002)(8676002)(4326008)(36756003)(6506007)(66946007)(54906003)(31696002)(86362001)(316002)(66476007)(66556008)(110136005)(26005)(2616005)(66574015)(83380400001)(53546011)(6666004)(6512007)(31686004)(4001150100001)(2906002)(5660300002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?d25kdWd2cDFtT2Z6d1VGcXl0Y3BHbU1UcHViM0MxQU55SVlRN0ljRlFpalNl?=
+ =?utf-8?B?dVhiK1FCVkhVcmNaa1l3TzJPQUE0UzRQM3BiZzZCRFdWOWFnT2kvVi9CSFE0?=
+ =?utf-8?B?a0pZNXdJOVV2S2k2ZlUvOWorRXhCRTlDcVZaOG05WmdJYkRhNllYZmhxcVNo?=
+ =?utf-8?B?RGtkVDVhbWtjYUVDdXJ3M3RJTzAxd2dGL3V6K1Z3bDdJSzdDczA2cm1EaXpO?=
+ =?utf-8?B?dkFJZ2tqRTM3MnFpTFZaZEZSSnEweWVXREoxVmIvUXRkdDRBUGpmVmUycE5l?=
+ =?utf-8?B?bnJESkZKU1NKVGd5bU5BalRJTEYzUkQ3ZW9GUXdDMkd0U1E4WDVyVXg0QlVD?=
+ =?utf-8?B?MmxLQ0lxKzBIUko3YzNuVkxLbngvdEM1Yk9rNnhsVVl5UExXTTFTb1ZveFJk?=
+ =?utf-8?B?Wjcwb0ZEOUtHa0I1VktENHlQRVpUU1Z3aHBBTytVYlJFWUVEdzVQeGtuWFIw?=
+ =?utf-8?B?WDAraHFvRHMyOXVkajVzOWYwMjNiWXhvTlAzbDRMUjNBZEhOMFAvM2ZtdFF3?=
+ =?utf-8?B?Y1lxRHU5SnV6dWo5Um10YlZwTzRQcU82OFFhMWVSamkvWEZGZzV1dmtMQUwr?=
+ =?utf-8?B?NGhBU3dLNTNPeU1FVXBCeEJlSVhEWEM0ZVRwa0U1Vmg0bnFlY0VmSVZGbDlM?=
+ =?utf-8?B?QVhiSVJyekp2cXduS1MxODByRGZOMC9Za1F3ajhJM1crbW81TnNsS1pLREQ1?=
+ =?utf-8?B?YjBpWnpPN3QvRjZEUDNpWHdKUDBuL0ttL3A4Sk5abG1qQ0c3S1dZL29YV0Z3?=
+ =?utf-8?B?a3AxYVhxYVl0OERyRXptbEZRWkVZM2YrYi9CM0NkVWZEcDRybXJudndCWGdi?=
+ =?utf-8?B?VmxzbFNWUC9mTW5zMWpQb25mT2lFQlJsSkZNbExUYm5Hd3NvZHNwQXMvb0Qy?=
+ =?utf-8?B?Y1VXNWNxZU02ZmR1TVFiZDU4TU9nTm13U3J0VE5OejdOcGN0NlpocWFJWk1L?=
+ =?utf-8?B?TEJRZmZwUkw1YS9GYUU2MDY2blFkSWhrTHFQcmZUNGlZeS9ha20vRDcvZVJr?=
+ =?utf-8?B?SEs5U29BY1JIaTdLNys0VnpPL2xBZi9SMDAyMWV6S3NjRWtVaWxGSVNNRitR?=
+ =?utf-8?B?enhLWTJBVUpZT2pFVmpIOG9Qa3QrbWJjaWh6ZWNhdVEzdGF0UVdsenFoVXc0?=
+ =?utf-8?B?N3pYNWN1N0xkdGQrNE9KUzNpVzFqWjV1djlsbmVQeS9XeXRxeWlaenhkSTVa?=
+ =?utf-8?B?Mm9EellQRUtMZ1ZsQ2ZiOUZXUmZQbFBLSTlUblpmMmtHQlZOSk00Sk5rWFVR?=
+ =?utf-8?B?OW1ZQkRHQVRRTk4wUlMzZXlwOTNhQWpydGZERkZiM1FDQnJWa2NjOVUraEYy?=
+ =?utf-8?B?QkxPVGV5cHhPRCtTUzNYWnNFYnRJV2o0NUtnU3NkTlQxNU5TUjVGcVRsQzFQ?=
+ =?utf-8?B?bTc4Y0o4QUNEM2lEd00vOCtrZkxrNmFrVlNHTTFsUGtjYVo2N2xiektuakh5?=
+ =?utf-8?B?SjZIcVd3c25NRVp1Um1EbzJha3ZkOTJpOUdkblAybGZkems5OTBQNTdMV3Q4?=
+ =?utf-8?B?MjJ0Zm9WU2FRVWx3Z0hHeG9DRkFsUnBnTGRsMU8wMlpEUzJIUjY2MUU3bFl2?=
+ =?utf-8?B?eVFYeHQzWnJwTm9IYkhUMEdmRElIblFjVmt2VjJvU0tMNU5IblJYaWRmeXUx?=
+ =?utf-8?B?YUpxd0gwSlVhVGI1bWx3a3hmZjJGKy9nRXZ5VmQ0Tm4xQVJrRE50dC95VGlS?=
+ =?utf-8?B?MkFJRGg1YmtOYlVoN2VpM0d6SEFhaHpaTmlyZ21MaHFISmVyUERROFQyTTNM?=
+ =?utf-8?B?dnNkdHI1YmNzZ1h4TnhiTEtnL3BIaVJpR3QzZXAraHBkZkNsN05MRS9wYnkv?=
+ =?utf-8?B?YjNJZnc2eDNPdnBlTktTUllyVUxGeFpGd2lLREthVGJ1aDh6YTBQWHkxK05T?=
+ =?utf-8?B?aTVKblJNR1NnMExFQUtMSXd6cEJ3NmZEdzhnRjdDc2ZDNlVzbGFEL0ZlM2l0?=
+ =?utf-8?B?OUIzZjIxdmtnWWhSVjhHQUxMcnNoeTlDNWRRc0VtSm5BNjg3RWZOU295dnow?=
+ =?utf-8?B?YkV6ckp2RlVJdUh0S1VlYmJ6eVdHMXdLR2xlaS9vUFJCOEIyUERHdDhqT3B6?=
+ =?utf-8?B?TGVFSTZMdnJBN0VuNGh6ZmpOTkhaR0lqbDYyaFpvdkk3UytLdnhTRUFQS1Bu?=
+ =?utf-8?Q?+47OO7dhVGaBkIynU33/cBHMR?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8abb31cd-b177-4921-1e14-08dbef53fce2
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3587.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2023 14:20:21.3503
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: aNlM2OFgfpl5FySg9QHZK+hHY9L1AevNpARe/8qu0fgGs43LuoMRKzkE9Ygv7kYv
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8209
 
-Hi Krzysztof,
+Am 27.11.23 um 15:13 schrieb Luben Tuikov:
+> On 2023-11-27 08:55, Christian König wrote:
+>> Hi Luben,
+>>
+>> Am 24.11.23 um 08:57 schrieb Christian König:
+>>> Am 24.11.23 um 06:27 schrieb Luben Tuikov:
+>>>> Rename DRM_SCHED_PRIORITY_MIN to DRM_SCHED_PRIORITY_LOW.
+>>>>
+>>>> This mirrors DRM_SCHED_PRIORITY_HIGH, for a list of DRM scheduler
+>>>> priorities
+>>>> in ascending order,
+>>>>     DRM_SCHED_PRIORITY_LOW,
+>>>>     DRM_SCHED_PRIORITY_NORMAL,
+>>>>     DRM_SCHED_PRIORITY_HIGH,
+>>>>     DRM_SCHED_PRIORITY_KERNEL.
+>>>>
+>>>> Cc: Rob Clark <robdclark@gmail.com>
+>>>> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>>> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> Cc: Danilo Krummrich <dakr@redhat.com>
+>>>> Cc: Alex Deucher <alexander.deucher@amd.com>
+>>>> Cc: Christian König <christian.koenig@amd.com>
+>>>> Cc: linux-arm-msm@vger.kernel.org
+>>>> Cc: freedreno@lists.freedesktop.org
+>>>> Cc: dri-devel@lists.freedesktop.org
+>>>> Signed-off-by: Luben Tuikov <ltuikov89@gmail.com>
+>>> Reviewed-by: Christian König <christian.koenig@amd.com>
+>> Looks like you missed one usage in Nouveau:
+>>
+>> drivers/gpu/drm/nouveau/nouveau_sched.c:21:41: error:
+>> ‘DRM_SCHED_PRIORITY_MIN’ undeclared here (not in a function); did you
+>> mean ‘DRM_SCHED_PRIORITY_LOW’?
+>>      21 |         NOUVEAU_SCHED_PRIORITY_SINGLE = DRM_SCHED_PRIORITY_MIN,
+>>         | ^~~~~~~~~~~~~~~~~~~~~~
+>>         | DRM_SCHED_PRIORITY_LOW
+>>
+>> This now results in a build error on drm-misc-next.
+> I'm waiting for someone to R-B the fix I posted two days ago:
+> https://lore.kernel.org/r/20231125192246.87268-2-ltuikov89@gmail.com
 
-On Sat, Nov 25, 2023 at 7:44=E2=80=AFPM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
-> Document preferred coding style for Devicetree sources (DTS and DTSI),
-> to bring consistency among all (sub)architectures and ease in reviews.
->
-> Cc: Andrew Davis <afd@ti.com>
-> cc: Andrew Lunn <andrew@lunn.ch>
-> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Cc: Arnd Bergmann <arnd@arndb.de>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Chen-Yu Tsai <wens@kernel.org>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Geert Uytterhoeven <geert+renesas@glider.be>
-> Cc: Heiko Stuebner <heiko@sntech.de>
-> Cc: Jonathan Corbet <corbet@lwn.net>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Matthias Brugger <matthias.bgg@gmail.com>
-> Cc: Michal Simek <michal.simek@amd.com>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: Nishanth Menon <nm@ti.com>
-> Cc: Olof Johansson <olof@lixom.net>
-> Cc: Rafa=C5=82 Mi=C5=82ecki <zajec5@gmail.com>
-> Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Acked-by: Heiko Stuebner <heiko@sntech.de>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> ---
->
-> Merging idea: Rob/DT bindings
->
-> Changes in v3
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> 1. should->shall (Angelo)
-> 2. Comments // -> /* (Angelo, Michal)
-> 3. Use imaginary example in "Order of Properties in Device Node"
->    (Angelo)
-> 4. Added paragraphs for three sections with justifications of chosen
->    style.
-> 5. Allow two style of ordering overrides in board DTS: alphabetically or
->    by order of DTSI (Rob).
-> 6. I did not incorporate feedback about, due to lack of consensus and my
->    disagreement:
->    a. SoM being DTS without DTSI in "Organizing DTSI and DTS"
+There must be something wrong with the dri-devel mailing list (or my 
+gmail, but I doubt so). I don't see this mail in my inbox anywhere.
 
-Thanks for the update!
+Feel free to add my rb and push it.
 
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/dts-coding-style.rst
-
-> +       /* SoC DTSI */
-> +
-> +       / {
-> +               cpus {
-> +                       /* ... */
-> +               };
-> +
-> +               psci {
-> +                       /* ... */
-> +               };
-> +
-> +               soc@ {
-
-"soc@" is invalid, that should be "soc".
-
-As the "soc" node is special, you may want to elaborate:
-
-                compatible =3D "simple-bus";
-                #address-cells =3D <1>;
-                #size-cells =3D <1>;
-                ranges;
-
-> +                       dma: dma-controller@10000 {
-> +                               /* ... */
-> +                       };
-> +
-> +                       clk: clock-controller@80000 {
-> +                               /* ... */
-> +                       };
-> +               };
-> +       };
-> +
-> +       /* Board DTS - alphabetical order */
-> +
-> +       &clk {
-> +               /* ... */
-> +       };
-> +
-> +       &dma {
-> +               /* ... */
-> +       };
-> +
-> +       /* Board DTS - alternative order, keep as DTSI */
-> +
-> +       &dma {
-> +               /* ... */
-> +       };
-> +
-> +       &clk {
-> +               /* ... */
-> +       };
-
-IMO that alternative order is hard to review: you need to have multiple
-files open.  It will also make validation hard, as you can only validate
-the end result, not individual files.
-
-Anyway, this is already quite usable so
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Thanks,
+Christian.
 
