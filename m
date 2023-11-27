@@ -1,113 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-2054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCE6A7F9D2B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 11:12:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73D567F9D42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 11:14:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 77F7B28125B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 10:12:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CC59281231
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 10:14:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D52491803F;
-	Mon, 27 Nov 2023 10:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59E86182AB;
+	Mon, 27 Nov 2023 10:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Wwgbasqp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZiW1iVnQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB87B10F;
-	Mon, 27 Nov 2023 02:12:28 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AR6sK8N000814;
-	Mon, 27 Nov 2023 10:12:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=sx6V64zmvOt7YMqP3pfR0ES/+ZW/aQszbllSAmtYhVg=;
- b=WwgbasqpBrqzIsNKN1xiTK568rPs2KAZXfYpTE1IUc09GDd5bSL2tM1S35Vc4XpXz8/p
- VxRrIXHu5abP0JZs/PPTcUln5GpXWj/tYWWAh7LvW43/2qrwzDYciApo6KMR5w8GReJC
- fauGB1Yj+4iFVRL55gF8hWSxNV2zG3vjtSNhc6U7T4ta6LWXomXk3Yj3rD3QKERyUlar
- z5wuyIQqbGhPEGRJYu+30APYgrjmogU2NNKmU0rYbosEN+lGlxd+mP8UQgTzXOn9vFpV
- m4WcSjEWPMz02he4Z9jyB7rmY1kz/V2Lk3irF6cX/FkwTT2UC1ftKHwJVOYC4+y/LNCW +w== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk9adktwe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 10:12:24 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ARACN1d007248
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 10:12:23 GMT
-Received: from [10.50.63.158] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 27 Nov
- 2023 02:12:20 -0800
-Message-ID: <8ac05276-eec1-fb42-166a-5739822ecdd0@quicinc.com>
-Date: Mon, 27 Nov 2023 15:42:12 +0530
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE10413A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 02:14:42 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2c5b7764016so44589381fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 02:14:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701080081; x=1701684881; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CNHHiLpeR2Ce67c7aTqgpQJDINa9GFsM154ew5MCzfw=;
+        b=ZiW1iVnQBf6sLUnq7bdjd9OajnObpl1WlsqKeXpFS5yWjQudUTsb7O72Zplc6IxAP4
+         MMg6uxGbrIELfZZ7IYYEkpYMM0xhIJ8oK3zPF04gykx2ODWe7F5MNdzFlV9uI1zIkyqB
+         LABDws6uGAecjBaiBqKnJ8aDbuvGGkEvkWBsS2dkSzngBMgheQDabE6fM/MuWK/n4XkW
+         dtS5M7vsvC22SDHYXyGoM/1wzztKYJwgDC+9d93mAZgCOfgBsZx0sJ7wRD3XvPOfmfFu
+         keDwJF4EvUdP2vseRwDe6ay6VjKp54Ad/HyNhsBdXLQRBNqi2EdAQDDssDIJQnF6By4M
+         yijA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701080081; x=1701684881;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CNHHiLpeR2Ce67c7aTqgpQJDINa9GFsM154ew5MCzfw=;
+        b=ChiUzeAtJ2PlaZhjepeV66E4NsZ40kjZca8CbSFCQBBWxU55Zfod+DQd42Sk8P3vfV
+         nYINtgHz4MOe7Mf1Q90G5B1T+gkyA/+CUsndnR6mySCpVw2hhFDh9VgUbi433XSSOtOW
+         efoRrtpWfjO/ud8+o+q/k+A1nzn4r9rzOGZN715GqcJ0BA2oF2cPHmCeH2HnrUAde2h8
+         vpFpbJMGo2e6PYlTsnkgmjaPeh6i58WLCu6kEgJKiX9SsIP9a1zcnSsFgypDCvf6r839
+         +bAH8KWkHSrlsDzhQQKdWLzSLJJtwsTeEu7yFqAzdRmTJx7p67WOk49+yHqjcuaPHo2A
+         Lbrw==
+X-Gm-Message-State: AOJu0YwaHcUYdEu2P10XoIUUn4yLHFJTc31SHXE3UMUNkDvNzpo93TKS
+	/tQj85Q2H7e2kQZtGK9jk8HIXA==
+X-Google-Smtp-Source: AGHT+IGZZYfB3M3w67wDWKNxuZZ/I8T9o4pe5ERsw+U2o/eGYk7sBQ/Ca2iXcUuYEFwHhDVFGdC32A==
+X-Received: by 2002:a2e:9e8a:0:b0:2b9:412a:111d with SMTP id f10-20020a2e9e8a000000b002b9412a111dmr7268289ljk.42.1701080081083;
+        Mon, 27 Nov 2023 02:14:41 -0800 (PST)
+Received: from [192.168.100.102] ([37.228.218.3])
+        by smtp.gmail.com with ESMTPSA id b5-20020a05600c4e0500b003feae747ff2sm14185211wmq.35.2023.11.27.02.14.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Nov 2023 02:14:40 -0800 (PST)
+Message-ID: <37422200-7954-4f0d-92ad-37da3a98b36d@linaro.org>
+Date: Mon, 27 Nov 2023 10:14:39 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v6 2/3] clk: qcom: clk-rcg2: add support for rcg2 freq
- multi ops
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sm8250-xiaomi-elish: Add pm8150b
+ type-c node and enable usb otg
 Content-Language: en-US
-To: Christian Marangi <ansuelsmth@gmail.com>
-CC: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230916140046.7878-1-ansuelsmth@gmail.com>
- <20230916140046.7878-3-ansuelsmth@gmail.com>
- <419b0e85-5479-30b0-d6a9-b2697d057c55@quicinc.com>
- <655bca09.050a0220.bac1.aa06@mx.google.com>
- <5540adcd-4ba6-53e7-c7fe-b7116e6403ca@quicinc.com>
- <655cb6e6.050a0220.35346.e9a2@mx.google.com>
-From: Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <655cb6e6.050a0220.35346.e9a2@mx.google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Jianhua Lu <lujianhua000@gmail.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org
+References: <20231126022849.14273-1-lujianhua000@gmail.com>
+ <20231126022849.14273-2-lujianhua000@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20231126022849.14273-2-lujianhua000@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: K-vT28wy7eyiIAz1l-2CUQ1fUyE6_SC3
-X-Proofpoint-GUID: K-vT28wy7eyiIAz1l-2CUQ1fUyE6_SC3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-27_08,2023-11-22_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- clxscore=1015 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 mlxlogscore=490 adultscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311270070
 
-
-
-On 11/21/2023 7:25 PM, Christian Marangi wrote:
->> Hi Christian,
->>
->> WARN does not get printed with the attached patchset.
->> Thanks much!
->>
-> Can you also confirm that the code correctly works with your div
-> scenario?
+On 26/11/2023 02:28, Jianhua Lu wrote:
+> Add type-c node to feature otg function and set usb-role-switch property
+> for usb_1_dwc3 to enable usb otg.
 > 
-> Would love to have some Tested-by tag to move this further!
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+> ---
+> Changes in v3:
+>    1. squash patch[3/3].
+>    2. update commit message.
+>    3. add pm8150b_vbus node.
 > 
-> (since it seems newer SoC after ipq807x will use this implementation
-> even more)
-
-Sorry was not available for a couple of days.
-Sure, will validate and add tested-by tag.
-
-Thanks,
-Devi Priya
+> No changes in v2:
 > 
-> -- 
+>   .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 43 ++++++++++++++++++-
+>   1 file changed, 42 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+> index 3d4ea428e4cb..946365f15a59 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+
+lgtm
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
