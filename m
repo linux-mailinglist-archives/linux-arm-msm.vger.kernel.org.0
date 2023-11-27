@@ -1,174 +1,239 @@
-Return-Path: <linux-arm-msm+bounces-2157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B35F17FAB69
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 21:27:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46F2F7FAC0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 21:52:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB77C1C20D80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 20:27:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 691AC1C20257
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 20:52:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFC3346446;
-	Mon, 27 Nov 2023 20:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CE3631580;
+	Mon, 27 Nov 2023 20:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="CITmsuf4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKHHG+Wj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2987E19A6;
-	Mon, 27 Nov 2023 12:27:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-	t=1701116852; bh=wjGIuleQ8kD0z2aVCMJjHMNPVmJYR139BLY4d6XpI1Q=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CITmsuf4OwScTPbofNMOSgAtZ0drI/A4I02RxAI8Q9XCGQdfw8Gjn+WBillie3caD
-	 E5iR5ev6U/j/hvZOmRcTns+y0IavwYPaRysGzBKB6OUZwCyRkp36FWeFNF1qhkWbRg
-	 GE9GZ06SNeLT41ez/Go5UlAPQVoL/XsYOlZYg24s=
-From: Luca Weiss <luca@z3ntu.xyz>
-To: Stephan Gerhold <stephan@gerhold.net>
-Cc: Loic Poulain <loic.poulain@linaro.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
- linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- wcn36xx@lists.infradead.org, linux-wireless@vger.kernel.org
-Subject:
- Re: [PATCH 1/4] dt-bindings: remoteproc: qcom: wcnss: Add WCN3680B compatible
-Date: Mon, 27 Nov 2023 21:27:30 +0100
-Message-ID: <5919350.DvuYhMxLoT@z3ntu.xyz>
-In-Reply-To: <ZWT3APJlNQaKVyJU@gerhold.net>
-References:
- <20231015-fp3-wcnss-v1-0-1b311335e931@z3ntu.xyz>
- <1868698.tdWV9SEqCh@z3ntu.xyz> <ZWT3APJlNQaKVyJU@gerhold.net>
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C90187;
+	Mon, 27 Nov 2023 12:52:45 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-54b0310f536so5966602a12.0;
+        Mon, 27 Nov 2023 12:52:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701118363; x=1701723163; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iq1f5KwVS7u1SEckZkDtY0vY5AxpaeWK/JmKNRqAs9g=;
+        b=jKHHG+WjX53hDoY9JUNf84mBeGwuqrgdmnMYxKvaa9aMY4AHQ5IUEQ6ytWaC8OsiKn
+         V73DuZ93iBtBs5R3lcISFUKaUFWmTvogx8DWD97lG+6fommUPesPazh6HwHPeN/cneR+
+         63olA0oHnOzAqeZq1XQjwJawQjQpwy5aakaAQN1NITKsrUH+D41R0Sx2MAjkcCgL1fpH
+         N3ehm4vW6HtL59geYN14G9S3QnBAN+x9lsd3N+zc3wMrQ2DbdI33l4lHgQ6xRofwe5sX
+         0yrDlXcEHBB0M8LFt4b2kaTOb4lv/iHWkepogDDQciW9v5LjZeoBscWd36uPzj4ztmjI
+         nYbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701118363; x=1701723163;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iq1f5KwVS7u1SEckZkDtY0vY5AxpaeWK/JmKNRqAs9g=;
+        b=V56OeLXztLzH0HlPaWjNK/QRVtM+449m2ByqDHxYNiFqOyNlPcT/XowFZ3lpv4w4lm
+         q9bApEdDnvJm1PobQGNKN92U0MA6vZud/X+xaR+OQLyT3/EVtXG7KagaO6b+WRwisXLS
+         97qLu48xQuW/8JFgexeXhQRrSBgaBRNafC+cmR69saXKQrtBmLs6SEhjAcxjwYfsbHv7
+         CCc5bDNcN2yb9bd7BzTKfRvCfFftx2qm0/KPVl8G2MSccShAh5ccsJEEO61Wn0krOpwo
+         UB4n1oDuOxbtFICTgBB8IyZQaUf5edX5f2mSlpzgFnsfLRPnWH0XwclVdfAT8SvjG97u
+         z4IA==
+X-Gm-Message-State: AOJu0YzSwm2aXl+3RiGdqI7lvbRVLHtlcsw4XYajlzJVIfeHCcYr/K6I
+	VFFuHWYQoMEOYx/Y+mIQK8Cry7XVi4KE8CyB1OE=
+X-Google-Smtp-Source: AGHT+IHA+7x/AjHTFDAwvhSHJMbTK0xbiS7p8hImH+hhMbLqntTZAz/X4UmP4JnJUgHE4QayqrQXgOxZGOx0FVS/fR8=
+X-Received: by 2002:a05:6402:b08:b0:54b:35f1:905 with SMTP id
+ bm8-20020a0564020b0800b0054b35f10905mr6518855edb.3.1701118363358; Mon, 27 Nov
+ 2023 12:52:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+References: <20231115141928.429688-1-dipamt1729@gmail.com> <CAA8EJprqnUGQxmj4Y=qttVuj0zJxdD9B6neHa6sPseLLETpk5A@mail.gmail.com>
+ <CALHmwsoC5h7_w9OzpUS_-xM6x5WF5V-vFExLEf4y99b2eCcqGQ@mail.gmail.com>
+ <CAA8EJpoyC=paF1ZuznXgJAkT1fne0RwYfqJh-cdz0WLt02i+bw@mail.gmail.com>
+ <CAF6AEGtdKD6-xA+AeZDXuKc+k4MnP8Ba4-12hHxt00bXLhJ7Eg@mail.gmail.com> <CAA8EJprj7F_K1zxnGdz1ReLNMR2CiYfRxWHUmudTZC+qjKA+kA@mail.gmail.com>
+In-Reply-To: <CAA8EJprj7F_K1zxnGdz1ReLNMR2CiYfRxWHUmudTZC+qjKA+kA@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Mon, 27 Nov 2023 12:52:31 -0800
+Message-ID: <CAF6AEGtW5XZS+S0xQViE8RwmdsxXsSg3yz8-1=oGO5+HTzw52g@mail.gmail.com>
+Subject: Re: [PATCH v2] Remove custom dumb_map_offset implementation in msm driver
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Dipam Turkar <dipamt1729@gmail.com>, quic_abhinavk@quicinc.com, sean@poorly.run, 
+	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Montag, 27. November 2023 21:07:28 CET Stephan Gerhold wrote:
-> On Sat, Nov 25, 2023 at 01:25:22PM +0100, Luca Weiss wrote:
-> > On Montag, 16. Oktober 2023 16:44:28 CET Stephan Gerhold wrote:
-> > > On Mon, Oct 16, 2023 at 03:16:14PM +0200, Loic Poulain wrote:
-> > > > On Mon, 16 Oct 2023 at 07:35, Krzysztof Kozlowski
-> > > > 
-> > > > <krzysztof.kozlowski@linaro.org> wrote:
-> > > > > On 15/10/2023 22:03, Luca Weiss wrote:
-> > > > > > Add a compatible for the iris subnode in the WCNSS PIL.
-> > > > > > 
-> > > > > > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > > > > > ---
-> > > > > > 
-> > > > > >  Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > > > >  | 1
-> > > > > >  +
-> > > > > >  1 file changed, 1 insertion(+)
-> > > > > > 
-> > > > > > diff --git
-> > > > > > a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > > > > b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yaml
-> > > > > > index 45eb42bd3c2c..0e5e0b7a0610 100644
-> > > > > > ---
-> > > > > > a/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yam
-> > > > > > l
-> > > > > > +++
-> > > > > > b/Documentation/devicetree/bindings/remoteproc/qcom,wcnss-pil.yam
-> > > > > > l
-> > > > > > 
-> > > > > > @@ -111,6 +111,7 @@ properties:
-> > > > > >            - qcom,wcn3660
-> > > > > >            - qcom,wcn3660b
-> > > > > >            - qcom,wcn3680
-> > > > > > 
-> > > > > > +          - qcom,wcn3680b
-> > > > > 
-> > > > > Looks like this should be made as compatible with qcom,wcn3680 (so
-> > > > > with
-> > > > > fallback).
-> > > > 
-> > > > Yes, agree, let's do a regular fallback as there is nothing 'b'
-> > > > specific in the driver:
-> > > > `compatible = "qcom,wcn3680b", "qcom,wcn3680";`
-> > > > 
-> > > > And yes, we should also have done that for qcom,wcn3660b...
-> > > 
-> > > I don't think this would have worked properly for qcom,wcn3660b:
-> > >  - It's not compatible with "qcom,wcn3660", because they have different
-> > >  
-> > >    regulator voltage requirements. wcn3660(a?) needs vddpa with
-> > >    2.9-3.0V, but wcn3660b needs 3.3V. That's why wcn3660b uses the
-> > >    wcn3680_data in qcom_wcnss.iris.c. Otherwise if you would run an
-> > >    older kernel that knows "qcom,wcn3660" but not "qcom,wcn3660b" it
-> > >    would apply the wrong voltage.
-> > >  
-> > >  - It's not compatible with "qcom,wcn3680" either because that is used
-> > >  
-> > >    as indication if 802.11ac is supported (wcn3660b doesn't).
-> > > 
-> > > The main question here is: What does the current "qcom,wcn3680"
-> > > compatible actually represent? It's defined with vddpa = 3.3V in the
-> > > 
-> > > driver, which would suggest that:
-> > >  1. It's actually meant to represent WCN3680B, which needs 3.3V vddpa
-> > >  
-> > >     like WCN3660B, or
-> > >  
-> > >  2. WCN3680(A?) has different requirements than WCN3660(A?) and also
-> > >  
-> > >     needs 3.3V vddpa. But then what is the difference between
-> > >     WCN3680(A?) and WCN3680B? Is there even a variant without ...B?
-> > > 
-> > > There is public documentation for WCN3660B and WCN3680B but the non-B
-> > > variants are shrouded in mystery.
-> > 
-> > Hi Stephan (and everyone),
-> > 
-> > Do you have a suggestion how to move this patchset forward? Is the
-> > fallback
-> > compatible that was suggested okay for the wcn3680b situation?
-> > 
-> >   compatible = "qcom,wcn3680b", "qcom,wcn3680";
-> > 
-> > If so, I'll make v2 with that implemented.
-> 
-> Personally, I would just go with what exists already and use the
-> existing "qcom,wcn3680" compatible as-is. No one has provided evidence
-> that there is actually something like a WCN3680(A), without a 'B' at the
-> end. Also, all existing users of the "qcom,wcn3680" compatible upstream
-> actually seem to refer to WCN3680B (I'm quite sure apq8039-t2 has
-> WCN3680B, MSM8974 isn't entirely clear but iirc you mentioned there was
-> some schematic of a MSM8974 device which says WCN3680B as well).
-> 
-> It would be nice to have the compatible perfectly correct and complete,
-> but I see no point to extend it with additional information that we
-> can't properly verify.
-> 
-> Or do you actually need a different compatible to customize something in
-> the driver?
+On Tue, Nov 21, 2023 at 5:14=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, 21 Nov 2023 at 04:26, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Wed, Nov 15, 2023 at 11:33=E2=80=AFAM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > >
+> > > On Wed, 15 Nov 2023 at 20:46, Dipam Turkar <dipamt1729@gmail.com> wro=
+te:
+> > > >
+> > > > They are not outdated, my bad. I went through the locks' code and s=
+aw that they have been updated. But they are probably not necessary here as=
+ most of the drivers do not use any form of locking in their implementation=
+s. The generic implementations drm_gem_dumb_map_offset() and drm_gem_ttm_du=
+mb_map_offset() do not have any locking mechanisms either.
+> > >
+> > > Excuse me, but this doesn't sound right to me. There are different
+> > > drivers with different implementations. So either we'd need a good
+> > > explanation of why it is not necessary, or this patch is NAKed.
+> >
+> > Digging a bit thru history, it looks like commit 0de23977cfeb
+> > ("drm/gem: convert to new unified vma manager") made external locking
+> > unnecessary, since the vma mgr already had it's own internal locking.
+>
+> So, should we drop our own locking system?
 
-No it should be fine with qcom,wcn3680.
+specifically for _just_ vma_offset_manager/vma_node, we could.  But I
+think that only amounts to mmap_offset().
 
-I'll send v2 in the coming days then, thanks for your input!
+BR,
+-R
 
-Regards
-Luca
-
-> 
-> Thanks,
-> Stephan
-
-
-
-
+> >
+> > BR,
+> > -R
+> >
+> > > >
+> > > > Thanks and regards
+> > > > Dipam Turkar
+> > > >
+> > > > On Wed, Nov 15, 2023 at 8:37=E2=80=AFPM Dmitry Baryshkov <dmitry.ba=
+ryshkov@linaro.org> wrote:
+> > > >>
+> > > >> On Wed, 15 Nov 2023 at 16:30, Dipam Turkar <dipamt1729@gmail.com> =
+wrote:
+> > > >> >
+> > > >> > Make msm use drm_gem_create_map_offset() instead of its custom
+> > > >> > implementation for associating GEM object with a fake offset. Si=
+nce,
+> > > >> > we already have this generic implementation, we don't need the c=
+ustom
+> > > >> > implementation and it is better to standardize the code for GEM =
+based
+> > > >> > drivers. This also removes the outdated locking leftovers.
+> > > >>
+> > > >> Why are they outdated?
+> > > >>
+> > > >> >
+> > > >> > Signed-off-by: Dipam Turkar <dipamt1729@gmail.com>
+> > > >> > ---
+> > > >> >  drivers/gpu/drm/msm/msm_drv.c |  2 +-
+> > > >> >  drivers/gpu/drm/msm/msm_gem.c | 21 ---------------------
+> > > >> >  drivers/gpu/drm/msm/msm_gem.h |  2 --
+> > > >> >  3 files changed, 1 insertion(+), 24 deletions(-)
+> > > >> >
+> > > >> > Changes in v2:
+> > > >> > Modify commit message to include the absence of internal locking=
+ leftovers
+> > > >> > around allocating a fake offset in msm_gem_mmap_offset() in the =
+generic
+> > > >> > implementation drm_gem_create_map_offset().
+> > > >> >
+> > > >> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm=
+/msm_drv.c
+> > > >> > index a428951ee539..86a15992c717 100644
+> > > >> > --- a/drivers/gpu/drm/msm/msm_drv.c
+> > > >> > +++ b/drivers/gpu/drm/msm/msm_drv.c
+> > > >> > @@ -1085,7 +1085,7 @@ static const struct drm_driver msm_driver =
+=3D {
+> > > >> >         .open               =3D msm_open,
+> > > >> >         .postclose          =3D msm_postclose,
+> > > >> >         .dumb_create        =3D msm_gem_dumb_create,
+> > > >> > -       .dumb_map_offset    =3D msm_gem_dumb_map_offset,
+> > > >> > +       .dumb_map_offset    =3D drm_gem_dumb_map_offset,
+> > > >> >         .gem_prime_import_sg_table =3D msm_gem_prime_import_sg_t=
+able,
+> > > >> >  #ifdef CONFIG_DEBUG_FS
+> > > >> >         .debugfs_init       =3D msm_debugfs_init,
+> > > >> > diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm=
+/msm_gem.c
+> > > >> > index db1e748daa75..489694ef79cb 100644
+> > > >> > --- a/drivers/gpu/drm/msm/msm_gem.c
+> > > >> > +++ b/drivers/gpu/drm/msm/msm_gem.c
+> > > >> > @@ -671,27 +671,6 @@ int msm_gem_dumb_create(struct drm_file *fi=
+le, struct drm_device *dev,
+> > > >> >                         MSM_BO_SCANOUT | MSM_BO_WC, &args->handl=
+e, "dumb");
+> > > >> >  }
+> > > >> >
+> > > >> > -int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_d=
+evice *dev,
+> > > >> > -               uint32_t handle, uint64_t *offset)
+> > > >> > -{
+> > > >> > -       struct drm_gem_object *obj;
+> > > >> > -       int ret =3D 0;
+> > > >> > -
+> > > >> > -       /* GEM does all our handle to object mapping */
+> > > >> > -       obj =3D drm_gem_object_lookup(file, handle);
+> > > >> > -       if (obj =3D=3D NULL) {
+> > > >> > -               ret =3D -ENOENT;
+> > > >> > -               goto fail;
+> > > >> > -       }
+> > > >> > -
+> > > >> > -       *offset =3D msm_gem_mmap_offset(obj);
+> > > >> > -
+> > > >> > -       drm_gem_object_put(obj);
+> > > >> > -
+> > > >> > -fail:
+> > > >> > -       return ret;
+> > > >> > -}
+> > > >> > -
+> > > >> >  static void *get_vaddr(struct drm_gem_object *obj, unsigned mad=
+v)
+> > > >> >  {
+> > > >> >         struct msm_gem_object *msm_obj =3D to_msm_bo(obj);
+> > > >> > diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm=
+/msm_gem.h
+> > > >> > index 8ddef5443140..dc74a0ef865d 100644
+> > > >> > --- a/drivers/gpu/drm/msm/msm_gem.h
+> > > >> > +++ b/drivers/gpu/drm/msm/msm_gem.h
+> > > >> > @@ -139,8 +139,6 @@ struct page **msm_gem_pin_pages(struct drm_g=
+em_object *obj);
+> > > >> >  void msm_gem_unpin_pages(struct drm_gem_object *obj);
+> > > >> >  int msm_gem_dumb_create(struct drm_file *file, struct drm_devic=
+e *dev,
+> > > >> >                 struct drm_mode_create_dumb *args);
+> > > >> > -int msm_gem_dumb_map_offset(struct drm_file *file, struct drm_d=
+evice *dev,
+> > > >> > -               uint32_t handle, uint64_t *offset);
+> > > >> >  void *msm_gem_get_vaddr_locked(struct drm_gem_object *obj);
+> > > >> >  void *msm_gem_get_vaddr(struct drm_gem_object *obj);
+> > > >> >  void *msm_gem_get_vaddr_active(struct drm_gem_object *obj);
+> > > >> > --
+> > > >> > 2.34.1
+> > > >> >
+> > > >>
+> > > >>
+> > > >> --
+> > > >> With best wishes
+> > > >> Dmitry
+> > >
+> > >
+> > >
+> > > --
+> > > With best wishes
+> > > Dmitry
+>
+>
+>
+> --
+> With best wishes
+> Dmitry
 
