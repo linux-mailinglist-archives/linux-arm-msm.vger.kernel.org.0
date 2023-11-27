@@ -1,208 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-2087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16C517FA225
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 15:14:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79E8F7FA22B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 15:14:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A3F3B20EA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 14:14:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AAB0A1C20E27
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 14:14:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CED13066C;
-	Mon, 27 Nov 2023 14:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17C1A3033B;
+	Mon, 27 Nov 2023 14:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kl2gfJtn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oSl9K6Bz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E500D183
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 06:14:05 -0800 (PST)
-Received: by mail-qt1-x82d.google.com with SMTP id d75a77b69052e-4219f89ee21so23750551cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 06:14:05 -0800 (PST)
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C55A22D78
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 06:14:35 -0800 (PST)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2c875207626so52624971fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 06:14:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701094445; x=1701699245; darn=vger.kernel.org;
-        h=in-reply-to:autocrypt:from:references:cc:to:content-language
-         :subject:user-agent:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=iD64oD8+Tiz7f283O8sbj0DrpBu/nCS99B4zaBcOQXA=;
-        b=Kl2gfJtnYkj8dZ7qR/gc0Bd2VJJAOvCLfAKW1w6tFr0CD11gIJ+sGhjEY52fL+c11D
-         7/tuuovaBzOSsOYWW2YhUIEjKYENWdQZ1jjq+SSV9ftzp8lswTpI92WutB16cFkHmvie
-         TQHGH2rtJSnKjKFL36PRr27Iaw3m63B4CVMfYs+TKjgNPkFYfS/gSLcff7sUPtwoHXlT
-         5gVYmuBgwSFEsD/FvBOX1PDfPMyUfkz8xgxqgGbAS/zdLeSUBGh59IPyrZ0RWjVJHKEu
-         eTbQG3C5ySk5fo2W8hbtBULPq1ctYHkOo7H3xmBohERJ8ja1LoZMYonzSGwE4MexzVGU
-         q32A==
+        d=linaro.org; s=google; t=1701094474; x=1701699274; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SKy4amU8iTtG4c/87HNO+81MkT0IDMpCUf7Ez3DCBpo=;
+        b=oSl9K6Bz2/Yx1KD1zH0lNRw2nFTQFM50RfR9QRIe1WWtFRDuehKSgs4qDzplagMVcS
+         g9L8YvFZBnamWjrIXPOj9YnVHKX0D84PfZdmHn83Ptqxuzm0btchbUgOuttUfzBH9RI0
+         qIIvUYpo6kT6x1aHL4jbQ9R9rZicbA4s6KJeImiV3d6MMwF/sWqcRZ8/4Nc79TTF0Mdl
+         +txBmilhg3dTrPkVIX1mz8glRv7C1tOlPXQmQKkSiYhavwm5RgXEa9+HCHfOgtQcME7Q
+         RawOySKG3Wtxe3mgqhkmPUYJ3tu8xT2sGPzBYKUhwlASnQfZN6XV8HRIn0F0KQ0UcoY5
+         SU/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701094445; x=1701699245;
-        h=in-reply-to:autocrypt:from:references:cc:to:content-language
-         :subject:user-agent:mime-version:date:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iD64oD8+Tiz7f283O8sbj0DrpBu/nCS99B4zaBcOQXA=;
-        b=eiHX54ibzr4deoVocaazyJEPSaMLLhiJin/wBR1B46IFkhp83J9Qx8gfIe9ZICkqsc
-         29TBpKVz7Gjpa7+ViRzblr7vyFLdd3Is/gjuQYmjxFTDtI1oTxHIIu/u9L2ww8W6XYum
-         9PzDyHGyECz/wzXMG0JDa/DU+f1E1zv45CKzrejYwKE2B4JUUG7FC2cS1v+GeTIG3cfL
-         fFPCvKcJmkTLhdXKgo9//PZkVLpg79TDj8cxR1nDLxM/WYyaOk+suBDuPaPp0t8NCME3
-         3SrrdWDzP4fJf/KPKAzsEge2mKhE8A0qa2uFUyUBK0/79zRXAOQI2N+uVe4e7PkDIeYZ
-         BRYg==
-X-Gm-Message-State: AOJu0YxlTDz+2obssi+ZKHwjONuWwW66e2WzAIk65H3vvoNhWQrfmCd2
-	eNxZ3QM215PToDwv9I8/eR4=
-X-Google-Smtp-Source: AGHT+IGwg5QV31C5XMheg1IRO4EfPhPM44eKrBn90XyWmIB7Foc3EZAxshRsGIra0OfZq1abL6qINQ==
-X-Received: by 2002:a05:622a:1b12:b0:423:98ba:1f74 with SMTP id bb18-20020a05622a1b1200b0042398ba1f74mr14628158qtb.58.1701094444911;
-        Mon, 27 Nov 2023 06:14:04 -0800 (PST)
-Received: from [192.168.2.14] ([76.65.20.140])
-        by smtp.gmail.com with ESMTPSA id g23-20020ac84817000000b0041eef6cacf4sm3759645qtq.81.2023.11.27.06.13.50
+        d=1e100.net; s=20230601; t=1701094474; x=1701699274;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SKy4amU8iTtG4c/87HNO+81MkT0IDMpCUf7Ez3DCBpo=;
+        b=KKsLXq1ceD9tRIB1SEUfx2X1p+qoTmQkDz5wcXRM5ZVopbK/6yR/2IH2DQ3Akf3ELi
+         gwigXXw/yZEp+s79K8WRg1NUC+zdp1sLotcnZzli/BdEQzvY6rpD8JQt9kHN412LDuG6
+         RtkgNCbuuadTW311Zu7ZfeM5XPJ7rDgSuW+tvjytQwJLmqfgZ4mjU0c3euubnMVMe0yA
+         yKFX9P39+IUMd3svuoTYsQztSoCHis2bM5muGl3AQmqdzcarkTacdCXsF8raUzMONrpB
+         h52eVaJd+7bOyAtbVE+3x1v8rNhH1QMbOn2qLAhvc5Gef1Q2I/FHLnnoSXYUXmh2/IpX
+         O8eA==
+X-Gm-Message-State: AOJu0YyvqAHMiby2vj4YgK/CKj1sIHaz0CAdP6C/y1iirDzuuPnX8u9D
+	VPWqLW8whystFPq+2RyIXL+bUA==
+X-Google-Smtp-Source: AGHT+IEgW2j95zDOVf/FJ2L4dA2GNYqH5r60BaApgPyaI8kW0iwaiytQIfVMsNWUQBSCThijBUQYiQ==
+X-Received: by 2002:a2e:b54d:0:b0:2c9:9982:69ed with SMTP id a13-20020a2eb54d000000b002c9998269edmr4192376ljn.22.1701094473958;
+        Mon, 27 Nov 2023 06:14:33 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:5a15:ac68:b4a4:85ff? ([2a01:e0a:982:cbb0:5a15:ac68:b4a4:85ff])
+        by smtp.gmail.com with ESMTPSA id h9-20020a05600c314900b0040b32edf626sm8416791wmo.31.2023.11.27.06.14.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Nov 2023 06:13:57 -0800 (PST)
-Message-ID: <49388112-f42a-448c-9f68-e41266c4408c@gmail.com>
-Date: Mon, 27 Nov 2023 09:13:33 -0500
+        Mon, 27 Nov 2023 06:14:33 -0800 (PST)
+Message-ID: <8a61e3e9-4139-4224-8c2b-1c2c40bad584@linaro.org>
+Date: Mon, 27 Nov 2023 15:14:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:115.0) Gecko/20100101
- Thunderbird/115.5.0
-Subject: Re: [PATCH 1/2] drm/sched: Rename priority MIN to LOW
-Content-Language: en-CA, en-US
-To: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Direct Rendering Infrastructure - Development
- <dri-devel@lists.freedesktop.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Danilo Krummrich <dakr@redhat.com>, Alex Deucher
- <alexander.deucher@amd.com>, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org
-References: <20231124052752.6915-4-ltuikov89@gmail.com>
- <20231124052752.6915-5-ltuikov89@gmail.com>
- <76749276-dc73-4f6f-a467-aa8a721b0878@amd.com>
- <f5a4d51d-82d6-435d-92cd-fdd2d1683404@amd.com>
-From: Luben Tuikov <ltuikov89@gmail.com>
-Autocrypt: addr=ltuikov89@gmail.com; keydata=
- xjMEZTohOhYJKwYBBAHaRw8BAQdAWSq76k+GsENjDTMVCy9Vr4fAO9Rb57/bPT1APnbnnRHN
- Ikx1YmVuIFR1aWtvdiA8bHR1aWtvdjg5QGdtYWlsLmNvbT7CmQQTFgoAQRYhBJkj7+VmFO9b
- eaAl10wVR5QxozSvBQJlOiE6AhsDBQkJZgGABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheA
- AAoJEEwVR5QxozSvSm4BAOwCpX53DTQhE20FBGlTMqKCOQyJqlMcIQ9SO1qPWX1iAQCv3vfy
- JwktF7REl1yt7IU2Sye1qmQMfJxdt9JMbMNNBs44BGU6IToSCisGAQQBl1UBBQEBB0BT9wSP
- cCE8uGe7FWo8C+nTSyWPXKTx9F0gpEnlqReRBwMBCAfCfgQYFgoAJhYhBJkj7+VmFO9beaAl
- 10wVR5QxozSvBQJlOiE6AhsMBQkJZgGAAAoJEEwVR5QxozSvSsYA/2LIFjbxQ2ikbU5S0pKo
- aMDzO9eGz69uNhNWJcvIKJK6AQC9228Mqc1JeZMIyjYWr2HKYHi8S2q2/zHrSZwAWYYwDA==
-In-Reply-To: <f5a4d51d-82d6-435d-92cd-fdd2d1683404@amd.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------9d8Wd8vPYUGUOABemRhg3b9i"
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 0/2] interconnect: qcom: Introduce support for SM8650
+Content-Language: en-US, fr
+To: Georgi Djakov <djakov@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+ linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+References: <20231123-topic-sm8650-upstream-interconnect-v2-0-7e050874f59b@linaro.org>
+ <7fbe4090-94cd-4aaf-98b6-07f2a089d51a@kernel.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <7fbe4090-94cd-4aaf-98b6-07f2a089d51a@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------9d8Wd8vPYUGUOABemRhg3b9i
-Content-Type: multipart/mixed; boundary="------------ANJos5hgeAFPnw8wVTMf0vip";
- protected-headers="v1"
-From: Luben Tuikov <ltuikov89@gmail.com>
-To: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Direct Rendering Infrastructure - Development
- <dri-devel@lists.freedesktop.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Danilo Krummrich <dakr@redhat.com>, Alex Deucher
- <alexander.deucher@amd.com>, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org
-Message-ID: <49388112-f42a-448c-9f68-e41266c4408c@gmail.com>
-Subject: Re: [PATCH 1/2] drm/sched: Rename priority MIN to LOW
-References: <20231124052752.6915-4-ltuikov89@gmail.com>
- <20231124052752.6915-5-ltuikov89@gmail.com>
- <76749276-dc73-4f6f-a467-aa8a721b0878@amd.com>
- <f5a4d51d-82d6-435d-92cd-fdd2d1683404@amd.com>
-In-Reply-To: <f5a4d51d-82d6-435d-92cd-fdd2d1683404@amd.com>
-
---------------ANJos5hgeAFPnw8wVTMf0vip
-Content-Type: multipart/mixed; boundary="------------0KPyDQBze61FW4P7mTO6D8Pz"
-
---------------0KPyDQBze61FW4P7mTO6D8Pz
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-On 2023-11-27 08:55, Christian K=C3=B6nig wrote:
-> Hi Luben,
->=20
-> Am 24.11.23 um 08:57 schrieb Christian K=C3=B6nig:
->> Am 24.11.23 um 06:27 schrieb Luben Tuikov:
->>> Rename DRM_SCHED_PRIORITY_MIN to DRM_SCHED_PRIORITY_LOW.
->>>
->>> This mirrors DRM_SCHED_PRIORITY_HIGH, for a list of DRM scheduler=20
->>> priorities
->>> in ascending order,
->>> =C2=A0=C2=A0 DRM_SCHED_PRIORITY_LOW,
->>> =C2=A0=C2=A0 DRM_SCHED_PRIORITY_NORMAL,
->>> =C2=A0=C2=A0 DRM_SCHED_PRIORITY_HIGH,
->>> =C2=A0=C2=A0 DRM_SCHED_PRIORITY_KERNEL.
->>>
->>> Cc: Rob Clark <robdclark@gmail.com>
->>> Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Cc: Danilo Krummrich <dakr@redhat.com>
->>> Cc: Alex Deucher <alexander.deucher@amd.com>
->>> Cc: Christian K=C3=B6nig <christian.koenig@amd.com>
->>> Cc: linux-arm-msm@vger.kernel.org
->>> Cc: freedreno@lists.freedesktop.org
->>> Cc: dri-devel@lists.freedesktop.org
->>> Signed-off-by: Luben Tuikov <ltuikov89@gmail.com>
+On 27/11/2023 15:08, Georgi Djakov wrote:
+> On 23.11.23 15:32, Neil Armstrong wrote:
+>> This covers the RPMh Network-On-Chip Interconnect bindings
+>> and driver for the interconnect framework.
+> 
+> Thanks Neil!
+> 
+>> As reported for earlier Interconnect drivers, the IDs
+>> for multi-rsc voting has been removed from this driver
+>> so the proper solution can be developed without having
+>> to remove entries later on.
 >>
->> Reviewed-by: Christian K=C3=B6nig <christian.koenig@amd.com>
->=20
-> Looks like you missed one usage in Nouveau:
->=20
-> drivers/gpu/drm/nouveau/nouveau_sched.c:21:41: error:=20
-> =E2=80=98DRM_SCHED_PRIORITY_MIN=E2=80=99 undeclared here (not in a func=
-tion); did you=20
-> mean =E2=80=98DRM_SCHED_PRIORITY_LOW=E2=80=99?
->  =C2=A0=C2=A0 21 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 NOUV=
-EAU_SCHED_PRIORITY_SINGLE =3D DRM_SCHED_PRIORITY_MIN,
->  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | ^~~~~~~~~~~~~~~~~~~~~~
->  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | DRM_SCHED_PRIORITY_LOW
->=20
-> This now results in a build error on drm-misc-next.
+>> To easy Bjorn into merging the DT bits, would it be possible
+>> to have an immutable branch with bindings shared with Bjorn once
+>> this patchset have been properly reviewed and accepted ?
+> 
+> Hi Bjorn,
+> 
+> Here is a stable branch with the DT bindings header that might be needed
+> for SM8650 dts patches.
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/djakov/icc.git/log/?h=icc-sm8650
+> 
+> Thanks,
+> Georgi
 
-I'm waiting for someone to R-B the fix I posted two days ago:
-https://lore.kernel.org/r/20231125192246.87268-2-ltuikov89@gmail.com
---=20
-Regards,
-Luben
+Thanks !
 
---------------0KPyDQBze61FW4P7mTO6D8Pz
-Content-Type: application/pgp-keys; name="OpenPGP_0x4C15479431A334AF.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x4C15479431A334AF.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+Neil
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+> 
+>>
+>> Dependencies: None
+>>
+>> For convenience, a regularly refreshed linux-next based git tree containing
+>> all the SM8650 related work is available at:
+>> https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>> Changes in v2:
+>> - Collected Reviewed-by
+>> - Moved required block in bindings as requested by Krzysztof
+>> - Link to v1: https://lore.kernel.org/r/20231025-topic-sm8650-upstream-interconnect-v1-0-b7277e03aa3d@linaro.org
+> 
 
-xjMEZTohOhYJKwYBBAHaRw8BAQdAWSq76k+GsENjDTMVCy9Vr4fAO9Rb57/bPT1A
-PnbnnRHNIkx1YmVuIFR1aWtvdiA8bHR1aWtvdjg5QGdtYWlsLmNvbT7CmQQTFgoA
-QRYhBJkj7+VmFO9beaAl10wVR5QxozSvBQJlOiE6AhsDBQkJZgGABQsJCAcCAiIC
-BhUKCQgLAgQWAgMBAh4HAheAAAoJEEwVR5QxozSvSm4BAOwCpX53DTQhE20FBGlT
-MqKCOQyJqlMcIQ9SO1qPWX1iAQCv3vfyJwktF7REl1yt7IU2Sye1qmQMfJxdt9JM
-bMNNBs44BGU6IToSCisGAQQBl1UBBQEBB0BT9wSPcCE8uGe7FWo8C+nTSyWPXKTx
-9F0gpEnlqReRBwMBCAfCfgQYFgoAJhYhBJkj7+VmFO9beaAl10wVR5QxozSvBQJl
-OiE6AhsMBQkJZgGAAAoJEEwVR5QxozSvSsYA/2LIFjbxQ2ikbU5S0pKoaMDzO9eG
-z69uNhNWJcvIKJK6AQC9228Mqc1JeZMIyjYWr2HKYHi8S2q2/zHrSZwAWYYwDA=3D=3D
-=3DqCaZ
------END PGP PUBLIC KEY BLOCK-----
-
---------------0KPyDQBze61FW4P7mTO6D8Pz--
-
---------------ANJos5hgeAFPnw8wVTMf0vip--
-
---------------9d8Wd8vPYUGUOABemRhg3b9i
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQSZI+/lZhTvW3mgJddMFUeUMaM0rwUCZWSkDgUDAAAAAAAKCRBMFUeUMaM0r1ZP
-AQCwzBKGWSSFf6Oz9Ktr5onlPjRbeXcOFk4UXputujHIrQD/ZQtqUnEIVF73ktHLWTZQMDGJ+0df
-pXv3ZFVRxQUv4A0=
-=VFsd
------END PGP SIGNATURE-----
-
---------------9d8Wd8vPYUGUOABemRhg3b9i--
 
