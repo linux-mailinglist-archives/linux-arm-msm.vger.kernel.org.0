@@ -1,150 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-2128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C6DF7FA4D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 16:35:23 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 537B27FA53C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 16:52:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 018C6280194
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 15:35:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DD2C28175F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 15:52:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10A5D328CA;
-	Mon, 27 Nov 2023 15:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F10862E406;
+	Mon, 27 Nov 2023 15:52:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A0hTYSHe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C0vWTb6r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A969C189
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 07:35:16 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-54af61f2a40so4056382a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 07:35:16 -0800 (PST)
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB6BB10DA
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 07:52:31 -0800 (PST)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-507a0907896so5711356e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 07:52:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701099315; x=1701704115; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5BeRSQ2NgtW3CkQnVCOjk3/1p7m2vsB5QkdRb/jJ4L0=;
-        b=A0hTYSHeruUv+N7EBseMCwPBRzYqq7imTey1wS8oqS9jesEbO6z5NwSJZEMoQFKsoU
-         kEwpc7MUGwM85dT2oz3bSbPbyPPg9S6MNXEjL5055oLOZPvM2FoKrnoINGBUWdiDZ980
-         pQCxJVUEsSHz8yXGvWJJ8p1qJf54G1B9AKF8Ay+ZRt/XNrXIoWQzUfeeSrqM1aA8JGrM
-         2Awkyu0+ZPynZHLW2+a2c42aRv9iTI+efuimIJvXQyyYndPWHcWRrRdCXrBwoXqnqhow
-         Ab9fbjdj3YZ/85a8VSDsNenZVnZXOzhYzaItrmcrbuTvUMc3MrB2NuiZaLE79Muu/5CA
-         PYTA==
+        d=linaro.org; s=google; t=1701100349; x=1701705149; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+Qt5tTZHEEzddg6Ssj7r37p+bACPrFj0HogZyj70Blc=;
+        b=C0vWTb6rGN+nwhvM8X4GZOdTxM9kSuWMPjJTrZVyrKmCPAFRsZcMA/F/CohWqyP2xo
+         TEPDBH+73DMgyqJH6FDf13q+jy0XVDiO6xs+Jo+29jY2r7TmftqsCX6alyxk7VpbiaCD
+         EXcEM8rD4ItlHYGGZzrZy74xyfXTsFhskM3zzHV9JOmQV14mr/qQQqojXOLJXG+vTLK9
+         3uX0EY0TCUbUC4VOIBruNd230n0LgU68m6GyR08N2yq/T180L7cpTVPIObogKQOuoUbS
+         SoUd2NMwT6x4gOEp74k7zQg7zpHyhFO3hJZKx7bgiTpLNtFepIecjODSHFMAs03igIVD
+         NpQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701099315; x=1701704115;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5BeRSQ2NgtW3CkQnVCOjk3/1p7m2vsB5QkdRb/jJ4L0=;
-        b=f8TN9ubikK+iu/7wU1my1HHKub8t67LHnOJy/A44VigTrUrxw89LJY3lZi56LQKTpY
-         Me1Pi6awBjxCHGEqF8p/XCZ3lOCam2ycVokXNQLz8c50qV7hqMST6ce3PIEKW/w4R+dU
-         WOL41ElOOq19Apq23i/s04p2gxuDKeHqD6MboGClEQTKX+mpjWvqz/ZJjUbl7AzUYaeT
-         lDpO5DCilCmHh2lrngVLdON+Et/EP1Tlm2ibJFUeGxgx49JArvPlpSSv4ykg1luYSgpr
-         phAVd47YCo2zqP5CTHjD67BGUQVh8UiSgBY0NQWWW/O0vyul2NVzuLBWyM9GRYcG5bAF
-         C7/Q==
-X-Gm-Message-State: AOJu0YyZcZcK58w7c7G2Sg173IkPz1fnBM2MziGytDarOaGr3VvsjOH+
-	zJFCRonpgPwE/GB0x5WBIEqgFZYmgvE2gK0as/c=
-X-Google-Smtp-Source: AGHT+IHOX/xkrK1RJFK21Ya6CH7VkQg6wVP1hQ5nJKlX8lT4H9axnaQBUp5u5Co0kTJ/p5w37pduug==
-X-Received: by 2002:a05:6402:78e:b0:54a:f8d9:8026 with SMTP id d14-20020a056402078e00b0054af8d98026mr7906465edy.12.1701099315088;
-        Mon, 27 Nov 2023 07:35:15 -0800 (PST)
-Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id h9-20020a056402280900b0054aeece37cesm4370406ede.52.2023.11.27.07.35.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Nov 2023 07:35:14 -0800 (PST)
-Message-ID: <ec4b7dfa-6fcf-4ccc-8857-d99573349599@linaro.org>
-Date: Mon, 27 Nov 2023 16:35:12 +0100
+        d=1e100.net; s=20230601; t=1701100349; x=1701705149;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+Qt5tTZHEEzddg6Ssj7r37p+bACPrFj0HogZyj70Blc=;
+        b=t1oZH3mr9KZwhyVZRTxHdG90mRpBmnhqq67KH0XnabIwHqFen4BikHDLGA4uMhbcWw
+         P5H7rziBarj4HByjLm95Tr4HeGHbKprKb5gpQKAw9KgR3t0dxStJ9kZGNcB2wA0qGOxi
+         iJ909o7hD6+tUccJaeceh41NPFTM3SatljMaOwDdKCrIwAmqYla0Uj5+Pw52cuIU8bs9
+         sqwHem8y0FwyzefZeszrGbz8BF1r6NBq5/q5o8Or1eGsk6lmeOm8ZaWc76CfLCGQSp7v
+         SA4D37H0mZYf+9byBhHh81w1lFYQ7N7wB/GaZKPCU0pUQq8jYI/Vsjpek7X05/+WAUau
+         VIIw==
+X-Gm-Message-State: AOJu0Yxkf0BJzYuD19Cf5pT05xIyC45jVHk3gQkkHKYvAUQX0N2+JMLP
+	WFgHFGry3N1bF8Z02DVqJ9ztuZXxVplZgC4vG1A=
+X-Google-Smtp-Source: AGHT+IEKpRFaESt4gZvElSt1l0ne4fGi8XPGy+WkqgJ128EQh8YsvW3WHrm+Q+ZuH8OVSRdawRxsRA==
+X-Received: by 2002:ac2:42c4:0:b0:507:a70e:c619 with SMTP id n4-20020ac242c4000000b00507a70ec619mr4364196lfl.67.1701100349416;
+        Mon, 27 Nov 2023 07:52:29 -0800 (PST)
+Received: from [10.167.154.1] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
+        by smtp.gmail.com with ESMTPSA id mb22-20020a170906eb1600b009fc0c42098csm5855150ejb.173.2023.11.27.07.52.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Nov 2023 07:52:29 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v7 0/2] Resolve MPM register space situation
+Date: Mon, 27 Nov 2023 16:52:11 +0100
+Message-Id: <20230328-topic-msgram_mpm-v7-0-6ee2bfeaac2c@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: add ACTLR data and support for
- SC7280
-Content-Language: en-US
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
- robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
- a39.skl@gmail.com, quic_bjorande@quicinc.com, mani@kernel.org,
- quic_eberman@quicinc.com, robdclark@chromium.org,
- u.kleine-koenig@pengutronix.de, robh@kernel.org, vladimir.oltean@nxp.com,
- quic_pkondeti@quicinc.com, quic_molvera@quicinc.com
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- qipl.kernel.upstream@quicinc.com
-References: <20231127145412.3981-1-quic_bibekkum@quicinc.com>
- <20231127145412.3981-4-quic_bibekkum@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231127145412.3981-4-quic_bibekkum@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACu7ZGUC/4XQy2rEMAwF0F8ZvK6LIz8zq/5HGYrtKIkhL+yZ0
+ DLk36vMrgSa5RXoXKEnK5gTFna9PFnGNZU0TxTs24XF3k8d8tRQZiBACgmO3+clRT6WLvvxa1x
+ GHo1zAWWIUCtGa8EX5CH7Kfa0OD2GgYZLxjZ9v3o+b5T7VO5z/nnVrtU+/adhrbjgVbDOed1qL
+ +XHkCaf5/c5d2zXVjgTgAQE5ZVDbVvRHAR5JkgSIFpowQZlhTkI6kxQJASP0kETRVvDQdBngib
+ BoDBAr6hN0AfBnAlmFxygcloHi39v2LbtF7C2wB8QAgAA
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <maz@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Shawn Guo <shawn.guo@linaro.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1701100347; l=2818;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=jzGaK78zqBfidrnl46fLd36+PZ3YDc+jJgsIYSdRn9o=;
+ b=xjIuKG6/Sr8LMdWtOOOHLmJy45SGvaDnQbAUVFhGFvFL98TkHNzpXEQaONwXO3JJvs82pw42m
+ uPRG2NFAyjIDzXSjZ5MH6KGM9lFIXS0cXYN+dNQAho+K9ocK0pMHz1h
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 27.11.2023 15:54, Bibek Kumar Patro wrote:
-> Add ACTLR data table for SC7280 along with support for
-> same including SC7280 specific implementation operations.
-> 
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 25 +++++++++++++++++++++-
->  1 file changed, 24 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 247eaa194129..f0ad09f9a974 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -27,6 +27,20 @@ struct actlr_config {
->  #define CPRE			BIT(1)		/* Enable context caching in the prefetch buffer */
->  #define CMTLB			BIT(0)		/* Enable context caching in the macro TLB */
-> 
-> +static const struct actlr_config sc7280_apps_actlr_cfg[] = {
-> +	{ 0x0800, 0x24E1, PREFETCH_DISABLE | CMTLB },
-hex should be lowercase
+v6 -> v7:
+- Actually check the rvalue of of_address_to_resource
+- Pick up rb
+- Link to v6: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v6-0-682e4855b7e2@linaro.org
 
-> +	{ 0x2000, 0x0163, PREFETCH_DISABLE | CMTLB },
-> +	{ 0x2080, 0x0461, PREFETCH_DISABLE | CMTLB },
-> +	{ 0x2100, 0x0161, PREFETCH_DISABLE | CMTLB },
-> +	{ 0x0900, 0x0407, PREFETCH_SHALLOW | CPRE | CMTLB },
-> +	{ 0x2180, 0x0027, PREFETCH_SHALLOW | CPRE | CMTLB },
-> +	{ 0x1000, 0x07ff, PREFETCH_DEEP | CPRE | CMTLB },
-> +};
-Any reason this list is so much smaller than 8550's? Is it complete?
+v5 -> v6:
+- Resending due to no responses.
+- Change of base to next-20231124 (no changes to the patch)
 
-Konrad
+Link to v5: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v5-0-6e06278896b5@linaro.org
+
+v4 -> v5:
+- Pick up tags
+- Rebase on Rob's of_ header untanglement
+
+Link to v4: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v4-0-bae382dc0f92@linaro.org
+
+v3 -> v4:
+- Fix up indentation in the bindings patch
+- Add an example glink-edge subnode to remoteproc-rpm (its bindings
+  require that..)
+
+Link to v3: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v3-0-2c72f27b4706@linaro.org
+
+v2 -> v3:
+- Fix the example
+- Pick up tags
+- remove the outdated example from the cover letter, check bindings
+  should you want to see one
+
+The bindings for the wrapper node used in the yaml example are merged
+in qcom/for-next
+
+Link to v2: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org
+
+v1 -> v2:
+- deprecate 'reg', make qcom,rpm-msg-ram required [1/2]
+- Use devm_ioremap() [2/2]
+
+Link to v1: https://lore.kernel.org/r/20230328-topic-msgram_mpm-v1-0-1b788a5f5a33@linaro.org
+
+Depends on resolution of https://github.com/devicetree-org/dt-schema/issues/104
+
+The MPM (and some other things, irrelevant to this patchset) resides
+(as far as the ARM cores are concerned, anyway) in a MMIO-mapped region
+that's a portion of the RPM (low-power management core)'s RAM, known
+as the RPM Message RAM. Representing this relation in the Device Tree
+creates some challenges, as one would either have to treat a memory
+region as a bus, map nodes in a way such that their reg-s would be
+overlapping, or supply the nodes with a slice of that region.
+
+This series implements the third option, by adding a qcom,rpm-msg-ram
+property, which has been used for some drivers poking into this region
+before. Bindings ABI compatibility is preserved through keeping the
+"normal" (a.k.a read the reg property and map that region) way of
+passing the register space.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: interrupt-controller: mpm: Pass MSG RAM slice through phandle
+      irqchip: irq-qcom-mpm: Support passing a slice of SRAM as reg space
+
+ .../bindings/interrupt-controller/qcom,mpm.yaml    | 52 +++++++++++++++-------
+ drivers/irqchip/irq-qcom-mpm.c                     | 26 +++++++++--
+ 2 files changed, 58 insertions(+), 20 deletions(-)
+---
+base-commit: 48bbaf8b793e0770798519f8ee1ea2908ff0943a
+change-id: 20230328-topic-msgram_mpm-c688be3bc294
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
 
