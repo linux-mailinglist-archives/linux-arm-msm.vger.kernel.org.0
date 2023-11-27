@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 640967FA4CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 16:34:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C6DF7FA4D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 16:35:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12DBD1F202A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 15:34:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 018C6280194
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 15:35:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52AF9328DE;
-	Mon, 27 Nov 2023 15:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10A5D328CA;
+	Mon, 27 Nov 2023 15:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jy9fVLwF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="A0hTYSHe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72C47189
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 07:34:41 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-544455a4b56so5769828a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 07:34:41 -0800 (PST)
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A969C189
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 07:35:16 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-54af61f2a40so4056382a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 07:35:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701099280; x=1701704080; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701099315; x=1701704115; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=QisU+sGRQtSRKQO4WVRt1/5HsESylrqy0n02GS4nlIQ=;
-        b=Jy9fVLwFLEhP3SVWjOpJbceDRV50YEwHrP/cLjVE1MS0KbAcos0SnK9+aKyhoqxjMo
-         PXQ8Mp9o9ZJHCLdDU81AUuYfPeg+ov7Rdwqqk3/Xa2ito3jC2V8zZACcpXoRdPp30aJ0
-         0J+5v7Du4p/kQ28X15V2DkAZvKykdd+6XmAqLm/Ck7rhy/8GOQVBen2Vg9orXrKvGLt3
-         zV9WqP5I3NpngLIJ/XRVNtvEpCqYZVmHb7Hbl21qx+KgoSvss88lH4wcPR+vWFRcw0++
-         yfpfDhna8pA70Ur+1HwU1K9YPh22pZJKIeYRMpvKg5D984rlOuAd8/eMTwtm2mI6PvrM
-         kUUA==
+        bh=5BeRSQ2NgtW3CkQnVCOjk3/1p7m2vsB5QkdRb/jJ4L0=;
+        b=A0hTYSHeruUv+N7EBseMCwPBRzYqq7imTey1wS8oqS9jesEbO6z5NwSJZEMoQFKsoU
+         kEwpc7MUGwM85dT2oz3bSbPbyPPg9S6MNXEjL5055oLOZPvM2FoKrnoINGBUWdiDZ980
+         pQCxJVUEsSHz8yXGvWJJ8p1qJf54G1B9AKF8Ay+ZRt/XNrXIoWQzUfeeSrqM1aA8JGrM
+         2Awkyu0+ZPynZHLW2+a2c42aRv9iTI+efuimIJvXQyyYndPWHcWRrRdCXrBwoXqnqhow
+         Ab9fbjdj3YZ/85a8VSDsNenZVnZXOzhYzaItrmcrbuTvUMc3MrB2NuiZaLE79Muu/5CA
+         PYTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701099280; x=1701704080;
+        d=1e100.net; s=20230601; t=1701099315; x=1701704115;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QisU+sGRQtSRKQO4WVRt1/5HsESylrqy0n02GS4nlIQ=;
-        b=IWaKtKIpqGAPXcIofIwe7dcUQfL7Jedk7X+oqBuhar/DjzJ7R5xX4XZZrWQA+QC0Ft
-         WHErTHZmtGQWHilKGfTZqm49ArA1J1+j3SmIdW+4G8acFz3qymnP9oYTcGENWEsYoCGX
-         c1AtjEIRtuSvSduo/17z+/qR8jIQqDWTG/oy/xyilQAKxh0ziiaa1RNIqUXXIxlxrGbg
-         w3KmOnsjYBhkgkk+oaBhTDrd72oZdh9ONyrTXWh4Xsw5hQV8FqoIBcIaif4IAZCYG2AV
-         AccdgLhRQ/bTOiYcXCtjV9hGwptyxl/lS86NyUhKWD/LCRMg90EbIWRXui+NNV4ZnGTN
-         A+1w==
-X-Gm-Message-State: AOJu0Yz8QMpUV8yU/e1ERLLu2i52xuwuk+RTVUj0EKI3vMoNuSmTL50T
-	A/6Lm/1Jg2F80/qfDcsXgDtOuA==
-X-Google-Smtp-Source: AGHT+IENlBVBkPbodSNFhC8gFnnNVtDggi2yCL+4ztHlU9SMlu0NcFmq+ogo/nggmf+u7Ru5xN53yQ==
-X-Received: by 2002:a05:6402:3458:b0:54b:1ca8:8539 with SMTP id l24-20020a056402345800b0054b1ca88539mr5528279edc.5.1701099279875;
-        Mon, 27 Nov 2023 07:34:39 -0800 (PST)
+        bh=5BeRSQ2NgtW3CkQnVCOjk3/1p7m2vsB5QkdRb/jJ4L0=;
+        b=f8TN9ubikK+iu/7wU1my1HHKub8t67LHnOJy/A44VigTrUrxw89LJY3lZi56LQKTpY
+         Me1Pi6awBjxCHGEqF8p/XCZ3lOCam2ycVokXNQLz8c50qV7hqMST6ce3PIEKW/w4R+dU
+         WOL41ElOOq19Apq23i/s04p2gxuDKeHqD6MboGClEQTKX+mpjWvqz/ZJjUbl7AzUYaeT
+         lDpO5DCilCmHh2lrngVLdON+Et/EP1Tlm2ibJFUeGxgx49JArvPlpSSv4ykg1luYSgpr
+         phAVd47YCo2zqP5CTHjD67BGUQVh8UiSgBY0NQWWW/O0vyul2NVzuLBWyM9GRYcG5bAF
+         C7/Q==
+X-Gm-Message-State: AOJu0YyZcZcK58w7c7G2Sg173IkPz1fnBM2MziGytDarOaGr3VvsjOH+
+	zJFCRonpgPwE/GB0x5WBIEqgFZYmgvE2gK0as/c=
+X-Google-Smtp-Source: AGHT+IHOX/xkrK1RJFK21Ya6CH7VkQg6wVP1hQ5nJKlX8lT4H9axnaQBUp5u5Co0kTJ/p5w37pduug==
+X-Received: by 2002:a05:6402:78e:b0:54a:f8d9:8026 with SMTP id d14-20020a056402078e00b0054af8d98026mr7906465edy.12.1701099315088;
+        Mon, 27 Nov 2023 07:35:15 -0800 (PST)
 Received: from [192.168.201.100] (178235187180.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.180])
-        by smtp.gmail.com with ESMTPSA id h9-20020a056402280900b0054aeece37cesm4370406ede.52.2023.11.27.07.34.37
+        by smtp.gmail.com with ESMTPSA id h9-20020a056402280900b0054aeece37cesm4370406ede.52.2023.11.27.07.35.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Nov 2023 07:34:39 -0800 (PST)
-Message-ID: <dcadb98e-8e54-4517-a4ec-c31731787bbe@linaro.org>
-Date: Mon, 27 Nov 2023 16:34:37 +0100
+        Mon, 27 Nov 2023 07:35:14 -0800 (PST)
+Message-ID: <ec4b7dfa-6fcf-4ccc-8857-d99573349599@linaro.org>
+Date: Mon, 27 Nov 2023 16:35:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,8 +62,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] iommu/arm-smmu: add ACTLR data and support for
- SM8550
+Subject: Re: [PATCH v3 3/4] iommu/arm-smmu: add ACTLR data and support for
+ SC7280
 Content-Language: en-US
 To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
  robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
@@ -75,7 +75,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
  qipl.kernel.upstream@quicinc.com
 References: <20231127145412.3981-1-quic_bibekkum@quicinc.com>
- <20231127145412.3981-3-quic_bibekkum@quicinc.com>
+ <20231127145412.3981-4-quic_bibekkum@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,17 +112,39 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231127145412.3981-3-quic_bibekkum@quicinc.com>
+In-Reply-To: <20231127145412.3981-4-quic_bibekkum@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 27.11.2023 15:54, Bibek Kumar Patro wrote:
-> Add ACTLR data table for SM8550 along with support for
-> same including SM8550 specific implementation operations.
+> Add ACTLR data table for SC7280 along with support for
+> same including SC7280 specific implementation operations.
 > 
 > Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
 > ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 25 +++++++++++++++++++++-
+>  1 file changed, 24 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 247eaa194129..f0ad09f9a974 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -27,6 +27,20 @@ struct actlr_config {
+>  #define CPRE			BIT(1)		/* Enable context caching in the prefetch buffer */
+>  #define CMTLB			BIT(0)		/* Enable context caching in the macro TLB */
+> 
+> +static const struct actlr_config sc7280_apps_actlr_cfg[] = {
+> +	{ 0x0800, 0x24E1, PREFETCH_DISABLE | CMTLB },
+hex should be lowercase
+
+> +	{ 0x2000, 0x0163, PREFETCH_DISABLE | CMTLB },
+> +	{ 0x2080, 0x0461, PREFETCH_DISABLE | CMTLB },
+> +	{ 0x2100, 0x0161, PREFETCH_DISABLE | CMTLB },
+> +	{ 0x0900, 0x0407, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +	{ 0x2180, 0x0027, PREFETCH_SHALLOW | CPRE | CMTLB },
+> +	{ 0x1000, 0x07ff, PREFETCH_DEEP | CPRE | CMTLB },
+> +};
+Any reason this list is so much smaller than 8550's? Is it complete?
 
 Konrad
 
