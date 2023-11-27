@@ -1,166 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-2071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59BBE7F9F57
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 13:14:58 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1118D7F9F8A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 13:28:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F06A8B209B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 12:14:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34B801C20CEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 12:28:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 396461CF96;
-	Mon, 27 Nov 2023 12:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 254C01DFF4;
+	Mon, 27 Nov 2023 12:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lm8MSf93"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wRsbUzy0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FEC810CA;
-	Mon, 27 Nov 2023 04:14:46 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ARBuci5022349;
-	Mon, 27 Nov 2023 12:14:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=Mwt/tc7oxaZVaxbhV5hYKe81nZekUp6gxT1uZJu+xF4=;
- b=Lm8MSf934ZNE1T3gS9kaDm8MdqdqdflC1ym9U2ttfAUjTzCkKJelpDkc0j1fwWjxvLJA
- VzelAuhJDeZaVHMYaefPprKy7Qf+5dttH2ez5//PmjyqGiSVcSoX+LEuysy0GUqsDl6K
- gRTHTFyGYyZb+c53nqCqhGXPr8Y0h3aas5uIMstJDzPv9wY+DsmXQv+3DLzgTk0ZjQby
- 3En75hSuR2r5z7PtDLFS/2xbhJQREYUIa+D+hjQKpKsirpCTojlDQE048KoG1+CbWyh0
- 80UJgSf/PoU4HSDE29MIgJn0fFxuMHPmyX1/avQE72+Cvl/GGUR2qKLkXqxK+BtRfEoN hw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk9adm2un-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 12:14:40 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ARCEdAM014936
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 12:14:39 GMT
-Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 27 Nov 2023 04:14:33 -0800
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Date: Mon, 27 Nov 2023 17:43:51 +0530
-Subject: [PATCH v3 3/3] phy: qcom-qmp-pcie: Add support for keeping refclk
- always on
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 105DB183
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 04:27:59 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-a06e59384b6so525485766b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 04:27:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701088077; x=1701692877; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VOWo+wDLTQ6LtueSi5uTAbIdfJHo+Rh93+WXgZshvmM=;
+        b=wRsbUzy0wacC9FCdjZzmvtZHfcKdoaqL51Iu6ysUir90gQuBdS2jJaKf+z3SKsvnAC
+         g2nXX9x7HLL+QWJIQKHD3CWXZO1o4XQJmWN2HfjLc1oGgxslSjww/PwOQwQ0RBiGlg3I
+         faGC8c4vcFo7SLwuDCRCNNy30S0sxpA5eF+f0DkeQcTPfj5x5UepfC0oDd0MHWVvgNls
+         iLxSSjQ0c93AcXoJ5xe3a4hkJbLvdTvbCYYiXlk4c4fvX2Ku9JWDA4ItKeIaDqM+NJbM
+         kjB8PXfzx6jwdrkxfRwCRNRHzgSNsjbjd1WE1OhM/UshOlFJ+7WAreluBTgQfYY0PVwM
+         MYiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701088077; x=1701692877;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VOWo+wDLTQ6LtueSi5uTAbIdfJHo+Rh93+WXgZshvmM=;
+        b=TMqyZn7bTgAsCAix5hYKzJnbD3huBgcJQbaCJo/cb4MGyc0y6Vkn/ZtaweVhtJrwmJ
+         u+zkmGqZls8gAlLSu2cFLPXisU/xKsDTpX/I4/N2oEFelCEJgCvAHnnzHVn+O5JC7+Bj
+         FZDb5Z+r1x8XDn1JLm2faEt2AnQ3GvfjnDuJxanolXdF1+TGMqT2dORT+VSaIznTtf0Z
+         AyH+hwIyux7FN9gx8JAdF2HdWcdmBJYbCJM3mpNGq4y2IsdIQ+1Z+yv0bs1K2KP1mWER
+         4EI5ycKStiLEFvEGyKsSOvBP0bRJ6DNeAywJYgXdyTtDQxJAtZPmYO+lszOoaD5G5ZI4
+         L67w==
+X-Gm-Message-State: AOJu0YzhYOUYguArR1hpo5BmOviVhZxKvHiKluMmb0JG//L/jG73q4MZ
+	28dyN0s7M2exTma45WKZBd2x9A==
+X-Google-Smtp-Source: AGHT+IEdz4rYPJnzWS03irP6vWuc3Ac4YU0czADdpY570/d38LijCAuUfxtyLO3R03NBBWzmd5XgPg==
+X-Received: by 2002:a17:907:1608:b0:a10:9722:97d3 with SMTP id cw8-20020a170907160800b00a10972297d3mr1349677ejd.0.1701088077476;
+        Mon, 27 Nov 2023 04:27:57 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.109])
+        by smtp.gmail.com with ESMTPSA id u10-20020a170906c40a00b009fd0a0b7ee5sm5608500ejz.9.2023.11.27.04.27.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Nov 2023 04:27:56 -0800 (PST)
+Message-ID: <769bf4e4-0db7-4fc4-9640-3797a729e404@linaro.org>
+Date: Mon, 27 Nov 2023 13:27:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] dt-bindings: interconnect: Add Qualcomm SM6115 NoC
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Georgi Djakov <djakov@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ Konrad Dybcio <konradybcio@kernel.org>
+References: <20231125-topic-6115icc-v2-0-69d05d90871b@linaro.org>
+ <20231125-topic-6115icc-v2-1-69d05d90871b@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231125-topic-6115icc-v2-1-69d05d90871b@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <20231127-refclk_always_on-v3-3-26d969fa8f1d@quicinc.com>
-References: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
-In-Reply-To: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_vpernami@quicinc.com>, <quic_parass@quicinc.com>,
-        "Krishna chaitanya
- chundru" <quic_krichai@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.13-dev-83828
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1701087256; l=2385;
- i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
- bh=w21FU3eA0VG4vGK0aaYA0Nrf7F5/HCavLA1e1RaBndc=;
- b=HCVVnv8YB0O2ZOyoGkIuHDninTGdT9FJjAmNErVSYkGZsmuBLpiW7GdMH4pg7zioo4aXFmRUl
- vJfZecH13gLBl6gud4nA0Cv9qODw0DVkOuLTOm8BhBJyVj5bQ01oxnl
-X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6a_EMSw5V3MRyOLGPyw_vUQEdbw9RpdM
-X-Proofpoint-GUID: 6a_EMSw5V3MRyOLGPyw_vUQEdbw9RpdM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-27_09,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- clxscore=1015 priorityscore=1501 malwarescore=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 mlxlogscore=999 adultscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311270083
 
-In PCIe low power states like L1.1 or L1.2 the phy will stop
-supplying refclk to endpoint. If endpoint asserts clkreq to bring
-back link L0, then RC needs to provide refclk to endpoint.
+On 27/11/2023 12:10, Konrad Dybcio wrote:
+> Add bindings for Qualcomm SM6115 Network-On-Chip interconnect.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+...
 
-Some platforms with pcie switch fail to drive the clkreq signal to
-the host from the endpoints because of the switch board design.
-Due to that refclk needs to supplied to the endpoint always.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sm6115-bimc
+> +      - qcom,sm6115-cnoc
+> +      - qcom,sm6115-snoc
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    minItems: 1
+> +    maxItems: 4
 
-Add a flag to keep refclk always supplied to endpoint.
+clock-names as well here. All of such arrays go together.
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 7fdf9b2596b6..e95f677817f7 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -43,6 +43,8 @@
- /* QPHY_PCS_STATUS bit */
- #define PHYSTATUS				BIT(6)
- #define PHYSTATUS_4_20				BIT(7)
-+/* PCS_PCIE_ENDPOINT_REFCLK_CNTRL */
-+#define EPCLK_ALWAYS_ON_EN			BIT(6)
- 
- #define PHY_INIT_COMPLETE_TIMEOUT		10000
- 
-@@ -2264,6 +2266,8 @@ struct qmp_pcie {
- 	struct phy *phy;
- 	int mode;
- 
-+	bool refclk_always_on;
-+
- 	struct clk_fixed_rate pipe_clk_fixed;
- };
- 
-@@ -3179,6 +3183,10 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
- 	qmp_pcie_configure(pcs, tbls->pcs, tbls->pcs_num);
- 	qmp_pcie_configure(pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
- 
-+	if (qmp->refclk_always_on && cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL])
-+		qphy_setbits(pcs_misc, cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL],
-+			     EPCLK_ALWAYS_ON_EN);
-+
- 	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
- 		qmp_pcie_configure(serdes, cfg->serdes_4ln_tbl, cfg->serdes_4ln_num);
- 		qmp_pcie_init_port_b(qmp, tbls);
-@@ -3701,6 +3709,12 @@ static int qmp_pcie_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_node_put;
- 
-+	qmp->refclk_always_on = of_property_read_bool(dev->of_node, "qcom,refclk-always-on");
-+	if (qmp->refclk_always_on && !qmp->cfg->regs[QPHY_PCS_ENDPOINT_REFCLK_CNTRL]) {
-+		dev_err(dev, "refclk is always on is present but refclk cntrl offset is not present\n");
-+		goto err_node_put;
-+	}
-+
- 	ret = phy_pipe_clk_register(qmp, np);
- 	if (ret)
- 		goto err_node_put;
-
--- 
-2.42.0
+> +
+> +# Child node's properties
+> +patternProperties:
+> +  '^interconnect-[a-z0-9]+$':
+Best regards,
+Krzysztof
 
 
