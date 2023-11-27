@@ -1,266 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-2066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84F677F9EB2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 12:35:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B8BCD7F9EF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 12:49:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 073A11F20C98
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 11:35:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5975EB20F84
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 11:49:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 734AA1A588;
-	Mon, 27 Nov 2023 11:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A966C1A711;
+	Mon, 27 Nov 2023 11:49:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pzOCb5Wh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jWS0lV+z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5951133;
-	Mon, 27 Nov 2023 03:35:40 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ARAv6rW024162;
-	Mon, 27 Nov 2023 11:35:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=thltlNEte7wqIEWzvgJuzPrT0P4hiM4udr7oHuK7vgY=;
- b=pzOCb5WhOzIYaaP5AGgRNCQeuYwj3DkeOfkB4UUWEPqiEy/gFifVHP03+miYQ3a40kaP
- Ln8MbJx2X5/Sug37juSuUKVfu+JX3o8Qu+bKrK/ZLOfbmUrkiOAFzH10wuX6/1Hg69hp
- lrQuU7+1QxG7Q0NMwwRIvoU5Up5XIXdx1py4gQePscDLh8vj+ti8r+u04ui28v/WoxAX
- afl80q0dVRrcF6tCEJchm1tpwqdd1Ip83IykXBbBLV5j3bg7uFO34KoZ5PB2Fe1LVFtv
- rizOqtfSVyOTJ5M2pbSc0R9yg87LBsGigPCjjS8tddwnXebYro9jjO/7+2xRo4/2QZK0 SA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk95cc1nx-1
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5973101;
+	Mon, 27 Nov 2023 03:49:26 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ARB3G7R023323;
+	Mon, 27 Nov 2023 11:49:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=oUuLdVyesXk1FBSpoe8O/kpXBhAsMocetEcxPvq3ts4=;
+ b=jWS0lV+zkBQBf+bXkaKipIaaycwYTucVNASnd0mYpw3k1Vo6F+7GLEA82Xbj2HnDRhmx
+ mQshqioI1OoYMBjvriowTAbA4v9y/3RrOnxF2C3B4NbOflKViejGz+m+jsEVcqNatCRw
+ 28bYTVnymgWGJhZcZm4xRIjhgELYzjbLiACI108MIPiZ+9ciLTadjhiIX2nsUcEu2Fs4
+ NfJ8rUWqEeFSBlCNFFWuzUU0qTvWQjxM82WqZ/bq1UXs233Cp+v/nfwqH5Qlp3qZMvEs
+ TnrbiK4Kue8hC6J8KxQXBy4xjPJXTxzT8GlxITUjwbsJu0ey1D5mgi020Gan40RMI4wK jg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uk9adm17p-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 11:35:13 +0000
+	Mon, 27 Nov 2023 11:49:15 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ARBZCvS005980
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ARBnEat016991
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 27 Nov 2023 11:35:12 GMT
-Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 27 Nov 2023 03:35:02 -0800
-Date: Mon, 27 Nov 2023 17:04:59 +0530
-From: Pavan Kondeti <quic_pkondeti@quicinc.com>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-CC: <corbet@lwn.net>, <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <keescook@chromium.org>, <tony.luck@intel.com>, <gpiccoli@igalia.com>,
-        <mathieu.poirier@linaro.org>, <vigneshr@ti.com>, <nm@ti.com>,
-        <matthias.bgg@gmail.com>, <kgene@kernel.org>,
-        <alim.akhtar@samsung.com>, <bmasney@redhat.com>,
-        <linux-doc@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-hardening@vger.kernel.org>,
-        <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-samsung-soc@vger.kernel.org>, <kernel@quicinc.com>
-Subject: Re: [Patch v6 10/12] pstore/ram: Add dynamic ramoops region support
- through commandline
-Message-ID: <ad38fb23-e2a2-448e-bdea-fa0985f82b50@quicinc.com>
-References: <1700864395-1479-1-git-send-email-quic_mojha@quicinc.com>
- <1700864395-1479-11-git-send-email-quic_mojha@quicinc.com>
+	Mon, 27 Nov 2023 11:49:14 GMT
+Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 27 Nov
+ 2023 03:49:08 -0800
+Message-ID: <1341f3d2-f20f-af2b-fd6e-bfe63a32630f@quicinc.com>
+Date: Mon, 27 Nov 2023 17:19:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <1700864395-1479-11-git-send-email-quic_mojha@quicinc.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
+ qcom,refclk-always-on property
+Content-Language: en-US
+To: Conor Dooley <conor@kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_vbadigan@quicinc.com>,
+        <quic_ramkri@quicinc.com>, <quic_nitegupt@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_vpernami@quicinc.com>,
+        <quic_parass@quicinc.com>
+References: <20231107-refclk_always_on-v2-0-de23962fc4b3@quicinc.com>
+ <20231107-refclk_always_on-v2-1-de23962fc4b3@quicinc.com>
+ <CAA8EJpqvCJsft3Y-m2ZYORBg=6P7EhT-PsCSkuQ4xaxuf3KOwA@mail.gmail.com>
+ <20231108-surgical-yelling-7314b68c0289@spud>
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20231108-surgical-yelling-7314b68c0289@spud>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: gSQpbWT7UNoVWbbqsLNJRqn82Dqqebju
-X-Proofpoint-ORIG-GUID: gSQpbWT7UNoVWbbqsLNJRqn82Dqqebju
+X-Proofpoint-ORIG-GUID: oB4cY0b_PFjbrYAkkiRiYVDtEAB4y0-X
+X-Proofpoint-GUID: oB4cY0b_PFjbrYAkkiRiYVDtEAB4y0-X
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-27_09,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- adultscore=0 bulkscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
- lowpriorityscore=0 phishscore=0 mlxscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311270079
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
+ clxscore=1011 priorityscore=1501 malwarescore=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 mlxlogscore=999 adultscore=0 impostorscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311270080
 
-On Sat, Nov 25, 2023 at 03:49:53AM +0530, Mukesh Ojha wrote:
-> The reserved memory region for ramoops is assumed to be at a fixed
-> and known location when read from the devicetree. This may not be
-> required for something like Qualcomm's minidump which is interested
-> in knowing addresses of ramoops region but it does not put hard
-> requirement of address being fixed as most of it's SoC does not
-> support warm reset and does not use pstorefs at all instead it has
-> firmware way of collecting ramoops region if it gets to know the
-> address and register it with apss minidump table which is sitting
-> in shared memory region in DDR and firmware will have access to
-> these table during reset and collects it on crash of SoC.
-> 
-> So, add the support of reserving ramoops region to be dynamically
-> allocated early during boot if it is request through command line
-> via 'dyn_ramoops_size=<size>' and fill up reserved resource structure
-> and export the structure, so that it can be read by ramoops driver.
-> 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
->  Documentation/admin-guide/ramoops.rst |  7 ++++
->  fs/pstore/Kconfig                     | 15 +++++++++
->  fs/pstore/ram.c                       | 62 ++++++++++++++++++++++++++++++++---
->  include/linux/pstore_ram.h            |  5 +++
->  init/main.c                           |  2 ++
->  5 files changed, 87 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/admin-guide/ramoops.rst b/Documentation/admin-guide/ramoops.rst
-> index e9f85142182d..af737adbf079 100644
-> --- a/Documentation/admin-guide/ramoops.rst
-> +++ b/Documentation/admin-guide/ramoops.rst
-> @@ -33,6 +33,13 @@ memory are implementation defined, and won't work on many ARMs such as omaps.
->  Setting ``mem_type=2`` attempts to treat the memory region as normal memory,
->  which enables full cache on it. This can improve the performance.
->  
-> +Ramoops memory region can also be allocated dynamically for a special case where
-> +there is no requirement to access the logs from pstorefs on next boot instead there
-> +is separate backend mechanism like minidump present which has awareness about the
-> +dynamic ramoops region and can recover the logs. This is enabled via command line
-> +parameter ``dyn_ramoops_size=<size>`` and should not be used in absence of
-> +separate backend which knows how to recover this dynamic region.
-> +
->  The memory area is divided into ``record_size`` chunks (also rounded down to
->  power of two) and each kmesg dump writes a ``record_size`` chunk of
->  information.
-> diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
-> index 3acc38600cd1..e13e53d7a225 100644
-> --- a/fs/pstore/Kconfig
-> +++ b/fs/pstore/Kconfig
-> @@ -81,6 +81,21 @@ config PSTORE_RAM
->  
->  	  For more information, see Documentation/admin-guide/ramoops.rst.
->  
-> +config PSTORE_DYNAMIC_RAMOOPS_REGION_RESERVATION
-> +	bool "Reserve ramoops region dynamically"
-> +	select PSTORE_RAM
-> +	help
-> +	  This enables the dynamic reservation of ramoops region for a special case
-> +	  where there is no requirement to access the logs from pstorefs on next boot
-> +	  instead there is separate backend mechanism like minidump present which has
-> +	  awareness about the dynamic ramoops region and can recover the logs. This is
-> +	  enabled via command line parameter dyn_ramoops_size=<size> and should not be
-> +	  used in absence of separate backend which knows how to recover this dynamic
-> +	  region.
-> +
-> +	  Note whenever this config is selected ramoops driver will be build statically
-> +	  into kernel.
-> +
 
-Is there any advantage if we decouple this memory reservation from
-pstore ram so that pstore ram can still be compiled as module? Asking
-because you explicitly mentioned this limitation.
+On 11/8/2023 9:22 PM, Conor Dooley wrote:
+> On Tue, Nov 07, 2023 at 03:01:47PM +0200, Dmitry Baryshkov wrote:
+>> On Tue, 7 Nov 2023 at 14:26, Krishna chaitanya chundru
+>> <quic_krichai@quicinc.com> wrote:
+>>> Document qcom,refclk-always-on property which is needed in some platforms
+>>> to supply refclk even in PCIe low power states.
+>>>
+>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>>> ---
+>>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 7 +++++++
+>>>   1 file changed, 7 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>>> index 2c3d6553a7ba..263291447a5b 100644
+>>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+>>> @@ -93,6 +93,13 @@ properties:
+>>>     "#phy-cells":
+>>>       const: 0
+>>>
+>>> +  qcom,refclk-always-on:
+>>> +    type: boolean
+>>> +    description: If there is some issues in platform with clkreq signal
+>> nit: there are some
+>>
+>> However this still doesn't describe what kind of issues with clkreq
+>> you observe. I mean, clkreq is just a GPIO pin.
+>>
+>>> +      propagation to the host and due to that host will not send refclk, which
+>>> +      results in linkdown in L1.2 or L1.1 exit initiated by EP. This property
+>>> +      if set keeps refclk always on even in Low power states (optional).
+> Dimitry's issues with the property aside, putting "(optional)" in the
+> description is meaningless - qcom,refclk-always-on isn't listed in the
+> required properties section, so therefore has to be optional.
+>
+> Cheers,
+> Conor.
 
->  config PSTORE_ZONE
->  	tristate
->  	depends on PSTORE
-> diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-> index 88b34fdbf759..a6c0da8cfdd4 100644
-> --- a/fs/pstore/ram.c
-> +++ b/fs/pstore/ram.c
-> @@ -20,6 +20,7 @@
->  #include <linux/compiler.h>
->  #include <linux/of.h>
->  #include <linux/of_address.h>
-> +#include <linux/memblock.h>
->  #include <linux/mm.h>
->  
->  #include "internal.h"
-> @@ -103,6 +104,55 @@ struct ramoops_context {
->  };
->  
->  static struct platform_device *dummy;
-> +static int dyn_ramoops_size;
-> +/* Location of the reserved area for the dynamic ramoops */
-> +static struct resource dyn_ramoops_res = {
-> +	.name  = "ramoops",
-> +	.start = 0,
-> +	.end   = 0,
-> +	.flags = IORESOURCE_BUSY | IORESOURCE_SYSTEM_RAM,
-> +	.desc  = IORES_DESC_NONE,
-> +};
-> +
-> +static int __init parse_dyn_ramoops_size(char *p)
-> +{
-> +	char *tmp;
-> +
-> +	dyn_ramoops_size = memparse(p, &tmp);
-> +	if (p == tmp) {
-> +		pr_err("ramoops: memory size expected\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +early_param("dyn_ramoops_size", parse_dyn_ramoops_size);
+I removed the optional flag and updated the description.
 
-should not this code be under
-CONFIG_PSTORE_DYNAMIC_RAMOOPS_REGION_RESERVATION?
+- Krishna chaitanya.
 
-> +
-> +#ifdef CONFIG_PSTORE_DYNAMIC_RAMOOPS_REGION_RESERVATION
-> +/*
-> + * setup_dynamic_ramoops() - reserves memory for dynamic ramoops
-> + *
-> + * This enable dynamic reserve memory support for ramoops through
-> + * command line.
-> + */
-> +void __init setup_dynamic_ramoops(void)
-> +{
-> +	unsigned long long ramoops_base;
-> +	unsigned long long ramoops_size;
-> +
-> +	ramoops_base = memblock_phys_alloc_range(dyn_ramoops_size, SMP_CACHE_BYTES,
-> +						 0, MEMBLOCK_ALLOC_NOLEAKTRACE);
-> +	if (!ramoops_base) {
-> +		pr_err("cannot allocate ramoops dynamic memory (size:0x%llx).\n",
-> +			ramoops_size);
-> +		return;
-> +	}
-
-This error needs to be propagated to ramoops_register_dummy() since it
-rely on !dyn_ramoops_size . one way is to set dyn_ramoops_size to 0.
-
-> +
-> +	dyn_ramoops_res.start = ramoops_base;
-> +	dyn_ramoops_res.end = ramoops_base + dyn_ramoops_size - 1;
-> +	insert_resource(&iomem_resource, &dyn_ramoops_res);
-> +}
-> +#endif
->  
->  static int ramoops_pstore_open(struct pstore_info *psi)
->  {
-> @@ -915,14 +965,18 @@ static void __init ramoops_register_dummy(void)
->  
->  	/*
->  	 * Prepare a dummy platform data structure to carry the module
-> -	 * parameters. If mem_size isn't set, then there are no module
-> -	 * parameters, and we can skip this.
-> +	 * parameters. If mem_size isn't set, check for dynamic ramoops
-> +	 * size and use if it is set.
->  	 */
-> -	if (!mem_size)
-> +	if (!mem_size && !dyn_ramoops_size)
->  		return;
->  
-
-If mem_size and dyn_ramoops_size are set, you are taking
-dyn_ramoops_size precedence here. The comment is a bit confusing, pls
-review it once.
-
-> -	pr_info("using module parameters\n");
-> +	if (dyn_ramoops_size) {
-> +		mem_size = dyn_ramoops_size;
-> +		mem_address = dyn_ramoops_res.start;
-> +	}
->  
-
-Overall it Looks good to me. Thanks.
+>>> +
+>>>   required:
+>>>     - compatible
+>>>     - reg
+>>>
+>>> --
+>>> 2.42.0
+>>>
+>>>
+>>
+>> -- 
+>> With best wishes
+>> Dmitry
 
