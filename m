@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B5DC7F9A43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 07:54:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0ABD7F9A4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 07:55:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7F60280D68
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 06:54:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 907D91C20915
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Nov 2023 06:55:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96A11CA7B;
-	Mon, 27 Nov 2023 06:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B67D1108;
+	Mon, 27 Nov 2023 06:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qP366yZh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lfH0MNXI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BCED138
-	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Nov 2023 22:54:08 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c876e44157so47052961fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Nov 2023 22:54:08 -0800 (PST)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFBDE188
+	for <linux-arm-msm@vger.kernel.org>; Sun, 26 Nov 2023 22:55:25 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-544455a4b56so5060988a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Nov 2023 22:55:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701068047; x=1701672847; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701068124; x=1701672924; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=g7O18zBiTgze+LVcu41zvOHt3KDlXKTRguomVeb/Thw=;
-        b=qP366yZhkbcg55UNxG/AGYaUvmM/KEcna8mNDSWDSYPERzKn3idfBHHrPp8Aq0JueB
-         QyO6MFaqdGbAzsTU2zkJ50ro4LrpV3pYnwegU8rtn2qwBFqFcPGJqyD3G3cZSBiN6iSu
-         yWW0iaPelGEe/f59DWpAOI8r7LZ6+JbdSxhCdCVx8gl5Nrqng3Qd7mt1XIFi7RTE7YYV
-         i9pPU20z2GHhF49pS4vy9RQ2oZuedUV2XAOdfZfh+l6yJgIMo4bKmg9qO3SU5mR6iYdu
-         zSromp/gfAch1+awNpmQxI/YFbtRikwgQbZY4lwM82uqdZuBgL5fdst98N3uonUnFb3L
-         ZWHg==
+        bh=fvoDgA0KUEavMZgSwz2q0okOEwjLaa+M4rFji12SNTI=;
+        b=lfH0MNXIwqUqbgj0/e1ph970BMTeOKqUHVUVwnx3z/tZ3CJ4VB7CA+gyW0LtR5CSjm
+         lGbQ7rdBh5fpepcSPs7K+XOlbpB4dSUPUhdKPZerFaIX41X41U4bRU5Lbb3lUtRGKNai
+         jQChv6w4iThWKs5YsKeN5Fgr/AsMbczJB6ZWDCIBr6WfPNXOsk05XhT4gl2Z0QMF0Yho
+         ZonZUkMLJYHi7y4KYzgtJP9fvRdZ11S/64jSj0GM42rhQVLhw/f2NS54onLtPkeimTen
+         mhquheGhAysceN1dxSXltQ8SYJswb2jx4kstNDXZ5Jv+Nj26OYrmtO+wqfLrtLGDYw7R
+         dYwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701068047; x=1701672847;
+        d=1e100.net; s=20230601; t=1701068124; x=1701672924;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g7O18zBiTgze+LVcu41zvOHt3KDlXKTRguomVeb/Thw=;
-        b=aq4v3hO36tb1ZPwba4K7EwllPf755zXDYUqkLSFfVKj5/dN/WC+jXQKEH1xi6/L6xV
-         16YKitNvOneNBhRzoHqriXOZWyxne9kkp4dgq5mpS7Z/ypugqPlAJPIJkNjV3+Nq4ZAm
-         FWhjYskBg0u6IdONC+UMDJ5L2Yc6xoNMah9Vb9doM3FzEloXqBrpDHSwCX/XXEWVqS8K
-         axqns7SEP/5Amav/XkkaNvxRdj2sRkI5kYG5m8SbveaEWWFTPbBgnlOKZagdY6O4JnBf
-         qCWHo7IvQlFPxHTcP0YQsEaOSxcqz9Sydn1J/Dt8yJIhNy7djjwi3wxcu2Rj1hOrL4ky
-         jq8g==
-X-Gm-Message-State: AOJu0Yymj0Jseez8cr5DLBPIBOMla3fLSzuLW2YQ+H/3B3GLA1rdOsJH
-	4mjt3E0iur+bpuxYo+yQktDmsw==
-X-Google-Smtp-Source: AGHT+IGySsVCaGz+BUtPFjXidV9mOz6tbh6cIk6Zv9lyxPI3Wu3V0ZesH3rLnRic2lXgw0/WByl3Zw==
-X-Received: by 2002:a05:6512:12c8:b0:50a:7575:1339 with SMTP id p8-20020a05651212c800b0050a75751339mr9573201lfg.18.1701068046576;
-        Sun, 26 Nov 2023 22:54:06 -0800 (PST)
+        bh=fvoDgA0KUEavMZgSwz2q0okOEwjLaa+M4rFji12SNTI=;
+        b=bmarG5rlC8+JM61p7h5qoZzmbEMDctaS9hWnvjR2HzEbX/yV3WsllUTaWUdCil/7Ua
+         f5PIX+pA9o87EeouZjPJpu/LpszZSJ9cLGX6eVCKfwiWCgp47IlL63WNjnku2db6edtI
+         LCY1Li/+MAF8ITKeAei+F6kedEkCw8IcxytKHvrf1cDIFmwBr/hVsQlE7MxGrGm6qyCd
+         dQZhn8gZqndGd/72bCJjizJuz16Ja+4qOnWUN7zYa613m1T/5yrwnpmkedAf3ETfhgMp
+         JSJ8uHovKjtpjohfhusEurgNrWQkpJ0RaH5fLtW+KZGyjJ7lj1t2rcuASXne0/Sh2LaR
+         wa5g==
+X-Gm-Message-State: AOJu0Yy35GSr/vnW1jbw5D/RSZXFDVBac0K+lkDHtFs/0U0JTpg23izZ
+	EHFZlAHv+fjIduRMgJvw2d80Ag==
+X-Google-Smtp-Source: AGHT+IH3uL19TulhmqPpzsz8xj7/gK1xsaMeXYzhDs1LLK/qqzEwTdegJjUqfJKBktgeMffAI+Y04Q==
+X-Received: by 2002:a05:6402:5152:b0:54b:5f8:2df with SMTP id n18-20020a056402515200b0054b05f802dfmr6025025edd.9.1701068124075;
+        Sun, 26 Nov 2023 22:55:24 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id c15-20020a05640227cf00b0054b564d04e8sm1258290ede.85.2023.11.26.22.54.03
+        by smtp.gmail.com with ESMTPSA id c15-20020a05640227cf00b0054b564d04e8sm1258290ede.85.2023.11.26.22.55.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 26 Nov 2023 22:54:06 -0800 (PST)
-Message-ID: <d1113c4f-cb67-4850-bd46-9ed2ec97ff08@linaro.org>
-Date: Mon, 27 Nov 2023 07:54:02 +0100
+        Sun, 26 Nov 2023 22:55:23 -0800 (PST)
+Message-ID: <72202fa6-6f0a-4f63-bfdc-36afe14207fd@linaro.org>
+Date: Mon, 27 Nov 2023 07:55:21 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,8 +62,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/12] dt-bindings: display: msm: qcm2290-mdss: Use the
- non-deprecated DSI compat
+Subject: Re: [PATCH 02/12] dt-bindings: display: msm: Add reg bus and rotator
+ interconnects
 Content-Language: en-US
 To: Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Clark
  <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -87,7 +87,7 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  iommu@lists.linux.dev
 References: <20231125-topic-rb1_feat-v1-0-11d71b12b058@linaro.org>
- <20231125-topic-rb1_feat-v1-1-11d71b12b058@linaro.org>
+ <20231125-topic-rb1_feat-v1-2-11d71b12b058@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -133,37 +133,27 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231125-topic-rb1_feat-v1-1-11d71b12b058@linaro.org>
+In-Reply-To: <20231125-topic-rb1_feat-v1-2-11d71b12b058@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/11/2023 15:17, Konrad Dybcio wrote:
-> The "qcom,dsi-ctrl-6g-qcm2290" has been deprecated in commit 0c0f65c6dd44
-> ("dt-bindings: msm: dsi-controller-main: Add compatible strings for every
-> current SoC"), but the example hasn't been updated to reflect that.
+> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there are
+> other connection paths:
+> - a path that connects rotator block to the DDR.
+> - a path that needs to be handled to ensure MDSS register access
+>   functions properly, namely the "reg bus", a.k.a the CPU-MDSS CFG
+>   interconnect.
 > 
-> Fix that.
+> Describe these paths bindings to allow using them in device trees and in
+> the driver
 > 
-> Fixes: 0c0f65c6dd44 ("dt-bindings: msm: dsi-controller-main: Add compatible strings for every current SoC")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> [Konrad: rework for one vs two MDP paths]
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-> index 5ad155612b6c..3d82c00a9f85 100644
-> --- a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
-> @@ -56,7 +56,9 @@ patternProperties:
->  
->      properties:
->        compatible:
-> -        const: qcom,dsi-ctrl-6g-qcm2290
-> +        items:
-> +          - const: qcom,qcm2290-dsi-ctrl
-> +          - const: qcom,mdss-dsi-ctrl
 
-You must also update the example here.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
