@@ -1,114 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-2288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34B9E7FBF02
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 17:11:30 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA6F37FBF8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 17:49:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D55E3B20DF3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 16:11:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 35E8CB20D95
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 16:49:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36F6237D1F;
-	Tue, 28 Nov 2023 16:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A22E058AD2;
+	Tue, 28 Nov 2023 16:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="H9Bn+40s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YE4TZ7dK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06C5DA;
-	Tue, 28 Nov 2023 08:11:20 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ASBliTK019059;
-	Tue, 28 Nov 2023 16:11:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iqbAdlkzfpJ3QRXcSlzFEiRtZrwRPJqcPLYmnFK9te4=;
- b=H9Bn+40scZaA7X7DxIujXYibiSOUDsAMQErDQ2lE7xZ9WQdn30fiajQGldjhRBHGJwN3
- N216pFNn0Z7YBUfWmLk1a7tS1oWUYUdQZRwr9xSVu1fUH4SUNw/Ln+Oa7dDLpTH9Aktb
- Fzp85jTQ3Nd9VFliUO/8oScKD5u2pIp0pH0FHtQ1E9KGGkavvvOtryun3AaFHUcVwmjX
- 10Fg4bx4L/8VBCIzaVjhVGPo/86OVLC7zJXi1qf/JQ8vH1umzOZaQa3R8lxCr+O3XPPn
- 9WGu+ql+IGJ9pmNxN/WIvpPCU5Iyd16hRC/skT4aBS0nyiG0zfKNSyhp5vJDlqu/mseJ Mw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3unfn4rv2u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 16:11:16 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ASGBF1g003718
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 16:11:15 GMT
-Received: from [10.216.35.46] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
- 2023 08:11:10 -0800
-Message-ID: <26b69814-201b-8d07-d844-27e804aa3016@quicinc.com>
-Date: Tue, 28 Nov 2023 21:41:06 +0530
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCF41988
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 08:49:49 -0800 (PST)
+Received: by mail-yb1-xb35.google.com with SMTP id 3f1490d57ef6-db510605572so666400276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 08:49:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701190188; x=1701794988; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GD78XLjf7azY9M1YBLSr3MhFJROFOKxRGQJfpbe9EqI=;
+        b=YE4TZ7dKjl7RDciYHKnpDYRuo3v3LkESmGNFvmNdIJr97utst1ZF0A8ey2wU891vtN
+         bVojvgZCYqTyZvFTbg7O3Wu6zkUuRGimTJLki30Kd3Dzwi85DLCzPzYMyLhU6IaYWMzz
+         H+zT19rWtoZxKmklAZFYvCGv8erYSYOgGXo548tEFLMltPKrD1P4RHOLTMbwNgdmOmLu
+         /6BpLcuhwtZ6/+KEjGGhklRKd+xC7a2+cj7prOimVpEI4RARrrUWWowj10j7FoyaUuKa
+         Bjv6xZVxgOGSorrD/cGnuGS0fhiprA+ZPhqQCpeuZaYSElu/JnZNtmuJbbWIScvi7xlO
+         la+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701190188; x=1701794988;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GD78XLjf7azY9M1YBLSr3MhFJROFOKxRGQJfpbe9EqI=;
+        b=D0kvwtcXGv3R2hvYlcDhoFawC48WI2SCdWyZfi3CBQ7tklOSqADO6wU0OG4NUGJSep
+         Ht035xDKv6M7X1ma5uUbSwq4722OhPpPK/euKmqStUw7ImXNbqZoAddui3HT/6noovFm
+         Boe9LmRkFCPWQc9xQEkX4GPVeiKElaPwnaMALG4Mnv18laxsz1Cr2EEYD8KNEY1iy1LZ
+         hCJN7cP+zR7MZ1iMYEiNCFGngcn8cCwZdrHc9u52xNzTlUNi4KeNqBlsFul/nxT2fvvH
+         lozvQ3hUnS0Ak6nGMqf6kVV1/udyfBCzYbxu3khlxQp/D4y0NRcrcnj0QM0HfGAyvGWs
+         5jeA==
+X-Gm-Message-State: AOJu0YwjyqYpKXnvSBQ3DHpagF9dJBzBLwbUmoosKvUDIkcrwqSAesQK
+	QLTMEfG+VMfmuOjY0zrwYLzWPiDJctJpeWp1axzAoA==
+X-Google-Smtp-Source: AGHT+IHvWlPlRTUJ/I2oNwEaIU1VT4yRPgec2UooToA0iRvEqgCTansBlFO5MCgGr8obm68fHQ3hfvqtxUtgQALcFMs=
+X-Received: by 2002:a05:690c:3383:b0:5d0:57a6:5f21 with SMTP id
+ fl3-20020a05690c338300b005d057a65f21mr7997955ywb.2.1701190188094; Tue, 28 Nov
+ 2023 08:49:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH V2 0/4] Add runtime PM support for videocc on SM8150
-Content-Language: en-US
-To: Konrad Dybcio <konradybcio@kernel.org>, Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20231118123944.2202630-1-quic_skakitap@quicinc.com>
- <47925f9e-32aa-4762-a4ec-aa559e18ff12@kernel.org>
-From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-In-Reply-To: <47925f9e-32aa-4762-a4ec-aa559e18ff12@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: st3HThTTRbxcV2U3hW0UrJWTCjJP1TlH
-X-Proofpoint-GUID: st3HThTTRbxcV2U3hW0UrJWTCjJP1TlH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-28_18,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 spamscore=0
- impostorscore=0 adultscore=0 clxscore=1011 suspectscore=0
- priorityscore=1501 mlxscore=0 bulkscore=0 mlxlogscore=983 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311280129
+References: <CAA8EJpozZkEswnioKjRCqBg4fcjVHFwGivoFNTNHVwyocKprQw@mail.gmail.com>
+ <20231127160658.2164612-1-mwalle@kernel.org>
+In-Reply-To: <20231127160658.2164612-1-mwalle@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 28 Nov 2023 18:49:36 +0200
+Message-ID: <CAA8EJpphwXoKnzDkY3cBqzsDZwdw+nze-Ev2toPBJm-2VJvY_g@mail.gmail.com>
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
+ the DSI link power state
+To: Michael Walle <mwalle@kernel.org>
+Cc: Laurent.pinchart@ideasonboard.com, andrzej.hajda@intel.com, 
+	dave.stevenson@raspberrypi.com, dianders@chromium.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	jernej.skrabec@gmail.com, jonas@kwiboo.se, konrad.dybcio@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, marex@denx.de, 
+	marijn.suijten@somainline.org, mripard@kernel.org, neil.armstrong@linaro.org, 
+	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, rfoss@kernel.org, 
+	sean@poorly.run, tzimmermann@suse.de, tony@atomide.com, 
+	alexander.stein@ew.tq-group.com
+Content-Type: text/plain; charset="UTF-8"
 
-
-On 11/20/2023 5:18 PM, Konrad Dybcio wrote:
-> On 18.11.2023 13:39, Satya Priya Kakitapalli wrote:
->> Add runtime support for videocc on SM8150 and update the resets
->> and video_pll0_config configuration.
->>
->> Satya Priya Kakitapalli (4):
->>    dt-bindings: clock: Update the videocc resets for sm8150
->>    clk: qcom: videocc-sm8150: Update the videocc resets
->>    clk: qcom: videocc-sm8150: Add missing PLL config properties
->>    clk: qcom: videocc-sm8150: Add runtime PM support
-> Hi, it's good practive to include a link to the previous revision
-> and a summary of changes.
+On Mon, 27 Nov 2023 at 18:07, Michael Walle <mwalle@kernel.org> wrote:
 >
-> The b4 tool [1] does that for you, please consider using it.
-
-
-Hi, I have installed b4 and followed all the steps, but it doesn't 
-populate my cover letter with change log and previous series link, do i 
-need to use some option for that?
-
-
-> Konrad
+> Hi,
 >
-> [1] https://b4.docs.kernel.org/en/latest/index.html
+> > DSI device lifetime has three different stages:
+> > 1. before the DSI link being powered up and clocking,
+> > 2. when the DSI link is in LP state (for the purpose of this question,
+> > this is the time between the DSI link being powered up and the video
+> > stream start)
+> > 3. when the DSI link is in HS state (while streaming the video).
+>
+> It's not clear to me what (2) is. What is the state of the clock and
+> data lanes?
+
+Clk an Data0 should be in the LP mode, ready for LP Data Transfer.
+
+I don't think we support ULPS currently.
+
+
+>
+> I'm facing similar issues with the tc358775 bridge. This bridge needs
+> to release its reset while both clock and data lanes are in LP-11 mode.
+> But then it needs to be configured (via I2C) while the clock lane is
+> in enabled (HS mode), but the data lanes are still in LP-11 mode.
+>
+> To me it looks like there is a fouth case then:
+> 1. unpowered
+> 2. DSI clock and data are in LP-11
+> 3. DSI clock is in HS and data are in LP-11
+> 4. DSI clock is in HS and data is in HS
+>
+> (And of course the bridge needs continuous clock mode).
+>
+> > Different DSI bridges have different requirements with respect to the
+> > code being executed at stages 1 and 2. For example several DSI-to-eDP
+> > bridges (ps8640, tc358767 require for the link to be quiet during
+> > reset time.
+> > The DSI-controlled bridges and DSI panels need to send some commands
+> > in stage 2, before starting up video
+> >
+> > In the DRM subsystem stage 3 naturally maps to the
+> > drm_bridge_funcs::enable, stage 1 also naturally maps to the
+> > drm_bridge_funcs::pre_enable. Stage 2 doesn't have its own place in
+> > the DRM call chain.
+> > Earlier we attempted to solve that using the pre_enable_prev_first,
+> > which remapped pre-enable callback execution order. However it has led
+> > us to the two issues. First, at the DSI host driver we do not know
+> > whether the panel / bridge were updated to use pre_enable_prev_first
+> > or not. Second, if the bridge has to perform steps during both stages
+> > 1 and 2, it can not do that.
+> >
+> > I'm trying to find a way to express the difference between stages 1
+> > and 2 in the generic code, so that we do not to worry about particular
+> > DSI host and DSI bridge / panel peculiarities when implementing the
+> > DSI host and/or DSI panel driver.
+>
+> For now, I have a rather hacky ".dsi_lp11_notify" callback in
+> drm_bridge_funcs which is supposed to be called by the DSI host while the
+> clock and data lanes are in LP-11 mode. But that is rather an RFC and me
+> needing something to get the driver for this bridge working. Because it's
+> badly broken. FWIW, you can find my work-in-progress patches at
+> https://github.com/mwalle/linux/tree/feature-tc358775-fixes
+>
+> -michael
+>
+
+
+--
+With best wishes
+Dmitry
 
