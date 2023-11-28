@@ -1,224 +1,268 @@
-Return-Path: <linux-arm-msm+bounces-2199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FF4F7FB3AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:11:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46DB17FB3BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:14:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2C39282270
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 08:11:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AABF2B211F9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 08:14:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82DA815AEA;
-	Tue, 28 Nov 2023 08:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F0D51640A;
+	Tue, 28 Nov 2023 08:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="F/8PUI6n"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N+aB0tQS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DCDFB0;
-	Tue, 28 Nov 2023 00:11:34 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS5l8Mt012065;
-	Tue, 28 Nov 2023 08:11:20 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F37BCE;
+	Tue, 28 Nov 2023 00:14:28 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS4KoE4009769;
+	Tue, 28 Nov 2023 08:14:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=BtNV9fxeItkU7fpOKRpTTkq1EpJ8ElvN9qoExmaMMo0=;
- b=F/8PUI6nWUUO7nyDMwGIOLj8+Ygb7FyG+GP9HGSehmaxC7LJlr7oR5i0Os//FSoh2YGK
- 6VeV+21rCHeYKp53QVGSWYuWOFVRR5dGZ6qLmtE85kkmb5d88YrH5zhFy7P3+5DsIDWb
- wbLxsEhnFQ+0UAjcgIwtvBPT2Vivv55W8i6ISzcXbN/UpTXtENLS4UK1jxg6TgTcv0L/
- UyS8OXEb0/aHfsM2a5r7cFl4+ZWo9oPKYT/AtjuAsxIyzE3Cfa/L8SLqkjYtlRzLnoZy
- 9UD3QI3prPP+wYWjvCkvF/aQNWD8lI5sZa+tlIl42CCdxxeKTOfn/5IekNLgXLfmuloy kw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3umsvajsx8-1
+ bh=guuOMbz3l0LYG0OKUpwSPI8VLzr9E5tLRgYzgSVkmA0=;
+ b=N+aB0tQSxGe6q8bI6pecGjQg9+7D9+XOPqLl35CqfoPQ0oFv+0Y0nBzozkYwq0uMHW12
+ uvB8iPBRqihWMp8SwHTiLu4Rf7IcY9KAL+zinmIbYRCTOhJ3Im4/aV67mc9sr2kagNV1
+ bFD2vT4UfpmSRBtwHNsZCrA5cCY/cwjtMOV9KcudejKYVFeKwv4YFV20ldXoaUNfTKvF
+ kBEkSSW7c3iQuFN3vL1jD8xRLVi7XRtGsmNUA569lmKk0Gg34QPHJ2IDklRk90oy2bLZ
+ La8dqKQYKS6/nt32OsCL4X6/mD6OV5FUxJax4D/RtHMbM6VOa7aXXvOKJmvPUKbGuJZw nA== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3umrqq2xwc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 08:11:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AS8BJj1021367
+	Tue, 28 Nov 2023 08:14:20 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AS8EJtV030775
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 08:11:19 GMT
-Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 28 Nov 2023 08:14:19 GMT
+Received: from [10.216.60.229] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
- 2023 00:11:14 -0800
-Message-ID: <420ce17d-279e-47ee-9935-35bc03b89f98@quicinc.com>
-Date: Tue, 28 Nov 2023 16:11:12 +0800
+ 2023 00:14:13 -0800
+Message-ID: <a4e8b531-49f9-f4a1-51cb-e422c56281cc@quicinc.com>
+Date: Tue, 28 Nov 2023 13:44:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/16] arm64: dts: qcom: sm8550-aim300: add pmic glink
- port/endpoints
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <tglx@linutronix.de>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20231117101817.4401-1-quic_tengfan@quicinc.com>
- <20231117101817.4401-16-quic_tengfan@quicinc.com>
- <e3e27fec-8ab9-4331-a5aa-2958dd630b11@linaro.org>
-From: Tengfei Fan <quic_tengfan@quicinc.com>
-In-Reply-To: <e3e27fec-8ab9-4331-a5aa-2958dd630b11@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc7280: Move video-firmware to
+ chrome-common
+Content-Language: en-US
+To: Luca Weiss <luca.weiss@fairphone.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro
+ Carvalho Chehab <mchehab@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20231002-sc7280-venus-pas-v2-0-bd2408891317@fairphone.com>
+ <20231002-sc7280-venus-pas-v2-2-bd2408891317@fairphone.com>
+ <4cfad910-1821-3a31-c372-3f6b199e8f71@quicinc.com>
+ <CX5ENKY70B5J.2D6DXKGI4EGX3@fairphone.com>
+ <ff021f49-f81b-0fd1-bd2c-895dbbb03d56@quicinc.com>
+ <CX70EBXCOB66.3998C482R86CN@fairphone.com>
+ <a29123a3-afe1-8f92-ff6c-835926d411af@quicinc.com>
+ <CAA8EJppkjpMmcHCvxomgUMPxGpf77iN9roRvb=NEcxdk237-UA@mail.gmail.com>
+ <e6d80982-1674-d0c4-9dbe-94d77079f6ba@quicinc.com>
+ <CX75Y1X2QIN7.1GRH1YI56MMZ@fairphone.com>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <CX75Y1X2QIN7.1GRH1YI56MMZ@fairphone.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cNJyJUBvkVNb_T6jO9n5Dp1jNc-2l6xe
-X-Proofpoint-GUID: cNJyJUBvkVNb_T6jO9n5Dp1jNc-2l6xe
+X-Proofpoint-ORIG-GUID: SWNyR8CKJr76zR2CihilRb79841x5gCd
+X-Proofpoint-GUID: SWNyR8CKJr76zR2CihilRb79841x5gCd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-28_07,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 mlxlogscore=899 phishscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 clxscore=1015 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ spamscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.12.0-2311060000 definitions=main-2311280063
 
 
+On 11/24/2023 9:26 PM, Luca Weiss wrote:
+> On Fri Nov 24, 2023 at 2:35 PM CET, Vikash Garodia wrote:
+>>
+>>
+>> On 11/24/2023 6:23 PM, Dmitry Baryshkov wrote:
+>>> On Fri, 24 Nov 2023 at 14:30, Vikash Garodia <quic_vgarodia@quicinc.com> wrote:
+>>>>
+>>>> On 11/24/2023 5:05 PM, Luca Weiss wrote:
+>>>>> On Fri Nov 24, 2023 at 7:38 AM CET, Vikash Garodia wrote:
+>>>>>>
+>>>>>> On 11/22/2023 7:50 PM, Luca Weiss wrote:
+>>>>>>> On Wed Nov 22, 2023 at 2:17 PM CET, Vikash Garodia wrote:
+>>>>>>>>
+>>>>>>>> On 10/2/2023 7:50 PM, Luca Weiss wrote:
+>>>>>>>>> If the video-firmware node is present, the venus driver assumes we're on
+>>>>>>>>> a system that doesn't use TZ for starting venus, like on ChromeOS
+>>>>>>>>> devices.
+>>>>>>>>>
+>>>>>>>>> Move the video-firmware node to chrome-common.dtsi so we can use venus
+>>>>>>>>> on a non-ChromeOS devices.
+>>>>>>>>>
+>>>>>>>>> At the same time also disable the venus node by default in the dtsi,
+>>>>>>>>> like it's done on other SoCs.
+>>>>>>>>>
+>>>>>>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>>>>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>>>>>>>>> ---
+>>>>>>>>>  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 8 ++++++++
+>>>>>>>>>  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 6 ++----
+>>>>>>>>>  2 files changed, 10 insertions(+), 4 deletions(-)
+>>>>>>>>>
+>>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>>>>>>>>> index 5d462ae14ba1..cd491e46666d 100644
+>>>>>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
+>>>>>>>>> @@ -104,6 +104,14 @@ &scm {
+>>>>>>>>>   dma-coherent;
+>>>>>>>>>  };
+>>>>>>>>>
+>>>>>>>>> +&venus {
+>>>>>>>>> + status = "okay";
+>>>>>>>>> +
+>>>>>>>>> + video-firmware {
+>>>>>>>>> +         iommus = <&apps_smmu 0x21a2 0x0>;
+>>>>>>>>> + };
+>>>>>>>>> +};
+>>>>>>>>> +
+>>>>>>>>>  &watchdog {
+>>>>>>>>>   status = "okay";
+>>>>>>>>>  };
+>>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>>>>>>>> index 66f1eb83cca7..fa53f54d4675 100644
+>>>>>>>>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>>>>>>>>> @@ -3740,6 +3740,8 @@ venus: video-codec@aa00000 {
+>>>>>>>>>                            <&apps_smmu 0x2184 0x20>;
+>>>>>> 0x2184 is a secure SID. I think qcm6490-fairphone-fp5.dts needs to override the
+>>>>>> iommus property as well to retain only the non secure SID i.e 0x2180 ? I am
+>>>>>> seeing below crash
+>>>>>>
+>>>>>> Call trace:
+>>>>>> [   47.663593]  qcom_smmu_write_s2cr+0x64/0xa4
+>>>>>> [   47.663616]  arm_smmu_attach_dev+0x120/0x284
+>>>>>> [   47.663647]  __iommu_attach_device+0x24/0xf8
+>>>>>> [   47.676845]  __iommu_device_set_domain+0x70/0xd0
+>>>>>> [   47.681632]  __iommu_group_set_domain_internal+0x60/0x1b4
+>>>>>> [   47.687218]  iommu_setup_default_domain+0x358/0x418
+>>>>>> [   47.692258]  __iommu_probe_device+0x3e4/0x404
+>>>>>>
+>>>>>> Could you please reconfirm if Video SID 0x2184 (and mask) is allowed by the
+>>>>>> qcm6490-fairphone-fp5 hardware having TZ ?
+>>>>>
+>>>>> Hi,
+>>>>>
+>>>>> On FP5 it seems it's no problem to have both SIDs in there, probe and
+>>>>> using venus appears to work fine.
+>>>>>
+>>>>> Are you using different firmware than QCM6490.LA.3.0 on the device where
+>>>>> you tested this?
+>>>> I was testing this on RB3 board which uses firmware [1].
+>>>
+>>> There is something wrong here.
+>>>
+>>> RB3 board uses venus-5.2
+>>> RB5 board uses vpu-1.0
+>>> Only sc7280 uses vpu-2.0
+>>
+>> Tested on QCM6490 IDP board, which is QCOM internal board similar to RB3 gen2.
+> 
+> In any case, I don't know much about the venus & iommu setup here. I can
+> try removing the 0x2184 SID and test if venus still works on FP5.
 
-在 11/17/2023 6:32 PM, Dmitry Baryshkov 写道:
-> On 17/11/2023 12:18, Tengfei Fan wrote:
->> Add nodes to support Type-C USB/DP functionality.
->>
->> On this platform, a Type-C redriver is added to the SuperSpeed graph.
->>
->> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sm8550-aim300.dts | 88 +++++++++++++++++++++-
->>   1 file changed, 87 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts 
->> b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
->> index 6dc3040b9f76..f3c558dd40f1 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm8550-aim300.dts
->> @@ -100,7 +100,15 @@
->>                       reg = <1>;
->>                       pmic_glink_ss_in: endpoint {
->> -                        remote-endpoint = <&usb_1_dwc3_ss>;
->> +                        remote-endpoint = <&redriver_ss_out>;
->> +                    };
->> +                };
->> +
->> +                port@2 {
->> +                    reg = <2>;
->> +
->> +                    pmic_glink_sbu: endpoint {
->> +                        remote-endpoint = <&fsa4480_sbu_mux>;
->>                       };
->>                   };
->>               };
->> @@ -519,6 +527,62 @@
->>       };
->>   };
->> +&i2c_master_hub_0 {
->> +    status = "okay";
->> +};
->> +
->> +&i2c_hub_2 {
->> +    status = "okay";
->> +
->> +    typec-mux@42 {
->> +        compatible = "fcs,fsa4480";
->> +        reg = <0x42>;
->> +
->> +        vcc-supply = <&vreg_bob1>;
->> +
->> +        mode-switch;
->> +        orientation-switch;
->> +
->> +        port {
->> +            fsa4480_sbu_mux: endpoint {
->> +                remote-endpoint = <&pmic_glink_sbu>;
->> +            };
->> +        };
->> +    };
->> +
->> +    typec-retimer@1c {
->> +        compatible = "onnn,nb7vpq904m";
->> +        reg = <0x1c>;
->> +
->> +        vcc-supply = <&vreg_l15b_1p8>;
->> +
->> +        orientation-switch;
->> +        retimer-switch;
->> +
->> +        ports {
->> +            #address-cells = <1>;
->> +            #size-cells = <0>;
->> +
->> +            port@0 {
->> +                reg = <0>;
->> +
->> +                redriver_ss_out: endpoint {
->> +                    remote-endpoint = <&pmic_glink_ss_in>;
->> +                };
->> +            };
->> +
->> +            port@1 {
->> +                reg = <1>;
->> +
->> +                redriver_ss_in: endpoint {
->> +                    data-lanes = <3 2 1 0>;
->> +                    remote-endpoint = <&usb_dp_qmpphy_out>;
->> +                };
->> +            };
->> +        };
->> +    };
->> +};
->> +
->>   &gcc {
->>       clocks = <&bi_tcxo_div2>, <&sleep_clk>,
->>            <&pcie0_phy>,
->> @@ -552,6 +616,16 @@
->>       status = "okay";
->>   };
->> +&mdss_dp0 {
->> +    status = "okay";
->> +};
->> +
->> +&mdss_dp0_out {
->> +    data-lanes = <0 1>;
-> 
-> Why? Are you really limited to two lanes for DP by the hardware?
-I got confirmation from a colleague that it is right that limited to two 
-lanes.
-> 
->> +    remote-endpoint = <&usb_dp_qmpphy_dp_in>;
->> +};
->> +
->> +
->>   &mdss_dsi0 {
->>       vdda-supply = <&vreg_l3e_1p2>;
->>       status = "okay";
->> @@ -861,6 +935,18 @@
->>       status = "okay";
->>   };
->> +&usb_dp_qmpphy_dp_in {
->> +    remote-endpoint = <&mdss_dp0_out>;
->> +};
->> +
->> +&usb_dp_qmpphy_out {
->> +    remote-endpoint = <&redriver_ss_in>;
->> +};
->> +
->> +&usb_dp_qmpphy_usb_ss_in {
->> +    remote-endpoint = <&usb_1_dwc3_ss>;
->> +};
->> +
->>   &xo_board {
->>       clock-frequency = <76800000>;
->>   };
-> 
+Please remove 0x2184 SID and confirm specifically encoder works. This SID is for
+encoder.
 
--- 
-Thx and BRs,
-Tengfei Fan
+> Also should the chromebooks keep that iommu entry or not?
+Chrome-common can have 0x2184 since its no-TZ based solution. So in sc7280.dtsi,
+you can keep the default SID i.e 0x2180 (with respective mask) and in
+chrome-common, we can override the iommus property with 0x2180 and 0x2184.
+
+Regards,
+Vikash
+
+> Regards
+> Luca
+> 
+>>
+>>>>
+>>>> Regards,
+>>>> Vikash
+>>>>
+>>>> [1]
+>>>> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/qcom/vpu-2.0
+>>>>
+>>>>>>
+>>>>>>>>>                   memory-region = <&video_mem>;
+>>>>>>>>>
+>>>>>>>>> +                 status = "disabled";
+>>>>>>>>> +
+>>>>>>>>>                   video-decoder {
+>>>>>>>>>                           compatible = "venus-decoder";
+>>>>>>>>>                   };
+>>>>>>>>> @@ -3748,10 +3750,6 @@ video-encoder {
+>>>>>>>>>                           compatible = "venus-encoder";
+>>>>>>>>>                   };
+>>>>>>>>>
+>>>>>>>>> -                 video-firmware {
+>>>>>>>>> -                         iommus = <&apps_smmu 0x21a2 0x0>;
+>>>>>>>>> -                 };
+>>>>>>>>> -
+>>>>>>>>>                   venus_opp_table: opp-table {
+>>>>>>>>>                           compatible = "operating-points-v2";
+>>>>>>>>>
+>>>>>>>>>
+>>>>>>>> Changes look good. Is this tested on SC7280 ?
+>>>>>>>
+>>>>>>> Hi Vikash,
+>>>>>>>
+>>>>>>> I didn't test it myself on sc7280 (just qcm6490-fp5) but dtx_diff
+>>>>>>> reports no differences except for status = okay property being added, so
+>>>>>>> there should be no change on those boards. See below.
+>>>>>>>
+>>>>>>> Regards
+>>>>>>> Luca
+>>>>>>
+>>>>>> I tested on SC7280 (herobrine) and all good.
+>>>>>
+>>>>> Great, thanks!
+>>>>>
+>>>>> Regards
+>>>>> Luca
+>>>>>
+>>>>>>
+>>>>>> Regards,
+>>>>>> Vikash
+>>>>>
+>>>>
+>>>
+>>>
+> 
 
