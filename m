@@ -1,103 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-2247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E5867FB6E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 11:15:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 736E37FB705
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 11:20:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DDA7A282883
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:15:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13D0DB214E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:20:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4B4F4D5AE;
-	Tue, 28 Nov 2023 10:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A5D94E1CA;
+	Tue, 28 Nov 2023 10:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mWYu+PS8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eaHRUk0e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CDB4DC;
-	Tue, 28 Nov 2023 02:15:09 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS5GINw015575;
-	Tue, 28 Nov 2023 10:15:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=HjUiSUZwj5j8IsIno6+2NrMwnJbKBPe36Zpz4kUjDlM=;
- b=mWYu+PS8/Kb/2NbcG1+geidoQ/l8f2Fpb4O4rUgmhiTmtF+5xose2zN9cKjIlvmoUKwL
- hPhbfKqDYG0zndkV/TPBPz4bvJrlTR1jUXEY44QMhdVcy6nlwCds7vbTf8x9kas9mb7b
- 8n3hGWK47yBrQxWO68i+lweDnBnl7+SxfRBCHfkbpRXq6bzPh65mA2IOWlRbUh/98p7f
- 896YpIJshKu6BBdXn6jcIwegRPgDoQjgn+PYGJxNtzoGu3ltpMxEhYhy/jG/uXNXvomE
- KSH41rT4R12THKztNW909p7Q1Xq0x4JR58Pk6TIWzj8BsyRkqood0F68yCnvJ9wu69Ns jw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3umsvak2fb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 10:15:05 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ASAF4ts004551
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 10:15:04 GMT
-Received: from hu-varada-blr.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Tue, 28 Nov 2023 02:15:00 -0800
-Date: Tue, 28 Nov 2023 15:44:56 +0530
-From: Varadarajan Narayanan <quic_varada@quicinc.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <lgirdwood@gmail.com>, <broonie@kernel.org>,
-        <dmitry.baryshkov@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: ipq9574: Fix USB
- 'vdda-pll-supply'
-Message-ID: <ZWW9oF24YUGfev+2@hu-varada-blr.qualcomm.com>
-References: <cover.1701160842.git.varada@hu-varada-blr.qualcomm.com>
- <f98bbf0a515236709d999010f08c8f2470a31209.1701160842.git.varada@hu-varada-blr.qualcomm.com>
- <832a6d4f-f561-4cf5-b1cb-7e4b2d4d50b4@linaro.org>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FAD1841;
+	Tue, 28 Nov 2023 10:20:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8A7C433C7;
+	Tue, 28 Nov 2023 10:20:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701166840;
+	bh=RWQ4oqqgHJ3ICm2hpPKNYpjBIge+3p/xB+tOFDs5NMw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eaHRUk0ehNhq8VY3cH77WL9LJEMIls02t0rLxqblsykoX2aLe0T7ldvP5f2UEmXQP
+	 LF0pjMGXvE8keZeRAIFmeGYuPLqK7ahQuamy1SbIQ0C5GK6eO4aNl3GQzazN0nDcse
+	 WCRfqTndclieY7vIq57jBdizycgeQsGPmGN+m7Byqhbpq4JocPN5cH/LfttH+NOn9B
+	 px9IHT9/1bIkKrJ/0rySpY1D8SYfH5JV+QKe3BPQQel4PXODhMGhQ0AEV2bWPY94IH
+	 BisfxqYWGRMAPmjDbQcUXQHsBoUwerbC1mmQ4/TmB5KC/HASaYFhbEWBKRPq7S0gZP
+	 zhSVeYPBRGVTQ==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r7vDI-0005YI-2G;
+	Tue, 28 Nov 2023 11:21:08 +0100
+Date: Tue, 28 Nov 2023 11:21:08 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+Subject: Re: [PATCH 1/6] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
+ bindings
+Message-ID: <ZWW_FOAKp95Cf9vN@hovoldconsulting.com>
+References: <20231122191335.3058-1-quic_kriskura@quicinc.com>
+ <ZV9dYpTYRXn63tXe@hovoldconsulting.com>
+ <1192d91f-11bf-44af-953a-14e08e2b6ca8@quicinc.com>
+ <ZWCpGdJRexnk98IN@hovoldconsulting.com>
+ <004ddc69-1566-4de4-b260-0fca96a9395f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <832a6d4f-f561-4cf5-b1cb-7e4b2d4d50b4@linaro.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Fdx1m2JwOburAe_Bgh71eb1fJwy9qrqN
-X-Proofpoint-GUID: Fdx1m2JwOburAe_Bgh71eb1fJwy9qrqN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-28_09,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 mlxlogscore=245 phishscore=0 clxscore=1011
- lowpriorityscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311060000 definitions=main-2311280081
+In-Reply-To: <004ddc69-1566-4de4-b260-0fca96a9395f@quicinc.com>
 
-On Tue, Nov 28, 2023 at 09:51:50AM +0100, Krzysztof Kozlowski wrote:
-> On 28/11/2023 09:46, Varadarajan Narayanan wrote:
-> > From: Varadarajan Narayanan <quic_varada@quicinc.com>
-> >
-> > The earlier patch ec4f047679d5, incorrectly used 'l2'
-> > as the vdda-pll-supply. However, 'l5' is the correct
-> > ldo that supplies power to the USB PHY.
-> >
-> > Fixes: ec4f047679d5 ("arm64: dts: qcom: ipq9574: Enable USB")
->
-> Doesn't this depend on the driver change?
+On Fri, Nov 24, 2023 at 11:09:04PM +0530, Krishna Kurapati PSSNV wrote:
+> >> Yes. From whatever targets I was able to find, only one of them didn't
+> >> have the power_event irq. Rest all of them had. I will recheck that
+> >> particular one again.
+> > 
+> > Please do. The driver polls the corresponding status register on all
+> > platforms currently, and perhaps this interrupt can one day be used to
+> > get rid of the polling.
+> >   
+> 
+> Ok, I just rechecked and case is, I am not able to get my hands on the 
+> doc. I can't say for sure that the target is missing the pwr_event 
+> interrupt. I say we can safely add the target assuming pwr_event is 
+> present for ipq9574. Every target so far even on downstream has this IRQ 
+> present in hw.
 
-Yes, will mention in the cover letter.
+Ok, good.
 
-> It affects both existing
-> kernel and backports which you claim here should happen.
+> >>> Now if the HS interrupt is truly unusable, I guess we can consider
+> >>> dropping it throughout and the above becomes just three permutations
+> >>> instead, which can even be expressed along the lines of:
+> >>
+> >> Infact, I wanted to do this but since you mentioned before that if HW
+> >> has it, we must describe it, I kept it in. But since this functionality
+> >> is confirmed to be mutually exclusive of qusb2/{dp/dm}, I am aligned to
+> >> skip it in bindings and drop it in DT.
+> > 
+> > As I mentioned elsewhere, it depends on whether it can be used at all.
+> > Not simply whether there is some other mechanism that can be used in its
+> > stead. Such a decision should be left up to the implementation.
+> > 
+> > That's why I said "truly unusable" above. It's still not clear to me
+> > whether that is the case or not.
+> 
+> I looked at the code of  4.4, 4.14/ 4.19/ 5.4/ 5.10/ 5.15/ 6.1 and none 
+> of them implement the hs_phy_irq.
 
-Ok. Will include stable@vger.kernel.org in the next revision.
+But again, that is completely irrelevant. As I've said numerous times
+now, this is about what the hardware is capable of, not which
+functionality a particular OS chooses to use.
+ 
+> My opinion would be to keep the power_event irq as mandatory and not to 
+> include the hs_phy_irq.
 
-Thanks
-Varada
+Ok, but you still need to explain why dropping hs_phy_irq is correct.
+
+Until there's a clear answer to that, it seems we need to include it.
+
+Johan
 
