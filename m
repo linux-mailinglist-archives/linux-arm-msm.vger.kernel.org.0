@@ -1,49 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-2228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6EF87FB54A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:12:36 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4DB57FB558
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:14:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49C0AB20E88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:12:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 711A2282670
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:14:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6AC43C6B9;
-	Tue, 28 Nov 2023 09:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42CE0DF54;
+	Tue, 28 Nov 2023 09:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BytLajBi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Feb9gHUn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672D7AB;
-	Tue, 28 Nov 2023 01:12:28 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS8xC52028057;
-	Tue, 28 Nov 2023 09:12:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=AqfsZhfJIV0ah8Mcq2ahxjWlSq2ikPRbgAL9ct0yCb4=;
- b=BytLajBiDBIkAvT8ar4pqExWzyliSVFA3VGWJxDU4m9cU+4SbYWXcviucRqHk/riR+w/
- jR+/9kGqB6jRDAoElZba5BzEeN+gGU4yWTQgI8WqW3hhN085W+pJMYwFznMl0UL77LUh
- woPZ/eMIe4IeKetBDYAa/Ze48iCGFmvfZwqiJNAYhlv/tQMr82k3EoxybJCzlYQYSIa6
- +8A5s4rN9xGhEyJM/TR62PaTZUsRp/M6n3X3OwTTatpjzQe1Cq5BybMk46WjC14b1kD5
- L5k9dlz02k3IfsSQNcCI65PD7ecEJzX7yFG75WBglE7q/9Y0uI/NLwxU2Zq9wjMVH9zG yg== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3umt4qjx6h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 09:12:06 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AS9C5Dd016438
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 09:12:05 GMT
-Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
- 2023 01:12:03 -0800
-Message-ID: <a86228f5-c1ae-4afe-87bd-5144633a9601@quicinc.com>
-Date: Tue, 28 Nov 2023 17:12:00 +0800
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8117FD5A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 01:14:32 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40b4a8db314so5915345e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 01:14:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701162871; x=1701767671; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2Kjtii/FN0kaVr+RySKyiRhJOaMJhIbqBNo40CkvcnQ=;
+        b=Feb9gHUnxF5TWgegOkqpzm7vTG611/aHD6XL5WWKMVxJOZRkAZL3Ja99GmKpGyahHO
+         fPG0WhLmeCc91jECktBjGkTiNRvwdTU2ztOF59Q+eabZ2+6yYddP8REfcRGZ4fpCb2bX
+         KXv/V1X5Akq1yorHZG+MBukLRQHZ5ZRUPxzB1I+CpFN6Z5UaIMHqlE82Z97EsjYHxXx+
+         wFarlUq42OC8J1K82YOMI6M9bbnyZZVYKOOQI3emB/k0z5PoyiQNe4WD5SzrQoAkrKcW
+         Y3m8RH0q5YUu1YPWbTnoeDzvF1kH5RJ1lEguv0MFkCjMw6HQ7H29zDI9hsDOchfJBASr
+         5fpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701162871; x=1701767671;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2Kjtii/FN0kaVr+RySKyiRhJOaMJhIbqBNo40CkvcnQ=;
+        b=LhvgJt7xVlT2HeyICPAXd146ke4gte5A6VQcDMkzYO2PiXDzNubaYbpiOfNDvtfll5
+         P46QzWJFjlVT+lQxviQQ+9IaS4NT9K/Sz2Sj3AgbMU5b6WKfY7zXZrlvDOllfkqvcWFH
+         mBFLcs5djRkIsqTuLWi0AY/Q29KZsMPbgpZL3WcnYlTceMwAXoixw+Mkegbhd6/iVJBD
+         qvZP8Xa1ArLSqNtJijxFAYSE1TUhsaja5TZWDqjYnuRuFoZqlunXjpj421w8bd5aNNaO
+         OZaovjdHJ3JTfIWQuzrl/dGqGVZ8ycBi/CtUK2tCIygQweDwqMDSBHWzUpQon2QSyy1Z
+         adkw==
+X-Gm-Message-State: AOJu0Yz5PxYzA7uQQAKb+fS8O3bDOeuMVa4rViuAnUf4mCfEmlSJCHg4
+	yvhMSzANa+aC8tPFcDc1PbRhCg==
+X-Google-Smtp-Source: AGHT+IEQUMczIYX8hA+zLKx022wQyd14G8CqIVm0T/Hdr+d/ZVMnwjy4MFWloEOBHn7FeV7wpwnPnA==
+X-Received: by 2002:a5d:49d1:0:b0:32d:9d99:d0a5 with SMTP id t17-20020a5d49d1000000b0032d9d99d0a5mr9526680wrs.5.1701162870857;
+        Tue, 28 Nov 2023 01:14:30 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:eada:f40e:7ab3:2afe? ([2a01:e0a:982:cbb0:eada:f40e:7ab3:2afe])
+        by smtp.gmail.com with ESMTPSA id l15-20020a5d560f000000b00332f8f4960fsm7891464wrv.0.2023.11.28.01.14.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Nov 2023 01:14:30 -0800 (PST)
+Message-ID: <752f5347-703a-4b38-b2b1-3493d270389c@linaro.org>
+Date: Tue, 28 Nov 2023 10:14:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,83 +64,116 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] freezer,sched: do not restore saved_state of a thawed
- task
-To: Elliot Berman <quic_eberman@quicinc.com>,
-        "Rafael J. Wysocki"
-	<rafael@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Ingo Molnar
-	<mingo@kernel.org>,
-        "Peter Zijlstra (Intel)" <peterz@infradead.org>
-CC: <linux-arm-msm@vger.kernel.org>,
-        Pavan Kondeti
-	<quic_pkondeti@quicinc.com>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Abhijeet Dharmapurikar
-	<quic_adharmap@quicinc.com>
-References: <20231120-freezer-state-multiple-thaws-v1-0-f2e1dd7ce5a2@quicinc.com>
-From: "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-In-Reply-To: <20231120-freezer-state-multiple-thaws-v1-0-f2e1dd7ce5a2@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 2/5] ASoC: dt-bindings: document WCD939x Audio Codec
+Content-Language: en-US, fr
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-0-21d4ad9276de@linaro.org>
+ <20231123-topic-sm8650-upstream-wcd939x-codec-v1-2-21d4ad9276de@linaro.org>
+ <160fc6c4-b07d-49c5-976b-aa0fa35e4f0f@linaro.org>
+ <b637c287-93e5-4214-9275-80fac3c6181b@linaro.org>
+ <60c9ba5d-a2b8-43cd-8b8d-2c709b8e5d04@linaro.org>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <60c9ba5d-a2b8-43cd-8b8d-2c709b8e5d04@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: tb538e39X4vhm4jHaQHO2TqEhx3aRRHW
-X-Proofpoint-GUID: tb538e39X4vhm4jHaQHO2TqEhx3aRRHW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-28_08,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- priorityscore=1501 malwarescore=0 bulkscore=0 mlxlogscore=831 mlxscore=0
- phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311280071
 
-On 11/21/2023 1:36 AM, Elliot Berman wrote:
-> This series applies couple fixes to commit 8f0eed4a78a8 ("freezer,sched:
-> Use saved_state to reduce some spurious wakeups") which was found while
-> testing with legacy cgroup freezer. My original testing was only with
-> system-wide freezer. We found that thaw_task could be called on a task
-> which was already frozen. Prior to commit 8f0eed4a78a8 ("freezer,sched:
-> Use saved_state to reduce some spurious wakeups"), this wasn't an issue
-> as kernel would try to wake up TASK_FROZEN, which wouldn't match the
-> thawed task state, and no harm done to task. After commit 8f0eed4a78a8
-> ("freezer,sched: Use saved_state to reduce some spurious wakeups"), it
-> was possible to overwrite the state of thawed task.
+On 28/11/2023 10:04, Krzysztof Kozlowski wrote:
+> On 28/11/2023 09:59, Neil Armstrong wrote:
+>> On 24/11/2023 09:33, Krzysztof Kozlowski wrote:
+>>> On 23/11/2023 15:49, Neil Armstrong wrote:
+>>>
+>>>> +  Qualcomm WCD9390/WCD9395 Codec is a standalone Hi-Fi audio codec IC.
+>>>> +  It has RX and TX Soundwire slave devices.
+>>>> +  The WCD9390/WCD9395 IC has a functionally separate USB-C Mux subsystem
+>>>> +  accessible over an I2C interface.
+>>>> +  The Audio Headphone and Microphone data path between the Codec and the USB-C Mux
+>>>> +  subsystems are external to the IC, thus requiring DT port-endpoint graph description
+>>>> +  to handle USB-C altmode & orientation switching for Audio Accessory Mode.
+>>>> +
+>>>> +allOf:
+>>>> +  - $ref: dai-common.yaml#
+>>>> +  - $ref: qcom,wcd93xx-common.yaml#
+>>>> +
+>>>> +properties:
+>>>> +  compatible:
+>>>> +    enum:
+>>>> +      - qcom,wcd9390-codec
+>>>> +      - qcom,wcd9395-codec
+>>>
+>>> 9395 should be compatible with 9390, so please express it with a list
+>>> using fallback. I know that earlier wcd93xx do not follow that concept,
+>>> but maybe we will fix them some point as well.
+>>
+>> I don't get why this would be needed, yes their are compatible but still
+>> two separate ICs with different internal capabilities.
+>>
+>> It the first time I get such request for new documentation
 > 
-> To: Rafael J. Wysocki <rafael@kernel.org>
-> To: Pavel Machek <pavel@ucw.cz>
-> To: Ingo Molnar <mingo@kernel.org>
-> To: Peter Zijlstra (Intel) <peterz@infradead.org>
-> Cc:  <linux-arm-msm@vger.kernel.org>
-> Cc: Pavan Kondeti <quic_pkondeti@quicinc.com>
-> Cc: Aiqun Yu (Maria) <quic_aiquny@quicinc.com>
-> Cc:  <linux-pm@vger.kernel.org>
-> Cc:  <linux-kernel@vger.kernel.org>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-Shall we add Fixed tag and Cc: stable@vger.kernel.org ?
-Since it is fixing a stable user thread hung issue.
+> Maybe it is first time for you, but I ask about this all the time. What
+> is important is whether the programming model or how the OS uses the
+> device is the same.
+
+I agree for new version of HW, anyway..
+
 > 
-> Originally sent to only linux-arm-msm, resending to correct authors.
-> - Link to v1: https://lore.kernel.org/r/20231120-freezer-state-multiple-thaws-v1-0-a4c453f50745@quicinc.com
-> 
-> ---
-> Elliot Berman (2):
->        freezer,sched: do not restore saved_state of a thawed task
->        freezer,sched: clean saved_state when restoring it during thaw
-> 
->   kernel/freezer.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> ---
-> base-commit: 6d7e4782bcf549221b4ccfffec2cf4d1a473f1a3
-> change-id: 20231108-freezer-state-multiple-thaws-7a3a8d9dadb3
+> Here the device exposes its version in registers, so you can easily rely
+> on the compatibility. That's also the case multiple times talked on the
+> mailing lists.
+
+... you're right here version can be determined at runtime.
+
+But, since both are compatible, there's no primary part number, right?
+
+so why use "qcom,wcd9395-codec", "qcom,wcd9390-codec"
+when "qcom,wcd9390-codec", "qcom,wcd9395-codec" should
+also be valid, so in this can why not use :
+"qcom,wcd9390-codec", "qcom,wcd939x-codec"
+or
+"qcom,wcd9395-codec", "qcom,wcd939x-codec"
+
+?
+
 > 
 > Best regards,
-
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
+> Krzysztof
+> 
 
 
