@@ -1,195 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-2242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB4397FB641
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:48:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C403F7FB66C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:58:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DCDF81C21246
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:48:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01F8F1C2102C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:58:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E83BC4B5C7;
-	Tue, 28 Nov 2023 09:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B47CD4BA9C;
+	Tue, 28 Nov 2023 09:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernkonzept.com header.i=@kernkonzept.com header.b="bRvo0HuL"
+	dkim=pass (2048-bit key) header.d=atomide.com header.i=@atomide.com header.b="AYmiUMy8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 463A9DD;
-	Tue, 28 Nov 2023 01:48:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=kernkonzept.com; s=mx1; h=Cc:To:In-Reply-To:References:Message-Id:
-	Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:
-	Reply-To:Content-ID:Content-Description;
-	bh=DTg3r4s2dq7irVOmMsd/CGuliapoNYe5wHImtDJ9WS0=; b=bRvo0HuLxOYk643Rru5OD62uMA
-	wLoJqM+cxZ9oFqxb6Ikj1xcFGAHwFEOSKrv0afkPCyKsOkOnD2smw+XOStqx2pAU0BPLuSOwYwBz9
-	Bj5wgtYp+DUF853pZKX2e3kEr2CEIgo5B2l4IK8lHYiEIs7f3Voa3friROnt7ysehS3YYZO1p6D1b
-	tzIA7d38j3Yke2uMff0RZDNjuTrU7DOlf2wAU6rfx8fui06ySGaaOZH88sSQqK5rq8ucqEOKQ3s2W
-	4MgvNDxMOC08yqBgMdW0rLa1PrxiOJwTzgocFUkFtJMvYkMGI+McEshHi2pYs/OeIhgrDYlVgz93z
-	oJMn64Ag==;
-Received: from [10.22.3.24] (helo=serv1.dd1.int.kernkonzept.com)
-	by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
-	id 1r7uhw-008Pi6-07;
-	Tue, 28 Nov 2023 10:48:44 +0100
-From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Date: Tue, 28 Nov 2023 10:48:37 +0100
-Subject: [PATCH 3/3] i2c: qup: Vote for interconnect bandwidth to DRAM
+Received: from mail5.25mail.st (mail5.25mail.st [74.50.62.9])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69068DE;
+	Tue, 28 Nov 2023 01:58:18 -0800 (PST)
+Received: from localhost (91-158-86-216.elisa-laajakaista.fi [91.158.86.216])
+	by mail5.25mail.st (Postfix) with ESMTPSA id 5F8CB60871;
+	Tue, 28 Nov 2023 09:57:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=atomide.com;
+	s=25mailst; t=1701165497;
+	bh=tQeGP10H+YEMxkuCC5ZqSkRKdCu2iitVcPgC9MNPInw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AYmiUMy8dYEV7WMSG8R47pS4cwSRZGb57lAqPqzGSy1KN/QAHCmrBq77dhO37/XIw
+	 92e7Y96w9hEDK3crftRvhDeItlLEFq+QLOaPxBOzdf/UFxE31G3OXrAEMcez6AYv/H
+	 DMM/MEcax9+vqpHEm+fuperg9bltVq44y7oQ8n34Fl7ToXsJ+mFxDRg+8pk6l1XWQd
+	 jhaBkRij7yW855egwUrCkrN150vnaUckxwGUCr6jHcfPkvBzjMTNENanSimwgl908r
+	 i31l3fYuxM8nzegFXrLWQ98WupHJWl+/Q9tw/Vx+52mUveW7aYfX1EG/scSbq5RPLf
+	 X9wK6/D6/shUw==
+Date: Tue, 28 Nov 2023 11:57:26 +0200
+From: Tony Lindgren <tony@atomide.com>
+To: Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc: MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	=?utf-8?Q?Beno=C3=AEt?= Cousson <bcousson@baylibre.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	linux-mediatek@lists.infradead.org,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	NXP Linux Team <linux-imx@nxp.com>, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-omap@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org
+Subject: Re: [PATCH v4 2/6] ARM: dts: ti/omap: Replace deprecated
+ extcon-usb-gpio id-gpio/vbus-gpio properties
+Message-ID: <20231128095726.GQ5169@atomide.com>
+References: <20230724103914.1779027-1-alexander.stein@ew.tq-group.com>
+ <20230724103914.1779027-3-alexander.stein@ew.tq-group.com>
+ <10373360.nUPlyArG6x@steina-w>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231128-i2c-qup-dvfs-v1-3-59a0e3039111@kernkonzept.com>
-References: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
-In-Reply-To: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
-To: Wolfram Sang <wsa@kernel.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Andi Shyti <andi.shyti@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-X-Mailer: b4 0.12.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <10373360.nUPlyArG6x@steina-w>
 
-When the I2C QUP controller is used together with a DMA engine it needs
-to vote for the interconnect path to the DRAM. Otherwise it may be
-unable to access the memory quickly enough.
+* Alexander Stein <alexander.stein@ew.tq-group.com> [231117 12:08]:
+> Hi everybody,
+> 
+> any feedback on this? Patch 3,4 and 6 have already been merged.
 
-The requested peak bandwidth is dependent on the I2C core clock.
+Sorry I did not know I'm supposed to pick it from the series.
+Applying into omap-for-v6,8/dt thanks.
 
-To avoid sending votes too often the bandwidth is always requested when
-a DMA transfer starts, but dropped only on runtime suspend. Runtime
-suspend should only happen if no transfer is active. After resumption we
-can defer the next vote until the first DMA transfer actually happens.
-
-The implementation is largely identical to the one introduced for
-spi-qup in commit ecdaa9473019 ("spi: qup: Vote for interconnect
-bandwidth to DRAM") since both drivers represent the same hardware
-block.
-
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
----
-The bandwidth calculation is taken over from Qualcomm's
-downstream/vendor driver [1]. Due to lack of documentation about the
-interconnect setup/behavior I cannot say exactly if this is right.
-Unfortunately, this is not implemented very consistently downstream...
-
-[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/commit/67174e2624ea64814231e7e1e4af83fd882302c6
----
- drivers/i2c/busses/i2c-qup.c | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
-
-diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-index 598102d16677..ee92a315f074 100644
---- a/drivers/i2c/busses/i2c-qup.c
-+++ b/drivers/i2c/busses/i2c-qup.c
-@@ -14,6 +14,7 @@
- #include <linux/dma-mapping.h>
- #include <linux/err.h>
- #include <linux/i2c.h>
-+#include <linux/interconnect.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/module.h>
-@@ -150,6 +151,8 @@
- /* TAG length for DATA READ in RX FIFO  */
- #define READ_RX_TAGS_LEN		2
- 
-+#define QUP_BUS_WIDTH			8
-+
- static unsigned int scl_freq;
- module_param_named(scl_freq, scl_freq, uint, 0444);
- MODULE_PARM_DESC(scl_freq, "SCL frequency override");
-@@ -227,6 +230,7 @@ struct qup_i2c_dev {
- 	int			irq;
- 	struct clk		*clk;
- 	struct clk		*pclk;
-+	struct icc_path		*icc_path;
- 	struct i2c_adapter	adap;
- 
- 	int			clk_ctl;
-@@ -255,6 +259,10 @@ struct qup_i2c_dev {
- 	/* To configure when bus is in run state */
- 	u32			config_run;
- 
-+	/* bandwidth votes */
-+	u32			src_clk_freq;
-+	u32			cur_bw_clk_freq;
-+
- 	/* dma parameters */
- 	bool			is_dma;
- 	/* To check if the current transfer is using DMA */
-@@ -453,6 +461,23 @@ static int qup_i2c_bus_active(struct qup_i2c_dev *qup, int len)
- 	return ret;
- }
- 
-+static int qup_i2c_vote_bw(struct qup_i2c_dev *qup, u32 clk_freq)
-+{
-+	u32 needed_peak_bw;
-+	int ret;
-+
-+	if (qup->cur_bw_clk_freq == clk_freq)
-+		return 0;
-+
-+	needed_peak_bw = Bps_to_icc(clk_freq * QUP_BUS_WIDTH);
-+	ret = icc_set_bw(qup->icc_path, 0, needed_peak_bw);
-+	if (ret)
-+		return ret;
-+
-+	qup->cur_bw_clk_freq = clk_freq;
-+	return 0;
-+}
-+
- static void qup_i2c_write_tx_fifo_v1(struct qup_i2c_dev *qup)
- {
- 	struct qup_i2c_block *blk = &qup->blk;
-@@ -840,6 +865,10 @@ static int qup_i2c_bam_xfer(struct i2c_adapter *adap, struct i2c_msg *msg,
- 	int ret = 0;
- 	int idx = 0;
- 
-+	ret = qup_i2c_vote_bw(qup, qup->src_clk_freq);
-+	if (ret)
-+		return ret;
-+
- 	enable_irq(qup->irq);
- 	ret = qup_i2c_req_dma(qup);
- 
-@@ -1645,6 +1674,7 @@ static void qup_i2c_disable_clocks(struct qup_i2c_dev *qup)
- 	config = readl(qup->base + QUP_CONFIG);
- 	config |= QUP_CLOCK_AUTO_GATE;
- 	writel(config, qup->base + QUP_CONFIG);
-+	qup_i2c_vote_bw(qup, 0);
- 	clk_disable_unprepare(qup->pclk);
- }
- 
-@@ -1745,6 +1775,11 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 			goto fail_dma;
- 		}
- 		qup->is_dma = true;
-+
-+		qup->icc_path = devm_of_icc_get(&pdev->dev, NULL);
-+		if (IS_ERR(qup->icc_path))
-+			return dev_err_probe(&pdev->dev, PTR_ERR(qup->icc_path),
-+					     "failed to get interconnect path\n");
- 	}
- 
- nodma:
-@@ -1793,6 +1828,7 @@ static int qup_i2c_probe(struct platform_device *pdev)
- 		qup_i2c_enable_clocks(qup);
- 		src_clk_freq = clk_get_rate(qup->clk);
- 	}
-+	qup->src_clk_freq = src_clk_freq;
- 
- 	/*
- 	 * Bootloaders might leave a pending interrupt on certain QUP's,
-
--- 
-2.39.2
-
+Tony
 
