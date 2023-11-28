@@ -1,185 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-2267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F06F7FB9E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 13:09:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 758377FBA08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 13:25:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3EDF9B21723
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 12:09:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F01C41F20FB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 12:25:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 296E14F8AE;
-	Tue, 28 Nov 2023 12:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D545F51C3A;
+	Tue, 28 Nov 2023 12:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h3usQyvE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BnXhwdQP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E3E7182;
-	Tue, 28 Nov 2023 04:09:28 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-40b397793aaso24700815e9.0;
-        Tue, 28 Nov 2023 04:09:28 -0800 (PST)
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9904FD5B;
+	Tue, 28 Nov 2023 04:25:23 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1cfb30ce241so27371795ad.0;
+        Tue, 28 Nov 2023 04:25:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701173367; x=1701778167; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=oGZ/AOFCUofp/Ip1CkJeKXSMao5eFIWJrE7N8FH5Dk4=;
-        b=h3usQyvEcDxiGMbYnhFh+sY19pffIWnIa6aEI/xTNJnxg/Egci3WGZbeSz9AOc2G2Q
-         HlTHrsYtapKcN6ZyPIu95Ry/1U81k2qNcwQ7fJxaptB2AS1wmthWrB3Kpib9pLdEvV3S
-         vSMyFh6wF6xbh/4XVPt0lvnW4b1WH6P2sxuZfpMeP8IIe2jWcX7Vy7+2IG1ZdVK9YKkk
-         64IcsrkDcizWVuwSj0/wX/5wkd/RENMSTQSDmKuQ4e1EauJgcCXUbfe/QLXAaJpVfzE+
-         qSXs+Ef73UgJlKkFgwS5f4CRZsfrxQtopywGWYH/7AnAOGZ+2/7HKamZ6QdyqlBPPT3l
-         EWtg==
+        d=gmail.com; s=20230601; t=1701174323; x=1701779123; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=FpZMH9jqBR7iLcAB8dXkkbG1VWWxWtCIiGpAgogjkdw=;
+        b=BnXhwdQPUO1WRphA7Nx1Q7PcxJYbajIJld44sWCz71kbdlP0v6dQJfoHI2qNfp1UF3
+         0Y+0WDItCGbIMLlNIFslTFgHcgwv7q3AiKYECDOx8Ss9NuesZIlm/SomgQoIp2rVJBnk
+         svf+S42JznityHKXiUJ+dZoeyWXrO00Sp5HG6Km0cu5Ss3TZYb2qleyah0feek4eRkFt
+         DN7q1Cg1AOYvYDRkeyW6mj7G4D0rsoX85K88aWC/eX/YEdamhLaZUrnDFFUruFD31EwZ
+         Q/IOGy94ACkUzuUYi1U5TYCAXkp+Aa1DOFHOUGsVuPQpfZoDH6IGOAsk7c5EpbPtx6pY
+         pYQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701173367; x=1701778167;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oGZ/AOFCUofp/Ip1CkJeKXSMao5eFIWJrE7N8FH5Dk4=;
-        b=iEyUdBfNC/5u+mejT0SLZ5qbCk88mAHXJ6Q5rSAj29Ar6bzyJsV3D6+sdjIJUkglRc
-         T46Z9ybhG0flYJy/941dj7Ys5Tuo4RR438Cn/3o4QIEjmhrnTFQdj65ammu1Zm0ru5od
-         sAdatcfVqV92QFL0kXaZoTL+G7ItrkCkm4ntohaSTVdf/PKjzG5Z90RCxyOGvJSw43Kl
-         /Tlv2wBL/9HUdZlgOGqeNO/Ff1WEvGxDg83NDFVDRk2GC5GA2fIEtfWJ1Gup50eH3/JE
-         1B7nFJ4Gykb13r22UQ/lWrENOLtce7i4KGLYDDSq3l5jqxxWRvA4TuQ3rUvvYClpZ4DB
-         QD1g==
-X-Gm-Message-State: AOJu0YzqPwsO7f5l2/lm9EddLmhydonjEaLF+jXxKPq4N5X1XpScBk3x
-	IkvGwGHuyoQOBqeF2N1e61I=
-X-Google-Smtp-Source: AGHT+IGbBBv6SLNWzhb+OGjrpkkr9ufbL/wiM7k+E/3ue7yfq8P984X8hsnAh2R7HaBI8aT4sqQLDQ==
-X-Received: by 2002:a05:600c:5124:b0:40b:2ad8:579f with SMTP id o36-20020a05600c512400b0040b2ad8579fmr15342645wms.3.1701173366197;
-        Tue, 28 Nov 2023 04:09:26 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id n19-20020a05600c501300b0040b4c26d2dasm2231768wmr.32.2023.11.28.04.09.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 04:09:25 -0800 (PST)
-Message-ID: <6565d875.050a0220.d709d.658b@mx.google.com>
-X-Google-Original-Message-ID: <ZWXYcwbGdFX0vGMD@Ansuel-xps.>
-Date: Tue, 28 Nov 2023 13:09:23 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Robert Marko <robert.marko@sartura.hr>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: Re: [net-next PATCH RFC v3 2/8] net: phy: add initial support for
- PHY package in DT
-References: <20231126015346.25208-1-ansuelsmth@gmail.com>
- <20231126015346.25208-3-ansuelsmth@gmail.com>
- <b28b5d10-08cd-4e30-9909-f37834d80c81@lunn.ch>
+        d=1e100.net; s=20230601; t=1701174323; x=1701779123;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FpZMH9jqBR7iLcAB8dXkkbG1VWWxWtCIiGpAgogjkdw=;
+        b=Adn+HFfptGm0qXwej/Ukvz47+IkZTmgQUO0UlGdhkNVKgyWqGurlByo1LqDr9SWR+3
+         8NPH//l6SsmMg3fPDUvUxvOh/w0/kQEAUcMQVqMkFizgMelTu1FElNRoIF3LGLvlarzD
+         Bbvz9OPhcAoKk3Ew9Viztgys4GHOZrS6egqHrVDx1uGsw4VgGec6YQ9Tuu4uNp36b7TH
+         KCWnQwUc+3w+XKlkpmPad70MRvUh8+MHhYWC4ga5bmq7cNHawGrOGyrTr8Kcj+xL201U
+         xSLUX50OWOWxz3C75LRkJglxLMEhqjvvLEmzd35XvOt83QZ8SvpA7ZDTKmefpZup3pQz
+         3NlQ==
+X-Gm-Message-State: AOJu0Ywkojbnyg5yo9wZSMjqGai49dtTqpTNjjZ8G6LqlXOHG7Rs1rn3
+	LIHCfEGSK/kIEjWOlhq9BkhPDn1ain46lUgRtwXqdOxbC/Q=
+X-Google-Smtp-Source: AGHT+IEncS9KAPArxVtfBqiUQpZTa6Fa44Km3nsDxBpEXJqvkVttbxmetcS4gSR0rmf239ATBFkw//MalFkIAgy8PtE=
+X-Received: by 2002:a17:90a:f2d2:b0:27d:348:94a8 with SMTP id
+ gt18-20020a17090af2d200b0027d034894a8mr15336036pjb.6.1701174323063; Tue, 28
+ Nov 2023 04:25:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b28b5d10-08cd-4e30-9909-f37834d80c81@lunn.ch>
+References: <20231025104457.628109-1-robimarko@gmail.com> <20231025104457.628109-2-robimarko@gmail.com>
+ <CAOX2RU4MBvDZZ767RPS9XKj0U2L3gviVG5cyR8NKyO4LD+sfYQ@mail.gmail.com>
+ <20c8cfde-3f55-45c5-bc23-21979ac9680d@linaro.org> <CAOX2RU5-XFZhGzjigNtu-qFnPWDd2XkpGpY=HXWigRa5SXw4TA@mail.gmail.com>
+ <ef377506-4132-4805-a76e-18f241afe319@linaro.org> <CAOX2RU4K67evm10giQvF1rcfqTfR+e--KQT3ZePoHQoqASv_fg@mail.gmail.com>
+ <bdf6be0b-c137-48ce-8a3f-ab74bced6f87@linaro.org> <CAOX2RU4z1Dcs7ct0BAaS7wicYVmQEiSe74=w_grFDKQv22uoFg@mail.gmail.com>
+ <4243a841-5509-4d04-8ec7-191f2ba5677a@linaro.org> <CAOX2RU73n4JUTxGGgN7YOEqjj-1_=n=UZ99xsZ8Easp6O-D_yA@mail.gmail.com>
+ <1f7674ea-ed79-48b1-b577-1596e6fe57d2@linaro.org>
+In-Reply-To: <1f7674ea-ed79-48b1-b577-1596e6fe57d2@linaro.org>
+From: Robert Marko <robimarko@gmail.com>
+Date: Tue, 28 Nov 2023 13:25:11 +0100
+Message-ID: <CAOX2RU67BHtiQf1HbZMTUUSMckY7J8kbKR6LeLuDKKAaGS0r-A@mail.gmail.com>
+Subject: Re: [PATCH 2/3] clk: qcom: ipq6018: add USB GDSCs
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, 
+	mturquette@baylibre.com, sboyd@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, 
+	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Nov 28, 2023 at 01:39:02AM +0100, Andrew Lunn wrote:
-> > +static int of_phy_package(struct phy_device *phydev)
-> > +{
-> > +	struct device_node *node = phydev->mdio.dev.of_node;
-> > +	struct device_node *package_node;
-> > +	u32 base_addr;
-> > +	int ret;
-> > +
-> > +	if (!node)
-> > +		return 0;
-> > +
-> > +	package_node = of_get_parent(node);
-> > +	if (!package_node)
-> > +		return 0;
-> > +
-> > +	if (!of_device_is_compatible(package_node, "ethernet-phy-package"))
-> > +		return 0;
-> > +
-> > +	if (of_property_read_u32(package_node, "reg", &base_addr))
-> > +		return -EINVAL;
-> > +
-> > +	ret = devm_phy_package_join(&phydev->mdio.dev, phydev,
-> > +				    base_addr, 0);
-> 
-> No don't do this. It is just going to lead to errors. The PHY driver
-> knows how many PHYs are in the package. So it can figure out what the
-> base address is and create the package. It can add each PHY as they
-> probe. That cannot go wrong.
+On Wed, 15 Nov 2023 at 17:22, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
+>
+>
+> On 11/13/23 13:50, Robert Marko wrote:
+> > On Mon, 13 Nov 2023 at 12:58, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>
+> >> On 11.11.2023 12:28, Robert Marko wrote:
+> >>> On Tue, 7 Nov 2023 at 22:51, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>>>
+> >>>>
+> >>>>
+> >>>> On 10/31/23 10:01, Robert Marko wrote:
+> >>>>> On Mon, 30 Oct 2023 at 22:12, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>>>>>
+> >>>>>> On 30.10.2023 21:37, Robert Marko wrote:
+> >>>>>>> On Mon, 30 Oct 2023 at 20:37, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> >>>>>>>>
+> >>>>>>>> On 29.10.2023 12:04, Robert Marko wrote:
+> >>>>>>>>> On Wed, 25 Oct 2023 at 12:45, Robert Marko <robimarko@gmail.com> wrote:
+> >>>>>>>>>>
+> >>>>>>>>>> IPQ6018 has GDSC-s for each of the USB ports, so lets define them as such
+> >>>>>>>>>> and drop the curent code that is de-asserting the USB GDSC-s as part of
+> >>>>>>>>>> the GCC probe.
+> >>>>>>>>>>
+> >>>>>>>>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> >>>>>>>>>
+> >>>>>>>>> Unfortunately, after testing on multiple devices I hit the same GDSC
+> >>>>>>>>> issue I had a long time ago
+> >>>>>>>>> that was the reason I did not send this upstream.
+> >>>>>>>>> It seems that USB3 port GDSC (USB0 GDSC in code) works just fine,
+> >>>>>>>>> however the USB2 one
+> >>>>>>>>> (USB1 GDSC in code) it is stuck off and USB2 port will fail due to this:
+> >>>>>>>>>       1.607531] ------------[ cut here ]------------
+> >>>>>>>>> [    1.607559] usb1_gdsc status stuck at 'off'
+> >>>>>>>>> [    1.607592] WARNING: CPU: 0 PID: 35 at gdsc_toggle_logic+0x16c/0x174
+> >>>>>>>>> [    1.615120] Modules linked in:
+> >>>>>>>> Can you dump GDSCR (the entire 32-bit register) at boot and when toggling?
+> >>>>>>>
+> >>>>>>> Sure, here it is:
+> >>>>>>> [    0.023760] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val: 0x8222004 init
+> >>>>>>> [    0.023782] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val: 0x8222004 init
+> >>>>>>> [    0.988626] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+> >>>>>>> 0x8282000 before toggle
+> >>>>>>> [    1.202506] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3f078 val:
+> >>>>>>> 0x8282000 after toggle
+> >>>>>>> [    1.207208] qcom,gcc-ipq6018 1800000.gcc: reg: 0x3e078 val:
+> >>>>>>> 0xa0282000 before toggle
+> >>>>>> Any chance
+> >>>>>>
+> >>>>>> .en_few_wait_val = 0x2
+> >>>>>>
+> >>>>>> (turning BIT(19) into BIT(17))
+> >>>>>>
+> >>>>>> will make a difference?
+> >>>>>
+> >>>>> Sadly, it makes no difference and GDSC status bit newer comes up which is
+> >>>>> rather weird as USB0 one seems to work just fine.
+> >>>> What if you add clk_ignore_unused?
+> >>>
+> >>> To the USB1 master clock or?
+> >> That's a command line parameter, effectively setting it on all clks.
+> >
+> > Oh that, I understand now.
+> >
+> >>
+> >>>
+> >>> There is definitively something broken regarding the GDSC as
+> >>> GDSC_STATE bits (30-27)
+> >>> change from 0 to something on the USB0 GDSC but on GDSC1 they are 0 even after
+> >>> SW_OVERRIDE BIT(2) is set to 1, and the POWER BIT(31) newer changes to 1.
+> >>>
+> >>> However, if you manually set BIT(2) to 1 then the USB1 master clock
+> >>> can come up so
+> >>> GDSC seems to work.
+> >>> USB1 (The USB2.0 HS) port is still broken after this if USB mass storage is used
+> >>> but that was present before the GDSC changes as well and I still need
+> >>> to figure out
+> >>> which quirk is missing for this.
+> >> Please try clk_ignore_unused and see if toggling the GDSC is still broken.
+> >
+> > Sadly, passing clk_ignore_unused in the bootargs doesn't help, GDSC is
+> > still stuck off.
+> Hm, so it looks like there's no clock dependency for this GDSC..
+>
+> Maybe some regulator needs to be turned on?
+>
+> Can you try to add regulator-always-on to all vregs and retry?
+> (and keep clk_ignore_unused to be sure)
 
-No it can't and we experiment this with a funny implementation on the
-QSDK. Maybe I'm confused?
+Sorry for the ultra late reply, currently there is just CPU regulator described
+via RPM.
 
-Example on QSDK they were all based on a value first_phy_addr. This was
-filled with the first phy addr found (for the package).
+I will look into describing the VQMMC and others I can find but I doubt
+it will change anything as no regulators are getting disabled currently.
 
-All OEM followed a template with declaring all sort of bloat and they
-probably have no idea what they are actually putting in DT. We reverse
-all the properties and we gave a meaning to all the values...
-
-We quikly notice that the parsing was very fragile and on some strange
-device (an example a Xiaomi 36000) the first PHY for the package was
-actually not attached to anything. Resulting in all this logic of
-"first_phy_addr" failing as by removing the first PHY, the value was set
-to a wrong addr resulting in all sort of problems.
-
-This changed a lot (the original series used a more robust way with
-phandle, but it was asked to use base_addr and use offset in the PHY
-addr, less robust still OK)
-
-If we revert to PHY driver making the PHY package then we lose all kind
-of ""automation"" of having a correct base addr. In PHY driver we would
-have to manually parse with parent (as we do here) and check the value?
-
-Why not do the thing directly on PHY core?
-
-By making the PHY driver creating the package, we are back on all kind
-of bloat in the PHY driver doing the same thing (parsing package nodes,
-probe_once check, config_once check) instead of handling them directly
-in PHY core.
-
-Also just to point out, the way the current PHY driver derive the base
-addr is problematic. All of them use special regs to find the base one
-but I can totally see a PHY driver in the future assuming the first PHY
-being the first in the package to be probed, set the base addr on the
-first PHY and also assuming that it's always define in DT.
-
-If we really don't want the OF parsing in PHY core and autojoin them,
-is at least OK to introduce an helper to get the base addr from a PHY
-package node structure? (to at least try to minimaze the bloat that PHY
-driver will have?)
-
-Also with the OF support dropped, I guess also the added API in this
-series has to be dropped. (as they would be called after the first PHY
-probe and that is problematic if for some reason only one PHY of the
-package is declared in DT) (an alternative might be moving the
-probe_once after the PHY is probed as we expect the phy_package_join
-call done in the PHY probe call)
-
-> If you create the package based on DT you have to validate that the DT
-> is correct. You need the same information, the base address, how many
-> packages are in the PHY, etc. So DT gains your nothing except more
-> potential to get it wrong.
-> 
-
-For the sake of package join, only the reg has to be validated and the
-validation is just if addrs makes sense. Everything else can be done by
-PHY package probe once.
-
-> Please use DT just for properties for the package, nothing else.
-> 
-
--- 
-	Ansuel
+Regards,
+Robert
+>
+> Konrad
 
