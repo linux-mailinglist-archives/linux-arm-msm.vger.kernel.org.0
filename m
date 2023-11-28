@@ -1,147 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-2175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DC4C7FAFC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 02:48:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FB867FAFC7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 02:51:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CFB721C20A67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 01:48:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 255FE2811FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 01:51:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD02F1C30;
-	Tue, 28 Nov 2023 01:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6482C4A2A;
+	Tue, 28 Nov 2023 01:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ke+t8H77"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ws+75g1I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39F8A1B6
-	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 17:48:22 -0800 (PST)
-Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-da30fd994fdso4545001276.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 17:48:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701136101; x=1701740901; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7vxz+tHNBNWZVc8EcJHObY+dUX9GxZl9+4l9Gmig2ak=;
-        b=Ke+t8H77GWjan1ANOqmYjkwt+IHQneOYRt5eYQrku+xbtptGCn4kLyl8fiasD8UNcJ
-         kJXIi4z/vr9/MBYJniziPs4FtPuMLCvra/vomwR8gLS6aC+q9JeXMl58kJzmx3ZKnq7I
-         w6dZesURCQgRlxs00ARVFnyGFn6QhMD0wEVNZO5JOsE+24729SAD7OAn06nLCoWVNmnf
-         Bqd8Ma49x0RJidD5DGfPfCqSYpHjXTuDPEttGqfm/LWaLq0N9Vbm62qPbc4DqlbTzxZo
-         LkmW1CU4AtcF7N+0ukwjsAgKOMIjetDCqIFdSmJCR+0mlg9Suhqm6yc9WftaGLgcWYfw
-         wj6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701136101; x=1701740901;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7vxz+tHNBNWZVc8EcJHObY+dUX9GxZl9+4l9Gmig2ak=;
-        b=NwQzNM9dae6vO0nhqpJ8oRKLWrG1tSyX6C6nx9aXJNIkH31jxASbqxdZv/6mCgewKz
-         skdZV3rCXX5H4x/000HP9uy6Zk501UZuJ5+saKFs9reQ2G2bZpwF+p7A9qcVegopoani
-         wxOMHWidi26Y7EPClHqX8d3ESwtaFse+fiqdbSDRy9yNwv8E5H1EhJoQcUQbAI39k3EE
-         L8zYx9J4Spv+cD0ibGa/diRYAWTHY14LB2pBU1WQYyLXtcb0+RSGdIJ0aGSff5577slm
-         mbeGGw2S6pEpF2V2Bm+kcec0uvzrC20zPrxV6ni4yoYjUaXShddYeIypiII+tftwf70U
-         tYuQ==
-X-Gm-Message-State: AOJu0Yx1Iw7fV9SLT0zX+muhAZvig+pamarWlhrVfuLCd2hjDzTOliN+
-	S5QLUhWoUKiBlDqF4qZDE3khZ6xA5oZCYYBzA7dpxA==
-X-Google-Smtp-Source: AGHT+IGYQElil91O5cH+HFnOPnDGOe0frEhW3uvtQCLF5IPu3HSvzwR/Wc1fbGURrXChA9Dz45L784GG2VN/D75eRF4=
-X-Received: by 2002:a81:6c82:0:b0:5cc:9ef4:b01d with SMTP id
- h124-20020a816c82000000b005cc9ef4b01dmr14954961ywc.21.1701136101408; Mon, 27
- Nov 2023 17:48:21 -0800 (PST)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78F541B6;
+	Mon, 27 Nov 2023 17:50:54 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS1h8Fk020602;
+	Tue, 28 Nov 2023 01:50:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Ys4/6FFfW1SAvUPGmv86XCxA3FNAIi1MkHLRZxoOcBk=;
+ b=Ws+75g1I1vgcxIlPy11nIbrzpMccCg84bcAj7cwlR2KzeoFwOtqcR+5zhw/UEA7QG33f
+ f9ruaVWd9Arpe7v53ImQgBPgKMNmZsNCfKfoscRsTBaU9Im8TsDxIjZLHgrQyo8CVzcq
+ Gq/S1dES9kPKMOwnWOJATq5Dkvwh5VhLrg41tn+Fb3lW1mgOCJA6Y/0xDNekPK/AGNpe
+ dMZnNFom8BJwNm0E33WHhjsIi8uBfEuyeyc7Ub8g7hhTtQRDDMDLQX1coA1QkMJQkkvn
+ UZzejRXGo6eT4DidiaQdna3hQXj9soNrNZnKL5dblIRvtMPD8CKzmSBK24uX2enDhgP4 1Q== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3umqxh29as-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Nov 2023 01:50:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AS1oaHN004445
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Nov 2023 01:50:36 GMT
+Received: from [10.253.11.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 27 Nov
+ 2023 17:50:32 -0800
+Message-ID: <a690f5c1-50e7-4d37-9e12-fff574917aba@quicinc.com>
+Date: Tue, 28 Nov 2023 09:50:28 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231128011122.14711-1-quic_parellan@quicinc.com>
-In-Reply-To: <20231128011122.14711-1-quic_parellan@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 28 Nov 2023 03:48:10 +0200
-Message-ID: <CAA8EJpprP7mQLm47d07AtNRjLtpQCSAw5PuXjwGXNO2rXVUPZw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: Capture dpu snapshot when frame_done_timer timeouts
-To: Paloma Arellano <quic_parellan@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, robdclark@gmail.com, seanpaul@chromium.org, 
-	swboyd@chromium.org, quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
-	marijn.suijten@somainline.org, neil.armstrong@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 08/10] phy: qualcomm: phy-qcom-qmp-ufs: Rectify SM8550
+ UFS HS-G4 PHY Settings
+Content-Language: en-US
+To: Vinod Koul <vkoul@kernel.org>
+CC: <bvanassche@acm.org>, <mani@kernel.org>, <adrian.hunter@intel.com>,
+        <beanhuo@micron.com>, <avri.altman@wdc.com>,
+        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
+        <linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Abel
+ Vesa <abel.vesa@linaro.org>,
+        "open list:GENERIC PHY FRAMEWORK"
+	<linux-phy@lists.infradead.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1700729190-17268-1-git-send-email-quic_cang@quicinc.com>
+ <1700729190-17268-9-git-send-email-quic_cang@quicinc.com>
+ <ZWR4cN0sJNcVHPrL@matsya>
+From: Can Guo <quic_cang@quicinc.com>
+In-Reply-To: <ZWR4cN0sJNcVHPrL@matsya>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jE2rucx1THA52q9EfdMqES3Sf4T1tPmF
+X-Proofpoint-ORIG-GUID: jE2rucx1THA52q9EfdMqES3Sf4T1tPmF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-28_01,2023-11-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ clxscore=1015 phishscore=0 mlxlogscore=999 spamscore=0 bulkscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 impostorscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311280013
 
-On Tue, 28 Nov 2023 at 03:12, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->
-> Trigger a devcoredump to dump dpu registers and capture the drm atomic
-> state when the frame_done_timer timeouts.
->
-> Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 13 +++++++++++--
->  1 file changed, 11 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 1cf7ff6caff4..5cf7594feb5a 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -191,6 +191,7 @@ struct dpu_encoder_virt {
->         void *crtc_frame_event_cb_data;
->
->         atomic_t frame_done_timeout_ms;
-> +       atomic_t frame_done_timeout_cnt;
->         struct timer_list frame_done_timer;
->
->         struct msm_display_info disp_info;
-> @@ -1204,6 +1205,8 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
->
->         dpu_enc->dsc = dpu_encoder_get_dsc_config(drm_enc);
->
-> +       atomic_set(&dpu_enc->frame_done_timeout_cnt, 0);
-> +
->         if (disp_info->intf_type == INTF_DP)
->                 dpu_enc->wide_bus_en = msm_dp_wide_bus_available(priv->dp[index]);
->         else if (disp_info->intf_type == INTF_DSI)
-> @@ -2115,11 +2118,12 @@ static int _dpu_encoder_status_show(struct seq_file *s, void *data)
->         for (i = 0; i < dpu_enc->num_phys_encs; i++) {
->                 struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
->
-> -               seq_printf(s, "intf:%d  wb:%d  vsync:%8d     underrun:%8d    ",
-> +               seq_printf(s, "intf:%d  wb:%d  vsync:%8d     underrun:%8d    frame_done_cnt:%d",
->                                 phys->hw_intf ? phys->hw_intf->idx - INTF_0 : -1,
->                                 phys->hw_wb ? phys->hw_wb->idx - WB_0 : -1,
->                                 atomic_read(&phys->vsync_cnt),
-> -                               atomic_read(&phys->underrun_cnt));
-> +                               atomic_read(&phys->underrun_cnt),
-> +                               atomic_read(&dpu_enc->frame_done_timeout_cnt));
->
->                 seq_printf(s, "mode: %s\n", dpu_encoder_helper_get_intf_type(phys->intf_mode));
->         }
-> @@ -2341,6 +2345,10 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
->
->         DPU_ERROR_ENC(dpu_enc, "frame done timeout\n");
->
-> +       atomic_inc(&dpu_enc->frame_done_timeout_cnt);
-> +       if (atomic_read(&dpu_enc->frame_done_timeout_cnt) == 1)
-> +               msm_disp_snapshot_state(drm_enc->dev);
+Hi Vinod,
 
-atomic_inc_and_test(), please
+On 11/27/2023 7:07 PM, Vinod Koul wrote:
+> On 23-11-23, 00:46, Can Guo wrote:
+>> The registers, which are being touched in current SM8550 UFS PHY settings,
+>> and the values being programmed are mainly the ones working for HS-G4 mode,
+>> meanwhile, there are also a few ones somehow taken from HS-G5 PHY settings.
+>> However, even consider HS-G4 mode only, some of them are incorrect and some
+>> are missing. Rectify the HS-G4 PHY settings by strictly aligning with the
+>> SM8550 UFS PHY Hardware Programming Guide suggested HS-G4 PHY settings.
+> 
+> can you copy on cover so that we know the context of the series, I just
+> got hit with two patches out of the blue with this
+> 
 
-> +
->         event = DPU_ENCODER_FRAME_EVENT_ERROR;
->         trace_dpu_enc_frame_done_timeout(DRMID(drm_enc), event);
->         dpu_enc->crtc_frame_event_cb(dpu_enc->crtc_frame_event_cb_data, event);
-> @@ -2392,6 +2400,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
->                 goto fail;
->
->         atomic_set(&dpu_enc->frame_done_timeout_ms, 0);
-> +       atomic_set(&dpu_enc->frame_done_timeout_cnt, 0);
->         timer_setup(&dpu_enc->frame_done_timer,
->                         dpu_encoder_frame_done_timeout, 0);
->
-> --
-> 2.41.0
->
+Will add you to the --to list in next version. The whole series is to 
+enable HS-G5 support on SM8550. FYI, the two changes to UFS PHY driver, 
+which you mentioned above, in the series are to 1. Rectify existing 
+HS-G4 PHY setting for SM8550 and 2. Add HS-G5 PHY settings for SM8550.
 
+Thanks,
+Can Guo.
 
--- 
-With best wishes
-Dmitry
+>>
+>> Fixes: 1679bfef906f ("phy: qcom-qmp-ufs: Add SM8550 support")
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> ---
+>>   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |  3 +++
+>>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 28 +++++++++++++++-------
+>>   2 files changed, 22 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+>> index 15bcb4b..674f158 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
+>> @@ -10,9 +10,12 @@
+>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_RX			0x2c
+>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX		0x30
+>>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX		0x34
+>> +#define QSERDES_UFS_V6_TX_LANE_MODE_1				0x7c
+>> +#define QSERDES_UFS_V6_TX_FR_DCC_CTRL				0x108
+>>   
+>>   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2		0x08
+>>   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4		0x10
+>> +#define QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2			0xd4
+>>   #define QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL			0x178
+>>   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0			0x208
+>>   #define QSERDES_UFS_V6_RX_MODE_RATE_0_1_B1			0x20c
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> index 3927eba..ad91f92 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
+>> @@ -658,22 +658,26 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
+>>   	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
+>>   	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x7f),
+>>   	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x06),
+>> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x4c),
+>> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
+>> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
+>> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
+>> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x99),
+>> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x07),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x4c),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x0a),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x14),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x99),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x07),
+>> +};
+>> +
+>> +static const struct qmp_phy_init_tbl sm8550_ufsphy_hs_b_serdes[] = {
+>> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x44),
+>>   };
+>>   
+>>   static const struct qmp_phy_init_tbl sm8550_ufsphy_tx[] = {
+>> -	QMP_PHY_INIT_CFG(QSERDES_V6_TX_LANE_MODE_1, 0x05),
+>> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_LANE_MODE_1, 0x05),
+>>   	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX, 0x07),
+>> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_FR_DCC_CTRL, 0x4c),
+>>   };
+>>   
+>>   static const struct qmp_phy_init_tbl sm8550_ufsphy_rx[] = {
+>> -	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2, 0x0c),
+>> -	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4, 0x0f),
+>> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2, 0x0c),
+>>   	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x0e),
+>>   
+>>   	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0, 0xc2),
+>> @@ -696,6 +700,8 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_pcs[] = {
+>>   	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
+>>   	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x2b),
+>>   	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
+>> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
+>> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
+>>   };
+>>   
+>>   struct qmp_ufs_offsets {
+>> @@ -1157,6 +1163,10 @@ static const struct qmp_phy_cfg sm8550_ufsphy_cfg = {
+>>   		.pcs		= sm8550_ufsphy_pcs,
+>>   		.pcs_num	= ARRAY_SIZE(sm8550_ufsphy_pcs),
+>>   	},
+>> +	.tbls_hs_b = {
+>> +		.serdes		= sm8550_ufsphy_hs_b_serdes,
+>> +		.serdes_num	= ARRAY_SIZE(sm8550_ufsphy_hs_b_serdes),
+>> +	},
+>>   	.clk_list		= sdm845_ufs_phy_clk_l,
+>>   	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
+>>   	.vreg_list		= qmp_phy_vreg_l,
+>> -- 
+>> 2.7.4
+> 
 
