@@ -1,213 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-2225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAC147FB525
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:02:17 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D66987FB52C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:05:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27AE61C21046
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:02:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 411EBB20CA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:05:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3467932C6E;
-	Tue, 28 Nov 2023 09:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBF3710A32;
+	Tue, 28 Nov 2023 09:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="NGkt5BpA";
-	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="8/1mIY83"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hTWl8373"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A702DE4;
-	Tue, 28 Nov 2023 01:02:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1701162126; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=r6eAu2ggbZSwoSOSC2LB9/TsOtVSDFGz1Yn6exqUJQ0DHNrZcDZFk2KMB6Pf2oxC4i
-    BD9rNHK1hh72OUMXPKLavH9XGEbp8ZBmEli83jQTqYUvLSva2U2lgNj9pIX3HuMVJt+2
-    qUz6BBCiePvo5XSEigRXFjYsQHZ3rLlZvVPXMb8P5gsWGcddPchoOkSsj1QNmgaWew8G
-    6c5Ml6V5mmIOeUMjXSAZUPm8rCOv7yZZf2k1BAnlxms0I+mBi9T87BkWQnq6AU/3Zjn5
-    bCpGLFHdB0BpP9+jgJ/ZYgEWUPJQz3LSIEqXVujdRK4OG77rNrCb8vS78Cn7rkaFkelM
-    VQ8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1701162126;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=njnHQBlxJazLWcAbW1gqa8mgblbBdF2CRCqEZQfBIIw=;
-    b=qzWaaTlBGfcOt2NSli9uC30OIHhTm7Et3bwWlm5HYltZczHIohrUpFsbELgy0mQfkS
-    WLyMz3zcRmaMElchm3RwfdjsZjVb+DeFjRQpFLfanu2K1+Ee6n52PZX/sHVTsBBPg6DY
-    P5KBI2rUPZEwXI181zMZX6FcG0zFldP3BDmfAbL6LD5gWXt6A/XYrNilOalrEWN1yRFr
-    nqPOIVRn30AqUGijCfS29EyfgvhiOP/EmYVHWyrs4QT5OxcZpJv9Y6jmDOwHRCn0negL
-    1TTkuctz5ZvQSFL1jWE5UVbC2TNr894f2i30jcJhcjDaLQfuF91h5IJQ0/+8Ve/FuZfH
-    58RA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1701162126;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=njnHQBlxJazLWcAbW1gqa8mgblbBdF2CRCqEZQfBIIw=;
-    b=NGkt5BpAHMAwG5ZGf2LpEqrMuOEjWLA6KVKLpltw4TzVMPa9HVzLWEtcKSBfqWrujV
-    qBOb4Dr8yy4PqS7SnkqExRYuFSIIElBJulaur0QNIREh0xy5LNNScHRpV0Ovj65xoe2R
-    MZmoW4OWEBqr1uEslj3AZKcxky/jhP6NL0nhANSgY1EUHpY5zIdu5MsqZ7ghvg2N4jdy
-    fYEqXZ7s2chHCM17/Dx78JTKLrSMGVOScX5rMWRHytabBb4IhYkYLHxhEzbiqRhMJSon
-    MUFdLiI8i8a9xMdgl7S9Jd5vbf79Nk1Dk69X9amD5LK4afivnJjWMjz0ylAWKLMMoOYB
-    UifQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1701162126;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=njnHQBlxJazLWcAbW1gqa8mgblbBdF2CRCqEZQfBIIw=;
-    b=8/1mIY83/yDD+zTLGU3PquPNdvq5bT+5tGhBNu6pRU7uN+7Y0kocxGPDSnyY8/AxHp
-    urFKBT2uGou13TLtIEBw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.9.1 DYNA|AUTH)
-    with ESMTPSA id t3efe7zAS925ktT
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Tue, 28 Nov 2023 10:02:05 +0100 (CET)
-Date: Tue, 28 Nov 2023 10:01:47 +0100
-From: Stephan Gerhold <stephan@gerhold.net>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/8] arm64: dts: qcom: add initial SM8650 dtsi
-Message-ID: <ZWWse_i-wjSTH8O4@gerhold.net>
-References: <20231124-topic-sm8650-upstream-dt-v4-0-e402e73cc5f0@linaro.org>
- <20231124-topic-sm8650-upstream-dt-v4-2-e402e73cc5f0@linaro.org>
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E33FD45
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 01:04:56 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-a0064353af8so1192009266b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 01:04:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701162295; x=1701767095; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Qc5JcQopyjaw0h7Rm7v1ZmQjJI8MfwTNyQE5kCaerF8=;
+        b=hTWl8373yfU/zzX7mbwJ+NybI9nH6+3S1911EYWLx8ReQftiOWwlH4XxmTl8XHb4t4
+         GPi1rSPk2aXfEEhdNcF5vUcIeH+5OcatrN0ziXgy+BExey4xYWYtd2R9jFFUmQ2v905A
+         vSYBGETw4KaO7cApqFEJjI5RHGJcRJ8PDkY3nM1tvz7j7bmQrS4vWFEx3CbhlpWqOvvv
+         joPKFgMM+BYXkdoaCwIMupjGpUDImBtScCJqIte5Sicxbvh86J89lc1Ft3AuOtL0LJFH
+         V/MDgEvpYYbfq8C8KfFIrmqHyffTDYiMW6BOtiNuz7S8Hm2mu+O62fWzsqQs9ahkQopq
+         M5oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701162295; x=1701767095;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qc5JcQopyjaw0h7Rm7v1ZmQjJI8MfwTNyQE5kCaerF8=;
+        b=P+Y4HoW42nA1rfYo5UbsuQQbt5wvoHSH55FzU9o0EEraPRgSQhOWXRVnf5+QEepomE
+         +hMaxNh9LabwQ0QpQrz4S7t4Qg9c4idPdZR7b5Sdl7Fv2biIIIZ43NtdquwIStBL+yow
+         riTY+fcm6zEEmh/XpTz3Hn58vvpeQuffQTYDIrSUt4E/Va2bkzkLnjLCpW7S422iCip3
+         s/zUQUw9XJ7Kk3w/Cc0wxKSpPczZuuvvXPIcLrSSZAJieZXhsWJBc434TY6fCpByf1LG
+         eKGRPNaeJSkpUrRvEOMzd8tHMzAyP66JXra/QoYpC15rrgoeuFS8oOhrrLt8z6EJ5q0v
+         eJSg==
+X-Gm-Message-State: AOJu0Yz3OPqOAqBfxqXWqJ32fh8gH//Hz6Jp9qPlab2hrkE0B+fxao/M
+	WEY4rDVpddvfsuIacQPX8BPzSA==
+X-Google-Smtp-Source: AGHT+IFEakoL6s8aB1Kbjd7EnmUyefNOANreyJhr02mT953pYfarluOEy7EfLk05JeBiqJ9ZxOftdQ==
+X-Received: by 2002:a17:906:20d4:b0:a0f:78db:cb15 with SMTP id c20-20020a17090620d400b00a0f78dbcb15mr4884972ejc.21.1701162294413;
+        Tue, 28 Nov 2023 01:04:54 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.109])
+        by smtp.gmail.com with ESMTPSA id 19-20020a170906319300b00992b8d56f3asm6528618ejy.105.2023.11.28.01.04.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Nov 2023 01:04:53 -0800 (PST)
+Message-ID: <60c9ba5d-a2b8-43cd-8b8d-2c709b8e5d04@linaro.org>
+Date: Tue, 28 Nov 2023 10:04:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231124-topic-sm8650-upstream-dt-v4-2-e402e73cc5f0@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] ASoC: dt-bindings: document WCD939x Audio Codec
+Content-Language: en-US
+To: neil.armstrong@linaro.org,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-0-21d4ad9276de@linaro.org>
+ <20231123-topic-sm8650-upstream-wcd939x-codec-v1-2-21d4ad9276de@linaro.org>
+ <160fc6c4-b07d-49c5-976b-aa0fa35e4f0f@linaro.org>
+ <b637c287-93e5-4214-9275-80fac3c6181b@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <b637c287-93e5-4214-9275-80fac3c6181b@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On Fri, Nov 24, 2023 at 10:20:39AM +0100, Neil Armstrong wrote:
-> Add initial DTSI for the Qualcomm SM8650 platform,
-> only contains nodes which doesn't depend on interconnect.
+On 28/11/2023 09:59, Neil Armstrong wrote:
+> On 24/11/2023 09:33, Krzysztof Kozlowski wrote:
+>> On 23/11/2023 15:49, Neil Armstrong wrote:
+>>
+>>> +  Qualcomm WCD9390/WCD9395 Codec is a standalone Hi-Fi audio codec IC.
+>>> +  It has RX and TX Soundwire slave devices.
+>>> +  The WCD9390/WCD9395 IC has a functionally separate USB-C Mux subsystem
+>>> +  accessible over an I2C interface.
+>>> +  The Audio Headphone and Microphone data path between the Codec and the USB-C Mux
+>>> +  subsystems are external to the IC, thus requiring DT port-endpoint graph description
+>>> +  to handle USB-C altmode & orientation switching for Audio Accessory Mode.
+>>> +
+>>> +allOf:
+>>> +  - $ref: dai-common.yaml#
+>>> +  - $ref: qcom,wcd93xx-common.yaml#
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    enum:
+>>> +      - qcom,wcd9390-codec
+>>> +      - qcom,wcd9395-codec
+>>
+>> 9395 should be compatible with 9390, so please express it with a list
+>> using fallback. I know that earlier wcd93xx do not follow that concept,
+>> but maybe we will fix them some point as well.
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 2439 ++++++++++++++++++++++++++++++++++
->  1 file changed, 2439 insertions(+)
+> I don't get why this would be needed, yes their are compatible but still
+> two separate ICs with different internal capabilities.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> new file mode 100644
-> index 000000000000..b0a9ca53d58e
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -0,0 +1,2439 @@
-> +[...]
-> +		timer@17420000 {
-> +			compatible = "arm,armv7-timer-mem";
-> +			reg = <0 0x17420000 0 0x1000>;
-> +
-> +			ranges = <0 0 0 0x20000000>;
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +
-> +			frame@17421000 {
-> +				reg = <0x17421000 0x1000>,
-> +				      <0x17422000 0x1000>;
-> +
-> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
-> +					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +				frame-number = <0>;
-> +			};
-> +
-> +			frame@17423000 {
-> +				reg = <0x17423000 0x1000>;
-> +
-> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +				frame-number = <1>;
-> +
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@17425000 {
-> +				reg = <0x17425000 0x1000>;
-> +
-> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +				frame-number = <2>;
-> +
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@17427000 {
-> +				reg = <0x17427000 0x1000>;
-> +
-> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +				frame-number = <3>;
-> +
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@17429000 {
-> +				reg = <0x17429000 0x1000>;
-> +
-> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +				frame-number = <4>;
-> +
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@1742b000 {
-> +				reg = <0x1742b000 0x1000>;
-> +
-> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +				frame-number = <5>;
-> +
-> +				status = "disabled";
-> +			};
-> +
-> +			frame@1742d000 {
-> +				reg = <0x1742d000 0x1000>;
-> +
-> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +				frame-number = <6>;
-> +
-> +				status = "disabled";
-> +			};
-> +		};
+> It the first time I get such request for new documentation
 
-Nitpick: Personally I feel the empty lines between each property here
-are a bit overly verbose. It would be better readable without them.
-Might be personal preference though :-)
+Maybe it is first time for you, but I ask about this all the time. What
+is important is whether the programming model or how the OS uses the
+device is the same.
 
-> +[...]
-> +	timer {
-> +		compatible = "arm,armv8-timer";
-> +
-> +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+Here the device exposes its version in registers, so you can easily rely
+on the compatibility. That's also the case multiple times talked on the
+mailing lists.
 
-I'm pretty sure GIC_CPU_MASK_SIMPLE() is only valid & used on GICv2.
-Unlike arm,gic.yaml, arm,gic-v3.yaml doesn't mention "bits[15:8] PPI
-interrupt cpu mask". Also see e.g. commit 4a92b6d75bab ("arm64: dts:
-msm8996: Fix wrong use of GIC_CPU_MASK_SIMPLE()").
+Best regards,
+Krzysztof
 
-Would be also good to check if any existing DTs have introduced this
-incorrectly again since then.
-
-Thanks,
-Stephan
 
