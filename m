@@ -1,62 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-2223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EA347FB514
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:00:02 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2283B7FB51E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:01:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 646651C21256
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:00:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A3DD11F20F85
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:01:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A852358AA;
-	Tue, 28 Nov 2023 08:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17FCE199CA;
+	Tue, 28 Nov 2023 09:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lQfWA8iA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l7aFcmLd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B95AF4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 00:59:53 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2c993da0b9eso37438851fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 00:59:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701161991; x=1701766791; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=c2BakYcGgqp0kJB3n7H4gdGk25DfuvAIGclFF4AFOAo=;
-        b=lQfWA8iAjSfFjLu41ROZg5NQoeqecGSnAM75yPoAw89Mqv9RVD8A1IcYZJqyUoLz+U
-         7dDS/5Dm9esrw9u9JFHmfsx8n4yRk1c/+eeP6yrPlY4GzQuFCIVVV32baBUu+NDomPkh
-         +KfzDUopiXJ2moU8DNAiA5s3gPtCc2qu3JYMXFqsJmuGoosXkQq7Tg+qO2909Mlq8zU+
-         fnhZh/bwGbJdbZ2rnCMk7RM1O++CWujTbTUqrWpHYjzlcPrurJ878xNY5ZN3VUZHyeew
-         sDiUEHR/WrGIyPheIOQo8oOjNZ9GQB3lnEFfYT+vgW9s/mew6ILiMh/5jsou2vHnMIpf
-         hqEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701161991; x=1701766791;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=c2BakYcGgqp0kJB3n7H4gdGk25DfuvAIGclFF4AFOAo=;
-        b=k566OLnqMce4D9Fcd8d2KtDh8QaZGVXurjUs7SJeFzKWDQ7rWVR+722Q+M2WW9DK8F
-         IBS72b0Ec0iD13UuiijGjo5Us4apmvL01igTfsWP77hoRoDFX2QEGSEOIR6vwI0Pl1qm
-         HzWV+Vm3Wb9hiwYYjnRnoe0yEydL6POLaJJFF1Ruc+cT6SVpNhLDI7EGxT7xZzqpnJso
-         rFpYtUNDV6+WxDfH0zLr9+TY5rTQZ2MgEPR9G6T2rwRVxXvhTZXVTHzPtdwEDYca3cke
-         UK+YFDl9ExdXui4fwVPbTImcw8f2UTVf1omxc1rYKPDZ3/y9hCNwnYlcWXB6K0t/T05f
-         jxvg==
-X-Gm-Message-State: AOJu0YyGiw+5VXZR9tUp6B9LsMKQ3HdhZcBYr0T2MAjCsGrn8LudI8M/
-	PSSOyXfMOVVR81rQwqOGfwpWJw==
-X-Google-Smtp-Source: AGHT+IFZSdmEUPX7kD3W5d3ANhGnQGfBaHbtzMGU1EThgWvD5DR/EiGeJwfk7caA9pwSTLM1fV0waw==
-X-Received: by 2002:a19:7901:0:b0:507:a650:991d with SMTP id u1-20020a197901000000b00507a650991dmr8345854lfc.58.1701161991449;
-        Tue, 28 Nov 2023 00:59:51 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:eada:f40e:7ab3:2afe? ([2a01:e0a:982:cbb0:eada:f40e:7ab3:2afe])
-        by smtp.gmail.com with ESMTPSA id o10-20020adfcf0a000000b00332cb5185edsm14233807wrj.14.2023.11.28.00.59.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Nov 2023 00:59:50 -0800 (PST)
-Message-ID: <d9dcaa1c-1f4b-4425-ada4-de4197c22bcd@linaro.org>
-Date: Tue, 28 Nov 2023 09:59:50 +0100
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78242198;
+	Tue, 28 Nov 2023 01:01:04 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS5S1cU001271;
+	Tue, 28 Nov 2023 09:00:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=QNUfJP5CeHay+odZ5ulMZu+ozmExmA/WZe/PCTme/DY=;
+ b=l7aFcmLdZI1heAuASu2Q5JmMVorhQXJC5ZuMAvcOm+a+UWqB7gzTyqKn6dd14ZGn0Cl+
+ cr0TfZhRov6FB0+Z52IF5SufTeySWVBhIfQ8imRnw+7olCXcwxCuu2DNLaAbCXVT6dVt
+ J6rNd6TVXjF2SvflFp0ns9jIFbAy++VnNrs3F2vippWXqxGjqTnICYYbeZUQq2wrbqQc
+ ZkN0t9oW+gzlMBE9pwtDQ3hlwlaN56U2EMbP5wU8B9iyhOsXRR2Ht2XdbvKa9yOSc10g
+ 9+bzX7aWleytlrXB1Y0d2RDJipHkLqor5SX6ZM+Pg7ASKJPOJDFCdyP2qnbLURldsOTQ DA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3un04bhpne-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Nov 2023 09:00:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AS90EDZ029313
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Nov 2023 09:00:14 GMT
+Received: from [10.253.11.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
+ 2023 01:00:11 -0800
+Message-ID: <f989335d-5b63-4a2c-b778-5d315ed5874f@quicinc.com>
+Date: Tue, 28 Nov 2023 17:00:08 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,66 +51,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 3/5] ASoC: codec: wcd-mbhc-v2: add support when connected
- behind an USB-C audio mux
-Content-Language: en-US, fr
-To: Mark Brown <broonie@kernel.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
- <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
- alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-0-21d4ad9276de@linaro.org>
- <20231123-topic-sm8650-upstream-wcd939x-codec-v1-3-21d4ad9276de@linaro.org>
- <ZV+ODbskjFe5louc@finisterre.sirena.org.uk>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <ZV+ODbskjFe5louc@finisterre.sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v5 09/10] phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed
+ Gear 5 support for SM8550
+Content-Language: en-US
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <bvanassche@acm.org>, <adrian.hunter@intel.com>, <beanhuo@micron.com>,
+        <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
+        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
+        open list
+	<linux-kernel@vger.kernel.org>
+References: <1700729190-17268-1-git-send-email-quic_cang@quicinc.com>
+ <1700729190-17268-10-git-send-email-quic_cang@quicinc.com>
+ <20231128064721.GJ3088@thinkpad>
+From: Can Guo <quic_cang@quicinc.com>
+In-Reply-To: <20231128064721.GJ3088@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9FxvVzWu_21JcRrCVEpDnKKh4Bybp0IQ
+X-Proofpoint-GUID: 9FxvVzWu_21JcRrCVEpDnKKh4Bybp0IQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-28_07,2023-11-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 suspectscore=0 priorityscore=1501 malwarescore=0 mlxscore=0
+ mlxlogscore=999 bulkscore=0 spamscore=0 adultscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311280070
 
-On 23/11/2023 18:38, Mark Brown wrote:
-> On Thu, Nov 23, 2023 at 03:49:13PM +0100, Neil Armstrong wrote:
+
+
+On 11/28/2023 2:47 PM, Manivannan Sadhasivam wrote:
+> On Thu, Nov 23, 2023 at 12:46:29AM -0800, Can Guo wrote:
+>> On SM8550, two sets of UFS PHY settings are provided, one set is to support
+>> HS-G5, another set is to support HS-G4 and lower gears. The two sets of PHY
+>> settings are programming different values to different registers, mixing
+>> the two sets and/or overwriting one set with another set is definitely not
+>> blessed by UFS PHY designers.
+>>
+>> To add HS-G5 support for SM8550, split the two sets of PHY settings into
+>> their dedicated overlay tables, only the common parts of the two sets of
+>> PHY settings are left in the .tbls.
+>>
+>> Consider we are going to add even higher gear support in future, to avoid
+>> adding more tables with different names, rename the .tbls_hs_g4 and make it
+>> an array, a size of 2 is enough as of now.
+>>
+>> In this case, .tbls alone is not a complete set of PHY settings, so either
+>> tbls_hs_overlay[0] or tbls_hs_overlay[1] must be applied on top of the
+>> .tbls to become a complete set of PHY settings.
+>>
 > 
+> Thanks for the update! This really helps in minimizing the changes for future
+> gears.
+> 
+>> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h     |   2 +
+>>   drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h |   2 +
+>>   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |   9 ++
+>>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 174 ++++++++++++++++++---
+>>   4 files changed, 166 insertions(+), 21 deletions(-)
+>>
+>>   
+> 
+> [...]
+> 
+>> -static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg *cfg)
+>> +static bool qmp_ufs_match_gear_overlay(struct qmp_ufs *qmp, const struct qmp_phy_cfg *cfg, int *i)
+>> +{
+>> +	u32 max_gear, floor_max_gear = cfg->max_supported_gear;
+>> +	bool found = false;
+>> +	int j;
 >> +
->> +	return 0;
->> +}
->> +EXPORT_SYMBOL(wcd_mbhc_typec_report_unplug);
+>> +	for (j = 0; j < NUM_OVERLAY; j ++) {
+>> +		max_gear = cfg->tbls_hs_overlay[j].max_gear;
+>> +
+>> +		if (max_gear == 0)
 > 
-> ASoC is generally EXPORT_SYMBOL_GPL.
+> Is this condition possible for hs_overlay tables?
 
-Bad copy paste from rest of the code... will fix
+Yes, now there are 2 overlays for SM8550, but only one overlay for the 
+rest targets. For those who has only one overlay, this check fits them.
+
+> 
+>> +			continue;
+>> +
+>> +		/* Direct matching, bail */
+>> +		if (qmp->submode == max_gear) {
+>> +			*i = j;
+>> +			return true;
+>> +		}
+>> +
+>> +		/* If no direct matching, the lowest gear is the best matching */
+>> +		if (max_gear < floor_max_gear) {
+> 
+> Can you start the loop from max? If looks odd to set the matching params in the
+> first iteration itself and then checking the next one.
+
+OK, will start from j = NUM_VERLAY - 1; in next version. When I wrote 
+the code, I was not expecting the max is always in the last overlay, 
+they can come in any orders.
+
+> 
+>> +			*i = j;
+>> +			found = true;
+>> +			floor_max_gear = max_gear;
+>> +		}
+>> +	}
+>> +
+>> +	return found;
+>> +}
+>> +
+>> +static int qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg *cfg)
+>>   {
+>> +	bool apply_overlay;
+>> +	int i;
+>> +
+>> +	if (qmp->submode > cfg->max_supported_gear || qmp->submode == 0) {
+>> +		dev_err(qmp->dev, "Invalid PHY submode %u\n", qmp->submode);
+>> +		return -EINVAL;
+>> +	}
+> 
+> This check should be moved to qmp_ufs_set_mode().
+
+OK.
 
 Thanks,
-Neil
+Can Guo.
+
+> 
+> Rest LGTM.
+> 
+> - Mani
+> 
 
