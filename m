@@ -1,57 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-2264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EDDA7FB95F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 12:24:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C8B857FB969
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 12:27:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 398C02821AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 11:24:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 841A6282A9B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 11:27:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C054B4F5F4;
-	Tue, 28 Nov 2023 11:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84F9C4F5FE;
+	Tue, 28 Nov 2023 11:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pCmNuBi1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AQ9fog7f"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12084F5F1;
-	Tue, 28 Nov 2023 11:24:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36231C433C8;
-	Tue, 28 Nov 2023 11:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6536A4F5F4;
+	Tue, 28 Nov 2023 11:27:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8835C433C7;
+	Tue, 28 Nov 2023 11:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701170679;
-	bh=IsNn+ClgvkZ4uETCGvuIForgy3jvNsLeqUnXrX0XuV4=;
+	s=k20201202; t=1701170861;
+	bh=B/yIJwxLaAT5R+A6b54U5ynQZIauIfWW6wfH2GeGYOQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pCmNuBi1q7zW0CbjVsoOuWVtQzzGwuXlPKHnOE7o7cFo3lHpuDDHUQHlT8A6qYUZu
-	 ThI+045PVpaG57yYVqFKBxRA7FB/bkn9kjc2GlmWcP8q0U45AkNTKRdPoNkaM2srAJ
-	 6c8pomjEvMzsvZWY4zG/cFhLbU6oc88VQhianOZMQEZLDC04mWHP+mrTRPMDCvEIwA
-	 3FMj4mja4ZiEzdZ6thgqm2XTYLoJtF0ZVVi2zS6nJQdRy/1qx/WajBeX4CfchHTLlG
-	 heu2ClC6A+ryTfAZJWf6jWpVcE0LMdsY4nKGKDPzM6aioCbw5tBSj4GnsWW1uRqZsM
-	 fiE7KxIfNLqHg==
-Date: Tue, 28 Nov 2023 16:54:09 +0530
+	b=AQ9fog7fgQPvyo6YamBdjTQIaFyIbBgPOndM0nhoIRfGIiMmC8WrLEhQvhnCS0QN2
+	 QSm3tH0BUAoZ/L99xiBkw4FurCM3Hzqa7BmV8TvAbgVUBa0Co10LGM8UrQ7sRGH9NK
+	 W6pszD10ZSyu3bmUx06Lm7rRLpd43MxyYFttVQ+mKq7EtBa4pxDTrXQkVJiYTO9EfN
+	 XgIoEBd7Ih0And8QXM4ursYTyw0wENYnqw0JwgXOZjv7La5tnJ/B4G6ZKWgy7gPLvW
+	 a2fO87YUdYPYAH18baKyMhpmdPhzrQJE0y4O/ldjFDHfvHdFoXsGlYkyUvyAOFeJ6N
+	 pWJgn0s4iP15w==
+Date: Tue, 28 Nov 2023 16:57:31 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Can Guo <quic_cang@quicinc.com>
-Cc: bvanassche@acm.org, adrian.hunter@intel.com, beanhuo@micron.com,
-	avri.altman@wdc.com, junwoo80.lee@samsung.com,
-	martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To: Ziqi Chen <quic_ziqichen@quicinc.com>
+Cc: Can Guo <quic_cang@quicinc.com>, quic_asutoshd@quicinc.com,
+	bvanassche@acm.org, beanhuo@micron.com, avri.altman@wdc.com,
+	junwoo80.lee@samsung.com, martin.petersen@oracle.com,
+	quic_nguyenb@quicinc.com, quic_nitirawa@quicinc.com,
+	quic_rampraka@quicinc.com, linux-scsi@vger.kernel.org,
+	Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
 	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 06/10] scsi: ufs: ufs-qcom: Limit HS-G5 Rate-A to
- hosts with HW version 5
-Message-ID: <20231128112409.GU3088@thinkpad>
-References: <1700729190-17268-1-git-send-email-quic_cang@quicinc.com>
- <1700729190-17268-7-git-send-email-quic_cang@quicinc.com>
- <20231128055520.GG3088@thinkpad>
- <4648b6a0-92cb-4411-9b58-03219962505d@quicinc.com>
- <20231128105506.GO3088@thinkpad>
- <46b24613-cffc-4a87-9232-8b93e09906f1@quicinc.com>
+Subject: Re: [PATCH] scsi: ufs: qcom: move ufs_qcom_host_reset() to
+ ufs_qcom_device_reset()
+Message-ID: <20231128112731.GV3088@thinkpad>
+References: <1698145815-17396-1-git-send-email-quic_ziqichen@quicinc.com>
+ <20231025074128.GA3648@thinkpad>
+ <85d7a1ef-92c4-49ae-afe0-727c1b446f55@quicinc.com>
+ <c6a72c38-aa63-79b8-c784-d753749f7272@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,105 +62,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <46b24613-cffc-4a87-9232-8b93e09906f1@quicinc.com>
+In-Reply-To: <c6a72c38-aa63-79b8-c784-d753749f7272@quicinc.com>
 
-On Tue, Nov 28, 2023 at 06:59:39PM +0800, Can Guo wrote:
+On Tue, Nov 28, 2023 at 03:40:57AM +0800, Ziqi Chen wrote:
 > 
 > 
-> On 11/28/2023 6:55 PM, Manivannan Sadhasivam wrote:
-> > On Tue, Nov 28, 2023 at 03:48:02PM +0800, Can Guo wrote:
-> > > Hi Mani,
-> > > 
-> > > On 11/28/2023 1:55 PM, Manivannan Sadhasivam wrote:
-> > > > On Thu, Nov 23, 2023 at 12:46:26AM -0800, Can Guo wrote:
-> > > > > Qcom UFS hosts, with HW ver 5, can only support up to HS-G5 Rate-A due to
-> > > > > HW limitations. If the HS-G5 PHY gear is used, update host_params->hs_rate
-> > > > > to Rate-A, so that the subsequent power mode changes shall stick to Rate-A.
-> > > > > 
-> > > > > Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> > > > 
-> > > > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > 
-> > > > One question below...
-> > > > 
-> > > > > ---
-> > > > >    drivers/ufs/host/ufs-qcom.c | 18 +++++++++++++++++-
-> > > > >    1 file changed, 17 insertions(+), 1 deletion(-)
-> > > > > 
-> > > > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > > > > index 9613ad9..6756f8d 100644
-> > > > > --- a/drivers/ufs/host/ufs-qcom.c
-> > > > > +++ b/drivers/ufs/host/ufs-qcom.c
-> > > > > @@ -442,9 +442,25 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
-> > > > >    static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
-> > > > >    {
-> > > > >    	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> > > > > +	struct ufs_host_params *host_params = &host->host_params;
-> > > > >    	struct phy *phy = host->generic_phy;
-> > > > > +	enum phy_mode mode;
-> > > > >    	int ret;
-> > > > > +	/*
-> > > > > +	 * HW ver 5 can only support up to HS-G5 Rate-A due to HW limitations.
-> > > > > +	 * If the HS-G5 PHY gear is used, update host_params->hs_rate to Rate-A,
-> > > > > +	 * so that the subsequent power mode change shall stick to Rate-A.
-> > > > > +	 */
-> > > > > +	if (host->hw_ver.major == 0x5) {
-> > > > > +		if (host->phy_gear == UFS_HS_G5)
-> > > > > +			host_params->hs_rate = PA_HS_MODE_A;
-> > > > > +		else
-> > > > > +			host_params->hs_rate = PA_HS_MODE_B;
-> > > > 
-> > > > Is this 'else' part really needed? Since there wouldn't be any 2nd init, I think
-> > > > we can skip that.
-> > > 
-> > > We need it because, even there is only one init, if a UFS3.1 device is
-> > > attached, phy_gear is given as UFS_HS_G4 in ufs_qcom_set_phy_gear(), hence
-> > > we need to put the UFS at HS-G4 Rate B, not Rate A.
-> > > 
+> On 11/22/2023 2:14 PM, Can Guo wrote:
 > > 
-> > But the default hs_rate is PA_HS_MODE_B only and the else condition would be not
-> > needed for the 1st init.
+> > 
+> > On 10/25/2023 3:41 PM, Manivannan Sadhasivam wrote:
+> > > On Tue, Oct 24, 2023 at 07:10:15PM +0800, Ziqi Chen wrote:
+> > > > During PISI test, we found the issue that host Tx still bursting after
+> > > 
+> > > What is PISI test?
 > 
-> You are right, but still we need this in case the UFS device version is not
-> populated, meaning dual init can also happen to SM8550. We need to apply the
-> right hs_rate in case the 2nd init asks for HS_G4.
+> SI measurement.
 > 
 
-Hmm, yeah I missed that corner case. This is fine.
+Please expand it in the patch description.
+
+> > > 
+> > > > H/W reset. Move ufs_qcom_host_reset() to ufs_qcom_device_reset() and
+> > > > reset host before device reset to stop tx burst.
+> > > > 
+> > > 
+> > > device_reset() callback is supposed to reset only the device and not
+> > > the host.
+> > > So NACK for this patch.
+> > 
+> > Agree, the change should come in a more reasonable way.
+> > 
+> > Actually, similar code is already there in ufs_mtk_device_reset() in
+> > ufs-mediatek.c, I guess here is trying to mimic that fashion.
+> > 
+> > This change, from its functionality point of view, we do need it,
+> > because I occasionally (2 out of 10) hit PHY error on lane 0 during
+> > reboot test (in my case, I tried SM8350, SM8450 and SM8550， all same).
+> > 
+> > [    1.911188] [DEBUG]ufshcd_update_uic_error: UECPA:0x80000002
+> > [    1.922843] [DEBUG]ufshcd_update_uic_error: UECDL:0x80004000
+> > [    1.934473] [DEBUG]ufshcd_update_uic_error: UECN:0x0
+> > [    1.944688] [DEBUG]ufshcd_update_uic_error: UECT:0x0
+> > [    1.954901] [DEBUG]ufshcd_update_uic_error: UECDME:0x0
+> > 
+> > I found out that the PHY error pops out right after UFS device gets
+> > reset in the 2nd init. After having this change in place, the PA/DL
+> > errors are gone.
+> 
+> Hi Mani,
+> 
+> There is another way that adding a new vops that call XXX_host_reset() from
+> soc vendor driver. in this way, we can call this vops in core layer without
+> the dependency of device reset.
+> due to we already observed such error and received many same reports from
+> different OEMs, we need to fix it in some way.
+> if you think above way is available, I will update new patch in soon. Or
+> could you give us other suggestion?
+> 
+
+First, please describe the issue in detail. How the issue is getting triggered
+and then justify your change. I do not have access to the bug reports that you
+received.
 
 - Mani
 
-> Thanks,
-> Can Guo.
+> -Ziqi
 > 
 > > 
-> > - Mani
-> > 
-> > > Thanks,
-> > > Can Guo.
+> > Thanks,
+> > Can Guo.
 > > > 
+> > > - Mani
+> > > 
+> > > > Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+> > > > ---
+> > > >   drivers/ufs/host/ufs-qcom.c | 13 +++++++------
+> > > >   1 file changed, 7 insertions(+), 6 deletions(-)
 > > > > 
-> > > > - Mani
+> > > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > > > index 96cb8b5..43163d3 100644
+> > > > --- a/drivers/ufs/host/ufs-qcom.c
+> > > > +++ b/drivers/ufs/host/ufs-qcom.c
+> > > > @@ -445,12 +445,6 @@ static int
+> > > > ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+> > > >       struct phy *phy = host->generic_phy;
+> > > >       int ret;
+> > > > -    /* Reset UFS Host Controller and PHY */
+> > > > -    ret = ufs_qcom_host_reset(hba);
+> > > > -    if (ret)
+> > > > -        dev_warn(hba->dev, "%s: host reset returned %d\n",
+> > > > -                  __func__, ret);
+> > > > -
+> > > >       /* phy initialization - calibrate the phy */
+> > > >       ret = phy_init(phy);
+> > > >       if (ret) {
+> > > > @@ -1709,6 +1703,13 @@ static void ufs_qcom_dump_dbg_regs(struct
+> > > > ufs_hba *hba)
+> > > >   static int ufs_qcom_device_reset(struct ufs_hba *hba)
+> > > >   {
+> > > >       struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> > > > +    int ret = 0;
+> > > > +
+> > > > +    /* Reset UFS Host Controller and PHY */
+> > > > +    ret = ufs_qcom_host_reset(hba);
+> > > > +    if (ret)
+> > > > +        dev_warn(hba->dev, "%s: host reset returned %d\n",
+> > > > +                  __func__, ret);
+> > > >       /* reset gpio is optional */
+> > > >       if (!host->device_reset)
+> > > > -- 
+> > > > 2.7.4
 > > > > 
-> > > > > +	}
-> > > > > +
-> > > > > +	mode = host_params->hs_rate == PA_HS_MODE_B ? PHY_MODE_UFS_HS_B : PHY_MODE_UFS_HS_A;
-> > > > > +
-> > > > >    	/* Reset UFS Host Controller and PHY */
-> > > > >    	ret = ufs_qcom_host_reset(hba);
-> > > > >    	if (ret)
-> > > > > @@ -459,7 +475,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
-> > > > >    		return ret;
-> > > > >    	}
-> > > > > -	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);
-> > > > > +	phy_set_mode_ext(phy, mode, host->phy_gear);
-> > > > >    	/* power on phy - start serdes and phy's power and clocks */
-> > > > >    	ret = phy_power_on(phy);
-> > > > > -- 
-> > > > > 2.7.4
-> > > > > 
-> > > > 
-> > 
+> > > 
 
 -- 
 மணிவண்ணன் சதாசிவம்
