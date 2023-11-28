@@ -1,41 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-2239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA6AA7FB63C
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6A8C7FB63D
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:48:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48C27B20D22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:48:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 00AE91C210CF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:48:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A7B14AF60;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E39644AF92;
 	Tue, 28 Nov 2023 09:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernkonzept.com header.i=@kernkonzept.com header.b="bLCJbpS1"
+	dkim=pass (2048-bit key) header.d=kernkonzept.com header.i=@kernkonzept.com header.b="Pa6RZ/uG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx.kernkonzept.com (serv1.kernkonzept.com [IPv6:2a01:4f8:1c1c:b490::2])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D81E4DD;
-	Tue, 28 Nov 2023 01:48:42 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A290DE;
+	Tue, 28 Nov 2023 01:48:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=kernkonzept.com; s=mx1; h=Cc:To:Content-Transfer-Encoding:Content-Type:
-	MIME-Version:Message-Id:Date:Subject:From:References:In-Reply-To:Reply-To:
-	Content-ID:Content-Description;
-	bh=qqD5FhYjTlrMhvo9H9Ud7tOWyJdz/L1HRDU0aJZunQs=; b=bLCJbpS15T6e6UbeFBQuRcwcAy
-	WRIkpCQVF1x0WSK/YCENnhXMk5gd31wDctSwhTOMPwgWm8wdgga2k2Cz2k5PbOLJ4HM7Y62kzWK1I
-	XZ+NPKRxMQx1F1F3Ph2aAo4nfADdjz8BY1w+GXO31WTcxzz4nBa5IffczTRTskGkO+Y39E87yC0dv
-	qtJ6OrL0biub8GhYcwg28WfQK+N5GXoOml6Bpfoa0ZyRFnJSlhwIGSpjV/NdIxwFhrxfV5+gji3Ld
-	xegF/08FluSg6sK9HoB82ua2/1qigPzLJUfsmXS9FPvhf0RuKCWf03TNfQCoZE3x2xuEuW2lyu2t6
-	iM75m4UQ==;
+	d=kernkonzept.com; s=mx1; h=Cc:To:In-Reply-To:References:Message-Id:
+	Content-Transfer-Encoding:Content-Type:MIME-Version:Subject:Date:From:
+	Reply-To:Content-ID:Content-Description;
+	bh=oHIdPeCtrx4tEmu1lgnT9TOC5wwT1XRZku7i/59y90A=; b=Pa6RZ/uGw1NL1tis/Y6Zzpxpbx
+	sAOdm8i3M32HbbkJ2TVFtpo0OWA9kqdQNw/0yqDyUZuxfWZRXiwcDFh+GxeVKqauMWCDczbu4dJEg
+	LZA5ehmlcMaOKneJEzIIoQaOCFZ9DjlPj/vqYu5XexB49dLdV9kYWPPPGSiILku7+4faut/rUOHxV
+	JCpLL1arLmGUEGtvxmQ97MO8pJlIUWcISl4i9vofMkJaZC27CqQ+7I6cpVKN4TcA7sJzk/UvwJ4II
+	sMtvPKOGdbZ7Q7eFRgeIoeNrRHRjYDE/iVCqA0NG2uDEKcZxI27kutyzjYFcnpmxpnatCDYK0VnPc
+	9nZkdM+g==;
 Received: from [10.22.3.24] (helo=serv1.dd1.int.kernkonzept.com)
 	by mx.kernkonzept.com with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
-	id 1r7uhr-008Pi6-2D;
-	Tue, 28 Nov 2023 10:48:39 +0100
+	id 1r7uht-008Pi6-0Q;
+	Tue, 28 Nov 2023 10:48:41 +0100
 From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: [PATCH 0/3] i2c: qup: Allow scaling power domains and interconnect
-Date: Tue, 28 Nov 2023 10:48:34 +0100
-Message-Id: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
+Date: Tue, 28 Nov 2023 10:48:35 +0100
+Subject: [PATCH 1/3] dt-bindings: i2c: qcom,i2c-qup: Document power-domains
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -44,9 +43,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHK3ZWUC/x3MQQqAIBBA0avErBtQA9GuEi1Kx5qNmVIE0t2Tl
- m/xf4VCmanA2FXIdHPhIzbIvgO3L3EjZN8MSqhBSqGRlcPzSujvUHB1WpCy1nhvoCUpU+Dn303
- z+35PDgNQXgAAAA==
+Message-Id: <20231128-i2c-qup-dvfs-v1-1-59a0e3039111@kernkonzept.com>
+References: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
+In-Reply-To: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
 To: Wolfram Sang <wsa@kernel.org>
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
@@ -58,30 +57,57 @@ Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 X-Mailer: b4 0.12.4
 
-Make it possible to scale performance states of the power domain and
-interconnect of the I2C QUP controller.
+Similar to qcom,geni-i2c, for i2c-qup we need to vote for performance
+states on the VDDCX power domain to ensure that required clock rates
+can be generated correctly.
 
-This is necessary to guarantee performance with power management
-enabled. Otherwise these resources might run at minimal performance
-state which is not sufficient for certain workloads.
+I2C is typically used with a fixed clock rate, so a single required-opp
+is sufficient without a full OPP table (unlike spi-qup for example).
 
 Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 ---
-Stephan Gerhold (3):
-      dt-bindings: i2c: qcom,i2c-qup: Document power-domains
-      dt-bindings: i2c: qup: Document interconnects
-      i2c: qup: Vote for interconnect bandwidth to DRAM
+ Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
- .../devicetree/bindings/i2c/qcom,i2c-qup.yaml      | 14 +++++++++
- drivers/i2c/busses/i2c-qup.c                       | 36 ++++++++++++++++++++++
- 2 files changed, 50 insertions(+)
----
-base-commit: b85ea95d086471afb4ad062012a4d73cd328fa86
-change-id: 20231106-i2c-qup-dvfs-bc60e2998dd8
+diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
+index f43947514d48..fc3077a7af0d 100644
+--- a/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
++++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml
+@@ -52,9 +52,15 @@ properties:
+       - const: default
+       - const: sleep
+ 
++  power-domains:
++    maxItems: 1
++
+   reg:
+     maxItems: 1
+ 
++  required-opps:
++    maxItems: 1
++
+ required:
+   - compatible
+   - clock-names
+@@ -68,6 +74,7 @@ examples:
+   - |
+     #include <dt-bindings/clock/qcom,gcc-msm8998.h>
+     #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
+ 
+     i2c@c175000 {
+         compatible = "qcom,i2c-qup-v2.2.1";
+@@ -82,6 +89,8 @@ examples:
+         pinctrl-names = "default", "sleep";
+         pinctrl-0 = <&blsp1_i2c1_default>;
+         pinctrl-1 = <&blsp1_i2c1_sleep>;
++        power-domains = <&rpmpd MSM8909_VDDCX>;
++        required-opps = <&rpmpd_opp_svs_krait>;
+         clock-frequency = <400000>;
+ 
+         #address-cells = <1>;
 
-Best regards,
 -- 
-Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Kernkonzept GmbH at Dresden, Germany, HRB 31129, CEO Dr.-Ing. Michael Hohmuth
+2.39.2
 
 
