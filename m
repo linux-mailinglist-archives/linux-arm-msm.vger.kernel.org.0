@@ -1,198 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-2224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2283B7FB51E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:01:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAC147FB525
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:02:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A3DD11F20F85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:01:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27AE61C21046
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:02:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17FCE199CA;
-	Tue, 28 Nov 2023 09:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3467932C6E;
+	Tue, 28 Nov 2023 09:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l7aFcmLd"
+	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="NGkt5BpA";
+	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="8/1mIY83"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78242198;
-	Tue, 28 Nov 2023 01:01:04 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS5S1cU001271;
-	Tue, 28 Nov 2023 09:00:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=QNUfJP5CeHay+odZ5ulMZu+ozmExmA/WZe/PCTme/DY=;
- b=l7aFcmLdZI1heAuASu2Q5JmMVorhQXJC5ZuMAvcOm+a+UWqB7gzTyqKn6dd14ZGn0Cl+
- cr0TfZhRov6FB0+Z52IF5SufTeySWVBhIfQ8imRnw+7olCXcwxCuu2DNLaAbCXVT6dVt
- J6rNd6TVXjF2SvflFp0ns9jIFbAy++VnNrs3F2vippWXqxGjqTnICYYbeZUQq2wrbqQc
- ZkN0t9oW+gzlMBE9pwtDQ3hlwlaN56U2EMbP5wU8B9iyhOsXRR2Ht2XdbvKa9yOSc10g
- 9+bzX7aWleytlrXB1Y0d2RDJipHkLqor5SX6ZM+Pg7ASKJPOJDFCdyP2qnbLURldsOTQ DA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3un04bhpne-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 09:00:15 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AS90EDZ029313
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 09:00:14 GMT
-Received: from [10.253.11.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
- 2023 01:00:11 -0800
-Message-ID: <f989335d-5b63-4a2c-b778-5d315ed5874f@quicinc.com>
-Date: Tue, 28 Nov 2023 17:00:08 +0800
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A702DE4;
+	Tue, 28 Nov 2023 01:02:09 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1701162126; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=r6eAu2ggbZSwoSOSC2LB9/TsOtVSDFGz1Yn6exqUJQ0DHNrZcDZFk2KMB6Pf2oxC4i
+    BD9rNHK1hh72OUMXPKLavH9XGEbp8ZBmEli83jQTqYUvLSva2U2lgNj9pIX3HuMVJt+2
+    qUz6BBCiePvo5XSEigRXFjYsQHZ3rLlZvVPXMb8P5gsWGcddPchoOkSsj1QNmgaWew8G
+    6c5Ml6V5mmIOeUMjXSAZUPm8rCOv7yZZf2k1BAnlxms0I+mBi9T87BkWQnq6AU/3Zjn5
+    bCpGLFHdB0BpP9+jgJ/ZYgEWUPJQz3LSIEqXVujdRK4OG77rNrCb8vS78Cn7rkaFkelM
+    VQ8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1701162126;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=njnHQBlxJazLWcAbW1gqa8mgblbBdF2CRCqEZQfBIIw=;
+    b=qzWaaTlBGfcOt2NSli9uC30OIHhTm7Et3bwWlm5HYltZczHIohrUpFsbELgy0mQfkS
+    WLyMz3zcRmaMElchm3RwfdjsZjVb+DeFjRQpFLfanu2K1+Ee6n52PZX/sHVTsBBPg6DY
+    P5KBI2rUPZEwXI181zMZX6FcG0zFldP3BDmfAbL6LD5gWXt6A/XYrNilOalrEWN1yRFr
+    nqPOIVRn30AqUGijCfS29EyfgvhiOP/EmYVHWyrs4QT5OxcZpJv9Y6jmDOwHRCn0negL
+    1TTkuctz5ZvQSFL1jWE5UVbC2TNr894f2i30jcJhcjDaLQfuF91h5IJQ0/+8Ve/FuZfH
+    58RA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1701162126;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=njnHQBlxJazLWcAbW1gqa8mgblbBdF2CRCqEZQfBIIw=;
+    b=NGkt5BpAHMAwG5ZGf2LpEqrMuOEjWLA6KVKLpltw4TzVMPa9HVzLWEtcKSBfqWrujV
+    qBOb4Dr8yy4PqS7SnkqExRYuFSIIElBJulaur0QNIREh0xy5LNNScHRpV0Ovj65xoe2R
+    MZmoW4OWEBqr1uEslj3AZKcxky/jhP6NL0nhANSgY1EUHpY5zIdu5MsqZ7ghvg2N4jdy
+    fYEqXZ7s2chHCM17/Dx78JTKLrSMGVOScX5rMWRHytabBb4IhYkYLHxhEzbiqRhMJSon
+    MUFdLiI8i8a9xMdgl7S9Jd5vbf79Nk1Dk69X9amD5LK4afivnJjWMjz0ylAWKLMMoOYB
+    UifQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1701162126;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=njnHQBlxJazLWcAbW1gqa8mgblbBdF2CRCqEZQfBIIw=;
+    b=8/1mIY83/yDD+zTLGU3PquPNdvq5bT+5tGhBNu6pRU7uN+7Y0kocxGPDSnyY8/AxHp
+    urFKBT2uGou13TLtIEBw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.9.1 DYNA|AUTH)
+    with ESMTPSA id t3efe7zAS925ktT
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 28 Nov 2023 10:02:05 +0100 (CET)
+Date: Tue, 28 Nov 2023 10:01:47 +0100
+From: Stephan Gerhold <stephan@gerhold.net>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/8] arm64: dts: qcom: add initial SM8650 dtsi
+Message-ID: <ZWWse_i-wjSTH8O4@gerhold.net>
+References: <20231124-topic-sm8650-upstream-dt-v4-0-e402e73cc5f0@linaro.org>
+ <20231124-topic-sm8650-upstream-dt-v4-2-e402e73cc5f0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/10] phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed
- Gear 5 support for SM8550
-Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <bvanassche@acm.org>, <adrian.hunter@intel.com>, <beanhuo@micron.com>,
-        <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
-        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK" <linux-phy@lists.infradead.org>,
-        open list
-	<linux-kernel@vger.kernel.org>
-References: <1700729190-17268-1-git-send-email-quic_cang@quicinc.com>
- <1700729190-17268-10-git-send-email-quic_cang@quicinc.com>
- <20231128064721.GJ3088@thinkpad>
-From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <20231128064721.GJ3088@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231124-topic-sm8650-upstream-dt-v4-2-e402e73cc5f0@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 9FxvVzWu_21JcRrCVEpDnKKh4Bybp0IQ
-X-Proofpoint-GUID: 9FxvVzWu_21JcRrCVEpDnKKh4Bybp0IQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-28_07,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 suspectscore=0 priorityscore=1501 malwarescore=0 mlxscore=0
- mlxlogscore=999 bulkscore=0 spamscore=0 adultscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311280070
 
+On Fri, Nov 24, 2023 at 10:20:39AM +0100, Neil Armstrong wrote:
+> Add initial DTSI for the Qualcomm SM8650 platform,
+> only contains nodes which doesn't depend on interconnect.
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 2439 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 2439 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> new file mode 100644
+> index 000000000000..b0a9ca53d58e
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -0,0 +1,2439 @@
+> +[...]
+> +		timer@17420000 {
+> +			compatible = "arm,armv7-timer-mem";
+> +			reg = <0 0x17420000 0 0x1000>;
+> +
+> +			ranges = <0 0 0 0x20000000>;
+> +			#address-cells = <1>;
+> +			#size-cells = <1>;
+> +
+> +			frame@17421000 {
+> +				reg = <0x17421000 0x1000>,
+> +				      <0x17422000 0x1000>;
+> +
+> +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+> +					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				frame-number = <0>;
+> +			};
+> +
+> +			frame@17423000 {
+> +				reg = <0x17423000 0x1000>;
+> +
+> +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				frame-number = <1>;
+> +
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17425000 {
+> +				reg = <0x17425000 0x1000>;
+> +
+> +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				frame-number = <2>;
+> +
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17427000 {
+> +				reg = <0x17427000 0x1000>;
+> +
+> +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				frame-number = <3>;
+> +
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@17429000 {
+> +				reg = <0x17429000 0x1000>;
+> +
+> +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				frame-number = <4>;
+> +
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@1742b000 {
+> +				reg = <0x1742b000 0x1000>;
+> +
+> +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				frame-number = <5>;
+> +
+> +				status = "disabled";
+> +			};
+> +
+> +			frame@1742d000 {
+> +				reg = <0x1742d000 0x1000>;
+> +
+> +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +				frame-number = <6>;
+> +
+> +				status = "disabled";
+> +			};
+> +		};
 
+Nitpick: Personally I feel the empty lines between each property here
+are a bit overly verbose. It would be better readable without them.
+Might be personal preference though :-)
 
-On 11/28/2023 2:47 PM, Manivannan Sadhasivam wrote:
-> On Thu, Nov 23, 2023 at 12:46:29AM -0800, Can Guo wrote:
->> On SM8550, two sets of UFS PHY settings are provided, one set is to support
->> HS-G5, another set is to support HS-G4 and lower gears. The two sets of PHY
->> settings are programming different values to different registers, mixing
->> the two sets and/or overwriting one set with another set is definitely not
->> blessed by UFS PHY designers.
->>
->> To add HS-G5 support for SM8550, split the two sets of PHY settings into
->> their dedicated overlay tables, only the common parts of the two sets of
->> PHY settings are left in the .tbls.
->>
->> Consider we are going to add even higher gear support in future, to avoid
->> adding more tables with different names, rename the .tbls_hs_g4 and make it
->> an array, a size of 2 is enough as of now.
->>
->> In this case, .tbls alone is not a complete set of PHY settings, so either
->> tbls_hs_overlay[0] or tbls_hs_overlay[1] must be applied on top of the
->> .tbls to become a complete set of PHY settings.
->>
-> 
-> Thanks for the update! This really helps in minimizing the changes for future
-> gears.
-> 
->> Signed-off-by: Can Guo <quic_cang@quicinc.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h     |   2 +
->>   drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h |   2 +
->>   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |   9 ++
->>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 174 ++++++++++++++++++---
->>   4 files changed, 166 insertions(+), 21 deletions(-)
->>
->>   
-> 
-> [...]
-> 
->> -static void qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg *cfg)
->> +static bool qmp_ufs_match_gear_overlay(struct qmp_ufs *qmp, const struct qmp_phy_cfg *cfg, int *i)
->> +{
->> +	u32 max_gear, floor_max_gear = cfg->max_supported_gear;
->> +	bool found = false;
->> +	int j;
->> +
->> +	for (j = 0; j < NUM_OVERLAY; j ++) {
->> +		max_gear = cfg->tbls_hs_overlay[j].max_gear;
->> +
->> +		if (max_gear == 0)
-> 
-> Is this condition possible for hs_overlay tables?
+> +[...]
+> +	timer {
+> +		compatible = "arm,armv8-timer";
+> +
+> +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+> +			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
 
-Yes, now there are 2 overlays for SM8550, but only one overlay for the 
-rest targets. For those who has only one overlay, this check fits them.
+I'm pretty sure GIC_CPU_MASK_SIMPLE() is only valid & used on GICv2.
+Unlike arm,gic.yaml, arm,gic-v3.yaml doesn't mention "bits[15:8] PPI
+interrupt cpu mask". Also see e.g. commit 4a92b6d75bab ("arm64: dts:
+msm8996: Fix wrong use of GIC_CPU_MASK_SIMPLE()").
 
-> 
->> +			continue;
->> +
->> +		/* Direct matching, bail */
->> +		if (qmp->submode == max_gear) {
->> +			*i = j;
->> +			return true;
->> +		}
->> +
->> +		/* If no direct matching, the lowest gear is the best matching */
->> +		if (max_gear < floor_max_gear) {
-> 
-> Can you start the loop from max? If looks odd to set the matching params in the
-> first iteration itself and then checking the next one.
-
-OK, will start from j = NUM_VERLAY - 1; in next version. When I wrote 
-the code, I was not expecting the max is always in the last overlay, 
-they can come in any orders.
-
-> 
->> +			*i = j;
->> +			found = true;
->> +			floor_max_gear = max_gear;
->> +		}
->> +	}
->> +
->> +	return found;
->> +}
->> +
->> +static int qmp_ufs_init_registers(struct qmp_ufs *qmp, const struct qmp_phy_cfg *cfg)
->>   {
->> +	bool apply_overlay;
->> +	int i;
->> +
->> +	if (qmp->submode > cfg->max_supported_gear || qmp->submode == 0) {
->> +		dev_err(qmp->dev, "Invalid PHY submode %u\n", qmp->submode);
->> +		return -EINVAL;
->> +	}
-> 
-> This check should be moved to qmp_ufs_set_mode().
-
-OK.
+Would be also good to check if any existing DTs have introduced this
+incorrectly again since then.
 
 Thanks,
-Can Guo.
-
-> 
-> Rest LGTM.
-> 
-> - Mani
-> 
+Stephan
 
