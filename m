@@ -1,62 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-2227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FCF47FB53E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:09:41 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6EF87FB54A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:12:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0EA5D2824ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:09:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49C0AB20E88
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 09:12:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC4FD3A8E4;
-	Tue, 28 Nov 2023 09:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6AC43C6B9;
+	Tue, 28 Nov 2023 09:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="StSWHPxl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BytLajBi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 230901B8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 01:09:33 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-332fd78fa9dso1362086f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 01:09:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701162571; x=1701767371; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ruBsZSrQwJWh8DMQKbh5iJ2P0cf6QJW5qv9vaOwvUVQ=;
-        b=StSWHPxlD8xl1n8zHQSoJ05SBS2PVfTXqBTQiCoHMEp6QVWWjLwmt4uGDRrXbtypv3
-         cpUS3aspuWjOqmapMSqpqISj5lExge3Cvhs11caNLgZTSjfEiTxirSKxgmynFBHM/q3b
-         EU2VXWWxkLa5kRt50v0lfC9mnRil/PFjR9jzl7MORTI12yxrVw/LiD9oS116UTNtWuke
-         KZUru+13JFaXvChyc992I+kI9e+FWwl0v9isURkyU5fuTCELDgnagdNZo/5fvh9wqg3g
-         nh7lUD1wl0Un5gwQuXTSduDkULhn03IGiGx3DbWPdGRRbJQuCs1PI2RNRV3FfTHzeOPo
-         d0NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701162571; x=1701767371;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ruBsZSrQwJWh8DMQKbh5iJ2P0cf6QJW5qv9vaOwvUVQ=;
-        b=bk6p6uudleWm7WDMnG2scyxJT0ojrHSVsV4H1pHKRZKUaFBGsATTnJz8lTJSI++GZl
-         vjhORhEoXg890Wr/z3z+AelBrH4q2m14KEDcvaA2msQnjPSvKMb2XdjzbgsIB8DLvjBb
-         mFYFI2hcjQb9vPcKhGblDUC1GUHWdRiMprFjLhmDF1tmi1IyPKqlfwpm3AZ9OqHL+82V
-         L8X+r/SSN896PgXdBKMSxBnQsyC90E+2Ip5vuZAIlaVn2TXMGk3QYtPiF9iHPlbWKlOk
-         nZnWPTTFwG+Cgcg/Fbhf5tJLEoQAdhnMlFkjhAC603t1h0eLuVXkpwtIccwd6m72jAhL
-         MG7w==
-X-Gm-Message-State: AOJu0YyuL5MotlEgHDXR3ppsm7hJVxr0Awj3X4CMBQWviqKrLz3So/3u
-	5gnuJ84RrficDI+MguoRWuc9ew==
-X-Google-Smtp-Source: AGHT+IF6HJ4YuzplSZALPIeQl8QyI70POmJ3I9zmAHJ1JutBV7HT0g8vyHKladOrQSsRpog4FtczQw==
-X-Received: by 2002:adf:e282:0:b0:333:829:e55c with SMTP id v2-20020adfe282000000b003330829e55cmr2436057wri.10.1701162571548;
-        Tue, 28 Nov 2023 01:09:31 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:eada:f40e:7ab3:2afe? ([2a01:e0a:982:cbb0:eada:f40e:7ab3:2afe])
-        by smtp.gmail.com with ESMTPSA id e2-20020a5d4e82000000b0032d893d8dc8sm14369433wru.2.2023.11.28.01.09.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Nov 2023 01:09:31 -0800 (PST)
-Message-ID: <ee3baf94-4158-4440-8d89-de39fe0aa2f3@linaro.org>
-Date: Tue, 28 Nov 2023 10:09:29 +0100
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 672D7AB;
+	Tue, 28 Nov 2023 01:12:28 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS8xC52028057;
+	Tue, 28 Nov 2023 09:12:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=AqfsZhfJIV0ah8Mcq2ahxjWlSq2ikPRbgAL9ct0yCb4=;
+ b=BytLajBiDBIkAvT8ar4pqExWzyliSVFA3VGWJxDU4m9cU+4SbYWXcviucRqHk/riR+w/
+ jR+/9kGqB6jRDAoElZba5BzEeN+gGU4yWTQgI8WqW3hhN085W+pJMYwFznMl0UL77LUh
+ woPZ/eMIe4IeKetBDYAa/Ze48iCGFmvfZwqiJNAYhlv/tQMr82k3EoxybJCzlYQYSIa6
+ +8A5s4rN9xGhEyJM/TR62PaTZUsRp/M6n3X3OwTTatpjzQe1Cq5BybMk46WjC14b1kD5
+ L5k9dlz02k3IfsSQNcCI65PD7ecEJzX7yFG75WBglE7q/9Y0uI/NLwxU2Zq9wjMVH9zG yg== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3umt4qjx6h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Nov 2023 09:12:06 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AS9C5Dd016438
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Nov 2023 09:12:05 GMT
+Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
+ 2023 01:12:03 -0800
+Message-ID: <a86228f5-c1ae-4afe-87bd-5144633a9601@quicinc.com>
+Date: Tue, 28 Nov 2023 17:12:00 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,132 +51,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 4/5] ASoC: codecs: Add WCD939x Soundwire slave driver
-Content-Language: en-US, fr
-To: Mark Brown <broonie@kernel.org>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood
- <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
- alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231123-topic-sm8650-upstream-wcd939x-codec-v1-0-21d4ad9276de@linaro.org>
- <20231123-topic-sm8650-upstream-wcd939x-codec-v1-4-21d4ad9276de@linaro.org>
- <ZV+PTynfbRmF0trU@finisterre.sirena.org.uk>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <ZV+PTynfbRmF0trU@finisterre.sirena.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 0/2] freezer,sched: do not restore saved_state of a thawed
+ task
+To: Elliot Berman <quic_eberman@quicinc.com>,
+        "Rafael J. Wysocki"
+	<rafael@kernel.org>, Pavel Machek <pavel@ucw.cz>,
+        Ingo Molnar
+	<mingo@kernel.org>,
+        "Peter Zijlstra (Intel)" <peterz@infradead.org>
+CC: <linux-arm-msm@vger.kernel.org>,
+        Pavan Kondeti
+	<quic_pkondeti@quicinc.com>, <linux-pm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Abhijeet Dharmapurikar
+	<quic_adharmap@quicinc.com>
+References: <20231120-freezer-state-multiple-thaws-v1-0-f2e1dd7ce5a2@quicinc.com>
+From: "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
+In-Reply-To: <20231120-freezer-state-multiple-thaws-v1-0-f2e1dd7ce5a2@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: tb538e39X4vhm4jHaQHO2TqEhx3aRRHW
+X-Proofpoint-GUID: tb538e39X4vhm4jHaQHO2TqEhx3aRRHW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-28_08,2023-11-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 malwarescore=0 bulkscore=0 mlxlogscore=831 mlxscore=0
+ phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311280071
 
-Hi,
-
-On 23/11/2023 18:43, Mark Brown wrote:
-> On Thu, Nov 23, 2023 at 03:49:14PM +0100, Neil Armstrong wrote:
->> Add Soundwire Slave driver for the WCD9390/WCD9395 Audio Codec.
+On 11/21/2023 1:36 AM, Elliot Berman wrote:
+> This series applies couple fixes to commit 8f0eed4a78a8 ("freezer,sched:
+> Use saved_state to reduce some spurious wakeups") which was found while
+> testing with legacy cgroup freezer. My original testing was only with
+> system-wide freezer. We found that thaw_task could be called on a task
+> which was already frozen. Prior to commit 8f0eed4a78a8 ("freezer,sched:
+> Use saved_state to reduce some spurious wakeups"), this wasn't an issue
+> as kernel would try to wake up TASK_FROZEN, which wouldn't match the
+> thawed task state, and no harm done to task. After commit 8f0eed4a78a8
+> ("freezer,sched: Use saved_state to reduce some spurious wakeups"), it
+> was possible to overwrite the state of thawed task.
 > 
->> The WCD9390/WCD9395 Soundwire Slaves will be used by the
+> To: Rafael J. Wysocki <rafael@kernel.org>
+> To: Pavel Machek <pavel@ucw.cz>
+> To: Ingo Molnar <mingo@kernel.org>
+> To: Peter Zijlstra (Intel) <peterz@infradead.org>
+> Cc:  <linux-arm-msm@vger.kernel.org>
+> Cc: Pavan Kondeti <quic_pkondeti@quicinc.com>
+> Cc: Aiqun Yu (Maria) <quic_aiquny@quicinc.com>
+> Cc:  <linux-pm@vger.kernel.org>
+> Cc:  <linux-kernel@vger.kernel.org>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+Shall we add Fixed tag and Cc: stable@vger.kernel.org ?
+Since it is fixing a stable user thread hung issue.
 > 
-> Please avoid using outdated terminology, "device" is probably a good
-> alternative here.  There are some usages in APIs that need to be updated
-> but still, good to avoid where possible.
-
-Sure, I simply kept the current Soundwire kernel terminologies,
-I'll change it to Device.
-
+> Originally sent to only linux-arm-msm, resending to correct authors.
+> - Link to v1: https://lore.kernel.org/r/20231120-freezer-state-multiple-thaws-v1-0-a4c453f50745@quicinc.com
 > 
->> +static struct wcd939x_sdw_ch_info wcd939x_sdw_tx_ch_info[] = {
->> +	WCD_SDW_CH(WCD939X_ADC1, WCD939X_ADC_1_4_PORT, BIT(0)),
->> +	WCD_SDW_CH(WCD939X_ADC2, WCD939X_ADC_1_4_PORT, BIT(1)),
->> +	WCD_SDW_CH(WCD939X_ADC3, WCD939X_ADC_1_4_PORT, BIT(2)),
->> +	WCD_SDW_CH(WCD939X_ADC4, WCD939X_ADC_1_4_PORT, BIT(3)),
->> +	// TOFIX support ADC3/4 & DMIC0/1 on port 2
->> +	//WCD_SDW_CH(WCD939X_ADC3, WCD939X_ADC_DMIC_1_2_PORT, BIT(0)),
->> +	//WCD_SDW_CH(WCD939X_ADC4, WCD939X_ADC_DMIC_1_2_PORT, BIT(1)),
->> +	//WCD_SDW_CH(WCD939X_DMIC0, WCD939X_ADC_DMIC_1_2_PORT, BIT(2)),
->> +	//WCD_SDW_CH(WCD939X_DMIC1, WCD939X_ADC_DMIC_1_2_PORT, BIT(3)),
+> ---
+> Elliot Berman (2):
+>        freezer,sched: do not restore saved_state of a thawed task
+>        freezer,sched: clean saved_state when restoring it during thaw
 > 
-> Why are these commented out?
-
-Future feature support, will remove and add those on my internal TODO list...
-
+>   kernel/freezer.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
+> ---
+> base-commit: 6d7e4782bcf549221b4ccfffec2cf4d1a473f1a3
+> change-id: 20231108-freezer-state-multiple-thaws-7a3a8d9dadb3
 > 
->> +static int wcd9390_interrupt_callback(struct sdw_slave *slave,
->> +				      struct sdw_slave_intr_status *status)
->> +{
->> +	struct wcd939x_sdw_priv *wcd = dev_get_drvdata(&slave->dev);
->> +	struct irq_domain *slave_irq = wcd->slave_irq;
->> +	u32 sts1, sts2, sts3;
->> +
->> +	do {
->> +		handle_nested_irq(irq_find_mapping(slave_irq, 0));
->> +		regmap_read(wcd->regmap, WCD939X_DIGITAL_INTR_STATUS_0, &sts1);
->> +		regmap_read(wcd->regmap, WCD939X_DIGITAL_INTR_STATUS_1, &sts2);
->> +		regmap_read(wcd->regmap, WCD939X_DIGITAL_INTR_STATUS_2, &sts3);
->> +
->> +	} while (sts1 || sts2 || sts3);
->> +
->> +	return IRQ_HANDLED;
->> +}
-> 
-> We do this in the other Qualcomm drivers but it doesn't seem ideal to
-> just ignore the interrupts.
+> Best regards,
 
-It seems we simply ignore IRQs that are not mapped in the regmap_irq,
-what would be the ideal way to handle this ?
-
-> 
->> +static int wcd939x_sdw_component_bind(struct device *dev, struct device *master,
->> +				      void *data)
->> +{
->> +	return 0;
->> +}
->> +
->> +static void wcd939x_sdw_component_unbind(struct device *dev,
->> +					 struct device *master, void *data)
->> +{
->> +}
->> +
->> +static const struct component_ops wcd939x_sdw_component_ops = {
->> +	.bind = wcd939x_sdw_component_bind,
->> +	.unbind = wcd939x_sdw_component_unbind,
->> +};
-> 
-> Do these need to be provided if they can legitimately be empty?
-
-AFAIK yes, component code will crash if those are not defined.
-I'll add a comment explaining whey they are no-op.
-
-Thanks,
-Neil
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
 
 
