@@ -1,121 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-2177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1057C7FAFD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 03:03:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD06E7FAFDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 03:06:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3AFB91C20905
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 02:03:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 97B81281608
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 02:06:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BFAE4681;
-	Tue, 28 Nov 2023 02:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D01E015CE;
+	Tue, 28 Nov 2023 02:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ap1YtmNq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GCpOggXs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AB591A5;
-	Mon, 27 Nov 2023 18:03:04 -0800 (PST)
-Received: by mail-qk1-x72e.google.com with SMTP id af79cd13be357-778ac9c898dso228324285a.0;
-        Mon, 27 Nov 2023 18:03:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701136983; x=1701741783; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nydx7/1u9y7SOcr8uGxNgKtY8IJYNLdrwjHk8OM0u2E=;
-        b=ap1YtmNq4fu7t+BZPCiQFsoFjSmfcyOMHN0IG4illoMfmjntNujodz/28Q+8FKp/P8
-         fK6X+27CpiFiJ9lgbLFK2IsA4k8wAv6sPoaMF2inoJ99krtrO+qKxBCO++vQzFs6VgSi
-         j7cAB+vqMBh80xmJHeo0p92dJhkX108lmCndklbgaoMtegxI072ewLlnErAsUYJSMKTZ
-         JDqypjWBi5o/5iiVoy70s3JK24yseF2a5ndBEj8nsMrgQ9AuxjTxThvcTdctzGuEfBaK
-         GgmLE+941TWqNNi459Nyi8vwlqke4y8otQWXmHavK6jePbm4q6NFalrgZnH6orMePWH4
-         zU2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701136983; x=1701741783;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Nydx7/1u9y7SOcr8uGxNgKtY8IJYNLdrwjHk8OM0u2E=;
-        b=q9mxJurGsrThEvo6dyKUnQR0Jm/FMydaJKHPkFMSLqUkLv7XQwJDCD3zDZ2Hkq0WR0
-         JQTB59bA4hhqAfl0Kh03l/mtfBr3FNw97cVOp7HDKducZ7y1J1day1K2GaA0fG//IrC0
-         84uRLhyismgQJveMNQFd+JZcSgaEeU+19TTlPZIuMwwxK5c/hJPNZ4NxTrO/wABQ83om
-         enbr6SWnc8JZ2p+XeANdo2QWU2qQRRHZXqliSC9qAdzpnbTPKg80VlOpN6UlJyhpo47Y
-         KV+U+sgyUDqk7mEO4QHM1QlDmGTtNPv3ar5Vfx55LbuRppFs1StksUSuucKkxicpfE0I
-         5Ftw==
-X-Gm-Message-State: AOJu0Yzlfb8wKokE3ZQ/Az4mYHO19f8b04Qm3SIKC3akPYpt3R9M6SPu
-	Vh/eCGBfhbTCCr4w6TWth18=
-X-Google-Smtp-Source: AGHT+IGNRRy7NLesOZPy2/LBns2jVN5tw+C3Rz05L4f/QeE/oLMazsKIsT7sqjl18j5ZuQ0RcmCaGg==
-X-Received: by 2002:ad4:5042:0:b0:66d:1219:f2ab with SMTP id m2-20020ad45042000000b0066d1219f2abmr13100508qvq.8.1701136983507;
-        Mon, 27 Nov 2023 18:03:03 -0800 (PST)
-Received: from localhost ([2607:fea8:529e:7800::a768])
-        by smtp.gmail.com with ESMTPSA id jm8-20020ad45ec8000000b0067a2c103711sm2739749qvb.25.2023.11.27.18.03.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Nov 2023 18:03:02 -0800 (PST)
-From: Richard Acayan <mailingradian@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org
-Cc: Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH] pinctrl: qcom: fail to retrieve configuration from invalid pin groups
-Date: Mon, 27 Nov 2023 21:02:04 -0500
-Message-ID: <20231128020202.728156-3-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49D2FD0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 27 Nov 2023 18:05:58 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AS0uuIR028511;
+	Tue, 28 Nov 2023 02:05:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=SVeXcK+Nv4n4xxLY2e9Af6K/gI+CEi7+y1nYoGbbgUg=;
+ b=GCpOggXsufpb5fekZhHet+LBWtPTOWNzZOtBLpAX8pUxriuLTb71Xtr6o8Qd5RVmzfWz
+ 3Gj5P451ZL+RD82fhEu7+NrCmdTAFvHCH7hGnq3ByIS35Fx4bTB2ox7Kbchhw052XNnH
+ rfkFCZ19fW4krCG0M+ExTWCun/DZlQ3ugWYJ8t3yaHlJ4xeZOEKwnYqnHOxCuvidd2Dx
+ OwvyMCwU3KGHhzegCv+B5/rpH9D8QCj310ztH5Oc5TD+/cu+DG638RGA9BBxMImk9zuk
+ whXxZP7wfmnDcpOQnh8MRWA9v3wHqCLCIZUb+MoWIFQf+P0JiMP6G+zIlmKiYO4+64DK Xg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3umwn5scyb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Nov 2023 02:05:47 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AS25kOL002397
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 28 Nov 2023 02:05:46 GMT
+Received: from [10.110.19.196] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 27 Nov
+ 2023 18:05:46 -0800
+Message-ID: <3b2ec0ce-a931-9eee-6d6e-261990800524@quicinc.com>
+Date: Mon, 27 Nov 2023 18:05:45 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/mdp4: flush vblank event on disable
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn
+ Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20231127215401.4064128-1-dmitry.baryshkov@linaro.org>
+ <60dc2b72-188f-7b6e-4e14-b90f10997a44@quicinc.com>
+ <CAA8EJpoKOPVLC9n_2MC2Es7XssEs5G5O4ESJ_-krA8aGG_fb0Q@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpoKOPVLC9n_2MC2Es7XssEs5G5O4ESJ_-krA8aGG_fb0Q@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WXR1tRmyPf8IXtfkBzenYds3dYkkBkn5
+X-Proofpoint-GUID: WXR1tRmyPf8IXtfkBzenYds3dYkkBkn5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-28_01,2023-11-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 mlxlogscore=971 mlxscore=0 spamscore=0 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 clxscore=1015
+ suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311060000 definitions=main-2311280015
 
-The pinconf-groups debugfs file dumps each valid configuration item of
-all pin groups. Some platforms and devices may have pin groups which
-cannot be accessed, according to commit 691bf5d5a7bf ("pinctrl: qcom:
-Don't allow protected pins to be requested"). Fail for each
-configuration item of an invalid pin group by checking the GPIO chip's
-valid mask.
 
-The validity of the pin group cannot be checked in the generic pinconf
-dump (function "pinconf_generic_dump_one"), as it does not directly
-interact with the gpiochip or the pinmux callbacks (which would give it
-access to the request callback). Instead, an entry contains the ID and
-name of the pingroup with no properties when all items fail.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
-First few lines of pinconf-generic on SDM670 with this patch:
+On 11/27/2023 3:17 PM, Dmitry Baryshkov wrote:
+> On Tue, 28 Nov 2023 at 00:00, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 11/27/2023 1:54 PM, Dmitry Baryshkov wrote:
+>>> Flush queued events when disabling the crtc. This avoids timeouts when
+>>> we come back and wait for dependencies (like the previous frame's
+>>> flip_done).
+>>>
+>>> Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 9 +++++++++
+>>>    1 file changed, 9 insertions(+)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+>>> index 169f9de4a12a..3100957225a7 100644
+>>> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+>>> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c
+>>> @@ -269,6 +269,7 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
+>>>    {
+>>>        struct mdp4_crtc *mdp4_crtc = to_mdp4_crtc(crtc);
+>>>        struct mdp4_kms *mdp4_kms = get_kms(crtc);
+>>> +     unsigned long flags;
+>>>
+>>>        DBG("%s", mdp4_crtc->name);
+>>>
+>>> @@ -281,6 +282,14 @@ static void mdp4_crtc_atomic_disable(struct drm_crtc *crtc,
+>>>        mdp_irq_unregister(&mdp4_kms->base, &mdp4_crtc->err);
+>>>        mdp4_disable(mdp4_kms);
+>>>
+>>> +     if (crtc->state->event && !crtc->state->active) {
+>>> +             WARN_ON(mdp4_crtc->event);
+>>
+>> Do you need a WARN_ON() here? Just wondering how often this might happen
+>> and spam.
+> 
+> Well, it is atomic_disable(), so it happens only on modesets or output
+> disable. Also, this is a port of mdp5 code, see commit e765ea77b0fd
+> ("drm/msm: Issue queued events when disabling crtc"). We don't have
+> reports from MDP5 code, so there should be no comparable reports for
+> MDP4.
+> 
 
-    Pin config settings per pin group
-    Format: group (name): configs
-    0 (gpio0):
-    1 (gpio1):
-    2 (gpio2):
-    3 (gpio3):
-    4 (gpio4): input bias disabled, output drive strength (16 mA), output enabled, pin output (0 level)
----
- drivers/pinctrl/qcom/pinctrl-msm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Ok, I thought this was ported from dpu code, even that has the same 
+logic but not the WARN_ON().
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 395040346d0f..0392b99d8be3 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -358,6 +358,10 @@ static int msm_config_group_get(struct pinctrl_dev *pctldev,
- 	int ret;
- 	u32 val;
- 
-+	/* Pin information can only be requested from valid pin groups */
-+	if (!gpiochip_line_is_valid(&pctrl->chip, group))
-+		return -EINVAL;
-+
- 	g = &pctrl->soc->groups[group];
- 
- 	ret = msm_config_reg(pctrl, g, param, &mask, &bit);
--- 
-2.43.0
+But I am fine with this,
 
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+
+>> otherwise LGTM.
+>>
+>>> +             spin_lock_irqsave(&mdp4_kms->dev->event_lock, flags);
+>>> +             drm_crtc_send_vblank_event(crtc, crtc->state->event);
+>>> +             crtc->state->event = NULL;
+>>> +             spin_unlock_irqrestore(&mdp4_kms->dev->event_lock, flags);
+>>> +     }
+>>> +
+>>>        mdp4_crtc->enabled = false;
+>>>    }
+>>>
+> 
+> 
+> 
 
