@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-2296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 406C77FC053
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 18:33:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 289067FC0A7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 18:54:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70B191C20BF9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 17:33:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 59DD11C20E5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 17:54:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 063175C08D;
-	Tue, 28 Nov 2023 17:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6156539AF6;
+	Tue, 28 Nov 2023 17:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LL+yYcCp"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NTDlTZNt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1485ACA;
-	Tue, 28 Nov 2023 09:33:38 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3ASEukOl012283;
-	Tue, 28 Nov 2023 17:33:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iBm5UrlwT+RdZamDA3hr2gOJjYMmpF+A+Ru9UXUTXPE=;
- b=LL+yYcCpdZRujo7owbg2TYSq6GMolkdoGUC1H13sGVi03WdS47AePeJYjkhyt3wCQzL2
- pM8j9soDUGxvHOlMSuSpOmIddwmm8D0Wb3+J1jab62GqhT6Xb3x7Rz5N6yg9AYEwDDqh
- MfrjABYPDM6D42MOKTPdtxlakahhx/DoiIvMiZ0splYSidRB/+/XwDQprzBa9YvTW78p
- 5lZiq3KG+C6U93WjyNMh4FXioh3TOADZbWUupz3N572GwCfZibqh5Mtl/pF+P+c4Xarc
- IfJ9YeNgcixp5t3DNNpAYj+HfppGt6XsPHgEfwIpT/4fbMb1kqCHFr8V+d/cBVoTuKyY 1A== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3unjdtgfq8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 17:33:26 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ASHXPMd021527
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 28 Nov 2023 17:33:25 GMT
-Received: from [10.110.114.100] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
- 2023 09:33:25 -0800
-Message-ID: <8be8ab72-0670-4821-b235-1f8e4ea170b2@quicinc.com>
-Date: Tue, 28 Nov 2023 11:33:23 -0600
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7960AB;
+	Tue, 28 Nov 2023 09:54:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701194040; x=1732730040;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=oDaVISZ4GC9Vx7bYPRhNfZMARfbZEazvuxrRBu0LJLE=;
+  b=NTDlTZNtUK0/pphaHPfsnq2jaKGtz5Czpja3nWhf5XeI4SN0XKCeA4pv
+   ynAkFjPGcjIagOjqaUUKreR/54cyzqGRi1zpnSZ9vpwn4Qxck8EiPoLBv
+   4aVf8LkUfL1BvrKr+JSRYo47jhTFXUTL7/wxF+B6J31Ak7BTDvu3kq0GV
+   OfFs3oJ0NyCrdeNfp304uLqWG0OOB94+Vei+YocyIFiY1Rhvz4dAmpUP1
+   PgW4ZdF8nYz3IIA4Y7RVMRahho6DCUndqxE3LcVNoincazJIxz1zu7McJ
+   5jx5CS8YuR7h+dBvWIpvQ1qwtoeV9VMFkzsd8f6Qzo2ihMRbxluGloe99
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="424127096"
+X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
+   d="scan'208";a="424127096"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 09:54:00 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="834715321"
+X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
+   d="scan'208";a="834715321"
+Received: from skumarso-mobl33.amr.corp.intel.com (HELO [10.255.231.208]) ([10.255.231.208])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 09:53:57 -0800
+Message-ID: <ce46c729-48de-4b71-ace3-9b88f95e8e28@linux.intel.com>
+Date: Tue, 28 Nov 2023 11:39:57 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,76 +51,61 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] freezer,sched: do not restore saved_state of a thawed
- task
+Subject: Re: [PATCH 1/2] ASoC: qcom: Add helper for allocating Soundwire
+ stream runtime
 Content-Language: en-US
-To: Peter Zijlstra <peterz@infradead.org>,
-        "Aiqun(Maria) Yu"
-	<quic_aiquny@quicinc.com>
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        "Ingo Molnar" <mingo@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Pavan
- Kondeti <quic_pkondeti@quicinc.com>, <linux-pm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Abhijeet Dharmapurikar
-	<quic_adharmap@quicinc.com>
-References: <20231120-freezer-state-multiple-thaws-v1-0-f2e1dd7ce5a2@quicinc.com>
- <a86228f5-c1ae-4afe-87bd-5144633a9601@quicinc.com>
- <20231128173119.GC3818@noisy.programming.kicks-ass.net>
-From: Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <20231128173119.GC3818@noisy.programming.kicks-ass.net>
-Content-Type: text/plain; charset="UTF-8"
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Bard Liao <yung-chuan.liao@linux.intel.com>,
+ Sanyog Kale <sanyog.r.kale@intel.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+ alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
+ linux-sound@vger.kernel.org
+References: <20231128165638.757665-1-krzysztof.kozlowski@linaro.org>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20231128165638.757665-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: xsBc_mpHuBkHKJwTNRh5WGS6awHkTJEe
-X-Proofpoint-ORIG-GUID: xsBc_mpHuBkHKJwTNRh5WGS6awHkTJEe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-28_18,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 mlxscore=0 mlxlogscore=647
- impostorscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
- phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311280140
 
 
+> +int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
+> +{
+> +	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+> +	struct sdw_stream_runtime *sruntime;
+> +	struct snd_soc_dai *codec_dai;
+> +	int ret, i;
+> +
+> +	sruntime = sdw_alloc_stream(cpu_dai->name);
+> +	if (!sruntime)
+> +		return -ENOMEM;
+> +
+> +	for_each_rtd_codec_dais(rtd, i, codec_dai) {
+> +		ret = snd_soc_dai_set_stream(codec_dai, sruntime,
+> +					     substream->stream);
+> +		if (ret < 0 && ret != -ENOTSUPP) {
 
-On 11/28/2023 11:31 AM, Peter Zijlstra wrote:
-> On Tue, Nov 28, 2023 at 05:12:00PM +0800, Aiqun(Maria) Yu wrote:
->> On 11/21/2023 1:36 AM, Elliot Berman wrote:
->>> This series applies couple fixes to commit 8f0eed4a78a8 ("freezer,sched:
->>> Use saved_state to reduce some spurious wakeups") which was found while
->>> testing with legacy cgroup freezer. My original testing was only with
->>> system-wide freezer. We found that thaw_task could be called on a task
->>> which was already frozen. Prior to commit 8f0eed4a78a8 ("freezer,sched:
->>> Use saved_state to reduce some spurious wakeups"), this wasn't an issue
->>> as kernel would try to wake up TASK_FROZEN, which wouldn't match the
->>> thawed task state, and no harm done to task. After commit 8f0eed4a78a8
->>> ("freezer,sched: Use saved_state to reduce some spurious wakeups"), it
->>> was possible to overwrite the state of thawed task.
->>>
->>> To: Rafael J. Wysocki <rafael@kernel.org>
->>> To: Pavel Machek <pavel@ucw.cz>
->>> To: Ingo Molnar <mingo@kernel.org>
->>> To: Peter Zijlstra (Intel) <peterz@infradead.org>
->>> Cc:  <linux-arm-msm@vger.kernel.org>
->>> Cc: Pavan Kondeti <quic_pkondeti@quicinc.com>
->>> Cc: Aiqun Yu (Maria) <quic_aiquny@quicinc.com>
->>> Cc:  <linux-pm@vger.kernel.org>
->>> Cc:  <linux-kernel@vger.kernel.org>
->>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
->> Shall we add Fixed tag and Cc: stable@vger.kernel.org ?
->> Since it is fixing a stable user thread hung issue.
-> 
-> If you want this routed through urgent, then yes.
+I know this is existing code moved into a helper, but out of curiosity
+why is -ENOTSUPP ignored? Isn't this problematic?
 
-Fixes tag is added to https://lore.kernel.org/all/20231120-freezer-state-multiple-thaws-v1-1-f2e1dd7ce5a2@quicinc.com/
+> +			dev_err(rtd->dev, "Failed to set sdw stream on %s\n",
+> +				codec_dai->name);
+> +			goto err_set_stream;
+> +		}
+> +	}
 
-Is CC'ing stable what triggers routing through urgent?
+Also should the CPU DAIs also be used to set the stream information?
+it's not clear to me why only the CODEC DAIs are used.
 
-Thanks,
-Elliot
+> +	return 0;
+> +
+> +err_set_stream:
+> +	sdw_release_stream(sruntime);
+> +
+> +	return ret;
+> +}
 
