@@ -1,95 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-2306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0BA67FC41F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 20:18:04 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 661947FC473
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 20:50:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0DDF01C20B80
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 19:18:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20512282801
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 19:50:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E46E146B9D;
-	Tue, 28 Nov 2023 19:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14DD73D0CE;
+	Tue, 28 Nov 2023 19:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p57NzxC0"
+	dkim=pass (2048-bit key) header.d=walle.cc header.i=@walle.cc header.b="Qp0qDmXd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.3ffe.de (0001.3ffe.de [IPv6:2a01:4f8:c0c:9d57::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 668AA10F0;
+	Tue, 28 Nov 2023 11:50:51 -0800 (PST)
+Received: from [127.0.0.1] (ip-109-43-115-169.web.vodafone.de [109.43.115.169])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98DD46B81;
-	Tue, 28 Nov 2023 19:18:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD616C433C7;
-	Tue, 28 Nov 2023 19:17:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701199080;
-	bh=SgFpPkvRLZH722x0Q2MvtZK1DcjJxLafBR+Y7mjLxR0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=p57NzxC0rRSaNC1yF4erIx7C/gTJjFfTBJfigTPSAXGEiABAsE9ucU9XuNAxvCrJj
-	 9xPeIBiCqcPar1Cv/LHyJ/xNmlhiUCQO9xA3wiw5MVIWrOwmP5SIAU9Kg49V2gUmBD
-	 dace5qSugrF8nFkLbOSWHZUc9n5DiBKI2VJ7UFJwNhHOJ4Caoa8wuf5Vx4IwzicuPA
-	 SnMXuZwO/Ak8459BojKDQfsUcvfHGYPJJSur8wFb6RRNVaWWK7MC9mS1CsLbb1pFQH
-	 lHelXtTBW7zVfo4IWbzIHH9dE9moP/5TfDKfzpfvAmOsCsw9MKIoHX/xKN7zyO0oi4
-	 yNgw0d+fxayMg==
-Date: Tue, 28 Nov 2023 20:17:57 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc: Wolfram Sang <wsa@kernel.org>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/3] i2c: qup: Vote for interconnect bandwidth to DRAM
-Message-ID: <20231128191757.67mlp2tp6wlxxta2@zenone.zhora.eu>
-References: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
- <20231128-i2c-qup-dvfs-v1-3-59a0e3039111@kernkonzept.com>
+	by mail.3ffe.de (Postfix) with ESMTPSA id 599866E;
+	Tue, 28 Nov 2023 20:50:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=walle.cc; s=mail2022082101;
+	t=1701201049;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qx987Q56BapeU8URf5u34Lr6fDvrB7kSuGpcq8K1euU=;
+	b=Qp0qDmXd2IqE5XgI3pEBnzHX+/g3nh2g2B0lcDHawAXQegtpC4VaW+7oamRtInuiIS8Rvu
+	ZvAfRngg6Nz3U26uxMyW5yzuWX46LLtDWTOe6fqsy9tdZjaZ+g8xpoWZRD/fZnRqgCIfZV
+	oY3hfXpkTF+zgjOg/pbgsdCJg6KUHOPmvi9bAF0kq21OkWkkLFr0BARBXs5TiSQHmSN28I
+	f7Kng8/jSs/4d4wmQpHa1LSy0RT1xruILL3Zvzl0q9kZUY2WfJumMh9r3dEzcJ0phMcdTS
+	RFsCubLpaucYl+8YFAoHxnwD5NNtWwSbi4i772nyyDcpJhdcOoWrffo+VxOtvA==
+Date: Tue, 28 Nov 2023 20:50:50 +0100
+From: Michael Walle <michael@walle.cc>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Michael Walle <mwalle@kernel.org>
+CC: Laurent.pinchart@ideasonboard.com, andrzej.hajda@intel.com,
+ dave.stevenson@raspberrypi.com, dianders@chromium.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ jernej.skrabec@gmail.com, jonas@kwiboo.se, konrad.dybcio@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, marex@denx.de,
+ marijn.suijten@somainline.org, mripard@kernel.org, neil.armstrong@linaro.org,
+ quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, rfoss@kernel.org,
+ sean@poorly.run, tzimmermann@suse.de, tony@atomide.com,
+ alexander.stein@ew.tq-group.com
+Subject: =?US-ASCII?Q?Re=3A_=5BRFC_PATCH_03/10=5D_drm/mipi-dsi=3A_add_API_fo?= =?US-ASCII?Q?r_manual_control_over_the_DSI_link_power_state?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <CAA8EJpr9PDgSrTpP2-joQ09fxmJKZB1B+ESbDbMjkLNiqZ1m3A@mail.gmail.com>
+References: <CAA8EJpozZkEswnioKjRCqBg4fcjVHFwGivoFNTNHVwyocKprQw@mail.gmail.com> <20231127160658.2164612-1-mwalle@kernel.org> <CAA8EJpphwXoKnzDkY3cBqzsDZwdw+nze-Ev2toPBJm-2VJvY_g@mail.gmail.com> <dce76a6e1321a6374ad39125bead56b3@kernel.org> <CAA8EJpr9PDgSrTpP2-joQ09fxmJKZB1B+ESbDbMjkLNiqZ1m3A@mail.gmail.com>
+Message-ID: <14D9F495-425D-47FA-AD0D-F7299285936F@walle.cc>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231128-i2c-qup-dvfs-v1-3-59a0e3039111@kernkonzept.com>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Stephan,
+>> >> > DSI device lifetime has three different stages:
+>> >> > 1=2E before the DSI link being powered up and clocking,
+>> >> > 2=2E when the DSI link is in LP state (for the purpose of this que=
+stion,
+>> >> > this is the time between the DSI link being powered up and the vid=
+eo
+>> >> > stream start)
+>> >> > 3=2E when the DSI link is in HS state (while streaming the video)=
+=2E
+>> >>
+>> >> It's not clear to me what (2) is=2E What is the state of the clock a=
+nd
+>> >> data lanes?
+>> >
+>> > Clk an Data0 should be in the LP mode, ready for LP Data Transfer=2E
+>>
+>> Then this is somehow missing
+>> https://docs=2Ekernel=2Eorg/gpu/drm-kms-helpers=2Ehtml#mipi-dsi-bridge-=
+operation
+>>
+>>    A DSI host should keep the PHY powered down until the pre_enable
+>> operation
+>>    is called=2E All lanes are in an undefined idle state up to this poi=
+nt,
+>> and
+>>    it must not be assumed that it is LP-11=2E pre_enable should initial=
+ise
+>> the
+>>    PHY, set the data lanes to LP-11, and the clock lane to either LP-11
+>> or HS
+>>    depending on the mode_flag MIPI_DSI_CLOCK_NON_CONTINUOUS=2E
+>>
+>> So I don't think these three states are sufficient, see below, that
+>> there
+>> should be at least four=2E
+>
+>Which one is #4?
 
-On Tue, Nov 28, 2023 at 10:48:37AM +0100, Stephan Gerhold wrote:
-> When the I2C QUP controller is used together with a DMA engine it needs
-> to vote for the interconnect path to the DRAM. Otherwise it may be
-> unable to access the memory quickly enough.
-> 
-> The requested peak bandwidth is dependent on the I2C core clock.
-> 
-> To avoid sending votes too often the bandwidth is always requested when
-> a DMA transfer starts, but dropped only on runtime suspend. Runtime
-> suspend should only happen if no transfer is active. After resumption we
-> can defer the next vote until the first DMA transfer actually happens.
-> 
-> The implementation is largely identical to the one introduced for
-> spi-qup in commit ecdaa9473019 ("spi: qup: Vote for interconnect
-> bandwidth to DRAM") since both drivers represent the same hardware
-> block.
-> 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+enabled clock lane (HS mode), data lanes in LP-11
 
-the patch looks good to me.
+-michael
 
-> ---
-> The bandwidth calculation is taken over from Qualcomm's
-> downstream/vendor driver [1]. Due to lack of documentation about the
-> interconnect setup/behavior I cannot say exactly if this is right.
-> Unfortunately, this is not implemented very consistently downstream...
-> 
-> [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/commit/67174e2624ea64814231e7e1e4af83fd882302c6
+>>
+>> >
+>> > I don't think we support ULPS currently=2E
+>> >
+>> >
+>> >>
+>> >> I'm facing similar issues with the tc358775 bridge=2E This bridge ne=
+eds
+>> >> to release its reset while both clock and data lanes are in LP-11
+>> >> mode=2E
+>> >> But then it needs to be configured (via I2C) while the clock lane is
+>> >> in enabled (HS mode), but the data lanes are still in LP-11 mode=2E
+>> >>
+>> >> To me it looks like there is a fouth case then:
+>> >> 1=2E unpowered
+>> >> 2=2E DSI clock and data are in LP-11
+>> >> 3=2E DSI clock is in HS and data are in LP-11
+>> >> 4=2E DSI clock is in HS and data is in HS
+>> >>
+>> >> (And of course the bridge needs continuous clock mode)=2E
+>> >>
+>> >> > Different DSI bridges have different requirements with respect to =
+the
+>> >> > code being executed at stages 1 and 2=2E For example several DSI-t=
+o-eDP
+>> >> > bridges (ps8640, tc358767 require for the link to be quiet during
+>> >> > reset time=2E
+>> >> > The DSI-controlled bridges and DSI panels need to send some comman=
+ds
+>> >> > in stage 2, before starting up video
+>> >> >
+>> >> > In the DRM subsystem stage 3 naturally maps to the
+>> >> > drm_bridge_funcs::enable, stage 1 also naturally maps to the
+>> >> > drm_bridge_funcs::pre_enable=2E Stage 2 doesn't have its own place=
+ in
+>> >> > the DRM call chain=2E
+>> >> > Earlier we attempted to solve that using the pre_enable_prev_first=
+,
+>> >> > which remapped pre-enable callback execution order=2E However it h=
+as led
+>> >> > us to the two issues=2E First, at the DSI host driver we do not kn=
+ow
+>> >> > whether the panel / bridge were updated to use pre_enable_prev_fir=
+st
+>> >> > or not=2E Second, if the bridge has to perform steps during both s=
+tages
+>> >> > 1 and 2, it can not do that=2E
+>> >> >
+>> >> > I'm trying to find a way to express the difference between stages =
+1
+>> >> > and 2 in the generic code, so that we do not to worry about partic=
+ular
+>> >> > DSI host and DSI bridge / panel peculiarities when implementing th=
+e
+>> >> > DSI host and/or DSI panel driver=2E
+>> >>
+>> >> For now, I have a rather hacky "=2Edsi_lp11_notify" callback in
+>> >> drm_bridge_funcs which is supposed to be called by the DSI host whil=
+e
+>> >> the
+>> >> clock and data lanes are in LP-11 mode=2E But that is rather an RFC =
+and
+>> >> me
+>> >> needing something to get the driver for this bridge working=2E Becau=
+se
+>> >> it's
+>> >> badly broken=2E FWIW, you can find my work-in-progress patches at
+>> >> https://github=2Ecom/mwalle/linux/tree/feature-tc358775-fixes
+>> >>
+>> >> -michael
+>> >>
+>> >
+>> >
+>> > --
+>> > With best wishes
+>> > Dmitry
+>
+>
+>
 
-Krzysztof, any chance you can help here?
-
-Thanks,
-Andi
 
