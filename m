@@ -1,94 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-2335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F2FE7FC67B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 21:58:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E34F57FC95D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 23:20:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C9C01C23A4D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 20:58:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 117521C20EA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 22:20:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667D642A9F;
-	Tue, 28 Nov 2023 20:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C343F44380;
+	Tue, 28 Nov 2023 22:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oV48eUKn"
+	dkim=pass (2048-bit key) header.d=walle.cc header.i=@walle.cc header.b="y9z7I1r8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.3ffe.de (0001.3ffe.de [IPv6:2a01:4f8:c0c:9d57::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBBCF1B4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 14:20:12 -0800 (PST)
+Received: from 3ffe.de (0001.3ffe.de [IPv6:2a01:4f8:c0c:9d57::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEF34437C;
-	Tue, 28 Nov 2023 20:58:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592C3C433C7;
-	Tue, 28 Nov 2023 20:58:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701205089;
-	bh=UX5C2qgBjiUo8YBuIWLh8l0BZcz0KqX1PVlM2d6g/Hs=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=oV48eUKntnEzVvcv9ghdk4dk2660mtkgGC0Rq09ovnIQzNbwC5LzvTjX/pzHoS/w3
-	 lLE7UZJsygtUY9+gFwrkTl/tIUufnO5J+XaoPSeACsp5uhGSjr3NZlsIcqT6IMqBMt
-	 mUdIRT8gLBx/KVa/AsVZ5XPeuU4n/mlHj24sCUS3EfVqaO+1fYX0ZHIekyUhVvl1rw
-	 yJSvsUyC6LHCwm9kfTJPE/ezpij/gexK4CA3CSIK2r4EyQMTDlPD7Ff11jVcLUm388
-	 Kf/Ejt8CDzUL0EfvfRoTI7fZgHwjeouX3YFeY+AbNe63iOFcohuGQRLioe/DbznTix
-	 OpVa7ZM6cd+3Q==
-Date: Tue, 28 Nov 2023 12:58:08 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
- mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, loic.poulain@linaro.org
-Subject: Re: [PATCH v2 0/2] Add MHI Endpoint network driver
-Message-ID: <20231128125808.7a5f0028@kernel.org>
-In-Reply-To: <CAA8EJppL0YHHjHj=teCnAwPDkNhwR1EWYuLPnDue1QdfZ3RS_w@mail.gmail.com>
-References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
-	<20230607094922.43106896@kernel.org>
-	<20230607171153.GA109456@thinkpad>
-	<20230607104350.03a51711@kernel.org>
-	<20230608123720.GC5672@thinkpad>
-	<20231117070602.GA10361@thinkpad>
-	<20231117162638.7cdb3e7d@kernel.org>
-	<20231127060439.GA2505@thinkpad>
-	<20231127084639.6be47207@kernel.org>
-	<CAA8EJppL0YHHjHj=teCnAwPDkNhwR1EWYuLPnDue1QdfZ3RS_w@mail.gmail.com>
+	by mail.3ffe.de (Postfix) with ESMTPSA id C6D4D323;
+	Tue, 28 Nov 2023 23:20:06 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=walle.cc; s=mail2022082101;
+	t=1701210006;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CAhOARmmFIxR/7vfxpNQzi/gksLmIWRxnp/mV78NkOY=;
+	b=y9z7I1r89PEvv8K1QY9l1riaX3zGYgIH11IFbg6n600hOOTUVRCGBLkWg6ASyeF0Zxnix7
+	RdJ6lL3qhWn/R/f6d5ZsLjguB8gg8GamTVvfOGUB9F6jAv3qwccpms68k0M9zx4oZE2kFm
+	/D3KdAbdtlrRbQpl0IRWO47jGxnLAZ50QPGWKRbfTjyeSj8UaspqqnB6uLC3NQNa2bxg4n
+	BVzwleYlKT3mjFGTADsL/COYr0nOxs/xDDfOgHP1nQXMFmKSZ9ZlfAk0fhALX8G9FswAHw
+	vQOIZer5vMBr1k30MVkgBBM7FM9y7YzvmNxVEyRHlE1Ai1sIlt8a4XGGqAlVYA==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Date: Tue, 28 Nov 2023 23:20:06 +0100
+From: Michael Walle <michael@walle.cc>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Michael Walle <mwalle@kernel.org>, Laurent.pinchart@ideasonboard.com,
+ andrzej.hajda@intel.com, dave.stevenson@raspberrypi.com,
+ dianders@chromium.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, jernej.skrabec@gmail.com, jonas@kwiboo.se,
+ konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, marex@denx.de, marijn.suijten@somainline.org,
+ mripard@kernel.org, neil.armstrong@linaro.org, quic_abhinavk@quicinc.com,
+ quic_jesszhan@quicinc.com, rfoss@kernel.org, sean@poorly.run,
+ tzimmermann@suse.de, tony@atomide.com, alexander.stein@ew.tq-group.com
+Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
+ the DSI link power state
+In-Reply-To: <CAA8EJpoYkH-0onMmNRk1iO5YeLN+5hpZMsfvtNo-7p6y2mjZwg@mail.gmail.com>
+References: <CAA8EJpozZkEswnioKjRCqBg4fcjVHFwGivoFNTNHVwyocKprQw@mail.gmail.com>
+ <20231127160658.2164612-1-mwalle@kernel.org>
+ <CAA8EJpphwXoKnzDkY3cBqzsDZwdw+nze-Ev2toPBJm-2VJvY_g@mail.gmail.com>
+ <dce76a6e1321a6374ad39125bead56b3@kernel.org>
+ <CAA8EJpr9PDgSrTpP2-joQ09fxmJKZB1B+ESbDbMjkLNiqZ1m3A@mail.gmail.com>
+ <14D9F495-425D-47FA-AD0D-F7299285936F@walle.cc>
+ <CAA8EJpoYkH-0onMmNRk1iO5YeLN+5hpZMsfvtNo-7p6y2mjZwg@mail.gmail.com>
+Message-ID: <5eeade839ad3f71e8976965ce6cf3ed2@walle.cc>
+X-Sender: michael@walle.cc
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Tue, 28 Nov 2023 22:35:50 +0200 Dmitry Baryshkov wrote:
-> Also, please excuse me if this was already answered, just for my understanding:
-> - If we limit functionality to just networking channels which are used
-> to pass IP data between host and EP, will that be accepted?
+[sorry I fat fingered my former reply and converted all CCs to BCCs..]
 
-That's too hard to enforce. We have 200+ drivers, we can't carefully
-review every single line of code to make sure you stick to the "just
-networking" promise you make us. Plus the next guy will come and tell
-us "but you let the company X do it".
+>> >> >> > DSI device lifetime has three different stages:
+>> >> >> > 1. before the DSI link being powered up and clocking,
+>> >> >> > 2. when the DSI link is in LP state (for the purpose of this question,
+>> >> >> > this is the time between the DSI link being powered up and the video
+>> >> >> > stream start)
+>> >> >> > 3. when the DSI link is in HS state (while streaming the video).
+>> >> >>
+>> >> >> It's not clear to me what (2) is. What is the state of the clock and
+>> >> >> data lanes?
+>> >> >
+>> >> > Clk an Data0 should be in the LP mode, ready for LP Data Transfer.
+>> >>
+>> >> Then this is somehow missing
+>> >> https://docs.kernel.org/gpu/drm-kms-helpers.html#mipi-dsi-bridge-operation
+>> >>
+>> >>    A DSI host should keep the PHY powered down until the pre_enable
+>> >> operation
+>> >>    is called. All lanes are in an undefined idle state up to this point,
+>> >> and
+>> >>    it must not be assumed that it is LP-11. pre_enable should initialise
+>> >> the
+>> >>    PHY, set the data lanes to LP-11, and the clock lane to either LP-11
+>> >> or HS
+>> >>    depending on the mode_flag MIPI_DSI_CLOCK_NON_CONTINUOUS.
+>> >>
+>> >> So I don't think these three states are sufficient, see below, that
+>> >> there
+>> >> should be at least four.
+>> >
+>> >Which one is #4?
+>> 
+>> enabled clock lane (HS mode), data lanes in LP-11
+> 
+> What is the purpose of such a mode?
 
-> - If we were to implement the PCIe networking card running Linux (e.g.
-> using Freescale PowerQUICC or Cavium Octeon chips), would you also be
-> opposed to implementing the EP side of the link as the netdev?
+To repeat my first mail:
 
-Yes.
+I'm facing similar issues with the tc358775 bridge. This bridge needs
+to release its reset while both clock and data lanes are in LP-11
+mode.
+But then it needs to be configured (via I2C) while the clock lane is
+in enabled (HS mode), but the data lanes are still in LP-11 mode.
 
-It's very tempting to reuse existing code, written for traffic to build
-a control channel. This becomes painful because:
- - the lifetime rules for interfaces to configure vs to pass traffic 
-   are different, which inevitably leads to bugs in common code,
- - the use cases are different, which leads to hacks / abuse,
-   and then it's a lot harder for us to refactor and optimize core 
-   code / data structures,
- - IDK how "channel to talk to FW" fits with the normal IP stack...
+Therefore, for the correct init sequence is:
+(1) dsi host enables lanes, that is clock and data are in lp-11
+(2) dsi bridge driver releases reset of the bridge
+(3) dsi host enables clock lane, leaves data lanes in lp-11
+(4) dsi bridge driver configures the bridge
+(5) dsi host enables the video stream
+(6) dsi bridge enables the output port of the bridge
 
-The "FW channel netdevs" exist for decades now, and are very popular
-with middle box SDKs, I know. Your choices are:
- - keep the code out of tree,
- - use a generic interface with a strong standard definition, like
-   virtio, and expect that no customizations will be allowed.
+-michael
+
+>> >> > I don't think we support ULPS currently.
+>> >> >
+>> >> >
+>> >> >>
+>> >> >> I'm facing similar issues with the tc358775 bridge. This bridge needs
+>> >> >> to release its reset while both clock and data lanes are in LP-11
+>> >> >> mode.
+>> >> >> But then it needs to be configured (via I2C) while the clock lane is
+>> >> >> in enabled (HS mode), but the data lanes are still in LP-11 mode.
+>> >> >>
+>> >> >> To me it looks like there is a fouth case then:
+>> >> >> 1. unpowered
+>> >> >> 2. DSI clock and data are in LP-11
+>> >> >> 3. DSI clock is in HS and data are in LP-11
+>> >> >> 4. DSI clock is in HS and data is in HS
+>> >> >>
+>> >> >> (And of course the bridge needs continuous clock mode).
+>> >> >>
+>> >> >> > Different DSI bridges have different requirements with respect to the
+>> >> >> > code being executed at stages 1 and 2. For example several DSI-to-eDP
+>> >> >> > bridges (ps8640, tc358767 require for the link to be quiet during
+>> >> >> > reset time.
+>> >> >> > The DSI-controlled bridges and DSI panels need to send some commands
+>> >> >> > in stage 2, before starting up video
+>> >> >> >
+>> >> >> > In the DRM subsystem stage 3 naturally maps to the
+>> >> >> > drm_bridge_funcs::enable, stage 1 also naturally maps to the
+>> >> >> > drm_bridge_funcs::pre_enable. Stage 2 doesn't have its own place in
+>> >> >> > the DRM call chain.
+>> >> >> > Earlier we attempted to solve that using the pre_enable_prev_first,
+>> >> >> > which remapped pre-enable callback execution order. However it has led
+>> >> >> > us to the two issues. First, at the DSI host driver we do not know
+>> >> >> > whether the panel / bridge were updated to use pre_enable_prev_first
+>> >> >> > or not. Second, if the bridge has to perform steps during both stages
+>> >> >> > 1 and 2, it can not do that.
+>> >> >> >
+>> >> >> > I'm trying to find a way to express the difference between stages 1
+>> >> >> > and 2 in the generic code, so that we do not to worry about particular
+>> >> >> > DSI host and DSI bridge / panel peculiarities when implementing the
+>> >> >> > DSI host and/or DSI panel driver.
+>> >> >>
+>> >> >> For now, I have a rather hacky ".dsi_lp11_notify" callback in
+>> >> >> drm_bridge_funcs which is supposed to be called by the DSI host while
+>> >> >> the
+>> >> >> clock and data lanes are in LP-11 mode. But that is rather an RFC and
+>> >> >> me
+>> >> >> needing something to get the driver for this bridge working. Because
+>> >> >> it's
+>> >> >> badly broken. FWIW, you can find my work-in-progress patches at
+>> >> >> https://github.com/mwalle/linux/tree/feature-tc358775-fixes
+>> >> >>
+>> >> >> -michael
+>> >> >>
+>> >> >
+>> >> >
+>> >> > --
+>> >> > With best wishes
+>> >> > Dmitry
+>> >
+>> >
+>> >
+>> 
 
