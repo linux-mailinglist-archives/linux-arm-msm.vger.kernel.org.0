@@ -1,258 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-2261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD34A7FB935
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 12:16:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5634C7FB955
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 12:21:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 67E8A282C53
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 11:16:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11A11282497
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 11:21:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 235A54F5E9;
-	Tue, 28 Nov 2023 11:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4998A4F5F1;
+	Tue, 28 Nov 2023 11:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="l5UdB6Lj";
-	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="cvtpWXAu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eant+qr0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72B69D6;
-	Tue, 28 Nov 2023 03:16:20 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1701170177; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=EZUjOS8CVjo+FKaqJuD/a9DCglOaWeb2zwpKo10hEPcPMG+OXTX5i+T3NqVLLUKYuM
-    FkzlY7UFeXuEFC4+D1259tUsMsRBGe4oon2/MkdO/12VMNAYb998ZrHbL6FToXR+nIfd
-    CPtahqf54N0Ih8nA83eIoWDx0m9qVQ+zL6JtxO5QpDiahhHIGfekQ3GKKa+kpgqewlCA
-    eGnJRSBhEQrQWsjnSy6+0KG3i6ZuuahdRXg2sQCpjhrTELoDspGFe1PlOROPoZQNOd/c
-    VxXrnF1KeJBdFtOqUab8qHVvVYwTXjzNe8D9X7lIoHS5Qzi6nD6hcIfOKdMaWS0hKE1a
-    OTlg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1701170177;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+x5mzkgJdHdY5sgqZaJ2j6SzsEzsF/GGqVmkNqn5SdE=;
-    b=d1b3UU4iiqpt/OG+fJnkaXwCSNVh6o8oLCQs1n9VaaI6o7w2g/74pWPJcES5+/Ih2p
-    OMDYoff7G8Gr233XJn5KtI7bJt+lC6redqj1tNrFVqX2Hf1tZzjkuevo097J4LeBnj0b
-    aeKevUTrNNQvLrI4arydJpjZdbVWcNwc4/az9BoODD1CLMZBFYf8Jolhqatc7cflRs1y
-    Wjc80iLreyzQ8Bhs1HPd+MSZSkQEzAgC+yWsER1dfv1sKxC1njN+J5hBsS2QTfqDSAK3
-    8JRcfShR62IgPJxoAUfvHIdoVgrS0N4ZcrIqGmWwnONKoDVRjxwMrFSjTxoEexc0TUjn
-    FySw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1701170177;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+x5mzkgJdHdY5sgqZaJ2j6SzsEzsF/GGqVmkNqn5SdE=;
-    b=l5UdB6LjVzzwHxTDciJ+4+G6b/VMi9dUGicW7QDJ0NEkzNK7Qwaak0rPsXlueJ9ILz
-    0RjvjizIyoOZv88kyeh/CXV1DiOtpPMd75HDVMClZP0Nk4FQlAWtRPdWGqN2m4a3L/1K
-    veSCvPJIkcGsU+l0XFOH4asIA+x3VfOtSBWneKNmJILjdqmwTNvz58S13D7bvHS34z3p
-    aiDgy/wt4dRsnyCNnXFXP4zelHI1LAnPMZNKDUKQ3iAlsXFe22hh9JpuDnuAvS3uAGOH
-    Xr5yS+ZFvR/cq/GQ+gZZfZBHHUWvVtUsamUgb66/SgrKoZ/5cNsD8H6sxleycNfRS7C2
-    hLcA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1701170177;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+x5mzkgJdHdY5sgqZaJ2j6SzsEzsF/GGqVmkNqn5SdE=;
-    b=cvtpWXAuny8zip5VDrpRZSJIFLVpsFXIM705/Jx9exlp7ETkYvQAtYkSTCqWjjNcEk
-    RfxSrRhubqY64mJB14CQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.9.1 DYNA|AUTH)
-    with ESMTPSA id t3efe7zASBGGlnd
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Tue, 28 Nov 2023 12:16:16 +0100 (CET)
-Date: Tue, 28 Nov 2023 12:16:11 +0100
-From: Stephan Gerhold <stephan@gerhold.net>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2799B4652D;
+	Tue, 28 Nov 2023 11:21:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACEAC433C8;
+	Tue, 28 Nov 2023 11:21:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701170490;
+	bh=i2DI2lTZRH7Axef8lpr2fdCRAi/tsvwjQbIBNg6ppKI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Eant+qr0P1HZHabKslZIjVVItph5/CbW2XVL0AUtY1QEuN3EMW2onX27lKXKbg3Bn
+	 Bvg+MNrC+kdHf7IsAST0EXCJmRnuOtRXzCZ3xdStk/ONmQm+SC9IjpT4CfIIKgeiNf
+	 74SwjhX8le2hIUSdIeCmo88ZD46XPYdvzSiS8s0XUF2TZeSwUiN069wok99T5xGiUJ
+	 f9cH/mTvAxGSu0r21mQ7FWOh6lo9RVwUjp/sUZctQpG1qnPSoG+rud1D0BE97nlEGj
+	 gyYU1J6eiHzqFETUht0MTuMMe9vpnSWhLqVbQjyL6o+MtE66YijZ5V8xy1dAMUHXSr
+	 RcN4Twvwxh9Tw==
+Date: Tue, 28 Nov 2023 16:50:59 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Can Guo <quic_cang@quicinc.com>
+Cc: bvanassche@acm.org, adrian.hunter@intel.com, beanhuo@micron.com,
+	avri.altman@wdc.com, junwoo80.lee@samsung.com,
+	martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/8] arm64: dts: qcom: add initial SM8650 dtsi
-Message-ID: <ZWXL-5OomtzRJCIj@gerhold.net>
-References: <20231124-topic-sm8650-upstream-dt-v4-0-e402e73cc5f0@linaro.org>
- <20231124-topic-sm8650-upstream-dt-v4-2-e402e73cc5f0@linaro.org>
- <ZWWse_i-wjSTH8O4@gerhold.net>
- <fbbed866-fc43-4f30-94a1-942d38103e51@linaro.org>
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 04/10] scsi: ufs: ufs-qcom: Limit negotiated gear to
+ selected PHY gear
+Message-ID: <20231128112059.GS3088@thinkpad>
+References: <1700729190-17268-1-git-send-email-quic_cang@quicinc.com>
+ <1700729190-17268-5-git-send-email-quic_cang@quicinc.com>
+ <20231128054522.GF3088@thinkpad>
+ <bc69d9ef-6ddc-4389-8bf0-9405385a494b@quicinc.com>
+ <20231128105237.GN3088@thinkpad>
+ <238a3df1-5631-4922-b268-83d3dfb80c6a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <fbbed866-fc43-4f30-94a1-942d38103e51@linaro.org>
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <238a3df1-5631-4922-b268-83d3dfb80c6a@quicinc.com>
 
-On Tue, Nov 28, 2023 at 11:00:36AM +0100, Neil Armstrong wrote:
-> On 28/11/2023 10:01, Stephan Gerhold wrote:
-> > On Fri, Nov 24, 2023 at 10:20:39AM +0100, Neil Armstrong wrote:
-> > > Add initial DTSI for the Qualcomm SM8650 platform,
-> > > only contains nodes which doesn't depend on interconnect.
+On Tue, Nov 28, 2023 at 07:03:41PM +0800, Can Guo wrote:
+> 
+> 
+> On 11/28/2023 6:52 PM, Manivannan Sadhasivam wrote:
+> > On Tue, Nov 28, 2023 at 04:05:59PM +0800, Can Guo wrote:
+> > > Hi Mani,
 > > > 
-> > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/sm8650.dtsi | 2439 ++++++++++++++++++++++++++++++++++
-> > >   1 file changed, 2439 insertions(+)
+> > > On 11/28/2023 1:45 PM, Manivannan Sadhasivam wrote:
+> > > > On Thu, Nov 23, 2023 at 12:46:24AM -0800, Can Guo wrote:
+> > > > > In the dual init scenario, the initial PHY gear is set to HS-G2, and the
+> > > > > first Power Mode Change (PMC) is meant to find the best matching PHY gear
+> > > > > for the 2nd init. However, for the first PMC, if the negotiated gear (say
+> > > > > HS-G4) is higher than the initial PHY gear, we cannot go ahead let PMC to
+> > > > > the negotiated gear happen, because the programmed UFS PHY settings may not
+> > > > > support the negotiated gear. Fix it by overwriting the negotiated gear with
+> > > > > the PHY gear.
+> > > > > 
+> > > > 
+> > > > I don't quite understand this patch. If the phy_gear is G2 initially and the
+> > > > negotiated gear is G4, then as per this change,
+> > > > 
+> > > > phy_gear = G4;
+> > > > negotiated gear = G2;
+> > > > 
+> > > > Could you please explain how this make sense?
 > > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> > > new file mode 100644
-> > > index 000000000000..b0a9ca53d58e
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> > > @@ -0,0 +1,2439 @@
-> > > +[...]
-> > > +		timer@17420000 {
-> > > +			compatible = "arm,armv7-timer-mem";
-> > > +			reg = <0 0x17420000 0 0x1000>;
-> > > +
-> > > +			ranges = <0 0 0 0x20000000>;
-> > > +			#address-cells = <1>;
-> > > +			#size-cells = <1>;
-> > > +
-> > > +			frame@17421000 {
-> > > +				reg = <0x17421000 0x1000>,
-> > > +				      <0x17422000 0x1000>;
-> > > +
-> > > +				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
-> > > +					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
-> > > +
-> > > +				frame-number = <0>;
-> > > +			};
-> > > +
-> > > +			frame@17423000 {
-> > > +				reg = <0x17423000 0x1000>;
-> > > +
-> > > +				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> > > +
-> > > +				frame-number = <1>;
-> > > +
-> > > +				status = "disabled";
-> > > +			};
-> > > +
-> > > +			frame@17425000 {
-> > > +				reg = <0x17425000 0x1000>;
-> > > +
-> > > +				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
-> > > +
-> > > +				frame-number = <2>;
-> > > +
-> > > +				status = "disabled";
-> > > +			};
-> > > +
-> > > +			frame@17427000 {
-> > > +				reg = <0x17427000 0x1000>;
-> > > +
-> > > +				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
-> > > +
-> > > +				frame-number = <3>;
-> > > +
-> > > +				status = "disabled";
-> > > +			};
-> > > +
-> > > +			frame@17429000 {
-> > > +				reg = <0x17429000 0x1000>;
-> > > +
-> > > +				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
-> > > +
-> > > +				frame-number = <4>;
-> > > +
-> > > +				status = "disabled";
-> > > +			};
-> > > +
-> > > +			frame@1742b000 {
-> > > +				reg = <0x1742b000 0x1000>;
-> > > +
-> > > +				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
-> > > +
-> > > +				frame-number = <5>;
-> > > +
-> > > +				status = "disabled";
-> > > +			};
-> > > +
-> > > +			frame@1742d000 {
-> > > +				reg = <0x1742d000 0x1000>;
-> > > +
-> > > +				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-> > > +
-> > > +				frame-number = <6>;
-> > > +
-> > > +				status = "disabled";
-> > > +			};
-> > > +		};
+> > > phy_gear was G2 (in the beginning) and just now changed to G4, but the PHY
+> > > settings programmed in the beginning can only support no-G4 (not G4).
+> > > Without this change, as the negotiated gear is G4, the power mode change is
+> > > going to put UFS at HS-G4 mode, but the PHY settings programmed is no-G4.
 > > 
-> > Nitpick: Personally I feel the empty lines between each property here
-> > are a bit overly verbose. It would be better readable without them.
-> > Might be personal preference though :-)
+> > But we are going to reinit the PHY anyway, isn't it?
 > 
-> I tried to maintain a coherent style across the document, so it would break it...
+> We are power mode changing to HS-G4 with no-G4 PHY settings programmed, the
+> power mode change operation, in the 1st init, may immediately cause UIC
+> errors and lead to probe fail. We are not seeing issues as of now, maybe
+> because the amount of HW used for testing is not large enough.
 > 
 
-OK, no problem :-)
+I'm not sure what you are saying is what happening. Because, if we use the
+incompatible gear setting, we should immediately see the UIC error.
 
+> This change is not really related to this specific series, I can remove it
+> in next version.
+> 
+
+Please do so. This needs to be reviewed separately.
+
+- Mani
+
+> Thanks,
+> Can Guo.
+> 
 > > 
-> > > +[...]
-> > > +	timer {
-> > > +		compatible = "arm,armv8-timer";
-> > > +
-> > > +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> > > +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> > > +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> > > +			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
+> > > This change is to limit the negotiated gear to HS-G2 for the 1st init. In
+> > > the 2nd init, as the new PHY gear is G4, G4 PHY settings would be
+> > > programmed, it'd be safe to put the UFS at HS-G4 mode.
+> > > 
 > > 
-> > I'm pretty sure GIC_CPU_MASK_SIMPLE() is only valid & used on GICv2.
-> > Unlike arm,gic.yaml, arm,gic-v3.yaml doesn't mention "bits[15:8] PPI
-> > interrupt cpu mask". Also see e.g. commit 4a92b6d75bab ("arm64: dts:
-> > msm8996: Fix wrong use of GIC_CPU_MASK_SIMPLE()").
+> > Why do we need to limit it since we already have the logic in place to set
+> > whatever gear mode applicable for 1st init?
 > > 
-> > Would be also good to check if any existing DTs have introduced this
-> > incorrectly again since then.
-> 
-> All those platforms using GICv3 still use GIC_CPU_MASK_SIMPLE():
-> 
-> arch/arm64/boot/dts/qcom/qcm2290.dtsi
-> arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> arch/arm64/boot/dts/qcom/sdx75.dtsi
-> arch/arm64/boot/dts/qcom/sm4450.dtsi
-> arch/arm64/boot/dts/qcom/sm6115.dtsi
-> arch/arm64/boot/dts/qcom/sm6350.dtsi
-> arch/arm64/boot/dts/qcom/sm6375.dtsi
-> arch/arm64/boot/dts/qcom/sm8250.dtsi
-> arch/arm64/boot/dts/qcom/sm8350.dtsi
-> arch/arm64/boot/dts/qcom/sm8450.dtsi
-> arch/arm64/boot/dts/qcom/sm8550.dtsi
-> 
+> > - Mani
+> > 
+> > > Thanks,
+> > > Can Guo.
+> > > > 
+> > > > - Mani
+> > > > 
+> > > > > Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> > > > > ---
+> > > > >    drivers/ufs/host/ufs-qcom.c | 7 ++++++-
+> > > > >    1 file changed, 6 insertions(+), 1 deletion(-)
+> > > > > 
+> > > > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > > > > index cc0eb37..d4edf58 100644
+> > > > > --- a/drivers/ufs/host/ufs-qcom.c
+> > > > > +++ b/drivers/ufs/host/ufs-qcom.c
+> > > > > @@ -920,8 +920,13 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+> > > > >    		 * because, the PHY gear settings are backwards compatible and we only need to
+> > > > >    		 * change the PHY gear settings while scaling to higher gears.
+> > > > >    		 */
+> > > > > -		if (dev_req_params->gear_tx > host->phy_gear)
+> > > > > +		if (dev_req_params->gear_tx > host->phy_gear) {
+> > > > > +			u32 old_phy_gear = host->phy_gear;
+> > > > > +
+> > > > >    			host->phy_gear = dev_req_params->gear_tx;
+> > > > > +			dev_req_params->gear_tx = old_phy_gear;
+> > > > > +			dev_req_params->gear_rx = old_phy_gear;
+> > > > > +		}
+> > > > >    		/* enable the device ref clock before changing to HS mode */
+> > > > >    		if (!ufshcd_is_hs_mode(&hba->pwr_info) &&
+> > > > > -- 
+> > > > > 2.7.4
+> > > > > 
+> > > > 
+> > 
 
-Heh, so we managed to omit it for msm8996, msm8998, sdm845, sm8150 and
-then someone reintroduced it for sm8250 and the following. :-)
-
-> I'm sure you're right, and indeed the PPI affinity can be specified in an optional
-> 4th cell, but I'll need another confirmation I can safely remove it here.
-> 
-> Since it's harmless, it could be cleaned up later on over all the qcom DT.
-> 
-
-Please don't introduce new device trees with known mistakes, at least if
-it's trivial to fix. This will just increase the likelihood that someone
-will accidentally copy from the commit and make the same mistake again.
-
-This is effectively comparable to a dtbs_check failure (except that the
-tooling can't check for this automatically at the moment). Either the
-binding or the DT should be fixed. It's most definitely the DT in this
-case. :-)
-
-Thanks,
-Stephan
+-- 
+மணிவண்ணன் சதாசிவம்
 
