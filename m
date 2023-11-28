@@ -1,112 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-2334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFF4D7FC58E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 21:36:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F2FE7FC67B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 21:58:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F1BF21C20F70
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 20:36:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C9C01C23A4D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 20:58:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B82F5C08D;
-	Tue, 28 Nov 2023 20:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667D642A9F;
+	Tue, 28 Nov 2023 20:58:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OZo70hHW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oV48eUKn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E90DC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 12:36:02 -0800 (PST)
-Received: by mail-oo1-xc2a.google.com with SMTP id 006d021491bc7-58d12b53293so3333205eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 12:36:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701203761; x=1701808561; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8QlqPdsqaKfOX4ybpeoxfRZcdk2EJ2CcgPBS+ybUncU=;
-        b=OZo70hHWiTTFFoNK/myvRMKlNndV5GgTqTBj7uIQhy8oyN4WgomPZMPm7k21r2PJV2
-         Siv8v78XFghK3IYVj8ah0Nos6L7hfS4zO2+mYubq9Hst5wTOjQnNBkj2v+RdSd23SlYW
-         oxpBSp92bCszoWbYMob3cpV+H46wO6Q73xw8vOGZLcTKYQOPhDQpWZZhZP+Lp9SEO78a
-         680geMRkI6YKOC90jr82eBA878lf6CJQnypyAQfpw/s0I0cUFYZRVft45W2oa8u72fuk
-         PVLU1AWmiHSmCMZBUFDbK2jz0hV2H2TkfAP01IsxF9UY/3FDsVpx33KwajyGwyMflJd2
-         eUPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701203761; x=1701808561;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8QlqPdsqaKfOX4ybpeoxfRZcdk2EJ2CcgPBS+ybUncU=;
-        b=uhNpnuvBjEXFFMFuAQE4awES3NBNkpJhYi2N2qay+v1MeB6DjAzS6d79zn2hi6Gop0
-         aI4N9O0BGCDqlBRhmmT43MNrFt1G+XsAVQJsIcVvIdlqeQliKfh4UlG89sEWrQfSgUhq
-         byja0E01n5wuC0pfbrlW0yymbfybk+28o5N9vM2q7DYk67B7gzHj8c21aBRbdKIZZQyL
-         sSETaV8oxfC6yEVpRWP22M14TATUlHAK4L88fwtDGH21QRH7NKVOwLltPDmZEEfTriH9
-         NkzW/bSaLNRYVG67u06s3naEGd6Y3w/d9KXsFxr75oLdytGb+DBBKaztreS10x2hC8hy
-         fo5g==
-X-Gm-Message-State: AOJu0YwCmQVJRrXqCDv2+GXr6RDrUpIUhEZtEod/n8uRmxLHn5E8hPWu
-	k86dL5Um+Jng46RtxqIummA/REB/8b2Atv/+8pGlHPxkyrHUmC5a
-X-Google-Smtp-Source: AGHT+IFzsmlB/1Q5gxxim4y4vmRNi1YzA551Xf7Btg7SG2Mt7yLBRFaDXl11rOlT2eb6ssG2GPUC+ENHaKVHfploOV4=
-X-Received: by 2002:a05:6358:60cd:b0:16b:c249:9b97 with SMTP id
- i13-20020a05635860cd00b0016bc2499b97mr20105639rwi.18.1701203761477; Tue, 28
- Nov 2023 12:36:01 -0800 (PST)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEF34437C;
+	Tue, 28 Nov 2023 20:58:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592C3C433C7;
+	Tue, 28 Nov 2023 20:58:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701205089;
+	bh=UX5C2qgBjiUo8YBuIWLh8l0BZcz0KqX1PVlM2d6g/Hs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=oV48eUKntnEzVvcv9ghdk4dk2660mtkgGC0Rq09ovnIQzNbwC5LzvTjX/pzHoS/w3
+	 lLE7UZJsygtUY9+gFwrkTl/tIUufnO5J+XaoPSeACsp5uhGSjr3NZlsIcqT6IMqBMt
+	 mUdIRT8gLBx/KVa/AsVZ5XPeuU4n/mlHj24sCUS3EfVqaO+1fYX0ZHIekyUhVvl1rw
+	 yJSvsUyC6LHCwm9kfTJPE/ezpij/gexK4CA3CSIK2r4EyQMTDlPD7Ff11jVcLUm388
+	 Kf/Ejt8CDzUL0EfvfRoTI7fZgHwjeouX3YFeY+AbNe63iOFcohuGQRLioe/DbznTix
+	 OpVa7ZM6cd+3Q==
+Date: Tue, 28 Nov 2023 12:58:08 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+ mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, loic.poulain@linaro.org
+Subject: Re: [PATCH v2 0/2] Add MHI Endpoint network driver
+Message-ID: <20231128125808.7a5f0028@kernel.org>
+In-Reply-To: <CAA8EJppL0YHHjHj=teCnAwPDkNhwR1EWYuLPnDue1QdfZ3RS_w@mail.gmail.com>
+References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
+	<20230607094922.43106896@kernel.org>
+	<20230607171153.GA109456@thinkpad>
+	<20230607104350.03a51711@kernel.org>
+	<20230608123720.GC5672@thinkpad>
+	<20231117070602.GA10361@thinkpad>
+	<20231117162638.7cdb3e7d@kernel.org>
+	<20231127060439.GA2505@thinkpad>
+	<20231127084639.6be47207@kernel.org>
+	<CAA8EJppL0YHHjHj=teCnAwPDkNhwR1EWYuLPnDue1QdfZ3RS_w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
- <20230607094922.43106896@kernel.org> <20230607171153.GA109456@thinkpad>
- <20230607104350.03a51711@kernel.org> <20230608123720.GC5672@thinkpad>
- <20231117070602.GA10361@thinkpad> <20231117162638.7cdb3e7d@kernel.org>
- <20231127060439.GA2505@thinkpad> <20231127084639.6be47207@kernel.org>
-In-Reply-To: <20231127084639.6be47207@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 28 Nov 2023 22:35:50 +0200
-Message-ID: <CAA8EJppL0YHHjHj=teCnAwPDkNhwR1EWYuLPnDue1QdfZ3RS_w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Add MHI Endpoint network driver
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, davem@davemloft.net, 
-	edumazet@google.com, pabeni@redhat.com, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, loic.poulain@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Mon, 27 Nov 2023 at 18:46, Jakub Kicinski <kuba@kernel.org> wrote:
->
-> On Mon, 27 Nov 2023 11:34:39 +0530 Manivannan Sadhasivam wrote:
-> > I think you made up your mind that this driver is exposing the network interface
-> > to the firmware on the device. I ought to clearify that the device running this
-> > driver doesn't necessarily be a modem but a PCIe endpoint instance that uses the
-> > netdev exposed by this driver to share data connectivity with another device.
->
-> Doesn't matter how many legit use cases you can come up with.
-> Using netdev as a device comm channel is something I am
-> fundamentally opposed to.
->
-> > This concept is not new and being supported by other protocols such as Virtio
-> > etc...
->
-> Yes. Use virtio, please.
+On Tue, 28 Nov 2023 22:35:50 +0200 Dmitry Baryshkov wrote:
+> Also, please excuse me if this was already answered, just for my understanding:
+> - If we limit functionality to just networking channels which are used
+> to pass IP data between host and EP, will that be accepted?
 
-We can try using virtio if we control both sides of the link. However
-there are usecases of the upstream Linux running on the modem (PCIe
-EP) side and other systems (Win, Android) running on the RC side. In
-such cases we have to provide the interface that is expected by the
-host driver, which unfortunately is MHI. Not to mention that one of
-the PCIe EP regions contains registers which are targeting the MHI
-protocol. I am not sure how hardware will react if we bypass this
-completely and implement VirtIIO or NTB instead.
+That's too hard to enforce. We have 200+ drivers, we can't carefully
+review every single line of code to make sure you stick to the "just
+networking" promise you make us. Plus the next guy will come and tell
+us "but you let the company X do it".
 
-Also, please excuse me if this was already answered, just for my understanding:
-- If we limit functionality to just networking channels which are used
-to pass IP data between host and EP, will that be accepted?
+> - If we were to implement the PCIe networking card running Linux (e.g.
+> using Freescale PowerQUICC or Cavium Octeon chips), would you also be
+> opposed to implementing the EP side of the link as the netdev?
 
-- If we were to implement the PCIe networking card running Linux (e.g.
-using Freescale PowerQUICC or Cavium Octeon chips), would you also be
-opposed to implementing the EP side of the link as the netdev?
+Yes.
 
--- 
-With best wishes
-Dmitry
+It's very tempting to reuse existing code, written for traffic to build
+a control channel. This becomes painful because:
+ - the lifetime rules for interfaces to configure vs to pass traffic 
+   are different, which inevitably leads to bugs in common code,
+ - the use cases are different, which leads to hacks / abuse,
+   and then it's a lot harder for us to refactor and optimize core 
+   code / data structures,
+ - IDK how "channel to talk to FW" fits with the normal IP stack...
+
+The "FW channel netdevs" exist for decades now, and are very popular
+with middle box SDKs, I know. Your choices are:
+ - keep the code out of tree,
+ - use a generic interface with a strong standard definition, like
+   virtio, and expect that no customizations will be allowed.
 
