@@ -1,146 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-2253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62D167FB8AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 11:55:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 865CE7FB8B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 11:57:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F3E4282BD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:55:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41053282BAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 10:57:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DFF945C19;
-	Tue, 28 Nov 2023 10:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94BC5381CD;
+	Tue, 28 Nov 2023 10:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VXtbiMX+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AD6s+RD+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB69179AD;
-	Tue, 28 Nov 2023 10:55:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03AFC433C7;
-	Tue, 28 Nov 2023 10:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72756D511;
+	Tue, 28 Nov 2023 10:57:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8033C433C7;
+	Tue, 28 Nov 2023 10:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701168916;
-	bh=xaI8DgSJpCKxnGj0OgbufF5SQT3bV5304U6aBzNRRtU=;
+	s=k20201202; t=1701169043;
+	bh=YneTLXB1mmfGNl3d0q1JaknL6gIyvE7m5Usmdw11fFk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VXtbiMX+CCuZfqiD8VznplAdiicAVzfiX3wkUpZKwQM9w1U6b5Iwr1vcwOZvy/HcJ
-	 JbM+hep59s/yueEpV2COfKs/6Od67nUg/hGKAoEc2A4wohIB1PJzAUl4/+NI01GVvt
-	 wpO/5Dhe4G279cAtXNQPcHKvT1tUlqhahkXUU7DzhMTy4G9SmnzmT/TW+UnKpFbily
-	 7euOw8ign1svEO5l9EJmYb0kL5n5ZfF6O88DxP1webG52W1wu6g8zG/ALTB8JkfeA+
-	 igdkKZzIGCBcQaNFPikaydeyV9Zmx8zqWq3KX/+TpGIQ1FvEnj86+jXcQ+/jboyRLO
-	 wXp+ZOJwygbig==
-Date: Tue, 28 Nov 2023 16:25:06 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Can Guo <quic_cang@quicinc.com>
-Cc: bvanassche@acm.org, adrian.hunter@intel.com, beanhuo@micron.com,
-	avri.altman@wdc.com, junwoo80.lee@samsung.com,
-	martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	b=AD6s+RD+HhYX03u/xLI9X4ZvmMgS7DysGh94q+tZS3O1cAf+OBIcDcpYBkIiwr53Y
+	 EVosBvet6LVHec5YJbCJHj6TjLkISwR64UUZHY5DGWLvU6UmbP75XfBvyCpJeC86tP
+	 UjJTzPU8atfgF0MRQNDTRY2GoqpUGc+B7197fW3MtQEoi5ELJYg+R36Xd8rg075hPo
+	 1wFeEgfjh2L/KmdVr8uNtrPYuF78BwN0I1lnqoZocOYReov7Le4/gtEzelwIKcQDoq
+	 vY4rpwYWwcfiZQFQ1z0EgxF0xz5GNFoS8xetv+l/QEwPod/iNzgf6tvqUz+I10VQX9
+	 NKQe2+aV88aNA==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1r7vmo-0005v9-2v;
+	Tue, 28 Nov 2023 11:57:51 +0100
+Date: Tue, 28 Nov 2023 11:57:50 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 06/10] scsi: ufs: ufs-qcom: Limit HS-G5 Rate-A to
- hosts with HW version 5
-Message-ID: <20231128105506.GO3088@thinkpad>
-References: <1700729190-17268-1-git-send-email-quic_cang@quicinc.com>
- <1700729190-17268-7-git-send-email-quic_cang@quicinc.com>
- <20231128055520.GG3088@thinkpad>
- <4648b6a0-92cb-4411-9b58-03219962505d@quicinc.com>
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+Subject: Re: [PATCH 1/6] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
+ bindings
+Message-ID: <ZWXHrvUDnF2dMk6r@hovoldconsulting.com>
+References: <20231122191335.3058-1-quic_kriskura@quicinc.com>
+ <ZV9dYpTYRXn63tXe@hovoldconsulting.com>
+ <1192d91f-11bf-44af-953a-14e08e2b6ca8@quicinc.com>
+ <ZWCpGdJRexnk98IN@hovoldconsulting.com>
+ <004ddc69-1566-4de4-b260-0fca96a9395f@quicinc.com>
+ <ZWW_FOAKp95Cf9vN@hovoldconsulting.com>
+ <18965bb9-7afa-4892-8b71-981ba29d2cd4@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4648b6a0-92cb-4411-9b58-03219962505d@quicinc.com>
+In-Reply-To: <18965bb9-7afa-4892-8b71-981ba29d2cd4@quicinc.com>
 
-On Tue, Nov 28, 2023 at 03:48:02PM +0800, Can Guo wrote:
-> Hi Mani,
+On Tue, Nov 28, 2023 at 04:02:53PM +0530, Krishna Kurapati PSSNV wrote:
+
+> >    >> My opinion would be to keep the power_event irq as mandatory and not to
+> >> include the hs_phy_irq.
+> > 
+> > Ok, but you still need to explain why dropping hs_phy_irq is correct.
+> > 
+> > Until there's a clear answer to that, it seems we need to include it.
 > 
-> On 11/28/2023 1:55 PM, Manivannan Sadhasivam wrote:
-> > On Thu, Nov 23, 2023 at 12:46:26AM -0800, Can Guo wrote:
-> > > Qcom UFS hosts, with HW ver 5, can only support up to HS-G5 Rate-A due to
-> > > HW limitations. If the HS-G5 PHY gear is used, update host_params->hs_rate
-> > > to Rate-A, so that the subsequent power mode changes shall stick to Rate-A.
-> > > 
-> > > Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> > 
-> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > 
-> > One question below...
-> > 
-> > > ---
-> > >   drivers/ufs/host/ufs-qcom.c | 18 +++++++++++++++++-
-> > >   1 file changed, 17 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > > index 9613ad9..6756f8d 100644
-> > > --- a/drivers/ufs/host/ufs-qcom.c
-> > > +++ b/drivers/ufs/host/ufs-qcom.c
-> > > @@ -442,9 +442,25 @@ static u32 ufs_qcom_get_hs_gear(struct ufs_hba *hba)
-> > >   static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
-> > >   {
-> > >   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> > > +	struct ufs_host_params *host_params = &host->host_params;
-> > >   	struct phy *phy = host->generic_phy;
-> > > +	enum phy_mode mode;
-> > >   	int ret;
-> > > +	/*
-> > > +	 * HW ver 5 can only support up to HS-G5 Rate-A due to HW limitations.
-> > > +	 * If the HS-G5 PHY gear is used, update host_params->hs_rate to Rate-A,
-> > > +	 * so that the subsequent power mode change shall stick to Rate-A.
-> > > +	 */
-> > > +	if (host->hw_ver.major == 0x5) {
-> > > +		if (host->phy_gear == UFS_HS_G5)
-> > > +			host_params->hs_rate = PA_HS_MODE_A;
-> > > +		else
-> > > +			host_params->hs_rate = PA_HS_MODE_B;
-> > 
-> > Is this 'else' part really needed? Since there wouldn't be any 2nd init, I think
-> > we can skip that.
+> Sure, I agree with you. It should describe what hardware is capable of, 
+> not what we choose to add in driver code. In that sense we can add the 
+> hs_phy_irq to all targets.
 > 
-> We need it because, even there is only one init, if a UFS3.1 device is
-> attached, phy_gear is given as UFS_HS_G4 in ufs_qcom_set_phy_gear(), hence
-> we need to put the UFS at HS-G4 Rate B, not Rate A.
+> In my next revision, I can do the following:
 > 
-
-But the default hs_rate is PA_HS_MODE_B only and the else condition would be not
-needed for the 1st init.
-
-- Mani
-
-> Thanks,
-> Can Guo.
+> 	- anyOf:
+> 	  - items:
+> 	    - const: qusb2_phy
+> 	  - items:
+> 	    - const: dp_hs_phy_irq
+> 	    - const: dm_hs_phy_irq
+> 	- const: hs_phy_irq
+> 	- const: pwr_event
+> 	- const: ss_phy_irq	(optional)
 > 
-> > 
-> > - Mani
-> > 
-> > > +	}
-> > > +
-> > > +	mode = host_params->hs_rate == PA_HS_MODE_B ? PHY_MODE_UFS_HS_B : PHY_MODE_UFS_HS_A;
-> > > +
-> > >   	/* Reset UFS Host Controller and PHY */
-> > >   	ret = ufs_qcom_host_reset(hba);
-> > >   	if (ret)
-> > > @@ -459,7 +475,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
-> > >   		return ret;
-> > >   	}
-> > > -	phy_set_mode_ext(phy, PHY_MODE_UFS_HS_B, host->phy_gear);
-> > > +	phy_set_mode_ext(phy, mode, host->phy_gear);
-> > >   	/* power on phy - start serdes and phy's power and clocks */
-> > >   	ret = phy_power_on(phy);
-> > > -- 
-> > > 2.7.4
-> > > 
-> > 
+> A modified version of your suggestion should help cover all cases and 
+> describe all DT's perfectly.
 
--- 
-மணிவண்ணன் சதாசிவம்
+It may be better to spell out the permutations. Especially since there
+are no platforms with both qusb2_phy and dp/dm as I thought when
+mentioning the above. Using anyOf also makes it hard to specify
+min/maxItems as you'll need to do.
+
+So back to my initial proposal, with a slight modification moving
+pwr_event first (e.g. as it is not a wakeup interrupt):
+
+qusb2-:
+
+	- const: pwr_event
+	- const: qusb2_phy
+	- const: ss_phy_irq	(optional)
+
+qusb2:
+
+	- const: pwr_event
+	- const: hs_phy_irq
+	- const: qusb2_phy
+	- const: ss_phy_irq	(optional)
+
+femto-:
+	- const: pwr_event
+	- const: dp_hs_phy_irq
+	- const: dm_hs_phy_irq
+	- const: ss_phy_irq	(optional)
+
+femto:
+	- const: pwr_event
+	- const: hs_phy_irq
+	- const: dp_hs_phy_irq
+	- const: dm_hs_phy_irq
+	- const: ss_phy_irq	(optional)
+
+That ss_phy_irq is optional would be expressed as minItems being one
+less than maxItems for each permutation.
+
+Johan
 
