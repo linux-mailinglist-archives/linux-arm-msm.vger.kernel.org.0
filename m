@@ -1,108 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-2304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0C347FC0A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 18:54:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B92927FC09B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 18:50:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8131EB21398
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 17:54:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF9E71C20AD8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 17:50:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA98439AF4;
-	Tue, 28 Nov 2023 17:54:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XmmeJA66"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 729FF39AF4;
+	Tue, 28 Nov 2023 17:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB278AB;
-	Tue, 28 Nov 2023 09:54:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701194043; x=1732730043;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=U7SHRv8kT+n7b9v0GPnWjN8fPXLgdna0HJB40XzjEaE=;
-  b=XmmeJA668oj5wlrR1op3ftWM+hNrTkF9WzqLhxdGSVWje9J4vGobtQoE
-   TTWIrPxMUuf9z7BHrUTd1fRtTY+fRDByVXYEuMcwCFjOZcCUP93AZ33Xw
-   nGwzVSs7CAEMMgUocsMzNg6ag8m8lWq3NEQQHY5xSzAfsjgQnzXbI+kKt
-   5a3NT8hUmuVPR3LHpf+2eQyHknIHKz4O6lrHwuE0gcLRQXVYBmZ0a4zYN
-   /yLZc3rAcCRJsC0Pyf5tJEEupPaHLVm9iYk8EqBn8gPmtxYRl3XADJ0zX
-   yF1ZgU6duAgCdMKEup3txbBB99KARLpBu4O07mzdIo8Dxykif12yHH2Qa
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="424127120"
-X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
-   d="scan'208";a="424127120"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 09:54:03 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10908"; a="834715363"
-X-IronPort-AV: E=Sophos;i="6.04,234,1695711600"; 
-   d="scan'208";a="834715363"
-Received: from skumarso-mobl33.amr.corp.intel.com (HELO [10.255.231.208]) ([10.255.231.208])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Nov 2023 09:54:01 -0800
-Message-ID: <d3a2eb33-ea3e-43ac-a872-a7182404eee6@linux.intel.com>
-Date: Tue, 28 Nov 2023 11:49:44 -0600
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E4A010CB;
+	Tue, 28 Nov 2023 09:50:46 -0800 (PST)
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-6ce353df504so3567957a34.3;
+        Tue, 28 Nov 2023 09:50:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701193845; x=1701798645;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pNiHiA6wSmKNmRriIDAMYJotOGbcur5RnZmpYezuUUg=;
+        b=tFjFEReNcjMz+GQPjpkEP3R1k/+Spz6kX0LRbQq/YiOmf3ewY6JMvNTcOUjTulOeKd
+         s7HEWkrH39TjcKQG6/DHrzwNbOjfqIAJWu+3chW17+6dXuJP1nP8HFUdRgT6Ot57MdMu
+         rvxHV5hPUEhwloJVWNPf1NqZxd6wYX64K2lmIatsMd1jG/7ZkmbRG4rTqvKHYD6OWNnU
+         Cc0Z177IemOvvgEC3a/AdEZeMVuVJmoG3EI4RVTevtcEEh0XY9VdSxITfRX1dgZvE3Nu
+         QBkn6xAjLMCEE/11R+hYl7UnqXmd3O68UCIpj0nxBlztJ460VUOQRFWVl3X7CPjchlGi
+         dHtw==
+X-Gm-Message-State: AOJu0Yz6NL98yf3YZd9QwjFw9KbvqEQvuch3APgwfylDmimGXg7QCTSJ
+	/KKvg3iJbEMb1+nTa6LBdPbXOvYroA==
+X-Google-Smtp-Source: AGHT+IEjDCvt0vi7M2D0Vgdb1l1lflZgZ7cf7adlM1nWVNj8pKpbDYpnNuo5F79frDyWtoGy7D2zpw==
+X-Received: by 2002:a9d:6449:0:b0:6d6:490f:f027 with SMTP id m9-20020a9d6449000000b006d6490ff027mr16049889otl.37.1701193845338;
+        Tue, 28 Nov 2023 09:50:45 -0800 (PST)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id s2-20020a0568301e0200b006d646763942sm1717051otr.23.2023.11.28.09.50.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Nov 2023 09:50:44 -0800 (PST)
+Received: (nullmailer pid 3558114 invoked by uid 1000);
+	Tue, 28 Nov 2023 17:50:43 -0000
+Date: Tue, 28 Nov 2023 11:50:43 -0600
+From: Rob Herring <robh@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Cc: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, linux-i2c@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Wolfram Sang <wsa@kernel.org>, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: i2c: qcom,i2c-qup: Document
+ power-domains
+Message-ID: <170119384299.3558042.16570050685219683863.robh@kernel.org>
+References: <20231128-i2c-qup-dvfs-v1-0-59a0e3039111@kernkonzept.com>
+ <20231128-i2c-qup-dvfs-v1-1-59a0e3039111@kernkonzept.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ASoC: qcom: Move Soundwire runtime stream alloc to
- soundcards
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Bard Liao <yung-chuan.liao@linux.intel.com>,
- Sanyog Kale <sanyog.r.kale@intel.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
- linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org
-References: <20231128165638.757665-1-krzysztof.kozlowski@linaro.org>
- <20231128165638.757665-2-krzysztof.kozlowski@linaro.org>
- <4317ec5d-8eb8-4a2f-aebc-cc04f2aba145@linaro.org>
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <4317ec5d-8eb8-4a2f-aebc-cc04f2aba145@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231128-i2c-qup-dvfs-v1-1-59a0e3039111@kernkonzept.com>
 
 
-
-On 11/28/23 10:59, Krzysztof Kozlowski wrote:
-> On 28/11/2023 17:56, Krzysztof Kozlowski wrote:
->> Currently the Qualcomm Soundwire controller in its DAI startup op
->> allocates the Soundwire stream runtime.  This works fine for existing
->> designs, but has limitations for stream runtimes with multiple
->> controllers, like upcoming Qualcomm X1E80100 SoC with four WSA8840
->> speakers on two Soundwire controllers.
->>
->> When two Soundwire controllers are added to sound card codecs, Soundwire
->> startup() is called twice, one for each Soundwire controller, and second
->> execution overwrites what was set before.  During shutdown() this causes
->> double free.
->>
->> It is expected to have only one Soundwire stream runtime, thus it should
->> be allocated from SoC soundcard context startup(), not from each
->> Soundwire startup().  Such way will properly handle both cases: one and
->> two Soundwire controllers in the stream runtime.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> This is an entirely different approach than my previous try here:
->> https://lore.kernel.org/all/20231025144601.268645-1-krzysztof.kozlowski@linaro.org/
+On Tue, 28 Nov 2023 10:48:35 +0100, Stephan Gerhold wrote:
+> Similar to qcom,geni-i2c, for i2c-qup we need to vote for performance
+> states on the VDDCX power domain to ensure that required clock rates
+> can be generated correctly.
 > 
-> ... and I forgot to thank you Pierre-Louis for patient explanation of
-> the case in my previous try. Your review was much appreciated!
+> I2C is typically used with a fixed clock rate, so a single required-opp
+> is sufficient without a full OPP table (unlike spi-qup for example).
+> 
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> ---
+>  Documentation/devicetree/bindings/i2c/qcom,i2c-qup.yaml | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+> 
 
-You're welcome. It's good if we have multiple platforms using the
-'stream' concept in similar ways.
+Reviewed-by: Rob Herring <robh@kernel.org>
+
 
