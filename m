@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B59EE7FD89E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:50:04 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 514917FD8DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:01:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F33B282894
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 13:50:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CC368B21444
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:01:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ABB320B1E;
-	Wed, 29 Nov 2023 13:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 445BC208AB;
+	Wed, 29 Nov 2023 14:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NeHvIq0e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FKcaGS6d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274CF198
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 05:49:58 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-a011e9bf336so931601866b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 05:49:58 -0800 (PST)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D4C10CE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:01:03 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50bc743c7f7so614274e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:01:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701265796; x=1701870596; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701266462; x=1701871262; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UPA9Ue4Gdl7RwpERVeFUS5eOUk3EY2mtgbz0gqR07UI=;
-        b=NeHvIq0efQpgcEyuUjj5uIzp1JZNXlweLv1SDt2GVk+A8MLvCkdQiP+hVWMlzonrVp
-         zfA4jgVBl19ZPsxGm343dQ3xQLyWM24CX4NwgSjYe5v2ry4xKmt7d5pczKMCLhFZHblN
-         z3AlSaSmmx3hFrQWbe4gFaAb8GH2xxk1pMMgYmewbpu8hmbaNNalimVvqDN2SVmo01sD
-         i+LI/aDvXIQCA6vyr3VsdiFVFFmhdOZOrFSTPcFnLp3bKR6XcSWNFMPVLqoPE8kgP4o/
-         QCWFx8Wqn/v+g+mnvDqx6sYBan5IwI7UhvcCYC6BSJHyyukUXaJwYzY0hKLJ2UGNHE6k
-         5YZA==
+        bh=HFdKEVTW61V1xHyYtbiBsO5/c4EsvUDRepVmlWcXtHE=;
+        b=FKcaGS6dI4FXUUTe1fF3/tSQTgJ9APHPqyA5hZJYGvufxyp8lzKeraM51NNkPXIY4S
+         4TVE+xuz/E+as705ZmTFyk7Z1qQgHBqO2GrA+mp/w+whGDRlHVFqYZ0yY5mS2L18bDkS
+         qy1V4Zlpk8x7vlG9vXakEEQ068OktUAFo2Uz2xBVLVsW+UDWzSm9YeyOaiXz6dI+Fw4G
+         CDgA/sfCscxF1JbSIPLglVLFEgOu2fOVCabyj93luvUf7JlZ8tu1Rsw/ZTTZr1AyVkTi
+         cGac6fx67S36jUFmuvfFNB67JB1uw6vhb5q5sETnWwcYO3GJgh3BVIxrXHLWFCXkbpwV
+         T5/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701265796; x=1701870596;
+        d=1e100.net; s=20230601; t=1701266462; x=1701871262;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UPA9Ue4Gdl7RwpERVeFUS5eOUk3EY2mtgbz0gqR07UI=;
-        b=ThoXnI650RP+wbGOq6skxUh5nJqy2cIFd5PI5hE1OydRUrTtnqFIiL64ACw9NCsM3M
-         9vEUdBrK8pDvQVb5qL5YgBnorjT/yWLwK8IcIQiMh7/R1UbPhROTH/KYKuwSPf92gKAI
-         2VhQF1+isMWQRKthOI658bvVnuKMaUrAHu+0KL168l2R/JqPH5kTZN79XoI0nODeoZWH
-         gsys4Lqyx5OGiLbJuaia1eUuPVWBC+DxhRjtK4nAQVmFD3F13JDVka0cLppwVFRJ8cY2
-         H+y+IZvjjHHU7VAIJSIiJAQBfLmiYXnAIoTt5b/0A+kJdYXwPpjqqPF+U5znuXZpXnEM
-         tRRg==
-X-Gm-Message-State: AOJu0Ywz8wXIhZfUs80kBgK1caHJbaihqHOV0Rnx/HHp4FslhsTk9AjM
-	dq9QjFGdsO4SFjZOC11/MCjzM7be6T5EMXWoWrg=
-X-Google-Smtp-Source: AGHT+IFiCXcs6L2i44eAqVZ2L4F+9584f92S1p6O/xMEuDjTQ9WRsaXu+BNt40od2y6fbxMJy9239g==
-X-Received: by 2002:a17:906:6811:b0:a02:f424:f817 with SMTP id k17-20020a170906681100b00a02f424f817mr12407911ejr.30.1701265796643;
-        Wed, 29 Nov 2023 05:49:56 -0800 (PST)
+        bh=HFdKEVTW61V1xHyYtbiBsO5/c4EsvUDRepVmlWcXtHE=;
+        b=EA1/wYqT70+WRMXUnt2oJ7xjakDUsh9ydqCaihmHoZjnGg5cJPw73n6x/fbYzbk2Wz
+         aARXc49W+EmyniJ/hcezfpc+jA18QO9jmYqOZd8OrXOrpOBiSn1893iSfUVJrbiQG/Kd
+         Ae5iVyt9WglT6rjzeM6JRgPODui2r/yUe7fycZ+9nYHAQBpv4jlxb8EhEsrnKm14sINI
+         Yftxs8UlLufrD2NAy1+XKrfdcRWKpGcsIKiiBTvxMMbEHT9E7pi+l25j+u/KVWrihNBO
+         UGyD8WtvYaNOG5nl/FXD7wUWiSEf0GRCp6VJXlKKet42ZE9cGVDhmWGvLtMembqDNWRo
+         tacQ==
+X-Gm-Message-State: AOJu0YznxHVrgO8eEJJLxwG0ZDySOKlRob2e/uEHL85dvTLQGZ6yo6Hf
+	x1Yc5ITwiKEffVFqCkHTCTDzFQ==
+X-Google-Smtp-Source: AGHT+IHviG4Z2hXt1LHxLsvc3bZ7a1BErojOSze3hz/kajM1AYS7CCxQR3Bhgrh58eTm6pB20cB+hQ==
+X-Received: by 2002:a05:6512:1d1:b0:50b:bd3f:9118 with SMTP id f17-20020a05651201d100b0050bbd3f9118mr2774050lfp.36.1701266461633;
+        Wed, 29 Nov 2023 06:01:01 -0800 (PST)
 Received: from [192.168.209.173] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id f8-20020a17090624c800b009fd77d78f7fsm7910195ejb.116.2023.11.29.05.49.54
+        by smtp.gmail.com with ESMTPSA id ck7-20020a0564021c0700b0054b1360dd03sm5520697edb.58.2023.11.29.06.00.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Nov 2023 05:49:56 -0800 (PST)
-Message-ID: <d1014fe5-e9ae-4ce8-bf19-63793552852f@linaro.org>
-Date: Wed, 29 Nov 2023 14:49:54 +0100
+        Wed, 29 Nov 2023 06:01:01 -0800 (PST)
+Message-ID: <2ca148cc-564c-499a-8fdf-487391c9024c@linaro.org>
+Date: Wed, 29 Nov 2023 15:00:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,17 +62,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: sm8650-mtp: add WSA8845 speakers
+Subject: Re: [PATCH V2 0/4] Add runtime PM support for videocc on SM8150
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
+To: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>,
+ Konrad Dybcio <konradybcio@kernel.org>, Andy Gross <agross@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-References: <20231129132247.63721-1-krzysztof.kozlowski@linaro.org>
- <20231129132247.63721-6-krzysztof.kozlowski@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20231118123944.2202630-1-quic_skakitap@quicinc.com>
+ <47925f9e-32aa-4762-a4ec-aa559e18ff12@kernel.org>
+ <26b69814-201b-8d07-d844-27e804aa3016@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -109,31 +113,58 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231129132247.63721-6-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <26b69814-201b-8d07-d844-27e804aa3016@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 29.11.2023 14:22, Krzysztof Kozlowski wrote:
-> Add nodes for WSA8845 speakers on SM8650 MTP board.
+On 28.11.2023 17:11, Satya Priya Kakitapalli (Temp) wrote:
 > 
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-[...]
+> On 11/20/2023 5:18 PM, Konrad Dybcio wrote:
+>> On 18.11.2023 13:39, Satya Priya Kakitapalli wrote:
+>>> Add runtime support for videocc on SM8150 and update the resets
+>>> and video_pll0_config configuration.
+>>>
+>>> Satya Priya Kakitapalli (4):
+>>>    dt-bindings: clock: Update the videocc resets for sm8150
+>>>    clk: qcom: videocc-sm8150: Update the videocc resets
+>>>    clk: qcom: videocc-sm8150: Add missing PLL config properties
+>>>    clk: qcom: videocc-sm8150: Add runtime PM support
+>> Hi, it's good practive to include a link to the previous revision
+>> and a summary of changes.
+>>
+>> The b4 tool [1] does that for you, please consider using it.
+> 
+> 
+> Hi, I have installed b4 and followed all the steps, but it doesn't populate my cover letter with change log and previous series link, do i need to use some option for that?
+You probably did something like this:
 
-> +&swr0 {
-> +	status = "okay";
-> +
-> +	/* WSA8845, Speaker Left */
-> +	left_spkr: speaker@0,0 {
-> +		compatible = "sdw20217020400";
-> +		reg = <0 0>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&spkr_1_sd_n_active>;
-property-n
-property-names
+b4 prep -n 8150vidcc --from-thread 26b69814-201b-8d07-d844-27e804aa3016@quicinc.com
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Then if you do:
+
+b4 prep --edit-cover
+
+you'll see a note like
+
+EDITME: Imported from f26b69814-201b-8d07-d844-27e804aa3016@quicinc.com
+        Please review before sending.
+
+so you need to do it manually.
+
+
+Generally, when the series has been sent at least once with b4 already,
+you'll notice that `b4 send` appends something like this to the cover
+letter:
+
+Changes in v2:
+- EDITME: describe what is new in this series revision.
+- EDITME: use bulletpoints and terse descriptions.
+- Link to v1: https://lore.kernel.org/r/20230830-topic-refgenphy-v1-0-892db196a1c0@linaro.org
+
+
+This should be only necessary to do by hand once, since as mentioned it's
+the first time b4 sees this series
+
 
 Konrad
 
