@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EAD47FD336
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 10:49:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 082CD7FD33C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 10:51:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CF171B21184
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 09:49:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3951F1C20980
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 09:51:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EC0C15E86;
-	Wed, 29 Nov 2023 09:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7370114267;
+	Wed, 29 Nov 2023 09:51:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zd2TBOwQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jWytgJWZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0CCE1999;
-	Wed, 29 Nov 2023 01:49:17 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40b4f6006d5so11365845e9.1;
-        Wed, 29 Nov 2023 01:49:17 -0800 (PST)
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E29D6C;
+	Wed, 29 Nov 2023 01:51:23 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40838915cecso46789325e9.2;
+        Wed, 29 Nov 2023 01:51:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701251356; x=1701856156; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1701251481; x=1701856281; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:subject:cc
          :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=66nT2oOs9hwRfLJpvpIoPxs492CUA1F2zIY8oJPXmF8=;
-        b=Zd2TBOwQHSmbB8+X0oM5/RE/K3oUYtzuY4EvalJa+k3yg79HjiN8ZX0CRRFDwRRvFJ
-         I8DnZncj+3ZBI1DHi5OBLSYR8mO90AJXTUQleWQJAxvbGpvkit6tK0HQtwIo7FUd+CId
-         D/Tq/NWMjBbhvJBjQtxF/qB5lQNQx8D2VB5r1R6bwL3DgUFsYn3plxz7DDzzTBlc6Peo
-         RMycnZdxf9RoAJs5hhSC4KoaEhi9XjxlnTsUR2MvBpYMis3H/0bD5IbOnnKCJCMKn/7l
-         4lDj6T2W22lug6bORAYDdZplzOavuWmjwmKmyCjNXfXqVXea+Cv6zMDPuClnpkv/Qt4D
-         NJAA==
+        bh=6s49NkgqWAb2LnIjZ7sm9fhr+G6maRXMhGbQfVxBFQk=;
+        b=jWytgJWZ6bwNN1KtDsbLW0NRKkBBB1E1FQmHSw24Q7G0l5tkRwvFSmPki8ZYZvea1c
+         R4vlK8SP/3p8+a/jb73CiQijvUVcfKZF+EI3SPAM4y6mXSw2fLtOnxxbLYDDtKIyglnT
+         kn0z2cF8JU38OnSDVdmywa/4pKbaYerU4oc/7eY5I3+0g/4q0z6fQ6eVBD8ecOO4F3RD
+         DFfW1pALvTd3htGkwVnnlVClCYBk/ymOOjGguNKeL30wZKD1Wso6OkghtzLRO2h8phwk
+         f4xTlURSn9SgD/nFNh+kGw+G68fiHsL6X4dVYkMIWxfnk4SZo+yvPTN14i0lfP1sGXkk
+         UO0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701251356; x=1701856156;
+        d=1e100.net; s=20230601; t=1701251481; x=1701856281;
         h=in-reply-to:content-disposition:mime-version:references:subject:cc
          :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=66nT2oOs9hwRfLJpvpIoPxs492CUA1F2zIY8oJPXmF8=;
-        b=FebaUCfOrCjGiBmQus9x2MtdHJ2eCTJ4iO2LMZQTBTDF/pX/s3/jW115PuavXEIdZn
-         vtFwbQvtU9po6QvVgKQPKs7ALLEXknPIJ7FdYH6k8JWHfQGZAcaMczic+8PeE/3s6Tby
-         BH+sGBp+qqyhAbi/evgZU9yRcU+gPSyTuAEO7M4VWBCL1uKfErJDzxUBaZHLi+dmV97U
-         p8/9OkW51CX4GYvRLtTF51Vzz/rgKAy7XnfuLD3LcCxDCL13yxFBWio7fXd9lPGQncao
-         W1yv2ZX66k4ND492/TFwMcj+Nd9aGh9WoXTKYSQADMmkpV2T3NO+wgHG8Q6YtMd0M319
-         hFqA==
-X-Gm-Message-State: AOJu0Yzx3xDr764VwIjyKCSyatoszr5UKrUQO/KYb6Jv9W55iEV0xRb3
-	6yZcQJZyNSFfs2zBojPvjY4J2HZxPSI=
-X-Google-Smtp-Source: AGHT+IF54aFHBaIN3vElNqQGOxBoZOqFtZLyaSwx1V6rMit1/UE0qnBNSDtEZmCBE5S7pqM8G1ohQw==
-X-Received: by 2002:a05:600c:524a:b0:40b:4ba1:c502 with SMTP id fc10-20020a05600c524a00b0040b4ba1c502mr3602156wmb.37.1701251355650;
-        Wed, 29 Nov 2023 01:49:15 -0800 (PST)
+        bh=6s49NkgqWAb2LnIjZ7sm9fhr+G6maRXMhGbQfVxBFQk=;
+        b=qkyB92ez9o05jPWSIzuDgrP5w/g7s+05HcFIlm2bM9HJ+ztZNLEtlDALnPj7qwn+pk
+         8o/sKthhRN8sdek0Kb7otT408ltw6C2qnfPxmDtxL53GlUJGUpv88auelC5tkBhLLSIl
+         IqNz+mbKv6f1yIU+ueKTixw4c1h8n8EtKuUMxBeBb7q3qsRC7d7XzOaIn9pZeGp5c+o2
+         weHVLp89O5i8wFoRW4RlJMWhzQLGplbZVSiv1F/5VUglv0TsWlgLQwkZZyJC8Y+XObXk
+         DaSC9RPAKhF8dTQNoag2I5x0X5wCm/WwbB4ilWEUoR3T4Z5/yPeX4JZlpk/E+e1ttVoa
+         rzLg==
+X-Gm-Message-State: AOJu0YwKxCe+gckcP0qj3xtzZEi3Lh4nAWMBhyCiNaGy5LtN+a1RKA1O
+	bS3RSEIttRv6BSwJumGn0ns=
+X-Google-Smtp-Source: AGHT+IEDBtku78XiW3LUgqwyucltQA7Rb1AhKKKDLz5hBamwHeAYpgOr4gHWNEC5NHnvJZj9HkhHvA==
+X-Received: by 2002:a05:600c:3592:b0:40b:4523:693a with SMTP id p18-20020a05600c359200b0040b4523693amr7528147wmq.24.1701251481109;
+        Wed, 29 Nov 2023 01:51:21 -0800 (PST)
 Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id q7-20020a05600c46c700b0040b4110f548sm1592873wmo.23.2023.11.29.01.49.14
+        by smtp.gmail.com with ESMTPSA id f15-20020a05600c154f00b0040839fcb217sm1599796wmg.8.2023.11.29.01.51.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 01:49:15 -0800 (PST)
-Message-ID: <6567091b.050a0220.44fc8.41fb@mx.google.com>
-X-Google-Original-Message-ID: <ZWcJGQEvH-9H2f6p@Ansuel-xps.>
-Date: Wed, 29 Nov 2023 10:49:13 +0100
+        Wed, 29 Nov 2023 01:51:20 -0800 (PST)
+Message-ID: <65670998.050a0220.212d3.3fb2@mx.google.com>
+X-Google-Original-Message-ID: <ZWcJluKs2hvNzNy6@Ansuel-xps.>
+Date: Wed, 29 Nov 2023 10:51:18 +0100
 From: Christian Marangi <ansuelsmth@gmail.com>
 To: "Russell King (Oracle)" <linux@armlinux.org.uk>
 Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
@@ -66,11 +66,11 @@ Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH 09/14] net: phy: at803x: remove specific qca808x
- check from at803x functions
+Subject: Re: [net-next PATCH 10/14] net: phy: at803x: drop usless probe for
+ qca8081 PHY
 References: <20231129021219.20914-1-ansuelsmth@gmail.com>
- <20231129021219.20914-10-ansuelsmth@gmail.com>
- <ZWcHzAXyIl++F1Sm@shell.armlinux.org.uk>
+ <20231129021219.20914-11-ansuelsmth@gmail.com>
+ <ZWcICtVc0dBDi3pA@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,115 +79,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZWcHzAXyIl++F1Sm@shell.armlinux.org.uk>
+In-Reply-To: <ZWcICtVc0dBDi3pA@shell.armlinux.org.uk>
 
-On Wed, Nov 29, 2023 at 09:43:40AM +0000, Russell King (Oracle) wrote:
-> On Wed, Nov 29, 2023 at 03:12:14AM +0100, Christian Marangi wrote:
-> > Remove specific qca808x check from at803x generic functions.
-> > 
-> > While this cause a bit of code duplication, this is needed in
-> > preparation for splitting the driver per PHY family and detaching
-> > qca808x specific bits from the at803x driver.
-> > 
-> > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > ---
-> >  drivers/net/phy/at803x.c | 107 ++++++++++++++++++++++++++-------------
-> >  1 file changed, 71 insertions(+), 36 deletions(-)
-> > 
-> > diff --git a/drivers/net/phy/at803x.c b/drivers/net/phy/at803x.c
-> > index 8f5878ccb1a8..475b96165f45 100644
-> > --- a/drivers/net/phy/at803x.c
-> > +++ b/drivers/net/phy/at803x.c
-> > @@ -1043,24 +1043,6 @@ static int at803x_config_aneg(struct phy_device *phydev)
-> >  	 */
-> >  	ret = 0;
+On Wed, Nov 29, 2023 at 09:44:42AM +0000, Russell King (Oracle) wrote:
+> On Wed, Nov 29, 2023 at 03:12:15AM +0100, Christian Marangi wrote:
+> > Drop useless probe for qca8081 PHY. The specific functions and the
+> > generic ones doesn't use any of allocated variables of the at803x_priv
+> > struct and doesn't support any of the properties used for at803x PHYs.
 > 
-> Doesn't this become unnecessary?
-> >  
-> > -	if (phydev->drv->phy_id == QCA8081_PHY_ID) {
-> > -		int phy_ctrl = 0;
-> > -
-> > -		/* The reg MII_BMCR also needs to be configured for force mode, the
-> > -		 * genphy_config_aneg is also needed.
-> > -		 */
-> > -		if (phydev->autoneg == AUTONEG_DISABLE)
-> > -			genphy_c45_pma_setup_forced(phydev);
-> > -
-> > -		if (linkmode_test_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT, phydev->advertising))
-> > -			phy_ctrl = MDIO_AN_10GBT_CTRL_ADV2_5G;
-> > -
-> > -		ret = phy_modify_mmd_changed(phydev, MDIO_MMD_AN, MDIO_AN_10GBT_CTRL,
-> > -				MDIO_AN_10GBT_CTRL_ADV2_5G, phy_ctrl);
-> > -		if (ret < 0)
-> > -			return ret;
-> > -	}
-> > -
-> >  	return __genphy_config_aneg(phydev, ret);
+> So now we have two different structures in ->priv _and_ ->priv can be
+> NULL all in the same driver.
 > 
-> ... since you can just call genphy_config_aneg() here now?
-> 
-> > @@ -1845,6 +1815,47 @@ static int qca8327_suspend(struct phy_device *phydev)
-> >  	return qca83xx_suspend(phydev);
-> >  }
-> >  
-> > +static int qca808x_config_aneg(struct phy_device *phydev)
-> > +{
-> > +	int phy_ctrl = 0;
-> > +	int ret;
-> > +
-> > +	ret = at803x_config_mdix(phydev, phydev->mdix_ctrl);
-> > +	if (ret < 0)
-> > +		return ret;
-> > +
-> > +	/* Changes of the midx bits are disruptive to the normal operation;
-> > +	 * therefore any changes to these registers must be followed by a
-> > +	 * software reset to take effect.
-> > +	 */
-> > +	if (ret == 1) {
-> > +		ret = genphy_soft_reset(phydev);
-> > +		if (ret < 0)
-> > +			return ret;
-> > +	}
-> > +
-> > +	/* Do not restart auto-negotiation by setting ret to 0 defautly,
-> > +	 * when calling __genphy_config_aneg later.
-> > +	 */
-> > +	ret = 0;
-> > +
-> > +	/* The reg MII_BMCR also needs to be configured for force mode, the
-> > +	 * genphy_config_aneg is also needed.
-> > +	 */
-> > +	if (phydev->autoneg == AUTONEG_DISABLE)
-> > +		genphy_c45_pma_setup_forced(phydev);
-> > +
-> > +	if (linkmode_test_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT, phydev->advertising))
-> > +		phy_ctrl = MDIO_AN_10GBT_CTRL_ADV2_5G;
-> > +
-> > +	ret = phy_modify_mmd_changed(phydev, MDIO_MMD_AN, MDIO_AN_10GBT_CTRL,
-> > +				     MDIO_AN_10GBT_CTRL_ADV2_5G, phy_ctrl);
-> > +	if (ret < 0)
-> > +		return ret;
-> > +
-> > +	return __genphy_config_aneg(phydev, ret);
-> > +}
-> 
-> ... but is it _really_ worth duplicating the entire function just to
-> deal with the QCA8081 difference? On balance, I think the original code
-> is better.
-> 
-> Overall, I'm getting the impression that you have a mental hang-up about
-> drivers checking the PHY ID in their method drivers... there's
-> absolutely nothing wrong with that. When the result of trying to
-> eliminate those results in bloating a driver, then the cleanup is not
-> a cleanup anymore, it creates bloat and makes future maintenance
-> harder.
+> This is getting rediculous.
+>
 
-For some AT803x ID it might be O.K. but here we are mixing all kind of
-thing and you already noticing the state of this driver with the priv
-changes. Again it's all to facilitate the last 2 patch of this series.
+Saddly this is the state of this PHY driver... Imagine me noticing that
+qca808x actually don't use any of the priv struct and doen't support any
+of the proprerty parsed in the OF function...
 
-> 
-> Sorry, but no, I don't like this patch.
+Guess I have to move also this change where I split the driver.
+(again trying to keep change as little as possible)
 
 -- 
 	Ansuel
