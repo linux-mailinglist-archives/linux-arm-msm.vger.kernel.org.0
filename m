@@ -1,112 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-2479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D44297FD8EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:05:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3BD27FD92D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:23:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 749F6B213BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:05:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D13E61C20943
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:23:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B700249FF;
-	Wed, 29 Nov 2023 14:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85B843064B;
+	Wed, 29 Nov 2023 14:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rE3DPTLV"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BMam2tcO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0317F19A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:05:43 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-a02d91ab199so923054866b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:05:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701266742; x=1701871542; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vIpe57LK+ad4j3gXLtYhpcdtMPnG7fFGsBLCvb5Xl00=;
-        b=rE3DPTLVdTe+gXcLth66c37DX7SHlmOGKngnUuV7dpsbAkjqxCnzvmwNN7Su83SGBZ
-         nXGKvARiV4aMEOPSHjfyFl2zVG9+xztHErG9zsFZ0vcc97QL/PjJyEbAjvo+RI5x9442
-         ubwPmw8l3Ovv6vhL4mWGReiFyWSlzaAC8ngcr8xmvjcYCREzQmXaQ3/eOfi17xiUzS/j
-         SfflkVLzvOFbZUFY4LAIoyAwoXOVTktVknOtBrGqiBEiT+rGvdQzCVTuYKt73/1a4S32
-         urydTKiOt7Tv2jn7l243x9sMmD2zqwT3J1pqrQvA6h26HlpcbD8BJjIQkYJjEU1KpJ7+
-         cuvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701266742; x=1701871542;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vIpe57LK+ad4j3gXLtYhpcdtMPnG7fFGsBLCvb5Xl00=;
-        b=JSd2rfb3fUW7PbWwRvFMxNsuT9X310GCZ2Ueeh7e6m9ehol1SK6e71V7CWbpKs4r+4
-         ms5M1+GHza4/GO+86Oepw7EtbR9xVepLy2XDMn7NisEqsIFNRi8m2hpcnhMDnNTfPTTo
-         ddYsR+zwY+fy35kYaAcME3TO/ZX82Xv+KKeAmnbnR/O9OhDdiDTMg0NOF38IMOfQCweg
-         PQ8Ps0P4VKevftlNknSIgA8ECLkhH+LPS2ebTppdTlQcz0hg9Gwtc0fCtMBC9zpmDj1e
-         IoVIYbBtHHU3hSuAyKfS74rxrza0BdEC04LTexxt0QCtEGBY6s8zcpfJi6vHjaAE/qyt
-         /lxQ==
-X-Gm-Message-State: AOJu0YwFeL0Zw0K1YzfZpQuOeSOwNXB8BXAqo32m5PVO3fjqTHisPsZ+
-	wsonFG4HG4YdO3LlqzJa29uJIg==
-X-Google-Smtp-Source: AGHT+IEQVZGJKNnT5Gk0etakEOWrLbSJedZgEcktiPi8arX5Jm4KIFYIq/ld/mtUihzQQFDAOFePzg==
-X-Received: by 2002:a17:906:fa06:b0:a0d:ebfe:e404 with SMTP id lo6-20020a170906fa0600b00a0debfee404mr9221770ejb.22.1701266742475;
-        Wed, 29 Nov 2023 06:05:42 -0800 (PST)
-Received: from krzk-bin.. ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id o14-20020a1709062e8e00b009fe3e9dee25sm7947530eji.61.2023.11.29.06.05.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 06:05:42 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andy Gross <agross@kernel.org>,
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A13BF;
+	Wed, 29 Nov 2023 06:23:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701267806; x=1732803806;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=i+nKxtVOoA7/2O3dUI5Zs5QSN68782gToG5E1Dn3b/0=;
+  b=BMam2tcOO7h7oYN+AXqv09Imrcb5qRWJip2vCyzoFbrkdf0dOZ57fhyi
+   qOYejD14LUMrcAoBtfPyB/68/9onfdmk1F7r5stuyYmWz0ywSCQS/ZghT
+   EFrPb16XGVADMEYh3/5D9xjsBp645I3ManhdfYu50JAKrID3v483lbLJn
+   CG8rxV4i8IhKsvkMxY5cknnQVPOKDlZIv6KaZxPgrR2pDi8Fv0BIuVWtm
+   PApNeYFyMEH7AkacJmC6TY8C423Yq30UyA9zDoQreAwD3vDAkXzvzzxMp
+   rrf7JC0u90sNWSJ7OqK/+kkFm0sJo9XEocyuFajzGXl8cnBmgfP8TmPWL
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10909"; a="424313715"
+X-IronPort-AV: E=Sophos;i="6.04,235,1695711600"; 
+   d="scan'208";a="424313715"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2023 06:23:25 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10909"; a="1100543308"
+X-IronPort-AV: E=Sophos;i="6.04,235,1695711600"; 
+   d="scan'208";a="1100543308"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2023 06:23:17 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1r8LT7-00000000SaA-0d82;
+	Wed, 29 Nov 2023 16:23:13 +0200
+Date: Wed, 29 Nov 2023 16:23:12 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Jianlong Huang <jianlong.huang@starfivetech.com>,
+	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Dong Aisheng <aisheng.dong@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Sean Wang <sean.wang@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>,
+	Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8550: correct TX Soundwire clock
-Date: Wed, 29 Nov 2023 15:05:37 +0100
-Message-Id: <20231129140537.161720-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231129140537.161720-1-krzysztof.kozlowski@linaro.org>
-References: <20231129140537.161720-1-krzysztof.kozlowski@linaro.org>
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Hal Feng <hal.feng@starfivetech.com>
+Subject: Re: [PATCH v3 06/22] pinctrl: core: Make pins const in struct
+ group_desc
+Message-ID: <ZWdJUBNMYj9qvCf2@smile.fi.intel.com>
+References: <20231128200155.438722-1-andriy.shevchenko@linux.intel.com>
+ <20231128200155.438722-7-andriy.shevchenko@linux.intel.com>
+ <CAMuHMdWt0qq-Umd8udb7fxpNVZ=X9O9eZGMVGFSGRO_d9UkgNw@mail.gmail.com>
+ <ZWc_o4Dcsb0v5TGB@smile.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZWc_o4Dcsb0v5TGB@smile.fi.intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-The TX Soundwire controller should take clock from TX macro codec, not
-VA macro codec clock, otherwise the clock stays disabled.  This looks
-like a copy-paste issue, because the SC8280xp code uses here correctly
-clock from TX macro.  The VA macro clock is already consumed by TX macro
-codec, thus it won't be disabled by this change.
+On Wed, Nov 29, 2023 at 03:41:55PM +0200, Andy Shevchenko wrote:
+> On Wed, Nov 29, 2023 at 12:21:45PM +0100, Geert Uytterhoeven wrote:
+> > On Tue, Nov 28, 2023 at 9:04 PM Andy Shevchenko
+> > <andriy.shevchenko@linux.intel.com> wrote:
+> > > It's unclear why it's not a const from day 1. Make the pins member
+> > > const in struct group_desc. Update necessary APIs.
 
-Fixes: 61b006389bb7 ("arm64: dts: qcom: sm8550: add Soundwire controllers")
-Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+...
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 52e8f4c52426..2fd3faacf554 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2199,7 +2199,7 @@ swr2: soundwire@6d30000 {
- 			interrupts = <GIC_SPI 496 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 520 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "core", "wakeup";
--			clocks = <&lpass_vamacro>;
-+			clocks = <&lpass_txmacro>;
- 			clock-names = "iface";
- 			label = "TX";
- 
+> > >  int pinctrl_generic_add_group(struct pinctrl_dev *pctldev, const char *name,
+> > > -                             int *gpins, int ngpins, void *data);
+> > > +                             const int *pins, int num_pins, void *data);
+> > >
+> > >  int pinctrl_generic_remove_group(struct pinctrl_dev *pctldev,
+> > >                                  unsigned int group_selector);
+> > 
+> > Probably this is also the right moment to change all of these to arrays
+> > of unsigned ints?  Else you will have mixed int/unsigned int after
+> > "[PATCH v3 13/22] pinctrl: core: Embed struct pingroup into struct
+> > group_desc", and purely unsigned int after "[PATCH v3 22/22] pinctrl:
+> > core: Remove unused members from struct group_desc".
+> 
+> Hmm... Can it be done later?
+> 
+> I can, of course try to change the parameter here to be unsigned, but it most
+> likely fail the build for those drivers means need more patches, more delay to
+> this series.
+> 
+> Linus?
+
+On the first glance updating API here does not fail the build.
+Lemme incorporate this into v4.
+
+Meanwhile the drivers I left untouched, it might be separate changes
+to convert from int to const unsigned int.
+
 -- 
-2.34.1
+With Best Regards,
+Andy Shevchenko
+
 
 
