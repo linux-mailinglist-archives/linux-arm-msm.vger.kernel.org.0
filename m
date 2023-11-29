@@ -1,78 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-2510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D73157FDBD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 16:46:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B0517FDC10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 16:57:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 047FF1C208E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:46:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 056752823E4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:57:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D83539853;
-	Wed, 29 Nov 2023 15:46:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44EF938FB2;
+	Wed, 29 Nov 2023 15:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LKSyjgsn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84B80D67;
-	Wed, 29 Nov 2023 07:46:51 -0800 (PST)
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6ce2eaf7c2bso4117458a34.0;
-        Wed, 29 Nov 2023 07:46:51 -0800 (PST)
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C898D54
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 07:57:44 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50bbb78efb5so2848330e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 07:57:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701273463; x=1701878263; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vA0x6TLGrrwrneDYeNbPP8u/I8CMuud7wLf1wVHyc/E=;
+        b=LKSyjgsnMToOAYXJMfSztu3tCnmFKdO/LZHIK5z3TkA/wGuARdjRNkzvxrq1jJI6oV
+         D0xBFrPauxPKvbY9oR5TB5KoJFOfQL6QHEHeCSjemhqJ/0W5iYzQg+JIwoSraRGJvmhw
+         Pkw74zi3rnfOQjqMnITIl41LQgzjcMgYEfjK5KBMhYGJjRkxBS7fe1qsj93zbrPmEH2Q
+         rJtFQ9pJYbeyQBJZb/ssz4gwS7KBrRT8Wja/NM6veM5owUFcdWa0Enlq0UHMAxhqagQ4
+         9s0Ls7NvBqiWFGzFbNrbJ+gdmRGg1aid2SA0hZgzrWVIUo0HATyF+PMXzN6Dg5RTUvjv
+         nSyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701272811; x=1701877611;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GJ23N4x9xsyS+PdtjpIOJ1tiYnfSGNct1P34OTOLm2k=;
-        b=WFQxqnhUA1kF2ZyYkKYSAu4AUdZtTlJJdl3XI+sUzPqC1HMR2LldNEqps51MKNEFQg
-         GG+zOjA0NgU893x/HllDZkq29jcjK3zoPpVnHT9bFWrxsbudvn9xG/qZ/tDqQrBFKZl3
-         fyM2a7QuQnNXsuV9XV5Kj0x82F69yKJ1zwqV1pmh3yxCNRR6EHYyHgeAKxm3n7JH/3XK
-         GkW82uKANutpz8GQgtu8kCX0Q3zHfBNTFsOVTq16JuGy4ZBYrgMz5R2zWlGYtJECe7/R
-         +g3ZBV2w+l5ZXi9HdcLMFMND6+GkVSSIg72h/mtLgcYTNABzKcF5O82k3Le4+kYm9iVu
-         go/w==
-X-Gm-Message-State: AOJu0YxDw/wTmPXBLwgxqWpeDSz/5OkCuL3dDwccGCJc+qSNJEnMUfwC
-	vFTgtQTSl7c45QKT2j7YBA==
-X-Google-Smtp-Source: AGHT+IH1cW5WeqpkTlob3Rn0FcoRYZoiNqB7GPItDNM4+VO90I/UqzXgHGRDuxBkDGTJ34CdR2GIPg==
-X-Received: by 2002:a05:6830:34a9:b0:6d8:138a:dd8b with SMTP id c41-20020a05683034a900b006d8138add8bmr16934439otu.33.1701272810799;
-        Wed, 29 Nov 2023 07:46:50 -0800 (PST)
-Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id d22-20020a0568301b7600b006b87f593877sm2023303ote.37.2023.11.29.07.46.49
+        d=1e100.net; s=20230601; t=1701273463; x=1701878263;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vA0x6TLGrrwrneDYeNbPP8u/I8CMuud7wLf1wVHyc/E=;
+        b=qL7vgl0rVozh3y0d+dl/g05aulxrIcCZA4QO5jeRSyJfToA1epFfB5NdWi6GUTA6Nc
+         E3lXgMm0LKN3XjHH9080YgEq+eT55PbTdzoeh1lj8e1ZOuXgHm2sF14ifQL2Zg/m9eaG
+         F9q8iVPA900IhoVMqKY380VqbGL1IEaxUDS8T3//4Tn3LiHvTJM+8CG8cv7d/8p/BmeF
+         D8RgJa/aJXsCW9hnfaP9RFvYaVoc0cEYj5ZYl8C/tiCuw6b0mZXb0Y6l/M7//H4HvM3K
+         pHL0R1C9opxc8ape3X0w8AhUsk6Ajqm9C0lTrWL7puf8PhPOCefilwFSh3TtNkIem496
+         7Dgg==
+X-Gm-Message-State: AOJu0Yy+ghkGyApYeFxzxYoy0wjXl5P+rCl5qwsTQFsFckQQ1eIsGyhd
+	VTy2JSeVMaXbNF9DksNyFCqmXQ==
+X-Google-Smtp-Source: AGHT+IF+Z+kwt6F2DX1OduNpIDwwv9Ayq2GX7aWrmMCjgCQFl2Myc5kLzUmIxfrRWVgaj7HNcVtCKQ==
+X-Received: by 2002:a05:6512:108f:b0:507:97ca:ec60 with SMTP id j15-20020a056512108f00b0050797caec60mr15616839lfg.3.1701273462620;
+        Wed, 29 Nov 2023 07:57:42 -0800 (PST)
+Received: from krzk-bin.. ([178.197.223.109])
+        by smtp.gmail.com with ESMTPSA id gy5-20020a0564025bc500b0054b686e5b3bsm3345130edb.68.2023.11.29.07.57.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 07:46:49 -0800 (PST)
-Received: (nullmailer pid 2542152 invoked by uid 1000);
-	Wed, 29 Nov 2023 15:46:48 -0000
-Date: Wed, 29 Nov 2023 09:46:48 -0600
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Andy Gross <agross@kernel.org>, Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 4/4] ASoC: dt-bindings: qcom,lpass-wsa-macro: Add SM8650
- LPASS WSA
-Message-ID: <170127280827.2542113.8003220554875038607.robh@kernel.org>
-References: <20231129113014.38837-1-krzysztof.kozlowski@linaro.org>
- <20231129113014.38837-4-krzysztof.kozlowski@linaro.org>
+        Wed, 29 Nov 2023 07:57:41 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH] dt-bindings: pinctrl: qcom,sm8550-lpass-lpi: add X1E80100 LPASS LPI
+Date: Wed, 29 Nov 2023 16:57:38 +0100
+Message-Id: <20231129155738.167030-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231129113014.38837-4-krzysztof.kozlowski@linaro.org>
+Content-Transfer-Encoding: 8bit
 
+Document the Qualcomm X1E80100 SoC Low Power Audio SubSystem Low Power
+Island (LPASS LPI) pin controller, compatible with earlier SM8550 model.
 
-On Wed, 29 Nov 2023 12:30:14 +0100, Krzysztof Kozlowski wrote:
-> Add bindings for Qualcomm SM8650 Low Power Audio SubSystem (LPASS) WSA
-> macro codec, which looks like compatible with earlier SM8550.
-> 
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../bindings/sound/qcom,lpass-wsa-macro.yaml  | 21 ++++++++++++-------
->  1 file changed, 13 insertions(+), 8 deletions(-)
-> 
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml     | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Acked-by: Rob Herring <robh@kernel.org>
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml
+index ef9743246849..ad5e32130fd7 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8550-lpass-lpi-pinctrl.yaml
+@@ -16,7 +16,11 @@ description:
+ 
+ properties:
+   compatible:
+-    const: qcom,sm8550-lpass-lpi-pinctrl
++    oneOf:
++      - const: qcom,sm8550-lpass-lpi-pinctrl
++      - items:
++          - const: qcom,x1e80100-lpass-lpi-pinctrl
++          - const: qcom,sm8550-lpass-lpi-pinctrl
+ 
+   reg:
+     items:
+-- 
+2.34.1
 
 
