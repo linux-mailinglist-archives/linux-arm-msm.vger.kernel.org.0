@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-2355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBAFD7FCD7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 04:29:26 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30A4E7FCDDF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 05:22:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4CE0A1F207C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 03:29:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D8361C20F26
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 04:22:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 160194414;
-	Wed, 29 Nov 2023 03:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6416C6FA7;
+	Wed, 29 Nov 2023 04:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TDCarUw2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X7xXVYwS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C49491AD;
-	Tue, 28 Nov 2023 19:29:19 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AT0dJBl004234;
-	Wed, 29 Nov 2023 03:29:13 GMT
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34C7E1710;
+	Tue, 28 Nov 2023 20:22:18 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AT3LoTh026472;
+	Wed, 29 Nov 2023 04:22:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+boRo36HQaqSkzRXdCK64bpQqb4ilPayZOqyrR6e6H4=;
- b=TDCarUw2BcjyceRxg2VVTav/9LVa4DtuuffDOrT7QRqwlMni/ZgPyXDMyyMWVsUaEeXB
- VqLVkonNT7Y7A1jUqXjJRddoRPAOkvodFz58/Gb/ml+EbYARnGb1R4YWgttxpdc8xXCV
- ff8ImCJKanVcwywgVi3qv0C1xfm1orEcutY0ZFLq49l45K08xC3hxl1VD4XYa2fKbsPB
- 1PFpKgKW4DOCh6ratZkTk35450n1DCrz0KLhCEOdH07HV5HltxgGqNr+QYfXbVvBt2cl
- fwwFSctu3ZNitrJSoz8uZlHPEirVIQW1Ya9gRkBe8sKbgtoVsceTh6tq+q7XeQ7RjD0g 1g== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3unhrpsqe2-1
+ bh=5GPHYWNLlw5rUJSjPsApRdIgwkJG6a4bhZxOWXdiWCM=;
+ b=X7xXVYwS21iJ6zBE+7BhDLSuL7pjydLeECqInL8N5jiqWffbJ3Ivu/KWNGW3Xs0jdqIE
+ 1EVYovBsewFOeF73shW+aGRbaTDQRu/FPHDnCKCoVZz35fFTAztoZ30wuqCsCuJCLAUt
+ AflgekSW+sUJqUJRMn0N4TZo6u8a/UyecgQd3HhuvPcvc+Opsu1MQaE9t9Gjz+VQVXSP
+ meKSaxP0ALMrJvS2MWAz/eIDpo4MXkejs3XazcNBQtielw8hQZCyYHtWJMoAYTEeZvA5
+ OSqnGTRsCG8Q71O/SARc3O5RxBf/Q5hsWBXwaFdPLNQHkhTnMdHSGaOrrpzikUvUHjPd tA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3unekyjh06-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Nov 2023 03:29:13 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AT3TCZE028581
+	Wed, 29 Nov 2023 04:22:12 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AT4MBs7021674
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Nov 2023 03:29:12 GMT
-Received: from [10.253.36.238] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 29 Nov 2023 04:22:11 GMT
+Received: from [10.239.154.73] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
- 2023 19:29:09 -0800
-Message-ID: <5eb0a521-0b72-4d15-9a65-429c4c123833@quicinc.com>
-Date: Wed, 29 Nov 2023 11:29:07 +0800
+ 2023 20:22:08 -0800
+Message-ID: <bf772476-79a1-4a52-a8e3-54709adf4673@quicinc.com>
+Date: Wed, 29 Nov 2023 12:22:06 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,112 +51,128 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] bus: mhi: host: Drop chan lock before queuing
- buffers
+Subject: Re: [PATCH RESEND v7 0/3] Add support for vibrator in multiple PMICs
 Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>
-References: <1699939661-7385-1-git-send-email-quic_qianyu@quicinc.com>
- <1699939661-7385-3-git-send-email-quic_qianyu@quicinc.com>
- <20231124100403.GA4536@thinkpad>
- <639d6008-bdfa-4b6e-b622-e916003ec908@quicinc.com>
- <20231128133252.GX3088@thinkpad>
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20231128133252.GX3088@thinkpad>
+To: <linux-arm-msm@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC: <linux-input@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_collinsd@quicinc.com>,
+        <quic_subbaram@quicinc.com>, <quic_kamalw@quicinc.com>,
+        <jestar@qti.qualcomm.com>, Luca Weiss <luca.weiss@fairphone.com>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski@linaro.org>
+References: <20231108-pm8xxx-vibrator-v7-0-632c731d25a8@quicinc.com>
+From: Fenglin Wu <quic_fenglinw@quicinc.com>
+In-Reply-To: <20231108-pm8xxx-vibrator-v7-0-632c731d25a8@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: d7CXt-DTp8ER7QHhB7t0eHlK45p4PFy_
-X-Proofpoint-ORIG-GUID: d7CXt-DTp8ER7QHhB7t0eHlK45p4PFy_
+X-Proofpoint-GUID: NsV8g-GEnr5H-cqykFoC4HzDLpvgYYw9
+X-Proofpoint-ORIG-GUID: NsV8g-GEnr5H-cqykFoC4HzDLpvgYYw9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-28_27,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 clxscore=1011 bulkscore=0 suspectscore=0 impostorscore=0
- phishscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=587 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311290024
+ definitions=2023-11-29_01,2023-11-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ mlxscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 clxscore=1011 spamscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311290032
 
+Hi Dmitry Torokhov,
 
-On 11/28/2023 9:32 PM, Manivannan Sadhasivam wrote:
-> On Mon, Nov 27, 2023 at 03:13:55PM +0800, Qiang Yu wrote:
->> On 11/24/2023 6:04 PM, Manivannan Sadhasivam wrote:
->>> On Tue, Nov 14, 2023 at 01:27:39PM +0800, Qiang Yu wrote:
->>>> Ensure read and write locks for the channel are not taken in succession by
->>>> dropping the read lock from parse_xfer_event() such that a callback given
->>>> to client can potentially queue buffers and acquire the write lock in that
->>>> process. Any queueing of buffers should be done without channel read lock
->>>> acquired as it can result in multiple locks and a soft lockup.
->>>>
->>> Is this patch trying to fix an existing issue in client drivers or a potential
->>> issue in the future drivers?
->>>
->>> Even if you take care of disabled channels, "mhi_event->lock" acquired during
->>> mhi_mark_stale_events() can cause deadlock, since event lock is already held by
->>> mhi_ev_task().
->>>
->>> I'd prefer not to open the window unless this patch is fixing a real issue.
->>>
->>> - Mani
->> In [PATCH v4 1/4] bus: mhi: host: Add spinlock to protect WP access when
->> queueing
->> TREs,  we add
->> write_lock_bh(&mhi_chan->lock)/write_unlock_bh(&mhi_chan->lock)
->> in mhi_gen_tre, which may be invoked as part of mhi_queue in client xfer
->> callback,
->> so we have to use read_unlock_bh(&mhi_chan->lock) here to avoid acquiring
->> mhi_chan->lock
->> twice.
->>
->> Sorry for confusing you. Do you think we need to sqush this two patch into
->> one?
-> Well, if patch 1 is introducing a potential deadlock, then we should fix patch
-> 1 itself and not introduce a follow up patch.
->
-> But there is one more issue that I pointed out in my previous reply.
-Sorry, I can not understand why "mhi_event->lock" acquired during
-mhi_mark_stale_events() can cause deadlock. In mhi_ev_task(), we will
-not invoke mhi_mark_stale_events(). Can you provide some interpretation?
->
-> Also, I'm planning to cleanup the locking mess within MHI in the coming days.
-> Perhaps we can revisit this series at that point of time. Will that be OK for
-> you?
-Sure, that will be great.
->
-> - Mani
->
->>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>> ---
->>>>    drivers/bus/mhi/host/main.c | 4 ++++
->>>>    1 file changed, 4 insertions(+)
->>>>
->>>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
->>>> index 6c6d253..c4215b0 100644
->>>> --- a/drivers/bus/mhi/host/main.c
->>>> +++ b/drivers/bus/mhi/host/main.c
->>>> @@ -642,6 +642,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->>>>    			mhi_del_ring_element(mhi_cntrl, tre_ring);
->>>>    			local_rp = tre_ring->rp;
->>>> +			read_unlock_bh(&mhi_chan->lock);
->>>> +
->>>>    			/* notify client */
->>>>    			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->>>> @@ -667,6 +669,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
->>>>    					kfree(buf_info->cb_buf);
->>>>    				}
->>>>    			}
->>>> +
->>>> +			read_lock_bh(&mhi_chan->lock);
->>>>    		}
->>>>    		break;
->>>>    	} /* CC_EOT */
->>>> -- 
->>>> 2.7.4
->>>>
->>>>
+Can you help to review the series of the changes?
+I knew that you left comment in patch V6 about moving shift and mask 
+into a chip-specific data structure to avoid defining 'hw_type'. 
+Actually 'hw_type' is added here to differentiate the SSBI vibrator 
+module which doesn't need to read the base address from the DT and add 
+it up in register read/write access, while SPMI vibrators in different 
+PMICs may be the same HW but just with different base address, and we 
+can use device compatibles instead of adding the chip-specific data 
+structure for each of them by just updating the base address. See 
+discussion here for more details:
+https://lore.kernel.org/linux-arm-msm/20230718062639.2339589-3-quic_fenglinw@quicinc.com/
+
+I also responded here that having 'hw_type' would help us with a cleaner 
+code logic instead of checking specific reg/mask for particular 
+operations: 
+https://lore.kernel.org/linux-arm-msm/8697d115-9aa7-2a1c-4d96-25b15adb5cca@quicinc.com/
+
+Let me know what's your final suggestion, if you insist that I should 
+move the reg/mask/shift in the chip-specific data structure, I can 
+update it even it won't be as clean as what it looks right now.
+Thanks
+
+Fenglin
+
+On 11/8/2023 3:36 PM, Fenglin Wu via B4 Relay wrote:
+> Add SW support for the vibrator module inside PMI632, PM7250B, PM7325B, PM7550BA.
+> It is very similar to the vibrator module inside PM8916 which is supported in
+> pm8xxx-vib driver but just the drive amplitude is controlled with 2 registers,
+> and the register base offset in each PMIC is different.
+> 
+> Changes in v7;
+>    1. Fix a typo: SSBL_VIB_DRV_REG --> SSBI_VIB_DRV_REG
+>    2. Move the hw_type switch case in pm8xxx_vib_set() to the refactoring
+>       change.
+> 
+> Changes in v6:
+>    1. Add "qcom,pmi632-vib" as a standalone compatible string.
+> 
+> Changes in v5:
+>    1. Drop "qcom,spmi-vib-gen2" generic compatible string as requested
+>       and use device specific compatible strings only.
+> 
+> Changes in v4:
+>    1. Update to use the combination of the HW type and register offset
+>       as the constant match data, the register base address defined in
+>       'reg' property will be added when accessing SPMI registers using
+>       regmap APIs.
+>    2. Remove 'qcom,spmi-vib-gen1' generic compatible string.
+> 
+> Changes in v3:
+>    1. Refactor the driver to support different type of the vibrators with
+>      better flexibility by introducing the HW type with corresponding
+>      register fields definitions.
+>    2. Add 'qcom,spmi-vib-gen1' and 'qcom,spmi-vib-gen2' compatible
+>      strings, and add PMI632, PM7250B, PM7325B, PM7550BA as compatbile as
+>      spmi-vib-gen2.
+> 
+> Changes in v2:
+>    Remove the "pm7550ba-vib" compatible string as it's compatible with pm7325b.
+> 
+> Fenglin Wu (3):
+>    input: pm8xxx-vib: refactor to easily support new SPMI vibrator
+>    dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
+>    input: pm8xxx-vibrator: add new SPMI vibrator support
+> 
+>   .../bindings/input/qcom,pm8xxx-vib.yaml       |  16 +-
+>   drivers/input/misc/pm8xxx-vibrator.c          | 171 ++++++++++++------
+>   2 files changed, 132 insertions(+), 55 deletions(-)
+> 
+> --
+> 2.25.1
+> 
+> ---
+> Fenglin Wu (3):
+>        input: pm8xxx-vib: refactor to easily support new SPMI vibrator
+>        dt-bindings: input: qcom,pm8xxx-vib: add new SPMI vibrator module
+>        input: pm8xxx-vibrator: add new SPMI vibrator support
+> 
+>   .../devicetree/bindings/input/qcom,pm8xxx-vib.yaml |  16 +-
+>   drivers/input/misc/pm8xxx-vibrator.c               | 170 ++++++++++++++-------
+>   2 files changed, 131 insertions(+), 55 deletions(-)
+> ---
+> base-commit: 650cda2ce25f08e8fae391b3ba6be27e7296c6a5
+> change-id: 20230925-pm8xxx-vibrator-62df3df46a6c
+> 
+> Best regards,
 
