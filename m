@@ -1,61 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-2490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3435C7FD9E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:44:14 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 482427FD9EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:44:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E19F9282521
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:44:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BFE76B20FCC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:44:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A03991FC4;
-	Wed, 29 Nov 2023 14:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C568630D04;
+	Wed, 29 Nov 2023 14:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b+qfJj84"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yg1632co"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 217C9D63
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:44:08 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9e1021dbd28so919941466b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:44:08 -0800 (PST)
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B1F9D63
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:44:12 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-a132acb67b5so309721366b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:44:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701269046; x=1701873846; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ylEU11Sj8y9lW/5egLuUmSM5125mWJnuLEGjsRPUTJo=;
-        b=b+qfJj84HFi7KHGXbY3991wdSxUu3uDJhe1WyG2L4NNpl+Fpw/Kn4jQozhnz8KtEKc
-         FL1rx8JzUxBZbkwysF43TPwnqjoR4Gpr2S7k/xGaJeV9T12HV3DiFH+bj+90SRQYZXvv
-         MzueIJU21Fp8yOQnhUaSZDjFOUA5bBfW77mOMuDEHSP5WfFRwA3G2lTMe1mcgCpJy4ht
-         C/MnsF8MQEO5vso310JmIaC1/vO9AGJi7FWlfuFq7+kcbMJRyHHZWZkb47MkZ4026YYI
-         Z6uELtX5EipXKHseAPzvbShK05SJLnq0xUbyJDKus9kbgje+YyLd5stfMAdvtp7r1v+V
-         lnGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701269046; x=1701873846;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1701269050; x=1701873850; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ylEU11Sj8y9lW/5egLuUmSM5125mWJnuLEGjsRPUTJo=;
-        b=FGQ8gsdrhclwxikOilqaE/fJxXCReJOeYbv7R5qzPPaRkLC50O8VXGsIdxvcF6o/hn
-         SQ3cJLH/AgJAWGoCJyUmeK2bRpxGgw8uPMqzGXfwxAEv3o23EtV39fWycvjS2OtZ/GPJ
-         EkXWRhdllNRfOsAdYg4Sz6+jpsg/VPHzZQVlEk3e4Arn6xCLGohc1OjdhmuwJ5Sptu/+
-         QncmTtRa3EqqLzpWi65fSyT75ZRCz/1NDMIqAVXFCSve9FwrRMtppHLjdS4pc0whAmcl
-         ogSPhsPLW/bLsB4bshOm4jPBeY9HNx/S5ZphzOUpoJvIZN52jbhTPuIwZXrj1IUtyR95
-         SUaQ==
-X-Gm-Message-State: AOJu0Yy2E7irObqNY1dGArX0mRuRUUosdQRzTv7XiA+G3FZUFTNHTng/
-	U2SiBuyfS+W6oNphYJl3hzwazQ==
-X-Google-Smtp-Source: AGHT+IFEXQX5eb9doRuoINpQIG+Qas2v9OWjMo2x6sJj2S1M6xOCHUkKC0SwNpJFe6cwgq0kONdNQQ==
-X-Received: by 2002:a17:907:7289:b0:a04:bcc4:b8d8 with SMTP id dt9-20020a170907728900b00a04bcc4b8d8mr13575442ejc.43.1701269046550;
-        Wed, 29 Nov 2023 06:44:06 -0800 (PST)
+        bh=H+pZ3XAdsVueNoWE7iUbXVGwfYWqTolu2H2HJ2DSPkw=;
+        b=yg1632coyniA2tIPKhW/qAF/1HeIk89TTbC0/nvIs/YkE3f4FN+5qgghIzStMlcm0a
+         re1WG7Q180QzPRBXmWkbEDbUW/oMKd2aibIpDBpYahmMyh/jVkB4ZIR+InwDshG+Fuoq
+         37LyZ8EXLqK70WiclOsXxfkIeBonBWn9icbKZFNin2TOCLxbhtRfOeHxQ1dlEZgr7Uzg
+         kYGyyhJIdbijZke57nc+kFrvoZZBF+krEotA0zL/m+w0opx+g4RehF0eAEXeXzf0dPE5
+         jmNTGw4T/RVxjYJS14cum4Yec9l2GXTb2WcSnRqYhtBqzIdcSJBt1C1Bp27zLPrZeXh9
+         18vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701269050; x=1701873850;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H+pZ3XAdsVueNoWE7iUbXVGwfYWqTolu2H2HJ2DSPkw=;
+        b=oU4+WRC/YW7VjwDmd7PHkdEyKz95sk0tgHES1dL1IZ128JBvPEyNewPEflJAqMecMx
+         x1pI4E9DVRr9qciSPSrJpvOhxS5EhC7cn0OzYffbywZ8t8VHrTCmERGkz936MpOMmq7K
+         GLkWYg7HZzDYSHOgEsfQAyT9BX3cfywe5Su4kOYa5CbGeTzCsOS/avWQfpL4uBPoL1XO
+         tsnY8M1+j+AnjTCDwTcVbT96wd4XmleA9yAdo4gAo8fvZjGxs4ZJnqCb5iz1Qn/orYr7
+         XenCqLwkJgsSkYgiEBuzgnLCubYycz2/Ih/V1v4hMb15vhVzNbdxZ72rAft8G8dlOHx9
+         4BoA==
+X-Gm-Message-State: AOJu0YxjBkBoBPzuPQolVutkvbsFa0+SrbLScjt2hGX4vvKrFYxEC/Y2
+	oDW68qz6cI3ZzKDVy0uqW8FmIQ==
+X-Google-Smtp-Source: AGHT+IFURYRN3Yij4y5ft90nlDPEV1BNLexcpwu9tBs3tNyDBBwPthgG8Q+ABWb8eufV7YLwTjIF0A==
+X-Received: by 2002:a17:906:510:b0:9be:30c2:b8ff with SMTP id j16-20020a170906051000b009be30c2b8ffmr12348644eja.61.1701269050628;
+        Wed, 29 Nov 2023 06:44:10 -0800 (PST)
 Received: from [10.167.154.1] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id e27-20020a1709062c1b00b009fda627abd9sm7913738ejh.79.2023.11.29.06.44.02
+        by smtp.gmail.com with ESMTPSA id e27-20020a1709062c1b00b009fda627abd9sm7913738ejh.79.2023.11.29.06.44.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 06:44:06 -0800 (PST)
+        Wed, 29 Nov 2023 06:44:10 -0800 (PST)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v3 00/12] RB1/QCM2290 features
-Date: Wed, 29 Nov 2023 15:43:57 +0100
-Message-Id: <20231125-topic-rb1_feat-v3-0-4cbb567743bb@linaro.org>
+Date: Wed, 29 Nov 2023 15:43:58 +0100
+Subject: [PATCH v3 01/12] dt-bindings: display: msm: qcm2290-mdss: Use the
+ non-deprecated DSI compat
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,10 +65,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAC1OZ2UC/32NwQ6CMBAFf4X0bA27tQKe/A9jTEsXaEJa0mKjI
- fy7hZsHPc5LZt7CIgVLkV2KhQVKNlrvMohDwdpBuZ64NZkZligAUPLZT7blQcOjIzVzYySUUuA
- ZQbMsaRWJ66BcO2TNPccxj1Ogzr72l9s982Dj7MN7P02wrT/7CXjJAUwFGlCXsr6O1qngjz70b
- Gsl/O9j9puq0Vh3QtJJffnrun4AEq4XRAIBAAA=
+Message-Id: <20231125-topic-rb1_feat-v3-1-4cbb567743bb@linaro.org>
+References: <20231125-topic-rb1_feat-v3-0-4cbb567743bb@linaro.org>
+In-Reply-To: <20231125-topic-rb1_feat-v3-0-4cbb567743bb@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -92,87 +92,54 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
  iommu@lists.linux.dev, Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1701269042; l=3004;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1701269042; l=1541;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=eV260drlUhaV86AtMNOLW5CfSC+ugoXrL0AzM2FTKtc=;
- b=i1CbpYQhpDTPJ5XiYrBQ5xsHRCDu6vxMZQ/OHzcmfaEiDhHV4Sw10Tu/GPRgYbTNufhADMuHR
- PHRNnPX728XB+61s6hLdjib0rJBmAEAX/m1WIwS4EIuhYsxDLg/kDMm
+ bh=l4+kOWFmXlWpi0xa3oCnZKgfHtaUhcfrj2zIVLkYkxw=;
+ b=OWgPkJLJLGOOEg/SuBCEfCvzf9y60IwA2WztWt4bBigKVglnHm9CAi7xNYwNozaUtbSvibwxq
+ GHrhQZK30uaB89OofoKFMMcdG8oy58DjqfC9DacVEB+qkpCn7d8tK5Y
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-This series brings:
-- interconnect plumbing
-- display setup
+The "qcom,dsi-ctrl-6g-qcm2290" has been deprecated in commit 0c0f65c6dd44
+("dt-bindings: msm: dsi-controller-main: Add compatible strings for every
+current SoC"), but the example hasn't been updated to reflect that.
 
-for QCM2290/QRB2210 and
+Fix that.
 
-- CAN bus controller
-- HDMI display
-- wifi fw variant name
-
-for QTI RB1
-
-and the necessary bindings changes
-
-Patch 1-2 is for Dmitry/freedreno
-Patch 3 for Georgi/icc
-Patch 5 for Will/iommu
-the rest are for Bjorn/qcom
-
+Fixes: 0c0f65c6dd44 ("dt-bindings: msm: dsi-controller-main: Add compatible strings for every current SoC")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Changes in v3:
-- Pick up tags
-- Fix commit msg of "iommu/arm-smmu-qcom: Add QCM2290.."
-- Add missing sob ("qrb2210-rb1: add wifi variant property")
-- Link to v2: https://lore.kernel.org/r/20231125-topic-rb1_feat-v2-0-979b28f35e4a@linaro.org
+ .../devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml         | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-Changes in v2:
-- Fix up the bindings example in "qcm2290-mdss: Use the non-deprecated DSI compat" (krzk)
-- Fix up sc7180 & sc7280 DTs as a result of the bindings changes
-- Pick up rbs where it makes sense
-- Link to v1: https://lore.kernel.org/r/20231125-topic-rb1_feat-v1-0-11d71b12b058@linaro.org
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
+index 5ad155612b6c..d71a8e09a798 100644
+--- a/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
++++ b/Documentation/devicetree/bindings/display/msm/qcom,qcm2290-mdss.yaml
+@@ -56,7 +56,9 @@ patternProperties:
+ 
+     properties:
+       compatible:
+-        const: qcom,dsi-ctrl-6g-qcm2290
++        items:
++          - const: qcom,qcm2290-dsi-ctrl
++          - const: qcom,mdss-dsi-ctrl
+ 
+   "^phy@[0-9a-f]+$":
+     type: object
+@@ -136,7 +138,8 @@ examples:
+         };
+ 
+         dsi@5e94000 {
+-            compatible = "qcom,dsi-ctrl-6g-qcm2290";
++            compatible = "qcom,qcm2290-dsi-ctrl",
++                         "qcom,mdss-dsi-ctrl";
+             reg = <0x05e94000 0x400>;
+             reg-names = "dsi_ctrl";
+ 
 
----
-Dmitry Baryshkov (1):
-      arm64: dts: qcom: qrb2210-rb1: add wifi variant property
-
-Konrad Dybcio (11):
-      dt-bindings: display: msm: qcm2290-mdss: Use the non-deprecated DSI compat
-      dt-bindings: display: msm: Add reg bus and rotator interconnects
-      dt-bindings: interconnect: qcom,msm8998-bwmon: Add QCM2290 bwmon instance
-      dt-bindings: firmware: qcom,scm: Allow interconnect for everyone
-      iommu/arm-smmu-qcom: Add QCM2290 MDSS compatible
-      arm64: dts: qcom: sc7180: Add the missing MDSS icc path
-      arm64: dts: qcom: sc7280: Add the missing MDSS icc path
-      arm64: dts: qcom: qcm2290: Add display nodes
-      arm64: dts: qcom: qcm2290: Hook up interconnects
-      arm64: dts: qcom: qrb2210-rb1: Set up HDMI
-      arm64: dts: qcom: qrb2210-rb1: Enable CAN bus controller
-
- .../bindings/display/msm/mdss-common.yaml          |  18 +-
- .../bindings/display/msm/qcom,qcm2290-mdss.yaml    |  21 +-
- .../bindings/display/msm/qcom,sc7180-mdss.yaml     |  14 +-
- .../bindings/display/msm/qcom,sc7280-mdss.yaml     |  14 +-
- .../bindings/display/msm/qcom,sm6115-mdss.yaml     |  10 +
- .../bindings/display/msm/qcom,sm6125-mdss.yaml     |   8 +-
- .../bindings/display/msm/qcom,sm6350-mdss.yaml     |   8 +-
- .../bindings/display/msm/qcom,sm6375-mdss.yaml     |   8 +-
- .../bindings/display/msm/qcom,sm8450-mdss.yaml     |  13 +-
- .../devicetree/bindings/firmware/qcom,scm.yaml     |  15 -
- .../bindings/interconnect/qcom,msm8998-bwmon.yaml  |   1 +
- arch/arm64/boot/dts/qcom/qcm2290.dtsi              | 462 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts           | 109 +++++
- arch/arm64/boot/dts/qcom/sc7180.dtsi               |   8 +-
- arch/arm64/boot/dts/qcom/sc7280.dtsi               |   9 +-
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c         |   1 +
- 16 files changed, 671 insertions(+), 48 deletions(-)
----
-base-commit: 1f5c003694fab4b1ba6cbdcc417488b975c088d0
-change-id: 20231125-topic-rb1_feat-dd510532621b
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.43.0
 
 
