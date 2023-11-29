@@ -1,158 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-2430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E9E77FD56B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:22:03 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 814E97FD59E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:27:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A487282EE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 11:22:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 20AF11F20FA2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 11:27:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23F711C696;
-	Wed, 29 Nov 2023 11:22:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10F4A1C6BA;
+	Wed, 29 Nov 2023 11:27:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BexiC6xL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C2BBD5C;
-	Wed, 29 Nov 2023 03:21:57 -0800 (PST)
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-db4422fff15so5594180276.1;
-        Wed, 29 Nov 2023 03:21:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701256916; x=1701861716;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QQMIsPSnGej6JUmLAmR8223gXbEgbLhru5iUfZNaJ9Y=;
-        b=aG3ATMfT3/n0QjJZAKgzaLaeH9mOjMtsgwwPD4OnB/2zLPL9+9knXssPG0W+TEdMA/
-         vtPnx/c/bVaatTiTZYf3nbOjlEHSutM++w3B0lGZiz4bfKdpk7x4AzjETtdtRJNIw1at
-         ip+oMbP4AT4zTbQnCRVbdnw+WAgrON1Xc/7EyHtD8lVefsYUBGHRiahkQjy71Y91Y51u
-         LDYUPK4DbX4V8CsTif3b5B6BmVFDEPPSNRVErnY42hrPu63ueU09QADCgPucQ/ntmg7s
-         mWCVL558DegtFdF/8rpXOXkYL8BBLPDQ2b7EQse+EW7iqlg2SsVXvF9khgRTGtFW5e3d
-         vsFw==
-X-Gm-Message-State: AOJu0YyQZXo/qE1134HIvr5u9xQBQiA8E2nGbAMZS9A571mCT3wkQD43
-	4LXufgca+SnAf02lSZmGgyqMgRZFX00WCw==
-X-Google-Smtp-Source: AGHT+IFEXZ4xfi2mEgBMBigLSielKuHT15ssBs+m4TCTuJMeTnCclwHqIUn2Cz1OJb25aJ2NQGYCPA==
-X-Received: by 2002:a25:256:0:b0:da0:29df:ae62 with SMTP id 83-20020a250256000000b00da029dfae62mr16626470ybc.35.1701256916142;
-        Wed, 29 Nov 2023 03:21:56 -0800 (PST)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id c84-20020a254e57000000b00d9abff76f5csm4143479ybb.9.2023.11.29.03.21.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Nov 2023 03:21:56 -0800 (PST)
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-db4422fff15so5594173276.1;
-        Wed, 29 Nov 2023 03:21:56 -0800 (PST)
-X-Received: by 2002:a25:fc22:0:b0:d9a:618a:d727 with SMTP id
- v34-20020a25fc22000000b00d9a618ad727mr16348333ybd.41.1701256915894; Wed, 29
- Nov 2023 03:21:55 -0800 (PST)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325121BCB;
+	Wed, 29 Nov 2023 03:27:33 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AT6TT0G029911;
+	Wed, 29 Nov 2023 11:27:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=yP8eKcgfAElCvOmXHkr60HKJJdtU1JjT7uWox8Q0nPQ=;
+ b=BexiC6xL1H6UvTI3zgKcZvPfulV9ZOiglfaveRMtCc+lrgOesUu+uM8jJI9x9fJshxRy
+ fgVR8cnfHYfLofTBT3r9UwSwZLI1bm3MxcuIdaob40K6em5Uhvy7am1Ckq7tAj4iSxZg
+ U+BPkoX820N/s4O+Srlj3UVnYOzbFWNgUgVYW2sQiO1bI8zyI7AuoYV20BnHZyyggqH5
+ rVA2YObE7vXvyc54y6oSFnkl9mr/DlTMF5xM/b+hZZzo8h/oIgCN7+k+q6qEK1+VrbzS
+ CXyTnK78OiRlPjDJrMjBuH573ztFELgDfF6U6UnKAu8noZQz5ffO+EqWKWCbObWQK08W yQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3up02xrr09-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Nov 2023 11:27:06 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ATBR4Iq029105
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Nov 2023 11:27:04 GMT
+Received: from [10.218.17.183] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 29 Nov
+ 2023 03:26:57 -0800
+Message-ID: <474a8942-e22f-4899-acb9-f794d01fdfe9@quicinc.com>
+Date: Wed, 29 Nov 2023 16:56:53 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231128200155.438722-1-andriy.shevchenko@linux.intel.com> <20231128200155.438722-7-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20231128200155.438722-7-andriy.shevchenko@linux.intel.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Wed, 29 Nov 2023 12:21:45 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdWt0qq-Umd8udb7fxpNVZ=X9O9eZGMVGFSGRO_d9UkgNw@mail.gmail.com>
-Message-ID: <CAMuHMdWt0qq-Umd8udb7fxpNVZ=X9O9eZGMVGFSGRO_d9UkgNw@mail.gmail.com>
-Subject: Re: [PATCH v3 06/22] pinctrl: core: Make pins const in struct group_desc
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
-	Biju Das <biju.das.jz@bp.renesas.com>, 
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>, 
-	Jianlong Huang <jianlong.huang@starfivetech.com>, linux-arm-kernel@lists.infradead.org, 
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org, 
-	linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Dong Aisheng <aisheng.dong@nxp.com>, 
-	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	NXP Linux Team <linux-imx@nxp.com>, Sean Wang <sean.wang@kernel.org>, 
-	Paul Cercueil <paul@crapouillou.net>, Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Emil Renner Berthing <kernel@esmil.dk>, 
-	Hal Feng <hal.feng@starfivetech.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net] net: stmmac: update Rx clk divider for 10M SGMII
+Content-Language: en-US
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+CC: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu
+	<joabreu@synopsys.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet
+	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni
+	<pabeni@redhat.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>
+References: <20231124050818.1221-1-quic_snehshah@quicinc.com>
+ <ZWBo5EKjkffNOqkQ@shell.armlinux.org.uk>
+ <47c9eb95-ff6a-4432-a7ef-1f3ebf6f593f@quicinc.com>
+ <ZWRVz05Gb4oALDnf@shell.armlinux.org.uk>
+ <3bf6f666-b58a-460f-88f5-ad8ec08bfbbc@quicinc.com>
+ <ZWRp3pVv0DNsPMT7@shell.armlinux.org.uk>
+From: Sneh Shah <quic_snehshah@quicinc.com>
+In-Reply-To: <ZWRp3pVv0DNsPMT7@shell.armlinux.org.uk>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Ihd05gQVYWQ5L930kHs45XYlLcwDm_lx
+X-Proofpoint-GUID: Ihd05gQVYWQ5L930kHs45XYlLcwDm_lx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-29_09,2023-11-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=668 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311290085
 
-Hi Andy,
 
-On Tue, Nov 28, 2023 at 9:04=E2=80=AFPM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
-> It's unclear why it's not a const from day 1. Make the pins member
-> const in struct group_desc. Update necessary APIs.
->
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-Thanks for your patch!
-
-> --- a/drivers/pinctrl/core.c
-> +++ b/drivers/pinctrl/core.c
-> @@ -642,7 +642,7 @@ static int pinctrl_generic_group_name_to_selector(str=
-uct pinctrl_dev *pctldev,
->   * Note that the caller must take care of locking.
->   */
->  int pinctrl_generic_add_group(struct pinctrl_dev *pctldev, const char *n=
-ame,
-> -                             int *pins, int num_pins, void *data)
-> +                             const int *pins, int num_pins, void *data)
->  {
->         struct group_desc *group;
->         int selector, error;
-> diff --git a/drivers/pinctrl/core.h b/drivers/pinctrl/core.h
-> index 530370443c19..01ea1ce99fe8 100644
-> --- a/drivers/pinctrl/core.h
-> +++ b/drivers/pinctrl/core.h
-> @@ -203,7 +203,7 @@ struct pinctrl_maps {
->   */
->  struct group_desc {
->         const char *name;
-> -       int *pins;
-> +       const int *pins;
->         int num_pins;
->         void *data;
->  };
-> @@ -222,7 +222,7 @@ struct group_desc *pinctrl_generic_get_group(struct p=
-inctrl_dev *pctldev,
->                                              unsigned int group_selector)=
-;
->
->  int pinctrl_generic_add_group(struct pinctrl_dev *pctldev, const char *n=
-ame,
-> -                             int *gpins, int ngpins, void *data);
-> +                             const int *pins, int num_pins, void *data);
->
->  int pinctrl_generic_remove_group(struct pinctrl_dev *pctldev,
->                                  unsigned int group_selector);
-
-Probably this is also the right moment to change all of these to arrays
-of unsigned ints?  Else you will have mixed int/unsigned int after
-"[PATCH v3 13/22] pinctrl: core: Embed struct pingroup into struct
-group_desc", and purely unsigned int after "[PATCH v3 22/22] pinctrl:
-core: Remove unused members from struct group_desc".
-
-The Renesas pinctrl drivers already pass arrays of unsigned ints.
-Some other drivers still use arrays of ints, though.
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+On 11/27/2023 3:35 PM, Russell King (Oracle) wrote:
+> On Mon, Nov 27, 2023 at 03:17:20PM +0530, Sneh Shah wrote:
+>> On 11/27/2023 2:09 PM, Russell King (Oracle) wrote:
+>>> On Mon, Nov 27, 2023 at 11:25:34AM +0530, Sneh Shah wrote:
+>>>> On 11/24/2023 2:42 PM, Russell King (Oracle) wrote:
+>>>>> The next concern I have is that you're only doing this for SPEED_10.
+>>>>> If it needs to be programmed for SPEED_10 to work, and not any of the
+>>>>> other speeds, isn't this something that can be done at initialisation
+>>>>> time? If it has to be done depending on the speed, then don't you need
+>>>>> to do this for each speed with an appropriate value?
+>>>>
+>>>> This field programming is required only for 10M speed in for SGMII mode. other speeds are agnostic to this field. Hence we are programming it always when SGMII link comes up in 10M mode. init driver data for ethqos is common for sgmii and rgmii. As this fix is specific to SGMII we can't add this to init driver data.
+>>>
+>>> I wasn't referring to adding it to driver data. I was asking whether it
+>>> could be done in the initialisation path.
+>>>
+>> No, IOMACRO block is configured post phylink up regardless of RGMII or SGMII mode. We are not updating them at driver initialization time itself.
+> 
+> What reason (in terms of the hardware) requires you to do this every
+> time you select 10M speed? Does the hardware change the value in the
+> register?
+> 
+Yes, the hardware changes the value in register every time the interface is toggled. That is the reason we have ethqos_configure_sgmii function to configure registers whenever there is link activity.
 
