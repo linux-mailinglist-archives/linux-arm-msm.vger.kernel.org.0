@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2475-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 482467FD88F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:47:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58F257FD893
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:48:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04E10282910
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 13:47:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8AC5F1C20D14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 13:48:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 142D7208DB;
-	Wed, 29 Nov 2023 13:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 773BD1E4B9;
+	Wed, 29 Nov 2023 13:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IPjz+8rW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mwBX/M+0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EC74CE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 05:47:09 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-543456dbd7bso1725010a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 05:47:09 -0800 (PST)
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0548DE
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 05:48:47 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-548d60a4d60so8760157a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 05:48:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701265627; x=1701870427; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701265726; x=1701870526; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8E5bkvLIYcOM0I422pk1TjHF7GapQVouJN2+bMb/99s=;
-        b=IPjz+8rWr/TBCOJoSCywQGFi36kUgkN4jhG9x/doYz/Pi2XvNnbFkQRgAzERtNmJct
-         6vXTblAatI3XkMHrDN7sLyjqOvT1R2QdEaVq0nWmM3nqrKKyCjAiHZUcJCSTzqZ42wY2
-         uQU3qY2odpuyleu2iRG5UcA5QMU1D0NnMs9HcOwlPI28oWce8VUjA6ZhDrQ6SuGd5WNK
-         5SyzhmXbxEq8SXS4DbL3d9xTYanFn1XajNihjcDYvFlIe03vXT3q5u637U4cwhsz1h2D
-         xtSydgP+V3M9+ja7dKONa8SuyFhzjYoLrOEp4jUSJuAKjEVi1nUgo00WGw/rgBg1gq6F
-         Hpaw==
+        bh=+s2czFu1psUGazPlYYW6MqNEJ17MQXOhczIimjIdn4A=;
+        b=mwBX/M+0BIdl7zYuIcHSllccVklHY4vjcRUXmmpGNxXUyckZNGVbrQ9662ZkpBu74/
+         56jw2kwHx/cTdm04cSo/ncQfZ4aD3+jcBhbyraiNuSSebCiyzSRwu3lIGT255MXxFT86
+         CBqUnqxhEp8iB0I7rqB5bdVveTQeYTxbroU+v3Yb31XIMGvMGzipu5NswctQhct2iSlu
+         wuhJk5zeSd3GEe/Nd1VMYtW0XRzX2Ev9WgQPf9JoCkElKYUlHPcRyGtBern51EBfGznR
+         8S8cfDPhkhDku2GTX1DGbU9vknIFNCmGvbx2aBG9SX5tkcmw6HeqM9ZR7k4Qdta48e8r
+         RoBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701265627; x=1701870427;
+        d=1e100.net; s=20230601; t=1701265726; x=1701870526;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8E5bkvLIYcOM0I422pk1TjHF7GapQVouJN2+bMb/99s=;
-        b=kpTsx/dVeNd9FHQuVfCheTQIKtJ7rZ482ZXQSSg/MjMaWsnjJMKJP0qZMOsh8sDI1W
-         cvJKd9xrxmLHKasenQGGUwQTRZGcxOJdvO8lcUebdyj6SUOt1FfnkD6+II5wVi3Ve0Aj
-         nsVzW2yDP78w7z8AcjS3lXbE5kN1zEjxRluw997Hgf/blOfTHrZs4rlbDUqDYSSEXmN7
-         vywviBkkDbjpru9tILCw2U2v+2NnnlHMgwHxLDT2vsD4Vqw/cNhbR1yVFWLRZ8bXmpGP
-         BA8Da0OdYmoNlPwGP7lDUJEguZ4wVUvWavc29kwgrKVt9/5MXTPIyVpA0u10jeaYhEkA
-         VWrA==
-X-Gm-Message-State: AOJu0Yz1G0kGfvKjn+bXs+Wxsj/oshEw4bRrO9+/7RQGhzv4BeqApKe9
-	r/LFwWZ1FyLnCSwm0HVh+gLoxQ==
-X-Google-Smtp-Source: AGHT+IFIxcFBHBzJr2SXAfv0DNWvRQSbd/bH8Swm65bB7ZvuZcwwX8+AC6QOru1mOExaT0mGOSYfOA==
-X-Received: by 2002:a17:906:c791:b0:9ad:8a96:ad55 with SMTP id cw17-20020a170906c79100b009ad8a96ad55mr20249069ejb.14.1701265627638;
-        Wed, 29 Nov 2023 05:47:07 -0800 (PST)
+        bh=+s2czFu1psUGazPlYYW6MqNEJ17MQXOhczIimjIdn4A=;
+        b=XXot/2lwX8YH1rgDtoa5C40Ruqo8/o9Dx4upYA5w8iqgL319I0K+lAlW9A8xWqjTIT
+         +rbsJXR8ruc+ZjGn4hgfLR0loc4QLpOZq0EF5kTcRwne9iu9E3ljsO/PYOzNJ+zDFhtg
+         A4ZzFlhCNR//B647gAF8ChoS3z32CBs3Gnbf5/EvbfrnkT6aJOFa7kBE42qGE9Ac+32g
+         FAbE7bO6SIRLzTTp2qt306kHkLBSThZKzwaFOwDkqQ+Ng3J7soYe3+AzPO9OQP/cecvr
+         tFG5NL9gYgT5z6/JEzoDIAlo6Ix8roKtZ5+lWg56ptniT2UChjnsfTNTsZTK8E6uZ0rp
+         iCPw==
+X-Gm-Message-State: AOJu0YypveI4vrHcmcgZ2lgUCgdbEoLGWyfdyXD5VHwmdyQTFNbJhBGO
+	9PO7Xunm2HTVcqAhhG3HLUEliQ==
+X-Google-Smtp-Source: AGHT+IFsZgN/ib5jj6CxGYWelnMkFPQwOk2q6h9GoZgFVTeGCHCxSk6MPttE9B+MYM7L/MkCs3jOzg==
+X-Received: by 2002:a17:906:7c41:b0:a08:291c:62c9 with SMTP id g1-20020a1709067c4100b00a08291c62c9mr11826344ejp.5.1701265726230;
+        Wed, 29 Nov 2023 05:48:46 -0800 (PST)
 Received: from [192.168.209.173] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id f8-20020a17090624c800b009fd77d78f7fsm7910195ejb.116.2023.11.29.05.47.06
+        by smtp.gmail.com with ESMTPSA id f8-20020a17090624c800b009fd77d78f7fsm7910195ejb.116.2023.11.29.05.48.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Nov 2023 05:47:07 -0800 (PST)
-Message-ID: <fbe553fc-fb36-48d7-a1e0-8ba7fea0c01a@linaro.org>
-Date: Wed, 29 Nov 2023 14:47:06 +0100
+        Wed, 29 Nov 2023 05:48:45 -0800 (PST)
+Message-ID: <ab9fa787-614b-462e-87f4-e56aaa21fa64@linaro.org>
+Date: Wed, 29 Nov 2023 14:48:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: sm8650: add ADSP audio codec macros
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: sm8650: add Soundwire controllers
 Content-Language: en-US
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
@@ -72,7 +72,7 @@ To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc: Neil Armstrong <neil.armstrong@linaro.org>
 References: <20231129132247.63721-1-krzysztof.kozlowski@linaro.org>
- <20231129132247.63721-4-krzysztof.kozlowski@linaro.org>
+ <20231129132247.63721-5-krzysztof.kozlowski@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -109,46 +109,44 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231129132247.63721-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231129132247.63721-5-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 29.11.2023 14:22, Krzysztof Kozlowski wrote:
-> Add the Low Power Audio SubSystem (LPASS) / ADSP audio codec macros on
-> Qualcomm SM8650.  The nodes are very similar to SM8550.
+> Add nodes for LPASS Soundwire v2.0.0 controllers.  Use labels with
+> indices matching downstream DTS, to make any comparisons easier.
 > 
 > Cc: Neil Armstrong <neil.armstrong@linaro.org>
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
 > ---
-> 
-> Bindings were documented here:
-> https://lore.kernel.org/linux-devicetree/20231129113014.38837-1-krzysztof.kozlowski@linaro.org/
-> ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 83 ++++++++++++++++++++++++++++
->  1 file changed, 83 insertions(+)
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 226 +++++++++++++++++++++++++++
+>  1 file changed, 226 insertions(+)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index e926329cf3f9..cf663a18c9f0 100644
+> index cf663a18c9f0..148118e3fb0a 100644
 > --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -2611,6 +2611,89 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
->  			};
+> @@ -2627,6 +2627,36 @@ lpass_wsa2macro: codec@6aa0000 {
+>  			#sound-dai-cells = <1>;
 >  		};
 >  
-> +		lpass_wsa2macro: codec@6aa0000 {
-> +			compatible = "qcom,sm8650-lpass-wsa-macro", "qcom,sm8550-lpass-wsa-macro";
-> +			reg = <0 0x06aa0000 0 0x1000>;
-> +			clocks = <&q6prmcc LPASS_CLK_ID_WSA2_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
-> +				 <&lpass_vamacro>;
-> +			clock-names = "mclk", "macro", "dcodec", "fsgen";
-one per line?
+> +		swr3: soundwire@6ab0000 {
+> +			compatible = "qcom,soundwire-v2.0.0";
+> +			reg = <0 0x06ab0000 0 0x10000>;
+> +			interrupts = <GIC_SPI 171 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&lpass_wsa2macro>;
+> +			clock-names = "iface";
+> +			label = "WSA2";
+> +
+> +			pinctrl-names = "default";
+> +			pinctrl-0 = <&wsa2_swr_active>;
+property-n
+property-names
 
-> +			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA2_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> +			assigned-clock-rates = <19200000>;
-Is this necessary?
+lgtm otherwise
+
+Reviewed-by : Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
