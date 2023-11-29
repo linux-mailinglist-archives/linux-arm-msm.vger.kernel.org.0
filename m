@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-2496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53A057FDA0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:44:43 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 387497FDA12
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:44:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B6DAEB20FDA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:44:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E60612834C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:44:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64D2A32189;
-	Wed, 29 Nov 2023 14:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 167D532C74;
+	Wed, 29 Nov 2023 14:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WtGlSdAv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DQlrCYKe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC58810F2
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:44:29 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-a00cbb83c80so935233066b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:44:29 -0800 (PST)
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EF410FF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:44:33 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9fa45e75ed9so931836866b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:44:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701269068; x=1701873868; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701269072; x=1701873872; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3WME6ubitd3vxaAOMdHVezdwhed8qbighnDEBO169Ec=;
-        b=WtGlSdAvYS2KDuvldE8lVt2M9SryXBG3ShZAMXg8gCUJF8BnBIfj/eZlyVnF904vO+
-         q/aAYUUsPlbEp4UToSnxM8Xw5WEQMAl5vsh+T9VKFAxTaxLZm2TWq6VvdEVGT1GdbJrH
-         YZ3xbyVcAqc/S6QNuJL3HO1AOJxL8/2nP5ZHhbne2adaSoPqcNUr5po06oEad0XC7FGp
-         +kWYwW9OgXdZYpsY2BY4At4e4B1XbrDnrWjYXO3s6KVySqb0yucyfxm40Kp75W6o1oTt
-         AzezSFS5BCFISbQfpeMDDj4OSEMQN+bEd2Sc4JlY8OLKNJLLd911j6YqJdL4x3auGyLs
-         hNgg==
+        bh=9K/KL6rUHA7mDcBMrrqIFDkXaVSeDD2iYf5D2W8YBIg=;
+        b=DQlrCYKe3kKI8xIrFTQGxuCmo1BbW5P0nACsnOQz4FX/NRxQEj0g2/KtZQLnXTP7Sg
+         DJxCw/LZ0r7IID9HUQHpmOl7RWcgb1FZwofmaOrn9FUt47pfjrYqpUUEnbb7J89G+ELs
+         jWBHt5VeztRilNduWdABzTpJQPkV0+fUfXFHG101OJVSGVSimfTtQI5JZ8rtMOge2pzG
+         sMrbFkV1iTx4C73eNIzBFKyQX8XJAOgzMyvAqjQhibxwMAch+FLWtqy+JnEVmhSHou6O
+         +XLQp3Y98W7ZcXXuwFwzddqbrLP9zLMMfXUCo7525bKmt3j5K+eUZtzNS8TcgdEXvI+K
+         u0fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701269068; x=1701873868;
+        d=1e100.net; s=20230601; t=1701269072; x=1701873872;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3WME6ubitd3vxaAOMdHVezdwhed8qbighnDEBO169Ec=;
-        b=dj8jrPBSYxICACy66lQQRtaEam49YabLh7PPZI6vp63f/wtUk3yZCKGpQIoCceDind
-         KvFhp2ZvlmMZNrXeXg1R2GVT7ISYBfELuzhfml6KT+lWC6y6ixNocowCkFmb5t8eed68
-         RvoPxXUL3bK6TAvRD4P9ejay6JeoeYUuf2CF+z3/JVjKZPnyBEnSC/i6DqDhhEfNuRVY
-         4y/MD0XQbXDa917bYHnHJ5l0EVfykpx2oiGNhA5VIPe+9DxsxTwLawYWEguaCX+RI5j0
-         NX50Z91O8XCrZIlwnBb2HfMBGeBZMo+FjW8TvUaFwnCPWwps5QxM0AV37ByloEDq8mEs
-         7tBQ==
-X-Gm-Message-State: AOJu0YwfoRdYlE3zAyqJsIfaavvoyn3Gyd0qMxDINDH1x/W0v4p8vI8S
-	KK8dLaVbUgIbAhjMKoHy9ylejA==
-X-Google-Smtp-Source: AGHT+IH+RwsuXNKo7mRRSs5QfH4RQDMAsxgT6mJOUDi04ruodSJZaS3PyYqxW9aAR+nUNX0ZJcUxXA==
-X-Received: by 2002:a17:906:fcce:b0:9f8:2b44:7b7f with SMTP id qx14-20020a170906fcce00b009f82b447b7fmr13038742ejb.70.1701269068288;
-        Wed, 29 Nov 2023 06:44:28 -0800 (PST)
+        bh=9K/KL6rUHA7mDcBMrrqIFDkXaVSeDD2iYf5D2W8YBIg=;
+        b=KoxLnfu1iGl6EeH6FkYqfSCfwB3QYlca1Q/6ez3vGbXP/lrh9Z72KqizZYbOsF9rNw
+         FX7K5Mevn758PbVxmZMk0LJI4Rs+M7LrcLjCeAf75jUT5Q9OL+roDZZyumhDMDZs8RZi
+         93m7fbsVj74UXiXTx1cpapPEibbVEjEKwzBlA+S5n5+e550GdlYA6QjF57JqkuEWDb9W
+         xOWKe6NCA2FWdzy8zkm/yC0SSVrtaX00VTcjul6Au0FeiHJBIybKlob8uBrcL/QnbsZ5
+         L9WFqAJJAGW3aK6r31JsrPLQvbTRzGed1eO4n19wJrjl6vqSqGkSJ8Nh+QO3OLBZcGzW
+         Xrog==
+X-Gm-Message-State: AOJu0Ywir2yhqmNMwoq62CjOgZFnrHbiA59rDNVa0S6eBwxTtNExiBZ3
+	/81NiI/0B8rl7B+I81X+yqIumg==
+X-Google-Smtp-Source: AGHT+IGjVdN7cz5padHg+T+KRoFbmsMzhIWory1lFuWkxTuEmzq2syYeBQUInK/9FTSsztA+J2jYow==
+X-Received: by 2002:a17:906:2219:b0:a16:8d1b:5b13 with SMTP id s25-20020a170906221900b00a168d1b5b13mr3159519ejs.73.1701269071739;
+        Wed, 29 Nov 2023 06:44:31 -0800 (PST)
 Received: from [10.167.154.1] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id e27-20020a1709062c1b00b009fda627abd9sm7913738ejh.79.2023.11.29.06.44.24
+        by smtp.gmail.com with ESMTPSA id e27-20020a1709062c1b00b009fda627abd9sm7913738ejh.79.2023.11.29.06.44.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 06:44:27 -0800 (PST)
+        Wed, 29 Nov 2023 06:44:31 -0800 (PST)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Wed, 29 Nov 2023 15:44:03 +0100
-Subject: [PATCH v3 06/12] arm64: dts: qcom: sc7180: Add the missing MDSS
+Date: Wed, 29 Nov 2023 15:44:04 +0100
+Subject: [PATCH v3 07/12] arm64: dts: qcom: sc7280: Add the missing MDSS
  icc path
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -65,7 +65,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231125-topic-rb1_feat-v3-6-4cbb567743bb@linaro.org>
+Message-Id: <20231125-topic-rb1_feat-v3-7-4cbb567743bb@linaro.org>
 References: <20231125-topic-rb1_feat-v3-0-4cbb567743bb@linaro.org>
 In-Reply-To: <20231125-topic-rb1_feat-v3-0-4cbb567743bb@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -92,11 +92,11 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
  iommu@lists.linux.dev, Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1701269042; l=1145;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1701269042; l=1493;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=QxbVxThi6gj4JqQP8V9LpJsjR/myuVOnIJbwHX7amYU=;
- b=sYPUfm+T2CO9HyMoVEn+/8/AzljQnlW0jC9XeZnrz01woxrBDGuDswi+m+bEgPSkuiCtZLp8N
- BR3hZTS03LmDYMTViL/cCS/WJooBooB/al2zibrNvM1dONg09omgSvQ
+ bh=RpzLMWuMbYjvqQjs1yjMVMPj1VmkWicMXA9dO0pSXPQ=;
+ b=idb266kdiffZu3Aqa8UlqEsL6fRd558KK+7szhEZHwR5Nruiw3g141r8j8bfrnqsrqdUyCE8W
+ EO6Zzca5zhMB+0xwj+IunhA6686/xhyDdRSJIxzzge1Fic1shg6vvOS
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
@@ -108,14 +108,22 @@ Add the missing path.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 11f353d416b4..9664e42faeb1 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3100,8 +3100,12 @@ mdss: display-subsystem@ae00000 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 04bf85b0399a..41d327b1f1b6 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -15,6 +15,7 @@
+ #include <dt-bindings/dma/qcom-gpi.h>
+ #include <dt-bindings/firmware/qcom,scm.h>
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/interconnect/qcom,icc.h>
+ #include <dt-bindings/interconnect/qcom,osm-l3.h>
+ #include <dt-bindings/interconnect/qcom,sc7280.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+@@ -3958,8 +3959,12 @@ mdss: display-subsystem@ae00000 {
  			interrupt-controller;
  			#interrupt-cells = <1>;
  
@@ -124,11 +132,11 @@ index 11f353d416b4..9664e42faeb1 100644
 +			interconnects = <&mmss_noc MASTER_MDP0 QCOM_ICC_TAG_ALWAYS
 +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
 +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-+					 &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ALWAYS>;
++					 &cnoc2 SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ALWAYS>;
 +			interconnect-names = "mdp0-mem",
 +					     "cpu-cfg";
  
- 			iommus = <&apps_smmu 0x800 0x2>;
+ 			iommus = <&apps_smmu 0x900 0x402>;
  
 
 -- 
