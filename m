@@ -1,120 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-2455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E2C57FD6F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 13:40:37 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97F6F7FD734
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 13:55:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05C56282F6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:40:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BBDC31C20F41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:55:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65A901B273;
-	Wed, 29 Nov 2023 12:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE1E11C6BE;
+	Wed, 29 Nov 2023 12:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="zRrR8Ur3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZbCHbIJf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from aposti.net (aposti.net [89.234.176.197])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21ED310D4;
-	Wed, 29 Nov 2023 04:40:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-	s=mail; t=1701261623;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=cr7SDYHYCVtmS9GCsJZvy0ptpnGDSw4tSZ96I2SXICU=;
-	b=zRrR8Ur3NcRUURsDYlT0r/pa2WDsbyyBoASlGrp3V15HpHxfka0vhFg3ap+bv8aIcsrtKO
-	dG1ym6Q5AqpHV6KuvauxKRCpQV9e6+SEiFJNK4FhLx0cuTVTCKigOkXVGqrDCmT4ZsgWpn
-	G9cBDwI0ZHj3vddH5Zu3ftV2vDKOn3A=
-Message-ID: <84dd44ca9a07f319a391e72769cc7b9488303d2d.camel@crapouillou.net>
-Subject: Re: [PATCH v3 11/22] pinctrl: ingenic: Make use of
- PINCTRL_GROUP_DESC()
-From: Paul Cercueil <paul@crapouillou.net>
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Linus Walleij
- <linus.walleij@linaro.org>, Bartosz Golaszewski
- <bartosz.golaszewski@linaro.org>,  Rasmus Villemoes
- <linux@rasmusvillemoes.dk>, Jonathan =?ISO-8859-1?Q?Neusch=E4fer?=
- <j.neuschaefer@gmx.net>,  Krzysztof Kozlowski
- <krzysztof.kozlowski@linaro.org>, Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=
- <u.kleine-koenig@pengutronix.de>,  Geert Uytterhoeven
- <geert+renesas@glider.be>, Biju Das <biju.das.jz@bp.renesas.com>, Claudiu
- Beznea <claudiu.beznea.uj@bp.renesas.com>, Jianlong Huang
- <jianlong.huang@starfivetech.com>, linux-arm-kernel@lists.infradead.org, 
- linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org, 
- linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-renesas-soc@vger.kernel.org
-Cc: Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Dong Aisheng
- <aisheng.dong@nxp.com>,  Fabio Estevam <festevam@gmail.com>, Shawn Guo
- <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,  Pengutronix Kernel
- Team <kernel@pengutronix.de>, Sascha Hauer <s.hauer@pengutronix.de>, NXP
- Linux Team <linux-imx@nxp.com>, Sean Wang <sean.wang@kernel.org>, Lakshmi
- Sowjanya D <lakshmi.sowjanya.d@intel.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
- <konrad.dybcio@linaro.org>, Emil Renner Berthing <kernel@esmil.dk>, Hal
- Feng <hal.feng@starfivetech.com>
-Date: Wed, 29 Nov 2023 13:40:19 +0100
-In-Reply-To: <20231128200155.438722-12-andriy.shevchenko@linux.intel.com>
-References: <20231128200155.438722-1-andriy.shevchenko@linux.intel.com>
-	 <20231128200155.438722-12-andriy.shevchenko@linux.intel.com>
-Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
- keydata=mQENBF0KhcEBCADkfmrzdTOp/gFOMQX0QwKE2WgeCJiHPWkpEuPH81/HB2dpjPZNW03ZMLQfECbbaEkdbN4YnPfXgcc1uBe5mwOAPV1MBlaZcEt4M67iYQwSNrP7maPS3IaQJ18ES8JJ5Uf5UzFZaUawgH+oipYGW+v31cX6L3k+dGsPRM0Pyo0sQt52fsopNPZ9iag0iY7dGNuKenaEqkYNjwEgTtNz8dt6s3hMpHIKZFL3OhAGi88wF/21isv0zkF4J0wlf9gYUTEEY3Eulx80PTVqGIcHZzfavlWIdzhe+rxHTDGVwseR2Y1WjgFGQ2F+vXetAB8NEeygXee+i9nY5qt9c07m8mzjABEBAAG0JFBhdWwgQ2VyY3VlaWwgPHBhdWxAY3JhcG91aWxsb3UubmV0PokBTgQTAQoAOBYhBNdHYd8OeCBwpMuVxnPua9InSr1BBQJdCoXBAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEHPua9InSr1BgvIH/0kLyrI3V0f33a6D3BJwc1grbygPVYGuC5l5eMnAI+rDmLR19E2yvibRpgUc87NmPEQPpbbtAZt8On/2WZoE5OIPdlId/AHNpdgAtGXo0ZX4LGeVPjxjdkbrKVHxbcdcnY+zzaFglpbVSvp76pxqgVg8PgxkAAeeJV+ET4t0823Gz2HzCL/6JZhvKAEtHVulOWoBh368SYdolp1TSfORWmHzvQiCCCA+j0cMkYVGzIQzEQhX7Urf9N/nhU5/SGLFEi9DcBfXoGzhyQyLXflhJtKm3XGB1K/pPulbKaPcKAl6rIDWPuFpHkSbmZ9r4KFlBwgAhlGy6nqP7O3u7q23hRW5AQ0EXQqFwQEIAMo+MgvYHsyjX3Ja4Oolg1Txzm8woj30ch2nACFCqaO0R/1kLj2VVeLrDyQUOlXx9PD6IQI4M8wy8m0sR4wV2p/g/paw7k65cjzYYLh+FdLNyO7IW
-	YXndJO+wDPi3aK/YKUYepqlP+QsmaHNYNdXEQDRKqNfJg8t0f5rfzp9ryxd1tCnbV+tG8VHQWiZXNqN7062DygSNXFUfQ0vZ3J2D4oAcIAEXTymRQ2+hr3Hf7I61KMHWeSkCvCG2decTYsHlw5Erix/jYWqVOtX0roOOLqWkqpQQJWtU+biWrAksmFmCp5fXIg1Nlg39v21xCXBGxJkxyTYuhdWyu1yDQ+LSIUAEQEAAYkBNgQYAQoAIBYhBNdHYd8OeCBwpMuVxnPua9InSr1BBQJdCoXBAhsMAAoJEHPua9InSr1B4wsH/Az767YCT0FSsMNt1jkkdLCBi7nY0GTW+PLP1a4zvVqFMo/vD6uz1ZflVTUAEvcTi3VHYZrlgjcxmcGu239oruqUS8Qy/xgZBp9KF0NTWQSl1iBfVbIU5VV1vHS6r77W5x0qXgfvAUWOH4gmN3MnF01SH2zMcLiaUGF+mcwl15rHbjnT3Nu2399aSE6cep86igfCAyFUOXjYEGlJy+c6UyT+DUylpjQg0nl8MlZ/7Whg2fAU9+FALIbQYQzGlT4c71SibR9T741jnegHhlmV4WXXUD6roFt54t0MSAFSVxzG8mLcSjR2cLUJ3NIPXixYUSEn3tQhfZj07xIIjWxAYZo=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2510BA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 04:54:54 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-54a945861c6so9182645a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 04:54:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701262493; x=1701867293; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=BnOhFVb1M8Ieky9ixxo2vsCz1mFiT6hqkrZpGr/aemg=;
+        b=ZbCHbIJfIqw4qDOiPwG0efFh0O3yf/UPHsrN6rFk4mh0OtOdMXxqfKyY8UfLRN3AWD
+         Ckl1m4TAFL9SGYiQhlwPnt6f8ndnnzDPOFfNefLWHBG8HFRd7k6F4OeRoesjbBhDNlRv
+         DdQX3a244GD6JQFnw5WriJwErl2JXbHUbVLoeqPMig5a23hsaI/UEHFUoRqox26IlmOk
+         SZsb/l7yG+OMLxV119BHK56b8mPjVBPY5VB/UyXkSaP33B4Km9h488YcenXxZQlbCTWb
+         lTYwFsFwYt0WEO9KWGJ3Zgbm5uuhuiUUejJmyYMc/0u+XFncl7Ulurv33gZS0qO75Xas
+         sUzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701262493; x=1701867293;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BnOhFVb1M8Ieky9ixxo2vsCz1mFiT6hqkrZpGr/aemg=;
+        b=WCoyM6UKeNS1LZuNFhdsgbquJq179dyfDrlzyk5idynz7bbbtLNBHjeqanwIaBlyTA
+         AYuTxFLNRlOyPtd81q2lSGvS7jHY9tiQspsQKTpvRHidT220PxHn5me42RNg/QXIOQpM
+         5BNiezRTb5gZ0U1HSx9BRU1gtZdU31DVtBe85jVX4gflhX7E5xZfqfJPbzVDrCq/MwfK
+         w9eGNCCYQS3pvYJMYbcNpsRX08lnIv8QGbvjXjbJNASNGHzZun8E2KoOGrNS3g/OhQSE
+         bS2WR7hbsr1AoZrHgPLHz1xxDyiWYUWhorrYZiI4o8nM9/fXxCEb2g6jlYfUcNMX8tL1
+         Iw4g==
+X-Gm-Message-State: AOJu0YxnXkrGt55nv01716VA7Nb5TyqiolNbZf9x1m/NeesxaFkwD2yH
+	7VaCguG53+yW5dJ+ew2qoE2feUGQJwGU7Sm2vVg=
+X-Google-Smtp-Source: AGHT+IEYDeTpe6aRRoO6VuBBVxOwRuNY57fe+k+quVA4ooyis/B2/dk2jyJ6WmPDEnY8OMkLchnCEg==
+X-Received: by 2002:a05:6402:5207:b0:54b:96ee:5c7 with SMTP id s7-20020a056402520700b0054b96ee05c7mr6059332edd.30.1701262493075;
+        Wed, 29 Nov 2023 04:54:53 -0800 (PST)
+Received: from [192.168.209.173] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
+        by smtp.gmail.com with ESMTPSA id v28-20020aa7cd5c000000b00548d649f638sm7386490edw.96.2023.11.29.04.54.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Nov 2023 04:54:52 -0800 (PST)
+Message-ID: <c6e05a10-88cc-409c-afc0-37166b763eaa@linaro.org>
+Date: Wed, 29 Nov 2023 13:54:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 3/5] arm64: dts: qcom: Add base X1E80100 dtsi and the
+ QCP dts
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ catalin.marinas@arm.com, ulf.hansson@linaro.org
+Cc: agross@kernel.org, conor+dt@kernel.org, ayan.kumar.halder@amd.com,
+ j@jannau.net, dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+ m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
+ lpieralisi@kernel.org, quic_rjendra@quicinc.com, abel.vesa@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ quic_tsoni@quicinc.com, neil.armstrong@linaro.org
+References: <20231117113931.26660-1-quic_sibis@quicinc.com>
+ <20231117113931.26660-4-quic_sibis@quicinc.com>
+ <918ff1f5-ce01-43ea-b034-e69fbb31f495@linaro.org>
+ <3dd41426-c026-a832-0a6b-0aabfaec2a8c@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <3dd41426-c026-a832-0a6b-0aabfaec2a8c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Le mardi 28 novembre 2023 =C3=A0 21:57 +0200, Andy Shevchenko a =C3=A9crit=
-=C2=A0:
-> Make use of PINCTRL_GROUP_DESC() instead of open coding it.
->=20
-> Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+On 29.11.2023 10:25, Sibi Sankar wrote:
+> 
+> 
+> On 11/18/23 06:36, Konrad Dybcio wrote:
+>> On 17.11.2023 12:39, Sibi Sankar wrote:
+>>> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+>>>
+>>> Add base dtsi and QCP board (Qualcomm Compute Platform) dts file for
+>>> X1E80100 SoC, describing the CPUs, GCC and RPMHCC clock controllers,
+>>> geni UART, interrupt controller, TLMM, reserved memory, interconnects,
+>>> SMMU and LLCC nodes.
+>>>
+>>> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
+>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>>> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>> ---
+[...]
 
-I missed this one in your V2 (didn't notice that there were 2 patches
-touching pinctrl-ingenic).
 
-Acked-by: Paul Cercueil <paul@crapouillou.net>
+>>> +        idle-states {
+>>> +            entry-method = "psci";
+>>> +
+>>> +            CLUSTER_C4: cpu-sleep-0 {
+>>> +                compatible = "arm,idle-state";
+>>> +                idle-state-name = "ret";
+>>> +                arm,psci-suspend-param = <0x00000004>;
+>> These suspend parameters look funky.. is this just a PSCI sleep
+>> implementation that strays far away from Arm's suggested guidelines?
+> 
+> not really! it's just that 30th bit is set according to spec i.e
+> it's marked as a retention state.
+So, is there no state where the cores actually power down? Or is it
+not described yet?
 
-Cheers,
--Paul
+FWIW by "power down" I mean it in the sense that Arm DEN0022D does,
+so "In this state the core is powered off. Software on the device
+needs to save all core state, so that it can be preserved over
+the powerdown."
 
-> ---
-> =C2=A0drivers/pinctrl/pinctrl-ingenic.c | 9 ++-------
-> =C2=A01 file changed, 2 insertions(+), 7 deletions(-)
->=20
-> diff --git a/drivers/pinctrl/pinctrl-ingenic.c
-> b/drivers/pinctrl/pinctrl-ingenic.c
-> index ee718f6e2556..393873de910a 100644
-> --- a/drivers/pinctrl/pinctrl-ingenic.c
-> +++ b/drivers/pinctrl/pinctrl-ingenic.c
-> @@ -83,15 +83,10 @@
-> =C2=A0#define JZ4730_PINS_PER_PAIRED_REG	16
-> =C2=A0
-> =C2=A0#define INGENIC_PIN_GROUP_FUNCS(name, id, funcs)		\
-> -	{						\
-> -		name,					\
-> -		id##_pins,				\
-> -		ARRAY_SIZE(id##_pins),			\
-> -		funcs,					\
-> -	}
-> +	PINCTRL_GROUP_DESC(name, id##_pins, ARRAY_SIZE(id##_pins),
-> funcs)
-> =C2=A0
-> =C2=A0#define INGENIC_PIN_GROUP(name, id, func)		\
-> -	INGENIC_PIN_GROUP_FUNCS(name, id, (void *)(func))
-> +	PINCTRL_GROUP_DESC(name, id##_pins, ARRAY_SIZE(id##_pins),
-> (void *)(func))
-> =C2=A0
-> =C2=A0enum jz_version {
-> =C2=A0	ID_JZ4730,
+> 
+>>
+>> [...]
+>>
+>>
+>>> +        CPU_PD11: power-domain-cpu11 {
+>>> +            #power-domain-cells = <0>;
+>>> +            power-domains = <&CLUSTER_PD>;
+>>> +        };
+>>> +
+>>> +        CLUSTER_PD: power-domain-cpu-cluster {
+>>> +            #power-domain-cells = <0>;
+>>> +            domain-idle-states = <&CLUSTER_CL4>, <&CLUSTER_CL5>;
+>>> +        };
+>> So, can the 3 clusters not shut down their L2 and PLLs (if separate?)
+>> on their own?
+> 
+> on CL5 the clusters are expected to shutdown their l2 and PLL on their
+> own.
+Then I think this won't happen with this description
 
+every cpu has a genpd tree like this:
+
+cpu_n
+ |_CPU_PDn
+    |_CLUSTER_PD
+
+and CLUSTER_PD has two idle states: CLUSTER_CL4 and CLUSTER_CL5
+
+which IIUC means that neither cluster idle state will be reached
+unless all children of CLUSTER_PD (so, all CPUs) go down that low
+
+This is "fine" on e.g. sc8280 where both CPU clusters are part of
+the same Arm DynamIQ cluster (which is considered one cluster as
+far as MPIDR_EL1 goes) (though perhaps that's misleading and with
+the qcom plumbing they perhaps could actually be collapsed separately)
+
+Konrad
 
