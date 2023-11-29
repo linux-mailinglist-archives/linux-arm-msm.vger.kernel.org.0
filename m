@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6C277FE196
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 22:10:58 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1EC87FE1A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 22:15:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 13FC21C20ACC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 21:10:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E9C1282440
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 21:15:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E603C6167A;
-	Wed, 29 Nov 2023 21:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EAAC61664;
+	Wed, 29 Nov 2023 21:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HDSIBx0g"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kV/3nZrt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27DD310CB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 13:10:50 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40b4c2ef58aso1850215e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 13:10:50 -0800 (PST)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FAB5D67
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 13:14:53 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-40b472f98b1so1568715e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 13:14:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701292248; x=1701897048; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701292491; x=1701897291; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wtBnMhm6OvHI+sD8xVhry5VRmxy7IqGvQG/iVuqiaCo=;
-        b=HDSIBx0grkiFIuVQEncbGx+zGKJCrBZc1Y6koKNNyU29PZoq/ayADwuI9NPlpv7cPe
-         ixQJ9tTWiddnbqNTpg5+GN1djEuhlp/j0sX3MuEQHEbMOtTUnrR2ap3B2xmZBAZsg0xT
-         QLNQGYFu+lkifDgL74bOr7n/EdIEhNa3jATire/01Xc72dncTDKonwFWL649Bm8b608r
-         8dTpu1UTAaMURJN04q6LWHTrHkna/S2cVsTSUkLESAWEbX8Lm0MoEE7zfsMjFeyc0QIH
-         ekNuLrZLdIssT8epO+zxLc7BR3EWFZt0Zqd3rmz+s9nSsiFXcWhdwlUbjcE47A3YEFWm
-         Cjfw==
+        bh=yrXYY2lU23zuZlfwWGvLQFyDFXfNY5T1gubM0hMOkP0=;
+        b=kV/3nZrtIXim7T8H+5rv62fUMv1rQTPhLBD/3Isc8acCcwl7tAN/IbGSfQpCRaeIG9
+         wMvhIYte02MMdFwstAlCzwAzKRIUtl7BqxUfJrhcBdQveNP2/JxEyBWhtAsZ/rM+ZlCi
+         bPfcO6nNYbTr1V+KhLgkj9UbUkThs/14Ei3TqPmcpzfAiBpW9RUahGujFpobOCX3+Rzb
+         JKbbJMA/Dmj1IGa5A797D9frd+gF0KRjEuqatl2pyHxjhExftdi+PfaSxVYFrHXVzlZi
+         A+IDuIMPTZXFLckSH9SLQ5v0HosJGspOsXoZKHtybLmxPPxX/7Qn5EU9WfrkASSecPo/
+         jw3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701292248; x=1701897048;
+        d=1e100.net; s=20230601; t=1701292491; x=1701897291;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wtBnMhm6OvHI+sD8xVhry5VRmxy7IqGvQG/iVuqiaCo=;
-        b=eeJBa2C+NsfQXyQsytl92M4RtO2Cee5FKIuLJwSveVMm+Cx2GUed/wLX5Qzv+BdyW9
-         5EEtUNSXCiaFgUBIvYNTZ6ujyCLTh70jRXlQRhRJ2w5UBfRcpCMp215P4nKbAVCLV8e8
-         CDsBrUMYjddxiODhS+z3M4LEUKvetNQQXNWoijXN3POYTqayWCfRA/xluwG0wQqomdPP
-         EMunAV1X69YprMZMd3Ur/1zEoM1P3zK0Tu44zCO38yvvWue9N3Kq5WGKnk1/CnduUv6R
-         WsMLsrlhJp1m+jEQuOBTLrUMzRqQ1bxLBXdnFN+8pI5CWXIhslttqb9e0kYz/wJqn1Wi
-         1NGg==
-X-Gm-Message-State: AOJu0YwDFT/ywO5Nx7Wn4SND/vpL4Rjt/GlOuiXNqCmmF229uFoMOr19
-	oxLEDCUUlOx29UO+FH/hoT6OoA==
-X-Google-Smtp-Source: AGHT+IFK6ZIhfZ4JuFNWETn6u9qVaS2ig7dwVdCiT9wxAV7HwOa3SUvF1+3PBWJecliU6ZqoknkANg==
-X-Received: by 2002:adf:f14c:0:b0:333:145b:dbe4 with SMTP id y12-20020adff14c000000b00333145bdbe4mr2636137wro.42.1701292248595;
-        Wed, 29 Nov 2023 13:10:48 -0800 (PST)
+        bh=yrXYY2lU23zuZlfwWGvLQFyDFXfNY5T1gubM0hMOkP0=;
+        b=RoFD5i5vzkpg1G+2DObU/inBuEbtb9gLnLNXq2ovZuTa61+SVUBIehRw+OfHOh+6ih
+         E0X8KXJNcjnrpSkBIyNQR1kbs+fNmtLqfDtGsyE8+rUiAQXgV2hwMXG1G+4o0mVL6AYw
+         V28Iv4OyWi0yan57432uHB4rFA1idZpfPowPXKY4G8jlD1q3ir/MoS129imU8mCnoP5a
+         foT8i0bUI7un2qVCstvMVRnAk5c//AQImHUWaSx1tyb2H+ru9XV+qCzvHZ6CscTSBeFj
+         FATsat5JOxNRO7qDELCH8Vddd43tYO0oT7YrbBjGcP5FJDLbyJLJAzox2/JSZ1Hhw7n7
+         rdLA==
+X-Gm-Message-State: AOJu0YwY+SSGldu43EKj2poIognSTTDE0Moy8ECBdmU4romOGrT0DB3d
+	wO034epkNLauZhc9V5gTUg6j5w==
+X-Google-Smtp-Source: AGHT+IGRcnRu1N1xTnN+KnuhwyPQ2zbQ1cfBs1AkuMyRKBLa9fu/rxRRKx3hyrPecuiaTRdyzUKC0g==
+X-Received: by 2002:a05:600c:474d:b0:405:3885:490a with SMTP id w13-20020a05600c474d00b004053885490amr15194120wmo.0.1701292491583;
+        Wed, 29 Nov 2023 13:14:51 -0800 (PST)
 Received: from [192.168.100.102] ([37.228.218.3])
-        by smtp.gmail.com with ESMTPSA id n14-20020a05600c500e00b0040b478da760sm3433383wmr.48.2023.11.29.13.10.47
+        by smtp.gmail.com with ESMTPSA id t13-20020a05600c198d00b003feea62440bsm3374880wmq.43.2023.11.29.13.14.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Nov 2023 13:10:48 -0800 (PST)
-Message-ID: <622181e8-acd8-42e4-8a39-c75cd8862999@linaro.org>
-Date: Wed, 29 Nov 2023 21:10:47 +0000
+        Wed, 29 Nov 2023 13:14:51 -0800 (PST)
+Message-ID: <8318363a-7122-45f4-a42f-3f01b33457eb@linaro.org>
+Date: Wed, 29 Nov 2023 21:14:50 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/15] clk: qcom: gpucc-sm6375: Unregister critical
+Subject: Re: [PATCH v2 06/15] clk: qcom: gpucc-sm6115: Unregister critical
  clocks
 Content-Language: en-US
 To: Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -75,9 +75,9 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20230717-topic-branch_aon_cleanup-v2-0-2a583460ef26@linaro.org>
- <20230717-topic-branch_aon_cleanup-v2-5-2a583460ef26@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v2-6-2a583460ef26@linaro.org>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230717-topic-branch_aon_cleanup-v2-5-2a583460ef26@linaro.org>
+In-Reply-To: <20230717-topic-branch_aon_cleanup-v2-6-2a583460ef26@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -92,85 +92,81 @@ On 29/11/2023 18:59, Konrad Dybcio wrote:
 > 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/clk/qcom/gpucc-sm6375.c | 33 +++------------------------------
+>   drivers/clk/qcom/gpucc-sm6115.c | 33 +++------------------------------
 >   1 file changed, 3 insertions(+), 30 deletions(-)
 > 
-> diff --git a/drivers/clk/qcom/gpucc-sm6375.c b/drivers/clk/qcom/gpucc-sm6375.c
-> index da24276a018e..6d85936dd441 100644
-> --- a/drivers/clk/qcom/gpucc-sm6375.c
-> +++ b/drivers/clk/qcom/gpucc-sm6375.c
-> @@ -183,20 +183,6 @@ static struct clk_rcg2 gpucc_gx_gfx3d_clk_src = {
+> diff --git a/drivers/clk/qcom/gpucc-sm6115.c b/drivers/clk/qcom/gpucc-sm6115.c
+> index fb71c21c9a89..93a50431aef8 100644
+> --- a/drivers/clk/qcom/gpucc-sm6115.c
+> +++ b/drivers/clk/qcom/gpucc-sm6115.c
+> @@ -234,20 +234,6 @@ static struct clk_rcg2 gpu_cc_gx_gfx3d_clk_src = {
 >   	},
 >   };
 >   
-> -static struct clk_branch gpucc_ahb_clk = {
+> -static struct clk_branch gpu_cc_ahb_clk = {
 > -	.halt_reg = 0x1078,
 > -	.halt_check = BRANCH_HALT_DELAY,
 > -	.clkr = {
 > -		.enable_reg = 0x1078,
 > -		.enable_mask = BIT(0),
 > -		.hw.init = &(struct clk_init_data){
-> -			.name = "gpucc_ahb_clk",
+> -			.name = "gpu_cc_ahb_clk",
 > -			.flags = CLK_IS_CRITICAL,
 > -			.ops = &clk_branch2_ops,
 > -		},
 > -	},
 > -};
 > -
->   static struct clk_branch gpucc_cx_gfx3d_clk = {
->   	.halt_reg = 0x10a4,
+>   static struct clk_branch gpu_cc_crc_ahb_clk = {
+>   	.halt_reg = 0x107c,
 >   	.halt_check = BRANCH_HALT_DELAY,
-> @@ -294,20 +280,6 @@ static struct clk_branch gpucc_cxo_clk = {
+> @@ -336,20 +322,6 @@ static struct clk_branch gpu_cc_cxo_clk = {
 >   	},
 >   };
 >   
-> -static struct clk_branch gpucc_gx_cxo_clk = {
+> -static struct clk_branch gpu_cc_gx_cxo_clk = {
 > -	.halt_reg = 0x1060,
 > -	.halt_check = BRANCH_HALT_DELAY,
 > -	.clkr = {
 > -		.enable_reg = 0x1060,
 > -		.enable_mask = BIT(0),
 > -		.hw.init = &(struct clk_init_data){
-> -			.name = "gpucc_gx_cxo_clk",
+> -			.name = "gpu_cc_gx_cxo_clk",
 > -			.flags = CLK_IS_CRITICAL,
 > -			.ops = &clk_branch2_ops,
 > -		},
 > -	},
 > -};
 > -
->   static struct clk_branch gpucc_gx_gfx3d_clk = {
+>   static struct clk_branch gpu_cc_gx_gfx3d_clk = {
 >   	.halt_reg = 0x1054,
->   	.halt_check = BRANCH_HALT_DELAY,
-> @@ -381,7 +353,6 @@ static struct gdsc gpu_gx_gdsc = {
+>   	.halt_check = BRANCH_HALT_SKIP,
+> @@ -418,7 +390,6 @@ static struct gdsc gpu_gx_gdsc = {
 >   };
 >   
->   static struct clk_regmap *gpucc_sm6375_clocks[] = {
-> -	[GPU_CC_AHB_CLK] = &gpucc_ahb_clk.clkr,
->   	[GPU_CC_CX_GFX3D_CLK] = &gpucc_cx_gfx3d_clk.clkr,
->   	[GPU_CC_CX_GFX3D_SLV_CLK] = &gpucc_cx_gfx3d_slv_clk.clkr,
->   	[GPU_CC_CX_GMU_CLK] = &gpucc_cx_gmu_clk.clkr,
-> @@ -389,7 +360,6 @@ static struct clk_regmap *gpucc_sm6375_clocks[] = {
->   	[GPU_CC_CXO_AON_CLK] = &gpucc_cxo_aon_clk.clkr,
->   	[GPU_CC_CXO_CLK] = &gpucc_cxo_clk.clkr,
->   	[GPU_CC_GMU_CLK_SRC] = &gpucc_gmu_clk_src.clkr,
-> -	[GPU_CC_GX_CXO_CLK] = &gpucc_gx_cxo_clk.clkr,
->   	[GPU_CC_GX_GFX3D_CLK] = &gpucc_gx_gfx3d_clk.clkr,
->   	[GPU_CC_GX_GFX3D_CLK_SRC] = &gpucc_gx_gfx3d_clk_src.clkr,
->   	[GPU_CC_GX_GMU_CLK] = &gpucc_gx_gmu_clk.clkr,
-> @@ -455,6 +425,9 @@ static int gpucc_sm6375_probe(struct platform_device *pdev)
->   	clk_lucid_pll_configure(&gpucc_pll0, regmap, &gpucc_pll0_config);
->   	clk_lucid_pll_configure(&gpucc_pll1, regmap, &gpucc_pll1_config);
->   
-> +	qcom_branch_set_clk_en(regmap, 0x1078); /* GPUCC_AHB_CLK */
-> +	qcom_branch_set_clk_en(regmap, 0x1060); /* GPUCC_GX_CXO_CLK */
-> +
->   	ret = qcom_cc_really_probe(pdev, &gpucc_sm6375_desc, regmap);
->   	pm_runtime_put(&pdev->dev);
->   
-> 
+>   static struct clk_regmap *gpu_cc_sm6115_clocks[] = {
+> -	[GPU_CC_AHB_CLK] = &gpu_cc_ahb_clk.clkr,
+>   	[GPU_CC_CRC_AHB_CLK] = &gpu_cc_crc_ahb_clk.clkr,
+>   	[GPU_CC_CX_GFX3D_CLK] = &gpu_cc_cx_gfx3d_clk.clkr,
+>   	[GPU_CC_CX_GMU_CLK] = &gpu_cc_cx_gmu_clk.clkr,
+> @@ -426,7 +397,6 @@ static struct clk_regmap *gpu_cc_sm6115_clocks[] = {
+>   	[GPU_CC_CXO_AON_CLK] = &gpu_cc_cxo_aon_clk.clkr,
+>   	[GPU_CC_CXO_CLK] = &gpu_cc_cxo_clk.clkr,
+>   	[GPU_CC_GMU_CLK_SRC] = &gpu_cc_gmu_clk_src.clkr,
+> -	[GPU_CC_GX_CXO_CLK] = &gpu_cc_gx_cxo_clk.clkr,
 
-I think this makes sense for a CLK_IS_CRITICAL clock - why bother 
-enumerating halt regs/semantics we never use..
+OTOH.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Seems a pity to remove these clocks - generally for the series I mean - 
+from the debug view in /sys/kernel/debug/clk_summary.
+
+In the ideal case we have pm runtime functional without dropping these 
+clocks from the view in /sys/kernel/debug/clk_summary.
+
+Certainly I've found that interface useful when launching a real 
+product. It might be confusing to _not_ see the always-on clocks 
+enumerated there.
+
+---
+bod
 
