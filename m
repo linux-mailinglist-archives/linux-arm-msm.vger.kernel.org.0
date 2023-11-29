@@ -1,212 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-2439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EC417FD5E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:37:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D268F7FD5FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:47:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5AEC9282FFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 11:37:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DD2C282F6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 11:47:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 089201CFBD;
-	Wed, 29 Nov 2023 11:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B177A1C696;
+	Wed, 29 Nov 2023 11:47:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="YUTwYCyg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M6yfliDn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B081EAF;
-	Wed, 29 Nov 2023 03:37:33 -0800 (PST)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0918784;
+	Wed, 29 Nov 2023 03:47:40 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AT6TUGH029956;
+	Wed, 29 Nov 2023 11:47:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=PRkDXyYxUN+epgRlp9Gxs5pkKmtQ9d0GvJ3wxnx/ZcI=;
+ b=M6yfliDnEbaENNsE5nVSNaoZeKk0QMAi0R4DQcYSeOSkP2niCxyD/wbIZ2NzAmoQiIan
+ Oxf7qDSB8Oyk/FWQmCp3EfGJpTFFoq3t7YTDZcZaOL4s+bfZ6rxFTu88UE2h4PsJX4Nd
+ rOw0dKWq/nl+1RlEzxCRerHhekxDkrK17OpKUa+9CmIs1COjA1JYNX3pHg93UdBcfUYN
+ PIgxG4vMaz6gHkkUUzxMILLifC060lWqbul2pk35jm5i6kcEmOB0iozx0gCnmfOA/p1D
+ /nZqeY7JKwP4cS8P/+Pprsdt0TssOfR5DRcIGZmD9Ta9HUcfHdrm2zrYEqG2SwABupFq IA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3up02xrs58-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Nov 2023 11:47:20 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3ATBlIO3030168
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Nov 2023 11:47:18 GMT
+Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 29 Nov
+ 2023 03:47:12 -0800
+Message-ID: <26227b9e-e604-43a4-b9ca-949842330009@quicinc.com>
+Date: Wed, 29 Nov 2023 17:17:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1701257848;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zFMkyI45VT7UXczSOfK7lHaQtQAsm/dZT4KJu3kbR6M=;
-	b=YUTwYCygZsU6Xp6EA/BNba80tC0tNo4Lj5ACDCNmLzJogjTYp7Lee8wOoW6F3wmz8j1e4B
-	gT9p9h9p6IL5YpXbFPyDy7tW1GV4ySnd9idxr+Yl07Az/bD3Bww+PyC5u01Rglv6Z4h86b
-	Jx7it0g9Ar9kd/DHDNiyE8BTFXzRFwL65dzkfiW1wzMnxIzoPAvsIHmeyrl86t2UxsKmZq
-	wBTDB+AMPpuHw3zcwlPDg+I+5bFDJc01y0Bpn+L2WpdxEKUcz7dMrNIWvzMbVPnOAHJ2/h
-	vq7XGBYrnKNgVWA315hLJ8qlYrXmCUQzi+0uMWP9aeQwh15V7XVeiUxo0j5fTw==
-Date: Wed, 29 Nov 2023 12:37:26 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, Andrew Lunn
- <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson
- <andersson@kernel.org>, Chen-Yu Tsai <wens@kernel.org>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>,
- Heiko Stuebner <heiko@sntech.de>, Jonathan Corbet <corbet@lwn.net>, Konrad
- Dybcio <konrad.dybcio@linaro.org>, Michal Simek <michal.simek@amd.com>, Neil
- Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>, Olof
- Johansson <olof@lixom.net>, =?UTF-8?Q?Rafa=C5=82_Mi=C5=82ecki?=
- <zajec5@gmail.com>, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, workflows@vger.kernel.org,
- linux-doc@vger.kernel.org
-Subject: Re: [PATCH v3] docs: dt-bindings: add DTS Coding Style document
-In-Reply-To: <0bcc0679-b883-4435-8843-cc830122c0e1@linaro.org>
-References: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
- <63ec18b2758a9e385f446fb00b60ee69@manjaro.org>
- <0bcc0679-b883-4435-8843-cc830122c0e1@linaro.org>
-Message-ID: <83b413441a953e8f2bc56adf09511a80@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/4] iommu/arm-smmu: introduction of ACTLR for custom
+ prefetcher settings
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, <will@kernel.org>,
+        <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <dmitry.baryshkov@linaro.org>, <a39.skl@gmail.com>,
+        <quic_bjorande@quicinc.com>, <mani@kernel.org>,
+        <quic_eberman@quicinc.com>, <robdclark@chromium.org>,
+        <u.kleine-koenig@pengutronix.de>, <robh@kernel.org>,
+        <vladimir.oltean@nxp.com>, <quic_pkondeti@quicinc.com>,
+        <quic_molvera@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <qipl.kernel.upstream@quicinc.com>
+References: <20231127145412.3981-1-quic_bibekkum@quicinc.com>
+ <20231127145412.3981-2-quic_bibekkum@quicinc.com>
+ <cfbf33cd-0faf-47c6-8e0f-b13c088670df@linaro.org>
+From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+In-Reply-To: <cfbf33cd-0faf-47c6-8e0f-b13c088670df@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: E-WKoFgOLDezuQBIbLehdFLAGP4lWBsX
+X-Proofpoint-GUID: E-WKoFgOLDezuQBIbLehdFLAGP4lWBsX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-29_09,2023-11-29_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=999 clxscore=1015
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311290088
 
-On 2023-11-29 11:43, Krzysztof Kozlowski wrote:
-> On 28/11/2023 21:00, Dragan Simic wrote:
->> 
->> I went through the language of the entire patch, after the notice that
->> the v4 would no longer accept language improvements.  My wording- and
->> grammar-related suggestions are available inline below.
+
+
+On 11/27/2023 9:03 PM, Konrad Dybcio wrote:
+> On 27.11.2023 15:54, Bibek Kumar Patro wrote:
+>> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
+>> the TLB to fetch just the next page table. MMU-500 features ACTLR
+>> register which is implementation defined and is used for Qualcomm SoCs
+>> to have a prefetch setting of 1/3/7/15 enabling TLB to prefetch
+>> the next set of page tables accordingly allowing for faster translations.
+>>
+>> ACTLR value is unique for each SMR (Stream matching register) and stored
+>> in a pre-populated table. This value is set to the register during
+>> context bank initialisation.
+>>
+>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+>>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 56 +++++++++++++++++++++-
+>>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  6 ++-
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.c      |  5 +-
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  5 ++
+>>   4 files changed, 68 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> index 7f52ac67495f..4a38cae29be2 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>> @@ -14,6 +14,12 @@
+>>
+>>   #define QCOM_DUMMY_VAL	-1
+>>
+>> +struct actlr_config {
+>> +	u16 sid;
+>> +	u16 mask;
+>> +	u32 actlr;
+>> +};
+>> +
+>>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>>   {
+>>   	return container_of(smmu, struct qcom_smmu, smmu);
+>> @@ -205,10 +211,40 @@ static bool qcom_adreno_can_do_ttbr1(struct arm_smmu_device *smmu)
+>>   	return true;
+>>   }
+>>
+>> +static void arm_smmu_set_actlr(struct device *dev, struct arm_smmu_device *smmu, int cbndx,
+>> +		const struct actlr_config *actlrcfg, size_t actlrcfg_size)
+>> +{
+>> +	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
+>> +	struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
+>> +	struct arm_smmu_smr *smr;
+>> +	int i;
+>> +	int j;
+>> +	u16 id;
+>> +	u16 mask;
+>> +	int idx;
+>> +
+>> +	for (i = 0; i < actlrcfg_size; ++i) {
+>> +		id = (actlrcfg + i)->sid;
+>> +		mask = (actlrcfg + i)->mask;
+> actrlcfg[i].id?
 > 
-> Thanks. I want to finish this at some point and it might not happen if
-> grammar fixes will be coming every patch revision. Then after we finish
-> review, new feedback will appear about using British or American
-> spelling (which reminds me old quote/email about which variant of
-> English is most popular in Linux kernel: the incorrect one).
 
-Ah, that's a good one. :)  Basically, both English variants should be 
-fine, but a single document should obviously use only one variant.
+Noted, array indexing instead of incrementing the base address
+should also work.
 
->>> +=====================================
->>> +Devicetree Sources (DTS) Coding Style
->>> +=====================================
->>> +
->>> +When writing Devicetree Sources (DTS) please observe below 
->>> guidelines.
->>>  They
->> 
->> The sentence above should be replaced with: "The following guidelines
->> are to be followed when writing Devicetree Source (DTS) files."
+>> +
+>> +		for_each_cfg_sme(cfg, fwspec, j, idx) {
+>> +			smr = &smmu->smrs[idx];
+>> +			if (smr_is_subset(*smr, id, mask))
+> Any reason for this value to be a pointer?
 > 
-> Are you sure? It's passive and I was taught it is discouraged for
-> writing. See for example:
-> https://www.hamilton.edu/academics/centers/writing/seven-sins-of-writing/1
-
-Hmm, you're right, passive voice is usually not the best choice.  Here's 
-my take two for the suggested replacement sentence, which is actually a 
-simplified version:
-
-"This document contains the guidelines for writing Devicetree Source 
-(DTS) files."
-
->>> +should be considered complementary to any rules expressed already in
->>> Devicetree
->>> +Specification and dtc compiler (including W=1 and W=2 builds).
->> 
->> A definite article ("the") should be added before "Devicetree
+>> +				arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR,
+>> +						(actlrcfg + i)->actlr);
+> ditto
 > 
-> ack
+
+Noted
+
+>> +		}
+>> +	}
+>> +}
+>> +
+>>   static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>   		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+>>   {
+>>   	struct adreno_smmu_priv *priv;
+>> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+>> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+>> +	const struct actlr_config *actlrcfg;
+>> +	size_t actlrcfg_size;
+>> +	int cbndx = smmu_domain->cfg.cbndx;
+> Reverse-Christmas-tree sorting, please
 > 
->> Specification" and "dtc".  Also, "Specification" in "Devicetree
->> Specification" should be capitalized.
+
+Noted, thanks for pointing this, I will
+take care of this in next revision.
+
+>>
+>>   	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
+>>
+>> @@ -238,6 +274,12 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>   	priv->set_stall = qcom_adreno_smmu_set_stall;
+>>   	priv->resume_translation = qcom_adreno_smmu_resume_translation;
+>>
+>> +	if (qsmmu->data->actlrcfg_gfx) {
+>> +		actlrcfg = qsmmu->data->actlrcfg_gfx;
+>> +		actlrcfg_size = qsmmu->data->actlrcfg_gfx_size;
+> These can be passed directly s arm_smmu_set_actrl arguments
 > 
-> It was.
 
-Oh, sorry, I see now.  IIRC, it wasn't capitalized in some places, so I 
-made a mistake here.
+Noted, will address in next revision. since there won't be any issue 
+during time of access, I can pass these values directly.
 
->>> +
->>> +Individual architectures and sub-architectures can add additional
->>> rules, making
->>> +the style stricter.
->> 
->> "Sub-architectures" should be replaced with "subarchitectures".  "Can
-> 
-> A hint, you can write such review feedback as:
-> s/sub-architectures/subarchitectures/
+>> +		arm_smmu_set_actlr(dev, smmu, cbndx, actlrcfg, actlrcfg_size);
+>> +	}
+>> +
+>>   	return 0;
+>>   }
+>>
+>> @@ -263,6 +305,18 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+>>   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>   		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+>>   {
+>> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
+>> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+>> +	const struct actlr_config *actlrcfg;
+>> +	size_t actlrcfg_size;
+>> +	int cbndx = smmu_domain->cfg.cbndx;
+>> +
+>> +	if (qsmmu->data->actlrcfg) {
+>> +		actlrcfg = qsmmu->data->actlrcfg;
+>> +		actlrcfg_size = qsmmu->data->actlrcfg_size;
+>> +		arm_smmu_set_actlr(dev, smmu, cbndx, actlrcfg, actlrcfg_size);
+> ditto
+>
+Noted.
 
-Sure, but I specifically wanted to be less terse, as a way to be 
-respectful.
-
-> BTW, my language spelling points "subarchitectures" as mistake, but
-> sure, ack.
-
-Using hyphens or not is almost always debatable, but modern English in 
-general leans toward not using them.
-
->>> +3. Unit addresses shall use lowercase hex, without leading zeros
->>> (padding).
->> 
->> "Lowercase hex" should be replaced with "lowercase hexadecimal 
->> digits".
->> 
->>> +
->>> +4. Hex values in properties, e.g. "reg", shall use lowercase hex.  
->>> The
->>> address
->>> +   part can be padded with leading zeros.
->> 
->> "Hex values" should be replaced with "Hexadecimal values".  "Lowercase
->> hex" should be replaced with "lowercase hexadecimal digits".
-> 
-> ack, but that's quite picky. We are (software) engineers so we are
-> supposed to know the slang.
-
-Sure, but this document is of a bit formal nature, so using slightly 
-more formal language can only be helpful.
-
->>> +2. Nodes without unit addresses shall be ordered alpha-numerically 
->>> by
->>> the node
->>> +   name.  For a few types of nodes, they can be ordered by the main
->>> property
->>> +   (e.g. pin configuration states ordered by value of "pins"
->>> property).
->> 
->> "Alpha-numerically" should be replaced with "alphabetically".
-> 
-> Are you sure? Does alphabetical order include numbers?
-
-That's a good question, which also crossed my mind while writing the 
-suggestions down.  A more correct word would be "lexicographically", 
-with something like ", with the already defined valid characters making 
-the symbol set and the ACSII character set defining the ordering, " 
-serving as an additional explanation.
-
-This would be a rather formal, but also very precise definition of the 
-applied ordering.
-
->>> +3. When extending nodes in the board DTS via &label, the entries 
->>> shall
->>> be
->>> +   ordered either alpha-numerically or by keeping the order from 
->>> DTSI
->>> (choice
->>> +   depending on sub-architecture).
->> 
->> "Alpha-numerically" should be replaced with "alphabetically".
-> 
-> Similar concern
-
-I agree.  We could use "lexicographically" instead, with the precise 
-definition already established earlier in the document.
-
->>> +board DTS, not in the SoC or SoM DTSI.  A partial exception is a
->>> common
->>> +external reference SoC-input clock, which could be coded as a
->>> fixed-clock in
->> 
->> "SoC-input" should be replaced with "SoC input".
-> 
-> ack, thanks!
-
-Thank you once again for working on this document!
+> Konrad
 
