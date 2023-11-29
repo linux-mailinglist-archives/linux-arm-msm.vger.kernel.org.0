@@ -1,125 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-2562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 490A47FDF95
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 19:45:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 702277FDDF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 18:08:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C3966B20E66
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 18:45:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A1A3F1C20A8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 17:08:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39668347AC;
-	Wed, 29 Nov 2023 18:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B92F3C48B;
+	Wed, 29 Nov 2023 17:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jRCEbeLw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PRYgMA3F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1519A1B4;
-	Wed, 29 Nov 2023 10:45:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701283545; x=1732819545;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=cKJeFNkIQAf+/tiMMgC+hJ3Nk+Hnaj6HJWSuL5lnedo=;
-  b=jRCEbeLwuepAT3ho4szAd9g+6HYrPSUxEr+U6jLv4+DfNuNtHPq6IwLw
-   OYQY7VKtgb/fOY9YhM0Zl5GahCfQD/XyvyRqk1X+QKIirurcKy8+wn+E4
-   sHiLLcfQKuUuSXo2ayKb+o0vXUFk11DSx+q6qrid0e1f67LOOv8fJ5Wif
-   pa9Uk7oaeEu9MGlUVBfAIlIrwEp6V2BLfB7ko074ItTxfpLXG4sqsZDIS
-   VlrCT4vUCflzMkfQlq/4WZDrkRkHNxudxzKmp5eZXDs9v0opS9wDqsDAd
-   7bN0e5dSSJyi0IGoIhDTxWj/sFg0uFZBGDK1tm3iq65zz04e7fwBv6EAl
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10909"; a="383602809"
-X-IronPort-AV: E=Sophos;i="6.04,237,1695711600"; 
-   d="scan'208";a="383602809"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2023 10:45:44 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10909"; a="942421675"
-X-IronPort-AV: E=Sophos;i="6.04,237,1695711600"; 
-   d="scan'208";a="942421675"
-Received: from caw1-mobl1.amr.corp.intel.com (HELO [10.255.229.136]) ([10.255.229.136])
-  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2023 10:45:43 -0800
-Message-ID: <3d36d707-86f7-44fe-a613-64e264bb53cd@linux.intel.com>
-Date: Wed, 29 Nov 2023 11:07:20 -0600
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 031BFBE;
+	Wed, 29 Nov 2023 09:08:50 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id 98e67ed59e1d1-280cd4e6f47so1132485a91.1;
+        Wed, 29 Nov 2023 09:08:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701277729; x=1701882529; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O76Cfk68KhrIxRJmJnZsx1C518bMCKM0WCIhUwoBo8w=;
+        b=PRYgMA3F0Bp6pNkgNKeUdAQlRGC+iPlG85TnoAVupre+1QPulwS0cHnlgeTje09G9A
+         mPE7vzEXEWAr7pe4MHdfWmcbN/vsIaEW8AYHQJGMuyEYVBdbOCIW0MSb+9yaPxPTnk5m
+         LjuzykqfsG8ZEb+b6YvwfnLxZWPkAg9K3Wx3sY/5Non09c2a36k5GhWO56mxIZjsci1E
+         QUreYyc3TDav+GGV5ctRTr4ubn6PT4c7WK43Mycl37yAgFAB7woFzqOw7Pi1m+BiT6tf
+         /mp8kc0nNXQI2Pj71NKG+YFbEp0KH1uagoghh0QPrx6Kzdjs4x1U7/m3IPM5RvmGHEB9
+         2+yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701277729; x=1701882529;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=O76Cfk68KhrIxRJmJnZsx1C518bMCKM0WCIhUwoBo8w=;
+        b=kDKJc+wi3XGQCze3nzmQuGPPIAamvXl/MIt54+h85wSB//FZfZ0RiEuuIztDMXl7pE
+         +Cx3Z6UPiRaAy1oUB5U7Lb64vEV7lepv4mc9zNQZEYTKIGQDevieBZBftgn1xEqwPAss
+         21cmyDvpuZHTARY4A87Z0dNPdZCW48zeOoihkBKU/S0vGUYaW7mEKgxqIAZdYsJ1c/DY
+         x/iZvulchB7doGhINUfGT/hZaET2PjZp4glkyGwYxIW6aWr60cgjgDsu3Lu16ZXEuavl
+         57R9rxG+L7Ud7Rnma5rgjBPpnWRPHRx9rrvbSPx2lR7PBfLpf9q8wkSuCVdkcjAfqXoB
+         O+Cg==
+X-Gm-Message-State: AOJu0Yxi01M8CIE28NXf3DTlWmlzikAgf8ZaFsee7XMt9A2V0CmUw8hK
+	+lpoLfNLRW95DNTMI2XT+h4IdNxySM1GfUqgVwQ=
+X-Google-Smtp-Source: AGHT+IFtel5cMuSoclx/RD5jpcO3jFsf4gFjr/2yk0h//Bk9GZrDN+VMoKMUdgmJ/KVAvyVH4q/bBMMt3AS7ri8wwtQ=
+X-Received: by 2002:a17:90a:d996:b0:285:f76:9d6e with SMTP id
+ d22-20020a17090ad99600b002850f769d6emr19702101pjv.3.1701277729276; Wed, 29
+ Nov 2023 09:08:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soundwire: qcom: allow multi-link on newer devices
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Bard Liao <yung-chuan.liao@linux.intel.com>,
- Sanyog Kale <sanyog.r.kale@intel.com>, linux-arm-msm@vger.kernel.org,
- alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>
-References: <20231128150049.412236-1-krzysztof.kozlowski@linaro.org>
- <e43db38a-206d-4ea5-8813-23e1f918dd65@linux.intel.com>
- <ab0fc6e0-a358-42e7-92e5-77ceea53a546@linaro.org>
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <ab0fc6e0-a358-42e7-92e5-77ceea53a546@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20231129161459.1002323-1-andriy.shevchenko@linux.intel.com>
+ <20231129161459.1002323-17-andriy.shevchenko@linux.intel.com>
+ <CAOMZO5CZpQjWKimNReUkwHOc-mF8vWoq2HDhjGKSu6E3g5-aVw@mail.gmail.com> <ZWduPKmBWkaIdLhi@smile.fi.intel.com>
+In-Reply-To: <ZWduPKmBWkaIdLhi@smile.fi.intel.com>
+From: Fabio Estevam <festevam@gmail.com>
+Date: Wed, 29 Nov 2023 14:08:38 -0300
+Message-ID: <CAOMZO5C_dhvx70nk1HOSZdw8hMMmED69tdsXgydXdpnxHTJ58Q@mail.gmail.com>
+Subject: Re: [PATCH v4 16/23] pinctrl: imx: Convert to use grp member
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Biju Das <biju.das.jz@bp.renesas.com>, 
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>, 
+	Jianlong Huang <jianlong.huang@starfivetech.com>, linux-arm-kernel@lists.infradead.org, 
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org, 
+	linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Dong Aisheng <aisheng.dong@nxp.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	NXP Linux Team <linux-imx@nxp.com>, Sean Wang <sean.wang@kernel.org>, 
+	Paul Cercueil <paul@crapouillou.net>, Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Emil Renner Berthing <kernel@esmil.dk>, 
+	Hal Feng <hal.feng@starfivetech.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Nov 29, 2023 at 2:01=E2=80=AFPM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> It's explained in the first paragraph in the cover letter. Do you
+> want to copy this into each commit message?
 
-
-On 11/29/23 10:43, Krzysztof Kozlowski wrote:
-> On 28/11/2023 16:35, Pierre-Louis Bossart wrote:
->>>  static enum sdw_command_response qcom_swrm_xfer_msg(struct sdw_bus *bus,
->>>  						    struct sdw_msg *msg)
->>>  {
->>> @@ -1078,6 +1090,7 @@ static const struct sdw_master_port_ops qcom_swrm_port_ops = {
->>>  };
->>>  
->>>  static const struct sdw_master_ops qcom_swrm_ops = {
->>> +	.read_prop = qcom_swrm_read_prop,
->>
->> nit-pick: read_prop() literally means "read platform properties".
->>
->> The functionality implemented in this callback looks more like an
->> initialization done in a probe, no?
-> 
-> Yes, but multi_link is being set by sdw_bus_master_add() just before
-> calling read_prop(). It looks a bit odd, because "bus" comes from the
-> caller and is probably zero-ed already. Therefore I assumed the code did
-> it on purpose - ignored multi_link set before sdw_bus_master_add(),
-
-On the Intel side, there's a bit of luck here.
-
-The caller intel_link_probe() does not set the multi-link property, but
-it's set in intel_link_startup() *AFTER* reading the properties - but we
-don't have any properties related to multi-link, only the ability to
-discard specific links.
-
->>>  	.xfer_msg = qcom_swrm_xfer_msg,
->>>  	.pre_bank_switch = qcom_swrm_pre_bank_switch,
->>>  	.post_bank_switch = qcom_swrm_post_bank_switch,
->>> @@ -1196,6 +1209,15 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
->>>  
->>>  	mutex_lock(&ctrl->port_lock);
->>>  	list_for_each_entry(m_rt, &stream->master_list, stream_node) {
->>
->> just realizing this now, are you sure the 'port_lock' is the proper
->> means to protecting the stream->master_list? I don't see this used
->> anywhere else in stream.c. I think you need to use bus_lock.
-> 
-> This is from ctrl, internal driver structure:
-> 
-> struct qcom_swrm_ctrl *ctrl
-
-My point what that all other instances where list_for_each_entry() is
-used on stream->master list rely on the bus_lock.
-
-You may be fine in this specific case with a QCOM-specific lock, not
-sure if there's any risk. At any rate that is not introduced by this
-patch, so for now
-
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Yes, much better to have the information into each commit message.
 
