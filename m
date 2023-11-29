@@ -1,303 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-2380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4BFF7FD13D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 09:45:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F97B7FD14D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 09:48:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5A001C20995
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 08:45:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0BA61C2040C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 08:48:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7110107BC;
-	Wed, 29 Nov 2023 08:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q7dKe2JW"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43A75125AE;
+	Wed, 29 Nov 2023 08:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F57AB0;
-	Wed, 29 Nov 2023 00:45:01 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AT5n1gc027378;
-	Wed, 29 Nov 2023 08:44:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=uIUZu15cR5nDlWtaUwXfa3ybfhwZsNfedTtHvSaEeuI=;
- b=Q7dKe2JWgTOxUx7BOtT73sI/oJFLBm9STZiA2vwunhg2cWKxIfdgxFiPLgVcaxVoLxYa
- h2osBPMbX9wSH7T3SMpr5FkGMOGJM9GMrQzkziV6UDe32OJYpU8mSvdBCouc5kbAgJkL
- yxNiTpsSV2RpxnRwRb4vhFU75NQ/CTgQwecxrqKOQq0rlMQY5/a7B6k1EDBr75AsdGUo
- lbRdqCqDEQjHwt2IZBsGDYpV88KmyTAw4+RaIC4VMWmJuHpw/0vf6H77zQi0KXltKbkL
- 9KAsIcf308VWCyIjdwDc4RyP0dg7qfJ21a2KhTSOxcuXZyZGUFUabJwDl/7rJLFuaLDA pQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3unnpespn3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Nov 2023 08:44:43 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AT8ifML001772
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 29 Nov 2023 08:44:41 GMT
-Received: from [10.214.66.253] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 29 Nov
- 2023 00:44:35 -0800
-Message-ID: <1615da33-a7c3-4519-b7ce-51893600034e@quicinc.com>
-Date: Wed, 29 Nov 2023 14:14:32 +0530
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E53B0;
+	Wed, 29 Nov 2023 00:47:55 -0800 (PST)
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-5cbcfdeaff3so66495557b3.0;
+        Wed, 29 Nov 2023 00:47:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701247675; x=1701852475;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mLerLul424y9KF+UL/6zr3ivEhD1RgHSR/3xjytvLS8=;
+        b=ZkemoQjO/bBTd8d+LsdUMD4ToLFvR20uTycUuPxASEp1Wv2jracDpJVgxuRhBKgrEe
+         Dv8UdOCyYtn4jolKAK4sP6RSsPGdC2iMkUPZ0S5x5T3GOJUs4mGd0o+GP3c0bN61YS+v
+         reWI8SIzVw3ops8uEEJRZuKt+F021WhZYGbnzgWtzawtgIzARNp5p2IpIdcWRxPw1inS
+         KX4TqE7nxu4NOKRYqZzv7i4LINXvhKAjvbWkAOH0idqiR1rbe5WeryFNRl3ruKGmXupS
+         XotY6M5C+57zYE9/5WtXUVdimrFItNhI8//XtzhFOi2crDcWuQgN+HmH5Zy2mNAS+S/g
+         RlDA==
+X-Gm-Message-State: AOJu0YwhAMu2qlqPqdc4Z90/V5/ZBk4IYYMRuHFYGGJUPwSY2LlQlfYj
+	1fLzznAmzfiVy805JgkGlhzy5QFijUR+NA==
+X-Google-Smtp-Source: AGHT+IHIJ2CnpACRf14tRnG90JPNWlW5HmFEZrLCws+3jYIXscmZFWQC37s6lXP2Vkxf3COSceFtOw==
+X-Received: by 2002:a0d:cbd0:0:b0:5ce:9d68:2b81 with SMTP id n199-20020a0dcbd0000000b005ce9d682b81mr14200254ywd.28.1701247674706;
+        Wed, 29 Nov 2023 00:47:54 -0800 (PST)
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
+        by smtp.gmail.com with ESMTPSA id t184-20020a8183c1000000b005cb7fccffe2sm4409502ywf.126.2023.11.29.00.47.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Nov 2023 00:47:54 -0800 (PST)
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-db49ab94768so3541001276.2;
+        Wed, 29 Nov 2023 00:47:54 -0800 (PST)
+X-Received: by 2002:a25:3d1:0:b0:db4:47e1:407d with SMTP id
+ 200-20020a2503d1000000b00db447e1407dmr16074846ybd.60.1701247673674; Wed, 29
+ Nov 2023 00:47:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Subject: Re: [PATCH v3 1/4] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
-        <dmitry.baryshkov@linaro.org>, <a39.skl@gmail.com>,
-        <konrad.dybcio@linaro.org>, <quic_bjorande@quicinc.com>,
-        <mani@kernel.org>, <quic_eberman@quicinc.com>,
-        <robdclark@chromium.org>, <u.kleine-koenig@pengutronix.de>,
-        <robh@kernel.org>, <vladimir.oltean@nxp.com>,
-        <quic_pkondeti@quicinc.com>, <quic_molvera@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <linux-kernel@vger.kernel.org>, <qipl.kernel.upstream@quicinc.com>
-References: <20231127145412.3981-1-quic_bibekkum@quicinc.com>
- <20231127145412.3981-2-quic_bibekkum@quicinc.com>
- <2lkajltbalhqipqapzsvb33mebzxb36cfvwnrtih624odja2ev@kssf4fagteri>
-Content-Language: en-US
-In-Reply-To: <2lkajltbalhqipqapzsvb33mebzxb36cfvwnrtih624odja2ev@kssf4fagteri>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: br0Rp6Vm0E8l70TGn_Mcqdiqt6ZmGHlY
-X-Proofpoint-ORIG-GUID: br0Rp6Vm0E8l70TGn_Mcqdiqt6ZmGHlY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-29_06,2023-11-27_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- mlxscore=0 phishscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
- clxscore=1011 bulkscore=0 malwarescore=0 suspectscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311290063
+References: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org> <ZWboWqELHbIrblnz@francesco-nb.int.toradex.com>
+In-Reply-To: <ZWboWqELHbIrblnz@francesco-nb.int.toradex.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Wed, 29 Nov 2023 09:47:42 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdVSAgihFAuPecyrR+Wvzqr58z_fkWkShOSu+HnHzZnW2g@mail.gmail.com>
+Message-ID: <CAMuHMdVSAgihFAuPecyrR+Wvzqr58z_fkWkShOSu+HnHzZnW2g@mail.gmail.com>
+Subject: Re: [PATCH v3] docs: dt-bindings: add DTS Coding Style document
+To: Francesco Dolcini <francesco@dolcini.it>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, 
+	Andrew Lunn <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>, 
+	Chen-Yu Tsai <wens@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Heiko Stuebner <heiko@sntech.de>, Jonathan Corbet <corbet@lwn.net>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Michal Simek <michal.simek@amd.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>, 
+	=?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>, 
+	linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	workflows@vger.kernel.org, linux-doc@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Francesco,
 
+On Wed, Nov 29, 2023 at 8:29=E2=80=AFAM Francesco Dolcini <francesco@dolcin=
+i.it> wrote:
+> On Sat, Nov 25, 2023 at 07:44:22PM +0100, Krzysztof Kozlowski wrote:
+> > Document preferred coding style for Devicetree sources (DTS and DTSI),
+> > to bring consistency among all (sub)architectures and ease in reviews.
+>
+> Thank Krzysztof, we had most of this collected as BKM in some internal
+> documents and it's great to see the effort to consolidate this and add
+> it to the kernel documentation.
+>
+> > ---
+> > +Following order of properties in device nodes is preferred:
+> > +
+> > +1. compatible
+> > +2. reg
+> > +3. ranges
+> > +4. Standard/common properties (defined by common bindings, e.g. withou=
+t
+> > +   vendor-prefixes)
+> > +5. Vendor-specific properties
+> > +6. status (if applicable)
+> > +7. Child nodes, where each node is preceded with a blank line
+>
+> On point 4, do you have a more explicit way to define what is an actual
+> standard/common property? You mention the vendor-prefixes as an example,
+> is this just an example or this is the whole definition?
 
-On 11/28/2023 8:31 AM, Bjorn Andersson wrote:
-> On Mon, Nov 27, 2023 at 08:24:09PM +0530, Bibek Kumar Patro wrote:
->> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
->> the TLB to fetch just the next page table. MMU-500 features ACTLR
->> register which is implementation defined and is used for Qualcomm SoCs
->> to have a prefetch setting of 1/3/7/15 enabling TLB to prefetch
-> 
-> In the previous discussion with Dmitry you stated that the "prefetch
-> setting" doesn't directly map to any known values. This commit message
-> give a clear indication about the meaning of these values.
-> 
-> So, please fix the commit message to properly document the value space -
-> to avoid confusion when people are searching for the meaning of the
-> defines...
-> 
+I think there are three classes of standard properties:
+  1. Device Tree Specification (from devicetree.org)
+  2. dt-schema
+  3. Common subsystem bindings (Documentation/devicetree/bindings/)
+     (may be moved to 2).
 
-Noted, agree on the same. Thanks for pointing this out.
-Will fix the description accordingly, avoid mentioning
-meaning of these values.
+> What would be the order for this for example (from an existing DTS file)?
+>
+>         reg_sdhc1_vmmc: regulator-sdhci1 {
+>                 compatible =3D "regulator-fixed";
+>                 pinctrl-names =3D "default";
+>                 pinctrl-0 =3D <&pinctrl_sd1_pwr_en>;
+>                 enable-active-high;
+>                 gpio =3D <&main_gpio0 29 GPIO_ACTIVE_HIGH>;
+>                 off-on-delay-us =3D <100000>;
+>                 regulator-max-microvolt =3D <3300000>;
+>                 regulator-min-microvolt =3D <3300000>;
+>                 regulator-name =3D "+V3.3_SD";
+>                 startup-delay-us =3D <2000>;
+>         };
+>
+> I guess the point that is not obvious to me here is where do we want
+> pinctrl. I like it at position between 3 and 4, the rationale is that is
+> a very frequent property and this way it will be in a similar place for
+> every node.
 
-> 
-> Please also clarify why there are 4 possible values here, 4 possible
-> values of the 2 prefetch settings bits in the register, but only 3
-> defines in the actual patch.
-> 
+The pinctrl properties are only present in board DTS files, not in
+SoC DTSi files.  There are two classes of them:
+  1. Extension of on-SoC devices, where they are added to already
+     existing nodes, defined in the SoC DTSi files, e.g. (from the same
+     existing DTS file):
 
-One of the values haven't been yet used in the targets whose list are
-posted in this series, hence corresponding define is not mentioned in 
-the actual patch yet.
+         &cpsw3g {
+                 pinctrl-names =3D "default";
+                 pinctrl-0 =3D <&pinctrl_rgmii1>;
+                 status =3D "disabled";
+         };
 
-Thanks & Regards,
-Bibek
+  2. Pure board devices, in new nodes (e.g. your regulator example).
+     These are less common, so I don't even know from the top of my
+     mind when I last added one, and where ;-)
+     I'd guess after all standard properties?
 
-> Regards,
-> Bjorn
-> 
->> the next set of page tables accordingly allowing for faster translations.
->>
->> ACTLR value is unique for each SMR (Stream matching register) and stored
->> in a pre-populated table. This value is set to the register during
->> context bank initialisation.
->>
->> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>
->> ---
->>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 56 +++++++++++++++++++++-
->>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  6 ++-
->>   drivers/iommu/arm/arm-smmu/arm-smmu.c      |  5 +-
->>   drivers/iommu/arm/arm-smmu/arm-smmu.h      |  5 ++
->>   4 files changed, 68 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> index 7f52ac67495f..4a38cae29be2 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> @@ -14,6 +14,12 @@
->>
->>   #define QCOM_DUMMY_VAL	-1
->>
->> +struct actlr_config {
->> +	u16 sid;
->> +	u16 mask;
->> +	u32 actlr;
->> +};
->> +
->>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->>   {
->>   	return container_of(smmu, struct qcom_smmu, smmu);
->> @@ -205,10 +211,40 @@ static bool qcom_adreno_can_do_ttbr1(struct arm_smmu_device *smmu)
->>   	return true;
->>   }
->>
->> +static void arm_smmu_set_actlr(struct device *dev, struct arm_smmu_device *smmu, int cbndx,
->> +		const struct actlr_config *actlrcfg, size_t actlrcfg_size)
->> +{
->> +	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
->> +	struct arm_smmu_master_cfg *cfg = dev_iommu_priv_get(dev);
->> +	struct arm_smmu_smr *smr;
->> +	int i;
->> +	int j;
->> +	u16 id;
->> +	u16 mask;
->> +	int idx;
->> +
->> +	for (i = 0; i < actlrcfg_size; ++i) {
->> +		id = (actlrcfg + i)->sid;
->> +		mask = (actlrcfg + i)->mask;
->> +
->> +		for_each_cfg_sme(cfg, fwspec, j, idx) {
->> +			smr = &smmu->smrs[idx];
->> +			if (smr_is_subset(*smr, id, mask))
->> +				arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR,
->> +						(actlrcfg + i)->actlr);
->> +		}
->> +	}
->> +}
->> +
->>   static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>   		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
->>   {
->>   	struct adreno_smmu_priv *priv;
->> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
->> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
->> +	const struct actlr_config *actlrcfg;
->> +	size_t actlrcfg_size;
->> +	int cbndx = smmu_domain->cfg.cbndx;
->>
->>   	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
->>
->> @@ -238,6 +274,12 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>   	priv->set_stall = qcom_adreno_smmu_set_stall;
->>   	priv->resume_translation = qcom_adreno_smmu_resume_translation;
->>
->> +	if (qsmmu->data->actlrcfg_gfx) {
->> +		actlrcfg = qsmmu->data->actlrcfg_gfx;
->> +		actlrcfg_size = qsmmu->data->actlrcfg_gfx_size;
->> +		arm_smmu_set_actlr(dev, smmu, cbndx, actlrcfg, actlrcfg_size);
->> +	}
->> +
->>   	return 0;
->>   }
->>
->> @@ -263,6 +305,18 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
->>   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>   		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
->>   {
->> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
->> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
->> +	const struct actlr_config *actlrcfg;
->> +	size_t actlrcfg_size;
->> +	int cbndx = smmu_domain->cfg.cbndx;
->> +
->> +	if (qsmmu->data->actlrcfg) {
->> +		actlrcfg = qsmmu->data->actlrcfg;
->> +		actlrcfg_size = qsmmu->data->actlrcfg_size;
->> +		arm_smmu_set_actlr(dev, smmu, cbndx, actlrcfg, actlrcfg_size);
->> +	}
->> +
->>   	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
->>
->>   	return 0;
->> @@ -464,7 +518,7 @@ static struct arm_smmu_device *qcom_smmu_create(struct arm_smmu_device *smmu,
->>   		return ERR_PTR(-ENOMEM);
->>
->>   	qsmmu->smmu.impl = impl;
->> -	qsmmu->cfg = data->cfg;
->> +	qsmmu->data = data;
->>
->>   	return &qsmmu->smmu;
->>   }
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> index 593910567b88..138fc57f7b0d 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> @@ -8,7 +8,7 @@
->>
->>   struct qcom_smmu {
->>   	struct arm_smmu_device smmu;
->> -	const struct qcom_smmu_config *cfg;
->> +	const struct qcom_smmu_match_data *data;
->>   	bool bypass_quirk;
->>   	u8 bypass_cbndx;
->>   	u32 stall_enabled;
->> @@ -25,6 +25,10 @@ struct qcom_smmu_config {
->>   };
->>
->>   struct qcom_smmu_match_data {
->> +	const struct actlr_config *actlrcfg;
->> +	size_t actlrcfg_size;
->> +	const struct actlr_config *actlrcfg_gfx;
->> +	size_t actlrcfg_gfx_size;
->>   	const struct qcom_smmu_config *cfg;
->>   	const struct arm_smmu_impl *impl;
->>   	const struct arm_smmu_impl *adreno_impl;
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> index d6d1a2a55cc0..8e4faf015286 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> @@ -990,9 +990,10 @@ static int arm_smmu_find_sme(struct arm_smmu_device *smmu, u16 id, u16 mask)
->>   		 * expect simply identical entries for this case, but there's
->>   		 * no harm in accommodating the generalisation.
->>   		 */
->> -		if ((mask & smrs[i].mask) == mask &&
->> -		    !((id ^ smrs[i].id) & ~smrs[i].mask))
->> +
->> +		if (smr_is_subset(smrs[i], id, mask))
->>   			return i;
->> +
->>   		/*
->>   		 * If the new entry has any other overlap with an existing one,
->>   		 * though, then there always exists at least one stream ID
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
->> index 703fd5817ec1..b1638bbc41d4 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
->> @@ -501,6 +501,11 @@ static inline void arm_smmu_writeq(struct arm_smmu_device *smmu, int page,
->>   		writeq_relaxed(val, arm_smmu_page(smmu, page) + offset);
->>   }
->>
->> +static inline bool smr_is_subset(struct arm_smmu_smr smrs, u16 id, u16 mask)
->> +{
->> +	return (mask & smrs.mask) == mask && !((id ^ smrs.id) & ~smrs.mask);
->> +}
->> +
->>   #define ARM_SMMU_GR0		0
->>   #define ARM_SMMU_GR1		1
->>   #define ARM_SMMU_CB(s, n)	((s)->numpage + (n))
->> --
->> 2.17.1
->>
->>
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--=20
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
 
