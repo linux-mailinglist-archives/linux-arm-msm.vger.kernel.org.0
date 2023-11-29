@@ -1,141 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-2480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3BD27FD92D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:23:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D0C07FD94D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 15:26:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D13E61C20943
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:23:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2D0D282F74
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 14:26:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85B843064B;
-	Wed, 29 Nov 2023 14:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E12C530F97;
+	Wed, 29 Nov 2023 14:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BMam2tcO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q1GDGA/w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90A13BF;
-	Wed, 29 Nov 2023 06:23:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701267806; x=1732803806;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=i+nKxtVOoA7/2O3dUI5Zs5QSN68782gToG5E1Dn3b/0=;
-  b=BMam2tcOO7h7oYN+AXqv09Imrcb5qRWJip2vCyzoFbrkdf0dOZ57fhyi
-   qOYejD14LUMrcAoBtfPyB/68/9onfdmk1F7r5stuyYmWz0ywSCQS/ZghT
-   EFrPb16XGVADMEYh3/5D9xjsBp645I3ManhdfYu50JAKrID3v483lbLJn
-   CG8rxV4i8IhKsvkMxY5cknnQVPOKDlZIv6KaZxPgrR2pDi8Fv0BIuVWtm
-   PApNeYFyMEH7AkacJmC6TY8C423Yq30UyA9zDoQreAwD3vDAkXzvzzxMp
-   rrf7JC0u90sNWSJ7OqK/+kkFm0sJo9XEocyuFajzGXl8cnBmgfP8TmPWL
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10909"; a="424313715"
-X-IronPort-AV: E=Sophos;i="6.04,235,1695711600"; 
-   d="scan'208";a="424313715"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2023 06:23:25 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10909"; a="1100543308"
-X-IronPort-AV: E=Sophos;i="6.04,235,1695711600"; 
-   d="scan'208";a="1100543308"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Nov 2023 06:23:17 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1r8LT7-00000000SaA-0d82;
-	Wed, 29 Nov 2023 16:23:13 +0200
-Date: Wed, 29 Nov 2023 16:23:12 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Jianlong Huang <jianlong.huang@starfivetech.com>,
-	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
-	openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Dong Aisheng <aisheng.dong@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Sean Wang <sean.wang@kernel.org>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Hal Feng <hal.feng@starfivetech.com>
-Subject: Re: [PATCH v3 06/22] pinctrl: core: Make pins const in struct
- group_desc
-Message-ID: <ZWdJUBNMYj9qvCf2@smile.fi.intel.com>
-References: <20231128200155.438722-1-andriy.shevchenko@linux.intel.com>
- <20231128200155.438722-7-andriy.shevchenko@linux.intel.com>
- <CAMuHMdWt0qq-Umd8udb7fxpNVZ=X9O9eZGMVGFSGRO_d9UkgNw@mail.gmail.com>
- <ZWc_o4Dcsb0v5TGB@smile.fi.intel.com>
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F013FD71
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:26:11 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-a02c48a0420so932829166b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 06:26:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701267970; x=1701872770; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CjrSa1njyWn/9fAa9//XhFWUEc7n0hayxm4Pd7bvr9Y=;
+        b=Q1GDGA/whOc8CsEZbRAjp4W3nhrkMQlk4cDzQJjb2tnTvZeeOADSbFypVL6BFChMIZ
+         GLYzdM+/Q2pbZL2TGyrt+duwQd6aCq64WdrGafYBPv/etgDxyXbQXEMqSIp5gMQRjsrz
+         /m8WLFWzSRhxAHeTJhJq6fx0rmUrbrCv/2Y27AFVRwHPZO2iqem4DyXwE7kuBKMmi4Mm
+         7WoHz/1fzipUVYeITriKkPxMV91R0Wjoz1tx5zBlCxcr1/I+7FCICf2+hDBtNz4e3Xnz
+         a1zeY+Uz7uml/58jUjvfCUBcTVSRSJUl/qTzuW1CdugDRV7a3PcSFfRfDlkHrQxThRnD
+         pR8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701267970; x=1701872770;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CjrSa1njyWn/9fAa9//XhFWUEc7n0hayxm4Pd7bvr9Y=;
+        b=u/qpTQUpIa1HHfQZDwHsaS3oSdA2w1H1bv0lPoWxtDoKcQU4nF100EpTHJR+zg/wwY
+         +cvLj8T5b8l0yFlbqHi2gfyykKCWoRRh6DEH5Motxf05+R8sk66g+RPrEqwNI2Qc4F6J
+         jJZ5zS8yJffOoDQbeC0hTDLvcwja/oxc6JFdre/H8T6bLAKXSrLHHNA1jg1GzdXu4y2e
+         hOo3P/iRa6CiB0X1SbqEVa++sJRHbnjVgNkSPnkQK6tY/mqoT1GrMszxspGIa22NuAih
+         chylQ8sk9VWKPe5Taj6eX2P6GtAmKzvdsu3iWq3q+6aa2YseF1Z2Ld7QykmYHE4Q7UQK
+         0I9w==
+X-Gm-Message-State: AOJu0Yw2SzMHw2PALsQ0Wtf8qPEJQd5/bWcBSuEn16ayVW9BHJzmsXyY
+	ELqJLiymdTvab/4d2A7mlqUBbg==
+X-Google-Smtp-Source: AGHT+IFDPuQkEToCwu/2tcDdilhfVHrDbPlCDtcMHh/euGPfTeHMaW0SQgIOQEnwR2I7I6R1YAm6ww==
+X-Received: by 2002:a17:906:1685:b0:9fe:a92b:9844 with SMTP id s5-20020a170906168500b009fea92b9844mr14220378ejd.37.1701267970469;
+        Wed, 29 Nov 2023 06:26:10 -0800 (PST)
+Received: from [192.168.209.173] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
+        by smtp.gmail.com with ESMTPSA id oq14-20020a170906cc8e00b009fdcc65d720sm7941557ejb.72.2023.11.29.06.26.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Nov 2023 06:26:10 -0800 (PST)
+Message-ID: <206434f6-3747-48d2-9b95-097ac4f07e72@linaro.org>
+Date: Wed, 29 Nov 2023 15:26:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZWc_o4Dcsb0v5TGB@smile.fi.intel.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8450: correct TX Soundwire clock
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+References: <20231129140537.161720-1-krzysztof.kozlowski@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231129140537.161720-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 29, 2023 at 03:41:55PM +0200, Andy Shevchenko wrote:
-> On Wed, Nov 29, 2023 at 12:21:45PM +0100, Geert Uytterhoeven wrote:
-> > On Tue, Nov 28, 2023 at 9:04 PM Andy Shevchenko
-> > <andriy.shevchenko@linux.intel.com> wrote:
-> > > It's unclear why it's not a const from day 1. Make the pins member
-> > > const in struct group_desc. Update necessary APIs.
-
-...
-
-> > >  int pinctrl_generic_add_group(struct pinctrl_dev *pctldev, const char *name,
-> > > -                             int *gpins, int ngpins, void *data);
-> > > +                             const int *pins, int num_pins, void *data);
-> > >
-> > >  int pinctrl_generic_remove_group(struct pinctrl_dev *pctldev,
-> > >                                  unsigned int group_selector);
-> > 
-> > Probably this is also the right moment to change all of these to arrays
-> > of unsigned ints?  Else you will have mixed int/unsigned int after
-> > "[PATCH v3 13/22] pinctrl: core: Embed struct pingroup into struct
-> > group_desc", and purely unsigned int after "[PATCH v3 22/22] pinctrl:
-> > core: Remove unused members from struct group_desc".
+On 29.11.2023 15:05, Krzysztof Kozlowski wrote:
+> The TX Soundwire controller should take clock from TX macro codec, not
+> VA macro codec clock, otherwise the clock stays disabled.  This looks
+> like a copy-paste issue, because the SC8280xp code uses here correctly
+> clock from TX macro.  The VA macro clock is already consumed by TX macro
+> codec, thus it won't be disabled by this change.
 > 
-> Hmm... Can it be done later?
+> Fixes: 14341e76dbc7 ("arm64: dts: qcom: sm8450: add Soundwire and LPASS")
+> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> I can, of course try to change the parameter here to be unsigned, but it most
-> likely fail the build for those drivers means need more patches, more delay to
-> this series.
-> 
-> Linus?
+> ---
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-On the first glance updating API here does not fail the build.
-Lemme incorporate this into v4.
-
-Meanwhile the drivers I left untouched, it might be separate changes
-to convert from int to const unsigned int.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Konrad
 
