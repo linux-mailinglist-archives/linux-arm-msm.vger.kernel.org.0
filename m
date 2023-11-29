@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4BAC7FE2BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 23:09:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5CA17FE32A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 23:30:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F5DB282210
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 22:09:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F1A4B20EB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 22:30:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DECC4CB5C;
-	Wed, 29 Nov 2023 22:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBD0A3B199;
+	Wed, 29 Nov 2023 22:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uR1+J9eN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Twumr8gt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1700DB6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:09:29 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-54bf9a54fe3so103883a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:09:29 -0800 (PST)
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E171C4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:29:57 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-54acdd65c88so120581a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:29:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701295767; x=1701900567; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701296995; x=1701901795; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8SYJPO3WANXfLrJT96QPXJOyEPmj0+YqiIB6d1PVgyw=;
-        b=uR1+J9eN/VdCXJ8T/LaFR9/hBTt/xejL9ACeYf1Pz4XT7GlF9o1B9YXHjasKhHsg6d
-         qma0pOiSXdO7zR96+C2rs4s1MokJWds5IsxrV82b516MFo+o6FBTHB6v0kvCwm+P8gr7
-         pID8seGi4fyObRIKRPtv9f/efbeW8s7vJp06kw3OzFBKv+TZkdDSts3F5DQF0109O916
-         U5M+XhuMlmBEl+ftFfFMvMcUaWv102e9tudUwTH3mbgO09yk+y4RM1spNqUYTTLFPHbG
-         Vj8+kmRNgJTF4Xp2C42mNr2vzrOcOS2G/yRyNKSD7NMWEK3uuUAc3FePVazdK5B398ut
-         Lk8A==
+        bh=jjJ8Mb+534HQepceR4AuOphlKM7gML1f+9PSTE2HCjU=;
+        b=Twumr8gt3E9+63cRKBsbZdTs9o0k95AQa92DaWz8n+2cGT/Z57di/Agc7C02U4l8Lx
+         u82iKtJKVtpwEqYLBQFMHxS5AGgZPh3OnTLVDwcIT2y82TO+KXjd62RQa6XXwS65c2P4
+         IF7c0nWRaPd7Q8lNKiCJ+qq24NP1lyJrgjmbDZrgztZ+Y3BQ1Sbdwelz6CBUBFdmDwbM
+         SuNfw0uGXwuYoDnZliuna08llr/kvBcFeGfFhzJoLygVccSBk06sl4fT8pemcNGqpeiF
+         sn7DgVNCQ4jcwqkYXZ0M1LTy3dD4aq+2CuTXowPRpFtjbGNr3kldd2UjXFAYjznublIG
+         9Z2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701295767; x=1701900567;
+        d=1e100.net; s=20230601; t=1701296995; x=1701901795;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8SYJPO3WANXfLrJT96QPXJOyEPmj0+YqiIB6d1PVgyw=;
-        b=r6WovCyN0NfPkSl1WdGMrzw3YsY8eVsM2oq1av1pOr4fu2xH6Gdm+cR/SN1cdkGWTa
-         NvqckpXM9YG8f70oT3VZtGy7jvYQhi+NGiRWSaZVsG/wNvrYu4jvUFWVCyTffjzEzibc
-         NC5KQXMd3QQClyrguLJT6MqGun4nHbNzQzr00hi6OzD5Tjfb1/4lj9VfLB9btyQrITvc
-         BeHUsbkOitPUBPL1f3NRSFp+s3JxOev3/Vh0REhCHrlNEVbavr2QqOQJvl/LFwnL81KW
-         RZTlD38/Ez7wQH+5n49DQBWTT5kJyq0keKdIXfXJIYBE1imcl56mVan96pRRJV3nHmbk
-         ZJsQ==
-X-Gm-Message-State: AOJu0Yym6uikwwphfMp07PJ3xCEAT1e0eaxZrXCYSyqAOS2LWHSgCAL8
-	4t/dNf8weoxhlfb3b9kIt5Kmgw==
-X-Google-Smtp-Source: AGHT+IENx+OW2HpeiO1gNtCLT9v9Xg0hIOo5zRVhn9ogDaRMkWtj6jEgtM7O5wLu/1O3n5RNl3xvXQ==
-X-Received: by 2002:a50:fb85:0:b0:54a:f1db:c2b3 with SMTP id e5-20020a50fb85000000b0054af1dbc2b3mr14729811edq.0.1701295767566;
-        Wed, 29 Nov 2023 14:09:27 -0800 (PST)
+        bh=jjJ8Mb+534HQepceR4AuOphlKM7gML1f+9PSTE2HCjU=;
+        b=RQfRB5QOszn8SzKJb5ScpGex3WxAqAwhYwHjc94Zu5cj1FdLwljn8vsffwZzeUpYc3
+         ywXlEbBI3r1XyRN/aV7jFzG4/oXfXvFxPot9KosA6wkctmQk+OPVTyUXYyvVePSNze4v
+         JmVukN6jAbMHFjN+dGbSYuGF3mycmpjG/AXD3U47vq7Z6bS6uJYSY8g+vyVVdOaYNnOk
+         1fJnw4aunzQ00hx1uY4P+B4YxlvieKQq6RwXRMrnD01V7CnPsZaXNlBK2skzLK0fUfHm
+         Tn1DWUBD9sIckqbt/RlsyVJ6TXbpNhLOjHm8cJ8NRx6lhytkSKaX0A9MOctJsVReRXGq
+         NCZg==
+X-Gm-Message-State: AOJu0Yw3he1LnHUd3YkgtoJldTg8JhJWzWqFjvHRAlBxkk2QP3IOOR3I
+	lpkuYpVJNLBaXRok9PViwaizmi5Itx7yKc7TDoQ=
+X-Google-Smtp-Source: AGHT+IFPWBWAiWFLmSm+a0zThkr+g5UOIuJnAP86zUgmmcw2sX3gcHSnHqviZtEbzdTrQ2XTT+zKLA==
+X-Received: by 2002:a17:907:9728:b0:9be:7b67:1673 with SMTP id jg40-20020a170907972800b009be7b671673mr17684397ejc.1.1701296995481;
+        Wed, 29 Nov 2023 14:29:55 -0800 (PST)
 Received: from [192.168.209.83] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id w4-20020a056402268400b0054b2daa6654sm5165986edd.56.2023.11.29.14.09.24
+        by smtp.gmail.com with ESMTPSA id f4-20020a170906560400b009fcb5fcfbe6sm8316172ejq.220.2023.11.29.14.29.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Nov 2023 14:09:27 -0800 (PST)
-Message-ID: <498465c4-ddaf-4a90-be5f-2e3709777e62@linaro.org>
-Date: Wed, 29 Nov 2023 23:09:24 +0100
+        Wed, 29 Nov 2023 14:29:54 -0800 (PST)
+Message-ID: <5ffa4cbf-c30f-4169-ad75-38cd3e8d11c2@linaro.org>
+Date: Wed, 29 Nov 2023 23:29:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,21 +62,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/15] clk: qcom: gpucc-sm6115: Unregister critical
- clocks
+Subject: Re: [PATCH V2 3/5] arm64: dts: qcom: Add base X1E80100 dtsi and the
+ QCP dts
 Content-Language: en-US
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230717-topic-branch_aon_cleanup-v2-0-2a583460ef26@linaro.org>
- <20230717-topic-branch_aon_cleanup-v2-6-2a583460ef26@linaro.org>
- <8318363a-7122-45f4-a42f-3f01b33457eb@linaro.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ catalin.marinas@arm.com, ulf.hansson@linaro.org
+Cc: agross@kernel.org, conor+dt@kernel.org, ayan.kumar.halder@amd.com,
+ j@jannau.net, dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
+ m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
+ lpieralisi@kernel.org, quic_rjendra@quicinc.com, abel.vesa@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ quic_tsoni@quicinc.com, neil.armstrong@linaro.org
+References: <20231117113931.26660-1-quic_sibis@quicinc.com>
+ <20231117113931.26660-4-quic_sibis@quicinc.com>
+ <918ff1f5-ce01-43ea-b034-e69fbb31f495@linaro.org>
+ <3dd41426-c026-a832-0a6b-0aabfaec2a8c@quicinc.com>
+ <c6e05a10-88cc-409c-afc0-37166b763eaa@linaro.org>
+ <8021a6f5-6316-031d-8181-e0e2047e2fa8@quicinc.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -113,39 +117,108 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <8318363a-7122-45f4-a42f-3f01b33457eb@linaro.org>
+In-Reply-To: <8021a6f5-6316-031d-8181-e0e2047e2fa8@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 29.11.2023 22:14, Bryan O'Donoghue wrote:
-> On 29/11/2023 18:59, Konrad Dybcio wrote:
->> Some clocks need to be always-on, but we don't really do anything
->> with them, other than calling enable() once and telling Linux they're
->> enabled.
+On 29.11.2023 16:46, Sibi Sankar wrote:
+> 
+> 
+> On 11/29/23 18:24, Konrad Dybcio wrote:
+>> On 29.11.2023 10:25, Sibi Sankar wrote:
+>>>
+>>>
+>>> On 11/18/23 06:36, Konrad Dybcio wrote:
+>>>> On 17.11.2023 12:39, Sibi Sankar wrote:
+>>>>> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+>>>>>
+>>>>> Add base dtsi and QCP board (Qualcomm Compute Platform) dts file for
+>>>>> X1E80100 SoC, describing the CPUs, GCC and RPMHCC clock controllers,
+>>>>> geni UART, interrupt controller, TLMM, reserved memory, interconnects,
+>>>>> SMMU and LLCC nodes.
+>>>>>
+>>>>> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
+>>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+>>>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+>>>>> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>>>>> ---
+>> [...]
 >>
->> Unregister them to save a couple of bytes and, perhaps more
->> importantly, allow for runtime suspend of the clock controller device,
->> as CLK_IS_CRITICAL prevents the latter.
 >>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
-[...]
+>>>>> +        idle-states {
+>>>>> +            entry-method = "psci";
+>>>>> +
+>>>>> +            CLUSTER_C4: cpu-sleep-0 {
+>>>>> +                compatible = "arm,idle-state";
+>>>>> +                idle-state-name = "ret";
+>>>>> +                arm,psci-suspend-param = <0x00000004>;
+>>>> These suspend parameters look funky.. is this just a PSCI sleep
+>>>> implementation that strays far away from Arm's suggested guidelines?
+>>>
+>>> not really! it's just that 30th bit is set according to spec i.e
+>>> it's marked as a retention state.
+>> So, is there no state where the cores actually power down? Or is it
+>> not described yet?
+>>
+>> FWIW by "power down" I mean it in the sense that Arm DEN0022D does,
+>> so "In this state the core is powered off. Software on the device
+>> needs to save all core state, so that it can be preserved over
+>> the powerdown."
+> 
+> I was told we mark it explicitly as retention because hw is expected
+> to handle powerdown and we don't want sw to also do the same.
+> 
+>>
+>>>
+>>>>
+>>>> [...]
+>>>>
+>>>>
+>>>>> +        CPU_PD11: power-domain-cpu11 {
+>>>>> +            #power-domain-cells = <0>;
+>>>>> +            power-domains = <&CLUSTER_PD>;
+>>>>> +        };
+>>>>> +
+>>>>> +        CLUSTER_PD: power-domain-cpu-cluster {
+>>>>> +            #power-domain-cells = <0>;
+>>>>> +            domain-idle-states = <&CLUSTER_CL4>, <&CLUSTER_CL5>;
+>>>>> +        };
+>>>> So, can the 3 clusters not shut down their L2 and PLLs (if separate?)
+>>>> on their own?
+>>>
+>>> on CL5 the clusters are expected to shutdown their l2 and PLL on their
+>>> own.
+>> Then I think this won't happen with this description
+>>
+>> every cpu has a genpd tree like this:
+>>
+>> cpu_n
+>>   |_CPU_PDn
+>>      |_CLUSTER_PD
+>>
+>> and CLUSTER_PD has two idle states: CLUSTER_CL4 and CLUSTER_CL5
+>>
+>> which IIUC means that neither cluster idle state will be reached
+>> unless all children of CLUSTER_PD (so, all CPUs) go down that low
+>>
+>> This is "fine" on e.g. sc8280 where both CPU clusters are part of
+>> the same Arm DynamIQ cluster (which is considered one cluster as
+>> far as MPIDR_EL1 goes) (though perhaps that's misleading and with
+>> the qcom plumbing they perhaps could actually be collapsed separately)
+> 
+> We did verify that the sleep stats increase independently for each
+> cluster, so it's behavior is unlike what you explained above. I'll
+> re-spin this series again in the meantime and you can take another
+> stab at it there.
+So are you saying that you checked the RPMh sleep stats and each cluster
+managed to sleep on its own, or did you do something different?
 
+Were the sleep durations far apart? What's the order of magnitude of that
+difference? Are the values reported in RPMh greater than those in
+/sys/kernel/debug/pm_genpd/power-domain-cpu-cluster/total_idle_time?
 
-> 
-> OTOH.
-> 
-> Seems a pity to remove these clocks - generally for the series I mean - from the debug view in /sys/kernel/debug/clk_summary.
-> 
-> In the ideal case we have pm runtime functional without dropping these clocks from the view in /sys/kernel/debug/clk_summary.
-> 
-> Certainly I've found that interface useful when launching a real product. It might be confusing to _not_ see the always-on clocks enumerated there.
-> 
-> ---
-I have shared the very same concern in the past.. I did also however realize
-that debugfs is not accurate, especially with funky clocks that need only be
-enabled once (*even if you gate the e.g. MM subsystem*) and debugcc should be
-used instead
+Is there any other (i.e. non-Linux) source of "go to sleep" votes?
 
 Konrad
 
