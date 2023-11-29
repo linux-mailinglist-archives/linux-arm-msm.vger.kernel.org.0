@@ -1,115 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-2338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29B337FC9C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 23:44:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 634117FCC9F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 03:12:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B20A1C20F49
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Nov 2023 22:44:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 098442831E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 02:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5BE119464;
-	Tue, 28 Nov 2023 22:44:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46F441FB5;
+	Wed, 29 Nov 2023 02:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=walle.cc header.i=@walle.cc header.b="Bz6rbpsR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k8My24x8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.3ffe.de (0001.3ffe.de [IPv6:2a01:4f8:c0c:9d57::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06E11998;
-	Tue, 28 Nov 2023 14:44:35 -0800 (PST)
-Received: from 3ffe.de (0001.3ffe.de [IPv6:2a01:4f8:c0c:9d57::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.3ffe.de (Postfix) with ESMTPSA id BD9BF323;
-	Tue, 28 Nov 2023 23:44:33 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=walle.cc; s=mail2022082101;
-	t=1701211473;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mMdaszjmHghx02rDq1Oy91uT9YTXeu24D5SoecBFShI=;
-	b=Bz6rbpsRlDLXQu7iPJGh4cDpMtvt9UH/JNiuHy0U5yvZwAec30mWSQjEnLdr+GG9ILGZHM
-	Y+6/gZPCexw9YqoS+PALoNMdmVZNDDh8ytuMPxB9Zbf8e+JAQ0joYWk4JsbCSAsPFoCNvF
-	4DY10E9QotmRPLrodIIigVD9YPSxHSfdhVVxYP/Yyqfk/4zNGh0jwPdW9jyucCephWpZ43
-	6Wz3hG86neR4QQqKDc6J2gebUy7Ym9n69678zrQAdsL38S4QWCNFte+XE5ZmTVmodR6/FZ
-	pKZm2XUmNApgbnyFJRioes5y9Dgl/8Oo2RvUr1YO8gQSLrgOT/3/6qNdbhHBGg==
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D0D919BA;
+	Tue, 28 Nov 2023 18:12:30 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-332e58d4219so3614548f8f.0;
+        Tue, 28 Nov 2023 18:12:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701223949; x=1701828749; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tgQ89J9c3uszO6o9xy/pNVP40wp2tzxLJEUGDYsTDYE=;
+        b=k8My24x8PwzpoY62fB8a5q3uwG2mIwFnmYIIeXcKua6nk0U0IzMAQ2AUcpb8A7E3Ke
+         qAer8gMDRO9Jl2y7VG4IAihOK/KWTPsPsM8CMIfG/J2ZxUTA9xlUvzBf4DH6K4TcKeBH
+         4vwnafTr4m2SE3HAJALTz0HnCYNIztxgBENFM4ivkDoV5bvRSeXrHtXWjPJ1GTkht7JR
+         F0F6HiV3cB/ihk3Q4/Wi8TMU9z2gQTpm6d3CkYTUAColJtWPSI96jfFawcJqE3zV1vOb
+         +km3/enWob58YjFGgFJZvD6ZFydDSiRgk5my+Yoq26zYEc0PPvINQW8uOFriBX/Mvg6C
+         P6zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701223949; x=1701828749;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tgQ89J9c3uszO6o9xy/pNVP40wp2tzxLJEUGDYsTDYE=;
+        b=ljZMBMtl5l3GOTfV3zsSnX+NYcgweJUMa34ODBCdcgIu0h2sIwYX6Y5vV/7On7/+7M
+         +G1RbiqFt5iH7LfIzAE5d3se4DMSJJAWrs8yDG4/0TzEbPg8HeWGVIDbxA37WbxjiTbX
+         l133hLZH0YcJ6nC3qKTR63SdxrcuInLDwPsKFi6kuP2i48w4wV0+7Xby9QQytw5X57v5
+         gpVH9gxa+NZ6z1BTBog272u2tlm2DHK6g3UCNjmin4HAB1CeuaiZxeTtVV37TCQdzGOr
+         G7WMMWQoWrLnYrK9YrjaT9S9YtJjc9NFgPVV0xMbIIqElq7eqIo7eVDgNYOjzoAF/W6z
+         APvA==
+X-Gm-Message-State: AOJu0Yx8wh9jxgrTsAZb1HAYqoAB/2IaT+3hQvrDtazOdMoYgRIwgfWW
+	3gyJneEzEwKNL1IcPPlxgNQ=
+X-Google-Smtp-Source: AGHT+IEA84J4BUwzgt6ri/sglZvQdT1+cylXfse8HAFnt5lCUSSK60IYq+Yui4VAWkUvtaDu+Io28Q==
+X-Received: by 2002:adf:ee90:0:b0:333:ed:82e7 with SMTP id b16-20020adfee90000000b0033300ed82e7mr5949287wro.10.1701223948601;
+        Tue, 28 Nov 2023 18:12:28 -0800 (PST)
+Received: from localhost.localdomain (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
+        by smtp.googlemail.com with ESMTPSA id b19-20020a05600c4e1300b0040648217f4fsm321406wmq.39.2023.11.28.18.12.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Nov 2023 18:12:28 -0800 (PST)
+From: Christian Marangi <ansuelsmth@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Christian Marangi <ansuelsmth@gmail.com>
+Subject: [net-next PATCH 00/14] net: phy: at803x: cleanup + split
+Date: Wed, 29 Nov 2023 03:12:05 +0100
+Message-Id: <20231129021219.20914-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 28 Nov 2023 23:44:33 +0100
-From: Michael Walle <michael@walle.cc>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Michael Walle <mwalle@kernel.org>, Laurent.pinchart@ideasonboard.com,
- andrzej.hajda@intel.com, dave.stevenson@raspberrypi.com,
- dianders@chromium.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, jernej.skrabec@gmail.com, jonas@kwiboo.se,
- konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, marex@denx.de, marijn.suijten@somainline.org,
- mripard@kernel.org, neil.armstrong@linaro.org, quic_abhinavk@quicinc.com,
- quic_jesszhan@quicinc.com, rfoss@kernel.org, sean@poorly.run,
- tzimmermann@suse.de, tony@atomide.com, alexander.stein@ew.tq-group.com
-Subject: Re: [RFC PATCH 03/10] drm/mipi-dsi: add API for manual control over
- the DSI link power state
-In-Reply-To: <CAA8EJppAhfm4FK4z_B=h9+o7LScjCyUD0XvdzQCe6tjrRx5KbA@mail.gmail.com>
-References: <CAA8EJpozZkEswnioKjRCqBg4fcjVHFwGivoFNTNHVwyocKprQw@mail.gmail.com>
- <20231127160658.2164612-1-mwalle@kernel.org>
- <CAA8EJpphwXoKnzDkY3cBqzsDZwdw+nze-Ev2toPBJm-2VJvY_g@mail.gmail.com>
- <dce76a6e1321a6374ad39125bead56b3@kernel.org>
- <CAA8EJpr9PDgSrTpP2-joQ09fxmJKZB1B+ESbDbMjkLNiqZ1m3A@mail.gmail.com>
- <14D9F495-425D-47FA-AD0D-F7299285936F@walle.cc>
- <CAA8EJpoYkH-0onMmNRk1iO5YeLN+5hpZMsfvtNo-7p6y2mjZwg@mail.gmail.com>
- <5eeade839ad3f71e8976965ce6cf3ed2@walle.cc>
- <CAA8EJppAhfm4FK4z_B=h9+o7LScjCyUD0XvdzQCe6tjrRx5KbA@mail.gmail.com>
-Message-ID: <634164b4a8085770bd06134c1d328d8b@walle.cc>
-X-Sender: michael@walle.cc
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
->> I'm facing similar issues with the tc358775 bridge. This bridge needs
->> to release its reset while both clock and data lanes are in LP-11
->> mode.
->> But then it needs to be configured (via I2C) while the clock lane is
->> in enabled (HS mode), but the data lanes are still in LP-11 mode.
-> 
-> This is quite an interesting requirement. For example, I'm not 100%
-> sure whether we can get that done on our (msm) hosts. I need to double
-> check that.
-> What frequency is expected on the CLK lane? Can it be an arbitrary
-> frequency or it should be the same freq as the one used later for the
-> video transfer?
+The intention of this big series is to try to cleanup and split
+the big at803x PHY driver.
 
-I presume it has to be the same frequency as the video stream later.
-That's a least what I have successfully tested.
-The datasheet doesn't mention if a frequency switch is allowed on the
-clock lane (which would need a brief switch to LP mode, I presume). I'd 
-say
-it's not allowed/supported as the bridge is very picky regarding the 
-init
-sequence in general.
+It currently have 3 different family of PHY in it. at803x, qca83xx
+and qca808x.
 
-I'm using the Mediatek DSI host, where that sequence is possible. I.e. 
-you
-just enable the clock and data lanes in continuous clock mode, but don't
-enable the video stream, which should leave the data lanes in LP-11 
-mode.
+The current codebase required lots of cleanup and reworking to
+make the split possible as currently there is a greater use of
+adding special function matching the phy_id.
 
-Sometimes you also have a command mode (instead of a video mode). And if
-you don't send any commands, the data lanes are in LP-11 mode, too.
+This has been reworked to make the function actually generic
+and make the change only in more specific one. The result
+is the addition of micro additional function but that is for good
+as it massively simplify splitting the driver later.
 
--michael
+The main bonus of this cleanup is creating smaller PHY drivers
+since they won't have all the bloat of unused functions or
+extra condition (especially all the stuff related to regulators
+that are only handled by the at8031 PHY)
 
->> Therefore, for the correct init sequence is:
->> (1) dsi host enables lanes, that is clock and data are in lp-11
->> (2) dsi bridge driver releases reset of the bridge
->> (3) dsi host enables clock lane, leaves data lanes in lp-11
->> (4) dsi bridge driver configures the bridge
->> (5) dsi host enables the video stream
->> (6) dsi bridge enables the output port of the bridge
+Consider that this is all in preparation for the addition of
+qca807x PHY driver that will also uso some of the functions of
+at803x.
+
+New Kconfig are introduced for the split PHY driver as they are
+now built as separate PHY drivers.
+
+Christian Marangi (14):
+  net: phy: at803x: fix passing the wrong reference for config_intr
+  net: phy: at803x: move disable WOL for 8031 from probe to config
+  net: phy: at803x: raname hw_stats functions to qca83xx specific name
+  net: phy: at803x: move qca83xx stats out of generic at803x_priv struct
+  net: phy: at803x: move qca83xx specific check in dedicated functions
+  net: phy: at803x: move at8031 specific data out of generic at803x_priv
+  net: phy: at803x: move at8035 specific DT parse to dedicated probe
+  net: phy: at803x: drop specific PHY id check from cable test functions
+  net: phy: at803x: remove specific qca808x check from at803x functions
+  net: phy: at803x: drop usless probe for qca8081 PHY
+  net: phy: at803x: make specific status mask more generic
+  net: phy: move at803x PHY driver to dedicated directory
+  net: phy: qcom: deatch qca83xx PHY driver from at803x
+  net: phy: qcom: detach qca808x PHY driver from at803x
+
+ drivers/net/phy/Kconfig        |    7 +-
+ drivers/net/phy/Makefile       |    2 +-
+ drivers/net/phy/at803x.c       | 2248 --------------------------------
+ drivers/net/phy/qcom/Kconfig   |   17 +
+ drivers/net/phy/qcom/Makefile  |    4 +
+ drivers/net/phy/qcom/at803x.c  | 1222 +++++++++++++++++
+ drivers/net/phy/qcom/common.c  |  351 +++++
+ drivers/net/phy/qcom/qca808x.c |  550 ++++++++
+ drivers/net/phy/qcom/qca83xx.c |  275 ++++
+ drivers/net/phy/qcom/qcom.h    |  124 ++
+ 10 files changed, 2545 insertions(+), 2255 deletions(-)
+ delete mode 100644 drivers/net/phy/at803x.c
+ create mode 100644 drivers/net/phy/qcom/Kconfig
+ create mode 100644 drivers/net/phy/qcom/Makefile
+ create mode 100644 drivers/net/phy/qcom/at803x.c
+ create mode 100644 drivers/net/phy/qcom/common.c
+ create mode 100644 drivers/net/phy/qcom/qca808x.c
+ create mode 100644 drivers/net/phy/qcom/qca83xx.c
+ create mode 100644 drivers/net/phy/qcom/qcom.h
+
+-- 
+2.40.1
+
 
