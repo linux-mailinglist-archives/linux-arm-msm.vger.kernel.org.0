@@ -1,113 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-2438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3001C7FD5D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:35:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EC417FD5E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:37:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AA711B20F11
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 11:35:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5AEC9282FFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 11:37:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 123A71CABF;
-	Wed, 29 Nov 2023 11:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 089201CFBD;
+	Wed, 29 Nov 2023 11:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="vuzdJXag"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="YUTwYCyg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4715DA;
-	Wed, 29 Nov 2023 03:35:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=rqS+h/QhB+l3YOA1zOKZSiEXB38gEHQM7lW0MLULbqg=; b=vuzdJXagBK8d7m5cAmLL0Boojc
-	QyyhacdZgGAZS2j6Hit5ht9BRy5aUqNw+7TaK/yQcKNNG4Gm5VsmU2C6r5zrPk/c/RODcxSIfcXY9
-	t2CNXc8fL009N6jI30245Z1FtuxIezXE7Y6p60LWcBLeq4wP+NwYmJ7Hshxq4tJkyfufrqe0mCr5D
-	3v1TfYbAfnmkZ8Q413fHNagFsWg0usjA/RDbJ23DsP0gt9j6dwHVt5sdiS/xpwfY+e+pSi48774LV
-	HmanbcFoR+0rnLz7cQaWEEbQDX7fTJYYbgwCY+ru11YjTTU9idzi1TTVscPzF8L3jBz5lFphvE34g
-	Gy9+ohPw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:48210)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1r8IqR-0000Iz-2l;
-	Wed, 29 Nov 2023 11:35:08 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1r8IqS-0003xO-Ap; Wed, 29 Nov 2023 11:35:08 +0000
-Date: Wed, 29 Nov 2023 11:35:08 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Sneh Shah <quic_snehshah@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>
-Subject: Re: [PATCH net] net: stmmac: update Rx clk divider for 10M SGMII
-Message-ID: <ZWch7LIqbMEaLRLW@shell.armlinux.org.uk>
-References: <20231124050818.1221-1-quic_snehshah@quicinc.com>
- <ZWBo5EKjkffNOqkQ@shell.armlinux.org.uk>
- <47c9eb95-ff6a-4432-a7ef-1f3ebf6f593f@quicinc.com>
- <ZWRVz05Gb4oALDnf@shell.armlinux.org.uk>
- <3bf6f666-b58a-460f-88f5-ad8ec08bfbbc@quicinc.com>
- <ZWRp3pVv0DNsPMT7@shell.armlinux.org.uk>
- <474a8942-e22f-4899-acb9-f794d01fdfe9@quicinc.com>
+Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B081EAF;
+	Wed, 29 Nov 2023 03:37:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <474a8942-e22f-4899-acb9-f794d01fdfe9@quicinc.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1701257848;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zFMkyI45VT7UXczSOfK7lHaQtQAsm/dZT4KJu3kbR6M=;
+	b=YUTwYCygZsU6Xp6EA/BNba80tC0tNo4Lj5ACDCNmLzJogjTYp7Lee8wOoW6F3wmz8j1e4B
+	gT9p9h9p6IL5YpXbFPyDy7tW1GV4ySnd9idxr+Yl07Az/bD3Bww+PyC5u01Rglv6Z4h86b
+	Jx7it0g9Ar9kd/DHDNiyE8BTFXzRFwL65dzkfiW1wzMnxIzoPAvsIHmeyrl86t2UxsKmZq
+	wBTDB+AMPpuHw3zcwlPDg+I+5bFDJc01y0Bpn+L2WpdxEKUcz7dMrNIWvzMbVPnOAHJ2/h
+	vq7XGBYrnKNgVWA315hLJ8qlYrXmCUQzi+0uMWP9aeQwh15V7XVeiUxo0j5fTw==
+Date: Wed, 29 Nov 2023 12:37:26 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+ <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, Andrew Lunn
+ <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson
+ <andersson@kernel.org>, Chen-Yu Tsai <wens@kernel.org>, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>,
+ Heiko Stuebner <heiko@sntech.de>, Jonathan Corbet <corbet@lwn.net>, Konrad
+ Dybcio <konrad.dybcio@linaro.org>, Michal Simek <michal.simek@amd.com>, Neil
+ Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>, Olof
+ Johansson <olof@lixom.net>, =?UTF-8?Q?Rafa=C5=82_Mi=C5=82ecki?=
+ <zajec5@gmail.com>, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, workflows@vger.kernel.org,
+ linux-doc@vger.kernel.org
+Subject: Re: [PATCH v3] docs: dt-bindings: add DTS Coding Style document
+In-Reply-To: <0bcc0679-b883-4435-8843-cc830122c0e1@linaro.org>
+References: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
+ <63ec18b2758a9e385f446fb00b60ee69@manjaro.org>
+ <0bcc0679-b883-4435-8843-cc830122c0e1@linaro.org>
+Message-ID: <83b413441a953e8f2bc56adf09511a80@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Wed, Nov 29, 2023 at 04:56:53PM +0530, Sneh Shah wrote:
+On 2023-11-29 11:43, Krzysztof Kozlowski wrote:
+> On 28/11/2023 21:00, Dragan Simic wrote:
+>> 
+>> I went through the language of the entire patch, after the notice that
+>> the v4 would no longer accept language improvements.  My wording- and
+>> grammar-related suggestions are available inline below.
 > 
+> Thanks. I want to finish this at some point and it might not happen if
+> grammar fixes will be coming every patch revision. Then after we finish
+> review, new feedback will appear about using British or American
+> spelling (which reminds me old quote/email about which variant of
+> English is most popular in Linux kernel: the incorrect one).
+
+Ah, that's a good one. :)  Basically, both English variants should be 
+fine, but a single document should obviously use only one variant.
+
+>>> +=====================================
+>>> +Devicetree Sources (DTS) Coding Style
+>>> +=====================================
+>>> +
+>>> +When writing Devicetree Sources (DTS) please observe below 
+>>> guidelines.
+>>>  They
+>> 
+>> The sentence above should be replaced with: "The following guidelines
+>> are to be followed when writing Devicetree Source (DTS) files."
 > 
-> On 11/27/2023 3:35 PM, Russell King (Oracle) wrote:
-> > On Mon, Nov 27, 2023 at 03:17:20PM +0530, Sneh Shah wrote:
-> >> On 11/27/2023 2:09 PM, Russell King (Oracle) wrote:
-> >>> On Mon, Nov 27, 2023 at 11:25:34AM +0530, Sneh Shah wrote:
-> >>>> On 11/24/2023 2:42 PM, Russell King (Oracle) wrote:
-> >>>>> The next concern I have is that you're only doing this for SPEED_10.
-> >>>>> If it needs to be programmed for SPEED_10 to work, and not any of the
-> >>>>> other speeds, isn't this something that can be done at initialisation
-> >>>>> time? If it has to be done depending on the speed, then don't you need
-> >>>>> to do this for each speed with an appropriate value?
-> >>>>
-> >>>> This field programming is required only for 10M speed in for SGMII mode. other speeds are agnostic to this field. Hence we are programming it always when SGMII link comes up in 10M mode. init driver data for ethqos is common for sgmii and rgmii. As this fix is specific to SGMII we can't add this to init driver data.
-> >>>
-> >>> I wasn't referring to adding it to driver data. I was asking whether it
-> >>> could be done in the initialisation path.
-> >>>
-> >> No, IOMACRO block is configured post phylink up regardless of RGMII or SGMII mode. We are not updating them at driver initialization time itself.
-> > 
-> > What reason (in terms of the hardware) requires you to do this every
-> > time you select 10M speed? Does the hardware change the value in the
-> > register?
-> > 
-> Yes, the hardware changes the value in register every time the interface is toggled. That is the reason we have ethqos_configure_sgmii function to configure registers whenever there is link activity.
+> Are you sure? It's passive and I was taught it is discouraged for
+> writing. See for example:
+> https://www.hamilton.edu/academics/centers/writing/seven-sins-of-writing/1
 
-That is sufficient reason to write it each time - and it would be good
-to mention this in a comment above the write in
-ethqos_configure_sgmii().
+Hmm, you're right, passive voice is usually not the best choice.  Here's 
+my take two for the suggested replacement sentence, which is actually a 
+simplified version:
 
-Thanks.
+"This document contains the guidelines for writing Devicetree Source 
+(DTS) files."
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+>>> +should be considered complementary to any rules expressed already in
+>>> Devicetree
+>>> +Specification and dtc compiler (including W=1 and W=2 builds).
+>> 
+>> A definite article ("the") should be added before "Devicetree
+> 
+> ack
+> 
+>> Specification" and "dtc".  Also, "Specification" in "Devicetree
+>> Specification" should be capitalized.
+> 
+> It was.
+
+Oh, sorry, I see now.  IIRC, it wasn't capitalized in some places, so I 
+made a mistake here.
+
+>>> +
+>>> +Individual architectures and sub-architectures can add additional
+>>> rules, making
+>>> +the style stricter.
+>> 
+>> "Sub-architectures" should be replaced with "subarchitectures".  "Can
+> 
+> A hint, you can write such review feedback as:
+> s/sub-architectures/subarchitectures/
+
+Sure, but I specifically wanted to be less terse, as a way to be 
+respectful.
+
+> BTW, my language spelling points "subarchitectures" as mistake, but
+> sure, ack.
+
+Using hyphens or not is almost always debatable, but modern English in 
+general leans toward not using them.
+
+>>> +3. Unit addresses shall use lowercase hex, without leading zeros
+>>> (padding).
+>> 
+>> "Lowercase hex" should be replaced with "lowercase hexadecimal 
+>> digits".
+>> 
+>>> +
+>>> +4. Hex values in properties, e.g. "reg", shall use lowercase hex.  
+>>> The
+>>> address
+>>> +   part can be padded with leading zeros.
+>> 
+>> "Hex values" should be replaced with "Hexadecimal values".  "Lowercase
+>> hex" should be replaced with "lowercase hexadecimal digits".
+> 
+> ack, but that's quite picky. We are (software) engineers so we are
+> supposed to know the slang.
+
+Sure, but this document is of a bit formal nature, so using slightly 
+more formal language can only be helpful.
+
+>>> +2. Nodes without unit addresses shall be ordered alpha-numerically 
+>>> by
+>>> the node
+>>> +   name.  For a few types of nodes, they can be ordered by the main
+>>> property
+>>> +   (e.g. pin configuration states ordered by value of "pins"
+>>> property).
+>> 
+>> "Alpha-numerically" should be replaced with "alphabetically".
+> 
+> Are you sure? Does alphabetical order include numbers?
+
+That's a good question, which also crossed my mind while writing the 
+suggestions down.  A more correct word would be "lexicographically", 
+with something like ", with the already defined valid characters making 
+the symbol set and the ACSII character set defining the ordering, " 
+serving as an additional explanation.
+
+This would be a rather formal, but also very precise definition of the 
+applied ordering.
+
+>>> +3. When extending nodes in the board DTS via &label, the entries 
+>>> shall
+>>> be
+>>> +   ordered either alpha-numerically or by keeping the order from 
+>>> DTSI
+>>> (choice
+>>> +   depending on sub-architecture).
+>> 
+>> "Alpha-numerically" should be replaced with "alphabetically".
+> 
+> Similar concern
+
+I agree.  We could use "lexicographically" instead, with the precise 
+definition already established earlier in the document.
+
+>>> +board DTS, not in the SoC or SoM DTSI.  A partial exception is a
+>>> common
+>>> +external reference SoC-input clock, which could be coded as a
+>>> fixed-clock in
+>> 
+>> "SoC-input" should be replaced with "SoC input".
+> 
+> ack, thanks!
+
+Thank you once again for working on this document!
 
