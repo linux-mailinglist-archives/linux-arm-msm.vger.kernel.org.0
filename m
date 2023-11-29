@@ -1,62 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-2396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 082CD7FD33C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 10:51:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86C457FD343
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 10:53:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3951F1C20980
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 09:51:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 433DA28308A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 09:53:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7370114267;
-	Wed, 29 Nov 2023 09:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1D6418E13;
+	Wed, 29 Nov 2023 09:53:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jWytgJWZ"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="on5VUU3t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15E29D6C;
-	Wed, 29 Nov 2023 01:51:23 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-40838915cecso46789325e9.2;
-        Wed, 29 Nov 2023 01:51:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701251481; x=1701856281; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6s49NkgqWAb2LnIjZ7sm9fhr+G6maRXMhGbQfVxBFQk=;
-        b=jWytgJWZ6bwNN1KtDsbLW0NRKkBBB1E1FQmHSw24Q7G0l5tkRwvFSmPki8ZYZvea1c
-         R4vlK8SP/3p8+a/jb73CiQijvUVcfKZF+EI3SPAM4y6mXSw2fLtOnxxbLYDDtKIyglnT
-         kn0z2cF8JU38OnSDVdmywa/4pKbaYerU4oc/7eY5I3+0g/4q0z6fQ6eVBD8ecOO4F3RD
-         DFfW1pALvTd3htGkwVnnlVClCYBk/ymOOjGguNKeL30wZKD1Wso6OkghtzLRO2h8phwk
-         f4xTlURSn9SgD/nFNh+kGw+G68fiHsL6X4dVYkMIWxfnk4SZo+yvPTN14i0lfP1sGXkk
-         UO0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701251481; x=1701856281;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6s49NkgqWAb2LnIjZ7sm9fhr+G6maRXMhGbQfVxBFQk=;
-        b=qkyB92ez9o05jPWSIzuDgrP5w/g7s+05HcFIlm2bM9HJ+ztZNLEtlDALnPj7qwn+pk
-         8o/sKthhRN8sdek0Kb7otT408ltw6C2qnfPxmDtxL53GlUJGUpv88auelC5tkBhLLSIl
-         IqNz+mbKv6f1yIU+ueKTixw4c1h8n8EtKuUMxBeBb7q3qsRC7d7XzOaIn9pZeGp5c+o2
-         weHVLp89O5i8wFoRW4RlJMWhzQLGplbZVSiv1F/5VUglv0TsWlgLQwkZZyJC8Y+XObXk
-         DaSC9RPAKhF8dTQNoag2I5x0X5wCm/WwbB4ilWEUoR3T4Z5/yPeX4JZlpk/E+e1ttVoa
-         rzLg==
-X-Gm-Message-State: AOJu0YwKxCe+gckcP0qj3xtzZEi3Lh4nAWMBhyCiNaGy5LtN+a1RKA1O
-	bS3RSEIttRv6BSwJumGn0ns=
-X-Google-Smtp-Source: AGHT+IEDBtku78XiW3LUgqwyucltQA7Rb1AhKKKDLz5hBamwHeAYpgOr4gHWNEC5NHnvJZj9HkhHvA==
-X-Received: by 2002:a05:600c:3592:b0:40b:4523:693a with SMTP id p18-20020a05600c359200b0040b4523693amr7528147wmq.24.1701251481109;
-        Wed, 29 Nov 2023 01:51:21 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id f15-20020a05600c154f00b0040839fcb217sm1599796wmg.8.2023.11.29.01.51.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 01:51:20 -0800 (PST)
-Message-ID: <65670998.050a0220.212d3.3fb2@mx.google.com>
-X-Google-Original-Message-ID: <ZWcJluKs2hvNzNy6@Ansuel-xps.>
-Date: Wed, 29 Nov 2023 10:51:18 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91C16D6C;
+	Wed, 29 Nov 2023 01:53:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=QSUj5Hf27QAanj8NaPVwwZeZA3o2C5Q3Bi2HvrNaM/A=; b=on5VUU3tr5GEfHsjZFwUrgEY1l
+	MDU8UIqQXuKAeIK+YVs7aaZFssQwkJ1FkdyCLY8JmKoftwt0BRgh934gGoX9IXCq6JpkLFV+b7bM8
+	PVG7kB3MrJOH01NqxhGgwoEEhteJIM0egKh9PO1mfriK1uJo7KUH7qWvJ1vsvS9xRSLBRIWTrBJCm
+	Ys9nS0PIh3g1SpOM3Ud5blZGmBwiwkL3h883a4QpF3bB2yURKxINOWNzxSQfW/WbVrL5aW5fJKeAU
+	f5SQcivuyurfikG1g69lKQ9qowm1fPftvDZp0mUtGwVCwVGBgbdT0xPjUV6a+kbKB7UB25NSU/8WD
+	3Bm5Z0eQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:50220)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1r8HFa-00005y-30;
+	Wed, 29 Nov 2023 09:52:58 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1r8HFc-0003t4-Ni; Wed, 29 Nov 2023 09:53:00 +0000
+Date: Wed, 29 Nov 2023 09:53:00 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Christian Marangi <ansuelsmth@gmail.com>
 Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
@@ -66,11 +51,11 @@ Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH 10/14] net: phy: at803x: drop usless probe for
- qca8081 PHY
+Subject: Re: [net-next PATCH 13/14] net: phy: qcom: deatch qca83xx PHY driver
+ from at803x
+Message-ID: <ZWcJ/OgC1+cbFvhk@shell.armlinux.org.uk>
 References: <20231129021219.20914-1-ansuelsmth@gmail.com>
- <20231129021219.20914-11-ansuelsmth@gmail.com>
- <ZWcICtVc0dBDi3pA@shell.armlinux.org.uk>
+ <20231129021219.20914-14-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,27 +64,29 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZWcICtVc0dBDi3pA@shell.armlinux.org.uk>
+In-Reply-To: <20231129021219.20914-14-ansuelsmth@gmail.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Wed, Nov 29, 2023 at 09:44:42AM +0000, Russell King (Oracle) wrote:
-> On Wed, Nov 29, 2023 at 03:12:15AM +0100, Christian Marangi wrote:
-> > Drop useless probe for qca8081 PHY. The specific functions and the
-> > generic ones doesn't use any of allocated variables of the at803x_priv
-> > struct and doesn't support any of the properties used for at803x PHYs.
-> 
-> So now we have two different structures in ->priv _and_ ->priv can be
-> NULL all in the same driver.
-> 
-> This is getting rediculous.
->
+On Wed, Nov 29, 2023 at 03:12:18AM +0100, Christian Marangi wrote:
+> diff --git a/drivers/net/phy/qcom/Makefile b/drivers/net/phy/qcom/Makefile
+> index 6a68da8aaa7b..43e4d14df8ea 100644
+> --- a/drivers/net/phy/qcom/Makefile
+> +++ b/drivers/net/phy/qcom/Makefile
+> @@ -1,2 +1,3 @@
+>  # SPDX-License-Identifier: GPL-2.0
+> -obj-$(CONFIG_AT803X_PHY)	+= at803x.o
+> +obj-$(CONFIG_AT803X_PHY)	+= at803x.o common.o
+> +obj-$(CONFIG_QCA83XX_PHY)	+= qca83xx.o common.o
 
-Saddly this is the state of this PHY driver... Imagine me noticing that
-qca808x actually don't use any of the priv struct and doen't support any
-of the proprerty parsed in the OF function...
+These PHY drivers can be built as modules. You will end up with several
+modules - at803x.ko, qca83xx.ko and common.ko. You don't mark any
+functions in common.c as exported, no module license, no author, no
+description. common.ko is way too generic a name as well.
 
-Guess I have to move also this change where I split the driver.
-(again trying to keep change as little as possible)
+Please think about this more and test building these drivers as a
+module.
 
 -- 
-	Ansuel
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
