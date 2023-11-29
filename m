@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDFEF7FE2A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 23:05:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BFF657FE2AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 23:08:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A3B81C209F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 22:05:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE3C21C20BFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 22:08:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 947724CB23;
-	Wed, 29 Nov 2023 22:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EB3D4CB23;
+	Wed, 29 Nov 2023 22:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LPt0dBlK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZfDiA35e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13EF3BF
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:05:31 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-548f853fc9eso106797a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:05:31 -0800 (PST)
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2360B2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:08:06 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-54b545ec229so110934a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:08:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701295529; x=1701900329; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701295685; x=1701900485; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y8E9IL2rTxndKeeYdbk/Y9ijp2mjFLxuDcVfuc0PDkA=;
-        b=LPt0dBlKTevtKSW51sKJS4ObsJ3Y3vdw2pRZa/9sVpBSo3P3rn8ObBHf7e5FtLLTWF
-         mir8+WNBcd8cgCez3qdcLcbPGkX/y/pB8buIp1aYlPnTZgb0g0DqCNxVADZ7wEJFV1w0
-         nBUiFmMyzQveIF1F2QJil4FIfkUGCtKQLh40a5ZCTroedwZgFJx8VEV5GgJrZh8tHEWL
-         7cJlhQEuS8U6iGLNxzkhblA1/tFCrPZaGncokweAH3IRI0Ii7d3PhXZ9ghqoEUd90hGS
-         c8nuDR7fxehTopKgqQ1hE4OTk++HlghB6txkSlED7YExyUHDkdZelG0vh+S5A3JCT5J1
-         mHYg==
+        bh=czFcgcINYMlRcLlALz1qdLQDX7a+Nbpsu5OQjgSwil4=;
+        b=ZfDiA35ewaoGivIccHAQy5WO76uwErQqY7DGflZJSZmhxmSL/7l5oKyh+s4oLzfq0R
+         ouUkSo5zSpzzi8pgvtMrEfs/CL5tfr4nEW0/vcoNL9FNE03sE4LcassdQKS4mshH8kUi
+         XtL4mUqAt/Qdx2A6O1ywxk8Nqmi17TWMbQsmSwdZ1lWRMcfdZ2GvWhKT6mgYJRMaljN4
+         J2r9kgrvwS4emWtGToBws8WCTDWNOGUmUHGHd/KeB9xL+dtLe+upMOfMClW8xwpYKAmm
+         u2SWxWgga++EV1hfRnsrKg1tTWuWMJLEIqi7eIPpkFvv5vjNgMdRWxtdGnM256vHySEA
+         bFXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701295529; x=1701900329;
+        d=1e100.net; s=20230601; t=1701295685; x=1701900485;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y8E9IL2rTxndKeeYdbk/Y9ijp2mjFLxuDcVfuc0PDkA=;
-        b=PF2jHBYoarnqcrlybdSlBm6ibHCW7SgJTBYt82MDyhBH5tsOwGGdSOOyWjSJyJB2Mz
-         AE0Q8r/uUcrYKl11Ug31gmABxj9nEW0/IjnBhupsVe9nQdjsjc4ykcnPZFL/sPtD9N+Q
-         woWBASEUomkwT/mhXpjK+Eo69hGfwbJOs8LSBcD5XxI3BxnKXwJuBpDjyS/23LtIr9cF
-         GiLAuBswm8zDKGQP2/miPnSFHGI/Rnz0hk7OWAXnsfMy3O/TJAgXxuxWiBKLyRncN+zC
-         sLAN6vQaOmWFGudcbnST0L5pbDCjb5Z22QY+dtd1c6VF7yriaO2pLiaCgfQJRsFmXbdF
-         S23A==
-X-Gm-Message-State: AOJu0Yw/4UYR+wph4LnzyUSgt/ym2noFCuQRxnkkLxtW+a0FFyfmyrqs
-	/tMn1l1V108ZFXRNRnEXHivfoA==
-X-Google-Smtp-Source: AGHT+IHp1xHIT3Z6mxSnIcv5khsVGARx/xfav8jOsoXU0wm8E9P2e7iKmJBS6C+khsrmnCdwgWaxzg==
-X-Received: by 2002:a17:906:51dd:b0:a18:7e19:5347 with SMTP id v29-20020a17090651dd00b00a187e195347mr11591ejk.47.1701295529518;
-        Wed, 29 Nov 2023 14:05:29 -0800 (PST)
+        bh=czFcgcINYMlRcLlALz1qdLQDX7a+Nbpsu5OQjgSwil4=;
+        b=AK7s0YhbX+lZk4hR6xZixQXbjqSgxrVy2U/QA+Jc2ZP9ipLpw69INyFxGh/2UmyASW
+         kByjLtTiVGLBAixyU5INX4UeCD1gepUhwXHejdqoBg3CkQEuD21x+mpm1ipU3LHg/5Mm
+         UUxUrZBiToRVNwphmv1nN5JPMWWq6oCFMZd1pHM0OPTeuq8HEDrPxHZdPEP9+Y6vVAX0
+         BADZzrskFmCcyjDUuYYrJKvuv4zXbJYpz7HZBJiwSgU5CIBpxD6QFLnF5LNsXMS3RsMG
+         n2rWSoB/+8kZebydgiyhBPl6zJX/lWrk/LoSt9M6GARp7gLkTlmm7ssRvG1enZQH/D6k
+         g21g==
+X-Gm-Message-State: AOJu0YxVTBJCA5IRbG2bLn1a1DOsrRWHGC2T9ZFdFKg4fYpL7IkHXwlj
+	r9rgHka/bsG5+c1YWTW99a0bsQ==
+X-Google-Smtp-Source: AGHT+IF0wKBTBOQ2XRt7CEYjrQAXa3L33opCzbaaHe222xQdidkDVUFgbmVhxw6buTatWI8DLF3LvA==
+X-Received: by 2002:aa7:d388:0:b0:54a:ee59:fdb9 with SMTP id x8-20020aa7d388000000b0054aee59fdb9mr13003367edq.41.1701295685052;
+        Wed, 29 Nov 2023 14:08:05 -0800 (PST)
 Received: from [192.168.209.83] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id a20-20020a1709063e9400b00a0369e232bfsm8274504ejj.75.2023.11.29.14.05.27
+        by smtp.gmail.com with ESMTPSA id w4-20020a056402268400b0054b2daa6654sm5165986edd.56.2023.11.29.14.08.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Nov 2023 14:05:28 -0800 (PST)
-Message-ID: <27380394-093e-4b8e-94f8-a1eefc72a020@linaro.org>
-Date: Wed, 29 Nov 2023 23:05:26 +0100
+        Wed, 29 Nov 2023 14:08:04 -0800 (PST)
+Message-ID: <74573830-627a-470b-ba31-1c2ce7e38b49@linaro.org>
+Date: Wed, 29 Nov 2023 23:08:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/15] clk: qcom: Use qcom_branch_set_clk_en()
+Subject: Re: [PATCH v2 03/15] clk: qcom: gcc-sm6375: Unregister critical
+ clocks
 Content-Language: en-US
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
@@ -74,8 +75,8 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20230717-topic-branch_aon_cleanup-v2-0-2a583460ef26@linaro.org>
- <20230717-topic-branch_aon_cleanup-v2-2-2a583460ef26@linaro.org>
- <d65653d1-e7f6-45c6-ba2c-0ef973866ffb@linaro.org>
+ <20230717-topic-branch_aon_cleanup-v2-3-2a583460ef26@linaro.org>
+ <9deb31e4-2e75-4db2-8a73-7c8b7f9ac03a@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -112,37 +113,23 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <d65653d1-e7f6-45c6-ba2c-0ef973866ffb@linaro.org>
+In-Reply-To: <9deb31e4-2e75-4db2-8a73-7c8b7f9ac03a@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 29.11.2023 21:59, Bryan O'Donoghue wrote:
+On 29.11.2023 22:08, Bryan O'Donoghue wrote:
 > On 29/11/2023 18:59, Konrad Dybcio wrote:
->> Instead of magically poking at the bit0 of branch clocks' CBCR, use
->> the newly introduced helper.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
+>> + qcom_branch_set_clk_en(regmap, 0x2b06c); /* GCC_SYS_NOC_CPUSS_AHB_CLK */
 > 
->> -    /*
->> -     * Keep clocks always enabled:
->> -     *    cam_cc_gdsc_clk
->> -     *    cam_cc_sleep_clk
->> -     */
->> -    regmap_update_bits(regmap, 0x1419c, BIT(0), BIT(0));
->> -    regmap_update_bits(regmap, 0x142cc, BIT(0), BIT(0));
->> +    qcom_branch_set_clk_en(regmap, 0x1419c); /* CAM_CC_GDSC_CLK */
->> +    qcom_branch_set_clk_en(regmap, 0x142cc); /* CAM_CC_SLEEP_CLK */
-> 
-> This all looks functionally correct to me, wondering what your motivation for changing the comment is though.
-Perhaps I could have included this in the commit message, but:
+> Shouldn't this be 0x79004.
+Oh hmm you're right!
 
-- it makes sure ARRAY_SIZE(clocks_in_comment) == ARRAY_SIZE(clocks)
-- gets rid of different capitalization and wording between files
-  that triggers my OCD
-- also makes it easier to see which register corresponds to which
-  clock, which is especially helpful if you wanna validate the
-  guy before you
+This is a weird outlier.. all the other ones seem to have a 1-1
+mapping between halt and enable reg
+
+Interestingly enough, this doesn't seem to have kaboomd, but I'll
+fix it (or maybe if there's no other mistakes in this series Bjorn
+could prettyplease fix when applying?)
 
 Konrad
 
