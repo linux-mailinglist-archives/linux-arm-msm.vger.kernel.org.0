@@ -1,116 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-2354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AEF07FCD27
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 04:04:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBAFD7FCD7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 04:29:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B7E41C21015
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 03:04:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4CE0A1F207C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 03:29:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B49F54C8B;
-	Wed, 29 Nov 2023 03:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 160194414;
+	Wed, 29 Nov 2023 03:29:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="hs8pfRPG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TDCarUw2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C2611990
-	for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 19:04:46 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-6cdd214bce1so156149b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Nov 2023 19:04:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1701227086; x=1701831886; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tJGxAu392s/bORKdAjJBrcSJ8FzTjUlfAs3pgZbxfG8=;
-        b=hs8pfRPGFma1EueAR2BfbQu6ZGHmezoKnRYlJB+1QWez5uW4HNwTgrlzZEKSaM3hOV
-         7PAiCLSZu7G9sli1ScVvO6EHxvxuUo+tbOCjgCJGGWgiyDjanQ6N1IUkzxMK9uOumoo8
-         Gq6In8LxsytvM8HW3Q+dNy2uyenZB/lahzkP0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701227086; x=1701831886;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tJGxAu392s/bORKdAjJBrcSJ8FzTjUlfAs3pgZbxfG8=;
-        b=s7c1SHaFu//Nfi4XrGrZqBF0dEWnLlNE9JB2qgUlFIgs6PVcNpl41EdKKzsqla1DdY
-         nl5wUo5zwNkvQb2pDCdXTYZ3lnjF/FZOguOlhQvbwre7baUam+nEN1Gw3KySQRuRMviX
-         AWPeByISnoZhA42Yg5HsYNyJDIvw+5b018CnSetFdOaWp3F8JJ5cmndEWvNhdKMQRmcD
-         Z44zkqnyPSOWk0o0bxHrEXVALndEBdAiJeYA4UiOAn5gjHU+9LQx4FMg2OnvHSPrpuNP
-         M9fLm1PEj2buzlPwZyOL0f67uvs2b30EyFbTTzwgswItlejt44i495cpUvwJyQVsgull
-         DRhg==
-X-Gm-Message-State: AOJu0YzG+zzBsNncFsLj8DlS6AcMdljzQPcRoajD3Z7xDqArYpW8tk/Q
-	u0Jq0/sckeSAUK2dGX/Z76J2arszfsJWJBvMSE0=
-X-Google-Smtp-Source: AGHT+IGygOdS0FDYG0MeUfrKyvdo448ZeERsKbGVJU3tooOdVfsvGLB+9h5K3ZINX8K1tfa6iwgshw==
-X-Received: by 2002:a05:6a00:10d2:b0:6cb:4bd5:a4c5 with SMTP id d18-20020a056a0010d200b006cb4bd5a4c5mr20961101pfu.9.1701227085930;
-        Tue, 28 Nov 2023 19:04:45 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:11a:201:d7b2:b65d:af69:8a53])
-        by smtp.gmail.com with ESMTPSA id u12-20020a056a00098c00b006cd88728572sm4847426pfg.211.2023.11.28.19.04.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Nov 2023 19:04:45 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	Rob Herring <robh+dt@kernel.org>,
-	devicetree@vger.kernel.org,
-	Alexandre TORGUE <alexandre.torgue@foss.st.com>,
-	Yanteng Si <siyanteng@loongson.cn>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Douglas Anderson <dianders@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2] dt-bindings: arm: qcom: Fix html link
-Date: Tue, 28 Nov 2023 19:04:41 -0800
-Message-ID: <20231129030443.2753833-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.43.0.rc1.413.gea7ed67945-goog
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C49491AD;
+	Tue, 28 Nov 2023 19:29:19 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AT0dJBl004234;
+	Wed, 29 Nov 2023 03:29:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+boRo36HQaqSkzRXdCK64bpQqb4ilPayZOqyrR6e6H4=;
+ b=TDCarUw2BcjyceRxg2VVTav/9LVa4DtuuffDOrT7QRqwlMni/ZgPyXDMyyMWVsUaEeXB
+ VqLVkonNT7Y7A1jUqXjJRddoRPAOkvodFz58/Gb/ml+EbYARnGb1R4YWgttxpdc8xXCV
+ ff8ImCJKanVcwywgVi3qv0C1xfm1orEcutY0ZFLq49l45K08xC3hxl1VD4XYa2fKbsPB
+ 1PFpKgKW4DOCh6ratZkTk35450n1DCrz0KLhCEOdH07HV5HltxgGqNr+QYfXbVvBt2cl
+ fwwFSctu3ZNitrJSoz8uZlHPEirVIQW1Ya9gRkBe8sKbgtoVsceTh6tq+q7XeQ7RjD0g 1g== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3unhrpsqe2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Nov 2023 03:29:13 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AT3TCZE028581
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 29 Nov 2023 03:29:12 GMT
+Received: from [10.253.36.238] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 28 Nov
+ 2023 19:29:09 -0800
+Message-ID: <5eb0a521-0b72-4d15-9a65-429c4c123833@quicinc.com>
+Date: Wed, 29 Nov 2023 11:29:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/4] bus: mhi: host: Drop chan lock before queuing
+ buffers
+Content-Language: en-US
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>
+References: <1699939661-7385-1-git-send-email-quic_qianyu@quicinc.com>
+ <1699939661-7385-3-git-send-email-quic_qianyu@quicinc.com>
+ <20231124100403.GA4536@thinkpad>
+ <639d6008-bdfa-4b6e-b622-e916003ec908@quicinc.com>
+ <20231128133252.GX3088@thinkpad>
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <20231128133252.GX3088@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: d7CXt-DTp8ER7QHhB7t0eHlK45p4PFy_
+X-Proofpoint-ORIG-GUID: d7CXt-DTp8ER7QHhB7t0eHlK45p4PFy_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-28_27,2023-11-27_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 clxscore=1011 bulkscore=0 suspectscore=0 impostorscore=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 mlxlogscore=587 spamscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311290024
 
-This link got broken by commit e790a4ce5290 ("arm: docs: Move Arm
-documentation to Documentation/arch/") when the doc moved from arm/ to
-arch/arm/. Fix the link so that it can continue to be followed.
 
-Fixes: e790a4ce5290 ("arm: docs: Move Arm documentation to Documentation/arch/")
-Cc: Alexandre TORGUE <alexandre.torgue@foss.st.com>
-Cc: Yanteng Si <siyanteng@loongson.cn>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
-
-Please land this through qcom tree.
-
-Changes from v1 (https://lore.kernel.org/r/20231128002052.2520402-1-swboyd@chromium.org):
- * Pick up tags
-
- Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 7f80f48a0954..8a6466d1fc4e 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -138,7 +138,7 @@ description: |
-   There are many devices in the list below that run the standard ChromeOS
-   bootloader setup and use the open source depthcharge bootloader to boot the
-   OS. These devices do not use the scheme described above. For details, see:
--  https://docs.kernel.org/arm/google/chromebook-boot-flow.html
-+  https://docs.kernel.org/arch/arm/google/chromebook-boot-flow.html
- 
- properties:
-   $nodename:
-
-base-commit: b85ea95d086471afb4ad062012a4d73cd328fa86
--- 
-https://chromeos.dev
-
+On 11/28/2023 9:32 PM, Manivannan Sadhasivam wrote:
+> On Mon, Nov 27, 2023 at 03:13:55PM +0800, Qiang Yu wrote:
+>> On 11/24/2023 6:04 PM, Manivannan Sadhasivam wrote:
+>>> On Tue, Nov 14, 2023 at 01:27:39PM +0800, Qiang Yu wrote:
+>>>> Ensure read and write locks for the channel are not taken in succession by
+>>>> dropping the read lock from parse_xfer_event() such that a callback given
+>>>> to client can potentially queue buffers and acquire the write lock in that
+>>>> process. Any queueing of buffers should be done without channel read lock
+>>>> acquired as it can result in multiple locks and a soft lockup.
+>>>>
+>>> Is this patch trying to fix an existing issue in client drivers or a potential
+>>> issue in the future drivers?
+>>>
+>>> Even if you take care of disabled channels, "mhi_event->lock" acquired during
+>>> mhi_mark_stale_events() can cause deadlock, since event lock is already held by
+>>> mhi_ev_task().
+>>>
+>>> I'd prefer not to open the window unless this patch is fixing a real issue.
+>>>
+>>> - Mani
+>> In [PATCH v4 1/4] bus: mhi: host: Add spinlock to protect WP access when
+>> queueing
+>> TREs,  we add
+>> write_lock_bh(&mhi_chan->lock)/write_unlock_bh(&mhi_chan->lock)
+>> in mhi_gen_tre, which may be invoked as part of mhi_queue in client xfer
+>> callback,
+>> so we have to use read_unlock_bh(&mhi_chan->lock) here to avoid acquiring
+>> mhi_chan->lock
+>> twice.
+>>
+>> Sorry for confusing you. Do you think we need to sqush this two patch into
+>> one?
+> Well, if patch 1 is introducing a potential deadlock, then we should fix patch
+> 1 itself and not introduce a follow up patch.
+>
+> But there is one more issue that I pointed out in my previous reply.
+Sorry, I can not understand why "mhi_event->lock" acquired during
+mhi_mark_stale_events() can cause deadlock. In mhi_ev_task(), we will
+not invoke mhi_mark_stale_events(). Can you provide some interpretation?
+>
+> Also, I'm planning to cleanup the locking mess within MHI in the coming days.
+> Perhaps we can revisit this series at that point of time. Will that be OK for
+> you?
+Sure, that will be great.
+>
+> - Mani
+>
+>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>> ---
+>>>>    drivers/bus/mhi/host/main.c | 4 ++++
+>>>>    1 file changed, 4 insertions(+)
+>>>>
+>>>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+>>>> index 6c6d253..c4215b0 100644
+>>>> --- a/drivers/bus/mhi/host/main.c
+>>>> +++ b/drivers/bus/mhi/host/main.c
+>>>> @@ -642,6 +642,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>>>>    			mhi_del_ring_element(mhi_cntrl, tre_ring);
+>>>>    			local_rp = tre_ring->rp;
+>>>> +			read_unlock_bh(&mhi_chan->lock);
+>>>> +
+>>>>    			/* notify client */
+>>>>    			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+>>>> @@ -667,6 +669,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>>>>    					kfree(buf_info->cb_buf);
+>>>>    				}
+>>>>    			}
+>>>> +
+>>>> +			read_lock_bh(&mhi_chan->lock);
+>>>>    		}
+>>>>    		break;
+>>>>    	} /* CC_EOT */
+>>>> -- 
+>>>> 2.7.4
+>>>>
+>>>>
 
