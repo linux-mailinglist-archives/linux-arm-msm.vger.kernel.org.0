@@ -1,63 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-2420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9106E7FD4DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:04:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED5DC7FD4EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 12:07:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B81291C20F6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 11:04:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A63132828CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 11:07:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55F951BDE2;
-	Wed, 29 Nov 2023 11:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43BA51B293;
+	Wed, 29 Nov 2023 11:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PqNEvVpW"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="IGBmZD/U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75C2E95;
-	Wed, 29 Nov 2023 03:04:09 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40b4f6006d5so11968395e9.1;
-        Wed, 29 Nov 2023 03:04:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701255848; x=1701860648; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rjk+/1D9AF+cQ5xDbcmA1MBP/vuhlv65HDhCtKVSoZk=;
-        b=PqNEvVpW911WnIT3JULjB3wgDwpK5ePh+wNSB/GmLnEWH5osYydhpBvsbQ7/Xz5ocH
-         dc1pRYehdHP34IIxLKWnIdSZQvpF5/k9/9LizgWR/vCDrynO0khPxNsOvtB5FavVVXxn
-         QCaav1jar7DjpwuVnqW4zHZJ8QqG6xX3KUvI44aWStupV1hpXK7hXkf78Dnk5hj6qW+u
-         MEX2nw/5mB9MYjLyyeDNaUwzJbdBg1Wa0QkEEEWcy4twANRwlDTCSsr0ugk7MWyIz9dS
-         /96OyLGVbvRQJjYMNhb8v2EaLvkKYAKz914EBjUYoTRdJzmLjQc+YqHpJ81clQWLwUHh
-         4N3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701255848; x=1701860648;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Rjk+/1D9AF+cQ5xDbcmA1MBP/vuhlv65HDhCtKVSoZk=;
-        b=CZdtv/P88MJHWt3eFVf4ghsBXNWjcrtDB3gKuTxGh1bWsfb17P0r8/unxqooJGPoJY
-         TxPksoLVzXrVexAqAkAQUerf9odN1TjCHSK9DPv7TwypeWtyhmKDRKq26IQ8ehvdvcp8
-         vUiTlUL/IAzoizPfeNussjbdWvCOqyWR8jsJJZvSZA6uMsSjRqf8FOr6ViWgLJ5JFfsq
-         +joKQ2ypCoTkhOQalpDvBe2sGPDe3GidY1eArPseQ0BIfcTmVBSoXA+uYJRbFuFJkvsf
-         BrxeqB0QuRfMC7Z2W4UGYP9v3vXt6hYAJb5gcgO11bMUI8uh3UQZu/tKaqvPIV60vgnz
-         e2Iw==
-X-Gm-Message-State: AOJu0YyNS4pJo5Y2TfDg4Nf78oaqnuhx92Wdl5GAfosgR58LQy6z+IxB
-	fsA2gnWtehnFHDUD/gRqtXg=
-X-Google-Smtp-Source: AGHT+IEBAvm1wqVWEUe9pB+o21b32WHVSL4QBMcx54XwI8du9Wk6l+5lAsEg+hPmovN1+6jfSLOv/g==
-X-Received: by 2002:a05:600c:5125:b0:40b:3dae:1ff6 with SMTP id o37-20020a05600c512500b0040b3dae1ff6mr8791416wms.14.1701255847651;
-        Wed, 29 Nov 2023 03:04:07 -0800 (PST)
-Received: from Ansuel-xps. (93-34-89-13.ip49.fastwebnet.it. [93.34.89.13])
-        by smtp.gmail.com with ESMTPSA id q4-20020adfea04000000b003296b488961sm17464741wrm.31.2023.11.29.03.04.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Nov 2023 03:04:07 -0800 (PST)
-Message-ID: <65671aa7.df0a0220.2a628.a3b9@mx.google.com>
-X-Google-Original-Message-ID: <ZWcapJKrMLLmIVZS@Ansuel-xps.>
-Date: Wed, 29 Nov 2023 12:04:04 +0100
-From: Christian Marangi <ansuelsmth@gmail.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B13C172E;
+	Wed, 29 Nov 2023 03:07:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=cKOfMVE2W4N3jeYF+QDJoKs2t5s3uglE1xOHGeLFmiI=; b=IGBmZD/UjaDEPNJp0tJi9yf8ll
+	dnIBkkid9jAcAYvAyqEVoWEGXsErHT85ymeq3Bw38vedSI6BYSpVCcTvRouRYXFXx6tPZm+anwBsJ
+	4F+Bhkbjl42VtSW/3G4VZ3DKRW5BaW1m4LOt6KIOFMRCcQ7t1LxJak3CaEJ4Z0xGSYvodOcXBv6+/
+	C3Zo6XtJoZ/9yCBTKxnTYurmgRo+t+ADyZ701kSUbfWXAk75J9Kt9G8FmttWt/9Hsdvb6+XIKdXpz
+	fdqaZby3XcdY/3+KU9duayG+wHUTX6BcogMHeuM/HwiKzO/VC8m0fXR9JAr4Po4cdilY93qzxq/HH
+	aXfh3VYg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:39236)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1r8IPZ-0000Cf-34;
+	Wed, 29 Nov 2023 11:07:21 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1r8IPb-0003vl-JR; Wed, 29 Nov 2023 11:07:23 +0000
+Date: Wed, 29 Nov 2023 11:07:23 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Christian Marangi <ansuelsmth@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
@@ -68,11 +54,9 @@ Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
 	linux-arm-msm@vger.kernel.org
 Subject: Re: [net-next PATCH 08/14] net: phy: at803x: drop specific PHY id
  check from cable test functions
+Message-ID: <ZWcbazz0cLvXk7CN@shell.armlinux.org.uk>
 References: <20231129021219.20914-1-ansuelsmth@gmail.com>
  <20231129021219.20914-9-ansuelsmth@gmail.com>
- <ZWcGn7KVSpsN/1Ee@shell.armlinux.org.uk>
- <656708a8.df0a0220.28d76.9307@mx.google.com>
- <ZWcZGO1HWxJnzPrk@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,61 +65,90 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZWcZGO1HWxJnzPrk@shell.armlinux.org.uk>
+In-Reply-To: <20231129021219.20914-9-ansuelsmth@gmail.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Wed, Nov 29, 2023 at 10:57:28AM +0000, Russell King (Oracle) wrote:
-> On Wed, Nov 29, 2023 at 10:47:18AM +0100, Christian Marangi wrote:
-> > On Wed, Nov 29, 2023 at 09:38:39AM +0000, Russell King (Oracle) wrote:
-> > > On Wed, Nov 29, 2023 at 03:12:13AM +0100, Christian Marangi wrote:
-> > > > @@ -1310,10 +1302,6 @@ static int at803x_cable_test_start(struct phy_device *phydev)
-> > > >  	 */
-> > > >  	phy_write(phydev, MII_BMCR, BMCR_ANENABLE);
-> > > >  	phy_write(phydev, MII_ADVERTISE, ADVERTISE_CSMA);
-> > > > -	if (phydev->phy_id != ATH9331_PHY_ID &&
-> > > > -	    phydev->phy_id != ATH8032_PHY_ID &&
-> > > > -	    phydev->phy_id != QCA9561_PHY_ID)
-> > > > -		phy_write(phydev, MII_CTRL1000, 0);
-> > > ...
-> > > > +static int at8031_cable_test_start(struct phy_device *phydev)
-> > > > +{
-> > > > +	at803x_cable_test_start(phydev);
-> > > > +	phy_write(phydev, MII_CTRL1000, 0);
-> > > 
-> > > I don't think this is a safe change - same reasons as given on a
-> > > previous patch. You can't randomly reorder register writes like this.
-> > >
-> > 
-> > Actually for this the order is keeped. Generic function is called and
-> > for at8031 MII_CTRL1000 is called on top of that.
-> 
-> Okay, but I don't like it. I would prefer this to be:
-> 
-> static void at803x_cable_test_autoneg(struct phy_device *phydev)
-> {
-> 	phy_write(phydev, MII_BMCR, BMCR_ANENABLE);
-> 	phy_write(phydev, MII_ADVERTISE, ADVERTISE_CSMA);
-> }
-> 
-> static int at803x_cable_test_start(struct phy_device *phydev)
-> {
-> 	at803x_cable_test_autoneg(phydev);
-> 	return 0;
-> }
-> 
-> static int at8031_cable_test_start(struct phy_device *phydev)
-> {
-> 	at803x_cable_test_autoneg(phydev);
-> 	phy_write(phydev, MII_CTRL1000, 0);
-> 	return 0;
-> }
-> 
-> which makes it more explicit what is going on here. Also a comment
-> above the function stating that it's for AR8031 _and_ AR8035 would
-> be useful.
->
+Andrew,
 
-Much cleaner thanks for the hint!
+On Wed, Nov 29, 2023 at 03:12:13AM +0100, Christian Marangi wrote:
+>  static int at8035_parse_dt(struct phy_device *phydev)
+>  {
+>  	struct device_node *node = phydev->mdio.dev.of_node;
+> @@ -2205,8 +2213,8 @@ static struct phy_driver at803x_driver[] = {
+>  	.handle_interrupt	= at803x_handle_interrupt,
+>  	.get_tunable		= at803x_get_tunable,
+>  	.set_tunable		= at803x_set_tunable,
+> -	.cable_test_start	= at803x_cable_test_start,
+> -	.cable_test_get_status	= at803x_cable_test_get_status,
+> +	.cable_test_start	= at8031_cable_test_start,
+> +	.cable_test_get_status	= at8031_cable_test_get_status,
+>  }, {
+>  	/* Qualcomm Atheros AR8030 */
+>  	.phy_id			= ATH8030_PHY_ID,
+> @@ -2243,8 +2251,8 @@ static struct phy_driver at803x_driver[] = {
+>  	.handle_interrupt	= at803x_handle_interrupt,
+>  	.get_tunable		= at803x_get_tunable,
+>  	.set_tunable		= at803x_set_tunable,
+> -	.cable_test_start	= at803x_cable_test_start,
+> -	.cable_test_get_status	= at803x_cable_test_get_status,
+> +	.cable_test_start	= at8031_cable_test_start,
+> +	.cable_test_get_status	= at8031_cable_test_get_status,
+>  }, {
+>  	/* Qualcomm Atheros AR8032 */
+>  	PHY_ID_MATCH_EXACT(ATH8032_PHY_ID),
+> @@ -2259,7 +2267,7 @@ static struct phy_driver at803x_driver[] = {
+>  	.config_intr		= at803x_config_intr,
+>  	.handle_interrupt	= at803x_handle_interrupt,
+>  	.cable_test_start	= at803x_cable_test_start,
+> -	.cable_test_get_status	= at803x_cable_test_get_status,
+> +	.cable_test_get_status	= at8032_cable_test_get_status,
+>  }, {
+>  	/* ATHEROS AR9331 */
+>  	PHY_ID_MATCH_EXACT(ATH9331_PHY_ID),
+> @@ -2272,7 +2280,7 @@ static struct phy_driver at803x_driver[] = {
+>  	.config_intr		= at803x_config_intr,
+>  	.handle_interrupt	= at803x_handle_interrupt,
+>  	.cable_test_start	= at803x_cable_test_start,
+> -	.cable_test_get_status	= at803x_cable_test_get_status,
+> +	.cable_test_get_status	= at8032_cable_test_get_status,
+>  	.read_status		= at803x_read_status,
+>  	.soft_reset		= genphy_soft_reset,
+>  	.config_aneg		= at803x_config_aneg,
+> @@ -2288,7 +2296,7 @@ static struct phy_driver at803x_driver[] = {
+>  	.config_intr		= at803x_config_intr,
+>  	.handle_interrupt	= at803x_handle_interrupt,
+>  	.cable_test_start	= at803x_cable_test_start,
+> -	.cable_test_get_status	= at803x_cable_test_get_status,
+> +	.cable_test_get_status	= at8032_cable_test_get_status,
+>  	.read_status		= at803x_read_status,
+>  	.soft_reset		= genphy_soft_reset,
+>  	.config_aneg		= at803x_config_aneg,
+
+We could _really_ do with moving away from an array of PHY driver
+structures in phylib because patches like this are hard to properly
+review. The problem is there is little context to say _which_ driver
+instance is being changed. The only thing that saves us above are
+the comments on the next instance - but those may not be present
+if we're modifying something in the middle of each definition.
+
+The same issue happens with the mv88e6xxx driver, with that big
+array in chip.c, where we have loads of function pointers. It's
+far from ideal.
+
+Maybe we should consider moving to a model where each driver is
+defined as a separate named structure, and then we have an array
+of pointers to each driver, which is then passed into a new PHY
+driver registration function? This way, at least the @@ line will
+identify to a reviewer which instance is being modified.
+
+This won't help the problem of a patch being mis-applied due to
+there not being sufficient differences in context, but if one
+subsequently diffs after applying such a change and compares the
+patch to the original, there will be a difference in the @@ line.
+(However, arguably that level of checking is unlikely to happen.)
+
 
 -- 
-	Ansuel
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
