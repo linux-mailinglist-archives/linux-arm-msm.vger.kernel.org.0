@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D71467FEB53
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 10:04:03 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1618F7FEB62
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 10:06:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C945B20DDF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 09:04:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C3A05281F68
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 09:06:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 552D8168BD;
-	Thu, 30 Nov 2023 09:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 229E12E403;
+	Thu, 30 Nov 2023 09:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CUAR3B4Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GC3ld3P3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76121B9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 01:03:55 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-a011e9bf336so90122266b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 01:03:55 -0800 (PST)
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37DDC10F5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 01:06:47 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-a02ba1f500fso95532766b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 01:06:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701335034; x=1701939834; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701335206; x=1701940006; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8sa+wp4OC86yAkfIHtqVkVHkrtyRl+ogcDtfESJ8zkA=;
-        b=CUAR3B4ZhGrT0mGFSQh3vrZZU7KtqFDlvaypKI5vU8/0jJj+2lqr8fo8pFIlyJDLSm
-         srs+A+lWPcfAYeyt/XRPyRrMqpcvXD1grD9tYbZWT6/P5iIT7uhY6b856dPqDfd0jYVA
-         sMLF1fhtGQ/RJR/foKQ9BGxLcohZ+DncETFWHyV8bk1jsC/lswlh5G1eiNighsCNIOrV
-         Y6JgKRSOSgrwMNrCbJiNKFBdcd9a86wGINT1J8CB+w+hmYcokoc8bsuMv8nEt+kfL72I
-         2ULx8VQtLq5RHN5EIEQpCb0WZZyk2cIJzlwukMyvPx49jmIH/xClgXfAsh/B/qzazDLU
-         AcXg==
+        bh=waqxObd7MFiv2k/g5hFzOrXYuXhq1FgbasV0xVDRK9U=;
+        b=GC3ld3P3ezSqEw93dokYVMHq3w65gTtSx8wKN/UU3dpmjUk4dWDlz0473MiSi5Y38Q
+         iTbpwNP9zTdEkzhddNWGPBy3/U2gAfr8ot7/3P2oBNqiW8l+VtRokTZ2f67A9tzB9aGF
+         YMQBB1JWdSMEQWAJoAr/YQOlsjfhcgza8W/e5343nXBywVH2J3VoS0zQt5k7TaT0tpiC
+         fo00Ob47TjXbgvWfc5jq4R/qKnskS0qxqxjnvwzuKki1GkoVc2VYW4t5JcO8A+H9yRav
+         CQX6Z7XZGxY6ers0LvR8CiGX+1pzMYLCwxeDYakFw4HcSW5wcu1OOQWNKOiHVTOUk8O3
+         pWFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701335034; x=1701939834;
+        d=1e100.net; s=20230601; t=1701335206; x=1701940006;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8sa+wp4OC86yAkfIHtqVkVHkrtyRl+ogcDtfESJ8zkA=;
-        b=hXR0CPkEayZulpNNhpTUg/NeZ64Ns/qj7v6jxH2kJHRNwPNEaqS30CHCfkPeCh6XCl
-         xvx8AjWefRKCCYdnzbUZTers62vf1IRcupHnOGdPBneiKGNwiRRQfBcq+6zUT4ou1KEz
-         3ytXyhllEE0F3JF3pH8OY++uCLwNa6+jVYf0r5oGBiB6yczH6LnMQ696Uqfeof65W85x
-         rz8Um7eGsv+yu55JlSnNCCDXPMAUJ4J9J/n8D2WhFq9DMP6ELhJYgLzgIsxVoDtTN8R2
-         Lp1oFmLznmWi/vt0Yoyje8n2k40Xml6x/crgBxx50/IZMO4VC+1opTiFn22Kw9oaedYf
-         tQAw==
-X-Gm-Message-State: AOJu0YzK7HqXOPDn+tElxNR16e4fnPO4TlQq1JGGrwZEsKOwpfE9wRFI
-	0NNtOA/n//fqOOWhmF9PsKsagw==
-X-Google-Smtp-Source: AGHT+IHyXeFtXqIdzk/B4SHcuV9ciO/XYi0TQIgmdz9CqDEDNnnKKH0swmU5pZrLeUlXBDSfmmGh/g==
-X-Received: by 2002:a17:906:c785:b0:a19:12b6:74a1 with SMTP id cw5-20020a170906c78500b00a1912b674a1mr70032ejb.24.1701335033874;
-        Thu, 30 Nov 2023 01:03:53 -0800 (PST)
+        bh=waqxObd7MFiv2k/g5hFzOrXYuXhq1FgbasV0xVDRK9U=;
+        b=dFZl9hzb4T8tWfPGOEc4+4ORwHNDYhhsEL/3zieHANOTdcssYAGpkGakCZqYxEu2rR
+         Wvn8i4+YlLvF8V1r1HuvkMx67FGlRUITOGmQLpPF1GtY3ucRFemfZOEk2JEfyQ+mDoWE
+         7xbneFoPUCNA8Dndb6V3DBFVWbG0qzyB0ym0hupWcT1F38cp4R9P/I3GxC29VhGxICgo
+         LC5OvDZrthEV1vnk1YaN3+XRpikHNK+fuSWnwgGeii6S+nG/usf1O1PwDWXZvMzd94OQ
+         OlRXuCh63TnVFLdH0t/63cziVhIEvKRsPrGqSmvSthkvNySAFVqI1ONtCePpgymagN7k
+         L1DQ==
+X-Gm-Message-State: AOJu0Yzgcyfgqq3ZO7tFGK1q+GHV/+m8cI6zflIlieAL0K8q174/eov/
+	noa4z+FgLIRSFucCeO4jhFpqsg==
+X-Google-Smtp-Source: AGHT+IHuGb5D6baMNkYCthpAUWo8DXkHxY88h8bqHgstIzaqCwX0i9I6xv+WhGfYPCjF9J9Gg1qu+A==
+X-Received: by 2002:a17:906:2c08:b0:9fc:3a70:4430 with SMTP id e8-20020a1709062c0800b009fc3a704430mr16238597ejh.70.1701335205759;
+        Thu, 30 Nov 2023 01:06:45 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id le12-20020a170907170c00b009dd90698893sm421877ejc.38.2023.11.30.01.03.52
+        by smtp.gmail.com with ESMTPSA id d15-20020a170906344f00b009eff65e6942sm442122ejb.197.2023.11.30.01.06.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Nov 2023 01:03:53 -0800 (PST)
-Message-ID: <bce9dffa-25e1-4129-a720-53aff158cf26@linaro.org>
-Date: Thu, 30 Nov 2023 10:03:52 +0100
+        Thu, 30 Nov 2023 01:06:45 -0800 (PST)
+Message-ID: <876a3c09-3ff5-442c-ad72-81a371f7d19e@linaro.org>
+Date: Thu, 30 Nov 2023 10:06:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,20 +62,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: Fix coresight warnings in
- in-ports and out-ports
+Subject: Re: [PATCH 1/6] dt-bindings: arm-smmu: Document SM8[45]50 GPU SMMU
 Content-Language: en-US
-To: Mao Jinlong <quic_jinlmao@quicinc.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>
-References: <20231129143815.7892-1-quic_jinlmao@quicinc.com>
- <20231129143815.7892-4-quic_jinlmao@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20231127-topic-a7xx_dt-v1-0-a228b8122ebf@linaro.org>
+ <20231127-topic-a7xx_dt-v1-1-a228b8122ebf@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -121,22 +123,15 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231129143815.7892-4-quic_jinlmao@quicinc.com>
+In-Reply-To: <20231127-topic-a7xx_dt-v1-1-a228b8122ebf@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/11/2023 15:38, Mao Jinlong wrote:
-> When a node is only one in port or one out port, address-cells and
-> size-cells are not required in in-ports and out-ports. And the number
-> and reg of the port need to be removed.
+On 27/11/2023 17:20, Konrad Dybcio wrote:
+> SM8450 and SM8550 both use a Qualcomm-modified MMU500 for their GPU.
+> In both cases, it requires a set of clocks to be enabled. Describe that.
 > 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi |  5 +----
->  arch/arm64/boot/dts/qcom/sm8150.dtsi |  5 +----
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 24 ++++--------------------
->  3 files changed, 6 insertions(+), 28 deletions(-)
-> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
