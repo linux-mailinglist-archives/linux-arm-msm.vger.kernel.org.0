@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-2723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E24A17FF303
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 15:58:34 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 776DB7FF307
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 15:58:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE8B61C20FE6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:58:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1C37B2117A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:58:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82E9451C2C;
-	Thu, 30 Nov 2023 14:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 938E451C3C;
+	Thu, 30 Nov 2023 14:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="R0U85/pe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vnhsGY89"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0D7ED48
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 06:58:27 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-54bec1d3854so1183978a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 06:58:27 -0800 (PST)
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC77F1A4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 06:58:28 -0800 (PST)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-54b8276361cso1137083a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 06:58:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701356306; x=1701961106; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701356307; x=1701961107; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iJgElm+2FKgOiklOOlflaWJ/HuIwIWorSVJS04oX4jw=;
-        b=R0U85/pecA9j/yCPCDmWFg3tN+okjwsQW1/PKjWB/mU7gYk33oN2vnNunD5oIcvcTs
-         AMwPbS9Uz8zrE61ilPsR7ePJKxLDthFe1IHiSaAy5Qgx1k/nJLGDfQTWWQfU+BOkCg58
-         ixWUDPLL2LY024BJrA1zhWkX4fAym01TBLX/cKsmqGUDbSUEGdP96ghkaPcH32AIMtXh
-         D/6dlNBL4nn2NkcKCu3ek5wyCA/6MwZIV/taliob/5Qpnfrzse8sQOY/C3WkNYHCkbbl
-         X4bY744CYpqo1xesBgoiUHN+oi9EkSTlPJgyfHPAah9LDCVM1OM9fTwVQbkw5ySPeBPt
-         R4Xg==
+        bh=FEWaT4vWmB9FPKlxuE8ZsMpGec2h+D+gnsnqlOC+FWw=;
+        b=vnhsGY89wdTqXzmws+jns2gkOizWSLwPUVYkbMAsNJs3C8Xjigja3UyjoOU430UeAS
+         tfG4iSSkTrsAIKiS7yrqa5o5p6bgQQ6tOHWUBOKzSir3YL2V+QeBdeFiI/rpng8n7mlR
+         TfMidStH8w8ptL5dpW11vExK3mVFj2t43hVsB24jt5FXD/mhDv6J8xo9fVeq10+/DPE0
+         SmnkSGi9Ag2j7/srLdursJvf3nZO3cBl7LVZZsmtcpUeYgmQB12xywm3jXzD2Wvgj7D2
+         9A4jYHUuWEbi+yGJ/5AzbSJBCUtnBGwVcKR4Trnr0XQ1UY7l1qCxaHPXcqUps7GQEtSz
+         Dt6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701356306; x=1701961106;
+        d=1e100.net; s=20230601; t=1701356307; x=1701961107;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iJgElm+2FKgOiklOOlflaWJ/HuIwIWorSVJS04oX4jw=;
-        b=fxPCI1xKeeRL/wcuqaLqEk0DDPq759qEfVchevQShsun6EN7SodAUMoCeMrls4sRZJ
-         AMM0YXVF3UlJvQa/i8KiQespuPoFxsgpNQsMr7qPs9dq0PqN9UsWgJCBZUBWDq95YkCp
-         b4D5wTCwuMd8sBAsuAY4uYFIEIcHBtJEmU0/2uScppoWRyzmTZu8ywoKLnFHRWx/iLbS
-         Sz6nrUsn97M51tp6yRLqihZcpEL4o6G5XKYcTiEWVRsenBf0D1e3yeyxoVJX/7R/2Mhf
-         EnKC8xuprjIDBpnaKXZyKr4QmrxaUBnKDL6Irk1I/7v7wiND2kjWRz0GwRxbgnExrUQv
-         OnQQ==
-X-Gm-Message-State: AOJu0YxdqoZnIyNO35n1gHSn/UEov4NkNSydQmAtnDJzGh5uTqg7Uvq/
-	uDydYXuSR9LzqxvzD7H2k6HKaQ==
-X-Google-Smtp-Source: AGHT+IEdc5RzXaFURAU5ct3kKx68yGncfwaVGga3c8YgiCbhZDEGnA9sVFWsFTJbCANEViMYDg3Qog==
-X-Received: by 2002:a17:906:eb01:b0:9ff:53b6:f951 with SMTP id mb1-20020a170906eb0100b009ff53b6f951mr14942949ejb.23.1701356306058;
-        Thu, 30 Nov 2023 06:58:26 -0800 (PST)
+        bh=FEWaT4vWmB9FPKlxuE8ZsMpGec2h+D+gnsnqlOC+FWw=;
+        b=AfoQh037NGeGndPFl4TsBjrHRwB60LViJ8Oegq5lnmhcVtxVnPLd94yhjDMyxrSvJA
+         7aMSi/QsSPU4zg6Soxpf8InDUG48Fpvw0pocqsQHv/Lyuv4zl64p9SLWZE2BIAXlPU5+
+         /2s7Ic8LKj2vAcYl8pznMWhVXbrdrCsXI6V4Ar2/QGHKuPLqxDCiv973D+IZ3Gd5b0+s
+         3iMmO5nAPiJkep+49FlHYkJ1cXZoqbighwrYWnTLp79MEQ99YCJu/6Khoo8VgqOCyLYG
+         EEhBeUAGe4rkmcXFAt5mStIbv2iZewhLrwbrWDGJ9/tLtZiV5CowxOSpNwzMQZtvGi/t
+         izog==
+X-Gm-Message-State: AOJu0Yz4QnurL4ldwHdu+I+KDB0de/D9/VEyazVvyt8bdG4ccMvkcgHJ
+	JZWwhV613n4CZLObJ71VAYL/q6A7ottB7fKfWJo=
+X-Google-Smtp-Source: AGHT+IH32OpKgq8DOm58fWQmY+Cdt2aGkHh2/RMF2craPX73HwEmtnQ2TUVg6DtANndN58S6bPTkMg==
+X-Received: by 2002:a17:906:5307:b0:a09:589f:8853 with SMTP id h7-20020a170906530700b00a09589f8853mr14757421ejo.66.1701356307328;
+        Thu, 30 Nov 2023 06:58:27 -0800 (PST)
 Received: from [10.167.154.1] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id a5-20020a17090640c500b009e50ea0a05asm756753ejk.99.2023.11.30.06.58.24
+        by smtp.gmail.com with ESMTPSA id a5-20020a17090640c500b009e50ea0a05asm756753ejk.99.2023.11.30.06.58.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Nov 2023 06:58:25 -0800 (PST)
+        Thu, 30 Nov 2023 06:58:27 -0800 (PST)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Date: Thu, 30 Nov 2023 15:58:21 +0100
-Subject: [PATCH 1/3] dt-bindings: soc: qcom: stats: Add QMP handle
+Date: Thu, 30 Nov 2023 15:58:22 +0100
+Subject: [PATCH 2/3] soc: qcom: stats: Add DDR sleep stats
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,7 +64,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231130-topic-ddr_sleep_stats-v1-1-5981c2e764b6@linaro.org>
+Message-Id: <20231130-topic-ddr_sleep_stats-v1-2-5981c2e764b6@linaro.org>
 References: <20231130-topic-ddr_sleep_stats-v1-0-5981c2e764b6@linaro.org>
 In-Reply-To: <20231130-topic-ddr_sleep_stats-v1-0-5981c2e764b6@linaro.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -75,51 +75,285 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1701356302; l=1104;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1701356302; l=7789;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=L/mYPSgVkQwlDWwgGCvsNga37g+6iaiq7t+BzLPdK7I=;
- b=u8N2CiHIzoLaEuBNc2Ib2FMbPuylVaP8j1vXJq18nkVLtgx4wKQyBeLNjMjamEX2RVstAuZZS
- Vig5YSRSe0gBB29M/aSZzjgbcOI+1kcdqSPJggbLSturZQ9MPss/3Re
+ bh=n247b3gscc6TQzkRebaWpfpSPhntN+5rBPC03jA9Nlw=;
+ b=pquLU0BKQ6uVxtgV2+o/+kiSu+6/SuinRalqCnajEMKMU120Sw1UvjY/mYzKPOWcvLN74U395
+ 3PzqcQeldxHDYc6iIR8UYsQyRBwAvJZjnKoN20NCDQJh4KIgfrigEzh
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-The stats can be expanded by poking the Always-On Subsystem through QMP.
-Allow passing a QMP handle for configurations that support it.
+Add DDR sleep stats that include:
+
+- the available RAM low power states
+- per-state residency information
+- per-frequency residency information (for some freqs only, it seems)
+- DDR vote information (AB/IB)
+
+and some magic thing that we're yet to decode.
+
+Based on the msm-5.4 downstream implementation, debugged with some help
+from Qualcomm's Maulik Shah.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/soc/qcom/qcom_stats.c | 186 +++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 185 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-index 96a7f1822022..686a7ef2f48a 100644
---- a/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-+++ b/Documentation/devicetree/bindings/soc/qcom/qcom-stats.yaml
-@@ -31,10 +31,24 @@ properties:
-   reg:
-     maxItems: 1
+diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+index 0216fc24f2ca..94ee543d2e8e 100644
+--- a/drivers/soc/qcom/qcom_stats.c
++++ b/drivers/soc/qcom/qcom_stats.c
+@@ -11,6 +11,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/seq_file.h>
  
-+  qcom,qmp:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: Reference to the AOSS side-channel message RAM
++#include <linux/soc/qcom/qcom_aoss.h>
+ #include <linux/soc/qcom/smem.h>
+ #include <clocksource/arm_arch_timer.h>
+ 
+@@ -22,8 +23,20 @@
+ #define LAST_ENTERED_AT_OFFSET	0x8
+ #define LAST_EXITED_AT_OFFSET	0x10
+ #define ACCUMULATED_OFFSET	0x18
++#define DDR_DYNAMIC_OFFSET	0x1c
++ #define DDR_OFFSET_MASK	GENMASK(9, 0)
+ #define CLIENT_VOTES_OFFSET	0x20
+ 
++#define ARCH_TIMER_FREQ		19200000
++#define DDR_MAGIC_KEY1		0xA1157A75 /* leetspeak "ALLSTATS" */
++#define DDR_MAX_NUM_ENTRIES	20
 +
- required:
-   - compatible
-   - reg
- 
-+allOf:
-+  - if:
-+      not:
-+        properties:
-+          compatible:
-+            const: qcom,rpmh-stats
-+    then:
-+      properties:
-+        qcom,qmp: false
++#define DDR_VOTE_DRV_MAX	18
++#define DDR_VOTE_DRV_ABSENT	0xdeaddead
++#define DDR_VOTE_DRV_INVALID	0xffffdead
++#define DDR_VOTE_X		GENMASK(27, 14)
++#define DDR_VOTE_Y		GENMASK(13, 0)
 +
- additionalProperties: false
+ struct subsystem_data {
+ 	const char *name;
+ 	u32 smem_item;
+@@ -48,6 +61,7 @@ struct stats_config {
+ 	bool appended_stats_avail;
+ 	bool dynamic_offset;
+ 	bool subsystem_stats_in_smem;
++	bool ddr_stats;
+ };
  
- examples:
+ struct stats_data {
+@@ -68,6 +82,25 @@ struct appended_stats {
+ 	u32 reserved[3];
+ };
+ 
++struct ddr_stats_entry {
++	u32 name;
++	u32 count;
++	u64 dur;
++} __packed;
++
++struct ddr_stats {
++	u32 key;
++	u32 entry_count;
++#define MAX_DDR_STAT_ENTRIES	20
++	struct ddr_stats_entry entry[MAX_DDR_STAT_ENTRIES];
++} __packed;
++
++struct ddr_stats_data {
++	struct device *dev;
++	void __iomem *base;
++	struct qmp *qmp;
++};
++
+ static void qcom_print_stats(struct seq_file *s, const struct sleep_stats *stat)
+ {
+ 	u64 accumulated = stat->accumulated;
+@@ -118,6 +151,108 @@ static int qcom_soc_sleep_stats_show(struct seq_file *s, void *unused)
+ 	return 0;
+ }
+ 
++#define DDR_NAME_TYPE		GENMASK(15, 8)
++ #define DDR_NAME_TYPE_LPM	0
++ #define DDR_NAME_TYPE_FREQ	1
++
++#define DDR_NAME_LPM_NAME	GENMASK(7, 0)
++
++#define DDR_NAME_FREQ_MHZ	GENMASK(31, 16)
++#define DDR_NAME_FREQ_CP_IDX	GENMASK(4, 0)
++static void qcom_ddr_stats_print(struct seq_file *s, struct ddr_stats_entry *entry)
++{
++	u32 cp_idx, name;
++	u8 type;
++
++	type = FIELD_GET(DDR_NAME_TYPE, entry->name);
++
++	switch (type) {
++	case DDR_NAME_TYPE_LPM:
++		name = FIELD_GET(DDR_NAME_LPM_NAME, entry->name);
++
++		seq_printf(s, "LPM  | Type 0x%2x\tcount: %u\ttime: %llums\n",
++			   name, entry->count, entry->dur);
++		break;
++	case DDR_NAME_TYPE_FREQ:
++		cp_idx = FIELD_GET(DDR_NAME_FREQ_CP_IDX, entry->name);
++		name = FIELD_GET(DDR_NAME_FREQ_MHZ, entry->name);
++
++		/* Neither 0Mhz nor 0 votes is very interesting */
++		if (!name || !entry->count)
++			return;
++
++		seq_printf(s, "Freq | %dMHz (idx %u)\tcount: %u\ttime: %llums\n",
++			   name, cp_idx, entry->count, entry->dur);
++		break;
++	default:
++		seq_printf(s, "Unknown data chunk (type = 0x%x count = 0x%x dur = 0x%llx)\n",
++			   type, entry->count, entry->dur);
++	}
++}
++
++static int qcom_ddr_stats_show(struct seq_file *s, void *unused)
++{
++	struct ddr_stats_data *ddrd = s->private;
++	struct ddr_stats ddr;
++	struct ddr_stats_entry *entry = ddr.entry;
++	u32 entry_count, stats_size;
++	u32 votes[DDR_VOTE_DRV_MAX];
++	int i, ret;
++
++	/* Request a stats sync, it may take some time to update though.. */
++	ret = qmp_send(ddrd->qmp, "{class: ddr, action: freqsync}");
++	if (ret) {
++		dev_err(ddrd->dev, "failed to send QMP message\n");
++		return ret;
++	}
++
++	entry_count = readl(ddrd->base + offsetof(struct ddr_stats, entry_count));
++	if (entry_count > DDR_MAX_NUM_ENTRIES)
++		return -EINVAL;
++
++	/* We're not guaranteed to have DDR_MAX_NUM_ENTRIES */
++	stats_size = sizeof(ddr);
++	stats_size -= DDR_MAX_NUM_ENTRIES * sizeof(*entry);
++	stats_size += entry_count * sizeof(*entry);
++
++	/* Copy and process the stats */
++	memcpy_fromio(&ddr, ddrd->base, stats_size);
++
++	for (i = 0; i < ddr.entry_count; i++) {
++		/* Convert the period to ms */
++		entry[i].dur = mult_frac(MSEC_PER_SEC, entry[i].dur, ARCH_TIMER_FREQ);
++	}
++
++	for (i = 0; i < ddr.entry_count; i++)
++		qcom_ddr_stats_print(s, &entry[i]);
++
++	/* Ask AOSS to dump DDR votes */
++	ret = qmp_send(ddrd->qmp, "{class: ddr, res: drvs_ddr_votes}");
++	if (ret) {
++		dev_err(ddrd->dev, "failed to send QMP message\n");
++		return ret;
++	}
++
++	/* Subsystem votes */
++	memcpy_fromio(votes, ddrd->base + stats_size, sizeof(u32) * DDR_VOTE_DRV_MAX);
++
++	for (i = 0; i < DDR_VOTE_DRV_MAX; i++) {
++		u32 ab, ib;
++
++		if (votes[i] == DDR_VOTE_DRV_ABSENT || votes[i] == DDR_VOTE_DRV_INVALID)
++			ab = ib = votes[i];
++		else {
++			ab = FIELD_GET(DDR_VOTE_X, votes[i]);
++			ib = FIELD_GET(DDR_VOTE_Y, votes[i]);
++		}
++
++		seq_printf(s, "Vote | AB = %5u\tIB = %5u\n", ab, ib);
++	}
++
++	return 0;
++}
++
++DEFINE_SHOW_ATTRIBUTE(qcom_ddr_stats);
+ DEFINE_SHOW_ATTRIBUTE(qcom_soc_sleep_stats);
+ DEFINE_SHOW_ATTRIBUTE(qcom_subsystem_sleep_stats);
+ 
+@@ -180,13 +315,56 @@ static void qcom_create_subsystem_stat_files(struct dentry *root,
+ 				    &qcom_subsystem_sleep_stats_fops);
+ }
+ 
++static int qcom_create_ddr_stats_files(struct device *dev,
++				       struct dentry *root,
++				       void __iomem *reg,
++				       const struct stats_config *config)
++{
++	struct ddr_stats_data *ddrd;
++	u32 key, stats_offset;
++	struct dentry *dent;
++
++	/* Nothing to do */
++	if (!config->ddr_stats)
++		return 0;
++
++	ddrd = devm_kzalloc(dev, sizeof(*ddrd), GFP_KERNEL);
++	if (!ddrd)
++		return dev_err_probe(dev, -ENOMEM, "Couldn't allocate DDR stats data\n");
++
++	ddrd->dev = dev;
++
++	/* Get the offset of DDR stats */
++	stats_offset = readl(reg + DDR_DYNAMIC_OFFSET) & DDR_OFFSET_MASK;
++	ddrd->base = reg + stats_offset;
++
++	/* Check if DDR stats are present */
++	key = readl(ddrd->base);
++	if (key != DDR_MAGIC_KEY1)
++		return 0;
++
++	dent = debugfs_create_file("ddr_sleep_stats", 0400, root, ddrd, &qcom_ddr_stats_fops);
++	if (IS_ERR(dent))
++		return PTR_ERR(dent);
++
++	/* QMP is only necessary for DDR votes */
++	ddrd->qmp = qmp_get(dev);
++	if (IS_ERR(ddrd->qmp)) {
++		dev_err(dev, "Couldn't get QMP mailbox: %ld. DDR votes won't be available.\n",
++			PTR_ERR(ddrd->qmp));
++		debugfs_remove(dent);
++	}
++
++	return 0;
++}
++
+ static int qcom_stats_probe(struct platform_device *pdev)
+ {
+ 	void __iomem *reg;
+ 	struct dentry *root;
+ 	const struct stats_config *config;
+ 	struct stats_data *d;
+-	int i;
++	int i, ret;
+ 
+ 	config = device_get_match_data(&pdev->dev);
+ 	if (!config)
+@@ -208,6 +386,11 @@ static int qcom_stats_probe(struct platform_device *pdev)
+ 
+ 	qcom_create_subsystem_stat_files(root, config);
+ 	qcom_create_soc_sleep_stat_files(root, reg, d, config);
++	ret = qcom_create_ddr_stats_files(&pdev->dev, root, reg, config);
++	if (ret) {
++		debugfs_remove_recursive(root);
++		return ret;
++	};
+ 
+ 	platform_set_drvdata(pdev, root);
+ 
+@@ -254,6 +437,7 @@ static const struct stats_config rpmh_data = {
+ 	.appended_stats_avail = false,
+ 	.dynamic_offset = false,
+ 	.subsystem_stats_in_smem = true,
++	.ddr_stats = true,
+ };
+ 
+ static const struct of_device_id qcom_stats_table[] = {
 
 -- 
 2.43.0
