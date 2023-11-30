@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DDAF7FEA99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 09:30:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FB327FEABE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 09:33:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04A8DB20F31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 08:30:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 29FA428409E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 08:33:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DDF22EB10;
-	Thu, 30 Nov 2023 08:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C870934571;
+	Thu, 30 Nov 2023 08:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="l7I1ZGpH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gIsNX1BV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271CE10D1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:30:09 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-9fa2714e828so85849066b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:30:09 -0800 (PST)
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C9A10E2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:33:42 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-54af1daf6a9so873052a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:33:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701333007; x=1701937807; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701333219; x=1701938019; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lkPUpQlLMmBIBFWbcp8hBUQgZv9g0OjS+svvP1BjvBQ=;
-        b=l7I1ZGpHrdhrHeFTt4k5qpayYX79FluNAwzcs0Wu8VMJE2vsCC3mftNLXWOpNOIL6p
-         rZDN1V6wl+pl46lSR7gaRa2oXZVF0K9CDVGAaNAUKqUJPq+mW2DMTOgY9d8mVdPs2yTF
-         nKkgOBRR82nOCSs1FWz+hGiXszv/jPL+vvRzJ43p2UTMJaNA+ZwDNi9QelffktKZfY83
-         E7GQHQEzULpYRLuLgND83+vI7PirpgCl9dJE8FCq60a3dGiQIL07DY5mts/ekwt4vIln
-         ApOI98mVIBbKtnzEOOWvJ3w3jErJfngGSOIrwKGVbhDs/mH1jFc8PmKzd8GcWKMA7OwY
-         JDkw==
+        bh=8PSAY2k2J7SrIdNr0vF4rXf43WhakIolosmZF+sg9ug=;
+        b=gIsNX1BVfD71qSglxZ03JpKyhv5cSzsZ7xLN37LoumT/1Y3S/MgE7G8SSwgASbWeij
+         qwkKugTi3TpqNRTMX3gZf72KozKqQUThtdKXFHNMiBfTxx83wmM5vgpz6O0WOu+0hRM+
+         c63W5Fv7e488xtJDjJDkagxnXnAwyDL2FCx4wakklXmq2StO9wQRnocHur77IvM55tuL
+         SafY9IX6cmwfkRTFqihC8Uqkmhq1nmmhYEPUCokw8WH2XgBESlpFJAEqaurt2xbVjaTp
+         0sTuKpabGMobdTHwhecbV3wxbkDx/dXrf5/kveTkJUro1IWs7KaD9S2zDwqOTxN8zc46
+         QqRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701333007; x=1701937807;
+        d=1e100.net; s=20230601; t=1701333219; x=1701938019;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lkPUpQlLMmBIBFWbcp8hBUQgZv9g0OjS+svvP1BjvBQ=;
-        b=nmyJlOHmYexARrxuTOvPl5068K7aPiqiooCIe8sD94zDgSVPwij5G8vPOwtQzR+Z+d
-         1ohPza3AjWor4Y+SOoxeja90iDE65evlwd1yyMyBVjYM0e2OqrbkQEVZT+iXGAGtzmto
-         UGQ4sYMYf/0ffnqhsYLoilUBionBQI9NuXUMDh2DHH1QNQ/KrqgVcy7PPjjgvaJxqZJi
-         ND1fM8ucTh3wwYoZJk4v5ZV+ssgfme+UcvWLymyiGkt9XvkhVWQBKBFvhvK0et1vYSRi
-         hCWZ6ojfr+qMfM5fjx2HLHU0mhLJ+igex0hQ5VSd08GVgqcfgPKq9kJSI0F/uHxmv5eE
-         vSyw==
-X-Gm-Message-State: AOJu0Yzkk88a59N61HI4bwdxlVy4hO3NxEjYcnDwA4ZcZMkF74DLWrHs
-	1gKr87SYK/wG8GezbZW1O0xiZg==
-X-Google-Smtp-Source: AGHT+IFkzN0cKvGI75ysYJ3G16THN9pXthqovU/JmcvY5N+gUcUQjk+4973qTh8tP6dIBf76jt4xeg==
-X-Received: by 2002:a17:907:1b8e:b0:a02:27d9:9f05 with SMTP id mz14-20020a1709071b8e00b00a0227d99f05mr12493302ejc.42.1701333007562;
-        Thu, 30 Nov 2023 00:30:07 -0800 (PST)
+        bh=8PSAY2k2J7SrIdNr0vF4rXf43WhakIolosmZF+sg9ug=;
+        b=aRPLPSAbfPNxkbP1hXexJCnKvHt9miOCtRnmPa1Q5cdgfnlRfScf+RP2dredumpoP0
+         C3MZBNiljDOQdWyNOOUtqkMP0sdJRFU78vn3i3Aie49DZihHT9hfWA34OV2cnhBuFa7R
+         GkqWMoIc1wne2/4IRD/c5YyUaqHfNdQDpbHckH/wVS5GQogk5L5DYb9j+mmq3y6EB4i6
+         O8iDEDeDe8ys223/ZtP9RjVEQOowbwproHgJZbgBLWQ8yMxbgLUXJ3r+zNddScw2RXBe
+         L524m17ftznRiAlPYFD4/bIStzkG9RRZmDQPYp6jJW46bSrp58fDTb+aPDVlvP57k4tY
+         wGfw==
+X-Gm-Message-State: AOJu0YxRsLqZuzlefdJVqZSkZysao+sRM+6WJzq6qZaopb/iTBqaX+Qw
+	ktwFXKykkKSCAzFqWqkW1s0ySQ==
+X-Google-Smtp-Source: AGHT+IFgzitCvBSeMROIhzbM/XZqqBd9jq7G/YZnGvhD8zhcpiJZSW3EA1UTK2CouOOqV0cSitIjNw==
+X-Received: by 2002:aa7:d848:0:b0:54a:f411:9a2e with SMTP id f8-20020aa7d848000000b0054af4119a2emr17483276eds.0.1701333219485;
+        Thu, 30 Nov 2023 00:33:39 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id n23-20020a170906089700b0099297782aa9sm416962eje.49.2023.11.30.00.30.06
+        by smtp.gmail.com with ESMTPSA id c19-20020aa7c993000000b0054bcfd3d671sm323775edt.37.2023.11.30.00.33.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Nov 2023 00:30:07 -0800 (PST)
-Message-ID: <8d9b28e8-22b3-4002-a225-3f53f7cbb9c1@linaro.org>
-Date: Thu, 30 Nov 2023 09:30:05 +0100
+        Thu, 30 Nov 2023 00:33:39 -0800 (PST)
+Message-ID: <5607b466-3db1-4c18-be16-2731ee55451a@linaro.org>
+Date: Thu, 30 Nov 2023 09:33:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,20 +62,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/7] dt-bindings: leds: leds-qcom-lpg: Add support for
- LPG PPG
+Subject: Re: [PATCH] dt-bindings: net: qcom,ipa: document SM8650 compatible
 Content-Language: en-US
-To: Anjelique Melendez <quic_amelende@quicinc.com>, pavel@ucw.cz,
- lee@kernel.org, thierry.reding@gmail.com, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, agross@kernel.org,
- andersson@kernel.org
-Cc: luca.weiss@fairphone.com, konrad.dybcio@linaro.org,
- u.kleine-koenig@pengutronix.de, quic_subbaram@quicinc.com,
- quic_gurus@quicinc.com, linux-leds@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org
-References: <20231130013615.14287-1-quic_amelende@quicinc.com>
- <20231130013615.14287-3-quic_amelende@quicinc.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Alex Elder <elder@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231129-topic-sm8650-upstream-bindings-ipa-v1-1-ca21eb2dfb14@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -121,14 +120,17 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231130013615.14287-3-quic_amelende@quicinc.com>
+In-Reply-To: <20231129-topic-sm8650-upstream-bindings-ipa-v1-1-ca21eb2dfb14@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/11/2023 02:36, Anjelique Melendez wrote:
-> Update leds-qcom-lpg binding to support LPG PPG.
+On 29/11/2023 18:22, Neil Armstrong wrote:
+> Document the IPA on the SM8650 Platform which uses version 5.5.1,
+> which is a minor revision of v5.5 found on SM8550, thus we can
+> use the SM8550 bindings as fallback since it shares the same
+> register mappings.
 > 
-> Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
