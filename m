@@ -1,102 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-2736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2E0C7FF517
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 17:25:56 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB6417FF6E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 17:49:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 885AA1F20F5E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 16:25:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 337F0B20EAD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 16:49:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FF8554F92;
-	Thu, 30 Nov 2023 16:25:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CC1448CEA;
+	Thu, 30 Nov 2023 16:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MCHx7RWi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7C8EE198;
-	Thu, 30 Nov 2023 08:25:49 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EACC81042;
-	Thu, 30 Nov 2023 08:26:35 -0800 (PST)
-Received: from pluto (unknown [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 11E1B3F6C4;
-	Thu, 30 Nov 2023 08:25:46 -0800 (PST)
-Date: Thu, 30 Nov 2023 16:25:44 +0000
-From: Cristian Marussi <cristian.marussi@arm.com>
-To: Sudeep Holla <sudeep.holla@arm.com>
-Cc: Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
-	linux-arm-kernel@lists.infradead.org, quic_asartor@quicinc.com,
-	quic_lingutla@quicinc.com
-Subject: Re: [PATCH 2/3] firmware: arm_scmi: Fix freq/power truncation in the
- perf protocol
-Message-ID: <ZWi3iN3HDc92eMFO@pluto>
-References: <20231129065748.19871-1-quic_sibis@quicinc.com>
- <20231129065748.19871-3-quic_sibis@quicinc.com>
- <ZWh6cuApg-sRbA2s@bogus>
- <ZWiE5nM83TZd3drT@pluto>
- <ZWiUqGJ8FaA1GBjm@bogus>
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5563510F3;
+	Thu, 30 Nov 2023 08:49:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701362952; x=1732898952;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=HXAZKQLZl/DnOU4OtJdFiiHQn7NurI3k3IMwWiBmDag=;
+  b=MCHx7RWi9D4AH1qegRmpVfOvEddd6y/CrF3Cl3HyL1LHoAqUrPuyFxVp
+   8EEx0SK+WTUa3TKwOaw8Pqi1VGehwl/+iK4NSOSbUjs2Y/w6ioXE0hepu
+   +4brtw42eS8DNUtPs1qX8rPNvtUp2AnvxaaTody52y5ga6zw1NHhg6itR
+   vLV+gTBjyI+GqHN3a16FHgv+7z35h/8S7H76wSGs6MYyk0mF5WNH9LHVr
+   rKsbFXcLwVkfzanc6nMTde8RptmT0Os6Y7y8Lb6f/XW3sep0lcUsrh0rw
+   E29o7e7AgCOFBFmuaAl478WPcggsTwPt8kjaOLLGZFFLEEfYtVUzuLuKa
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10910"; a="12064101"
+X-IronPort-AV: E=Sophos;i="6.04,239,1695711600"; 
+   d="scan'208";a="12064101"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2023 08:49:11 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10910"; a="745706056"
+X-IronPort-AV: E=Sophos;i="6.04,239,1695711600"; 
+   d="scan'208";a="745706056"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orsmga006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2023 08:49:01 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1r8kDh-00000000kYA-2Q4s;
+	Thu, 30 Nov 2023 18:48:57 +0200
+Date: Thu, 30 Nov 2023 18:48:57 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Fabio Estevam <festevam@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Jianlong Huang <jianlong.huang@starfivetech.com>,
+	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Dong Aisheng <aisheng.dong@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Sean Wang <sean.wang@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Hal Feng <hal.feng@starfivetech.com>
+Subject: Re: [PATCH v4 16/23] pinctrl: imx: Convert to use grp member
+Message-ID: <ZWi8-a_4bdSUBqaV@smile.fi.intel.com>
+References: <20231129161459.1002323-1-andriy.shevchenko@linux.intel.com>
+ <20231129161459.1002323-17-andriy.shevchenko@linux.intel.com>
+ <CAOMZO5CZpQjWKimNReUkwHOc-mF8vWoq2HDhjGKSu6E3g5-aVw@mail.gmail.com>
+ <ZWduPKmBWkaIdLhi@smile.fi.intel.com>
+ <CAOMZO5C_dhvx70nk1HOSZdw8hMMmED69tdsXgydXdpnxHTJ58Q@mail.gmail.com>
+ <ZWdyOc3pCoNihDtD@smile.fi.intel.com>
+ <CACRpkdap2fe-L0v7ttQULGq7d_zVCb2MmD4w=hHxKacKZH8jng@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZWiUqGJ8FaA1GBjm@bogus>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACRpkdap2fe-L0v7ttQULGq7d_zVCb2MmD4w=hHxKacKZH8jng@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-On Thu, Nov 30, 2023 at 01:56:56PM +0000, Sudeep Holla wrote:
-> On Thu, Nov 30, 2023 at 12:49:42PM +0000, Cristian Marussi wrote:
-> > On Thu, Nov 30, 2023 at 12:05:06PM +0000, Sudeep Holla wrote:
-> > > On Wed, Nov 29, 2023 at 12:27:47PM +0530, Sibi Sankar wrote:
-> > > > Fix frequency and power truncation seen in the performance protocol by
-> > > > casting it with the correct type.
+On Wed, Nov 29, 2023 at 10:41:14PM +0100, Linus Walleij wrote:
+> On Wed, Nov 29, 2023 at 6:18 PM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
+> > On Wed, Nov 29, 2023 at 02:08:38PM -0300, Fabio Estevam wrote:
+> > > On Wed, Nov 29, 2023 at 2:01 PM Andy Shevchenko
+> > > <andriy.shevchenko@linux.intel.com> wrote:
 > > > >
-> > > 
-> > > While I always remembered to handle this when reviewing the spec, seem to
-> > > have forgotten when it came to handling in the implementation :(. Thanks
-> > > for spotting this.
-> > > 
-> > > However I don't like the ugly type casting. I think we can do better. Also
-> > > looking at the code around the recently added level index mode, I think we
-> > > can simplify things like below patch.
-> > > 
-> > > Cristian,
-> > > What do you think ?
-> > > 
-> > 
-> > Hi
-> > 
-> > the cleanup seems nice in general to compact the mult_factor multipliers
-> > in one place, and regarding addressing the problem of truncation without
-> > the need of the explicit casting, should not be enough to change to
-> > additionally also change mult_factor to be an u64 ?
+> > > > It's explained in the first paragraph in the cover letter. Do you
+> > > > want to copy this into each commit message?
+> > >
+> > > Yes, much better to have the information into each commit message.
 > >
+> > Here it would be like
+> > "Because other members will be removed to avoid duplication and
+> > desynchronisation of the generic pin group description."
+> >
+> > Linus, what do you think about this?
 > 
-> I started exactly with that, but when I completed the patch, there was no
-> explicit need for it, so dropped it again. I can bump mult_factor to be
-> u64 but do you see any other place that would need it apart from having
-> single statement that does multiplication and assignment ? I am exploiting
-> the conditional based on level_indexing_mode here but I agree it may help
-> in backporting if I make mult_factor u64.
-> 
+> I can just add that to each commit while applying if it makes everyone happy.
 
-Ah right
+I'm pretty much fine, but I dunno if you are using `b4 shazam -H ...` I found
+that very cool feature.
 
-   freq *= dom->multi_fact;
+> No need to resend for that.
 
-does the trick..but cannot this by itself (under unplausibl conds)
-overflow and does not fit into a u32 mult_factor ?
+Yeah, we may utilise `git msg-filter ...` to fulfill the job (for curious one,
+it can be run even if we are in the middle of `git rebase --interactive ...`).
 
- dom_info->mult_factor =
- 	(dom_info->sustained_freq_khz * 1000UL)
-	/ dom_info->sustained_perf_level;
+-- 
+With Best Regards,
+Andy Shevchenko
 
-
-Thanks,
-Cristian
 
 
