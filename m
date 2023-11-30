@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FB347FEA2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 09:06:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DC6E7FEA35
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 09:09:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC094282059
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 08:06:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40ED81C2097F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 08:09:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B11D620DFE;
-	Thu, 30 Nov 2023 08:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38B0B20DFE;
+	Thu, 30 Nov 2023 08:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D6GSCDMq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Kuncds0M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87E8ABC
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:06:23 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-548ce39b101so555647a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:06:23 -0800 (PST)
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3EE2A3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:08:55 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-54bd7e5182cso575089a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:08:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701331582; x=1701936382; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701331734; x=1701936534; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=PuMr0nvcohjZX6wIPgNOI2/5doYoXUO9PO0hIz9g7nM=;
-        b=D6GSCDMqP7gIDxUkjZibd8ndDVCj2pCpPnd99HHZWMHcAutpkIZwPJ61urwh+dBTW0
-         Zmj8AkhM0+s+bzi89GK2OF2L5L5u+bYxP47KlbtgWYvaVhWD459JPsJFT1yWqNsRF+Hk
-         IpXTThj2p+vkARUqvzmAt91cEo9bK03O3wnVXbbShLD1Hkh1GSEyLXX5/HuCmsxw3eW2
-         Cmhp6+5YO82rwKxya9Kh7/rT7ZRxp/qDl/7ZpoED3XT99OG37fI9XvY45tga/9vNv5bn
-         T4nosI+ky+YYRHsklOk1Y3zi8UglZRnFo0T9XvdKNncCwZ6fSKmqDLuXeO2M77LmP2nu
-         Osng==
+        bh=O0TlxkSYiSYMLKfsE9cTgw+R2Akfbcusr1v9Z2l/iJ4=;
+        b=Kuncds0MIb4kZRgIrgNFDFIbnTdl6KEkIxZlen50mtDCacYISIB93eyLOkYd0Kued/
+         ij9HeqBlaIz5wlCrVreXHqpAS/gNWeKhitvm6evD1I9J0lHQpMsfBWHcffQw4AmxL4tX
+         6OaNmDH8oFCgon0Hr814vsfEfkzpO3dzntpolOV80dmv3MUk3ZaPlMkXJRXOT2HNbBLB
+         WbGGfwSbqo7PXop86OTmFLMh2L/TMqJK+uGAY3reMcfa8m4nJr62vTo8Y2Y0/kmSzUA9
+         K67tnV+3UfBcHw1aG5CmNpsjNZEfhVaUHmUSeY13m7aH/sBKoNsYD43jzCSL1o68+4cG
+         dr7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701331582; x=1701936382;
+        d=1e100.net; s=20230601; t=1701331734; x=1701936534;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PuMr0nvcohjZX6wIPgNOI2/5doYoXUO9PO0hIz9g7nM=;
-        b=EsLcft9alMI5ExsOgbCIO8ITA3UrT7fCpeKsr6SoEYX459m7w7cB0rUdU8VQsO2dGj
-         If8KVPDCjj8qcsbe/njbOcNGW/ZOsbjnAbVXVuHiInmSOB0QitOMdo6fjsDLSU9+Uge5
-         GVekRwC3ryXwljST9Dz0KCU/p7hqQo/NMxxidM8kd40U4yDCci4fPmb3+153Hs1P1fRz
-         lnzO6Xu40bMtDbLeZaWEhfhS1zYaGu1IJml1kZQZ2DTijgRMws0OIG8jHijEXRS9ITzQ
-         1oxeyZ8LATbrQFpxk4DGi8taMe2ZSAd0UOEIO9ADx1DiSlVH8MdWGz1/yHg//7igDHg/
-         1MBg==
-X-Gm-Message-State: AOJu0YyxDz8mm3oNRVYqQsPLrbxbzzHRvQsuT3GLgIJzRVoEi8aR3Gya
-	3KAHJfsYxEloXClx0QDsTspVQw==
-X-Google-Smtp-Source: AGHT+IGj+qm59/BU3dajOgaf0wVDzQvC1zS76PWdIlIx86BX3nwgq8lsilB5Crn8C7DhTvI7qHJBpw==
-X-Received: by 2002:a05:6402:35cd:b0:54b:50bf:afcc with SMTP id z13-20020a05640235cd00b0054b50bfafccmr10137139edc.41.1701331581997;
-        Thu, 30 Nov 2023 00:06:21 -0800 (PST)
+        bh=O0TlxkSYiSYMLKfsE9cTgw+R2Akfbcusr1v9Z2l/iJ4=;
+        b=aiqvawYaxCQbO09BnlQuxk5/Xc8U4J1itOvR69pKPv2s5mETqPUgIvyExGUJsmRhjx
+         F2Oe3lCYLjMAdZyPOhO8fWwFUlfE0mBfBQIl5oYmF5xcMy4dL8a404iBo31GjubjHYQo
+         8hS+4GRTQ1/pUXa6Mbn82PFZG3QQQoV8LiEs+9Nae5PkxkyhV9KGFRUcuN4sQhzQI7RA
+         deFm+LxngK3l0h4fPL9rrp86I+igGUo7gAroDOQDgQ8O+XdykEmLTQkhzN6kLQsMTqYT
+         fhlnnaL8PpBrmKvkZkRspekmyVD1e66Uqr9UKtrjyOUMOvjgKqlLzLN5Cns0LfUrFg8n
+         G6Vw==
+X-Gm-Message-State: AOJu0YzYBBf9a7LrVk9QP4vgTNH/OcJERwUaAlYrib71HeNQOXze4P6O
+	E8lEyAnLr0DFrjCj9UGa+7w+ZQ==
+X-Google-Smtp-Source: AGHT+IG+zp9WU4nYZCOlDoa3Hyb5JWPq/5DfQn+YAqpp+sYDM3FQo1RNPzUztNps4jWnW8T3l++tDA==
+X-Received: by 2002:a17:907:1687:b0:a12:6a16:15c8 with SMTP id cx7-20020a170907168700b00a126a1615c8mr5820940ejd.6.1701331734352;
+        Thu, 30 Nov 2023 00:08:54 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id w8-20020a056402070800b0054aeac2c4b9sm295179edx.81.2023.11.30.00.06.20
+        by smtp.gmail.com with ESMTPSA id oz11-20020a170906cd0b00b009fc990d9edbsm395410ejb.192.2023.11.30.00.08.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Nov 2023 00:06:21 -0800 (PST)
-Message-ID: <0be610ed-ac95-4de1-9639-d634cf979359@linaro.org>
-Date: Thu, 30 Nov 2023 09:06:19 +0100
+        Thu, 30 Nov 2023 00:08:53 -0800 (PST)
+Message-ID: <ef315412-99c7-4179-9e96-80eaf2e25f26@linaro.org>
+Date: Thu, 30 Nov 2023 09:08:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +62,32 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: correct TX Soundwire clock
+Subject: Re: [PATCH 1/6] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
+ bindings
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>,
+ Johan Hovold <johan@kernel.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-References: <20231129140537.161720-1-krzysztof.kozlowski@linaro.org>
- <20231129140537.161720-2-krzysztof.kozlowski@linaro.org>
- <3ec70fd9-11a3-4bd3-bd8c-a73c3d44dcde@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>, quic_wcheng@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+References: <20231122191335.3058-1-quic_kriskura@quicinc.com>
+ <ZV9dYpTYRXn63tXe@hovoldconsulting.com>
+ <1192d91f-11bf-44af-953a-14e08e2b6ca8@quicinc.com>
+ <ZWCpGdJRexnk98IN@hovoldconsulting.com>
+ <004ddc69-1566-4de4-b260-0fca96a9395f@quicinc.com>
+ <ZWW_FOAKp95Cf9vN@hovoldconsulting.com>
+ <18965bb9-7afa-4892-8b71-981ba29d2cd4@quicinc.com>
+ <ZWXHrvUDnF2dMk6r@hovoldconsulting.com>
+ <6d7527bf-8c1a-49b5-a0cf-99a92098c971@quicinc.com>
+ <c8a28c72-5c0a-4a67-a4c9-e46a5716cda4@linaro.org>
+ <ZWcPZPX-eT-xHAOv@hovoldconsulting.com>
+ <3abe4ebe-80fc-4214-b01e-50c25575f2b9@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -120,29 +133,85 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <3ec70fd9-11a3-4bd3-bd8c-a73c3d44dcde@linaro.org>
+In-Reply-To: <3abe4ebe-80fc-4214-b01e-50c25575f2b9@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/11/2023 15:35, Konrad Dybcio wrote:
-> On 29.11.2023 15:05, Krzysztof Kozlowski wrote:
->> The TX Soundwire controller should take clock from TX macro codec, not
->> VA macro codec clock, otherwise the clock stays disabled.  This looks
->> like a copy-paste issue, because the SC8280xp code uses here correctly
->> clock from TX macro.  The VA macro clock is already consumed by TX macro
->> codec, thus it won't be disabled by this change.
+On 29/11/2023 11:50, Krishna Kurapati PSSNV wrote:
+> 
+> 
+> On 11/29/2023 3:46 PM, Johan Hovold wrote:
+>> On Wed, Nov 29, 2023 at 10:28:25AM +0100, Krzysztof Kozlowski wrote:
+>>> On 28/11/2023 12:32, Krishna Kurapati PSSNV wrote:
+>>>>
+>>>>>
+>>>>> So back to my initial proposal, with a slight modification moving
+>>>>> pwr_event first (e.g. as it is not a wakeup interrupt):
+>>>>>
+>>>>> qusb2-:
+>>>>>
+>>>>> 	- const: pwr_event
+>>>>> 	- const: qusb2_phy
+>>>>> 	- const: ss_phy_irq	(optional)
+>>>>>
+>>>>> qusb2:
+>>>>>
+>>>>> 	- const: pwr_event
+>>>>> 	- const: hs_phy_irq
+>>>>> 	- const: qusb2_phy
+>>>>> 	- const: ss_phy_irq	(optional)
+>>>>>
+>>>>> femto-:
+>>>>> 	- const: pwr_event
+>>>>> 	- const: dp_hs_phy_irq
+>>>>> 	- const: dm_hs_phy_irq
+>>>>> 	- const: ss_phy_irq	(optional)
+>>>>>
+>>>>> femto:
+>>>>> 	- const: pwr_event
+>>>>> 	- const: hs_phy_irq
+>>>>> 	- const: dp_hs_phy_irq
+>>>>> 	- const: dm_hs_phy_irq
+>>>>> 	- const: ss_phy_irq	(optional)
+>>>
+>>> I did not follow entire thread and I do not know whether you change the
+>>> order in existing bindings, but just in case: the entries in existing
+>>> bindings cannot change the order. That's a strict ABI requirement
+>>> recently also discussed with Bjorn, because we want to have stable DTB
+>>> for laptop platforms. If my comment is not relevant, then please ignore.
 >>
->> Fixes: 61b006389bb7 ("arm64: dts: qcom: sm8550: add Soundwire controllers")
->> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
-> Interestingly, downstream 8550 has
+>> Your comment is relevant, but I'm not sure I agree.
+>>
+>> The Qualcomm bindings are a complete mess of DT snippets copied from
+>> vendor trees and which have not been sanitised properly before being
+>> merged upstream (partly due to there not being any public documentation
+>> available).
+>>
+>> This amounts to an unmaintainable mess which is reflected in the
+>> binding schemas which similarly needs to encode every random order which
+>> the SoC happened to use when being upstreamed. That makes the binding
+>> documentation unreadable too, and the next time a new SoC is upstreamed
+>> there is no clear hints of what the binding should look like, and we end
+>> up with yet another permutation.
+>>
+>> As part of this exercise, we've also determined that some of the
+>> devicetrees that are already upstream are incorrect as well as
+>> incomplete.
+>>
+>> I really see no alternative to ripping of the plaster and cleaning this
+>> up once and for all even if it "breaks" some imaginary OS which (unlike
+>> Linux) relies on the current random order of these interrupts.
+>>
+>> [ If there were any real OSes actually relying on the order, then that
+>> would be a different thing of course. ]
+>>
 > 
-> qcom,use-clk-id = <VA_CORE_CLK>;
+> Hi Krzysztof, Johan,
 > 
-> which doesn't seem to be used in techpack
+>    We are modifying all the DT's in accordance to bindings as well. 
+> Still it would be breaking ABI ?
 
-In which node? I see it in the va-macro node, not the tx-macro.
+Yes, how can you modify DTB stored in firmware on the customer board?
 
 Best regards,
 Krzysztof
