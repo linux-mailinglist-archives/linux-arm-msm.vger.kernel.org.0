@@ -1,158 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-2715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F78E7FF04C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:38:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A61297FF0B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:51:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A46B281EA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:38:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62396282065
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:51:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D91147A7A;
-	Thu, 30 Nov 2023 13:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7748147A67;
+	Thu, 30 Nov 2023 13:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iAg/YnWE"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="H58wh8CH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF4ADC4;
-	Thu, 30 Nov 2023 05:37:58 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AUBt4CI032596;
-	Thu, 30 Nov 2023 13:37:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=D4urVbhmcVHg+zDN+1uI7L+DvfPy0F3NUE4iAdZuAMU=;
- b=iAg/YnWET+uB+v8h2hMrfuDlzbImm0aglXwfYSLmR8CkvKREDyetOhfXG2AY9NC9FMAG
- 0GWHV2RYIIO69gI8K6cMRwZrYcLdbq5fhxzY2pycAADYSitv0d4ap7h3D93bKC5Jwrqc
- W5PHs+oB+E6B4NxUw4GrpJ1iGLXX2NJMJj7Z8L8yXABlIXYlFRYMOgxqkzYSwty4HzC7
- NMu4zkYHADQUOYAv8X0jjnpD481/i74WkipnDty0k0pIf69eNA1EsUTJbvBk0JH3PbY4
- e/45cYC3B7WMeSVNZiGzourt5f8PHxHrxjjEoViYdNbBBhWDTF8PJsdaQdjOpH778KdC wg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3up2byuwcr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 13:37:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AUDbqp6011305
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 13:37:52 GMT
-Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 30 Nov
- 2023 05:37:49 -0800
-Message-ID: <22ddb4aa-a908-49c3-8eb4-2399c7c5bc37@quicinc.com>
-Date: Thu, 30 Nov 2023 21:37:47 +0800
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8821B9;
+	Thu, 30 Nov 2023 05:51:00 -0800 (PST)
+Received: from [100.124.219.30] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id 037796607345;
+	Thu, 30 Nov 2023 13:50:54 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1701352258;
+	bh=HGnD8bUQWOaK+6RFgKTsVFZmO6HTrfFGIJlJrDox4v8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=H58wh8CHNeyKhFKLgOKBi4cHe/A5GWRrfro7BiyeAt4Jr5iSpHtao56/5Xpa0WFNt
+	 iL9p94K8uIyTXndAwxXyrdNoIHY9sXoa5oBmnefTqKNP3R0jrZm8Swjg7huYA2KQi2
+	 qA2dhqdwQ0MRA5G3Od4dScyaTjrYKG0aYkBzU0D3kIBfKadg5E9uG5RT6kHtSoFYVf
+	 4V0V4odklj4B0h1o/kAGP/l1KaQWj1PwW92dO9KW8DxzbwFbO/+nUqH7C+XFTFeJ/d
+	 058/Sgc7SGQkJBFyU3cqme3tnGtkMBUFdWLM7lBBh92rCW62iY4m/GSvtgeOyxYAOI
+	 yAE7gIc4P+R8w==
+Message-ID: <893192db-0431-4d1f-7281-952da9979345@collabora.com>
+Date: Thu, 30 Nov 2023 19:20:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] arm64: dts: qcom: msm8996: Fix 'in-ports' is a
- required property
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang
-	<quic_taozha@quicinc.com>
-References: <20231129143815.7892-1-quic_jinlmao@quicinc.com>
- <20231129143815.7892-2-quic_jinlmao@quicinc.com>
- <3527d540-3e3f-4edb-b5f2-6ac481132c06@linaro.org>
- <591e1aca-20ca-4d42-809d-12cd12ddadb3@quicinc.com>
- <35916812-af55-4b2a-99e5-8566e945cb6e@linaro.org>
- <5ef0372a-2b9d-4a19-bbb4-2c6ce29dbe79@quicinc.com>
- <5bc8b7e3-7a4f-48d4-a1fa-9e3cb0b39a3a@linaro.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v6 06/10] drm: ci: mediatek: Set IGT_FORCE_DRIVER for
+ mt8173
 Content-Language: en-US
-From: Jinlong Mao <quic_jinlmao@quicinc.com>
-In-Reply-To: <5bc8b7e3-7a4f-48d4-a1fa-9e3cb0b39a3a@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Daniel Stone <daniel@fooishbar.org>
+Cc: helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
+ daniels@collabora.com, emma@anholt.net, gustavo.padovan@collabora.com,
+ linux-arm-msm@vger.kernel.org, guilherme.gallo@collabora.com,
+ sergi.blanch.torne@collabora.com, linux-kernel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, virtualization@lists.linux-foundation.org,
+ david.heidelberg@collabora.com, linux-mediatek@lists.infradead.org,
+ linux-rockchip@lists.infradead.org
+References: <20231129121841.253223-1-vignesh.raman@collabora.com>
+ <20231129121841.253223-7-vignesh.raman@collabora.com>
+ <CAPj87rPKywWa8KxTCeJQz4vvgTwhPzL+y4aCX9zxZDkkfrvsoQ@mail.gmail.com>
+From: Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <CAPj87rPKywWa8KxTCeJQz4vvgTwhPzL+y4aCX9zxZDkkfrvsoQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: S0Mg-Hzo3MbnhYpjJn879lFcmTDDG2rT
-X-Proofpoint-ORIG-GUID: S0Mg-Hzo3MbnhYpjJn879lFcmTDDG2rT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-30_11,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- phishscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 impostorscore=0 bulkscore=0
- mlxlogscore=617 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311060000 definitions=main-2311300101
 
+Hi Daniel,
 
-
-On 11/30/2023 9:35 PM, Krzysztof Kozlowski wrote:
-> On 30/11/2023 14:12, Jinlong Mao wrote:
->>
->>
->> On 11/30/2023 8:06 PM, Krzysztof Kozlowski wrote:
->>> On 30/11/2023 12:15, Jinlong Mao wrote:
->>>>
->>>>
->>>> On 11/30/2023 4:55 PM, Krzysztof Kozlowski wrote:
->>>>> On 29/11/2023 15:38, Mao Jinlong wrote:
->>>>>> The inport of funnel@3023000 connects to a source which is not supported
->>>>>> in current linux kernel. Remove the device tree node of funnel@3023000
->>>>>> to fix the warning. It will be added once the driver support to the
->>>>>> source is added to linux kernel.
->>>>>
->>>>> Thanks for the changes, but that's not correct reason to remove DTS
->>>>> code. What kernel supports or not, should be irrelevant for the DTS. DTS
->>>>> for example is used in other projects - did you check if they have the
->>>>> same issues? Anyway, DTS describes the hardware, so how current kernel
->>>>> support defines what is and what is not in the hardware?
->>>>>
->>>>>
->>>>> Best regards,
->>>>> Krzysztof
->>>>
->>>> Hi Krzysztof,
->>>>
->>>> The funnel dt node must have in-ports node. It is to describe the input
->>>> connection of funnel HW. But there is no dt_binding doc to describe the
->>>> DT node of the HW connected to funnel@3023000. So remove the funnel to
->>>> solve the warning as of now. The funnel will be added back once driver
->>>> and dt_binding are added for the HW.
->>>>
->>>> Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
->>>
->>> Why we cannot add now the binding for the connected hardware? It's not
->>> really related to the driver.
->>>
->>> Best regards,
->>> Krzysztof
->>
->> Do you mean yaml file can be added before the driver code is merged ?
+On 29/11/23 18:52, Daniel Stone wrote:
+> Hi Vignesh,
 > 
-> Yes, the binding. YAML is only the language. We don't write YAMLs, we
-> write bindings.
+> On Wed, 29 Nov 2023 at 12:19, Vignesh Raman <vignesh.raman@collabora.com> wrote:
+>> Expected driver for mt8173 is "mediatek" and for mt8183
+>> it is "panfrost". Set IGT_FORCE_DRIVER to 'mediatek' as
+>> the expected driver for mt8173.
 > 
-> Best regards,
-> Krzysztof
+> Actually, for mt8183 it's both. And for mt8173 it will probably be
+> mediatek+pvr pretty soon. Each of these SoCs (like most Arm devices)
+> have a separate display controller and GPU, with different drivers for
+> each. They'll run different tests with different xfails. So we should
+> figure out a way to support igt running for both devices on the one
+> system.
 
-ok, Thanks. I will prepare the binding file.
+Agree. Will work on separate patch to test both the drivers for these 
+devices.
 
-Thanks
-Jinlong Mao
-
-> 
-
+Regards,
+Vignesh
 
