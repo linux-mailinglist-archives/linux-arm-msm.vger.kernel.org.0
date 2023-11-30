@@ -1,49 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01CFE7FE9EA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 08:49:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FB347FEA2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 09:06:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DF5C71C20860
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 07:49:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC094282059
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 08:06:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D10520DC2;
-	Thu, 30 Nov 2023 07:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B11D620DFE;
+	Thu, 30 Nov 2023 08:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GEsXeYep"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D6GSCDMq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B71851A3;
-	Wed, 29 Nov 2023 23:49:47 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AU5xK0R001015;
-	Thu, 30 Nov 2023 07:49:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=yvqvx5ZXXmbPnljimpZq97cMptAIaEhfTTf8X22A5pg=;
- b=GEsXeYepRTbmwpkBhMFGn+VgdPZl+wE0EZhkJpBH1AWEuvnOfJhrJj0FyOjV0Pgq33xB
- A00IVNSOObjV/X16ZN847ePk/Hv73C8f8uHMUCn4C5aCBrX/e4H1+qafzMuyzT4UDa/Y
- mvQ1cpjMUU4vEFYMCWJPxzlREYWb93ZxBM5pBouOwxqYzcxtHy++f2acEoQSK5lFqkeV
- TKgnlXO+Miizjdd788q6sNONooejyNhn8TPl+TNovf1ajyDYxAjXTSopaVsYP8M22U8u
- HbflKwVC7E4O5J5LrTxDMdlxqwJGZc+FgBp05vONXLw7R9BP7TcxgBjUJLXoLCYgJLSw JQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3up4cfaqpa-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 07:49:10 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AU7n8Fs000544
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 07:49:08 GMT
-Received: from [10.253.11.15] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 29 Nov
- 2023 23:49:05 -0800
-Message-ID: <22a49deb-001d-4fa2-83e1-0fe6c7fe2a2e@quicinc.com>
-Date: Thu, 30 Nov 2023 15:49:03 +0800
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87E8ABC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:06:23 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-548ce39b101so555647a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 00:06:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701331582; x=1701936382; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PuMr0nvcohjZX6wIPgNOI2/5doYoXUO9PO0hIz9g7nM=;
+        b=D6GSCDMqP7gIDxUkjZibd8ndDVCj2pCpPnd99HHZWMHcAutpkIZwPJ61urwh+dBTW0
+         Zmj8AkhM0+s+bzi89GK2OF2L5L5u+bYxP47KlbtgWYvaVhWD459JPsJFT1yWqNsRF+Hk
+         IpXTThj2p+vkARUqvzmAt91cEo9bK03O3wnVXbbShLD1Hkh1GSEyLXX5/HuCmsxw3eW2
+         Cmhp6+5YO82rwKxya9Kh7/rT7ZRxp/qDl/7ZpoED3XT99OG37fI9XvY45tga/9vNv5bn
+         T4nosI+ky+YYRHsklOk1Y3zi8UglZRnFo0T9XvdKNncCwZ6fSKmqDLuXeO2M77LmP2nu
+         Osng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701331582; x=1701936382;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PuMr0nvcohjZX6wIPgNOI2/5doYoXUO9PO0hIz9g7nM=;
+        b=EsLcft9alMI5ExsOgbCIO8ITA3UrT7fCpeKsr6SoEYX459m7w7cB0rUdU8VQsO2dGj
+         If8KVPDCjj8qcsbe/njbOcNGW/ZOsbjnAbVXVuHiInmSOB0QitOMdo6fjsDLSU9+Uge5
+         GVekRwC3ryXwljST9Dz0KCU/p7hqQo/NMxxidM8kd40U4yDCci4fPmb3+153Hs1P1fRz
+         lnzO6Xu40bMtDbLeZaWEhfhS1zYaGu1IJml1kZQZ2DTijgRMws0OIG8jHijEXRS9ITzQ
+         1oxeyZ8LATbrQFpxk4DGi8taMe2ZSAd0UOEIO9ADx1DiSlVH8MdWGz1/yHg//7igDHg/
+         1MBg==
+X-Gm-Message-State: AOJu0YyxDz8mm3oNRVYqQsPLrbxbzzHRvQsuT3GLgIJzRVoEi8aR3Gya
+	3KAHJfsYxEloXClx0QDsTspVQw==
+X-Google-Smtp-Source: AGHT+IGj+qm59/BU3dajOgaf0wVDzQvC1zS76PWdIlIx86BX3nwgq8lsilB5Crn8C7DhTvI7qHJBpw==
+X-Received: by 2002:a05:6402:35cd:b0:54b:50bf:afcc with SMTP id z13-20020a05640235cd00b0054b50bfafccmr10137139edc.41.1701331581997;
+        Thu, 30 Nov 2023 00:06:21 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.109])
+        by smtp.gmail.com with ESMTPSA id w8-20020a056402070800b0054aeac2c4b9sm295179edx.81.2023.11.30.00.06.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Nov 2023 00:06:21 -0800 (PST)
+Message-ID: <0be610ed-ac95-4de1-9639-d634cf979359@linaro.org>
+Date: Thu, 30 Nov 2023 09:06:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,127 +62,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 06/10] scsi: ufs: ufs-qcom: Set initial PHY gear to max
- HS gear for HW ver 4 and newer
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: correct TX Soundwire clock
 Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <bvanassche@acm.org>, <adrian.hunter@intel.com>, <cmd4@qualcomm.com>,
-        <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        open list
-	<linux-kernel@vger.kernel.org>
-References: <1701246516-11626-1-git-send-email-quic_cang@quicinc.com>
- <1701246516-11626-7-git-send-email-quic_cang@quicinc.com>
- <20231130064757.GF3043@thinkpad>
-From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <20231130064757.GF3043@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Cc: Neil Armstrong <neil.armstrong@linaro.org>
+References: <20231129140537.161720-1-krzysztof.kozlowski@linaro.org>
+ <20231129140537.161720-2-krzysztof.kozlowski@linaro.org>
+ <3ec70fd9-11a3-4bd3-bd8c-a73c3d44dcde@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <3ec70fd9-11a3-4bd3-bd8c-a73c3d44dcde@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NFwkfCEgPSvr7K-s6BB-UAXSrKYY2Mt9
-X-Proofpoint-ORIG-GUID: NFwkfCEgPSvr7K-s6BB-UAXSrKYY2Mt9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-30_05,2023-11-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 bulkscore=0 suspectscore=0 mlxlogscore=999
- clxscore=1015 phishscore=0 priorityscore=1501 spamscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311300056
 
-
-
-On 11/30/2023 2:47 PM, Manivannan Sadhasivam wrote:
-> On Wed, Nov 29, 2023 at 12:28:31AM -0800, Can Guo wrote:
->> Since HW ver 4, max HS gear can be get from UFS host controller's register,
->> use the max HS gear as the initial PHY gear instead of UFS_HS_G2, so that
->> we don't need to update the hard code for newer targets in future.
+On 29/11/2023 15:35, Konrad Dybcio wrote:
+> On 29.11.2023 15:05, Krzysztof Kozlowski wrote:
+>> The TX Soundwire controller should take clock from TX macro codec, not
+>> VA macro codec clock, otherwise the clock stays disabled.  This looks
+>> like a copy-paste issue, because the SC8280xp code uses here correctly
+>> clock from TX macro.  The VA macro clock is already consumed by TX macro
+>> codec, thus it won't be disabled by this change.
 >>
->> Signed-off-by: Can Guo <quic_cang@quicinc.com>
-> 
-> One comment below. With that addressed,
-> 
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
+>> Fixes: 61b006389bb7 ("arm64: dts: qcom: sm8550: add Soundwire controllers")
+>> Reported-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 >> ---
->>   drivers/ufs/host/ufs-qcom.c | 21 +++++++++++++++------
->>   1 file changed, 15 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
->> index aca6199..30f4ca6 100644
->> --- a/drivers/ufs/host/ufs-qcom.c
->> +++ b/drivers/ufs/host/ufs-qcom.c
->> @@ -1060,6 +1060,20 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
->>   		hba->quirks |= UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
->>   }
->>   
->> +static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
->> +{
->> +	struct ufs_host_params *host_params = &host->host_params;
->> +
->> +	host->phy_gear = host_params->hs_tx_gear;
->> +
->> +	/*
->> +	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
->> +	 * Switching to max gear will be performed during reinit if supported.
+> Interestingly, downstream 8550 has
 > 
-> As I mentioned in v5, you need to reword this comment to make it clear we are
-> setting G2 only for platforms < v4. Something like below:
+> qcom,use-clk-id = <VA_CORE_CLK>;
 > 
-> "For controllers whose major version is < 4, power up the PHY using minimum
-> supported gear (UFS_HS_G2). Switching to max gear will be performed during
-> reinit if supported. For newer controllers (>= 4), PHY will be powered up using
-> max supported gear."
+> which doesn't seem to be used in techpack
 
-Sorry that I missed this one, will add in next version.
+In which node? I see it in the va-macro node, not the tx-macro.
 
-Thanks,
-Can Guo.
+Best regards,
+Krzysztof
 
-> 
-> - Mani
-> 
->> +	 */
->> +	if (host->hw_ver.major < 0x4)
->> +		host->phy_gear = UFS_HS_G2;
->> +}
->> +
->>   static void ufs_qcom_set_host_params(struct ufs_hba *hba)
->>   {
->>   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->> @@ -1296,6 +1310,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->>   	ufs_qcom_set_caps(hba);
->>   	ufs_qcom_advertise_quirks(hba);
->>   	ufs_qcom_set_host_params(hba);
->> +	ufs_qcom_set_phy_gear(host);
->>   
->>   	err = ufs_qcom_ice_init(host);
->>   	if (err)
->> @@ -1313,12 +1328,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->>   		dev_warn(dev, "%s: failed to configure the testbus %d\n",
->>   				__func__, err);
->>   
->> -	/*
->> -	 * Power up the PHY using the minimum supported gear (UFS_HS_G2).
->> -	 * Switching to max gear will be performed during reinit if supported.
->> -	 */
->> -	host->phy_gear = UFS_HS_G2;
->> -
->>   	return 0;
->>   
->>   out_variant_clear:
->> -- 
->> 2.7.4
->>
->>
-> 
 
