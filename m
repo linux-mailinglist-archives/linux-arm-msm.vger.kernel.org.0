@@ -1,118 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-2704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 381EB7FEE59
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 12:57:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F35227FEE89
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:05:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8416281EC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 11:57:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7DCFFB20B1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 12:05:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6CAF3D3AD;
-	Thu, 30 Nov 2023 11:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EPxIU2m0"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7A174502B;
+	Thu, 30 Nov 2023 12:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98E3364B5;
-	Thu, 30 Nov 2023 11:57:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940D8C433C8;
-	Thu, 30 Nov 2023 11:57:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701345441;
-	bh=8CCxDG2erkr44cih7hoQuTdkzaWJ5GXhxHs05U154co=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EPxIU2m08MkeBD0FTUm5ybRbXe8QceQ8f0KZwFqwuqI83BnUdyJruLz9AbncAT36+
-	 jXG6gU2pXd0Q8CcDKpHzRoJ9fFeIxiv/ijKWwtV52/5B32WGVTDkAnYZLrMlTbrWfg
-	 UIwcrKabQftMo5f+z4eby8oqGypUNinJlOzVlukvaPM/DlusWQkGsusf1eChY1myX2
-	 RX8bltGl7cJ0a/iIwTYCeLwc7v+uIe9mwt57ubsDOD3l2GKJcFj+1njlC1Tr0qcWnM
-	 kpY9iqATIKBzKfTWw2X6jmIqzhA1LtLoizFRUEqSI0dUPWeSgy0BfS8fdYzkom6cx+
-	 BwfVgK7KA6hVQ==
-Message-ID: <1d2fbb36-9476-4f32-8bcd-33fd5dcbd6e4@kernel.org>
-Date: Thu, 30 Nov 2023 12:57:18 +0100
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTP id EDBC9D46;
+	Thu, 30 Nov 2023 04:05:09 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 526E11042;
+	Thu, 30 Nov 2023 04:05:56 -0800 (PST)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 791C53F5A1;
+	Thu, 30 Nov 2023 04:05:08 -0800 (PST)
+Date: Thu, 30 Nov 2023 12:05:06 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: <cristian.marussi@arm.com>, <linux-arm-msm@vger.kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>, <linux-kernel@vger.kernel.org>,
+	<quic_mdtipton@quicinc.com>, <linux-arm-kernel@lists.infradead.org>,
+	<quic_asartor@quicinc.com>, <quic_lingutla@quicinc.com>
+Subject: Re: [PATCH 2/3] firmware: arm_scmi: Fix freq/power truncation in the
+ perf protocol
+Message-ID: <ZWh6cuApg-sRbA2s@bogus>
+References: <20231129065748.19871-1-quic_sibis@quicinc.com>
+ <20231129065748.19871-3-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/4] pinctrl: qcom: Add SM4450 pinctrl driver
-Content-Language: en-US
-To: Tengfei Fan <quic_tengfan@quicinc.com>, andersson@kernel.org,
- agross@kernel.org, konrad.dybcio@linaro.org, linus.walleij@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20231130024046.25938-1-quic_tengfan@quicinc.com>
- <20231130024046.25938-3-quic_tengfan@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20231130024046.25938-3-quic_tengfan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231129065748.19871-3-quic_sibis@quicinc.com>
 
-On 30/11/2023 03:40, Tengfei Fan wrote:
-> Add pinctrl driver for TLMM block found in SM4450 SoC.
-> 
-> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
-> ---
->  drivers/pinctrl/qcom/Kconfig.msm      |    8 +
->  drivers/pinctrl/qcom/Makefile         |    1 +
->  drivers/pinctrl/qcom/pinctrl-sm4450.c | 1013 +++++++++++++++++++++++++
->  3 files changed, 1022 insertions(+)
->  create mode 100644 drivers/pinctrl/qcom/pinctrl-sm4450.c
-> 
+On Wed, Nov 29, 2023 at 12:27:47PM +0530, Sibi Sankar wrote:
+> Fix frequency and power truncation seen in the performance protocol by
+> casting it with the correct type.
+>
 
-Hm, was this patch ever built?
+While I always remembered to handle this when reviewing the spec, seem to
+have forgotten when it came to handling in the implementation :(. Thanks
+for spotting this.
 
-Best regards,
-Krzysztof
+However I don't like the ugly type casting. I think we can do better. Also
+looking at the code around the recently added level index mode, I think we
+can simplify things like below patch.
+
+Cristian,
+What do you think ?
+
+Regards,
+Sudeep
+
+-->8
+
+ drivers/firmware/arm_scmi/perf.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+index a648521e04a3..2e828b29efab 100644
+--- a/drivers/firmware/arm_scmi/perf.c
++++ b/drivers/firmware/arm_scmi/perf.c
+@@ -268,13 +268,14 @@ scmi_perf_domain_attributes_get(const struct scmi_protocol_handle *ph,
+ 		dom_info->sustained_perf_level =
+ 					le32_to_cpu(attr->sustained_perf_level);
+ 		if (!dom_info->sustained_freq_khz ||
+-		    !dom_info->sustained_perf_level)
++		    !dom_info->sustained_perf_level ||
++		    dom_info->level_indexing_mode)
+ 			/* CPUFreq converts to kHz, hence default 1000 */
+ 			dom_info->mult_factor =	1000;
+ 		else
+ 			dom_info->mult_factor =
+-					(dom_info->sustained_freq_khz * 1000) /
+-					dom_info->sustained_perf_level;
++					(dom_info->sustained_freq_khz * 1000UL)
++					/ dom_info->sustained_perf_level;
+ 		strscpy(dom_info->info.name, attr->name,
+ 			SCMI_SHORT_NAME_MAX_SIZE);
+ 	}
+@@ -804,9 +805,10 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
+
+ 	for (idx = 0; idx < dom->opp_count; idx++) {
+ 		if (!dom->level_indexing_mode)
+-			freq = dom->opp[idx].perf * dom->mult_factor;
++			freq = dom->opp[idx].perf;
+ 		else
+-			freq = dom->opp[idx].indicative_freq * 1000;
++			freq = dom->opp[idx].indicative_freq;
++		freq *= dom->mult_factor;
+
+ 		data.level = dom->opp[idx].perf;
+ 		data.freq = freq;
+@@ -879,7 +881,7 @@ static int scmi_dvfs_freq_get(const struct scmi_protocol_handle *ph, u32 domain,
+ 		return ret;
+
+ 	if (!dom->level_indexing_mode) {
+-		*freq = level * dom->mult_factor;
++		*freq = level;
+ 	} else {
+ 		struct scmi_opp *opp;
+
+@@ -887,8 +889,9 @@ static int scmi_dvfs_freq_get(const struct scmi_protocol_handle *ph, u32 domain,
+ 		if (!opp)
+ 			return -EIO;
+
+-		*freq = opp->indicative_freq * 1000;
++		*freq = opp->indicative_freq;
+ 	}
++	freq *= dom->mult_factor;
+
+ 	return ret;
+ }
+@@ -908,9 +911,10 @@ static int scmi_dvfs_est_power_get(const struct scmi_protocol_handle *ph,
+
+ 	for (opp = dom->opp, idx = 0; idx < dom->opp_count; idx++, opp++) {
+ 		if (!dom->level_indexing_mode)
+-			opp_freq = opp->perf * dom->mult_factor;
++			opp_freq = opp->perf;
+ 		else
+-			opp_freq = opp->indicative_freq * 1000;
++			opp_freq = opp->indicative_freq;
++		opp_freq *= dom->mult_factor;
+
+ 		if (opp_freq < *freq)
+ 			continue;
 
 
