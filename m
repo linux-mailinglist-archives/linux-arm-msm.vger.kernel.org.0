@@ -1,124 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-2731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59ACF7FF358
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 16:19:53 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38C437FF379
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 16:22:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 88F4B1C20E3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 15:19:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B4A44B20AD8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 15:22:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DF3251C5D;
-	Thu, 30 Nov 2023 15:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A5B6524B2;
+	Thu, 30 Nov 2023 15:22:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zq5m9SiU"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Ry6PWNiB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D2310E4;
-	Thu, 30 Nov 2023 07:19:46 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AUFIA2H023978;
-	Thu, 30 Nov 2023 15:19:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=77cknAywjb3vJ0XHOP+azo+o2YZ4goxYI+iunv5cNkc=;
- b=Zq5m9SiUXxY2h1wbcV+obb8yRmbXrTqJosuMDX8dbAWqH2Ttp8dWh4gsroHOduC8ViEn
- B2pC7kjgnYnDTRwEENPtilgVy8oypg5+V9CYsrFVejDgVSseNnRkPj492YvLOpSaeABC
- 5nPBk7gDdEz/JrBIsvl+hk//TLbgPgZHiApKrNIQPPDCmRwA+8AY+3dkNOMPvNNT0rNc
- Czmmax0HW1IsBtPFEN0rn6ZOYFuEAAgkQIMglG7S3f1nfW8PWNSQBXojasQVFWDbows7
- NzXJvS9o5j0XsOZ9+jF6diujGGllgzca6WOoUGIrgPssubxxkG8Pk6s2a49o4IJxfPG3 pw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3upbxsjep2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 15:19:22 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AUFJLw2003303
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 15:19:21 GMT
-Received: from [10.251.45.12] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 30 Nov
- 2023 07:19:16 -0800
-Message-ID: <47f40099-4215-4c9e-9b7a-c5b981abc589@quicinc.com>
-Date: Thu, 30 Nov 2023 17:19:14 +0200
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97E4C10FE;
+	Thu, 30 Nov 2023 07:21:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=+YOgP5+zO/Xow7+mzpfCfU7R635Z1roqLn/BuaW+ZFM=; b=Ry6PWNiBej04RlW4GoLjqg0VGv
+	F9b05uv/VWYnmPr4988jICSkzGjpk3r6dtz0/hklmtnWzcgZxrpVt3ZDLceVpKmghaI24ws16SfMj
+	ZL1x6OHD4St5A/8hOIvcisViE0ZzVUs+cqVpkCxwOiiNm5Ip/t98zVkwi8rVKeJI2JGA=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1r8irO-001fzA-2N; Thu, 30 Nov 2023 16:21:50 +0100
+Date: Thu, 30 Nov 2023 16:21:50 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Christian Marangi <ansuelsmth@gmail.com>
+Cc: Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [net-next PATCH 06/14] net: phy: at803x: move at8031 specific
+ data out of generic at803x_priv
+Message-ID: <47df2f0d-3410-43c2-96d3-87af47cfdcce@lunn.ch>
+References: <20231129021219.20914-1-ansuelsmth@gmail.com>
+ <20231129021219.20914-7-ansuelsmth@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] Add support for Translation Buffer Units
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>
-CC: <devicetree@vger.kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-kernel@lists.infradead.org>,
-        <iommu@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_cgoldswo@quicinc.com>,
-        <quic_sukadev@quicinc.com>, <quic_pdaly@quicinc.com>,
-        <quic_sudaraja@quicinc.com>, <djakov@kernel.org>
-References: <20231118042730.2799-1-quic_c_gdjako@quicinc.com>
- <fe74b1ab-078d-4c53-9133-cf7ab00a656d@linaro.org>
-Content-Language: en-US
-From: Georgi Djakov <quic_c_gdjako@quicinc.com>
-In-Reply-To: <fe74b1ab-078d-4c53-9133-cf7ab00a656d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OBdVb95uphT6pHD6u44i1ixvLsUD4i29
-X-Proofpoint-GUID: OBdVb95uphT6pHD6u44i1ixvLsUD4i29
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-30_14,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
- suspectscore=0 mlxlogscore=804 lowpriorityscore=0 mlxscore=0 bulkscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 clxscore=1011
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2311300110
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231129021219.20914-7-ansuelsmth@gmail.com>
 
-On 11/18/2023 1:21 PM, Bryan O'Donoghue wrote:
-> On 18/11/2023 04:27, Georgi Djakov wrote:
->> The TCUs (Translation Control Units) and TBUs (Translation Buffer
->> Units) are key components of the MMU-500. Multiple TBUs are connected
->> to a single TCU over an interconnect. Each TBU contains a TLB that
->> caches page tables. The MMU-500 implements a TBU for each connected
->> master, and the TBU is designed, so that it is local to the master.
->>
->> The Qualcomm SDM845 platform has an implementation of the SMMU-500,
->> that has multiple TBUs. A DT schema is added to describe the resources
->> for each TBU (register space, power-domains, interconnects and clocks).
->>
->> The TBU driver will manage the resources and allow the system to
->> operate the TBUs during a context fault to obtain details by doing
->> s1 inv, software + hardware page table walks etc. This is implemented
->> with ATOS/eCATs as the ATS feature is not supported. Being able to
->> query the TBUs is useful for debugging various hardware/software
->> issues on these platforms.
->>
->> v2:
->> - Improve DT binding description, add full example. (Konrad)
->> - Drop Qcom specific stuff from the generic binding. (Rob)
->> - Unconditionally try to populate subnodes. (Konrad)
->> - Improve TBU driver commit text, remove memory barriers. (Bjorn)
->> - Move TBU stuff into separate file. Make the driver builtin.
->> - TODO: Evaluate whether to keep TBU support as a separate driver
->>    or just instantiate things from qcom_smmu_impl_init()
->>
->> v1: https://lore.kernel.org/r/20231019021923.13939-1-quic_c_gdjako@quicinc.com
-> 
-> What is your suggested way to test this series ?
+> +struct at8031_data {
+> +	bool is_fiber;
+> +	bool is_1000basex;
+> +	struct regulator_dev *vddio_rdev;
+> +	struct regulator_dev *vddh_rdev;
+> +};
+> +
+>  struct at803x_priv {
+>  	int flags;
+>  	u16 clk_25m_reg;
+>  	u16 clk_25m_mask;
+>  	u8 smarteee_lpi_tw_1g;
+>  	u8 smarteee_lpi_tw_100m;
+> -	bool is_fiber;
+> -	bool is_1000basex;
+> -	struct regulator_dev *vddio_rdev;
+> -	struct regulator_dev *vddh_rdev;
+> +
+> +	/* Specific data for at8031 PHYs */
+> +	void *data;
+>  };
 
-Hi Bryan,
+I don't really like this void *
 
-Just break some driver to initiate a memory transaction with no valid context. I used venus for that. Or the simplest would be to just specify an invalid stream ID in DT for some device.
+Go through at803x_priv and find out what is common to them all, and
+keep that in one structure. Add per family private structures which
+include the common as a member.
 
-Thanks,
-Georgi
+By having real types everywhere you get the compiler doing checks for
+you.
+
+As Russell pointed out, this patch series is going to be too big. So
+break it up. We can move fast on patches which are simple and
+obviously correct.
+
+	  Andrew
 
