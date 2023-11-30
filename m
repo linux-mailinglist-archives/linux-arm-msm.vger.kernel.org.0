@@ -1,205 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-2700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2701-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D40B7FEDBC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 12:24:39 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C8887FEDF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 12:31:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0931C281B9C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 11:24:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C3DC1C210DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 11:31:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83DC63C483;
-	Thu, 30 Nov 2023 11:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DFCC3DB9B;
+	Thu, 30 Nov 2023 11:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q5/vXlP+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PtI5AB0y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FC1810D4;
-	Thu, 30 Nov 2023 03:24:31 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AUAGqoX030099;
-	Thu, 30 Nov 2023 11:24:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Pb/ULEA6EZts/A7bgZSpJRDWdXNI8NoXl9I0WNYwpwY=;
- b=Q5/vXlP+BnOB7NSQeHAn21+l/IivpMZ69ijElAXRkQ92Zw/ofzL7numdhIp7XIVN1lIg
- tyWiFp6Mq8G8BeK06aAieMxmHiYskvyrRNDzWl6qUsW4bAhMjB2e6t/XfCh7FwSpkL1d
- bEwo9g4vt338rI8q/yzM4q1DHtmvXZQ+ZuFxWgLuwWEzDZRSJrkbdVk0XbPc3A2QRi42
- S2TWtlCH4VXN/T/zbtJGy0YOpacj2HM12RnnTk5Qg4PnCMlIxsxH/mSacd8iDoimXdaO
- hS6uPYDyS6Z1/J4MLAr2qS24tjLRTlzGXjet5lolQsW5f5m8ljlcAGs1jIeUGldL+RNR hg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3up2byumu8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 11:24:05 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AUBO4rc019029
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 11:24:04 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 30 Nov
- 2023 03:23:57 -0800
-Message-ID: <9272429a-42f8-8af5-8b70-c0c785c001fd@quicinc.com>
-Date: Thu, 30 Nov 2023 16:53:54 +0530
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7885710FA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 03:31:14 -0800 (PST)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5d279bcce64so9206707b3.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 03:31:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701343873; x=1701948673; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F/HclVvX4CFRsOl+VZSwxHOAlC8On+bnCgFx4qFVgaY=;
+        b=PtI5AB0ySw7fT/Q3ZOC06OG/RtVCFSMpVJpHRk+3ViHKe4K4J1fsxUbruQyUFTUqIs
+         uYUA2YaRe7wqiXP/HkqSpIQiamxMBIUiqwq8B95S+PA8M9HH+JgmuBmFOHZI5g1y3OuT
+         3BR4B/nDvkpNuM7SH+8WCOXM0gABIgyEO1x9SZ0kOVADazaHj+nTXvbauC55IezBpMdl
+         MlQab81dPErFfeOxWHwPeUM+G5SiYhwz1ClKRH/+Mq85aUgMkCc+tx3N24Uk5ERU6cs2
+         tAPe2moWG0t+FTbEfjhcsNlA5YCa60KtZsITNWcJHkmSGrVgEnhI3u1HgN5wFP56deHE
+         BiGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701343873; x=1701948673;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F/HclVvX4CFRsOl+VZSwxHOAlC8On+bnCgFx4qFVgaY=;
+        b=tpeD0KzwSAJ4KIoU7TTnjoigButeuCy0k7+gATlAfgSaXsm2oXUPwfXXgz+hY7L0V/
+         0HOmcqV8YQ0z6dkgP1GotZCCfvQjn6UOlIcP8Sd4bWg5Vbcno6f2oYxg5PQm9ry7ViC1
+         sVRIMGJ/QF4cMSXd+dabK4BuwaNO4frFmN9xCOAI+txVBW2uH/WbTcijKWCSBslPWl5k
+         nboPdE0LKdIbV6PkpIQmbAlZaL1kLSKocZtirs3TJAT/EHUpTppQgWfW9uH1IC0p4GkN
+         wV34zokxTLVncmzaYVVj4A5D/DForK4j57Wn4Glu9xwDNn3FAwfhvTZk0NUyCL42am3d
+         Xq4g==
+X-Gm-Message-State: AOJu0YygRfstKWB33QanN71+wyh/kluKBToAxlJ3KwD4/uxOGnceBHgY
+	9ln+g1Btvwtjlk3kp4d9NMPXRlI9ddzMn/xXolqrFw==
+X-Google-Smtp-Source: AGHT+IH1CnGwV597j2be6JXJ7H1sH3FUOqbojh7QGEEjE4QkfLLaWQrU1Lc/ACiw78MzsxK6+qZrL30ouvAAFN/Wn1g=
+X-Received: by 2002:a0d:dec2:0:b0:5cd:c7a3:6cb3 with SMTP id
+ h185-20020a0ddec2000000b005cdc7a36cb3mr21398845ywe.37.1701343873628; Thu, 30
+ Nov 2023 03:31:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V2 3/5] arm64: dts: qcom: Add base X1E80100 dtsi and the
- QCP dts
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <catalin.marinas@arm.com>, <ulf.hansson@linaro.org>
-CC: <agross@kernel.org>, <conor+dt@kernel.org>, <ayan.kumar.halder@amd.com>,
-        <j@jannau.net>, <dmitry.baryshkov@linaro.org>,
-        <nfraprado@collabora.com>, <m.szyprowski@samsung.com>,
-        <u-kumar1@ti.com>, <peng.fan@nxp.com>, <lpieralisi@kernel.org>,
-        <quic_rjendra@quicinc.com>, <abel.vesa@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <quic_tsoni@quicinc.com>, <neil.armstrong@linaro.org>
-References: <20231117113931.26660-1-quic_sibis@quicinc.com>
- <20231117113931.26660-4-quic_sibis@quicinc.com>
- <918ff1f5-ce01-43ea-b034-e69fbb31f495@linaro.org>
- <3dd41426-c026-a832-0a6b-0aabfaec2a8c@quicinc.com>
- <c6e05a10-88cc-409c-afc0-37166b763eaa@linaro.org>
- <8021a6f5-6316-031d-8181-e0e2047e2fa8@quicinc.com>
- <5ffa4cbf-c30f-4169-ad75-38cd3e8d11c2@linaro.org>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <5ffa4cbf-c30f-4169-ad75-38cd3e8d11c2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 7TCNuBAt3U1hp4nhwT4p9S0anx5UnRGI
-X-Proofpoint-ORIG-GUID: 7TCNuBAt3U1hp4nhwT4p9S0anx5UnRGI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-30_09,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- phishscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 impostorscore=0 bulkscore=0
- mlxlogscore=999 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311060000 definitions=main-2311300084
+References: <20231124080623.564924-1-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20231124080623.564924-1-u.kleine-koenig@pengutronix.de>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Thu, 30 Nov 2023 12:30:37 +0100
+Message-ID: <CAPDyKFqQeUsyHf4RC_FQTpm9G_LMYNAaC6EXtOmb_h_6rhUcfA@mail.gmail.com>
+Subject: Re: [PATCH 0/9] pmdomain: Convert to platform remove callback
+ returning void
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc: Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Linus Walleij <linus.walleij@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Pengfei Li <pengfei.li_1@nxp.com>, Rob Herring <robh@kernel.org>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+	Marco Felsch <m.felsch@pengutronix.de>, Peng Fan <peng.fan@nxp.com>, 
+	Jindong Yue <jindong.yue@nxp.com>, Lucas Stach <l.stach@pengutronix.de>, 
+	Marek Vasut <marex@denx.de>, Deepak R Varma <drv@mailo.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>, 
+	Michal Simek <michal.simek@amd.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	NXP Linux Team <linux-imx@nxp.com>, linux-pm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, 24 Nov 2023 at 09:10, Uwe Kleine-K=C3=B6nig
+<u.kleine-koenig@pengutronix.de> wrote:
+>
+> Hello,
+>
+> this patch set converts all drivers below drivers/pmdomain to use struct
+> platform_driver::remove_new(). See commit 5c5a7680e67b ("platform:
+> Provide a remove callback that returns no value") for an extended
+> explanation and the eventual goal.
+>
+> While working on drivers/pmdomain/imx/gpc.c I noticed three issues, but
+> didn't address them:
+>
+>  - The driver uses builtin_platform_driver twice. The documentation
+>    however mandates that "Each driver may only use this macro once".
+>    I don't know if the documentation is wrong and using it twice works
+>    as intended.
+>
+>  - imx_gpc_remove() only removes two PDs, but there might be up to four?!
+>
+>  - In imx_gpc_remove() if
+>    pm_genpd_remove(&imx_gpc_domains[GPC_PGC_DOMAIN_PU].base) fails,
+>    removing the ARM PD is skipped. So together with the previous item
+>    the driver leaks up to three genpd instances.
+>
+> Maybe someone caring for this driver will pick these up and prepare
+> patches? Ideally pm_genpd_remove() should return void caring for still
+> existing providers, parents and devices in generic code. I think that
+> erroring out in genpd_remove() before the PM domain is removed from the
+> various lists might result in use-after-free errors.
+>
+> Best regards
+> Uwe
+>
+> Uwe Kleine-K=C3=B6nig (9):
+>   pmdomain: imx-pgc: Convert to platform remove callback returning void
+>   pmdomain: imx-gpc: Convert to platform remove callback returning void
+>   pmdomain: imx-gpcv2: Convert to platform remove callback returning
+>     void
+>   pmdomain: imx8m-blk-ctrl: Convert to platform remove callback
+>     returning void
+>   pmdomain: imx8mp-blk-ctrl: Convert to platform remove callback
+>     returning void
+>   pmdomain: imx93-blk-ctrl: Convert to platform remove callback
+>     returning void
+>   pmdomain: imx93-pd: Convert to platform remove callback returning void
+>   pmdomain: qcom-cpr: Convert to platform remove callback returning void
+>   pmdomain: xilinx/zynqmp: Convert to platform remove callback returning
+>     void
+>
+>  drivers/pmdomain/imx/gpc.c                  | 28 +++++++++++----------
+>  drivers/pmdomain/imx/gpcv2.c                |  6 ++---
+>  drivers/pmdomain/imx/imx8m-blk-ctrl.c       |  6 ++---
+>  drivers/pmdomain/imx/imx8mp-blk-ctrl.c      |  6 ++---
+>  drivers/pmdomain/imx/imx93-blk-ctrl.c       |  6 ++---
+>  drivers/pmdomain/imx/imx93-pd.c             |  6 ++---
+>  drivers/pmdomain/qcom/cpr.c                 |  6 ++---
+>  drivers/pmdomain/xilinx/zynqmp-pm-domains.c |  6 ++---
+>  8 files changed, 29 insertions(+), 41 deletions(-)
+>
 
+The series applied for next, thanks!
 
-On 11/30/23 03:59, Konrad Dybcio wrote:
-> On 29.11.2023 16:46, Sibi Sankar wrote:
->>
->>
->> On 11/29/23 18:24, Konrad Dybcio wrote:
->>> On 29.11.2023 10:25, Sibi Sankar wrote:
->>>>
->>>>
->>>> On 11/18/23 06:36, Konrad Dybcio wrote:
->>>>> On 17.11.2023 12:39, Sibi Sankar wrote:
->>>>>> From: Rajendra Nayak <quic_rjendra@quicinc.com>
->>>>>>
->>>>>> Add base dtsi and QCP board (Qualcomm Compute Platform) dts file for
->>>>>> X1E80100 SoC, describing the CPUs, GCC and RPMHCC clock controllers,
->>>>>> geni UART, interrupt controller, TLMM, reserved memory, interconnects,
->>>>>> SMMU and LLCC nodes.
->>>>>>
->>>>>> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
->>>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>>>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
->>>>>> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
->>>>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>>>>> ---
->>> [...]
->>>
->>>
->>>>>> +        idle-states {
->>>>>> +            entry-method = "psci";
->>>>>> +
->>>>>> +            CLUSTER_C4: cpu-sleep-0 {
->>>>>> +                compatible = "arm,idle-state";
->>>>>> +                idle-state-name = "ret";
->>>>>> +                arm,psci-suspend-param = <0x00000004>;
->>>>> These suspend parameters look funky.. is this just a PSCI sleep
->>>>> implementation that strays far away from Arm's suggested guidelines?
->>>>
->>>> not really! it's just that 30th bit is set according to spec i.e
->>>> it's marked as a retention state.
->>> So, is there no state where the cores actually power down? Or is it
->>> not described yet?
->>>
->>> FWIW by "power down" I mean it in the sense that Arm DEN0022D does,
->>> so "In this state the core is powered off. Software on the device
->>> needs to save all core state, so that it can be preserved over
->>> the powerdown."
->>
->> I was told we mark it explicitly as retention because hw is expected
->> to handle powerdown and we don't want sw to also do the same.
->>
->>>
->>>>
->>>>>
->>>>> [...]
->>>>>
->>>>>
->>>>>> +        CPU_PD11: power-domain-cpu11 {
->>>>>> +            #power-domain-cells = <0>;
->>>>>> +            power-domains = <&CLUSTER_PD>;
->>>>>> +        };
->>>>>> +
->>>>>> +        CLUSTER_PD: power-domain-cpu-cluster {
->>>>>> +            #power-domain-cells = <0>;
->>>>>> +            domain-idle-states = <&CLUSTER_CL4>, <&CLUSTER_CL5>;
->>>>>> +        };
->>>>> So, can the 3 clusters not shut down their L2 and PLLs (if separate?)
->>>>> on their own?
->>>>
->>>> on CL5 the clusters are expected to shutdown their l2 and PLL on their
->>>> own.
->>> Then I think this won't happen with this description
->>>
->>> every cpu has a genpd tree like this:
->>>
->>> cpu_n
->>>    |_CPU_PDn
->>>       |_CLUSTER_PD
->>>
->>> and CLUSTER_PD has two idle states: CLUSTER_CL4 and CLUSTER_CL5
->>>
->>> which IIUC means that neither cluster idle state will be reached
->>> unless all children of CLUSTER_PD (so, all CPUs) go down that low
->>>
->>> This is "fine" on e.g. sc8280 where both CPU clusters are part of
->>> the same Arm DynamIQ cluster (which is considered one cluster as
->>> far as MPIDR_EL1 goes) (though perhaps that's misleading and with
->>> the qcom plumbing they perhaps could actually be collapsed separately)
->>
->> We did verify that the sleep stats increase independently for each
->> cluster, so it's behavior is unlike what you explained above. I'll
->> re-spin this series again in the meantime and you can take another
->> stab at it there.
-> So are you saying that you checked the RPMh sleep stats and each cluster
-> managed to sleep on its own, or did you do something different?
-
-We had used some jtag scripts but what you said is correct, there
-definitely needs to be separate cluster_pd defined for each cluster.
-Will fix this in the next re-spin.
-
--Sibi
-
-> 
-> Were the sleep durations far apart? What's the order of magnitude of that
-> difference? Are the values reported in RPMh greater than those in
-> /sys/kernel/debug/pm_genpd/power-domain-cpu-cluster/total_idle_time?
-> 
-> Is there any other (i.e. non-Linux) source of "go to sleep" votes?
-> 
-> Konrad
+Kind regards
+Uffe
 
