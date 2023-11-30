@@ -1,191 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-2772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6D297FFE99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 23:41:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 869787FFEBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 23:48:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D1FA2B20A92
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 22:41:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 70E45B20BFA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 22:48:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19ECE282F2;
-	Thu, 30 Nov 2023 22:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA0FA584C2;
+	Thu, 30 Nov 2023 22:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Z9eIZFd2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eeKd4MA2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 684F0133;
-	Thu, 30 Nov 2023 14:41:39 -0800 (PST)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AUMRq33024023;
-	Thu, 30 Nov 2023 22:41:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Vexax5Lwygt2DRmCytzPYqLZ+7assqLIoKPkyKRQ7aM=;
- b=Z9eIZFd2WMiD98YStG9Nf9TvaTl+y/KTHpI3re6kt6/rkLbALcbw4C/NcDxHKCWDQwZ5
- GXaCa2G3RTIfcckNqEOiBu4EyV4Cdg7ijN+w5FxxGLYTtGhQ5DJeVzSmrDSePJYrViw9
- JKxtmZDOQVCY62BeINGvsjtbXQmdqITzMnqh2K6wbe7lDkkDHIq57RhTMF5ZnY3gtscU
- 1REs90aLxt+3GTXPPgsDwzoiH83I/RbZG4spCNRreEVK/GzU/acne136s1TL8br8kM4s
- JRpCpH68wZHI9TmoZVOHkd+2hYC57wGU7vQuvQ3AXLtF+/CcEkUoimWtCDHpCW3NpHdQ Wg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3upv4818t0-1
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F20CE10FC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 14:48:11 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AULknpO032003;
+	Thu, 30 Nov 2023 22:47:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=A3SdIOwkp+raoZKeD++WfooMkWxcrdLVxMc2AMfPLs8=;
+ b=eeKd4MA2C7XXmEXgfs7uuACbtCLlKqAM730dQlvyyuyMv7pjmNyTbB7sEtwBzGCJAMNj
+ NwFtJaHJWtZPYQDvGteiZdE4LP0C78ea1F724mu5SFfTS7fOogtoZy8bX3Bjl8jODfHg
+ b6OicAMngNnuOsXojbJ7orJDP1Qinvo+cRqXqfcvpbqSUA5zUiUdzuor7nx21F20CzuL
+ lcg4gzZCEX7W2bQhvwWbAqEIk4JKVUb+o/hJ1w8SBJKiJquYURCwIFsNNojhYjX+9NbE
+ j9BYdgChIW5Ovn2vF+yztSmsBTJopdFIA8SXrYmp/YO4nM4CqleJa85EaFqceR1XCyDU 1w== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uq2kp83xg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 22:41:33 +0000
+	Thu, 30 Nov 2023 22:47:55 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AUMfHVw016661
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AUMlt1X006166
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 30 Nov 2023 22:41:17 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 30 Nov
- 2023 14:41:17 -0800
-Message-ID: <f990043a-eb17-dc5d-3257-ed95efcee8e3@quicinc.com>
-Date: Thu, 30 Nov 2023 14:41:16 -0800
+	Thu, 30 Nov 2023 22:47:55 GMT
+Received: from hu-parellan-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 30 Nov 2023 14:47:54 -0800
+From: Paloma Arellano <quic_parellan@quicinc.com>
+To: <freedreno@lists.freedesktop.org>
+CC: Paloma Arellano <quic_parellan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <marijn.suijten@somainline.org>,
+        <neil.armstrong@linaro.org>, kernel test robot <lkp@intel.com>
+Subject: [PATCH v3] drm/msm/dpu: Capture dpu snapshot when frame_done_timer timeouts
+Date: Thu, 30 Nov 2023 14:47:37 -0800
+Message-ID: <20231130224740.24383-1-quic_parellan@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 04/16] drm/msm/dpu: add cdm blocks to sc7280
- dpu_hw_catalog
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <quic_khsieh@quicinc.com>, <quic_parellan@quicinc.com>,
-        <quic_jesszhan@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Sean Paul <sean@poorly.run>
-References: <20230830224910.8091-1-quic_abhinavk@quicinc.com>
- <20230830224910.8091-5-quic_abhinavk@quicinc.com>
- <CAA8EJpoQ0L_b=KDQxuXEL4KbaP1DACq1Qpw6m_ot6m+UYsHZWg@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpoQ0L_b=KDQxuXEL4KbaP1DACq1Qpw6m_ot6m+UYsHZWg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dbBQUbkUqIScm6kbF2VdY5kc44p9WIKO
-X-Proofpoint-ORIG-GUID: dbBQUbkUqIScm6kbF2VdY5kc44p9WIKO
+X-Proofpoint-ORIG-GUID: ly9GfYG9tBvzHilOahlA_xu6i1AQamog
+X-Proofpoint-GUID: ly9GfYG9tBvzHilOahlA_xu6i1AQamog
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-30_22,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 mlxscore=0
- phishscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ bulkscore=0 clxscore=1011 spamscore=0 mlxlogscore=999 priorityscore=1501
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
- definitions=main-2311300167
+ definitions=main-2311300168
 
+Trigger a devcoredump to dump dpu registers and capture the drm atomic
+state when the frame_done_timer timeouts.
 
+v2: Optimize the format in which frame_done_timeout_cnt is incremented
+v3: Describe parameter frame_done_timeout_cnt in dpu_encoder_virt
 
-On 8/30/2023 3:57 PM, Dmitry Baryshkov wrote:
-> On Thu, 31 Aug 2023 at 01:49, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->> Add CDM blocks to the sc7280 dpu_hw_catalog to support
->> YUV format output from writeback block.
->>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> ---
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h  |  9 +++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h      | 13 +++++++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h         |  5 +++++
->>   3 files changed, 27 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->> index 3b5061c4402a..5252170f216d 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->> @@ -251,10 +251,19 @@ static const struct dpu_mdss_version sc7280_mdss_ver = {
->>          .core_minor_ver = 2,
->>   };
->>
->> +static const struct dpu_cdm_cfg sc7280_cdm = {
->> +       .name = "cdm_0",
->> +       .id = CDM_0,
->> +       .len = 0x228,
->> +       .base = 0x79200,
->> +       .features = 0,
-> 
-> No need to.
-> Also, as the CDM block seems to be common to all existing platforms,
-> what about moving this definition to dpu_hw_catalog.c next to VBIF
-> settings?
-> 
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202312010225.2OJWLKmA-lkp@intel.com/
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-Thanks for the feedback and sorry for the delay in getting back to this 
-feature.
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 1cf7ff6caff4e..1c3560e1c6252 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -151,6 +151,8 @@ enum dpu_enc_rc_states {
+  * @crtc_frame_event_cb:	callback handler for frame event
+  * @crtc_frame_event_cb_data:	callback handler private data
+  * @frame_done_timeout_ms:	frame done timeout in ms
++ * @frame_done_timeout_cnt:	atomic counter tracking the number of frame
++ * 				done timeouts
+  * @frame_done_timer:		watchdog timer for frame done event
+  * @disp_info:			local copy of msm_display_info struct
+  * @idle_pc_supported:		indicate if idle power collaps is supported
+@@ -191,6 +193,7 @@ struct dpu_encoder_virt {
+ 	void *crtc_frame_event_cb_data;
+ 
+ 	atomic_t frame_done_timeout_ms;
++	atomic_t frame_done_timeout_cnt;
+ 	struct timer_list frame_done_timer;
+ 
+ 	struct msm_display_info disp_info;
+@@ -1204,6 +1207,8 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
+ 
+ 	dpu_enc->dsc = dpu_encoder_get_dsc_config(drm_enc);
+ 
++	atomic_set(&dpu_enc->frame_done_timeout_cnt, 0);
++
+ 	if (disp_info->intf_type == INTF_DP)
+ 		dpu_enc->wide_bus_en = msm_dp_wide_bus_available(priv->dp[index]);
+ 	else if (disp_info->intf_type == INTF_DSI)
+@@ -2115,11 +2120,12 @@ static int _dpu_encoder_status_show(struct seq_file *s, void *data)
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+ 		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+ 
+-		seq_printf(s, "intf:%d  wb:%d  vsync:%8d     underrun:%8d    ",
++		seq_printf(s, "intf:%d  wb:%d  vsync:%8d     underrun:%8d    frame_done_cnt:%d",
+ 				phys->hw_intf ? phys->hw_intf->idx - INTF_0 : -1,
+ 				phys->hw_wb ? phys->hw_wb->idx - WB_0 : -1,
+ 				atomic_read(&phys->vsync_cnt),
+-				atomic_read(&phys->underrun_cnt));
++				atomic_read(&phys->underrun_cnt),
++				atomic_read(&dpu_enc->frame_done_timeout_cnt));
+ 
+ 		seq_printf(s, "mode: %s\n", dpu_encoder_helper_get_intf_type(phys->intf_mode));
+ 	}
+@@ -2341,6 +2347,9 @@ static void dpu_encoder_frame_done_timeout(struct timer_list *t)
+ 
+ 	DPU_ERROR_ENC(dpu_enc, "frame done timeout\n");
+ 
++	if (atomic_inc_return(&dpu_enc->frame_done_timeout_cnt) == 1)
++		msm_disp_snapshot_state(drm_enc->dev);
++
+ 	event = DPU_ENCODER_FRAME_EVENT_ERROR;
+ 	trace_dpu_enc_frame_done_timeout(DRMID(drm_enc), event);
+ 	dpu_enc->crtc_frame_event_cb(dpu_enc->crtc_frame_event_cb_data, event);
+@@ -2392,6 +2401,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+ 		goto fail;
+ 
+ 	atomic_set(&dpu_enc->frame_done_timeout_ms, 0);
++	atomic_set(&dpu_enc->frame_done_timeout_cnt, 0);
+ 	timer_setup(&dpu_enc->frame_done_timer,
+ 			dpu_encoder_frame_done_timeout, 0);
+ 
+-- 
+2.39.2
 
-Ack. Yes lets move it to dpu_hw_catalog.c and remove explicit 0 
-assignment for features.
-
->> +};
->> +
->>   const struct dpu_mdss_cfg dpu_sc7280_cfg = {
->>          .mdss_ver = &sc7280_mdss_ver,
->>          .caps = &sc7280_dpu_caps,
->>          .mdp = &sc7280_mdp,
->> +       .cdm = &sc7280_cdm,
->>          .ctl_count = ARRAY_SIZE(sc7280_ctl),
->>          .ctl = sc7280_ctl,
->>          .sspp_count = ARRAY_SIZE(sc7280_sspp),
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> index 6c9634209e9f..4ea7c3f85a95 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> @@ -693,6 +693,17 @@ struct dpu_vbif_cfg {
->>          u32 memtype[MAX_XIN_COUNT];
->>   };
->>
->> +/**
->> + * struct dpu_cdm_cfg - information of chroma down blocks
->> + * @name               string name for debug purposes
->> + * @id                 enum identifying this block
->> + * @base               register offset of this block
->> + * @features           bit mask identifying sub-blocks/features
->> + */
->> +struct dpu_cdm_cfg {
->> +       DPU_HW_BLK_INFO;
->> +};
->> +
->>   /**
->>    * Define CDP use cases
->>    * @DPU_PERF_CDP_UDAGE_RT: real-time use cases
->> @@ -816,6 +827,8 @@ struct dpu_mdss_cfg {
->>          u32 wb_count;
->>          const struct dpu_wb_cfg *wb;
->>
->> +       const struct dpu_cdm_cfg *cdm;
->> +
->>          u32 ad_count;
->>
->>          u32 dspp_count;
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
->> index d85157acfbf8..4d6dba18caf0 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
->> @@ -185,6 +185,11 @@ enum dpu_dsc {
->>          DSC_MAX
->>   };
->>
->> +enum dpu_cdm {
->> +       CDM_0 = 1,
->> +       CDM_MAX
->> +};
->> +
->>   enum dpu_pingpong {
->>          PINGPONG_NONE,
->>          PINGPONG_0,
->> --
->> 2.40.1
->>
-> 
-> 
 
