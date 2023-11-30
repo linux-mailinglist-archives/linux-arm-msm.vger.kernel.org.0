@@ -1,101 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-2644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDD687FE822
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 05:06:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B4127FE893
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 06:21:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8132281ACE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 04:06:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FE37281F64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 05:21:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC0A0156E5;
-	Thu, 30 Nov 2023 04:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6D9813FF9;
+	Thu, 30 Nov 2023 05:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gpik/YcZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NfwJ87uK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4D0610E4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 20:06:21 -0800 (PST)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5cd3c4457a0so5287377b3.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 20:06:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701317181; x=1701921981; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1zwuamlIV1jDg6rOlQdipklJQb9oUjXdjuftFM5av+U=;
-        b=gpik/YcZQs3CpgTa0jfYPa+AGxuqwHvIUOP8WBzkQCkPg/6cCcaGT+KNAcSHTr+/Nq
-         ibrEho5U2TOU1ytTLarpzjyjKla38BGAqKrrbBIFvgdjdEt2an64rBiHiLM6wDJwvnbK
-         mPJrOlURVDdUSmGxOMOQccQcS1z8D8TH3LlBAE6qn4FkjYKrZRgzrvB3pkz3QRprjY0r
-         Uj+azWQyiZWc2ODcgAOiTHKYnsO0j4OV0Hrfla6rWbsfM7IphlD16GoSNVqnxyCJoFN4
-         Om9ogEecASouztJQIqhurSibsMtY3PHCy5cxsupxlolgiTFudVfF4wzBTJssOeFWGQXX
-         fErg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701317181; x=1701921981;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1zwuamlIV1jDg6rOlQdipklJQb9oUjXdjuftFM5av+U=;
-        b=lheu2N79FMI50HCIDxYV0M95a2jgun+IOx5ZlzZSGWh/EWR3ky7yop1ecNalAKbxQ+
-         JbYRt9y0lQoZE6cJe012KzxJfW1DVUFSclP0xV3M0iQ/fq+XqQH1Z8Y3XarccyNHQFsq
-         Gh7oO940wMVoeYDogy1/NziAR5WhGNjfymcWn99W8foDQEurR4MhCz+4t3YiCCMFGUO4
-         xFGA1qUxpEhpV1Cjq2TjFQ3LO4NAY63pYjGSDfnTEFkqVFvk2PK4bN/kTxxHdeWLQBbM
-         kDHCRS8KyZP0u1Ut0A/IwMmy86ElAMwYaDdg1P2fNPQJHdseWA4bouUo57NaB/xmD2cj
-         AzIw==
-X-Gm-Message-State: AOJu0YxVryZklMYckgVWO3BRwmOZVgC7AHsZr/zRaHhnubrs3cBFOhv3
-	rivkBvx8QoWiV8VUGfYteFqHyLIYbxlNJzmoMQ4tyQ==
-X-Google-Smtp-Source: AGHT+IH5VqWkIJEXkSlzehGjOyCBp+myDPhrn3B4acVuNRIw/JkoNdioljfuRcqvXowZACNims6bGNNgqho9TQqZ5ow=
-X-Received: by 2002:a0d:ef47:0:b0:5a7:b481:4dd2 with SMTP id
- y68-20020a0def47000000b005a7b4814dd2mr21943989ywe.47.1701317180853; Wed, 29
- Nov 2023 20:06:20 -0800 (PST)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9F4134A8;
+	Thu, 30 Nov 2023 05:21:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4E4C433C8;
+	Thu, 30 Nov 2023 05:21:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701321689;
+	bh=SO7acnA+VBGiPPDRPjeZV0L8lWsY1H783sV0wpnMOCU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NfwJ87uKmQi0TjpEJJbc7uduVpBnZVRjYsbqNfzn7Ia4vqX6P5Szj69chlJbr71rt
+	 T7F/4We3/8qz7OeKwcKbcACPT9Z2KT+w82AY97DOx64vJKQnB4JR/bfNHr2hwPWVsv
+	 4p6d74/B+u39ZasqQ4QdbOgMbzaw+DueKKuXemlALO8HakEtfJ7avdNhU+0249Jwk5
+	 19Jhp8eEaXtg/U3ICZMY35kyutXWNJP0NmrOtV6SjnMmJWxOXkv8NRopv3wSZ8+4sb
+	 o/TWHtwlOfpYNUxuuU+BqQ0lcX1GHdKcsgqWsgzKoz74QLB7vi78xFjzwLfy+3ag/w
+	 3EQYo0DhUNjPw==
+Date: Thu, 30 Nov 2023 10:51:16 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	konrad.dybcio@linaro.org, mani@kernel.org, robh+dt@kernel.org,
+	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+	dmitry.baryshkov@linaro.org, robh@kernel.org,
+	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+	quic_parass@quicinc.com, quic_schintav@quicinc.com,
+	quic_shijjose@quicinc.com,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v4 1/3] PCI: qcom: Enable cache coherency for SA8775P RC
+Message-ID: <20231130052116.GA3043@thinkpad>
+References: <1700577493-18538-1-git-send-email-quic_msarkar@quicinc.com>
+ <1700577493-18538-2-git-send-email-quic_msarkar@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231027-solid-fill-v7-0-780188bfa7b2@quicinc.com> <20231027-solid-fill-v7-7-780188bfa7b2@quicinc.com>
-In-Reply-To: <20231027-solid-fill-v7-7-780188bfa7b2@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 30 Nov 2023 06:06:09 +0200
-Message-ID: <CAA8EJppjVcP3YbBLG2vaZrRP2FAVfVM4WvLieLpV3z1VQ2exAA@mail.gmail.com>
-Subject: Re: [PATCH RFC v7 07/10] drm/atomic: Loosen FB atomic checks
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, quic_abhinavk@quicinc.com, 
-	ppaalanen@gmail.com, contact@emersion.fr, laurent.pinchart@ideasonboard.com, 
-	sebastian.wick@redhat.com, ville.syrjala@linux.intel.com, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	wayland-devel@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1700577493-18538-2-git-send-email-quic_msarkar@quicinc.com>
 
-On Sat, 28 Oct 2023 at 01:33, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->
-> Loosen the requirements for atomic and legacy commit so that, in cases
-> where pixel_source != FB, the commit can still go through.
->
-> This includes adding framebuffer NULL checks in other areas to account for
-> FB being NULL when non-FB pixel sources are enabled.
->
-> To disable a plane, the pixel_source must be NONE or the FB must be NULL
-> if pixel_source == FB.
->
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+On Tue, Nov 21, 2023 at 08:08:11PM +0530, Mrinmay Sarkar wrote:
+> In a multiprocessor system cache snooping maintains the consistency
+> of caches. Snooping logic is disabled from HW on this platform.
+> Cache coherency doesn’t work without enabling this logic.
+> 
+> 8775 has IP version 1.34.0 so intruduce a new cfg(cfg_1_34_0) for this
+> platform. Assign no_snoop_override flag into struct qcom_pcie_cfg and
+> set it true in cfg_1_34_0 and enable cache snooping if this particular
+> flag is true.
+> 
+
+I just happen to check the internal register details of other platforms and I
+see this PCIE_PARF_NO_SNOOP_OVERIDE register with the reset value of 0x0. So
+going by the logic of this patch, this register needs to be configured for other
+platforms as well to enable cache coherency, but it seems like not the case as
+we never did and all are working fine (so far no issues reported).
+
+So this gives me an impression that this patch is wrong or needs modification.
+So,
+
+Nacked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
+> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
 > ---
->  drivers/gpu/drm/drm_atomic.c        | 21 ++++++++++----------
->  drivers/gpu/drm/drm_atomic_helper.c | 39 +++++++++++++++++++++----------------
->  include/drm/drm_atomic_helper.h     |  4 ++--
->  include/drm/drm_plane.h             | 29 +++++++++++++++++++++++++++
->  4 files changed, 64 insertions(+), 29 deletions(-)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 20 +++++++++++++++++++-
+>  1 file changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 6902e97..76f03fc 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -51,6 +51,7 @@
+>  #define PARF_SID_OFFSET				0x234
+>  #define PARF_BDF_TRANSLATE_CFG			0x24c
+>  #define PARF_SLV_ADDR_SPACE_SIZE		0x358
+> +#define PCIE_PARF_NO_SNOOP_OVERIDE		0x3d4
+>  #define PARF_DEVICE_TYPE			0x1000
+>  #define PARF_BDF_TO_SID_TABLE_N			0x2000
+>  
+> @@ -117,6 +118,10 @@
+>  /* PARF_LTSSM register fields */
+>  #define LTSSM_EN				BIT(8)
+>  
+> +/* PARF_NO_SNOOP_OVERIDE register fields */
+> +#define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
+> +#define RD_NO_SNOOP_OVERIDE_EN			BIT(3)
+> +
+>  /* PARF_DEVICE_TYPE register fields */
+>  #define DEVICE_TYPE_RC				0x4
+>  
+> @@ -229,6 +234,7 @@ struct qcom_pcie_ops {
+>  
+>  struct qcom_pcie_cfg {
+>  	const struct qcom_pcie_ops *ops;
+> +	bool no_snoop_overide;
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+I'd suggest to name variables after their usecase and not the register. Like,
 
+bool enable_cache_snoop;
+
+>  };
+>  
+>  struct qcom_pcie {
+> @@ -961,6 +967,13 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  
+>  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  {
+> +	const struct qcom_pcie_cfg *pcie_cfg = pcie->cfg;
+> +
+> +	/* Enable cache snooping for SA8775P */
+
+This comment doesn't belong here. It can be added while setting the flag in cfg.
+
+> +	if (pcie_cfg->no_snoop_overide)
+> +		writel(WR_NO_SNOOP_OVERIDE_EN | RD_NO_SNOOP_OVERIDE_EN,
+> +				pcie->parf + PCIE_PARF_NO_SNOOP_OVERIDE);
+> +
+>  	qcom_pcie_clear_hpc(pcie->pci);
+>  
+>  	return 0;
+> @@ -1331,6 +1344,11 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
+>  	.ops = &ops_1_9_0,
+>  };
+>  
+> +static const struct qcom_pcie_cfg cfg_1_34_0 = {
+> +	.ops = &ops_1_9_0,
+> +	.no_snoop_overide = true,
+> +};
+> +
+>  static const struct qcom_pcie_cfg cfg_2_1_0 = {
+>  	.ops = &ops_2_1_0,
+>  };
+> @@ -1627,7 +1645,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
+>  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
+>  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_1_9_0 },
+> -	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_9_0},
+> +	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
+>  	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
+>  	{ .compatible = "qcom,pcie-sc8180x", .data = &cfg_1_9_0 },
+>  	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_1_9_0 },
+> -- 
+> 2.7.4
+> 
+> 
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
