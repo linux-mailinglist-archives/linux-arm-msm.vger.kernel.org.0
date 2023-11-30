@@ -1,125 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-2748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C1507FF89C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 18:43:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B86C77FF977
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 19:35:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB501B20DA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 17:43:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4802CB20E0E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 18:35:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8B1D5812C;
-	Thu, 30 Nov 2023 17:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96E7059175;
+	Thu, 30 Nov 2023 18:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BycyN/3C"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U/f6msDp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F1558104;
-	Thu, 30 Nov 2023 17:43:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315EAC433C8;
-	Thu, 30 Nov 2023 17:43:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701366187;
-	bh=glQ7vJRlyzl2+xsSW7kn8lsuhF+aXhOL0FI2Li/dzJk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=BycyN/3CtipNGEFpKS82OrkkVPuTUAkQiUdpIRgj/4Gw3br5xOTlEU/iPVrraDfDu
-	 Qgx66TtMjgMK4XjfVS2HF4/15P8ix09cu1WftYFAy5Mf0IMvANYm4wCJUBWDu6qVUs
-	 5znw/3ERkJOzV2U7EAgidCzyFzgKO5UnYXcrKlnrgIrrh7s+e/2GDbkIE1eX7ZFI1A
-	 ROYZE3QuYHRpDhhRErNp+EOCSx9tFui+NdNZlee2l43bk8vriTcqu2gEIiwV4xRNaT
-	 VytoRtXTEi4qLOjjUfO2CYWlK4BEVQKFcUsws5vWCY9+Swl55HYHSRdJl8WUwMS7/A
-	 FYASVBZAngr2Q==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1r8l4e-0003Qw-1m;
-	Thu, 30 Nov 2023 18:43:40 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-watchdog@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] dt-bindings: watchdog: qcom,pm8916-wdt: add parent spmi node to example
-Date: Thu, 30 Nov 2023 18:42:54 +0100
-Message-ID: <20231130174254.13180-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.41.0
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8128210DF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 10:35:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701369335; x=1732905335;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=IGGS3ZJAvVbvSqfCChebVYd+/KpvmrRDEwYOg0wlBwM=;
+  b=U/f6msDpEeYJ/98RtSzRRfQ7oHhq12reD4o9afWec3U2Y7i3s5OWlQqE
+   qmNce+9zl3Wg8fZqmzWqxfsJGPyBPQwCB25a0GedJDV7aVP1KHndi0uti
+   au4yiqsQsY3GccD9jljqlN59XvfJkxovG039GZI+jir3dJCtPXINjIgAy
+   ApKM4l2EcdHUIC5Zx5Oe8hviVbKi40brE7VKcxwi2rOqlpWozDI5mt1kE
+   iz0zpmhhYGJq38REIlyJXd2n8r5PBjMH70IjZJ6y7P00DQ04L4jqnEn9W
+   h7lPCa+/TMHEAueuDU+GSitERi8dDrwqBW7V9TjyfBzm7/ieiJRepecXM
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10910"; a="228355"
+X-IronPort-AV: E=Sophos;i="6.04,239,1695711600"; 
+   d="scan'208";a="228355"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Nov 2023 10:35:35 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10910"; a="887337506"
+X-IronPort-AV: E=Sophos;i="6.04,239,1695711600"; 
+   d="scan'208";a="887337506"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by fmsmga002.fm.intel.com with ESMTP; 30 Nov 2023 10:35:31 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r8lsn-0002YR-1T;
+	Thu, 30 Nov 2023 18:35:29 +0000
+Date: Fri, 1 Dec 2023 02:35:03 +0800
+From: kernel test robot <lkp@intel.com>
+To: Paloma Arellano <quic_parellan@quicinc.com>,
+	freedreno@lists.freedesktop.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	neil.armstrong@linaro.org, marijn.suijten@somainline.org,
+	linux-arm-msm@vger.kernel.org, quic_abhinavk@quicinc.com,
+	dri-devel@lists.freedesktop.org, swboyd@chromium.org,
+	seanpaul@chromium.org, quic_jesszhan@quicinc.com,
+	dmitry.baryshkov@linaro.org,
+	Paloma Arellano <quic_parellan@quicinc.com>
+Subject: Re: [PATCH v2] drm/msm/dpu: Capture dpu snapshot when
+ frame_done_timer timeouts
+Message-ID: <202312010225.2OJWLKmA-lkp@intel.com>
+References: <20231129184159.24216-1-quic_parellan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231129184159.24216-1-quic_parellan@quicinc.com>
 
-The PM8916 watchdog is part of an SPMI PMIC, which lives on an SPMI bus.
+Hi Paloma,
 
-Add a parent SPMI bus node with an '#address-cells' of 2 and
-'#size-cells' of 0 instead of relying on the fact that the default
-number of register cells happen to match (i.e. 1 + 1).
+kernel test robot noticed the following build warnings:
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- .../bindings/watchdog/qcom,pm8916-wdt.yaml    | 33 +++++++++++--------
- 1 file changed, 19 insertions(+), 14 deletions(-)
+[auto build test WARNING on drm-misc/drm-misc-next]
+[also build test WARNING on linus/master v6.7-rc3 next-20231130]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-diff --git a/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.yaml
-index 568eb8480fc3..dc6af204e8af 100644
---- a/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.yaml
-+++ b/Documentation/devicetree/bindings/watchdog/qcom,pm8916-wdt.yaml
-@@ -30,22 +30,27 @@ examples:
-     #include <dt-bindings/interrupt-controller/irq.h>
-     #include <dt-bindings/spmi/spmi.h>
- 
--    pmic@0 {
--        compatible = "qcom,pm8916", "qcom,spmi-pmic";
--        reg = <0x0 SPMI_USID>;
--        #address-cells = <1>;
-+    spmi {
-+        #address-cells = <2>;
-         #size-cells = <0>;
- 
--        pon@800 {
--            compatible = "qcom,pm8916-pon";
--            reg = <0x800>;
--            mode-bootloader = <0x2>;
--            mode-recovery = <0x1>;
--
--            watchdog {
--                compatible = "qcom,pm8916-wdt";
--                interrupts = <0x0 0x8 6 IRQ_TYPE_EDGE_RISING>;
--                timeout-sec = <60>;
-+        pmic@0 {
-+            compatible = "qcom,pm8916", "qcom,spmi-pmic";
-+            reg = <0x0 SPMI_USID>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            pon@800 {
-+                compatible = "qcom,pm8916-pon";
-+                reg = <0x800>;
-+                mode-bootloader = <0x2>;
-+                mode-recovery = <0x1>;
-+
-+                watchdog {
-+                    compatible = "qcom,pm8916-wdt";
-+                    interrupts = <0x0 0x8 6 IRQ_TYPE_EDGE_RISING>;
-+                    timeout-sec = <60>;
-+                };
-             };
-         };
-     };
+url:    https://github.com/intel-lab-lkp/linux/commits/Paloma-Arellano/drm-msm-dpu-Capture-dpu-snapshot-when-frame_done_timer-timeouts/20231130-055033
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20231129184159.24216-1-quic_parellan%40quicinc.com
+patch subject: [PATCH v2] drm/msm/dpu: Capture dpu snapshot when frame_done_timer timeouts
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20231201/202312010225.2OJWLKmA-lkp@intel.com/config)
+compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project.git f28c006a5895fc0e329fe15fead81e37457cb1d1)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231201/202312010225.2OJWLKmA-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312010225.2OJWLKmA-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c:211: warning: Function parameter or member 'frame_done_timeout_cnt' not described in 'dpu_encoder_virt'
+
+
+vim +211 drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  114  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  115  /**
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  116   * struct dpu_encoder_virt - virtual encoder. Container of one or more physical
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  117   *	encoders. Virtual encoder manages one "logical" display. Physical
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  118   *	encoders manage one intf block, tied to a specific panel/sub-panel.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  119   *	Virtual encoder defers as much as possible to the physical encoders.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  120   *	Virtual encoder registers itself with the DRM Framework as the encoder.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  121   * @base:		drm_encoder base class for registration with DRM
+585b3f9472eea8 Sean Paul         2018-11-16  122   * @enc_spinlock:	Virtual-Encoder-Wide Spin Lock for IRQ purposes
+fba7427eb59496 Sean Paul         2018-11-16  123   * @enabled:		True if the encoder is active, protected by enc_lock
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  124   * @num_phys_encs:	Actual number of physical encoders contained.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  125   * @phys_encs:		Container of physical encoders managed.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  126   * @cur_master:		Pointer to the current master in this mode. Optimization
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  127   *			Only valid after enable. Cleared as disable.
+cca5ff947c7c6e Lee Jones         2020-11-23  128   * @cur_slave:		As above but for the slave encoder.
+cca5ff947c7c6e Lee Jones         2020-11-23  129   * @hw_pp:		Handle to the pingpong blocks used for the display. No.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  130   *			pingpong blocks can be different than num_phys_encs.
+58dca981074948 Vinod Koul        2022-04-06  131   * @hw_dsc:		Handle to the DSC blocks used for the display.
+58dca981074948 Vinod Koul        2022-04-06  132   * @dsc_mask:		Bitmask of used DSC blocks.
+cca5ff947c7c6e Lee Jones         2020-11-23  133   * @intfs_swapped:	Whether or not the phys_enc interfaces have been swapped
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  134   *			for partial update right-only cases, such as pingpong
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  135   *			split where virtual pingpong does not generate IRQs
+e4914867ac99ca Sean Paul         2018-11-16  136   * @crtc:		Pointer to the currently assigned crtc. Normally you
+e4914867ac99ca Sean Paul         2018-11-16  137   *			would use crtc->state->encoder_mask to determine the
+e4914867ac99ca Sean Paul         2018-11-16  138   *			link between encoder/crtc. However in this case we need
+e4914867ac99ca Sean Paul         2018-11-16  139   *			to track crtc in the disable() hook which is called
+e4914867ac99ca Sean Paul         2018-11-16  140   *			_after_ encoder_mask is cleared.
+6b6921e5537d0f Dmitry Baryshkov  2022-02-17  141   * @connector:		If a mode is set, cached pointer to the active connector
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  142   * @crtc_kickoff_cb:		Callback into CRTC that will flush & start
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  143   *				all CTL paths
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  144   * @crtc_kickoff_cb_data:	Opaque user data given to crtc_kickoff_cb
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  145   * @debugfs_root:		Debug file system root file node
+fba7427eb59496 Sean Paul         2018-11-16  146   * @enc_lock:			Lock around physical encoder
+fba7427eb59496 Sean Paul         2018-11-16  147   *				create/destroy/enable/disable
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  148   * @frame_busy_mask:		Bitmask tracking which phys_enc we are still
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  149   *				busy processing current command.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  150   *				Bit0 = phys_encs[0] etc.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  151   * @crtc_frame_event_cb:	callback handler for frame event
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  152   * @crtc_frame_event_cb_data:	callback handler private data
+70df9610de0fd3 Sean Paul         2019-01-28  153   * @frame_done_timeout_ms:	frame done timeout in ms
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  154   * @frame_done_timer:		watchdog timer for frame done event
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  155   * @disp_info:			local copy of msm_display_info struct
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  156   * @idle_pc_supported:		indicate if idle power collaps is supported
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  157   * @rc_lock:			resource control mutex lock to protect
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  158   *				virt encoder over various state changes
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  159   * @rc_state:			resource controller state
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  160   * @delayed_off_work:		delayed worker to schedule disabling of
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  161   *				clks and resources after IDLE_TIMEOUT time.
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  162   * @topology:                   topology of the display
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  163   * @idle_timeout:		idle timeout duration in milliseconds
+4b27f469b155bd Dmitry Baryshkov  2023-01-18  164   * @wide_bus_en:		wide bus is enabled on this interface
+46dd0c0658ff57 Dmitry Baryshkov  2022-07-11  165   * @dsc:			drm_dsc_config pointer, for DSC-enabled encoders
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  166   */
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  167  struct dpu_encoder_virt {
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  168  	struct drm_encoder base;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  169  	spinlock_t enc_spinlock;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  170  
+fba7427eb59496 Sean Paul         2018-11-16  171  	bool enabled;
+fba7427eb59496 Sean Paul         2018-11-16  172  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  173  	unsigned int num_phys_encs;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  174  	struct dpu_encoder_phys *phys_encs[MAX_PHYS_ENCODERS_PER_VIRTUAL];
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  175  	struct dpu_encoder_phys *cur_master;
+86b89080368b46 Jeykumar Sankaran 2018-09-05  176  	struct dpu_encoder_phys *cur_slave;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  177  	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
+58dca981074948 Vinod Koul        2022-04-06  178  	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+58dca981074948 Vinod Koul        2022-04-06  179  
+58dca981074948 Vinod Koul        2022-04-06  180  	unsigned int dsc_mask;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  181  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  182  	bool intfs_swapped;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  183  
+e4914867ac99ca Sean Paul         2018-11-16  184  	struct drm_crtc *crtc;
+6b6921e5537d0f Dmitry Baryshkov  2022-02-17  185  	struct drm_connector *connector;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  186  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  187  	struct dentry *debugfs_root;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  188  	struct mutex enc_lock;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  189  	DECLARE_BITMAP(frame_busy_mask, MAX_PHYS_ENCODERS_PER_VIRTUAL);
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  190  	void (*crtc_frame_event_cb)(void *, u32 event);
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  191  	void *crtc_frame_event_cb_data;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  192  
+70df9610de0fd3 Sean Paul         2019-01-28  193  	atomic_t frame_done_timeout_ms;
+ccd5957a0bacc2 Paloma Arellano   2023-11-29  194  	atomic_t frame_done_timeout_cnt;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  195  	struct timer_list frame_done_timer;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  196  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  197  	struct msm_display_info disp_info;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  198  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  199  	bool idle_pc_supported;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  200  	struct mutex rc_lock;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  201  	enum dpu_enc_rc_states rc_state;
+e077fe752cd344 Jeykumar Sankaran 2018-12-14  202  	struct delayed_work delayed_off_work;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  203  	struct msm_display_topology topology;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  204  
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  205  	u32 idle_timeout;
+3309a75639718c Kuogee Hsieh      2022-02-25  206  
+3309a75639718c Kuogee Hsieh      2022-02-25  207  	bool wide_bus_en;
+58dca981074948 Vinod Koul        2022-04-06  208  
+58dca981074948 Vinod Koul        2022-04-06  209  	/* DSC configuration */
+46dd0c0658ff57 Dmitry Baryshkov  2022-07-11  210  	struct drm_dsc_config *dsc;
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27 @211  };
+25fdd5933e4c0f Jeykumar Sankaran 2018-06-27  212  
+
 -- 
-2.41.0
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
