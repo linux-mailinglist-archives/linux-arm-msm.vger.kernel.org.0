@@ -1,224 +1,399 @@
-Return-Path: <linux-arm-msm+bounces-2592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5CA17FE32A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 23:30:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2E457FE58D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 02:12:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F1A4B20EB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Nov 2023 22:30:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 19B84B2176E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 01:12:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBD0A3B199;
-	Wed, 29 Nov 2023 22:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC5A818AF3;
+	Thu, 30 Nov 2023 01:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Twumr8gt"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="MZaNIhcl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E171C4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:29:57 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-54acdd65c88so120581a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Nov 2023 14:29:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701296995; x=1701901795; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jjJ8Mb+534HQepceR4AuOphlKM7gML1f+9PSTE2HCjU=;
-        b=Twumr8gt3E9+63cRKBsbZdTs9o0k95AQa92DaWz8n+2cGT/Z57di/Agc7C02U4l8Lx
-         u82iKtJKVtpwEqYLBQFMHxS5AGgZPh3OnTLVDwcIT2y82TO+KXjd62RQa6XXwS65c2P4
-         IF7c0nWRaPd7Q8lNKiCJ+qq24NP1lyJrgjmbDZrgztZ+Y3BQ1Sbdwelz6CBUBFdmDwbM
-         SuNfw0uGXwuYoDnZliuna08llr/kvBcFeGfFhzJoLygVccSBk06sl4fT8pemcNGqpeiF
-         sn7DgVNCQ4jcwqkYXZ0M1LTy3dD4aq+2CuTXowPRpFtjbGNr3kldd2UjXFAYjznublIG
-         9Z2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701296995; x=1701901795;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jjJ8Mb+534HQepceR4AuOphlKM7gML1f+9PSTE2HCjU=;
-        b=RQfRB5QOszn8SzKJb5ScpGex3WxAqAwhYwHjc94Zu5cj1FdLwljn8vsffwZzeUpYc3
-         ywXlEbBI3r1XyRN/aV7jFzG4/oXfXvFxPot9KosA6wkctmQk+OPVTyUXYyvVePSNze4v
-         JmVukN6jAbMHFjN+dGbSYuGF3mycmpjG/AXD3U47vq7Z6bS6uJYSY8g+vyVVdOaYNnOk
-         1fJnw4aunzQ00hx1uY4P+B4YxlvieKQq6RwXRMrnD01V7CnPsZaXNlBK2skzLK0fUfHm
-         Tn1DWUBD9sIckqbt/RlsyVJ6TXbpNhLOjHm8cJ8NRx6lhytkSKaX0A9MOctJsVReRXGq
-         NCZg==
-X-Gm-Message-State: AOJu0Yw3he1LnHUd3YkgtoJldTg8JhJWzWqFjvHRAlBxkk2QP3IOOR3I
-	lpkuYpVJNLBaXRok9PViwaizmi5Itx7yKc7TDoQ=
-X-Google-Smtp-Source: AGHT+IFPWBWAiWFLmSm+a0zThkr+g5UOIuJnAP86zUgmmcw2sX3gcHSnHqviZtEbzdTrQ2XTT+zKLA==
-X-Received: by 2002:a17:907:9728:b0:9be:7b67:1673 with SMTP id jg40-20020a170907972800b009be7b671673mr17684397ejc.1.1701296995481;
-        Wed, 29 Nov 2023 14:29:55 -0800 (PST)
-Received: from [192.168.209.83] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id f4-20020a170906560400b009fcb5fcfbe6sm8316172ejq.220.2023.11.29.14.29.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Nov 2023 14:29:54 -0800 (PST)
-Message-ID: <5ffa4cbf-c30f-4169-ad75-38cd3e8d11c2@linaro.org>
-Date: Wed, 29 Nov 2023 23:29:51 +0100
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2084.outbound.protection.outlook.com [40.107.243.84])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B5E10DF;
+	Wed, 29 Nov 2023 17:10:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UiZX9ZOj1ub5T9vWvCHa2tL4ofwN9OtXUUoJDccNC6Y48wwXxcfirU/IvuLRnbVJUDsKvD/g1NmFwob1PuN8+LxT7qAFwnn/U9MX1ZFHiaZOu/k/u/dj1EgvSZ2G8B02Tm6UZpmomSCfGdzxCnsbreg1fZZ06fU1UW3bxxNlciuEP2Ezl0dmvZojr7/sQnT0qMYSwQKE9c/vMqidLyfeIr5Is4oc8osCau2Rpeye5VV4xKn8rY0v5vwp4EncvD71zT6eb+DSasF1rhLbaRXN+yBb3q3OVLbc6yKP3mqw3NY137AWTQXJlnBX9Q+L9aJMgO2/+A3fRorgP5SEy//zHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jR4pbU5x/auVrVVOg/TAb4tNE+GP54D6lTgTD1gMXyk=;
+ b=EZpxLEJGABfvkFODDCF5OnvVFTmTSJerUlLhwSe0cX0KaxiLv8W0rcfIFB9zLhVt/v4JH3Kze6jclBhffVnSNV3t6I6EdQE0y9+ZiYXwrdMux1DwPnTofCSgHo3lqVao1gKeqKjgMDAXhHrl+Wh27X/zBp+q1onkv7sjiZkIQo4XULdIdNSPCjqN8oCryAkBU52lwjx5X1fmGh7S5gLCyuxth5isZNh2KzY4qmivwrKhoBhQ8YIGlc+r0k+A3oOBoNA88t9z+At1XB/KGjtz5+qK715BjxjIeVILX2GA6VLuMpdcJ7hBm8jTfg/ORpz82tRxhzwNt8u8h3//BP52bA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jR4pbU5x/auVrVVOg/TAb4tNE+GP54D6lTgTD1gMXyk=;
+ b=MZaNIhcl17yWA62qyFp4s06oBKWWsHLDpCRq1CPDGZgNkRLJP21TSBVaBHJHPrb+ur86IW1IJY9SfRtwRgYqg5T4iKr8Y3mQNFNYKNzCrJjxIPrUU5rSTEXvtVjxPJEFjsmGLqNWc7dZlfP9mf1yMp8XYV89JEnqHL8/uhAGPKNEtta/Z/4w16w7HzPyz+qZV+qQiBYV5WJzBD5rtCC4PqTorBX80mksNnXkg67auecoZoruQFeJ3o7+JMrs5lCRArKMa3GVZqb/0adhihufOQeKT9uTs9Zbtd8vnOddVndN0nXzGmiReGUCPR2HeylGp/MtVXtol6uaMH2om1RauA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+ by PH0PR12MB5484.namprd12.prod.outlook.com (2603:10b6:510:eb::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7046.24; Thu, 30 Nov
+ 2023 01:10:48 +0000
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::60d4:c1e3:e1aa:8f93]) by LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::60d4:c1e3:e1aa:8f93%4]) with mapi id 15.20.7046.015; Thu, 30 Nov 2023
+ 01:10:48 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: acpica-devel@lists.linux.dev,
+	Andy Gross <agross@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	asahi@lists.linux.dev,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	devicetree@vger.kernel.org,
+	Frank Rowand <frowand.list@gmail.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	iommu@lists.linux.dev,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Kees Cook <keescook@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Len Brown <lenb@kernel.org>,
+	linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-hardening@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Hector Martin <marcan@marcan.st>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Orson Zhai <orsonzhai@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Robert Moore <robert.moore@intel.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Sven Peter <sven@svenpeter.dev>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Krishna Reddy <vdumpa@nvidia.com>,
+	virtualization@lists.linux.dev,
+	Chen-Yu Tsai <wens@csie.org>,
+	Will Deacon <will@kernel.org>,
+	Yong Wu <yong.wu@mediatek.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>
+Cc: =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>,
+	patches@lists.linux.dev
+Subject: [PATCH 00/30] Make a new API for drivers to use to get their FW
+Date: Wed, 29 Nov 2023 21:10:07 -0400
+Message-ID: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SN7PR04CA0179.namprd04.prod.outlook.com
+ (2603:10b6:806:125::34) To LV2PR12MB5869.namprd12.prod.outlook.com
+ (2603:10b6:408:176::16)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 3/5] arm64: dts: qcom: Add base X1E80100 dtsi and the
- QCP dts
-Content-Language: en-US
-To: Sibi Sankar <quic_sibis@quicinc.com>, andersson@kernel.org,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- catalin.marinas@arm.com, ulf.hansson@linaro.org
-Cc: agross@kernel.org, conor+dt@kernel.org, ayan.kumar.halder@amd.com,
- j@jannau.net, dmitry.baryshkov@linaro.org, nfraprado@collabora.com,
- m.szyprowski@samsung.com, u-kumar1@ti.com, peng.fan@nxp.com,
- lpieralisi@kernel.org, quic_rjendra@quicinc.com, abel.vesa@linaro.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- quic_tsoni@quicinc.com, neil.armstrong@linaro.org
-References: <20231117113931.26660-1-quic_sibis@quicinc.com>
- <20231117113931.26660-4-quic_sibis@quicinc.com>
- <918ff1f5-ce01-43ea-b034-e69fbb31f495@linaro.org>
- <3dd41426-c026-a832-0a6b-0aabfaec2a8c@quicinc.com>
- <c6e05a10-88cc-409c-afc0-37166b763eaa@linaro.org>
- <8021a6f5-6316-031d-8181-e0e2047e2fa8@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <8021a6f5-6316-031d-8181-e0e2047e2fa8@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|PH0PR12MB5484:EE_
+X-MS-Office365-Filtering-Correlation-Id: 771d985f-0b93-4eb5-a0e0-08dbf1412b56
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	OiXroFQzwMNNfbmgk2qTxidfbHLliwxcxq9eNvc/3D6MDRdSr0QKCW4Txpb5GRzLPXFOHDZ1rPCJNE+K/d48Ubx5f8x3+z6S6KUsEwKj9Xp2G5J9MX7dkPutFAAXInwx8AFkfTNeEptsW/dPWPMi8JGzAxQb6I7tR03Brkvj10vQHOfFoN1GJRVzT97TNyd3s2AgLgla0wDgyrplc4b1BmA4rYbIdZ/dUaTHlndJ9MfKIK0BH67fDPsmgXJP+FG6zC0gzjj6UVFKkXY0G4DD80ub0Wd2HoYkm/Bnk2laBKlBIbFlg5BsvYj02LoYC8dZ+fnjqDkuAsQP6TMCsTDdd4Uoh16b3z4Kv80TETy9tDKeWF8Pi2XM+YKOqxQ9NSdLz7SAkkwmYI/Peraz1lZapwwg1U3GzQGfDRFN08/ZtAeqN6qJ1ew/05P5F00xjpCyrRNea8u07tlDp96Njw+duSOI+Y2vlD9UntSQnYGijjxJ4S3JMxM4UbwUbwey14DFzwuZOzfokMCewaTyNalthNiqLlBdjKs6gtTX/kvkHfaqntT37QLjJa24ylHkoJsvCbMxEXZbo6DUyGfC1KKEaO1HwVaODIaHqh5miOVqAo8iwllNGXFH2XbYP37W0wxzcD+gu6D7Ui/C1dbMO3uG9PogPe6QTEy2Fq2AQvKR6PvcZbZKh9zAxz4yzvTOpdocu+E4oWm0LBabBKscms4wuA==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(346002)(136003)(396003)(39860400002)(376002)(230922051799003)(451199024)(1800799012)(186009)(64100799003)(1191002)(8936002)(110136005)(8676002)(316002)(66556008)(4326008)(86362001)(66476007)(6486002)(966005)(478600001)(66946007)(41300700001)(36756003)(921008)(30864003)(7416002)(7366002)(2906002)(7406005)(5660300002)(38100700002)(2616005)(6512007)(6506007)(6666004)(83380400001)(26005)(202311291699003)(4216001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?YjlPR1lnOHpIUWU2RVo1c1M4L2hLK21Rei9LL3RCNDJYdDBEc2Zkck1xTzYz?=
+ =?utf-8?B?dkJrQ3FUenVOcmpwdm02VnozOHVPU0wrZ050eUJpYmdLelphalVmYjBYNWw2?=
+ =?utf-8?B?eW5OaXhidjlsUXJ1TjJUcEhvSVRtMk1YTDhWbjRPRkhnaFU4ZjBoT1Q2bC83?=
+ =?utf-8?B?RkY4RkRRSFlzRHhoSHdpQXJuTzhETktpb09reXZrTnpIeitIamJ2ZDBkckVx?=
+ =?utf-8?B?a0tUTmZ2RlFvWTI0ajlCanlwaHptLzRsdE5Kckt5S0hIUDZFREpnaW5YZit5?=
+ =?utf-8?B?OVRaWWZHM3pQUWtqSVI1Ni91VGNnQWtvaTlJekdjNXF0eThUZUZDRFI1cXkz?=
+ =?utf-8?B?VFdEQkJueTJrMzNLK0JHUFpSSlJOaXdBa0NxMnVmOHRCbUtDVmNjVHM4UEc4?=
+ =?utf-8?B?ajF5NkVadWRYVUFBOGV2S1JwMFpwVzU2SFRsWXBVV2xMRityaS9NTmdqZ0Z6?=
+ =?utf-8?B?SlNTdUQxMjVEVk16UGZrUlBwVURkZEwrbTVzNDFOc3E2Vm80SW1kR3cvd1VP?=
+ =?utf-8?B?clZTSS8vMml2SzNocHZ3ZjEvRktmbGhLT3E2R256YzJXUVB1VmcxNHNzUGhU?=
+ =?utf-8?B?VjFhWFhnQWRTQ2tSeHRxWFoxN2dwNEcxb3d0V05TWmxWdHRSUk5keGwzT3Rq?=
+ =?utf-8?B?VnJMNVZFNWNVdWJ1enFtdnljNmNzRWo5bTB5TlU5dnIzbDBsUzlYZDlybHJn?=
+ =?utf-8?B?dzlJb3hkVW55T3VQV01QVlozTWlyUjRiUjRCRElvaWt0VVhwZytFdisxK3lQ?=
+ =?utf-8?B?R1NPeXQxeng2TjM5T1RPbUlCVGVWbC9TTWxrRzExaUQvQnAveXB0enE2dGRG?=
+ =?utf-8?B?UGFZYXIzVnVvVjIwQmsyZXk1ODZYSTdwQTZha3pydWc2bFVZM3Rhb3luSjhp?=
+ =?utf-8?B?NFZpbEpMYWJ4WG1NY1Zid3NHdHVValE5bjJnMm1XV09nQmR5YlZnTzliMmlF?=
+ =?utf-8?B?OGNGK09UWWt2b21RWXRuREp0YklodkpqWHd1REY0ZEVRdnRQWTB3R3ErYWNp?=
+ =?utf-8?B?OVNkVFVURkhRbzl1RFF4QVdBTTV4TEUxeUQ4ekwrL3NsdFFxQVcvdS9Ebmsz?=
+ =?utf-8?B?UHdhNXNtdnNBYUJEd1JWa3hRSzhENENaem5OaEI3SitubXBERis1UlR1S0pp?=
+ =?utf-8?B?SUpEaFlJU1NnZUdWZXZjWGRPaDdTN3lOV2tOVTlHL01ZTEU3ZmFqTHpBNGVh?=
+ =?utf-8?B?cXRMcHY3N296U05rbUdxZGdYVXNqekFHbERiU2RWV0Vieml6L3lzenJYeXU1?=
+ =?utf-8?B?R2dyMWNNbk1YNEVsb2l3UGdWVko3UlV5dm9PWlAwQklMY3Zab3ZQbmZMZXF3?=
+ =?utf-8?B?a2NoZDgxV2RndFhMMDlPZTdIRm9BczlKQytFOXhIbVZhanpWQWFHNTVvSTR2?=
+ =?utf-8?B?R0NYVWp5dTNrWjdRSEJSOGJybGp4N3FTUzFPU1FvQWlNODk5WTFjOVFFNU9O?=
+ =?utf-8?B?N1dXVEhZVDhKTlZJNTFubnJWMW5wYUp3Z1NiaWFEUHM1cDd3b0MrcCt6Wmx2?=
+ =?utf-8?B?R3FtY2FEdVExMWQ2Y2hKUW5xUlVEZTA1dUZlQTJwT0p1ZUtLVmJCU0Nqa202?=
+ =?utf-8?B?R3hEWWxEZDlNcmI1YTBSbUU5aWpxRnEwRWljcW03eGRhQzBLcXZKL21jZ0FI?=
+ =?utf-8?B?a1pwQkZ2b1FwU3laR1dZYzVZc045UlBIWGhMczFoQWJCdXZHNVFRVmsrYzZB?=
+ =?utf-8?B?K3pkNXdrYmVhdm1ieTFxR1dSZnQrYVluQUZ5OW1EMC95bTl0VStKb3JEZDh4?=
+ =?utf-8?B?dlRxY0JPZWplK2tqVEIrMkFodWw5MCs4TWk4RCtDUmlNaURGVFFUdE9XZ1FR?=
+ =?utf-8?B?STRYOGFJZkY1cTBoclB2WjVucDZJckM1b0hPM2VPVmQzblNUa1hmQ1l3V3VB?=
+ =?utf-8?B?OVZnWjF5TzA0elZTVlluN3lyc1M1NGhIZ2Y5RWJJa0I3UG5LY2x4b2p3dTVI?=
+ =?utf-8?B?Y2lvSWxPVHIwSldqcjFud25lemRhTUluY3h0cERlSmcvSjB3YldXQWtvSmVP?=
+ =?utf-8?B?NHg0UTNqRi9IYjFxZmlhWHVsTC9PMXN4S3luRldVeXpTQTNieVJsaXRQcXBZ?=
+ =?utf-8?B?dVdjRnNDc2xTMkdRY29SRVVqNGRxaS93V0M1cjhoaFp2ZGVydUc1OVVjTUtr?=
+ =?utf-8?Q?TapHe5HBPxFQbhz6bN48dHqv5?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 771d985f-0b93-4eb5-a0e0-08dbf1412b56
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 01:10:40.7974
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mFPy5PUxghfXtbKQurqYbSRoGqBpiEiAtA8geV7Qw5E4kUqFRSTNB52cpLxCirzW
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB5484
 
-On 29.11.2023 16:46, Sibi Sankar wrote:
-> 
-> 
-> On 11/29/23 18:24, Konrad Dybcio wrote:
->> On 29.11.2023 10:25, Sibi Sankar wrote:
->>>
->>>
->>> On 11/18/23 06:36, Konrad Dybcio wrote:
->>>> On 17.11.2023 12:39, Sibi Sankar wrote:
->>>>> From: Rajendra Nayak <quic_rjendra@quicinc.com>
->>>>>
->>>>> Add base dtsi and QCP board (Qualcomm Compute Platform) dts file for
->>>>> X1E80100 SoC, describing the CPUs, GCC and RPMHCC clock controllers,
->>>>> geni UART, interrupt controller, TLMM, reserved memory, interconnects,
->>>>> SMMU and LLCC nodes.
->>>>>
->>>>> Co-developed-by: Abel Vesa <abel.vesa@linaro.org>
->>>>> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->>>>> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
->>>>> Co-developed-by: Sibi Sankar <quic_sibis@quicinc.com>
->>>>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->>>>> ---
->> [...]
->>
->>
->>>>> +        idle-states {
->>>>> +            entry-method = "psci";
->>>>> +
->>>>> +            CLUSTER_C4: cpu-sleep-0 {
->>>>> +                compatible = "arm,idle-state";
->>>>> +                idle-state-name = "ret";
->>>>> +                arm,psci-suspend-param = <0x00000004>;
->>>> These suspend parameters look funky.. is this just a PSCI sleep
->>>> implementation that strays far away from Arm's suggested guidelines?
->>>
->>> not really! it's just that 30th bit is set according to spec i.e
->>> it's marked as a retention state.
->> So, is there no state where the cores actually power down? Or is it
->> not described yet?
->>
->> FWIW by "power down" I mean it in the sense that Arm DEN0022D does,
->> so "In this state the core is powered off. Software on the device
->> needs to save all core state, so that it can be preserved over
->> the powerdown."
-> 
-> I was told we mark it explicitly as retention because hw is expected
-> to handle powerdown and we don't want sw to also do the same.
-> 
->>
->>>
->>>>
->>>> [...]
->>>>
->>>>
->>>>> +        CPU_PD11: power-domain-cpu11 {
->>>>> +            #power-domain-cells = <0>;
->>>>> +            power-domains = <&CLUSTER_PD>;
->>>>> +        };
->>>>> +
->>>>> +        CLUSTER_PD: power-domain-cpu-cluster {
->>>>> +            #power-domain-cells = <0>;
->>>>> +            domain-idle-states = <&CLUSTER_CL4>, <&CLUSTER_CL5>;
->>>>> +        };
->>>> So, can the 3 clusters not shut down their L2 and PLLs (if separate?)
->>>> on their own?
->>>
->>> on CL5 the clusters are expected to shutdown their l2 and PLL on their
->>> own.
->> Then I think this won't happen with this description
->>
->> every cpu has a genpd tree like this:
->>
->> cpu_n
->>   |_CPU_PDn
->>      |_CLUSTER_PD
->>
->> and CLUSTER_PD has two idle states: CLUSTER_CL4 and CLUSTER_CL5
->>
->> which IIUC means that neither cluster idle state will be reached
->> unless all children of CLUSTER_PD (so, all CPUs) go down that low
->>
->> This is "fine" on e.g. sc8280 where both CPU clusters are part of
->> the same Arm DynamIQ cluster (which is considered one cluster as
->> far as MPIDR_EL1 goes) (though perhaps that's misleading and with
->> the qcom plumbing they perhaps could actually be collapsed separately)
-> 
-> We did verify that the sleep stats increase independently for each
-> cluster, so it's behavior is unlike what you explained above. I'll
-> re-spin this series again in the meantime and you can take another
-> stab at it there.
-So are you saying that you checked the RPMh sleep stats and each cluster
-managed to sleep on its own, or did you do something different?
+This series improves the way drivers get their FW data. It introduces a
+series of driver facing APIs and converts every driver to use them and
+replaces fwspec with this mechanism.
 
-Were the sleep durations far apart? What's the order of magnitude of that
-difference? Are the values reported in RPMh greater than those in
-/sys/kernel/debug/pm_genpd/power-domain-cpu-cluster/total_idle_time?
+The new API allows drivers to do less stuff in alot of cases, and permits
+all drivers to sequence their operations in a logical way with correct
+error handling. It doesn't force the idea of pre or post parse on the
+driver, though I choose to implement post-parse here.
 
-Is there any other (i.e. non-Linux) source of "go to sleep" votes?
+Aside from the API change this takes on a few other goals:
 
-Konrad
+ 1) New API for drivers to simplify drivers and make them more robust
+ 2) Remove all FW parsing from _dma_configure()
+ 3) Make the global lock back into a static
+ 4) Organize things to reduce the probe time memory allocations from
+     fw_spec, N*realloc, dev_iommu, device-private
+    To just allocating device-private. The last step to merge dev_iommu
+    and device-private would be a follow on couple of patches.
+ 5) Get everything setup to allow all devices to probe during bus scan,
+    not during _dma_configure.
+ 6) Better layering between the ACPI and IOMMU code, less
+    iommu related things in the ACPI directory.
+
+The drivers break down into two broad approaches for accessing FW in a
+driver's probe_device() function. AMD, Intel, mtk_v1, omap, S390,
+smmu-legacy and tegra can "self probe" using code in their probe_device()
+functions to parse their associated FW descriptions.
+
+The rest (DART, smmu-modern, qcom, smmu-v3, exynos, ipmmu, msm, mtk,
+rockchip, sprd, sun50i, virtio) use the iommu_fwspec system and rely on
+the core code to do the FW parsing for them before invoking
+probe_device().
+
+To understand the philosophy of this design it is worth to take a moment
+and review the 2009 LWN article on Kernel Design
+patterns (https://lwn.net/Articles/336262/) exploring the "midlayer
+mistake". While I do not entirely agree that midlayers are unconditionally
+bad, the discussion does nicely frame the architectural choice I've made
+in this series.
+
+Organize the FW parsing so the drivers have an toolbox style API to
+extract the information they require from the FW. Create a set of APIs for
+the drivers to call that do exactly what the current set of drivers need
+in an efficient and understandable way. The API is designed to
+significantly clean and simplify the drivers.
+
+The API transforms the iommu_fwspec from a long-term allocated struct into
+a short-term on-stack struct iommu_probe_info. Using a short-term
+structure means we no longer have to be memory efficient and can store
+temporary details about the ongoing parsing in the structure which is the
+key to allowing the new API.
+
+Further, philosophically, the API changes to make the iommu driver
+responsible to provide per-device storage for any parsed FW data. It is
+stored in whatever format the driver finds appropriate. The API provides
+concise helpers to make this easy for the standard 'u32 id[]' cases. The
+unusual cases were already using unique per-driver storage and continue to
+do so in a cleaner, less convoluted way.
+
+The design allows the API to be implemented either as a 'parse on demand'
+or 'parse and cache in advance' (more like fwspec) approach. I've
+implemented the 'parse on demand' version here, but I'm not fixed on
+it. Let's discuss.
+
+The choice is deliberately not baked into the driver facing API,
+iommu_probe_info combined with the generic *_iommu_for_each_id() lower
+layer provides a lot of flexibility to do whatever organization we want.
+
+The specific commit messages provide details, but the drivers break down
+into three basic idiomatic sequences for their probe_device with the new
+API.
+
+Single iommu with no ID list:
+  iommu_driver = iommu_of_get_single_iommu(pinf, ops, num_cells,
+                                iommu_driver_struct, iommu_member);
+  per_driver = kzalloc(..)
+  per_driver->iommu = iommu_driver;
+  dev_iommu_priv_set(dev, per_driver);
+  return &iommu_driver->iommu_member;
+
+Single iommu with a simple u32 ID list:
+  iommu_driver = iommu_of_get_single_iommu(pinf, ops, num_cells,
+                                iommu_driver_struct, iommu_member);
+  per_driver = iommu_fw_alloc_per_device_ids(pinf, per_driver);
+  per_driver->iommu = iommu_driver;
+  dev_iommu_priv_set(dev, per_driver);
+  return &iommu_driver->iommu_member;
+
+The iommu_fw_alloc_per_device_ids() helper allocates a correctly sized
+per-driver struct and places a u32 ID list into the flex array
+per_driver->ids[]. This removes the need for a fw_spec allocation.
+
+Complex multi-iommu or complex ID list:
+  static int driver_of_xlate(struct iommu_device *iommu,
+			 struct of_phandle_args *args, void *priv);
+
+  per_driver = kzalloc(...);
+  iommu_of_xlate(pinf, &ops, num_cells, &driver_of_xlate, per_driver);
+
+  dev_iommu_priv_set(dev, per_driver);
+  return &per_driver->iommu; // The first iommu_device parsed
+
+The driver will process the given (iommu, args) tuples and store them into
+the per_driver struct in its own way (eg DART encodes things into a 2D
+array). Allocating the per_driver struct before running the parse cleans
+all the tortured logic.
+
+The VIOT and IORT ACPI parsers provide the same API. Drivers supporting
+ACPI will call the ACPI helper (ie iommu_iort_get_single_iommu()) which
+understands how to parse OF if no ACPI is present. Since the SMMU drivers
+directly invoke the IORT parser they also get back the extra IORT ACPI
+data in a "struct iort_params", which eliminates the need to create SW
+properties or store SMMU only stuff in the fwspec.
+
+The bulk of the series is converting each driver to this toolbox API. The
+design of the toolbox functions are lightweight from a driver perspective
+and generally replace existing steps that the drivers already had to do. A
+significant amount of inefficient boiler plate is removed from all drivers
+related to how the driver obtains the iommu_device pointers.
+
+The implementation of the three flavours of FW parsers (OF/IORT/VIOT) are
+all structured the same. The lower FW level provides
+a *_iommu_for_each_id() function which parses and iterates over the actual
+FW table and calls a function pointer for each (instance, id). The iommu
+layer then uses this for_each primitive to do the IOMMU specific stuff and
+create the above APIs.
+
+To allow the iommu_of_get_single_iommu()/iommu_fw_alloc_per_device_ids()
+split API the get_single will count all of the IDs and then alloc will
+size the flex array. The iommu_probe_info has scratch space for some ids
+which can then be memcpy'd without a reparse. Reparse is kept as a backup
+so we can handle arbitary complexity without burdening the typical fast
+path.
+
+The removal of all FW parsing from _dma_configure leaves only the
+initialization of the iommu_probe_info behind. My plan is to add a new bus
+op 'init iommu probe info' that will do this step and then we can fully
+execute probe outside the *_dma_configure() context.
+
+The big win here is the extensive cleaning of the driver's probe
+paths. There is alot of "creative" stuff there, this cleans almost all of
+it away.
+
+This is on github: https://github.com/jgunthorpe/linux/commits/iommu_fwspec
+
+Cc: Hector Martin <marcan@marcan.st>
+Cc: André Draszik <andre.draszik@linaro.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+
+Jason Gunthorpe (30):
+  iommu/of: Make a of_iommu_for_each_id()
+  ACPI: VIOT: Make a viot_iommu_for_each_id()
+  ACPI: IORT: Make a iort_iommu_for_each_id()
+  ACPI: IORT: Remove fwspec from the reserved region code
+  iommu: Add iommu_probe_info
+  iommu: Make iommu_ops_from_fwnode() return the iommu_device
+  iommu/of: Call of_iommu_get_resv_regions() directly
+  iommu/of: Add iommu_of_get_single_iommu()
+  iommu/rockchip: Move to iommu_of_get_single_iommu()
+  iommu/sprd: Move to iommu_of_get_single_iommu()
+  iommu/sun50i: Move to iommu_of_get_single_iommu()
+  iommu/of: Add iommu_of_xlate()
+  iommu/dart: Move to iommu_of_xlate()
+  iommu/exynos: Move to iommu_of_xlate()
+  iommu/msm: Move to iommu_of_xlate()
+  iommu/tegra: Route tegra_dev_iommu_get_stream_id() through an op
+  iommu: Add iommu_fw_alloc_per_device_ids()
+  iommu/tegra: Move to iommu_fw_alloc_per_device_ids()
+  iommu/mtk: Move to iommu_fw_alloc_per_device_ids()
+  iommu/ipmmu-vmsa: Move to iommu_fw_alloc_per_device_ids()
+  iommu/mtk_v1: Move to iommu_fw_alloc_per_device_ids()
+  iommu/qcom: Move to iommu_fw_alloc_per_device_ids()
+  iommu/viot: Add iommu_viot_get_single_iommu()
+  iommu/virtio: Move to iommu_fw_alloc_per_device_ids()
+  iommu/iort: Add iommu_iort_get_single_iommu()
+  iommu/arm-smmu-v3: Move to iommu_fw_alloc_per_device_ids()
+  iommu/arm-smmu: Move to iommu_of_xlate()
+  iommu: Call all drivers if there is no fwspec
+  iommu: Check for EPROBE_DEFER using the new FW parsers
+  iommu: Remove fwspec and related
+
+ drivers/acpi/arm64/iort.c                   | 233 +++++++---------
+ drivers/acpi/scan.c                         |  58 +---
+ drivers/acpi/viot.c                         |  67 ++---
+ drivers/iommu/Makefile                      |   2 +
+ drivers/iommu/apple-dart.c                  |  62 +++--
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |  73 ++---
+ drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |   4 +
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c  |   6 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.c       | 209 +++++++-------
+ drivers/iommu/arm/arm-smmu/arm-smmu.h       |  13 +-
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c     | 160 +++++------
+ drivers/iommu/dma-iommu.c                   |  22 --
+ drivers/iommu/dma-iommu.h                   |   6 -
+ drivers/iommu/exynos-iommu.c                |  78 +++---
+ drivers/iommu/iommu.c                       | 271 ++++++++++++------
+ drivers/iommu/iort_iommu.c                  |  99 +++++++
+ drivers/iommu/ipmmu-vmsa.c                  |  95 +++----
+ drivers/iommu/msm_iommu.c                   |  92 +++----
+ drivers/iommu/mtk_iommu.c                   | 115 ++++----
+ drivers/iommu/mtk_iommu_v1.c                | 162 +++++------
+ drivers/iommu/of_iommu.c                    | 288 ++++++++++++++------
+ drivers/iommu/rockchip-iommu.c              |  73 ++---
+ drivers/iommu/sprd-iommu.c                  |  31 +--
+ drivers/iommu/sun50i-iommu.c                |  59 ++--
+ drivers/iommu/tegra-smmu.c                  | 158 ++++-------
+ drivers/iommu/viot_iommu.c                  |  71 +++++
+ drivers/iommu/virtio-iommu.c                |  71 ++---
+ include/acpi/acpi_bus.h                     |   3 -
+ include/linux/acpi_iort.h                   |  24 +-
+ include/linux/acpi_viot.h                   |  16 +-
+ include/linux/iommu-driver.h                | 250 +++++++++++++++++
+ include/linux/iommu.h                       | 101 +------
+ include/linux/of_iommu.h                    |   8 -
+ 33 files changed, 1649 insertions(+), 1331 deletions(-)
+ create mode 100644 drivers/iommu/iort_iommu.c
+ create mode 100644 drivers/iommu/viot_iommu.c
+ create mode 100644 include/linux/iommu-driver.h
+
+
+base-commit: 68ec454bc1514f557686b5895dd9719e18d31705
+-- 
+2.42.0
+
 
