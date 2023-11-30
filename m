@@ -1,58 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-2645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B4127FE893
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 06:21:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A197C7FE8B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 06:32:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FE37281F64
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 05:21:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D39451C20D47
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 05:32:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6D9813FF9;
-	Thu, 30 Nov 2023 05:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B98BF179BC;
+	Thu, 30 Nov 2023 05:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NfwJ87uK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nzCN1zJV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9F4134A8;
-	Thu, 30 Nov 2023 05:21:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4E4C433C8;
-	Thu, 30 Nov 2023 05:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E13A1802D;
+	Thu, 30 Nov 2023 05:32:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151AFC433C7;
+	Thu, 30 Nov 2023 05:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701321689;
-	bh=SO7acnA+VBGiPPDRPjeZV0L8lWsY1H783sV0wpnMOCU=;
+	s=k20201202; t=1701322325;
+	bh=pMAZRD6C2KxJP4HEAtpAIDxbTaSlvGsc71rh/SQWRtU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NfwJ87uKmQi0TjpEJJbc7uduVpBnZVRjYsbqNfzn7Ia4vqX6P5Szj69chlJbr71rt
-	 T7F/4We3/8qz7OeKwcKbcACPT9Z2KT+w82AY97DOx64vJKQnB4JR/bfNHr2hwPWVsv
-	 4p6d74/B+u39ZasqQ4QdbOgMbzaw+DueKKuXemlALO8HakEtfJ7avdNhU+0249Jwk5
-	 19Jhp8eEaXtg/U3ICZMY35kyutXWNJP0NmrOtV6SjnMmJWxOXkv8NRopv3wSZ8+4sb
-	 o/TWHtwlOfpYNUxuuU+BqQ0lcX1GHdKcsgqWsgzKoz74QLB7vi78xFjzwLfy+3ag/w
-	 3EQYo0DhUNjPw==
-Date: Thu, 30 Nov 2023 10:51:16 +0530
+	b=nzCN1zJVSMh+g5X7qRKecWziuXOdWr00FRIYi06EW39LWAwKZx05wqoCY3qOBN+FI
+	 rQUnlYiDyKD9a22jXTQtSUBuGXxEmyuBWzZTFv+e7jwBPyI5Qe1Nrk+/o1WVjpL4uX
+	 pmPh7lSAAQ80/hn/AhNV9ezx+cZYrnDeAh0ifTa6npt+0Ka6SDakf5SBrKTYnTC7u5
+	 YPfn6eRwh4GVevufSN/gXUaw3bIBXFcoNWM2tBonHNxnmVUJiqKUl1A5IQTD9COAEL
+	 3NPPQDKNiWlINy8sljZrtPDqJG7/3ulyf92erDT42KHQbXFlD06+WWiS7ACC3gp76r
+	 T/x+mREHM8E3Q==
+Date: Thu, 30 Nov 2023 11:01:57 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	konrad.dybcio@linaro.org, mani@kernel.org, robh+dt@kernel.org,
-	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-	dmitry.baryshkov@linaro.org, robh@kernel.org,
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-	quic_parass@quicinc.com, quic_schintav@quicinc.com,
-	quic_shijjose@quicinc.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v4 1/3] PCI: qcom: Enable cache coherency for SA8775P RC
-Message-ID: <20231130052116.GA3043@thinkpad>
-References: <1700577493-18538-1-git-send-email-quic_msarkar@quicinc.com>
- <1700577493-18538-2-git-send-email-quic_msarkar@quicinc.com>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, quic_jhugo@quicinc.com,
+	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+	quic_mrana@quicinc.com
+Subject: Re: [PATCH v4 2/4] bus: mhi: host: Drop chan lock before queuing
+ buffers
+Message-ID: <20231130053157.GB3043@thinkpad>
+References: <1699939661-7385-1-git-send-email-quic_qianyu@quicinc.com>
+ <1699939661-7385-3-git-send-email-quic_qianyu@quicinc.com>
+ <20231124100403.GA4536@thinkpad>
+ <639d6008-bdfa-4b6e-b622-e916003ec908@quicinc.com>
+ <20231128133252.GX3088@thinkpad>
+ <5eb0a521-0b72-4d15-9a65-429c4c123833@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,114 +57,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1700577493-18538-2-git-send-email-quic_msarkar@quicinc.com>
+In-Reply-To: <5eb0a521-0b72-4d15-9a65-429c4c123833@quicinc.com>
 
-On Tue, Nov 21, 2023 at 08:08:11PM +0530, Mrinmay Sarkar wrote:
-> In a multiprocessor system cache snooping maintains the consistency
-> of caches. Snooping logic is disabled from HW on this platform.
-> Cache coherency doesn’t work without enabling this logic.
+On Wed, Nov 29, 2023 at 11:29:07AM +0800, Qiang Yu wrote:
 > 
-> 8775 has IP version 1.34.0 so intruduce a new cfg(cfg_1_34_0) for this
-> platform. Assign no_snoop_override flag into struct qcom_pcie_cfg and
-> set it true in cfg_1_34_0 and enable cache snooping if this particular
-> flag is true.
-> 
+> On 11/28/2023 9:32 PM, Manivannan Sadhasivam wrote:
+> > On Mon, Nov 27, 2023 at 03:13:55PM +0800, Qiang Yu wrote:
+> > > On 11/24/2023 6:04 PM, Manivannan Sadhasivam wrote:
+> > > > On Tue, Nov 14, 2023 at 01:27:39PM +0800, Qiang Yu wrote:
+> > > > > Ensure read and write locks for the channel are not taken in succession by
+> > > > > dropping the read lock from parse_xfer_event() such that a callback given
+> > > > > to client can potentially queue buffers and acquire the write lock in that
+> > > > > process. Any queueing of buffers should be done without channel read lock
+> > > > > acquired as it can result in multiple locks and a soft lockup.
+> > > > > 
+> > > > Is this patch trying to fix an existing issue in client drivers or a potential
+> > > > issue in the future drivers?
+> > > > 
+> > > > Even if you take care of disabled channels, "mhi_event->lock" acquired during
+> > > > mhi_mark_stale_events() can cause deadlock, since event lock is already held by
+> > > > mhi_ev_task().
+> > > > 
+> > > > I'd prefer not to open the window unless this patch is fixing a real issue.
+> > > > 
+> > > > - Mani
+> > > In [PATCH v4 1/4] bus: mhi: host: Add spinlock to protect WP access when
+> > > queueing
+> > > TREs,  we add
+> > > write_lock_bh(&mhi_chan->lock)/write_unlock_bh(&mhi_chan->lock)
+> > > in mhi_gen_tre, which may be invoked as part of mhi_queue in client xfer
+> > > callback,
+> > > so we have to use read_unlock_bh(&mhi_chan->lock) here to avoid acquiring
+> > > mhi_chan->lock
+> > > twice.
+> > > 
+> > > Sorry for confusing you. Do you think we need to sqush this two patch into
+> > > one?
+> > Well, if patch 1 is introducing a potential deadlock, then we should fix patch
+> > 1 itself and not introduce a follow up patch.
+> > 
+> > But there is one more issue that I pointed out in my previous reply.
+> Sorry, I can not understand why "mhi_event->lock" acquired during
+> mhi_mark_stale_events() can cause deadlock. In mhi_ev_task(), we will
+> not invoke mhi_mark_stale_events(). Can you provide some interpretation?
 
-I just happen to check the internal register details of other platforms and I
-see this PCIE_PARF_NO_SNOOP_OVERIDE register with the reset value of 0x0. So
-going by the logic of this patch, this register needs to be configured for other
-platforms as well to enable cache coherency, but it seems like not the case as
-we never did and all are working fine (so far no issues reported).
-
-So this gives me an impression that this patch is wrong or needs modification.
-So,
-
-Nacked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Going by your theory that if a channel gets disabled while processing the event,
+the process trying to disable the channel will try to acquire "mhi_event->lock"
+which is already held by the process processing the event.
 
 - Mani
 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 20 +++++++++++++++++++-
->  1 file changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 6902e97..76f03fc 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -51,6 +51,7 @@
->  #define PARF_SID_OFFSET				0x234
->  #define PARF_BDF_TRANSLATE_CFG			0x24c
->  #define PARF_SLV_ADDR_SPACE_SIZE		0x358
-> +#define PCIE_PARF_NO_SNOOP_OVERIDE		0x3d4
->  #define PARF_DEVICE_TYPE			0x1000
->  #define PARF_BDF_TO_SID_TABLE_N			0x2000
->  
-> @@ -117,6 +118,10 @@
->  /* PARF_LTSSM register fields */
->  #define LTSSM_EN				BIT(8)
->  
-> +/* PARF_NO_SNOOP_OVERIDE register fields */
-> +#define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
-> +#define RD_NO_SNOOP_OVERIDE_EN			BIT(3)
-> +
->  /* PARF_DEVICE_TYPE register fields */
->  #define DEVICE_TYPE_RC				0x4
->  
-> @@ -229,6 +234,7 @@ struct qcom_pcie_ops {
->  
->  struct qcom_pcie_cfg {
->  	const struct qcom_pcie_ops *ops;
-> +	bool no_snoop_overide;
-
-I'd suggest to name variables after their usecase and not the register. Like,
-
-bool enable_cache_snoop;
-
->  };
->  
->  struct qcom_pcie {
-> @@ -961,6 +967,13 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  
->  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->  {
-> +	const struct qcom_pcie_cfg *pcie_cfg = pcie->cfg;
-> +
-> +	/* Enable cache snooping for SA8775P */
-
-This comment doesn't belong here. It can be added while setting the flag in cfg.
-
-> +	if (pcie_cfg->no_snoop_overide)
-> +		writel(WR_NO_SNOOP_OVERIDE_EN | RD_NO_SNOOP_OVERIDE_EN,
-> +				pcie->parf + PCIE_PARF_NO_SNOOP_OVERIDE);
-> +
->  	qcom_pcie_clear_hpc(pcie->pci);
->  
->  	return 0;
-> @@ -1331,6 +1344,11 @@ static const struct qcom_pcie_cfg cfg_1_9_0 = {
->  	.ops = &ops_1_9_0,
->  };
->  
-> +static const struct qcom_pcie_cfg cfg_1_34_0 = {
-> +	.ops = &ops_1_9_0,
-> +	.no_snoop_overide = true,
-> +};
-> +
->  static const struct qcom_pcie_cfg cfg_2_1_0 = {
->  	.ops = &ops_2_1_0,
->  };
-> @@ -1627,7 +1645,7 @@ static const struct of_device_id qcom_pcie_match[] = {
->  	{ .compatible = "qcom,pcie-msm8996", .data = &cfg_2_3_2 },
->  	{ .compatible = "qcom,pcie-qcs404", .data = &cfg_2_4_0 },
->  	{ .compatible = "qcom,pcie-sa8540p", .data = &cfg_1_9_0 },
-> -	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_9_0},
-> +	{ .compatible = "qcom,pcie-sa8775p", .data = &cfg_1_34_0},
->  	{ .compatible = "qcom,pcie-sc7280", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sc8180x", .data = &cfg_1_9_0 },
->  	{ .compatible = "qcom,pcie-sc8280xp", .data = &cfg_1_9_0 },
-> -- 
-> 2.7.4
-> 
+> > 
+> > Also, I'm planning to cleanup the locking mess within MHI in the coming days.
+> > Perhaps we can revisit this series at that point of time. Will that be OK for
+> > you?
+> Sure, that will be great.
+> > 
+> > - Mani
+> > 
+> > > > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> > > > > ---
+> > > > >    drivers/bus/mhi/host/main.c | 4 ++++
+> > > > >    1 file changed, 4 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> > > > > index 6c6d253..c4215b0 100644
+> > > > > --- a/drivers/bus/mhi/host/main.c
+> > > > > +++ b/drivers/bus/mhi/host/main.c
+> > > > > @@ -642,6 +642,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+> > > > >    			mhi_del_ring_element(mhi_cntrl, tre_ring);
+> > > > >    			local_rp = tre_ring->rp;
+> > > > > +			read_unlock_bh(&mhi_chan->lock);
+> > > > > +
+> > > > >    			/* notify client */
+> > > > >    			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+> > > > > @@ -667,6 +669,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+> > > > >    					kfree(buf_info->cb_buf);
+> > > > >    				}
+> > > > >    			}
+> > > > > +
+> > > > > +			read_lock_bh(&mhi_chan->lock);
+> > > > >    		}
+> > > > >    		break;
+> > > > >    	} /* CC_EOT */
+> > > > > -- 
+> > > > > 2.7.4
+> > > > > 
+> > > > > 
 > 
 
 -- 
