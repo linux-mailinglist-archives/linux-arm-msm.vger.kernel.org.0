@@ -1,390 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-2713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0B947FF004
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:23:22 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 563577FF03A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:35:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F399A1C20DD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:23:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 781831C20A27
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:35:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63A8547A59;
-	Thu, 30 Nov 2023 13:23:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8201647A68;
+	Thu, 30 Nov 2023 13:35:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qQczZqSv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B236E84;
-	Thu, 30 Nov 2023 05:23:14 -0800 (PST)
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-58d9a0ead0cso180404eaf.0;
-        Thu, 30 Nov 2023 05:23:14 -0800 (PST)
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EF7890
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 05:35:42 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-9ffb5a4f622so127550366b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 05:35:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701351341; x=1701956141; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PUGMCVS56USs0j4kK07YrKAqZ6u88Klk5HZUiZ1F26I=;
+        b=qQczZqSvoJcZX7k0sSNgEwgO5CdivqTB1Jk/MN/TqThFSeTx4jKKkUghbOTNRcaXh9
+         DPIIRoONZYNeC3NU79J9gka337jn9yHy3eMVb2Y7WKt6o+Je3xjXwwV7SNKOEv/l2XWp
+         jWtmzPlIMPWW/AENWQNQ3F4lSKDDHO5onSRdWKZoZUSlFd051YrkH0O+O95LytSzZtQQ
+         0mayvo60onDqLm1cllQAGldBYeYqbd2KWkSxrCU9LAUliyD5mJDpzpFxouqI0hdRfpLI
+         odEv2ShWvpG2m34RkcWe+c330uNdQZ6QT4uEQcKIvpq/PMyw9jFzoIAkkyXIW9A5NvR4
+         J+hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701350594; x=1701955394;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mJ4HfSjmHmp/z8LKb9u0O3izJUOjiP9hVgtxT/yNmWw=;
-        b=VKuSingPxXB2+dkkjqfFRXv7xcan/iorLKkORvSk2ztDBnK7OX93HpqKkqboZuen0M
-         CS7/Z3D3tZicHO3IAiTp+LT0GbUOsxbdVEcbYOnmOPJzz0Qs98AwlZ6f0hf+BN2Hc0hE
-         C5tRn30amkYl33ng++wUiKr4qKoj46J2vDfelQ8OxKFgnE8iEOKkG5uGtC7DrzkQxV6I
-         9FDrIePf0fzuUUZUOXCpM9UmqZ7aSb+GkPFVmWukSlct5VqFIMNGmywgRGd1NJlv0etp
-         G2jUnvCX7T/1CRX8lh0reb0UK7aDZ3uPvO5ZMzpEqRt8bmTifsYWEBfi/dM6II42jUYb
-         tswg==
-X-Gm-Message-State: AOJu0YwEgC9sYGYneb6/XCLkpbVaFOXK7tW6PVa9vFmd54YgtgcExs9J
-	yoagPdseVR3cKiURrxEF4LhgXzxNBjxREk/YaQM=
-X-Google-Smtp-Source: AGHT+IHz57RxLZa4J1YxA2XttUwodX0GdXV5ylkhZb4Oyz6eVI2ERRPlDmHL2wK9GIJ4wc86qAKgBv8QpHj+lMuC3ss=
-X-Received: by 2002:a4a:e702:0:b0:58d:e73a:eb79 with SMTP id
- y2-20020a4ae702000000b0058de73aeb79mr2180906oou.0.1701350593894; Thu, 30 Nov
- 2023 05:23:13 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701351341; x=1701956141;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PUGMCVS56USs0j4kK07YrKAqZ6u88Klk5HZUiZ1F26I=;
+        b=YqcsAoHzUE3JYH5NGUfR1Ot4eLtKiO3EyYjQ/UghEzK2zb6KbAa0tNQfD+qPNWroAl
+         KFr1b2k4BGaupd/LL1+gHN9ankFpen1thgcjf3BP0sJJb3PmvGieJap4woBjaPSPRYSR
+         AzWuC3kz1miTJDKO1HgVSdq2R0v/0bG73KwQv3ekEKtJ37WmoCNNRUoeYfIuAxW+kwCX
+         cVLij5+tG24bNQqWu4fSgk3zLYOfRKgA4/RMr/8lFRD6cQQ951JmBYzduqZD4+5jqpOi
+         cpThmdEOUxAV6W1JW20vtHUB/BTJkJ7Tv3RWRE2IyiXOBfBek8/DNp+zs+SVD0hYdOop
+         9Jpw==
+X-Gm-Message-State: AOJu0YwbgXx7S65rY5UvMQ5CkEOQDbtbUpRlaK9Fx0jYACT7L3yFXXY9
+	gfW2vXJWKLN1c8Re2CPDp3P4ew==
+X-Google-Smtp-Source: AGHT+IG3J2bgioICSTFzmL0w5aUiYYwKvQNFVapPJBEmBEffUAamfWdykRW+3nNKuLJbQLDOnUVi5A==
+X-Received: by 2002:a17:907:7856:b0:9fd:9439:c9f5 with SMTP id lb22-20020a170907785600b009fd9439c9f5mr12545135ejc.63.1701351340859;
+        Thu, 30 Nov 2023 05:35:40 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.109])
+        by smtp.gmail.com with ESMTPSA id r19-20020a1709067fd300b009fd50aa6984sm678266ejs.83.2023.11.30.05.35.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Nov 2023 05:35:39 -0800 (PST)
+Message-ID: <5bc8b7e3-7a4f-48d4-a1fa-9e3cb0b39a3a@linaro.org>
+Date: Thu, 30 Nov 2023 14:35:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <0-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com> <4-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
-In-Reply-To: <4-v1-f82a05539a64+5042-iommu_fwspec_p2_jgg@nvidia.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Thu, 30 Nov 2023 14:23:02 +0100
-Message-ID: <CAJZ5v0jZYy=hSn0hVV_dBw7rqY4NwcTn6ODo_-g_EVkzcnMBsQ@mail.gmail.com>
-Subject: Re: [PATCH 04/30] ACPI: IORT: Remove fwspec from the reserved region code
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: acpica-devel@lists.linux.dev, Andy Gross <agross@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
-	Bjorn Andersson <andersson@kernel.org>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, asahi@lists.linux.dev, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, devicetree@vger.kernel.org, 
-	Frank Rowand <frowand.list@gmail.com>, Hanjun Guo <guohanjun@huawei.com>, 
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev, 
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Joerg Roedel <joro@8bytes.org>, 
-	Kees Cook <keescook@chromium.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Len Brown <lenb@kernel.org>, 
-	linux-acpi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Hector Martin <marcan@marcan.st>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, Orson Zhai <orsonzhai@gmail.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Rob Clark <robdclark@gmail.com>, 
-	Robert Moore <robert.moore@intel.com>, Rob Herring <robh+dt@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Samuel Holland <samuel@sholland.org>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Sven Peter <sven@svenpeter.dev>, 
-	Thierry Reding <thierry.reding@gmail.com>, Krishna Reddy <vdumpa@nvidia.com>, 
-	virtualization@lists.linux.dev, Chen-Yu Tsai <wens@csie.org>, 
-	Will Deacon <will@kernel.org>, Yong Wu <yong.wu@mediatek.com>, 
-	Chunyan Zhang <zhang.lyra@gmail.com>, =?UTF-8?Q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/3] arm64: dts: qcom: msm8996: Fix 'in-ports' is a
+ required property
+Content-Language: en-US
+To: Jinlong Mao <quic_jinlmao@quicinc.com>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Tao Zhang <quic_taozha@quicinc.com>
+References: <20231129143815.7892-1-quic_jinlmao@quicinc.com>
+ <20231129143815.7892-2-quic_jinlmao@quicinc.com>
+ <3527d540-3e3f-4edb-b5f2-6ac481132c06@linaro.org>
+ <591e1aca-20ca-4d42-809d-12cd12ddadb3@quicinc.com>
+ <35916812-af55-4b2a-99e5-8566e945cb6e@linaro.org>
+ <5ef0372a-2b9d-4a19-bbb4-2c6ce29dbe79@quicinc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <5ef0372a-2b9d-4a19-bbb4-2c6ce29dbe79@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 30, 2023 at 2:10=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
-ote:
->
-> iort_iommu_get_resv_regions() needs access to the parsed id array that is
-> currently stored in the iommu_fwspec.
->
-> Instead of getting this from the fwspec inside the iort code have the
-> caller pass it in.
->
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+On 30/11/2023 14:12, Jinlong Mao wrote:
+> 
+> 
+> On 11/30/2023 8:06 PM, Krzysztof Kozlowski wrote:
+>> On 30/11/2023 12:15, Jinlong Mao wrote:
+>>>
+>>>
+>>> On 11/30/2023 4:55 PM, Krzysztof Kozlowski wrote:
+>>>> On 29/11/2023 15:38, Mao Jinlong wrote:
+>>>>> The inport of funnel@3023000 connects to a source which is not supported
+>>>>> in current linux kernel. Remove the device tree node of funnel@3023000
+>>>>> to fix the warning. It will be added once the driver support to the
+>>>>> source is added to linux kernel.
+>>>>
+>>>> Thanks for the changes, but that's not correct reason to remove DTS
+>>>> code. What kernel supports or not, should be irrelevant for the DTS. DTS
+>>>> for example is used in other projects - did you check if they have the
+>>>> same issues? Anyway, DTS describes the hardware, so how current kernel
+>>>> support defines what is and what is not in the hardware?
+>>>>
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>>
+>>> Hi Krzysztof,
+>>>
+>>> The funnel dt node must have in-ports node. It is to describe the input
+>>> connection of funnel HW. But there is no dt_binding doc to describe the
+>>> DT node of the HW connected to funnel@3023000. So remove the funnel to
+>>> solve the warning as of now. The funnel will be added back once driver
+>>> and dt_binding are added for the HW.
+>>>
+>>> Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
+>>
+>> Why we cannot add now the binding for the connected hardware? It's not
+>> really related to the driver.
+>>
+>> Best regards,
+>> Krzysztof
+> 
+> Do you mean yaml file can be added before the driver code is merged ?
 
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Yes, the binding. YAML is only the language. We don't write YAMLs, we
+write bindings.
 
-> ---
->  drivers/acpi/arm64/iort.c | 88 ++++++++++++++++++++++++---------------
->  drivers/iommu/dma-iommu.c |  7 +++-
->  include/linux/acpi_iort.h |  8 +++-
->  3 files changed, 65 insertions(+), 38 deletions(-)
->
-> diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-> index 5c9b4c23f96a87..93e30f2f5004f0 100644
-> --- a/drivers/acpi/arm64/iort.c
-> +++ b/drivers/acpi/arm64/iort.c
-> @@ -946,11 +946,19 @@ static u32 *iort_rmr_alloc_sids(u32 *sids, u32 coun=
-t, u32 id_start,
->         return new_sids;
->  }
->
-> -static bool iort_rmr_has_dev(struct device *dev, u32 id_start,
-> +struct iort_resv_args {
-> +       struct device *dev;
-> +       struct list_head *head;
-> +       struct fwnode_handle *iommu_fwnode;
-> +       const u32 *fw_ids;
-> +       unsigned int fw_num_ids;
-> +};
-> +
-> +static bool iort_rmr_has_dev(struct iort_resv_args *args, u32 id_start,
->                              u32 id_count)
->  {
-> +       struct device *dev =3D args->dev;
->         int i;
-> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
->
->         /*
->          * Make sure the kernel has preserved the boot firmware PCIe
-> @@ -965,18 +973,18 @@ static bool iort_rmr_has_dev(struct device *dev, u3=
-2 id_start,
->                         return false;
->         }
->
-> -       for (i =3D 0; i < fwspec->num_ids; i++) {
-> -               if (fwspec->ids[i] >=3D id_start &&
-> -                   fwspec->ids[i] <=3D id_start + id_count)
-> +       for (i =3D 0; i < args->fw_num_ids; i++) {
-> +               if (args->fw_ids[i] >=3D id_start &&
-> +                   args->fw_ids[i] <=3D id_start + id_count)
->                         return true;
->         }
->
->         return false;
->  }
->
-> -static void iort_node_get_rmr_info(struct acpi_iort_node *node,
-> -                                  struct acpi_iort_node *iommu,
-> -                                  struct device *dev, struct list_head *=
-head)
-> +static void iort_node_get_rmr_info(struct iort_resv_args *args,
-> +                                  struct acpi_iort_node *node,
-> +                                  struct acpi_iort_node *iommu)
->  {
->         struct acpi_iort_node *smmu =3D NULL;
->         struct acpi_iort_rmr *rmr;
-> @@ -1013,8 +1021,8 @@ static void iort_node_get_rmr_info(struct acpi_iort=
-_node *node,
->                         continue;
->
->                 /* If dev is valid, check RMR node corresponds to the dev=
- SID */
-> -               if (dev && !iort_rmr_has_dev(dev, map->output_base,
-> -                                            map->id_count))
-> +               if (args->dev &&
-> +                   !iort_rmr_has_dev(args, map->output_base, map->id_cou=
-nt))
->                         continue;
->
->                 /* Retrieve SIDs associated with the Node. */
-> @@ -1029,12 +1037,12 @@ static void iort_node_get_rmr_info(struct acpi_io=
-rt_node *node,
->         if (!sids)
->                 return;
->
-> -       iort_get_rmrs(node, smmu, sids, num_sids, head);
-> +       iort_get_rmrs(node, smmu, sids, num_sids, args->head);
->         kfree(sids);
->  }
->
-> -static void iort_find_rmrs(struct acpi_iort_node *iommu, struct device *=
-dev,
-> -                          struct list_head *head)
-> +static void iort_find_rmrs(struct iort_resv_args *args,
-> +                          struct acpi_iort_node *iommu)
->  {
->         struct acpi_table_iort *iort;
->         struct acpi_iort_node *iort_node, *iort_end;
-> @@ -1057,7 +1065,7 @@ static void iort_find_rmrs(struct acpi_iort_node *i=
-ommu, struct device *dev,
->                         return;
->
->                 if (iort_node->type =3D=3D ACPI_IORT_NODE_RMR)
-> -                       iort_node_get_rmr_info(iort_node, iommu, dev, hea=
-d);
-> +                       iort_node_get_rmr_info(args, iort_node, iommu);
->
->                 iort_node =3D ACPI_ADD_PTR(struct acpi_iort_node, iort_no=
-de,
->                                          iort_node->length);
-> @@ -1069,25 +1077,23 @@ static void iort_find_rmrs(struct acpi_iort_node =
-*iommu, struct device *dev,
->   * If dev is NULL, the function populates all the RMRs associated with t=
-he
->   * given IOMMU.
->   */
-> -static void iort_iommu_rmr_get_resv_regions(struct fwnode_handle *iommu_=
-fwnode,
-> -                                           struct device *dev,
-> -                                           struct list_head *head)
-> +static void iort_iommu_rmr_get_resv_regions(struct iort_resv_args *args)
->  {
->         struct acpi_iort_node *iommu;
->
-> -       iommu =3D iort_get_iort_node(iommu_fwnode);
-> +       iommu =3D iort_get_iort_node(args->iommu_fwnode);
->         if (!iommu)
->                 return;
->
-> -       iort_find_rmrs(iommu, dev, head);
-> +       iort_find_rmrs(args, iommu);
->  }
->
-> -static struct acpi_iort_node *iort_get_msi_resv_iommu(struct device *dev=
-)
-> +static struct acpi_iort_node *
-> +iort_get_msi_resv_iommu(struct iort_resv_args *args)
->  {
->         struct acpi_iort_node *iommu;
-> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
->
-> -       iommu =3D iort_get_iort_node(fwspec->iommu_fwnode);
-> +       iommu =3D iort_get_iort_node(args->iommu_fwnode);
->
->         if (iommu && (iommu->type =3D=3D ACPI_IORT_NODE_SMMU_V3)) {
->                 struct acpi_iort_smmu_v3 *smmu;
-> @@ -1105,15 +1111,13 @@ static struct acpi_iort_node *iort_get_msi_resv_i=
-ommu(struct device *dev)
->   * The ITS interrupt translation spaces (ITS_base + SZ_64K, SZ_64K)
->   * associated with the device are the HW MSI reserved regions.
->   */
-> -static void iort_iommu_msi_get_resv_regions(struct device *dev,
-> -                                           struct list_head *head)
-> +static void iort_iommu_msi_get_resv_regions(struct iort_resv_args *args)
->  {
-> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
->         struct acpi_iort_its_group *its;
->         struct acpi_iort_node *iommu_node, *its_node =3D NULL;
->         int i;
->
-> -       iommu_node =3D iort_get_msi_resv_iommu(dev);
-> +       iommu_node =3D iort_get_msi_resv_iommu(args);
->         if (!iommu_node)
->                 return;
->
-> @@ -1126,9 +1130,9 @@ static void iort_iommu_msi_get_resv_regions(struct =
-device *dev,
->          * a given PCI or named component may map IDs to.
->          */
->
-> -       for (i =3D 0; i < fwspec->num_ids; i++) {
-> +       for (i =3D 0; i < args->fw_num_ids; i++) {
->                 its_node =3D iort_node_map_id(iommu_node,
-> -                                       fwspec->ids[i],
-> +                                       args->fw_ids[i],
->                                         NULL, IORT_MSI_TYPE);
->                 if (its_node)
->                         break;
-> @@ -1151,7 +1155,7 @@ static void iort_iommu_msi_get_resv_regions(struct =
-device *dev,
->                                                          prot, IOMMU_RESV=
-_MSI,
->                                                          GFP_KERNEL);
->                         if (region)
-> -                               list_add_tail(&region->list, head);
-> +                               list_add_tail(&region->list, args->head);
->                 }
->         }
->  }
-> @@ -1160,13 +1164,24 @@ static void iort_iommu_msi_get_resv_regions(struc=
-t device *dev,
->   * iort_iommu_get_resv_regions - Generic helper to retrieve reserved reg=
-ions.
->   * @dev: Device from iommu_get_resv_regions()
->   * @head: Reserved region list from iommu_get_resv_regions()
-> + * @iommu_fwnode: fwnode that describes the iommu connection for the dev=
-ice
-> + * @fw_ids: Parsed IDs
-> + * @fw_num_ids: Length of fw_ids
->   */
-> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead)
-> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead,
-> +                                struct fwnode_handle *iommu_fwnode,
-> +                                const u32 *fw_ids, unsigned int fw_num_i=
-ds)
->  {
-> -       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
-> +       struct iort_resv_args args =3D {
-> +               .dev =3D dev,
-> +               .head =3D head,
-> +               .iommu_fwnode =3D iommu_fwnode,
-> +               .fw_ids =3D fw_ids,
-> +               .fw_num_ids =3D fw_num_ids,
-> +       };
->
-> -       iort_iommu_msi_get_resv_regions(dev, head);
-> -       iort_iommu_rmr_get_resv_regions(fwspec->iommu_fwnode, dev, head);
-> +       iort_iommu_msi_get_resv_regions(&args);
-> +       iort_iommu_rmr_get_resv_regions(&args);
->  }
->
->  /**
-> @@ -1178,7 +1193,12 @@ void iort_iommu_get_resv_regions(struct device *de=
-v, struct list_head *head)
->  void iort_get_rmr_sids(struct fwnode_handle *iommu_fwnode,
->                        struct list_head *head)
->  {
-> -       iort_iommu_rmr_get_resv_regions(iommu_fwnode, NULL, head);
-> +       struct iort_resv_args args =3D {
-> +               .head =3D head,
-> +               .iommu_fwnode =3D iommu_fwnode,
-> +       };
-> +
-> +       iort_iommu_rmr_get_resv_regions(&args);
->  }
->  EXPORT_SYMBOL_GPL(iort_get_rmr_sids);
->
-> diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-> index 85163a83df2f68..d644b0502ef48e 100644
-> --- a/drivers/iommu/dma-iommu.c
-> +++ b/drivers/iommu/dma-iommu.c
-> @@ -468,9 +468,12 @@ void iommu_put_dma_cookie(struct iommu_domain *domai=
-n)
->   */
->  void iommu_dma_get_resv_regions(struct device *dev, struct list_head *li=
-st)
->  {
-> +       struct iommu_fwspec *fwspec =3D dev_iommu_fwspec_get(dev);
->
-> -       if (!is_of_node(dev_iommu_fwspec_get(dev)->iommu_fwnode))
-> -               iort_iommu_get_resv_regions(dev, list);
-> +       if (!is_of_node(fwspec->iommu_fwnode)) {
-> +               iort_iommu_get_resv_regions(dev, list, fwspec->iommu_fwno=
-de,
-> +                                           fwspec->ids, fwspec->num_ids)=
-;
-> +       }
->
->         if (dev->of_node)
->                 of_iommu_get_resv_regions(dev, list);
-> diff --git a/include/linux/acpi_iort.h b/include/linux/acpi_iort.h
-> index 5423abff9b6b09..13f0cefb930693 100644
-> --- a/include/linux/acpi_iort.h
-> +++ b/include/linux/acpi_iort.h
-> @@ -53,7 +53,9 @@ void iort_put_rmr_sids(struct fwnode_handle *iommu_fwno=
-de,
->  /* IOMMU interface */
->  int iort_dma_get_ranges(struct device *dev, u64 *size);
->  int iort_iommu_configure_id(struct device *dev, const u32 *id_in);
-> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead);
-> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead,
-> +                                struct fwnode_handle *iommu_fwnode,
-> +                                const u32 *fw_ids, unsigned int fw_num_i=
-ds);
->  phys_addr_t acpi_iort_dma_get_max_cpu_address(void);
->  #else
->  static inline u32 iort_msi_map_id(struct device *dev, u32 id)
-> @@ -72,7 +74,9 @@ static inline int iort_dma_get_ranges(struct device *de=
-v, u64 *size)
->  static inline int iort_iommu_configure_id(struct device *dev, const u32 =
-*id_in)
->  { return -ENODEV; }
->  static inline
-> -void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead)
-> +void iort_iommu_get_resv_regions(struct device *dev, struct list_head *h=
-ead,
-> +                                struct fwnode_handle *iommu_fwnode,
-> +                                const u32 *fw_ids, unsigned int fw_num_i=
-ds)
->  { }
->
->  static inline phys_addr_t acpi_iort_dma_get_max_cpu_address(void)
-> --
-> 2.42.0
->
+Best regards,
+Krzysztof
+
 
