@@ -1,84 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-2709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A2157FEFA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:00:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 217957FEFC7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:13:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DE1BBB20D47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:00:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D084D281EB6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:13:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 484453B1AC;
-	Thu, 30 Nov 2023 13:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dkim=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98F793C6AA;
+	Thu, 30 Nov 2023 13:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XGIOLx8Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8EFAB10C9;
-	Thu, 30 Nov 2023 05:00:06 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E9C931042;
-	Thu, 30 Nov 2023 05:00:52 -0800 (PST)
-Received: from pluto (unknown [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E56963F5A1;
-	Thu, 30 Nov 2023 05:00:04 -0800 (PST)
-Date: Thu, 30 Nov 2023 13:00:02 +0000
-From: Cristian Marussi <cristian.marussi@arm.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
-	linux-arm-kernel@lists.infradead.org, quic_asartor@quicinc.com,
-	quic_lingutla@quicinc.com
-Subject: Re: [PATCH 3/3] firmware: arm_scmi: Increase the maximum opp count
-Message-ID: <ZWiHUt-N8GvG5z_O@pluto>
-References: <20231129065748.19871-1-quic_sibis@quicinc.com>
- <20231129065748.19871-4-quic_sibis@quicinc.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6F86D6C;
+	Thu, 30 Nov 2023 05:13:06 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3AUAX9tP018655;
+	Thu, 30 Nov 2023 13:13:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+80nq5HKyboBab0Chv7EqFCq9FYjhjhHHD23iXvweeA=;
+ b=XGIOLx8Zq6kqx1UgB5f8454KUbuDyN+0SsY9ZN8rfarD9aPBCpoWzW/ChmF+dKIeSCV7
+ WHBxfzXxXcnapo0GieUfp4nvlBvtlBsZ/YptbrCguw8FEg4D4HgoNkxagEB1tN2S0owJ
+ 0uCEfJYu1ouRv5DuOcnZ+L9useHXQXwYIqpX7an44r3AL7B3dUE0me1UjcvZ76fVf+ju
+ jQwWzt8vCxJF6TQPNIQNGMOMvBvtBJIjbacGuly9u2oqcwYU+i7meDJor0/oxCRcPsoz
+ aX9Fh/tL64js2m2eMPPKc2sW1otJdGGpiTMb/coMuKzUUaVL8Y+fFJhfTqa/xClGehUw gw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uprhdrbph-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 30 Nov 2023 13:13:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3AUDD1hS015654
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 30 Nov 2023 13:13:02 GMT
+Received: from [10.239.133.49] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 30 Nov
+ 2023 05:12:58 -0800
+Message-ID: <5ef0372a-2b9d-4a19-bbb4-2c6ce29dbe79@quicinc.com>
+Date: Thu, 30 Nov 2023 21:12:56 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231129065748.19871-4-quic_sibis@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/3] arm64: dts: qcom: msm8996: Fix 'in-ports' is a
+ required property
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>
+References: <20231129143815.7892-1-quic_jinlmao@quicinc.com>
+ <20231129143815.7892-2-quic_jinlmao@quicinc.com>
+ <3527d540-3e3f-4edb-b5f2-6ac481132c06@linaro.org>
+ <591e1aca-20ca-4d42-809d-12cd12ddadb3@quicinc.com>
+ <35916812-af55-4b2a-99e5-8566e945cb6e@linaro.org>
+From: Jinlong Mao <quic_jinlmao@quicinc.com>
+In-Reply-To: <35916812-af55-4b2a-99e5-8566e945cb6e@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: yPFr3G_-Q2RtahagzOpdrtj6hWIS8xjj
+X-Proofpoint-GUID: yPFr3G_-Q2RtahagzOpdrtj6hWIS8xjj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-11-30_11,2023-11-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 spamscore=0 suspectscore=0 impostorscore=0 mlxlogscore=643
+ clxscore=1015 mlxscore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2311300099
 
-On Wed, Nov 29, 2023 at 12:27:48PM +0530, Sibi Sankar wrote:
-> The number of opps on certain variants of the X1E80100 SoC are greater
-> than current maximum, so increase the MAX_OPP count to the next log level
-> to accommodate that.
+
+
+On 11/30/2023 8:06 PM, Krzysztof Kozlowski wrote:
+> On 30/11/2023 12:15, Jinlong Mao wrote:
+>>
+>>
+>> On 11/30/2023 4:55 PM, Krzysztof Kozlowski wrote:
+>>> On 29/11/2023 15:38, Mao Jinlong wrote:
+>>>> The inport of funnel@3023000 connects to a source which is not supported
+>>>> in current linux kernel. Remove the device tree node of funnel@3023000
+>>>> to fix the warning. It will be added once the driver support to the
+>>>> source is added to linux kernel.
+>>>
+>>> Thanks for the changes, but that's not correct reason to remove DTS
+>>> code. What kernel supports or not, should be irrelevant for the DTS. DTS
+>>> for example is used in other projects - did you check if they have the
+>>> same issues? Anyway, DTS describes the hardware, so how current kernel
+>>> support defines what is and what is not in the hardware?
+>>>
+>>>
+>>> Best regards,
+>>> Krzysztof
+>>
+>> Hi Krzysztof,
+>>
+>> The funnel dt node must have in-ports node. It is to describe the input
+>> connection of funnel HW. But there is no dt_binding doc to describe the
+>> DT node of the HW connected to funnel@3023000. So remove the funnel to
+>> solve the warning as of now. The funnel will be added back once driver
+>> and dt_binding are added for the HW.
+>>
+>> Documentation/devicetree/bindings/arm/arm,coresight-dynamic-funnel.yaml
 > 
-
-Hi,
-
-
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-> ---
->  drivers/firmware/arm_scmi/perf.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Why we cannot add now the binding for the connected hardware? It's not
+> really related to the driver.
 > 
-> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-> index 3344ce3a2026..edf34a3c4d6a 100644
-> --- a/drivers/firmware/arm_scmi/perf.c
-> +++ b/drivers/firmware/arm_scmi/perf.c
-> @@ -24,7 +24,7 @@
->  #include "protocols.h"
->  #include "notify.h"
->  
-> -#define MAX_OPPS		16
-> +#define MAX_OPPS		24
->
+> Best regards,
+> Krzysztof
 
-There is an hashtable, opps_by_freq, sized by an ilog2()....
+Do you mean yaml file can be added before the driver code is merged ?
 
-....so, can we stick to a power-of-2 like 32 instead ?
-(and be more future proof too...)
-
-Other than this, LGTM
-
-Reviewed-by: Cristian Marussi <cristian.marussi@arm.com>
-
-Thanks,
-Cristian
+Thanks
+Jinlong Mao
+> 
 
