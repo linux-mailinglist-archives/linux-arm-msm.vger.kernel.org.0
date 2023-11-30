@@ -1,58 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-2744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C05417FF84B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 18:32:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E86E97FF887
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 18:40:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7AABC281824
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 17:32:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A34F7281789
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 17:40:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E83745811C;
-	Thu, 30 Nov 2023 17:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FAA75812F;
+	Thu, 30 Nov 2023 17:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u3qz1RuO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cusBl+xA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA96A5677C;
-	Thu, 30 Nov 2023 17:31:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B982C433C8;
-	Thu, 30 Nov 2023 17:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192BC51002;
+	Thu, 30 Nov 2023 17:40:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA3DC433C9;
+	Thu, 30 Nov 2023 17:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701365519;
-	bh=wxg56W6HTHMTFYDW4lY4u8CY4BkNOVOP9bjh79kHVmE=;
+	s=k20201202; t=1701366047;
+	bh=zWMt5IhznV4y9Tk0tbO7xpSyPtkYWHHVPfOad0SC0aE=;
 	h=From:To:Cc:Subject:Date:From;
-	b=u3qz1RuObFfuunerRon1cBHkIkU7XP6vXJNp5DiAMMPQkvPEoWkUOPZVq+ytWyqs8
-	 rh7hJHBIhJl33qrkpiM0Q7WWcXqao7Ry4bCOlPzT6CkSsubV+dC1TsLJfq8vjG/M6G
-	 1lPmceDj3EQS4HbiaHHU//CySGBJzKKF5qyYfQhZuEuIh8Ud59jTYgzKSELFJs147a
-	 26poZRPxdioOB5zkDpNDbkMay5YADZg7dhw89vYDNDT84MCO9f/ixv7XkCl24c9A5R
-	 6z5wPJ8p7zc/fYtt+eesdYQGHBEUagEoqH0nb141XlkzdUJShW5Rk9IWHNxUoGj+l0
-	 cucAy8DQJB6Hg==
+	b=cusBl+xAfmeQGQ8xZrO/Nsx3tct0XtjelzpH3X+fk3W4r9Zh8/JpXLSd+IR2Vecmh
+	 +oGvLbOzKDDhwn4X+82NNE2Ai/aKgcEmBdMNNrpd+rXkQuCMOo+badO2YRh0G0rQwr
+	 MdJ9N2+C6Rc1Pk2WHFdEyL4gi4w8/ZP5s0oUtMMO4cBVwN4CuedvrsoTXsPI3rsRlQ
+	 K+sGgXQPNkZBtDwMk0WtUo8oAgEjGQp+53qHG5JSr5jnbcMoiED5OM61iaRVdEPQP2
+	 FFZ77xkUIceFMw/xpQNdWgwtg14oLuEYowInWoeCtM9HKmCtis5SZZCadUlKRS8Bit
+	 FL2SGbgKSGHvg==
 Received: from johan by xi.lan with local (Exim 4.96.2)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1r8kts-0003KX-1h;
-	Thu, 30 Nov 2023 18:32:32 +0100
+	id 1r8l2P-0003Pu-01;
+	Thu, 30 Nov 2023 18:41:21 +0100
 From: Johan Hovold <johan+linaro@kernel.org>
-To: Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Alessandro Zummo <a.zummo@towertech.it>
+To: Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>
 Cc: Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-rtc@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] dt-bindings: rtc: qcom-pm8xxx: fix inconsistent example
-Date: Thu, 30 Nov 2023 18:32:23 +0100
-Message-ID: <20231130173223.12794-1-johan+linaro@kernel.org>
+Subject: [PATCH 0/2] dt-bindings: thermal: qcom-spmi-adc-tm5/hc: fix up examples
+Date: Thu, 30 Nov 2023 18:41:12 +0100
+Message-ID: <20231130174114.13122-1-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -62,68 +63,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The PM8921 is an SSBI PMIC but in the binding example it is described
-as being part of an SPMI PMIC while using an SSBI address.
+When reviewing the various SPMI PMIC bindings, I noticed that several
+examples were incorrect and misleading and could also use some cleanup.
 
-Make the example consistent by using the sibling PM8941 SPMI PMIC
-instead.
+This series addresses the thermal ones.
 
-Fixes: 8138c5f0318c ("dt-bindings: rtc: qcom-pm8xxx-rtc: Add qcom pm8xxx rtc bindings")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- .../bindings/rtc/qcom-pm8xxx-rtc.yaml         | 36 +++++++++----------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+Johan
 
-diff --git a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-index 774c34c3f8f6..cdc56dfbfac3 100644
---- a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-@@ -67,27 +67,27 @@ additionalProperties: false
- 
- examples:
-   - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-     #include <dt-bindings/spmi/spmi.h>
--    spmi_bus: spmi@c440000 {
--      reg = <0x0c440000 0x1100>;
--      #address-cells = <2>;
--      #size-cells = <0>;
--      pmicintc: pmic@0 {
--        reg = <0x0 SPMI_USID>;
--        compatible = "qcom,pm8921";
--        interrupts = <104 8>;
--        #interrupt-cells = <2>;
--        interrupt-controller;
--        #address-cells = <1>;
-+
-+    spmi {
-+        #address-cells = <2>;
-         #size-cells = <0>;
- 
--        pm8921_rtc: rtc@11d {
--          compatible = "qcom,pm8921-rtc";
--          reg = <0x11d>;
--          interrupts = <0x27 0>;
--          nvmem-cells = <&rtc_offset>;
--          nvmem-cell-names = "offset";
-+        pmic@0 {
-+            compatible = "qcom,pm8941", "qcom,spmi-pmic";
-+            reg = <0x0 SPMI_USID>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            rtc@6000 {
-+                compatible = "qcom,pm8941-rtc";
-+                reg = <0x6000>, <0x6100>;
-+                reg-names = "rtc", "alarm";
-+                interrupts = <0x0 0x61 0x1 IRQ_TYPE_EDGE_RISING>;
-+                nvmem-cells = <&rtc_offset>;
-+                nvmem-cell-names = "offset";
-+            };
-         };
--      };
-     };
- ...
+
+Johan Hovold (2):
+  dt-bindings: thermal: qcom-spmi-adc-tm5/hc: fix example node names
+  dt-bindings: thermal: qcom-spmi-adc-tm5/hc: clean up examples
+
+ .../bindings/thermal/qcom-spmi-adc-tm-hc.yaml    |  8 +++++---
+ .../bindings/thermal/qcom-spmi-adc-tm5.yaml      | 16 ++++++++++------
+ 2 files changed, 15 insertions(+), 9 deletions(-)
+
 -- 
 2.41.0
 
