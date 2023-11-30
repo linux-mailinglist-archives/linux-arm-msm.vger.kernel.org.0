@@ -1,62 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-2683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 912317FEC47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 10:54:28 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A4BA7FEC8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 11:10:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17F33B20E99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 09:54:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 236AE281EC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 10:10:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CA943A29D;
-	Thu, 30 Nov 2023 09:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2DED3B2A1;
+	Thu, 30 Nov 2023 10:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JeH+rs34"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ijqEs8zA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDA0219A1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 01:54:08 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-40b538d5c4eso4586105e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 01:54:08 -0800 (PST)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E80DC10EA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 02:10:05 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-54917ef6c05so729575a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 02:10:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701338047; x=1701942847; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oFnK2W1R2fhcw00BqzFHQ4o1k7qynf7VtO0VZ35BT6I=;
-        b=JeH+rs34eKDJrK4HSjaCddAyYFF0L/cQpDuNv+AO0an3MwfJ2nPgxin4Zs7YWpnheN
-         bEIZKA5siKq/yI0Xpbee3g9DEkkE6/xk41fKa72VwhpxW4qxxONM8F9GoOHI4TKeLzxb
-         ZYWHRzDm3BqrZmd88r3AGmhbG2bAMRvBhwSq4MYWggDDjivyE+ICrrI6mgnNO2HQ0joc
-         dlamnsN2MIiQ4TGWoqYRJwEfry+m61UUs1ryC6WkpCBZcVrHcWJqDerf1/GGtDrvYTKW
-         Vd5+TupBjhctDYl+/9K2TksZVo4oJqM5Unx1T2NXnK3UupyWcW+rVkZUXZBvvJQxMchq
-         z3Ew==
+        d=linaro.org; s=google; t=1701339004; x=1701943804; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=E1qjU5JXu1SHQD4xQGaPaJAhFMnpcUVxymDQSxAyOzQ=;
+        b=ijqEs8zAxhdFfTdawN2jKrK8GLI781pRySgTvoSLBVLTg6jZHc+9DfB1oDBBO0aDKU
+         Wm9TUbSEqBONj7+AaW84roR0XUXu93yf+YqsHlohY8gTomUC7OgVzZeTXaBaAnoSDSwn
+         vBG1FjE9Srt7g7tBJGUfeiokyeAvWGb+ZoFpBLVa4acSlbFFR0LMQOgSl1WdiRrHJivA
+         cla/4eYW3uizS/TT7R+ERbJ2rY9iCZXS1lVYvHC3tp4+rUEGygQBR64tf+LklGjirXGy
+         brhz3qjQLPqI0pRmt2FhpEIfHjoWqW+346erYLLMYbIjdo/M9MQXJXmbPoBasSUfmCeH
+         OeeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701338047; x=1701942847;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=oFnK2W1R2fhcw00BqzFHQ4o1k7qynf7VtO0VZ35BT6I=;
-        b=w3EIdoaq8hUtpadwXQpKu7AgyBTP9f/3fiGJ4xfqednK7yfFH7ksMmqwIShXgAndod
-         nxO3LlbaKRT8IOhKkAwrMs8DQwHI2cpX45GX/HUPOoKQSfi2GZBncCN6bRVPDVhbS1yo
-         0+0v0eUN1Zv1GvDB17r86VlW1iL4ZL8EG9qvoEZtOXjibkA+gj+Jg27aSZ1Mh7Q/Om3i
-         g5uwkDatRbv43mzgpkChcCjJXyX4SXgWZ04OZCfJ0Hoqyv8BBLaJnTSDyWQ3WZ4FKtSM
-         lvNDpWG2YRDAVChVFmR91KyQCWWIayGO1/IYHAJQg4YYc2A34d9JkOL/GDIO/CQerei2
-         r2Pg==
-X-Gm-Message-State: AOJu0YzT8mUV+TGQbKF10c+th+TfkI3JKUDCGci8KFPeDwGcDJVypnFv
-	O4XLBp3EQRM8akkTmnfCv+rGVQ==
-X-Google-Smtp-Source: AGHT+IERbAR5kCEXoFWKv930fgPayDnjMttXIi85mFVhsgzWECqO8UigNd0v3U/lwOMValdiRaGRQA==
-X-Received: by 2002:a05:600c:1c1c:b0:40b:37eb:900c with SMTP id j28-20020a05600c1c1c00b0040b37eb900cmr13788686wms.6.1701338046906;
-        Thu, 30 Nov 2023 01:54:06 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:41c9:3acd:a6e2:5242? ([2a01:e0a:982:cbb0:41c9:3acd:a6e2:5242])
-        by smtp.gmail.com with ESMTPSA id p36-20020a05600c1da400b0040b478da760sm1358964wms.48.2023.11.30.01.54.05
+        d=1e100.net; s=20230601; t=1701339004; x=1701943804;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E1qjU5JXu1SHQD4xQGaPaJAhFMnpcUVxymDQSxAyOzQ=;
+        b=L6JdQ4owajFzRqnvbpifepUGx7gPPzcpThCr5P84OYbp8sEBu1r2TgKD529+O5tDnl
+         DsIM8i3/7uImKxZvUFOCWG+CO/0rnfl9f/Z5vHbhSbenh/9U1zA6NsYovL/IZt4TGl0c
+         Bz4OFTOMQjwi6K+daT5j2z8b/Uf9Ex67VvyrMiSdeQY3LFQcNluN8+PKDt7DjNDReJzP
+         xCtbOl973aWIuD4TusB3fWlGWCF7cHJuIDTr1EHKNHLeZqrAZ/H8JSRMc/1Dzx/nOT48
+         PvJWNQ9mggGy/qzeNS9NZgGitDncitYMVq4xqvGmW16W6Q3F/LRiOAN5dFjwbjl4mJMx
+         YJrA==
+X-Gm-Message-State: AOJu0YwvPK9n8giRfkHo2R4XKmjblNJlw31Eo5jsWpxiEJilNV0oJXF4
+	ZXKGKqlu4HNAwBLOl2qkAq0J9g==
+X-Google-Smtp-Source: AGHT+IF/jgdSK4dsxLW+CHiaLQG7uE1vQq6/j3ab/pmaLpRz4Scp96/aZfQSgXqDVz21yXWypQxVVw==
+X-Received: by 2002:a17:906:73c7:b0:a17:d319:df11 with SMTP id n7-20020a17090673c700b00a17d319df11mr2272934ejl.59.1701339004233;
+        Thu, 30 Nov 2023 02:10:04 -0800 (PST)
+Received: from [192.168.209.83] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
+        by smtp.gmail.com with ESMTPSA id r21-20020a170906281500b009fca9f39e98sm504965ejc.26.2023.11.30.02.10.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Nov 2023 01:54:06 -0800 (PST)
-Message-ID: <690b7dbd-3165-4aa5-af85-1a1eaa12d176@linaro.org>
-Date: Thu, 30 Nov 2023 10:54:05 +0100
+        Thu, 30 Nov 2023 02:10:03 -0800 (PST)
+Message-ID: <a9c2532a-eaa6-4019-8ce9-5a58b1b720b2@linaro.org>
+Date: Thu, 30 Nov 2023 11:09:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,80 +63,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8450-hdk: Enable the A730 GPU
-Content-Language: en-US, fr
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+Subject: Re: [PATCH v4 1/3] PCI: qcom: Enable cache coherency for SA8775P RC
+To: Manivannan Sadhasivam <mani@kernel.org>,
+ Mrinmay Sarkar <quic_msarkar@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, robh+dt@kernel.org,
+ quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+ quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+ dmitry.baryshkov@linaro.org, robh@kernel.org, quic_krichai@quicinc.com,
+ quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+ quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Bjorn Helgaas <bhelgaas@google.com>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20231127-topic-a7xx_dt-v1-0-a228b8122ebf@linaro.org>
- <20231127-topic-a7xx_dt-v1-6-a228b8122ebf@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20231127-topic-a7xx_dt-v1-6-a228b8122ebf@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ linux-pci@vger.kernel.org
+References: <1700577493-18538-1-git-send-email-quic_msarkar@quicinc.com>
+ <1700577493-18538-2-git-send-email-quic_msarkar@quicinc.com>
+ <20231130052116.GA3043@thinkpad>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <20231130052116.GA3043@thinkpad>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 27/11/2023 17:20, Konrad Dybcio wrote:
-> Enable the GPU and provide a path for the ZAP blob.
+On 30.11.2023 06:21, Manivannan Sadhasivam wrote:
+> On Tue, Nov 21, 2023 at 08:08:11PM +0530, Mrinmay Sarkar wrote:
+>> In a multiprocessor system cache snooping maintains the consistency
+>> of caches. Snooping logic is disabled from HW on this platform.
+>> Cache coherency doesn’t work without enabling this logic.
+>>
+>> 8775 has IP version 1.34.0 so intruduce a new cfg(cfg_1_34_0) for this
+>> platform. Assign no_snoop_override flag into struct qcom_pcie_cfg and
+>> set it true in cfg_1_34_0 and enable cache snooping if this particular
+>> flag is true.
+>>
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8450-hdk.dts | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> index 20153d08edde..a20d5d76af35 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-> @@ -580,6 +580,14 @@ &dispcc {
->   	status = "okay";
->   };
->   
-> +&gpu {
-> +	status = "okay";
-> +
-> +	zap-shader {
-> +		firmware-name = "qcom/sm8450/a730_zap.mbn";
-> +	};
-> +};
-> +
->   &i2c9 {
->   	clock-frequency = <400000>;
->   	status = "okay";
-> 
+> I just happen to check the internal register details of other platforms and I
+> see this PCIE_PARF_NO_SNOOP_OVERIDE register with the reset value of 0x0. So
+> going by the logic of this patch, this register needs to be configured for other
+> platforms as well to enable cache coherency, but it seems like not the case as
+> we never did and all are working fine (so far no issues reported).
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Guess we know that already [1]
+
+The question is whether this override is necessary, or the default
+internal state is OK on other platforms
+
+Konrad
+
+[1] https://lore.kernel.org/linux-arm-msm/cb4324aa-8035-ce6e-94ef-a31ed070225c@quicinc.com/
 
