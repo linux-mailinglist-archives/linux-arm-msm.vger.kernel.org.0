@@ -1,89 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-2716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A61297FF0B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:51:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 011CC7FF0FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 14:57:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62396282065
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:51:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1BFD2820E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Nov 2023 13:57:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7748147A67;
-	Thu, 30 Nov 2023 13:51:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="H58wh8CH"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 591B547A77;
+	Thu, 30 Nov 2023 13:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8821B9;
-	Thu, 30 Nov 2023 05:51:00 -0800 (PST)
-Received: from [100.124.219.30] (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 037796607345;
-	Thu, 30 Nov 2023 13:50:54 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1701352258;
-	bh=HGnD8bUQWOaK+6RFgKTsVFZmO6HTrfFGIJlJrDox4v8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=H58wh8CHNeyKhFKLgOKBi4cHe/A5GWRrfro7BiyeAt4Jr5iSpHtao56/5Xpa0WFNt
-	 iL9p94K8uIyTXndAwxXyrdNoIHY9sXoa5oBmnefTqKNP3R0jrZm8Swjg7huYA2KQi2
-	 qA2dhqdwQ0MRA5G3Od4dScyaTjrYKG0aYkBzU0D3kIBfKadg5E9uG5RT6kHtSoFYVf
-	 4V0V4odklj4B0h1o/kAGP/l1KaQWj1PwW92dO9KW8DxzbwFbO/+nUqH7C+XFTFeJ/d
-	 058/Sgc7SGQkJBFyU3cqme3tnGtkMBUFdWLM7lBBh92rCW62iY4m/GSvtgeOyxYAOI
-	 yAE7gIc4P+R8w==
-Message-ID: <893192db-0431-4d1f-7281-952da9979345@collabora.com>
-Date: Thu, 30 Nov 2023 19:20:50 +0530
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTP id 0A99AB9;
+	Thu, 30 Nov 2023 05:57:00 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6F33C1042;
+	Thu, 30 Nov 2023 05:57:46 -0800 (PST)
+Received: from bogus (e103737-lin.cambridge.arm.com [10.1.197.49])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B00B03F5A1;
+	Thu, 30 Nov 2023 05:56:58 -0800 (PST)
+Date: Thu, 30 Nov 2023 13:56:56 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Cristian Marussi <cristian.marussi@arm.com>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
+	linux-arm-kernel@lists.infradead.org, quic_asartor@quicinc.com,
+	quic_lingutla@quicinc.com
+Subject: Re: [PATCH 2/3] firmware: arm_scmi: Fix freq/power truncation in the
+ perf protocol
+Message-ID: <ZWiUqGJ8FaA1GBjm@bogus>
+References: <20231129065748.19871-1-quic_sibis@quicinc.com>
+ <20231129065748.19871-3-quic_sibis@quicinc.com>
+ <ZWh6cuApg-sRbA2s@bogus>
+ <ZWiE5nM83TZd3drT@pluto>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v6 06/10] drm: ci: mediatek: Set IGT_FORCE_DRIVER for
- mt8173
-Content-Language: en-US
-To: Daniel Stone <daniel@fooishbar.org>
-Cc: helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
- daniels@collabora.com, emma@anholt.net, gustavo.padovan@collabora.com,
- linux-arm-msm@vger.kernel.org, guilherme.gallo@collabora.com,
- sergi.blanch.torne@collabora.com, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, virtualization@lists.linux-foundation.org,
- david.heidelberg@collabora.com, linux-mediatek@lists.infradead.org,
- linux-rockchip@lists.infradead.org
-References: <20231129121841.253223-1-vignesh.raman@collabora.com>
- <20231129121841.253223-7-vignesh.raman@collabora.com>
- <CAPj87rPKywWa8KxTCeJQz4vvgTwhPzL+y4aCX9zxZDkkfrvsoQ@mail.gmail.com>
-From: Vignesh Raman <vignesh.raman@collabora.com>
-In-Reply-To: <CAPj87rPKywWa8KxTCeJQz4vvgTwhPzL+y4aCX9zxZDkkfrvsoQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZWiE5nM83TZd3drT@pluto>
 
-Hi Daniel,
-
-On 29/11/23 18:52, Daniel Stone wrote:
-> Hi Vignesh,
+On Thu, Nov 30, 2023 at 12:49:42PM +0000, Cristian Marussi wrote:
+> On Thu, Nov 30, 2023 at 12:05:06PM +0000, Sudeep Holla wrote:
+> > On Wed, Nov 29, 2023 at 12:27:47PM +0530, Sibi Sankar wrote:
+> > > Fix frequency and power truncation seen in the performance protocol by
+> > > casting it with the correct type.
+> > >
+> > 
+> > While I always remembered to handle this when reviewing the spec, seem to
+> > have forgotten when it came to handling in the implementation :(. Thanks
+> > for spotting this.
+> > 
+> > However I don't like the ugly type casting. I think we can do better. Also
+> > looking at the code around the recently added level index mode, I think we
+> > can simplify things like below patch.
+> > 
+> > Cristian,
+> > What do you think ?
+> > 
 > 
-> On Wed, 29 Nov 2023 at 12:19, Vignesh Raman <vignesh.raman@collabora.com> wrote:
->> Expected driver for mt8173 is "mediatek" and for mt8183
->> it is "panfrost". Set IGT_FORCE_DRIVER to 'mediatek' as
->> the expected driver for mt8173.
+> Hi
 > 
-> Actually, for mt8183 it's both. And for mt8173 it will probably be
-> mediatek+pvr pretty soon. Each of these SoCs (like most Arm devices)
-> have a separate display controller and GPU, with different drivers for
-> each. They'll run different tests with different xfails. So we should
-> figure out a way to support igt running for both devices on the one
-> system.
+> the cleanup seems nice in general to compact the mult_factor multipliers
+> in one place, and regarding addressing the problem of truncation without
+> the need of the explicit casting, should not be enough to change to
+> additionally also change mult_factor to be an u64 ?
+>
 
-Agree. Will work on separate patch to test both the drivers for these 
-devices.
+I started exactly with that, but when I completed the patch, there was no
+explicit need for it, so dropped it again. I can bump mult_factor to be
+u64 but do you see any other place that would need it apart from having
+single statement that does multiplication and assignment ? I am exploiting
+the conditional based on level_indexing_mode here but I agree it may help
+in backporting if I make mult_factor u64.
 
+-- 
 Regards,
-Vignesh
+Sudeep
 
