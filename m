@@ -1,152 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-2942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 178138013A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 20:44:56 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAA218013B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 20:49:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B75ED281178
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 19:44:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A7AB01F20FA1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 19:49:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85F704F8B6;
-	Fri,  1 Dec 2023 19:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2CE74EB4D;
+	Fri,  1 Dec 2023 19:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Tb1Ofy8r"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lzdssPC/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D60C610E2
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 11:44:49 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B1GVaaY005177;
-	Fri, 1 Dec 2023 19:43:39 GMT
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D341D67
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 11:49:40 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B1ILBKH002619;
+	Fri, 1 Dec 2023 19:49:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0UvbmXfyHcIlOScsd/uYh4lpCjWpx8TNSAgarzw1f0M=;
- b=Tb1Ofy8rYS4PW8oD451gUqz8h307zVvGMPuQkcRty9AKnyNZPmCir+b940FICiBHHIo9
- kVusj0EoTOu1ke4A0W2ymbNKecvdADEgxwRQhmGc/ff+tXS9yjImGLBh1iItoZMAm9gs
- bNuqtuVgT0BkgJXbvdbb3UAs82iG0UijkbMVx3Bqn93OXrtp9MnEHtX0v1gaGiJ00wd3
- u+aSPVcgurC8p8EqiaycZsJ2tm5mjR3LgylxLPd4z2ZWmrrTzG4IQEW9Sq1WL+fac0tv
- H/rGtS7U9SNnt3wZaMhk/w2sccS3Mn+iGmSlZPbyI/GMxlFx1LhSgx2SYSBj9gMlZKgm Xg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uq3f7tsb2-1
+ bh=xN1py9cHnutJpVCIpNXt4MgccbHkV8Sj1sDoGQejqJ8=;
+ b=lzdssPC/xECmU6PH/cBWCwGy+DCnYi16Fbma6CvuBaAwbOtFQANheDfa5g3cwTPeoVJB
+ xHhqGxNObKLDkIdcCMtswqtejg1DgFxDATEtBfxThPyZhcWtLEOSQI0wtsaIg5tLyFXR
+ e/MGOIExOXluAPMo3lumyS1xvpWBA//plWiAsGm9Mqjbvr0iqQY34jS0Ghey3etYR73s
+ 7MRbylrNsHOJX8GCA7rhUXITGPg+g0JORETvzQ2zro1D3bUllVFyspqRDbR+ev7Oe4sq
+ MACjacayF1szCKXehqfgqG6mVYbIa4l9R3qGuDl2FDPiWWc7dCNAsz8GhvSnEKGBP0bw ag== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uqjf1rjc3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Dec 2023 19:43:38 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B1Jhcxv004169
+	Fri, 01 Dec 2023 19:49:16 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B1JnFff027782
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Dec 2023 19:43:38 GMT
-Received: from [10.110.73.134] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 1 Dec 2023 19:49:15 GMT
+Received: from [10.71.109.160] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 1 Dec
- 2023 11:43:37 -0800
-Message-ID: <a78c42d1-6ce0-2c34-5513-c04948d2ff31@quicinc.com>
-Date: Fri, 1 Dec 2023 11:43:36 -0800
+ 2023 11:49:14 -0800
+Message-ID: <cfe7803b-c28d-4cb4-8b4f-323c03aed9a7@quicinc.com>
+Date: Fri, 1 Dec 2023 11:49:14 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 2/2] drm/msm/dpu: Add mutex lock in control vblank irq
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 08/13] drm/msm/dpu: remove QoS teardown on plane
+ destruction
 Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Paloma Arellano <quic_parellan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <marijn.suijten@somainline.org>,
-        <steev@kali.org>
-References: <20231201014101.15802-1-quic_parellan@quicinc.com>
- <20231201014101.15802-3-quic_parellan@quicinc.com>
- <20231201034710.GB1766637@hu-bjorande-lv.qualcomm.com>
- <CAA8EJpqFya5H+4PPZ8A3CqqqRJXsJ3KKbbcfS=C13QTr1vAtSw@mail.gmail.com>
- <20231201162252.GG1766637@hu-bjorande-lv.qualcomm.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231201162252.GG1766637@hu-bjorande-lv.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230730011920.354575-1-dmitry.baryshkov@linaro.org>
+ <20230730011920.354575-9-dmitry.baryshkov@linaro.org>
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <20230730011920.354575-9-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PAp1ffyNoZaj6boHW5eX-9E78-WMBjNN
-X-Proofpoint-GUID: PAp1ffyNoZaj6boHW5eX-9E78-WMBjNN
+X-Proofpoint-ORIG-GUID: 0Zk1ZDwJofs7YXx_KAHDV8roWRKRH0bh
+X-Proofpoint-GUID: 0Zk1ZDwJofs7YXx_KAHDV8roWRKRH0bh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-01_18,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- spamscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
- priorityscore=1501 mlxlogscore=999 bulkscore=0 clxscore=1015 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312010125
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ phishscore=0 adultscore=0 mlxlogscore=935 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2312010125
 
 
 
-On 12/1/2023 8:22 AM, Bjorn Andersson wrote:
-> On Fri, Dec 01, 2023 at 10:34:50AM +0200, Dmitry Baryshkov wrote:
->> On Fri, 1 Dec 2023 at 05:47, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->>> On Thu, Nov 30, 2023 at 05:40:55PM -0800, Paloma Arellano wrote:
-> [..]
->>>> @@ -2386,6 +2390,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
->>>>        dpu_enc->enabled = false;
->>>>        mutex_init(&dpu_enc->enc_lock);
->>>>        mutex_init(&dpu_enc->rc_lock);
->>>> +     mutex_init(&dpu_enc->vblank_ctl_lock);
->>>
->>> Is this somehow propagated to multiple different dpu_encoder_phys
->>> instances, or why do you need to initialize it here and pass the pointer
->>> through 2 different intermediate structures before assigning it to
->>> phys_enc->vblank_ctl_lock below?
->>
->> Yes, there can be two phys_enc instances for a single encoder, so this
->> part is fine.
->>
+On 7/29/2023 6:19 PM, Dmitry Baryshkov wrote:
+> There is little point in disabling QoS on plane destruction: it happens
+> during DPU device destruction process, after which there will be no
+> running planes.
 > 
-> Thanks for the clarification, Dmitry. Sounds like it make sense then.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 7 -------
+>   1 file changed, 7 deletions(-)
 > 
-> But, if I read the code correctly the two instances will have separate
-> vblank_refcount copies, and the dpu_core_irq_*() interface does mutual
-> exclusion within. So why do we need shared mutual exclusion between the
-> two? (This is where a proper description of the problem in the commit
-> message would have been very helpful)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index aba5185e1d66..f114efee1b57 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -1173,17 +1173,10 @@ static void dpu_plane_atomic_update(struct drm_plane *plane,
+>   static void dpu_plane_destroy(struct drm_plane *plane)
+>   {
+>   	struct dpu_plane *pdpu = plane ? to_dpu_plane(plane) : NULL;
+> -	struct dpu_plane_state *pstate;
+>   
+>   	DPU_DEBUG_PLANE(pdpu, "\n");
+>   
+>   	if (pdpu) {
+> -		pstate = to_dpu_plane_state(plane->state);
+> -		_dpu_plane_set_qos_ctrl(plane, &pstate->pipe, false);
+> -
+> -		if (pstate->r_pipe.sspp)
+> -			_dpu_plane_set_qos_ctrl(plane, &pstate->r_pipe, false);
+> -
+>   		/* this will destroy the states as well */
+>   		drm_plane_cleanup(plane);
+>   
+> -- 
+> 2.39.2
 > 
-
-Are you suggesting we just have one vblank_ctl_lock per encoder and not 
-have one vblank_ctl_lock per phys encoder? I cannot think of a display 
-specific reason for that other than just the SW layout.
-
-The reason its like this today is that control_vblank_irq is an encoder 
-phys op because it does different things based on the type of encoder.
-
-Because its an encoder phys op, it has the vblank_ctl_lock at the phys 
-structure and not the encoder one.
-
-Its just more about how the phys op is defined that each phys op 
-operates on its phys's structure.
-
-Generally, if we have one encoder with two physical encoders we anyways 
-bail out early for the other encoder so this is mostly a no-op for the 
-slave phys encoder.
-
-Please take a look at below return point.
-
-715 	/* Slave encoders don't report vblank */
-716 	if (!sde_encoder_phys_vid_is_master(phys_enc))
-717 		goto end;
-718
-
-So technically its still providing protection for the same phys encoder 
-but the catch is this control_vblank_irq can get called from different 
-threads hence we need exclusion.
-
-
-> Regards,
-> Bjorn
 
