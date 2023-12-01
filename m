@@ -1,95 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-2927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D715180107F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 17:46:52 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D04C801075
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 17:46:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 141611C20EC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 16:46:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D4741C20C12
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 16:46:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 742A54CE01;
-	Fri,  1 Dec 2023 16:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A800D3C065;
+	Fri,  1 Dec 2023 16:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mmy9tmur"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GqkLVWvE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460364AF78;
-	Fri,  1 Dec 2023 16:46:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E1FC433C8;
-	Fri,  1 Dec 2023 16:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7922B1DA50;
+	Fri,  1 Dec 2023 16:46:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48D10C433C9;
+	Fri,  1 Dec 2023 16:46:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701449206;
-	bh=5VDnDHEln3DKe1zG9t7qo9Eo+6x9j+qVjLQOECvlRlU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mmy9tmurniIFtyjP3ziw7xjSYjUEYDmIScfc4kqHM7UqmbzUZ35zBFY2pdDes577s
-	 tjRX/Ayd7P3WcUW6Vnug/ydDlLOVj3QZFrD8D268psT1enu/5lv9PKOp4jLV8H+xAu
-	 DJiDHIbjSHheyDl6iGgUX1UFMDjYWzhyEVRk0fIc9yQP8726oGaOq0L2zozJ3gRiLp
-	 oXZ4gYVOkl14X0Djv6abQvVP7dmLFOWO21vMsFOR5JfdvjvS4roITxotqkoqlMwgnE
-	 x0R7MvzDA88sNRo4Gt3CHMh2vH/8JWCXOTWXGhxTWJF5PDJlcFcZzdYCRzQSPDY64T
-	 gqGQ5x+J+VAIw==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1r96fj-0003IY-0q;
-	Fri, 01 Dec 2023 17:47:23 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Lee Jones <lee@kernel.org>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
+	s=k20201202; t=1701449177;
+	bh=LFxpOweV7KVhHEesZpu+S1zzkJsuWf07I3KrLAutqs8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GqkLVWvE/Dk4oW6RsREi2JzmNu2WivSa24e+YqDv01BLNe8eoLZDQjCrMDPRHBHF1
+	 Jii8aN5YItrcg7bA7JLNwLNT7B1F36xrV1lTG++opE+eW2yQz0IyV/kxTjtdWe6uKl
+	 spmKDScf9fbukaDmt3BQXmuhsOjrOhRu939AKtI7l1vl8bfYQ2yvW+0bPj/v7Atvl6
+	 mZYCT5WpQ8iPjNeX7ENlYjz4S0rZFGhnuh2gEr71DfpSJQM1af1s0gfv+waNnG47Fh
+	 j8kC4t5PbGm8QvtaKSw1vqZJFw5O0UDXbjxPl1iufsqn7y5vQOykysZWCpLftzWpma
+	 68wXM0zVIan1Q==
+Date: Fri, 1 Dec 2023 16:46:09 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Andy Gross <agross@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>,
+	Andrew Lunn <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>,
 	Bjorn Andersson <andersson@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heiko Stuebner <heiko@sntech.de>, Jonathan Corbet <corbet@lwn.net>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 4/4] dt-bindings: mfd: pm8008: clean up example node names
-Date: Fri,  1 Dec 2023 17:45:46 +0100
-Message-ID: <20231201164546.12606-5-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231201164546.12606-1-johan+linaro@kernel.org>
-References: <20231201164546.12606-1-johan+linaro@kernel.org>
+	Michal Simek <michal.simek@amd.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>,
+	=?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	workflows@vger.kernel.org, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v3] docs: dt-bindings: add DTS Coding Style document
+Message-ID: <20231201-thrive-gully-5260ab07b352@spud>
+References: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="MfDi0fzK8bz3SQxU"
+Content-Disposition: inline
+In-Reply-To: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
 
-Devicetree node names should be generic; fix up the pm8008 binding
-example accordingly.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+--MfDi0fzK8bz3SQxU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-index 24c6158f73ae..32ea898e3ca9 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
-@@ -88,10 +88,11 @@ examples:
-   - |
-     #include <dt-bindings/interrupt-controller/irq.h>
-     #include <dt-bindings/gpio/gpio.h>
--    qupv3_se13_i2c {
-+    i2c {
-       #address-cells = <1>;
-       #size-cells = <0>;
--      pm8008i@8 {
-+
-+      pmic@8 {
-         compatible = "qcom,pm8008";
-         reg = <0x8>;
- 
--- 
-2.41.0
+On Sat, Nov 25, 2023 at 07:44:22PM +0100, Krzysztof Kozlowski wrote:
+> +Indentation
+> +-----------
+> +
+> +1. Use indentation according to :ref:`codingstyle`.
 
+One thing Jonathan mentioned before to me was to drop this :ref: stuff.
+| > +:ref:`devicetree-abi` more information on the ABI.
+|=20
+| ...can just be written as "Please see
+| Documentation/devicetree/bindings/ABI.rst".  The cross-reference link
+| will be generated as expected, and readers of the plain-text docs don't
+| have to go grepping to find the reference.
+https://lore.kernel.org/all/87bki23rbx.fsf@meer.lwn.net/
+
+Apparently the doc generation scripting can automagically do the right
+thing here:
+https://docs.kernel.org/process/maintainer-soc.html#devicetree-abi-stability
+
+Cheers,
+Conor.
+
+--MfDi0fzK8bz3SQxU
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZWoN0QAKCRB4tDGHoIJi
+0j9wAQDnyvYZgmaO0R7WxLXB+G3r+OjlxJNGnsVe1AuYO3IFJAD7BhbA4vqCT0nw
++WHXQA71Ia5T1lkozqxKhBUILq7PPAw=
+=V0a1
+-----END PGP SIGNATURE-----
+
+--MfDi0fzK8bz3SQxU--
 
