@@ -1,144 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-2843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2844-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 690448005C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:36:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2D7F8005E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:39:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 08782B21199
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 08:36:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 252FC28186C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 08:39:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 251961B269;
-	Fri,  1 Dec 2023 08:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B383C1C2B7;
+	Fri,  1 Dec 2023 08:39:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="p4pmbvO0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="w/SbIx7R"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B6951717
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 00:36:38 -0800 (PST)
-Received: by mail-io1-xd2a.google.com with SMTP id ca18e2360f4ac-7b3a8366e13so56257639f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 00:36:38 -0800 (PST)
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4160710D7
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 00:39:34 -0800 (PST)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5d3efc071e2so7101377b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 00:39:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701419797; x=1702024597; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AcDyzI673G1w5UmMWHHvh7Y+t65sOntHLFVH3YijAyQ=;
-        b=p4pmbvO0xMZHxEXuvUexB/kZknDcoDwB2h/BUfyx9V59deLhRwAS6hC9P6e77FUDSX
-         naHBCbkSPG5RwxuPl1IFDy5AHyjbPfVUHivlVgyqtEmZEXQ3d+2vXoGZgdX746JTRhaJ
-         FSMKWG+2ARzDuU8pP4mBWbazTVLGDf+hXFFqd1q+6R66GWT2BfvISiU3XMqlmFtv6XKE
-         mW4DyRMGsgQv7LSvhgHPhDQqivUCoBksvQBFbkY0tMEQJwU9riuTFZBV+W5OQv1tNDK3
-         FI06Zm8X3xtPsPK7nXioubPcDwi8dr7xyK1xaWSJ0gYGQ4Tk8L3bO/vEC+duj4AfXr6N
-         l9uw==
+        d=linaro.org; s=google; t=1701419973; x=1702024773; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QM9xhtSWl8bZod+heLo+OxtwiUVff2dCtOs0sAGegx4=;
+        b=w/SbIx7Rri7db/tA1bsHTWwhsiN5T4Yfo+Sc2AcnWLv7+4fXgOGTJmC4+4GJGbmRXd
+         w7VN7jIiqU9v/uPHcBcrPy9YmGM82LHldXxVV5IzYXCS9NVI79WuKwpu2D+yj5ZkfMSH
+         z2309llgI4MmRR18bJVwwHdSbb6hYn1JMqWPzrVhrS3Gc/7gA9UtcdDiRG3x19MvtacM
+         /PlNrfFq5BplyAK1vnf+hhljvlNbhdUmU4fLDA7ofuwgumpFmJ1lkL1c1S7tkIoACssx
+         8kBrsekfupaZcGBlwfcnhAcZLFiLS3YXZTJxqtpfTntZk/ggpni5ws3tWTfjh+9nxbdA
+         gEyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701419797; x=1702024597;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AcDyzI673G1w5UmMWHHvh7Y+t65sOntHLFVH3YijAyQ=;
-        b=RI59iyUVTxylXXUmeh3CSZnKfvZ3qY/y7xcxSN4uLDoPP0jpvQqkewFr/ZOVy89Bql
-         Kk1eSmKnTmVfExFjrjXp7vgNUEm3rdbrYmSxqdKG6r5y6gYUuQr147drlHci1GqX5i1b
-         JjDlhikP/n+l1/1XljCQ6jnUgTMYgDjYm9O5KupXl7MXUvAOkLsZMrH0//jMqPRHBG18
-         FwIEIGAfjKMyn2L9jXMe2iWJoyRdCW/5Imv/8Yws8zI8w5FNSUoCT81Czk76DxBS9tRm
-         GD6riO1ZZl8HulXrIVxdPEXNK9CQOnSkgMwK7ulVEr/vHsJyqmySB3Zl0Q3uSA1EkWMZ
-         DP2g==
-X-Gm-Message-State: AOJu0YyNVbOmfnfHwaDmegtPrF6LHrfYRw0sJhKHj/MbLNXtOKQkSFKu
-	LPF8EKpihy7tCV2qVKdBkKYQJQ==
-X-Google-Smtp-Source: AGHT+IFjPIuWdwry5JgWiDjzfIOhM/JyJIP3Yb0hMqSyGYga5zli25hA88lv8GL0BWnqleBIEp4Zsg==
-X-Received: by 2002:a6b:f306:0:b0:7b3:7cbb:f53e with SMTP id m6-20020a6bf306000000b007b37cbbf53emr20930178ioh.17.1701419797739;
-        Fri, 01 Dec 2023 00:36:37 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id fu12-20020a056638668c00b0046465bfebe3sm768879jab.149.2023.12.01.00.36.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 00:36:37 -0800 (PST)
-Message-ID: <aa9d7ba3-435a-484c-ab37-09ffbb0a5e33@linaro.org>
-Date: Fri, 1 Dec 2023 09:36:33 +0100
+        d=1e100.net; s=20230601; t=1701419973; x=1702024773;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QM9xhtSWl8bZod+heLo+OxtwiUVff2dCtOs0sAGegx4=;
+        b=W8eqZRogwzHpxQGLNqVdLq9os9L5DyytTcygF8bD46saSbaMlt8jLV+qJfVC9WQAgh
+         pXSi9zrI5HUnFyJw83SUk6+imlZlpyIRupggF5N9sBJOGOhH5/bujB/ysjDqnRNUb7zI
+         0AUAPNMmj08lKyBVoZ62ZOktjL/vATOx26/UEqEh3+JX6PPduk8OKtqPqE6Or5v1dpie
+         UWFNjT+eKq6PU8iu+J6rPg8pUm6Yg5vIYgaklQ0Ny0HRJycx9vwsIT4PPva7Oif/mLYa
+         Bn6+lHYW+/aL5cu7KYN3tCEqn0jCQUMJapm5Gg5lGi17l8HK9jikag2Ye5AAV1uBg6XM
+         heYQ==
+X-Gm-Message-State: AOJu0YzIYtGrXcuLRcwh3Ap0x7Ofrllif2q5g+eyUc/01/tG0TrhF/V2
+	8ZRLff5eHRR70/ywUCuw3LNBl96bJBT9PTWBlSQQ2w==
+X-Google-Smtp-Source: AGHT+IFmyIRr/gCqW6f+UW7j7jp8SM1NhNjkR32wOxNjKbwQ4wkSgwoud6Vt7F9+XZwH/86mmn+tBWKoGO57Bl+YGDU=
+X-Received: by 2002:a81:b71b:0:b0:5ca:da4c:306a with SMTP id
+ v27-20020a81b71b000000b005cada4c306amr296205ywh.51.1701419973356; Fri, 01 Dec
+ 2023 00:39:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] dt-bindings: mfd: hisilicon,hi6421-spmi-pmic: clean
- up example
-Content-Language: en-US
-To: Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20231130172547.12555-1-johan+linaro@kernel.org>
- <20231130172547.12555-4-johan+linaro@kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231130172547.12555-4-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20230830224910.8091-1-quic_abhinavk@quicinc.com>
+ <20230830224910.8091-9-quic_abhinavk@quicinc.com> <CAA8EJporcrBikTob9xJe8_96AJSP1vDJNYPkt1za73PAcg1+Bw@mail.gmail.com>
+ <396724e1-2c51-090e-cfa5-e516a0eea861@quicinc.com>
+In-Reply-To: <396724e1-2c51-090e-cfa5-e516a0eea861@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 1 Dec 2023 10:39:22 +0200
+Message-ID: <CAA8EJpqTYcPw0DqBqydZRbNZ7Mex_Q4Kkxnjni7XxKtqLomkPQ@mail.gmail.com>
+Subject: Re: [PATCH 08/16] drm/msm/dpu: add support to allocate CDM from RM
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
+	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com, quic_khsieh@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 30/11/2023 18:25, Johan Hovold wrote:
-> The SPMI PMIC sits on an SPMI bus which and has two address cells with
-> no size.
-> 
-> Clean up the example by adding a parent SPMI bus node with proper
-> '#address-cells' and '#size-cells' properties, using a define for the
-> second register value, dropping the unnecessary label and increasing the
-> indentation to four spaces.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
+On Fri, 1 Dec 2023 at 01:50, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 8/30/2023 5:06 PM, Dmitry Baryshkov wrote:
+> > On Thu, 31 Aug 2023 at 01:50, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>
+> >> Even though there is usually only one CDM block, it can be
+> >> used by either HDMI, DisplayPort OR Writeback interfaces.
+> >>
+> >> Hence its allocation needs to be tracked properly by the
+> >> resource manager to ensure appropriate availability of the
+> >> block.
+> >
+> > It almost feels like an overkill, as up to now there is at most one CDM block.
+> >
+>
+> Yes but even that one CDM block can be used by any connector. So as we
+> discussed on IRC, this just implements the FCFS and we need RM to be the
+> manager of that one block.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Yes. "almost"
 
-Best regards,
-Krzysztof
+>
+> >>
+> >> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  2 +-
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  1 +
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 45 +++++++++++++++++++--
+> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  4 +-
+> >>   5 files changed, 48 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >> index 6cf6597148fd..582680804016 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >> @@ -663,7 +663,7 @@ static int dpu_encoder_virt_atomic_check(
+> >>
+> >>                  if (!crtc_state->active_changed || crtc_state->enable)
+> >>                          ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
+> >> -                                       drm_enc, crtc_state, topology);
+> >> +                                       drm_enc, crtc_state, topology, false);
+> >>          }
+> >>
+> >>          trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags);
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> >> index 34f943102499..07f75f295844 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> >> @@ -98,6 +98,7 @@ enum dpu_hw_blk_type {
+> >>          DPU_HW_BLK_DSPP,
+> >>          DPU_HW_BLK_MERGE_3D,
+> >>          DPU_HW_BLK_DSC,
+> >> +       DPU_HW_BLK_CDM,
+> >>          DPU_HW_BLK_MAX,
+> >>   };
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> >> index b6f53ca6e962..61aa58643fda 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> >> @@ -136,6 +136,7 @@ struct dpu_global_state {
+> >>          uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
+> >>          uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
+> >>          uint32_t dsc_to_enc_id[DSC_MAX - DSC_0];
+> >> +       uint32_t cdm_to_enc_id;
+> >>   };
+> >>
+> >>   struct dpu_global_state
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> >> index 7b6444a3fcb1..e7d4beb4661e 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+> >> @@ -29,10 +29,12 @@ static inline bool reserved_by_other(uint32_t *res_map, int idx,
+> >>   /**
+> >>    * struct dpu_rm_requirements - Reservation requirements parameter bundle
+> >>    * @topology:  selected topology for the display
+> >> + * @needs_cdm: whether the display needs a CDM block for the current mode
+> >>    * @hw_res:       Hardware resources required as reported by the encoders
+> >>    */
+> >>   struct dpu_rm_requirements {
+> >>          struct msm_display_topology topology;
+> >> +       bool needs_cdm;
+> >>   };
+> >>
+> >>   int dpu_rm_destroy(struct dpu_rm *rm)
+> >> @@ -505,6 +507,26 @@ static int _dpu_rm_reserve_dsc(struct dpu_rm *rm,
+> >>          return 0;
+> >>   }
+> >>
+> >> +static int _dpu_rm_reserve_cdm(struct dpu_rm *rm,
+> >> +                              struct dpu_global_state *global_state,
+> >> +                              struct drm_encoder *enc)
+> >> +{
+> >> +       /* try allocating only one CDM block */
+> >> +       if (!rm->cdm_blk) {
+> >> +               DPU_ERROR("CDM block does not exist\n");
+> >> +               return -EIO;
+> >> +       }
+> >> +
+> >> +       if (global_state->cdm_to_enc_id) {
+> >> +               DPU_ERROR("CDM_0 is already allocated\n");
+> >> +               return -EIO;
+> >> +       }
+> >> +
+> >> +       global_state->cdm_to_enc_id = enc->base.id;
+> >> +
+> >> +       return 0;
+> >> +}
+> >> +
+> >>   static int _dpu_rm_make_reservation(
+> >>                  struct dpu_rm *rm,
+> >>                  struct dpu_global_state *global_state,
+> >> @@ -530,15 +552,25 @@ static int _dpu_rm_make_reservation(
+> >>          if (ret)
+> >>                  return ret;
+> >>
+> >> +       if (reqs->needs_cdm) {
+> >> +               ret = _dpu_rm_reserve_cdm(rm, global_state, enc);
+> >> +               if (ret) {
+> >> +                       DPU_ERROR("unable to find CDM blk\n");
+> >> +                       return ret;
+> >> +               }
+> >> +       }
+> >> +
+> >>          return ret;
+> >>   }
+> >>
+> >>   static int _dpu_rm_populate_requirements(
+> >>                  struct drm_encoder *enc,
+> >>                  struct dpu_rm_requirements *reqs,
+> >> -               struct msm_display_topology req_topology)
+> >> +               struct msm_display_topology req_topology,
+> >> +               bool needs_cdm)
+> >
+> > Push it to the topology, please. It is a part of the topology at some
+> > point of view.
+> >
+>
+> hmmm ... ok with a pinch of salt as we somewhat deviate from the true
+> topology definition that topology is just how lm, dsc and intf blocks
+> are used. it was not intended to hold cdm.
 
+Why not? I mean it is more logical compared to adding the 'needs_cdm'
+argument which gets passed through together with the topology.
+
+>
+> >>   {
+> >>          reqs->topology = req_topology;
+> >> +       reqs->needs_cdm = needs_cdm;
+> >>
+> >>          DRM_DEBUG_KMS("num_lm: %d num_dsc: %d num_intf: %d\n",
+> >>                        reqs->topology.num_lm, reqs->topology.num_dsc,
+> >> @@ -571,6 +603,7 @@ void dpu_rm_release(struct dpu_global_state *global_state,
+> >>                  ARRAY_SIZE(global_state->dsc_to_enc_id), enc->base.id);
+> >>          _dpu_rm_clear_mapping(global_state->dspp_to_enc_id,
+> >>                  ARRAY_SIZE(global_state->dspp_to_enc_id), enc->base.id);
+> >> +       _dpu_rm_clear_mapping(&global_state->cdm_to_enc_id, 1, enc->base.id);
+> >>   }
+> >>
+> >>   int dpu_rm_reserve(
+> >> @@ -578,7 +611,8 @@ int dpu_rm_reserve(
+> >>                  struct dpu_global_state *global_state,
+> >>                  struct drm_encoder *enc,
+> >>                  struct drm_crtc_state *crtc_state,
+> >> -               struct msm_display_topology topology)
+> >> +               struct msm_display_topology topology,
+> >> +               bool needs_cdm)
+> >>   {
+> >>          struct dpu_rm_requirements reqs;
+> >>          int ret;
+> >> @@ -595,7 +629,7 @@ int dpu_rm_reserve(
+> >>          DRM_DEBUG_KMS("reserving hw for enc %d crtc %d\n",
+> >>                        enc->base.id, crtc_state->crtc->base.id);
+> >>
+> >> -       ret = _dpu_rm_populate_requirements(enc, &reqs, topology);
+> >> +       ret = _dpu_rm_populate_requirements(enc, &reqs, topology, needs_cdm);
+> >>          if (ret) {
+> >>                  DPU_ERROR("failed to populate hw requirements\n");
+> >>                  return ret;
+> >> @@ -644,6 +678,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+> >>                  hw_to_enc_id = global_state->dsc_to_enc_id;
+> >>                  max_blks = ARRAY_SIZE(rm->dsc_blks);
+> >>                  break;
+> >> +       case DPU_HW_BLK_CDM:
+> >> +               hw_blks = &rm->cdm_blk;
+> >> +               hw_to_enc_id = &global_state->cdm_to_enc_id;
+> >> +               max_blks = 1;
+> >> +               break;
+> >>          default:
+> >>                  DPU_ERROR("blk type %d not managed by rm\n", type);
+> >>                  return 0;
+> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> >> index 29b221491926..74262d3cb6c3 100644
+> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+> >> @@ -69,13 +69,15 @@ int dpu_rm_destroy(struct dpu_rm *rm);
+> >>    * @drm_enc: DRM Encoder handle
+> >>    * @crtc_state: Proposed Atomic DRM CRTC State handle
+> >>    * @topology: Pointer to topology info for the display
+> >> + * @needs_cdm: bool to indicate whether current encoder needs CDM
+> >>    * @Return: 0 on Success otherwise -ERROR
+> >>    */
+> >>   int dpu_rm_reserve(struct dpu_rm *rm,
+> >>                  struct dpu_global_state *global_state,
+> >>                  struct drm_encoder *drm_enc,
+> >>                  struct drm_crtc_state *crtc_state,
+> >> -               struct msm_display_topology topology);
+> >> +               struct msm_display_topology topology,
+> >> +               bool needs_cdm);
+> >>
+> >>   /**
+> >>    * dpu_rm_reserve - Given the encoder for the display chain, release any
+> >> --
+> >> 2.40.1
+> >>
+> >
+> >
+
+
+
+-- 
+With best wishes
+Dmitry
 
