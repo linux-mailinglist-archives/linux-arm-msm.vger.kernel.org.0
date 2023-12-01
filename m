@@ -1,60 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-2876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C8AB800A81
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 13:11:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A972F800A90
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 13:14:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA963B2110C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:11:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBC4E1C20A88
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:14:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C3BB225D7;
-	Fri,  1 Dec 2023 12:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8D8522EE8;
+	Fri,  1 Dec 2023 12:14:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MnxtsxiU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iJ4HA6si"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76E44D4A
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 04:10:53 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-54b0e553979so2516253a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 04:10:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701432652; x=1702037452; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jf2VmZf9HW8ZFTDwybKL2Aiz279wqxhmPeD/Xu8cQLI=;
-        b=MnxtsxiUiz/GhOwKBNdG6KG4HQwg3T/ziW6GSM28KBu/yLyeGIkRFWU2ldXGxZngUL
-         wuTNlSmyYt/EbR0rjwhpdJlt8vZhV6OqGCUzXPygJLmfA/T65Yd0mS6KlVvBHNXJzqKr
-         qd5zkqmhPqKNXeU2fDHM/eUY5k3tjOLL6qRSdjtsPRElmHrsx/8KsZ6gIo+7s/QTWtg5
-         gOb7iK7WGuDUR2Hq+7xTZWrxxfJNLDac1a6p40VeTFbRgSMdruEEZ2N7ykJErefxB6cs
-         Wqr/0JrUYyyJpN/LwJ1ZB/cEj3onO/Nwo+gJm85ef6KrxV1lVGZwdPX5w08rVONIp95F
-         itxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701432652; x=1702037452;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jf2VmZf9HW8ZFTDwybKL2Aiz279wqxhmPeD/Xu8cQLI=;
-        b=L6fz/zL7rFkWWYIcKd2sk9qh+2ETf+2LA8P3iGq58+vWhz6wNsVHGQ+Wrzhdwi7w+9
-         gmrclGBPqYPzlk1SZUVXoB+O8IVfy7IEubVAzExTWgpZviAlSAUxJDmzg9VBeykkbzFU
-         7l89Qo95SSk8YazFvakTlMz/2D20dsB/rcKfWyvBRZXF05OrQdwKkhtEiEVQJsvTqZkw
-         WCc/LmExOEihLIIgCh2tj/9h/lgGaU+zPiG67u07Qgka/zB9LVTfxSlbMucqJgFGuPiD
-         v3NL/inR7YPFVnFdJo7fidi8rZtSxU1WCLSD83PbXABEWaP1GTbbykO+XTRlEij+tqre
-         txzg==
-X-Gm-Message-State: AOJu0Ywjs4K9W41LBEw9bXYCzlxbJ/ceY9/cZwhSikv8yPFUEpMwpuYU
-	7LZaACWi5wl4qkAPz64Xoii51y3S1gcmtAtkVYg=
-X-Google-Smtp-Source: AGHT+IHj/IZeTxOoelk+biR29d4G6gz52/1zLRKvvFnhpTMkxNk9Q9LO5aApvxjhv9D8fbO0LV0QLw==
-X-Received: by 2002:a50:a45c:0:b0:54c:62c5:7df6 with SMTP id v28-20020a50a45c000000b0054c62c57df6mr331702edb.47.1701432651951;
-        Fri, 01 Dec 2023 04:10:51 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id s11-20020a05640217cb00b0054c6625511csm238967edy.28.2023.12.01.04.10.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 04:10:51 -0800 (PST)
-Message-ID: <f844cd1e-7e4f-4836-bc9a-2e1ed13f064f@linaro.org>
-Date: Fri, 1 Dec 2023 13:10:48 +0100
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49938103;
+	Fri,  1 Dec 2023 04:14:00 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B17cSvb008154;
+	Fri, 1 Dec 2023 12:13:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ey6b8Nb6xUzGGHzqYHcKuMYjKqbqWw261ABK6acpxl0=;
+ b=iJ4HA6siTYMXD4qMJyIJa4FVcJEmN7JycdGrj6BqnAJijttXY2Tz1P5Xi/beXmnypGJ6
+ MuT7TOej2UJNLfeaEk1YmbQQ4rV0a/MCAzgIDfmcEsFOocrYZuiOyh4862rjz73zewmj
+ Cn8m2ybVfv544LB8E4h2w5y+8hiR+UZVoyOkAQ7CYGthDiF3HAJQ/6dQgAc1ETNiYLE/
+ cmVrrN+fdeu1rV0rGpWOv2xYPyd2iiB1yRjsZ4VyQHcyZFqc3lRHG3E98mNM/CRqPZpG
+ g7n+OxIfhytshpFb4XIbh33TQUsMkiQhfxiYR1kHbXS/dk4mzquuC3fiYJxEWel1fiWe eg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uq3f7sgeq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 01 Dec 2023 12:13:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B1CDaC8007541
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 1 Dec 2023 12:13:36 GMT
+Received: from [10.253.11.15] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 1 Dec
+ 2023 04:13:31 -0800
+Message-ID: <50818674-e5b7-415f-a023-40611ea10850@quicinc.com>
+Date: Fri, 1 Dec 2023 20:13:29 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,144 +51,232 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
- qcom,refclk-always-on property
+Subject: Re: [PATCH] scsi: ufs: qcom: move ufs_qcom_host_reset() to
+ ufs_qcom_device_reset()
 Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
- quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
- quic_vpernami@quicinc.com, quic_parass@quicinc.com
-References: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
- <20231127-refclk_always_on-v3-1-26d969fa8f1d@quicinc.com>
- <78815f1b-7390-40de-8afd-ac71806f4051@linaro.org>
- <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
- <20231201060716.GJ4009@thinkpad>
- <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
- <20231201111033.GL4009@thinkpad>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231201111033.GL4009@thinkpad>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Manivannan Sadhasivam <mani@kernel.org>,
+        Ziqi Chen
+	<quic_ziqichen@quicinc.com>
+CC: <quic_asutoshd@quicinc.com>, <bvanassche@acm.org>, <beanhuo@micron.com>,
+        <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
+        <martin.petersen@oracle.com>, <quic_nguyenb@quicinc.com>,
+        <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
+        <linux-scsi@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "James E.J.
+ Bottomley" <jejb@linux.ibm.com>,
+        "open list:ARM/QUALCOMM SUPPORT"
+	<linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <1698145815-17396-1-git-send-email-quic_ziqichen@quicinc.com>
+ <20231025074128.GA3648@thinkpad>
+ <85d7a1ef-92c4-49ae-afe0-727c1b446f55@quicinc.com>
+ <c6a72c38-aa63-79b8-c784-d753749f7272@quicinc.com>
+ <20231128112731.GV3088@thinkpad>
+ <ed81bb9e-a9cd-4d32-bfa0-2f0d28742026@quicinc.com>
+ <20231201051800.GA4009@thinkpad>
+From: Can Guo <quic_cang@quicinc.com>
+In-Reply-To: <20231201051800.GA4009@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: F7grcWgsbEM9qf_ZPO2mclnFNXKptlYx
+X-Proofpoint-GUID: F7grcWgsbEM9qf_ZPO2mclnFNXKptlYx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-01_09,2023-11-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ spamscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
+ priorityscore=1501 mlxlogscore=999 bulkscore=0 clxscore=1015 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2312010081
 
-On 01/12/2023 12:10, Manivannan Sadhasivam wrote:
-> On Fri, Dec 01, 2023 at 09:01:43AM +0100, Krzysztof Kozlowski wrote:
->> On 01/12/2023 07:07, Manivannan Sadhasivam wrote:
->>> On Tue, Nov 28, 2023 at 02:49:18PM +0530, Krishna Chaitanya Chundru wrote:
+Hi Mani,
+
+On 12/1/2023 1:18 PM, Manivannan Sadhasivam wrote:
+> On Wed, Nov 29, 2023 at 08:10:57PM +0800, Ziqi Chen wrote:
+>>
+>>
+>> On 11/28/2023 7:27 PM, Manivannan Sadhasivam wrote:
+>>> On Tue, Nov 28, 2023 at 03:40:57AM +0800, Ziqi Chen wrote:
 >>>>
->>>> On 11/28/2023 2:26 PM, Krzysztof Kozlowski wrote:
->>>>> On 27/11/2023 13:13, Krishna chaitanya chundru wrote:
->>>>>> Document qcom,refclk-always-on property which is needed in some platforms
->>>>>> to supply refclk even in PCIe low power states.
->>>>>>
->>>>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->>>>>> ---
->>>>>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 7 +++++++
->>>>>>   1 file changed, 7 insertions(+)
->>>>>>
->>>>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->>>>>> index 2c3d6553a7ba..c747c9f35795 100644
->>>>>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->>>>>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
->>>>>> @@ -93,6 +93,13 @@ properties:
->>>>>>     "#phy-cells":
->>>>>>       const: 0
->>>>>> +  qcom,refclk-always-on:
->>>>>> +    type: boolean
->>>>>> +    description: In some platform where PCIe switch is connected, pcie switch due to some design
->>>>> You received a comment to use proper wrapping: 80. Please implement it.
->>>> I will update this.
->>>>>> +      limitation fails to propage clkreq signal to the host and due to that host will not send
->>>>>> +      refclk, which  results in linkdown in L1.2 or L1.1 exit initiated by EP.
->>>>>> +      This property if set keeps refclk always on even in Low power states.
->>>>> The property name suggests that's the state of hardware - refclk is
->>>>> always on. Description suggests you want to instruct OS to do something.
+>>>>
+>>>> On 11/22/2023 2:14 PM, Can Guo wrote:
 >>>>>
->>>>> Again, third time (once from Bjorn, once from Dmitry), rephrase property
->>>>> name and description to describe the hardware issue. I see description
->>>>> improved, but not the property name. Again in the end of description you
+>>>>>
+>>>>> On 10/25/2023 3:41 PM, Manivannan Sadhasivam wrote:
+>>>>>> On Tue, Oct 24, 2023 at 07:10:15PM +0800, Ziqi Chen wrote:
+>>>>>>> During PISI test, we found the issue that host Tx still bursting after
+>>>>>>
+>>>>>> What is PISI test?
 >>>>
->>>> Both bjorn and Dmitry gave comments to change the description only, and not
->>>> the property name,
->>>>
->>>> correct if I am wrong.
->>>>
->>>>> say what Linux should do. Bindings do not describe Linux OS.
->>>>
->>>> I will remove the last line in the next patch.
+>>>> SI measurement.
 >>>>
 >>>
->>> You should name the property as, "qcom,keep-refclk-always-on"
+>>> Please expand it in the patch description.
 >>
->> Keep the clock by who? By driver? Then not, property should describe
->> physical phenomena or hardware issue being fixed here, not what driver
->> should do.
+>> Sure, I will update in next patch version.
+>>
+>>>
+>>>>>>
+>>>>>>> H/W reset. Move ufs_qcom_host_reset() to ufs_qcom_device_reset() and
+>>>>>>> reset host before device reset to stop tx burst.
+>>>>>>>
+>>>>>>
+>>>>>> device_reset() callback is supposed to reset only the device and not
+>>>>>> the host.
+>>>>>> So NACK for this patch.
+>>>>>
+>>>>> Agree, the change should come in a more reasonable way.
+>>>>>
+>>>>> Actually, similar code is already there in ufs_mtk_device_reset() in
+>>>>> ufs-mediatek.c, I guess here is trying to mimic that fashion.
+>>>>>
+>>>>> This change, from its functionality point of view, we do need it,
+>>>>> because I occasionally (2 out of 10) hit PHY error on lane 0 during
+>>>>> reboot test (in my case, I tried SM8350, SM8450 and SM8550， all same).
+>>>>>
+>>>>> [    1.911188] [DEBUG]ufshcd_update_uic_error: UECPA:0x80000002
+>>>>> [    1.922843] [DEBUG]ufshcd_update_uic_error: UECDL:0x80004000
+>>>>> [    1.934473] [DEBUG]ufshcd_update_uic_error: UECN:0x0
+>>>>> [    1.944688] [DEBUG]ufshcd_update_uic_error: UECT:0x0
+>>>>> [    1.954901] [DEBUG]ufshcd_update_uic_error: UECDME:0x0
+>>>>>
+>>>>> I found out that the PHY error pops out right after UFS device gets
+>>>>> reset in the 2nd init. After having this change in place, the PA/DL
+>>>>> errors are gone.
+>>>>
+>>>> Hi Mani,
+>>>>
+>>>> There is another way that adding a new vops that call XXX_host_reset() from
+>>>> soc vendor driver. in this way, we can call this vops in core layer without
+>>>> the dependency of device reset.
+>>>> due to we already observed such error and received many same reports from
+>>>> different OEMs, we need to fix it in some way.
+>>>> if you think above way is available, I will update new patch in soon. Or
+>>>> could you give us other suggestion?
+>>>>
+>>>
+>>> First, please describe the issue in detail. How the issue is getting triggered
+>>> and then justify your change. I do not have access to the bug reports that you
+>>> received.
+>>
+>>  From the waveform measured by Samsung , we can see at the end of 2nd Link
+>> Startup, host still keep bursting after H/W reset. This abnormal timing
+>> would cause the PA/DL error mentioned by Can.
+>>
+>> On the other hand, at the end of 1st Link start up, Host ends bursting at
+>> first and then sends H/W reset to device. So Samsung suggested to do host
+>> reset before every time device reset to fix this issue. That's what you saw
+>> in this patch.  This patch has been verified by OEMs.
 >>
 > 
-> This property indeed fixes the hardware issue (though in board level) and I see
-> a plenty of properties similar to this one instructing the OS to keep some
-> resource ON to workaround hardware issues. So they are all wrong?
+> Thanks for the detail. This info should have been part of the patch description.
+> 
+>> So do you think if we can keep this change with details update in commit
+>> message. or need to do other improvement?
+>>
+> 
+> For sure we should not do host reset within device_reset callback. I'd like to
+> know at what point of time we are seeing the host burst after device reset. I
+> mean can you point me to the code in the ufshcd driver that when calling
+> device_reset you are seeing the issue? Then we can do a host_reset before that
+> _specific_ device_reset with the help of the new vops you suggested.
 
-What I said before:
-"Again, third time (once from Bjorn, once from Dmitry), rephrase
-property name and description to describe the hardware issue. I see
-description improved, but not the property name. Again in the end of
-description you say what Linux should do. Bindings do not describe Linux
-OS."
+Actually, anytime when we are about to reset the device, we need to 
+reset host before that, because, as Ziqi mentioned, if host is still 
+bursting after device is reset, it may lead to PA/DL errors. It might be 
+a bit confusing, because host can be bursting some flow control frames 
+and/or dummy frames even when SW thinks it is in idle state.
 
+The reason why the PHY error cannot be easily observed is because that 
+PHY error is non-fatal, it does not trigger error handling, and there is 
+no logs or prints in serial console, meaning it is silent. However, we 
+have error history, in which PHY error can be recorded. Although PHY 
+error is non-fatal, we don't like to see any of it, because our PHY team 
+and customers are requesting zero tolerance to PHY error.
 
-Best regards,
-Krzysztof
+Currently, there are 3 scenarios where host reset should go before 
+device reset -
 
+1. When Linux boots up, in ufshcd_hba_init(), we reset the device. In 
+this case, we need to reset the host before reset the device, because 
+the previous boot stage usually leave the device and host both active 
+before jumping to Linux. This is the first case which this change was 
+made for at the beginning.
+
+2. When the 2nd init kicks start in ufshcd_probe_hba(), we reset the 
+device. In this case, we need to reset the host before reset the device. 
+This is the case which I mentioned in my previous reply.
+
+3. In UFS error handler, we reset the device. In this case, we need to 
+reset the host before reset the device.
+
+Thanks,
+Can Guo.
+
+> 
+> - Mani
+> 
+>>
+>> -Ziqi
+>>
+>>>
+>>> - Mani
+>>>
+>>>> -Ziqi
+>>>>
+>>>>>
+>>>>> Thanks,
+>>>>> Can Guo.
+>>>>>>
+>>>>>> - Mani
+>>>>>>
+>>>>>>> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+>>>>>>> ---
+>>>>>>>     drivers/ufs/host/ufs-qcom.c | 13 +++++++------
+>>>>>>>     1 file changed, 7 insertions(+), 6 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+>>>>>>> index 96cb8b5..43163d3 100644
+>>>>>>> --- a/drivers/ufs/host/ufs-qcom.c
+>>>>>>> +++ b/drivers/ufs/host/ufs-qcom.c
+>>>>>>> @@ -445,12 +445,6 @@ static int
+>>>>>>> ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>>>>>>>         struct phy *phy = host->generic_phy;
+>>>>>>>         int ret;
+>>>>>>> -    /* Reset UFS Host Controller and PHY */
+>>>>>>> -    ret = ufs_qcom_host_reset(hba);
+>>>>>>> -    if (ret)
+>>>>>>> -        dev_warn(hba->dev, "%s: host reset returned %d\n",
+>>>>>>> -                  __func__, ret);
+>>>>>>> -
+>>>>>>>         /* phy initialization - calibrate the phy */
+>>>>>>>         ret = phy_init(phy);
+>>>>>>>         if (ret) {
+>>>>>>> @@ -1709,6 +1703,13 @@ static void ufs_qcom_dump_dbg_regs(struct
+>>>>>>> ufs_hba *hba)
+>>>>>>>     static int ufs_qcom_device_reset(struct ufs_hba *hba)
+>>>>>>>     {
+>>>>>>>         struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+>>>>>>> +    int ret = 0;
+>>>>>>> +
+>>>>>>> +    /* Reset UFS Host Controller and PHY */
+>>>>>>> +    ret = ufs_qcom_host_reset(hba);
+>>>>>>> +    if (ret)
+>>>>>>> +        dev_warn(hba->dev, "%s: host reset returned %d\n",
+>>>>>>> +                  __func__, ret);
+>>>>>>>         /* reset gpio is optional */
+>>>>>>>         if (!host->device_reset)
+>>>>>>> -- 
+>>>>>>> 2.7.4
+>>>>>>>
+>>>>>>
+>>>
+> 
 
