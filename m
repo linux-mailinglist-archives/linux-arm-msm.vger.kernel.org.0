@@ -1,125 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-2863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F4358007E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 11:06:27 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 351888007EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 11:09:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3825828186C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 10:06:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 96506B210A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 10:09:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5DFE1E536;
-	Fri,  1 Dec 2023 10:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 433411C6A9;
+	Fri,  1 Dec 2023 10:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EolkPQDc"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="J44a0mOV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 442FBB2;
-	Fri,  1 Dec 2023 02:06:18 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B14mDrR030535;
-	Fri, 1 Dec 2023 10:06:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=A1EGrq2r/Zjw8fa3aqVFo2FlroFAid1G/BIBvjuO6XE=;
- b=EolkPQDcG1j3zhat+vvfRdu5KMutWS9ebFOytYPeKH34926T1Fy4QjTwnIXJyUeoKiGG
- QKzL8mon3wb6igqPzbAHzbVFP9S+YnNyh59iUmBq3xgHziu3s1IArhuzVvEsOZuQk8RO
- U62qDOJfQ/IMLGqTWHLzlKdDdhWf7/CpdS0vyvWP/OG1y9sQUICF1imGBh/kqcppNnus
- Uvlh3tpXKg/88lgNWoIl0iI1AUZL2HyEh/1Osm9uyKl9IZGaFLlL+rmz4TszjTz47tiS
- a5TjpqmBhnyvlh4HdxJ+WuFML4t7Vu09xZasH3yRalVzmIlvTnh9dWt0kRm8wXnT3zGC zQ== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uprhdu3v8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Dec 2023 10:06:02 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3B1A5urY026649;
-	Fri, 1 Dec 2023 10:05:56 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3unmf087ye-1;
-	Fri, 01 Dec 2023 10:05:56 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3B1A5uQd026644;
-	Fri, 1 Dec 2023 10:05:56 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-snehshah-hyd.qualcomm.com [10.147.246.35])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3B1A5ulh026640;
-	Fri, 01 Dec 2023 10:05:56 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2319345)
-	id 6DC595001C3; Fri,  1 Dec 2023 15:35:55 +0530 (+0530)
-From: Sneh Shah <quic_snehshah@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc: Sneh Shah <quic_snehshah@quicinc.com>, kernel@quicinc.com,
-        Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH v2] net: stmmac: update Rx clk divider for 10M SGMII
-Date: Fri,  1 Dec 2023 15:35:48 +0530
-Message-Id: <20231201100548.12994-1-quic_snehshah@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: H7GjdgLppbe_t5WTRxU9l3iP1t53Znd7
-X-Proofpoint-GUID: H7GjdgLppbe_t5WTRxU9l3iP1t53Znd7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-01_07,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 spamscore=0 suspectscore=0 impostorscore=0 mlxlogscore=763
- clxscore=1015 mlxscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312010067
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.65])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2BD384;
+	Fri,  1 Dec 2023 02:09:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701425379; x=1732961379;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=girjUnjQyiTvSrN9wz2D2bp+2sMZV3KcMTRgUm6aORo=;
+  b=J44a0mOVhpSaBHclYh8TmDENZKmInXY/lZHlzRHBH9dhZCeWRvYldDCI
+   +hfwC3BY1BM8K+TrKQhrp8JPqEGYizUg/GG9l5+aUVGFzT6rbNRJgXPRP
+   Xpwo5e2fAd68mO0+8+z/VxTTXlVlfqRuZjyEUA4tm+y5Sl1M19RuPwfNM
+   RXcCQKaTfdZc2cUi5DhFcLp2t2OBksLNfe/ZTEugVh21cdaX/3AdgKDHD
+   q6jNWBQ0Pjda+yN4uWQRfvYZ594An16MTqLcTVEMspkxZtF95rEOZPJCI
+   SHrdatYqYBkyufpTldkOADnEgef/EfF4lraZCsJ2eMHvABmVAcpHG93sc
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10910"; a="397364667"
+X-IronPort-AV: E=Sophos;i="6.04,241,1695711600"; 
+   d="scan'208";a="397364667"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2023 02:09:39 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.04,241,1695711600"; 
+   d="scan'208";a="11107011"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by orviesa002.jf.intel.com with ESMTP; 01 Dec 2023 02:09:33 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1r90Sg-0003TS-0w;
+	Fri, 01 Dec 2023 10:09:30 +0000
+Date: Fri, 1 Dec 2023 18:09:04 +0800
+From: kernel test robot <lkp@intel.com>
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, will@kernel.org,
+	robin.murphy@arm.com, joro@8bytes.org, dmitry.baryshkov@linaro.org,
+	a39.skl@gmail.com, konrad.dybcio@linaro.org,
+	quic_bjorande@quicinc.com, mani@kernel.org,
+	quic_eberman@quicinc.com, robdclark@chromium.org,
+	u.kleine-koenig@pengutronix.de, robh@kernel.org,
+	vladimir.oltean@nxp.com, quic_pkondeti@quicinc.com,
+	quic_molvera@quicinc.com
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+	qipl.kernel.upstream@quicinc.com,
+	Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Subject: Re: [PATCH v3 1/4] iommu/arm-smmu: introduction of ACTLR for custom
+ prefetcher settings
+Message-ID: <202312011750.Pwca3TWE-lkp@intel.com>
+References: <20231127145412.3981-2-quic_bibekkum@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231127145412.3981-2-quic_bibekkum@quicinc.com>
 
-SGMII 10MBPS mode needs RX clock divider to avoid drops in Rx.
-Update configure SGMII function with rx clk divider programming.
+Hi Bibek,
 
-Fixes: 463120c31c58 ("net: stmmac: dwmac-qcom-ethqos: add support for SGMII")
-Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
----
-v2 changelog:
-- Use FIELD_PREP to prepare bifield values in place of GENMASK
-- Add fixes tag
----
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 4 ++++
- 1 file changed, 4 insertions(+)
+kernel test robot noticed the following build errors:
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index d3bf42d0fceb..df6ff8bcdb5c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -34,6 +34,7 @@
- #define RGMII_CONFIG_LOOPBACK_EN		BIT(2)
- #define RGMII_CONFIG_PROG_SWAP			BIT(1)
- #define RGMII_CONFIG_DDR_MODE			BIT(0)
-+#define RGMII_CONFIG_SGMII_CLK_DVDR		GENMASK(18, 10)
- 
- /* SDCC_HC_REG_DLL_CONFIG fields */
- #define SDCC_DLL_CONFIG_DLL_RST			BIT(30)
-@@ -617,6 +618,9 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
- 	case SPEED_10:
- 		val |= ETHQOS_MAC_CTRL_PORT_SEL;
- 		val &= ~ETHQOS_MAC_CTRL_SPEED_MODE;
-+		rgmii_updatel(ethqos, RGMII_CONFIG_SGMII_CLK_DVDR,
-+			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR, 0x31),
-+			      RGMII_IO_MACRO_CONFIG);
- 		break;
- 	}
- 
+[auto build test ERROR on v6.7-rc3]
+[also build test ERROR on linus/master next-20231201]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Bibek-Kumar-Patro/iommu-arm-smmu-add-ACTLR-data-and-support-for-SM8550/20231127-235746
+base:   v6.7-rc3
+patch link:    https://lore.kernel.org/r/20231127145412.3981-2-quic_bibekkum%40quicinc.com
+patch subject: [PATCH v3 1/4] iommu/arm-smmu: introduction of ACTLR for custom prefetcher settings
+config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20231201/202312011750.Pwca3TWE-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231201/202312011750.Pwca3TWE-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312011750.Pwca3TWE-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c:25:16: error: no member named 'cfg' in 'struct qcom_smmu'
+      25 |                 cfg = qsmmu->cfg;
+         |                       ~~~~~  ^
+   1 error generated.
+
+
+vim +25 drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
+
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  12  
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  13  void qcom_smmu_tlb_sync_debug(struct arm_smmu_device *smmu)
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  14  {
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  15  	int ret;
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  16  	u32 tbu_pwr_status, sync_inv_ack, sync_inv_progress;
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  17  	struct qcom_smmu *qsmmu = container_of(smmu, struct qcom_smmu, smmu);
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  18  	const struct qcom_smmu_config *cfg;
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  19  	static DEFINE_RATELIMIT_STATE(rs, DEFAULT_RATELIMIT_INTERVAL,
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  20  				      DEFAULT_RATELIMIT_BURST);
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  21  
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  22  	if (__ratelimit(&rs)) {
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  23  		dev_err(smmu->dev, "TLB sync timed out -- SMMU may be deadlocked\n");
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08  24  
+b9b721d117e9d3 Sai Prakash Ranjan 2022-07-08 @25  		cfg = qsmmu->cfg;
+
 -- 
-2.17.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
