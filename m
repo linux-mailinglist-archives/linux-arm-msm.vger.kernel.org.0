@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A1648015B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 22:49:48 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18FB88015C5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 22:54:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0EDD1C20AC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 21:49:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 33243B20FA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 21:54:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F775A0F7;
-	Fri,  1 Dec 2023 21:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DB305A0FD;
+	Fri,  1 Dec 2023 21:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EnFpeyLu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XhRR1QKt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2D310EF
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 13:49:38 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-54af4f2838dso3169299a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 13:49:38 -0800 (PST)
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0CB9D6C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 13:53:52 -0800 (PST)
+Received: by mail-qk1-x72b.google.com with SMTP id af79cd13be357-77ecedad216so16104185a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 13:53:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701467377; x=1702072177; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701467632; x=1702072432; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=19FR1U3AKoV3VyCSX1p0aFDSinYo+NPtX+mnYm5SEjs=;
-        b=EnFpeyLuDyabqLZx0ksJuay5T+/8O8Kg/4su82mqD8gLQ7E1QVl0hlVr6JtdxM1rVO
-         cbPtIRFf7/36ORx71aqc1ICbWtb75zx8Kn3wghOqAUmdHcYCP/x57/tEhcz4hyZKrToe
-         7McNxVPFnEWhKaRZ6TlvBKNm/FDgWqJf1ww6x1DkLTgcLyzCsabdG48U3fW1PSyg/G05
-         8FX32xplgBL2ChL70VtG5RGT8i8rNXrKctcMyvAUDaBEKNpYsaXvMLZyY4bBrPASdR/1
-         c6waae2MjegHx0SAbFfv4abxx86LP55xQHMLyJdqWJNWcb6p48YuoM/z9umLO+1WvqCG
-         WSzw==
+        bh=jrHo3xuqedRIfDFM3RFqZlEkD9CY6RqxHH0K+7ZtnxQ=;
+        b=XhRR1QKtxaAz+rb4YpyGexnfr9nolBMLOR/h0cBhuzOq+meIpezzrb6Pva5N1GWoFh
+         P7m/Sh7BI9rfd99TaHw/DT2SRq6ZOVO4iQZfBK12ksIIYMRPSKaNdVe6vGNl+Xf6M7Gj
+         VCQD7rXBEcuzxRWdyBNoJOpG5w6WAU0F9ODsUpTrZzlF2RFOlUikAiR5VojZoaXzKTaU
+         zOFE3I2YLHZqWTkdKemcNFf0pYJ4+uGS/yPhBKZ5311TkXKxVzWxLGl6LqutdXdfEeWO
+         HsDaj4WQ/pJj3jMzclrYj2HGuCbS2AXtuqBq6hvyPyvw/yPmPHx6t6DwPIIks4xEl4SN
+         KvAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701467377; x=1702072177;
+        d=1e100.net; s=20230601; t=1701467632; x=1702072432;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=19FR1U3AKoV3VyCSX1p0aFDSinYo+NPtX+mnYm5SEjs=;
-        b=tHdgpo6muGOAbu7qLPycSbpy/Ps2dcjlovIWEN7lBbHSFa+nFmw9KhKEHB3arrK6ik
-         vCosQoElNHHXgc+/d7DcsAvHFEVU/zvnvvmRfyJYyF0wtwCnFPgsLEHtz1p1yrCvYLP7
-         4lsGCKEhuuavPGIW+LjiOHM71+HqQWI0u7Bd2+Q0iRxKE7VB5B/ger5dxrvthCf8IJ3C
-         xIfa++mOdRoWkzk2Ge0Mqj5BPaypHa+nCyusi6wbN3u8bxP2PW+WwR5TU8xcdBgwJrV2
-         wF48wqqhZofMBow4xOufQ3NyHuTkq6sA2B4cPzVG61B8ROyvpLxTj3mPXTmFNlCarxvt
-         13wQ==
-X-Gm-Message-State: AOJu0YwbcqxrxtiweiaWqDBf337Njr4yfyovZdEFxPVtO77IdPsoVAj/
-	OqvjmMKrfqlJXQdX27SA1KKzEw==
-X-Google-Smtp-Source: AGHT+IGZTFVrozcEI7yuAf9ShkkhnaNmfmSP/AsapXfKp2W9rDfgcdwmtOt+JKK5fNJW5nwVuMS5jw==
-X-Received: by 2002:a50:cd8e:0:b0:54b:c880:370d with SMTP id p14-20020a50cd8e000000b0054bc880370dmr1302981edi.36.1701467377445;
-        Fri, 01 Dec 2023 13:49:37 -0800 (PST)
+        bh=jrHo3xuqedRIfDFM3RFqZlEkD9CY6RqxHH0K+7ZtnxQ=;
+        b=XksW2GIzeIx6jHjwASjhesl3uMjHX1xTl0w9Dx+vXtaCGuAPAqOf3JDz6WbJHgGjMi
+         1tW8YSB8Cw2elZ48nrgVAZ7XSBaa45rLBtsfHlJxyjmuY2j4roJzmWwUwtxiglksEdp6
+         hyYzdYPl+zw1/+rscHU0+VSakXZx/Ve7L4uqgLsw815j+RgAO/3Di0zcaao3qdUa1g+z
+         e39yinxbZCmQrkbMvXsTs0xPnhtcsyJATbl4QTXvtZ2N72NfrK5X7njewyFkqjSlIrtK
+         IsxaY87RWWGY9aYI4E3cubZw+CFIGkCYSWc9cSBef59xU35hKTxuVYeSKQuqER6rNZn4
+         dJGQ==
+X-Gm-Message-State: AOJu0YyA4ChxYLg4Sznm5U5DqUEZ4TNmK0tePa4wSqGy5bTtsOU6VB2/
+	6zBz0uuxVssE3O5z5Fv9WcMfig==
+X-Google-Smtp-Source: AGHT+IHTUJmHRh893X18NM3LJCP4XO/vSxZP0oWw/Y9wh8wa4UeH9g8oTwEOYj02IhSJ/5+opO6W7A==
+X-Received: by 2002:a05:620a:8a8a:b0:77e:fba3:9d2d with SMTP id qu10-20020a05620a8a8a00b0077efba39d2dmr137248qkn.145.1701467631830;
+        Fri, 01 Dec 2023 13:53:51 -0800 (PST)
 Received: from [192.168.209.83] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id cf5-20020a0564020b8500b0054c4db03b9dsm1140785edb.30.2023.12.01.13.49.35
+        by smtp.gmail.com with ESMTPSA id j5-20020a05620a288500b0077d8526bcdesm1858880qkp.86.2023.12.01.13.53.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 13:49:37 -0800 (PST)
-Message-ID: <7dba2fa6-9f9a-4e48-a1a9-4814f488bc57@linaro.org>
-Date: Fri, 1 Dec 2023 22:49:34 +0100
+        Fri, 01 Dec 2023 13:53:51 -0800 (PST)
+Message-ID: <153ba359-fd73-47d8-8c6e-a70e24943bf1@linaro.org>
+Date: Fri, 1 Dec 2023 22:53:45 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +62,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: soc: qcom: stats: Add QMP handle
+Subject: Re: [PATCH 2/3] drm/msm/adreno: Add A305B support
 Content-Language: en-US
-To: Johan Hovold <johan@kernel.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
  Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Maulik Shah <quic_mkshah@quicinc.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20231130-topic-ddr_sleep_stats-v1-0-5981c2e764b6@linaro.org>
- <20231130-topic-ddr_sleep_stats-v1-1-5981c2e764b6@linaro.org>
- <ZWmq619zryYHV_kK@hovoldconsulting.com>
+References: <20231130-msm8226-gpu-v1-0-6bb2f1b29e49@z3ntu.xyz>
+ <20231130-msm8226-gpu-v1-2-6bb2f1b29e49@z3ntu.xyz>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,28 +117,60 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <ZWmq619zryYHV_kK@hovoldconsulting.com>
+In-Reply-To: <20231130-msm8226-gpu-v1-2-6bb2f1b29e49@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 1.12.2023 10:44, Johan Hovold wrote:
-> On Thu, Nov 30, 2023 at 03:58:21PM +0100, Konrad Dybcio wrote:
->> The stats can be expanded by poking the Always-On Subsystem through QMP.
->> Allow passing a QMP handle for configurations that support it.
+On 30.11.2023 21:35, Luca Weiss wrote:
+> Add support for the Adreno 305B GPU that is found in MSM8226(v2) SoC.
+> Previously this was mistakenly claimed to be supported but using wrong
+> a configuration.
 > 
-> I know Qualcomm likes their opaque acronyms, but how about mentioning
-> what QMP stands for here and in the binding below?
-I'll amend the commit message for v2.
+> In MSM8226v1 there's also a A305B but with chipid 0x03000510 which
+> should work with the same configuration but due to lack of hardware for
+> testing this is not added.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  drivers/gpu/drm/msm/adreno/a3xx_gpu.c      | 15 ++++++++++++---
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 15 +++++++++++----
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++++
+>  3 files changed, 28 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> index c86b377f6f0d..5fc29801c4c7 100644
+> --- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> @@ -134,6 +134,13 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
+>  		/* Set up AOOO: */
+>  		gpu_write(gpu, REG_A3XX_VBIF_OUT_AXI_AOOO_EN, 0x0000003c);
+>  		gpu_write(gpu, REG_A3XX_VBIF_OUT_AXI_AOOO, 0x003c003c);
+> +	} else if (adreno_is_a305b(adreno_gpu)) {
+> +		gpu_write(gpu, REG_A3XX_VBIF_IN_RD_LIM_CONF0, 0x00181818);
+> +		gpu_write(gpu, REG_A3XX_VBIF_IN_WR_LIM_CONF0, 0x00181818);
+> +		gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x00000018);
+> +		gpu_write(gpu, REG_A3XX_VBIF_OUT_WR_LIM_CONF0, 0x00000018);
+> +		gpu_write(gpu, REG_A3XX_VBIF_DDR_OUT_MAX_BURST, 0x00000303);
+> +		gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003);
+>  	} else if (adreno_is_a306(adreno_gpu)) {
+>  		gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003);
+>  		gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x0000000a);
+> @@ -230,7 +237,9 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
+>  	gpu_write(gpu, REG_A3XX_UCHE_CACHE_MODE_CONTROL_REG, 0x00000001);
+>  
+>  	/* Enable Clock gating: */
+> -	if (adreno_is_a306(adreno_gpu))
+> +	if (adreno_is_a305b(adreno_gpu))
+> +		gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xaaaaaaaa);
+> +	else if (adreno_is_a306(adreno_gpu))
+>  		gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xaaaaaaaa);
+||?
 
+[...]
 
-> Especially since we also have QMP PHYs (Qualcomm Multi PHY?), which I
-> doubt this is related to.
-There's only so many three-letter acronyms that begin with a Q ;)
+Otherwise looks in line with msm-3.10
 
-QMP stands for Qualcomm Messaging Protocol, which is a JSON-like way
-to communicate with the Always-On Subsystem (which is responsible for
-things such as managing low-power states and general SoC building blocks
-housekeeping)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
