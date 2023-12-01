@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-2912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 491B2800E52
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 16:15:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8472A800E53
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 16:15:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A2C81C210CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 15:15:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3FE78281DA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 15:15:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFB644A990;
-	Fri,  1 Dec 2023 15:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4BB6495F8;
+	Fri,  1 Dec 2023 15:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GtWJ/wzc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dqpTXmDo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468401BD4
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 07:15:16 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-6cdcef787ffso2229247b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 07:15:16 -0800 (PST)
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D44B1BF5
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 07:15:19 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6cdfb72172aso913202b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 07:15:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701443715; x=1702048515; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701443719; x=1702048519; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HRvflStZ/vTcP5B8zVnsU2ULybvGH2B1eMnhOvB9jfI=;
-        b=GtWJ/wzcoOW5Jc3UDjFMV81ANMdOg5e0pedMcEQBThMVaiJvZeoMKfs8uaoECnZFNx
-         orK42lnrM+sIthwFggaw6nUl7gpytq02A5vlbNO/t13babiolophin53U7p4xwymiWfm
-         GRbi0RbNy3Z6WeFd4UL9nN6YjqzSNE92cxJ/hcXdRHTifM7L/oYTE/qs8JhEGvv4INbi
-         F/XiVrm7fcCwWr2+HkEpY4FdYE0IZKzQAdna0U5OTkSCrbAxdBbhi3Llq42NvstM1JXj
-         MgSYEbSGzSpj3RGkBuH4jqSqc7m4ZCie7zJfamt2BQU5JiB0EU0JnYgCXXNtqL0vFxZZ
-         CNDQ==
+        bh=99jwCtueYKuqHSnO06pq+vanF2UHvfzCABwBvmt41SY=;
+        b=dqpTXmDoXE6wytJPhm2PCBQfp/5HV7AtqtFuSibrn7aUkYe89B32Er6GSctfWsodS3
+         5adNy7vLCG/+vARD/4JbpdWTFJb8JGike3Oa9YjC3A18kQ5paNKCktHOGIWb5SY8rFdx
+         hYwMu2edywVkLpgNa1FYcalgADmyGnWCieRxbjpkzNO96Q+qqi7AxLB3HcbyhJup1WKe
+         9nAw/W4/BGMt8cMwavX5YXBQo2jeXN1wMH7Jxa/8X88R7KKhsq0gpmNI97pOpt2IC8lo
+         ZdXDc5tnZxdwXd1Aekcl8X9VjzPKXRjDe60PRrzGBVhNdZUMd4PmmlSipE1Tu7p1+FCc
+         po+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701443715; x=1702048515;
+        d=1e100.net; s=20230601; t=1701443719; x=1702048519;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HRvflStZ/vTcP5B8zVnsU2ULybvGH2B1eMnhOvB9jfI=;
-        b=dGaFcI8R23b/uZQqm+Sq7y1Mh+Wy9eVtmoCmYBRC1RcKCGzhm+qbMGBogMImtk+Bz1
-         r3sjWq4ZeL7aIMG/oiPlQ3Zxl7FXE9Auri9m5aZv2SuCsEzybPwjj/6xMJzlKXLctwy2
-         eKPJgv5mk99jdhGd2jK9+cmUC1IVIebJo7gtNAxipPTXU+Qg52LftVGwROgxv4ruYSTH
-         2E8ah8IEe+NXO75PKz8GGUZjAdrD7sR4O0+knxl5/fSwKqYbyfCcK8okaagZ/7q7rNnt
-         rwdIpJxBs0MQpRQNP2oT9NkDI927/64rCMkJJzQMCciMtMPN416J4qm8Zj4F9Oki/fHE
-         NvHQ==
-X-Gm-Message-State: AOJu0YxdB7oxfmO3McGCWNgwpA+/n1BniMCHdO7xdgpAojzG0W+AKMeQ
-	rsOa7/OIdSJtoGNM00EKmsU7
-X-Google-Smtp-Source: AGHT+IFL+VdkT8Jx4gdpedUqkKxN/i8MfrhTGRszx2lMQkD1Yq8i2V0FL16deBTMgMSjHw0oq7LBQQ==
-X-Received: by 2002:a05:6a00:1401:b0:68a:5cf8:dac5 with SMTP id l1-20020a056a00140100b0068a5cf8dac5mr29042906pfu.22.1701443715471;
-        Fri, 01 Dec 2023 07:15:15 -0800 (PST)
+        bh=99jwCtueYKuqHSnO06pq+vanF2UHvfzCABwBvmt41SY=;
+        b=Ifr6Ux8/SBwGsPEFQUnlfLLkwuWMH8Io73eLlG3J663hcZyrqraET/krAhTcrr24gr
+         b0tDBFn4pYTEi51PTul4F7F+TnyuMepx9WpN/6Ek0vdtCJ8vhq566i4jijaZme++eTei
+         CBtlg0reNmeFRnX9vJObXdqRXCkhwGSei0GoOGX3YOA6s25qkTdHQLA7uJOU/LO+ArRy
+         OsdqnwcE2Rc2DTV7Nks97eOZiVOj2Jcwj3gFhMtcU1KFI9h+H0dvgXQ2mD7De6L96TDS
+         QMlBBsiZFdGW25/FbBRyGGlAYDBnzVx1JfI+RKyRO24s3qqk1YdNX64Hke78/xJfStXb
+         AfUA==
+X-Gm-Message-State: AOJu0YxPhiyByXI4l1lj2h6gXl8hE/C/efjEMCb9sEW2B0vydg4E7TyY
+	n1VfFacFiw8HSmMLOYfPQHiq
+X-Google-Smtp-Source: AGHT+IG0lDGObraHLt0PSday0c1vddh/0X4DzkGcDUEtJFQ4rieNhf2pWlFV1r7BSDu6rIgWhh5OOA==
+X-Received: by 2002:a05:6a00:938d:b0:6cd:faa6:fc36 with SMTP id ka13-20020a056a00938d00b006cdfaa6fc36mr3968638pfb.30.1701443718764;
+        Fri, 01 Dec 2023 07:15:18 -0800 (PST)
 Received: from localhost.localdomain ([117.213.98.226])
-        by smtp.gmail.com with ESMTPSA id s14-20020a65644e000000b00578afd8e012sm2765824pgv.92.2023.12.01.07.15.12
+        by smtp.gmail.com with ESMTPSA id s14-20020a65644e000000b00578afd8e012sm2765824pgv.92.2023.12.01.07.15.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Dec 2023 07:15:15 -0800 (PST)
+        Fri, 01 Dec 2023 07:15:18 -0800 (PST)
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To: martin.petersen@oracle.com,
 	jejb@linux.ibm.com
@@ -63,9 +63,9 @@ Cc: andersson@kernel.org,
 	linux-kernel@vger.kernel.org,
 	quic_cang@quicinc.com,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 12/13] scsi: ufs: qcom: Sort includes alphabetically
-Date: Fri,  1 Dec 2023 20:44:16 +0530
-Message-Id: <20231201151417.65500-13-manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 13/13] scsi: ufs: qcom: Initialize cycles_in_1us variable in ufs_qcom_set_core_clk_ctrl()
+Date: Fri,  1 Dec 2023 20:44:17 +0530
+Message-Id: <20231201151417.65500-14-manivannan.sadhasivam@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20231201151417.65500-1-manivannan.sadhasivam@linaro.org>
 References: <20231201151417.65500-1-manivannan.sadhasivam@linaro.org>
@@ -77,51 +77,32 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Sort includes alphabetically.
+In case the "core_clk_unipro" clock is not provided, "cycles_in_1us"
+variable will be used as uninitialized. So initialize it with 0.
+
+Issue reported by Smatch tool:
+
+drivers/ufs/host/ufs-qcom.c:1336 ufs_qcom_set_core_clk_ctrl() error: uninitialized symbol 'cycles_in_1us'.
+drivers/ufs/host/ufs-qcom.c:1341 ufs_qcom_set_core_clk_ctrl() error: uninitialized symbol 'cycles_in_1us'.
 
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 ---
- drivers/ufs/host/ufs-qcom.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/ufs/host/ufs-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 824c006be093..590a2c67cf7d 100644
+index 590a2c67cf7d..208543a62d43 100644
 --- a/drivers/ufs/host/ufs-qcom.c
 +++ b/drivers/ufs/host/ufs-qcom.c
-@@ -4,26 +4,26 @@
-  */
+@@ -1296,7 +1296,7 @@ static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up)
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+ 	struct list_head *head = &hba->clk_list_head;
+ 	struct ufs_clk_info *clki;
+-	u32 cycles_in_1us;
++	u32 cycles_in_1us = 0;
+ 	u32 core_clk_ctrl_reg;
+ 	int err;
  
- #include <linux/acpi.h>
--#include <linux/time.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
-+#include <linux/devfreq.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/interconnect.h>
- #include <linux/module.h>
- #include <linux/of.h>
--#include <linux/platform_device.h>
- #include <linux/phy/phy.h>
--#include <linux/gpio/consumer.h>
-+#include <linux/platform_device.h>
- #include <linux/reset-controller.h>
--#include <linux/devfreq.h>
-+#include <linux/time.h>
- 
- #include <soc/qcom/ice.h>
- 
- #include <ufs/ufshcd.h>
--#include "ufshcd-pltfrm.h"
--#include <ufs/unipro.h>
--#include "ufs-qcom.h"
- #include <ufs/ufshci.h>
- #include <ufs/ufs_quirks.h>
-+#include <ufs/unipro.h>
-+#include "ufshcd-pltfrm.h"
-+#include "ufs-qcom.h"
- 
- #define MCQ_QCFGPTR_MASK	GENMASK(7, 0)
- #define MCQ_QCFGPTR_UNIT	0x200
 -- 
 2.25.1
 
