@@ -1,209 +1,509 @@
-Return-Path: <linux-arm-msm+bounces-2865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C6E08007F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 11:09:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 351ED80084B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 11:35:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ECEA4B210D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 10:09:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8505281A85
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 10:35:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D546A20330;
-	Fri,  1 Dec 2023 10:09:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AF7120B26;
+	Fri,  1 Dec 2023 10:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vzxTFGcZ"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="a+z53Rsf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58849F1
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 02:09:49 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-40b4a8db331so18234465e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 02:09:49 -0800 (PST)
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF88DE
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 02:35:27 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-a18ebac19efso264104066b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 02:35:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701425388; x=1702030188; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zKEaUiZTxlPwx3QPN7jIyXfy5Uw4NLWZUGDodKGb1pE=;
-        b=vzxTFGcZ5eHxP4mZxAvtZxY18WSBWLIgSnCp+HQTkBKNq7lCrpdTyoCL4dMSkqU9f8
-         uhcikQIAup6Gyc92VXI45IHO7ag9AmTO9U4ObjdesnO5TS+azqm3RL7xKDWNr52Yu5JU
-         mSDpnw3rbAg+rYwd3PoH7EU1ppKZ2/K1Q1aaP+JYPfMymFipAhTgRk3ogLsu/HHRaCzZ
-         PgFEZbItj8S6EZaulFzpUNJuGSKMzR+84JvMxJzu0MZA+28w/SjVByqm6DxeFRT0uvPA
-         hG00NtXqIvt03eK6NJZg6IIYXrMJL1Sjp85dpARlOH2u/MPWgGQ0iuzjDUqv/TvNJhGf
-         bI1g==
+        d=fairphone.com; s=fair; t=1701426926; x=1702031726; darn=vger.kernel.org;
+        h=to:from:subject:message-id:date:content-transfer-encoding
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hk/oHK98YoR1tmr4jhgvsZXu217PjXSNuXKmzLFtPxc=;
+        b=a+z53RsfHrir3r5G/atF3j7eeQBkDm7FgrAHfq440Eh6SUwHmwDVs52Q5sWAxS4f9/
+         JGhZjA/UrxCOQBeXrL8zlFWriFLsDbEg2uZE86sxfzrQmAiclNad1rruMzij356fDtkI
+         kDvoQ9g+WEEAb/VZtLMDMivltzzmRSrCfWZnDOWQyglbH7fIEmW6keM0n9SsDZ8eAtyN
+         HHGV+MxOukLNoVBUfVHQbzzGKoSXAkBLV2vX9Cc05KeLSIeqIXOZEmK2W1EbKAyHpN6E
+         CjCSNSs2Ct+Rw1FkQV9WUjq69pTUKSIe0Yq3Tpu7/H5LQsBNVFDVWW2muGJpq3P/HqLe
+         eDPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701425388; x=1702030188;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=zKEaUiZTxlPwx3QPN7jIyXfy5Uw4NLWZUGDodKGb1pE=;
-        b=PBhtezS51edOl26D0bVsq1CrRdfOt98qALnuvmwRUZNhy+I0PSTx7xHfhtOcwvSPqv
-         drhyAjjaUumFnP3fPq3s+9CN76XFn5F24dw6TaNn5omW0tWydejrYb5OryPhREeB5mwN
-         +ewTFlEmy0AkdEKqLmKyPRJ7UgeJXzwsHi21hLgeFFysu8Lzq5SSz5bZ8gO9zSc+8u+m
-         T5OYIJLouSRT8y4OOtZVXopOQkqvEjtp8/ksgOozhj3YOkYchJrpQVZF3TNH7FNAfLz6
-         h+TKXcOXg1Sl1T6MzcNaqd/mTOqg3Lc9dnQEa1Rmrw+6AQZ4aCgDuYa76YeGzfJsqosy
-         dDTA==
-X-Gm-Message-State: AOJu0Ywp/BChQ1mYj5+4dEJsXKD4OWiypEyt4KsT1MqCQxI2QJMBAs9Z
-	TthoJrhfN8mcrdZZmmt2P0My+w==
-X-Google-Smtp-Source: AGHT+IENK1vb/UdBtKtDFUa1ipTkO6wrV04e1mWEkYa/5zZ5tqtZqhUqsoK8aEleU+NVAlPqjr8ZMg==
-X-Received: by 2002:a1c:4b14:0:b0:40b:5e59:c56d with SMTP id y20-20020a1c4b14000000b0040b5e59c56dmr298559wma.151.1701425386905;
-        Fri, 01 Dec 2023 02:09:46 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:46dc:1c67:6d66:e21? ([2a01:e0a:982:cbb0:46dc:1c67:6d66:e21])
-        by smtp.gmail.com with ESMTPSA id t10-20020a5d534a000000b0033326a5b01csm3125805wrv.59.2023.12.01.02.09.45
+        d=1e100.net; s=20230601; t=1701426926; x=1702031726;
+        h=to:from:subject:message-id:date:content-transfer-encoding
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Hk/oHK98YoR1tmr4jhgvsZXu217PjXSNuXKmzLFtPxc=;
+        b=OndV0tcHk9OQswjPhMQZAx31RK9GeVDLuFAdju5RJ0SgENJmSInZn0fM6fhXeX/Kqe
+         ZYaiD1LN8EYpgeF4Crf6MAYkrZuC6RKXW3r7ZnMFeiG9/YKRSUJqra1nTchxCMBlm8yc
+         Q8aTaSCCd661b2bZw93X4sAjwgnEU+D6RPetw8CLBcVRyP1jud0pEyxrByC4MhRhPywl
+         pex9PRnY64Epd61ajFPiu8FlGGWLRWB6gK/t9XJEkJCJBgm7dF5j3iKuEaNHuuHsOSzp
+         p9xXqRIxi5NryJs8qWtbeIvuypi4afsIE3+l8+2QkhbqPhRXCa2tRttwlkC7A7Sqi0oF
+         AtuA==
+X-Gm-Message-State: AOJu0YwTUOEKfHduc2pF+CLyPlE3pm28q1bfTfQM8kRqUsjzS+nZ5MV6
+	i+7ZG+KthCp8oYMWPDu+32X/2Q==
+X-Google-Smtp-Source: AGHT+IE4qAYg3vkRe4cvNNSWz37SkhpwznCavMo5mgiH92cjX7aWNoAsnPhmbIxZluB/ur32zorb9g==
+X-Received: by 2002:a17:907:96a1:b0:a19:5e13:3bdd with SMTP id hd33-20020a17090796a100b00a195e133bddmr1556750ejc.24.1701426926219;
+        Fri, 01 Dec 2023 02:35:26 -0800 (PST)
+Received: from localhost (dhcp-089-099-055-216.chello.nl. [89.99.55.216])
+        by smtp.gmail.com with ESMTPSA id v17-20020a17090651d100b00a192bb0de13sm1268195ejk.3.2023.12.01.02.35.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 02:09:46 -0800 (PST)
-Message-ID: <a6651f9f-b060-4195-b83a-b23aa2091a98@linaro.org>
-Date: Fri, 1 Dec 2023 11:09:44 +0100
+        Fri, 01 Dec 2023 02:35:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v7 00/10] Enable HS-G5 support on SM8550
-Content-Language: en-US, fr
-To: Can Guo <quic_cang@quicinc.com>, bvanassche@acm.org, mani@kernel.org,
- adrian.hunter@intel.com, vkoul@kernel.org, beanhuo@micron.com,
- avri.altman@wdc.com, junwoo80.lee@samsung.com, martin.petersen@oracle.com
-Cc: linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- "open list:ARM/Mediatek SoC support:Keyword:mediatek"
- <linux-kernel@vger.kernel.org>,
- "moderated list:ARM/Mediatek SoC support:Keyword:mediatek"
- <linux-arm-kernel@lists.infradead.org>,
- "moderated list:ARM/Mediatek SoC support:Keyword:mediatek"
- <linux-mediatek@lists.infradead.org>
-References: <1701407001-471-1-git-send-email-quic_cang@quicinc.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <1701407001-471-1-git-send-email-quic_cang@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 01 Dec 2023 11:35:25 +0100
+Message-Id: <CXCXIAY8RBVK.2Y9W66THN9QH2@fairphone.com>
+Subject: Issues bringing up WCD9385 codec on SC7280/QCM6490
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Krzysztof Kozlowski"
+ <krzysztof.kozlowski@linaro.org>, "Srinivas Kandagatla"
+ <srinivas.kandagatla@linaro.org>, "Johan Hovold" <johan@kernel.org>, "Vinod
+ Koul" <vkoul@kernel.org>, "Banajit Goswami" <bgoswami@quicinc.com>,
+ <linux-arm-msm@vger.kernel.org>
+X-Mailer: aerc 0.15.2
 
-On 01/12/2023 06:03, Can Guo wrote:
-> This series enables HS-G5 support on SM8550.
-> 
-> This series is rebased on below changes from Mani -
-> https://patchwork.kernel.org/project/linux-scsi/patch/20230908145329.154024-1-manivannan.sadhasivam@linaro.org/
-> https://patchwork.kernel.org/project/linux-scsi/patch/20230908145329.154024-2-manivannan.sadhasivam@linaro.org/
-> 
-> This series is tested on below HW combinations -
-> SM8550 MTP + UFS4.0
-> SM8550 QRD + UFS3.1
-> SM8450 MTP + UFS3.1 (for regression test)
-> SM8350 MTP + UFS3.1 (for regression test)
-> 
-> Note that during reboot test on above platforms, I occasinally hit PA (PHY)
-> error during the 2nd init, this is not related with this series. A fix for
-> this is mentioned in below patchwork -
-> 
-> https://patchwork.kernel.org/project/linux-scsi/patch/1698145815-17396-1-git-send-email-quic_ziqichen@quicinc.com/
-> 
-> Also note that on platforms, which have two sets of UFS PHY settings are
-> provided (say G4 and no-G4, G5 and no-G5). The two sets of PHY settings are
-> basically programming different values to different registers, mixing the
-> two sets and/or overwriting one set with another set is definitely not
-> blessed by UFS PHY designers. For SM8550, this series will make sure we
-> honor the rule. However, for old targets Mani and I will fix them in
-> another series in future.
-> 
-> v6 -> v7:
-> 1. Rebased on linux-next, based SM8650 PHY settings are merged there, no changes to patches for UFS driver
-> 2. Addressed comments from Mani
-> 
-> v5 -> v6:
-> 1. Rebased on scsi-queue-6.8
-> 2. Addressed comments from Dmitry and Mani in patches to phy-qcom-qmp-ufs.c
-> 
-> v4 -> v5:
-> Removed two useless debug prints in patch #9
-> 
-> v3 -> v4:
-> Used .tbls_hs_overlay array instead of adding more tables with different names like .tbls_hs_g5
-> 
-> v2 -> v3:
-> 1. Addressed comments from Andrew, Mani and Bart in patch #1
-> 2. Added patch #2 as per request from Andrew and Mani
-> 3. Added patch #4 to fix a common issue on old targets, it is not necessary
->     for this series, but put in this series only because it would be easier
->     to maintain and no need to rebase
-> 4. Addressed comments from Dmitry and Mani in patches to phy-qcom-qmp-ufs.c
-> 
-> v1 -> v2:
-> 1. Removed 2 changes which were exposing power info in sysfs
-> 2. Removed 1 change which was moving data structs to phy-qcom-qmp-ufs.h
-> 3. Added one new change (the 1st one) to clean up usage of ufs_dev_params based on comments from Mani
-> 4. Adjusted the logic of UFS device version detection according to comments from Mani:
-> 	4.1 For HW version < 0x5, go through dual init
->   	4.2 For HW version >= 0x5
-> 		a. If UFS device version is populated, one init is required
-> 		b. If UFS device version is not populated, go through dual init
-> 
-> Bao D. Nguyen (1):
->    scsi: ufs: ufs-qcom: Add support for UFS device version detection
-> 
-> Can Guo (9):
->    scsi: ufs: host: Rename structure ufs_dev_params to ufs_host_params
->    scsi: ufs: ufs-qcom: No need to set hs_rate after
->      ufshcd_init_host_param()
->    scsi: ufs: ufs-qcom: Setup host power mode during init
->    scsi: ufs: ufs-qcom: Allow the first init start with the maximum
->      supported gear
->    scsi: ufs: ufs-qcom: Limit HS-G5 Rate-A to hosts with HW version 5
->    scsi: ufs: ufs-qcom: Set initial PHY gear to max HS gear for HW ver 4
->      and newer
->    scsi: ufs: ufs-qcom: Check return value of phy_set_mode_ext()
->    phy: qualcomm: phy-qcom-qmp-ufs: Rectify SM8550 UFS HS-G4 PHY Settings
->    phy: qualcomm: phy-qcom-qmp-ufs: Add High Speed Gear 5 support for
->      SM8550
-> 
->   drivers/phy/qualcomm/phy-qcom-qmp-pcs-ufs-v6.h     |   2 +
->   drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v6.h |   2 +
->   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |   9 +
->   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 191 ++++++++++++++++++---
->   drivers/ufs/host/ufs-exynos.c                      |   7 +-
->   drivers/ufs/host/ufs-hisi.c                        |  11 +-
->   drivers/ufs/host/ufs-mediatek.c                    |  12 +-
->   drivers/ufs/host/ufs-qcom.c                        |  97 ++++++++---
->   drivers/ufs/host/ufs-qcom.h                        |   7 +-
->   drivers/ufs/host/ufshcd-pltfrm.c                   |  69 ++++----
->   drivers/ufs/host/ufshcd-pltfrm.h                   |  10 +-
->   11 files changed, 309 insertions(+), 108 deletions(-)
-> 
+Hi all,
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+I'm trying to get audio working on qcm6490-fairphone-fp5 (the SoC is
+sc7280.dtsi-based).
+Unfortunately the current sc7280.dtsi only supports directly interfacing
+with the hw blocks (lpass_aon/lpass_hm/lpass_audiocc) and not using
+q6afecc, but I think I've done this "conversion" correctly, based on
+other mainline SoCs and downstream dts.
 
-Thanks,
-Neil
+So, to the problem: I've added the nodes for the WCD9385 codec found on
+this device which is handling the microphones (and analog audio over
+USB-C). But I can't get it to work. I believe the first problem I saw
+was the error "soundwire device init timeout" where I saw that the wcd
+tx & rx devices (on the soundwire bus) only appeared after the timeout
+of 2 seconds expired and wcd938x driver probe failed. After bumping this
+to something higher (20 seconds) this was resolved.
+
+But now I'm having these errors in the initialization of the wcd
+devices.
+
+[   45.651156] qcom-soundwire 3230000.soundwire: swrm_wait_for_rd_fifo_avai=
+l err read underflow
+[   45.651173] soundwire sdw-master-1: trf on Slave 1 failed:-5 read addr 4=
+1 count 1
+[   45.651182] wcd9380-codec sdw:0:0217:010d:00:3: SDW_SCP_INTMASK1 write f=
+ailed:-5
+[   45.651186] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 initialization f=
+ailed: -5
+
+After some more debugging and changing some timeouts I'm noticing that
+the swr devices appear immediately after pm_runtime puts the driver to
+sleep, qcom_swrm_irq_handler is called and then we get this:
+
+[   45.531863] qcom-soundwire 3230000.soundwire: SWR new slave attached
+
+The same also happens for the other soundwire controller
+
+[   47.581067] qcom-soundwire 3210000.soundwire: SWR new slave attached
+
+And this is currently where I'm stuck and can't really think of why this
+is happening.. I've double checked nearly all of the properties I've
+added/modified incl. wcd reset GPIO, wcd *-supply, lpi pinctrl settings.
+I believe the "read underflow" error here is because the whole driver
+stack is already trying to suspend so then communication fails. The real
+question for me is why the swr 'slaves' only appear exactly when
+pm_runtime is suspending everything.
+
+The only thing I've not really checked yet is qcom,rx-port-mapping &
+qcom,tx-port-mapping, there I've just tried the two different values
+found on the various devices but I don't think this is causing these
+issues. I will try to look further into this property at some point but
+with msm-5.4 downstream it's quite tricky to find where these values are
+represented (I got some hints from Krzysztof though where to look so
+I'll try to do that soon)
+
+I'm attaching my current diff to the email, just note that it's based on
+one of my dev branches and is manually edited to remove some debug
+prints etc so it will probably not apply anywhere. I can also push the
+git tree somewhere in case that's helpful.
+
+Regards
+Luca
+
+
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm6=
+4/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+index 6e03715073ec..1c56f5c85571 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+@@ -337,6 +337,38 @@ fake-reg-mclk3 {
+ 		clocks =3D <&camcc CAM_CC_MCLK3_CLK>;
+ 		regulator-always-on;
+ 	};
++
++	wcd9385: audio-codec-1 {
++		compatible =3D "qcom,wcd9385-codec";
++
++		pinctrl-0 =3D <&wcd_default>;
++		pinctrl-names =3D "default";
++
++		reset-gpios =3D <&tlmm 83 GPIO_ACTIVE_LOW>;
++
++		qcom,rx-device =3D <&wcd_rx>;
++		qcom,tx-device =3D <&wcd_tx>;
++
++		vdd-rxtx-supply =3D <&vreg_l18b>;
++		vdd-io-supply =3D <&vreg_l18b>; // ???
++		vdd-buck-supply =3D <&vreg_l17b>;
++		vdd-mic-bias-supply =3D <&vreg_bob>;
++
++		qcom,micbias1-microvolt =3D <1800000>;
++		qcom,micbias2-microvolt =3D <1800000>;
++		qcom,micbias3-microvolt =3D <1800000>;
++		qcom,micbias4-microvolt =3D <1800000>;
++
++		// FIXME validate those
++		qcom,mbhc-buttons-vthreshold-microvolt =3D <75000 150000 237000 500000 5=
+00000
++							  500000 500000 500000>;
++		qcom,mbhc-headset-vthreshold-microvolt =3D <1700000>;
++		qcom,mbhc-headphone-vthreshold-microvolt =3D <50000>;
++		#sound-dai-cells =3D <1>;
++	};
+ };
+=20
+ &apps_rsc {
+@@ -713,6 +794,43 @@ &ipa {
+ 	status =3D "okay";
+ };
+=20
++&lpass_rx_macro {
++	status =3D "okay";
++};
++
++&lpass_tx_macro {
++	status =3D "okay";
++};
++
++&lpass_va_macro {
++	status =3D "okay";
++};
++
++&lpass_rx_swr_clk {
++	drive-strength =3D <2>;
++	slew-rate =3D <1>;
++	bias-disable;
++};
++
++&lpass_rx_swr_data {
++	drive-strength =3D <2>;
++	slew-rate =3D <1>;
++	bias-bus-hold;
++};
++
++&lpass_tx_swr_clk {
++	drive-strength =3D <2>;
++	slew-rate =3D <1>;
++	bias-disable;
++};
++
++&lpass_tx_swr_data {
++	drive-strength =3D <2>;
++	slew-rate =3D <1>;
++	bias-bus-hold;
++};
++
+ &mdss {
+ 	status =3D "okay";
+ };
+@@ -1083,6 +1215,35 @@ cpu {
+ 		};
+ 	};
+=20
++	wcd-capture-dai-link {
++		link-name =3D "WCD Capture";
++
++		cpu {
++			sound-dai =3D <&q6afedai TX_CODEC_DMA_TX_3>;
++		};
++
++		codec {
++			sound-dai =3D <&wcd9385 1>, <&swr1 0>, <&lpass_tx_macro 0>;
++		};
++	};
++
+ 	displayport-rx-dai-link {
+ 		link-name =3D "DisplayPort Playback";
+=20
+@@ -1130,6 +1291,27 @@ goodix-berlin@0 {
+ 	};
+ };
+=20
++&swr0 {
++	status =3D "okay";
++
++	wcd_rx: codec@0,4 {
++		compatible =3D "sdw20217010d00";
++		reg =3D <0 4>;
++		qcom,rx-port-mapping =3D <1 2 3 4 5>; // TODO no clue if correct
++	};
++};
++
++&swr1 {
++	status =3D "okay";
++
++	wcd_tx: codec@0,3 {
++		compatible =3D "sdw20217010d00";
++		reg =3D <0 3>;
++		qcom,tx-port-mapping =3D <1 2 3 4>; // TODO no clue if correct
++		//qcom,tx-port-mapping =3D <1 1 2 3>; // TODO no clue if correct
++	};
++};
++
+ &tlmm {
+ 	/*
+ 	 * 32-33: SMB1394 (SPMI)
+@@ -1252,6 +1434,27 @@ usb_redrive_1v8_en_default: usb-redrive-1v8-en-defau=
+lt-state {
+ 		bias-disable;
+ 		output-high;
+ 	};
++
++	wcd_default: wcd-reset-n-active-state {
++		pins =3D "gpio83";
++		function =3D "gpio";
++		drive-strength =3D <16>;
++		bias-disable;
++		output-low;
++	};
+ };
+=20
+ &uart5 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qco=
+m/sc7280.dtsi
+index 651def7796b0..e34bcf95874c 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -26,6 +26,7 @@
+ #include <dt-bindings/soc/qcom,apr.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+ #include <dt-bindings/sound/qcom,lpass.h>
++#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+ #include <dt-bindings/thermal/thermal.h>
+=20
+ / {
+@@ -2390,14 +2391,16 @@ lpass_rx_macro: codec@3200000 {
+ 			pinctrl-names =3D "default";
+ 			pinctrl-0 =3D <&lpass_rx_swr_clk>, <&lpass_rx_swr_data>;
+=20
+-			clocks =3D <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>,
+-				 <&lpass_aon LPASS_AON_CC_TX_MCLK_2X_CLK>,
++			clocks =3D <&q6afecc LPASS_CLK_ID_RX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUP=
+LE_NO>,
++				 <&q6afecc LPASS_CLK_ID_RX_CORE_NPL_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO=
+>,
++				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				 <&lpass_va_macro>;
+-			clock-names =3D "mclk", "npl", "fsgen";
++			clock-names =3D "mclk", "npl", "macro", "dcodec", "fsgen";
+=20
+-			power-domains =3D <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,
+-					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
+-			power-domain-names =3D "macro", "dcodec";
++			assigned-clocks =3D <&q6afecc LPASS_CLK_ID_RX_CORE_MCLK LPASS_CLK_ATTRI=
+BUTE_COUPLE_NO>,
++					  <&q6afecc LPASS_CLK_ID_RX_CORE_NPL_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_=
+NO>;
++			assigned-clock-rates =3D <22579200>, <22579200>;
+=20
+ 			#clock-cells =3D <0>;
+ 			#sound-dai-cells =3D <1>;
+@@ -2416,9 +2419,6 @@ swr0: soundwire@3210000 {
+ 			qcom,din-ports =3D <0>;
+ 			qcom,dout-ports =3D <5>;
+=20
+-			resets =3D <&lpass_audiocc LPASS_AUDIO_SWR_RX_CGCR>;
+-			reset-names =3D "swr_audio_cgcr";
+-
+ 			qcom,ports-word-length =3D	/bits/ 8 <0x01 0x07 0x04 0xff 0xff>;
+ 			qcom,ports-sinterval-low =3D	/bits/ 8 <0x03 0x3f 0x1f 0x03 0x03>;
+ 			qcom,ports-offset1 =3D		/bits/ 8 <0x00 0x00 0x0b 0x01 0x01>;
+@@ -2443,14 +2443,18 @@ lpass_tx_macro: codec@3220000 {
+ 			pinctrl-names =3D "default";
+ 			pinctrl-0 =3D <&lpass_tx_swr_clk>, <&lpass_tx_swr_data>;
+=20
+-			clocks =3D <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>,
+-				 <&lpass_aon LPASS_AON_CC_TX_MCLK_2X_CLK>,
++			clocks =3D <&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUP=
+LE_NO>,
++				 <&q6afecc LPASS_CLK_ID_TX_CORE_NPL_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO=
+>,
++				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
+ 				 <&lpass_va_macro>;
+-			clock-names =3D "mclk", "npl", "fsgen";
++			clock-names =3D "mclk", "npl", "macro", "dcodec", "fsgen";
+=20
+-			power-domains =3D <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,
+-					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
+-			power-domain-names =3D "macro", "dcodec";
++			assigned-clocks =3D <&q6afecc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRI=
+BUTE_COUPLE_NO>,
++					  <&q6afecc LPASS_CLK_ID_TX_CORE_NPL_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_=
+NO>;
++			assigned-clock-rates =3D <19200000>, <19200000>;
++
++			clock-output-names =3D "mclk";
+=20
+ 			#clock-cells =3D <0>;
+ 			#sound-dai-cells =3D <1>;
+@@ -2470,9 +2474,6 @@ swr1: soundwire@3230000 {
+ 			qcom,din-ports =3D <3>;
+ 			qcom,dout-ports =3D <0>;
+=20
+-			resets =3D <&lpass_audiocc LPASS_AUDIO_SWR_TX_CGCR>;
+-			reset-names =3D "swr_audio_cgcr";
+-
+ 			qcom,ports-sinterval-low =3D	/bits/ 8 <0x01 0x03 0x03>;
+ 			qcom,ports-offset1 =3D		/bits/ 8 <0x01 0x00 0x02>;
+ 			qcom,ports-offset2 =3D		/bits/ 8 <0x00 0x00 0x00>;
+@@ -2501,21 +2502,23 @@ lpass_audiocc: clock-controller@3300000 {
+ 			#clock-cells =3D <1>;
+ 			#power-domain-cells =3D <1>;
+ 			#reset-cells =3D <1>;
++
++			status =3D "reserved"; /* Owned by ADSP firmware */
+ 		};
+=20
+ 		lpass_va_macro: codec@3370000 {
+ 			compatible =3D "qcom,sc7280-lpass-va-macro";
+ 			reg =3D <0 0x03370000 0 0x1000>;
+=20
+-			pinctrl-names =3D "default";
+-			pinctrl-0 =3D <&lpass_dmic01_clk>, <&lpass_dmic01_data>;
++			clocks =3D <&q6afecc LPASS_CLK_ID_VA_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUP=
+LE_NO>,
++				 <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++				 <&q6afecc LPASS_CLK_ID_VA_CORE_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>=
+;
++			clock-names =3D "mclk", "macro", "dcodec", "npl";
+=20
+-			clocks =3D <&lpass_aon LPASS_AON_CC_TX_MCLK_CLK>;
+-			clock-names =3D "mclk";
+-
+-			power-domains =3D <&lpass_hm LPASS_CORE_CC_LPASS_CORE_HM_GDSC>,
+-					<&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
+-			power-domain-names =3D "macro", "dcodec";
++			assigned-clocks =3D <&q6afecc LPASS_CLK_ID_VA_CORE_MCLK LPASS_CLK_ATTRI=
+BUTE_COUPLE_NO>,
++					  <&q6afecc LPASS_CLK_ID_VA_CORE_2X_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_N=
+O>;
++			assigned-clock-rates =3D <19200000>, <19200000>;
+=20
+ 			#clock-cells =3D <0>;
+ 			#sound-dai-cells =3D <1>;
+@@ -2632,6 +2635,10 @@ lpass_tlmm: pinctrl@33c0000 {
+ 			#gpio-cells =3D <2>;
+ 			gpio-ranges =3D <&lpass_tlmm 0 0 15>;
+=20
++			clocks =3D <&q6afecc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>=
+,
++				 <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
++			clock-names =3D "core", "audio";
++
+ 			lpass_dmic01_clk: dmic01-clk-state {
+ 				pins =3D "gpio6";
+ 				function =3D "dmic1_clk";
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-=
+macro.c
+index 82f9873ffada..0d861c056462 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1998,18 +1998,18 @@ static int tx_macro_probe(struct platform_device *p=
+dev)
+ 	}
+=20
+ 	/* Update defaults for lpass sc7280 */
+-	if (of_device_is_compatible(np, "qcom,sc7280-lpass-tx-macro")) {
+-		for (reg =3D 0; reg < ARRAY_SIZE(tx_defaults); reg++) {
+-			switch (tx_defaults[reg].reg) {
+-			case CDC_TX_TOP_CSR_SWR_AMIC0_CTL:
+-			case CDC_TX_TOP_CSR_SWR_AMIC1_CTL:
+-				tx_defaults[reg].def =3D 0x0E;
+-				break;
+-			default:
+-				break;
+-			}
+-		}
+-	}
++	//if (of_device_is_compatible(np, "qcom,sc7280-lpass-tx-macro")) {
++	//	for (reg =3D 0; reg < ARRAY_SIZE(tx_defaults); reg++) {
++	//		switch (tx_defaults[reg].reg) {
++	//		case CDC_TX_TOP_CSR_SWR_AMIC0_CTL:
++	//		case CDC_TX_TOP_CSR_SWR_AMIC1_CTL:
++	//			tx_defaults[reg].def =3D 0x0E;
++	//			break;
++	//		default:
++	//			break;
++	//		}
++	//	}
++	//}
+=20
+ 	tx->regmap =3D devm_regmap_init_mmio(dev, base, &tx_regmap_config);
+ 	if (IS_ERR(tx->regmap)) {
+@@ -2162,7 +2162,7 @@ static const struct dev_pm_ops tx_macro_pm_ops =3D {
+ static const struct of_device_id tx_macro_dt_match[] =3D {
+ 	{
+ 		.compatible =3D "qcom,sc7280-lpass-tx-macro",
+-		.data =3D (void *)(LPASS_MACRO_FLAG_HAS_NPL_CLOCK | LPASS_MACRO_FLAG_RES=
+ET_SWR),
++		.data =3D (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
+ 	}, {
+ 		.compatible =3D "qcom,sm6115-lpass-tx-macro",
+ 		.data =3D (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
+diff --git a/sound/soc/codecs/wcd938x-sdw.c b/sound/soc/codecs/wcd938x-sdw.=
+c
+index a1f04010da95..24cb95a6affd 100644
+--- a/sound/soc/codecs/wcd938x-sdw.c
++++ b/sound/soc/codecs/wcd938x-sdw.c
+@@ -1272,11 +1272,12 @@ static int wcd9380_probe(struct sdw_slave *pdev,
+ 		regcache_cache_only(wcd->regmap, true);
+ 	}
+=20
+-	pm_runtime_set_autosuspend_delay(dev, 3000);
++	pm_runtime_set_autosuspend_delay(dev, 10000);
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+=20
+ 	ret =3D component_add(dev, &wcd938x_sdw_component_ops);
+ 	if (ret)
+diff --git a/sound/soc/codecs/wcd938x.c b/sound/soc/codecs/wcd938x.c
+index faf8d3f9b3c5..104b7ab160fc 100644
+--- a/sound/soc/codecs/wcd938x.c
++++ b/sound/soc/codecs/wcd938x.c
+@@ -3096,12 +3096,14 @@ static int wcd938x_soc_codec_probe(struct snd_soc_c=
+omponent *component)
+ 	unsigned long time_left;
+ 	int ret, i;
+=20
+ 	time_left =3D wait_for_completion_timeout(&tx_sdw_dev->initialization_com=
+plete,
+-						msecs_to_jiffies(2000));
++						msecs_to_jiffies(20000));
+ 	if (!time_left) {
+ 		dev_err(dev, "soundwire device init timeout\n");
+ 		return -ETIMEDOUT;
+ 	}
+=20
+ 	snd_soc_component_init_regmap(component, wcd938x->regmap);
+=20
 
