@@ -1,159 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-2868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EF4480096D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:10:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E55D800A4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 13:02:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AFFF41C209FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 11:10:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 296B2281C01
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:02:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C0FA210F5;
-	Fri,  1 Dec 2023 11:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8278022080;
+	Fri,  1 Dec 2023 12:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j4hmhtpw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bf2IrbwD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51C4710DF
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 03:10:47 -0800 (PST)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1faea6773c9so214335fac.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 03:10:47 -0800 (PST)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C08B172B
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 04:02:28 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3316d3d11e1so1313275f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 04:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701429046; x=1702033846; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=edpCM+r4M4/R7CxGMXVYffuZgPSvVTUvgVhnl4+XzgQ=;
-        b=j4hmhtpwzmbmJ2NftdTgSWUh+c3zsuS0Lm3pkdDmtCWdsWPmmPwTSZ5EM88HYW7GQi
-         8HP7B9x2LaRV39PWxMI/OfE4gVwKdzHb3pR4Cl5gr+HSId3SUc9WEb9As/8jbUmgXP0v
-         MQXsm39CmMM67lSS+7LCn0H0eKJLGhzMPWXohQnnUroMTSP1laefoeGuoq8ldn2ptN1V
-         yOBZ8AX7yWoqnAExM6LsBNeUQoEITe6EwBoxJqgqVG+g+EPp9UxUprLKCojt2+miwsTI
-         YCeDSXHFZ64C0gmjBzmAhruNaOqiaGr/fPzkfF7RPyAYvDCSehf1x8SK4XvTRQvy4Dge
-         WHdw==
+        d=linaro.org; s=google; t=1701432146; x=1702036946; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=MSQnM1vQQkiijwl5GySI5P/M85/cHy7IVYxrkl5uoyo=;
+        b=Bf2IrbwDabwiQ3Vu2B7jSJisomyFxYsRV3NiBJRxDhCDIU2ziId3VjPvB3rRKucGau
+         OsXdCj+gKS6XqNrM3w5PlLO2USgdl3/tZYPPXWOP4Rn7ThvqCHwYC99BddPcW1CsW6dR
+         bjiiRWYm4H6BY8HGmepc1DLLkbdGaaLMQ3VHqy+JJwCyvsOJMS+8sLdIN2qntPBM4U57
+         zUTop/0nw/pgBXC1sfjo8Z1KoJ338MidXo9DnFPd3y95deAIj2A7X0vAGJvjtNgcPt0t
+         NYiz+X/xQHstOjrqmaGaR5Qphkeo2Z23PvxcZ9W8JK0JD6/PuoQ6X6iDbGCuW4I9ILc5
+         GBNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701429046; x=1702033846;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=edpCM+r4M4/R7CxGMXVYffuZgPSvVTUvgVhnl4+XzgQ=;
-        b=EBEU9Sdx81Tmjh8EUTqkS/n+QoRYT3KVYOsMkLI2Qn9j1J1A/3/Ewnxm/2mAjLQO8w
-         cT7ct4RydwOgKZnzBvry+upqSG9Lq9JZ3+NCp8TUMHkDa1+XWgZBOYUqA7CIBp5/t/qR
-         LY4YMKHvvafvPvtFSsjQfTjc1U4b/X+mSa12Yq+xNaLsAr/NCXCFZHscAyeObI2Fz7To
-         AGGYBtgCG4F6V4rT8M7f1vvo87ZDo6hRvhX+bn0n0DK4L5MYTVHj5ff+2tTYv9FTxIHB
-         Pr5dT50IHrx1bS/iFmvIhUVGoX+PWYJZlJHBLlPm3xFj63RXjwSrFGGzcyq3gCCXuQTU
-         blLw==
-X-Gm-Message-State: AOJu0YzM756LMAUkZbx9dNhrAPQo0oZ7ZAVZYuHxzaKeTPh4nGuAnYJO
-	auYYzhhdu+JD2b7G5DaLEaR52fUnCXGribHbsA==
-X-Google-Smtp-Source: AGHT+IE9hpk7SsuRiq+lhQuZEppdkmL/H6bEvHrCH7Le0ftKkoFdTGYtEmATY9iOeyJwTiuL5WNNmQ==
-X-Received: by 2002:a05:6870:e0c9:b0:1f5:b5ca:438d with SMTP id a9-20020a056870e0c900b001f5b5ca438dmr27377051oab.16.1701429046585;
-        Fri, 01 Dec 2023 03:10:46 -0800 (PST)
-Received: from thinkpad ([117.213.102.92])
-        by smtp.gmail.com with ESMTPSA id s5-20020a0cb305000000b0066d12d1351fsm1385912qve.143.2023.12.01.03.10.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Dec 2023 03:10:46 -0800 (PST)
-Date: Fri, 1 Dec 2023 16:40:33 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
- qcom,refclk-always-on property
-Message-ID: <20231201111033.GL4009@thinkpad>
-References: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
- <20231127-refclk_always_on-v3-1-26d969fa8f1d@quicinc.com>
- <78815f1b-7390-40de-8afd-ac71806f4051@linaro.org>
- <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
- <20231201060716.GJ4009@thinkpad>
- <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
+        d=1e100.net; s=20230601; t=1701432146; x=1702036946;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MSQnM1vQQkiijwl5GySI5P/M85/cHy7IVYxrkl5uoyo=;
+        b=kwIoiZlso4RfaJVq5FRMxlU16TvYCizhWW2NscLmRDn1bIqeJ6UAlC7SqrqXiY1WOj
+         qbZDcTEj3CI9FqpP3GnTCuCIVcgNVJU4o52Xng3vKcsIavG3/esazKSAAGo8hdMxZOxW
+         2KQNHf+xvYaOYMaTn/Zrpud03iwQxuTT6f1JyydKdgU/7SouZhFIjozKArVRvvdApV1O
+         wdk9tw03hEPEAgJWzWi3kAt4ZCz2KJdV16KmsV9LpJMLxdLc1kATttjCknn55skdiUJb
+         pfyeJirBGtPE9ZNDQaAT36uxryHtg0PEI6nott02XM0JhI0FPaF8axfFxhN5h7YugpLL
+         3NgQ==
+X-Gm-Message-State: AOJu0YxgiG1LEw0Vwl0jUMPd60fslQHPizB2k0kkP3GBdXmCYlFFPIwm
+	cgNkS6d4VjzgEVoUSGqNhgcpsQRc4HjAGSKNY1Y=
+X-Google-Smtp-Source: AGHT+IEd9n7ghSa9QGa60fqnE6pvHoZaXViY7WK6tfO5zbK/xM8uZHTuwvB4nwuA80faTO6wR4pIWg==
+X-Received: by 2002:a5d:4fd0:0:b0:333:2fd7:95ff with SMTP id h16-20020a5d4fd0000000b003332fd795ffmr606690wrw.58.1701432145841;
+        Fri, 01 Dec 2023 04:02:25 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.223.109])
+        by smtp.gmail.com with ESMTPSA id cg16-20020a5d5cd0000000b003332656cd73sm3390392wrb.105.2023.12.01.04.02.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Dec 2023 04:02:25 -0800 (PST)
+Message-ID: <268bda81-d5e4-4e34-8cc0-da1c4825444c@linaro.org>
+Date: Fri, 1 Dec 2023 13:02:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Issues bringing up WCD9385 codec on SC7280/QCM6490
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Johan Hovold <johan@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Banajit Goswami <bgoswami@quicinc.com>, linux-arm-msm@vger.kernel.org
+References: <CXCXIAY8RBVK.2Y9W66THN9QH2@fairphone.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <CXCXIAY8RBVK.2Y9W66THN9QH2@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 01, 2023 at 09:01:43AM +0100, Krzysztof Kozlowski wrote:
-> On 01/12/2023 07:07, Manivannan Sadhasivam wrote:
-> > On Tue, Nov 28, 2023 at 02:49:18PM +0530, Krishna Chaitanya Chundru wrote:
-> >>
-> >> On 11/28/2023 2:26 PM, Krzysztof Kozlowski wrote:
-> >>> On 27/11/2023 13:13, Krishna chaitanya chundru wrote:
-> >>>> Document qcom,refclk-always-on property which is needed in some platforms
-> >>>> to supply refclk even in PCIe low power states.
-> >>>>
-> >>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> >>>> ---
-> >>>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 7 +++++++
-> >>>>   1 file changed, 7 insertions(+)
-> >>>>
-> >>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> >>>> index 2c3d6553a7ba..c747c9f35795 100644
-> >>>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> >>>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> >>>> @@ -93,6 +93,13 @@ properties:
-> >>>>     "#phy-cells":
-> >>>>       const: 0
-> >>>> +  qcom,refclk-always-on:
-> >>>> +    type: boolean
-> >>>> +    description: In some platform where PCIe switch is connected, pcie switch due to some design
-> >>> You received a comment to use proper wrapping: 80. Please implement it.
-> >> I will update this.
-> >>>> +      limitation fails to propage clkreq signal to the host and due to that host will not send
-> >>>> +      refclk, which  results in linkdown in L1.2 or L1.1 exit initiated by EP.
-> >>>> +      This property if set keeps refclk always on even in Low power states.
-> >>> The property name suggests that's the state of hardware - refclk is
-> >>> always on. Description suggests you want to instruct OS to do something.
-> >>>
-> >>> Again, third time (once from Bjorn, once from Dmitry), rephrase property
-> >>> name and description to describe the hardware issue. I see description
-> >>> improved, but not the property name. Again in the end of description you
-> >>
-> >> Both bjorn and Dmitry gave comments to change the description only, and not
-> >> the property name,
-> >>
-> >> correct if I am wrong.
-> >>
-> >>> say what Linux should do. Bindings do not describe Linux OS.
-> >>
-> >> I will remove the last line in the next patch.
-> >>
-> > 
-> > You should name the property as, "qcom,keep-refclk-always-on"
+On 01/12/2023 11:35, Luca Weiss wrote:
+> Hi all,
 > 
-> Keep the clock by who? By driver? Then not, property should describe
-> physical phenomena or hardware issue being fixed here, not what driver
-> should do.
+> I'm trying to get audio working on qcm6490-fairphone-fp5 (the SoC is
+> sc7280.dtsi-based).
+> Unfortunately the current sc7280.dtsi only supports directly interfacing
+> with the hw blocks (lpass_aon/lpass_hm/lpass_audiocc) and not using
+> q6afecc, but I think I've done this "conversion" correctly, based on
+> other mainline SoCs and downstream dts.
+
+Eh, you probably duplicated a lot of existing work. Here it is:
+https://lore.kernel.org/all/20230526113258.1467276-1-quic_mohs@quicinc.com/
+
+> 
+> So, to the problem: I've added the nodes for the WCD9385 codec found on
+> this device which is handling the microphones (and analog audio over
+> USB-C). But I can't get it to work. I believe the first problem I saw
+> was the error "soundwire device init timeout" where I saw that the wcd
+> tx & rx devices (on the soundwire bus) only appeared after the timeout
+> of 2 seconds expired and wcd938x driver probe failed. After bumping this
+> to something higher (20 seconds) this was resolved.
+
+Please describe the tree you are working on. This was fixed some time ago.
+
+> 
+> But now I'm having these errors in the initialization of the wcd
+> devices.
+> 
+> [   45.651156] qcom-soundwire 3230000.soundwire: swrm_wait_for_rd_fifo_avail err read underflow
+> [   45.651173] soundwire sdw-master-1: trf on Slave 1 failed:-5 read addr 41 count 1
+> [   45.651182] wcd9380-codec sdw:0:0217:010d:00:3: SDW_SCP_INTMASK1 write failed:-5
+> [   45.651186] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 initialization failed: -5
+> 
+> After some more debugging and changing some timeouts I'm noticing that
+> the swr devices appear immediately after pm_runtime puts the driver to
+> sleep, qcom_swrm_irq_handler is called and then we get this:
+> 
+> [   45.531863] qcom-soundwire 3230000.soundwire: SWR new slave attached
+> 
+> The same also happens for the other soundwire controller
+> 
+> [   47.581067] qcom-soundwire 3210000.soundwire: SWR new slave attached
+
+There were similar reports on the IRC, so I wonder if this is the same
+issue?
+
+Maybe wrong interrupt flag (like falling instead of rising)? I collected
+over time also several ideas of fixes from Srini, not always ready to
+upstream, but maybe they fix your issue? Did you try some of my audio
+branches like n/audio-sm8450-sm8550-on-next?
+
+Or maybe sc7280 needs to toggle the same CSR reset/clock bits as
+sc8280xp (lpass-csr-sc8280xp.c)?
+
+> 
+> And this is currently where I'm stuck and can't really think of why this
+> is happening.. I've double checked nearly all of the properties I've
+> added/modified incl. wcd reset GPIO, wcd *-supply, lpi pinctrl settings.
+> I believe the "read underflow" error here is because the whole driver
+> stack is already trying to suspend so then communication fails. The real
+> question for me is why the swr 'slaves' only appear exactly when
+> pm_runtime is suspending everything.
+
+Yeah, good question.
+
+> 
+> The only thing I've not really checked yet is qcom,rx-port-mapping &
+> qcom,tx-port-mapping, there I've just tried the two different values
+> found on the various devices but I don't think this is causing these
+> issues. I will try to look further into this property at some point but
+> with msm-5.4 downstream it's quite tricky to find where these values are
+> represented (I got some hints from Krzysztof though where to look so
+> I'll try to do that soon)
+> 
+> I'm attaching my current diff to the email, just note that it's based on
+> one of my dev branches and is manually edited to remove some debug
+> prints etc so it will probably not apply anywhere. I can also push the
+> git tree somewhere in case that's helpful.
+> 
+> Regards
+> Luca
 > 
 
-This property indeed fixes the hardware issue (though in board level) and I see
-a plenty of properties similar to this one instructing the OS to keep some
-resource ON to workaround hardware issues. So they are all wrong?
 
-- Mani
+Best regards,
+Krzysztof
 
-> 
-> Best regards,
-> Krzysztof
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
 
