@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2834-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DB5C800588
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:28:45 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43ED080058D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:29:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F9011C20E2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 08:28:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 72017B21167
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 08:28:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC9A21C2B6;
-	Fri,  1 Dec 2023 08:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF91B1A281;
+	Fri,  1 Dec 2023 08:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aFfhn4My"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RediUvXr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9957171F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 00:28:28 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-33334480eb4so14064f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 00:28:28 -0800 (PST)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C21931718
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 00:28:51 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-50bc8a9503fso2568523e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 00:28:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701419307; x=1702024107; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701419330; x=1702024130; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=43oxx2nn+iBXOa9e5aXPtmURZ6V3i8/WEFRigDGsPqo=;
-        b=aFfhn4MyUoVe8VsWhy5tJeLFnbUfttrCpbOiB0+slezBlJbb1Owo/jzRdsxNssTNZQ
-         PCBJffEBuiuRvhI2PvXJYWdGdNkF+MJwnHWLUvIPPCgdE/OHj1cvebRwgKhIzEHCWIvY
-         EUsWSgWNjJ3SMX5kxmd5XY5JSEuWXm3yoFdAMw2+oO7QgZvwh1uka7JbRQWNnkt8GyLB
-         H6oQ5vcxKWiU+nlhIhq0jFccq/+Nv+3EljFD6Odfn4JmXVljpOpwfZLKRMHVY74ku/vZ
-         7Wv++ECBvkdRFRmguD6qyuPQJivqColxtodInJWp2NvLr6AxBYt50YBuE2wlHukbTM60
-         s97Q==
+        bh=oAQ7FGUiuaQdWgqhi1B8TbnZWcQkuan2Ay+oXSJVlNU=;
+        b=RediUvXrC4SNaoEBdG+VTq2ioggZAkYlks9X+X32JegQilsJ1bNMFGV2nMlT+m8pOB
+         RAQotbELHfxfRY7DsfkvUIWLzDlv7H5rvAYEf8cuPWBCa6F9UuTsZmtPjDg/os6HHCik
+         Lx8jQg2zqUnjYIUa/j5XhlRKLjWSYugN6fyMCyExddSGsw5H6gFDgkk3FXshPJRO1dHl
+         S7EKyTayX87NwV9VmevjUhcYbyPPkCX86HuwVFhGMAPf1VGbV1FoXjBVtib1k4V0G/HM
+         ccfNs0lHGnL2dCeav6vEwCQALvw4ueCoG5gA6jCFA7P0LlFO6HLotM9/l1nqwyB3sLij
+         phcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701419307; x=1702024107;
+        d=1e100.net; s=20230601; t=1701419330; x=1702024130;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=43oxx2nn+iBXOa9e5aXPtmURZ6V3i8/WEFRigDGsPqo=;
-        b=dcCh/s8OTxStcJxTTzksuwMtgTbwfDzB+f6GN0pSnuS4Sa9Fly8mDdusSli2ij/Pz3
-         R3Utu6ZR2jYUU47fQ1goW1Wca4z1ERZg6Q7k7vQqQ/27NIHczV6FHILshuz4H1WirKL1
-         ndtBBeYuU8Scb7dpVWu/sb7itkoYb4efHxpyjybwcQP5uyoxaB9PQkDGtSVxudxMhnSl
-         BWFDUb2EFXt9ra+Aox1AiRHfvVhDA3VaFlFt4/EaknBbvQrNqwgGe5nbGwk/rcOCYPiG
-         M0mRA19uMfPsyOGpXXP03Sn3M2P2LC6dXmv4YtEWCa4vqlxxf1qdsXs8C6m1FrMjHbyW
-         mYjA==
-X-Gm-Message-State: AOJu0YyKwpM8sFCdCZQTInu4ILmDf++xChgPsz/0IkwdGM0k6z2S8osF
-	3UA8t54DnhOqcTKeyegRymZTNg==
-X-Google-Smtp-Source: AGHT+IEkDc3WsOIOvy//AmsjP+/5moRHwhLzXBPbuu4AB1gAcJXfLJ/gbtQIA/aSIxb41bb8BDjLuA==
-X-Received: by 2002:adf:ecce:0:b0:319:7c0f:d920 with SMTP id s14-20020adfecce000000b003197c0fd920mr502785wro.57.1701419307240;
-        Fri, 01 Dec 2023 00:28:27 -0800 (PST)
+        bh=oAQ7FGUiuaQdWgqhi1B8TbnZWcQkuan2Ay+oXSJVlNU=;
+        b=r5MwJ6FMSX1fXvPUZUqT24za/MbrEOfN4wL3s8+cVSXf+dKboI9T2DLUdDcEMo3oqJ
+         S5YHKfyk8D9L5QdrTD9MyXY9kpCsmjwDS6PdfbvQUAVtL/FmPTWk4sDsb72TuVQ/uCsZ
+         paTTyVDNVzxP6oZ9KKYFK74RWUZMrvuo9Pzupz0wOQ7Ue2IA9bYYBLxjEFE1n9Bu0oaq
+         EcOlLkZzQT9gGhDLNwx5BSVIbTbMabg2mRbTl9JitpgF8lsU+gGNJfjZZHhDYPGTrC6y
+         LP0GeHmhLM95MGiRIpJJniYgnrTV28sm66D5uLg3vXfKUkZfyvsEy6RmLjrq/64ndkw9
+         qCiA==
+X-Gm-Message-State: AOJu0YzNdc0j2llretxemBiUmtFM+gP3R5lVGycOzl36ZRkoWjFgqxR0
+	bAr+IiyLOquDR/RiC41QBhK9PJla6Ra4xdLCHlRl0Q==
+X-Google-Smtp-Source: AGHT+IHjIZ7xYii514sVknMdRH7MtpDMQGe0sQgHJK2iRTExuK9JB+g7SLl2BMyU/vP4kJTzvlj1Wg==
+X-Received: by 2002:ac2:4563:0:b0:50b:ce0a:7190 with SMTP id k3-20020ac24563000000b0050bce0a7190mr463023lfm.54.1701419330076;
+        Fri, 01 Dec 2023 00:28:50 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id u6-20020a5d4686000000b0033315876d3esm3554951wrq.12.2023.12.01.00.28.24
+        by smtp.gmail.com with ESMTPSA id u6-20020a5d4686000000b0033315876d3esm3554951wrq.12.2023.12.01.00.28.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 00:28:26 -0800 (PST)
-Message-ID: <84f41a72-7f3f-4118-b0f3-6eccc6b06a9b@linaro.org>
-Date: Fri, 1 Dec 2023 09:28:24 +0100
+        Fri, 01 Dec 2023 00:28:49 -0800 (PST)
+Message-ID: <5fca9859-35bd-4138-a461-203bee36c8e1@linaro.org>
+Date: Fri, 1 Dec 2023 09:28:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,8 +62,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: thermal: qcom-spmi-adc-tm5/hc: fix
- example node names
+Subject: Re: [PATCH 2/2] dt-bindings: thermal: qcom-spmi-adc-tm5/hc: clean up
+ examples
 Content-Language: en-US
 To: Johan Hovold <johan+linaro@kernel.org>,
  Daniel Lezcano <daniel.lezcano@linaro.org>,
@@ -75,7 +75,7 @@ Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20231130174114.13122-1-johan+linaro@kernel.org>
- <20231130174114.13122-2-johan+linaro@kernel.org>
+ <20231130174114.13122-3-johan+linaro@kernel.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -121,19 +121,22 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231130174114.13122-2-johan+linaro@kernel.org>
+In-Reply-To: <20231130174114.13122-3-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 30/11/2023 18:41, Johan Hovold wrote:
-> The ADC Thermal Monitor is part of an SPMI PMIC, which in turn sits on
-> an SPMI bus.
+> Clean up the examples by adding newline separators, moving 'reg'
+> properties after 'compatible' and dropping unused labels.
 > 
-> Fixes: db03874b8543 ("dt-bindings: thermal: qcom: add HC variant of adc-thermal monitor bindings")
-> Fixes: e8ffd6c0756b ("dt-bindings: thermal: qcom: add adc-thermal monitor bindings")
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  .../bindings/thermal/qcom-spmi-adc-tm-hc.yaml          |  5 +++--
+>  .../devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml | 10 ++++++----
+>  2 files changed, 9 insertions(+), 6 deletions(-)
 
-This is just an example, not a binding. There is no real bug to be fixed.
-
+This and previous patch are both trivial cleanups, so probably should be
+squashed together. Anyway:
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
