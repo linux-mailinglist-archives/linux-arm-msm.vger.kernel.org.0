@@ -1,59 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-2818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33B7780036B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 06:54:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2208800387
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 07:07:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 850A92816A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 05:54:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F06F01C20F67
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 06:07:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B97DBE59;
-	Fri,  1 Dec 2023 05:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AEEFBE79;
+	Fri,  1 Dec 2023 06:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MMHU/+pB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MprJc8WC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11E0883A;
-	Fri,  1 Dec 2023 05:54:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3204CC433C8;
-	Fri,  1 Dec 2023 05:54:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701410059;
-	bh=XWTd2RLDgng2C3LTUEtomheeaQdarXMuLAND323s2cc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MMHU/+pBkRXhRy4fG2fEF7IobU50XbzhbUaAEaIhAE2DFp3BLYAJOvfs4p1nzh1zH
-	 zBrwC2W3kdxWr1uRMew1MmondiRuqIgMCYs2G/44N9cdQX0RfjJ6p+oNnKI99Xbtn0
-	 z1wpmGVKOJ/idn2biFhL4OnsYL9spQzmkoD1y3+faZ+68I2GrDueqzSB5o1tEfQAfJ
-	 uLB/2iKjRzx22/4vvxLCfk6rHkaWTAEDqvGIYSRklhD0AsyEJXppi7niEdgCGErAVw
-	 KbrY2R7q6nn9UIo9Bc+BhApDVBCCyvryR1bCFCujqu613A9dXJBXJUcGDOA9XeaeCO
-	 1mXbG7aeqjFJg==
-Date: Fri, 1 Dec 2023 11:23:59 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Mrinmay Sarkar <quic_msarkar@quicinc.com>
-Cc: agross@kernel.org, andersson@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	konrad.dybcio@linaro.org, robh+dt@kernel.org,
-	quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
-	dmitry.baryshkov@linaro.org, robh@kernel.org,
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
-	quic_parass@quicinc.com, quic_schintav@quicinc.com,
-	quic_shijjose@quicinc.com, Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C67B41703
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 22:07:31 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id af79cd13be357-777754138bdso89274885a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 22:07:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701410851; x=1702015651; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Kgy5hlcvWH3mv4+OMDEYg4gGuadNVhIN6Sw8oNb6ClE=;
+        b=MprJc8WCS3au6vGnDxfd3X5nt9Lzyovn8sGqZPtTb3RH5vp5Jaa9UiRmNZd/QRwKFs
+         xzT5G+6+UDFF1NRNx1iWfDDrMSpMPtTrTEGIfqkTzdQrGVQZbu41QHLM9AMRxliDmhX1
+         mpR2ODU+RbBUE3rUIS0v88FZbPLneqp9DiK6udeZE9QuGGx5YcHRYW6b66aLq3z8sV1Z
+         hxfaf13MtVd7+cvPI4QI1+646esMflrm3oVnvOoPE1pVrpUftnVCeGRVj7XeJiN5C8Vr
+         N2OKBcG6vgY9gh53uco53JQ29aQ40k8ue+GEWPMMj9PWha4DpRXQgYDydPkzOgRCjuCW
+         KeqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701410851; x=1702015651;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kgy5hlcvWH3mv4+OMDEYg4gGuadNVhIN6Sw8oNb6ClE=;
+        b=e6zejEfAeT6dLCWZULttV3XY/oX+hTswtQNgTsfEZXccdzZfCJcV7wEFXtDo2LYKft
+         iAh7Psd4p6r/9UBoxgogDOcHNq5EnAsZS9UzM7vEfOfdJ/BBqTSvE2VNc079c60hIt15
+         glf1ji/up9ObN4TsoW0NswOW8dXSOT8vZQVUIwfcEnKYrHer7Al6qYkAQnQb1JEfbzWr
+         H5E69u0kkS4kHCEN2WHy3hAyrbPJActaKUP0tm2Mi77T8gy2wm7Ez9tf4FXHflXBw3Go
+         67SF05x18u3DOeSXeQVZ4ye4UYq6BSv6vmUDf8jOh4bFEV5HMNYFYxKCPIJSVHWsZyci
+         3/AQ==
+X-Gm-Message-State: AOJu0YysVbMmwMzUvRQTQMEgS71uz2bImbwfAzh31S4p0kBvinSe3EZV
+	1ikjU1eUoUVzKO6gd4dcoNBgoy5su29Dkk4cAQ==
+X-Google-Smtp-Source: AGHT+IHu2ksyKFCtF20WA7pQITHq93w/lCv7QCJfM5F0X7XunthNNyJrRVZbimdwRtLy0LpBiPTuQw==
+X-Received: by 2002:a05:620a:34d:b0:77d:cd41:1254 with SMTP id t13-20020a05620a034d00b0077dcd411254mr7559516qkm.12.1701410850808;
+        Thu, 30 Nov 2023 22:07:30 -0800 (PST)
+Received: from thinkpad ([117.213.102.92])
+        by smtp.gmail.com with ESMTPSA id d23-20020a05620a159700b0077d749de2a3sm1199149qkk.67.2023.11.30.22.07.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Nov 2023 22:07:30 -0800 (PST)
+Date: Fri, 1 Dec 2023 11:37:16 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	mhi@lists.linux.dev
-Subject: Re: [PATCH v8 4/5] PCI: epf-mhi: Add support for SA8775P
-Message-ID: <20231201055359.GI4009@thinkpad>
-References: <1699669982-7691-1-git-send-email-quic_msarkar@quicinc.com>
- <1699669982-7691-5-git-send-email-quic_msarkar@quicinc.com>
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
+ qcom,refclk-always-on property
+Message-ID: <20231201060716.GJ4009@thinkpad>
+References: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
+ <20231127-refclk_always_on-v3-1-26d969fa8f1d@quicinc.com>
+ <78815f1b-7390-40de-8afd-ac71806f4051@linaro.org>
+ <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,63 +86,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1699669982-7691-5-git-send-email-quic_msarkar@quicinc.com>
+In-Reply-To: <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
 
-On Sat, Nov 11, 2023 at 08:03:00AM +0530, Mrinmay Sarkar wrote:
-> Add support for Qualcomm Snapdragon SA8775P SoC to the EPF driver.
-> SA8775P is currently reusing the PID 0x0306 (the default one hardcoded
-> in the config space header) as the unique PID is not yet allocated.
-> But the host side stack works fine with the default PID. It will get
-> updated once the PID is finalized. Currently, it has no fixed PCI class,
-> so it is being advertised as "PCI_CLASS_OTHERS".
+On Tue, Nov 28, 2023 at 02:49:18PM +0530, Krishna Chaitanya Chundru wrote:
 > 
-> Signed-off-by: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+> On 11/28/2023 2:26 PM, Krzysztof Kozlowski wrote:
+> > On 27/11/2023 13:13, Krishna chaitanya chundru wrote:
+> > > Document qcom,refclk-always-on property which is needed in some platforms
+> > > to supply refclk even in PCIe low power states.
+> > > 
+> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > ---
+> > >   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 7 +++++++
+> > >   1 file changed, 7 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > > index 2c3d6553a7ba..c747c9f35795 100644
+> > > --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > > +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> > > @@ -93,6 +93,13 @@ properties:
+> > >     "#phy-cells":
+> > >       const: 0
+> > > +  qcom,refclk-always-on:
+> > > +    type: boolean
+> > > +    description: In some platform where PCIe switch is connected, pcie switch due to some design
+> > You received a comment to use proper wrapping: 80. Please implement it.
+> I will update this.
+> > > +      limitation fails to propage clkreq signal to the host and due to that host will not send
+> > > +      refclk, which  results in linkdown in L1.2 or L1.1 exit initiated by EP.
+> > > +      This property if set keeps refclk always on even in Low power states.
+> > The property name suggests that's the state of hardware - refclk is
+> > always on. Description suggests you want to instruct OS to do something.
+> > 
+> > Again, third time (once from Bjorn, once from Dmitry), rephrase property
+> > name and description to describe the hardware issue. I see description
+> > improved, but not the property name. Again in the end of description you
+> 
+> Both bjorn and Dmitry gave comments to change the description only, and not
+> the property name,
+> 
+> correct if I am wrong.
+> 
+> > say what Linux should do. Bindings do not describe Linux OS.
+> 
+> I will remove the last line in the next patch.
+> 
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+You should name the property as, "qcom,keep-refclk-always-on"
+
+Also, no need to stuff the binding with "why this property is required", that
+info should be part of the patch description. Just describe what this property
+means in binding.
 
 - Mani
 
-> ---
->  drivers/pci/endpoint/functions/pci-epf-mhi.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
+> - Krishna Chaitanya.
 > 
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> index 5b0515a..68801c2 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> @@ -114,6 +114,22 @@ static const struct pci_epf_mhi_ep_info sm8450_info = {
->  	.flags = MHI_EPF_USE_DMA,
->  };
->  
-> +static struct pci_epf_header sa8775p_header = {
-> +	.vendorid = PCI_VENDOR_ID_QCOM,
-> +	.deviceid = 0x0306,               /* FIXME: Update deviceid for sa8775p EP */
-> +	.baseclass_code = PCI_CLASS_OTHERS,
-> +	.interrupt_pin = PCI_INTERRUPT_INTA,
-> +};
-> +
-> +static const struct pci_epf_mhi_ep_info sa8775p_info = {
-> +	.config = &mhi_v1_config,
-> +	.epf_header = &sa8775p_header,
-> +	.bar_num = BAR_0,
-> +	.epf_flags = PCI_BASE_ADDRESS_MEM_TYPE_32,
-> +	.msi_count = 32,
-> +	.mru = 0x8000,
-> +};
-> +
->  struct pci_epf_mhi {
->  	const struct pci_epc_features *epc_features;
->  	const struct pci_epf_mhi_ep_info *info;
-> @@ -677,6 +693,7 @@ static int pci_epf_mhi_probe(struct pci_epf *epf,
->  }
->  
->  static const struct pci_epf_device_id pci_epf_mhi_ids[] = {
-> +	{ .name = "pci_epf_mhi_sa8775p", .driver_data = (kernel_ulong_t)&sa8775p_info },
->  	{ .name = "pci_epf_mhi_sdx55", .driver_data = (kernel_ulong_t)&sdx55_info },
->  	{ .name = "pci_epf_mhi_sm8450", .driver_data = (kernel_ulong_t)&sm8450_info },
->  	{},
-> -- 
-> 2.7.4
+> > 
+> > Best regards,
+> > Krzysztof
 > 
 
 -- 
