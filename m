@@ -1,107 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-2922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC53880103E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 17:37:00 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EFA4801070
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 17:43:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 966E5281B2F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 16:36:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D8579B20D6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 16:43:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07FE54CDF0;
-	Fri,  1 Dec 2023 16:36:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olZ1DBNJ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38AC24D112;
+	Fri,  1 Dec 2023 16:43:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC694A985;
-	Fri,  1 Dec 2023 16:36:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF63C433C7;
-	Fri,  1 Dec 2023 16:36:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701448618;
-	bh=RnPR+XBq6lWymlucGaXH1Q9fUC0o3QSRY7BPPDl2A/s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=olZ1DBNJRs1J10iZqvaOwhTBn1G+4W9E1qnGdgYAYiLfukGO13d8GVYduyw5j6ACQ
-	 6WeBCrXycQeMWLa/BuVYKdHaSwubOuB13inZWSqmEvtLr3WSJjsfhInatrFjnDUrBE
-	 ajP3Mw6AUuh3YqU2haz/WbsWPcyiUM+YHTMMpGBtKwf++YKREoS3E+HmiNccP77HQt
-	 PMj2vda64ICsGf3k1xTl3dQjKjKJS4I4JByohsoRJXhmDQtqloq7ByMfm3mNNzsWeW
-	 m53cVJ4+jm9bKy3E9GmjFG9mv4hMEuGZus6/kOBxYxqc7IHLS/GakCTxBH0FW+iNn5
-	 RLY4jh5xt/CqQ==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1r96WD-0003Dg-3C;
-	Fri, 01 Dec 2023 17:37:34 +0100
-Date: Fri, 1 Dec 2023 17:37:33 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Conor Dooley <conor@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Alessandro Zummo <a.zummo@towertech.it>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: rtc: qcom-pm8xxx: fix inconsistent example
-Message-ID: <ZWoLzTX0zmCOxsVm@hovoldconsulting.com>
-References: <20231130173223.12794-1-johan+linaro@kernel.org>
- <ad96b95a-5f4f-4333-b767-762936932061@linaro.org>
- <ZWmn6uicNIqqSwoE@hovoldconsulting.com>
- <20231201-pursuable-endocrine-1318f4843597@spud>
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTP id 31F20A6;
+	Fri,  1 Dec 2023 08:43:06 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5371C1007;
+	Fri,  1 Dec 2023 08:43:52 -0800 (PST)
+Received: from bogus (unknown [10.57.42.162])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 199DB3F6C4;
+	Fri,  1 Dec 2023 08:43:03 -0800 (PST)
+Date: Fri, 1 Dec 2023 16:41:02 +0000
+From: Sudeep Holla <sudeep.holla@arm.com>
+To: Cristian Marussi <cristian.marussi@arm.com>
+Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	quic_mdtipton@quicinc.com, quic_asartor@quicinc.com,
+	quic_lingutla@quicinc.com, Sibi Sankar <quic_sibis@quicinc.com>,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] firmware: arm_scmi: Fix frequency truncation by
+ promoting multiplier to u64
+Message-ID: <20231201164102.lb2o3mgdgjmtfknk@bogus>
+References: <20231130204343.503076-1-sudeep.holla@arm.com>
+ <20231201143935.be6wzjzxmyl5vpz6@bogus>
+ <ZWoHNPlxs-WnVAFe@pluto>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ry05RoAL5d6Ievs5"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231201-pursuable-endocrine-1318f4843597@spud>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZWoHNPlxs-WnVAFe@pluto>
 
+On Fri, Dec 01, 2023 at 04:17:56PM +0000, Cristian Marussi wrote:
+> On Fri, Dec 01, 2023 at 02:39:35PM +0000, Sudeep Holla wrote:
+> > On Thu, Nov 30, 2023 at 08:43:42PM +0000, Sudeep Holla wrote:
+> > > Fix the frequency truncation for all values equal to or greater 4GHz by
+> > > updating the multiplier 'mult_factor' to u64 type. It is also possible
+> > > that the multiplier itself can be greater than or equal to 2^32. So we need
+> > > to also fix the equation computing the value of the multiplier.
+> > > 
+> > > Fixes: a9e3fbfaa0ff ("firmware: arm_scmi: add initial support for performance protocol")
+> > > Reported-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > > Closes: https://lore.kernel.org/all/20231129065748.19871-3-quic_sibis@quicinc.com/
+> > > Cc: Cristian Marussi <cristian.marussi@arm.com>
+> > > Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+> > > ---
+> > >  drivers/firmware/arm_scmi/perf.c | 6 +++---
+> > >  1 file changed, 3 insertions(+), 3 deletions(-)
+> > > 
+> > > diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
+> > > index 81dd5c5e5533..8ce449922e55 100644
+> > > --- a/drivers/firmware/arm_scmi/perf.c
+> > > +++ b/drivers/firmware/arm_scmi/perf.c
+> > > @@ -152,7 +152,7 @@ struct perf_dom_info {
+> > >  	u32 opp_count;
+> > >  	u32 sustained_freq_khz;
+> > >  	u32 sustained_perf_level;
+> > > -	u32 mult_factor;
+> > > +	u64 mult_factor;
+> > 
+> > I have now changed this to unsigned long instead of u64 to fix the 32-bit
+> > build failure[1].
+> 
+> Right, I was caught a few times too by this kind of failures on v7 :D
+>
 
---ry05RoAL5d6Ievs5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+😄
 
-On Fri, Dec 01, 2023 at 04:27:33PM +0000, Conor Dooley wrote:
-> On Fri, Dec 01, 2023 at 10:31:22AM +0100, Johan Hovold wrote:
+> ... but this 32bit issue makes me wonder what to do in such a case...
+>
 
-> > A Fixes tag does not in itself imply that something should be
-> > backported, we have CC-stable tags for that.
->=20
-> IDK, I think at this point every highly active kernel developer should
-> be aware that the stable maintainers backport way more than just what
-> gets explicitly CCed to stable.
+Same here, but the frequency calculations are also unsigned long in higher
+layers, so I don't see any point in making it u64(also 32-bit doesn't
+support 32bit value to be divided by a 64bit value which adds unnecessary
+complications here).
 
-I'm quite aware of that, and if one of my patches with a Fixes tag is
-picked up for backporting when it should not I complain loudly.
+> ...I mean, on 32bit if the calculated freq oveflows, there is just
+> nothing we can do on v7 without overcomplicating the code...but I suppose
+> it is unplausible to have such high freq on a v7...
 
-For this patch, I would not necessarily complain however as the current
-example is misleading.
+Yes this is exactly the argument I made myself and got convinced to keep
+it unsigned long(KISS approach) unless we need it on v7.
 
-Johan
+> as a palliative I can only think of some sort of overflow check (only on v7)
+> that could trigger a warning ... but it is hardly worth the effort
+> probably..
+>
 
---ry05RoAL5d6Ievs5
-Content-Type: application/pgp-signature; name="signature.asc"
+Not sure myself.
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQQHbPq+cpGvN/peuzMLxc3C7H1lCAUCZWoLyQAKCRALxc3C7H1l
-CGwAAQD4pdhkL7tYkLWSHzoZle5G4pVsi5t0oj4r8gD7HUcCwQD/cP5hu7Utw+ZG
-WSjEUNMapd6fy9dBqslr8+BX+/g39wY=
-=YNXt
------END PGP SIGNATURE-----
-
---ry05RoAL5d6Ievs5--
+--
+Regards,
+Sudeep
 
