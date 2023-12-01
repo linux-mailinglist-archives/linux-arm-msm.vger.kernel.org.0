@@ -1,149 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-2847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5BF58006B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 10:19:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D0028006B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 10:22:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22AAB1C20D1C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:19:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AEF8A1C2098A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:22:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 802AE1CF86;
-	Fri,  1 Dec 2023 09:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 043751CF8A;
+	Fri,  1 Dec 2023 09:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aWkydWqr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DAPQcXtQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F15A10FA;
-	Fri,  1 Dec 2023 01:19:30 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A8531A6;
+	Fri,  1 Dec 2023 01:22:12 -0800 (PST)
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B15cHvc022539;
-	Fri, 1 Dec 2023 09:19:25 GMT
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B14sTid005013;
+	Fri, 1 Dec 2023 09:21:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Zka4KzIUcTY1DnFiW9G0zPvTAMcdwMCa69wvvZaIvwg=;
- b=aWkydWqruTEOIxl6gXrgbPzkAHePPA/4EVZc3PSFkeJ7KrXKvMtkwhd8kROB8o5Tx8FV
- F6Cixw1mBZZ3qWqohGmHSU5eYHxKCgCLSX5kVS+IVnm2WOJ7PrMZv0eHJeNq4GVif77M
- N+0Y/iyX5AtT+tnagNd7k6GEbgBw6n6gOYuIsZwLXrk4f7l1yyCcQbdGEnU2e8avgvpQ
- hiIbvKFgHhsN3qKOHe2Gz9ZZZnJr7iTxOcVNK/eEayBfdV2bsXoBxd1PowW6i7VSoniB
- f/mxSP0+4tx+BWyfCSoQVP1cfkWa/TxJh7C8ocHYYVsFAK1jxSkNNYx18uz0OGetmoxX DQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3upv482ek2-1
+ bh=tul7YL1lXXmGuJMUrSxJabsS90yyEUOoBc8g08oQ/R0=;
+ b=DAPQcXtQkLZIfti1Jyr1wROlazeCVg54HBcHa4gy1g9RFOCy97J7hAbiME01eBXLYtQ7
+ zWm7liMEhw5azn759WX2V7aTl5fA7tfemvfop3nx8pbPQTU6GqXTppYYbrDvim44KVON
+ 1KUdJiciqZ8EUkfBpX8pheeECjmgNzA7mUbq9kqH5vstp5/AewkhkdUIj43h22ItZ/S0
+ +pknbFhTSxm64YW2eYrBo17pu5m8aXgJF0SdEzKKguRkFGqsmdPu/BYOKJDOUNN2VtQb
+ GWthdfCuZMKLghBrbfFEwOxbpLo5J2h25yjmShEWwGXfoiCmmHCFvAbk1piF2FBntq+7 bg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3upv482eru-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Dec 2023 09:19:24 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B19JNei024942
+	Fri, 01 Dec 2023 09:21:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B19Lq4s027065
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Dec 2023 09:19:23 GMT
-Received: from [10.216.46.214] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 1 Dec 2023 09:21:52 GMT
+Received: from [10.50.0.148] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 1 Dec
- 2023 01:19:17 -0800
-Message-ID: <f38fa45b-6b57-f941-7bf9-5b6c2d0ea1b8@quicinc.com>
-Date: Fri, 1 Dec 2023 14:49:12 +0530
+ 2023 01:21:46 -0800
+Message-ID: <830f5586-0aec-f2ba-314b-e909f7126248@quicinc.com>
+Date: Fri, 1 Dec 2023 14:51:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH V2 0/4] Add runtime PM support for videocc on SM8150
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH v7 04/10] scsi: ufs: ufs-qcom: Allow the first init start
+ with the maximum supported gear
 Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>,
+To: Can Guo <quic_cang@quicinc.com>, <bvanassche@acm.org>, <mani@kernel.org>,
+        <adrian.hunter@intel.com>, <vkoul@kernel.org>, <beanhuo@micron.com>,
+        <avri.altman@wdc.com>, <junwoo80.lee@samsung.com>,
+        <martin.petersen@oracle.com>
+CC: <linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20231118123944.2202630-1-quic_skakitap@quicinc.com>
- <47925f9e-32aa-4762-a4ec-aa559e18ff12@kernel.org>
- <26b69814-201b-8d07-d844-27e804aa3016@quicinc.com>
- <2ca148cc-564c-499a-8fdf-487391c9024c@linaro.org>
-From: "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>
-In-Reply-To: <2ca148cc-564c-499a-8fdf-487391c9024c@linaro.org>
+	<konrad.dybcio@linaro.org>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        "open list" <linux-kernel@vger.kernel.org>
+References: <1701407001-471-1-git-send-email-quic_cang@quicinc.com>
+ <1701407001-471-5-git-send-email-quic_cang@quicinc.com>
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <1701407001-471-5-git-send-email-quic_cang@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NCiTyvsxjcNA6kaVhnTlc3f9a5qWfh18
-X-Proofpoint-ORIG-GUID: NCiTyvsxjcNA6kaVhnTlc3f9a5qWfh18
+X-Proofpoint-GUID: NAltkgEwVqmUrEQrjAJSsNnA0VgCW4QL
+X-Proofpoint-ORIG-GUID: NAltkgEwVqmUrEQrjAJSsNnA0VgCW4QL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-01_06,2023-11-30_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- spamscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ spamscore=0 clxscore=1011 impostorscore=0 lowpriorityscore=0 mlxscore=0
  phishscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
  definitions=main-2312010061
 
 
-On 11/29/2023 7:30 PM, Konrad Dybcio wrote:
-> On 28.11.2023 17:11, Satya Priya Kakitapalli (Temp) wrote:
->> On 11/20/2023 5:18 PM, Konrad Dybcio wrote:
->>> On 18.11.2023 13:39, Satya Priya Kakitapalli wrote:
->>>> Add runtime support for videocc on SM8150 and update the resets
->>>> and video_pll0_config configuration.
->>>>
->>>> Satya Priya Kakitapalli (4):
->>>>     dt-bindings: clock: Update the videocc resets for sm8150
->>>>     clk: qcom: videocc-sm8150: Update the videocc resets
->>>>     clk: qcom: videocc-sm8150: Add missing PLL config properties
->>>>     clk: qcom: videocc-sm8150: Add runtime PM support
->>> Hi, it's good practive to include a link to the previous revision
->>> and a summary of changes.
->>>
->>> The b4 tool [1] does that for you, please consider using it.
->>
->> Hi, I have installed b4 and followed all the steps, but it doesn't populate my cover letter with change log and previous series link, do i need to use some option for that?
-> You probably did something like this:
->
-> b4 prep -n 8150vidcc --from-thread 26b69814-201b-8d07-d844-27e804aa3016@quicinc.com
->
-> Then if you do:
->
-> b4 prep --edit-cover
->
-> you'll see a note like
->
-> EDITME: Imported from f26b69814-201b-8d07-d844-27e804aa3016@quicinc.com
->          Please review before sending.
->
-> so you need to do it manually.
->
->
-> Generally, when the series has been sent at least once with b4 already,
-> you'll notice that `b4 send` appends something like this to the cover
-> letter:
->
-> Changes in v2:
-> - EDITME: describe what is new in this series revision.
-> - EDITME: use bulletpoints and terse descriptions.
-> - Link to v1: https://lore.kernel.org/r/20230830-topic-refgenphy-v1-0-892db196a1c0@linaro.org
->
->
-> This should be only necessary to do by hand once, since as mentioned it's
-> the first time b4 sees this series
->
 
-Thanks for the information, will add them manually.
+On 12/1/2023 10:33 AM, Can Guo wrote:
+> During host driver init, the phy_gear is set to the minimum supported gear
+> (HS_G2). Then, during the first power mode change, the negotiated gear, say
+> HS-G4, is updated to the phy_gear variable so that in the second init the
+> updated phy_gear can be used to program the PHY.
+> 
+> But the current code only allows update the phy_gear to a higher value. If
+> one wants to start the first init with the maximum support gear, say HS-G4,
+> the phy_gear is not updated to HS-G3 if the device only supports HS-G3.
+> 
+> The original check added there is intend to make sure the phy_gear won't be
+> updated when gear is scaled down (during clock scaling). Update the check
+> so that one can start the first init with the maximum support gear without
+> breaking the original fix by checking the ufshcd_state, that is, allow
+> update to phy_gear only if power mode change is invoked from
+> ufshcd_probe_hba().
+> 
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+> ---
+>   drivers/ufs/host/ufs-qcom.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 9a90019..81056b9 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -916,11 +916,12 @@ static int ufs_qcom_pwr_change_notify(struct ufs_hba *hba,
+>   		}
+>   
+>   		/*
+> -		 * Update phy_gear only when the gears are scaled to a higher value. This is
+> -		 * because, the PHY gear settings are backwards compatible and we only need to
+> -		 * change the PHY gear settings while scaling to higher gears.
+> +		 * During UFS driver probe, always update the PHY gear to match the negotiated
+> +		 * gear, so that, if quirk UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH is enabled,
+> +		 * the second init can program the optimal PHY settings. This allows one to start
+> +		 * the first init with either the minimum or the maximum support gear.
+>   		 */
+> -		if (dev_req_params->gear_tx > host->phy_gear)
+> +		if (hba->ufshcd_state == UFSHCD_STATE_RESET)
+>   			host->phy_gear = dev_req_params->gear_tx;
+>   
+>   		/* enable the device ref clock before changing to HS mode */
 
-
-> Konrad
+Reviewed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 
