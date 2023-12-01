@@ -1,172 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-2867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0E32800954
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:07:10 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EF4480096D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:10:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 48527B20C92
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 11:07:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AFFF41C209FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 11:10:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6930F210E0;
-	Fri,  1 Dec 2023 11:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C0FA210F5;
+	Fri,  1 Dec 2023 11:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Tu5RxNuj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j4hmhtpw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B06EC10D8;
-	Fri,  1 Dec 2023 03:06:58 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B18uKgQ022357;
-	Fri, 1 Dec 2023 11:06:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=ddKWip09Ii5EtoLGy+6Dq9XJZUZNVv7bpq19jVF3sCY=;
- b=Tu5RxNujEtPzzGWyxKBjwTpTh6Nf8ljoPOXDVWu3mn527fcgAIddOaOVB4YjKIWyHjf7
- juQK/0PpRoTuU0N4tmEGtmN8Kzq99eUmapSgo9IxJIn/VWLjGsuOrP06LJ+HgjoYZC0j
- 2RRfFeA8pgDeMSXe7sOkgmZKOVP+SqfVKIsQVwA6wEER7uvZrZJUF88aKU7AO0qqyfpa
- /GX3eKPv1wf6i6aghWoLnG8emTfr3fjL4Qm6KQKjmDiKuRMf+Ta2Pa3HuRtUG8Ewc0bt
- WemhLrAcI6zC0fZqCOGImzgR1UuvWoCyslsvDH41mSoD5yeI5Zd+CkxfhxU+fkk7ShSy Fg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3upvm1tn6t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Dec 2023 11:06:54 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B1B6rEd017269
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Dec 2023 11:06:53 GMT
-Received: from hu-deesin-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 1 Dec 2023 03:06:49 -0800
-From: Deepak Kumar Singh <quic_deesin@quicinc.com>
-To: <quic_bjorande@quicinc.com>, <bjorn.andersson@kernel.org>,
-        <quic_clew@quicinc.com>, <mathieu.poirier@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <quic_sarannya@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        "Deepak
- Kumar Singh" <quic_deesin@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>
-Subject: [PATCH V1] rpmsg: glink: smem: validate index before fifo read write
-Date: Fri, 1 Dec 2023 16:36:31 +0530
-Message-ID: <20231201110631.669085-1-quic_deesin@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51C4710DF
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 03:10:47 -0800 (PST)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1faea6773c9so214335fac.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 03:10:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701429046; x=1702033846; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=edpCM+r4M4/R7CxGMXVYffuZgPSvVTUvgVhnl4+XzgQ=;
+        b=j4hmhtpwzmbmJ2NftdTgSWUh+c3zsuS0Lm3pkdDmtCWdsWPmmPwTSZ5EM88HYW7GQi
+         8HP7B9x2LaRV39PWxMI/OfE4gVwKdzHb3pR4Cl5gr+HSId3SUc9WEb9As/8jbUmgXP0v
+         MQXsm39CmMM67lSS+7LCn0H0eKJLGhzMPWXohQnnUroMTSP1laefoeGuoq8ldn2ptN1V
+         yOBZ8AX7yWoqnAExM6LsBNeUQoEITe6EwBoxJqgqVG+g+EPp9UxUprLKCojt2+miwsTI
+         YCeDSXHFZ64C0gmjBzmAhruNaOqiaGr/fPzkfF7RPyAYvDCSehf1x8SK4XvTRQvy4Dge
+         WHdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701429046; x=1702033846;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=edpCM+r4M4/R7CxGMXVYffuZgPSvVTUvgVhnl4+XzgQ=;
+        b=EBEU9Sdx81Tmjh8EUTqkS/n+QoRYT3KVYOsMkLI2Qn9j1J1A/3/Ewnxm/2mAjLQO8w
+         cT7ct4RydwOgKZnzBvry+upqSG9Lq9JZ3+NCp8TUMHkDa1+XWgZBOYUqA7CIBp5/t/qR
+         LY4YMKHvvafvPvtFSsjQfTjc1U4b/X+mSa12Yq+xNaLsAr/NCXCFZHscAyeObI2Fz7To
+         AGGYBtgCG4F6V4rT8M7f1vvo87ZDo6hRvhX+bn0n0DK4L5MYTVHj5ff+2tTYv9FTxIHB
+         Pr5dT50IHrx1bS/iFmvIhUVGoX+PWYJZlJHBLlPm3xFj63RXjwSrFGGzcyq3gCCXuQTU
+         blLw==
+X-Gm-Message-State: AOJu0YzM756LMAUkZbx9dNhrAPQo0oZ7ZAVZYuHxzaKeTPh4nGuAnYJO
+	auYYzhhdu+JD2b7G5DaLEaR52fUnCXGribHbsA==
+X-Google-Smtp-Source: AGHT+IE9hpk7SsuRiq+lhQuZEppdkmL/H6bEvHrCH7Le0ftKkoFdTGYtEmATY9iOeyJwTiuL5WNNmQ==
+X-Received: by 2002:a05:6870:e0c9:b0:1f5:b5ca:438d with SMTP id a9-20020a056870e0c900b001f5b5ca438dmr27377051oab.16.1701429046585;
+        Fri, 01 Dec 2023 03:10:46 -0800 (PST)
+Received: from thinkpad ([117.213.102.92])
+        by smtp.gmail.com with ESMTPSA id s5-20020a0cb305000000b0066d12d1351fsm1385912qve.143.2023.12.01.03.10.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Dec 2023 03:10:46 -0800 (PST)
+Date: Fri, 1 Dec 2023 16:40:33 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
+ qcom,refclk-always-on property
+Message-ID: <20231201111033.GL4009@thinkpad>
+References: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
+ <20231127-refclk_always_on-v3-1-26d969fa8f1d@quicinc.com>
+ <78815f1b-7390-40de-8afd-ac71806f4051@linaro.org>
+ <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
+ <20231201060716.GJ4009@thinkpad>
+ <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 49DiMz7uDClOHEvaBUotB1hqK0N7ZCFp
-X-Proofpoint-GUID: 49DiMz7uDClOHEvaBUotB1hqK0N7ZCFp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-01_09,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0 malwarescore=0
- bulkscore=0 adultscore=0 clxscore=1011 mlxscore=0 mlxlogscore=876
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312010072
+In-Reply-To: <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
 
-Fifo head and tail index can be modified with wrong values from
-untrusted remote procs. Glink smem is not validating these index
-before using to read or write fifo. This can result in out of
-bound memory access if head and tail have incorrect values.
+On Fri, Dec 01, 2023 at 09:01:43AM +0100, Krzysztof Kozlowski wrote:
+> On 01/12/2023 07:07, Manivannan Sadhasivam wrote:
+> > On Tue, Nov 28, 2023 at 02:49:18PM +0530, Krishna Chaitanya Chundru wrote:
+> >>
+> >> On 11/28/2023 2:26 PM, Krzysztof Kozlowski wrote:
+> >>> On 27/11/2023 13:13, Krishna chaitanya chundru wrote:
+> >>>> Document qcom,refclk-always-on property which is needed in some platforms
+> >>>> to supply refclk even in PCIe low power states.
+> >>>>
+> >>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> >>>> ---
+> >>>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 7 +++++++
+> >>>>   1 file changed, 7 insertions(+)
+> >>>>
+> >>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> >>>> index 2c3d6553a7ba..c747c9f35795 100644
+> >>>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> >>>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> >>>> @@ -93,6 +93,13 @@ properties:
+> >>>>     "#phy-cells":
+> >>>>       const: 0
+> >>>> +  qcom,refclk-always-on:
+> >>>> +    type: boolean
+> >>>> +    description: In some platform where PCIe switch is connected, pcie switch due to some design
+> >>> You received a comment to use proper wrapping: 80. Please implement it.
+> >> I will update this.
+> >>>> +      limitation fails to propage clkreq signal to the host and due to that host will not send
+> >>>> +      refclk, which  results in linkdown in L1.2 or L1.1 exit initiated by EP.
+> >>>> +      This property if set keeps refclk always on even in Low power states.
+> >>> The property name suggests that's the state of hardware - refclk is
+> >>> always on. Description suggests you want to instruct OS to do something.
+> >>>
+> >>> Again, third time (once from Bjorn, once from Dmitry), rephrase property
+> >>> name and description to describe the hardware issue. I see description
+> >>> improved, but not the property name. Again in the end of description you
+> >>
+> >> Both bjorn and Dmitry gave comments to change the description only, and not
+> >> the property name,
+> >>
+> >> correct if I am wrong.
+> >>
+> >>> say what Linux should do. Bindings do not describe Linux OS.
+> >>
+> >> I will remove the last line in the next patch.
+> >>
+> > 
+> > You should name the property as, "qcom,keep-refclk-always-on"
+> 
+> Keep the clock by who? By driver? Then not, property should describe
+> physical phenomena or hardware issue being fixed here, not what driver
+> should do.
+> 
 
-Add check for validation of head and tail index. This check will
-put index within fifo boundaries, so that no invalid memory access
-is made. Further this may result in certain packet drops unless
-glink finds a valid packet header in fifo again and recovers.
+This property indeed fixes the hardware issue (though in board level) and I see
+a plenty of properties similar to this one instructing the OS to keep some
+resource ON to workaround hardware issues. So they are all wrong?
 
-Crash signature and calltrace with wrong head and tail values:
+- Mani
 
-Internal error: Oops: 96000007 [#1] PREEMPT SMP
-pc : __memcpy_fromio+0x34/0xb4
-lr : glink_smem_rx_peak+0x68/0x94
+> 
+> Best regards,
+> Krzysztof
+> 
 
-__memcpy_fromio+0x34/0xb4
-glink_smem_rx_peak+0x68/0x94
-qcom_glink_native_intr+0x90/0x888
-
-Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
----
- drivers/rpmsg/qcom_glink_smem.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
-index 7a982c60a8dd..9eba0aaae916 100644
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -86,9 +86,14 @@ static size_t glink_smem_rx_avail(struct qcom_glink_pipe *np)
- 	tail = le32_to_cpu(*pipe->tail);
- 
- 	if (head < tail)
--		return pipe->native.length - tail + head;
-+		len = pipe->native.length - tail + head;
- 	else
--		return head - tail;
-+		len = head - tail;
-+
-+	if (WARN_ON_ONCE(len > pipe->native.length))
-+		len = 0;
-+
-+	return len;
- }
- 
- static void glink_smem_rx_peek(struct qcom_glink_pipe *np,
-@@ -99,6 +104,10 @@ static void glink_smem_rx_peek(struct qcom_glink_pipe *np,
- 	u32 tail;
- 
- 	tail = le32_to_cpu(*pipe->tail);
-+
-+	if (WARN_ON_ONCE(tail > pipe->native.length))
-+		return;
-+
- 	tail += offset;
- 	if (tail >= pipe->native.length)
- 		tail -= pipe->native.length;
-@@ -121,7 +130,7 @@ static void glink_smem_rx_advance(struct qcom_glink_pipe *np,
- 
- 	tail += count;
- 	if (tail >= pipe->native.length)
--		tail -= pipe->native.length;
-+		tail %= pipe->native.length;
- 
- 	*pipe->tail = cpu_to_le32(tail);
- }
-@@ -146,6 +155,9 @@ static size_t glink_smem_tx_avail(struct qcom_glink_pipe *np)
- 	else
- 		avail -= FIFO_FULL_RESERVE + TX_BLOCKED_CMD_RESERVE;
- 
-+	if (WARN_ON_ONCE(avail > pipe->native.length))
-+		avail = 0;
-+
- 	return avail;
- }
- 
-@@ -155,6 +167,9 @@ static unsigned int glink_smem_tx_write_one(struct glink_smem_pipe *pipe,
- {
- 	size_t len;
- 
-+	if (WARN_ON_ONCE(head > pipe->native.length))
-+		return head;
-+
- 	len = min_t(size_t, count, pipe->native.length - head);
- 	if (len)
- 		memcpy(pipe->fifo + head, data, len);
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
