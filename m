@@ -1,187 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-2964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74200801529
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 22:19:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E54C801559
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 22:29:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A0291F2101B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 21:19:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 54DBF281C7C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 21:29:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A15658AD5;
-	Fri,  1 Dec 2023 21:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE6B559B47;
+	Fri,  1 Dec 2023 21:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PUpMZnJ2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="j2zi3UMm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E08610D7
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 13:19:04 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c9c30c7eafso33152991fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 13:19:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701465542; x=1702070342; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=92I2VC77Jo/d7ZlTpIZWS29l3+Yi7ot/5rEINGGwN8k=;
-        b=PUpMZnJ2LEXN8zEp1jjmsKt5P7Ja33NXSO0TPzf8BPPJjpyHzqBosA6cXoa4UvBC3C
-         1ZRaCR7PBq1Vb3j5lBgMQNWeNlJFWvwZf4nbcg612gg57NE87CLnHaVwDqK8BtPpsiZM
-         JfWEDae52wyRDqQXnN4t0DbPpVEvcs8lDBh/GYL5+ECr53cuw9wVXHLPHJ4LgjPVHqvb
-         ZcC/c2dpts5b9cw5BTaqybUD+9R7g1nonM7faEiilde45gwrvIEisVP2sMfd+R3F3DQF
-         zMoLgsOxWGbAcwLUnaVUxGGY9bGP62FTwCtL9SC0LusdhTsOK/vTe6mrcvTcANh/bgND
-         /SBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701465542; x=1702070342;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=92I2VC77Jo/d7ZlTpIZWS29l3+Yi7ot/5rEINGGwN8k=;
-        b=o7hycVUZfWOJ3rN3whZbEmjHTNRpZMDgbO6733D9DERU5hdQB0+02kS7zjtC/dt0eG
-         eDZm/vPUS87ClmIxZTyClyjLzaB9OTAfKwnd9O/cT0cd7RKU5dIhjjp1g35XaMbcjm+N
-         vCVRqF5SPMXNephCQvpvXj+rSPYSIRDzm+gUXc9zlZVhNQ4DXcJi6QgXRewRt3wE01Y4
-         HHvULE0x2BX2JIrdrGKzcnnPENiMiJTKuFlIxUGu3yCK8YCViGO65U2VOZuhx9+pEotu
-         IewGpdJH0C1q/iAw7lxnE2tag18NlCALZO/Cy3OhJ32FEYJPCU7Qqwl5vCfKjd3c9cIf
-         DgQA==
-X-Gm-Message-State: AOJu0YxOLKctlYkbfHfBJIYdxpciW/lbT+11CIPwN9GbRgy05xuk6d+z
-	hyFQ6OACbtD1RqOWQOB8O7VvAw==
-X-Google-Smtp-Source: AGHT+IG0PapX2DW0mtcM2sBe+j3d8cEdosKjbPwmq0gmlCAeOni9lcrGN5Jprl6ze8zi30UCvPHYZQ==
-X-Received: by 2002:a2e:8693:0:b0:2c9:cadb:f9c5 with SMTP id l19-20020a2e8693000000b002c9cadbf9c5mr1281931lji.0.1701465542472;
-        Fri, 01 Dec 2023 13:19:02 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z4-20020a05651c022400b002c123b976acsm503612ljn.76.2023.12.01.13.19.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Dec 2023 13:19:01 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Stephen Boyd <swboyd@chromium.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: [PATCH v4 13/13] drm/msm/dpu: use drmm-managed allocation for dpu_encoder_virt
-Date: Sat,  2 Dec 2023 00:18:45 +0300
-Message-Id: <20231201211845.1026967-14-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231201211845.1026967-1-dmitry.baryshkov@linaro.org>
-References: <20231201211845.1026967-1-dmitry.baryshkov@linaro.org>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 924EE10D7;
+	Fri,  1 Dec 2023 13:29:23 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B1FnIkd020299;
+	Fri, 1 Dec 2023 21:29:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=7U3ff1W6UBAzgIEOf0ODrlvoD7YzizM1OIwxjAZ9kvo=;
+ b=j2zi3UMmJsYFnxdLjeSG5thi56qFB30ifmtk73DE62tQ6uCNkExXEKvC/cTLq9OxPMoL
+ vMpl+mWCFXHKU3VA8A1gOwLHu7thQ0W2Tj+9sMPjsQU+Jr/sWgeK4F9m44LL3M7SNxBm
+ MnRB4VCS1e3d8RN/hj+vSmdI4VnVee98Vj4nJLlTEGm+xOv1uD95WBnS+U8WzmQeDThk
+ 5BGpwyZ1fMtVJmN9n7Mp1Gr8o+aP1NYsmhG8wNAttDRdWAxDg2QuNw3P9MFidmwc0sF9
+ LvKgXfth8if9DopBaZu6xLVSde7MndYfTkSiaZvJ10z9lWxOCmyw/gby+BUmrien04L0 7w== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uqjf1rrex-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 01 Dec 2023 21:29:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B1LT3XD032234
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 1 Dec 2023 21:29:03 GMT
+Received: from [10.110.73.134] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 1 Dec
+ 2023 13:29:02 -0800
+Message-ID: <a076fced-f4b9-804e-eb73-1fbb510c4951@quicinc.com>
+Date: Fri, 1 Dec 2023 13:29:01 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/2] drm/msm/dpu: Set input_sel bit for INTF
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jessica Zhang
+	<quic_jesszhan@quicinc.com>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Marijn
+ Suijten" <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20231130-encoder-fixup-v1-0-585c54cd046e@quicinc.com>
+ <20231130-encoder-fixup-v1-2-585c54cd046e@quicinc.com>
+ <CAA8EJpqeu18q4jN82fUvsEdBRmEjG_mYLQQUWD+LDxjiQQQPsg@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpqeu18q4jN82fUvsEdBRmEjG_mYLQQUWD+LDxjiQQQPsg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: FaAJTLVBrxjZMaUplJE3OMLVGB9EcvM9
+X-Proofpoint-GUID: FaAJTLVBrxjZMaUplJE3OMLVGB9EcvM9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-01_20,2023-11-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
+ phishscore=0 adultscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
+ impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2312010132
 
-It is incorrect to use devm-managed memory allocations for DRM data
-structures exposed to userspace. They should use drmm_ allocations.
-Change struct dpu_encoder allocation to use drmm_encoder_alloc(). This
-removes the need to perform any actions on encoder destruction.
 
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 50 +++++----------------
- 1 file changed, 10 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 0dc74e315a9f..3383ab708ec4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -439,23 +439,6 @@ int dpu_encoder_get_linecount(struct drm_encoder *drm_enc)
- 	return linecount;
- }
- 
--static void dpu_encoder_destroy(struct drm_encoder *drm_enc)
--{
--	struct dpu_encoder_virt *dpu_enc = NULL;
--	int i = 0;
--
--	if (!drm_enc) {
--		DPU_ERROR("invalid encoder\n");
--		return;
--	}
--
--	dpu_enc = to_dpu_encoder_virt(drm_enc);
--	DPU_DEBUG_ENC(dpu_enc, "\n");
--
--	drm_encoder_cleanup(drm_enc);
--	mutex_destroy(&dpu_enc->enc_lock);
--}
--
- void dpu_encoder_helper_split_config(
- 		struct dpu_encoder_phys *phys_enc,
- 		enum dpu_intf interface)
-@@ -2337,7 +2320,6 @@ static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
- };
- 
- static const struct drm_encoder_funcs dpu_encoder_funcs = {
--		.destroy = dpu_encoder_destroy,
- 		.late_register = dpu_encoder_late_register,
- 		.early_unregister = dpu_encoder_early_unregister,
- };
-@@ -2348,20 +2330,13 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
- {
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
--	struct drm_encoder *drm_enc = NULL;
--	struct dpu_encoder_virt *dpu_enc = NULL;
--	int ret = 0;
-+	struct dpu_encoder_virt *dpu_enc;
-+	int ret;
- 
--	dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
--	if (!dpu_enc)
--		return ERR_PTR(-ENOMEM);
--
--	ret = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
--			       drm_enc_mode, NULL);
--	if (ret) {
--		devm_kfree(dev->dev, dpu_enc);
--		return ERR_PTR(ret);
--	}
-+	dpu_enc = drmm_encoder_alloc(dev, struct dpu_encoder_virt, base,
-+				     &dpu_encoder_funcs, drm_enc_mode, NULL);
-+	if (IS_ERR(dpu_enc))
-+		return ERR_CAST(dpu_enc);
- 
- 	drm_encoder_helper_add(&dpu_enc->base, &dpu_encoder_helper_funcs);
- 
-@@ -2371,8 +2346,10 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
- 	mutex_init(&dpu_enc->rc_lock);
- 
- 	ret = dpu_encoder_setup_display(dpu_enc, dpu_kms, disp_info);
--	if (ret)
--		goto fail;
-+	if (ret) {
-+		DPU_ERROR("failed to setup encoder\n");
-+		return ERR_PTR(-ENOMEM);
-+	}
- 
- 	atomic_set(&dpu_enc->frame_done_timeout_ms, 0);
- 	timer_setup(&dpu_enc->frame_done_timer,
-@@ -2387,13 +2364,6 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
- 	DPU_DEBUG_ENC(dpu_enc, "created\n");
- 
- 	return &dpu_enc->base;
--
--fail:
--	DPU_ERROR("failed to create encoder\n");
--	if (drm_enc)
--		dpu_encoder_destroy(drm_enc);
--
--	return ERR_PTR(ret);
- }
- 
- int dpu_encoder_wait_for_event(struct drm_encoder *drm_enc,
--- 
-2.39.2
+On 11/30/2023 11:36 PM, Dmitry Baryshkov wrote:
+> On Fri, 1 Dec 2023 at 03:31, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>>
+>> Set the input_sel bit for encoders as it was missed in the initial
+>> implementation.
+>>
+>> Reported-by: Rob Clark <robdclark@gmail.com>
+>> Fixes: 91143873a05d ("drm/msm/dpu: Add MISR register support for interface")
+>> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/39
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 2 +-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 2 +-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 7 ++++++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 4 +++-
+>>   4 files changed, 11 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> index 3442cf65b86f..d0884997ecb7 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>> @@ -320,7 +320,7 @@ static u32 dpu_hw_intf_get_line_count(struct dpu_hw_intf *intf)
+>>
+>>   static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf)
+>>   {
+>> -       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL);
+>> +       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, true);
+>>   }
+>>
+>>   static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 *misr_value)
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>> index f38473e68f79..77b14107c84a 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>> @@ -83,7 +83,7 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
+>>
+>>   static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx)
+>>   {
+>> -       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL);
+>> +       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, false);
+>>   }
+>>
+>>   static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>> index a8a0a4e76b94..f441df47fdde 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>> @@ -481,7 +481,8 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
+>>                        cfg->danger_safe_en ? QOS_QOS_CTRL_DANGER_SAFE_EN : 0);
+>>   }
+>>
+>> -void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset)
+>> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset,
+>> +               bool set_input_sel)
+>>   {
+>>          u32 config = 0;
+>>
+>> @@ -491,6 +492,10 @@ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset)
+>>          wmb();
+>>
+>>          config = MISR_FRAME_COUNT | MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK;
+>> +
+>> +       if (set_input_sel)
+>> +               config |= MISR_CTRL_INPUT_SEL;
+>> +
+>>          DPU_REG_WRITE(c, misr_ctrl_offset, config);
+>>   }
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>> index bb496ebe283b..793670d62414 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>> @@ -17,6 +17,7 @@
+>>   #define MISR_CTRL_ENABLE                BIT(8)
+>>   #define MISR_CTRL_STATUS                BIT(9)
+>>   #define MISR_CTRL_STATUS_CLEAR          BIT(10)
+>> +#define MISR_CTRL_INPUT_SEL             BIT(24)
+> 
+> The public apq8916 TRM documents this as a 4-bit field. I think this
+> was followed into the later generations. Can we please document it
+> correctly and use an uint instead of just bool for set_input_sel?
+> 
 
+Can you pls point us to this document you are referring?
+
+I was not aware that bit level details are revealed in external documents :)
+
+Even though its a 4-bit field, it only takes a 0 or 1 as others are 
+undefined.
+
+Exposing all the bits will only cause more confusion like it did for 
+others thinking that input select is actually configurable when its not.
+
+I think what we should do is just pass "misr_type" to this API to tell 
+whether its lm misr or intf misr and set BIT(24) based on that.
+
+
+>>   #define MISR_CTRL_FREE_RUN_MASK         BIT(31)
+>>
+>>   /*
+>> @@ -357,7 +358,8 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
+>>                             bool qos_8lvl,
+>>                             const struct dpu_hw_qos_cfg *cfg);
+>>
+>> -void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset);
+>> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset,
+>> +                      bool set_input_sel);
+>>
+>>   int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+>>                  u32 misr_ctrl_offset,
+>>
+>> --
+>> 2.43.0
+>>
+> 
+> 
 
