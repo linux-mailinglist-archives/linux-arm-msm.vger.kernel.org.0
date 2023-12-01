@@ -1,121 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-2945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E132801418
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 21:12:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EB30801473
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 21:27:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 081DA1F20EE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 20:12:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C51DB281CA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 20:27:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E73934EB4D;
-	Fri,  1 Dec 2023 20:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RKmfIbLY"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D1ED56B99;
+	Fri,  1 Dec 2023 20:27:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A4DC272B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 12:11:51 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B1ENCN4022105;
-	Fri, 1 Dec 2023 20:11:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=A8mehcLTiQERk0pvO1S9W3rOi0ADBqUuyocjxOW0XsA=;
- b=RKmfIbLYYgVssmwXmv1yB+vjqAwQQpnCN5tDM+KU/cwgWEQKFDAqvoqao+F9DVjgQGW0
- iiiBIOY3RPRktIHXsr9uIn2jAde9141jBtlUXhvdf9+tT/EtAWqNAtB63I1mv95+R/zT
- jmtjDGskZjg8KLd7aNlh9urDe0Vitp/XBPNFp05oADaqu9XOJKtBwTLmdqy3tprZ4Wdy
- s8VadD5w/uaU95IcjG51+vbrm6S/m3h10487MDgxUjpJJ44seR7EckQsYQmOvGQQ59fV
- VilNxDfhdQh+Pwx9NPIswhPvMc6BMGW4YkzgJR4L9GNsiPFaEzEbAglcEETMm3MHM2d9 8Q== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uprhdvna0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Dec 2023 20:11:44 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B1KBg6w014108
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Dec 2023 20:11:42 GMT
-Received: from [10.110.3.135] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 1 Dec
- 2023 12:11:41 -0800
-Message-ID: <1a6b5c1c-5bb6-e92c-daed-3b1c081438a1@quicinc.com>
-Date: Fri, 1 Dec 2023 12:11:39 -0800
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB6BDD;
+	Fri,  1 Dec 2023 12:27:51 -0800 (PST)
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1cfcc9b3b5cso8607295ad.0;
+        Fri, 01 Dec 2023 12:27:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701462471; x=1702067271;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1TFPInV3Tc8ZFH5rwZRwPYcB8wwI/zl+CFu8s3Ie1xU=;
+        b=hhfbuBFnoT9UuZff9clCk5x+1Fv105MjcMJNnWTtQdbeHLXsXAjPQ10tPkSECoHreM
+         oUZulqeyXaEp0xdX7H4ooeRzlGCdUptAi8c6r898R7D8ZbcubB4BtN407TmEtV6uHVTb
+         3VO7azcQYt2tOUeocIXEEXuYLP8rP55sRd2vuLe3akR8KvsIPk8d28NYZHPcI3uJYpKz
+         94t8fuH8WXEPswkDbqz49KgKHH7pk7mqgRFrMweNguk24dTIT7D+Rj5TUIYOZo96Tnny
+         IFrXyWFwMVMH0rKSA9rrs67ZsBifMgO4yOHz9+Bw3lpMFv0LO+55dC3BUdJOWFTjtu8R
+         25Ig==
+X-Gm-Message-State: AOJu0YwlIyDqt835xeX/mFUEZHy/7IonP33YFcCrbrogiuV8Br+SBWie
+	pqCyqD0m5CiuThvgu0bPv14=
+X-Google-Smtp-Source: AGHT+IEPDjVtIn3LAftvRhiMx0r4y+ay+rjlITtJ30wwSBgS3pfnXWGK/B1TcLukDKXmQ8nLyPPJrQ==
+X-Received: by 2002:a17:903:22c1:b0:1d0:1c45:fca6 with SMTP id y1-20020a17090322c100b001d01c45fca6mr105449plg.55.1701462470485;
+        Fri, 01 Dec 2023 12:27:50 -0800 (PST)
+Received: from [192.168.51.14] (c-73-231-117-72.hsd1.ca.comcast.net. [73.231.117.72])
+        by smtp.gmail.com with ESMTPSA id s2-20020a170902ea0200b001c9d011581dsm797614plg.164.2023.12.01.12.27.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Dec 2023 12:27:50 -0800 (PST)
+Message-ID: <ac563d4a-29dc-4985-bdbf-f6e77ba74a82@acm.org>
+Date: Fri, 1 Dec 2023 12:27:48 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 0/2] Stabilize use of vblank_refcount
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/13] scsi: ufs: qcom: Export ufshcd_{enable/disable}_irq
+ helpers and make use of them
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <marijn.suijten@somainline.org>, <steev@kali.org>
-References: <20231201014101.15802-1-quic_parellan@quicinc.com>
- <CAA8EJprzcWTmqkUNN2r81APkv3rE039xhmaZW5=Zp7WkkQ=pHQ@mail.gmail.com>
-From: Paloma Arellano <quic_parellan@quicinc.com>
-In-Reply-To: <CAA8EJprzcWTmqkUNN2r81APkv3rE039xhmaZW5=Zp7WkkQ=pHQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ martin.petersen@oracle.com, jejb@linux.ibm.com
+Cc: andersson@kernel.org, konrad.dybcio@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_cang@quicinc.com
+References: <20231201151417.65500-1-manivannan.sadhasivam@linaro.org>
+ <20231201151417.65500-7-manivannan.sadhasivam@linaro.org>
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20231201151417.65500-7-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: PxUZ3AO1NFwGDLpGiUsxVazof199q4fw
-X-Proofpoint-GUID: PxUZ3AO1NFwGDLpGiUsxVazof199q4fw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-01_18,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 spamscore=0 suspectscore=0 impostorscore=0 mlxlogscore=999
- clxscore=1015 mlxscore=0 priorityscore=1501 adultscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312010127
 
+On 12/1/23 07:14, Manivannan Sadhasivam wrote:
+> Instead of duplicating the enable/disable IRQ part, let's export the
+> helpers available in ufshcd driver and make use of them. This also fixes
+> the possible redundant IRQ disable before asserting reset (when IRQ was
+> already disabled).
 
-On 11/30/2023 11:41 PM, Dmitry Baryshkov wrote:
-> On Fri, 1 Dec 2023 at 03:41, Paloma Arellano <quic_parellan@quicinc.com> wrote:
->> There is currently a race condition occuring when accessing
->> vblank_refcount. Therefore, vblank irq timeouts may occur.
->>
->> Avoid any vblank irq timeouts by stablizing the use of vblank_refcount.
->>
->> Changes from prior versions:
->>     v2: - Slightly changed wording of patch #2 commit message
->>     v3: - Mistakenly did not change wording of patch #2 in last version.
->>           It is done now.
-> Usually sending a series once a day is enough. If you have any pending
-> changes, it might be better to reply to your patch stating that you
-> want to do this and that, while still allowing reviewers to respond
-> (and thus you can incorporate their review in the next iteration).
-
-Ack. Good to know.
-
-Thank you,
-
-Paloma
-
->> Paloma Arellano (2):
->>    drm/msm/dpu: Modify vblank_refcount if error in callback
->>    drm/msm/dpu: Add mutex lock in control vblank irq
->>
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          |  6 ++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h     |  6 ++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 11 +++++++++--
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 11 +++++++++--
->>   4 files changed, 30 insertions(+), 4 deletions(-)
->>
->> --
->> 2.41.0
->>
->
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 
