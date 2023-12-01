@@ -1,211 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-2869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2872-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E55D800A4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 13:02:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B1D6800A63
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 13:06:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 296B2281C01
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:02:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D2F21C20BE2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:06:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8278022080;
-	Fri,  1 Dec 2023 12:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E86F024B29;
+	Fri,  1 Dec 2023 12:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bf2IrbwD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Jw5TRQCA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C08B172B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 04:02:28 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3316d3d11e1so1313275f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 04:02:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701432146; x=1702036946; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=MSQnM1vQQkiijwl5GySI5P/M85/cHy7IVYxrkl5uoyo=;
-        b=Bf2IrbwDabwiQ3Vu2B7jSJisomyFxYsRV3NiBJRxDhCDIU2ziId3VjPvB3rRKucGau
-         OsXdCj+gKS6XqNrM3w5PlLO2USgdl3/tZYPPXWOP4Rn7ThvqCHwYC99BddPcW1CsW6dR
-         bjiiRWYm4H6BY8HGmepc1DLLkbdGaaLMQ3VHqy+JJwCyvsOJMS+8sLdIN2qntPBM4U57
-         zUTop/0nw/pgBXC1sfjo8Z1KoJ338MidXo9DnFPd3y95deAIj2A7X0vAGJvjtNgcPt0t
-         NYiz+X/xQHstOjrqmaGaR5Qphkeo2Z23PvxcZ9W8JK0JD6/PuoQ6X6iDbGCuW4I9ILc5
-         GBNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701432146; x=1702036946;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MSQnM1vQQkiijwl5GySI5P/M85/cHy7IVYxrkl5uoyo=;
-        b=kwIoiZlso4RfaJVq5FRMxlU16TvYCizhWW2NscLmRDn1bIqeJ6UAlC7SqrqXiY1WOj
-         qbZDcTEj3CI9FqpP3GnTCuCIVcgNVJU4o52Xng3vKcsIavG3/esazKSAAGo8hdMxZOxW
-         2KQNHf+xvYaOYMaTn/Zrpud03iwQxuTT6f1JyydKdgU/7SouZhFIjozKArVRvvdApV1O
-         wdk9tw03hEPEAgJWzWi3kAt4ZCz2KJdV16KmsV9LpJMLxdLc1kATttjCknn55skdiUJb
-         pfyeJirBGtPE9ZNDQaAT36uxryHtg0PEI6nott02XM0JhI0FPaF8axfFxhN5h7YugpLL
-         3NgQ==
-X-Gm-Message-State: AOJu0YxgiG1LEw0Vwl0jUMPd60fslQHPizB2k0kkP3GBdXmCYlFFPIwm
-	cgNkS6d4VjzgEVoUSGqNhgcpsQRc4HjAGSKNY1Y=
-X-Google-Smtp-Source: AGHT+IEd9n7ghSa9QGa60fqnE6pvHoZaXViY7WK6tfO5zbK/xM8uZHTuwvB4nwuA80faTO6wR4pIWg==
-X-Received: by 2002:a5d:4fd0:0:b0:333:2fd7:95ff with SMTP id h16-20020a5d4fd0000000b003332fd795ffmr606690wrw.58.1701432145841;
-        Fri, 01 Dec 2023 04:02:25 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id cg16-20020a5d5cd0000000b003332656cd73sm3390392wrb.105.2023.12.01.04.02.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 04:02:25 -0800 (PST)
-Message-ID: <268bda81-d5e4-4e34-8cc0-da1c4825444c@linaro.org>
-Date: Fri, 1 Dec 2023 13:02:23 +0100
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57AA2171C;
+	Fri,  1 Dec 2023 04:06:36 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B17dVRO022501;
+	Fri, 1 Dec 2023 12:06:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=rVEpqfq7a4wLZc0qYwymebX7KLCz/XpeFGNGTmJrPTU=;
+ b=Jw5TRQCAbkNuKJ8ADQBLQGtj97nIm/BGR0TxC6lHL06PHL4h2cvM702FMLibNKrWBdCG
+ KE0Gdn96U3C3A0CQ7YJN3GNAkuzQyRwHAaij8lw+Ij1k1DbFw0/jf7bau/xTp+e4WA4o
+ gFXyzptCKPaq1a/KPwcWJFCKlwkBoTn1KXNcpMuBE1+aPn2/K5+cFb4xPCJXaF1URLvU
+ 7qsrkd7RgZD3r01Y8Fsq04xMJwhTdOlWgaFLr73Eh+u0nRbnEUhv4GqYgvh2nW2OCCqg
+ U9C3YSreNgL3vq6151UDSbIFu7CXXkGGw1EqmmL6GLhFdftTSNnsFHyDUNesWFhOuyxn qA== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uq2kp9jn1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 01 Dec 2023 12:06:26 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3B1C6LHV020110;
+	Fri, 1 Dec 2023 12:06:21 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3unmf08shw-1;
+	Fri, 01 Dec 2023 12:06:21 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3B1C6LOc020105;
+	Fri, 1 Dec 2023 12:06:21 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-msarkar-hyd.qualcomm.com [10.213.111.194])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3B1C6L5B020104;
+	Fri, 01 Dec 2023 12:06:21 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3891782)
+	id 11C5B3064; Fri,  1 Dec 2023 17:36:20 +0530 (+0530)
+From: Mrinmay Sarkar <quic_msarkar@quicinc.com>
+To: agross@kernel.org, andersson@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, konrad.dybcio@linaro.org, mani@kernel.org,
+        robh+dt@kernel.org
+Cc: quic_shazhuss@quicinc.com, quic_nitegupt@quicinc.com,
+        quic_ramkri@quicinc.com, quic_nayiluri@quicinc.com,
+        dmitry.baryshkov@linaro.org, robh@kernel.org, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com, quic_parass@quicinc.com,
+        quic_schintav@quicinc.com, quic_shijjose@quicinc.com,
+        Mrinmay Sarkar <quic_msarkar@quicinc.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Kishon Vijay Abraham I <kishon@kernel.org>, linux-pci@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, mhi@lists.linux.dev
+Subject: [PATCH v9 0/5] arm64: qcom: sa8775p: add support for EP PCIe
+Date: Fri,  1 Dec 2023 17:36:11 +0530
+Message-Id: <1701432377-16899-1-git-send-email-quic_msarkar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: VZXBe7aYoFsbXtDXK1Qe83WOImAMIUqw
+X-Proofpoint-GUID: VZXBe7aYoFsbXtDXK1Qe83WOImAMIUqw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-01_09,2023-11-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ bulkscore=0 clxscore=1011 spamscore=0 mlxlogscore=703 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311060000
+ definitions=main-2312010080
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Issues bringing up WCD9385 codec on SC7280/QCM6490
-To: Luca Weiss <luca.weiss@fairphone.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Johan Hovold <johan@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Banajit Goswami <bgoswami@quicinc.com>, linux-arm-msm@vger.kernel.org
-References: <CXCXIAY8RBVK.2Y9W66THN9QH2@fairphone.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CXCXIAY8RBVK.2Y9W66THN9QH2@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 01/12/2023 11:35, Luca Weiss wrote:
-> Hi all,
-> 
-> I'm trying to get audio working on qcm6490-fairphone-fp5 (the SoC is
-> sc7280.dtsi-based).
-> Unfortunately the current sc7280.dtsi only supports directly interfacing
-> with the hw blocks (lpass_aon/lpass_hm/lpass_audiocc) and not using
-> q6afecc, but I think I've done this "conversion" correctly, based on
-> other mainline SoCs and downstream dts.
+This series adds the relavent DT bindings, new compatible string,
+add support to EPF driver and add EP PCIe node in dtsi file for
+ep pcie0 controller.
 
-Eh, you probably duplicated a lot of existing work. Here it is:
-https://lore.kernel.org/all/20230526113258.1467276-1-quic_mohs@quicinc.com/
+v8 -> v9:
+- update author in "Add pci_epf_mhi_ prefix to the function" patch.
+- add ack by and reviewed by tag in commit message.
 
-> 
-> So, to the problem: I've added the nodes for the WCD9385 codec found on
-> this device which is handling the microphones (and analog audio over
-> USB-C). But I can't get it to work. I believe the first problem I saw
-> was the error "soundwire device init timeout" where I saw that the wcd
-> tx & rx devices (on the soundwire bus) only appeared after the timeout
-> of 2 seconds expired and wcd938x driver probe failed. After bumping this
-> to something higher (20 seconds) this was resolved.
+v7 -> v8:
+- Add new patch PCI: epf-mhi: Add "pci_epf_mhi_" prefix to the function
+  names
+- Update PCI: epf-mhi: Add support for SA8775P patch on top of the new
+  patch and update commit message.
 
-Please describe the tree you are working on. This was fixed some time ago.
+v6 -> v7:
+- add reviewed by tag in commit message in all patches.
+- update commit message in patch 2 as per comment.
+- update reason for reusing PID in commit message.
 
-> 
-> But now I'm having these errors in the initialization of the wcd
-> devices.
-> 
-> [   45.651156] qcom-soundwire 3230000.soundwire: swrm_wait_for_rd_fifo_avail err read underflow
-> [   45.651173] soundwire sdw-master-1: trf on Slave 1 failed:-5 read addr 41 count 1
-> [   45.651182] wcd9380-codec sdw:0:0217:010d:00:3: SDW_SCP_INTMASK1 write failed:-5
-> [   45.651186] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 initialization failed: -5
-> 
-> After some more debugging and changing some timeouts I'm noticing that
-> the swr devices appear immediately after pm_runtime puts the driver to
-> sleep, qcom_swrm_irq_handler is called and then we get this:
-> 
-> [   45.531863] qcom-soundwire 3230000.soundwire: SWR new slave attached
-> 
-> The same also happens for the other soundwire controller
-> 
-> [   47.581067] qcom-soundwire 3210000.soundwire: SWR new slave attached
+v5 -> v6:
+- update cover letter.
 
-There were similar reports on the IRC, so I wonder if this is the same
-issue?
+v4 -> v5:
+- add maxItems to the respective field to constrain io space and
+  interrupt in all variants.
 
-Maybe wrong interrupt flag (like falling instead of rising)? I collected
-over time also several ideas of fixes from Srini, not always ready to
-upstream, but maybe they fix your issue? Did you try some of my audio
-branches like n/audio-sm8450-sm8550-on-next?
+v3 -> v4:
+- add maxItems field in dt bindings
+- update comment in patch2
+- dropped PHY driver patch as it is already applied [1]
+- update comment in EPF driver patch
+- update commect in dtsi and add iommus instead of iommu-map
 
-Or maybe sc7280 needs to toggle the same CSR reset/clock bits as
-sc8280xp (lpass-csr-sc8280xp.c)?
+[1] https://lore.kernel.org/all/169804254205.383714.18423881810869732517.b4-ty@kernel.org/
 
-> 
-> And this is currently where I'm stuck and can't really think of why this
-> is happening.. I've double checked nearly all of the properties I've
-> added/modified incl. wcd reset GPIO, wcd *-supply, lpi pinctrl settings.
-> I believe the "read underflow" error here is because the whole driver
-> stack is already trying to suspend so then communication fails. The real
-> question for me is why the swr 'slaves' only appear exactly when
-> pm_runtime is suspending everything.
+v2 -> v3:
+- removed if/then schemas, added minItems for reg,
+  reg-bnames, interrupt and interrupt-names instead.
+- adding qcom,sa8775p-pcie-ep compitable for sa8775p
+  as we have some specific change to add.
+- reusing sm8450's pcs_misc num table as it is same as sa8775p.
+  used appropriate namespace for pcs.
+- remove const from sa8775p_header as kernel test robot
+  throwing some warnings due to this.
+- remove fallback compatiable as we are adding compatiable for sa8775p.
 
-Yeah, good question.
-
-> 
-> The only thing I've not really checked yet is qcom,rx-port-mapping &
-> qcom,tx-port-mapping, there I've just tried the two different values
-> found on the various devices but I don't think this is causing these
-> issues. I will try to look further into this property at some point but
-> with msm-5.4 downstream it's quite tricky to find where these values are
-> represented (I got some hints from Krzysztof though where to look so
-> I'll try to do that soon)
-> 
-> I'm attaching my current diff to the email, just note that it's based on
-> one of my dev branches and is manually edited to remove some debug
-> prints etc so it will probably not apply anywhere. I can also push the
-> git tree somewhere in case that's helpful.
-> 
-> Regards
-> Luca
-> 
+v1 -> v2:
+- update description for dma
+- Reusing qcom,sdx55-pcie-ep compatibe so remove compaitable
+  for sa8775p
+- sort the defines in phy header file and remove extra defines
+- add const in return type pci_epf_header and remove MHI_EPF_USE_DMA
+  flag as hdma patch is not ready
+- add fallback compatiable as qcom,sdx55-pcie-ep, add iommu property
 
 
-Best regards,
-Krzysztof
+Manivannan Sadhasivam (1):
+  PCI: epf-mhi: Add "pci_epf_mhi_" prefix to the function names
+
+Mrinmay Sarkar (4):
+  dt-bindings: PCI: qcom-ep: Add support for SA8775P SoC
+  PCI: qcom-ep: Add support for SA8775P SOC
+  PCI: epf-mhi: Add support for SA8775P
+  arm64: dts: qcom: sa8775p: Add ep pcie0 controller node
+
+ .../devicetree/bindings/pci/qcom,pcie-ep.yaml      | 64 +++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 46 ++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c          |  1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c       | 21 ++++++-
+ 4 files changed, 128 insertions(+), 4 deletions(-)
+
+-- 
+2.7.4
 
 
