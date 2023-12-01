@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E8868015B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 22:46:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A1648015B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 22:49:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8ECD51C2084A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 21:46:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A0EDD1C20AC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 21:49:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E245659B69;
-	Fri,  1 Dec 2023 21:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F775A0F7;
+	Fri,  1 Dec 2023 21:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nBH1jcCi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EnFpeyLu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9A6B10DB
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 13:45:52 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-a1a0fedd3a1so155458466b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 13:45:52 -0800 (PST)
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2D310EF
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 13:49:38 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-54af4f2838dso3169299a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 13:49:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701467151; x=1702071951; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701467377; x=1702072177; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8sn6TIMQGfSCwqnbYuewhqgGKU0sPXKc6S7oOa0pf30=;
-        b=nBH1jcCiXs3HaRgxJJ0QMoKL7bPIQzjdXBjFmDeGC3KBEvs/zRf3TV0vsEKV6sW2Wg
-         8ZXVBx2LLBQtAaAL7fSGNzgHWOwMw4+rwJnt1xxhgcBx+EMdn8LG6yha5OBW6d+ncmlP
-         Dv7POHpFWOryrV2EUagw8Yj6BRLl8aBANIP4BcA8nmnuNUvK5FphZjNNGiLYyz/EbfLz
-         H4L+7MWrMi6mOkNL/qfVOfYKxPElwqFBYglrxv8Ysf9D7RBm8dTc6ZLHg/7sdBONSgLU
-         xLfMvyNJyr19CPreSYoSE+VsZvd4Fdn4/bYSMYZM8FCajMvNUwpg4bxaiQFj9J2jMxN1
-         E5Ng==
+        bh=19FR1U3AKoV3VyCSX1p0aFDSinYo+NPtX+mnYm5SEjs=;
+        b=EnFpeyLuDyabqLZx0ksJuay5T+/8O8Kg/4su82mqD8gLQ7E1QVl0hlVr6JtdxM1rVO
+         cbPtIRFf7/36ORx71aqc1ICbWtb75zx8Kn3wghOqAUmdHcYCP/x57/tEhcz4hyZKrToe
+         7McNxVPFnEWhKaRZ6TlvBKNm/FDgWqJf1ww6x1DkLTgcLyzCsabdG48U3fW1PSyg/G05
+         8FX32xplgBL2ChL70VtG5RGT8i8rNXrKctcMyvAUDaBEKNpYsaXvMLZyY4bBrPASdR/1
+         c6waae2MjegHx0SAbFfv4abxx86LP55xQHMLyJdqWJNWcb6p48YuoM/z9umLO+1WvqCG
+         WSzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701467151; x=1702071951;
+        d=1e100.net; s=20230601; t=1701467377; x=1702072177;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8sn6TIMQGfSCwqnbYuewhqgGKU0sPXKc6S7oOa0pf30=;
-        b=AjmuqAxKnx9XpPn6kPYkZWz9SiBmurM5IBY0yqoqeXS83lXPHEF+kRVZbvqj5OOCU/
-         u46YYWG71FaDxOq4WMFneBTM4W9VPsFdKcaUagVFgqtgbeYT2YERFpkZFZg/CrvDAXHf
-         KbpYkAYhgdjQHhHDTVDXGrJnKJhEvGe0tfLSzfrOzO68qe0VKxGt1iHjeRrHYsE4be2b
-         TndZ6IrPksZWMLYW0oZT9F3jOWLtfLTVPHkroYNRTdQJ8A63M7e4dERVNjDx1RI7QcA6
-         lV1bRGdEDWihnI5c6ryJiL0PmE0KCFGUQMviIJJSCRdcEgIbCDJy0LovJnmex0nSV3w1
-         ONjQ==
-X-Gm-Message-State: AOJu0Yz3TfAvPCy794i05/uEiYM7klVzsXmgOccWfAY0nuAgYtiwJndI
-	RgTCctKSIz5na+fEbt/rbU5jGA==
-X-Google-Smtp-Source: AGHT+IEwdQx3qk30hc3NuMNho+pYuDCvbHivi7c1Kv4hAHmi7L90T8BZhGRCFodD8UzyTeAHY8dopg==
-X-Received: by 2002:a17:906:109c:b0:a19:396e:99bc with SMTP id u28-20020a170906109c00b00a19396e99bcmr550273eju.39.1701467151471;
-        Fri, 01 Dec 2023 13:45:51 -0800 (PST)
+        bh=19FR1U3AKoV3VyCSX1p0aFDSinYo+NPtX+mnYm5SEjs=;
+        b=tHdgpo6muGOAbu7qLPycSbpy/Ps2dcjlovIWEN7lBbHSFa+nFmw9KhKEHB3arrK6ik
+         vCosQoElNHHXgc+/d7DcsAvHFEVU/zvnvvmRfyJYyF0wtwCnFPgsLEHtz1p1yrCvYLP7
+         4lsGCKEhuuavPGIW+LjiOHM71+HqQWI0u7Bd2+Q0iRxKE7VB5B/ger5dxrvthCf8IJ3C
+         xIfa++mOdRoWkzk2Ge0Mqj5BPaypHa+nCyusi6wbN3u8bxP2PW+WwR5TU8xcdBgwJrV2
+         wF48wqqhZofMBow4xOufQ3NyHuTkq6sA2B4cPzVG61B8ROyvpLxTj3mPXTmFNlCarxvt
+         13wQ==
+X-Gm-Message-State: AOJu0YwbcqxrxtiweiaWqDBf337Njr4yfyovZdEFxPVtO77IdPsoVAj/
+	OqvjmMKrfqlJXQdX27SA1KKzEw==
+X-Google-Smtp-Source: AGHT+IGZTFVrozcEI7yuAf9ShkkhnaNmfmSP/AsapXfKp2W9rDfgcdwmtOt+JKK5fNJW5nwVuMS5jw==
+X-Received: by 2002:a50:cd8e:0:b0:54b:c880:370d with SMTP id p14-20020a50cd8e000000b0054bc880370dmr1302981edi.36.1701467377445;
+        Fri, 01 Dec 2023 13:49:37 -0800 (PST)
 Received: from [192.168.209.83] (178235187166.dynamic-4-waw-k-2-3-0.vectranet.pl. [178.235.187.166])
-        by smtp.gmail.com with ESMTPSA id a7-20020a1709062b0700b009fc8f309183sm2339415ejg.51.2023.12.01.13.45.49
+        by smtp.gmail.com with ESMTPSA id cf5-20020a0564020b8500b0054c4db03b9dsm1140785edb.30.2023.12.01.13.49.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 13:45:51 -0800 (PST)
-Message-ID: <f1604d9c-663a-4778-87e6-53f8e4b8b25e@linaro.org>
-Date: Fri, 1 Dec 2023 22:45:49 +0100
+        Fri, 01 Dec 2023 13:49:37 -0800 (PST)
+Message-ID: <7dba2fa6-9f9a-4e48-a1a9-4814f488bc57@linaro.org>
+Date: Fri, 1 Dec 2023 22:49:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +62,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] clk: qcom: videocc-sm8150: Add runtime PM support
+Subject: Re: [PATCH 1/3] dt-bindings: soc: qcom: stats: Add QMP handle
 Content-Language: en-US
-To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Johan Hovold <johan@kernel.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Jonathan Marek <jonathan@marek.ca>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231201-videocc-8150-v3-0-56bec3a5e443@quicinc.com>
- <20231201-videocc-8150-v3-4-56bec3a5e443@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, Maulik Shah <quic_mkshah@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231130-topic-ddr_sleep_stats-v1-0-5981c2e764b6@linaro.org>
+ <20231130-topic-ddr_sleep_stats-v1-1-5981c2e764b6@linaro.org>
+ <ZWmq619zryYHV_kK@hovoldconsulting.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -111,32 +111,28 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231201-videocc-8150-v3-4-56bec3a5e443@quicinc.com>
+In-Reply-To: <ZWmq619zryYHV_kK@hovoldconsulting.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 1.12.2023 10:50, Satya Priya Kakitapalli wrote:
-> Add runtime PM support to ensure the supply rails are enabled
-> when necessary.
+On 1.12.2023 10:44, Johan Hovold wrote:
+> On Thu, Nov 30, 2023 at 03:58:21PM +0100, Konrad Dybcio wrote:
+>> The stats can be expanded by poking the Always-On Subsystem through QMP.
+>> Allow passing a QMP handle for configurations that support it.
 > 
-> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> I know Qualcomm likes their opaque acronyms, but how about mentioning
+> what QMP stands for here and in the binding below?
+I'll amend the commit message for v2.
+
+
+> Especially since we also have QMP PHYs (Qualcomm Multi PHY?), which I
+> doubt this is related to.
+There's only so many three-letter acronyms that begin with a Q ;)
+
+QMP stands for Qualcomm Messaging Protocol, which is a JSON-like way
+to communicate with the Always-On Subsystem (which is responsible for
+things such as managing low-power states and general SoC building blocks
+housekeeping)
 
 Konrad
->  	clk_trion_pll_configure(&video_pll0, regmap, &video_pll0_config);
->  
->  	/* Keep VIDEO_CC_XO_CLK ALWAYS-ON */
->  	regmap_update_bits(regmap, 0x984, 0x1, 0x1);
->  
-> -	return qcom_cc_really_probe(pdev, &video_cc_sm8150_desc, regmap);
-> +	ret = qcom_cc_really_probe(pdev, &video_cc_sm8150_desc, regmap);
-> +
-> +	pm_runtime_put_sync(&pdev->dev);
-> +
-> +	return ret;
->  }
->  
->  static struct platform_driver video_cc_sm8150_driver = {
-> 
 
