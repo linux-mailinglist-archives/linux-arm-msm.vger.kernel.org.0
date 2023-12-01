@@ -1,143 +1,266 @@
-Return-Path: <linux-arm-msm+bounces-2837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A20B48005AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:34:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C28BA8005AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:35:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 429DFB20FC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 08:34:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3CF26B20F8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 08:35:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AEFC1C297;
-	Fri,  1 Dec 2023 08:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD6B61C2AC;
+	Fri,  1 Dec 2023 08:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bqHxA+ng"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B7TfPLRn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7200E172D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 00:34:38 -0800 (PST)
-Received: by mail-io1-xd2a.google.com with SMTP id ca18e2360f4ac-7b3870ee4easo56125239f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 00:34:38 -0800 (PST)
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C8E1711
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 00:35:02 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5d34d85e610so17132777b3.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 00:35:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701419678; x=1702024478; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K3Yxil9QXZ7JQy43Phh685O5TjH76XNF3w9qfHqbcY8=;
-        b=bqHxA+ngdmYsteR2jsDEYtfclZvilYE0/n8Lb6q8BgoO+kKgcfp1fcnVEhglce1HdF
-         e+a+Ydx8LvHIl4cSP300BPeTs2nc6KBY/Qqe7Z3uufJlPappwmO8vIONqDQbutlkHeAg
-         8h1OIwIJwDDJC98Y9G/UtJjgzdzcCRJW2ttph8NWXQsJ9nmk5WTDXZDAxqNiy6sutj5G
-         afhqrX4YyFZ2hpAAUr3FDhvU5+UPFg+r4t/ic1sApSdjHN6ZYCGZx5NH31OY8zZtgGfq
-         huyGB0tiGwbfTc2Rsc6JENDzPJvGYkCcYYHAdUWAg60foyEyIRpTi6YCT07xiPnhcj1v
-         ygQg==
+        d=linaro.org; s=google; t=1701419701; x=1702024501; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0vyyy44HJ0PCg/k+e1EPUHLw7C4zTOZSquNZFbC/lLQ=;
+        b=B7TfPLRnxs+U5KMxJoueTzM3p7DBNla1TcWjD+INIQTP589720O9OX9FrQD/46CD3d
+         K4buW9/kewqXpXKtvIu6e8WehLek+ri7mfqHK4g1W5SCCGBSO3Dv0cwvbmy/3T3PPhDK
+         uP2mmDrhLQ9SttQzWyodHdtFYUwSWMqe+GWNjSEgBLqD6tMqPbI357uTPUyQNiPeG1qu
+         k6qskeXjRoWNOvOrNwWz2UqpGtpPz98gT64tUdQRR8NfL9glK30L79CVLZ3FYAXnjI0V
+         ZBPWvo5hnkj/yKJ0TJNxtQ6cOtjM6LPBj5C8Bx3nfCEVXvqTMGZ75gFPCyCJNfRB29qk
+         1ajw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701419678; x=1702024478;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K3Yxil9QXZ7JQy43Phh685O5TjH76XNF3w9qfHqbcY8=;
-        b=LSXcG7R9ODx5Ga/oJAWBf15LWHcF/ud7OOjtXxpyStC8szrvRBqu6207ikE0lGDjC/
-         jydzuOhzml7q+0piEethrZpMlLx/Xb7bXY1OlhI0OyQGWI7QUvBRvY9E8r9VWamHCGpv
-         xjrGxSNnLqiOCOPgwx+D9vOWVa6dBW/JA+W7uuQ8GjFudcqTFAd9Fg9XsFuIr7uLXCxy
-         0cDxLdlZgrxruOsZtYdelS90pmm8iHpk261QNN2FuH5n0NL8pMWfSLP8DyvY+1hZj8Ej
-         8krtL27ZnMFU0wEiDn7JUK2XXDnMIu2IZWRVPi+sNFeYqL5H1AfREpzk0xDscIhRJVum
-         yK3g==
-X-Gm-Message-State: AOJu0Yz/0vrvg/5glsAcG86/4TVp5zmJ5UpTNeMw4a8JCO4aKPEOCIy0
-	QO+mVk71yHAb4GLh3AO/7mY97Q==
-X-Google-Smtp-Source: AGHT+IGQ3qnt3tC6HC6SBjxWSY7LXEbqVzswjzwBs32hzFuSm4t5Jw7cAK7yEM/Z879OOfPlO15e7g==
-X-Received: by 2002:a05:6602:4818:b0:7a9:571c:5694 with SMTP id ed24-20020a056602481800b007a9571c5694mr29187257iob.10.1701419677896;
-        Fri, 01 Dec 2023 00:34:37 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id fu12-20020a056638668c00b0046465bfebe3sm768879jab.149.2023.12.01.00.34.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 00:34:37 -0800 (PST)
-Message-ID: <e40c4957-346e-430e-8cb4-ece866ef8d1b@linaro.org>
-Date: Fri, 1 Dec 2023 09:34:33 +0100
+        d=1e100.net; s=20230601; t=1701419701; x=1702024501;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0vyyy44HJ0PCg/k+e1EPUHLw7C4zTOZSquNZFbC/lLQ=;
+        b=QqsqgRpPLB3u86a+k0cqPPY0PMKMUOntyyTtYgwNhZQCAyfE1Lxkte/EKghFn8A/PC
+         udtsU72hIubb9AOf9YsY0KKLeqj1m/klMZUMk1j116x+XXgwlbpz1XSOiWwKbUVZVNz5
+         3EWPQcFxus/MFw7boWiJuYA3p6i1K6K8JbKoVX3TvYM68t+41oGEx7dt/GUSHoDJE9Xw
+         98Z++JkMlw9fAbEkqYYumA//zwhjXyHKvYImxLlrXZwHyzEEGukb+DpBdCCJ1NDmZi3a
+         mMzlzIYUGOLxEyNBwAr9UnX7gX+lPi00FS/GIan3Ly1BQyyyvuOtx3jj+u06f0cnax6/
+         57Dg==
+X-Gm-Message-State: AOJu0YzEq/CJWNWCfD8UuHskdgh1pyYVf7GCUp1WlXO+Vcu417aANpQH
+	XzfG09gibXc6jsa7lSmIiVVcgPZjLN+PCGWzu+OonQ==
+X-Google-Smtp-Source: AGHT+IHsluDiR7TEy0JFz35RPDBZDAZGfERlf830bZCq3ZaKdNXxvA2SrojV1Ox4NklHZlOsNBsTriMfTwHWENQDftA=
+X-Received: by 2002:a05:690c:dd2:b0:5d3:9bc7:57d1 with SMTP id
+ db18-20020a05690c0dd200b005d39bc757d1mr4087419ywb.10.1701419701383; Fri, 01
+ Dec 2023 00:35:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: clean up example
-Content-Language: en-US
-To: Johan Hovold <johan+linaro@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231130172834.12653-1-johan+linaro@kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231130172834.12653-1-johan+linaro@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20231201014101.15802-1-quic_parellan@quicinc.com>
+ <20231201014101.15802-3-quic_parellan@quicinc.com> <20231201034710.GB1766637@hu-bjorande-lv.qualcomm.com>
+In-Reply-To: <20231201034710.GB1766637@hu-bjorande-lv.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 1 Dec 2023 10:34:50 +0200
+Message-ID: <CAA8EJpqFya5H+4PPZ8A3CqqqRJXsJ3KKbbcfS=C13QTr1vAtSw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] drm/msm/dpu: Add mutex lock in control vblank irq
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc: Paloma Arellano <quic_parellan@quicinc.com>, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org, 
+	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
+	marijn.suijten@somainline.org, steev@kali.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 30/11/2023 18:28, Johan Hovold wrote:
-> The Multi-Purpose Pin controller block is part of an SPMI PMIC (which in
-> turns sits on an SPMI bus) and uses a single value for the register
-> property that corresponds to its base address.
-> 
-> Clean up the example by adding a parent PMIC node with proper
-> '#address-cells' and '#size-cells' properties, dropping the incorrect
-> second register value, adding some newline separators and increasing the
-> indentation to four spaces.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
+On Fri, 1 Dec 2023 at 05:47, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
+>
+> On Thu, Nov 30, 2023 at 05:40:55PM -0800, Paloma Arellano wrote:
+> > Add a missing mutex lock to control vblank irq. Thus prevent race
+> > conditions when registering/unregistering the irq callback.
+> >
+>
+> I'm guessing that the mutex is needed because vblank_refcount, while
+> being an atomic_t, doesn't actually provide any protection during
+> concurrency?
+>
+> I also tried to follow the calls backwards, but I'm uncertain how you
+> end up here concurrently.
+>
+> When wrapped in proper mutual exclusion, can't vblank_refcount just be
+> turned into an "int"...given that you're not actually able to rely on
+> it's atomic behavior anyways...
+>
+>
+> So, please rewrite the commit message with a detailed description of how
+> the concurrency happens, and please review if vblank_refcount should be
+> an atomic at all...
+>
+> > v2: Slightly changed wording of commit message
+> > v3: Mistakenly did not change wording in last version. It is done now.
+> >
+> > Signed-off-by: Paloma Arellano <quic_parellan@quicinc.com>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          | 6 ++++++
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h     | 6 ++++++
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 2 ++
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 2 ++
+> >  4 files changed, 16 insertions(+)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > index 1cf7ff6caff4e..19ff7d1d5ccad 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -119,6 +119,8 @@ enum dpu_enc_rc_states {
+> >   *   Virtual encoder defers as much as possible to the physical encoders.
+> >   *   Virtual encoder registers itself with the DRM Framework as the encoder.
+> >   * @base:            drm_encoder base class for registration with DRM
+> > + * @vblank_ctl_lock: Vblank ctl mutex lock to protect physical encoder
+> > + *                                           for IRQ purposes
+>
+> I think this protects vblank_refcount, so state that instead of the
+> vague "for IRQ purposes".
+>
+> >   * @enc_spinlock:    Virtual-Encoder-Wide Spin Lock for IRQ purposes
+> >   * @enabled:         True if the encoder is active, protected by enc_lock
+> >   * @num_phys_encs:   Actual number of physical encoders contained.
+> > @@ -166,6 +168,7 @@ enum dpu_enc_rc_states {
+> >   */
+> >  struct dpu_encoder_virt {
+> >       struct drm_encoder base;
+> > +     struct mutex vblank_ctl_lock;
+> >       spinlock_t enc_spinlock;
+> >
+> >       bool enabled;
+> > @@ -2255,6 +2258,7 @@ static int dpu_encoder_setup_display(struct dpu_encoder_virt *dpu_enc,
+> >       phys_params.dpu_kms = dpu_kms;
+> >       phys_params.parent = &dpu_enc->base;
+> >       phys_params.enc_spinlock = &dpu_enc->enc_spinlock;
+> > +     phys_params.vblank_ctl_lock = &dpu_enc->vblank_ctl_lock;
+> >
+> >       WARN_ON(disp_info->num_of_h_tiles < 1);
+> >
+> > @@ -2386,6 +2390,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
+> >       dpu_enc->enabled = false;
+> >       mutex_init(&dpu_enc->enc_lock);
+> >       mutex_init(&dpu_enc->rc_lock);
+> > +     mutex_init(&dpu_enc->vblank_ctl_lock);
+>
+> Is this somehow propagated to multiple different dpu_encoder_phys
+> instances, or why do you need to initialize it here and pass the pointer
+> through 2 different intermediate structures before assigning it to
+> phys_enc->vblank_ctl_lock below?
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Yes, there can be two phys_enc instances for a single encoder, so this
+part is fine.
 
-Best regards,
-Krzysztof
+>
+> >
+> >       ret = dpu_encoder_setup_display(dpu_enc, dpu_kms, disp_info);
+> >       if (ret)
+> > @@ -2495,6 +2500,7 @@ void dpu_encoder_phys_init(struct dpu_encoder_phys *phys_enc,
+> >       phys_enc->dpu_kms = p->dpu_kms;
+> >       phys_enc->split_role = p->split_role;
+> >       phys_enc->enc_spinlock = p->enc_spinlock;
+> > +     phys_enc->vblank_ctl_lock = p->vblank_ctl_lock;
+>
+> Could you not just mutex_init() the one and only vblank_ctl_lock here?
+>
+> >       phys_enc->enable_state = DPU_ENC_DISABLED;
+> >
+> >       atomic_set(&phys_enc->vblank_refcount, 0);
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> > index 6f04c3d56e77c..5691bf6b82ee6 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+> > @@ -155,6 +155,8 @@ enum dpu_intr_idx {
+> >   * @hw_wb:           Hardware interface to the wb registers
+> >   * @dpu_kms:         Pointer to the dpu_kms top level
+> >   * @cached_mode:     DRM mode cached at mode_set time, acted on in enable
+> > + * @vblank_ctl_lock: Vblank ctl mutex lock to protect physical encoder
+> > + *                                           for IRQ purposes
+>
+> Same here.
+>
+> >   * @enabled:         Whether the encoder has enabled and running a mode
+> >   * @split_role:              Role to play in a split-panel configuration
+> >   * @intf_mode:               Interface mode
+> > @@ -183,6 +185,7 @@ struct dpu_encoder_phys {
+> >       struct dpu_hw_wb *hw_wb;
+> >       struct dpu_kms *dpu_kms;
+> >       struct drm_display_mode cached_mode;
+> > +     struct mutex *vblank_ctl_lock;
+> >       enum dpu_enc_split_role split_role;
+> >       enum dpu_intf_mode intf_mode;
+> >       spinlock_t *enc_spinlock;
+> > @@ -253,6 +256,8 @@ struct dpu_encoder_phys_cmd {
+> >   * @split_role:              Role to play in a split-panel configuration
+> >   * @hw_intf:         Hardware interface to the intf registers
+> >   * @hw_wb:           Hardware interface to the wb registers
+> > + * @vblank_ctl_lock: Vblank ctl mutex lock to protect physical encoder
+> > + *                                           for IRQ purposes
+>
+> And here...
+>
+> Regards,
+> Bjorn
+>
+> >   * @enc_spinlock:    Virtual-Encoder-Wide Spin Lock for IRQ purposes
+> >   */
+> >  struct dpu_enc_phys_init_params {
+> > @@ -261,6 +266,7 @@ struct dpu_enc_phys_init_params {
+> >       enum dpu_enc_split_role split_role;
+> >       struct dpu_hw_intf *hw_intf;
+> >       struct dpu_hw_wb *hw_wb;
+> > +     struct mutex *vblank_ctl_lock;
+> >       spinlock_t *enc_spinlock;
+> >  };
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > index 25babfe1f001a..dcf1f6a18ad6e 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > @@ -244,6 +244,7 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
+> >               return -EINVAL;
+> >       }
+> >
+> > +     mutex_lock(phys_enc->vblank_ctl_lock);
+> >       refcount = atomic_read(&phys_enc->vblank_refcount);
+> >
+> >       /* Slave encoders don't report vblank */
+> > @@ -275,6 +276,7 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
+> >       }
+> >
+> >  end:
+> > +     mutex_unlock(phys_enc->vblank_ctl_lock);
+> >       if (ret) {
+> >               DRM_ERROR("vblank irq err id:%u pp:%d ret:%d, enable %s/%d\n",
+> >                         DRMID(phys_enc->parent),
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > index 8e905d7267f9f..87bb49763785d 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > @@ -364,6 +364,7 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
+> >       int ret = 0;
+> >       int refcount;
+> >
+> > +     mutex_lock(phys_enc->vblank_ctl_lock);
+> >       refcount = atomic_read(&phys_enc->vblank_refcount);
+> >
+> >       /* Slave encoders don't report vblank */
+> > @@ -394,6 +395,7 @@ static int dpu_encoder_phys_vid_control_vblank_irq(
+> >       }
+> >
+> >  end:
+> > +     mutex_unlock(phys_enc->vblank_ctl_lock);
+> >       if (ret) {
+> >               DRM_ERROR("failed: id:%u intf:%d ret:%d enable:%d refcnt:%d\n",
+> >                         DRMID(phys_enc->parent),
+> > --
+> > 2.41.0
+> >
+> >
 
+
+
+-- 
+With best wishes
+Dmitry
 
