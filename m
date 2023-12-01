@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-2832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9604C80054D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:18:56 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CD45800579
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 09:27:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C7AB31C20AAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 08:18:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB5512815F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 08:27:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C09318625;
-	Fri,  1 Dec 2023 08:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEBB31A28F;
+	Fri,  1 Dec 2023 08:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I6Wc+9LB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VuXvgQh0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EB07170C
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 00:18:51 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-54b450bd014so2064666a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 00:18:51 -0800 (PST)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F00E170C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 00:27:12 -0800 (PST)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50bbb78efb5so2624977e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 00:27:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701418730; x=1702023530; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701419230; x=1702024030; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+HhNZrtG9hsY/ugvNneqcYie0/5RzKtNLPewvDyCT5g=;
-        b=I6Wc+9LBmEROPoEat63civhVfYBQj4R5WZVqU9vy5h+cpQ8FpT6QgiY6atH+yC93xn
-         z9TD1GHI5m1vC+Nkyt3HKUFS8qSHVFuCE4qbb4JElYnsz7jPzZY5utdMh7ZBLQc53cJQ
-         QOZQFaPa0iVIimZoFxiDTJV+yKycaJUmpgApzurdnk/XvMue90/YPQa0DmFnDJtUGK+C
-         rPP4AUc5ZEvZMBnd+EzN+i6mLAVJlLLunHrXal4xOK0oGfpYa+2hQ9dkxTWxep6l3HXb
-         t+GlXpbtBTVig85gDnjOECs4vF1zcRST+DJ/eTo6ooAlQ0EYjaQOp5o8Zea28YpjbGNM
-         Iz+Q==
+        bh=fYlJxa44NRqIWaoOT9h97BChPZR6Qx31wJ/uv03b3Fo=;
+        b=VuXvgQh0pAmd7rMR7be9uVBxrm0CJmebIuKqb3DTGeoNwap+hxwf8vL0fdbSpbqs3D
+         rx7qsP3S8Un5lj3ZTNCygFJglcK9BTOQS7h/mpF7ywrwctHs5C7Q6WXhA+ceP+jXpeH/
+         CpRFFYd9YXsejDcm+1ggCWRJaNMU6RIOZ60ZjKyIlvnKUlfOZHHzEoW6VfDq5uyOmIKR
+         Zp6sILiINLEvkmeYGYDWwTGHPer2QRdyTjGpQ4mDkZj41WcDku6Zottc/e6dgr3Vxgx+
+         gk1blwwDSnMfbG6gw2p6HBwJF9p6IqiEiYsgwlJiHaGB99OXnBMQY1tYmjFzLDHKLzQf
+         IY4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701418730; x=1702023530;
+        d=1e100.net; s=20230601; t=1701419230; x=1702024030;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+HhNZrtG9hsY/ugvNneqcYie0/5RzKtNLPewvDyCT5g=;
-        b=bpiFuSaElrrh1kykKBQ46lRL+hVq0VlsL6SihXsHmcU/cz6Bo1nsTHCSnX0Co9Jz9S
-         rOeW2Z6JjC/gydLcVeKevehxryMJX6jyvkNffQSo129Oan3adfy3R+3eRDPIXa0qmS6K
-         L32Te+PWa87vxO/xu/BulTOK4kLSEOmWag/d7j+JefgsotbkSiDzanDRUKc5314mi1y4
-         dI6/YWoo5OwMDQ52ujifah/yjZn/VFbkhiDQIbyl29Hgjl+ZRkmEAnepU3dj5UsV5QU9
-         14z/6nNbP9ND5RWmAoVacM6HroV0K4WCWM8ob6jY9YYGwsAkIpNcjDnaDieROlaeYbsW
-         Q0cw==
-X-Gm-Message-State: AOJu0Yw80CY0S8/5D08waxDZpecpH59nOYDVHRrhbsJSkNMj0j5k2q5E
-	cHdtryEsJNDT/FQ7UoZrI0jcFA==
-X-Google-Smtp-Source: AGHT+IHQeGmxVOhsc8Rty5Ko7YGzv+HnZ7kPmLQGlX08d7/IR0OspYjP2l4nOPiU5eRR8y+BDntqWg==
-X-Received: by 2002:a17:907:119e:b0:a19:a19b:7897 with SMTP id uz30-20020a170907119e00b00a19a19b7897mr483319ejb.90.1701418729839;
-        Fri, 01 Dec 2023 00:18:49 -0800 (PST)
+        bh=fYlJxa44NRqIWaoOT9h97BChPZR6Qx31wJ/uv03b3Fo=;
+        b=GsoWMn7hfoWTJY8ew4UPYtI23og6fMEnva2R+fstBG/nLjhUmXxcYTxjH7XvwQCZXd
+         JgCV7h5kKp1M/1EomifzXdrhK2VlhY1aW4kJZFyjC++BVcOnFhAq+7qJJXAbAiV+GQ3S
+         A50Riuugajk0Y3+my8OEuXeY1gvHTgEAG+ANk3eDS4mg0U+iJmGTqPLbnkTq5c46ivKp
+         Hqi7BHXC8VCYcl0wYns+ZK7Jp3sYr/zuRwWzPQQfszhtQzRjXFmJbTByAkhdSezAqW1R
+         XhtPH8akui+ZT7l25nEnY2qBG2+AWgCir7R/doHZF3bJcDpobmDHZO2c8hoGjSmmeapk
+         Uy6A==
+X-Gm-Message-State: AOJu0YwSkbFiUajVaRW4LpDCiFjRJ9vnIOI3Kx7Ux8CJhfuUgT1oI+Fm
+	RWHOSRz7IYzktsyIbWWNJ1/CFg==
+X-Google-Smtp-Source: AGHT+IGt6gGUYQbfYTCW+fgTZwiYVkTHkkXkFVu31WVuZE5bRE1PlMbjRQruGhd4D+FyeTifGNMDyg==
+X-Received: by 2002:a19:f704:0:b0:50b:d177:d9dd with SMTP id z4-20020a19f704000000b0050bd177d9ddmr494188lfe.13.1701419230474;
+        Fri, 01 Dec 2023 00:27:10 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id qb18-20020a1709077e9200b009f8af454d0dsm1601120ejc.112.2023.12.01.00.18.47
+        by smtp.gmail.com with ESMTPSA id u6-20020a5d4686000000b0033315876d3esm3554951wrq.12.2023.12.01.00.27.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 00:18:49 -0800 (PST)
-Message-ID: <41a177c9-c319-4c48-bcc6-4705e7de2a2c@linaro.org>
-Date: Fri, 1 Dec 2023 09:18:47 +0100
+        Fri, 01 Dec 2023 00:27:09 -0800 (PST)
+Message-ID: <09d5acce-1826-47e2-9b0f-c4020627a85a@linaro.org>
+Date: Fri, 1 Dec 2023 09:27:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,27 +62,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: display/msm: gpu: Allow multiple digits
- for patchid
+Subject: Re: [PATCH] dt-bindings: watchdog: qcom,pm8916-wdt: add parent spmi
+ node to example
 Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh+dt@kernel.org>,
+To: Johan Hovold <johan+linaro@kernel.org>, Guenter Roeck
+ <linux@roeck-us.net>, Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20231130-msm8226-gpu-v1-0-6bb2f1b29e49@z3ntu.xyz>
- <20231130-msm8226-gpu-v1-1-6bb2f1b29e49@z3ntu.xyz>
+References: <20231130174254.13180-1-johan+linaro@kernel.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -128,18 +119,19 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231130-msm8226-gpu-v1-1-6bb2f1b29e49@z3ntu.xyz>
+In-Reply-To: <20231130174254.13180-1-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/11/2023 21:35, Luca Weiss wrote:
-> Some GPUs like the Adreno A305B has a patchid higher than 9, in this
-> case 18. Make sure the regexes can account for that.
+On 30/11/2023 18:42, Johan Hovold wrote:
+> The PM8916 watchdog is part of an SPMI PMIC, which lives on an SPMI bus.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
+> Add a parent SPMI bus node with an '#address-cells' of 2 and
+> '#size-cells' of 0 instead of relying on the fact that the default
+> number of register cells happen to match (i.e. 1 + 1).
+> 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
