@@ -1,178 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-2878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8957800AE9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 13:31:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4371C800AFC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 13:35:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6DFE02814B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:31:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F02E6281A1B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 12:35:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A3662554A;
-	Fri,  1 Dec 2023 12:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E3B925545;
+	Fri,  1 Dec 2023 12:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AX6CDuhe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PYFM/DuK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1ECAC1B4
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 04:31:08 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id af79cd13be357-77dd4532a60so117618785a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 04:31:08 -0800 (PST)
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B3D1728;
+	Fri,  1 Dec 2023 04:35:07 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c9c30c7eafso25883291fa.0;
+        Fri, 01 Dec 2023 04:35:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701433867; x=1702038667; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=q7hh6CC3wSteFKObO5YP2ueHTB4l8VhYUaj/87rIPRc=;
-        b=AX6CDuheZWCA1sUZCi56gn2vHvY+1vGPfAZ6jyuZSeg3SYyjWjRMsk1psFNPOkxVL7
-         GWF3hWcy/YHLPbb7ShV4P+pduNh2lMA36MvxXnAnuLlYNCvfv+7lb1p/5yh0y2muC9S+
-         UzZC4C+6/npD34iqyVXiNBPmq7T/Gyg4yDTK/M7NXHq9O0MvTC9FMkYYTPFAI7M+PCcj
-         EWgiVeOsuHx68/m4KPKrD1j+Gl770X+NEUpMmPwuRhxzeXGFdhvPTDxQ+MbuJuYkFFUf
-         C91rqfnOkYNX/YyMM6wyyJRHxUC2DpqNU+Lq0kfYY03bilE1pLCP3CyI19JIvQsVutTR
-         hRLQ==
+        d=gmail.com; s=20230601; t=1701434106; x=1702038906; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YAJ12ZP/6sikIFKSSmQlShHQawFcbI6eeUcRDaDj6EQ=;
+        b=PYFM/DuKm0NGrhD23v+U3Uk4EpSo/F7LSCjilX4k8ZJDwaFSjGeVLOXW2JwtO5N5jk
+         IdCyiPtcOki98odsR/tZmdkDNhkOtA4j2Z1B+7maDm6f9fe/KCR4hZxmROgdrSiuXpBz
+         9rtC9Tyyl1qiI6pYDP2yz5PYqx+vzAhHCjCXnOxriimgfyc1e1pCtFnhor8v9e3ua/7w
+         GB0ZAa9cMIizwgvQeR4Bt/hy1r7E3IEXEW/SV/k2PB5ieNBy7ByVc8qcfcpZAyshvwZp
+         YXcIwA5p2B9tVu1xs7wlW6Ch8Co/nsI86T7G4s213OM2XSyfDIwzy1UcyhnzVw7JCpWf
+         C9TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701433867; x=1702038667;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q7hh6CC3wSteFKObO5YP2ueHTB4l8VhYUaj/87rIPRc=;
-        b=OlXfUrK4w6MSRiBZjqWAdosxFKdaMWOYwYS4QGrDOTXWBo4PKaWMtiGrHmfRXPSxb1
-         JmliwqrCLiQwLK3DYmMxvps2uZ67SNqHMB0kYVz+vy5ozKmTpZgZYkCev9aKiMhmdzTo
-         2hz8M0VBU9wqFjLvHl0qCIJfgTYu6AmG7AdEgL2jpFjYzfCiUgoENKDBLy4O1Fw1xAFI
-         vXOSP39DiYhd5JE3sy+fVb1DzVms8utjNrNmfxaqq9bdh6xcfY02nqOP0i3a2Mcx8wAt
-         Va7mLc6QDVx9KqV983O8LLisLOHHrQQN+wPOGSrQflzzh1upi//0ctLSd/kgI7jtZr4d
-         ZpMg==
-X-Gm-Message-State: AOJu0Yznd7aCYY3D1EXLR4xsy+kOE8Ds9A6v9H02WwEqRhtbQVHQOADM
-	93INdbgcbUgRD0cKm6ixDNBlfc+FIeR7VOO15w==
-X-Google-Smtp-Source: AGHT+IE1kJN7qLd2CNmGt5TJbTi4Ma6/SDDEDvoRX10XqoO8jyv841Ns3tHx6UmwBMtliC3KLksQjA==
-X-Received: by 2002:a05:620a:698e:b0:77b:aa20:908 with SMTP id ua14-20020a05620a698e00b0077baa200908mr23876438qkn.37.1701433867158;
-        Fri, 01 Dec 2023 04:31:07 -0800 (PST)
-Received: from thinkpad ([117.213.102.92])
-        by smtp.gmail.com with ESMTPSA id qx3-20020a05620a8b8300b0077da68b8801sm1445020qkn.65.2023.12.01.04.30.59
+        d=1e100.net; s=20230601; t=1701434106; x=1702038906;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YAJ12ZP/6sikIFKSSmQlShHQawFcbI6eeUcRDaDj6EQ=;
+        b=TP2QdNGZswOK9xCXcatwvw2uMPshYc0/DYZ2wzCWPTWbPyHsrkhW/RRfT/EwVUGpUI
+         54+mCQFmCarrMnTh+nf2MQ/igFaMYJdwXEKhsU3oaUyMiIGabTEHGG2o45DsynHRG6+K
+         g8947ZFW2dU1peyXV1AiGJwFjqFxg3verygshwKd5lkRrEk/pb1RH7+6IUfgdPm2oa1S
+         Wdc0ix15zL3kmN0JhDrV5kHS6lBMryeDxlTbWsMsAA4fjCvn6G5bifJwuY64msDlgx6b
+         eyoBtPnJ742L+fxmynzsoCBEek1X1DANjkmGSsEwgadWVNl7YGtQOeJzpH5XZIFwN3FI
+         E5lg==
+X-Gm-Message-State: AOJu0Ywyjr0gnz5Ga6eDXWB7LFxGA+K8juhqBT/CBqTAA9oqwDCvBJNq
+	kWk/CjBusfPiQcdhGwlkTzs=
+X-Google-Smtp-Source: AGHT+IFWvGMZWlpeLzOqlvxU4Iovm3Lrni2kgJ/FhveV1eY9wgfEIZEwE7tYYQ2Va/X639zttJ8beg==
+X-Received: by 2002:a2e:8895:0:b0:2c9:d874:6efc with SMTP id k21-20020a2e8895000000b002c9d8746efcmr818380lji.89.1701434105454;
+        Fri, 01 Dec 2023 04:35:05 -0800 (PST)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id i21-20020a2e8655000000b002c9b873270asm408702ljj.123.2023.12.01.04.35.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Dec 2023 04:31:06 -0800 (PST)
-Date: Fri, 1 Dec 2023 18:00:54 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
- qcom,refclk-always-on property
-Message-ID: <20231201123054.GM4009@thinkpad>
-References: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
- <20231127-refclk_always_on-v3-1-26d969fa8f1d@quicinc.com>
- <78815f1b-7390-40de-8afd-ac71806f4051@linaro.org>
- <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
- <20231201060716.GJ4009@thinkpad>
- <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
- <20231201111033.GL4009@thinkpad>
- <f844cd1e-7e4f-4836-bc9a-2e1ed13f064f@linaro.org>
+        Fri, 01 Dec 2023 04:35:05 -0800 (PST)
+Date: Fri, 1 Dec 2023 15:35:02 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>
+Subject: Re: [PATCH v2] net: stmmac: update Rx clk divider for 10M SGMII
+Message-ID: <mfcvaq2n2lzsg47nzgk25n5fpmii2ftbx6gkrmz7pkxv6mq4w6@eia6ymhx3wff>
+References: <20231201100548.12994-1-quic_snehshah@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f844cd1e-7e4f-4836-bc9a-2e1ed13f064f@linaro.org>
+In-Reply-To: <20231201100548.12994-1-quic_snehshah@quicinc.com>
 
-On Fri, Dec 01, 2023 at 01:10:48PM +0100, Krzysztof Kozlowski wrote:
-> On 01/12/2023 12:10, Manivannan Sadhasivam wrote:
-> > On Fri, Dec 01, 2023 at 09:01:43AM +0100, Krzysztof Kozlowski wrote:
-> >> On 01/12/2023 07:07, Manivannan Sadhasivam wrote:
-> >>> On Tue, Nov 28, 2023 at 02:49:18PM +0530, Krishna Chaitanya Chundru wrote:
-> >>>>
-> >>>> On 11/28/2023 2:26 PM, Krzysztof Kozlowski wrote:
-> >>>>> On 27/11/2023 13:13, Krishna chaitanya chundru wrote:
-> >>>>>> Document qcom,refclk-always-on property which is needed in some platforms
-> >>>>>> to supply refclk even in PCIe low power states.
-> >>>>>>
-> >>>>>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> >>>>>> ---
-> >>>>>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml        | 7 +++++++
-> >>>>>>   1 file changed, 7 insertions(+)
-> >>>>>>
-> >>>>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> >>>>>> index 2c3d6553a7ba..c747c9f35795 100644
-> >>>>>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> >>>>>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
-> >>>>>> @@ -93,6 +93,13 @@ properties:
-> >>>>>>     "#phy-cells":
-> >>>>>>       const: 0
-> >>>>>> +  qcom,refclk-always-on:
-> >>>>>> +    type: boolean
-> >>>>>> +    description: In some platform where PCIe switch is connected, pcie switch due to some design
-> >>>>> You received a comment to use proper wrapping: 80. Please implement it.
-> >>>> I will update this.
-> >>>>>> +      limitation fails to propage clkreq signal to the host and due to that host will not send
-> >>>>>> +      refclk, which  results in linkdown in L1.2 or L1.1 exit initiated by EP.
-> >>>>>> +      This property if set keeps refclk always on even in Low power states.
-> >>>>> The property name suggests that's the state of hardware - refclk is
-> >>>>> always on. Description suggests you want to instruct OS to do something.
-> >>>>>
-> >>>>> Again, third time (once from Bjorn, once from Dmitry), rephrase property
-> >>>>> name and description to describe the hardware issue. I see description
-> >>>>> improved, but not the property name. Again in the end of description you
-> >>>>
-> >>>> Both bjorn and Dmitry gave comments to change the description only, and not
-> >>>> the property name,
-> >>>>
-> >>>> correct if I am wrong.
-> >>>>
-> >>>>> say what Linux should do. Bindings do not describe Linux OS.
-> >>>>
-> >>>> I will remove the last line in the next patch.
-> >>>>
-> >>>
-> >>> You should name the property as, "qcom,keep-refclk-always-on"
-> >>
-> >> Keep the clock by who? By driver? Then not, property should describe
-> >> physical phenomena or hardware issue being fixed here, not what driver
-> >> should do.
-> >>
-> > 
-> > This property indeed fixes the hardware issue (though in board level) and I see
-> > a plenty of properties similar to this one instructing the OS to keep some
-> > resource ON to workaround hardware issues. So they are all wrong?
-> 
-> What I said before:
-> "Again, third time (once from Bjorn, once from Dmitry), rephrase
-> property name and description to describe the hardware issue. I see
-> description improved, but not the property name. Again in the end of
-> description you say what Linux should do. Bindings do not describe Linux
-> OS."
-> 
+On Fri, Dec 01, 2023 at 03:35:48PM +0530, Sneh Shah wrote:
+> SGMII 10MBPS mode needs RX clock divider to avoid drops in Rx.
+> Update configure SGMII function with rx clk divider programming.
 
-You didn't answer my question:
+> [PATCH v2] net: stmmac: update Rx clk divider for 10M SGMII
 
-"I see a plenty of properties similar to this one instructing the OS to keep some
-resource ON to workaround hardware issues. So they are all wrong?"
+It would be better to add "dwmac-qcom-ethqos" prefix to the subject
+since the patch concerns the Qualcomm Eth MAC only. 
 
-If you say they are wrong, why are they approved in the first place?
-
-- Mani
+-Serge(y)
 
 > 
-> Best regards,
-> Krzysztof
+> Fixes: 463120c31c58 ("net: stmmac: dwmac-qcom-ethqos: add support for SGMII")
+> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+> ---
+> v2 changelog:
+> - Use FIELD_PREP to prepare bifield values in place of GENMASK
+> - Add fixes tag
+> ---
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-
--- 
-மணிவண்ணன் சதாசிவம்
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index d3bf42d0fceb..df6ff8bcdb5c 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -34,6 +34,7 @@
+>  #define RGMII_CONFIG_LOOPBACK_EN		BIT(2)
+>  #define RGMII_CONFIG_PROG_SWAP			BIT(1)
+>  #define RGMII_CONFIG_DDR_MODE			BIT(0)
+> +#define RGMII_CONFIG_SGMII_CLK_DVDR		GENMASK(18, 10)
+>  
+>  /* SDCC_HC_REG_DLL_CONFIG fields */
+>  #define SDCC_DLL_CONFIG_DLL_RST			BIT(30)
+> @@ -617,6 +618,9 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+>  	case SPEED_10:
+>  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
+>  		val &= ~ETHQOS_MAC_CTRL_SPEED_MODE;
+> +		rgmii_updatel(ethqos, RGMII_CONFIG_SGMII_CLK_DVDR,
+> +			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR, 0x31),
+> +			      RGMII_IO_MACRO_CONFIG);
+>  		break;
+>  	}
+>  
+> -- 
+> 2.17.1
+> 
+> 
 
