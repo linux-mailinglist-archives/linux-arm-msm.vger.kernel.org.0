@@ -1,185 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-2795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-2797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F656800108
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 02:31:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 052C2800125
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 02:41:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2AEC9281623
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 01:31:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B349C28159A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 01:41:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4652017CF;
-	Fri,  1 Dec 2023 01:31:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A484217CD;
+	Fri,  1 Dec 2023 01:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VrQ70tFE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nTfHqQi3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB4B810F3;
-	Thu, 30 Nov 2023 17:31:06 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A448910F8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 30 Nov 2023 17:41:21 -0800 (PST)
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B10L6iB000664;
-	Fri, 1 Dec 2023 01:31:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=/NU2dbFQNyWKS8CYNdbXTOILj/VJ3QBEhaVjuOI+lD8=;
- b=VrQ70tFEB1EPxbl9tUEYn9Dybw6vjaIs9O2e98tLwVEeow/MOHbKIcnbj0BUofsgu6Ft
- xJMCgTQ2r28Px46Xp2wEBlUTqIgyngneuYV/gVcF/fj7v72aRmFILq7lqTLTqiw8YBdE
- 1e8y8JRdRfW5NksW9o5omGuu/asKqQYHSy9TiYfPeHWVbs8KAhhoOvnZqaK5AhErUHbP
- N2tePEC6HBfdGSnvdLQZQnw+Y7TzthPohCTmiMjxgznA6nlFrYDcxH64VnN5+DNXmFzA
- 0NynNBwjKzG4fnTO7W/RNwtOkANlKD0aSlmAt7v90K0nZIJDFwJsMSFXbf5MyNTnoC0p MQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3upgfd3c8u-1
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B110Ti1023367;
+	Fri, 1 Dec 2023 01:41:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=pBbhuJzhpm5p17tfCiZjVePgIX8Yff0eR3/crDOPvGM=;
+ b=nTfHqQi3wd40Xgemo1IIU0akv1B7R+jjXEyRnNnYcYV+/exSzPEKe/NFkihy6ui/kbJJ
+ BgwDsJtPfcZRpPrWUyu3zFS59qMUuMc01FbatyB73BEhN/ojq7SuGqW2aRXMe0JcmGIX
+ TiD1+DIC/1XhSE28XvP4CzHb7TsjK41GsEUFkGltdUaqUN3TQCBgQ6jDTlaGllYBBp29
+ WyTUKEIk1nvFM7LZdXT8p5nWxvJDGGIU4ijoQyKAsIrJP360oXIIv7WbqzeBmxPKEeEd
+ Xg0+BXt0la4LVe2seRRALz5z3HFS/raANWGO6qK/H+IGZ0sQH9zfexrLeIdK6OJPpFoA sQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3upgfd3csy-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 01 Dec 2023 01:31:01 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B11V0JD024463
+	Fri, 01 Dec 2023 01:41:14 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B11fD4J026903
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 1 Dec 2023 01:31:00 GMT
-Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+	Fri, 1 Dec 2023 01:41:13 GMT
+Received: from hu-parellan-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Thu, 30 Nov 2023 17:31:00 -0800
-From: Jessica Zhang <quic_jesszhan@quicinc.com>
-Date: Thu, 30 Nov 2023 17:30:34 -0800
-Subject: [PATCH 2/2] drm/msm/dpu: Set input_sel bit for INTF
+ 15.2.1118.40; Thu, 30 Nov 2023 17:41:12 -0800
+From: Paloma Arellano <quic_parellan@quicinc.com>
+To: <freedreno@lists.freedesktop.org>
+CC: Paloma Arellano <quic_parellan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <robdclark@gmail.com>, <seanpaul@chromium.org>, <swboyd@chromium.org>,
+        <dmitry.baryshkov@linaro.org>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <marijn.suijten@somainline.org>,
+        <steev@kali.org>
+Subject: [PATCH v3 0/2] Stabilize use of vblank_refcount
+Date: Thu, 30 Nov 2023 17:40:53 -0800
+Message-ID: <20231201014101.15802-1-quic_parellan@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20231130-encoder-fixup-v1-2-585c54cd046e@quicinc.com>
-References: <20231130-encoder-fixup-v1-0-585c54cd046e@quicinc.com>
-In-Reply-To: <20231130-encoder-fixup-v1-0-585c54cd046e@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>
-CC: <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-X-Mailer: b4 0.13-dev-53db1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1701394259; l=3663;
- i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=f4MgpUR7qdkeHqkjRkQnRto4i/L5a9mnRaHCbV37d7s=;
- b=YaRowAfYu9UtWmL0tdfOtCJLCUYSpZfgImYT6w+enn5a+q8W013WGwVAs8OLuaN1d6ykP84Gn
- Rn0uCPBwnL8AjxV6SfA9Kw1+xPKpSKcYTJvqW8BYXu4najOkg+BzhS4
-X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
- pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SclDWkzTrjjqxZt7KBFQUeHklgcM3nok
-X-Proofpoint-GUID: SclDWkzTrjjqxZt7KBFQUeHklgcM3nok
+X-Proofpoint-ORIG-GUID: 7AR5ny3XfkB31_g17sqTSPOBU9WrlTHv
+X-Proofpoint-GUID: 7AR5ny3XfkB31_g17sqTSPOBU9WrlTHv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-11-30_25,2023-11-30_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
  lowpriorityscore=0 spamscore=0 malwarescore=0 impostorscore=0
  priorityscore=1501 bulkscore=0 clxscore=1015 mlxscore=0 adultscore=0
- phishscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311060000 definitions=main-2312010008
+ phishscore=0 mlxlogscore=717 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311060000 definitions=main-2312010009
 
-Set the input_sel bit for encoders as it was missed in the initial
-implementation.
+There is currently a race condition occuring when accessing
+vblank_refcount. Therefore, vblank irq timeouts may occur.
 
-Reported-by: Rob Clark <robdclark@gmail.com>
-Fixes: 91143873a05d ("drm/msm/dpu: Add MISR register support for interface")
-Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/39
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 7 ++++++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 4 +++-
- 4 files changed, 11 insertions(+), 4 deletions(-)
+Avoid any vblank irq timeouts by stablizing the use of vblank_refcount.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-index 3442cf65b86f..d0884997ecb7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -320,7 +320,7 @@ static u32 dpu_hw_intf_get_line_count(struct dpu_hw_intf *intf)
- 
- static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf)
- {
--	dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL);
-+	dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, true);
- }
- 
- static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 *misr_value)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-index f38473e68f79..77b14107c84a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
-@@ -83,7 +83,7 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
- 
- static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx)
- {
--	dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL);
-+	dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, false);
- }
- 
- static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-index a8a0a4e76b94..f441df47fdde 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-@@ -481,7 +481,8 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
- 		      cfg->danger_safe_en ? QOS_QOS_CTRL_DANGER_SAFE_EN : 0);
- }
- 
--void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset)
-+void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset,
-+		bool set_input_sel)
- {
- 	u32 config = 0;
- 
-@@ -491,6 +492,10 @@ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset)
- 	wmb();
- 
- 	config = MISR_FRAME_COUNT | MISR_CTRL_ENABLE | MISR_CTRL_FREE_RUN_MASK;
-+
-+	if (set_input_sel)
-+		config |= MISR_CTRL_INPUT_SEL;
-+
- 	DPU_REG_WRITE(c, misr_ctrl_offset, config);
- }
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-index bb496ebe283b..793670d62414 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-@@ -17,6 +17,7 @@
- #define MISR_CTRL_ENABLE                BIT(8)
- #define MISR_CTRL_STATUS                BIT(9)
- #define MISR_CTRL_STATUS_CLEAR          BIT(10)
-+#define MISR_CTRL_INPUT_SEL             BIT(24)
- #define MISR_CTRL_FREE_RUN_MASK         BIT(31)
- 
- /*
-@@ -357,7 +358,8 @@ void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
- 			   bool qos_8lvl,
- 			   const struct dpu_hw_qos_cfg *cfg);
- 
--void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset);
-+void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 misr_ctrl_offset,
-+		       bool set_input_sel);
- 
- int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
- 		u32 misr_ctrl_offset,
+Changes from prior versions:
+   v2: - Slightly changed wording of patch #2 commit message
+   v3: - Mistakenly did not change wording of patch #2 in last version.
+         It is done now.
+
+Paloma Arellano (2):
+  drm/msm/dpu: Modify vblank_refcount if error in callback
+  drm/msm/dpu: Add mutex lock in control vblank irq
+
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          |  6 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h     |  6 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 11 +++++++++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 11 +++++++++--
+ 4 files changed, 30 insertions(+), 4 deletions(-)
 
 -- 
-2.43.0
+2.41.0
 
 
