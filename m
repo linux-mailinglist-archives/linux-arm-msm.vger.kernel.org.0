@@ -1,209 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-3018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC54B801C27
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 11:11:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 04BE7801C57
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 12:12:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 404FD1F2116C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 10:11:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3800281BC7
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 11:12:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 713D015ADB;
-	Sat,  2 Dec 2023 10:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FBEB11732;
+	Sat,  2 Dec 2023 11:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nYE3bjZD"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MpxeUPic"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2F1B181;
-	Sat,  2 Dec 2023 02:11:37 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B2ABCvA027494;
-	Sat, 2 Dec 2023 10:11:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3kibO4udjOungBApnJYuOvCQkp77DLoZ4l7doiXrJBs=;
- b=nYE3bjZDsetQesN82pYm0/m1CfcSPueqaYHRRU8DRYs1jRxotBtjxmuA1QCT5PXjWD0j
- jHAWX8x0QbTo6omgmnVMBQg56WthMv5Pyz+W/I1JMruS0CYHVZ3BMgN1yYrOE1mdsrn+
- 36lojtGkumQ+BstChd/X1C+Cvik+kTyb0VgZxgCJkAYgkaxcqPLShy2A8JX9y1Rq43k1
- iByrGiGYPLMye2Q5S2FfwGok47Av/61ZeuSf7HiQsex4JLj0ZmDZDDMhGiUxhTyZ2IOB
- efhXHS5p0B9rtZ0Lv/x80cj0vFMwSFIF48/QbrzMcCIYsiyPLf7eLL4Upoh0MIr5Flpi DQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uqsxw0p59-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 02 Dec 2023 10:11:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B2ABApt023215
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 2 Dec 2023 10:11:10 GMT
-Received: from [10.253.72.107] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sat, 2 Dec
- 2023 02:11:05 -0800
-Message-ID: <e7883e6b-4d65-d997-a9fb-83497e2ad8f1@quicinc.com>
-Date: Sat, 2 Dec 2023 18:11:03 +0800
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 809F2134
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 03:12:07 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c9f099cf3aso4788901fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Dec 2023 03:12:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701515526; x=1702120326; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ye7uYp1nmAK2nKeV+Qnc2ULdi2skK6GG5U5rkpVgBoU=;
+        b=MpxeUPic8LNnPUQ57uD4G28VlI3hu8YzgVf+9PSRfrkFN6k8Y82vIqwrUTf84z4Hq2
+         fjcCiXynPEkG9EBnPWHBN4jjsVAsLw6yhthjcNIP+g1/BHsbUZzDnRvgvTcOdddGFc62
+         hctRbERcKgJIFueQjgNSoX//FZL/JVYzyiUaRKc5RraNdLrlV3SttnsBOwCvyi2DvCni
+         MDiYqF3LGrlMWotoedsTUyzqb9+piBQu9MVP1MuyXen3yXxadOn6qu+ZaWUOT23y6ngt
+         eXVkcnlXzbmaZy/FJzL2UL6E1xNn6ZjLrdT4Ch8O4N2UzAr68XtsmJI0lcAcUJC9v1zP
+         +qOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701515526; x=1702120326;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ye7uYp1nmAK2nKeV+Qnc2ULdi2skK6GG5U5rkpVgBoU=;
+        b=U2d7bo6dTW/jko6Tu6RpljTGoOwp1srHvt6WB11jxI81kFpcAlfY9oFvOPmpGMJJ7k
+         MFexk84W98rr3YFnh93wWbY34dwFICcGiox9dYki/8Hpv6R4FYYKPVvpjfVahxA3lvcF
+         Wxp0GVVAf1s8lWUB0i0LxyG5DmMDx7tG4cZ+fWOGB2ogAcFJNjGjxJUSXAjDMxUjU1Hj
+         AHTPwBwomtTQUFksqjgYzRrzOW9oTx2CG3QnZv99pYcV2j2ZAGWzk6dd3GtwpgadnQqR
+         BSSRu7F0jxOXMAhQDLVCIinBJj1crqzdLbNdFah36IUIgMkSISGqwksev+79oxsQd3R8
+         bQPQ==
+X-Gm-Message-State: AOJu0YzuE8unWiojv9Xjtr2iE6Hr5/JVBJbTmT4H7WL2RxvMTwh6kmDO
+	5syU69P0QjoR1SVAvHrLtjRy+Q==
+X-Google-Smtp-Source: AGHT+IGvGjkThsYR3UUVLQAlKIxV9cBXcsJZftyrwSYfFBkAKYldOtihnoBuJqklB3k+/mK35PAMHQ==
+X-Received: by 2002:a2e:81d1:0:b0:2c9:ed9f:9dff with SMTP id s17-20020a2e81d1000000b002c9ed9f9dffmr517970ljg.88.1701515525554;
+        Sat, 02 Dec 2023 03:12:05 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id l21-20020a2ea315000000b002c9bae02ca9sm687112lje.18.2023.12.02.03.12.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 02 Dec 2023 03:12:05 -0800 (PST)
+Message-ID: <67c2f17d-4405-4a44-8215-202759957885@linaro.org>
+Date: Sat, 2 Dec 2023 13:12:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v7 09/10] phy: qualcomm: phy-qcom-qmp-ufs: Rectify SM8550
- UFS HS-G4 PHY Settings
-Content-Language: en-US
-To: Abel Vesa <abel.vesa@linaro.org>
-CC: <bvanassche@acm.org>, <mani@kernel.org>, <adrian.hunter@intel.com>,
-        <vkoul@kernel.org>, <beanhuo@micron.com>, <avri.altman@wdc.com>,
-        <junwoo80.lee@samsung.com>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Andy Gross
-	<agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Johan Hovold
-	<johan+linaro@kernel.org>,
-        "open list:GENERIC PHY FRAMEWORK"
-	<linux-phy@lists.infradead.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1701407001-471-1-git-send-email-quic_cang@quicinc.com>
- <1701407001-471-10-git-send-email-quic_cang@quicinc.com>
- <ZWmOc/L/2najkwKf@linaro.org>
-From: Can Guo <quic_cang@quicinc.com>
-In-Reply-To: <ZWmOc/L/2najkwKf@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 0AmNZe6pJcDQTw_Kw3u19s-ezWxNmWxC
-X-Proofpoint-GUID: 0AmNZe6pJcDQTw_Kw3u19s-ezWxNmWxC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-02_07,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- mlxscore=0 bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501
- mlxlogscore=851 malwarescore=0 impostorscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312020074
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/17] drm/msm: add arrays listing formats supported by
+ MDP4/MDP5 hardware
+Content-Language: en-GB
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>, Rob Clark
+ <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
+ <20230708010407.3871346-2-dmitry.baryshkov@linaro.org>
+ <47635658-6424-7f95-97e8-0955e262fec1@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <47635658-6424-7f95-97e8-0955e262fec1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-On 12/1/2023 3:42 PM, Abel Vesa wrote:
-> On 23-11-30 21:03:19, Can Guo wrote:
->> The registers, which are being touched in current SM8550 UFS PHY settings,
->> and the values being programmed are mainly the ones working for HS-G4 mode,
->> meanwhile, there are also a few ones somehow taken from HS-G5 PHY settings.
->> However, even consider HS-G4 mode only, some of them are incorrect and some
->> are missing. Rectify the HS-G4 PHY settings by strictly aligning with the
->> SM8550 UFS PHY Hardware Programming Guide suggested HS-G4 PHY settings.
+On 02/12/2023 03:36, Abhinav Kumar wrote:
+> 
+> 
+> On 7/7/2023 6:03 PM, Dmitry Baryshkov wrote:
+>> MDP4 and MDP5 drivers enumerate supported formats each time the plane is
+>> created. As the list of supported image formats is constant, create
+>> corresponding data arrays to be used by MDP4 and MDP5 drivers.
 >>
->> Fixes: 1679bfef906f ("phy: qcom-qmp-ufs: Add SM8550 support")
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
->> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> Signed-off-by: Can Guo <quic_cang@quicinc.com>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> ---
-> Hi Can,
->
-> Since you are not CC'ing everyone on all patches from this series,
-> please write the changes made since the last version in every patch (if
-> applicable) from now on.
->
-> Thanks,
-> Abel
-
-Sure.
-
-
-Thanks,
-
-Can Guo.
-
->
->>   .../qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h    |  1 +
->>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            | 28 +++++++++++++++-------
->>   2 files changed, 20 insertions(+), 9 deletions(-)
+>>   drivers/gpu/drm/msm/disp/mdp_format.c | 49 +++++++++++++++++++++++++--
+>>   drivers/gpu/drm/msm/disp/mdp_kms.h    |  5 +++
+>>   2 files changed, 52 insertions(+), 2 deletions(-)
 >>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->> index ae220fd..35d497f 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-ufs-v6.h
->> @@ -11,6 +11,7 @@
->>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX		0x30
->>   #define QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_RX		0x34
->>   #define QSERDES_UFS_V6_TX_LANE_MODE_1				0x7c
->> +#define QSERDES_UFS_V6_TX_FR_DCC_CTRL				0x108
->>   
->>   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2		0x08
->>   #define QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4		0x10
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> index 5f79d18..3c2e625 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> @@ -763,22 +763,26 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_serdes[] = {
->>   	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
->>   	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x7f),
->>   	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x06),
->> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x4c),
->> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x0a),
->> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x18),
->> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x14),
->> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x99),
->> -	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x07),
->> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x4c),
->> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x0a),
->> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x18),
->> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x14),
->> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x99),
->> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x07),
+> 
+> After going through the patch series, as commented in patch 17 I am 
+> totally fine with migrating to drmm-managed APIs but I dont like to 
+> maintain 3 format arrays.
+> 
+> Can we keep the existing format mechanism to avoid having two more arrays?
+
+For DPU we have exactly the same idea: single formats data array 
+describing and per-usecase arrays, like plane RGB arrays, plane YUV+RGB 
+array, WB arrays.
+
+Anyway. formats was one of the topics where we had a lot of duplication 
+between mdp4/mdp5 and dpu anyway. I think I'm going to back up the 
+patches 1, 10, 16, 17 (plane patches depend on the format arrays), push 
+the rest of the patches to msm-next-lumag and send a series reworking 
+all the formats handling.
+
+
+> 
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c 
+>> b/drivers/gpu/drm/msm/disp/mdp_format.c
+>> index 025595336f26..ba9abe8b3acc 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp_format.c
+>> +++ b/drivers/gpu/drm/msm/disp/mdp_format.c
+>> @@ -81,8 +81,8 @@ static struct csc_cfg csc_convert[CSC_MAX] = {
+>>   #define BPC0A 0
+>>   /*
+>> - * Note: Keep RGB formats 1st, followed by YUV formats to avoid breaking
+>> - * mdp_get_rgb_formats()'s implementation.
+>> + * Note: Keep mdp_rgb_formats and mdp_rgb_yuv_formats in sync when 
+>> adding
+>> + * entries to this array.
+>>    */
+>>   static const struct mdp_format formats[] = {
+>>       /*  name      a  r  g  b   e0 e1 e2 e3  alpha   tight  cpp cnt 
+>> ... */
+>> @@ -138,6 +138,51 @@ static const struct mdp_format formats[] = {
+>>               MDP_PLANE_PLANAR, CHROMA_420, true),
+>>   };
+>> +const uint32_t mdp_rgb_formats[] = {
+>> +    DRM_FORMAT_ARGB8888,
+>> +    DRM_FORMAT_ABGR8888,
+>> +    DRM_FORMAT_RGBA8888,
+>> +    DRM_FORMAT_BGRA8888,
+>> +    DRM_FORMAT_XRGB8888,
+>> +    DRM_FORMAT_XBGR8888,
+>> +    DRM_FORMAT_RGBX8888,
+>> +    DRM_FORMAT_BGRX8888,
+>> +    DRM_FORMAT_RGB888,
+>> +    DRM_FORMAT_BGR888,
+>> +    DRM_FORMAT_RGB565,
+>> +    DRM_FORMAT_BGR565,
 >> +};
 >> +
->> +static const struct qmp_phy_init_tbl sm8550_ufsphy_hs_b_serdes[] = {
->> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x44),
->>   };
->>   
->>   static const struct qmp_phy_init_tbl sm8550_ufsphy_tx[] = {
->> -	QMP_PHY_INIT_CFG(QSERDES_V6_TX_LANE_MODE_1, 0x05),
->> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_LANE_MODE_1, 0x05),
->>   	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_RES_CODE_LANE_OFFSET_TX, 0x07),
->> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_TX_FR_DCC_CTRL, 0x4c),
->>   };
->>   
->>   static const struct qmp_phy_init_tbl sm8550_ufsphy_rx[] = {
->> -	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE2, 0x0c),
->> -	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FASTLOCK_FO_GAIN_RATE4, 0x0f),
->> +	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_UCDR_FO_GAIN_RATE2, 0x0c),
->>   	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_VGA_CAL_MAN_VAL, 0x0e),
->>   
->>   	QMP_PHY_INIT_CFG(QSERDES_UFS_V6_RX_MODE_RATE_0_1_B0, 0xc2),
->> @@ -801,6 +805,8 @@ static const struct qmp_phy_init_tbl sm8550_ufsphy_pcs[] = {
->>   	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_MID_TERM_CTRL1, 0x43),
->>   	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_PLL_CNTL, 0x2b),
->>   	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_MULTI_LANE_CTRL1, 0x02),
->> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_TX_HSGEAR_CAPABILITY, 0x04),
->> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_UFS_RX_HSGEAR_CAPABILITY, 0x04),
->>   };
->>   
->>   static const struct qmp_phy_init_tbl sm8650_ufsphy_serdes[] = {
->> @@ -1357,6 +1363,10 @@ static const struct qmp_phy_cfg sm8550_ufsphy_cfg = {
->>   		.pcs		= sm8550_ufsphy_pcs,
->>   		.pcs_num	= ARRAY_SIZE(sm8550_ufsphy_pcs),
->>   	},
->> +	.tbls_hs_b = {
->> +		.serdes		= sm8550_ufsphy_hs_b_serdes,
->> +		.serdes_num	= ARRAY_SIZE(sm8550_ufsphy_hs_b_serdes),
->> +	},
->>   	.clk_list		= sdm845_ufs_phy_clk_l,
->>   	.num_clks		= ARRAY_SIZE(sdm845_ufs_phy_clk_l),
->>   	.vreg_list		= qmp_phy_vreg_l,
->> -- 
->> 2.7.4
->>
+>> +size_t mdp_rgb_num_formats = ARRAY_SIZE(mdp_rgb_formats);
+>> +
+>> +const uint32_t mdp_rgb_yuv_formats[] = {
+>> +    DRM_FORMAT_ARGB8888,
+>> +    DRM_FORMAT_ABGR8888,
+>> +    DRM_FORMAT_RGBA8888,
+>> +    DRM_FORMAT_BGRA8888,
+>> +    DRM_FORMAT_XRGB8888,
+>> +    DRM_FORMAT_XBGR8888,
+>> +    DRM_FORMAT_RGBX8888,
+>> +    DRM_FORMAT_BGRX8888,
+>> +    DRM_FORMAT_RGB888,
+>> +    DRM_FORMAT_BGR888,
+>> +    DRM_FORMAT_RGB565,
+>> +    DRM_FORMAT_BGR565,
+>> +
+>> +    DRM_FORMAT_NV12,
+>> +    DRM_FORMAT_NV21,
+>> +    DRM_FORMAT_NV16,
+>> +    DRM_FORMAT_NV61,
+>> +    DRM_FORMAT_VYUY,
+>> +    DRM_FORMAT_UYVY,
+>> +    DRM_FORMAT_YUYV,
+>> +    DRM_FORMAT_YVYU,
+>> +    DRM_FORMAT_YUV420,
+>> +    DRM_FORMAT_YVU420,
+>> +};
+>> +
+>> +size_t mdp_rgb_yuv_num_formats = ARRAY_SIZE(mdp_rgb_yuv_formats);
+>> +
+>>   /*
+>>    * Note:
+>>    * @rgb_only must be set to true, when requesting
+>> diff --git a/drivers/gpu/drm/msm/disp/mdp_kms.h 
+>> b/drivers/gpu/drm/msm/disp/mdp_kms.h
+>> index b0286d5d5130..11402a859574 100644
+>> --- a/drivers/gpu/drm/msm/disp/mdp_kms.h
+>> +++ b/drivers/gpu/drm/msm/disp/mdp_kms.h
+>> @@ -94,6 +94,11 @@ struct mdp_format {
+>>   uint32_t mdp_get_formats(uint32_t *formats, uint32_t max_formats, 
+>> bool rgb_only);
+>>   const struct msm_format *mdp_get_format(struct msm_kms *kms, 
+>> uint32_t format, uint64_t modifier);
+>> +extern const uint32_t mdp_rgb_formats[];
+>> +extern size_t mdp_rgb_num_formats;
+>> +extern const uint32_t mdp_rgb_yuv_formats[];
+>> +extern size_t mdp_rgb_yuv_num_formats;
+>> +
+>>   /* MDP capabilities */
+>>   #define MDP_CAP_SMP        BIT(0)    /* Shared Memory 
+>> Pool                 */
+>>   #define MDP_CAP_DSC        BIT(1)    /* VESA Display Stream 
+>> Compression    */
+
+-- 
+With best wishes
+Dmitry
+
 
