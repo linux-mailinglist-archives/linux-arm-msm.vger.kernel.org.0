@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19362801CD9
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 14:04:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 027B7801E5E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 20:55:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7544CB20D93
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 13:04:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 834DFB20B1A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 19:55:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF0CE179B6;
-	Sat,  2 Dec 2023 13:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13E871F5F3;
+	Sat,  2 Dec 2023 19:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OOjuEPO2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gBgZYMDd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D4313A
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 05:04:38 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-332d5c852a0so2069040f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Dec 2023 05:04:38 -0800 (PST)
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com [IPv6:2a00:1450:4864:20::242])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34EF2FA
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 11:54:54 -0800 (PST)
+Received: by mail-lj1-x242.google.com with SMTP id 38308e7fff4ca-2c9bd3ec4f6so39834331fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Dec 2023 11:54:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701522277; x=1702127077; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1701546892; x=1702151692; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5MwJfzzcYu8whL7SkYku9YrYz+BKMaZCOtwmhhq14kI=;
-        b=OOjuEPO2tnbgU1wm5KmeWWN94rd9U1C51m7Hxl54T35iIl+h4rHKv8Ew/F3Ick9zEh
-         tB7nj+Gz9kWm3fPuJJnde4LZPVX2I1a+22sZGxJ+FwMACgy7MQ7+XhI99yQfzoONyMtI
-         Szgm1iUcw6e6TO5yra+8Wsg69ZwEEuhDiexLJml/v0EDYJeYGGP6UI9+o4rUw1W8C2yu
-         WUGq5wHj/SI0jf+fbqbQ7PNfQMjOtGduSFXKEH1lXfQhpkgl413P2Bv5HmWBFB0mjtU+
-         juYjG3XuZVhw/jaxkWPnLRTFcUHMZHHr9pkiUJWhak1b8cqk3uTpeFwg2xUXi9G6vrOO
-         0Rfw==
+        bh=mypENOTvjGc6UKp6SNlOk81hu+cXKNAEwrYZ0eb98SE=;
+        b=gBgZYMDdfdndn4+su1fQ/6xNlU6hi5ZtgEg8RM9ZhAz3S3iDWuP3EW7iZUXTTsnxjx
+         jTkzmNCAGFBgf+E2ZSCYgYvOsIJNpR+qW6UjE0kphwlDQjbXKuKCou3CYDWvoA60mzed
+         22FnMi7AJPBIRpJz4R56teYQOWikdt0AJQhyDGHzfyPx/+QkvlqbzUDVzRRVPOSHE7wo
+         Ywa0V4knZ9opXHGsDr87EPyhyMhbbYEB0w2JtgEqibyRpJQDIJHslpmPKsXjc5oCOwAQ
+         55BNHduAInJEe5WZKFDRp4SP48kXOcKIP3521sxIw/KQklBTWWwLRaGOx7NSYQvAQ3T+
+         c4fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701522277; x=1702127077;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1701546892; x=1702151692;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5MwJfzzcYu8whL7SkYku9YrYz+BKMaZCOtwmhhq14kI=;
-        b=WfG4FoeIpZvAC+/k+5rxl6OnKtdGzJTdPVNcoDMBkCf4BkZ+zP5YsLTddB0cOWin4x
-         JFQb4HULQ/+Lj/0p+5NUng16hfe+ApWNnUAI11aZfp+8iXM2L9FBG2rxaqm60X+FyrA9
-         cpy5t+/UjNECrEZXlFzk0VtPFYFGBVMvJw8E9VP0bNGdjMPcjYzibzaqlgDWFn0b6465
-         KV7QQivb0ThvEROUIKhBFCj9oH+u3zCXtGoDVYAndwoqtKZHNhnMzEO77QJjDHO44NZL
-         NNEjlH8cVJWQ12asbRlYDIfY66Yp3lL4Cba+NcZBk/tlKLXMcFFizufAzvOonrqOzznw
-         3ozg==
-X-Gm-Message-State: AOJu0Yz5EsF4J6FdJCHF0P1QR5pRFsv0q8KVdwfWbjBrRywHNUD9K/8W
-	ZZC/KaOKD+xMpsZooE8mNLcYhw==
-X-Google-Smtp-Source: AGHT+IHlFnK8sTgxK+l5q18QnQD3ZgV35E8ImVT03PumeBHQl7xWXIsd70+914v19fF4PgYqzpbtbg==
-X-Received: by 2002:a05:600c:84cf:b0:40b:5e21:dd22 with SMTP id er15-20020a05600c84cf00b0040b5e21dd22mr1032022wmb.80.1701522276749;
-        Sat, 02 Dec 2023 05:04:36 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id 9-20020a170906100900b009ddaf5ebb6fsm3056569ejm.177.2023.12.02.05.04.33
+        bh=mypENOTvjGc6UKp6SNlOk81hu+cXKNAEwrYZ0eb98SE=;
+        b=EVLWrwx1TTK/+xByWz4iJAMZ7xU++IyKJpJ93rPMw4hDFRqA3HfurBY0IF+OLzQBjf
+         2Ihq5ac/8ceu3Z0O2lcS5erBItcdnx1CFrusdM3kts5gkJBvGD3Gv6TbmbicrrjwQXRW
+         wOG7XtK1UcRqRrzI7y5Mp9gzegQjyOOlP2LWrkOb+IonMwwofnuyfeLpo6ItNrs+OlYZ
+         VsgzE5Pe5yLKLSPwjoRR07hgcr+jSO54RpMK7uunecg84ARBwvgmC0C4CVl169AgVC9z
+         XtHahVT2lwSSlhSQt8HzYSO/JW+aK4OCnTb+bubqNX3gT5dJbtMLrm9pkJDgr5NmNWXi
+         43Zg==
+X-Gm-Message-State: AOJu0YyfQpvYihXqUQ0m99Ik1ZNeZAFaw5Isz3KJW6VCAgrbSLQHaYGL
+	rLVEftQC45sRqMVEBBgQ0rSE/b8mOODTVcJ8tkTpq0L3h00=
+X-Google-Smtp-Source: AGHT+IH3My8XPBaauAwFiRuvgLhrkMUD2b5HPKUvjhIU+O7KAUS3Yyc7nyJY4nMMh7APjo3+nzysjg==
+X-Received: by 2002:a05:6512:10ce:b0:50b:d764:28ee with SMTP id k14-20020a05651210ce00b0050bd76428eemr1441389lfg.134.1701546892350;
+        Sat, 02 Dec 2023 11:54:52 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id c27-20020ac25f7b000000b00507a0098424sm37426lfc.109.2023.12.02.11.54.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Dec 2023 05:04:36 -0800 (PST)
-Message-ID: <695b4402-5e0f-4b4b-9848-16d8f8956cf4@linaro.org>
-Date: Sat, 2 Dec 2023 14:04:32 +0100
+        Sat, 02 Dec 2023 11:54:51 -0800 (PST)
+Message-ID: <77c229fd-5414-49ad-bccd-7a5732345695@linaro.org>
+Date: Sat, 2 Dec 2023 21:54:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,100 +62,177 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] docs: dt-bindings: add DTS Coding Style document
-Content-Language: en-US
-To: Conor Dooley <conor@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Matthias Brugger
- <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org,
- Andrew Davis <afd@ti.com>, Andrew Lunn <andrew@lunn.ch>,
- Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>,
- Chen-Yu Tsai <wens@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Heiko Stuebner <heiko@sntech.de>, Jonathan Corbet <corbet@lwn.net>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Michal Simek
- <michal.simek@amd.com>, Neil Armstrong <neil.armstrong@linaro.org>,
- Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>,
- =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
- linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- workflows@vger.kernel.org, linux-doc@vger.kernel.org
-References: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
- <20231201-thrive-gully-5260ab07b352@spud>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231201-thrive-gully-5260ab07b352@spud>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH 2/2] drm/msm/dpu: Set input_sel bit for INTF
+Content-Language: en-GB
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20231130-encoder-fixup-v1-0-585c54cd046e@quicinc.com>
+ <20231130-encoder-fixup-v1-2-585c54cd046e@quicinc.com>
+ <CAA8EJpqeu18q4jN82fUvsEdBRmEjG_mYLQQUWD+LDxjiQQQPsg@mail.gmail.com>
+ <a076fced-f4b9-804e-eb73-1fbb510c4951@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <a076fced-f4b9-804e-eb73-1fbb510c4951@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 01/12/2023 17:46, Conor Dooley wrote:
-> On Sat, Nov 25, 2023 at 07:44:22PM +0100, Krzysztof Kozlowski wrote:
->> +Indentation
->> +-----------
->> +
->> +1. Use indentation according to :ref:`codingstyle`.
+On 01/12/2023 23:29, Abhinav Kumar wrote:
 > 
-> One thing Jonathan mentioned before to me was to drop this :ref: stuff.
-> | > +:ref:`devicetree-abi` more information on the ABI.
-> | 
-> | ...can just be written as "Please see
-> | Documentation/devicetree/bindings/ABI.rst".  The cross-reference link
-> | will be generated as expected, and readers of the plain-text docs don't
-> | have to go grepping to find the reference.
-> https://lore.kernel.org/all/87bki23rbx.fsf@meer.lwn.net/
 > 
+> On 11/30/2023 11:36 PM, Dmitry Baryshkov wrote:
+>> On Fri, 1 Dec 2023 at 03:31, Jessica Zhang <quic_jesszhan@quicinc.com> 
+>> wrote:
+>>>
+>>> Set the input_sel bit for encoders as it was missed in the initial
+>>> implementation.
+>>>
+>>> Reported-by: Rob Clark <robdclark@gmail.com>
+>>> Fixes: 91143873a05d ("drm/msm/dpu: Add MISR register support for 
+>>> interface")
+>>> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/39
+>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>> ---
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 2 +-
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   | 2 +-
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c | 7 ++++++-
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h | 4 +++-
+>>>   4 files changed, 11 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>> index 3442cf65b86f..d0884997ecb7 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+>>> @@ -320,7 +320,7 @@ static u32 dpu_hw_intf_get_line_count(struct 
+>>> dpu_hw_intf *intf)
+>>>
+>>>   static void dpu_hw_intf_setup_misr(struct dpu_hw_intf *intf)
+>>>   {
+>>> -       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL);
+>>> +       dpu_hw_setup_misr(&intf->hw, INTF_MISR_CTRL, true);
+>>>   }
+>>>
+>>>   static int dpu_hw_intf_collect_misr(struct dpu_hw_intf *intf, u32 
+>>> *misr_value)
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>>> index f38473e68f79..77b14107c84a 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+>>> @@ -83,7 +83,7 @@ static void dpu_hw_lm_setup_border_color(struct 
+>>> dpu_hw_mixer *ctx,
+>>>
+>>>   static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx)
+>>>   {
+>>> -       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL);
+>>> +       dpu_hw_setup_misr(&ctx->hw, LM_MISR_CTRL, false);
+>>>   }
+>>>
+>>>   static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 
+>>> *misr_value)
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>>> index a8a0a4e76b94..f441df47fdde 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+>>> @@ -481,7 +481,8 @@ void _dpu_hw_setup_qos_lut(struct 
+>>> dpu_hw_blk_reg_map *c, u32 offset,
+>>>                        cfg->danger_safe_en ? 
+>>> QOS_QOS_CTRL_DANGER_SAFE_EN : 0);
+>>>   }
+>>>
+>>> -void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 
+>>> misr_ctrl_offset)
+>>> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 
+>>> misr_ctrl_offset,
+>>> +               bool set_input_sel)
+>>>   {
+>>>          u32 config = 0;
+>>>
+>>> @@ -491,6 +492,10 @@ void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map 
+>>> *c, u32 misr_ctrl_offset)
+>>>          wmb();
+>>>
+>>>          config = MISR_FRAME_COUNT | MISR_CTRL_ENABLE | 
+>>> MISR_CTRL_FREE_RUN_MASK;
+>>> +
+>>> +       if (set_input_sel)
+>>> +               config |= MISR_CTRL_INPUT_SEL;
+>>> +
+>>>          DPU_REG_WRITE(c, misr_ctrl_offset, config);
+>>>   }
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>>> index bb496ebe283b..793670d62414 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+>>> @@ -17,6 +17,7 @@
+>>>   #define MISR_CTRL_ENABLE                BIT(8)
+>>>   #define MISR_CTRL_STATUS                BIT(9)
+>>>   #define MISR_CTRL_STATUS_CLEAR          BIT(10)
+>>> +#define MISR_CTRL_INPUT_SEL             BIT(24)
+>>
+>> The public apq8916 TRM documents this as a 4-bit field. I think this
+>> was followed into the later generations. Can we please document it
+>> correctly and use an uint instead of just bool for set_input_sel?
+>>
+> 
+> Can you pls point us to this document you are referring?
 
-Sure, indeed it's better for plain-text readers.
+I have this link in my bookmarks, which doesn't seem to work no longer:
 
-Best regards,
-Krzysztof
+https://developer.qualcomm.com/download/sd410/snapdragon-410e-technical-reference-manual.pdf?referrer=node/29241
+
+96boards forum has several links and mentions of this doc.
+
+> 
+> I was not aware that bit level details are revealed in external 
+> documents :)
+> 
+> Even though its a 4-bit field, it only takes a 0 or 1 as others are 
+> undefined.
+> 
+> Exposing all the bits will only cause more confusion like it did for 
+> others thinking that input select is actually configurable when its not.
+> 
+> I think what we should do is just pass "misr_type" to this API to tell 
+> whether its lm misr or intf misr and set BIT(24) based on that.
+
+This would be another simplification. Can we instead just use values 0 
+and 1 instead and maybe document that by default everybody should use 0.
+
+> 
+> 
+>>>   #define MISR_CTRL_FREE_RUN_MASK         BIT(31)
+>>>
+>>>   /*
+>>> @@ -357,7 +358,8 @@ void _dpu_hw_setup_qos_lut(struct 
+>>> dpu_hw_blk_reg_map *c, u32 offset,
+>>>                             bool qos_8lvl,
+>>>                             const struct dpu_hw_qos_cfg *cfg);
+>>>
+>>> -void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 
+>>> misr_ctrl_offset);
+>>> +void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c, u32 
+>>> misr_ctrl_offset,
+>>> +                      bool set_input_sel);
+>>>
+>>>   int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+>>>                  u32 misr_ctrl_offset,
+>>>
+>>> -- 
+>>> 2.43.0
+>>>
+>>
+>>
+
+-- 
+With best wishes
+Dmitry
 
 
