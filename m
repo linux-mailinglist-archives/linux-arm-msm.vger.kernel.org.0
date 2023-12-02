@@ -1,108 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-3007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04265801808
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 00:48:24 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A703980191E
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 01:49:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2C1331C20850
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Dec 2023 23:48:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3520EB20D25
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Dec 2023 00:49:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00AA03F8EA;
-	Fri,  1 Dec 2023 23:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B0277E2;
+	Sat,  2 Dec 2023 00:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mZd1tuEK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NfDEtChw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E88D71A6
-	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 15:48:17 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-50bdebb1786so1063520e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Dec 2023 15:48:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701474496; x=1702079296; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MJVF1ZrmInpC3Gvm7OoxUYxrkOmo0ZmH7AoQY/EPSs0=;
-        b=mZd1tuEKRfnRNS0QnROcQtzivqmaGm5La3GJFMAIGcspDCufWl11BE3goa/nC5mDQQ
-         YCqC974jIbEYugeztPTDvqyIM+9yXh4wFiRRUcpqLha/OBxP34b+oTw5NS1MUS6Oct+k
-         DQyhIpdTHTL8Bau8vQXNeJzDsFa1pELRgdVP0iTkPW7k2yILuwN318fSiM7WiVhcUs8U
-         5iv9uDU7/Iq8FoLPv+pd/7A8eIEl++jLsl+XdBHx4RTq9VoAlVMogquSZIXWzWH5ago0
-         id71As2c4cd5GqgBlDeiE4fXLzLMtIHPO+j5VVteSSTzYGcMyh0BgXbi7oNt+4cEmfHB
-         fNrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701474496; x=1702079296;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MJVF1ZrmInpC3Gvm7OoxUYxrkOmo0ZmH7AoQY/EPSs0=;
-        b=JUSbLbxbcCSxpq9c4SLiPS/kqMyAo+QoWi75D5jIWD74O+LK0yaHuE9+NwXbZzKOyI
-         ZnMHRjCHYluYHxPtCUQ2uisJTxwo6U/OHWLCU2uwXULIOi/KWR5tThjbp/KsURZHZFQB
-         kaIA57sgZ48GvWcyqoXEe89rf30anPE61tG57vh1ycAPzrU2W3ePkLu15AHJSecAkRc0
-         sT+QukcxqRlnPSY9E5amLyaZEsJdsxdC/W0Or0qD83NM8lG9TZsz98j9GZgAmoRLWgUQ
-         qA3a+YCOcdIhftQ6pXq6aYZmnmtr6eYs2+0C5KQkH+mfgpdRaq3pZd1mI7SIP/KktizV
-         aUzg==
-X-Gm-Message-State: AOJu0YxAkOhyRPtBX7B3bCWX2fxAYWnnq3YZsKV+1M0uBWFMoJ24pYV2
-	cJSze3EOotB+gMCwAfgRHRNy4w==
-X-Google-Smtp-Source: AGHT+IHTNUQKLLhXANUvRoFzT3r6DBEs/yUnPcAE4JI0ahtu6IrjM/fQLRF3nClcM2LwCY50wd2GhA==
-X-Received: by 2002:a2e:991a:0:b0:2c9:b8c6:1a3f with SMTP id v26-20020a2e991a000000b002c9b8c61a3fmr1491188lji.46.1701474496154;
-        Fri, 01 Dec 2023 15:48:16 -0800 (PST)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id u16-20020a05651c131000b002c9e7c4a7c0sm118565lja.33.2023.12.01.15.48.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Dec 2023 15:48:15 -0800 (PST)
-Message-ID: <e380c8c6-59eb-46c2-8b62-e9cbc4e90752@linaro.org>
-Date: Sat, 2 Dec 2023 01:48:14 +0200
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1D7F103
+	for <linux-arm-msm@vger.kernel.org>; Fri,  1 Dec 2023 16:49:32 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B1Nfmb0009703;
+	Sat, 2 Dec 2023 00:49:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=I3L8Z78dPjm73L5817yDSaFBpcg+nIjTwRx/lgtlwMY=;
+ b=NfDEtChwoHL652NU5qH4yvmpX43HFSUKMdG2YcR/knQjo4xT1tc1Uzk91E8UbQMOeVjL
+ BbGRs9qSTIdRMDj5dWFlxYQdwU8g8XqYEJ3liwvFOtKSW6e4Pm8Pkwr/+joiWIeahm6b
+ Hw6z2OQtXbm+Uayp/8/DpZFNARrJfCVXC9u/f7eZKnYDKbjBacFi4LdftNCFh3Qp52gn
+ UjtQuR9kCQkkFBIsv1G5OfR/0OCP7fjBxHr70Sw8fe1qMXiubp16Kv7Gb+ncZq+5ZfOz
+ MLW+miRA6XOyNQt/J4bPGNYwrHr4iDAB5yaK2oUvJusmoE3aAdfuy4zJW7L0EMoQOA0t Hg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uqcm6a7fh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 02 Dec 2023 00:49:17 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B20nHTw002448
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 2 Dec 2023 00:49:17 GMT
+Received: from [10.110.73.134] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 1 Dec
+ 2023 16:49:16 -0800
+Message-ID: <8a1116d7-8fc7-438c-5fc5-199b440f5284@quicinc.com>
+Date: Fri, 1 Dec 2023 16:49:15 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/a6xx: add QMP dependency
-Content-Language: en-GB
-To: Arnd Bergmann <arnd@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>,
- Daniel Vetter <daniel@ffwll.ch>, Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Arnd Bergmann <arnd@arndb.de>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Ulf Hansson <ulf.hansson@linaro.org>, Thomas Zimmermann
- <tzimmermann@suse.de>, Randy Dunlap <rdunlap@infradead.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Akhil P Oommen <quic_akhilpo@quicinc.com>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org
-References: <20231016200415.791090-1-arnd@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20231016200415.791090-1-arnd@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 12/17] drm/msm/mdp4: use drmm-managed allocation for
+ mdp4_crtc
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>
+CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
+ <20230708010407.3871346-13-dmitry.baryshkov@linaro.org>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230708010407.3871346-13-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LUPYwGq_EekJbjaomHxZAeefWjTg2BI6
+X-Proofpoint-ORIG-GUID: LUPYwGq_EekJbjaomHxZAeefWjTg2BI6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-01_24,2023-11-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 impostorscore=0 bulkscore=0 mlxlogscore=999 clxscore=1015
+ suspectscore=0 spamscore=0 mlxscore=0 priorityscore=1501 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2312020004
 
-On 16/10/2023 23:04, Arnd Bergmann wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
+
+
+On 7/7/2023 6:04 PM, Dmitry Baryshkov wrote:
+> Change struct mdp4_crtc allocation to use drmm_crtc_alloc(). This
+> removes the need to perform any actions on CRTC destruction.
 > 
-> When QMP is in a loadable module, the A6xx GPU driver fails to link
-> as built-in:
-> 
-> x86_64-linux-ld: drivers/gpu/drm/msm/adreno/a6xx_gmu.o: in function `a6xx_gmu_resume':
-> a6xx_gmu.c:(.text+0xd62): undefined reference to `qmp_send'
-> 
-> Add the usual dependency that still allows compiling without QMP but
-> otherwise avoids the broken combination of options.
-> 
-> Fixes: 88a0997f2f949 ("drm/msm/a6xx: Send ACD state to QMP at GMU resume")
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/gpu/drm/msm/Kconfig | 1 +
->   1 file changed, 1 insertion(+)
+>   drivers/gpu/drm/msm/disp/mdp4/mdp4_crtc.c | 33 ++++++++++++-----------
+>   1 file changed, 17 insertions(+), 16 deletions(-)
+> 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
