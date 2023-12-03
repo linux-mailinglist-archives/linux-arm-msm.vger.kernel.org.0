@@ -1,109 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-3150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36D6180260A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 18:46:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DB25802620
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 19:10:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6823280A7E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 17:46:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DDF38B208E7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 18:10:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E732156EB;
-	Sun,  3 Dec 2023 17:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4698E17736;
+	Sun,  3 Dec 2023 18:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="o0iagnjm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="unYOaL6G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-89-177-23-149.bb.vodafone.cz [89.177.23.149])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8DC4EA;
-	Sun,  3 Dec 2023 09:46:43 -0800 (PST)
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 52CF5161141;
-	Sun,  3 Dec 2023 18:46:40 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1701625600;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=/0uABy5p+lD1/t8pLC8a1UTZg8b9mPTQ0FRBl/mwsVg=;
-	b=o0iagnjmhHvdCaV5lzHQSenVOcIWFHj+qxGESPGjVaXTkyQ8jIlqz7E4esWAU0vjB8YjBG
-	TsMPTC7Lz4jIukDlq7SOfXyOjg0RKbR8zt1rC+6l5MqG0Ii7W0wQdIUhtZ/a6Np7P9DBR1
-	Fise9q5guGz3sFspXBh06L0jS+Ob9GA=
-Message-ID: <3a32ad33-5f0e-4166-a118-1bbbec9c68e0@ixit.cz>
-Date: Sun, 3 Dec 2023 18:46:40 +0100
+Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 898EDE8
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Dec 2023 10:10:43 -0800 (PST)
+Received: by mail-oo1-xc2c.google.com with SMTP id 006d021491bc7-58db7d8f2ebso2533248eaf.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Dec 2023 10:10:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701627042; x=1702231842; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=hNWrRac9X2HwvORQ757NwocfD1vnHP+xf8IZ/qHDI6Y=;
+        b=unYOaL6GmKGiXQQvTG3eiOK0jsCalp+D5BcbGe2XQfAv756BIqOvNo9m6J6D6JfFMA
+         vutdEKQ3i9xcZH5u9N6By923F1m316v9Qu2vZQatBhQYznZx8JonJVbqs6Olhp4IUrMC
+         C2R4zsXgNBHWbf9v5LrAN4s0yuKaoKdZKkyAFA781CRekh74nE5X/EGbRZy0Qtvj7sSv
+         93CayLV8+tBjrJG3g4u5o+LfJtvgoW7yk60NjjQ+NfWa2Sb84LKnt9JLcg9l+9CwyC+W
+         krdu/Pusa3JpopTeJMffBIFcLWOAUEEOeZ8IN8zI6WbnsbDTqSstsoCEMTRAJamAMVPl
+         PBgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701627042; x=1702231842;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hNWrRac9X2HwvORQ757NwocfD1vnHP+xf8IZ/qHDI6Y=;
+        b=TWtgFiwc06mEuTz6ETfOf7lpKMy6sJcKEzn1kZFQv6LOVIPoKFz2A92GASbEr6CMDN
+         ZEWx8q8+a24JYUf4asfwvD/B2/0KaXDRQc5pKxoOel2xKk/wFF24cd+hDTCx60uvuEu1
+         82xt72EOiuZSZQoMsqSUE0N/t9gVeCx3FsUG8wToN4hfpfPKKgh8b0y6zx+Sk6l8ea1X
+         C3Ns3kdGv+sagQy8FUQtiJpynwWdyOtomHcseaN7A1FVYI0d8v8mJeoxKLkfm01yJV6c
+         e1n1lrlPJdD7sc9FsqqZY6hgOy7MjFfJxEmi0EhV1xLIK/Sam1wuhMcCndEgJ19TE1b+
+         cR5Q==
+X-Gm-Message-State: AOJu0YxNVlQOi95LMCAJ+ZcP2N0OXhJKnWWRj1FhIaf2mSJnfQBBzEWm
+	OSvWwMXCEo7pOt5xsn2f6SIS/1hgzVvY88PMV7TZ6A==
+X-Google-Smtp-Source: AGHT+IHb3Z+Gg112hSwn2ALLmEQLugH9ogYS6oGgilydDX+dwhOwywfw0uwnNsBepyMljqTdUfek1dtr5E8c4G2RWMA=
+X-Received: by 2002:a05:6358:9214:b0:169:49f7:cb1c with SMTP id
+ d20-20020a056358921400b0016949f7cb1cmr3149078rwb.8.1701627042402; Sun, 03 Dec
+ 2023 10:10:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: luhongfei@vivo.com
-Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- opensource.kernel@vivo.com, stable@vger.kernel.org
-References: <20230612133452.47315-1-luhongfei@vivo.com>
-Subject: Re: [PATCH v3] soc: qcom: pmic: Fix resource leaks in a
- device_for_each_child_node() loop
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20230612133452.47315-1-luhongfei@vivo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20231027-solid-fill-v7-0-780188bfa7b2@quicinc.com>
+ <170155324921.2215646.4829699354481827834.b4-ty@linaro.org> <OiX1EToyQ0JBECS-Vs6IOw1vqLTt42PYkTlTCBhsPUi-VXC2UoLjkRfEW-OFucxsTqz93Q3IIXZZ3Lw_Lqs1dFt4YbuFSUGrKfDPnnKDCbw=@emersion.fr>
+In-Reply-To: <OiX1EToyQ0JBECS-Vs6IOw1vqLTt42PYkTlTCBhsPUi-VXC2UoLjkRfEW-OFucxsTqz93Q3IIXZZ3Lw_Lqs1dFt4YbuFSUGrKfDPnnKDCbw=@emersion.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Sun, 3 Dec 2023 20:10:31 +0200
+Message-ID: <CAA8EJpom-guy0p_u2kLhXgLZnJaVXCXaHAUGhv2EH=xyrHtL6A@mail.gmail.com>
+Subject: Re: (subset) [PATCH RFC v7 00/10] Support for Solid Fill Planes
+To: Simon Ser <contact@emersion.fr>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	quic_abhinavk@quicinc.com, ppaalanen@gmail.com, 
+	laurent.pinchart@ideasonboard.com, sebastian.wick@redhat.com, 
+	ville.syrjala@linux.intel.com, dri-devel@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, wayland-devel@lists.freedesktop.org, 
+	Pekka Paalanen <pekka.paalanen@collabora.com>, Harry Wentland <harry.wentland@amd.com>, 
+	Sebastian Wick <sebastian@sebastianwick.net>
+Content-Type: text/plain; charset="UTF-8"
 
-Heya!
+On Sun, 3 Dec 2023 at 14:15, Simon Ser <contact@emersion.fr> wrote:
+>
+> On Saturday, December 2nd, 2023 at 22:41, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+>
+> > On Fri, 27 Oct 2023 15:32:50 -0700, Jessica Zhang wrote:
+> >
+> > > Some drivers support hardware that have optimizations for solid fill
+> > > planes. This series aims to expose these capabilities to userspace as
+> > > some compositors have a solid fill flag (ex. SOLID_COLOR in the Android
+> > > hardware composer HAL) that can be set by apps like the Android Gears
+> > > test app.
+> > >
+> > > In order to expose this capability to userspace, this series will:
+> > >
+> > > [...]
+> >
+> >
+> > Applied to drm-misc-next, thanks!
+>
+> Where are the IGT and userspace for this uAPI addition?
 
-I think this would be great candidate for backport, at least up to 6.6. 
-What do you think?
+Indeed. I checked that there are uABI acks/reviews, but I didn't check
+these requirements. Frankly speaking, I thought that they were handled
+already, before giving the ack. How should we proceed? Should I land a
+revert?
 
-David
-
+-- 
+With best wishes
+Dmitry
 
