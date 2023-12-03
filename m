@@ -1,167 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-3157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA36D8026E6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 20:34:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F274802730
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 21:12:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82E611F20FC9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 19:34:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37B641C2092E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 20:12:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9863118030;
-	Sun,  3 Dec 2023 19:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B82F118C16;
+	Sun,  3 Dec 2023 20:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BnlSM+sE"
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="ljIX4sel"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 939D01BD7;
-	Sun,  3 Dec 2023 11:33:44 -0800 (PST)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-5d05ff42db0so42210827b3.2;
-        Sun, 03 Dec 2023 11:33:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701632022; x=1702236822; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vguNRNHZWUrDOSu/TVKVOPIB86L1io3LlGEpKJkKhiw=;
-        b=BnlSM+sEOduvbEUrrvCDcvg+vYlF5hKVKUkmiSk20y+NXZ9rlfSFBC/XxwGXu5FxnQ
-         OlZgRkfBLkFgr05ufkOc0kNxcSpiDLoBYJxmjX3oSyl1DVw8mQ+OrQmgaiWTm34E5oSX
-         a5vBPq/t9S2WHl3qKcrmyrK1l+TTV4/nll23ZlhcEAw0Mz6zRG5M6wqOAnHkWIPNGFuq
-         baLJeW9UzP7qWRaTB2MYyBJ2ieydGukGKUviNHKT4/tf1za6SsgC1TyhNh4Z80T01saR
-         h4Mi5/Pmmf7FYTLEHZ/rYDlmpZ2PBZOqLYv8EQyDOPMyfkSiHuEz+Fnurd1cu8dfpDJL
-         lEHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701632022; x=1702236822;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vguNRNHZWUrDOSu/TVKVOPIB86L1io3LlGEpKJkKhiw=;
-        b=gVhYNGIpHnlP0Swz4VKfhieUzc1u1Sn7WBUKlE0/GDvT8vHe1IuMmbJrZcYJvirVZJ
-         ZNNd0u5c483ckzVfRkZ7QKSsSRHYgU/rcsO9+HbuFNTRI1SzWMQmYnZuiHfER/NRo4eB
-         hyREQEwisSG6Elyi6KI0MFtDtmwRNTbEL4eZbPiXyLgoJbW240PBf8vxqDU1DIGSoh3n
-         5HpN2vICySn0mncf9o4YXZ5QrifCyuu1XFmHf5h8fXTbVoXdViA+D6x4PXhutaoOvlD7
-         M0oX6xtMoLtkTD0St/mQu2aFUzqpQPnpISuJXmFEKBI/O46FKXKhFBd6vnmk5LKNpDYO
-         K6eA==
-X-Gm-Message-State: AOJu0Yw1guZMuv8NCiiuvpWm1KOmExUEo4o/ClUHhU5JVHnFxbTT7gGg
-	5ejSiDR7AcyghB9FGx9pAIQInWumTTk75Q==
-X-Google-Smtp-Source: AGHT+IFSv+65IiQiN8WCGcLVQvQiuR6hHdW5qXQ7nf6ECXpLpXmmUxxmzvhwBggjw2vBz5nonWlXlg==
-X-Received: by 2002:a05:690c:3745:b0:5d8:5fad:8dcc with SMTP id fw5-20020a05690c374500b005d85fad8dccmr507589ywb.29.1701632022542;
-        Sun, 03 Dec 2023 11:33:42 -0800 (PST)
-Received: from localhost ([2601:344:8301:57f0:cb98:c3e:57c:8191])
-        by smtp.gmail.com with ESMTPSA id m190-20020a0dfcc7000000b005463e45458bsm2765478ywf.123.2023.12.03.11.33.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Dec 2023 11:33:41 -0800 (PST)
-From: Yury Norov <yury.norov@gmail.com>
-To: linux-kernel@vger.kernel.org,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Yury Norov <yury.norov@gmail.com>,
-	linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org
-Cc: Jan Kara <jack@suse.cz>,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Matthew Wilcox <willy@infradead.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
-	Alexey Klimov <klimov.linux@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>
-Subject: [PATCH v2 19/35] iommu: use atomic find_bit() API where appropriate
-Date: Sun,  3 Dec 2023 11:32:51 -0800
-Message-Id: <20231203193307.542794-18-yury.norov@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231203193307.542794-1-yury.norov@gmail.com>
-References: <20231203192422.539300-1-yury.norov@gmail.com>
- <20231203193307.542794-1-yury.norov@gmail.com>
+Received: from mail.manjaro.org (mail.manjaro.org [IPv6:2a01:4f8:c0c:51f3::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A3ECC0;
+	Sun,  3 Dec 2023 12:12:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1701634342;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=iNJjh+X6J9Z2/8EV0arL00UpbZzQdKWDMWVJrQFp4PA=;
+	b=ljIX4selP/ND8AJ6It0KkxBLOqBtyjfUs3s0T0C6UA8PdapcWO8fuZos8pLiUl3M7doWqt
+	/V3Gz0oO6Ih2UIXol5JsGXO8vk003riVjOyRrAN+PVlz0hp0BlO4Ft9fddsrzin2+bA4t7
+	xMp6H6/iz5K4jOThAsmVxrHzXL5ONg7OCm0clj6JmtpBJA8yEj0437Bc6a9uc+kyfyvbDM
+	mRMHYfdiVuJz63EWuVpppTT0RNTqL/nA+M4FL35JgJDjKrEgZGb7LhhZsGm8mIvchOplBw
+	yWchPPfzmaYRYzwb+xnNetndCxJqr4s8r1Kz+uNFwx8t7FkfAwXdJLYqk9NgAA==
+Date: Sun, 03 Dec 2023 21:12:17 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
+ <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, Andrew Lunn
+ <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson
+ <andersson@kernel.org>, Chen-Yu Tsai <wens@kernel.org>, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>,
+ Heiko Stuebner <heiko@sntech.de>, Jonathan Corbet <corbet@lwn.net>, Konrad
+ Dybcio <konrad.dybcio@linaro.org>, Michal Simek <michal.simek@amd.com>, Neil
+ Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>, Olof
+ Johansson <olof@lixom.net>, =?UTF-8?Q?Rafa=C5=82_Mi=C5=82ecki?=
+ <zajec5@gmail.com>, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, workflows@vger.kernel.org,
+ linux-doc@vger.kernel.org
+Subject: Re: [PATCH v3] docs: dt-bindings: add DTS Coding Style document
+In-Reply-To: <83b413441a953e8f2bc56adf09511a80@manjaro.org>
+References: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
+ <63ec18b2758a9e385f446fb00b60ee69@manjaro.org>
+ <0bcc0679-b883-4435-8843-cc830122c0e1@linaro.org>
+ <83b413441a953e8f2bc56adf09511a80@manjaro.org>
+Message-ID: <7021717e2e747b9c119b7c5091b60bdf@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Switch opencoded find_and_set_next_bit() in __arm_smmu_alloc_bitmap()
-and msm_iommu_alloc_ctx() to use dedicated API, and make them nice
-one-liner wrappers.
+Just a brief reminder about my suggestions below, which seemingly didn't 
+find their way into the v4.  At least the first one, which improves the 
+opening sentence, is worth including, IMHO.
 
-While here, refactor msm_iommu_attach_dev() and msm_iommu_alloc_ctx()
-so that error codes don't mismatch.
 
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu.h | 10 ++--------
- drivers/iommu/msm_iommu.c             | 18 ++++--------------
- 2 files changed, 6 insertions(+), 22 deletions(-)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-index 703fd5817ec1..004a4704ebf1 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -453,15 +453,9 @@ struct arm_smmu_impl {
- 
- static inline int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
- {
--	int idx;
-+	int idx = find_and_set_next_bit(map, end, start);
- 
--	do {
--		idx = find_next_zero_bit(map, end, start);
--		if (idx == end)
--			return -ENOSPC;
--	} while (test_and_set_bit(idx, map));
--
--	return idx;
-+	return idx < end ? idx : -ENOSPC;
- }
- 
- static inline void __iomem *arm_smmu_page(struct arm_smmu_device *smmu, int n)
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index f86af9815d6f..67124f4228b1 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -185,17 +185,9 @@ static const struct iommu_flush_ops msm_iommu_flush_ops = {
- 	.tlb_add_page = __flush_iotlb_page,
- };
- 
--static int msm_iommu_alloc_ctx(unsigned long *map, int start, int end)
-+static int msm_iommu_alloc_ctx(struct msm_iommu_dev *iommu)
- {
--	int idx;
--
--	do {
--		idx = find_next_zero_bit(map, end, start);
--		if (idx == end)
--			return -ENOSPC;
--	} while (test_and_set_bit(idx, map));
--
--	return idx;
-+	return find_and_set_bit(iommu->context_map, iommu->ncb);
- }
- 
- static void msm_iommu_free_ctx(unsigned long *map, int idx)
-@@ -418,10 +410,8 @@ static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 					ret = -EEXIST;
- 					goto fail;
- 				}
--				master->num =
--					msm_iommu_alloc_ctx(iommu->context_map,
--							    0, iommu->ncb);
--				if (IS_ERR_VALUE(master->num)) {
-+				master->num = msm_iommu_alloc_ctx(iommu);
-+				if (master->num >= iommu->ncb) {
- 					ret = -ENODEV;
- 					goto fail;
- 				}
--- 
-2.40.1
-
+On 2023-11-29 12:37, Dragan Simic wrote:
+> On 2023-11-29 11:43, Krzysztof Kozlowski wrote:
+>> On 28/11/2023 21:00, Dragan Simic wrote:
+>>> 
+>>> I went through the language of the entire patch, after the notice 
+>>> that
+>>> the v4 would no longer accept language improvements.  My wording- and
+>>> grammar-related suggestions are available inline below.
+>> 
+>> Thanks. I want to finish this at some point and it might not happen if
+>> grammar fixes will be coming every patch revision. Then after we 
+>> finish
+>> review, new feedback will appear about using British or American
+>> spelling (which reminds me old quote/email about which variant of
+>> English is most popular in Linux kernel: the incorrect one).
+> 
+> Ah, that's a good one. :)  Basically, both English variants should be
+> fine, but a single document should obviously use only one variant.
+> 
+>>>> +=====================================
+>>>> +Devicetree Sources (DTS) Coding Style
+>>>> +=====================================
+>>>> +
+>>>> +When writing Devicetree Sources (DTS) please observe below 
+>>>> guidelines.
+>>>>  They
+>>> 
+>>> The sentence above should be replaced with: "The following guidelines
+>>> are to be followed when writing Devicetree Source (DTS) files."
+>> 
+>> Are you sure? It's passive and I was taught it is discouraged for
+>> writing. See for example:
+>> https://www.hamilton.edu/academics/centers/writing/seven-sins-of-writing/1
+> 
+> Hmm, you're right, passive voice is usually not the best choice.
+> Here's my take two for the suggested replacement sentence, which is
+> actually a simplified version:
+> 
+> "This document contains the guidelines for writing Devicetree Source
+> (DTS) files."
+> 
+>>>> +should be considered complementary to any rules expressed already 
+>>>> in
+>>>> Devicetree
+>>>> +Specification and dtc compiler (including W=1 and W=2 builds).
+>>> 
+>>> A definite article ("the") should be added before "Devicetree
+>> 
+>> ack
+>> 
+>>> Specification" and "dtc".  Also, "Specification" in "Devicetree
+>>> Specification" should be capitalized.
+>> 
+>> It was.
+> 
+> Oh, sorry, I see now.  IIRC, it wasn't capitalized in some places, so
+> I made a mistake here.
+> 
+>>>> +
+>>>> +Individual architectures and sub-architectures can add additional
+>>>> rules, making
+>>>> +the style stricter.
+>>> 
+>>> "Sub-architectures" should be replaced with "subarchitectures".  "Can
+>> 
+>> A hint, you can write such review feedback as:
+>> s/sub-architectures/subarchitectures/
+> 
+> Sure, but I specifically wanted to be less terse, as a way to be 
+> respectful.
+> 
+>> BTW, my language spelling points "subarchitectures" as mistake, but
+>> sure, ack.
+> 
+> Using hyphens or not is almost always debatable, but modern English in
+> general leans toward not using them.
+> 
+>>>> +3. Unit addresses shall use lowercase hex, without leading zeros
+>>>> (padding).
+>>> 
+>>> "Lowercase hex" should be replaced with "lowercase hexadecimal 
+>>> digits".
+>>> 
+>>>> +
+>>>> +4. Hex values in properties, e.g. "reg", shall use lowercase hex.  
+>>>> The
+>>>> address
+>>>> +   part can be padded with leading zeros.
+>>> 
+>>> "Hex values" should be replaced with "Hexadecimal values".  
+>>> "Lowercase
+>>> hex" should be replaced with "lowercase hexadecimal digits".
+>> 
+>> ack, but that's quite picky. We are (software) engineers so we are
+>> supposed to know the slang.
+> 
+> Sure, but this document is of a bit formal nature, so using slightly
+> more formal language can only be helpful.
+> 
+>>>> +2. Nodes without unit addresses shall be ordered alpha-numerically 
+>>>> by
+>>>> the node
+>>>> +   name.  For a few types of nodes, they can be ordered by the main
+>>>> property
+>>>> +   (e.g. pin configuration states ordered by value of "pins"
+>>>> property).
+>>> 
+>>> "Alpha-numerically" should be replaced with "alphabetically".
+>> 
+>> Are you sure? Does alphabetical order include numbers?
+> 
+> That's a good question, which also crossed my mind while writing the
+> suggestions down.  A more correct word would be "lexicographically",
+> with something like ", with the already defined valid characters
+> making the symbol set and the ACSII character set defining the
+> ordering, " serving as an additional explanation.
+> 
+> This would be a rather formal, but also very precise definition of the
+> applied ordering.
+> 
+>>>> +3. When extending nodes in the board DTS via &label, the entries 
+>>>> shall
+>>>> be
+>>>> +   ordered either alpha-numerically or by keeping the order from 
+>>>> DTSI
+>>>> (choice
+>>>> +   depending on sub-architecture).
+>>> 
+>>> "Alpha-numerically" should be replaced with "alphabetically".
+>> 
+>> Similar concern
+> 
+> I agree.  We could use "lexicographically" instead, with the precise
+> definition already established earlier in the document.
+> 
+>>>> +board DTS, not in the SoC or SoM DTSI.  A partial exception is a
+>>>> common
+>>>> +external reference SoC-input clock, which could be coded as a
+>>>> fixed-clock in
+>>> 
+>>> "SoC-input" should be replaced with "SoC input".
+>> 
+>> ack, thanks!
+> 
+> Thank you once again for working on this document!
 
