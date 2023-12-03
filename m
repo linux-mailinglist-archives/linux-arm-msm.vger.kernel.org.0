@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-3063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDBFE801FDE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 01:05:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0FCF801FDF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 01:05:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 929D61F2101D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 00:05:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E7561C2092E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 00:05:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66A362F38;
-	Sun,  3 Dec 2023 00:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41BE72FB3;
+	Sun,  3 Dec 2023 00:05:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="coxPpZKs"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C455Y+/p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A88BE3
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 16:05:37 -0800 (PST)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50abbb23122so4667640e87.3
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12EEC107
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 16:05:38 -0800 (PST)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50bf37fd2bbso1358e87.0
         for <linux-arm-msm@vger.kernel.org>; Sat, 02 Dec 2023 16:05:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701561935; x=1702166735; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701561936; x=1702166736; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JO3m8ahifaDZ0+MNukHcqzkkdAa1Y9cf8gmY03LWk14=;
-        b=coxPpZKs77ZyM1pXxmt66CeRKf+hVxFyJiD6nurJI8MLJbVJGKM0nvNijGOpP4nL52
-         WOQETEBaKFP5KHvzkVTXF6pm04/MG4SItAr0xRCKM4pvoP/3v+4mnwRX6XMaF5IgQrbY
-         IxxMiMDWnpspw9vM7nFNEYdv1cs02LdWemV0HeJXnJhtiolUS8FhFdr8RdEXthlrsDwx
-         ONT+bvuLinJ+k9LKAklAcP8WXXbtJ9v1tzjOniJuoNf2R6AfuBBofNNTeDAElj+cW4/J
-         8QjyAEs74Wbigyxe8sevUm6IIA+sIMko8E+F8b9TMkRd0VgoY+q6PT19xnjnc5MDaO12
-         6Sag==
+        bh=yhduEdY9rfFEo5t7qo9Oszbc0IZqRQzEBjCv6mdoXAM=;
+        b=C455Y+/pWz8uzedYpKZWlkBiA0liLdy7NKBBMEKQRiFEgLsXzZN8F32P/uWWL/QTB2
+         kiUaaOyMNEjYZxQzcTXTZkV9bnKbdz/yOr3JTFP1GNdocsaJlcylcBdMSBgnPDi4Q5Pv
+         iqSJcJOMhTKZvfBrRivC8MiwtvWNXCSVUiJJGN4rvT6TqXw742j9bMIQ7O1mrt65Mreg
+         /l711lUJmxAeVrxeLPyTBSmiv9Y5fo4sqLLvGY+ttt9dZ1QyaIHE93pa7R1EEFUoSzfG
+         gkkdLv4wC7XUDcdR5RBjQgn4aRCa+koYNKFP+QhqCS9bSO+XoRcNydF1Ardp8uSjgPKJ
+         ATsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701561935; x=1702166735;
+        d=1e100.net; s=20230601; t=1701561936; x=1702166736;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JO3m8ahifaDZ0+MNukHcqzkkdAa1Y9cf8gmY03LWk14=;
-        b=NlGRf2TqqlJXSuahdlWL97shqpACwxe5fje59pxHmo6X7alZ9KoSfPeuIDJBq8Pj9M
-         YB0IJfAVCPwiv/+KM+9zS4OdVuHH7nGFyQLTqpxjyKuNoVi1ds+uQUc+5RIZf8BjdOq0
-         Js4ZKwcutcfJyfl9fZWlP9eLb8K9f5fSgBGqxL8/HuIXEUkaNHwxdKlyBB4uj+LCJK95
-         QIOB0M5P74oJ7keudv0XMzHIVUYhAxTrsciiy/5/vqvIEVEro8mwwUzGxBhEipusevrW
-         t3QQzD/s9CTMzEjJfXNeoRvTZF7pN3cWzJccyTE6QP4W5fqwrIVzGh3TPWAOPWrxyKRe
-         dAig==
-X-Gm-Message-State: AOJu0Yz6cCEHAtiW0QIoo7Cwzz9rXrZQ7pApI0U3DB0kV8bhRGsKup/7
-	awglcDDFf2uq5tzWWfQ3fAkHKw==
-X-Google-Smtp-Source: AGHT+IH/f0Rg02BqzF0RxgclP0Ngb9Yhu8RdxeWoyIlgBcPLdaE4UHjLlCCMIAdKZLauDY7T3sDXtw==
-X-Received: by 2002:a19:ca5e:0:b0:50b:eead:3756 with SMTP id h30-20020a19ca5e000000b0050beead3756mr343659lfj.54.1701561935562;
-        Sat, 02 Dec 2023 16:05:35 -0800 (PST)
+        bh=yhduEdY9rfFEo5t7qo9Oszbc0IZqRQzEBjCv6mdoXAM=;
+        b=V21hszzYlO7nj479XFcSxnu610ib5xly+8hDChA5Yl1tys+lC6lC4MpD8Kz5G9/AEU
+         itFZRHbLIamBgmHkWPRO2OgKJB4vyzP5ejmRHAvWteZmT2J2VXkm8CPJjpG6ogouSLlk
+         LcuZE5+wBq8svlTSDwxqTjiLd8jw3T8Y0236rtRBUN4DudMncmDOyIF/2wrZZPY3IyA6
+         Hd04m8bU37lneE6PYgfaY1XUdMO5zVM2ZwJC6JtyfS+mMTzFodMc+gzDqkzRtho+XZxR
+         AOVv76m77jMY+It5Iun/Q0uqm9w1vSCABk1wZNQEmsub1W7EbGLVMGfQky5Gfhjmc3ST
+         opQQ==
+X-Gm-Message-State: AOJu0Yz7bc9jfcsO+nR6dWFWPFU0SZTIfW2U2PKuXjn0hEpyKpqMLQXX
+	T3fvaYBYT5rfG6g6fWUg2IWCYw==
+X-Google-Smtp-Source: AGHT+IEnH09BN8lJCnFzv/1AEwB1sYe5O3yf8kfOev9tVf+ZhwPkF/62e21L4u2Nl2L7UYNUJg5kQg==
+X-Received: by 2002:ac2:4f05:0:b0:50b:d764:76de with SMTP id k5-20020ac24f05000000b0050bd76476demr3115828lfr.109.1701561936482;
+        Sat, 02 Dec 2023 16:05:36 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t2-20020a19ad02000000b0050bc5edfa45sm826273lfc.85.2023.12.02.16.05.33
+        by smtp.gmail.com with ESMTPSA id t2-20020a19ad02000000b0050bc5edfa45sm826273lfc.85.2023.12.02.16.05.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Dec 2023 16:05:34 -0800 (PST)
+        Sat, 02 Dec 2023 16:05:35 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Maxime Ripard <mripard@kernel.org>,
@@ -64,9 +64,9 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH RESEND 1/5] drm/atomic: add private obj state to state dump
-Date: Sun,  3 Dec 2023 03:05:28 +0300
-Message-Id: <20231203000532.1290480-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH RESEND 2/5] drm/msm/dpu: finalise global state object
+Date: Sun,  3 Dec 2023 03:05:29 +0300
+Message-Id: <20231203000532.1290480-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231203000532.1290480-1-dmitry.baryshkov@linaro.org>
 References: <20231203000532.1290480-1-dmitry.baryshkov@linaro.org>
@@ -78,44 +78,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The drm_atomic_print_new_state() already prints private object state via
-drm_atomic_private_obj_print_state(). Add private object state dumping
-to __drm_state_dump(), so that it is also included into drm_state_dump()
-output and into debugfs/dri/N/state file.
+Add calls to finalise global state object and corresponding lock.
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+Fixes: de3916c70a24 ("drm/msm/dpu: Track resources in global state")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/drm_atomic.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-index f1a503aafe5a..c31fc0b48c31 100644
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -1773,6 +1773,7 @@ static void __drm_state_dump(struct drm_device *dev, struct drm_printer *p,
- 	struct drm_crtc *crtc;
- 	struct drm_connector *connector;
- 	struct drm_connector_list_iter conn_iter;
-+	struct drm_private_obj *obj;
- 
- 	if (!drm_drv_uses_atomic_modeset(dev))
- 		return;
-@@ -1801,6 +1802,14 @@ static void __drm_state_dump(struct drm_device *dev, struct drm_printer *p,
- 	if (take_locks)
- 		drm_modeset_unlock(&dev->mode_config.connection_mutex);
- 	drm_connector_list_iter_end(&conn_iter);
-+
-+	list_for_each_entry(obj, &config->privobj_list, head) {
-+		if (take_locks)
-+			drm_modeset_lock(&obj->lock, NULL);
-+		drm_atomic_private_obj_print_state(p, obj->state);
-+		if (take_locks)
-+			drm_modeset_unlock(&obj->lock);
-+	}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index fe7267b3bff5..73f70e67cfef 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -385,6 +385,12 @@ static int dpu_kms_global_obj_init(struct dpu_kms *dpu_kms)
+ 	return 0;
  }
  
- /**
++static void dpu_kms_global_obj_fini(struct dpu_kms *dpu_kms)
++{
++	drm_atomic_private_obj_fini(&dpu_kms->global_state);
++	drm_modeset_lock_fini(&dpu_kms->global_state_lock);
++}
++
+ static int dpu_kms_parse_data_bus_icc_path(struct dpu_kms *dpu_kms)
+ {
+ 	struct icc_path *path0;
+@@ -826,6 +832,8 @@ static void _dpu_kms_hw_destroy(struct dpu_kms *dpu_kms)
+ 		dpu_rm_destroy(&dpu_kms->rm);
+ 	dpu_kms->rm_init = false;
+ 
++	dpu_kms_global_obj_fini(dpu_kms);
++
+ 	dpu_kms->catalog = NULL;
+ 
+ 	if (dpu_kms->hw_mdp)
 -- 
 2.39.2
 
