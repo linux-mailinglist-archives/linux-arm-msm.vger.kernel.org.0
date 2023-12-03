@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D42B8802580
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 17:33:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEBDC802582
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 17:34:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBE891C20933
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 16:33:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 68FB01F20DD4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 16:34:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D64342F47;
-	Sun,  3 Dec 2023 16:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7703914262;
+	Sun,  3 Dec 2023 16:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X0ZqQTff"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DcI6QIl/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E742AC1
-	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Dec 2023 08:33:47 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-a1b03886fd7so92257966b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Dec 2023 08:33:47 -0800 (PST)
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED8F2CF
+	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Dec 2023 08:34:28 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-a1a5772b8a5so199591766b.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Dec 2023 08:34:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701621226; x=1702226026; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701621267; x=1702226067; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LD4myhxFv1aMiSYLqC9ASJD82XriEC9rJCJ/sLaBe4E=;
-        b=X0ZqQTffpaM9SJBceY6UfPdVbXUrB4a2NUZ9NP4T+cfsVtYiyns8D/KZvYIbBmXsUc
-         C4g5X9VIrEpkQ/vDXTHZXf06XtWsdEmH0bHcD9zixGuy/WGEnRfL5PBRSbHFTFUR+GB8
-         kQFQNR7QUOfhIeh2i4Thqvu59PmnKmsSU9NKwUbVKZ/xLaPJHO2FYmbKAd98czDmFZCt
-         5CUNjcz6g2vhnGM5b6EwscoSh9S+cKq0dyJxKhSbGoZ8hu3byMDo5A+u5v1AlFrgHpSh
-         tFEzhIcguK8uZw5CWl3nRHCMFbGYiDq+0R+AH2irke3UziVyc3RXwBjC0pPJ0u+l9PX0
-         dDuQ==
+        bh=JZc7WfjaB2ZO2aboTBI45OdkxPzclEBBZASLm6NWu6s=;
+        b=DcI6QIl/jB7c18ghz4zOAhG34coGmeyOHf2jOw3DJGAbaf35uxOIJKeA37VjkMljTj
+         epv9EJAQHPiuykB77l72QGyRcEsYt5VmlFbj6ldXOqUA9QJCe+pGP4uOfgjrAoufojXc
+         a+8IXyp7prBU8IUyPrj+qyIcsLVjJOVpljJsCommdMO6MYVQHZ0ZKHAaiDPBGipws1H8
+         3/mrTGigomjGYMXOmoKVwy2XxNy3s3r3D0NxwGfpcN6M9mZEyFqv8qS178pQUvdjsLgO
+         w9CwlZYH19QEZhylDnFCm0DmDUmjUS9jXpMNEzQKlQp8h2WhJieqTwU6VAkN/hq7q+Ab
+         NbWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701621226; x=1702226026;
+        d=1e100.net; s=20230601; t=1701621267; x=1702226067;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LD4myhxFv1aMiSYLqC9ASJD82XriEC9rJCJ/sLaBe4E=;
-        b=hbNp2XO94pv7QylkiQt4IECUfMA4d4j7cNXHJBj/6d/6CBDpUbiEh3FQhV3cqxOGx8
-         +2YTTDN2umiCCDt+RaoFL8DSOSu/VZsMIScDIEa4KKO9aEadCKGMxPJMb6+lVkd0cPM8
-         PAiA3vN89doDvGoMz0016BXi7smWz3zMyeBfNtfKbtF8F4UVHYvmoRdZOSwIlmARQqSA
-         fx9wxxmkGGTKwj5IOA/btjqCmnekwFTdlSBfdjEOwIb2kCvlDdx+FfYUs9DPHHOwjXGy
-         whBP5wII6Lne3zWcseEDKVLPNlkmq87iUIt8mfOy4nibjWQ5ipqKmtk8MlOsJJZNY4bj
-         Qbzw==
-X-Gm-Message-State: AOJu0Yw0+yp/zW1YNs1KTYVFlLHT9Wq6HMCvX/c+x+eJrIgy46lzR0iW
-	cZTPrU7ioN2ZJm3kYu3tq1xoJg==
-X-Google-Smtp-Source: AGHT+IEjCXRFvxlwnxceMKE2GE6drMxM44wMjN7pXLKY3+/LRfLHMDr/GphB3Wr78M5SjmKWRxMUNA==
-X-Received: by 2002:a17:906:1c6:b0:a19:a1ba:da48 with SMTP id 6-20020a17090601c600b00a19a1bada48mr2725900ejj.111.1701621226338;
-        Sun, 03 Dec 2023 08:33:46 -0800 (PST)
+        bh=JZc7WfjaB2ZO2aboTBI45OdkxPzclEBBZASLm6NWu6s=;
+        b=wljksHOessOfeHE/miiqmACmc9bWZzWzc9OsF6S8N+xY9RvPm9lOoauueNt4XAW8ef
+         Dfdn/v3zq0g0Z6HSkCAJ7tCv2Q4S8ngpKrn77b/P9XiOswLUVSLHjIeFsW0OipK7/q3o
+         4pY7r9CwNxKpFV5E8zATJBS274HSccJ8iQna1yF+b/ioY/q3v6XkDw1txvXA9V/CuVkp
+         AaB21VzRr+koOar90KkrV3XovEQpwGHPcWHkBX1HuIdPwcKXull+cchXbqBrBKewrpLW
+         n5Avjpl6bMFG7jc4y7x395adPpUTiHpdwTVILYVOQkOBfj/+GEgKDtlfkgo3YA4ufBpi
+         AztA==
+X-Gm-Message-State: AOJu0Yw8ilc1PvZkjozbfpBGuR7/jY3mM1EGFyPF+qVzhym1Lc0GZJF1
+	7fsqA10nA7hCNyqWHkHSkFvP6A==
+X-Google-Smtp-Source: AGHT+IGMwvHqjNHtEfM1uwKc7VtAYA35h34m5rRtJlKSUeyGCL/w7kxasjv1qcPwbLB2Bc6P7WxeqQ==
+X-Received: by 2002:a17:906:5ac3:b0:a17:3097:3f6e with SMTP id x3-20020a1709065ac300b00a1730973f6emr2261207ejs.30.1701621267442;
+        Sun, 03 Dec 2023 08:34:27 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id sa12-20020a1709076d0c00b009fd585a2155sm4272210ejc.0.2023.12.03.08.33.44
+        by smtp.gmail.com with ESMTPSA id sa12-20020a1709076d0c00b009fd585a2155sm4272210ejc.0.2023.12.03.08.34.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Dec 2023 08:33:45 -0800 (PST)
-Message-ID: <6f4f7903-c112-428b-8082-a8eca7c5981d@linaro.org>
-Date: Sun, 3 Dec 2023 17:33:43 +0100
+        Sun, 03 Dec 2023 08:34:26 -0800 (PST)
+Message-ID: <67ecd9c3-40e3-40c6-b904-9898556af409@linaro.org>
+Date: Sun, 3 Dec 2023 17:34:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,8 +62,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: ipq6018: fix clock rates for
- GCC_USB0_MOCK_UTMI_CLK
+Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: ipq6018: Add QUP5 SPI node
 Content-Language: en-US
 To: Chukun Pan <amadeus@jmu.edu.cn>, Bjorn Andersson <andersson@kernel.org>
 Cc: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -71,7 +70,7 @@ Cc: Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
  Conor Dooley <conor+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org
-References: <20231203154030.532880-1-amadeus@jmu.edu.cn>
+References: <20231203154003.532765-1-amadeus@jmu.edu.cn>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -117,18 +116,21 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231203154030.532880-1-amadeus@jmu.edu.cn>
+In-Reply-To: <20231203154003.532765-1-amadeus@jmu.edu.cn>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/12/2023 16:40, Chukun Pan wrote:
-> The clock provided by XO is 24MHz, not 20MHz.
-
-That does not look like XO, but GCC_USB0_MOCK_UTMI_CLK
-
+> Add node to support the QUP5 SPI controller inside of IPQ6018.
+> Some routers use this bus to connect SPI TPM chips.
 > 
-> Fixes: 5726079cd486 ("arm64: dts: ipq6018: Use reference clock to set dwc3 period")
 > Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+> ---
+> Changes in v2:
+> * No changes, resend due to error link to other threads.
+
+Why are you sending this separately from the UART patch?
+
 Best regards,
 Krzysztof
 
