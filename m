@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-3077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72045802015
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 01:32:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AFD2802018
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 01:32:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A35641C20845
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 00:32:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B6649281009
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 00:32:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14F64635;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9419E7F0;
 	Sun,  3 Dec 2023 00:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N9ojhrI5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ue+uWrUU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3750107
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 16:32:08 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-50bc053a9a7so4700809e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Dec 2023 16:32:08 -0800 (PST)
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA888114
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 16:32:09 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50be8ced3ddso785073e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Dec 2023 16:32:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701563527; x=1702168327; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701563528; x=1702168328; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zzawnv+H8eBQZ1f28Md0xL056czBkqWOMr7/krgRvws=;
-        b=N9ojhrI5vhwuTt+LD4fQK0EDBkxdUDaLxYBHIVe/Dg5xuilYHSEiu/MrjYfA/jByIj
-         4Oh0KP98lXkMDCGdiXX39jI0kaVTi6EqT2yaC+SqeoesvWWsrMRtOOFwvE/zjKHdXkb/
-         DOxVm+3CsIdVbHzu9l4mKpmQcJubglRwzDEUKRLfWFBvD5768OUbkk468jmM38rFl3Br
-         9utA2K5+uHeEZDtT/HtrLIpBS2TK3kOHvYyRUNteEynn3C+p95JS9WR9YuoSnFGdQX82
-         STSMNkCzyYHmvxkiOi67EY2T95yusT9A9wORNBsIU6/fVDHv8mictLb02gyGDiJqlIsa
-         OEAg==
+        bh=dUi6QKN0qZ859wsIOcquZfetN1GsdPLuB9ODzPF+Xac=;
+        b=ue+uWrUUqFpvcfNHOcAj5vMvor68/SGkq1fKMaqD1GZwQTrvia5Hj/Bi5yxsR7E/q5
+         urC2j/9siCoCu2ZAmWtD2anJ+Hr5wdNSg8fNloxQVJbmKpbU53kS1GjifhAWe3OV+0dG
+         qvTGnAiP+oX++Lq8W8oXJ9QML1uzTAfbXjpMj00Xu/ALdECE70NvKsuVNF25ZzTa+puT
+         EyeHG++4YdtogpnJRnBVfvmQq4+wH6FfX0eJDRAoAj2hlAq+M2luSBuC25uogNLQ9fml
+         8d2rGkbVVHSr6FSqTcxCERhkvk+qiGUZOHUpKKKt+IN0Ai3xfVEwvOTRpzOU/fJfi+F7
+         2KZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701563527; x=1702168327;
+        d=1e100.net; s=20230601; t=1701563528; x=1702168328;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zzawnv+H8eBQZ1f28Md0xL056czBkqWOMr7/krgRvws=;
-        b=DKXxEWEFsiJYJiubqD211apQufBG6YszvGPdH917OxkY3X790wRr2c8yUAUVPJy0pv
-         BkQ4K/RgIJXgIgzTe3eXH1ERyRDq31dSkKXiL9Gbl8zzdR7VitFeqw7zxydN+aALZuS/
-         4tqBuuTAhNP7syUwPEwordR8OHPpCMLkQA5I/j2ijoimMaAdBu/8DKaezIR9mY39dYha
-         D+5/JIhxWSEC725+bWn293r77QkV1RxrOA99MdZwvmeMCY1ff2bI9jjdsX6TIDAnCuqE
-         Mr7RfG6/yJGItTSW/j/dTF8R8joKPzJGZH7VxpEGxG6pyKvTpvrg2uyOUlLSuXMFj2um
-         dhTg==
-X-Gm-Message-State: AOJu0YzEr773EiInsyYpYYp8n/v8HIYC9NsB1ju2Nm2aMiI4PKDV9v0m
-	S10OOBIBQ9F2nqxtfm4lEMbDVw==
-X-Google-Smtp-Source: AGHT+IHPoMoW+IkTm8S0Mv9PnrYHKs5uHnRTWcNf/X845nTvEjQ6crWLuMR6wcSGJxcHPv8g630uIQ==
-X-Received: by 2002:ac2:5f43:0:b0:50b:d764:2911 with SMTP id 3-20020ac25f43000000b0050bd7642911mr1050984lfz.169.1701563527377;
-        Sat, 02 Dec 2023 16:32:07 -0800 (PST)
+        bh=dUi6QKN0qZ859wsIOcquZfetN1GsdPLuB9ODzPF+Xac=;
+        b=mZxNApLHF9/4+D/Ac9QZK0w0JMJ5ukGnEewndM+HlYv9ndHdPdnxEOI3XObx8jNaem
+         Xsta7CgXv8rxgHHuoXVygJiJILlAHJa666v41HqHMrlNlBBPZPCxmtbir5GeDJgVl3Do
+         132ihz1a/ChqlOQEfEnhQe47vz+VLPx+NaVxJC4fd9JeKK9h9+Ql/kbgjssuERdBjdef
+         JP7q01bULpq2xb+f9RD/seXxQUztgHERevpNmrNzGQZvQrGj9rRmjBT5I8tix3baJljX
+         T40J9L1c7PBSfQf0F794Ly2JtRAzi5B09nTKlWESAieok/hGxjZe5oPMwaNfUKBeRRjW
+         DCDA==
+X-Gm-Message-State: AOJu0Yw4QDzg1wd+1E4W2Q/e27bpCzFO6/X/ODFwZZo8BZuQEaV4VeNS
+	/2SD581NFV0oBITnzvLo3DXLyg==
+X-Google-Smtp-Source: AGHT+IH4cg6wWyl23jyswquCXROqmqiFTtHeAnCuqWAXJ5nyGZhx7Jin+V/SbzHLIknUTdUjGeImvA==
+X-Received: by 2002:a05:6512:3109:b0:50b:f113:2cf8 with SMTP id n9-20020a056512310900b0050bf1132cf8mr116309lfb.118.1701563528124;
+        Sat, 02 Dec 2023 16:32:08 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id i7-20020ac25b47000000b0050ba4a26fccsm422408lfp.117.2023.12.02.16.32.06
+        by smtp.gmail.com with ESMTPSA id i7-20020ac25b47000000b0050ba4a26fccsm422408lfp.117.2023.12.02.16.32.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Dec 2023 16:32:06 -0800 (PST)
+        Sat, 02 Dec 2023 16:32:07 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Sean Paul <sean@poorly.run>,
@@ -65,9 +65,9 @@ Cc: Stephen Boyd <swboyd@chromium.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [RFT PATCH v2 3/4] drm/msm/dpu: enable writeback on SM6125
-Date: Sun,  3 Dec 2023 03:32:02 +0300
-Message-Id: <20231203003203.1293087-4-dmitry.baryshkov@linaro.org>
+Subject: [RFT PATCH v2 4/4] drm/msm/dpu: enable writeback on SM6350
+Date: Sun,  3 Dec 2023 03:32:03 +0300
+Message-Id: <20231203003203.1293087-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org>
 References: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org>
@@ -83,51 +83,51 @@ Enable WB2 hardware block, enabling writeback support on this platform.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h | 18 ++++++++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h | 18 ++++++++++++++++++
  1 file changed, 18 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-index cec7af6667dc..79fca229df18 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h
-@@ -27,6 +27,7 @@ static const struct dpu_mdp_cfg sm6125_mdp = {
- 		[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+index 62db84bd15f2..3c179a73c030 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h
+@@ -27,6 +27,7 @@ static const struct dpu_mdp_cfg sm6350_mdp = {
  		[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
  		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
+ 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2c4, .bit_off = 8 },
 +		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
+ 		[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
+ 	},
+ };
+@@ -146,6 +147,21 @@ static const struct dpu_dsc_cfg sm6350_dsc[] = {
  	},
  };
  
-@@ -139,6 +140,21 @@ static const struct dpu_pingpong_cfg sm6125_pp[] = {
- 	},
- };
- 
-+static const struct dpu_wb_cfg sm6125_wb[] = {
++static const struct dpu_wb_cfg sm6350_wb[] = {
 +	{
 +		.name = "wb_2", .id = WB_2,
 +		.base = 0x65000, .len = 0x2c8,
-+		.features = WB_SDM845_MASK,
++		.features = WB_SM8250_MASK,
 +		.format_list = wb2_formats,
 +		.num_formats = ARRAY_SIZE(wb2_formats),
 +		.clk_ctrl = DPU_CLK_CTRL_WB2,
 +		.xin_id = 6,
 +		.vbif_idx = VBIF_RT,
-+		.maxlinewidth = 2160,
++		.maxlinewidth = 1920,
 +		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
 +	},
 +};
 +
- static const struct dpu_intf_cfg sm6125_intf[] = {
+ static const struct dpu_intf_cfg sm6350_intf[] = {
  	{
  		.name = "intf_0", .id = INTF_0,
-@@ -210,6 +226,8 @@ const struct dpu_mdss_cfg dpu_sm6125_cfg = {
- 	.dspp = sm6125_dspp,
- 	.pingpong_count = ARRAY_SIZE(sm6125_pp),
- 	.pingpong = sm6125_pp,
-+	.wb_count = ARRAY_SIZE(sm6125_wb),
-+	.wb = sm6125_wb,
- 	.intf_count = ARRAY_SIZE(sm6125_intf),
- 	.intf = sm6125_intf,
+@@ -219,6 +235,8 @@ const struct dpu_mdss_cfg dpu_sm6350_cfg = {
+ 	.dsc = sm6350_dsc,
+ 	.pingpong_count = ARRAY_SIZE(sm6350_pp),
+ 	.pingpong = sm6350_pp,
++	.wb_count = ARRAY_SIZE(sm6350_wb),
++	.wb = sm6350_wb,
+ 	.intf_count = ARRAY_SIZE(sm6350_intf),
+ 	.intf = sm6350_intf,
  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
 -- 
 2.39.2
