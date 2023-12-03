@@ -1,83 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-3112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEE308022BB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 12:26:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9A5D8022C2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 12:26:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75A8C1F20F9A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 11:26:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6F045B20A0B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 11:26:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD3B49479;
-	Sun,  3 Dec 2023 11:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CEFDB662;
+	Sun,  3 Dec 2023 11:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oZgW4vza"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ej3FuKBz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19D669B
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B93C7E3
 	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Dec 2023 03:26:35 -0800 (PST)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2c9f099cf3aso12990451fa.1
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50bee606265so759286e87.2
         for <linux-arm-msm@vger.kernel.org>; Sun, 03 Dec 2023 03:26:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701602793; x=1702207593; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701602794; x=1702207594; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YmhXK4vL3E4nWjMPFEArxq3v2irEKwOONy77m2lg+qc=;
-        b=oZgW4vzaIJ0QYKVsk1WfWjTsQL9R8/q1vUBt9nxk1ttQgC4b0632m5wQDiydbv5IZj
-         Fr9J7DB5H7k84wr/F6qwof9hexO2hjMZiBY228kx58uHPgBxbBYGCS89yQ6gvBst3MWm
-         L8lnVsm68+K7GbLIpKQEZkEi6GiSIEI3Tk8n6Q9p47KuorQguX2d+hzHMFcDyS++pNJZ
-         Cm+oZHtmjUyTJ6GDrLk+fCe+A2kNB0s86DHO6ZRohsWJskkyk9xjLMAtBBRjlBXzMm7E
-         oxSW6KuMdA8n6xlqe9KtPk1R/iFpBlbbq8qu0oYKoH7QL6/U88STCcMr5pgb1R0rnoHp
-         rK9g==
+        bh=8vrRnlK++TVk2VT6FeBO/PnYsSt3drwvKoWii9XeVnc=;
+        b=Ej3FuKBzqHG3pr6gDw/2Hb0pdan9keHBtmz2/INI7UkHL/A1N+BkZS7Yqv0pqSrWPD
+         QFUJC+RcbXOu4MbqUi5OhVp48MwwQEGF3bnGu2WYZbYUluQXlp9nSIbbR05kUz6WqFk6
+         o+M/m0O0znQOFWJ9CdW5UNyR4x8wackCSnnX1Hv+EgfDm7vUHYkoClKhaBYChI3IdrKU
+         /zwd6j/+yq2DQowgqULzkMu9XWnSLOAWfytLE5AO70ImaUjD+xi2N0uNGKSZwbJrfr/A
+         CafjP/FJquaTmGaD/h/IlU27L+vUJp/sxvSdDiegSl34u/5ks2RS8lxN3Hzg49N9jPEp
+         NdJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701602793; x=1702207593;
+        d=1e100.net; s=20230601; t=1701602794; x=1702207594;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YmhXK4vL3E4nWjMPFEArxq3v2irEKwOONy77m2lg+qc=;
-        b=WZOHsEyPaMA4XgQgJilloRV0oquHk9f6qAi377x5EUj3vvF3hbsX/AKvj02qdYNfKG
-         uEPzGFrvBDRD/kE5Jh9/4G8ZMM1WyJWoh7ICSiZzLlaPF/AQc4zVv/GuO9rcKKihMwFM
-         tciwtL6vTrPgpA4KXED1kI4BwoZDgaOOSuWdUA22zYbU+40xfSuZuUw985FlPnb22EDd
-         xxXoqUSBvCJZtrgGm6lXT163E9e/BW+ICIOKOWBH7K0+J+cZV+fIcZK/9tTSGWtrufsW
-         7e5CvakQ1ln3Vt/tQCPVPRUhXrBUJIaIqmjfT6MkYDNZK1EV7xBwDE0xydwyI7uWH7h6
-         tDBg==
-X-Gm-Message-State: AOJu0YxRKGIIJy1ArUsAOuUBlcPyvuhYMKMf3qTi/fN+P0fEy0195EnO
-	UTjvtMSyAt5D0+KzbLu/xZ9DLw==
-X-Google-Smtp-Source: AGHT+IHlLYyyC21TH0FtIj5NM4vWDxanSGH9w8egAW9vnCLxMxgkRyfvr22YsKy9g8OxxxGBM7H5hA==
-X-Received: by 2002:ac2:4244:0:b0:50b:e4a7:93c with SMTP id m4-20020ac24244000000b0050be4a7093cmr913587lfl.11.1701602793049;
+        bh=8vrRnlK++TVk2VT6FeBO/PnYsSt3drwvKoWii9XeVnc=;
+        b=Q9wC9uSyaM3N2pqjZNRFaaBVQ6tJmIg5CvqyPvVTRc5+vuyiGxl7RmHEZ12WZ76KOJ
+         lLMrA1lN1/iTlecqOcS5HTG6ALzVIcBiT6C1+lxrEn4+BkDEOyrIO8X2GXC9V0VKWLbV
+         wfyOjgHJuFVUMu93oVXmD77+pWUTgcpM9Pd0YKCJcEFSgIbUytkxwTVgHjYzF6aOVnM0
+         mvwKbxitbfm09gXuGQia1j9PlhevFhI3zL2VyC+/7Y/+37h3dAW7BUUThVuSbTbgW9SU
+         07rk12BiB6t2n4kwrRF5xSffRacUsTYiEnOx77TJVDW1Hx9AbbEVvtl4X+wqq63Ay79N
+         bXyg==
+X-Gm-Message-State: AOJu0Yxa/Q+tiLrlCqrzT5Ci0Xqy7x1Az733NXk1i/Qo3CjHYzjGHSg3
+	T+XhNXXUL+FGvIo7dXGHXIImlsNG2/fMhl8EnMY=
+X-Google-Smtp-Source: AGHT+IF8VFE8yHqpdA0lL2rONweKN2YoaaNJYPbP1H/4L8xmGbnzoQjpJq+kMoolwog2wQ5Wm5dbeg==
+X-Received: by 2002:a05:6512:6cb:b0:50b:e427:a530 with SMTP id u11-20020a05651206cb00b0050be427a530mr1343544lff.34.1701602793929;
         Sun, 03 Dec 2023 03:26:33 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id b9-20020ac25629000000b0050bf01760a1sm241224lff.295.2023.12.03.03.26.32
+        by smtp.gmail.com with ESMTPSA id b9-20020ac25629000000b0050bf01760a1sm241224lff.295.2023.12.03.03.26.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Dec 2023 03:26:32 -0800 (PST)
+        Sun, 03 Dec 2023 03:26:33 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Stephen Boyd <swboyd@chromium.org>,
 	David Airlie <airlied@gmail.com>,
 	Daniel Vetter <daniel@ffwll.ch>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Arnd Bergmann <arnd@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/a6xx: add QMP dependency
-Date: Sun,  3 Dec 2023 14:26:17 +0300
-Message-Id: <170160265547.1305159.16031924969779572625.b4-ty@linaro.org>
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 00/17] drm/msm/mdp[45]: use managed memory allocations
+Date: Sun,  3 Dec 2023 14:26:18 +0300
+Message-Id: <170160265545.1305159.2501271853192928734.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231016200415.791090-1-arnd@kernel.org>
-References: <20231016200415.791090-1-arnd@kernel.org>
+In-Reply-To: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
+References: <20230708010407.3871346-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,22 +82,61 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 16 Oct 2023 22:04:03 +0200, Arnd Bergmann wrote:
-> When QMP is in a loadable module, the A6xx GPU driver fails to link
-> as built-in:
+On Sat, 08 Jul 2023 04:03:50 +0300, Dmitry Baryshkov wrote:
+> Follow the DPU patchset ([1]) and use devm_ and drmm_ functions to
+> allocate long-living data structures in mdp4 and mdp5 drivers.
 > 
-> x86_64-linux-ld: drivers/gpu/drm/msm/adreno/a6xx_gmu.o: in function `a6xx_gmu_resume':
-> a6xx_gmu.c:(.text+0xd62): undefined reference to `qmp_send'
+> [1] https://patchwork.freedesktop.org/series/120366/
 > 
-> Add the usual dependency that still allows compiling without QMP but
-> otherwise avoids the broken combination of options.
+> Dmitry Baryshkov (17):
+>   drm/msm: add arrays listing formats supported by MDP4/MDP5 hardware
+>   drm/msm/mdp5: use devres-managed allocation for configuration data
+>   drm/msm/mdp5: use devres-managed allocation for CTL manager data
+>   drm/msm/mdp5: use devres-managed allocation for mixer data
+>   drm/msm/mdp5: use devres-managed allocation for pipe data
+>   drm/msm/mdp5: use devres-managed allocation for SMP data
+>   drm/msm/mdp5: use devres-managed allocation for INTF data
+>   drm/msm/mdp5: use drmm-managed allocation for mdp5_crtc
+>   drm/msm/mdp5: use drmm-managed allocation for mdp5_encoder
+>   drm/msm/mdp5: use drmm-managed allocation for mdp5_plane
+>   drm/msm/mdp4: use bulk regulators API for LCDC encoder
+>   drm/msm/mdp4: use drmm-managed allocation for mdp4_crtc
+>   drm/msm/mdp4: use drmm-managed allocation for mdp4_dsi_encoder
+>   drm/msm/mdp4: use drmm-managed allocation for mdp4_dtv_encoder
+>   drm/msm/mdp4: use drmm-managed allocation for mdp4_lcdc_encoder
+>   drm/msm/mdp4: use drmm-managed allocation for mdp4_plane
+>   drm/msm: drop mdp_get_formats()
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] drm/msm/a6xx: add QMP dependency
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/96ab215b2d5e
+[02/17] drm/msm/mdp5: use devres-managed allocation for configuration data
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/062aeadeba1d
+[03/17] drm/msm/mdp5: use devres-managed allocation for CTL manager data
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/4c1f4c1f1b43
+[04/17] drm/msm/mdp5: use devres-managed allocation for mixer data
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/1ad175c2c884
+[05/17] drm/msm/mdp5: use devres-managed allocation for pipe data
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/323e9a18d6e1
+[06/17] drm/msm/mdp5: use devres-managed allocation for SMP data
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/531d5313d934
+[07/17] drm/msm/mdp5: use devres-managed allocation for INTF data
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/6de8288bf668
+[08/17] drm/msm/mdp5: use drmm-managed allocation for mdp5_crtc
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/6f235e3d6b18
+[09/17] drm/msm/mdp5: use drmm-managed allocation for mdp5_encoder
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/669afee4a17e
+[11/17] drm/msm/mdp4: use bulk regulators API for LCDC encoder
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/54f1fbcb47d4
+[12/17] drm/msm/mdp4: use drmm-managed allocation for mdp4_crtc
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/783ad6e6312f
+[13/17] drm/msm/mdp4: use drmm-managed allocation for mdp4_dsi_encoder
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/e79571e8708b
+[14/17] drm/msm/mdp4: use drmm-managed allocation for mdp4_dtv_encoder
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/93d6e1b82b93
+[15/17] drm/msm/mdp4: use drmm-managed allocation for mdp4_lcdc_encoder
+        https://gitlab.freedesktop.org/lumag/msm/-/commit/2c24668cc068
 
 Best regards,
 -- 
