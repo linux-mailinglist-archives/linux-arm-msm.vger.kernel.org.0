@@ -1,58 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-3072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A59D802003
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 01:27:57 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B419E80200F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 01:32:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 47AB41F20FC2
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 00:27:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E55711C20837
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 00:32:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62D45625;
-	Sun,  3 Dec 2023 00:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86FE6395;
+	Sun,  3 Dec 2023 00:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EERH8BNj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qUpF7+vV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1950C115
-	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 16:27:49 -0800 (PST)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-50be3eed85aso1366527e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Dec 2023 16:27:49 -0800 (PST)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D50F114
+	for <linux-arm-msm@vger.kernel.org>; Sat,  2 Dec 2023 16:32:06 -0800 (PST)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50bf2dfda6fso89124e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Dec 2023 16:32:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701563267; x=1702168067; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=heUF+a7HiOKx2XIYX+afSxGWRxKmOfUpqPHFcQ7qMuk=;
-        b=EERH8BNjjS6DVWaLNYugtrYeyNr67F05+72p1Lduy9/bxbRd0siUxA3A6U0jqZ4TNc
-         lz2h9bWZCQE4XyK+gFuuTzgk7xk0zqfnZViZSxISVhEDscjTN7buAcWbjFN8IoKKst89
-         byqL7b/RiW3TwQo9V4AFdQahMQegW9v3xpI62klyEEgT3oRE8jpxCIFfPmdCR4PAryfq
-         OnU8GZ6lj6q1ekchBlyhtn95zNEFiWUjLzVJbjs63iF1UmV+gO4Fid3kA4IGgcF7TuYx
-         oIn6Qm4ldJYzbNeZRc4UEP8jQYfvJ4eviOLmy+/Og38Zmwx91ae9oHw0ka8AZ58pULGJ
-         fwnA==
+        d=linaro.org; s=google; t=1701563525; x=1702168325; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=H1sh+e6WV9mxF+sYcaPaBBaaZreS9crd7exAJRUxSZY=;
+        b=qUpF7+vVMfU3FgOTIhPjGWNy5G+2p1/kyY+nl8/6yDE6Vv8DiDd7vhfHMv0qRGtWuW
+         9t5wpjSm4ognY1gp36jBRsjepKEKR/bjcG1Pa/k/1FslN0tTZdRe/FLUH8iRTPOQafXo
+         jnuPwoEWjzojHJ/lVufJOWT8AZD6Oflv9z6nTZDPLz4cKS+cDzirU2ZSV/Mvy4x4955v
+         Y7uyTgu44AxusyYbySZDQVelDf/sJeUWSfXovUA4yvm9rTDdp5VsYhnDTk1ixi/zzJBj
+         /G01GkZOvyrshfrLzWl8ZxIEMtYkrfD6t18Ru9itGH24+x2mQa+6BK/LMOiGZak+bYs/
+         Gv4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701563267; x=1702168067;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=heUF+a7HiOKx2XIYX+afSxGWRxKmOfUpqPHFcQ7qMuk=;
-        b=AFWdLoOKE7BquecbpMXZRzyHjqlMm81pjg0k2rS5yqd0ktvii0B3lSRRHkKVBYHtZ3
-         ee3IkJSCBJjP4jsyunx/m/9hcmgrko/qEt+kqUTtEc0p5nbFnUTVRf/jUHoDrsYxn8pX
-         PNBWz381dOCe7up7m1uSkmqTFYeWnISrmWGbuCaeVOXL8YcrOIbYuymbvUdJaXwmr10Q
-         oyFoy19d06cFYYzUQKqACoh8RUf18eOgl6XvvfbpFIwPO6bDCH+SsAD7zIo1FNjUX7g3
-         1QDAMJpmspYAIXjZINLcQrcD9jeo23/GKqqgvapkZEb67DVledNdRyyNWhXVyukNAglh
-         aJjQ==
-X-Gm-Message-State: AOJu0Yy3PDfegAMj9OozhXMNH9+3k+3vkYpPeZJa2A/3xvAjlqtzhk8h
-	JdRwmEBrQocJgWnv7sj8+YXqMQ==
-X-Google-Smtp-Source: AGHT+IHi/rdRGHaEWr+BG4yKRNfKQ+Sj/CUnz2fF+hUvMf0vGSjuTU9KsGIzTFv+bZdWpU8b96CLWw==
-X-Received: by 2002:ac2:529c:0:b0:50b:d582:52f3 with SMTP id q28-20020ac2529c000000b0050bd58252f3mr1702952lfm.20.1701563267459;
-        Sat, 02 Dec 2023 16:27:47 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701563525; x=1702168325;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=H1sh+e6WV9mxF+sYcaPaBBaaZreS9crd7exAJRUxSZY=;
+        b=b4b34ZDsk0ZSlxQqXXszf3bu1omfVpcrDWkjoPl0BQ6pkPf9G0zw1V4yUUE+WYJ7nO
+         +LzU08Hx9o2kE8/xmniljOP/xQmVD01p0Qeorh6nagyXG+/XTWeqkh5UQBhalMtNNcu7
+         uzMAaTSFkvvGQSJtSQiUyq1Tm200+U+agdFhKTJ7o9qgsYoAYbkoeIT3C9JpgsYdPL9J
+         M9TeBiaZeZLIlmakbVMGipN+wXs2IjII4+AVrhEgm9SoO4jWLlF5Jkj+aUT650Yf3XDw
+         DrzZ4CyGLipXkJkJmvvkDfVBWBLqnZi46r7lTtBEQxhphlGDpdpmLYfDR4JYdCOrB8cs
+         9wsg==
+X-Gm-Message-State: AOJu0Yy8ZVLOUXA2DDGBUOuid9nohE6UDkF+1TzulJkkXHx0P6j0KQCz
+	JMbqJJ43MTr8Rk61ZBMGXw7cpg==
+X-Google-Smtp-Source: AGHT+IExV7d8TC5LUgJOCMr0Y0PtwxL8cWlbUdf980HQHway8QjDisIeQIpeJucyZJBGGAgpBBjIGQ==
+X-Received: by 2002:a05:6512:3e09:b0:50b:d764:64d1 with SMTP id i9-20020a0565123e0900b0050bd76464d1mr2401906lfv.134.1701563524761;
+        Sat, 02 Dec 2023 16:32:04 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id v13-20020a056512348d00b0050bca79a59bsm317231lfr.196.2023.12.02.16.27.46
+        by smtp.gmail.com with ESMTPSA id i7-20020ac25b47000000b0050ba4a26fccsm422408lfp.117.2023.12.02.16.32.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Dec 2023 16:27:46 -0800 (PST)
+        Sat, 02 Dec 2023 16:32:04 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Sean Paul <sean@poorly.run>,
@@ -65,12 +64,10 @@ Cc: Stephen Boyd <swboyd@chromium.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH v2 3/3] drm/msm/dpu: enable writeback on SM8450
-Date: Sun,  3 Dec 2023 03:27:43 +0300
-Message-Id: <20231203002743.1291956-4-dmitry.baryshkov@linaro.org>
+Subject: [RFT PATCH v2 0/4] drm/msm/dpu: enable writeback on the other platforms
+Date: Sun,  3 Dec 2023 03:31:59 +0300
+Message-Id: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231203002743.1291956-1-dmitry.baryshkov@linaro.org>
-References: <20231203002743.1291956-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,56 +76,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enable WB2 hardware block, enabling writeback support on this platform.
+I was not able to test it on my own, this is a call for testing for the
+owners of these platforms. The git version of modetest now fully
+supports writeback.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+Use libdrm >= 2.4.117, run modetest -ac to determine the writeback
+connector, cat /sys/kernel/debug/dri/0/state to determine
+spare CRTC and plane, then run something like:
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index d18145c226da..413c0b1f4ad3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -32,6 +32,7 @@ static const struct dpu_mdp_cfg sm8450_mdp = {
- 		[DPU_CLK_CTRL_DMA1] = { .reg_off = 0x2b4, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA2] = { .reg_off = 0x2bc, .bit_off = 8 },
- 		[DPU_CLK_CTRL_DMA3] = { .reg_off = 0x2c4, .bit_off = 8 },
-+		[DPU_CLK_CTRL_WB2] = { .reg_off = 0x2bc, .bit_off = 16 },
- 		[DPU_CLK_CTRL_REG_DMA] = { .reg_off = 0x2bc, .bit_off = 20 },
- 	},
- };
-@@ -316,6 +317,21 @@ static const struct dpu_dsc_cfg sm8450_dsc[] = {
- 	},
- };
- 
-+static const struct dpu_wb_cfg sm8450_wb[] = {
-+	{
-+		.name = "wb_2", .id = WB_2,
-+		.base = 0x65000, .len = 0x2c8,
-+		.features = WB_SM8250_MASK,
-+		.format_list = wb2_formats,
-+		.num_formats = ARRAY_SIZE(wb2_formats),
-+		.clk_ctrl = DPU_CLK_CTRL_WB2,
-+		.xin_id = 6,
-+		.vbif_idx = VBIF_RT,
-+		.maxlinewidth = 4096,
-+		.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
-+	},
-+};
-+
- static const struct dpu_intf_cfg sm8450_intf[] = {
- 	{
- 		.name = "intf_0", .id = INTF_0,
-@@ -411,6 +427,8 @@ const struct dpu_mdss_cfg dpu_sm8450_cfg = {
- 	.dsc = sm8450_dsc,
- 	.merge_3d_count = ARRAY_SIZE(sm8450_merge_3d),
- 	.merge_3d = sm8450_merge_3d,
-+	.wb_count = ARRAY_SIZE(sm8450_wb),
-+	.wb = sm8450_wb,
- 	.intf_count = ARRAY_SIZE(sm8450_intf),
- 	.intf = sm8450_intf,
- 	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+modetest -M msm -a -s 36@85:1024x768 -o test.d -P 79@85:1024x768
+
+where 36 is the Writeback connector id, 85 is CRTC and 79 is the plane.
+
+Then press Enter and check the test.d file for the raw image dump.
+
+Changes since v1:
+- Fixed the DPU_CLK_CTRL_WB2 definition
+
+Dmitry Baryshkov (4):
+  drm/msm/dpu: enable writeback on SM8150
+  drm/msm/dpu: enable writeback on SC8108X
+  drm/msm/dpu: enable writeback on SM6125
+  drm/msm/dpu: enable writeback on SM6350
+
+ .../drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 18 ++++++++++++++++++
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 18 ++++++++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h | 18 ++++++++++++++++++
+ .../drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h | 18 ++++++++++++++++++
+ 4 files changed, 72 insertions(+)
+
 -- 
 2.39.2
 
