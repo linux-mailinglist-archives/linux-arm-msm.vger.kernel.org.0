@@ -1,54 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-3105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DF478020F3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 05:52:58 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B4938020F5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 05:52:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C5B17B20B2C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 04:52:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B05FE1F21011
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 04:52:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DF3133E9;
-	Sun,  3 Dec 2023 04:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ED663C1E;
+	Sun,  3 Dec 2023 04:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SpKeB8HW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rb+m4kO3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E338D8F48;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1D98F48;
+	Sun,  3 Dec 2023 04:52:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEED1C433AD;
 	Sun,  3 Dec 2023 04:52:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E48C433A9;
-	Sun,  3 Dec 2023 04:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701579126;
-	bh=g9M9djE+Zo2OXIDWinS0oNMbR3ZSzjxtKnWXMhw6wI8=;
+	s=k20201202; t=1701579127;
+	bh=3IWQMAplStI32tTqlVKUtGheICzw+hofNiO3oG6ElaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SpKeB8HW4cy+hPa+FVjptdgDzrDMRDnS91UmNrziuyUZC0EcnT3uEO5wV+b5mMy6m
-	 iF1HXcXBVBaDd0W0XZmFrfO63mRThmmdiL5Xk1JuMcLQnm2NY+kqeBAo7uDYj3SioO
-	 tNUkCTyFknslfiwaGxdfDpN9RUX5EkrQpcoLVSPcc7xmsSRzwMqvWHBTvhHho5KqXf
-	 +Xp+s2HAXmeIFWCIa3d1rCoMKBPEhC0TE2CzIMXkeNHqYheFEtPxKXakguIG72LZxs
-	 VKnnTSvGPc17rsirBVcvvdOgbUz/KFnM5wS3LJzcmpPYOZcimXmOP17fjMoRlr5U3Q
-	 238sq8IQyK2yQ==
+	b=rb+m4kO3lhOFWLwquC9W8BlYmj9Z53Q1UOUHOVcNBKpeGaQfgq0V5KeFOUrlLDiae
+	 DKFiTSFvs4LTxCrbKgfVfq1y+ZVq9q1CsdJEwF47z1ZYv1LojkrXMh+maarQBxETmM
+	 m3n7qB6gGR8tuH9KIPKJFU2U8p5g8pTsgxrsFuo4f41aE0+xLivFsOL4EIR4x1PDyt
+	 w2RCHfotK6ouli6QSuw9egua/5uWZFFdKt4a4K8AfAHLjrK3ThKOaAr8fsVTkmtVr3
+	 Xn8xF0lzShZHh5yUl4Q6Ijg1pEVxZeApeGcjzja0SMmSPHoNVOEs87b8GzWpRsxHVs
+	 szcnvEeXI1h2A==
 From: Bjorn Andersson <andersson@kernel.org>
-To: agross@kernel.org,
-	konrad.dybcio@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	Tengfei Fan <quic_tengfan@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: linux-kernel@vger.kernel.org,
+	Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Nikita Travkin <nikita@trvn.ru>,
+	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel@quicinc.com
-Subject: Re: (subset) [PATCH v7 0/6] soc: qcom: Add uart console support for SM4450
-Date: Sat,  2 Dec 2023 20:54:52 -0800
-Message-ID: <170157925811.1717511.17508500866528370526.b4-ty@kernel.org>
+	~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-acer-a1-724: Add notification LED
+Date: Sat,  2 Dec 2023 20:54:53 -0800
+Message-ID: <170157925832.1717511.1073225570333009442.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231129103325.24854-1-quic_tengfan@quicinc.com>
-References: <20231129103325.24854-1-quic_tengfan@quicinc.com>
+In-Reply-To: <20231017125848.84311-1-raymondhackley@protonmail.com>
+References: <20231017125848.84311-1-raymondhackley@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,25 +61,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 29 Nov 2023 18:33:19 +0800, Tengfei Fan wrote:
-> This series add base description of UART, TLMM, RPMHCC, GCC and RPMh PD
-> nodes which helps SM4450 boot to shell with console on boards with this
-> SoC.
+On Tue, 17 Oct 2023 13:00:11 +0000, Raymond Hackley wrote:
+> Acer Iconia Talk S A1-724 uses KTD2026 LED driver. However, there is
+> no blue LED on it. Add it to the device tree.
 > 
 > 
 
 Applied, thanks!
 
-[1/6] arm64: dts: qcom: sm4450: Add apps_rsc and cmd_db node
-      commit: 924645058d31bde9788d6b493adefc6f113b3272
-[2/6] arm64: dts: qcom: sm4450: Add RPMH and Global clock
-      commit: 483fa5552d352f3bfe835a3156e6cf037c4cf77f
-[3/6] arm64: dts: qcom: add uart console support for SM4450
-      commit: 980679261b061da92fc441fa4e2fdb7ef8baadb2
-[4/6] arm64: dts: qcom: sm4450-qrd: add QRD4450 uart support
-      commit: b6fbe1112e40109b8a0013d19b2d97f01438482d
-[5/6] arm64: dts: qcom: sm4450-qrd: mark QRD4450 reserved gpios
-      commit: 6e28e70f00756275151ffb02534c6d2318229416
+[1/1] arm64: dts: qcom: msm8916-acer-a1-724: Add notification LED
+      commit: 50891bc7f1e9e65fa260c442efa7fa24b3523c96
 
 Best regards,
 -- 
