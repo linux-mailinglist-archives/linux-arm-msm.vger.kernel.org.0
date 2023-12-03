@@ -1,48 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-3110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D21A8802266
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 11:12:28 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08DAD80228C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 11:38:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 840CD1F2100B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 10:12:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF7481C208C9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 10:38:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DB438F57;
-	Sun,  3 Dec 2023 10:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9AE328FC;
+	Sun,  3 Dec 2023 10:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="YVpST0YX"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="SPC77Gh4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFEC1F3;
-	Sun,  3 Dec 2023 02:12:19 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C207F2;
+	Sun,  3 Dec 2023 02:38:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1701598336; bh=D98OLD1PzU0av069+SEqgQFkN/5n2xG9ugwljKPGRv4=;
+	t=1701599894; bh=gfTmLjG+RDZIzwKoJm7kepCtpzSofJnZrPO/EdJCflY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YVpST0YXbsjwdBdARgyDVsq31Bsq3mJCmHCXc43oKUXYpvhJymXCPUSHgVxUoSSS7
-	 MwmEdqKh5KpfwnKvd9+51+IoQdn7H+ERRpBUQZrRYvtEtT0A+EbWfo8r49po5ZQENi
-	 2zGTEIj0lViDIFGbCY4dlpMpozKltr4ik5wieMYw=
+	b=SPC77Gh4dVLSLqgmBDzjfjEiCH0YAYA72E5Uqz01zs41j1FGhhKKokrq96cyY4lji
+	 23C9vqjw9wUbaYKrvtMzXhLF2Q69T5gboN8coWA9Flf4LDIL8ueqoJbDpjiVyvavU2
+	 +FSNkHc+iqOBM29PPUEG3J38MXZaMDG5i1s9EqWc=
 From: Luca Weiss <luca@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>,
- Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh+dt@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
-Subject: Re: (subset) [PATCH 0/3] Add watchdog nodes to msm8226 & msm8974
-Date: Sun, 03 Dec 2023 11:12:15 +0100
-Message-ID: <8630951.T7Z3S40VBb@z3ntu.xyz>
-In-Reply-To: <170157925797.1717511.7301998654173050568.b4-ty@kernel.org>
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject:
+ Re: [PATCH v2 1/2] arm64: dts: qcom: msm8953: Set initial address for memory
+Date: Sun, 03 Dec 2023 11:38:13 +0100
+Message-ID: <2575326.iZASKD2KPV@z3ntu.xyz>
+In-Reply-To: <t6ckvr7bcpoc3z4cam7bilp67nn6qyvrmnqch6tlkwug7n2neq@32f5mso75fvu>
 References:
- <20231011-msm8226-msm8974-watchdog-v1-0-2c472818fbce@z3ntu.xyz>
- <170157925797.1717511.7301998654173050568.b4-ty@kernel.org>
+ <20231125-msm8953-misc-fixes-v2-0-df86655841d9@z3ntu.xyz>
+ <20231125-msm8953-misc-fixes-v2-1-df86655841d9@z3ntu.xyz>
+ <t6ckvr7bcpoc3z4cam7bilp67nn6qyvrmnqch6tlkwug7n2neq@32f5mso75fvu>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,38 +50,69 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
 
-On Sonntag, 3. Dezember 2023 05:54:39 CET Bjorn Andersson wrote:
-> On Wed, 11 Oct 2023 18:33:12 +0200, Luca Weiss wrote:
-> > Document the compatible for the watchdog found on both SoCs, and add
-> > them to the SoC dtsi file. And especially for the case where the
-> > bootloader has already enabled the watchdog we need to start petting it
-> > on time, otherwise the system gets rebooted.
+On Sonntag, 3. Dezember 2023 05:20:23 CET Bjorn Andersson wrote:
+> On Sat, Nov 25, 2023 at 01:19:27PM +0100, Luca Weiss wrote:
+> > The dtbs_check really doesn't like having memory without reg set.
 > > 
-> > It's worth noting that the watchdog behaves a bit unexpectedly.
-> > It appears the watchdog counts down significantly slower when there's no
-> > load on the system and can last far longer than 30 seconds until they
-> > bark. Only when putting load on the system, e.g. with stress-ng does the
-> > watchdog interrupt fire and kill the system within an expected amount of
-> > time.
+> > The base address depends on the amount of RAM you have:
+> >   <= 2.00 GiB RAM: 0x80000000
+> >   
+> >    = 3.00 GiB RAM: 0x40000000
+> >    = 3.75 GiB RAM: 0x10000000
+> >  
+> >  (more does not fit into the 32-bit physical address space)
 > > 
-> > [...]
+> > So, let's pick one of the values, 0x10000000 which is used on devices
+> > with 3.75 GiB RAM. Since the bootloader will update it to what's present
+> > on the device it doesn't matter too much.
+> > 
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > ---
+> > 
+> >  arch/arm64/boot/dts/qcom/msm8953.dtsi | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> > b/arch/arm64/boot/dts/qcom/msm8953.dtsi index e7de7632669a..a3ba24ca599b
+> > 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
+> > @@ -174,10 +174,10 @@ scm: scm {
+> > 
+> >  		};
+> >  	
+> >  	};
+> > 
+> > -	memory {
 > 
-> Applied, thanks!
-> 
-> [3/3] ARM: dts: qcom: msm8974: Add watchdog node
->       commit: 95053f6bc8ffca438a261400d7c06bd74e3f106e
+> Wouldn't it be sufficient to add @0 here, to please dtbs_check?
 
-Hi Bjorn,
+The checker itself also seems to be okay with memory@0 and no other change,
+but there's this warning with W=1
 
-Any reason you didn't pick up the msm8226 patch? Doesn't seem to be just your
-ty email, I only see the msm8974 patch in 
-https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/log/?h=arm32-for-6.8
+arch/arm64/boot/dts/qcom/msm8953.dtsi:177.11-181.4: Warning (unique_unit_address_if_enabled): /memory@0: duplicate unit-address (also used in node /soc@0)
+
+So probably we should still try to put it at a reasonable address like
+0x10000000?
 
 Regards
 Luca
 
 > 
-> Best regards,
+> Regards,
+> Bjorn
+> 
+> > +	memory@10000000 {
+> > 
+> >  		device_type = "memory";
+> >  		/* We expect the bootloader to fill in the reg */
+> > 
+> > -		reg = <0 0 0 0>;
+> > +		reg = <0 0x10000000 0 0>;
+> > 
+> >  	};
+> >  	
+> >  	pmu {
 
 
 
