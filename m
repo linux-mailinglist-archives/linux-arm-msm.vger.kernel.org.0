@@ -1,87 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-3152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D696802627
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 19:12:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E578802650
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 19:40:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D90BEB20988
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 18:12:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 284DE1F20F94
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Dec 2023 18:40:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ABECDDCD;
-	Sun,  3 Dec 2023 18:12:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IItbyqSa"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B21A21772A;
+	Sun,  3 Dec 2023 18:40:44 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7614DEA
-	for <linux-arm-msm@vger.kernel.org>; Sun,  3 Dec 2023 10:12:27 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-3b8903f7192so1774441b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Dec 2023 10:12:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701627147; x=1702231947; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lg+rYehudk4zCa2J1cWSGcffMXq8x+Mv5QTHznDZ7UE=;
-        b=IItbyqSaslJmRtggyu2MJS+ZvmgLSPiVPVxd2zCgP5su6Rzc0f436I16Kzy2d3iS7C
-         z1e83YjuZ4XHkI0eXQsQcNsF9Q30ABDjm7EAxKQnGUdTRZPUxPKzyArV10HiKD4jnUrR
-         BGjpu/N3DNis4/6iR3DnUlfgQhiw/py8pBKSNjBNEa/0owAG8s3GB2C0/gSN4rEFKxn1
-         5kqxHQ2+Gh35xP8Wk+t8VBLlBf9+L1546BE8iOq/MyFyYvIY7tcSf8jpK+lVMZKAz8ce
-         AxgOx5tKA8F8NJysQmRx06xrpnm7YbBbD5sUQuloYcKh5X7lm08SJYM4OdJh2riv0DF0
-         xoUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701627147; x=1702231947;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Lg+rYehudk4zCa2J1cWSGcffMXq8x+Mv5QTHznDZ7UE=;
-        b=DBJqO/cFB4sxbB2rWTPOuc3GTosDjh5MpJeSBimrgha+AFeq2mEybcGaZjLzTFNpTf
-         gupo1OAtCw7czzOBASv92kgtlV9SgBQ1O31CFwFp0Vl6debbDYcpjlpmi2J5YPKJ2vTQ
-         TQEviXJPtz72U4+6mZtyyWKSz48X0mvKUUeSTZpEhzCCsXbKI4mO3b3u51jJK4PsiXc1
-         njkPHXO/i0vCnjyZasBJAUeePkbATKLAf0sey3Bc3Ij99qrxwDu7zcTnHASWa9mO0DXo
-         Td6EP5yHaWEe2oSNF4iVhXJnGgHHhUdeoDwQ9T4HWKxhUDZnLUTQ2TSXQUtXyiYufS1w
-         BuXQ==
-X-Gm-Message-State: AOJu0YxryA25HIymzCubp/2JGQ1K/C2o19HTA7D2VKpE13sir2+O9dDQ
-	kp0F+FmiV/K67iQF5+M3AR2Zi7ajIWOknVL3w4e8GA==
-X-Google-Smtp-Source: AGHT+IFKiSLUh69bXIrR+MV8gBrvB/vkxWpWEmjwGc5/RbIXCKbbWe0MXg9D42xuTng5Uf6CH97soxZ4iLXLqlDmZLs=
-X-Received: by 2002:a05:6358:10a:b0:170:17eb:b3e with SMTP id
- f10-20020a056358010a00b0017017eb0b3emr2568531rwa.40.1701627146725; Sun, 03
- Dec 2023 10:12:26 -0800 (PST)
+Received: from mail11.truemail.it (mail11.truemail.it [IPv6:2001:4b7e:0:8::81])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E07EDA;
+	Sun,  3 Dec 2023 10:40:38 -0800 (PST)
+Received: from gaggiata.pivistrello.it (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
+	by mail11.truemail.it (Postfix) with ESMTPA id 5DE06201D4;
+	Sun,  3 Dec 2023 19:40:31 +0100 (CET)
+Received: from livingston (unknown [192.168.42.11])
+	by gaggiata.pivistrello.it (Postfix) with ESMTP id 0C5E67F9C0;
+	Sun,  3 Dec 2023 19:40:31 +0100 (CET)
+Received: from pivi by livingston with local (Exim 4.96)
+	(envelope-from <francesco@dolcini.it>)
+	id 1r9rOI-0000pW-2v;
+	Sun, 03 Dec 2023 19:40:30 +0100
+Date: Sun, 3 Dec 2023 19:40:30 +0100
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>,
+	Andrew Lunn <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Michal Simek <michal.simek@amd.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nishanth Menon <nm@ti.com>, Olof Johansson <olof@lixom.net>,
+	=?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	workflows@vger.kernel.org, linux-doc@vger.kernel.org
+Subject: Re: [PATCH v4] docs: dt-bindings: add DTS Coding Style document
+Message-ID: <ZWzLns9CPK3xeTzG@livingston.pivistrello.it>
+References: <20231203174622.18402-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20230612133452.47315-1-luhongfei@vivo.com> <3a32ad33-5f0e-4166-a118-1bbbec9c68e0@ixit.cz>
-In-Reply-To: <3a32ad33-5f0e-4166-a118-1bbbec9c68e0@ixit.cz>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sun, 3 Dec 2023 20:12:16 +0200
-Message-ID: <CAA8EJppC6kGVf2XKu8AWYtJu+p5auei3Mdttae1qvuxRrSa-gQ@mail.gmail.com>
-Subject: Re: [PATCH v3] soc: qcom: pmic: Fix resource leaks in a
- device_for_each_child_node() loop
-To: David Heidelberg <david@ixit.cz>
-Cc: luhongfei@vivo.com, agross@kernel.org, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, opensource.kernel@vivo.com, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231203174622.18402-1-krzysztof.kozlowski@linaro.org>
 
-On Sun, 3 Dec 2023 at 19:46, David Heidelberg <david@ixit.cz> wrote:
->
-> Heya!
->
-> I think this would be great candidate for backport, at least up to 6.6.
-> What do you think?
+Hello Krzysztof,
 
-Yes. Most likely it should have had:
+On Sun, Dec 03, 2023 at 06:46:22PM +0100, Krzysztof Kozlowski wrote:
+> Document preferred coding style for Devicetree sources (DTS and DTSI),
+> to bring consistency among all (sub)architectures and ease in reviews.
+> 
+> Cc: Andrew Davis <afd@ti.com>
+> cc: Andrew Lunn <andrew@lunn.ch>
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Chen-Yu Tsai <wens@kernel.org>
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Jonathan Corbet <corbet@lwn.net>
+> Cc: Matthias Brugger <matthias.bgg@gmail.com>
+> Cc: Michal Simek <michal.simek@amd.com>
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> Cc: Nishanth Menon <nm@ti.com>
+> Cc: Olof Johansson <olof@lixom.net>
+> Cc: Rafał Miłecki <zajec5@gmail.com>
+> Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Acked-by: Heiko Stuebner <heiko@sntech.de>
+> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+> Acked-by: Konrad Dybcio <konradybcio@kernel.org>
+> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
 
+Francesco
 
--- 
-With best wishes
-Dmitry
 
