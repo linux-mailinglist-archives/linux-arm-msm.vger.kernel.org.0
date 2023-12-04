@@ -1,111 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-3343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C981803C72
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 19:08:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4A35803D18
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 19:32:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3F098B20CFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 18:08:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D42E41C20B6F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 18:32:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72CE72EAF3;
-	Mon,  4 Dec 2023 18:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OCca4v89"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35D142FC3F;
+	Mon,  4 Dec 2023 18:32:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54BCD1A1
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 10:07:34 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B4HLXAI007781;
-	Mon, 4 Dec 2023 18:07:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8p3Zd+6if6OsnnOQdgWBtD9Rur2zxR8vFBbfoZYNvR8=;
- b=OCca4v899WO1nEouYgSOyM8IJ1YYzAn8Z2RS1oZoo0336jHOGslD7ruTHztZDqdqDY6L
- cTixIlq0R0VUsd75wDWm5KlvukqpEgSlVhJMFYqzehA91VBOtfDtCr8LR+DUMCQdR1bN
- HOEw9dSzDK+yl4vSrwVQxC9J+3ux0KlFiISx5XNF497CGipFYfU3Ohjbr5dqkmbQauSH
- C9IEMwSRb3KKkO6VXjrLRD64l5B4xV/z8gN7jU3i0oCM/ZHpO7S5JNfwEnSunNIXHM7B
- GFvF0E5CRjoRR1fLKc0plt1oguUBnDFsMmheQoqRjqr7vYtC+JuTyAyHMQuFHaFr0xY8 wg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3usdf7h5jk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Dec 2023 18:07:22 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B4I7LJO014616
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Dec 2023 18:07:21 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
- 2023 10:07:21 -0800
-Message-ID: <5ae4729d-3a06-ef77-be9f-d93e91caa06c@quicinc.com>
-Date: Mon, 4 Dec 2023 10:07:20 -0800
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37C4FD5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 10:32:22 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rADj4-00038w-0z; Mon, 04 Dec 2023 19:31:26 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rADj1-00DZmP-KD; Mon, 04 Dec 2023 19:31:23 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rADj1-00EE78-9y; Mon, 04 Dec 2023 19:31:23 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: "David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Cc: Alex Elder <elder@kernel.org>,
+	netdev@vger.kernel.org,
+	kernel@pengutronix.de,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	=?utf-8?b?Q2zDqW1lbnQgTMOpZ2Vy?= <clement.leger@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	linux-renesas-soc@vger.kernel.org,
+	Zhao Qiang <qiang.zhao@nxp.com>,
+	linuxppc-dev@lists.ozlabs.org,
+	Linus Walleij <linusw@kernel.org>,
+	Imre Kaloz <kaloz@openwrt.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Loic Poulain <loic.poulain@linaro.org>,
+	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-arm-msm@vger.kernel.org,
+	Alexander Aring <alex.aring@gmail.com>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	linux-wpan@vger.kernel.org
+Subject: [PATCH net-next v2 0/9] net*: Convert to platform remove callback returning void
+Date: Mon,  4 Dec 2023 19:30:40 +0100
+Message-ID: <cover.1701713943.git.u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/dpu: drop MSM_ENC_VBLANK support
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20231004031903.518223-1-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231004031903.518223-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ReXVwtYxsZnITWbvTb4F_k7ZCnRp1S-D
-X-Proofpoint-GUID: ReXVwtYxsZnITWbvTb4F_k7ZCnRp1S-D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-04_17,2023-12-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- spamscore=0 clxscore=1015 adultscore=0 phishscore=0 malwarescore=0
- mlxscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312040139
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1746; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=OVvQ8uYjxLMYTaZSJq1OCfRdtPS4cvgLm8vM3BejMRM=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlbhrRA9QNL9A6/+EC/b+KUL8ByuRJhbrVgnSOG 4TWQn68YNaJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZW4a0QAKCRCPgPtYfRL+ TjVDB/0eG4VYbw9drfz2A1JiSQIiH+SED39TRg3MQbSa1i7JvhthEdJz3RsgmHJGxuIbvTEaf+G pE3/IiK/WYsAVNlWURx8F58h1MaKSgcCxB6UkK3F13nFcsSdkYViabIu/cyHooy2wVyyCDL31/D kmn9dtqyNwosyXWaN7VXQpLtM+q3Smw5Tl9HVpWdfAenzfShrzn6h5h1vT6pkXsWjucByaEjmjO Ep/nxUhk6mkRawEkvZ2rMZ7/IgkiQ/KfWaIVwkGYHngmAUDeMcuHd3+70YIw50qlOokbuV/k5yW CVge3kM7/CpnqYDmiBU/n7A3crLTVVTN0roUGmeLUQIG0uxJ
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+
+Hello,
+
+(implicit) v1 of this series can be found at
+https://lore.kernel.org/netdev/20231117095922.876489-1-u.kleine-koenig@pengutronix.de.
+Changes since then:
+
+ - Dropped patch #1 as Alex objected. Patch #1 (was #2 before) now
+   converts ipa to remove_new() and introduces an error message in the
+   error path that failed before.
+
+ - Rebased to today's next
+
+ - Add the tags received in the previous round.
+
+Uwe Kleine-König (9):
+  net: ipa: Convert to platform remove callback returning void
+  net: fjes: Convert to platform remove callback returning void
+  net: pcs: rzn1-miic: Convert to platform remove callback returning
+    void
+  net: sfp: Convert to platform remove callback returning void
+  net: wan/fsl_ucc_hdlc: Convert to platform remove callback returning
+    void
+  net: wan/ixp4xx_hss: Convert to platform remove callback returning
+    void
+  net: wwan: qcom_bam_dmux: Convert to platform remove callback
+    returning void
+  ieee802154: fakelb: Convert to platform remove callback returning void
+  ieee802154: hwsim: Convert to platform remove callback returning void
+
+ drivers/net/fjes/fjes_main.c             |  6 ++---
+ drivers/net/ieee802154/fakelb.c          |  5 ++--
+ drivers/net/ieee802154/mac802154_hwsim.c |  6 ++---
+ drivers/net/ipa/ipa_main.c               | 29 +++++++++++-------------
+ drivers/net/pcs/pcs-rzn1-miic.c          |  6 ++---
+ drivers/net/phy/sfp.c                    |  6 ++---
+ drivers/net/wan/fsl_ucc_hdlc.c           |  6 ++---
+ drivers/net/wan/ixp4xx_hss.c             |  5 ++--
+ drivers/net/wwan/qcom_bam_dmux.c         |  6 ++---
+ 9 files changed, 29 insertions(+), 46 deletions(-)
 
 
+base-commit: 629a3b49f3f957e975253c54846090b8d5ed2e9b
+-- 
+2.42.0
 
-On 10/3/2023 8:19 PM, Dmitry Baryshkov wrote:
-> There are no in-kernel users of MSM_ENC_VBLANK wait type. Drop it
-> together with the corresponding wait_for_vblank callback.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  3 --
->   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  1 -
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 28 -------------------
->   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  9 +++---
->   drivers/gpu/drm/msm/msm_drv.h                 |  2 --
->   5 files changed, 4 insertions(+), 39 deletions(-)
-> 
-
-No users today but will need to be added back when features such as 
-autorefresh get added. But, as usual, we go by what in the driver today 
-so I am aware that this will be a lost argument.
-
-Hence,
-
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
