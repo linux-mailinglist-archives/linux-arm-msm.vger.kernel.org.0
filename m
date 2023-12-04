@@ -1,125 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-3297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C064C803677
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:24:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB3CD803691
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:27:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7AFEE28100F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:24:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E4AEB2096C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:27:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FBD728DA7;
-	Mon,  4 Dec 2023 14:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E55F28387;
+	Mon,  4 Dec 2023 14:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gto9Wb2/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qeXekkRv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1296A249ED;
-	Mon,  4 Dec 2023 14:24:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E86C433C7;
-	Mon,  4 Dec 2023 14:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03958249ED
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 14:27:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D024C433C8;
+	Mon,  4 Dec 2023 14:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701699882;
-	bh=FxyTNV2BSZCdnXrn/+nzGXNlT8yOZRDQS3uQJjiW47g=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Gto9Wb2/vIUEXslxtUHhJczyFiYNjrM8cQ4dvpD07pgWzYI5onF4rEYmXUofK0qaz
-	 SU5yaVKSoSetKprNtUIR0gbnHjceiKiD7Vh9qYwXOmy0R9IpYk3KISn1alMye9WU3W
-	 BpRVtv2FyUGvuGfA7eh5Dr8DtP5pJHxiej0iOQ0paiO/5ha29M/CrrOB5+/4llzHB6
-	 9WlJ/aLAvCzT1JOJMadkpuPzZFpa7wSOndZwnJuAGLz4luOpH38AJcE89R/nY/1k6s
-	 EaI7d40iiH1blx/dSqKFX85drBOs6hFKRNIYa2+C3iYO4V5ZugcaNh99SvyCgn8Tle
-	 kmx1XTuCDJnWw==
-Date: Mon, 4 Dec 2023 14:24:29 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Nia Espera <nespera@igalia.com>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Lars-Peter Clausen
- <lars@metafoo.de>, Rob Herring <robh+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>, Tony Luck
- <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>, Vinod
- Koul <vkoul@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski@linaro.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
- phone-devel@vger.kernel.org, Rob <Me@orbit.sh>, Clayton Craft
- <clayton@igalia.com>, Caleb Connolly <caleb.connolly@linaro.org>, Luca
- Weiss <luca.weiss@fairphone.com>, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH v3 1/6] dt-bindings: iio: adc: add smb139x
-Message-ID: <20231204142429.5691e85c@jic23-huawei>
-In-Reply-To: <20231108-nia-sm8350-for-upstream-v3-1-18a024b5c74c@igalia.com>
-References: <20231108-nia-sm8350-for-upstream-v3-0-18a024b5c74c@igalia.com>
-	<20231108-nia-sm8350-for-upstream-v3-1-18a024b5c74c@igalia.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+	s=k20201202; t=1701700048;
+	bh=iTFfJWlVyVd40bRiM1AFzumUzQtTXVFumdktfECzhMY=;
+	h=Date:From:To:Subject:In-Reply-To:References:Cc:From;
+	b=qeXekkRv92r8qCLjoELFNMe1SrBuRQi7VtQm4F/WELvSzqVt6BPW1WU8fTcxaMcpE
+	 flrCCtiPLkBKHnTRYMZUyEnJh6Ir/rZ65NJ86l9tk9hO7qibzsAnBB1DRD4S4lQgbH
+	 cEeQ27eNhvt8eVQeeSy2QAj90Fb3VEIrhybbUCA/Q0tvoK5HalvDSBtWt4PNOHudCN
+	 OpBaYZN8bPyueVeyI0Z4En/7+BFib/WfZgSM4E5kCOGraxZcpriMFV5FZYQ3PFAL7R
+	 BaXfIo4B2OPuO7eEnbdfoMQS6t0U1puiOMefjUg0JLKF0TTM58Y0Q2bpr6ghAfTaXS
+	 PIdFGsoK0Qrag==
+Message-ID: <59d4f1e74b4546b9f9eea0fed62a5546@kernel.org>
+Date: Mon, 04 Dec 2023 14:27:25 +0000
+From: "Maxime Ripard" <mripard@kernel.org>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 0/7] drm: revert solid fill support
+In-Reply-To: <20231204131455.19023-1-dmitry.baryshkov@linaro.org>
+References: <20231204131455.19023-1-dmitry.baryshkov@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, "Abhinav
+ Kumar" <quic_abhinavk@quicinc.com>, "Daniel Vetter" <daniel@ffwll.ch>, "David
+ Airlie" <airlied@gmail.com>, "Maarten Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime
+ Ripard" <mripard@kernel.org>, "Rob Clark" <robdclark@gmail.com>, "Sam
+ Ravnborg" <sam@ravnborg.org>, "Thierry Reding" <thierry.reding@gmail.com>, "Thomas
+ Zimmermann" <tzimmermann@suse.de>
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
 
-On Wed, 08 Nov 2023 18:50:25 +0100
-Nia Espera <nespera@igalia.com> wrote:
-
-> Bindings for a charger controller chip found on sm8350
+On Mon, 4 Dec 2023 15:13:47 +0200, Dmitry Baryshkov wrote:
+> Altough the Solid Fill planes patchset got all reviews and
+> acknowledgements, it doesn't fulfill requirements for the new uABI.
+> Merging it was a fault of mine.
 > 
-> Signed-off-by: Nia Espera <nespera@igalia.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
-> ---
->  include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h | 19 +++++++++++++++++++
->  include/dt-bindings/iio/qcom,spmi-vadc.h         |  3 +++
->  2 files changed, 22 insertions(+)
+> It has neither corresponding open-source userspace implementation nor
 > 
-> diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h b/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h
-> new file mode 100644
-> index 000000000000..c0680d1285cf
-> --- /dev/null
-> +++ b/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h
-> @@ -0,0 +1,19 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only OR BSD-3-Clause */
-> +/*
-> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
-> + */
-> +
-> +#ifndef _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
-> +#define _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
-> +
-> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
-> +
-> +#define SMB139x_1_ADC7_SMB_TEMP			(SMB139x_1_SID << 8 | ADC7_SMB_TEMP)
-> +#define SMB139x_1_ADC7_ICHG_SMB			(SMB139x_1_SID << 8 | ADC7_ICHG_SMB)
-> +#define SMB139x_1_ADC7_IIN_SMB			(SMB139x_1_SID << 8 | ADC7_IIN_SMB)
-> +
-> +#define SMB139x_2_ADC7_SMB_TEMP			(SMB139x_2_SID << 8 | ADC7_SMB_TEMP)
-> +#define SMB139x_2_ADC7_ICHG_SMB			(SMB139x_2_SID << 8 | ADC7_ICHG_SMB)
-> +#define SMB139x_2_ADC7_IIN_SMB			(SMB139x_2_SID << 8 | ADC7_IIN_SMB)
-> +
-> +#endif
-> diff --git a/include/dt-bindings/iio/qcom,spmi-vadc.h b/include/dt-bindings/iio/qcom,spmi-vadc.h
-> index 08adfe25964c..ef07ecd4d585 100644
-> --- a/include/dt-bindings/iio/qcom,spmi-vadc.h
-> +++ b/include/dt-bindings/iio/qcom,spmi-vadc.h
-> @@ -239,12 +239,15 @@
->  #define ADC7_GPIO3				0x0c
->  #define ADC7_GPIO4				0x0d
->  
-> +#define ADC7_SMB_TEMP				0x06
->  #define ADC7_CHG_TEMP				0x10
->  #define ADC7_USB_IN_V_16			0x11
->  #define ADC7_VDC_16				0x12
->  #define ADC7_CC1_ID				0x13
->  #define ADC7_VREF_BAT_THERM			0x15
->  #define ADC7_IIN_FB				0x17
-> +#define ADC7_ICHG_SMB				0x18
-> +#define ADC7_IIN_SMB				0x19
->  
->  /* 30k pull-up1 */
->  #define ADC7_AMUX_THM1_30K_PU			0x24
-> 
+> [ ... ]
 
+Acked-by: Maxime Ripard <mripard@kernel.org>
+
+Thanks!
+Maxime
 
