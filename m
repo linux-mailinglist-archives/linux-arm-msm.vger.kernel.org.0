@@ -1,147 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-3246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02940803305
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:38:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BD199803377
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:55:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3398F1C20AA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:38:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE5861C20A2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:55:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D45EA241FD;
-	Mon,  4 Dec 2023 12:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF12A24218;
+	Mon,  4 Dec 2023 12:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kg7utGGN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Euj0vyih"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0BB24201;
-	Mon,  4 Dec 2023 12:38:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74043C433C7;
-	Mon,  4 Dec 2023 12:38:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701693511;
-	bh=bcgAvS5v7/P9i7PtTCfg8KWI9mKWeeJAMZyU85serQQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Kg7utGGNqp6x5pRjhpmg3WXVAoFp7AaxpPHJk7ZRWyj77eQa1GSdt9ISx45h+h1qs
-	 2wRXyTIILs2rsNnckNhdxjGbb4xoZkfASlelg0b9VSowjt8FnFSlqF4ASSaUTVrrLa
-	 a4TloVSWDQ+iLZCgj+BTRRJorcrq6qPYtpQVFsnlEArryMz1GF97ZXJQ0XXPxq5EFB
-	 bLKFRf4VicR06ZL0+l7oQdQllOdorWGFDh4x6rFYM5DhMmlex3oUZ8u9OuL4KI/rG2
-	 bfdVU2KX6+LdmC03nCnQ7q68TZ24OqmlmM0aN7X+a/pcbfmtcUEhvYulzX5SKhf+kW
-	 7cUZW4QysKrUQ==
-Message-ID: <2af7b90c-797c-4557-8186-bebe23a69ce6@kernel.org>
-Date: Mon, 4 Dec 2023 13:38:14 +0100
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E618BFE
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 04:55:36 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-a1b654faa8cso152846966b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 04:55:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701694535; x=1702299335; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=L2hsBw2f4zAGauIZbOvreuYSNpIWy0p3UiF+fZb/E10=;
+        b=Euj0vyih7AVGjpIBXcmmNBvr/29gFIjKjVXLujlB9qUcwFmIyAJabmbuoZki29QxLu
+         gOW1zr+K4bBXjYunWrsS8rSmKhE24hka26hklm0VCI3UvuVKAiyu4JlLJQ42j/tcNDn3
+         IrTsKm6xTRqM8rsaooQ9lltrIHL8Xu4ucl5UIslz8tw3LRpTy+UqpI5myaojzHiG753U
+         BalnrZM1ldVLuquNqvqcfSHpRHPkDm5Cb66dQGm2019rLmNacwjs0oxBsurkLpQDcp38
+         pGu+uofvUrmiZFbjX+GeXSu1EDwpXcWaqCK5xOEeDZvGn6bBZa5Z48BD6qeLUYfrzevJ
+         yF4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701694535; x=1702299335;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L2hsBw2f4zAGauIZbOvreuYSNpIWy0p3UiF+fZb/E10=;
+        b=mHlVI1hzC5kVZodFxYaeldR1qvJ9Fjn22Qtemo+Z9XIH3hW1tNnfZflUgX1m7RM9RT
+         Mi36lL/h/4eo9xqa7B32Lszc9SqZOD2JiatKNNz6MEZfZ/j4tA3iXDXMfGdV+nB+Jmqz
+         u+6sP8csasTaKofHKYHe6qXwcQ0RSHYPL73adJT/JJ8pHgCKb6RMOCMDbwhhJYexEn+o
+         kxb8N1D/G+dOAmCot6zDOPUQxnJl1Co0YcYjlb+aw8aLlC9LOO8k0iWrnlguwezQ+V7E
+         t1yCHn8WOXnkPXDW9Pqjqmktfrn6kmxTaDv//OW7COQVFfrUsEzOdkygn3wAbR4qPbS2
+         hVZw==
+X-Gm-Message-State: AOJu0YwyJUtGYtiNW4tboLn6CiB1sJ5uXAb7tS4J3HymCmtH0uNxWzvr
+	9WWUf5+meMbyqI+XM4BS8j5wJA==
+X-Google-Smtp-Source: AGHT+IGrvcribSjcrW0uB3jSUhS+pnkpk+Fcqij3kL8dj7I1z74eqTqBVKOeNtEWtKSkDbuBhrI2dA==
+X-Received: by 2002:a17:906:6015:b0:a19:d40a:d22a with SMTP id o21-20020a170906601500b00a19d40ad22amr1483993ejj.246.1701694535368;
+        Mon, 04 Dec 2023 04:55:35 -0800 (PST)
+Received: from [10.167.154.1] (178235179097.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.97])
+        by smtp.gmail.com with ESMTPSA id ay22-20020a170906d29600b009efe6fdf615sm5241373ejb.150.2023.12.04.04.55.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Dec 2023 04:55:34 -0800 (PST)
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH v2 0/6] SM8450 / SM8550 Adreno
+Date: Mon, 04 Dec 2023 13:55:19 +0100
+Message-Id: <20231127-topic-a7xx_dt-v2-0-2a437588e563@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 12/23] pinctrl: mediatek: Make use of
- PINCTRL_GROUP_DESC()
-To: Marek Szyprowski <m.szyprowski@samsung.com>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Rasmus Villemoes <linux@rasmusvillemoes.dk>,
- =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Biju Das <biju.das.jz@bp.renesas.com>,
- Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
- Jianlong Huang <jianlong.huang@starfivetech.com>,
- linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
- openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org
-Cc: Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Dong Aisheng
- <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>,
- Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Sascha Hauer <s.hauer@pengutronix.de>, NXP Linux Team <linux-imx@nxp.com>,
- Sean Wang <sean.wang@kernel.org>, Paul Cercueil <paul@crapouillou.net>,
- Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>,
- Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Emil Renner Berthing <kernel@esmil.dk>, Hal Feng <hal.feng@starfivetech.com>
-References: <20231129161459.1002323-1-andriy.shevchenko@linux.intel.com>
- <20231129161459.1002323-13-andriy.shevchenko@linux.intel.com>
- <CGME20231204114016eucas1p2689bcb5a8e754555ae5821ac6cabe7e9@eucas1p2.samsung.com>
- <6161d2f2-f112-4a53-8e6b-0956c0fa2cbe@samsung.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <6161d2f2-f112-4a53-8e6b-0956c0fa2cbe@samsung.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADfMbWUC/3WNQQqDMBBFryKz7hQzFZSueo8iJTGjDkgiEysW8
+ e5N3Xf5Hvz/dkiswgnuxQ7KqySJIQNdCuhGGwZG8ZmBSroZQzUucZYObb1tL79gz8yVqYi9t5A
+ 3ziZGpzZ0Y16F9zRlOSv3sp2RZ5t5lLRE/ZzN1fzsv/vVYImWqHGNIWLXPyYJVuM16gDtcRxf+
+ JmW98AAAAA=
+To: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
+ Joerg Roedel <joro@8bytes.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1701694533; l=1382;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=G2AGr7+EfmpDgrZgtA9axRHuip8IvIHibzVfFKlzR2Q=;
+ b=8v7uPUgPccph1d0xbsOc11lWkToE8gvXhqB3LqrVRQCp0HSjVz9i/VveJmoux/2n5cxHGrMMs
+ s5uly2frnAaAdtE8+UBQUA3JLO5N7k9Skk9Fs2qW0LJ6mO+dcvZkAu4
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-On 04/12/2023 12:40, Marek Szyprowski wrote:
-> On 29.11.2023 17:06, Andy Shevchenko wrote:
->> Make use of PINCTRL_GROUP_DESC() instead of open coding it.
->>
->> Signed-off-by: Andy Shevchenko<andriy.shevchenko@linux.intel.com>
-> 
-> This patch landed in linux-next as commit 1949e4630c3b ("pinctrl: 
-> mediatek: Make use of PINCTRL_GROUP_DESC()"). Unfortunately it causes a 
-> build break of ARM64 arch with standard defconfig.
+Following the merging of related bindings, driver and mesa changes, enable
+the GPU on both of these platforms.
 
-Not only arm64, but also arm32. Defconfigs, so something completely
-standard. This wasn't compiled which is quite surprising because cross
-building defconfigs is trivial, not even mentioning testing your trees
-with LKP. :(
+P1 for Will/iommu, rest for qcom
 
-https://lore.kernel.org/all/ed981149-5d96-43a9-9534-c1e52443a983@linaro.org/
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- Sort nodes better in 8550dtsi
+- Fix the 8550 GPU chip ID
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20231127-topic-a7xx_dt-v1-0-a228b8122ebf@linaro.org
+
+---
+Konrad Dybcio (6):
+      dt-bindings: arm-smmu: Document SM8[45]50 GPU SMMU
+      arm64: dts: qcom: sm8450: Add GPU nodes
+      arm64: dts: qcom: sm8550: Add GPU nodes
+      arm64: dts: qcom: sm8550-qrd: Enable the A740 GPU
+      arm64: dts: qcom: sm8550-mtp: Enable the A740 GPU
+      arm64: dts: qcom: sm8450-hdk: Enable the A730 GPU
+
+ .../devicetree/bindings/iommu/arm,smmu.yaml        |  48 ++++-
+ arch/arm64/boot/dts/qcom/sm8450-hdk.dts            |   8 +
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 202 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts            |   8 +
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts            |   8 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               | 166 +++++++++++++++++
+ 6 files changed, 438 insertions(+), 2 deletions(-)
+---
+base-commit: 629a3b49f3f957e975253c54846090b8d5ed2e9b
+change-id: 20231127-topic-a7xx_dt-feee4142edda
 
 Best regards,
-Krzysztof
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
 
