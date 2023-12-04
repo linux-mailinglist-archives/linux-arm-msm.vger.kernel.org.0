@@ -1,94 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-3329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1D1E8039FF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 17:20:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC3ED803A2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 17:27:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 556DA2810EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 16:20:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72D071F20EE2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 16:27:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97F482D796;
-	Mon,  4 Dec 2023 16:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B1682E3F7;
+	Mon,  4 Dec 2023 16:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="e7yB0UOW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DZAz5lrX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-X-Greylist: delayed 72460 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 04 Dec 2023 08:20:06 PST
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D68795;
-	Mon,  4 Dec 2023 08:20:06 -0800 (PST)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C7B5395;
+	Mon,  4 Dec 2023 16:27:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FBCC433C7;
+	Mon,  4 Dec 2023 16:27:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701707237;
+	bh=IQD+6ShDGEkoKp0dcPe5eVwpPIHahHs+5LKTlUYoWRk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DZAz5lrXF0MsmUxmKEUnEnrSGsVQrfEXwAPB2a1IgDjow5aNH8jFQttH/k+IbYv/k
+	 BGw8SpLhg9MSOhaf+iz3WFFkFQm72fz7FVFMZuA4KSAzS44CRZ22vyAf92SBCcBD+y
+	 cvRpFvkexiT3G/4gZ/reQh4isO78WL5jzBiCRoz2qC7Vt57pA3xgvfJLTvfZOhmMsi
+	 ZGi3fQG1OgGbzh3RqXlTri40RwB/Nme1Dkx50n0GP9E5ChoSK235RQT766IVsGEYG7
+	 WoEoqdjZ49zI3IrDicthfNo/e6Qpop4jSZ86zNk0oh6vSwgzxZqIXPJny9W1W8R+BI
+	 AhPRVa/B4zv4A==
+Date: Mon, 4 Dec 2023 16:27:11 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] ASoC: dt-bindings: qcom,sm8250: Add X1E80100 sound
+ card
+Message-ID: <20231204-salami-condone-f10b45e09828@spud>
+References: <20231204100116.211898-1-krzysztof.kozlowski@linaro.org>
+ <20231204100116.211898-2-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1701706804;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Ei0AfrTxppCNJPpWkXUKHARQoDXVj01I/xt3XpEpDOk=;
-	b=e7yB0UOWUQ5vZJkft/UZvLG3evjPAYjr3Uk+dlKW13a90dCPz/oxZdtsKFSaX9nFPSr+Kh
-	lHEMlx8BB58c4hJTORW1x3K/7rewGccMmgPWUMos+5MiBnCainQsrMzdJlsaFZudAv7np/
-	5NKkLKPzBdaOJ+vHgicel+QjKNdYjmWmMRQfDFKhlauhnZCprP2Fq//K0YGxH93S7+uCqw
-	MXmHvj/18GgnvCc2bSrcJbklJFOVakITZ6e9ewkM89wSSuFKvlmA30Q1pnSWYFOv6HAaCm
-	Bl/OSfOPXYoPAZf8V5GHAKAMbb32bRCc3nQ6JIk5rqYVlurldeZWyphu2p7azw==
-Date: Mon, 04 Dec 2023 17:19:59 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno
- <angelogioacchino.delregno@collabora.com>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-mediatek@lists.infradead.org, Andrew Davis <afd@ti.com>, Andrew Lunn
- <andrew@lunn.ch>, Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson
- <andersson@kernel.org>, Chen-Yu Tsai <wens@kernel.org>, Dmitry Baryshkov
- <dmitry.baryshkov@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>,
- Heiko Stuebner <heiko@sntech.de>, Jonathan Corbet <corbet@lwn.net>, Konrad
- Dybcio <konrad.dybcio@linaro.org>, Michal Simek <michal.simek@amd.com>, Neil
- Armstrong <neil.armstrong@linaro.org>, Nishanth Menon <nm@ti.com>, Olof
- Johansson <olof@lixom.net>, =?UTF-8?Q?Rafa=C5=82_Mi=C5=82ecki?=
- <zajec5@gmail.com>, linux-rockchip@lists.infradead.org,
- linux-samsung-soc@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, workflows@vger.kernel.org,
- linux-doc@vger.kernel.org
-Subject: Re: [PATCH v3] docs: dt-bindings: add DTS Coding Style document
-In-Reply-To: <95bb3618-496d-4b55-a2f7-1b4200cbe420@linaro.org>
-References: <20231125184422.12315-1-krzysztof.kozlowski@linaro.org>
- <63ec18b2758a9e385f446fb00b60ee69@manjaro.org>
- <0bcc0679-b883-4435-8843-cc830122c0e1@linaro.org>
- <83b413441a953e8f2bc56adf09511a80@manjaro.org>
- <7021717e2e747b9c119b7c5091b60bdf@manjaro.org>
- <95bb3618-496d-4b55-a2f7-1b4200cbe420@linaro.org>
-Message-ID: <619db272718a608ac211266aa2fd05aa@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="0c/XrDjxI3neAjwL"
+Content-Disposition: inline
+In-Reply-To: <20231204100116.211898-2-krzysztof.kozlowski@linaro.org>
 
-On 2023-12-04 16:11, Krzysztof Kozlowski wrote:
-> On 03/12/2023 21:12, Dragan Simic wrote:
->> Just a brief reminder about my suggestions below, which seemingly 
->> didn't
->> find their way into the v4.  At least the first one, which improves 
->> the
->> opening sentence, is worth including, IMHO.
->> 
-> 
-> I applied almost all your suggestions, except few which I disagreed 
-> with
-> in my replies.
 
-Sure, but I got no response from you after I replied and offered 
-different versions of the few suggestions you disagreed with.  I mean, 
-none of those are too important, except the one about the opening 
-sentence, which is currently a bit awkward, so it might be good to have 
-it improved as suggested.  It's the opening sentence after all. :)
+--0c/XrDjxI3neAjwL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Dec 04, 2023 at 11:01:16AM +0100, Krzysztof Kozlowski wrote:
+> Document bindings for the Qualcomm X1E80100 SoC sound card.  The
+> bindings are the same as for other newer Qualcomm ADSP sound cards, thus
+> keep them in existing qcom,sm8250.yaml file, even though Linux driver is
+> separate.
+>=20
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+
+Cheers,
+Conor.
+
+--0c/XrDjxI3neAjwL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZW393wAKCRB4tDGHoIJi
+0uSaAP9t10prS2rDvL4Vjq/XD55wIkALOkf52ckItqXbEvt+rAD/YxHy9M/SpJrk
+B2I6lPxE3KmwSmHKhi8KV/szOph/YQo=
+=5fPr
+-----END PGP SIGNATURE-----
+
+--0c/XrDjxI3neAjwL--
 
