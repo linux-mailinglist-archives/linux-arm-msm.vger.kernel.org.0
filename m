@@ -1,122 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-3363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3351B803F21
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:16:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F894803F3E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:25:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B4CC2B20B06
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 20:16:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B55EAB20AD7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 20:25:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C852B33CF6;
-	Mon,  4 Dec 2023 20:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCE8A34188;
+	Mon,  4 Dec 2023 20:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KQds8Gu9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="m9woum7u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00663D3
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 12:16:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1701720977;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=scE6uJE/gsl0ExlvPlw1tvZXL0nwbCHoC6Ch9ngDrG8=;
-	b=KQds8Gu9MN9fs665098G4bgXmbejxlRdEzdisgH4g/5hRlycImVcD7QdJRe6HH9qFxKPQh
-	tT+WMUy6oLyLhdwSqMOsiZPd8pTjTgrd/cxUoVuI1qAvhYh+CuC5pnOpKHEpuC+X7YTUwJ
-	+5+VB8QOJl9jI33hcWDrbOqyp+No5zs=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665--dCZ-KONMWusfUvNH9Thsw-1; Mon, 04 Dec 2023 15:16:15 -0500
-X-MC-Unique: -dCZ-KONMWusfUvNH9Thsw-1
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-67a9a237908so28371756d6.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 12:16:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701720975; x=1702325775;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=scE6uJE/gsl0ExlvPlw1tvZXL0nwbCHoC6Ch9ngDrG8=;
-        b=B5f8pIDsWQfDj0TXJ4LWNT4ym1hHYVae//I+jjGIvZixO7r+bwRroYO0UaZjzfuNEX
-         09+CgxY4HxtcRpFeuViP89s/tjbhnzJTUh6tk7OIW768nR9C+hBbB8X4lHdsfzroqhBL
-         835n+KO/aRpfu4Q8D1rEs0p63d0hdagO+QZTiWhIJB0FtYZsy+17zZZslUBfXnzZokno
-         QqQGCS9Gr2bXAcNjxCrdUdA3PnE4q4HxhWqwkjn74lCgfF0SMkWmgZdLUoTiyhmi1KEA
-         3JvYiPvLeCiAiPO9vR9Ec7+7veTilackV6dxHGli2NldoheVRp+V6ElBPEvMjIbyGrzu
-         jF9A==
-X-Gm-Message-State: AOJu0YwfCDBeyW/DbNpaEVlTNK0Vow1EG5NjFMj+8/XTRBx/b4vk6yJT
-	SGVMY/JvWO4zHwwH5qfCLgNT/B323ne5wjsah+QwJcOl0KGChDetKvDnT4s3GwlaGMgVsCY3GZU
-	P6OtdWWH+dWbRiqvSZqYTN32NMg==
-X-Received: by 2002:ad4:4481:0:b0:67a:a721:ec1a with SMTP id m1-20020ad44481000000b0067aa721ec1amr127142qvt.94.1701720975330;
-        Mon, 04 Dec 2023 12:16:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGgoVrFG6EC//oL2uzFysj4twtnTf+9h/+HjOZVaxTJrf07QpXYwOj+ja1iSEQZGrynxBr/Ig==
-X-Received: by 2002:ad4:4481:0:b0:67a:a721:ec1a with SMTP id m1-20020ad44481000000b0067aa721ec1amr127121qvt.94.1701720975037;
-        Mon, 04 Dec 2023 12:16:15 -0800 (PST)
-Received: from fedora ([2600:1700:1ff0:d0e0::47])
-        by smtp.gmail.com with ESMTPSA id r3-20020a0cb283000000b00677fb735738sm4618230qve.34.2023.12.04.12.16.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 12:16:14 -0800 (PST)
-Date: Mon, 4 Dec 2023 14:16:12 -0600
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, Prasad Sodagudi <psodagud@quicinc.com>, kernel@quicinc.com
-Subject: Re: [PATCH net-next v3 0/3] Ethernet DWMAC5 fault IRQ support
-Message-ID: <rw5vfdvre5rt4rwytfsp3qy6sgsdr3dm6oefr4sap2aqbvpw42@c2dxz42tucby>
-References: <cover.1701695218.git.quic_jsuraj@quicinc.com>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DD9CCB;
+	Mon,  4 Dec 2023 12:25:39 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B4JxZT6028697;
+	Mon, 4 Dec 2023 20:25:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=VoyLD+BBBgnkOe7m+0wyGjQqsPNxrHuUW5al5xZbTeg=;
+ b=m9woum7ukhrKgy2DlbVkq2m+pO/zRkSoTjp2rBy2klcmFL8JYacLW70LiypX0MjSaxe+
+ ORDAuC/8DKWmhkalXAUKTu2SA47IkuEPd0mc2rwoUdUrVJiGJSGBUkg1oTFYtbKqPEIN
+ VeCLf4ejhodQk8ZLMYW0T1ezbKVXmSCvRqt9kP5OY+dCvBXtuMeP7JGAXvzaPst1BNY4
+ h19w4vMysFfhbAPHPvH2pMs7L63NGP6OgbkK1xVAYvmqozBrhYJtBI6RIcxk1ZFSix4O
+ N0dENhlm2jcdlu8D5N6nMqlXYevBZWAmEIi7GJPf/nvhHL0WwrM8T9hDS29ca1QPPZEF mQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3usjnqgfdc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 04 Dec 2023 20:25:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B4KPHqF006340
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 4 Dec 2023 20:25:17 GMT
+Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
+ 2023 12:25:17 -0800
+Message-ID: <230fd6a4-c1d6-64af-1073-2effd5d44d8c@quicinc.com>
+Date: Mon, 4 Dec 2023 12:25:16 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1701695218.git.quic_jsuraj@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH next] drm/msm/dp: add a missing unlock in
+ dp_hpd_plug_handle()
+Content-Language: en-US
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+        Rob Clark
+	<robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        "Sean
+ Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn
+ Andersson <quic_bjorande@quicinc.com>,
+        Kuogee Hsieh
+	<quic_khsieh@quicinc.com>,
+        "Vinod Polimera" <quic_vpolimer@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <kernel-janitors@vger.kernel.org>, <error27@gmail.com>,
+        <dan.carpenter@linaro.org>
+References: <20231204171317.192427-1-harshit.m.mogalapalli@oracle.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20231204171317.192427-1-harshit.m.mogalapalli@oracle.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: f2EGCVjZ2PkGJvnv8FbQ_bzpg_EP3lOK
+X-Proofpoint-GUID: f2EGCVjZ2PkGJvnv8FbQ_bzpg_EP3lOK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-04_18,2023-12-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1011 mlxscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 impostorscore=0 mlxlogscore=999
+ phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311060000 definitions=main-2312040159
 
-On Mon, Dec 04, 2023 at 06:56:14PM +0530, Suraj Jaiswal wrote:
-> Add support to listen Ethernet HW safery IRQ. The safety IRQ will be
 
-s/safery/safety/
 
-> triggered for ECC, DPP, FSM error.
+On 12/4/2023 9:13 AM, Harshit Mogalapalli wrote:
+> When pm_runtime_resume_and_get() fails, unlock before returning.
 > 
-> Changes since v3:
-
-This is listed as v3 in the subject, but it should now be v4 since the
-last version was v3.
-
-> - Fix DT_CHECKER warning
-> - use name safety for the IRQ.
->  
-> 
-> Suraj Jaiswal (3):
->   dt-bindings: net: qcom,ethqos: add binding doc for safety IRQ for
->     sa8775p
->   arm64: dts: qcom: sa8775p: enable safety IRQ
->   net: stmmac: Add driver support for DWMAC5 safety IRQ Support
-> 
->  .../devicetree/bindings/net/qcom,ethqos.yaml   |  9 ++++++---
->  .../devicetree/bindings/net/snps,dwmac.yaml    |  5 +++--
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi          | 10 ++++++----
->  drivers/net/ethernet/stmicro/stmmac/common.h   |  1 +
->  drivers/net/ethernet/stmicro/stmmac/stmmac.h   |  2 ++
->  .../net/ethernet/stmicro/stmmac/stmmac_main.c  | 18 ++++++++++++++++++
->  .../ethernet/stmicro/stmmac/stmmac_platform.c  |  9 +++++++++
->  7 files changed, 45 insertions(+), 9 deletions(-)
-> 
-> -- 
-> 2.25.1
+> Fixes: 5814b8bf086a ("drm/msm/dp: incorporate pm_runtime framework into DP driver")
+> Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+> ---
+> This is based on static analysis with Smatch. Only compile tested.
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
 
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
