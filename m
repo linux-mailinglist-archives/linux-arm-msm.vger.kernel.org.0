@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-3262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E78D8033F1
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F9AA8033F2
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:08:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CAFF3B20A8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:08:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27442280FCE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:08:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8E622555B;
-	Mon,  4 Dec 2023 13:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5354325546;
+	Mon,  4 Dec 2023 13:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IVg5eeVm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YyhRklG/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1021E189
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 05:08:00 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-40c0a03eb87so12386075e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 05:07:59 -0800 (PST)
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 775B6194
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 05:08:01 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-40c09f4814eso15059175e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 05:08:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701695278; x=1702300078; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701695280; x=1702300080; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cwBpTlor8QGPHD6RCGBwXqu4uW7ps+IkBJil9Sq0JkQ=;
-        b=IVg5eeVmzutPkuos9vw4nUZlIvJ/Qec5pTXWc9AVy8VqLyu//QXYfe3+j28Rf+GPuM
-         glvYcUDb8Smz69QmDf8sLFf/igEKaRBDxLy+Liq0Rf53shhkP2BVHh9k9SCTQhD+3HJU
-         aV6M22F1aVLOn1ZyswAh6Kb8A3tX0EXiAUK4cCOPBffsPlHQKCFNwhWuQbMiGjPhPjJ/
-         btaHcQFXOMtV3wkA+J9C8/kV5UpkwvK60B2IzmSgCD42tzkNeAfzeS50S3A9t+lHn3JN
-         L3XYqabZimOC4VUiB4+epjniXm2WZHJWZoyJJMNDtAjCSxtLk/JtOZy/0mHEozwCRuYX
-         KVkg==
+        bh=HUks0VPbd9cYN7vszIiBuJ+mQVO4/oWNE01Kkc+iAPE=;
+        b=YyhRklG/zHjIAoYyiIoq+useOhy/J6SIE0U9gMoYk3inYkmLYqyF0htPEDrnz01FZ5
+         YeBHjDed25348xQjJhU6G5kzGmXbdO/ql43QzH8AaQ/qNQo7ExT3eRvEpx75UEAgzUP4
+         Fg7u5TBtb+60m/QWrr9BovJqlcC5WZBdMrVJfmrxJNFphvYxWoGt0tMptZrTJtyOQ7GN
+         yHXTbmTNrkglrrhGRUaWpiEq/ym/avJzyk7RQZjbFHX58aDjYRz718TJ0jhT4S0I+ahV
+         BIrgvwlYauLbqvkUJ9KtnWTpyCC3Z2FR2hg+3xKFYTt0mvv6YJepPnmYoz9IRBNg7Tk+
+         XRWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701695278; x=1702300078;
+        d=1e100.net; s=20230601; t=1701695280; x=1702300080;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cwBpTlor8QGPHD6RCGBwXqu4uW7ps+IkBJil9Sq0JkQ=;
-        b=fKSQ3wiex5GOP9+bRE1G4fVzoZ9NBqHVGh5CeXahx3ECMs+oN3hSajVZRtZjsR1sNp
-         0kXrcBxM0Mjxrm3nohdfumcSh8tCIPRfMKb0uMmtKb/kI2YTMRO9TYBstmg8DAS5i3pl
-         Mw7WpwkmwIWSe7wtMIPppHVgdgY7uPSxOubKmA1//zmttnd8iVxMZcgRxJl9hDT3NHnc
-         BtafP+vAdkhZELa3DHMzHvAu7JI495/GTnlY+D23EwjaevDXEogrtYpeTMsqfH24dev5
-         lmc9FNdTX5A0LS7nhF0yqwUU8vdOwlB9hX+HkOPKVRb5UAEb1r2BsoyD9MzJAq25lwQA
-         31+w==
-X-Gm-Message-State: AOJu0Yz0ca8k5/rPYSj5qzaeL42OtdG50/FJ49R5hh3Uti9xzpDnvAPa
-	3NYObTH0zvLLz+s9mfSzC7dsUw==
-X-Google-Smtp-Source: AGHT+IHz6z9FNxdUY89GlaEKZKo9VT8cN4GSZp+9MkJvNXaV2qURb9hzGEg+cOJVQYnkAzpc1YZTTA==
-X-Received: by 2002:a05:600c:4713:b0:40b:5f03:b3db with SMTP id v19-20020a05600c471300b0040b5f03b3dbmr1123061wmo.253.1701695278472;
-        Mon, 04 Dec 2023 05:07:58 -0800 (PST)
+        bh=HUks0VPbd9cYN7vszIiBuJ+mQVO4/oWNE01Kkc+iAPE=;
+        b=vbc6kKuSx3ecMFt8HJMvwUjIPHZL88O8lttRb99uXUbkviP41PW1T/NJGzCDaS9xA1
+         8W47dYoME+eIKr+RqWFIHA1DX5w84EW1Tb0L/umnnUKZgn+V1CRaxTQiCxBW5ewW5KD9
+         pkt+ytZXoyzwMvVIAUOMCB9lmukJKLx3Crs5VWKZD/7l23rQ2uQ6cDL2hdFaFXBarhYL
+         6J9Zqcc5pqouK1RgPRscnYvhbetRcBEbdgOQtRLln3pU00+gSVu/jQpjDi7iio2QA1ZP
+         DmZbHHxMJFWkk7lRGOMgr/Rnq5wZ2h3drGByAFzNV1S7Zn+a9kv+EmoiF3NZaEoVq+6J
+         ewMw==
+X-Gm-Message-State: AOJu0YxkIvwaNXL3zkgmylThhI9Uo3lDsJynQSn2XO+ZOV0nI0roFQkL
+	Feju2e/nkxDukzZ3A2Zy8x84hg==
+X-Google-Smtp-Source: AGHT+IFM0QwwCk8522Vl3t4aRbxd9Q+q4yyucz746KxdgT4MpgGYyFNAZFhvVp/Nwh8zfZev+tmAwA==
+X-Received: by 2002:a7b:c857:0:b0:40b:5e59:ccad with SMTP id c23-20020a7bc857000000b0040b5e59ccadmr423442wml.142.1701695279957;
+        Mon, 04 Dec 2023 05:07:59 -0800 (PST)
 Received: from [127.0.1.1] ([82.77.85.67])
-        by smtp.gmail.com with ESMTPSA id n10-20020a05600c4f8a00b004053e9276easm18494166wmq.32.2023.12.04.05.07.57
+        by smtp.gmail.com with ESMTPSA id n10-20020a05600c4f8a00b004053e9276easm18494166wmq.32.2023.12.04.05.07.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 05:07:58 -0800 (PST)
+        Mon, 04 Dec 2023 05:07:59 -0800 (PST)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 04 Dec 2023 15:07:38 +0200
-Subject: [PATCH v2 4/7] phy: qcom-qmp: pcs-usb: Add v7 register offsets
+Date: Mon, 04 Dec 2023 15:07:39 +0200
+Subject: [PATCH v2 5/7] phy: qcom-qmp: qserdes-com: Add v7 register offsets
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,7 +64,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v2-4-21956ae0c5c3@linaro.org>
+Message-Id: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v2-5-21956ae0c5c3@linaro.org>
 References: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v2-0-21956ae0c5c3@linaro.org>
 In-Reply-To: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v2-0-21956ae0c5c3@linaro.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -74,52 +74,138 @@ To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1034; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=4M+XfVf6Rbtz4QjGiR/Rgm75VNvkMBMlXyXrx+AsN/Q=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlbc8jlAoI7yS4kGdu5+tw6hM+aSjBAPwyaEbTx
- SwXDvPLVRiJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZW3PIwAKCRAbX0TJAJUV
- VoLCEADHCXTn+LJx/Z0vGhTOpLqN5JAUkTvZLybJOk3hlMamTWm00izxsZhkYrnJoj2q0jx3aAS
- +XEC555bIMY3TZ5XSUPRxHomlLpWZPjGUqDhQ+d7nWXI5S3haKfA3eRQPKnjOvQpwO1TNpX1Orn
- HMP6gQw66LoCVgQqbKHqFIOp7mnCMpPab7jzgvKcNhYKDvMMWQ+VlI5tSALlwh7j1K7gA/9eED9
- sjINJ4MjgpWnAivi8OcgalTLAJRLvyfZ/xjaS3tkevTRb8uIKCeDO0+TqE4cTDnTu3J1CQy3uib
- 67Zwr8bV2HeHsZatkNGYRa+fnuWVkiO7mYyO2/1IfPVlJ0VMG3CsiyUGDLUJHua8Pq2H3I6GN8S
- B3hO0/mkaA0crGmi/0DhWUMOj06rPJv0VA+mgi2YpRVOG3OEe7YPVXRiTyfj8aBfy2Uuz+B5dup
- ikBBb8ntBjwcy3N4T9L4hwM8j7Qe3p0Hfy0jaCwZfhYFlT5XPCZc0hj8znCHYBwDdE4+1AcEwnl
- Dg6yG3WLV8aJk8KiUxN/mBtjudEiwiys443mQk3zgCx+29etM/3LzkOv1sK+eya5OtidEhpiCg+
- GvInk2ac/f9XhSI6zpj+uE7zrwnqefqJg8UKWO7Bugso7RBiaLCZrbbKUJXcAGWps1HpVrAHiAr
- PhlcqqREJq6Kyhw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5077; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=4NLR4VFQwo4+fX7UwBPIiMq13lp/lzmGWpiGVxHOxcA=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlbc8l1+QvRIvoYU4BHdmt5lsW9MqdkS82wkNOD
+ I/RF6dwMoOJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZW3PJQAKCRAbX0TJAJUV
+ VvE8D/4kT2ifTcIAdfsBcf+LM4L0G7TndZkVJox9hn3jld3QtHxxah4jSkGFk1Q0E1Qw+Wn7tPG
+ olswtGk47KAQFpB64L/0mnsSg6ORQwBEP9tvnvQ+suuieuEsDdR1rtHsP/iultNPMgpurjYeicF
+ ByMhP48WgJWI0gxnha9weMMs8bdNfaTvlZpwWG/Oo6klSE0PjjSkUcJZ2vfpkU3laX/apLxJIYi
+ dn5V6M8eweTEKy7tdc+dgJO+3LXLOq5YTxp62DCZmd3CCVAqMdLoCjkm1M6+H2DARbgpK8KivTG
+ ZZN/wwSJChMx/+VnYCj/ijR2UqrtRCXOxcJ7aU/Chst54tIrbKnhL2oXZjYLadsKgst3M7jXrB4
+ zpr7MNuFqr7bASZRsnTUybt2vDDrJCvCcX2TDKXWYpd0H/X4jSJzitNEdEHdf8T5LzEh2pj1hUG
+ XoSOIg8Xti7l4ImK/n/Sx+YIp+8HGggOcQuiUFeGoWIixqOhAYB1dHssiIrVdGAHqACgJlq85AA
+ 8FKHt6irlVilmm9NG+XYsrbuOO0Jem3Qc54ZcF6nHl3oJI+NRrDa/Pzx6wJPWl9wZaWYNlwkunW
+ KVT8bw6g+p7corClfaSg89oZHQu65qJHZ/tC3baIg3IiUxOaTmxVGznoDJbISe74SHxpyOefUeX
+ UTNHCkAhTWyTDmw==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-The X1E80100 platform bumps the HW version of QMP phy to v7 for USB.
-Add the new PCS USB specific offsets in a dedicated header file.
+The X1E80100 platform bumps the HW version of QMP phy to v7 for USB
+and PCIE g3x2. Add the new qserdes com offsets in a dedicated
+header file.
 
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v7.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v7.h | 86 ++++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.h                |  2 +
+ 2 files changed, 88 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v7.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v7.h
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v7.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v7.h
 new file mode 100644
-index 000000000000..6e785c73f4da
+index 000000000000..9fe7326e4190
 --- /dev/null
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-usb-v7.h
-@@ -0,0 +1,15 @@
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-com-v7.h
+@@ -0,0 +1,86 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +/*
 + * Copyright (c) 2023, Linaro Limited
 + */
 +
-+#ifndef QCOM_PHY_QMP_PCS_USB_V7_H_
-+#define QCOM_PHY_QMP_PCS_USB_V7_H_
++#ifndef QCOM_PHY_QMP_QSERDES_COM_V7_H_
++#define QCOM_PHY_QMP_QSERDES_COM_V7_H_
 +
-+/* Only for QMP V7 PHY - USB3 have different offsets than V6 */
-+#define QPHY_V7_PCS_USB3_LFPS_DET_HIGH_COUNT_VAL	0x18
-+#define QPHY_V7_PCS_USB3_RXEQTRAINING_DFE_TIME_S2	0x3c
-+#define QPHY_V7_PCS_USB3_RCVR_DTCT_DLY_U3_L		0x40
-+#define QPHY_V7_PCS_USB3_RCVR_DTCT_DLY_U3_H		0x44
++/* Only for QMP V7 PHY - QSERDES COM registers */
++
++#define QSERDES_V7_COM_SSC_STEP_SIZE1_MODE1			0x00
++#define QSERDES_V7_COM_SSC_STEP_SIZE2_MODE1			0x04
++#define QSERDES_V7_COM_CP_CTRL_MODE1				0x10
++#define QSERDES_V7_COM_PLL_RCTRL_MODE1				0x14
++#define QSERDES_V7_COM_PLL_CCTRL_MODE1				0x18
++#define QSERDES_V7_COM_CORECLK_DIV_MODE1			0x1c
++#define QSERDES_V7_COM_LOCK_CMP1_MODE1				0x20
++#define QSERDES_V7_COM_LOCK_CMP2_MODE1				0x24
++#define QSERDES_V7_COM_DEC_START_MODE1				0x28
++#define QSERDES_V7_COM_DEC_START_MSB_MODE1			0x2c
++#define QSERDES_V7_COM_DIV_FRAC_START1_MODE1			0x30
++#define QSERDES_V7_COM_DIV_FRAC_START2_MODE1			0x34
++#define QSERDES_V7_COM_DIV_FRAC_START3_MODE1			0x38
++#define QSERDES_V7_COM_HSCLK_SEL_1				0x3c
++#define QSERDES_V7_COM_INTEGLOOP_GAIN0_MODE1			0x40
++#define QSERDES_V7_COM_INTEGLOOP_GAIN1_MODE1			0x44
++#define QSERDES_V7_COM_VCO_TUNE1_MODE1				0x48
++#define QSERDES_V7_COM_VCO_TUNE2_MODE1				0x4c
++#define QSERDES_V7_COM_BIN_VCOCAL_CMP_CODE1_MODE1		0x50
++#define QSERDES_V7_COM_BIN_VCOCAL_CMP_CODE2_MODE1		0x54
++#define QSERDES_V7_COM_BIN_VCOCAL_CMP_CODE1_MODE0		0x58
++#define QSERDES_V7_COM_BIN_VCOCAL_CMP_CODE2_MODE0		0x5c
++#define QSERDES_V7_COM_SSC_STEP_SIZE1_MODE0			0x60
++#define QSERDES_V7_COM_SSC_STEP_SIZE2_MODE0			0x64
++#define QSERDES_V7_COM_CP_CTRL_MODE0				0x70
++#define QSERDES_V7_COM_PLL_RCTRL_MODE0				0x74
++#define QSERDES_V7_COM_PLL_CCTRL_MODE0				0x78
++#define QSERDES_V7_COM_PLL_CORE_CLK_DIV_MODE0			0x7c
++#define QSERDES_V7_COM_LOCK_CMP1_MODE0				0x80
++#define QSERDES_V7_COM_LOCK_CMP2_MODE0				0x84
++#define QSERDES_V7_COM_DEC_START_MODE0				0x88
++#define QSERDES_V7_COM_DEC_START_MSB_MODE0			0x8c
++#define QSERDES_V7_COM_DIV_FRAC_START1_MODE0			0x90
++#define QSERDES_V7_COM_DIV_FRAC_START2_MODE0			0x94
++#define QSERDES_V7_COM_DIV_FRAC_START3_MODE0			0x98
++#define QSERDES_V7_COM_HSCLK_HS_SWITCH_SEL_1			0x9c
++#define QSERDES_V7_COM_INTEGLOOP_GAIN0_MODE0			0xa0
++#define QSERDES_V7_COM_INTEGLOOP_GAIN1_MODE0			0xa4
++#define QSERDES_V7_COM_VCO_TUNE1_MODE0				0xa8
++#define QSERDES_V7_COM_VCO_TUNE2_MODE0				0xac
++#define QSERDES_V7_COM_BG_TIMER					0xbc
++#define QSERDES_V7_COM_SSC_EN_CENTER				0xc0
++#define QSERDES_V7_COM_SSC_PER1					0xcc
++#define QSERDES_V7_COM_SSC_PER2					0xd0
++#define QSERDES_V7_COM_PLL_POST_DIV_MUX				0xd8
++#define QSERDES_V7_COM_PLL_BIAS_EN_CLK_BUFLR_EN			0xdc
++#define QSERDES_V7_COM_CLK_ENABLE1				0xe0
++#define QSERDES_V7_COM_SYS_CLK_CTRL				0xe4
++#define QSERDES_V7_COM_SYSCLK_BUF_ENABLE			0xe8
++#define QSERDES_V7_COM_PLL_IVCO					0xf4
++#define QSERDES_V7_COM_PLL_IVCO_MODE1				0xf8
++#define QSERDES_V7_COM_SYSCLK_EN_SEL				0x110
++#define QSERDES_V7_COM_RESETSM_CNTRL				0x118
++#define QSERDES_V7_COM_LOCK_CMP_EN				0x120
++#define QSERDES_V7_COM_LOCK_CMP_CFG				0x124
++#define QSERDES_V7_COM_VCO_TUNE_CTRL				0x13c
++#define QSERDES_V7_COM_VCO_TUNE_MAP				0x140
++#define QSERDES_V7_COM_VCO_TUNE_INITVAL2			0x148
++#define QSERDES_V7_COM_VCO_TUNE_MAXVAL2				0x158
++#define QSERDES_V7_COM_CLK_SELECT				0x164
++#define QSERDES_V7_COM_CORE_CLK_EN				0x170
++#define QSERDES_V7_COM_CMN_CONFIG_1				0x174
++#define QSERDES_V7_COM_SVS_MODE_CLK_SEL				0x17c
++#define QSERDES_V7_COM_CMN_MISC_1				0x184
++#define QSERDES_V7_COM_CMN_MODE					0x188
++#define QSERDES_V7_COM_PLL_VCO_DC_LEVEL_CTRL			0x198
++#define QSERDES_V7_COM_AUTO_GAIN_ADJ_CTRL_1			0x1a4
++#define QSERDES_V7_COM_AUTO_GAIN_ADJ_CTRL_2			0x1a8
++#define QSERDES_V7_COM_AUTO_GAIN_ADJ_CTRL_3			0x1ac
++#define QSERDES_V7_COM_ADDITIONAL_MISC				0x1b4
++#define QSERDES_V7_COM_ADDITIONAL_MISC_2			0x1b8
++#define QSERDES_V7_COM_ADDITIONAL_MISC_3			0x1bc
++#define QSERDES_V7_COM_CMN_STATUS				0x1d0
++#define QSERDES_V7_COM_C_READY_STATUS				0x1f8
 +
 +#endif
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.h b/drivers/phy/qualcomm/phy-qcom-qmp.h
+index 21f6a56e7ae3..3a0512c3e07a 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.h
+@@ -26,6 +26,8 @@
+ #include "phy-qcom-qmp-qserdes-txrx-v6_20.h"
+ #include "phy-qcom-qmp-qserdes-ln-shrd-v6.h"
+ 
++#include "phy-qcom-qmp-qserdes-com-v7.h"
++
+ #include "phy-qcom-qmp-qserdes-pll.h"
+ 
+ #include "phy-qcom-qmp-pcs-v2.h"
 
 -- 
 2.34.1
