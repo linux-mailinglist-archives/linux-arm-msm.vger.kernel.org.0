@@ -1,490 +1,445 @@
-Return-Path: <linux-arm-msm+bounces-3224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E56BE803106
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:57:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC52D80311C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:00:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 994FD280E15
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:57:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A9C91F21077
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:00:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3DCF224D6;
-	Mon,  4 Dec 2023 10:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C9451C6B6;
+	Mon,  4 Dec 2023 10:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fOuzRnrz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SU7IpRlb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C537120303;
-	Mon,  4 Dec 2023 10:57:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFF0C433C7;
-	Mon,  4 Dec 2023 10:57:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701687445;
-	bh=sdr/Cw7QG4rPegnVGJDapH8E3KOkaTsGiXcrQMCi+Ow=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fOuzRnrzczp4RnsdRYK6GGsRsUR/ljpD2SHg8ZgY3X4kmb6Y1xy5tKEzogl2BZfW4
-	 sb3rdWCYKzGQzKzX2IzDf3eb0P4/0QRmPP8P0OHxfsWgckvN8GAIl+tAtYbNMXWIaR
-	 pCDtSxFoK4f+z2TpIqC6HigZANEozEhSeClHxKaS1fo2PBeejOthtGVCkyBAkwo1t8
-	 +fa6x034e8hD3WP9Y5lSxD6UbcbVCAwTTv8YyZoZvNz4fZooqyBZLNXphCYNs0IJ3W
-	 SOvjXRVqkBljtqPefDsOYntnSnSgab3Byz24nVGUzeNGhWZY7dWCSeUZ+lZPlYS0Sf
-	 d4RePIjAqbAQg==
-Date: Mon, 4 Dec 2023 16:27:09 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
-	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH v5] bus: mhi: host: Add tracing support
-Message-ID: <20231204105709.GA35383@thinkpad>
-References: <20231127-ftrace_support-v5-1-eb67daead4f1@quicinc.com>
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C83FD
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 02:59:51 -0800 (PST)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5b383b4184fso46377727b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 02:59:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701687591; x=1702292391; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y8dkNJZmgkudX4QZPlv1ILHsvPj3tnDoTM3txLJEL3E=;
+        b=SU7IpRlbhdN8Wgc4Ys8AcHegI+wyxhO1ibtTVNwpfiGgdHsjasiqd8kMMDyHGcAnk7
+         U/4bsF78TofFKBTN4z3sNygVG52rjSHGq8n42aONh85EMb3ZU+1O7tdjtqA+gai75svC
+         lHCjTTxdRkZe1Jyp/KcLS9ajhr2tuMphq+eGDnKPQFAP0XiCcvzBbkR7JCGYCrb1BSue
+         lOjImL3Da+pPM5NKV172FVKh4Ta3AZmr2Ok4dKKj+bhpxyEkIIj75kDCl7AjYgGd1xB5
+         TNIy/q3B2aed7h83CbSaVJ0G+CxAzZOeuXyP0B9LmnEdjZ0A8QsjBgy7T6v93MGiuXb5
+         9dLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701687591; x=1702292391;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y8dkNJZmgkudX4QZPlv1ILHsvPj3tnDoTM3txLJEL3E=;
+        b=pEhrmHQA5Wy7BtGuyV0vtaNORFmVsC98eRGhDHLyE0oQy763U6/iWLmKyEsWkwtVCM
+         q/lpciO84CeYUz6VuJek/J9If0UOdh1NFqxOqlJuER4LD95ZBs8TCtpDJLcFLTPpRcmR
+         z3l98bLIsJdkjQfwwK3rYh3Mb0VKYmnN79HpGoZFYEOLai7eBDA78AJisx+6yyH7SMxg
+         u602IKJuVA85LKDaooDvMobUv8Cd0xzXeNx/Tp6MiSs4TTpuQM6wwltujh0QwhIO6Pyt
+         r/hq+OtfKjaR4wRCSYt034dfyZA0l9pT14lWFjrL/+LqhSV64yPiiZsBONq3d9BK8Ryk
+         WFeA==
+X-Gm-Message-State: AOJu0Yw5lymkOTF+EKWzIhWbF4zN0cM93VhVdcr+/6y274P6+zeIthTL
+	CGnRk4LIkL1OTUFCf0tEGAmHqwjWr+dPz2Inj1YANA==
+X-Google-Smtp-Source: AGHT+IFgOWlc6uLr3ABma0Ztx6ruoa8pJKHw5PH4Q3fPtSjH4+YzgEy91ioUAfZzGo3eslogg8aJ09lISiVh3tDeShk=
+X-Received: by 2002:a81:bd4a:0:b0:5d7:545e:3bd3 with SMTP id
+ n10-20020a81bd4a000000b005d7545e3bd3mr2365817ywk.25.1701687590977; Mon, 04
+ Dec 2023 02:59:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231127-ftrace_support-v5-1-eb67daead4f1@quicinc.com>
+References: <20230912-msm8909-cpufreq-v1-0-767ce66b544b@kernkonzept.com>
+ <20230912-msm8909-cpufreq-v1-1-767ce66b544b@kernkonzept.com>
+ <CAPDyKFq6U-MR4Bd+GmixYseRECDh142RhydtKbiPd3NHV2g6aw@mail.gmail.com>
+ <ZQGqfMigCFZP_HLA@gerhold.net> <CAPDyKFppdXe1AZo1jm2Bc_ZR18hw5Bmh1x+2P7Obhb_rJ2gc4Q@mail.gmail.com>
+ <ZRcC2IRRv6dtKY65@gerhold.net> <CAPDyKFoiup8KNv=1LFGKDdDLA1pHsdJUgTTWMdgxnikEmReXzg@mail.gmail.com>
+ <ZSg-XtwMxg3_fWxc@gerhold.net> <CAPDyKFoH5EOvRRKy-Bgp_B9B3rf=PUKK5N45s5PNgfBi55PaOQ@mail.gmail.com>
+ <ZWXgFNKgm9QaFuzx@gerhold.net>
+In-Reply-To: <ZWXgFNKgm9QaFuzx@gerhold.net>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Mon, 4 Dec 2023 11:59:15 +0100
+Message-ID: <CAPDyKFr3WMZQxFgzn7E7mOtecu-mnfoZ-D051pgGhPV5Eeb5BQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] cpufreq: qcom-nvmem: Handling multiple power domains
+To: Stephan Gerhold <stephan@gerhold.net>
+Cc: Stephan Gerhold <stephan.gerhold@kernkonzept.com>, Viresh Kumar <viresh.kumar@linaro.org>, 
+	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Ilia Lin <ilia.lin@kernel.org>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Nov 27, 2023 at 04:39:12PM +0530, Krishna chaitanya chundru wrote:
-> This change adds ftrace support for following functions which
-> helps in debugging the issues when there is Channel state & MHI
-> state change and also when we receive data and control events:
-> 1. mhi_intvec_mhi_states
-> 2. mhi_process_data_event_ring
-> 3. mhi_process_ctrl_ev_ring
-> 4. mhi_gen_tre
-> 5. mhi_update_channel_state
-> 6. mhi_tryset_pm_state
-> 7. mhi_pm_st_worker
-> 
-> Where ever the trace events are added, debug messages are removed.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
-> Changes in v5:
-> - Use DECLARE_EVENT_CLASS for multiple events as suggested by steve.
-> - Instead of converting to u64 to print address, use %px to print the address to avoid
-> - warnings in some platforms.
-> - Link to v4: https://lore.kernel.org/r/20231111-ftrace_support-v4-1-c83602399461@quicinc.com
-> 
-> Changes in v4:
-> - Fix compilation issues in previous patch which happended due to rebasing.
-> - In the defconfig FTRACE config is not enabled due to that the compilation issue is not
-> - seen in my workspace.
-> - Link to v3: https://lore.kernel.org/r/20231111-ftrace_support-v3-1-f358d2911a74@quicinc.com
-> 
-> Changes in v3:
-> - move trace header file from include/trace/events to drivers/bus/mhi/host/ so that
-> - we can include driver header files.
-> - Use macros directly in the trace events as suggested Jeffrey Hugo.
-> - Reorder the structure in the events as suggested by steve to avoid holes in the buffer.
-> - removed the mhi_to_physical function as this can give security issues.
-> - removed macros to define strings as we can get those from driver headers.
-> - Link to v2: https://lore.kernel.org/r/20231013-ftrace_support-v2-1-6e893ce010b5@quicinc.com
-> 
-> Changes in v2:
-> - Passing the raw state into the trace event and using  __print_symbolic() as suggested by bjorn.
-> - Change mhi_pm_st_worker to mhi_pm_st_transition as suggested by bjorn.
-> - Fixed the kernel test rebot issues.
-> - Link to v1: https://lore.kernel.org/r/20231005-ftrace_support-v1-1-23a2f394fa49@quicinc.com
-> ---
->  drivers/bus/mhi/host/init.c     |   3 +
->  drivers/bus/mhi/host/internal.h |   1 +
->  drivers/bus/mhi/host/main.c     |  23 +++--
->  drivers/bus/mhi/host/pm.c       |   6 +-
->  drivers/bus/mhi/host/trace.h    | 208 ++++++++++++++++++++++++++++++++++++++++
->  5 files changed, 228 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index f78aefd2d7a3..6acb85f4c5f8 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -20,6 +20,9 @@
->  #include <linux/wait.h>
->  #include "internal.h"
->  
-> +#define CREATE_TRACE_POINTS
-> +#include "trace.h"
-> +
->  static DEFINE_IDA(mhi_controller_ida);
->  
->  const char * const mhi_ee_str[MHI_EE_MAX] = {
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index 2e139e76de4c..a02a71605907 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -7,6 +7,7 @@
->  #ifndef _MHI_INT_H
->  #define _MHI_INT_H
->  
-> +#include "trace.h"
+On Tue, 28 Nov 2023 at 13:42, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> Hi Uffe,
+>
+> On Mon, Oct 16, 2023 at 04:47:52PM +0200, Ulf Hansson wrote:
+> > [...]
+> > > > >   - MSM8916 (CPR+RPMPD):
+> > > > >     https://github.com/msm8916-mainline/linux/commit/8880f39108206d7a60a0a8351c0373bddf58657c
+> > > >
+> > > > This looks a bit odd to me. Does a CPU really have four different
+> > > > power-domains, where three of them are performance-domains?
+> > > >
+> > >
+> > > Good question. I think we're largely entering "uncharted territory" with
+> > > these questions, I can just try to answer it the best I can from the
+> > > limited documentation and knowledge I have. :)
+> > >
+> > > The CPU does indeed use four different power domains. There also seem to
+> > > be additional power switches that gate power for some components without
+> > > having to turn off the entire supply.
+> > >
+> > > I'll list them twice from two points of view: Once mapping component ->
+> > > power domain, then again showing each power domain separately to make it
+> > > more clear. At the end I also want to make clear that MSM8909 (with the
+> > > "single" power domain) is actually exactly the same SoC design, just
+> > > with different regulators supplying the power domains.
+> > >
+> > > It's totally fine if you just skim over it. I'm listing it in detail
+> > > also as reference for myself. :D
+> > >
+> > > # Components
+> > >  - SoC
+> > >    - CPU subsystem ("APPS")
+> > >      - CPU cluster
+> > >        - 4x CPU core (logic and L1 cache) -> VDD_APC
+> > >        - Shared L2 cache
+> > >          - Logic -> VDD_APC
+> > >          - Memory -> VDD_MX
+> > >      - CPU clock controller (logic) -> VDD_CX
+> > >        - Provides CPU frequency from different clock sources
+> > >        - L2 cache runs at 1/2 of CPU frequency
+> > >        => Both VDD_APC and VDD_MX must be scaled based on frequency
+> > >      - CPU PLL clock source
+> > >        - Generates the higher (GHz) CPU frequencies
+> > >        - Logic (?, unsure) -> VDD_CX
+> > >        - ??? -> VDD_SR2_APPS_PLL
+> > >        => VDD_CX must be scaled based on PLL frequency
+> > >
+> > > # Power Domains
+> > > ## VDD_APC
+> > >  - dedicated for CPU
+> > >  - powered off completely in deepest cluster cpuidle state
+> > >
+> > >  - per-core power switch (per-core cpuidle)
+> > >    - CPU logic
+> > >    - L1 cache controller/logic and maybe memory(?, unsure)
+> > >  - shared L2 cache controller/logic
+> > >
+> > >  => must be scaled based on CPU frequency
+> > >
+> > > ## VDD_MX
+> > >  - global SoC power domain for "on-chip memories"
+> > >  - always on, reduced to minimal voltage when entire SoC is idle
+> > >
+> > >  - power switch (controlled by deepest cluster cpuidle state?, unsure)
+> > >    - L2 cache memory
+> > >
+> > >  => must be scaled based on L2 frequency (=> 1/2 CPU frequency)
+> > >
+> > > ## VDD_CX
+> > >  - global SoC power domain for "digital logic"
+> > >  - always on, reduced to minimal voltage when entire SoC is idle
+> > >  - voting for VDD_CX in the RPM firmware also affects VDD_MX performance
+> > >    state (firmware implicitly sets VDD_MX >= VDD_CX)
+> > >
+> > >  - CPU clock controller logic, CPU PLL logic(?, unsure)
+> > >
+> > >  => must be scaled based on CPU PLL frequency
+> > >
+> > > ## VDD_SR2_APPS_PLL
+> > >  - global SoC power domain for CPU clock PLLs
+> > >  - on MSM8916: always on with constant voltage
+> > >
+> > >  => ignored in Linux at the moment
+> > >
+> > > # Power Domain Regulators
+> > > These power domains are literally input pins on the SoC chip. In theory
+> > > one could connect any suitable regulator to each of those. In practice
+> > > there are just a couple of standard reference designs that everyone
+> > > uses:
+> > >
+> > > ## MSM8916 (SoC) + PM8916 (PMIC)
+> > > We need to scale 3 power domains together with cpufreq:
+> > >
+> > >  - VDD_APC (CPU logic) = &pm8916_spmi_s2 (via CPR)
+> > >  - VDD_MX  (L2 memory) = &pm8916_l3 (via RPMPD: MSM8916_VDDMX)
+> > >  - VDD_CX  (CPU PLL)   = &pm8916_s1 (via RPMPD: MSM8916_VDDCX)
+> > >
+> > > ## MSM8909 (SoC) + PM8909 (PMIC)
+> > > We need to scale 1 power domain together with cpufreq:
+> > >
+> > >  - VDD_APC = VDD_CX    = &pm8909_s1 (via RPMPD: MSM8909_VDDCX)
+> > >    (CPU logic, L2 logic and CPU PLL)
+> > > (- VDD_MX  (L2 memory) = &pm8909_l3 (RPM firmware enforces VDD_MX >= VDD_CX))
+> > >
+> > > There is implicit magic in the RPM firmware here that saves us from
+> > > scaling VDD_MX. VDD_CX/APC are the same power rail.
+> > >
+> > > ## MSM8909 (SoC) + PM8916 (PMIC)
+> > > When MSM8909 is paired with PM8916 instead of PM8909, the setup is
+> > > identical to MSM8916+PM8916. We need to scale 3 power domains.
+> > >
+> > > > In a way it sounds like an option could be to hook up the cpr to the
+> > > > rpmpd:s instead (possibly even set it as a child-domains to the
+> > > > rpmpd:s), assuming that is a better description of the HW, which it
+> > > > may not be, of course.
+> > >
+> > > Hm. It's definitely an option. I must admit I haven't really looked
+> > > much at child-domains so far, so spontaneously I'm not sure about
+> > > the implications, for both the abstract hardware description and
+> > > the implementation.
+> > >
+> > > There seems to be indeed some kind of relation between MX <=> CX/APC:
+> > >
+> > >  - When voting for CX in the RPM firmware, it will always implicitly
+> > >    adjust the MX performance state to be MX >= CX.
+> > >
+> > >  - When scaling APC up, we must increase MX before APC.
+> > >  - When scaling APC down, we must decrease MX after APC.
+> > >  => Clearly MX >= APC. Not in terms of raw voltage, but at least for the
+> > >     abstract performance state.
+> > >
+> > > Is this some kind of parent-child relationship between MX <=> CX and
+> > > MX <=> APC?
+> >
+> > Thanks for sharing the above. Yes, to me, it looks like there is a
+> > parent/child-domain relationship that could be worth describing/using.
+> >
+> > >
+> > > If yes, maybe we could indeed bind MX to the CPR genpd somehow. They use
+> > > different performance state numbering, so we need some kind of
+> > > translation. I'm not entirely sure how that would be described.
+> >
+> > Both the power-domain and the required-opps DT bindings
+> > (Documentation/devicetree/bindings/opp/opp-v2-base.yaml) are already
+> > allowing us to describe these kinds of hierarchical
+> > dependencies/layouts.
+> >
+> > In other words, to scale performance for a child domain, the child may
+> > rely on that we scale performance for the parent domain too. This is
+> > already supported by genpd and through the opp library - so it should
+> > just work. :-)
+> >
+>
+> I'm getting back to the "multiple power domains" case of MSM8916 now, as
+> discussed above. I've tried modelling MX as parent genpd of CPR, to
+> avoid having to scale multiple power domains as part of cpufreq.
+>
+> Basically, it looks like the following:
+>
+>         cpr: power-controller@b018000 {
+>                 compatible = "qcom,msm8916-cpr", "qcom,cpr";
+>                 reg = <0x0b018000 0x1000>;
+>                 /* ... */
+>                 #power-domain-cells = <0>;
+>                 operating-points-v2 = <&cpr_opp_table>;
+>                 /* Supposed to be parent domain, not consumer */
+>                 power-domains = <&rpmpd MSM8916_VDDMX_AO>;
+>
+>                 cpr_opp_table: opp-table {
+>                         compatible = "operating-points-v2-qcom-level";
+>
+>                         cpr_opp1: opp1 {
+>                                 opp-level = <1>;
+>                                 qcom,opp-fuse-level = <1>;
+>                                 required-opps = <&rpmpd_opp_svs_soc>;
+>                         };
+>                         cpr_opp2: opp2 {
+>                                 opp-level = <2>;
+>                                 qcom,opp-fuse-level = <2>;
+>                                 required-opps = <&rpmpd_opp_nom>;
+>                         };
+>                         cpr_opp3: opp3 {
+>                                 opp-level = <3>;
+>                                 qcom,opp-fuse-level = <3>;
+>                                 required-opps = <&rpmpd_opp_super_turbo>;
+>                         };
+>                 };
+>         };
+>
+> As already discussed [1] it's a bit annoying that the genpd core
+> attaches the power domain as consumer by default, but I work around this
+> by calling of_genpd_add_subdomain() followed by dev_pm_domain_detach()
+> in the CPR driver.
 
-Please include header in files where it is actually used.
+Yep, that seems reasonable to me.
 
->  #include "../common.h"
->  
->  extern struct bus_type mhi_bus_type;
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index dcf627b36e82..0d7e068e713a 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -491,11 +491,9 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->  
->  	state = mhi_get_mhi_state(mhi_cntrl);
->  	ee = mhi_get_exec_env(mhi_cntrl);
-> -	dev_dbg(dev, "local ee: %s state: %s device ee: %s state: %s\n",
-> -		TO_MHI_EXEC_STR(mhi_cntrl->ee),
-> -		mhi_state_str(mhi_cntrl->dev_state),
-> -		TO_MHI_EXEC_STR(ee), mhi_state_str(state));
->  
-> +	trace_mhi_intvec_states(mhi_cntrl->mhi_dev->name, mhi_cntrl->ee,
-> +				mhi_cntrl->dev_state, ee, state);
->  	if (state == MHI_STATE_SYS_ERR) {
->  		dev_dbg(dev, "System error detected\n");
->  		pm_state = mhi_tryset_pm_state(mhi_cntrl,
-> @@ -832,6 +830,10 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->  	while (dev_rp != local_rp) {
->  		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
->  
-> +		trace_mhi_ctrl_event(mhi_cntrl->mhi_dev->name, local_rp,
-> +				     local_rp->ptr, local_rp->dword[0],
-> +				     local_rp->dword[1]);
-> +
->  		switch (type) {
->  		case MHI_PKT_TYPE_BW_REQ_EVENT:
->  		{
-> @@ -997,6 +999,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
->  	while (dev_rp != local_rp && event_quota > 0) {
->  		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
->  
-> +		trace_mhi_data_event(mhi_cntrl->mhi_dev->name, local_rp, local_rp->ptr,
-> +				     local_rp->dword[0], local_rp->dword[1]);
-> +
->  		chan = MHI_TRE_GET_EV_CHID(local_rp);
->  
->  		WARN_ON(chan >= mhi_cntrl->max_chan);
-> @@ -1235,6 +1240,8 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->  	mhi_tre->dword[0] = MHI_TRE_DATA_DWORD0(info->len);
->  	mhi_tre->dword[1] = MHI_TRE_DATA_DWORD1(bei, eot, eob, chain);
->  
-> +	trace_mhi_gen_tre(mhi_cntrl->mhi_dev->name, mhi_chan->chan, mhi_tre,
-> +			  mhi_tre->ptr, mhi_tre->dword[0], mhi_tre->dword[1]);
->  	/* increment WP */
->  	mhi_add_ring_element(mhi_cntrl, tre_ring);
->  	mhi_add_ring_element(mhi_cntrl, buf_ring);
-> @@ -1327,9 +1334,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
->  	enum mhi_cmd_type cmd = MHI_CMD_NOP;
->  	int ret;
->  
-> -	dev_dbg(dev, "%d: Updating channel state to: %s\n", mhi_chan->chan,
-> -		TO_CH_STATE_TYPE_STR(to_state));
-> -
-> +	trace_mhi_channel_command_start(mhi_cntrl->mhi_dev->name, mhi_chan->chan, to_state);
->  	switch (to_state) {
->  	case MHI_CH_STATE_TYPE_RESET:
->  		write_lock_irq(&mhi_chan->lock);
-> @@ -1396,9 +1401,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
->  		write_unlock_irq(&mhi_chan->lock);
->  	}
->  
-> -	dev_dbg(dev, "%d: Channel state change to %s successful\n",
-> -		mhi_chan->chan, TO_CH_STATE_TYPE_STR(to_state));
-> -
-> +	trace_mhi_channel_command_end(mhi_cntrl->mhi_dev->name, mhi_chan->chan, to_state);
->  exit_channel_update:
->  	mhi_cntrl->runtime_put(mhi_cntrl);
->  	mhi_device_put(mhi_cntrl->mhi_dev);
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index 8a4362d75fc4..e32afdc92fde 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -123,6 +123,7 @@ enum mhi_pm_state __must_check mhi_tryset_pm_state(struct mhi_controller *mhi_cn
->  	if (unlikely(!(dev_state_transitions[index].to_states & state)))
->  		return cur_state;
->  
-> +	trace_mhi_tryset_pm_state(mhi_cntrl->mhi_dev->name, state);
->  	mhi_cntrl->pm_state = state;
->  	return mhi_cntrl->pm_state;
->  }
-> @@ -753,7 +754,6 @@ void mhi_pm_st_worker(struct work_struct *work)
->  	struct mhi_controller *mhi_cntrl = container_of(work,
->  							struct mhi_controller,
->  							st_worker);
-> -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  
->  	spin_lock_irq(&mhi_cntrl->transition_lock);
->  	list_splice_tail_init(&mhi_cntrl->transition_list, &head);
-> @@ -761,8 +761,8 @@ void mhi_pm_st_worker(struct work_struct *work)
->  
->  	list_for_each_entry_safe(itr, tmp, &head, node) {
->  		list_del(&itr->node);
-> -		dev_dbg(dev, "Handling state transition: %s\n",
-> -			TO_DEV_STATE_TRANS_STR(itr->state));
-> +
-> +		trace_mhi_pm_st_transition(mhi_cntrl->mhi_dev->name, itr->state);
->  
->  		switch (itr->state) {
->  		case DEV_ST_TRANSITION_PBL:
-> diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
-> new file mode 100644
-> index 000000000000..3bfac529c6b7
-> --- /dev/null
-> +++ b/drivers/bus/mhi/host/trace.h
-> @@ -0,0 +1,208 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM mhi_host
-> +
-> +#if !defined(_TRACE_EVENT_MHI_HOST_H) || defined(TRACE_HEADER_MULTI_READ)
-> +#define _TRACE_EVENT_MHI_HOST_H
-> +
-> +#include <linux/tracepoint.h>
-> +#include <linux/trace_seq.h>
-> +#include "../common.h"
-> +#include "internal.h"
-> +
-> +TRACE_EVENT(mhi_gen_tre,
-> +
-> +	TP_PROTO(const char *name, int ch_num, void *wp, __le64 tre_ptr,
-> +		 __le32 dword0, __le32 dword1),
-> +
-> +	TP_ARGS(name, ch_num, wp, tre_ptr, dword0, dword1),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, name)
-> +		__field(int, ch_num)
-> +		__field(void *, wp)
-> +		__field(__le64, tre_ptr)
-> +		__field(__le32, dword0)
-> +		__field(__le32, dword1)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, name);
-> +		__entry->ch_num = ch_num;
-> +		__entry->wp = wp;
-> +		__entry->tre_ptr = tre_ptr;
-> +		__entry->dword0 = dword0;
-> +		__entry->dword1 = dword1;
-> +	),
-> +
-> +	TP_printk("%s: Chan: %d WP: 0x%p TRE: 0x%llx 0x%08x 0x%08x\n",o
+>
+> The actual scaling works fine, performance states of the MX power domain
+> are updated when CPR performance state. I added some debug prints and it
+> looks e.g. as follows (CPR is the power-controller@):
+>
+>     [   24.498218] PM: mx_ao set performance state 6
+>     [   24.498788] PM: power-controller@b018000 set performance state 3
+>     [   24.511025] PM: mx_ao set performance state 3
+>     [   24.511526] PM: power-controller@b018000 set performance state 1
+>     [   24.521189] PM: mx_ao set performance state 4
+>     [   24.521660] PM: power-controller@b018000 set performance state 2
+>     [   24.533183] PM: mx_ao set performance state 6
+>     [   24.533535] PM: power-controller@b018000 set performance state 3
+>
+> There is one remaining problem here: Consider e.g. the switch from CPR
+> performance state 3 -> 1. In both cases the parent genpd state is set
+> *before* the child genpd. When scaling down, the parent genpd state must
+> be reduced *after* the child genpd. Otherwise, we can't guarantee that
+> the parent genpd state is always >= of the child state.
 
-What you are printing as TRE is not actually a TRE but the data pointer
-referenced by the TRE. WP is the actual TRE.
+Good point!
 
-> +		  __get_str(name), __entry->ch_num, __entry->wp, __entry->tre_ptr,
-> +		  __entry->dword0, __entry->dword1)
+>
+> In the OPP core, the order of such operations is always chosen based on
+> whether we are scaling up or down. When scaling up, power domain states
+> are set before the frequency is changed, and the other way around for
+> scaling down.
+>
+> Is this something you could imagine changing in the GENPD core, either
+> unconditionally for everyone, or as an option?
 
-DWORDs are getting printed without any name. Like,
+This sounds like a generic problem that we need to fix for genpd. So
+for everyone.
 
-mhi_gen_tre: mhi0: Chan: 46 WP: 0x00000000bcd06579 TRE: 0xffbcf190 0x0000004c 0x00020200
+>
+> I tried to hack this in for a quick test and came up with the following
+> (the diff is unreadable so I'll just post the entire changed
+> (_genpd_set_performance_state() function). Admittedly it's a bit ugly.
+>
+> With these changes the sequence from above looks more like:
+>
+>     [   22.374555] PM: mx_ao set performance state 6
+>     [   22.375175] PM: power-controller@b018000 set performance state 3
+>     [   22.424661] PM: power-controller@b018000 set performance state 1
+>     [   22.425169] PM: mx_ao set performance state 3
+>     [   22.434932] PM: mx_ao set performance state 4
+>     [   22.435331] PM: power-controller@b018000 set performance state 2
+>     [   22.461197] PM: mx_ao set performance state 6
+>     [   22.461968] PM: power-controller@b018000 set performance state 3
+>
+> Which is correct now.
+>
+> Let me know if you have any thoughts about this. :-)
 
-> +);
-> +
-> +TRACE_EVENT(mhi_intvec_states,
-> +
-> +	TP_PROTO(const char *name, int local_ee, int state, int dev_ee, int dev_state),
-> +
-> +	TP_ARGS(name, local_ee, state, dev_ee, dev_state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, name)
-> +		__field(int, local_ee)
-> +		__field(int, state)
-> +		__field(int, dev_ee)
-> +		__field(int, dev_state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, name);
-> +		__entry->local_ee = local_ee;
-> +		__entry->state = state;
-> +		__entry->dev_ee = dev_ee;
-> +		__entry->dev_state = dev_state;
-> +	),
-> +
-> +	TP_printk("%s: local ee: %s state: %s device ee: %s state: %s\n",
-> +		  __get_str(name),
-> +		  TO_MHI_EXEC_STR(__entry->local_ee),
-> +		  mhi_state_str(__entry->state),
-> +		  TO_MHI_EXEC_STR(__entry->dev_ee),
-> +		  mhi_state_str(__entry->dev_state))
-> +);
-> +
-> +TRACE_EVENT(mhi_tryset_pm_state,
-> +
-> +	TP_PROTO(const char *name, int pm_state),
-> +
-> +	TP_ARGS(name, pm_state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, name)
-> +		__field(int, pm_state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, name);
-> +		if (pm_state)
-> +			pm_state = __fls(pm_state);
-> +		__entry->pm_state = pm_state;
-> +	),
-> +
-> +	TP_printk("%s: PM state: %s\n", __get_str(name),
-> +		  to_mhi_pm_state_str(__entry->pm_state))
-> +);
-> +
-> +DECLARE_EVENT_CLASS(mhi_process_event_ring,
-> +
-> +	TP_PROTO(const char *name, void *rp, __le64 ptr,
-> +		 __le32 dword0, __le32 dword1),
-> +
-> +	TP_ARGS(name, rp, ptr, dword0, dword1),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, name)
-> +		__field(__le32, dword0)
-> +		__field(__le32, dword1)
-> +		__field(int, state)
-> +		__field(__le64, ptr)
-> +		__field(void *, rp)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, name);
-> +		__entry->rp = rp;
-> +		__entry->ptr = ptr;
-> +		__entry->dword0 = dword0;
-> +		__entry->dword1 = dword1;
-> +		__entry->state = MHI_TRE_GET_EV_STATE((struct mhi_ring_element *)entry->rp);
-> +	),
-> +
-> +	TP_printk("%s: RP:0x%p Processing Event:0x%llx 0x%08x 0x%08x state:%s\n",
+Makes sense! Please post the below as a formal patch so I can review
+and test it!
 
-Same comment as above. Also, please use a single format. Like, here you are
-printing "Processing Event" after "RP"...
+Kind regards
+Uffe
 
-> +		  __get_str(name), __entry->rp, __entry->ptr, __entry->dword0,
-> +		  __entry->dword1, mhi_state_str(__entry->state))
-> +);
-> +
-> +DEFINE_EVENT(mhi_process_event_ring, mhi_data_event,
-> +
-> +	TP_PROTO(const char *name, void *rp, __le64 ptr,
-> +		 __le32 dword0, __le32 dword1),
-> +
-> +	TP_ARGS(name, rp, ptr, dword0, dword1)
-> +);
-> +
-> +DEFINE_EVENT(mhi_process_event_ring, mhi_ctrl_event,
-> +
-> +	TP_PROTO(const char *name, void *rp, __le64 ptr,
-> +		 __le32 dword0, __le32 dword1),
-> +
-> +	TP_ARGS(name, rp, ptr, dword0, dword1)
-> +);
-> +
-> +DECLARE_EVENT_CLASS(mhi_update_channel_state,
-> +
-> +	TP_PROTO(const char *name, int ch_num, int state),
-> +
-> +	TP_ARGS(name, ch_num, state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, name)
-> +		__field(int, ch_num)
-> +		__field(int, state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, name);
-> +		__entry->ch_num = ch_num;
-> +		__entry->state = state;
-> +	),
-> +
-> +	TP_printk("%s: ch%d: Updating state to: %s\n",
-
-Use "Chan" as above.
-
-> +		  __get_str(name), __entry->ch_num,
-> +		  TO_CH_STATE_TYPE_STR(__entry->state))
-> +);
-> +
-> +DEFINE_EVENT(mhi_update_channel_state, mhi_channel_command_start,
-> +
-> +	TP_PROTO(const char *name, int ch_num, int state),
-> +
-> +	TP_ARGS(name, ch_num, state)
-> +);
-> +
-> +DEFINE_EVENT(mhi_update_channel_state, mhi_channel_command_end,
-> +
-> +	TP_PROTO(const char *name, int ch_num, int state),
-> +
-> +	TP_ARGS(name, ch_num, state)
-> +);
-> +
-> +TRACE_EVENT(mhi_pm_st_transition,
-> +
-> +	TP_PROTO(const char *name, int state),
-> +
-> +	TP_ARGS(name, state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, name)
-> +		__field(int, state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, name);
-> +		__entry->state = state;
-> +	),
-> +
-> +	TP_printk("%s: Handling state transition: %s\n", __get_str(name),
-> +		  TO_DEV_STATE_TRANS_STR(__entry->state))
-> +);
-> +
-> +#endif
-> +#undef TRACE_INCLUDE_PATH
-> +#define TRACE_INCLUDE_PATH .
-
-I had to use relative path to build this patch:
-
-#define TRACE_INCLUDE_PATH ../../drivers/bus/mhi/host
-
-- Mani
-
-> +#undef TRACE_INCLUDE_FILE
-> +#define TRACE_INCLUDE_FILE trace
-> +
-> +#include <trace/define_trace.h>
-> 
-> ---
-> base-commit: 3006adf3be79cde4d14b1800b963b82b6e5572e0
-> change-id: 20231005-ftrace_support-6869d4156139
-> 
-> Best regards,
-> -- 
-> Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+>
+> Thanks for taking the time to discuss this!
+> Stephan
+>
+> [1]: https://lore.kernel.org/linux-pm/CAPDyKFq+zsoeF-4h5TfT4Z+S46a501_pUq8y2c1x==Tt6EKBGA@mail.gmail.com/
+>
+> static int _genpd_set_performance_state(struct generic_pm_domain *genpd,
+>                                         unsigned int state, int depth);
+>
+> static void _genpd_rollback_parent_state(struct gpd_link *link, int depth)
+> {
+>         struct generic_pm_domain *parent = link->parent;
+>         int parent_state;
+>
+>         genpd_lock_nested(parent, depth + 1);
+>
+>         parent_state = link->prev_performance_state;
+>         link->performance_state = parent_state;
+>
+>         parent_state = _genpd_reeval_performance_state(parent, parent_state);
+>         if (_genpd_set_performance_state(parent, parent_state, depth + 1)) {
+>                 pr_err("%s: Failed to roll back to %d performance state\n",
+>                        parent->name, parent_state);
+>         }
+>
+>         genpd_unlock(parent);
+> }
+>
+> static int _genpd_set_parent_state(struct generic_pm_domain *genpd,
+>                                    struct gpd_link *link,
+>                                    unsigned int state, int depth)
+> {
+>         struct generic_pm_domain *parent = link->parent;
+>         int parent_state, ret;
+>
+>         /* Find parent's performance state */
+>         ret = genpd_xlate_performance_state(genpd, parent, state);
+>         if (unlikely(ret < 0))
+>                 return ret;
+>
+>         parent_state = ret;
+>
+>         genpd_lock_nested(parent, depth + 1);
+>
+>         link->prev_performance_state = link->performance_state;
+>         link->performance_state = parent_state;
+>         parent_state = _genpd_reeval_performance_state(parent,
+>                                                 parent_state);
+>         ret = _genpd_set_performance_state(parent, parent_state, depth + 1);
+>         if (ret)
+>                 link->performance_state = link->prev_performance_state;
+>
+>         genpd_unlock(parent);
+>
+>         return ret;
+> }
+>
+> static int _genpd_set_performance_state(struct generic_pm_domain *genpd,
+>                                         unsigned int state, int depth)
+> {
+>         struct gpd_link *link = NULL;
+>         int ret;
+>
+>         if (state == genpd->performance_state)
+>                 return 0;
+>
+>         /* When scaling up, propagate to parents first in normal order */
+>         if (state > genpd->performance_state) {
+>                 list_for_each_entry(link, &genpd->child_links, child_node) {
+>                         ret = _genpd_set_parent_state(genpd, link, state, depth);
+>                         if (ret)
+>                                 goto rollback_parents_up;
+>                 }
+>         }
+>
+>         if (genpd->set_performance_state) {
+>                 pr_err("%s set performance state %d\n", genpd->name, state);
+>                 ret = genpd->set_performance_state(genpd, state);
+>                 if (ret) {
+>                         if (link)
+>                                 goto rollback_parents_up;
+>                         return ret;
+>                 }
+>         }
+>
+>         /* When scaling down, propagate to parents after in reverse order */
+>         if (state < genpd->performance_state) {
+>                 list_for_each_entry_reverse(link, &genpd->child_links, child_node) {
+>                         ret = _genpd_set_parent_state(genpd, link, state, depth);
+>                         if (ret)
+>                                 goto rollback_parents_down;
+>                 }
+>         }
+>
+>         genpd->performance_state = state;
+>         return 0;
+>
+> rollback_parents_up:
+>         list_for_each_entry_continue_reverse(link, &genpd->child_links, child_node)
+>                 _genpd_rollback_parent_state(link, depth);
+>         return ret;
+> rollback_parents_down:
+>         list_for_each_entry_continue(link, &genpd->child_links, child_node)
+>                 _genpd_rollback_parent_state(link, depth);
+>         return ret;
+> }
+>
 
