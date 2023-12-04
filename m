@@ -1,106 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-3296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0D7D803631
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:16:51 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C064C803677
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:24:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27FE51C20AA2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:16:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7AFEE28100F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:24:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF34925762;
-	Mon,  4 Dec 2023 14:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FBD728DA7;
+	Mon,  4 Dec 2023 14:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ppjPukIs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gto9Wb2/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D671A9
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 06:16:39 -0800 (PST)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2ca0288ebc5so12728741fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 06:16:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701699396; x=1702304196; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n6YMpMOZZj4+cuOxRYdI7nrhzUfHZl6j32N3A+bPyU8=;
-        b=ppjPukIsy2D9jA7NMdYHS/I5CwKcNHZpS+lYFy9yzGnO/WAVAfUEtv61gaBF+xiXVw
-         qGtBhA1Sm6lEE2WCxcl/vicxaKIJ7+/INAnLrpPqn+rfm+5cDtEQtC/g+CrzcIFYIiL/
-         qoPGEfZWBY8f4dnpWWVH/a9ZfKfQRAZORRs5CTKH0lZ00mXcDBnApsXcTetZ3OAp4udL
-         IKYrrZ08JaQm8vGL/dMF4tHgYapmDEN32NOlwfkYs7c3MsvjB9rIsWrUhRRcdfS5roTc
-         LGADAnoUKUA2RF7g3agGTeaUlh77WF8jwY3IEZ5DV/+WvwxiZbU3WGXWLxOEKZpQDxdJ
-         SOVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701699396; x=1702304196;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n6YMpMOZZj4+cuOxRYdI7nrhzUfHZl6j32N3A+bPyU8=;
-        b=pSeH2s6IpC6n3U7+GwbST77DCjnki5Mf4cSoz7UwvO9Y8RvP3kT7AcDge/HwYxGIq7
-         /22X5hmlO2viCQwibiCYBR3yUkeln9x5s2S1z9iybI2/z5trQBQ3TsgG0iD1TqmMXSWN
-         I1tLdMjuJeS63sMXLm2uofnFWLh7TiRrizBG2PDtkRN1FGnc7tBxQ02YphgET6TQ6mUi
-         04zc/fz9Bze0MukFo5E8RkZhlBgmxUR9D6IWS8pSuLRYrnOTf2T45i/iGFNFatlUdv4H
-         gbAlLuq2D73AAOfaleIh7LoMCzBY5VmZacZfZKuXXzIwpigwkJhScuUQufHnTrwwZzn7
-         eWHA==
-X-Gm-Message-State: AOJu0YxMHwc/h4H6IvHylx3ffLC0BGUHMp9tdTOzjffjfSLBJ37K5+ur
-	gC6pk8+zj33Q1zpPjO9E0k8bSg==
-X-Google-Smtp-Source: AGHT+IHxlvjohMUpKehKwnggj+Lz3P6QMDf6Qpur+3rLugPmZ4qsdPayS5BHoKR4TzBjRie6bNxfgg==
-X-Received: by 2002:a2e:7c0a:0:b0:2c9:f564:b414 with SMTP id x10-20020a2e7c0a000000b002c9f564b414mr1344885ljc.24.1701699396667;
-        Mon, 04 Dec 2023 06:16:36 -0800 (PST)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::227])
-        by smtp.gmail.com with ESMTPSA id v3-20020a2e9243000000b002c9fda71acesm487033ljg.127.2023.12.04.06.16.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 06:16:36 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: (subset) [PATCH RESEND v2 0/3] drm: introduce per-encoder debugfs directory
-Date: Mon,  4 Dec 2023 16:16:31 +0200
-Message-ID: <170169936702.76859.7909470270335421365.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231203115315.1306124-1-dmitry.baryshkov@linaro.org>
-References: <20231203115315.1306124-1-dmitry.baryshkov@linaro.org>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1296A249ED;
+	Mon,  4 Dec 2023 14:24:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E86C433C7;
+	Mon,  4 Dec 2023 14:24:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701699882;
+	bh=FxyTNV2BSZCdnXrn/+nzGXNlT8yOZRDQS3uQJjiW47g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Gto9Wb2/vIUEXslxtUHhJczyFiYNjrM8cQ4dvpD07pgWzYI5onF4rEYmXUofK0qaz
+	 SU5yaVKSoSetKprNtUIR0gbnHjceiKiD7Vh9qYwXOmy0R9IpYk3KISn1alMye9WU3W
+	 BpRVtv2FyUGvuGfA7eh5Dr8DtP5pJHxiej0iOQ0paiO/5ha29M/CrrOB5+/4llzHB6
+	 9WlJ/aLAvCzT1JOJMadkpuPzZFpa7wSOndZwnJuAGLz4luOpH38AJcE89R/nY/1k6s
+	 EaI7d40iiH1blx/dSqKFX85drBOs6hFKRNIYa2+C3iYO4V5ZugcaNh99SvyCgn8Tle
+	 kmx1XTuCDJnWw==
+Date: Mon, 4 Dec 2023 14:24:29 +0000
+From: Jonathan Cameron <jic23@kernel.org>
+To: Nia Espera <nespera@igalia.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Lars-Peter Clausen
+ <lars@metafoo.de>, Rob Herring <robh+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Kees Cook <keescook@chromium.org>, Tony Luck
+ <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>, Vinod
+ Koul <vkoul@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski@linaro.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-iio@vger.kernel.org, devicetree@vger.kernel.org,
+ phone-devel@vger.kernel.org, Rob <Me@orbit.sh>, Clayton Craft
+ <clayton@igalia.com>, Caleb Connolly <caleb.connolly@linaro.org>, Luca
+ Weiss <luca.weiss@fairphone.com>, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v3 1/6] dt-bindings: iio: adc: add smb139x
+Message-ID: <20231204142429.5691e85c@jic23-huawei>
+In-Reply-To: <20231108-nia-sm8350-for-upstream-v3-1-18a024b5c74c@igalia.com>
+References: <20231108-nia-sm8350-for-upstream-v3-0-18a024b5c74c@igalia.com>
+	<20231108-nia-sm8350-for-upstream-v3-1-18a024b5c74c@igalia.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Sun, 03 Dec 2023 14:53:12 +0300, Dmitry Baryshkov wrote:
-> Resending, patch 1 needs review from DRM core maintainers, but it got no
-> attention since October.
+On Wed, 08 Nov 2023 18:50:25 +0100
+Nia Espera <nespera@igalia.com> wrote:
+
+> Bindings for a charger controller chip found on sm8350
 > 
-> Each of connectors and CRTCs used by the DRM device provides debugfs
-> directory, which is used by several standard debugfs files and can
-> further be extended by the driver. Add such generic debugfs directories
-> for encoder. As a showcase for this dir, migrate `bridge_chains' debugfs
-> file (which contains per-encoder data) and MSM custom encoder status to
-> this new debugfs directory.
+> Signed-off-by: Nia Espera <nespera@igalia.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+> ---
+>  include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h | 19 +++++++++++++++++++
+>  include/dt-bindings/iio/qcom,spmi-vadc.h         |  3 +++
+>  2 files changed, 22 insertions(+)
 > 
-> [...]
+> diff --git a/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h b/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h
+> new file mode 100644
+> index 000000000000..c0680d1285cf
+> --- /dev/null
+> +++ b/include/dt-bindings/iio/qcom,spmi-adc7-smb139x.h
+> @@ -0,0 +1,19 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only OR BSD-3-Clause */
+> +/*
+> + * Copyright (c) 2020 The Linux Foundation. All rights reserved.
+> + */
+> +
+> +#ifndef _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
+> +#define _DT_BINDINGS_QCOM_SPMI_VADC_SMB139X_H
+> +
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +
+> +#define SMB139x_1_ADC7_SMB_TEMP			(SMB139x_1_SID << 8 | ADC7_SMB_TEMP)
+> +#define SMB139x_1_ADC7_ICHG_SMB			(SMB139x_1_SID << 8 | ADC7_ICHG_SMB)
+> +#define SMB139x_1_ADC7_IIN_SMB			(SMB139x_1_SID << 8 | ADC7_IIN_SMB)
+> +
+> +#define SMB139x_2_ADC7_SMB_TEMP			(SMB139x_2_SID << 8 | ADC7_SMB_TEMP)
+> +#define SMB139x_2_ADC7_ICHG_SMB			(SMB139x_2_SID << 8 | ADC7_ICHG_SMB)
+> +#define SMB139x_2_ADC7_IIN_SMB			(SMB139x_2_SID << 8 | ADC7_IIN_SMB)
+> +
+> +#endif
+> diff --git a/include/dt-bindings/iio/qcom,spmi-vadc.h b/include/dt-bindings/iio/qcom,spmi-vadc.h
+> index 08adfe25964c..ef07ecd4d585 100644
+> --- a/include/dt-bindings/iio/qcom,spmi-vadc.h
+> +++ b/include/dt-bindings/iio/qcom,spmi-vadc.h
+> @@ -239,12 +239,15 @@
+>  #define ADC7_GPIO3				0x0c
+>  #define ADC7_GPIO4				0x0d
+>  
+> +#define ADC7_SMB_TEMP				0x06
+>  #define ADC7_CHG_TEMP				0x10
+>  #define ADC7_USB_IN_V_16			0x11
+>  #define ADC7_VDC_16				0x12
+>  #define ADC7_CC1_ID				0x13
+>  #define ADC7_VREF_BAT_THERM			0x15
+>  #define ADC7_IIN_FB				0x17
+> +#define ADC7_ICHG_SMB				0x18
+> +#define ADC7_IIN_SMB				0x19
+>  
+>  /* 30k pull-up1 */
+>  #define ADC7_AMUX_THM1_30K_PU			0x24
+> 
 
-Applied to drm-misc-next, thanks!
-
-[1/3] drm/encoder: register per-encoder debugfs dir
-      commit: caf525ed45b4960b450cbd4e811d9b247bc2586c
-[2/3] drm/bridge: migrate bridge_chains to per-encoder file
-      commit: d0b3c318e04cc6c4e2a3c30ee0f6f619aa8d0db5
-
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
