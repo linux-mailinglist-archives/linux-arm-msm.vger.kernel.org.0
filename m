@@ -1,93 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-3200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA3B7802F6B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:57:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14D37802F70
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:58:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4BF5A1F210A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 09:57:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C3F9D280D0F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 09:58:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EDD01DDE1;
-	Mon,  4 Dec 2023 09:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FDD21D55E;
+	Mon,  4 Dec 2023 09:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VNrznMQZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WxF3Yfsr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37D0DB2
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 01:57:26 -0800 (PST)
-Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-5d7a47d06eeso15600077b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 01:57:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701683845; x=1702288645; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kyeYb+ql0SyNyhyMLosDv4p5iiN7RVdysjk96TvPY/U=;
-        b=VNrznMQZQXMwLXSN68X9g5/OdxpIohRK+oNslgHvKEP/xEBwGB7Y8aA4ftrOWHhzLv
-         CBj+C1vCGSO+LuYnvysjMY5SPehZXTq+RKMg3ieGrZPxonIy26dbh5OTdrfas3x/l3y0
-         tXk0fBMMJcQihEQNoyFpf4141mLrbx2CJu0LfyEpHl0oKnaOI8qJ9rFPzpu/CJRSvDdI
-         ZBS8678B9S8ezq4LzEE/ro3yEaiGssVVF4KHMSISDCq+Sjw9jmxJmmBU8CkQSl3dr9XF
-         R6orJ4atECtlChdpljU8XVcgpBKm7SZKBTUXPpnA3OdVcMa+e90bqvGhyUgwQOGgUvfi
-         2oaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701683845; x=1702288645;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kyeYb+ql0SyNyhyMLosDv4p5iiN7RVdysjk96TvPY/U=;
-        b=JE/CmkY/Tgyl5ACX2c1E3/ev2A+CKJz1gLK+5ImE2v/aor0kMHbtD6Z1SbY1NKT/T2
-         3CrDCLiKxg3kR3Ef0fcB3/V7m4WGb2tbDCorOP19HYI+bN5XgASYs4OGWVTEO/TGqUER
-         f6ceJK8YscbFajcG3dU4oO3O1rsBpF6TrXpEqPMT2+u+ygmiVRsW7DIS398k4AFBPANT
-         1W/MSqzZJ6HkX9jh7sIQlrlNwL6YYqM73Rzw5TsvooAe3LHwFBzN3bVZT39YXesH4wDB
-         Aa2o+h713OAKJIxhiXrwpUY1vVWo6fgC/WfLQ+SPugXCtXwUNsmypKzTI1QJW/7fQwLX
-         51Mg==
-X-Gm-Message-State: AOJu0Yz8wSfWeWbE4oMpP6AFJ/P0ytNK/QhlefkA9bZC6mx2g7MARXAC
-	R90QBT9XG2ri+EAqd9vWFJr+EH9JW3bggx8TrvHMWw==
-X-Google-Smtp-Source: AGHT+IFPNuK+9cOIpKHmoinczKV8MminI3NreBuRG+6sy+RGo1WH4QD56pTWpN4kexe3XakI3kZkEOgDB4+bi46jBIc=
-X-Received: by 2002:a81:b626:0:b0:5d7:1940:f3db with SMTP id
- u38-20020a81b626000000b005d71940f3dbmr3037866ywh.67.1701683845464; Mon, 04
- Dec 2023 01:57:25 -0800 (PST)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0579FB6;
+	Mon,  4 Dec 2023 01:57:54 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B48JDHd002330;
+	Mon, 4 Dec 2023 09:57:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=1U8ANJ1MUuewKhfU6DLgDYvcVITnKtqeI7iFGTnw/yg=;
+ b=WxF3YfsrnjWAi/VWD8o7qp4Yh+AcXTJkRLmOujZW50WrIdZx8lVA/qJvZEVB227zCGUg
+ vMjfsDgo8bViwK0cCSsI5iI5jMyZo+6Ca47b4wWUaWbR0Mhp37hcQ/3/hBsf7ckHsCcu
+ 5DofRPaPITnaWn1Kf9bZ4Gh6X+UtyEpCWAIax7Y6O2XpL6IfETIA8IKO6oiXe1712HNZ
+ pRnPek2PQlYHWUOV8lPQb0EmUEdGKmAi29tel1U7icp5PV8CVA2BnVBwahiX3hUo+Xh+
+ /v/+Y1gJxM9Oaur1tvZ8V4rp42GMn8ZgkDaXBC6AQNQ6FfllSN8+dkbHrpil+8DVKUji ww== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uqv673m66-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 04 Dec 2023 09:57:50 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B49vn0m022270
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 4 Dec 2023 09:57:49 GMT
+Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
+ 2023 01:57:44 -0800
+Message-ID: <4d85fda9-6e00-4bb4-b8a8-85c5e66635bf@quicinc.com>
+Date: Mon, 4 Dec 2023 17:57:42 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231130024046.25938-1-quic_tengfan@quicinc.com>
- <20231130024046.25938-5-quic_tengfan@quicinc.com> <dx62durg3wmqviqdpecdqprd5wwkg4i7n5tgcab55axzssdeel@ftt35c6td2sh>
-In-Reply-To: <dx62durg3wmqviqdpecdqprd5wwkg4i7n5tgcab55axzssdeel@ftt35c6td2sh>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Mon, 4 Dec 2023 10:57:14 +0100
-Message-ID: <CACRpkdZRNvUY0rEY__v9wPy4bjuDSgFhEkXFHxixdfyKSw56Bg@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] pinctrl: qcom: sm4450: correct incorrect address offset
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] pinctrl: Add lock to ensure the state atomization
 To: Bjorn Andersson <andersson@kernel.org>
-Cc: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org, konrad.dybcio@linaro.org, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+CC: <linus.walleij@linaro.org>, <linux-gpio@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20231201152931.31161-1-quic_aiquny@quicinc.com>
+ <6jlui5h7d2rs37sdvvwmii55mwhm5dzfo2m62hwt53mkx4z32a@aw5kcghe4bik>
+From: "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
+In-Reply-To: <6jlui5h7d2rs37sdvvwmii55mwhm5dzfo2m62hwt53mkx4z32a@aw5kcghe4bik>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zRNDn3JTG5xlrNZ9DzuWwAXzZeJuZIBz
+X-Proofpoint-GUID: zRNDn3JTG5xlrNZ9DzuWwAXzZeJuZIBz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-04_06,2023-11-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ clxscore=1011 mlxscore=0 spamscore=0 suspectscore=0 adultscore=0
+ mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311060000 definitions=main-2312040075
 
-On Fri, Dec 1, 2023 at 10:33=E2=80=AFPM Bjorn Andersson <andersson@kernel.o=
-rg> wrote:
-> On Thu, Nov 30, 2023 at 10:40:46AM +0800, Tengfei Fan wrote:
-> > The address offset of 0x100000 is already provided in SM4450 DTSI, so
-> > subtract 0x100000 from the offset which used by ufs and sdc.
-> >
->
-> As Konrad points out, please fix the broken patch, don't add a separate
-> fix in the same series.
->
-> > Suggested-by: Can Guo <quic_cang@quicinc.com>
->
-> We unfortunately don't have a way to give credit to those providing
-> review feedback, so omit this when fixing patch #2.
+On 12/2/2023 4:39 AM, Bjorn Andersson wrote:
+> On Fri, Dec 01, 2023 at 11:29:31PM +0800, Maria Yu wrote:
+>> Currently pinctrl_select_state is an export symbol and don't have
+>> effective re-entrance protect design. And possible of pinctrl state
+>> changed during pinctrl_commit_state handling. Add per pinctrl lock to
+>> ensure the old state and new state transition atomization.
+>> Move dev error print message right before old_state pinctrl_select_state
+>> and out of lock protection to avoid console related driver call
+>> pinctrl_select_state recursively.
+> 
+> I'm uncertain about the validity of having client code call this api in
+> a racy manner. I'm likely just missing something here... It would be
+> nice if this scenario was described in a little bit more detail.
+Hi Bjorn,
 
-Just write in the commit message that Can Guo helped out in reviewing
-the driver (just some free text).
+we've got a customer dump that the real racy happened, and the system 
+frequently have printk message like:
+   "not freeing pin xx (xxx) as part of deactivating group xxx - it is
+already used for some other setting".
+Finally the system crashed after the flood log.
 
-Yours,
-Linus Walleij
+We've inform the customer to check their own client code which called 
+this api, to have proper lock to avoid racy of per dev 
+pinctrl_select_state call from customer driver end.
+For example:
+LOCK;
+pinctrl_select_state();
+gpio pulling;
+udelay();
+check state;
+other hardware behaviors;
+UNLOCK;
+
+While it is still unnecessary the volatile re-load of p->state for the 
+interation and so I upstream a patch like link[2].
+
+while during the merge discussion, upstream maintainer suggest to have 
+the lock issue fixed, instead of only READ_ONCE for the interation.
+I think it is also make sense since although current in-tree driver have 
+take care of each pinctrl_select_state call, since it is a export 
+symbole and we've see the similar issue continuously (a year back ago 
+also we've seen similar issue before[3]).
+
+The whole serials discussion can be found link here:
+[1] 
+https://lore.kernel.org/lkml/e011b3e9-7c09-4214-8e9c-90e12c38bbaa@quicinc.com/
+[2] 
+https://lore.kernel.org/lkml/20231115102824.23727-1-quic_aiquny@quicinc.com/
+[3] 
+https://lore.kernel.org/lkml/20221027065408.36977-1-quic_aiquny@quicinc.com/
+
+> 
+> The recursive error print sounds like a distinct problem of its own,
+> that warrants being introduced in a patch of its own. But as with the
+> other part, I'm not able to spot a code path in the upstream kernel
+> where this hppens, so please properly describe the scenario where
+> touching the console would result back in another pinctrl_select_state().
+For this part, I am thinking about a spin lock is introduced and have 
+the error log out of the lock will be safer.
+The current patch disable irq during the lock, and some console driver 
+rely on interrupt to get tx dma/fifo ready.
+Also console driver will be a pinctrl client, so avoid unnecessary 
+recursive in theory.
+Just incase some out of tree concole driver was able to use the 
+pinctrl_select_state in console write related APIs as well.
+> 
+> Thanks,
+> Bjorn
+> 
+>>
+>> Fixes: 4198a9b57106 ("pinctrl: avoid reload of p state in list iteration")
+>> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
+>> ---
+>>   drivers/pinctrl/core.c | 11 +++++++++--
+>>   drivers/pinctrl/core.h |  2 ++
+>>   2 files changed, 11 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+>> index f2977eb65522..a19c286bf82e 100644
+>> --- a/drivers/pinctrl/core.c
+>> +++ b/drivers/pinctrl/core.c
+>> @@ -1066,6 +1066,7 @@ static struct pinctrl *create_pinctrl(struct device *dev,
+>>   	p->dev = dev;
+>>   	INIT_LIST_HEAD(&p->states);
+>>   	INIT_LIST_HEAD(&p->dt_maps);
+>> +	spin_lock_init(&p->lock);
+>>   
+>>   	ret = pinctrl_dt_to_map(p, pctldev);
+>>   	if (ret < 0) {
+>> @@ -1262,9 +1263,12 @@ static void pinctrl_link_add(struct pinctrl_dev *pctldev,
+>>   static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
+>>   {
+>>   	struct pinctrl_setting *setting, *setting2;
+>> -	struct pinctrl_state *old_state = READ_ONCE(p->state);
+>> +	struct pinctrl_state *old_state;
+>>   	int ret;
+>> +	unsigned long flags;
+>>   
+>> +	spin_lock_irqsave(&p->lock, flags);
+>> +	old_state = p->state;
+>>   	if (old_state) {
+>>   		/*
+>>   		 * For each pinmux setting in the old state, forget SW's record
+>> @@ -1329,11 +1333,11 @@ static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
+>>   	}
+>>   
+>>   	p->state = state;
+>> +	spin_unlock_irqrestore(&p->lock, flags);
+>>   
+>>   	return 0;
+>>   
+>>   unapply_new_state:
+>> -	dev_err(p->dev, "Error applying setting, reverse things back\n");
+>>   
+>>   	list_for_each_entry(setting2, &state->settings, node) {
+>>   		if (&setting2->node == &setting->node)
+>> @@ -1349,6 +1353,9 @@ static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
+>>   			pinmux_disable_setting(setting2);
+>>   	}
+>>   
+>> +	spin_unlock_irqrestore(&p->lock, flags);
+>> +
+>> +	dev_err(p->dev, "Error applying setting, reverse things back\n");
+>>   	/* There's no infinite recursive loop here because p->state is NULL */
+>>   	if (old_state)
+>>   		pinctrl_select_state(p, old_state);
+>> diff --git a/drivers/pinctrl/core.h b/drivers/pinctrl/core.h
+>> index 530370443c19..86fc41393f7b 100644
+>> --- a/drivers/pinctrl/core.h
+>> +++ b/drivers/pinctrl/core.h
+>> @@ -12,6 +12,7 @@
+>>   #include <linux/list.h>
+>>   #include <linux/mutex.h>
+>>   #include <linux/radix-tree.h>
+>> +#include <linux/spinlock.h>
+>>   #include <linux/types.h>
+>>   
+>>   #include <linux/pinctrl/machine.h>
+>> @@ -91,6 +92,7 @@ struct pinctrl {
+>>   	struct pinctrl_state *state;
+>>   	struct list_head dt_maps;
+>>   	struct kref users;
+>> +	spinlock_t lock;
+>>   };
+>>   
+>>   /**
+>>
+>> base-commit: 994d5c58e50e91bb02c7be4a91d5186292a895c8
+>> -- 
+>> 2.17.1
+>>
+>>
+
+-- 
+Thx and BRs,
+Aiqun(Maria) Yu
+
 
