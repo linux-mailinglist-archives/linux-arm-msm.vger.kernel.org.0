@@ -1,212 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-3284-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A58418034DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:28:07 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEF818034E1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:28:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 57BF02810A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:28:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 08C88B2110E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:28:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 272322510D;
-	Mon,  4 Dec 2023 13:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B7AD250F7;
+	Mon,  4 Dec 2023 13:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PdWrtqnQ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lDK5++dL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C620926BA;
-	Mon,  4 Dec 2023 05:27:29 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B4BcVUG013058;
-	Mon, 4 Dec 2023 13:27:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=Gcy1w3PefWJh243SAeR1phCMPiO1eZ4dlFAMhh8tH48=;
- b=PdWrtqnQtNveZPhwR5OrfP12g66s8LeOh0cenOrAuZW/Ccuwg4c/Yx1Y42t2AXtMbySk
- aAu/T+yHXgORqstFAvrzQCwXn44YnCLx9r8hA/7JTe2R074jU5As8uD6YtSFbYJctOEP
- vHAsMaDHZvNI8OAm8ooqETrLowtRgM2IJ+aWJRsG5Tnxhmr21fMBL9UdN+Mj4xHHoBJY
- xy5zE3d6zhYa2dukenjD6MyZ0cJ2onFUnCmOUS9CGWDgup5qQlNZs2fZQm+u0NpLinuN
- mlG7bTKhaha33toYCGRz25uM+SRfMhVk8E1FzuMJqz5231h+mJt7mR0L7Ik/kT7KrWkz lA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uqwrvv11n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Dec 2023 13:27:10 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B4DR9dn004045
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Dec 2023 13:27:09 GMT
-Received: from hu-jsuraj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 4 Dec 2023 05:27:00 -0800
-From: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-To: <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma
-	<bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        "Jose
- Abreu" <joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Prasad Sodagudi
-	<psodagud@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>
-CC: <kernel@quicinc.com>
-Subject: [PATCH net-next v3 3/3] net: stmmac: Add driver support for DWMAC5 safety IRQ Support
-Date: Mon, 4 Dec 2023 18:56:17 +0530
-Message-ID: <d915004a7c45dc96fa326924c467e1f59af9ccbd.1701695218.git.quic_jsuraj@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <cover.1701695218.git.quic_jsuraj@quicinc.com>
-References: <cover.1701695218.git.quic_jsuraj@quicinc.com>
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FF12D76;
+	Mon,  4 Dec 2023 05:27:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701696472; x=1733232472;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=xAo1jP5xdLJDHA5y+K5s26G3/Skb6cWDEtnKHmw94sw=;
+  b=lDK5++dLYq9IIOBw0RtETWA9o5/PiFweVqEdnrq6yrN0Qmsh76AmMtD7
+   sSo5PT5RCtkHRH6NmDynYABDPhiiUD6qIMWwMEy0ne3JluDGmI5a8ye2T
+   mQ24lgUu4fyXW2PGUHfCdEMABA1U7RhVMZWrZploP1OQfBSRh/xs9ikGS
+   d6ym37BJDF08BVt7AKd2NvIBaSBIQgVapzbezmvhSj8bUU/XcPXy2t76r
+   Qoc0faa/d9tDHpuIIJNQwM6iXiZvlj5XW5wOTuGCyHIeY92QO31ziCiW+
+   xLDtI/q3CgLdWByockDErhKZ61c4JaJ1l3WUrhPtTue3nATLQ+ZMUQL3P
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10913"; a="12445082"
+X-IronPort-AV: E=Sophos;i="6.04,249,1695711600"; 
+   d="scan'208";a="12445082"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 05:27:52 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10913"; a="914424174"
+X-IronPort-AV: E=Sophos;i="6.04,249,1695711600"; 
+   d="scan'208";a="914424174"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 04 Dec 2023 05:27:45 -0800
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 04 Dec 2023 15:27:44 +0200
+Date: Mon, 4 Dec 2023 15:27:44 +0200
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>, Janne Grunau <j@jannau.net>,
+	Simon Ser <contact@emersion.fr>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+	freedreno@lists.freedesktop.org
+Subject: Re: [PATCH RESEND 6/6] usb: typec: qcom-pmic-typec: switch to
+ DRM_AUX_HPD_BRIDGE
+Message-ID: <ZW3F6wdNiSc8c0FX@kuha.fi.intel.com>
+References: <20231203114333.1305826-1-dmitry.baryshkov@linaro.org>
+ <20231203114333.1305826-7-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UKLH59-fwy_VhQPC-tByT52VPU6dgYiT
-X-Proofpoint-GUID: UKLH59-fwy_VhQPC-tByT52VPU6dgYiT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-04_12,2023-12-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 bulkscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=999
- suspectscore=0 priorityscore=1501 mlxscore=0 spamscore=0 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312040101
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231203114333.1305826-7-dmitry.baryshkov@linaro.org>
 
-Add IRQ support to listen HW safety IRQ like ECC,DPP,FSM
-fault and print the fault information in the kernel
-log.
+Hi Dmitry,
 
-Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
----
- drivers/net/ethernet/stmicro/stmmac/common.h   |  1 +
- drivers/net/ethernet/stmicro/stmmac/stmmac.h   |  2 ++
- .../net/ethernet/stmicro/stmmac/stmmac_main.c  | 18 ++++++++++++++++++
- .../ethernet/stmicro/stmmac/stmmac_platform.c  |  9 +++++++++
- 4 files changed, 30 insertions(+)
+On Sun, Dec 03, 2023 at 02:43:33PM +0300, Dmitry Baryshkov wrote:
+> Use the freshly defined DRM_AUX_HPD_BRIDGE instead of open-coding the
+> same functionality for the DRM bridge chain termination.
+> 
+> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
-index 6b935922054d..c4821c7ab674 100644
---- a/drivers/net/ethernet/stmicro/stmmac/common.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-@@ -347,6 +347,7 @@ enum request_irq_err {
- 	REQ_IRQ_ERR_SFTY_UE,
- 	REQ_IRQ_ERR_SFTY_CE,
- 	REQ_IRQ_ERR_LPI,
-+	REQ_IRQ_ERR_SAFETY,
- 	REQ_IRQ_ERR_WOL,
- 	REQ_IRQ_ERR_MAC,
- 	REQ_IRQ_ERR_NO,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 686c94c2e8a7..8eac37ff002d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -33,6 +33,7 @@ struct stmmac_resources {
- 	int irq;
- 	int sfty_ce_irq;
- 	int sfty_ue_irq;
-+	int safety_common_irq;
- 	int rx_irq[MTL_MAX_RX_QUEUES];
- 	int tx_irq[MTL_MAX_TX_QUEUES];
- };
-@@ -343,6 +344,7 @@ struct stmmac_priv {
- 	/* XDP BPF Program */
- 	unsigned long *af_xdp_zc_qps;
- 	struct bpf_prog *xdp_prog;
-+	int safety_common_irq;
- };
- 
- enum stmmac_state {
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index c2ac88aaffed..46a5cb20e4b4 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3591,6 +3591,10 @@ static void stmmac_free_irq(struct net_device *dev,
- 		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
- 			free_irq(priv->wol_irq, dev);
- 		fallthrough;
-+	case REQ_IRQ_ERR_SAFETY:
-+		if (priv->safety_common_irq > 0 && priv->safety_common_irq != dev->irq)
-+			free_irq(priv->safety_common_irq, dev);
-+		fallthrough;
- 	case REQ_IRQ_ERR_WOL:
- 		free_irq(dev->irq, dev);
- 		fallthrough;
-@@ -3797,6 +3801,18 @@ static int stmmac_request_irq_single(struct net_device *dev)
- 		}
- 	}
- 
-+	if (priv->safety_common_irq > 0 && priv->safety_common_irq != dev->irq) {
-+		ret = request_irq(priv->safety_common_irq, stmmac_safety_interrupt,
-+				  0, "safety", dev);
-+		if (unlikely(ret < 0)) {
-+			netdev_err(priv->dev,
-+				   "%s: alloc safety failed %d (error: %d)\n",
-+				   __func__, priv->safety_common_irq, ret);
-+			irq_err = REQ_IRQ_ERR_SAFETY;
-+			goto irq_error;
-+		}
-+	}
-+
- 	return 0;
- 
- irq_error:
-@@ -7459,6 +7475,8 @@ int stmmac_dvr_probe(struct device *device,
- 	priv->lpi_irq = res->lpi_irq;
- 	priv->sfty_ce_irq = res->sfty_ce_irq;
- 	priv->sfty_ue_irq = res->sfty_ue_irq;
-+	priv->safety_common_irq = res->safety_common_irq;
-+
- 	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
- 		priv->rx_irq[i] = res->rx_irq[i];
- 	for (i = 0; i < MTL_MAX_TX_QUEUES; i++)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index 1ffde555da47..41a4a253d75b 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -726,6 +726,15 @@ int stmmac_get_platform_resources(struct platform_device *pdev,
- 		dev_info(&pdev->dev, "IRQ eth_lpi not found\n");
- 	}
- 
-+	stmmac_res->safety_common_irq =
-+		platform_get_irq_byname_optional(pdev, "safety");
-+
-+	if (stmmac_res->safety_common_irq < 0) {
-+		if (stmmac_res->safety_common_irq == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
-+		dev_info(&pdev->dev, "IRQ safety IRQ not found\n");
-+	}
-+
- 	stmmac_res->addr = devm_platform_ioremap_resource(pdev, 0);
- 
- 	return PTR_ERR_OR_ZERO(stmmac_res->addr);
+I'm sorry, I've completely missed this second typec patch.
+
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+
+> ---
+>  drivers/usb/typec/tcpm/Kconfig                |  1 +
+>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 41 +++----------------
+>  2 files changed, 7 insertions(+), 35 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/tcpm/Kconfig b/drivers/usb/typec/tcpm/Kconfig
+> index 0b2993fef564..64d5421c69e6 100644
+> --- a/drivers/usb/typec/tcpm/Kconfig
+> +++ b/drivers/usb/typec/tcpm/Kconfig
+> @@ -80,6 +80,7 @@ config TYPEC_QCOM_PMIC
+>  	tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
+>  	depends on ARCH_QCOM || COMPILE_TEST
+>  	depends on DRM || DRM=n
+> +	select DRM_AUX_HPD_BRIDGE if DRM_BRIDGE
+>  	help
+>  	  A Type-C port and Power Delivery driver which aggregates two
+>  	  discrete pieces of silicon in the PM8150b PMIC block: the
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> index 581199d37b49..1a2b4bddaa97 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> @@ -18,7 +18,7 @@
+>  #include <linux/usb/tcpm.h>
+>  #include <linux/usb/typec_mux.h>
+>  
+> -#include <drm/drm_bridge.h>
+> +#include <drm/bridge/aux-bridge.h>
+>  
+>  #include "qcom_pmic_typec_pdphy.h"
+>  #include "qcom_pmic_typec_port.h"
+> @@ -36,7 +36,6 @@ struct pmic_typec {
+>  	struct pmic_typec_port	*pmic_typec_port;
+>  	bool			vbus_enabled;
+>  	struct mutex		lock;		/* VBUS state serialization */
+> -	struct drm_bridge	bridge;
+>  };
+>  
+>  #define tcpc_to_tcpm(_tcpc_) container_of(_tcpc_, struct pmic_typec, tcpc)
+> @@ -150,35 +149,6 @@ static int qcom_pmic_typec_init(struct tcpc_dev *tcpc)
+>  	return 0;
+>  }
+>  
+> -#if IS_ENABLED(CONFIG_DRM)
+> -static int qcom_pmic_typec_attach(struct drm_bridge *bridge,
+> -				     enum drm_bridge_attach_flags flags)
+> -{
+> -	return flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR ? 0 : -EINVAL;
+> -}
+> -
+> -static const struct drm_bridge_funcs qcom_pmic_typec_bridge_funcs = {
+> -	.attach = qcom_pmic_typec_attach,
+> -};
+> -
+> -static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
+> -{
+> -	tcpm->bridge.funcs = &qcom_pmic_typec_bridge_funcs;
+> -#ifdef CONFIG_OF
+> -	tcpm->bridge.of_node = of_get_child_by_name(tcpm->dev->of_node, "connector");
+> -#endif
+> -	tcpm->bridge.ops = DRM_BRIDGE_OP_HPD;
+> -	tcpm->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
+> -
+> -	return devm_drm_bridge_add(tcpm->dev, &tcpm->bridge);
+> -}
+> -#else
+> -static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
+> -{
+> -	return 0;
+> -}
+> -#endif
+> -
+>  static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  {
+>  	struct pmic_typec *tcpm;
+> @@ -186,6 +156,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  	struct device_node *np = dev->of_node;
+>  	const struct pmic_typec_resources *res;
+>  	struct regmap *regmap;
+> +	struct device *bridge_dev;
+>  	u32 base[2];
+>  	int ret;
+>  
+> @@ -241,14 +212,14 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  	mutex_init(&tcpm->lock);
+>  	platform_set_drvdata(pdev, tcpm);
+>  
+> -	ret = qcom_pmic_typec_init_drm(tcpm);
+> -	if (ret)
+> -		return ret;
+> -
+>  	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
+>  	if (!tcpm->tcpc.fwnode)
+>  		return -EINVAL;
+>  
+> +	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+> +	if (IS_ERR(bridge_dev))
+> +		return PTR_ERR(bridge_dev);
+> +
+>  	tcpm->tcpm_port = tcpm_register_port(tcpm->dev, &tcpm->tcpc);
+>  	if (IS_ERR(tcpm->tcpm_port)) {
+>  		ret = PTR_ERR(tcpm->tcpm_port);
+> -- 
+> 2.39.2
+
 -- 
-2.25.1
-
+heikki
 
