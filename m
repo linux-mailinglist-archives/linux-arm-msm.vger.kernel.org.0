@@ -1,61 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9015B8030B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:41:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEDC28030C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:43:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E1BA9280E25
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:41:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B335280EDB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:43:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE683D295;
-	Mon,  4 Dec 2023 10:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B93F1799B;
+	Mon,  4 Dec 2023 10:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M9c4Wvwj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KudhpRRg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40327CC
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 02:41:41 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-54b8276361cso5235281a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 02:41:41 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96AC8E6
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 02:43:11 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-54c77e0835bso2401107a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 02:43:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701686499; x=1702291299; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=28XgFmjfh625VXQFy6sZqO8571DU9BRuNNIufn2+gPU=;
-        b=M9c4WvwjCH2GqMt457VU8JRuEfaBSNczcs4PhswAg6o8QgoKYxvY3PYYf1B5vbP8fD
-         bIpAnjVToe8GuQBsiS77jMdP2uabrNa3DluyBFGSbueItcVG60lYt3sKJmrVtHfNv9L6
-         yOAgfmhN6IiVtgL2qzRK56Ou16cEE9jk0McC3uveUC1XTOTE3zZ58LNXhRVP5ADGlgGk
-         nxJCwAC6JqycKE0sJJvlQnx/O9OZD8mDUvEhWvS9sptpmVwbC96aJddBMxzqibYbeJ4c
-         jYGhWleV7p7CbK0oRH5pVYYZcanaPgVOUSE/xMUMxdb3303gM4DfNuEaYcAG4Hww1nKw
-         Xl6w==
+        d=linaro.org; s=google; t=1701686590; x=1702291390; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YH2Ij/F/wMEEbbAmHc7EPSvsXzYx4kJlgIGSkqXdxfI=;
+        b=KudhpRRg/js7oSb6LGL4wcguejwjkWdi4oQfSOEftUuf0WSAIXMx/UwzsoEclIEYqd
+         wIQVHHn3Jb4huomFjicpQ8moYtiaQliEK8ifiGE5Y3XFjAzlj7/0V+vmhwDdElRMrw54
+         9VxXth8koqmquRD7VWQolcYk7b4Z3ZVTshizIlTXXKhg8RAy/RJ4hl3Khr2TJ9yZLcRL
+         7tDaTI/aZJL5K6zSI316951fKtFr+C6r2vuHWZYCKUc/nwushhy/ukDSVnxW1XcVAGZ5
+         sYOg3LEMm5HYNHhQygtKlo5s/vRYH2LFKgVueOrxyUAYwrBzdr1D6Yioc6cBmabiGUU3
+         dZVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701686499; x=1702291299;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=28XgFmjfh625VXQFy6sZqO8571DU9BRuNNIufn2+gPU=;
-        b=P33vHulo+ePZVbRJCyHQIAIXUzJxXzJViBK2fjeKSR+SIJB+dSl40aA+V7OMMtiNGO
-         +SpzteHYBSDRjePpA1HSCj4qmYU66GMYSyMAn/mQ/bdaw0mA31vT8hvb0fiVc7mNGSXy
-         gEvCmlmBwTtBjGmq1AzsZfgaQry0VPvSNs/prvH16eId8cyIhL98myGwM40NRfBks9vd
-         WqdLSdrS6h3teYrbNheadWL4ua7OpFTCfYAIZ0eEiuOV9B5w5xFHjtYcd6e86fb+x6Fm
-         oBAKP2f8SqmTVmFXy7J5g4bkHqEVyKBkLA3XlO6d5KYH8DitzAfhKU9DK1jZBa+W+XQ7
-         6Ybg==
-X-Gm-Message-State: AOJu0Yyzkdq0VhORjslrZ/4PGcgRCBLHII+SrQAR4NaOEddndhBaR5B4
-	tY62YAXpAKFkUD7YdGlLB/Bf1A==
-X-Google-Smtp-Source: AGHT+IGV3c16x1plImWbu4nV2P7vZFQzLSzQQ0a4wo2sFM+k39x6r32KdecP4qbMSe6wnKvfQetgfA==
-X-Received: by 2002:a05:6402:22eb:b0:54c:d33a:5ea4 with SMTP id dn11-20020a05640222eb00b0054cd33a5ea4mr532856edb.65.1701686499621;
-        Mon, 04 Dec 2023 02:41:39 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701686590; x=1702291390;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YH2Ij/F/wMEEbbAmHc7EPSvsXzYx4kJlgIGSkqXdxfI=;
+        b=N6GhlGfT0hAuTOn94N79wRNYL4GZtqS52ja762CAJXxvl16kyhzTde+4mv+ZHCE0G/
+         pZy/5vFPCYpAsMWeIqIdqr3qN+y72iLi0Sq2kUn4DTbY3nxStSXC8X3ZnvVTS1ExYuO8
+         PYR/3Jy6kMhe0XGusdEtKygtVEzHqx47HitlGIPMOleLJAD0IlEs0qvx3cjkO8pSQg6R
+         aWRQiEYHvbg3rnhdHjgjAZsD/Hbhutk5UNSgCxAx2y/yIlNTYkhVPIGgYtyrRnbYhasf
+         4MJCmvoz7+UaAMNQa1i79BMON0NMn1v/aY7hgrUmUWoTGfzHrmZWJGvBYejNRwOk6Ub+
+         M20A==
+X-Gm-Message-State: AOJu0Yx0IHjmFN6AXu3AZNj/cnOLmCqzVaUHlgTYPV5vBSq6EwucuH9p
+	H0oCS4zhr9qQ1FTe+Bg13m/+3Q==
+X-Google-Smtp-Source: AGHT+IGeS6J9m2+FzcV1/4dFqgU6LovESxmEWg22Z7PF2++0+369OKlqMTVxUEbbDH1I/3O/wExisA==
+X-Received: by 2002:a05:6402:358f:b0:543:90d4:6132 with SMTP id y15-20020a056402358f00b0054390d46132mr3320462edc.16.1701686589974;
+        Mon, 04 Dec 2023 02:43:09 -0800 (PST)
 Received: from [192.168.209.83] (178235179097.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.97])
-        by smtp.gmail.com with ESMTPSA id f10-20020a056402354a00b0054ca1d90410sm1985488edd.85.2023.12.04.02.41.37
+        by smtp.gmail.com with ESMTPSA id f10-20020a056402354a00b0054ca1d90410sm1985488edd.85.2023.12.04.02.43.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Dec 2023 02:41:39 -0800 (PST)
-Message-ID: <d1f1ee82-7997-4e36-a21a-7b70d2db9746@linaro.org>
-Date: Mon, 4 Dec 2023 11:41:36 +0100
+        Mon, 04 Dec 2023 02:43:09 -0800 (PST)
+Message-ID: <7147f99c-7fd4-4fb4-828f-5463ddac9809@linaro.org>
+Date: Mon, 4 Dec 2023 11:43:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,17 +62,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8226: Add CPU and SAW/ACC nodes
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-References: <20231203-msm8226-cpu-v1-0-d18e83340b32@z3ntu.xyz>
- <20231203-msm8226-cpu-v1-2-d18e83340b32@z3ntu.xyz>
+Subject: Re: [PATCH] ARM: dts: qcom: apq8026-samsung-matissewifi: Configure
+ touch keys
 Content-Language: en-US
+To: =?UTF-8?Q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
+ linux-arm-msm@vger.kernel.org
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231204094649.10094-1-matti.lehtimaki@gmail.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,23 +110,18 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231203-msm8226-cpu-v1-2-d18e83340b32@z3ntu.xyz>
+In-Reply-To: <20231204094649.10094-1-matti.lehtimaki@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 3.12.2023 23:38, Luca Weiss wrote:
-> From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
+On 4.12.2023 10:46, Matti Lehtimäki wrote:
+> Add touch keys which are handled in touchscreen driver.
+> Use KEY_APPSELECT for the left button because other devices use that
+> even though downstream kernel uses KEY_RECENT.
 > 
-> Add CPU and SAW/ACC nodes to enable SMP on MSM8226.
-> 
-> Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> [luca: update some nodes to fix dtbs_check errors, reorder, cleanup]
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 > ---
-Looks like L2 SAW (@ 0xf9012000) is missing.. but then it's present
-on 8974.. but it's not bound by any driver :)
-
-The nodes you added here look correct FWIW
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
 
