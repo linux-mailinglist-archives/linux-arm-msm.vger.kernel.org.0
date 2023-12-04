@@ -1,202 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-3285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEF818034E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:28:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F3D78034E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:28:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 08C88B2110E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:28:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B94AC1F211DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:28:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B7AD250F7;
-	Mon,  4 Dec 2023 13:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96A5A24B5C;
+	Mon,  4 Dec 2023 13:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lDK5++dL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GAHVgSOK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50FF12D76;
-	Mon,  4 Dec 2023 05:27:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701696472; x=1733232472;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=xAo1jP5xdLJDHA5y+K5s26G3/Skb6cWDEtnKHmw94sw=;
-  b=lDK5++dLYq9IIOBw0RtETWA9o5/PiFweVqEdnrq6yrN0Qmsh76AmMtD7
-   sSo5PT5RCtkHRH6NmDynYABDPhiiUD6qIMWwMEy0ne3JluDGmI5a8ye2T
-   mQ24lgUu4fyXW2PGUHfCdEMABA1U7RhVMZWrZploP1OQfBSRh/xs9ikGS
-   d6ym37BJDF08BVt7AKd2NvIBaSBIQgVapzbezmvhSj8bUU/XcPXy2t76r
-   Qoc0faa/d9tDHpuIIJNQwM6iXiZvlj5XW5wOTuGCyHIeY92QO31ziCiW+
-   xLDtI/q3CgLdWByockDErhKZ61c4JaJ1l3WUrhPtTue3nATLQ+ZMUQL3P
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10913"; a="12445082"
-X-IronPort-AV: E=Sophos;i="6.04,249,1695711600"; 
-   d="scan'208";a="12445082"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 05:27:52 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10913"; a="914424174"
-X-IronPort-AV: E=Sophos;i="6.04,249,1695711600"; 
-   d="scan'208";a="914424174"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 04 Dec 2023 05:27:45 -0800
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 04 Dec 2023 15:27:44 +0200
-Date: Mon, 4 Dec 2023 15:27:44 +0200
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>, Janne Grunau <j@jannau.net>,
-	Simon Ser <contact@emersion.fr>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RESEND 6/6] usb: typec: qcom-pmic-typec: switch to
- DRM_AUX_HPD_BRIDGE
-Message-ID: <ZW3F6wdNiSc8c0FX@kuha.fi.intel.com>
-References: <20231203114333.1305826-1-dmitry.baryshkov@linaro.org>
- <20231203114333.1305826-7-dmitry.baryshkov@linaro.org>
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0550E173A
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 05:27:57 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-59b5484fbe6so50368737b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 05:27:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701696477; x=1702301277; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2fW3mjZFFzwIx8dmT9JEHvadR6/J6k7n4MRMrtMRyEY=;
+        b=GAHVgSOKkVlBz+w9n1xP4kdiDK9OkF/dRCyeRc7fl5d83MWHqSucPogxsuG2cSS4bI
+         /HXSdqeKhbhSQiyMZny0nT3uLqFzcCJqbDYXZdtctYvFiiyfN/JNA05wuWn5Ch+pbqPE
+         cby9vn7uOYq9A4wVuewp2B/O6WGic8NanhMMUJlOhbRTxagfZJ7Ib3a3St3QHalNxgI+
+         MSKq/ayNyijGzRLfNAdlc0sklc7hoZOFxS4QAx1J/sB3qKFOf2KCAvnMoozX7rLjIkNI
+         c3v1Nvrw0JJ6+SqNZqrMydcU3pzBvmyy5AsjfAh5/hUzmIzbbpIdmRZninQecTfHFyaJ
+         +TMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701696477; x=1702301277;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2fW3mjZFFzwIx8dmT9JEHvadR6/J6k7n4MRMrtMRyEY=;
+        b=bFL4LFFUmCRqOMe2IiP1sXUU1wg1zCbqbG3zZPnXFXxMYDGuYQa3xY4gBpaSP7547P
+         v4rrEdBlunQjY8FeR3bKIdNfe80AHaEuMOee/3lBjcM79ov+NcYLcO0l9SAE3ws3HHeS
+         Q8N6Hwayc/kKpufRgqgNd8s87ohF9tSxZ3IXSB8gf8hfvQwdB2qFthcVz2f9TCbaGiwz
+         An4nuYu7hmLkzdq0jf26izL8bZtbyGZr9QZBfKnrTBWUZTY2iYOdxKYigcgop5HLt0Ft
+         5XA2/ZO3xc9vLN9RsFuv3Ng20t3+I+iRNJe+jaQnMHdE7xZvxImwnvkh+y93QhK0IIrj
+         y0sw==
+X-Gm-Message-State: AOJu0Yz/F+Zhu4oWPpYs+TM+eMAyhUrN0AFkkomPcd2qWcayN8h57764
+	kCQDpgQh1IOdSihED+X8QrVp9yHVDbVe5qS37FLc1Q==
+X-Google-Smtp-Source: AGHT+IFT5Ekm/eux4m2CPF+K2InPLFR37b/4dxO3Ja+TBOqMeMVzDBImq2SVkNPbb6g1r6wIiJTMB7rV1scXEx5//MU=
+X-Received: by 2002:a81:af14:0:b0:5d7:1940:b373 with SMTP id
+ n20-20020a81af14000000b005d71940b373mr3543896ywh.63.1701696477097; Mon, 04
+ Dec 2023 05:27:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231203114333.1305826-7-dmitry.baryshkov@linaro.org>
+References: <CAA8EJpp+SJpX4FFmcTm133KNtztTJH0ovTLRm0bftahPT8a1kw@mail.gmail.com>
+ <87leaaqg7a.fsf@kernel.org>
+In-Reply-To: <87leaaqg7a.fsf@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 4 Dec 2023 15:27:46 +0200
+Message-ID: <CAA8EJpomDw0sBOT_t5F33Uqn4FeWRBewv_=_4q4OzvU+JzXH-g@mail.gmail.com>
+Subject: Re: ath10k / WCN3990: firmware-5.bin and wlanmdsp.mbn being out of sync
+To: Kalle Valo <kvalo@kernel.org>
+Cc: ath10k@lists.infradead.org, 
+	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Dmitry,
+On Mon, 4 Dec 2023 at 14:56, Kalle Valo <kvalo@kernel.org> wrote:
+>
+> Hi Dmitry,
+>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>
+> > I wanted to ask your opinion regarding one of the issues we stumbled
+> > upon on the Qualcomm RB1 and RB2 platforms. These platforms use ath10k
+> > snoc (WCN3990) WiFi "card". We noticed the following messages being
+> > spawned on the console, which I traced it to the
+> > ATH10K_FW_FEATURE_SINGLE_CHAN_INFO_PER_CHANNEL feature:
+> >
+> > ath10k_snoc c800000.wifi: chan info: invalid frequency 0 (idx 41 out of bounds)
+> >
+> > As a reminder, on this platform the wlan firmware and firmware-N.bin
+> > files come separately.
+> > The wlanmdsp.mbn is downloaded by the onboard modem DSP via the
+> > tqftpserv request (which is served from the board-specific folder
+> > qcom/qcm2210). The firmware-N.bin file is loaded by the WiFi driver
+> > itself from the generic folder, ath10k/WCN3990/hw1.0. Current
+> > firmware-5.bin file was provided with the sdm845's wlanmdsp.mbn, which
+> > is older than qcm2210/qrb4210's wlanmdsp.mbn.
+> >
+> > I'm looking for suggestions on how to make ath10k driver load
+> > firmware-N.bin file which corresponds to the board-specific
+> > wlanmdsp.mbn.
+>
+> We have had similar discussions in the past but it didn't go very far.
+> It would be so nice if you could finally fix this :) At one point we
+> even had a discussion that we might need something similar for ath11k
+> but it didn't go anywhere.
+>
+> > In particular I'd like to hear your opinion on the following proposal:
+> >
+> > Add the  optional property to the board DT, that specifies:
+> > firmware-name = "path/to/wlanmdsp.mbn".  The property, if present,
+> > will be used as an override for the firmware directory. So, while the
+> > ath10k driver will not load wlanmdsp.mbn on its own, it will still
+> > look for the firmware-N files in the specified directory.
+>
+> Back in the day I was thinking something like below, please let me know
+> what you think.
+>
+> So the normal firmware path for WCN3990 is:
+>
+> ath10k/WCN3990/hw1.0/
+>
+> My idea was that if we could extend it for different "platforms" (not
+> sure what's the proper term for this) by having platform specific
+> directories:
+>
+> ath10k/WCN3990/hw1.0-platform/
+>
+> (Replace "platform" with a unique name for the platform, for example
+> "acme-kv7" for a product from Acme with model name kv7.)
+>
+> Then DT could inform ath10k about this "platform" string and ath10k
+> would then download boath firmware-N.bin and board-2.bin from the
+> platform specific directory.
+>
+> And even cleaner if we could have the *.mbn firmware files in the same
+> directory, even if ath10k doesn't access them directly.
 
-On Sun, Dec 03, 2023 at 02:43:33PM +0300, Dmitry Baryshkov wrote:
-> Use the freshly defined DRM_AUX_HPD_BRIDGE instead of open-coding the
-> same functionality for the DRM bridge chain termination.
-> 
-> Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+We can, and a symlink from qcom/SoC/.../dir to that subdir.
 
-I'm sorry, I've completely missed this second typec patch.
+So, for example, for Pixel-3, using your schema we will have:
 
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+ath10k/WCN3990/hw1.0-blueline/wlanmdsp.mbn
+ath10k/WCN3990/hw1.0-blueline/firmware-5.bin
+ath10k/WCN3990/hw1.0-blueline/board-2.bin
 
-> ---
->  drivers/usb/typec/tcpm/Kconfig                |  1 +
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 41 +++----------------
->  2 files changed, 7 insertions(+), 35 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/tcpm/Kconfig b/drivers/usb/typec/tcpm/Kconfig
-> index 0b2993fef564..64d5421c69e6 100644
-> --- a/drivers/usb/typec/tcpm/Kconfig
-> +++ b/drivers/usb/typec/tcpm/Kconfig
-> @@ -80,6 +80,7 @@ config TYPEC_QCOM_PMIC
->  	tristate "Qualcomm PMIC USB Type-C Port Controller Manager driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
->  	depends on DRM || DRM=n
-> +	select DRM_AUX_HPD_BRIDGE if DRM_BRIDGE
->  	help
->  	  A Type-C port and Power Delivery driver which aggregates two
->  	  discrete pieces of silicon in the PM8150b PMIC block: the
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> index 581199d37b49..1a2b4bddaa97 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> @@ -18,7 +18,7 @@
->  #include <linux/usb/tcpm.h>
->  #include <linux/usb/typec_mux.h>
->  
-> -#include <drm/drm_bridge.h>
-> +#include <drm/bridge/aux-bridge.h>
->  
->  #include "qcom_pmic_typec_pdphy.h"
->  #include "qcom_pmic_typec_port.h"
-> @@ -36,7 +36,6 @@ struct pmic_typec {
->  	struct pmic_typec_port	*pmic_typec_port;
->  	bool			vbus_enabled;
->  	struct mutex		lock;		/* VBUS state serialization */
-> -	struct drm_bridge	bridge;
->  };
->  
->  #define tcpc_to_tcpm(_tcpc_) container_of(_tcpc_, struct pmic_typec, tcpc)
-> @@ -150,35 +149,6 @@ static int qcom_pmic_typec_init(struct tcpc_dev *tcpc)
->  	return 0;
->  }
->  
-> -#if IS_ENABLED(CONFIG_DRM)
-> -static int qcom_pmic_typec_attach(struct drm_bridge *bridge,
-> -				     enum drm_bridge_attach_flags flags)
-> -{
-> -	return flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR ? 0 : -EINVAL;
-> -}
-> -
-> -static const struct drm_bridge_funcs qcom_pmic_typec_bridge_funcs = {
-> -	.attach = qcom_pmic_typec_attach,
-> -};
-> -
-> -static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
-> -{
-> -	tcpm->bridge.funcs = &qcom_pmic_typec_bridge_funcs;
-> -#ifdef CONFIG_OF
-> -	tcpm->bridge.of_node = of_get_child_by_name(tcpm->dev->of_node, "connector");
-> -#endif
-> -	tcpm->bridge.ops = DRM_BRIDGE_OP_HPD;
-> -	tcpm->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
-> -
-> -	return devm_drm_bridge_add(tcpm->dev, &tcpm->bridge);
-> -}
-> -#else
-> -static int qcom_pmic_typec_init_drm(struct pmic_typec *tcpm)
-> -{
-> -	return 0;
-> -}
-> -#endif
-> -
->  static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  {
->  	struct pmic_typec *tcpm;
-> @@ -186,6 +156,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  	struct device_node *np = dev->of_node;
->  	const struct pmic_typec_resources *res;
->  	struct regmap *regmap;
-> +	struct device *bridge_dev;
->  	u32 base[2];
->  	int ret;
->  
-> @@ -241,14 +212,14 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  	mutex_init(&tcpm->lock);
->  	platform_set_drvdata(pdev, tcpm);
->  
-> -	ret = qcom_pmic_typec_init_drm(tcpm);
-> -	if (ret)
-> -		return ret;
-> -
->  	tcpm->tcpc.fwnode = device_get_named_child_node(tcpm->dev, "connector");
->  	if (!tcpm->tcpc.fwnode)
->  		return -EINVAL;
->  
-> +	bridge_dev = drm_dp_hpd_bridge_register(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
-> +	if (IS_ERR(bridge_dev))
-> +		return PTR_ERR(bridge_dev);
-> +
->  	tcpm->tcpm_port = tcpm_register_port(tcpm->dev, &tcpm->tcpc);
->  	if (IS_ERR(tcpm->tcpm_port)) {
->  		ret = PTR_ERR(tcpm->tcpm_port);
-> -- 
-> 2.39.2
+qcom/sdm845/Google/blueline/wlanmdsp.mbn ->
+../../../../ath10k/WCN3990/hw1.0-blueline/wlanmdsp.mbn
+
+This sounds mostly fine to me. My only suggestions is to change it as following:
+
+ath10k/WCN3990/hw1.0/board-2.bin
+
+ath10k/WCN3990/hw1.0/blueline/wlanmdsp.mbn
+ath10k/WCN3990/hw1.0/blueline/firmware-5.bin
+ath10k/WCN3990/hw1.0/blueline/board-2.bin
+
+qcom/sdm845/Google/blueline/wlanmdsp.mbn ->
+../../../../ath10k/WCN3990/hw1.0/blueline/wlanmdsp.mbn
 
 -- 
-heikki
+With best wishes
+Dmitry
 
