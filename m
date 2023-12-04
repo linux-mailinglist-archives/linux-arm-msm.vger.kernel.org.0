@@ -1,123 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-3267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC8AD80340A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:10:32 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DD4B803426
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:15:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A49B1F21074
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:10:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1DEF4B209D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:15:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7248924A1F;
-	Mon,  4 Dec 2023 13:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C11E624B2E;
+	Mon,  4 Dec 2023 13:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fkAZwGeO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K0OduAbi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C23CD2;
-	Mon,  4 Dec 2023 05:10:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701695420; x=1733231420;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=JAdlnvXuynUxhOXk0fIFpQJujwMXMqGdAOOSeNyz0/8=;
-  b=fkAZwGeOTAaT7g1TLLbwZkLPHwfNOvVT7HGBQwMksXgPzylOT/Pr9Ax3
-   AELlWselr2ftlOzzwPvObNoFptz0pew2MOauQJiQps3cfalhuXDjz8p1I
-   2FsLsGTQxZjQ7nQskgYkfIi8paeE+Zho1j3nyH6oBC4w412w3qux6ZwhA
-   Z8r8H1wtQxbejCe9npV+6ckI5ZkiRg6MwOInYqzuePwsYvciKGSKYrWrk
-   UIYX1zhkzZtvJKShT1PpfV9I9QwX3LVIlhYGtaV6evA6z6Prah3YyQDoL
-   ZSSL3zJfPN/CFDHPH59gpK1jJ6o3b6R0VEhqiu/ufMLTyesamWKr8QKdX
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10913"; a="793435"
-X-IronPort-AV: E=Sophos;i="6.04,249,1695711600"; 
-   d="scan'208";a="793435"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 05:10:19 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10913"; a="841040937"
-X-IronPort-AV: E=Sophos;i="6.04,249,1695711600"; 
-   d="scan'208";a="841040937"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 05:10:10 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1rA8i5-00000001kt9-3IFH;
-	Mon, 04 Dec 2023 15:10:05 +0200
-Date: Mon, 4 Dec 2023 15:10:05 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Jianlong Huang <jianlong.huang@starfivetech.com>,
-	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
-	openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Dong Aisheng <aisheng.dong@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Sean Wang <sean.wang@kernel.org>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Hal Feng <hal.feng@starfivetech.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH v4 12/23] pinctrl: mediatek: Make use of
- PINCTRL_GROUP_DESC()
-Message-ID: <ZW3PrSQWyZvvhN66@smile.fi.intel.com>
-References: <20231129161459.1002323-1-andriy.shevchenko@linux.intel.com>
- <20231129161459.1002323-13-andriy.shevchenko@linux.intel.com>
- <CGME20231204114039eucas1p29c6f8a162191e58ff658d3a1c44429bf@eucas1p2.samsung.com>
- <9e4e65de-7234-4234-8091-796277a1f1c5@samsung.com>
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BF27D8
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 05:14:58 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50bdec453c8so3069196e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 05:14:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701695696; x=1702300496; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8FXfNmjk0/FPoln77FIQlKYMoeFsew2x/wYq+84u+hg=;
+        b=K0OduAbiizr31I+8G2isn+BmSsbPL+3BeO4N7bm1MmdwpyYfPULBqg3jMfFqOQotub
+         Ux5vRrQXDboWj7BBuLcJhDSHhV8AyqWzCMhj9mlmeMGS7fbqQTtgM4A41sQBgeiSx5zM
+         c0WmZdVmmQCKYLVkbLBI71bbJJhMaGvguI2CuvwDRvHhRnv5h01v6mDS9014fcOk1rSz
+         HJbnH3si/k9UbDnSlUASnInIz5Z6Gv67TUC3ggPKgeHVbn2Hl2/M1lFWN+O/ba8DGw1A
+         NBpX3BaK3r7XVkTSl5OWe/PP1ccUOYDHM4zYp2PfhrqIIoySpUYwx13WMpDz4+nylfAY
+         SgcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701695696; x=1702300496;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8FXfNmjk0/FPoln77FIQlKYMoeFsew2x/wYq+84u+hg=;
+        b=K0XvJZ3tJQzkLIcI5PhdOTKILe5631qBdXVA2LBCi9IKTmX06WkGtZWzVXn1BHgvN8
+         qNrX3AwMMim5rxwvF6U0YXZ+ENEIuELy39iAybGLJB+2x+ZMqhyP7yvHl6Qv4f0lsTUQ
+         W+6ypgCBhCdYHp2THLIMYoTXWZYFxYLsPPnlVgX2sOvzSR6fSN+kUjUPoV0MkoBPS0ax
+         Tgw6/hoD2Q44solWUHB2iwiEjO7dZOhE0KAxzwycaoJdOuAwgTl+UZeJ+hiv7mfxQ26/
+         pj8VaPnV1ww0hwcHH4DAENdBBnm74khXxG5T7GiLvC/YXTRppYlRrObc0WPtSVTEp8JP
+         Qi0g==
+X-Gm-Message-State: AOJu0YxPL9HznC3jxm1VAutkAniWwdUWWA4LJ6f4/0YZkr61iMfCmYin
+	TXR5p3Z/ku/Da/tVGdlHYBwviQ==
+X-Google-Smtp-Source: AGHT+IGD0A8642jBm/8iajKiw6EkrNIqrKxuiUZkj2SDjATgXK7NJGhtxWQa5GEz/hYoM63L/w1G1g==
+X-Received: by 2002:ac2:5f5a:0:b0:50b:f792:3265 with SMTP id 26-20020ac25f5a000000b0050bf7923265mr732882lfz.123.1701695696448;
+        Mon, 04 Dec 2023 05:14:56 -0800 (PST)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::227])
+        by smtp.gmail.com with ESMTPSA id br25-20020a056512401900b0050bc59642casm1251924lfb.286.2023.12.04.05.14.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Dec 2023 05:14:56 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Thierry Reding <thierry.reding@gmail.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH 0/7] drm: revert solid fill support
+Date: Mon,  4 Dec 2023 15:13:47 +0200
+Message-ID: <20231204131455.19023-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9e4e65de-7234-4234-8091-796277a1f1c5@samsung.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Transfer-Encoding: 8bit
 
-On Mon, Dec 04, 2023 at 12:40:38PM +0100, Marek Szyprowski wrote:
-> On 29.11.2023 17:06, Andy Shevchenko wrote:
-> > Make use of PINCTRL_GROUP_DESC() instead of open coding it.
+Altough the Solid Fill planes patchset got all reviews and
+acknowledgements, it doesn't fulfill requirements for the new uABI.
+Merging it was a fault of mine.
 
-> PINCTRL_GROUP_DESC() macro from drivers/pinctrl/core.h contains a cast
-> to (struct group_desc), what breaks users of the above macros.
+It has neither corresponding open-source userspace implementation nor
+the IGT tests coverage. Revert this patchset until userspace obligations
+are fulfilled.
 
-There is no cast (*).
-Thanks for report, I will check.
+Dmitry Baryshkov (7):
+  Revert "drm/atomic: Loosen FB atomic checks"
+  Revert "drm/atomic: Move framebuffer checks to helper"
+  Revert "drm/atomic: Add solid fill data to plane state dump"
+  Revert "drm/atomic: Add pixel source to plane state dump"
+  Revert "drm: Add solid fill pixel source"
+  Revert "drm: Introduce solid fill DRM plane property"
+  Revert "drm: Introduce pixel_source DRM plane property"
 
-But this was v4 of the series and LKP actually sent a positive feedback.
-Besides that I have tested this locally with modules enabled.
-
-*) It's a compound literal, _not_ a cast.
-   Taking above into consideration I'm wondering what compilers
-   are in use?
+ drivers/gpu/drm/drm_atomic.c              | 148 +++++++++-------------
+ drivers/gpu/drm/drm_atomic_helper.c       |  39 +++---
+ drivers/gpu/drm/drm_atomic_state_helper.c |  10 --
+ drivers/gpu/drm/drm_atomic_uapi.c         |  30 -----
+ drivers/gpu/drm/drm_blend.c               | 133 -------------------
+ drivers/gpu/drm/drm_crtc_internal.h       |   1 -
+ drivers/gpu/drm/drm_plane.c               |  27 +---
+ include/drm/drm_atomic_helper.h           |   4 +-
+ include/drm/drm_blend.h                   |   3 -
+ include/drm/drm_plane.h                   |  90 -------------
+ include/uapi/drm/drm_mode.h               |  24 ----
+ 11 files changed, 86 insertions(+), 423 deletions(-)
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
+2.42.0
 
 
