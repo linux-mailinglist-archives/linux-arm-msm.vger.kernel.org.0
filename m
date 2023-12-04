@@ -1,49 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-3349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11E7D803D9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 19:55:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E25F8803DEC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 20:00:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C184C2810F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 18:55:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1975A1C209B1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 19:00:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A6562FC20;
-	Mon,  4 Dec 2023 18:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lgGzNrVw"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF40F30CEC;
+	Mon,  4 Dec 2023 19:00:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414CD1B6;
-	Mon,  4 Dec 2023 10:55:11 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B4INYdn015584;
-	Mon, 4 Dec 2023 18:55:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=dSvfU/A9FYj1qwwOVJDS9+Ju7eixVYgLzQFvbz4/wN0=;
- b=lgGzNrVw3PrYNy5zmck71zSQhOAHdsCthOzNQCQWj4Jw6nQ05j09aYfqss+uMdcJSwaw
- cCLQFpHd/hs6tesTZ/C+1y3J5WuaU0yZDHQ3f2Jj13Iyoulgojpc16KsHO4zkUGRe4Nx
- b1S982VmTpCeLBFyOMSqLMrEbsaK2oIA9/n334jT+x+oc/gpSiT0BkYjVyraXgHjMbQz
- kHKoziP3IWvIc4QeL3eVHgzTmRp0AWsHIz8CLfkqbnQj4YyD1iZXupONXlhlywhjjZwd
- wfevyhfTZh+S7buhyH+JvsHy4lDowjTXrBS2jNn2Sx6KDR3tFSIJp/NtBIzrqbDd3J78 /A== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3us81yj1sr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Dec 2023 18:55:01 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B4It0Zr030512
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Dec 2023 18:55:00 GMT
-Received: from [10.71.110.214] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
- 2023 10:54:57 -0800
-Message-ID: <6602b327-f0a6-4eb5-860f-bf91cbfdff41@quicinc.com>
-Date: Mon, 4 Dec 2023 10:54:56 -0800
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A9F3D5;
+	Mon,  4 Dec 2023 11:00:40 -0800 (PST)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1d001e4cf7cso19426805ad.2;
+        Mon, 04 Dec 2023 11:00:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701716439; x=1702321239;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N1TuqS/7C7MDnJYXgnCCq7sNkI/3dfj9oPHuyt6Lz0g=;
+        b=L50mEP/RjTLfGLZHinpsWm1fN2yS+mVPWeISYoi84N6RoRi97wZake/V2F0hDo9wsG
+         ht38us+Z8QtgBY+S5US7wowkICCqkQ6tA9xTC/4iATiV55O6vLa1Z71EUponCII4dQ85
+         QWZ7QzxRE0ei7nrL+dprw4l4o+GrUahU3/dTChReab3/pjrznUGojVQ8cZYGUgGEA+Iz
+         lG+dp1MhW/PtPNXgz5mTHsKEE5rETk1VoQE4nGnmP7rP+ncl9F9WGyHh5czGaTro3lO7
+         /Vm2E81mFfApXfXskdtf7QSZfF5flUGd9OfgwoCncBe4kg1srB8WKZ1kUcPwOFWYJnON
+         Yslw==
+X-Gm-Message-State: AOJu0Yw4xl3SElhIUTjYAjdSuRfnXP9XT3kQ3aUhEib0UbmQQLHCkH69
+	azS0+8KWL2Md/3TfTFAnhj8=
+X-Google-Smtp-Source: AGHT+IHHQ2rAL0Tvz4EmLO23SEvKXkdcMniEXebNQQPfxw8obQEF0UOva9F7zaPNEHq1byNEaiZN3A==
+X-Received: by 2002:a17:902:e5c8:b0:1d0:7d9a:3bc3 with SMTP id u8-20020a170902e5c800b001d07d9a3bc3mr2090541plf.79.1701716439379;
+        Mon, 04 Dec 2023 11:00:39 -0800 (PST)
+Received: from [10.46.23.145] ([156.39.10.100])
+        by smtp.gmail.com with ESMTPSA id i31-20020a63221f000000b005bd2b3a03eesm7940081pgi.6.2023.12.04.11.00.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Dec 2023 11:00:39 -0800 (PST)
+Message-ID: <590ade27-b4da-49be-933b-e9959aa0cd4c@acm.org>
+Date: Mon, 4 Dec 2023 11:00:36 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,150 +48,67 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 0/6] Dynamic allocation of reserved_mem array.
+Subject: Re: [PATCH V2 1/3] ufs: core: Add CPU latency QoS support for ufs
+ driver
 Content-Language: en-US
-To: <catalin.marinas@arm.com>, <will@kernel.org>, <robh+dt@kernel.org>,
-        <frowand.list@gmail.com>
-CC: <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <20231204041339.9902-1-quic_obabatun@quicinc.com>
-From: Oreoluwa Babatunde <quic_obabatun@quicinc.com>
-In-Reply-To: <20231204041339.9902-1-quic_obabatun@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+To: Maramaina Naresh <quic_mnaresh@quicinc.com>,
+ "James E.J. Bottomley" <jejb@linux.ibm.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Peter Wang <peter.wang@mediatek.com>, Manivannan Sadhasivam
+ <mani@kernel.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ chu.stanley@gmail.com
+Cc: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, quic_cang@quicinc.com,
+ quic_nguyenb@quicinc.com, Nitin Rawat <quic_nitirawa@quicinc.com>
+References: <20231204143101.64163-1-quic_mnaresh@quicinc.com>
+ <20231204143101.64163-2-quic_mnaresh@quicinc.com>
+From: Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <20231204143101.64163-2-quic_mnaresh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bsIB1V5-Jc8GhGDBKvQaqP7GfBgc_pXW
-X-Proofpoint-GUID: bsIB1V5-Jc8GhGDBKvQaqP7GfBgc_pXW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-04_18,2023-12-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 adultscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- spamscore=0 impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=943 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312040146
 
+On 12/4/23 06:30, Maramaina Naresh wrote:
+> +	u32	(*config_qos_vote)(struct ufs_hba *hba);
 
-On 12/3/2023 8:13 PM, Oreoluwa Babatunde wrote:
-> The reserved_mem array is used to store the data of the different
-> reserved memory regions specified in the DT of a device.
-> The array stores information such as the name, node, starting address,
-> and size of a reserved memory region.
->
-> The array is currently statically allocated with a size of
-> MAX_RESERVED_REGIONS(64). This means that any system that specifies a
-> number of reserved memory regions greater than MAX_RESERVED_REGIONS(64)
-> will not have enough space to store the information for all the regions.
->
-> Therefore, this series extends the use of a static array for
-> reserved_mem, and introduces a dynamically allocated array using
-> memblock_alloc() based on the number of reserved memory regions
-> specified in the DT.
->
-> Memory gotten from memblock_alloc() is only writable after paging_init()
-> is called, but the reserved memory regions need to be reserved before
-> then so that the system does not create page table mappings for them.
->
-> Reserved memory regions can be divided into 2 groups.
-> i) Statically-placed reserved memory regions
-> i.e. regions defined in the DT using the @reg property.
-> ii) Dynamically-placed reserved memory regions.
-> i.e. regions specified in the DT using the @alloc_ranges
->     and @size properties.
->
-> It is possible to call memblock_reserve() and memblock_mark_nomap() on
-> the statically-placed reserved memory regions and not need to save them
-> to the array until after paging_init(), but this is not possible for the
-> dynamically-placed reserved memory because the starting address of these
-> regions need to be stored somewhere after they are allocated.
->
-> Therefore, this series achieves the allocation and population of the
-> reserved_mem array in two steps:
->
-> 1. Before paging_init()
->    Before paging_init() is called, iterate through the reserved_mem
->    nodes in the DT and do the following:
->    - Allocate memory for dynamically-placed reserved memory regions and
->      store their starting address in the static allocated reserved_mem
->      array.
->    - Call memblock_reserve() and memblock_mark_nomap() on all the
->      reserved memory regions as needed.
->    - Count the total number of reserved_mem nodes in the DT.
->
-> 2. After paging_init()
->    After paging_init() is called:
->    - Allocate new memory for the reserved_mem array based on the number
->      of reserved memory nodes in the DT.
->    - Transfer all the information that was stored in the static array
->      into the new array.
->    - Store the rest of the reserved_mem regions in the new array.
->      i.e. the statically-placed regions.
->
-> The static array is no longer needed after this point, but there is
-> currently no obvious way to free the memory. Therefore, the size of the
-> initial static array is now defined using a config option.
-> Because the array is used only before paging_init() to store the
-> dynamically-placed reserved memory regions, the required size can vary
-> from device to device. Therefore, scaling it can help get some memory
-> savings.
->
-> A possible solution to freeing the memory for the static array will be
-> to mark it as __initdata. This will automatically free the memory once
-> the init process is done running.
-> The reason why this is not pursued in this series is because of
-> the possibility of a use-after-free.
-> If the dynamic allocation of the reserved_mem array fails, then future
-> accesses of the reserved_mem array will still be referencing the static
-> array. When the init process ends and the memory is freed up, any
-> further attempts to use the reserved_mem array will result in a
-> use-after-free.
->
-> Note:
->
-> - The limitation to this approach is that there is still a limit of
->   64 for dynamically reserved memory regions.
-> - Upon further review, the series might need to be split up/duplicated
->   for other archs.
->
->
-> Oreoluwa Babatunde (6):
->   of: reserved_mem: Change the order that reserved_mem regions are
->     stored
->   of: reserved_mem: Swicth call to unflatten_device_tree() to after
->     paging_init()
->   of: resevred_mem: Delay allocation of memory for dynamic regions
->   of: reserved_mem: Add code to use unflattened DT for reserved_mem
->     nodes
->   of: reserved_mem: Add code to dynamically allocate reserved_mem array
->   of: reserved_mem: Make MAX_RESERVED_REGIONS a config option
->
->  arch/loongarch/kernel/setup.c      |   2 +-
->  arch/mips/kernel/setup.c           |   3 +-
->  arch/nios2/kernel/setup.c          |   4 +-
->  arch/openrisc/kernel/setup.c       |   4 +-
->  arch/powerpc/kernel/setup-common.c |   3 +
->  arch/sh/kernel/setup.c             |   5 +-
->  arch/um/kernel/dtb.c               |   1 -
->  arch/um/kernel/um_arch.c           |   2 +
->  arch/xtensa/kernel/setup.c         |   4 +-
->  drivers/of/Kconfig                 |  13 +++
->  drivers/of/fdt.c                   |  39 +++++--
->  drivers/of/of_private.h            |   6 +-
->  drivers/of/of_reserved_mem.c       | 175 +++++++++++++++++++++--------
->  include/linux/of_reserved_mem.h    |   8 +-
->  kernel/dma/coherent.c              |   4 +-
->  kernel/dma/contiguous.c            |   8 +-
->  kernel/dma/swiotlb.c               |  10 +-
->  17 files changed, 205 insertions(+), 86 deletions(-)
-re-sending this to include maintainers for the other
-archs.
+Please remove the above callback since this patch series does not
+introduce any instances of this callback.
 
-Regards,
+> +
+> +	/* This capability allows the host controller driver to use the PM QoS
+> +	 * feature.
+> +	 */
+> +	UFSHCD_CAP_PM_QOS				= 1 << 13,
+>   };
 
-Oreoluwa
+Why does it depend on the host driver whether or not PM QoS is
+enabled? Why isn't it enabled unconditionally?
+
+> + * @pm_qos_req: PM QoS request handle
+> + * @pm_qos_init: flag to check if pm qos init completed
+>    */
+
+Documentation for pm_qos_init is missing.
+
+>   struct ufs_hba {
+>   	void __iomem *mmio_base;
+> @@ -1076,6 +1089,9 @@ struct ufs_hba {
+>   	struct ufs_hw_queue *uhq;
+>   	struct ufs_hw_queue *dev_cmd_queue;
+>   	struct ufshcd_mcq_opr_info_t mcq_opr[OPR_MAX];
+> +	struct pm_qos_request pm_qos_req;
+> +	bool pm_qos_init;
+> +	u32 qos_vote;
+
+Please rename "pm_qos_init" into "pm_qos_initialized".
+
+Thanks,
+
+Bart.
 
 
