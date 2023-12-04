@@ -1,91 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-3295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 552C380362E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:16:47 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0D7D803631
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:16:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1315F1F2116A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:16:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 27FE51C20AA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:16:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E708286B7;
-	Mon,  4 Dec 2023 14:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF34925762;
+	Mon,  4 Dec 2023 14:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ozr8o/Mk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ppjPukIs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3E3BA0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 06:16:37 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2ca0288ebc5so12728551fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 06:16:37 -0800 (PST)
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D671A9
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 06:16:39 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2ca0288ebc5so12728741fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 06:16:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1701699396; x=1702304196; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tnNKn8nu723Lg0zpF/kv/3F1mKY2Dj8RO/b7j9k36Wk=;
-        b=ozr8o/Mk7ftEK1xYc/WYENZVKqtnPQxU6slAQnt2QoTKsWMj8KqDQaSCA/YkmTUL8v
-         XBytNQ6H0MdJpqsG/rMxW2kNNJ4NrAOhkhks6Uo5R22xMypCnNBP0JiWAzO20fwdXJiE
-         5I+bCsMtG4U4iA1bOkrf1TtMDDUzOofKfV/D1HD0zgOuzpZ9bLLTMaaS3OuvLzWacUVh
-         tDrilnnTA8OyowSwj1yZFgQsWG4OerO4fcc4E91rB7mE+G0J4UA+QiDghc0jzxfBrqbH
-         CM8skPpG4KDgjVUklIDAahCPzlE7xgYnnZuXxC2vBngBOJYsmvv4cJKsI93eifce7sgu
-         dN2Q==
+        bh=n6YMpMOZZj4+cuOxRYdI7nrhzUfHZl6j32N3A+bPyU8=;
+        b=ppjPukIsy2D9jA7NMdYHS/I5CwKcNHZpS+lYFy9yzGnO/WAVAfUEtv61gaBF+xiXVw
+         qGtBhA1Sm6lEE2WCxcl/vicxaKIJ7+/INAnLrpPqn+rfm+5cDtEQtC/g+CrzcIFYIiL/
+         qoPGEfZWBY8f4dnpWWVH/a9ZfKfQRAZORRs5CTKH0lZ00mXcDBnApsXcTetZ3OAp4udL
+         IKYrrZ08JaQm8vGL/dMF4tHgYapmDEN32NOlwfkYs7c3MsvjB9rIsWrUhRRcdfS5roTc
+         LGADAnoUKUA2RF7g3agGTeaUlh77WF8jwY3IEZ5DV/+WvwxiZbU3WGXWLxOEKZpQDxdJ
+         SOVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1701699396; x=1702304196;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tnNKn8nu723Lg0zpF/kv/3F1mKY2Dj8RO/b7j9k36Wk=;
-        b=Bunut1Fe4Q7qUdA9TCfmRXTrKhtGBJTNzaijQiNXb6JNTF5LCUAFkS+g11+SKUryic
-         mpYo92vaRTHxlKNIjjJ7THCKUoFpUD/L5KRGFCjTJGUaMBizFIqqXUii8OCWol8mGAf3
-         Z3Hc2DDHAMFIc4QakQSArx1PtTwQAogA3ysjADI0wWa4VUkDn3BLApTOtMGw5J9Wy7Vz
-         dwbua6yx7lTwQHDCVBpBECDJ5Sf4Tf4cPEg3Y3pP4fqfGq1quGEDrDR6046YBKlRqNwk
-         nCo16VAl8xJyZly23P1Nzj7GEjllwSQKxLSTj7Jn++lK33auUCOVBvcrPzyoWTpFd3LD
-         rbyg==
-X-Gm-Message-State: AOJu0YwoDH9FlJj9NEmQDrXnZcs3sDFcLIf+eMEv9ujuXzbjAzsuqQAG
-	S0yRuvAYKslBa6YAGm96AFHwgw==
-X-Google-Smtp-Source: AGHT+IHddUgNiM5+JeDrcniHCScJhE7jly22t2q9+rXWr3RDXN6X9hcnxXrPXIv6LuNWyNWoqwMFJg==
-X-Received: by 2002:a2e:8041:0:b0:2c9:d863:2c1c with SMTP id p1-20020a2e8041000000b002c9d8632c1cmr3034669ljg.69.1701699396066;
+        bh=n6YMpMOZZj4+cuOxRYdI7nrhzUfHZl6j32N3A+bPyU8=;
+        b=pSeH2s6IpC6n3U7+GwbST77DCjnki5Mf4cSoz7UwvO9Y8RvP3kT7AcDge/HwYxGIq7
+         /22X5hmlO2viCQwibiCYBR3yUkeln9x5s2S1z9iybI2/z5trQBQ3TsgG0iD1TqmMXSWN
+         I1tLdMjuJeS63sMXLm2uofnFWLh7TiRrizBG2PDtkRN1FGnc7tBxQ02YphgET6TQ6mUi
+         04zc/fz9Bze0MukFo5E8RkZhlBgmxUR9D6IWS8pSuLRYrnOTf2T45i/iGFNFatlUdv4H
+         gbAlLuq2D73AAOfaleIh7LoMCzBY5VmZacZfZKuXXzIwpigwkJhScuUQufHnTrwwZzn7
+         eWHA==
+X-Gm-Message-State: AOJu0YxMHwc/h4H6IvHylx3ffLC0BGUHMp9tdTOzjffjfSLBJ37K5+ur
+	gC6pk8+zj33Q1zpPjO9E0k8bSg==
+X-Google-Smtp-Source: AGHT+IHxlvjohMUpKehKwnggj+Lz3P6QMDf6Qpur+3rLugPmZ4qsdPayS5BHoKR4TzBjRie6bNxfgg==
+X-Received: by 2002:a2e:7c0a:0:b0:2c9:f564:b414 with SMTP id x10-20020a2e7c0a000000b002c9f564b414mr1344885ljc.24.1701699396667;
         Mon, 04 Dec 2023 06:16:36 -0800 (PST)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::227])
-        by smtp.gmail.com with ESMTPSA id v3-20020a2e9243000000b002c9fda71acesm487033ljg.127.2023.12.04.06.16.35
+        by smtp.gmail.com with ESMTPSA id v3-20020a2e9243000000b002c9fda71acesm487033ljg.127.2023.12.04.06.16.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 06:16:35 -0800 (PST)
+        Mon, 04 Dec 2023 06:16:36 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Maxime Ripard <mripard@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Janne Grunau <j@jannau.net>,
-	Simon Ser <contact@emersion.fr>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: dri-devel@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH RESEND 0/6] drm: simplify support for transparent DRM bridges
-Date: Mon,  4 Dec 2023 16:16:30 +0200
-Message-ID: <170169936705.76859.13553998311101543980.b4-ty@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH RESEND v2 0/3] drm: introduce per-encoder debugfs directory
+Date: Mon,  4 Dec 2023 16:16:31 +0200
+Message-ID: <170169936702.76859.7909470270335421365.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231203114333.1305826-1-dmitry.baryshkov@linaro.org>
-References: <20231203114333.1305826-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231203115315.1306124-1-dmitry.baryshkov@linaro.org>
+References: <20231203115315.1306124-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -95,33 +80,25 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Sun, 03 Dec 2023 14:43:27 +0300, Dmitry Baryshkov wrote:
-> Greg, could you please ack the last patch to be merged through the
-> drm-misc tree? You have acked patch 3, but since that time I've added
-> patches 4-6.
+On Sun, 03 Dec 2023 14:53:12 +0300, Dmitry Baryshkov wrote:
+> Resending, patch 1 needs review from DRM core maintainers, but it got no
+> attention since October.
 > 
-> Supporting DP/USB-C can result in a chain of several transparent
-> bridges (PHY, redrivers, mux, etc). All attempts to implement DP support
-> in a different way resulted either in series of hacks or in device tree
-> not reflecting the actual hardware design. This results in drivers
-> having similar boilerplate code for such bridges.
+> Each of connectors and CRTCs used by the DRM device provides debugfs
+> directory, which is used by several standard debugfs files and can
+> further be extended by the driver. Add such generic debugfs directories
+> for encoder. As a showcase for this dir, migrate `bridge_chains' debugfs
+> file (which contains per-encoder data) and MSM custom encoder status to
+> this new debugfs directory.
 > 
 > [...]
 
 Applied to drm-misc-next, thanks!
 
-[1/6] drm/bridge: add transparent bridge helper
-      commit: 2a04739139b2b2761571e18937e2400e71eff664
-[2/6] phy: qcom: qmp-combo: switch to DRM_AUX_BRIDGE
-      commit: 35921910bbd0b6ab595cead16d0c8faadbf2fd94
-[3/6] usb: typec: nb7vpq904m: switch to DRM_AUX_BRIDGE
-      commit: c5d296bad640b190c52ef7508114d70e971a4bba
-[4/6] drm/bridge: implement generic DP HPD bridge
-      commit: e560518a6c2e60f1566473c146fddcff3281f617
-[5/6] soc: qcom: pmic-glink: switch to DRM_AUX_HPD_BRIDGE
-      commit: 2bcca96abfbf89d26fc10fc92e40532bb2ae8891
-[6/6] usb: typec: qcom-pmic-typec: switch to DRM_AUX_HPD_BRIDGE
-      commit: 7d9f1b72b29698e3030c2b163522cf4aa91b47e9
+[1/3] drm/encoder: register per-encoder debugfs dir
+      commit: caf525ed45b4960b450cbd4e811d9b247bc2586c
+[2/3] drm/bridge: migrate bridge_chains to per-encoder file
+      commit: d0b3c318e04cc6c4e2a3c30ee0f6f619aa8d0db5
 
 Best regards,
 -- 
