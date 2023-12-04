@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1B208038EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 16:36:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 652508038F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 16:37:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9A9EC1F20F95
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:36:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 966101C209FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:37:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3B962C85D;
-	Mon,  4 Dec 2023 15:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 739752C859;
+	Mon,  4 Dec 2023 15:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ih7gBOaN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VgWBdLMA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 737EEC0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 07:36:20 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-a1b6d183fb8so144833166b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 07:36:20 -0800 (PST)
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FF8FCA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 07:37:08 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-a186e5d1056so591767766b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 07:37:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701704178; x=1702308978; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701704227; x=1702309027; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wXNtB9p4AFTor8yzvcHLeN/o46UrN84d1uXDYiHmlY4=;
-        b=ih7gBOaNXUkKjr0cgIbLumKJEgv8KQPFDAq5Y2jYzNifdZnVET5hMuw/1/RJeLCPMG
-         T0KNME4f2LaafwvJTGbrUYG3Hid/zzF8nVSQ5icXaENNc1S4OV5Xkiru4vURb62vLeZS
-         9ZPJroV4FL/QOAtYPKtfeLuZqAitmv2BEKbZkH2YW+lI3TqXU3RHQLbGIgT1/36jRyj2
-         LiE1VtGR/qKNhgO0dgJ7WKmE9UNbsasGd2hUvopA2yCxAdmRPbtLWZnE5vt8zBO11tVF
-         odW6MVTmmPWga5hgfFa8q9KynxvfJQGgJxgVcveNG55IRUR2dpS7sJToGoACbyndrS/M
-         vXvg==
+        bh=bXOtAomjkOicit57jC1utJl/MiFhZ4Za21m1cV04Zm8=;
+        b=VgWBdLMApBn3huKpfTtHAkPEOkDdoJu4EIObKotSa/YLMHWbc3ZU5a8WyxuSyUNogn
+         uVIb940CikWjqR2S6zSAHa5w1mfZKnuMoETCbSsPkRLHDDNXUEDsDIQ85juf+au+ZGJE
+         2RCfXfFvlpcntJeyqHmxbN4/byUkRLb1Ng1ivKbSR7TPgHXiS/t8q5pIlxtQwJixMsm1
+         c3BpxPgIvI2eSEDbvIlmhaRTIK+rSlDwCBD/ebcIVeyAZn6Xi5268/6kEZLo0/9ckmaD
+         3UUI3P1uwcVo+m04i3SZ3J9nkP80ykkLTua+MkDO8qjfYuq6h9+URtlK3HUU95Xfhx5e
+         MUqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701704178; x=1702308978;
+        d=1e100.net; s=20230601; t=1701704227; x=1702309027;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wXNtB9p4AFTor8yzvcHLeN/o46UrN84d1uXDYiHmlY4=;
-        b=VeRou8tpooZQeqaSmaug7kL+izfrM5fHB0i75aERz9r9KVPJo8ABXDreazS7xsJHR0
-         jrj1vDAkK7+VerMdk+cqy1j1rezt+wt3CDYVMusEevISY5jMTx5gLdWHQnnp4dtwEDNH
-         Qj73kVuxvHjKVYH+UqVcpldBg32vnE8+WhMSoWZginMgWS9ZSw3P06h07scvcC/4LoTQ
-         5mFH4Y5Tq53TBMSyIRiNP2WINPLZd0nTrztvGupZcyHyc9Bnt9vHjG17mb3N3hCD8GuK
-         2tIvkoDAZQ2Nez8KSOgX3uYwmp0IOW2+siGz4uGs9p9zfcX338Fmmk3sX4AiDLY1bwyj
-         e00w==
-X-Gm-Message-State: AOJu0YzeCYX5zsCptvLf5BqistT8G2C4inAD1Fw5JRsmdxEw2ltH3gj1
-	0X89UNPltsVfuxFNfesdeWICfA==
-X-Google-Smtp-Source: AGHT+IEolCb7OiRGcUKXP5fQ1QT5iJL5FI1u3ZNAulapO1oN5cJSr8+jbE6zEYSINXLbwCv96lJdaw==
-X-Received: by 2002:a17:906:ac8:b0:a19:a19a:eab6 with SMTP id z8-20020a1709060ac800b00a19a19aeab6mr3410071ejf.111.1701704178730;
-        Mon, 04 Dec 2023 07:36:18 -0800 (PST)
+        bh=bXOtAomjkOicit57jC1utJl/MiFhZ4Za21m1cV04Zm8=;
+        b=ONrNAM0YnFytNi1S0YxWHvFO6KmLah7dCet8fYav417keQiB4OHnEKIipPr6osq7Ar
+         RyO+s3Tw1+R0+cKoLSFlhhBLRo6DlYdxG59XCEqNeX7r4fSx36JzFXQ9mLTaDtYSsKrX
+         8hiS8h1BLJDu3IW8nV0Papkg8K+qyYRz26ED2rRBowl4cwnt5fkiLSbXTpKvdlABmAHT
+         nj5nyJPVGtfDWC3pvrzEtybNGSLU1sJ8i9Rtw4P8gdtPW7LaPL9dLZhRre5rua/odSbB
+         APzw99xGblNEx0gY1tTEy7Gjg8DG1mdoDEBEooKDMWwobG1bq4kyNCy/X3KvJgNPzVOF
+         S68w==
+X-Gm-Message-State: AOJu0YyQjNXR3O+LRhXS8Q21l7aMVhwZZAacEaz4fPQyWF/URDBTxSWV
+	wPLp0sbn1apO+yIXgwkHN40rPg==
+X-Google-Smtp-Source: AGHT+IE4KfHPN9Zo0Z0JzsKaMBdKPkee6V3e7qVDQ9yuECS+3ZoJme5P5tbmo9U8Mcs03of7zIQJVA==
+X-Received: by 2002:a17:907:9152:b0:a18:9076:c53d with SMTP id l18-20020a170907915200b00a189076c53dmr2781998ejs.33.1701704227038;
+        Mon, 04 Dec 2023 07:37:07 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.223.109])
-        by smtp.gmail.com with ESMTPSA id a7-20020a170906684700b00a170d8bee7csm5372260ejs.225.2023.12.04.07.36.17
+        by smtp.gmail.com with ESMTPSA id a7-20020a170906684700b00a170d8bee7csm5372260ejs.225.2023.12.04.07.37.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Dec 2023 07:36:17 -0800 (PST)
-Message-ID: <518273a3-fbfa-41b8-aa66-0352bc8ec4a4@linaro.org>
-Date: Mon, 4 Dec 2023 16:36:16 +0100
+        Mon, 04 Dec 2023 07:37:05 -0800 (PST)
+Message-ID: <06c32358-f9bc-4f39-94b3-ddcf09b61141@linaro.org>
+Date: Mon, 4 Dec 2023 16:37:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: sm8650: add Soundwire controllers
+Subject: Re: [PATCH 5/5] arm64: dts: qcom: sm8650-mtp: add WSA8845 speakers
 Content-Language: en-US
 To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
@@ -71,8 +71,8 @@ To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc: Neil Armstrong <neil.armstrong@linaro.org>
 References: <20231129132247.63721-1-krzysztof.kozlowski@linaro.org>
- <20231129132247.63721-5-krzysztof.kozlowski@linaro.org>
- <ab9fa787-614b-462e-87f4-e56aaa21fa64@linaro.org>
+ <20231129132247.63721-6-krzysztof.kozlowski@linaro.org>
+ <d1014fe5-e9ae-4ce8-bf19-63793552852f@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -118,20 +118,20 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <ab9fa787-614b-462e-87f4-e56aaa21fa64@linaro.org>
+In-Reply-To: <d1014fe5-e9ae-4ce8-bf19-63793552852f@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/11/2023 14:48, Konrad Dybcio wrote:
->> +
->> +			pinctrl-names = "default";
->> +			pinctrl-0 = <&wsa2_swr_active>;
+On 29/11/2023 14:49, Konrad Dybcio wrote:
+>> +	/* WSA8845, Speaker Left */
+>> +	left_spkr: speaker@0,0 {
+>> +		compatible = "sdw20217020400";
+>> +		reg = <0 0>;
+>> +		pinctrl-names = "default";
+>> +		pinctrl-0 = <&spkr_1_sd_n_active>;
 > property-n
 > property-names
 > 
-> lgtm otherwise
-> 
-> Reviewed-by : Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Ack
 
