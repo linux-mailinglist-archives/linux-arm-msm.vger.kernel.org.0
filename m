@@ -1,77 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-3368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DA818040BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 22:08:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D4EE80411F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 22:47:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1A031F21160
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:08:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D7D50B20ABF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:47:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36C1E364AC;
-	Mon,  4 Dec 2023 21:07:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="I4plrVI8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E38039FCD;
+	Mon,  4 Dec 2023 21:47:07 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71DAFB6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 13:07:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1701724074;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=mJ2aLBuQ82UANlQlbiQPqkEKJKPRAic/HCDLBzYoX6s=;
-	b=I4plrVI8pxkE+gH1m9jpK65PnVeLj61KICZXPJvHuLL6aUNAmjOmx15KZ6WK2z5zRgnoxI
-	/gCk9VJ9Jtm5Cmyrsz0NlVQLc2FuQUyXv0FU6AKI/MH7M4fVGg6Jc4fFcjvk0GNF54Nlgs
-	jDNVKd78vpB0ffaKTGayhKYbEE5zKso=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-299-TJEIIJf0NUeZX-YipDVrgg-1; Mon, 04 Dec 2023 16:07:48 -0500
-X-MC-Unique: TJEIIJf0NUeZX-YipDVrgg-1
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-423dba1e166so76410821cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 13:07:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701724068; x=1702328868;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mJ2aLBuQ82UANlQlbiQPqkEKJKPRAic/HCDLBzYoX6s=;
-        b=TTnQD2SlwfrjvtvNhm9HbmaQsPuwpFlKotrAlfjUVBAog6I78U+u2AUA+LgiMrOnzZ
-         YuAOLv78J6RYQlG9sfZ1RD/LS5+yp9eqXiLdeNqUuh/oTzOcifYhhbCshciXewkPV9P/
-         PEyHp8AQD82W84ha9fgllLSxWQfxHD/e0uawmmT6vo9PdyBjejBuCz5mOIA2/VlSIYBZ
-         W2gyvia1UGfxs0Sc4VIqkkJceMc67MowaT1le8G06QrsW9xVfDR065GVTj2g86Uuulkm
-         fzF8OtrxAlMh+/mWHiTCzs0g2CpD8+CsRt7/QwFmSYYceByIHfNjLLyaE0sGor2n949v
-         yI3A==
-X-Gm-Message-State: AOJu0Yyym3uBLO+3uFk7fcblX9dvyJXjBdK8WzYlcE7KRW2daxV4ZK2P
-	qjRW0Gzu5HxWRmG5RPLI8Mc6zOTDh6cGm+ApBD4F8xEwf/LWMuxfTNiksKrsI+VwMd5dB5FcIb/
-	H5T9yjY4tvqHEkyiAPHmbV/33Aw==
-X-Received: by 2002:a05:622a:612:b0:423:9887:cd3e with SMTP id z18-20020a05622a061200b004239887cd3emr209062qta.32.1701724068021;
-        Mon, 04 Dec 2023 13:07:48 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGbFKSKjTKx+Yam65LOYaKr2UKx4QIOdb9/HID8MZGjV0GNxiebXUhSTXBgxjLjto4QiruptA==
-X-Received: by 2002:a05:622a:612:b0:423:9887:cd3e with SMTP id z18-20020a05622a061200b004239887cd3emr209036qta.32.1701724067678;
-        Mon, 04 Dec 2023 13:07:47 -0800 (PST)
-Received: from fedora ([2600:1700:1ff0:d0e0::47])
-        by smtp.gmail.com with ESMTPSA id o16-20020ac841d0000000b00423829b6d91sm4583237qtm.8.2023.12.04.13.07.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 13:07:47 -0800 (PST)
-Date: Mon, 4 Dec 2023 15:07:45 -0600
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Sneh Shah <quic_snehshah@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH v2] net: stmmac: update Rx clk divider for 10M SGMII
-Message-ID: <zf4fsrtrd736kxweputr2fulu7ffagivwi7zodctcsdg3uj6e2@iquglstf2gqb>
-References: <20231201100548.12994-1-quic_snehshah@quicinc.com>
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 138CDC4
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 13:47:02 -0800 (PST)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 4F1B01FC57;
+	Mon,  4 Dec 2023 22:46:57 +0100 (CET)
+Date: Mon, 4 Dec 2023 22:46:55 +0100
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Jonathan Marek <jonathan@marek.ca>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Jiasheng Jiang <jiasheng@iscas.ac.cn>, 
+	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>, 
+	"open list:DRM DRIVER FOR MSM ADRENO GPU" <dri-devel@lists.freedesktop.org>, open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 2/6] drm/msm/dsi: set video mode widebus enable bit
+ when widebus is enabled
+Message-ID: <ghozqqj3ka6ntbofbpol2zf6sa7lt5ppqnsmnqbvqr5nwgx4ox@5kndla2nf54n>
+References: <20231114225857.19702-1-jonathan@marek.ca>
+ <20231114225857.19702-3-jonathan@marek.ca>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,68 +45,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231201100548.12994-1-quic_snehshah@quicinc.com>
+In-Reply-To: <20231114225857.19702-3-jonathan@marek.ca>
 
-On Fri, Dec 01, 2023 at 03:35:48PM +0530, Sneh Shah wrote:
-> SGMII 10MBPS mode needs RX clock divider to avoid drops in Rx.
-> Update configure SGMII function with rx clk divider programming.
+On 2023-11-14 17:58:30, Jonathan Marek wrote:
+> The value returned by msm_dsi_wide_bus_enabled() doesn't match what the
+> driver is doing in video mode. Fix that by actually enabling widebus for
+> video mode.
 > 
-> Fixes: 463120c31c58 ("net: stmmac: dwmac-qcom-ethqos: add support for SGMII")
-> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+> Fixes: efcbd6f9cdeb ("drm/msm/dsi: Enable widebus for DSI")
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
+Conditional r-b assuming this will be submitted to mesa, otherwise it'll
+disappear when the next person updates and regenerates these bindings.
 
-I can confirm that without this patch traffic doesn't seem to work when
-I force things in to SPEED_10 with ethtool (which required another
-change to this driver in stmmac_ethtool.c to do so, which as far as I
-understand Sarosh from your group will be upstreaming soon and is an
-independent issue).
-
-I am curious, I expected to see some dropped/errors output in ip link
-when things weren't working. I guess the sgmii phy in the soc is
-rejecting these prior to handing them to the mac? Or am I
-misunderstanding how that works?
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
 > ---
-> v2 changelog:
-> - Use FIELD_PREP to prepare bifield values in place of GENMASK
-> - Add fixes tag
-> ---
->  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 4 ++++
->  1 file changed, 4 insertions(+)
+>  drivers/gpu/drm/msm/dsi/dsi.xml.h  | 1 +
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 2 ++
+>  2 files changed, 3 insertions(+)
 > 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> index d3bf42d0fceb..df6ff8bcdb5c 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> @@ -34,6 +34,7 @@
->  #define RGMII_CONFIG_LOOPBACK_EN		BIT(2)
->  #define RGMII_CONFIG_PROG_SWAP			BIT(1)
->  #define RGMII_CONFIG_DDR_MODE			BIT(0)
-> +#define RGMII_CONFIG_SGMII_CLK_DVDR		GENMASK(18, 10)
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> index 2a7d980e12c3..f0b3cdc020a1 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> @@ -231,6 +231,7 @@ static inline uint32_t DSI_VID_CFG0_TRAFFIC_MODE(enum dsi_traffic_mode val)
+>  #define DSI_VID_CFG0_HSA_POWER_STOP				0x00010000
+>  #define DSI_VID_CFG0_HBP_POWER_STOP				0x00100000
+>  #define DSI_VID_CFG0_HFP_POWER_STOP				0x01000000
+> +#define DSI_VID_CFG0_DATABUS_WIDEN				0x02000000
+>  #define DSI_VID_CFG0_PULSE_MODE_HSA_HE				0x10000000
 >  
->  /* SDCC_HC_REG_DLL_CONFIG fields */
->  #define SDCC_DLL_CONFIG_DLL_RST			BIT(30)
-> @@ -617,6 +618,9 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
->  	case SPEED_10:
->  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
->  		val &= ~ETHQOS_MAC_CTRL_SPEED_MODE;
-> +		rgmii_updatel(ethqos, RGMII_CONFIG_SGMII_CLK_DVDR,
-> +			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR, 0x31),
-> +			      RGMII_IO_MACRO_CONFIG);
-
-Russell requested a comment about why you must program this every time,
-I think it's a good idea too: https://lore.kernel.org/netdev/ZWch7LIqbMEaLRLW@shell.armlinux.org.uk/
-
-Also on my wishlist is making 0x31 less magic, but Santa might not bring
-that for me :)
-
->  		break;
->  	}
+>  #define REG_DSI_VID_CFG1					0x0000001c
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index deeecdfd6c4e..f2c1cbd08d4d 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -745,6 +745,8 @@ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+>  		data |= DSI_VID_CFG0_TRAFFIC_MODE(dsi_get_traffic_mode(flags));
+>  		data |= DSI_VID_CFG0_DST_FORMAT(dsi_get_vid_fmt(mipi_fmt));
+>  		data |= DSI_VID_CFG0_VIRT_CHANNEL(msm_host->channel);
+> +		if (msm_dsi_host_is_wide_bus_enabled(&msm_host->base))
+> +			data |= DSI_VID_CFG0_DATABUS_WIDEN;
+>  		dsi_write(msm_host, REG_DSI_VID_CFG0, data);
 >  
+>  		/* Do not swap RGB colors */
 > -- 
-> 2.17.1
+> 2.26.1
 > 
-> 
-
 
