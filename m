@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62DDB803124
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:00:32 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B46DF80312A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:02:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 92F401C20A5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:00:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6FB23280E1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:02:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25064208BD;
-	Mon,  4 Dec 2023 11:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B261224DB;
+	Mon,  4 Dec 2023 11:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ne9EJZO4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HFMUPntn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D2BD40
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 03:00:22 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-a18f732dc83so734235366b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 03:00:22 -0800 (PST)
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42115B9
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 03:02:31 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-a1b68ae40efso120489866b.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 03:02:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701687621; x=1702292421; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701687750; x=1702292550; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zMJ0dX/x7e8dMzBxocrNbXjh+xb4eJogbtARHYIGT34=;
-        b=Ne9EJZO4GsfVsiKH3aTqAwueotFkkuXvUu9F2g28kvVrvIP7mWX7eEMS5+nqEKvH/X
-         a3U+mXM9s1rqxYm0UP53URII58ksq7b6jDOoUTMwj0EbxhqaNkKnMMBjAUzBOHyhFlkH
-         53Vgo5zvIO1i5NAnFkacaTchDFgKfChPT2WA06iibPWG2DlMOc8tF7MNZCWJwuXwtHOe
-         4i2t7Ww8l+5gPKv2Dv3/5FTDuZKxlCAaaFQP99vU4DnlvTuUayu2H/cbC+Jdrt+kso/C
-         wWQyunDSCvBdLwJ82ytxouD+VezMKEUBkQrlZF7DpV6Bq5cA0WVUiNJvpThOFx/nPyyv
-         QWuA==
+        bh=kvCpwjImoYWLvinjMDGOnfCxgHCwEX0Wp0hmlvMkuhM=;
+        b=HFMUPntnQZeCvbKGpbTn/qE0gyugFIEmgRALVNB/ggq91BGEyfClOjpLfHLLkbmeCx
+         9vcXyFLBcQWrJVMTw0tvoHwzd2mssuYC6eu8YiuXP4zK/O0/kQQwFl1IRt2yk//XNQuG
+         EVJbtYUHK1PUradlDn2KUh/2JSsRdVzeNn7MNyQ5RBxsvF1zh7SsV7rfSyYJACxbatxg
+         goq/rm7Scm/NPOBcXyPbO52M1XtdslYrTtxU+e9PenzWkcyolgUNM6rJQSNuDrA9IYTK
+         VfnTBORZDmEyWYLe2KTiSgwTc9qPthjPouhikAEYffMoXoH8plblVq7Ze9/sSy9BROv2
+         vwhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701687621; x=1702292421;
+        d=1e100.net; s=20230601; t=1701687750; x=1702292550;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zMJ0dX/x7e8dMzBxocrNbXjh+xb4eJogbtARHYIGT34=;
-        b=GhUK4amHlMANnDe6fdeHcv8PbfU0t3xAc2tbDES/fsU+C/curezfNnbmXDWs2vJROj
-         MhSNgKWYbJR7BxIeLBGWYxzYvWgnj+iPD5d/ArEbhcZjr+BYjN20TJedv8CPbTxOksg7
-         k5BS4sQ9eR935cBLuNqQ7XQya/vyiIuPm2Solit3FGhD8FzNmjBNY9xiirgpRPGh/tiz
-         kKRKkHFQPrkeIfjjbrzNYG60WVicoLxwrgI1qzmqSwNnJzkJJ3M523nd148T+Ll99gvt
-         BP4paFqmaVTIggvgpPtX9rNS5kXMRoTRBDzUCzJ5hqv2KIQWcOU++S+2UNjU0fjqwqus
-         U1mg==
-X-Gm-Message-State: AOJu0YyS1MH1bM78kK6GeNBIKKQo2NUURLc13lklipBNQM7Rt+71225J
-	+e6Lzh4Hyhzaj1x9pqtf/sproQ==
-X-Google-Smtp-Source: AGHT+IGr++cSCnry8v6UCnnH6JPuwxMw6hOwRdfEiM0xGHi/7wyzDr1p7SZ8wYyTjpx8aZIEJkNiJA==
-X-Received: by 2002:a17:906:268e:b0:a16:7f44:25bf with SMTP id t14-20020a170906268e00b00a167f4425bfmr4621773ejc.17.1701687620957;
-        Mon, 04 Dec 2023 03:00:20 -0800 (PST)
+        bh=kvCpwjImoYWLvinjMDGOnfCxgHCwEX0Wp0hmlvMkuhM=;
+        b=OzZE4PZiHIC71RW9onEewYvHfu9sjdumRjBE1DS+vRTmv7T3ybpUj/OpOfCrBCJ7R3
+         YwyQzwUHgoNjePk9jt7ghMraN6mHthmfzVBqdrQR8pIU0BAO3nqykGLq1zPxmCzti4N3
+         Sepv0iRIZ6pZjCTpu7MeYv5q1AzCBSTclYDGZFeZAYChxcgAlO1Xf1UOxDhsfERe7MP5
+         WM7fgHJ/TwPPZvo2SRHXSEWt7pNYfJIqQ/0orBXqq7NyGjjZ7ny02/jWNMvaxrfnrkg+
+         DwlwCZMXqBIJQHJmzy1ZnMLEUJ75BTVzoSYDLuxVTr/DS+kNSbr4LKG7s/47sPgNvvWr
+         UxtA==
+X-Gm-Message-State: AOJu0YwbLhEd689fuD2Cdb5upmW8ppTHLZsi+72Z4wR+CouANvAzVWBB
+	GGk3xduN4D+jYZxNad/AERwXjg==
+X-Google-Smtp-Source: AGHT+IF6zDxwYWco6meugRImHyKt+d7STRTyWCwdIHOEBs1fN7k3Q2y16RNRCVa1b6oAu4PR06JgfA==
+X-Received: by 2002:a17:906:22d5:b0:9dc:2291:d384 with SMTP id q21-20020a17090622d500b009dc2291d384mr2839881eja.22.1701687749715;
+        Mon, 04 Dec 2023 03:02:29 -0800 (PST)
 Received: from [192.168.209.83] (178235179097.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.97])
-        by smtp.gmail.com with ESMTPSA id w17-20020a170906481100b009fad1dfe472sm5135963ejq.153.2023.12.04.03.00.19
+        by smtp.gmail.com with ESMTPSA id sa12-20020a1709076d0c00b00a0a5a794575sm5124335ejc.216.2023.12.04.03.02.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Dec 2023 03:00:20 -0800 (PST)
-Message-ID: <f24e9f93-bd48-4845-96cb-ae08f8b4f210@linaro.org>
-Date: Mon, 4 Dec 2023 12:00:18 +0100
+        Mon, 04 Dec 2023 03:02:29 -0800 (PST)
+Message-ID: <fd51b768-8c0d-4f37-887d-b9bb350ea201@linaro.org>
+Date: Mon, 4 Dec 2023 12:02:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,18 +62,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: msm8939: Add clock-frequency for
- broadcast timer
+Subject: Re: [PATCH v4 1/4] drm/msm/mdss: switch mdss to use devm_of_icc_get()
 Content-Language: en-US
-To: Stephan Gerhold <stephan@gerhold.net>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Andy Gross <agross@kernel.org>, Shawn Guo <shawn.guo@linaro.org>,
- Benjamin Li <benl@squareup.com>, James Willcox <jwillcox@squareup.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Leo Yan <leo.yan@linaro.org>,
- Vincent Knecht <vincent.knecht@mailoo.org>, Jun Nie <jun.nie@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231204-msm8939-timer-v1-1-a2486c625786@gerhold.net>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>, Bjorn Andersson <andersson@kernel.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20231202224247.1282567-1-dmitry.baryshkov@linaro.org>
+ <20231202224247.1282567-2-dmitry.baryshkov@linaro.org>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -110,35 +110,16 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <20231204-msm8939-timer-v1-1-a2486c625786@gerhold.net>
+In-Reply-To: <20231202224247.1282567-2-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 4.12.2023 10:55, Stephan Gerhold wrote:
-> Looks like not all firmware versions used for MSM8939 program the timer
-> frequency for both broadcast/MMIO timers, causing a WARNING at runtime:
+On 2.12.2023 23:42, Dmitry Baryshkov wrote:
+> Stop using hand-written reset function for ICC release, use
+> devm_of_icc_get() instead.
 > 
-> WARNING: CPU: 0 PID: 0 at kernel/time/clockevents.c:38 cev_delta2ns+0x74/0x90
-> pc : cev_delta2ns+0x74/0x90
-> lr : clockevents_config.part.0+0x64/0x8c
-> Call trace:
->  cev_delta2ns+0x74/0x90
->  clockevents_config_and_register+0x20/0x34
->  arch_timer_mem_of_init+0x374/0x534
->  timer_probe+0x88/0x110
->  time_init+0x14/0x4c
->  start_kernel+0x2c0/0x640
-> 
-> Unfortunately there is no way to fix the firmware on most of these
-> devices since it's proprietary and signed. As a workaround, specify the
-> clock-frequency explicitly in the DT to fix the warning.
-> 
-> Fixes: 61550c6c156c ("arm64: dts: qcom: Add msm8939 SoC")
-> Reported-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Ouch.
-
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
