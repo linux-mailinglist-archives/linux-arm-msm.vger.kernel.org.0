@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-3247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD199803377
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:55:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A48B180337E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:55:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE5861C20A2F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:55:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C609C1C20A82
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:55:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF12A24218;
-	Mon,  4 Dec 2023 12:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EC1A24216;
+	Mon,  4 Dec 2023 12:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Euj0vyih"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IoDNXalF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E618BFE
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 04:55:36 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-a1b654faa8cso152846966b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 04:55:36 -0800 (PST)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58E84101
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 04:55:39 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40c032962c5so25281295e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 04:55:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701694535; x=1702299335; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=L2hsBw2f4zAGauIZbOvreuYSNpIWy0p3UiF+fZb/E10=;
-        b=Euj0vyih7AVGjpIBXcmmNBvr/29gFIjKjVXLujlB9qUcwFmIyAJabmbuoZki29QxLu
-         gOW1zr+K4bBXjYunWrsS8rSmKhE24hka26hklm0VCI3UvuVKAiyu4JlLJQ42j/tcNDn3
-         IrTsKm6xTRqM8rsaooQ9lltrIHL8Xu4ucl5UIslz8tw3LRpTy+UqpI5myaojzHiG753U
-         BalnrZM1ldVLuquNqvqcfSHpRHPkDm5Cb66dQGm2019rLmNacwjs0oxBsurkLpQDcp38
-         pGu+uofvUrmiZFbjX+GeXSu1EDwpXcWaqCK5xOEeDZvGn6bBZa5Z48BD6qeLUYfrzevJ
-         yF4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701694535; x=1702299335;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1701694538; x=1702299338; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=L2hsBw2f4zAGauIZbOvreuYSNpIWy0p3UiF+fZb/E10=;
-        b=mHlVI1hzC5kVZodFxYaeldR1qvJ9Fjn22Qtemo+Z9XIH3hW1tNnfZflUgX1m7RM9RT
-         Mi36lL/h/4eo9xqa7B32Lszc9SqZOD2JiatKNNz6MEZfZ/j4tA3iXDXMfGdV+nB+Jmqz
-         u+6sP8csasTaKofHKYHe6qXwcQ0RSHYPL73adJT/JJ8pHgCKb6RMOCMDbwhhJYexEn+o
-         kxb8N1D/G+dOAmCot6zDOPUQxnJl1Co0YcYjlb+aw8aLlC9LOO8k0iWrnlguwezQ+V7E
-         t1yCHn8WOXnkPXDW9Pqjqmktfrn6kmxTaDv//OW7COQVFfrUsEzOdkygn3wAbR4qPbS2
-         hVZw==
-X-Gm-Message-State: AOJu0YwyJUtGYtiNW4tboLn6CiB1sJ5uXAb7tS4J3HymCmtH0uNxWzvr
-	9WWUf5+meMbyqI+XM4BS8j5wJA==
-X-Google-Smtp-Source: AGHT+IGrvcribSjcrW0uB3jSUhS+pnkpk+Fcqij3kL8dj7I1z74eqTqBVKOeNtEWtKSkDbuBhrI2dA==
-X-Received: by 2002:a17:906:6015:b0:a19:d40a:d22a with SMTP id o21-20020a170906601500b00a19d40ad22amr1483993ejj.246.1701694535368;
-        Mon, 04 Dec 2023 04:55:35 -0800 (PST)
+        bh=4VYbVKXhxANMzmAo5DevDefivd0gCsbNC7OR7kQaPmk=;
+        b=IoDNXalFUmES1fSYW9ynJsO+d3+R5Fqu03qlm+not/pECMwuZQokuSD94kTAyW1Nbs
+         LcpC2Y7GkNCkN04VOZlpfAcDUw7MpuFeJoqGqEzFzgMoRWdI7iDTVcdLL9XmWxVxvwCY
+         Uv5GJEPNWkDkCbETRYRlyV6yYS2YtNkqe7Ys84FkWNWrYECJPBVvgm19I8DgLAv213eq
+         lXw7qvbLMywXywjoufQditAJ1fM7lqwm7r9fohVNRSmRgrDJD79u1dY2a4jTaKQgM/j0
+         u+K6EjxR0jxphcaDxjb+vohxIrtK4tEQcPI6Q1SaLyXGaRUz4V/YBby7GI89YQ8hicPR
+         ilKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701694538; x=1702299338;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4VYbVKXhxANMzmAo5DevDefivd0gCsbNC7OR7kQaPmk=;
+        b=p9kqh93YKPeK7GLd25O9JNgA26r30i+RRjduqdDZV5zDLngTqiOcXm1PyKuhKEF9bn
+         sAu1CNfv+1Gq9DGOBzqX9+3z+eluntvRFnaebERQnwAE09uE0R5AxGiO75dyGBQlbJ0K
+         /88yDu0PLrtpvdxNeGembcF5uwxqNI1LCY0HvL9zRQWLqOZt+OTQnGkZ+ZATLx1p7UdK
+         HfSxA1v3CleB0C2zudi939aJUbs5jnDArcxaOAnmxh2ttdHUPDB47qbUX/uy5lE3x/Zg
+         v5B5pVqK4/eeGR3ZnCt6LOYhU7ZgyUMvr8VSYqYg2Z4p7Bt/qYLm3Wc282MMOanQMMRU
+         /Fyg==
+X-Gm-Message-State: AOJu0YyG1o4LvXefSVb6O4hR/WX7vkItetI676sMK0cA6pBd3FbCCJS9
+	8Fn7oTjmjwpCOn1ff5tLL2IyjQ==
+X-Google-Smtp-Source: AGHT+IF20KkqSBNgI0V5q5M23rtNvOl2oHvkQdd+994YeANMyI+Y4stIiq0gluNCbAppjSBRCJtivg==
+X-Received: by 2002:a05:600c:1385:b0:40b:3fc7:c88a with SMTP id u5-20020a05600c138500b0040b3fc7c88amr1831169wmf.39.1701694537845;
+        Mon, 04 Dec 2023 04:55:37 -0800 (PST)
 Received: from [10.167.154.1] (178235179097.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.97])
-        by smtp.gmail.com with ESMTPSA id ay22-20020a170906d29600b009efe6fdf615sm5241373ejb.150.2023.12.04.04.55.33
+        by smtp.gmail.com with ESMTPSA id ay22-20020a170906d29600b009efe6fdf615sm5241373ejb.150.2023.12.04.04.55.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 04:55:34 -0800 (PST)
+        Mon, 04 Dec 2023 04:55:37 -0800 (PST)
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: [PATCH v2 0/6] SM8450 / SM8550 Adreno
-Date: Mon, 04 Dec 2023 13:55:19 +0100
-Message-Id: <20231127-topic-a7xx_dt-v2-0-2a437588e563@linaro.org>
+Date: Mon, 04 Dec 2023 13:55:20 +0100
+Subject: [PATCH v2 1/6] dt-bindings: arm-smmu: Document SM8[45]50 GPU SMMU
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,10 +64,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADfMbWUC/3WNQQqDMBBFryKz7hQzFZSueo8iJTGjDkgiEysW8
- e5N3Xf5Hvz/dkiswgnuxQ7KqySJIQNdCuhGGwZG8ZmBSroZQzUucZYObb1tL79gz8yVqYi9t5A
- 3ziZGpzZ0Y16F9zRlOSv3sp2RZ5t5lLRE/ZzN1fzsv/vVYImWqHGNIWLXPyYJVuM16gDtcRxf+
- JmW98AAAAA=
+Message-Id: <20231127-topic-a7xx_dt-v2-1-2a437588e563@linaro.org>
+References: <20231127-topic-a7xx_dt-v2-0-2a437588e563@linaro.org>
+In-Reply-To: <20231127-topic-a7xx_dt-v2-0-2a437588e563@linaro.org>
 To: Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, 
  Joerg Roedel <joro@8bytes.org>, Rob Herring <robh+dt@kernel.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
@@ -81,49 +80,98 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1701694533; l=1382;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1701694533; l=2754;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=G2AGr7+EfmpDgrZgtA9axRHuip8IvIHibzVfFKlzR2Q=;
- b=8v7uPUgPccph1d0xbsOc11lWkToE8gvXhqB3LqrVRQCp0HSjVz9i/VveJmoux/2n5cxHGrMMs
- s5uly2frnAaAdtE8+UBQUA3JLO5N7k9Skk9Fs2qW0LJ6mO+dcvZkAu4
+ bh=1ykSmvOZZDjJjgZpitbyB4XwAgvbWrZhIXxM64S4nPE=;
+ b=lj3IMiwPIJxgczSTOsCkVKkVF04JuQ2p6btaSUMQQGimuIK9Sqsb4x4moWx+oYn8OzCWFpfam
+ br91WBeade2BjmO2oLO7ObprbqxSPbY8KcKz1j29Mnt3F70tYkAnC9D
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Following the merging of related bindings, driver and mesa changes, enable
-the GPU on both of these platforms.
+SM8450 and SM8550 both use a Qualcomm-modified MMU500 for their GPU.
+In both cases, it requires a set of clocks to be enabled. Describe that.
 
-P1 for Will/iommu, rest for qcom
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
-Changes in v2:
-- Sort nodes better in 8550dtsi
-- Fix the 8550 GPU chip ID
-- Pick up tags
-- Link to v1: https://lore.kernel.org/r/20231127-topic-a7xx_dt-v1-0-a228b8122ebf@linaro.org
+ .../devicetree/bindings/iommu/arm,smmu.yaml        | 48 +++++++++++++++++++++-
+ 1 file changed, 46 insertions(+), 2 deletions(-)
 
----
-Konrad Dybcio (6):
-      dt-bindings: arm-smmu: Document SM8[45]50 GPU SMMU
-      arm64: dts: qcom: sm8450: Add GPU nodes
-      arm64: dts: qcom: sm8550: Add GPU nodes
-      arm64: dts: qcom: sm8550-qrd: Enable the A740 GPU
-      arm64: dts: qcom: sm8550-mtp: Enable the A740 GPU
-      arm64: dts: qcom: sm8450-hdk: Enable the A730 GPU
+diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+index aa9e1c0895a5..19dba93a7654 100644
+--- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
++++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+@@ -89,6 +89,8 @@ properties:
+               - qcom,sm8150-smmu-500
+               - qcom,sm8250-smmu-500
+               - qcom,sm8350-smmu-500
++              - qcom,sm8450-smmu-500
++              - qcom,sm8550-smmu-500
+           - const: qcom,adreno-smmu
+           - const: qcom,smmu-500
+           - const: arm,mmu-500
+@@ -453,6 +455,50 @@ allOf:
+             - description: Voter clock required for HLOS SMMU access
+             - description: Interface clock required for register access
+ 
++  - if:
++      properties:
++        compatible:
++          const: qcom,sm8450-smmu-500
++    then:
++      properties:
++        clock-names:
++          items:
++            - const: gmu
++            - const: hub
++            - const: hlos
++            - const: bus
++            - const: iface
++            - const: ahb
++
++        clocks:
++          items:
++            - description: GMU clock
++            - description: GPU HUB clock
++            - description: HLOS vote clock
++            - description: GPU memory bus clock
++            - description: GPU SNoC bus clock
++            - description: GPU AHB clock
++
++  - if:
++      properties:
++        compatible:
++          const: qcom,sm8550-smmu-500
++    then:
++      properties:
++        clock-names:
++          items:
++            - const: hlos
++            - const: bus
++            - const: iface
++            - const: ahb
++
++        clocks:
++          items:
++            - description: HLOS vote clock
++            - description: GPU memory bus clock
++            - description: GPU SNoC bus clock
++            - description: GPU AHB clock
++
+   # Disallow clocks for all other platforms with specific compatibles
+   - if:
+       properties:
+@@ -473,8 +519,6 @@ allOf:
+               - qcom,sm6350-smmu-500
+               - qcom,sm6375-smmu-500
+               - qcom,sm8350-smmu-500
+-              - qcom,sm8450-smmu-500
+-              - qcom,sm8550-smmu-500
+     then:
+       properties:
+         clock-names: false
 
- .../devicetree/bindings/iommu/arm,smmu.yaml        |  48 ++++-
- arch/arm64/boot/dts/qcom/sm8450-hdk.dts            |   8 +
- arch/arm64/boot/dts/qcom/sm8450.dtsi               | 202 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts            |   8 +
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts            |   8 +
- arch/arm64/boot/dts/qcom/sm8550.dtsi               | 166 +++++++++++++++++
- 6 files changed, 438 insertions(+), 2 deletions(-)
----
-base-commit: 629a3b49f3f957e975253c54846090b8d5ed2e9b
-change-id: 20231127-topic-a7xx_dt-feee4142edda
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+2.43.0
 
 
