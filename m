@@ -1,136 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-3307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFD1C803712
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:39:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6951C80375B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 15:45:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D0601C20B7A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:39:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E5A71B20E2E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 14:45:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7870E25769;
-	Mon,  4 Dec 2023 14:39:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ehyAlRyu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16255241FF;
+	Mon,  4 Dec 2023 14:45:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66B12F0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 06:38:56 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5d279bcce64so50445967b3.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 06:38:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701700735; x=1702305535; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cxLSyniVGe3oXQ5MuL2XefFrl8HM24cTqFseCBF9Iy0=;
-        b=ehyAlRyuoDWOqBeYUZMocpV+ZQ7I3beND9Lx8eBbp1ge5G0xF19cYkJ0C2c2E0ZqwJ
-         dw+1RFEm529lkdp3OS156R4vRwoqxHWUsLxSNaBWObkHATIYmWPEApTbWBolv3baqFWr
-         OfH+wV3bcZ6qJ1fd0b1wckbAO8CqAkh4Icq2mJf9G7LMG4HoM7w83uGjmzukk9wj8qpa
-         x3fnDh1XAaVyAihRZaL8/sCjO4gn752U3IQudB5Fy3qlpt/RVMzXSyRJ+k8XTixLoKeJ
-         qFBGRah4punlfQb3bWXuYpB7qwvhTTPc13VKNbEb+hpe86szkcIhe3R/YfFzJEBy7f1g
-         O1qg==
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 323E4D4D;
+	Mon,  4 Dec 2023 06:45:26 -0800 (PST)
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3b8b0ced0f4so965449b6e.0;
+        Mon, 04 Dec 2023 06:45:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701700735; x=1702305535;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cxLSyniVGe3oXQ5MuL2XefFrl8HM24cTqFseCBF9Iy0=;
-        b=Ely/89ZHE3qQ0CK7WtcMrDs+bcPSNANjLqsLLquGBLdYcITzht8jIFQiS4BBCD34ZN
-         tZeL/X6IhE9oLRVLU61ypvcVr0lGpIehIiXN4Kmx9pnT5uFitim04NCHqTiAJlCeRyry
-         ao34KwQwCvZFavjtc/P+mZS6fSnTm73ApQt/mgbg3Ua/cxxLfnDIXa5D1geQW4acmSKt
-         sphPPpwRNnX5Op8DJ4T0TtV+JuofYwx50Z0B/BUbPdTMBwKkYG5A7veE5EfFhxOwwDXP
-         uliOCd1FLMJNz8l8QZYSpGjDjfWJyq8NoYkyzWoeTxew+czqK0ZRuO6o6cBbKJQSYe06
-         +Kpw==
-X-Gm-Message-State: AOJu0YwwvV9Mwfa8SR0RI+voNRA/0rTfDXAskF50mGisGEPTaxNZFJmc
-	uBmFRSSCP9ma3h364IDyxvfQZd5AtW5x1OZ0cyCyWg==
-X-Google-Smtp-Source: AGHT+IF5j0JqaMho4i7p5964T0Yqh+pRNVtwTFoozUNJZ0KaRa5Q9kvxCuDBokw9Cjl6tT4I/mCwxZtlAamIDbGbO0w=
-X-Received: by 2002:a81:57d8:0:b0:5d3:adfd:ff7d with SMTP id
- l207-20020a8157d8000000b005d3adfdff7dmr3131183ywb.12.1701700735577; Mon, 04
- Dec 2023 06:38:55 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701701125; x=1702305925;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IStlrL3AAA++ujnW7Gs80LO4c80fIgknoPnSy4FHWTY=;
+        b=eV/OIhpXuu39TO1zkZ7A6NFC38toXXxtZizcIYx8wuXyFQ1eUgWVAZ9TDz7Az6hAj/
+         /u7UPPwZlxlCHKQM1aXVBAQoHyAdJSmo8cLA7SQwhtmdgwwjRIQ0DNgPQ+9aaookoXSi
+         aUDTFGfWsqRYZijmvDSxvCSt6MqBF9NTGoEaq/OD2Sy6FDhbNt1PpL5P9GEAOEft3ICs
+         TmLdgnjIzkd8DoZBRoSWH9t5d4V9y+G/3iGl6nz7wJqGwjefYwqfELuQW5kHKZzvWaqV
+         OfOgTE9rVEJ1o3W/Dch82aRUU3eHSlqgEsZONUV1P+OMlyPF13w2gnnAsIfUM1EDWDFM
+         w2MA==
+X-Gm-Message-State: AOJu0YwNl8lx9J+Y8aWIYk0o6BotRMqw8C1uBQ2SqqS68OG4KUzpFS2T
+	utrKAKPJ79Ra6Uk/6Alz5w==
+X-Google-Smtp-Source: AGHT+IGP/nC2C30emuK8+P2XIGBs/Pp0+yyMdPBFSIlSkDXIrMUGupMhp1AlWT6VkWwdCJoaeK1dQg==
+X-Received: by 2002:a54:4414:0:b0:3b8:b06b:9807 with SMTP id k20-20020a544414000000b003b8b06b9807mr1684905oiw.55.1701701125334;
+        Mon, 04 Dec 2023 06:45:25 -0800 (PST)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id z3-20020a056808048300b003b83c516e62sm1847817oid.51.2023.12.04.06.45.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Dec 2023 06:45:24 -0800 (PST)
+Received: (nullmailer pid 1246097 invoked by uid 1000);
+	Mon, 04 Dec 2023 14:45:23 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231129161459.1002323-1-andriy.shevchenko@linux.intel.com>
-In-Reply-To: <20231129161459.1002323-1-andriy.shevchenko@linux.intel.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Mon, 4 Dec 2023 15:38:43 +0100
-Message-ID: <CACRpkdZhpXcx2FZYKM69j3x4dP5Nu-=3sXW+BQAw3k6c5aRrWw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/23] pinctrl: Convert struct group_desc to use struct pingroup
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Biju Das <biju.das.jz@bp.renesas.com>, 
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>, 
-	Jianlong Huang <jianlong.huang@starfivetech.com>, linux-arm-kernel@lists.infradead.org, 
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org, 
-	linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Dong Aisheng <aisheng.dong@nxp.com>, 
-	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	NXP Linux Team <linux-imx@nxp.com>, Sean Wang <sean.wang@kernel.org>, 
-	Paul Cercueil <paul@crapouillou.net>, Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Emil Renner Berthing <kernel@esmil.dk>, 
-	Hal Feng <hal.feng@starfivetech.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Rob Herring <robh@kernel.org>
+To: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, linux-arm-msm@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>, "David S. Miller" <davem@davemloft.net>, linux-stm32@st-md-mailman.stormreply.com, linux-kernel@vger.kernel.org, Prasad Sodagudi <psodagud@quicinc.com>, kernel@quicinc.com, Jose Abreu <joabreu@synopsys.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Conor Dooley <conor+dt@kernel.org>, Andrew Halaney <ahalaney@redhat.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>, Eric Dumazet <edumazet@google.com>, netdev@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, Vinod Koul <vkoul@kernel.org>
+In-Reply-To: <2f215e2dabec345ec7f28e759c9463854959cced.1701695218.git.quic_jsuraj@quicinc.com>
+References: <cover.1701695218.git.quic_jsuraj@quicinc.com>
+ <2f215e2dabec345ec7f28e759c9463854959cced.1701695218.git.quic_jsuraj@quicinc.com>
+Message-Id: <170170112344.1246081.15695671179356012271.robh@kernel.org>
+Subject: Re: [PATCH net-next v3 1/3] dt-bindings: net: qcom,ethqos: add
+ binding doc for safety IRQ for sa8775p
+Date: Mon, 04 Dec 2023 08:45:23 -0600
 
-Hi Andy,
 
-due to compile errors on arm32 and arm64 I had to drop most of the
-patches again but I kept the preparatory patches so your
-patch stack don't need to be so deep.
+On Mon, 04 Dec 2023 18:56:15 +0530, Suraj Jaiswal wrote:
+> Add binding doc for safety IRQ. The safety IRQ will be
+> triggered for ECC, DPP, FSM error.
+> 
+> Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 9 ++++++---
+>  Documentation/devicetree/bindings/net/snps,dwmac.yaml  | 5 +++--
+>  2 files changed, 9 insertions(+), 5 deletions(-)
+> 
 
-On Wed, Nov 29, 2023 at 5:15=E2=80=AFPM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> Andy Shevchenko (23):
->   pinctrl: qcom: lpass-lpi: Replace kernel.h with what is being used
->   pinctrl: qcom: lpass-lpi: Remove unused member in struct lpi_pingroup
->   pinctrl: equilibrium: Unshadow error code of
->     of_property_count_u32_elems()
->   pinctrl: equilibrium: Use temporary variable to hold pins
->   pinctrl: imx: Use temporary variable to hold pins
+yamllint warnings/errors:
 
-I kept these.
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/snps,dwmac.example.dtb: ethernet@e0800000: interrupt-names:2: 'eth_lpi' is not one of ['eth_wake_irq', 'safety']
+	from schema $id: http://devicetree.org/schemas/net/snps,dwmac.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/starfive,jh7110-dwmac.example.dtb: ethernet@16030000: interrupt-names:2: 'eth_lpi' is not one of ['eth_wake_irq', 'safety']
+	from schema $id: http://devicetree.org/schemas/net/snps,dwmac.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/starfive,jh7110-dwmac.example.dtb: ethernet@16030000: interrupt-names:2: 'eth_lpi' is not one of ['eth_wake_irq', 'safety']
+	from schema $id: http://devicetree.org/schemas/net/starfive,jh7110-dwmac.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/starfive,jh7110-dwmac.example.dtb: ethernet@16030000: Unevaluated properties are not allowed ('mdio', 'phy-handle', 'phy-mode', 'rx-fifo-depth', 'snps,axi-config', 'snps,en-tx-lpi-clockgating', 'snps,fixed-burst', 'snps,force_thresh_dma_mode', 'snps,multicast-filter-bins', 'snps,no-pbl-x8', 'snps,perfect-filter-entries', 'snps,rxpbl', 'snps,tso', 'snps,txpbl', 'stmmac-axi-config', 'tx-fifo-depth' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/starfive,jh7110-dwmac.yaml#
 
->   pinctrl: core: Make pins const unsigned int pointer in struct
->     group_desc
->   pinctrl: equilibrium: Convert to use struct pingroup
->   pinctrl: keembay: Convert to use struct pingroup
->   pinctrl: nuvoton: Convert to use struct pingroup and
->     PINCTRL_PINGROUP()
->   pinctrl: core: Add a convenient define PINCTRL_GROUP_DESC()
->   pinctrl: ingenic: Make use of PINCTRL_GROUP_DESC()
->   pinctrl: mediatek: Make use of PINCTRL_GROUP_DESC()
->   pinctrl: core: Embed struct pingroup into struct group_desc
->   pinctrl: bcm: Convert to use grp member
->   pinctrl: equilibrium: Convert to use grp member
->   pinctrl: imx: Convert to use grp member
->   pinctrl: ingenic: Convert to use grp member
->   pinctrl: keembay: Convert to use grp member
->   pinctrl: mediatek: Convert to use grp member
->   pinctrl: renesas: Convert to use grp member
->   pinctrl: starfive: Convert to use grp member
->   pinctrl: core: Remove unused members from struct group_desc
+doc reference errors (make refcheckdocs):
 
-I dropped these (because they all cross-depend...)
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/2f215e2dabec345ec7f28e759c9463854959cced.1701695218.git.quic_jsuraj@quicinc.com
 
->   pinctrl: Convert unsigned to unsigned int
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-I kept this one.
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-Yours,
-Linus Walleij
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
