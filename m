@@ -1,97 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-3346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70B40803D47
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 19:39:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 060A2803D5B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 19:41:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13418B20ACD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 18:39:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8113AB20326
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 18:41:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54FAB2E843;
-	Mon,  4 Dec 2023 18:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2EB22E859;
+	Mon,  4 Dec 2023 18:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="43o/gGkg"
+	dkim=pass (1024-bit key) header.d=z3ntu.xyz header.i=@z3ntu.xyz header.b="4L3ziRE/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19E42FA;
-	Mon,  4 Dec 2023 10:39:12 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87DDBFA;
+	Mon,  4 Dec 2023 10:41:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=s1;
-	t=1701715118; bh=rj7Er9R1xUABlk9cGEroopYihFMT61dNP76qORyH8LU=;
+	t=1701715309; bh=2PAcdZ04uUxyJLm0VRzSG1hwJegBDoQrkRkj6wKigh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=43o/gGkgLpC4l6K12zlYt+pRDMhb+R1bIunqxnfaZiH+qBkGaiNt+gy3h8gB++v/g
-	 XI2BqFGANYQmFHLXs7hSf36vskRWxrq2TyLFifpfwbj8BfXupkynjhAsf1K64o57hm
-	 oY3nj9P4j8rHKsasN+LR1Ni6+QAaYGiMuVqPMpIw=
+	b=4L3ziRE//d5LvCE1u1Dd/tyddQCYhOPpiYiJH44uwjkb7Oa02A1Zi9etQELda40dy
+	 ih9mPfffEDnnlKCNXDIbo+bu0BWYcUECn4aSKDxbj7Y8SqRsKIP4b9vHz5aMh/mQdt
+	 ro1O88u1hgjv3SiJvW/wAuULODgqw2KCzEUaQxeE=
 From: Luca Weiss <luca@z3ntu.xyz>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+To: linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>,
  Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-Subject: Re: [PATCH 2/2] ARM: dts: qcom: msm8226: Add CPU and SAW/ACC nodes
-Date: Mon, 04 Dec 2023 19:38:37 +0100
-Message-ID: <12332815.O9o76ZdvQC@z3ntu.xyz>
-In-Reply-To: <d1f1ee82-7997-4e36-a21a-7b70d2db9746@linaro.org>
-References:
- <20231203-msm8226-cpu-v1-0-d18e83340b32@z3ntu.xyz>
- <20231203-msm8226-cpu-v1-2-d18e83340b32@z3ntu.xyz>
- <d1f1ee82-7997-4e36-a21a-7b70d2db9746@linaro.org>
+ Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Matti =?ISO-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
+Subject:
+ Re: [PATCH] ARM: dts: qcom: apq8026-samsung-matissewifi: Configure touch keys
+Date: Mon, 04 Dec 2023 19:41:48 +0100
+Message-ID: <4877522.31r3eYUQgx@z3ntu.xyz>
+In-Reply-To: <20231204094649.10094-1-matti.lehtimaki@gmail.com>
+References: <20231204094649.10094-1-matti.lehtimaki@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-On Montag, 4. Dezember 2023 11:41:36 CET Konrad Dybcio wrote:
-> On 3.12.2023 23:38, Luca Weiss wrote:
-> > From: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> > 
-> > Add CPU and SAW/ACC nodes to enable SMP on MSM8226.
-> > 
-> > Signed-off-by: Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
-> > [luca: update some nodes to fix dtbs_check errors, reorder, cleanup]
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> 
-> Looks like L2 SAW (@ 0xf9012000) is missing.. but then it's present
-> on 8974.. but it's not bound by any driver :)
+On Montag, 4. Dezember 2023 10:46:49 CET Matti Lehtim=E4ki wrote:
+> Add touch keys which are handled in touchscreen driver.
+> Use KEY_APPSELECT for the left button because other devices use that
+> even though downstream kernel uses KEY_RECENT.
+>=20
+> Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
+> ---
+>  .../boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts    | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>=20
+> diff --git a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
+> b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts index
+> f516e0426bb9..8a2ba2aadf23 100644
+> --- a/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
+> +++ b/arch/arm/boot/dts/qcom/qcom-apq8026-samsung-matisse-wifi.dts
+> @@ -268,6 +268,13 @@ touchscreen@4a {
+>  		interrupt-parent =3D <&tlmm>;
+>  		interrupts =3D <17 IRQ_TYPE_LEVEL_LOW>;
+>=20
+> +		linux,keycodes =3D <KEY_RESERVED
+> +				  KEY_RESERVED
+> +				  KEY_RESERVED
+> +				  KEY_RESERVED
+> +				  KEY_APPSELECT
+> +				  KEY_BACK>;
 
-Right, I had this node before:
+Might be prettier like this since it's 6 items you're adding, not one long=
+=20
+property?
 
-	saw_l2: power-controller@f9012000 {
-		compatible = "qcom,saw2";
-		reg = <0xf9012000 0x1000>;
-		regulator;
-	};
+	linux,keycodes =3D <KEY_RESERVED>,
+			  <KEY_RESERVED>,
+			  <KEY_RESERVED>,
+			  <KEY_RESERVED>,
+			  <KEY_APPSELECT>,
+			  <KEY_BACK>;
 
-And then used like this:
+Resulting dtb should be the same, so it's just a stylistic thing.
 
-	L2: l2-cache {
-		compatible = "cache";
-		cache-level = <2>;
-		qcom,saw = <&saw_l2>;
-	};
+In any case:
 
-I decided to remove it because first there's no "qcom,saw2" (without a second 
-compatible) in the yaml. And qcom,saw property in the l2-cache node also 
-wasn't accepted. Since I'm not aware of any driver code currently using this 
-(and the bindings not being particularly maintained, there's still this bit in 
-.txt form?) I decided to remove it to not knowingly introduce binding errors.
+Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
 
-Regards
-Luca
-
-> 
-> The nodes you added here look correct FWIW
-> 
-> Konrad
+> +
+>  		pinctrl-names =3D "default";
+>  		pinctrl-0 =3D <&tsp_int_rst_default_state>;
 
 
 
