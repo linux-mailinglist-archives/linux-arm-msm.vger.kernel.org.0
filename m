@@ -1,237 +1,316 @@
-Return-Path: <linux-arm-msm+bounces-3201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14D37802F70
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:58:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8540802F7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:01:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C3F9D280D0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 09:58:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3DFDAB20A47
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:01:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FDD21D55E;
-	Mon,  4 Dec 2023 09:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE1A01EB3C;
+	Mon,  4 Dec 2023 10:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WxF3Yfsr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UGe7GZ6i"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0579FB6;
-	Mon,  4 Dec 2023 01:57:54 -0800 (PST)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B48JDHd002330;
-	Mon, 4 Dec 2023 09:57:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=1U8ANJ1MUuewKhfU6DLgDYvcVITnKtqeI7iFGTnw/yg=;
- b=WxF3YfsrnjWAi/VWD8o7qp4Yh+AcXTJkRLmOujZW50WrIdZx8lVA/qJvZEVB227zCGUg
- vMjfsDgo8bViwK0cCSsI5iI5jMyZo+6Ca47b4wWUaWbR0Mhp37hcQ/3/hBsf7ckHsCcu
- 5DofRPaPITnaWn1Kf9bZ4Gh6X+UtyEpCWAIax7Y6O2XpL6IfETIA8IKO6oiXe1712HNZ
- pRnPek2PQlYHWUOV8lPQb0EmUEdGKmAi29tel1U7icp5PV8CVA2BnVBwahiX3hUo+Xh+
- /v/+Y1gJxM9Oaur1tvZ8V4rp42GMn8ZgkDaXBC6AQNQ6FfllSN8+dkbHrpil+8DVKUji ww== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uqv673m66-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Dec 2023 09:57:50 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B49vn0m022270
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Dec 2023 09:57:49 GMT
-Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
- 2023 01:57:44 -0800
-Message-ID: <4d85fda9-6e00-4bb4-b8a8-85c5e66635bf@quicinc.com>
-Date: Mon, 4 Dec 2023 17:57:42 +0800
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3F7CE5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 02:01:24 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2ca03103155so8506501fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 02:01:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701684083; x=1702288883; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6ZudBhO/WCplbQCp3KVlqjf1fHRbAS/TfrewGCqAIPY=;
+        b=UGe7GZ6i5Gk5Xty/f2kGTEcOZO4q4YI6F/ZTNBsgnXmWApJbEZ05e5KrZ7uLo1XZ0U
+         +vA+hyxiqrBGpbgep+scL1qauA386N7bqrErYtC2w5cV/itesJkUlEmaTlvdUTnUPp80
+         Ml2nRtWO3R2BmLt0nzif9+NyaH+GGysqPXkHxckXzM3V7wEwwqSuLBKQE0c9OEpNGlhI
+         dCVp2FW4psPAZxKT8LAgLYkIT/3z9yLfjuqpyL0zWZoIyfLTsjaWT6DZ8AQL8TlUzQgF
+         pkWZwiRPHPlHu4aD9H30sU1lItXG60hpwDANb5sA8u3/l4D9P6Ho9xQ9Oj3hojsVmMlw
+         ckFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701684083; x=1702288883;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6ZudBhO/WCplbQCp3KVlqjf1fHRbAS/TfrewGCqAIPY=;
+        b=DZZklvj58mgz5C2aBcwkzlDLeFycppnrQPO11V+JbP3m7WjCLkknmxaY0t5Xez3uVF
+         saQoPPLZTe1niWUmEOfSr3pTQ5mX7yLAPKrsVypQqzhyW7EbkMApizc4IaXdYZjeXMaA
+         qeKkArMMKT3Y1WM8SHbPYg8jX38l1ZL6y6AWLf4ZjMAgqnX3n+shK4hrBhyIqsIsIvFN
+         k1OfEzG45iQjFFCcdUzTofIjBxAzmTAu1xOgJMBAOgRxcjEUNn1eJREektXi71TydgTj
+         ybxQ0EMUhQDcj99QT3I0MV6ZuPSFDlGHZj2k3b2ArggHpxOWEwvknmw+quQz+HqJ/x1K
+         B1fQ==
+X-Gm-Message-State: AOJu0YycEfSX4TNZQppbDiMUB4x8fvI998e0IsQNhRnwFZO71UIAgV/r
+	tQX2URMZWG4ppknjV59GL0D8tg==
+X-Google-Smtp-Source: AGHT+IEDH45bXF+mWwkq6P/83Vxtzbob4paKWveQYD4Oa84mb7HX7jeUMe6GVsa5KVjC2XQoi2C8Xw==
+X-Received: by 2002:a2e:82c3:0:b0:2c9:f7fb:4e0f with SMTP id n3-20020a2e82c3000000b002c9f7fb4e0fmr770674ljh.101.1701684082678;
+        Mon, 04 Dec 2023 02:01:22 -0800 (PST)
+Received: from krzk-bin.. ([178.197.223.109])
+        by smtp.gmail.com with ESMTPSA id pj21-20020a170906d79500b00a188fe9563esm5065572ejb.131.2023.12.04.02.01.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Dec 2023 02:01:22 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] ASoC: qcom: Add x1e80100 sound machine driver
+Date: Mon,  4 Dec 2023 11:01:15 +0100
+Message-Id: <20231204100116.211898-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pinctrl: Add lock to ensure the state atomization
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <linus.walleij@linaro.org>, <linux-gpio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20231201152931.31161-1-quic_aiquny@quicinc.com>
- <6jlui5h7d2rs37sdvvwmii55mwhm5dzfo2m62hwt53mkx4z32a@aw5kcghe4bik>
-From: "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-In-Reply-To: <6jlui5h7d2rs37sdvvwmii55mwhm5dzfo2m62hwt53mkx4z32a@aw5kcghe4bik>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zRNDn3JTG5xlrNZ9DzuWwAXzZeJuZIBz
-X-Proofpoint-GUID: zRNDn3JTG5xlrNZ9DzuWwAXzZeJuZIBz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-04_06,2023-11-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
- clxscore=1011 mlxscore=0 spamscore=0 suspectscore=0 adultscore=0
- mlxlogscore=999 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311060000 definitions=main-2312040075
+Content-Transfer-Encoding: 8bit
 
-On 12/2/2023 4:39 AM, Bjorn Andersson wrote:
-> On Fri, Dec 01, 2023 at 11:29:31PM +0800, Maria Yu wrote:
->> Currently pinctrl_select_state is an export symbol and don't have
->> effective re-entrance protect design. And possible of pinctrl state
->> changed during pinctrl_commit_state handling. Add per pinctrl lock to
->> ensure the old state and new state transition atomization.
->> Move dev error print message right before old_state pinctrl_select_state
->> and out of lock protection to avoid console related driver call
->> pinctrl_select_state recursively.
-> 
-> I'm uncertain about the validity of having client code call this api in
-> a racy manner. I'm likely just missing something here... It would be
-> nice if this scenario was described in a little bit more detail.
-Hi Bjorn,
+Add sound machine driver for the soundcards on Qualcomm X1E80100 SoC,
+supporting up to four channel audio playback over Soundwire bus.  The
+driver is based on existing sc8280xp.c driver.
 
-we've got a customer dump that the real racy happened, and the system 
-frequently have printk message like:
-   "not freeing pin xx (xxx) as part of deactivating group xxx - it is
-already used for some other setting".
-Finally the system crashed after the flood log.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ sound/soc/qcom/Kconfig    |  12 +++
+ sound/soc/qcom/Makefile   |   2 +
+ sound/soc/qcom/x1e80100.c | 168 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 182 insertions(+)
+ create mode 100644 sound/soc/qcom/x1e80100.c
 
-We've inform the customer to check their own client code which called 
-this api, to have proper lock to avoid racy of per dev 
-pinctrl_select_state call from customer driver end.
-For example:
-LOCK;
-pinctrl_select_state();
-gpio pulling;
-udelay();
-check state;
-other hardware behaviors;
-UNLOCK;
-
-While it is still unnecessary the volatile re-load of p->state for the 
-interation and so I upstream a patch like link[2].
-
-while during the merge discussion, upstream maintainer suggest to have 
-the lock issue fixed, instead of only READ_ONCE for the interation.
-I think it is also make sense since although current in-tree driver have 
-take care of each pinctrl_select_state call, since it is a export 
-symbole and we've see the similar issue continuously (a year back ago 
-also we've seen similar issue before[3]).
-
-The whole serials discussion can be found link here:
-[1] 
-https://lore.kernel.org/lkml/e011b3e9-7c09-4214-8e9c-90e12c38bbaa@quicinc.com/
-[2] 
-https://lore.kernel.org/lkml/20231115102824.23727-1-quic_aiquny@quicinc.com/
-[3] 
-https://lore.kernel.org/lkml/20221027065408.36977-1-quic_aiquny@quicinc.com/
-
-> 
-> The recursive error print sounds like a distinct problem of its own,
-> that warrants being introduced in a patch of its own. But as with the
-> other part, I'm not able to spot a code path in the upstream kernel
-> where this hppens, so please properly describe the scenario where
-> touching the console would result back in another pinctrl_select_state().
-For this part, I am thinking about a spin lock is introduced and have 
-the error log out of the lock will be safer.
-The current patch disable irq during the lock, and some console driver 
-rely on interrupt to get tx dma/fifo ready.
-Also console driver will be a pinctrl client, so avoid unnecessary 
-recursive in theory.
-Just incase some out of tree concole driver was able to use the 
-pinctrl_select_state in console write related APIs as well.
-> 
-> Thanks,
-> Bjorn
-> 
->>
->> Fixes: 4198a9b57106 ("pinctrl: avoid reload of p state in list iteration")
->> Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
->> ---
->>   drivers/pinctrl/core.c | 11 +++++++++--
->>   drivers/pinctrl/core.h |  2 ++
->>   2 files changed, 11 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
->> index f2977eb65522..a19c286bf82e 100644
->> --- a/drivers/pinctrl/core.c
->> +++ b/drivers/pinctrl/core.c
->> @@ -1066,6 +1066,7 @@ static struct pinctrl *create_pinctrl(struct device *dev,
->>   	p->dev = dev;
->>   	INIT_LIST_HEAD(&p->states);
->>   	INIT_LIST_HEAD(&p->dt_maps);
->> +	spin_lock_init(&p->lock);
->>   
->>   	ret = pinctrl_dt_to_map(p, pctldev);
->>   	if (ret < 0) {
->> @@ -1262,9 +1263,12 @@ static void pinctrl_link_add(struct pinctrl_dev *pctldev,
->>   static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
->>   {
->>   	struct pinctrl_setting *setting, *setting2;
->> -	struct pinctrl_state *old_state = READ_ONCE(p->state);
->> +	struct pinctrl_state *old_state;
->>   	int ret;
->> +	unsigned long flags;
->>   
->> +	spin_lock_irqsave(&p->lock, flags);
->> +	old_state = p->state;
->>   	if (old_state) {
->>   		/*
->>   		 * For each pinmux setting in the old state, forget SW's record
->> @@ -1329,11 +1333,11 @@ static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
->>   	}
->>   
->>   	p->state = state;
->> +	spin_unlock_irqrestore(&p->lock, flags);
->>   
->>   	return 0;
->>   
->>   unapply_new_state:
->> -	dev_err(p->dev, "Error applying setting, reverse things back\n");
->>   
->>   	list_for_each_entry(setting2, &state->settings, node) {
->>   		if (&setting2->node == &setting->node)
->> @@ -1349,6 +1353,9 @@ static int pinctrl_commit_state(struct pinctrl *p, struct pinctrl_state *state)
->>   			pinmux_disable_setting(setting2);
->>   	}
->>   
->> +	spin_unlock_irqrestore(&p->lock, flags);
->> +
->> +	dev_err(p->dev, "Error applying setting, reverse things back\n");
->>   	/* There's no infinite recursive loop here because p->state is NULL */
->>   	if (old_state)
->>   		pinctrl_select_state(p, old_state);
->> diff --git a/drivers/pinctrl/core.h b/drivers/pinctrl/core.h
->> index 530370443c19..86fc41393f7b 100644
->> --- a/drivers/pinctrl/core.h
->> +++ b/drivers/pinctrl/core.h
->> @@ -12,6 +12,7 @@
->>   #include <linux/list.h>
->>   #include <linux/mutex.h>
->>   #include <linux/radix-tree.h>
->> +#include <linux/spinlock.h>
->>   #include <linux/types.h>
->>   
->>   #include <linux/pinctrl/machine.h>
->> @@ -91,6 +92,7 @@ struct pinctrl {
->>   	struct pinctrl_state *state;
->>   	struct list_head dt_maps;
->>   	struct kref users;
->> +	spinlock_t lock;
->>   };
->>   
->>   /**
->>
->> base-commit: 994d5c58e50e91bb02c7be4a91d5186292a895c8
->> -- 
->> 2.17.1
->>
->>
-
+diff --git a/sound/soc/qcom/Kconfig b/sound/soc/qcom/Kconfig
+index e7b00d1d9e99..762491d6f2f2 100644
+--- a/sound/soc/qcom/Kconfig
++++ b/sound/soc/qcom/Kconfig
+@@ -221,4 +221,16 @@ config SND_SOC_SC7280
+ 	  SC7280 SoC-based systems.
+ 	  Say Y or M if you want to use audio device on this SoCs.
+ 
++config SND_SOC_X1E80100
++	tristate "SoC Machine driver for X1E80100 boards"
++	depends on QCOM_APR && SOUNDWIRE
++	depends on COMMON_CLK
++	select SND_SOC_QDSP6
++	select SND_SOC_QCOM_COMMON
++	select SND_SOC_QCOM_SDW
++	help
++	  Add support for audio on Qualcomm Technologies Inc.
++	  X1E80100 SoC-based systems.
++	  Say Y or M if you want to use audio device on this SoCs.
++
+ endif #SND_SOC_QCOM
+diff --git a/sound/soc/qcom/Makefile b/sound/soc/qcom/Makefile
+index 254350d9dc06..34f3fcb8ee9a 100644
+--- a/sound/soc/qcom/Makefile
++++ b/sound/soc/qcom/Makefile
+@@ -29,6 +29,7 @@ snd-soc-sm8250-objs := sm8250.o
+ snd-soc-sc8280xp-objs := sc8280xp.o
+ snd-soc-qcom-common-objs := common.o
+ snd-soc-qcom-sdw-objs := sdw.o
++snd-soc-x1e80100-objs := x1e80100.o
+ 
+ obj-$(CONFIG_SND_SOC_STORM) += snd-soc-storm.o
+ obj-$(CONFIG_SND_SOC_APQ8016_SBC) += snd-soc-apq8016-sbc.o
+@@ -40,6 +41,7 @@ obj-$(CONFIG_SND_SOC_SDM845) += snd-soc-sdm845.o
+ obj-$(CONFIG_SND_SOC_SM8250) += snd-soc-sm8250.o
+ obj-$(CONFIG_SND_SOC_QCOM_COMMON) += snd-soc-qcom-common.o
+ obj-$(CONFIG_SND_SOC_QCOM_SDW) += snd-soc-qcom-sdw.o
++obj-$(CONFIG_SND_SOC_X1E80100) += snd-soc-x1e80100.o
+ 
+ #DSP lib
+ obj-$(CONFIG_SND_SOC_QDSP6) += qdsp6/
+diff --git a/sound/soc/qcom/x1e80100.c b/sound/soc/qcom/x1e80100.c
+new file mode 100644
+index 000000000000..c3c8bf7ffb5b
+--- /dev/null
++++ b/sound/soc/qcom/x1e80100.c
+@@ -0,0 +1,168 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2023, Linaro Limited
++
++#include <dt-bindings/sound/qcom,q6afe.h>
++#include <linux/module.h>
++#include <linux/platform_device.h>
++#include <linux/soundwire/sdw.h>
++#include <sound/pcm.h>
++#include <sound/jack.h>
++#include <sound/soc.h>
++#include <sound/soc-dapm.h>
++
++#include "common.h"
++#include "qdsp6/q6afe.h"
++#include "sdw.h"
++
++struct x1e80100_snd_data {
++	bool stream_prepared[AFE_PORT_MAX];
++	struct snd_soc_card *card;
++	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
++	struct snd_soc_jack jack;
++	bool jack_setup;
++};
++
++static int x1e80100_snd_init(struct snd_soc_pcm_runtime *rtd)
++{
++	struct x1e80100_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
++
++	return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
++}
++
++static void x1e80100_snd_shutdown(struct snd_pcm_substream *substream)
++{
++	struct snd_soc_pcm_runtime *rtd = substream->private_data;
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
++	struct x1e80100_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
++	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
++
++	data->sruntime[cpu_dai->id] = NULL;
++	sdw_release_stream(sruntime);
++}
++
++static int x1e80100_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
++				     struct snd_pcm_hw_params *params)
++{
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
++	struct snd_interval *rate = hw_param_interval(params,
++						      SNDRV_PCM_HW_PARAM_RATE);
++	struct snd_interval *channels = hw_param_interval(params,
++							  SNDRV_PCM_HW_PARAM_CHANNELS);
++
++	rate->min = rate->max = 48000;
++	switch (cpu_dai->id) {
++	case TX_CODEC_DMA_TX_0:
++	case TX_CODEC_DMA_TX_1:
++	case TX_CODEC_DMA_TX_2:
++	case TX_CODEC_DMA_TX_3:
++		channels->min = 1;
++		break;
++	default:
++		break;
++	}
++
++	return 0;
++}
++
++static int x1e80100_snd_hw_params(struct snd_pcm_substream *substream,
++				struct snd_pcm_hw_params *params)
++{
++	struct snd_soc_pcm_runtime *rtd = substream->private_data;
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
++	struct x1e80100_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
++
++	return qcom_snd_sdw_hw_params(substream, params, &data->sruntime[cpu_dai->id]);
++}
++
++static int x1e80100_snd_prepare(struct snd_pcm_substream *substream)
++{
++	struct snd_soc_pcm_runtime *rtd = substream->private_data;
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
++	struct x1e80100_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
++	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
++
++	return qcom_snd_sdw_prepare(substream, sruntime,
++				    &data->stream_prepared[cpu_dai->id]);
++}
++
++static int x1e80100_snd_hw_free(struct snd_pcm_substream *substream)
++{
++	struct snd_soc_pcm_runtime *rtd = substream->private_data;
++	struct x1e80100_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
++	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
++	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
++
++	return qcom_snd_sdw_hw_free(substream, sruntime,
++				    &data->stream_prepared[cpu_dai->id]);
++}
++
++static const struct snd_soc_ops x1e80100_be_ops = {
++	.startup = qcom_snd_sdw_startup,
++	.shutdown = x1e80100_snd_shutdown,
++	.hw_params = x1e80100_snd_hw_params,
++	.hw_free = x1e80100_snd_hw_free,
++	.prepare = x1e80100_snd_prepare,
++};
++
++static void x1e80100_add_be_ops(struct snd_soc_card *card)
++{
++	struct snd_soc_dai_link *link;
++	int i;
++
++	for_each_card_prelinks(card, i, link) {
++		if (link->no_pcm == 1) {
++			link->init = x1e80100_snd_init;
++			link->be_hw_params_fixup = x1e80100_be_hw_params_fixup;
++			link->ops = &x1e80100_be_ops;
++		}
++	}
++}
++
++static int x1e80100_platform_probe(struct platform_device *pdev)
++{
++	struct snd_soc_card *card;
++	struct x1e80100_snd_data *data;
++	struct device *dev = &pdev->dev;
++	int ret;
++
++	card = devm_kzalloc(dev, sizeof(*card), GFP_KERNEL);
++	if (!card)
++		return -ENOMEM;
++	/* Allocate the private data */
++	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
++	card->owner = THIS_MODULE;
++	card->dev = dev;
++	dev_set_drvdata(dev, card);
++	snd_soc_card_set_drvdata(card, data);
++
++	ret = qcom_snd_parse_of(card);
++	if (ret)
++		return ret;
++
++	card->driver_name = "x1e80100";
++	x1e80100_add_be_ops(card);
++
++	return devm_snd_soc_register_card(dev, card);
++}
++
++static const struct of_device_id snd_x1e80100_dt_match[] = {
++	{ .compatible = "qcom,x1e80100-sndcard", },
++	{}
++};
++MODULE_DEVICE_TABLE(of, snd_x1e80100_dt_match);
++
++static struct platform_driver snd_x1e80100_driver = {
++	.probe  = x1e80100_platform_probe,
++	.driver = {
++		.name = "snd-x1e80100",
++		.of_match_table = snd_x1e80100_dt_match,
++	},
++};
++module_platform_driver(snd_x1e80100_driver);
++MODULE_AUTHOR("Srinivas Kandagatla <srinivas.kandagatla@linaro.org");
++MODULE_AUTHOR("Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>");
++MODULE_DESCRIPTION("Qualcomm X1E80100 ASoC Machine Driver");
++MODULE_LICENSE("GPL");
 -- 
-Thx and BRs,
-Aiqun(Maria) Yu
+2.34.1
 
 
