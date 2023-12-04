@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-3366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9F0680406D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:54:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 39F958040A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 22:02:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 291A6B209EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 20:54:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BDA63B20AE2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:02:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 918182FC3C;
-	Mon,  4 Dec 2023 20:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9681135F0B;
+	Mon,  4 Dec 2023 21:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N5Nm2itO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I/TLW5O8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19194C6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 12:54:09 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B4FkUMe032752;
-	Mon, 4 Dec 2023 20:53:57 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 705F6B6
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 13:02:34 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B4ItNYD014464;
+	Mon, 4 Dec 2023 21:02:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=m3LrJBvPBgRIWRL2mInTWbsidoycYXvYMpvP9ahBi1o=;
- b=N5Nm2itOtOKtSvAxDTWJBx821ydSVuHtpA0pbWgysZbzh+V5FRTECs2Sftw/hP+hTlJG
- 8XXj/50qlCjcGYzKrSe7loTK3FHjivwLvgUCrhIvMPMCz8sI7NSkconUlyJDKHPRoSB1
- DSYQwchfiaxSPhmmw4VoREJZxTEw8bpxGy3MYOsSDdLKPpja/vooKvU6CpTJtuT05aBY
- R0lqAOeP/D4FEDjlCi2iojze9GXcj5CL7PEkFn5umWz8xh50bkpHppPovUTskuBzJYcc
- Z82rnkvspBEhpbxeILufuRigNZkyabKK+PfaDo9KjJTNm/lb9Heu5Ae6lTJrWwoVtvDg xw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3us81yj9g4-1
+ bh=QYjIFnNstO3qlMsMHZghNVKgRaHWOBv3NyOgeVjlJHE=;
+ b=I/TLW5O8+j11NFlRFaAKtDLMQgN9S4gAGpvceFBgvBuGhZLm/BfPfS+Xi9HSkAJ1U91e
+ dvR+DkeiHBCqLzycZOBKdQRQ0y4QsxHS4FmFFZcwdttbRtECbf/L3V3Pr94Klvn9BEmV
+ LE28vf1mIG/hRf+Vb69Uw1I/eG7KggCoiYFUKd0Rms4h0qpAXdIb5J1s/F+P59YhfU+z
+ jtt8pnhczkArGwtrxFCmMJXbu0x+ql/jaZRjTiaq6af3y0MYfY2uK8fLsI4qCQydY8+L
+ /Va8ZYvptPu3erpdY0ywCNp3TGudQ98WkrUq+BqPuiAw8yjiIj3/av512e7VZqgi+rTI rw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3usfu791br-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Dec 2023 20:53:57 +0000
+	Mon, 04 Dec 2023 21:02:20 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B4KrupU012659
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B4L2Jn0019933
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Dec 2023 20:53:56 GMT
+	Mon, 4 Dec 2023 21:02:19 GMT
 Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
- 2023 12:53:56 -0800
-Message-ID: <b4145bc8-c5f4-af0c-be2a-947e119ac8ef@quicinc.com>
-Date: Mon, 4 Dec 2023 12:53:55 -0800
+ 2023 13:02:19 -0800
+Message-ID: <90d23728-66a5-d3fe-5920-90bf60093399@quicinc.com>
+Date: Mon, 4 Dec 2023 13:02:18 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v4 1/4] drm/msm/mdss: switch mdss to use devm_of_icc_get()
+Subject: Re: [PATCH v4 2/4] drm/msm/mdss: Rename path references to mdp_path
 Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark
@@ -66,37 +66,104 @@ CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
         <freedreno@lists.freedesktop.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 References: <20231202224247.1282567-1-dmitry.baryshkov@linaro.org>
- <20231202224247.1282567-2-dmitry.baryshkov@linaro.org>
+ <20231202224247.1282567-3-dmitry.baryshkov@linaro.org>
 From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231202224247.1282567-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231202224247.1282567-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kAHP3hVTNoJa76g9LYfcT85fXeBNRJ8l
-X-Proofpoint-GUID: kAHP3hVTNoJa76g9LYfcT85fXeBNRJ8l
+X-Proofpoint-GUID: B1dOvlzBjbm9GEwV17PNaTxj00Xrytld
+X-Proofpoint-ORIG-GUID: B1dOvlzBjbm9GEwV17PNaTxj00Xrytld
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-04_19,2023-12-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 adultscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- spamscore=0 impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- mlxlogscore=701 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312040163
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0 impostorscore=0
+ mlxlogscore=999 priorityscore=1501 mlxscore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2312040164
 
 
 
 On 12/2/2023 2:42 PM, Dmitry Baryshkov wrote:
-> Stop using hand-written reset function for ICC release, use
-> devm_of_icc_get() instead.
+> From: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
+> The DPU1 driver needs to handle all MDPn<->DDR paths, as well as
+> CPU<->SLAVE_DISPLAY_CFG. The former ones share how their values are
+> calculated, but the latter one has static predefines spanning all SoCs.
+> 
+> In preparation for supporting the CPU<->SLAVE_DISPLAY_CFG path, rename
+> the path-related struct members to include "mdp_".
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/msm_mdss.c | 16 ++--------------
->   1 file changed, 2 insertions(+), 14 deletions(-)
-> 
+
+Minor nits and I am fine to fix them now or later as they existed even 
+before this patch,
+
+1) we can just have num_mdp_paths++ in both places instead of setting to 
+1 and then increment.
+
+2) Maybe some macro like MAX_MDP_ICC_PATH instead of 2 will be better.
+
+3) Wondering whether we even need a num_path/num_mdp_path and just use 
+ARRAY_SIZE for the loop and then check if (mdp_path) OR even better if 
+icc has some sort of bulk_set_bw with num of paths.
+
+Nothing these down but nothing to block this patch:
 
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+> ---
+>   drivers/gpu/drm/msm/msm_mdss.c | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> index 53bc496ace99..e1b208fd072e 100644
+> --- a/drivers/gpu/drm/msm/msm_mdss.c
+> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> @@ -40,8 +40,8 @@ struct msm_mdss {
+>   		struct irq_domain *domain;
+>   	} irq_controller;
+>   	const struct msm_mdss_data *mdss_data;
+> -	struct icc_path *path[2];
+> -	u32 num_paths;
+> +	struct icc_path *mdp_path[2];
+> +	u32 num_mdp_paths;
+>   };
+>   
+>   static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
+> @@ -54,13 +54,13 @@ static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
+>   	if (IS_ERR_OR_NULL(path0))
+>   		return PTR_ERR_OR_ZERO(path0);
+>   
+> -	msm_mdss->path[0] = path0;
+> -	msm_mdss->num_paths = 1;
+> +	msm_mdss->mdp_path[0] = path0;
+> +	msm_mdss->num_mdp_paths = 1;
+>   
+>   	path1 = devm_of_icc_get(dev, "mdp1-mem");
+>   	if (!IS_ERR_OR_NULL(path1)) {
+> -		msm_mdss->path[1] = path1;
+> -		msm_mdss->num_paths++;
+> +		msm_mdss->mdp_path[1] = path1;
+> +		msm_mdss->num_mdp_paths++;
+>   	}
+>   
+>   	return 0;
+> @@ -70,8 +70,8 @@ static void msm_mdss_icc_request_bw(struct msm_mdss *msm_mdss, unsigned long bw)
+>   {
+>   	int i;
+>   
+> -	for (i = 0; i < msm_mdss->num_paths; i++)
+> -		icc_set_bw(msm_mdss->path[i], 0, Bps_to_icc(bw));
+> +	for (i = 0; i < msm_mdss->num_mdp_paths; i++)
+> +		icc_set_bw(msm_mdss->mdp_path[i], 0, Bps_to_icc(bw));
+>   }
+>   
+>   static void msm_mdss_irq(struct irq_desc *desc)
 
