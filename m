@@ -1,104 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-3362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC1B7803EA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 20:45:52 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3351B803F21
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:16:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED93C1C209B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 19:45:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B4CC2B20B06
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 20:16:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DA8A32C9E;
-	Mon,  4 Dec 2023 19:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C852B33CF6;
+	Mon,  4 Dec 2023 20:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wHnr+BU6"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KQds8Gu9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D63C124
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 11:45:45 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2c9fbb846b7so18939241fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 11:45:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701719143; x=1702323943; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OL0YCwWLeVAAaS8V6Q9QVlcCyCHJm88AKIY6T+RHXgI=;
-        b=wHnr+BU6XBf3H8SDWPtRcVxcqAQWgAVOcrbFqmdhTIbDK18cYtaUCDJoIlXJ8bsL4f
-         bWcVEu55vG1m94HfeU5K7GcUe49dXmWoHKp53KgKyzykz6z3/SaO6TyjFeGvBilyPTaN
-         P3953tl3wmWReWCpK99Gn6AC4ooMdy8rUPAY2Z8xXzjZcj+MPyM/P0SWDHSFXRJwbiw2
-         2/3ys0QPI35KyEJpaNWPVc5kVAywfp2VSt3IEVUsbeYPePy8x2+6S88Bs93PegagRnOU
-         x9Vp8VcJBHSqcjefGhI4gCVALMgGm3iekUrTqcUUVXt9ox8Wv0Qd2TukpF1asUErlNON
-         VHgQ==
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00663D3
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 12:16:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1701720977;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=scE6uJE/gsl0ExlvPlw1tvZXL0nwbCHoC6Ch9ngDrG8=;
+	b=KQds8Gu9MN9fs665098G4bgXmbejxlRdEzdisgH4g/5hRlycImVcD7QdJRe6HH9qFxKPQh
+	tT+WMUy6oLyLhdwSqMOsiZPd8pTjTgrd/cxUoVuI1qAvhYh+CuC5pnOpKHEpuC+X7YTUwJ
+	+5+VB8QOJl9jI33hcWDrbOqyp+No5zs=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665--dCZ-KONMWusfUvNH9Thsw-1; Mon, 04 Dec 2023 15:16:15 -0500
+X-MC-Unique: -dCZ-KONMWusfUvNH9Thsw-1
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-67a9a237908so28371756d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 12:16:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701719143; x=1702323943;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OL0YCwWLeVAAaS8V6Q9QVlcCyCHJm88AKIY6T+RHXgI=;
-        b=CdktUti1Jb5YEyECLX/0N+8AhWmosPeYmSF+rjGSqfqq5ndYDpQq79jFKQED32tCLj
-         cLw3aHyOVIjd0dChlt05kq8A8zxTV5asSS77qJXr41NnHZliL3nHL5T/qcOZarHDN1o4
-         cQkpVwAVz7LPtxYnEvl5vhUduFA1YeGGXnQyvpGR8J2aIyac4fuEyPzMHRUPv19nrLdI
-         VAK8qEgJzwVUjmEgQmJQHKws7kZe88yXeCq5xSLyHZhqcLYjEyEtQBC0QNk9nQwzb/F2
-         bA+WAarfngW/Iu+nx66eS0D4ptidaESY86QMMSaqK3f5UWaJ0Cc/qLimHAW9Kq2Ci+Uj
-         5mNA==
-X-Gm-Message-State: AOJu0Yyh/oU8AzcXo/+3e1T0EvqYG+4ENSJVQcEvL1YIAH/zTRKAmzK5
-	5/9G1gwpjwugljghucenYVj0FA==
-X-Google-Smtp-Source: AGHT+IGUU2+rL+VrrRankPr+xbpBILPjIFZNhDvGINb4xeFiR7O7TGptVO7yxax82e3WI1uhyyeE2Q==
-X-Received: by 2002:a2e:9346:0:b0:2ca:1282:d61c with SMTP id m6-20020a2e9346000000b002ca1282d61cmr116222ljh.15.1701719143192;
-        Mon, 04 Dec 2023 11:45:43 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id f1-20020a05651c02c100b002ca02e43f40sm455120ljo.74.2023.12.04.11.45.42
+        d=1e100.net; s=20230601; t=1701720975; x=1702325775;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=scE6uJE/gsl0ExlvPlw1tvZXL0nwbCHoC6Ch9ngDrG8=;
+        b=B5f8pIDsWQfDj0TXJ4LWNT4ym1hHYVae//I+jjGIvZixO7r+bwRroYO0UaZjzfuNEX
+         09+CgxY4HxtcRpFeuViP89s/tjbhnzJTUh6tk7OIW768nR9C+hBbB8X4lHdsfzroqhBL
+         835n+KO/aRpfu4Q8D1rEs0p63d0hdagO+QZTiWhIJB0FtYZsy+17zZZslUBfXnzZokno
+         QqQGCS9Gr2bXAcNjxCrdUdA3PnE4q4HxhWqwkjn74lCgfF0SMkWmgZdLUoTiyhmi1KEA
+         3JvYiPvLeCiAiPO9vR9Ec7+7veTilackV6dxHGli2NldoheVRp+V6ElBPEvMjIbyGrzu
+         jF9A==
+X-Gm-Message-State: AOJu0YwfCDBeyW/DbNpaEVlTNK0Vow1EG5NjFMj+8/XTRBx/b4vk6yJT
+	SGVMY/JvWO4zHwwH5qfCLgNT/B323ne5wjsah+QwJcOl0KGChDetKvDnT4s3GwlaGMgVsCY3GZU
+	P6OtdWWH+dWbRiqvSZqYTN32NMg==
+X-Received: by 2002:ad4:4481:0:b0:67a:a721:ec1a with SMTP id m1-20020ad44481000000b0067aa721ec1amr127142qvt.94.1701720975330;
+        Mon, 04 Dec 2023 12:16:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGgoVrFG6EC//oL2uzFysj4twtnTf+9h/+HjOZVaxTJrf07QpXYwOj+ja1iSEQZGrynxBr/Ig==
+X-Received: by 2002:ad4:4481:0:b0:67a:a721:ec1a with SMTP id m1-20020ad44481000000b0067aa721ec1amr127121qvt.94.1701720975037;
+        Mon, 04 Dec 2023 12:16:15 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::47])
+        by smtp.gmail.com with ESMTPSA id r3-20020a0cb283000000b00677fb735738sm4618230qve.34.2023.12.04.12.16.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 11:45:42 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Vinod Polimera <quic_vpolimer@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Cc: dan.carpenter@linaro.org,
-	kernel-janitors@vger.kernel.org,
-	error27@gmail.com
-Subject: Re: [PATCH next] drm/msm/dp: add a missing unlock in dp_hpd_plug_handle()
-Date: Mon,  4 Dec 2023 22:45:42 +0300
-Message-Id: <170171913105.1455672.8865445448285442373.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231204171317.192427-1-harshit.m.mogalapalli@oracle.com>
-References: <20231204171317.192427-1-harshit.m.mogalapalli@oracle.com>
+        Mon, 04 Dec 2023 12:16:14 -0800 (PST)
+Date: Mon, 4 Dec 2023 14:16:12 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, Prasad Sodagudi <psodagud@quicinc.com>, kernel@quicinc.com
+Subject: Re: [PATCH net-next v3 0/3] Ethernet DWMAC5 fault IRQ support
+Message-ID: <rw5vfdvre5rt4rwytfsp3qy6sgsdr3dm6oefr4sap2aqbvpw42@c2dxz42tucby>
+References: <cover.1701695218.git.quic_jsuraj@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1701695218.git.quic_jsuraj@quicinc.com>
 
+On Mon, Dec 04, 2023 at 06:56:14PM +0530, Suraj Jaiswal wrote:
+> Add support to listen Ethernet HW safery IRQ. The safety IRQ will be
 
-On Mon, 04 Dec 2023 09:13:14 -0800, Harshit Mogalapalli wrote:
-> When pm_runtime_resume_and_get() fails, unlock before returning.
+s/safery/safety/
+
+> triggered for ECC, DPP, FSM error.
 > 
+> Changes since v3:
+
+This is listed as v3 in the subject, but it should now be v4 since the
+last version was v3.
+
+> - Fix DT_CHECKER warning
+> - use name safety for the IRQ.
+>  
+> 
+> Suraj Jaiswal (3):
+>   dt-bindings: net: qcom,ethqos: add binding doc for safety IRQ for
+>     sa8775p
+>   arm64: dts: qcom: sa8775p: enable safety IRQ
+>   net: stmmac: Add driver support for DWMAC5 safety IRQ Support
+> 
+>  .../devicetree/bindings/net/qcom,ethqos.yaml   |  9 ++++++---
+>  .../devicetree/bindings/net/snps,dwmac.yaml    |  5 +++--
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi          | 10 ++++++----
+>  drivers/net/ethernet/stmicro/stmmac/common.h   |  1 +
+>  drivers/net/ethernet/stmicro/stmmac/stmmac.h   |  2 ++
+>  .../net/ethernet/stmicro/stmmac/stmmac_main.c  | 18 ++++++++++++++++++
+>  .../ethernet/stmicro/stmmac/stmmac_platform.c  |  9 +++++++++
+>  7 files changed, 45 insertions(+), 9 deletions(-)
+> 
+> -- 
+> 2.25.1
 > 
 
-Applied, thanks!
-
-[1/1] drm/msm/dp: add a missing unlock in dp_hpd_plug_handle()
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/801207c18834
-
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
