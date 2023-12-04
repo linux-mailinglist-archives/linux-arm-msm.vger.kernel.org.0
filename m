@@ -1,169 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-3367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39F958040A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 22:02:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DA818040BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 22:08:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BDA63B20AE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:02:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1A031F21160
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 21:08:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9681135F0B;
-	Mon,  4 Dec 2023 21:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36C1E364AC;
+	Mon,  4 Dec 2023 21:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I/TLW5O8"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="I4plrVI8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 705F6B6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 13:02:34 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B4ItNYD014464;
-	Mon, 4 Dec 2023 21:02:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=QYjIFnNstO3qlMsMHZghNVKgRaHWOBv3NyOgeVjlJHE=;
- b=I/TLW5O8+j11NFlRFaAKtDLMQgN9S4gAGpvceFBgvBuGhZLm/BfPfS+Xi9HSkAJ1U91e
- dvR+DkeiHBCqLzycZOBKdQRQ0y4QsxHS4FmFFZcwdttbRtECbf/L3V3Pr94Klvn9BEmV
- LE28vf1mIG/hRf+Vb69Uw1I/eG7KggCoiYFUKd0Rms4h0qpAXdIb5J1s/F+P59YhfU+z
- jtt8pnhczkArGwtrxFCmMJXbu0x+ql/jaZRjTiaq6af3y0MYfY2uK8fLsI4qCQydY8+L
- /Va8ZYvptPu3erpdY0ywCNp3TGudQ98WkrUq+BqPuiAw8yjiIj3/av512e7VZqgi+rTI rw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3usfu791br-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Dec 2023 21:02:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B4L2Jn0019933
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 4 Dec 2023 21:02:19 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
- 2023 13:02:19 -0800
-Message-ID: <90d23728-66a5-d3fe-5920-90bf60093399@quicinc.com>
-Date: Mon, 4 Dec 2023 13:02:18 -0800
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71DAFB6
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 13:07:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1701724074;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mJ2aLBuQ82UANlQlbiQPqkEKJKPRAic/HCDLBzYoX6s=;
+	b=I4plrVI8pxkE+gH1m9jpK65PnVeLj61KICZXPJvHuLL6aUNAmjOmx15KZ6WK2z5zRgnoxI
+	/gCk9VJ9Jtm5Cmyrsz0NlVQLc2FuQUyXv0FU6AKI/MH7M4fVGg6Jc4fFcjvk0GNF54Nlgs
+	jDNVKd78vpB0ffaKTGayhKYbEE5zKso=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-299-TJEIIJf0NUeZX-YipDVrgg-1; Mon, 04 Dec 2023 16:07:48 -0500
+X-MC-Unique: TJEIIJf0NUeZX-YipDVrgg-1
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-423dba1e166so76410821cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 13:07:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701724068; x=1702328868;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mJ2aLBuQ82UANlQlbiQPqkEKJKPRAic/HCDLBzYoX6s=;
+        b=TTnQD2SlwfrjvtvNhm9HbmaQsPuwpFlKotrAlfjUVBAog6I78U+u2AUA+LgiMrOnzZ
+         YuAOLv78J6RYQlG9sfZ1RD/LS5+yp9eqXiLdeNqUuh/oTzOcifYhhbCshciXewkPV9P/
+         PEyHp8AQD82W84ha9fgllLSxWQfxHD/e0uawmmT6vo9PdyBjejBuCz5mOIA2/VlSIYBZ
+         W2gyvia1UGfxs0Sc4VIqkkJceMc67MowaT1le8G06QrsW9xVfDR065GVTj2g86Uuulkm
+         fzF8OtrxAlMh+/mWHiTCzs0g2CpD8+CsRt7/QwFmSYYceByIHfNjLLyaE0sGor2n949v
+         yI3A==
+X-Gm-Message-State: AOJu0Yyym3uBLO+3uFk7fcblX9dvyJXjBdK8WzYlcE7KRW2daxV4ZK2P
+	qjRW0Gzu5HxWRmG5RPLI8Mc6zOTDh6cGm+ApBD4F8xEwf/LWMuxfTNiksKrsI+VwMd5dB5FcIb/
+	H5T9yjY4tvqHEkyiAPHmbV/33Aw==
+X-Received: by 2002:a05:622a:612:b0:423:9887:cd3e with SMTP id z18-20020a05622a061200b004239887cd3emr209062qta.32.1701724068021;
+        Mon, 04 Dec 2023 13:07:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGbFKSKjTKx+Yam65LOYaKr2UKx4QIOdb9/HID8MZGjV0GNxiebXUhSTXBgxjLjto4QiruptA==
+X-Received: by 2002:a05:622a:612:b0:423:9887:cd3e with SMTP id z18-20020a05622a061200b004239887cd3emr209036qta.32.1701724067678;
+        Mon, 04 Dec 2023 13:07:47 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::47])
+        by smtp.gmail.com with ESMTPSA id o16-20020ac841d0000000b00423829b6d91sm4583237qtm.8.2023.12.04.13.07.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Dec 2023 13:07:47 -0800 (PST)
+Date: Mon, 4 Dec 2023 15:07:45 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH v2] net: stmmac: update Rx clk divider for 10M SGMII
+Message-ID: <zf4fsrtrd736kxweputr2fulu7ffagivwi7zodctcsdg3uj6e2@iquglstf2gqb>
+References: <20231201100548.12994-1-quic_snehshah@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 2/4] drm/msm/mdss: Rename path references to mdp_path
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-References: <20231202224247.1282567-1-dmitry.baryshkov@linaro.org>
- <20231202224247.1282567-3-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231202224247.1282567-3-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: B1dOvlzBjbm9GEwV17PNaTxj00Xrytld
-X-Proofpoint-ORIG-GUID: B1dOvlzBjbm9GEwV17PNaTxj00Xrytld
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-04_19,2023-12-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0 impostorscore=0
- mlxlogscore=999 priorityscore=1501 mlxscore=0 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311060000 definitions=main-2312040164
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231201100548.12994-1-quic_snehshah@quicinc.com>
 
-
-
-On 12/2/2023 2:42 PM, Dmitry Baryshkov wrote:
-> From: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Fri, Dec 01, 2023 at 03:35:48PM +0530, Sneh Shah wrote:
+> SGMII 10MBPS mode needs RX clock divider to avoid drops in Rx.
+> Update configure SGMII function with rx clk divider programming.
 > 
-> The DPU1 driver needs to handle all MDPn<->DDR paths, as well as
-> CPU<->SLAVE_DISPLAY_CFG. The former ones share how their values are
-> calculated, but the latter one has static predefines spanning all SoCs.
-> 
-> In preparation for supporting the CPU<->SLAVE_DISPLAY_CFG path, rename
-> the path-related struct members to include "mdp_".
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Fixes: 463120c31c58 ("net: stmmac: dwmac-qcom-ethqos: add support for SGMII")
+> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
 
-Minor nits and I am fine to fix them now or later as they existed even 
-before this patch,
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8775p-ride
 
-1) we can just have num_mdp_paths++ in both places instead of setting to 
-1 and then increment.
+I can confirm that without this patch traffic doesn't seem to work when
+I force things in to SPEED_10 with ethtool (which required another
+change to this driver in stmmac_ethtool.c to do so, which as far as I
+understand Sarosh from your group will be upstreaming soon and is an
+independent issue).
 
-2) Maybe some macro like MAX_MDP_ICC_PATH instead of 2 will be better.
-
-3) Wondering whether we even need a num_path/num_mdp_path and just use 
-ARRAY_SIZE for the loop and then check if (mdp_path) OR even better if 
-icc has some sort of bulk_set_bw with num of paths.
-
-Nothing these down but nothing to block this patch:
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+I am curious, I expected to see some dropped/errors output in ip link
+when things weren't working. I guess the sgmii phy in the soc is
+rejecting these prior to handing them to the mac? Or am I
+misunderstanding how that works?
 
 > ---
->   drivers/gpu/drm/msm/msm_mdss.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
+> v2 changelog:
+> - Use FIELD_PREP to prepare bifield values in place of GENMASK
+> - Add fixes tag
+> ---
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
-> index 53bc496ace99..e1b208fd072e 100644
-> --- a/drivers/gpu/drm/msm/msm_mdss.c
-> +++ b/drivers/gpu/drm/msm/msm_mdss.c
-> @@ -40,8 +40,8 @@ struct msm_mdss {
->   		struct irq_domain *domain;
->   	} irq_controller;
->   	const struct msm_mdss_data *mdss_data;
-> -	struct icc_path *path[2];
-> -	u32 num_paths;
-> +	struct icc_path *mdp_path[2];
-> +	u32 num_mdp_paths;
->   };
->   
->   static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
-> @@ -54,13 +54,13 @@ static int msm_mdss_parse_data_bus_icc_path(struct device *dev,
->   	if (IS_ERR_OR_NULL(path0))
->   		return PTR_ERR_OR_ZERO(path0);
->   
-> -	msm_mdss->path[0] = path0;
-> -	msm_mdss->num_paths = 1;
-> +	msm_mdss->mdp_path[0] = path0;
-> +	msm_mdss->num_mdp_paths = 1;
->   
->   	path1 = devm_of_icc_get(dev, "mdp1-mem");
->   	if (!IS_ERR_OR_NULL(path1)) {
-> -		msm_mdss->path[1] = path1;
-> -		msm_mdss->num_paths++;
-> +		msm_mdss->mdp_path[1] = path1;
-> +		msm_mdss->num_mdp_paths++;
->   	}
->   
->   	return 0;
-> @@ -70,8 +70,8 @@ static void msm_mdss_icc_request_bw(struct msm_mdss *msm_mdss, unsigned long bw)
->   {
->   	int i;
->   
-> -	for (i = 0; i < msm_mdss->num_paths; i++)
-> -		icc_set_bw(msm_mdss->path[i], 0, Bps_to_icc(bw));
-> +	for (i = 0; i < msm_mdss->num_mdp_paths; i++)
-> +		icc_set_bw(msm_mdss->mdp_path[i], 0, Bps_to_icc(bw));
->   }
->   
->   static void msm_mdss_irq(struct irq_desc *desc)
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index d3bf42d0fceb..df6ff8bcdb5c 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -34,6 +34,7 @@
+>  #define RGMII_CONFIG_LOOPBACK_EN		BIT(2)
+>  #define RGMII_CONFIG_PROG_SWAP			BIT(1)
+>  #define RGMII_CONFIG_DDR_MODE			BIT(0)
+> +#define RGMII_CONFIG_SGMII_CLK_DVDR		GENMASK(18, 10)
+>  
+>  /* SDCC_HC_REG_DLL_CONFIG fields */
+>  #define SDCC_DLL_CONFIG_DLL_RST			BIT(30)
+> @@ -617,6 +618,9 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+>  	case SPEED_10:
+>  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
+>  		val &= ~ETHQOS_MAC_CTRL_SPEED_MODE;
+> +		rgmii_updatel(ethqos, RGMII_CONFIG_SGMII_CLK_DVDR,
+> +			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR, 0x31),
+> +			      RGMII_IO_MACRO_CONFIG);
+
+Russell requested a comment about why you must program this every time,
+I think it's a good idea too: https://lore.kernel.org/netdev/ZWch7LIqbMEaLRLW@shell.armlinux.org.uk/
+
+Also on my wishlist is making 0x31 less magic, but Santa might not bring
+that for me :)
+
+>  		break;
+>  	}
+>  
+> -- 
+> 2.17.1
+> 
+> 
+
 
