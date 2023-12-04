@@ -1,204 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-3235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A48948031A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:40:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47405803208
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 13:02:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4DE4F1F20FE6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:40:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 780981C20A22
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 12:02:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 998BE22EE5;
-	Mon,  4 Dec 2023 11:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CAFC23748;
+	Mon,  4 Dec 2023 12:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="ZiElWQBW"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="brI0cGXI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ADCAB0;
-	Mon,  4 Dec 2023 03:40:41 -0800 (PST)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20231204114040euoutp02292a0127f27ad873afe25d97659f31a9~dnhNdbYt51544815448euoutp02O;
-	Mon,  4 Dec 2023 11:40:40 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20231204114040euoutp02292a0127f27ad873afe25d97659f31a9~dnhNdbYt51544815448euoutp02O
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1701690040;
-	bh=qoSlDlAlmyMO1fD/zESFlbZVGoR0yDyo5RovorKXLGU=;
-	h=Date:From:Subject:To:Cc:In-Reply-To:References:From;
-	b=ZiElWQBWoN/gMkxnTbl4EIJxJaE/qWzC15BE8zltHkDgiAkzy4jcRQQtE89lZJRFE
-	 y0CAFQMH/8r3YrWb6vhMFfNnjlRU4OQG3F1D5CcUm6baAXYgCF3nBRHZq0UuUfINyM
-	 b9rZMUmPEL+y10xZs8D85HkEGozViYSZ4VZGZ/5w=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20231204114040eucas1p22e4e9d56a0f68b1e4d48c13f2cc13892~dnhNR4TKl1052710527eucas1p2C;
-	Mon,  4 Dec 2023 11:40:40 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-	eusmges2new.samsung.com (EUCPMTA) with SMTP id 47.26.09814.7BABD656; Mon,  4
-	Dec 2023 11:40:39 +0000 (GMT)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20231204114039eucas1p29c6f8a162191e58ff658d3a1c44429bf~dnhM11-r21052710527eucas1p2B;
-	Mon,  4 Dec 2023 11:40:39 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20231204114039eusmtrp2aa892cf8db8bcd9cc62f775c443bc043~dnhMyrE4x3101831018eusmtrp2K;
-	Mon,  4 Dec 2023 11:40:39 +0000 (GMT)
-X-AuditID: cbfec7f4-711ff70000002656-67-656dbab7ff2e
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-	eusmgms1.samsung.com (EUCPMTA) with SMTP id 1A.00.09146.7BABD656; Mon,  4
-	Dec 2023 11:40:39 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20231204114037eusmtip1af7cdf53ae21703af228f6e129f28260~dnhLNXjH_2303523035eusmtip1g;
-	Mon,  4 Dec 2023 11:40:37 +0000 (GMT)
-Message-ID: <9e4e65de-7234-4234-8091-796277a1f1c5@samsung.com>
-Date: Mon, 4 Dec 2023 12:40:38 +0100
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 529FD10C2
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 04:00:34 -0800 (PST)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-db539ab8e02so2750500276.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 04:00:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701691218; x=1702296018; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=AxQa10ALTFJrtePQUNooIdnJ7/2/V51IMg2dt+kkdtw=;
+        b=brI0cGXIL63tH86anAjLts3RtkeNWs23+psHbkch+iAUeoPRN1bkKeugZU4nZTvA+i
+         6KNyziCuukcJnB+yIAyYmzdgEEVTcZYvO5fL5XxkXgOgK+5vPB+8DlmPE/BxiQRGo6js
+         7f5/6oxEXbz7SlKWX6z9XgylrQk5DLjUqkz/qhDoCPe03n9fNo8FmASKlWEHpOiY32V9
+         37PZFxK1SThouTOdcYC8c5nvVAMhflN0IaVyCut9m8qI+oBRsrOGPDZwAweljv7O4bvB
+         mlvHNn4H5ZWa20tPHObkF5ngSLIAxkP2DfnQvDEExDB/ixQnzVeEe0cucuM0YubKroYQ
+         urKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701691218; x=1702296018;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AxQa10ALTFJrtePQUNooIdnJ7/2/V51IMg2dt+kkdtw=;
+        b=Yhki4jiftt132wYeEj+mlgJJrXIcfg8pMdgUjCs43OuyShoNTNGqv99onC0mL7ybgf
+         ck+/QUVTaqwi0fI3NhbJwKc/p05TDZJmrHbCtmSG7NusiJ5gJdG/EYV62lQsqpc8iB+N
+         2aU8Vs5sZKa2lDCAQV944324RTI42ecVqx2u8fA+5VgP9yceW8XN6dSi9Pjue4okK4cV
+         jppfL1ZNFoF2719SklyJ329Wf3SdBoz8rZby4My1Cqdjr7X1RResbmDilpaHHFZze21B
+         FhBoTdgXnG9X28kD0DXmlMx4V381xueytMDjdHJ4WV9VP/JPyU8f23tmVVMYSb69juCu
+         3OVQ==
+X-Gm-Message-State: AOJu0Yzf9ZKjIs9BOB3FrBBWC4CDfowqqSz1Ai46U/wPMUMIQGKIZICi
+	gIREQ23t+jxprG0alhqgMzQh36xiRQdbqbd7SSvTDw==
+X-Google-Smtp-Source: AGHT+IGtx7FZUsk81dL3/t2g6cd3rE+aZFVev88VqUsqsQ+gPdRNsR1xz4Vo1+2JrRUIQSocaOyRYdJiyBQUguClOwM=
+X-Received: by 2002:a05:690c:dd0:b0:5d7:1941:aa1 with SMTP id
+ db16-20020a05690c0dd000b005d719410aa1mr2935063ywb.60.1701691218139; Mon, 04
+ Dec 2023 04:00:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: Re: [PATCH v4 12/23] pinctrl: mediatek: Make use of
- PINCTRL_GROUP_DESC()
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>, Linus Walleij
-	<linus.walleij@linaro.org>, Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>, Rasmus Villemoes
-	<linux@rasmusvillemoes.dk>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?=
-	<j.neuschaefer@gmx.net>, Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>, =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?=
-	<u.kleine-koenig@pengutronix.de>, Geert Uytterhoeven
-	<geert+renesas@glider.be>, Biju Das <biju.das.jz@bp.renesas.com>, Claudiu
-	Beznea <claudiu.beznea.uj@bp.renesas.com>, Jianlong Huang
-	<jianlong.huang@starfivetech.com>, linux-arm-kernel@lists.infradead.org,
-	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mediatek@lists.infradead.org, openbmc@lists.ozlabs.org,
-	linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org
-Cc: Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list
-	<bcm-kernel-feedback-list@broadcom.com>, Dong Aisheng
-	<aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, Shawn Guo
-	<shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, Pengutronix Kernel Team
-	<kernel@pengutronix.de>, Sascha Hauer <s.hauer@pengutronix.de>, NXP Linux
-	Team <linux-imx@nxp.com>, Sean Wang <sean.wang@kernel.org>, Paul Cercueil
-	<paul@crapouillou.net>, Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>,
-	Bjorn Andersson <andersson@kernel.org>, Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Emil Renner Berthing
-	<kernel@esmil.dk>, Hal Feng <hal.feng@starfivetech.com>, Krzysztof Kozlowski
-	<krzk@kernel.org>
-Content-Language: en-US
-In-Reply-To: <20231129161459.1002323-13-andriy.shevchenko@linux.intel.com>
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Ta0xTZxjed87hnAOueKxsfEEJCQGjC3JZAL8NgmOT5EzdJpOxuBs2coZC
-	uaSF1REWG0GETgTacStQNBCuCqzcK6bKBg0wLlZhpEMZ4yJggHUSN0B0tgc3/j3v+z7P97zP
-	m3w0LlwgnegzcYmcJE4kdiXtiNae1cH9bbpYznvDfAANTq0TaCVPh6PWjECUdb4AQ9VPrmHo
-	elY3gTTtTzD0fXedDZoc+QiVFisBMl7owlDJ+TYKZa72AzR9rQig2rwOAmWo2gg0NNRIoZuP
-	Wii0rBmj0A9PqzCknRq1Qbn6AQo1lT0FSLFWg6O7uhIS3U29A1CmtgWglvklDE2pNSTqS5sj
-	UHa5kUB1g7dJNFPURKKNNi2BluqmAVLVv4/mmh3Rb7kq8M4etmaumGLVEwMkW2e8SLIZl58R
-	bO7AfrZDfZ9iy7V6ki3vnMdYbW0myY6PdpKspjeUbao4xw4VXgXsj0vtGJu94c0OK2KOCT+z
-	C4zkxGe+4SReQSftTqfNPiQTftp+tnW9gZKDvlcVwJaGjC+c1KzaKIAdLWSqAbxU30jwxQqA
-	Ff/c35w8BnAmdYN4KZFf7yD5QRWAFxYqMb4wAzhSc+sFi6YFTBB8oAIWAcG4wZnVAdKCBcwO
-	2Fs0bX3oNcYFTpgKKQsmGR+oWFRYOTuZ4/Dn8QdWAwfmFxLeK222GuBMDgkbeu5Z1TjjCE3T
-	ZZgF2zKH4aRy1obvu8C2xRLcIoCMfBvMX36+ufchqDT0kzzeCRcMzRSPd8PnHWUYL7gI4JX1
-	ic0iB0D5QxPgWQFwfHCNtGTDmX2wQefFt4PhLd2yNTJk7OHY4g5+CXuobC3A+bYAZqQLefYe
-	qDbU/2d7e9iI5wBX9ZbDqLdEU2+Jo/7f9wogaoEjlySNjeKkb8ZxMk+pKFaaFBfleSo+Vgte
-	fIf+Z4aVdlC1YPbsAhgNugCkcVcHgcYUwwkFkaJvkzlJfIQkScxJu8AumnB1FLhHunBCJkqU
-	yMVwXAIneTnFaFsnOVZj2q7sVh4Z85jpOfFK/Agnya/3EZszsuTy90aDvgpwp+cpMjPiQOhs
-	aVjKTffdic75Rx8Fiw4ZZB59Rv1JcU9kchf3eW/649+VMb5npz/9YFdIxK8uDmF3ZI3V7wZM
-	pWDLxUkHjc4H3ZzsQ4ZLR+3OReQ3OPVFJ4evb4CpTwL9C3NEl96O2isPNZRXJvy1z+DjvLJU
-	o0+LNoccSdSd8vvicGXn8VWpSe3fd/RPuUtHoD7ULXjc71gWIwv/o7TZIUUm/rgiKvDyiWy3
-	70K8C0zFVV+m9/ukKh23JYf7/e3lm2f8Gn3YemNNp/IQ+5r1BWGvJ/vfoIvfqotURbP1NriT
-	2ZWQnhb5vIFLpKJ/Ac8KBzB9BAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Sf1CTdRzH+T579mxQq6eJ7HtcRO66PPGY29zoixHVJfVQaSZedmhHU5/A
-	Y2PcNrDsrIVU41GkbZJj4KjwFwxkbcCALHKhHHiAwsURTBAYAwowI7yQyQWs7vjvdZ/P+/35
-	fO5zby6L/4AdyT2cpaM1WQqlkAjDbyy13Y51N6to8bwXoq6xRRz9XdzMQg2GBFSYdwZDl+5X
-	Y6im8BqObI33MXTimp2NRn59C50tNQHU87kHQ2V5bg4qWLgBkK+6BKCq4iYcGcxuHHV3Ozjo
-	xz/qOeiurZ+DTgcuYsg51sdGxpZODnKVBwBiHlSyUG9zGYF6j98CqMBZD1D91CyGxqw2AnXk
-	T+KoqKIHR/auqwQaL3ER6KHbiaNZuw8g8+VkNFknQINGM3jpWapyspRDWYc7Ccre8yVBGU4t
-	4ZSxM5Zqst7mUBXOFoKquDKFUc6qAoLy9l0hKFv725Tr3KdUt+VbQH0/24hRRQ/F1E0mcxc/
-	VZSgUefo6Kcz1FrdC8J9EiQVSeKRSCqLF0m2PvfeNqlcuCUx4RCtPJxLa7Ykvi/KyPdPENm/
-	PP5hw2ItRw86HmVAKBeSMqivaSIYEMblk+cBHG0rx4ONJ2H713p2kNfBQB/zn+gugIsDo4AB
-	XC6PTIRDZrCiwcln4PhCJ7HCPPIJ2F7iW52znoyGwwMWzgoTpAQyM8yqZh2ZAlu9Q6scTnYR
-	0GhJW2EWaSLg8Jg0uMsA4NVbJ7FgQwAHfOWrHEq+DkdMfnawHgeZegYEORq6Z8pYXwG+dc0d
-	1jV26xqLdY3lG4BXgXA6R6tKV2klIq1Cpc3JShcdVKucYDmEDdcXXI3A9vs9kQdgXOABkMsS
-	hvNsA5k0n3dI8dFRWqNO0+Qoaa0HyJefYWRFrj+oXk5xli5NEieWS2Rx8WJ5fNxWoYCXnG1Q
-	8Ml0hY7OpOlsWvO/D+OGRuox9lL3u7uVNdKW0rCZs+7vilJvxso29qeM7KhLntjwmqPK8lf2
-	xiOj4qN5S09FDbp/cM+fsCd9cuQNSWrl5tqXDR6f75jjz4shJrKxS2baMdi2Vxohn5tXO1oP
-	6PIddz6uLX5Tb88P+BsDnL3nXIK6uk61xJ9k3u5Mn1OcDszlbst1CKriJl717vlg/2M7LYk7
-	W8v4l6XdPp/hWLUs5foj4v3eL2Yu9LuizpMXPBFNuy8l9b4yrRrMihiPjqmImRhNn/+tY1fI
-	0ELE9uMgtbmwuta/iR7+h+39Wft81FTIHlgUual8X8p02b2ozfq66QMbfjqDFU++46NPmV50
-	f9anvENUCnFthkISw9JoFf8CmRY9FQ0EAAA=
-X-CMS-MailID: 20231204114039eucas1p29c6f8a162191e58ff658d3a1c44429bf
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20231204114039eucas1p29c6f8a162191e58ff658d3a1c44429bf
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20231204114039eucas1p29c6f8a162191e58ff658d3a1c44429bf
-References: <20231129161459.1002323-1-andriy.shevchenko@linux.intel.com>
-	<20231129161459.1002323-13-andriy.shevchenko@linux.intel.com>
-	<CGME20231204114039eucas1p29c6f8a162191e58ff658d3a1c44429bf@eucas1p2.samsung.com>
+References: <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-0-d9340d362664@linaro.org>
+ <20231122-phy-qualcomm-v6-v6-20-v7-new-offsets-v1-2-d9340d362664@linaro.org>
+ <CAA8EJpr2HhiXEbp0QsN-qB+L4WQWiV3o2yCc-f5oqdhdKZGL9A@mail.gmail.com> <ZW23/jPxofGw9GnY@linaro.org>
+In-Reply-To: <ZW23/jPxofGw9GnY@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 4 Dec 2023 14:00:07 +0200
+Message-ID: <CAA8EJponcVngT5X3+C1nuCd+fX4xMUFYdGoxT+Mdit+BpjEG=w@mail.gmail.com>
+Subject: Re: [PATCH 2/7] phy: qcom-qmp: qserdes-txrx: Add some more v6.20
+ register offsets
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 29.11.2023 17:06, Andy Shevchenko wrote:
-> Make use of PINCTRL_GROUP_DESC() instead of open coding it.
+On Mon, 4 Dec 2023 at 13:29, Abel Vesa <abel.vesa@linaro.org> wrote:
 >
-> Signed-off-by: Andy Shevchenko<andriy.shevchenko@linux.intel.com>
-
-This patch landed in linux-next as commit 1949e4630c3b ("pinctrl: 
-mediatek: Make use of PINCTRL_GROUP_DESC()"). Unfortunately it causes a 
-build break of ARM64 arch with standard defconfig.
-
-> ---
->   drivers/pinctrl/mediatek/pinctrl-moore.h | 7 +------
->   drivers/pinctrl/mediatek/pinctrl-paris.h | 7 +------
->   2 files changed, 2 insertions(+), 12 deletions(-)
+> On 23-11-22 12:12:00, Dmitry Baryshkov wrote:
+> > On Wed, 22 Nov 2023 at 12:04, Abel Vesa <abel.vesa@linaro.org> wrote:
+> > >
+> > > Add some missing v6.20 registers offsets that are needed by the new
+> > > Snapdragon X Elite (X1E80100) platform.
+> > >
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > ---
+> > >  drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h | 4 ++++
+> > >  1 file changed, 4 insertions(+)
+> > >
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h
+> > > index 5385a8b60970..7402a94d1be8 100644
+> > > --- a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-v6_20.h
+> > > @@ -14,11 +14,14 @@
+> > >  #define QSERDES_V6_20_TX_LANE_MODE_3                           0x80
+> > >
+> > >  #define QSERDES_V6_20_RX_UCDR_FO_GAIN_RATE_2                   0x08
+> > > +#define QSERDES_V6_20_RX_UCDR_SO_GAIN_RATE_2                   0x18
+> > >  #define QSERDES_V6_20_RX_UCDR_FO_GAIN_RATE_3                   0x0c
+> >
+> > As a side note, this should be probably 0x1c. Could you please verify
+> > it and send a fix?
+> >
 >
-> diff --git a/drivers/pinctrl/mediatek/pinctrl-moore.h b/drivers/pinctrl/mediatek/pinctrl-moore.h
-> index e1b4b82b9d3d..22ef1ffbcdcb 100644
-> --- a/drivers/pinctrl/mediatek/pinctrl-moore.h
-> +++ b/drivers/pinctrl/mediatek/pinctrl-moore.h
-> @@ -38,12 +38,7 @@
->   	}
->   
->   #define PINCTRL_PIN_GROUP(name, id)			\
-> -	{						\
-> -		name,					\
-> -		id##_pins,				\
-> -		ARRAY_SIZE(id##_pins),			\
-> -		id##_funcs,				\
-> -	}
-> +	PINCTRL_GROUP_DESC(name, id##_pins, ARRAY_SIZE(id##_pins), id##_funcs)
->   int mtk_moore_pinctrl_probe(struct platform_device *pdev,
->   			    const struct mtk_pin_soc *soc);
-> diff --git a/drivers/pinctrl/mediatek/pinctrl-paris.h b/drivers/pinctrl/mediatek/pinctrl-paris.h
-> index 8762ac599329..f208a904c4a8 100644
-> --- a/drivers/pinctrl/mediatek/pinctrl-paris.h
-> +++ b/drivers/pinctrl/mediatek/pinctrl-paris.h
-> @@ -50,12 +50,7 @@
->   	}
->   
->   #define PINCTRL_PIN_GROUP(name, id)			\
-> -	{						\
-> -		name,					\
-> -		id##_pins,				\
-> -		ARRAY_SIZE(id##_pins),			\
-> -		id##_funcs,				\
-> -	}
-> +	PINCTRL_GROUP_DESC(name, id##_pins, ARRAY_SIZE(id##_pins), id##_funcs)
->   
->   int mtk_paris_pinctrl_probe(struct platform_device *pdev);
+> Double checked. The values are correct. So I'll just put the
+> SO_GAIN_RATE_2 below FO_GAIN_RATE_3.
+
+SGTM
+
+>
+> > >  #define QSERDES_V6_20_RX_UCDR_PI_CONTROLS                      0x20
+> > >  #define QSERDES_V6_20_RX_UCDR_SO_ACC_DEFAULT_VAL_RATE3         0x34
+> > >  #define QSERDES_V6_20_RX_IVCM_CAL_CTRL2                                0x9c
+> > >  #define QSERDES_V6_20_RX_IVCM_POSTCAL_OFFSET                   0xa0
+> > > +#define QSERDES_V6_20_RX_DFE_1                                 0xac
+> > > +#define QSERDES_V6_20_RX_DFE_2                                 0xb0
+> > >  #define QSERDES_V6_20_RX_DFE_3                                 0xb4
+> > >  #define QSERDES_V6_20_RX_VGA_CAL_MAN_VAL                       0xe8
+> > >  #define QSERDES_V6_20_RX_GM_CAL                                        0x10c
+> > > @@ -41,5 +44,6 @@
+> > >  #define QSERDES_V6_20_RX_MODE_RATE3_B4                         0x220
+> > >  #define QSERDES_V6_20_RX_MODE_RATE3_B5                         0x224
+> > >  #define QSERDES_V6_20_RX_MODE_RATE3_B6                         0x228
+> > > +#define QSERDES_V6_20_RX_BKUP_CTRL1                            0x22c
+> > >
+> > >  #endif
+> > >
+> > > --
+> > > 2.34.1
+> > >
+> > >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
 
-PINCTRL_GROUP_DESC() macro from drivers/pinctrl/core.h contains a cast 
-to (struct group_desc), what breaks users of the above macros.
 
-Best regards
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+With best wishes
+Dmitry
 
