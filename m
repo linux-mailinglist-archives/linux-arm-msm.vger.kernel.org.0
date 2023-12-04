@@ -1,130 +1,490 @@
-Return-Path: <linux-arm-msm+bounces-3223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E82D8030E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:45:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E56BE803106
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 11:57:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8C971F211D2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:45:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 994FD280E15
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Dec 2023 10:57:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAA5420303;
-	Mon,  4 Dec 2023 10:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3DCF224D6;
+	Mon,  4 Dec 2023 10:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nFdbUWfv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fOuzRnrz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D01D9D5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 02:45:21 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-54ca339ae7aso1596141a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 02:45:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701686720; x=1702291520; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6YyztTu0COTbmlcMD4L0hygA8BtaTvI3nN75TEHzfHI=;
-        b=nFdbUWfv31zyu3vMX72F0iYgWtFejs9xIpHQM49PojNhylZMJ1dfLJjmK+SSWI0RHH
-         LcYFQtgQ0wO8aD4cJwwwzFAMQHz2o5mAHxeb1h8BahlK3v9CnVAOtVlQERVOeCbkEKMF
-         xK5xbJlX8H6M6TKdQLUC0XrcnJVt168qajP2oCJSQ/6UAgU70jUo7GS59N/hhK8uiZTf
-         j8a6n79y3/t05Q0s+UOoDtl8AanUPDQFBQzTXHlbx3OXQUhBk5Uobt/jDsnqQJxq10Lp
-         mlFR7vQ9BAZl/ZRYKYFW3iYK4GMnyeyHRbypJmjg2bmqB8DY7j97I78s++eNZCy7qOzT
-         mtBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701686720; x=1702291520;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6YyztTu0COTbmlcMD4L0hygA8BtaTvI3nN75TEHzfHI=;
-        b=t3c9myXnOj6qoIkH3zO4+7A32KlpFyOc6KdawXV8hvAzt+CHee2gsLLIOKZFjU8BQz
-         Gc6lDyGvSPsUGQIaYesOEtD6rraR3zY5OSPC0WwH3W/1x6ZSVaoBti3duPmKC+NTtUB5
-         COefwHDSikVcYuvEnuP3BCmxNL/QIgHrK8Kixf8kqGsxGAJiX44sue2TGXjywp2eUm5E
-         u+f1vtYErzNL6xHb48oWvrr0TOfOiUjoIvTsbMEMzMKbA8zGOWkkZkL8mp9Fl+5Yk5Ks
-         2WLDBuqsQ2hg95pXA+aZUnOKv6zHOWeG41ccGQrFdM9YII31nLxuOhaORorHyWuTbmnP
-         dUdw==
-X-Gm-Message-State: AOJu0Yzrr0GIXJlncB8uSkLqpo332KoZSrlz7DRdrlL/iNzrJmHDVegQ
-	DvkX6TpCb9efhMuP4m6QwJPsWIbUsalUjl+NJa8=
-X-Google-Smtp-Source: AGHT+IFSjGkSVgh5Xs2KkgKSiERG0P1FSH0235jUWEfNRfdAVN5fzTc3kFuiSWxzA0Gbdyj2qJ4F1Q==
-X-Received: by 2002:a50:ab0d:0:b0:54a:fe10:dede with SMTP id s13-20020a50ab0d000000b0054afe10dedemr2966994edc.36.1701686720300;
-        Mon, 04 Dec 2023 02:45:20 -0800 (PST)
-Received: from [192.168.209.83] (178235179097.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.97])
-        by smtp.gmail.com with ESMTPSA id q9-20020a056402040900b0054c0264a7fasm4618484edv.64.2023.12.04.02.45.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Dec 2023 02:45:20 -0800 (PST)
-Message-ID: <3678b052-d812-439f-89b3-6d816d8f35f8@linaro.org>
-Date: Mon, 4 Dec 2023 11:45:16 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C537120303;
+	Mon,  4 Dec 2023 10:57:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFF0C433C7;
+	Mon,  4 Dec 2023 10:57:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701687445;
+	bh=sdr/Cw7QG4rPegnVGJDapH8E3KOkaTsGiXcrQMCi+Ow=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fOuzRnrzczp4RnsdRYK6GGsRsUR/ljpD2SHg8ZgY3X4kmb6Y1xy5tKEzogl2BZfW4
+	 sb3rdWCYKzGQzKzX2IzDf3eb0P4/0QRmPP8P0OHxfsWgckvN8GAIl+tAtYbNMXWIaR
+	 pCDtSxFoK4f+z2TpIqC6HigZANEozEhSeClHxKaS1fo2PBeejOthtGVCkyBAkwo1t8
+	 +fa6x034e8hD3WP9Y5lSxD6UbcbVCAwTTv8YyZoZvNz4fZooqyBZLNXphCYNs0IJ3W
+	 SOvjXRVqkBljtqPefDsOYntnSnSgab3Byz24nVGUzeNGhWZY7dWCSeUZ+lZPlYS0Sf
+	 d4RePIjAqbAQg==
+Date: Mon, 4 Dec 2023 16:27:09 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH v5] bus: mhi: host: Add tracing support
+Message-ID: <20231204105709.GA35383@thinkpad>
+References: <20231127-ftrace_support-v5-1-eb67daead4f1@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ARM: dts: qcom: Disable pm8941 & pm8226 smbb charger by
- default
-Content-Language: en-US
-To: Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Bryant Mairs <bryant@mai.rs>
-References: <20231203-smbb-pm8941-pm8226-v1-1-9ad75909604b@z3ntu.xyz>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
- 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
- izWDgYvmBE8=
-In-Reply-To: <20231203-smbb-pm8941-pm8226-v1-1-9ad75909604b@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231127-ftrace_support-v5-1-eb67daead4f1@quicinc.com>
 
-On 3.12.2023 15:19, Luca Weiss wrote:
-> From: Bryant Mairs <bryant@mai.rs>
+On Mon, Nov 27, 2023 at 04:39:12PM +0530, Krishna chaitanya chundru wrote:
+> This change adds ftrace support for following functions which
+> helps in debugging the issues when there is Channel state & MHI
+> state change and also when we receive data and control events:
+> 1. mhi_intvec_mhi_states
+> 2. mhi_process_data_event_ring
+> 3. mhi_process_ctrl_ev_ring
+> 4. mhi_gen_tre
+> 5. mhi_update_channel_state
+> 6. mhi_tryset_pm_state
+> 7. mhi_pm_st_worker
 > 
-> Some platforms don't use the built-in charging hardware (e.g. milletwifi).
-> As this is an optional peripheral, default it to off.
+> Where ever the trace events are added, debug messages are removed.
 > 
-> Keep it enabled for all other boards that use smbb.
-> 
-> Signed-off-by: Bryant Mairs <bryant@mai.rs>
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Changes in v5:
+> - Use DECLARE_EVENT_CLASS for multiple events as suggested by steve.
+> - Instead of converting to u64 to print address, use %px to print the address to avoid
+> - warnings in some platforms.
+> - Link to v4: https://lore.kernel.org/r/20231111-ftrace_support-v4-1-c83602399461@quicinc.com
+> 
+> Changes in v4:
+> - Fix compilation issues in previous patch which happended due to rebasing.
+> - In the defconfig FTRACE config is not enabled due to that the compilation issue is not
+> - seen in my workspace.
+> - Link to v3: https://lore.kernel.org/r/20231111-ftrace_support-v3-1-f358d2911a74@quicinc.com
+> 
+> Changes in v3:
+> - move trace header file from include/trace/events to drivers/bus/mhi/host/ so that
+> - we can include driver header files.
+> - Use macros directly in the trace events as suggested Jeffrey Hugo.
+> - Reorder the structure in the events as suggested by steve to avoid holes in the buffer.
+> - removed the mhi_to_physical function as this can give security issues.
+> - removed macros to define strings as we can get those from driver headers.
+> - Link to v2: https://lore.kernel.org/r/20231013-ftrace_support-v2-1-6e893ce010b5@quicinc.com
+> 
+> Changes in v2:
+> - Passing the raw state into the trace event and using  __print_symbolic() as suggested by bjorn.
+> - Change mhi_pm_st_worker to mhi_pm_st_transition as suggested by bjorn.
+> - Fixed the kernel test rebot issues.
+> - Link to v1: https://lore.kernel.org/r/20231005-ftrace_support-v1-1-23a2f394fa49@quicinc.com
+> ---
+>  drivers/bus/mhi/host/init.c     |   3 +
+>  drivers/bus/mhi/host/internal.h |   1 +
+>  drivers/bus/mhi/host/main.c     |  23 +++--
+>  drivers/bus/mhi/host/pm.c       |   6 +-
+>  drivers/bus/mhi/host/trace.h    | 208 ++++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 228 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index f78aefd2d7a3..6acb85f4c5f8 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -20,6 +20,9 @@
+>  #include <linux/wait.h>
+>  #include "internal.h"
+>  
+> +#define CREATE_TRACE_POINTS
+> +#include "trace.h"
+> +
+>  static DEFINE_IDA(mhi_controller_ida);
+>  
+>  const char * const mhi_ee_str[MHI_EE_MAX] = {
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index 2e139e76de4c..a02a71605907 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -7,6 +7,7 @@
+>  #ifndef _MHI_INT_H
+>  #define _MHI_INT_H
+>  
+> +#include "trace.h"
 
-Konrad
+Please include header in files where it is actually used.
+
+>  #include "../common.h"
+>  
+>  extern struct bus_type mhi_bus_type;
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index dcf627b36e82..0d7e068e713a 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -491,11 +491,9 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+>  
+>  	state = mhi_get_mhi_state(mhi_cntrl);
+>  	ee = mhi_get_exec_env(mhi_cntrl);
+> -	dev_dbg(dev, "local ee: %s state: %s device ee: %s state: %s\n",
+> -		TO_MHI_EXEC_STR(mhi_cntrl->ee),
+> -		mhi_state_str(mhi_cntrl->dev_state),
+> -		TO_MHI_EXEC_STR(ee), mhi_state_str(state));
+>  
+> +	trace_mhi_intvec_states(mhi_cntrl->mhi_dev->name, mhi_cntrl->ee,
+> +				mhi_cntrl->dev_state, ee, state);
+>  	if (state == MHI_STATE_SYS_ERR) {
+>  		dev_dbg(dev, "System error detected\n");
+>  		pm_state = mhi_tryset_pm_state(mhi_cntrl,
+> @@ -832,6 +830,10 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
+>  	while (dev_rp != local_rp) {
+>  		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
+>  
+> +		trace_mhi_ctrl_event(mhi_cntrl->mhi_dev->name, local_rp,
+> +				     local_rp->ptr, local_rp->dword[0],
+> +				     local_rp->dword[1]);
+> +
+>  		switch (type) {
+>  		case MHI_PKT_TYPE_BW_REQ_EVENT:
+>  		{
+> @@ -997,6 +999,9 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
+>  	while (dev_rp != local_rp && event_quota > 0) {
+>  		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
+>  
+> +		trace_mhi_data_event(mhi_cntrl->mhi_dev->name, local_rp, local_rp->ptr,
+> +				     local_rp->dword[0], local_rp->dword[1]);
+> +
+>  		chan = MHI_TRE_GET_EV_CHID(local_rp);
+>  
+>  		WARN_ON(chan >= mhi_cntrl->max_chan);
+> @@ -1235,6 +1240,8 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
+>  	mhi_tre->dword[0] = MHI_TRE_DATA_DWORD0(info->len);
+>  	mhi_tre->dword[1] = MHI_TRE_DATA_DWORD1(bei, eot, eob, chain);
+>  
+> +	trace_mhi_gen_tre(mhi_cntrl->mhi_dev->name, mhi_chan->chan, mhi_tre,
+> +			  mhi_tre->ptr, mhi_tre->dword[0], mhi_tre->dword[1]);
+>  	/* increment WP */
+>  	mhi_add_ring_element(mhi_cntrl, tre_ring);
+>  	mhi_add_ring_element(mhi_cntrl, buf_ring);
+> @@ -1327,9 +1334,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
+>  	enum mhi_cmd_type cmd = MHI_CMD_NOP;
+>  	int ret;
+>  
+> -	dev_dbg(dev, "%d: Updating channel state to: %s\n", mhi_chan->chan,
+> -		TO_CH_STATE_TYPE_STR(to_state));
+> -
+> +	trace_mhi_channel_command_start(mhi_cntrl->mhi_dev->name, mhi_chan->chan, to_state);
+>  	switch (to_state) {
+>  	case MHI_CH_STATE_TYPE_RESET:
+>  		write_lock_irq(&mhi_chan->lock);
+> @@ -1396,9 +1401,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
+>  		write_unlock_irq(&mhi_chan->lock);
+>  	}
+>  
+> -	dev_dbg(dev, "%d: Channel state change to %s successful\n",
+> -		mhi_chan->chan, TO_CH_STATE_TYPE_STR(to_state));
+> -
+> +	trace_mhi_channel_command_end(mhi_cntrl->mhi_dev->name, mhi_chan->chan, to_state);
+>  exit_channel_update:
+>  	mhi_cntrl->runtime_put(mhi_cntrl);
+>  	mhi_device_put(mhi_cntrl->mhi_dev);
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 8a4362d75fc4..e32afdc92fde 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -123,6 +123,7 @@ enum mhi_pm_state __must_check mhi_tryset_pm_state(struct mhi_controller *mhi_cn
+>  	if (unlikely(!(dev_state_transitions[index].to_states & state)))
+>  		return cur_state;
+>  
+> +	trace_mhi_tryset_pm_state(mhi_cntrl->mhi_dev->name, state);
+>  	mhi_cntrl->pm_state = state;
+>  	return mhi_cntrl->pm_state;
+>  }
+> @@ -753,7 +754,6 @@ void mhi_pm_st_worker(struct work_struct *work)
+>  	struct mhi_controller *mhi_cntrl = container_of(work,
+>  							struct mhi_controller,
+>  							st_worker);
+> -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+>  
+>  	spin_lock_irq(&mhi_cntrl->transition_lock);
+>  	list_splice_tail_init(&mhi_cntrl->transition_list, &head);
+> @@ -761,8 +761,8 @@ void mhi_pm_st_worker(struct work_struct *work)
+>  
+>  	list_for_each_entry_safe(itr, tmp, &head, node) {
+>  		list_del(&itr->node);
+> -		dev_dbg(dev, "Handling state transition: %s\n",
+> -			TO_DEV_STATE_TRANS_STR(itr->state));
+> +
+> +		trace_mhi_pm_st_transition(mhi_cntrl->mhi_dev->name, itr->state);
+>  
+>  		switch (itr->state) {
+>  		case DEV_ST_TRANSITION_PBL:
+> diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
+> new file mode 100644
+> index 000000000000..3bfac529c6b7
+> --- /dev/null
+> +++ b/drivers/bus/mhi/host/trace.h
+> @@ -0,0 +1,208 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#undef TRACE_SYSTEM
+> +#define TRACE_SYSTEM mhi_host
+> +
+> +#if !defined(_TRACE_EVENT_MHI_HOST_H) || defined(TRACE_HEADER_MULTI_READ)
+> +#define _TRACE_EVENT_MHI_HOST_H
+> +
+> +#include <linux/tracepoint.h>
+> +#include <linux/trace_seq.h>
+> +#include "../common.h"
+> +#include "internal.h"
+> +
+> +TRACE_EVENT(mhi_gen_tre,
+> +
+> +	TP_PROTO(const char *name, int ch_num, void *wp, __le64 tre_ptr,
+> +		 __le32 dword0, __le32 dword1),
+> +
+> +	TP_ARGS(name, ch_num, wp, tre_ptr, dword0, dword1),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(name, name)
+> +		__field(int, ch_num)
+> +		__field(void *, wp)
+> +		__field(__le64, tre_ptr)
+> +		__field(__le32, dword0)
+> +		__field(__le32, dword1)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(name, name);
+> +		__entry->ch_num = ch_num;
+> +		__entry->wp = wp;
+> +		__entry->tre_ptr = tre_ptr;
+> +		__entry->dword0 = dword0;
+> +		__entry->dword1 = dword1;
+> +	),
+> +
+> +	TP_printk("%s: Chan: %d WP: 0x%p TRE: 0x%llx 0x%08x 0x%08x\n",o
+
+What you are printing as TRE is not actually a TRE but the data pointer
+referenced by the TRE. WP is the actual TRE.
+
+> +		  __get_str(name), __entry->ch_num, __entry->wp, __entry->tre_ptr,
+> +		  __entry->dword0, __entry->dword1)
+
+DWORDs are getting printed without any name. Like,
+
+mhi_gen_tre: mhi0: Chan: 46 WP: 0x00000000bcd06579 TRE: 0xffbcf190 0x0000004c 0x00020200
+
+> +);
+> +
+> +TRACE_EVENT(mhi_intvec_states,
+> +
+> +	TP_PROTO(const char *name, int local_ee, int state, int dev_ee, int dev_state),
+> +
+> +	TP_ARGS(name, local_ee, state, dev_ee, dev_state),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(name, name)
+> +		__field(int, local_ee)
+> +		__field(int, state)
+> +		__field(int, dev_ee)
+> +		__field(int, dev_state)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(name, name);
+> +		__entry->local_ee = local_ee;
+> +		__entry->state = state;
+> +		__entry->dev_ee = dev_ee;
+> +		__entry->dev_state = dev_state;
+> +	),
+> +
+> +	TP_printk("%s: local ee: %s state: %s device ee: %s state: %s\n",
+> +		  __get_str(name),
+> +		  TO_MHI_EXEC_STR(__entry->local_ee),
+> +		  mhi_state_str(__entry->state),
+> +		  TO_MHI_EXEC_STR(__entry->dev_ee),
+> +		  mhi_state_str(__entry->dev_state))
+> +);
+> +
+> +TRACE_EVENT(mhi_tryset_pm_state,
+> +
+> +	TP_PROTO(const char *name, int pm_state),
+> +
+> +	TP_ARGS(name, pm_state),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(name, name)
+> +		__field(int, pm_state)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(name, name);
+> +		if (pm_state)
+> +			pm_state = __fls(pm_state);
+> +		__entry->pm_state = pm_state;
+> +	),
+> +
+> +	TP_printk("%s: PM state: %s\n", __get_str(name),
+> +		  to_mhi_pm_state_str(__entry->pm_state))
+> +);
+> +
+> +DECLARE_EVENT_CLASS(mhi_process_event_ring,
+> +
+> +	TP_PROTO(const char *name, void *rp, __le64 ptr,
+> +		 __le32 dword0, __le32 dword1),
+> +
+> +	TP_ARGS(name, rp, ptr, dword0, dword1),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(name, name)
+> +		__field(__le32, dword0)
+> +		__field(__le32, dword1)
+> +		__field(int, state)
+> +		__field(__le64, ptr)
+> +		__field(void *, rp)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(name, name);
+> +		__entry->rp = rp;
+> +		__entry->ptr = ptr;
+> +		__entry->dword0 = dword0;
+> +		__entry->dword1 = dword1;
+> +		__entry->state = MHI_TRE_GET_EV_STATE((struct mhi_ring_element *)entry->rp);
+> +	),
+> +
+> +	TP_printk("%s: RP:0x%p Processing Event:0x%llx 0x%08x 0x%08x state:%s\n",
+
+Same comment as above. Also, please use a single format. Like, here you are
+printing "Processing Event" after "RP"...
+
+> +		  __get_str(name), __entry->rp, __entry->ptr, __entry->dword0,
+> +		  __entry->dword1, mhi_state_str(__entry->state))
+> +);
+> +
+> +DEFINE_EVENT(mhi_process_event_ring, mhi_data_event,
+> +
+> +	TP_PROTO(const char *name, void *rp, __le64 ptr,
+> +		 __le32 dword0, __le32 dword1),
+> +
+> +	TP_ARGS(name, rp, ptr, dword0, dword1)
+> +);
+> +
+> +DEFINE_EVENT(mhi_process_event_ring, mhi_ctrl_event,
+> +
+> +	TP_PROTO(const char *name, void *rp, __le64 ptr,
+> +		 __le32 dword0, __le32 dword1),
+> +
+> +	TP_ARGS(name, rp, ptr, dword0, dword1)
+> +);
+> +
+> +DECLARE_EVENT_CLASS(mhi_update_channel_state,
+> +
+> +	TP_PROTO(const char *name, int ch_num, int state),
+> +
+> +	TP_ARGS(name, ch_num, state),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(name, name)
+> +		__field(int, ch_num)
+> +		__field(int, state)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(name, name);
+> +		__entry->ch_num = ch_num;
+> +		__entry->state = state;
+> +	),
+> +
+> +	TP_printk("%s: ch%d: Updating state to: %s\n",
+
+Use "Chan" as above.
+
+> +		  __get_str(name), __entry->ch_num,
+> +		  TO_CH_STATE_TYPE_STR(__entry->state))
+> +);
+> +
+> +DEFINE_EVENT(mhi_update_channel_state, mhi_channel_command_start,
+> +
+> +	TP_PROTO(const char *name, int ch_num, int state),
+> +
+> +	TP_ARGS(name, ch_num, state)
+> +);
+> +
+> +DEFINE_EVENT(mhi_update_channel_state, mhi_channel_command_end,
+> +
+> +	TP_PROTO(const char *name, int ch_num, int state),
+> +
+> +	TP_ARGS(name, ch_num, state)
+> +);
+> +
+> +TRACE_EVENT(mhi_pm_st_transition,
+> +
+> +	TP_PROTO(const char *name, int state),
+> +
+> +	TP_ARGS(name, state),
+> +
+> +	TP_STRUCT__entry(
+> +		__string(name, name)
+> +		__field(int, state)
+> +	),
+> +
+> +	TP_fast_assign(
+> +		__assign_str(name, name);
+> +		__entry->state = state;
+> +	),
+> +
+> +	TP_printk("%s: Handling state transition: %s\n", __get_str(name),
+> +		  TO_DEV_STATE_TRANS_STR(__entry->state))
+> +);
+> +
+> +#endif
+> +#undef TRACE_INCLUDE_PATH
+> +#define TRACE_INCLUDE_PATH .
+
+I had to use relative path to build this patch:
+
+#define TRACE_INCLUDE_PATH ../../drivers/bus/mhi/host
+
+- Mani
+
+> +#undef TRACE_INCLUDE_FILE
+> +#define TRACE_INCLUDE_FILE trace
+> +
+> +#include <trace/define_trace.h>
+> 
+> ---
+> base-commit: 3006adf3be79cde4d14b1800b963b82b6e5572e0
+> change-id: 20231005-ftrace_support-6869d4156139
+> 
+> Best regards,
+> -- 
+> Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> 
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
