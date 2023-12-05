@@ -1,154 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-3400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52977804981
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 06:53:46 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BEFA8049A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 06:59:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0243A1F21467
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 05:53:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5200128150D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 05:59:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BCABD2EA;
-	Tue,  5 Dec 2023 05:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 458E6D50E;
+	Tue,  5 Dec 2023 05:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="azAj7eL1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o8m8mIqi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57BE8AA;
-	Mon,  4 Dec 2023 21:53:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701755619; x=1733291619;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=bFFeeF8hJ3DxE50au0V2o4iCp73fC+lbzXYWg5k/A/o=;
-  b=azAj7eL1U16j4HcCYOXpiTtrsJDi5jsAjhd4CXRGeMvER9FQISvS0raS
-   GSeP3vgeox4W2Txfvgbm6Ypu4osD+pwu/3PAZfy0tqyV6Dfeo/8niKHnO
-   7cyj0siOEefqYQKg/uS36JLWD9mKlWgQocyUXCNFhGO9NqDyWwbks/Vky
-   uzex9G8SMTyTjIdCc9S61G4qCidN5fDfOsUCEjxpTUfpu8biHMsm8ELL7
-   A3D5u7hj7ctdAaH25T+iKXbrHshDSK5Sof28MKLbccTcHw507hNJ2B+k4
-   G8uvYXiIT53a/8Vp7T7/9rvxHC1Omj9wJHG6tu8nGLz3n2BLhljxTobHG
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="425008173"
-X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
-   d="scan'208";a="425008173"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 21:53:39 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="841329822"
-X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
-   d="scan'208";a="841329822"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by fmsmga004.fm.intel.com with ESMTP; 04 Dec 2023 21:53:35 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rAONA-0008PG-1l;
-	Tue, 05 Dec 2023 05:53:32 +0000
-Date: Tue, 5 Dec 2023 13:53:09 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sneh Shah <quic_snehshah@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, netdev@vger.kernel.org,
-	Sneh Shah <quic_snehshah@quicinc.com>, kernel@quicinc.com,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: Re: [PATCH net-next] net: stmmac: qcom-ethqos: Add sysfs nodes for
- qcom ethqos
-Message-ID: <202312051347.L3L2pNLv-lkp@intel.com>
-References: <20231204084854.31543-1-quic_snehshah@quicinc.com>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FA52134;
+	Mon,  4 Dec 2023 21:59:46 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B530TCh010074;
+	Tue, 5 Dec 2023 05:59:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=3LK9jcnO2LKsXvZ4d4db8H6yT9gdmGLVtbrluxK8Gv0=;
+ b=o8m8mIqi/aC0QrUWWiuWVZjs9GXCeX+xG8xlFpLj4irv22PQlGNrgUs/TZN7Hy7ycN0m
+ RkkZxtrCGk4XibHSUdjiDc3ZwFLx7Zh+ghQXRkvB6iKND+aNNlT68UeAH7/FZvBMwM+S
+ igz96hsNywiVf/AHgU3eEcPaEJn6JqsRuiIPtsavJxD139PVLgJN52EJnCS8NYPLH6IB
+ gn0tBNKjJarZ8lNvL9JJCuwUFvnc0daqEVOGQHDsEmYUCfKizlU3KQ9I+SeBRzR82GG8
+ BIdONGQ3MZsJCSenhCcJ0o13Mn4IjpFQOTStJXW9WFUCau87kpugwGVCYjEfJg6Dc8rA Ng== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3usdf7jdek-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 05 Dec 2023 05:59:26 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B55x0Y2022211
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 5 Dec 2023 05:59:00 GMT
+Received: from [10.217.219.220] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
+ 2023 21:58:54 -0800
+Message-ID: <692cd503-5b14-4be6-831d-d8e9c282a95e@quicinc.com>
+Date: Tue, 5 Dec 2023 11:28:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231204084854.31543-1-quic_snehshah@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 1/3] ufs: core: Add CPU latency QoS support for ufs
+ driver
+To: Bart Van Assche <bvanassche@acm.org>,
+        "James E.J. Bottomley"
+	<jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Peter Wang <peter.wang@mediatek.com>,
+        Manivannan Sadhasivam
+	<mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Matthias
+ Brugger" <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        <chu.stanley@gmail.com>
+CC: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+        <linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, Nitin Rawat <quic_nitirawa@quicinc.com>
+References: <20231204143101.64163-1-quic_mnaresh@quicinc.com>
+ <20231204143101.64163-2-quic_mnaresh@quicinc.com>
+ <590ade27-b4da-49be-933b-e9959aa0cd4c@acm.org>
+Content-Language: en-US
+From: Naresh Maramaina <quic_mnaresh@quicinc.com>
+In-Reply-To: <590ade27-b4da-49be-933b-e9959aa0cd4c@acm.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 94TVaSz2EVX3106dVDD8YYFE_UR_i5ND
+X-Proofpoint-GUID: 94TVaSz2EVX3106dVDD8YYFE_UR_i5ND
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-05_03,2023-12-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ spamscore=0 clxscore=1015 adultscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2312050048
 
-Hi Sneh,
+On 12/5/2023 12:30 AM, Bart Van Assche wrote:
+> On 12/4/23 06:30, Maramaina Naresh wrote:
+>> +    u32    (*config_qos_vote)(struct ufs_hba *hba);
+> 
+> Please remove the above callback since this patch series does not
+> introduce any instances of this callback.
+> 
 
-kernel test robot noticed the following build warnings:
+Sure Bart, i will take care of this comment in next patch set.
+If some SoC vendor have a different qos vote value then this callback 
+can be added in future.
 
-[auto build test WARNING on net-next/main]
+>> +
+>> +    /* This capability allows the host controller driver to use the 
+>> PM QoS
+>> +     * feature.
+>> +     */
+>> +    UFSHCD_CAP_PM_QOS                = 1 << 13,
+>>   };
+> 
+> Why does it depend on the host driver whether or not PM QoS is
+> enabled? Why isn't it enabled unconditionally?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sneh-Shah/net-stmmac-qcom-ethqos-Add-sysfs-nodes-for-qcom-ethqos/20231204-165232
-base:   net-next/main
-patch link:    https://lore.kernel.org/r/20231204084854.31543-1-quic_snehshah%40quicinc.com
-patch subject: [PATCH net-next] net: stmmac: qcom-ethqos: Add sysfs nodes for qcom ethqos
-config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20231205/202312051347.L3L2pNLv-lkp@intel.com/config)
-compiler: alpha-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231205/202312051347.L3L2pNLv-lkp@intel.com/reproduce)
+For some platform vendors power KPI might be more important than random 
+io KPI. Hence this flag is disabled by default and can be enabled based 
+on platform requirement.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202312051347.L3L2pNLv-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c: In function 'gvm_queue_mapping_store':
->> drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c:770:13: warning: variable 'prio' set but not used [-Wunused-but-set-variable]
-     770 |         u32 prio;
-         |             ^~~~
+> 
+>> + * @pm_qos_req: PM QoS request handle
+>> + * @pm_qos_init: flag to check if pm qos init completed
+>>    */
+> 
+> Documentation for pm_qos_init is missing.
+> 
+Sorry, i didn't get your comment, i have already added documentation for 
+@pm_qos_init, @pm_qos_req variable as above. Do you want me to add this 
+information some where else as well?
 
 
-vim +/prio +770 drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
 
-   762	
-   763	static ssize_t gvm_queue_mapping_store(struct device *dev,
-   764					       struct device_attribute *attr,
-   765					       const char *user_buf, size_t size)
-   766	{
-   767		struct net_device *netdev = to_net_dev(dev);
-   768		struct stmmac_priv *priv;
-   769		struct qcom_ethqos *ethqos;
- > 770		u32 prio;
-   771		s8 input = 0;
-   772	
-   773		if (!netdev) {
-   774			pr_err("netdev is NULL\n");
-   775			return -EINVAL;
-   776		}
-   777	
-   778		priv = netdev_priv(netdev);
-   779		if (!priv) {
-   780			pr_err("priv is NULL\n");
-   781			return -EINVAL;
-   782		}
-   783	
-   784		ethqos = priv->plat->bsp_priv;
-   785		if (!ethqos) {
-   786			pr_err("ethqos is NULL\n");
-   787			return -EINVAL;
-   788		}
-   789	
-   790		if (kstrtos8(user_buf, 0, &input)) {
-   791			pr_err("Error in reading option from user\n");
-   792			return -EINVAL;
-   793		}
-   794	
-   795		if (input == ethqos->gvm_queue)
-   796			pr_err("No effect as duplicate input\n");
-   797	
-   798		ethqos->gvm_queue = input;
-   799		prio  = 1 << input;
-   800	
-   801		return size;
-   802	}
-   803	
+>>   struct ufs_hba {
+>>       void __iomem *mmio_base;
+>> @@ -1076,6 +1089,9 @@ struct ufs_hba {
+>>       struct ufs_hw_queue *uhq;
+>>       struct ufs_hw_queue *dev_cmd_queue;
+>>       struct ufshcd_mcq_opr_info_t mcq_opr[OPR_MAX];
+>> +    struct pm_qos_request pm_qos_req;
+>> +    bool pm_qos_init;
+>> +    u32 qos_vote;
+> 
+> Please rename "pm_qos_init" into "pm_qos_initialized".
+> 
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Sure Bart, i will take care of this comment in next patch set.
+
+> Thanks,
+> 
+> Bart.
+> 
+
+Thanks,
+Naresh.
 
