@@ -1,90 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-3440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8A758052E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:31:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E01D805333
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:41:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62D602816A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 11:31:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B02A82812B1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 11:41:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 504AE6979D;
-	Tue,  5 Dec 2023 11:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99C1A56B64;
+	Tue,  5 Dec 2023 11:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="M7XiLvX7";
-	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="wcXJG4s/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FMJov2tc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8112C1B9;
-	Tue,  5 Dec 2023 03:31:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1701775857; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=j8ERvUoQFRjxzG3q+WoTBj1tiSAUaNNRRWQVzv3YChJpuqqjq5wIMapskHmrZ/dxQn
-    +nKRxGQOx6sQbb4VS2JbtwukY5kfaegoSRxR9hJUtpRj+EsdsI9kDlOUsS6DT/uNKZiV
-    E3oaZANWqdrl7ieUdYqoH8yNUOXdqqYpdyZf11MRpkAcPw6K5+Jn+wh1emKGR+Gy0d5V
-    COveT6qXTRG25t8X78MCMe59XUDiSHVGjGR7FEFFFWMaUr9V+YYfL6thiAScqmghyFL1
-    v7I4Ez06vPu+n4Y1+aEDP9PFo71j0K+ba4D7wdbaNG8d9EKc4H5Y9mf1I9oMN2JkhlWr
-    yp1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1701775857;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=R8hAw3u8uqXybhgsoJbMwSKfmEEJh0/vArUEqpnDzW8=;
-    b=Xuo2z92jnhvalBzoA/FJv5RM/4iFyeugNtj6kUQdMnOLBCqg5rKX3+xbNHURiAADij
-    qpxe45n6q99RsaPrYpcoxZyI4UegrYWSgyXBh8CYzjPXiX3uVk2KhQ7cqjkLVBFewx5y
-    rFtVEdHS/oZLKqaxEUIBwJFwdAksVZilS7a0lKVib6QkFbmx32eXpacWS96hkPbyy281
-    7loYXdggQt2wVeYQuw0HYoEihJ//VDF0EWXTBkGpUjlfBCwXBgdDiXbNuwVmS3IF1rr5
-    PdSELmVfXHMTMGbJDLOhGu7IfsdlNit91/eFnupQgGvfgJVRxSbcy8K1POjlNLS1DZK1
-    rfNw==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1701775857;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=R8hAw3u8uqXybhgsoJbMwSKfmEEJh0/vArUEqpnDzW8=;
-    b=M7XiLvX73qoQax2FX0WCdtSotvrXrkdQu0DAmf1qcF9qH0wnlpwaNKMCuXVB17FC7r
-    c4nXgffq+mYxza2XOpLGCGV9chiVi8ngsOFUf2VOOSdhpzGQ9H3Fr8nt9uVo3gc5sKvi
-    2tSdbtMPm2zogOqbBHig8FQIMMflhs/uh6jZqLZf4t0wVbosyx/VG/fziMa2z3NV1FIf
-    mNQxj7JhcwGw3loI6xByyfVBqdBGKXLH0hqUeBnRgRoNf+KQlwqWmmoKMH0IiVrEPr7l
-    BARz5m3nXqWcC71+LbBtYsOleD/Lw1NsvnCnI/iBiYy2OjX/wo1e8ND7iXElkYuv4pg6
-    5nRg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1701775857;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=R8hAw3u8uqXybhgsoJbMwSKfmEEJh0/vArUEqpnDzW8=;
-    b=wcXJG4s/z88ltIwTsAmmSfGUkunYw8ndfagKoH9cZ5jWXVCPV736ww7fHo65T71Bco
-    75BdiM0wjzv+sI5D1sDg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.10.0 DYNA|AUTH)
-    with ESMTPSA id 58bb61zB5BUu12y
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Tue, 5 Dec 2023 12:30:56 +0100 (CET)
-Date: Tue, 5 Dec 2023 12:30:50 +0100
-From: Stephan Gerhold <stephan@gerhold.net>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Raymond Hackley <raymondhackley@protonmail.com>,
-	linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76650697A9;
+	Tue,  5 Dec 2023 11:41:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E85D8C433C8;
+	Tue,  5 Dec 2023 11:41:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701776483;
+	bh=39hIynYLxtwl/O23npHEkHvKhoLwLy7fzyGPOOqty9g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FMJov2tcJS/7wL/pPXe3meTv6r3DI2KkeFBdH68DYYQ6tOUabE33M0QM7VH7HVNV7
+	 p94elf+S/c5ZZTQ6sC4/qdAYFoJGrTmztWs/T2rak7Zi5FH2riyTetSCXQ8QTMIx12
+	 BOWXOXEHXX6oJXKOKUMtTOt5d9hXGsTAL7rBfXBF/0qNEoRGiLtIM1qNQE0zBikHpX
+	 zOSQY2ZM7dH24M+d+GMc5hb6VtdvRM9UU5yAgUfvyYvNcpzcwO7pHEkzQye9fAXDyd
+	 0C0QHbw+lBZVRSsehi1ZgvBuBjZDx12acKI5T8BS+Fq5ugVe3WcPnjd2HRJHMcKtNi
+	 MuP18QxZfnWCA==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rAToU-0008Ud-2D;
+	Tue, 05 Dec 2023 12:42:06 +0100
+Date: Tue, 5 Dec 2023 12:42:06 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jakob Hauser <jahau@rocketmail.com>,
-	Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916/39-samsung-a2015: Add PMIC and
- charger
-Message-ID: <ZW8J6vYKg82Q4JFV@gerhold.net>
-References: <20231205093841.24325-1-raymondhackley@protonmail.com>
- <1c62dd8b-72b2-4204-8284-a1dd90d4f909@linaro.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: qrb5165-rb5: add a pin function
+ for BT enable GPIO
+Message-ID: <ZW8Mjp9whA9rxam9@hovoldconsulting.com>
+References: <20231205112311.16391-1-brgl@bgdev.pl>
+ <20231205112311.16391-2-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,41 +60,43 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1c62dd8b-72b2-4204-8284-a1dd90d4f909@linaro.org>
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20231205112311.16391-2-brgl@bgdev.pl>
 
-On Tue, Dec 05, 2023 at 12:17:15PM +0100, Bryan O'Donoghue wrote:
-> On 05/12/2023 10:38, Raymond Hackley wrote:
-> > The phones listed below have Richtek RT5033 PMIC and charger.
-> > Add them to the device trees.
-> > 
-> > - Samsung Galaxy A3/A5/A7 2015
-> > - Samsung Galaxy E5/E7
-> > - Samsung Galaxy Grand Max
-> > 
-> > Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
-> > [...]
-> > +			/*
-> > +			 * Needed for camera, but not used yet.
-> > +			 * Define empty nodes to allow disabling the unused
-> > +			 * regulators.
-> > +			 */
-> > +			LDO {};
-> > +			BUCK {};
-> > +		};
+On Tue, Dec 05, 2023 at 12:23:10PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Aren't the camera regulators off until enabled ?
+> Set up the pin function for the Bluetooth enable GPIO.
 > 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index ce6ae0771d34..ead0c45ba60c 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -1264,6 +1264,17 @@ &tlmm {
+>  		"HST_WLAN_UART_TX",
+>  		"HST_WLAN_UART_RX";
+>  
+> +	bt_en_state: bt-default-state {
+> +		bt-en {
+> +			pins = "gpio21";
+> +			function = "gpio";
+> +
+> +			drive-strength = <16>;
+> +			output-low;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+>  	lt9611_irq_pin: lt9611-irq-state {
+>  		pins = "gpio63";
+>  		function = "gpio";
 
-We don't know for sure what state they are in during boot. If we omit
-these nodes the regulator core will ignore these regulators completely
-and just leave them in whatever state they are.
+This makes no sense as a separate patch and should be squashed with the
+final patch enabling bluetooth. Same for the first patch.
 
-I would indeed expect them to be off after reset, but there are also
-other situations in which Linux might be booted, such as kexec. That's
-why it's usually better to be explicit and avoid relying on boot/reset
-states altogether.
-
-Thanks,
-Stephan
+Johan
 
