@@ -1,207 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-3417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA028804B53
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 08:47:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95DEC804B72
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 08:51:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F6F31F213F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 07:47:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4BFD1280FE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 07:51:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 070F5250FD;
-	Tue,  5 Dec 2023 07:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20A9B2D62E;
+	Tue,  5 Dec 2023 07:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AihshZxP"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="b4vhiER6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FF8BCA;
-	Mon,  4 Dec 2023 23:47:01 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B52oxUZ016853;
-	Tue, 5 Dec 2023 07:46:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=kbodZWM2evYVptkeKv/TRiiQ0iRhUvgSJ4NO6T5niTg=;
- b=AihshZxP8tvNzsiAh4KijSEOxhuGRyqcAFTy3GmTI4kIZF/Ykfk66R/2hcnheE5WmxKS
- ZRIu1EDRNzXhOkQl6LOJcYgZC6mY1e+AGdYg9WzLmwpolgVK88+QhwW6J6uhkDOP8Dxw
- hrZC9L++mK6n8MaRNidz00f8oh6xHvT8wKUBAaiuIBIUstoyB66iFmFLfR8xTPuJOh7K
- 7l0ESFPGKsnkB2tIKNsnEr3BdskuaHsagcdmzKlEx0mPLnfUyThstKYlzEgDLfEgjLaS
- x6s+TKKigSCIjfkywhgY6npZsxfKBtbnzQO4DDtpi9WKIT/9bjaJD/FOBmgg2M+69Vtx DA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3us8wpk7up-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Dec 2023 07:46:57 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B57kuuv020485
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Dec 2023 07:46:56 GMT
-Received: from [10.239.133.73] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
- 2023 23:46:51 -0800
-Message-ID: <a715c4f1-dcba-4411-ae6b-20ce4ad849ac@quicinc.com>
-Date: Tue, 5 Dec 2023 15:46:48 +0800
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::229])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6D4CA;
+	Mon,  4 Dec 2023 23:50:55 -0800 (PST)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 15DFEFF80A;
+	Tue,  5 Dec 2023 07:50:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1701762654;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=33Cr2ldAlMbcSRdOfjbnL3I/Zg4ZMoiw1vVYuAFexRo=;
+	b=b4vhiER6a0L6V8r2zxzPP/QzfzSTlhkeU1AriyKxFIiplNb1XZ+XCg2+EjeucXV/uV/YO1
+	A6h6P+g9lkmW+V/niTIfxHvrUoEZvRPzOqCAIDa3DT3VFQTc+CsmYxgkF04Y5f60h3AyTB
+	LGT8ZexvnP/khyItrTvFEaSAjyBJLtzeazAio64kaoWBvk9/Cf5MbKMwt/WGwhkx/tsdFN
+	mh73fi+AM6pxPwChmWZxPfMalh+OE/yLyktflvwxRIlg6Tb8lQh+mjSaNsubYNsZFYEufg
+	rM38OiIl0V2/qYiI4jNoAbSvYw49xiCSmt3syB9uLbezVsY4n/msm/yXn2SWag==
+Date: Tue, 5 Dec 2023 08:50:46 +0100
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Uwe =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?= <u.kleine-koenig@pengutronix.de>
+Cc: Andrew Lunn <andrew@lunn.ch>, Alexander Aring <alex.aring@gmail.com>,
+ Sergey Ryazanov <ryazanov.s.a@gmail.com>, Eric Dumazet
+ <edumazet@google.com>, Stefan Schmidt <stefan@datenfreihafen.org>, Zhao
+ Qiang <qiang.zhao@nxp.com>, Bjorn Andersson <andersson@kernel.org>, Konrad
+ Dybcio <konrad.dybcio@linaro.org>, Russell King <linux@armlinux.org.uk>,
+ linux-wpan@vger.kernel.org, Andy Gross <agross@kernel.org>, Jakub Kicinski
+ <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, =?UTF-8?B?Q2zDqW1l?=
+ =?UTF-8?B?bnQgTMOpZ2Vy?= <clement.leger@bootlin.com>, Christian Marangi
+ <ansuelsmth@gmail.com>, Nick Child <nnac123@linux.ibm.com>, Stephan Gerhold
+ <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org, Loic Poulain
+ <loic.poulain@linaro.org>, Marc Kleine-Budde <mkl@pengutronix.de>,
+ linux-arm-kernel@lists.infradead.org, Alex Elder <elder@kernel.org>,
+ netdev@vger.kernel.org, Linus Walleij <linusw@kernel.org>,
+ linux-renesas-soc@vger.kernel.org, kernel@pengutronix.de, Johannes Berg
+ <johannes@sipsolutions.net>, Imre Kaloz <kaloz@openwrt.org>,
+ linuxppc-dev@lists.ozlabs.org, "David S. Miller" <davem@davemloft.net>,
+ Heiner Kallweit <hkallweit1@gmail.com>
+Subject: Re: [PATCH net-next v2 0/9] net*: Convert to platform remove
+ callback returning void
+Message-ID: <20231205085046.7307ca9b@xps-13>
+In-Reply-To: <20231205073911.e6nphzhc6yjan5vu@pengutronix.de>
+References: <cover.1701713943.git.u.kleine-koenig@pengutronix.de>
+	<20231205075110.795b88d2@xps-13>
+	<20231205073911.e6nphzhc6yjan5vu@pengutronix.de>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pinctrl: Add lock to ensure the state atomization
-To: Bjorn Andersson <andersson@kernel.org>
-CC: <linus.walleij@linaro.org>, <linux-gpio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20231201152931.31161-1-quic_aiquny@quicinc.com>
- <6jlui5h7d2rs37sdvvwmii55mwhm5dzfo2m62hwt53mkx4z32a@aw5kcghe4bik>
- <4d85fda9-6e00-4bb4-b8a8-85c5e66635bf@quicinc.com>
- <wmpsnz3lhqsqglwkbr5ohrywqeufrjmtobhnprvf4o6iarc5x6@6jeuqck4n2nc>
-From: "Aiqun(Maria) Yu" <quic_aiquny@quicinc.com>
-In-Reply-To: <wmpsnz3lhqsqglwkbr5ohrywqeufrjmtobhnprvf4o6iarc5x6@6jeuqck4n2nc>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WUG1ez1NYRNFYBRUY8Y2L2nHUUc4RZ2d
-X-Proofpoint-ORIG-GUID: WUG1ez1NYRNFYBRUY8Y2L2nHUUc4RZ2d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-05_03,2023-12-04_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 clxscore=1015 malwarescore=0 bulkscore=0 phishscore=0
- mlxlogscore=999 impostorscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311060000 definitions=main-2312050062
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: miquel.raynal@bootlin.com
 
-On 12/5/2023 12:46 AM, Bjorn Andersson wrote:
-> On Mon, Dec 04, 2023 at 05:57:42PM +0800, Aiqun(Maria) Yu wrote:
->> On 12/2/2023 4:39 AM, Bjorn Andersson wrote:
->>> On Fri, Dec 01, 2023 at 11:29:31PM +0800, Maria Yu wrote:
->>>> Currently pinctrl_select_state is an export symbol and don't have
->>>> effective re-entrance protect design. And possible of pinctrl state
->>>> changed during pinctrl_commit_state handling. Add per pinctrl lock to
->>>> ensure the old state and new state transition atomization.
->>>> Move dev error print message right before old_state pinctrl_select_state
->>>> and out of lock protection to avoid console related driver call
->>>> pinctrl_select_state recursively.
->>>
->>> I'm uncertain about the validity of having client code call this api in
->>> a racy manner. I'm likely just missing something here... It would be
->>> nice if this scenario was described in a little bit more detail.
->> Hi Bjorn,
->>
->> we've got a customer dump that the real racy happened, and the system
->> frequently have printk message like:
->>    "not freeing pin xx (xxx) as part of deactivating group xxx - it is
->> already used for some other setting".
->> Finally the system crashed after the flood log.
->>
-> 
-> Sounds like we have a valid issue, but let's make sure that we
-> describe the problem on its technical grounds in the commit that is
-> upstreamed - if nothing else, so that others can determine if the
-> solution matches their bug reports.
-> 
->> We've inform the customer to check their own client code which called this
->> api, to have proper lock to avoid racy of per dev pinctrl_select_state call
->> from customer driver end.
->> For example:
->> LOCK;
->> pinctrl_select_state();
-> 
-> Placing a lock inside pinctrl_select_state() will not make this whole
-> sequence atomic, so if the client driver needs to know that the state
-> remains from here until the "other hardware behaviors" below, something
-> more is needed.
-Agree.
-This is only an example to enforcing from the clients which call this 
-API. while apparently not all clients ensured this kind of lock safe 
-when to call pinctrl_select_state, so that's why placing a lock inside 
-pinctrl_select_state to ensure atomic of per dev pinctrl at least.
-> 
-> Perhaps I'm misunderstanding what you're saying though?
+Hello Uwe,
 
-> 
->> gpio pulling;
->> udelay();
->> check state;
->> other hardware behaviors;
->> UNLOCK;
->>
->> While it is still unnecessary the volatile re-load of p->state for the
->> interation and so I upstream a patch like link[2].
->>
->> while during the merge discussion, upstream maintainer suggest to have the
->> lock issue fixed, instead of only READ_ONCE for the interation.
->> I think it is also make sense since although current in-tree driver have
->> take care of each pinctrl_select_state call, since it is a export symbole
->> and we've see the similar issue continuously (a year back ago also we've
->> seen similar issue before[3]).
->>
-> 
-> I think you're correcting a real problem, in that two contexts calling
-> pinctrl_select_state() seems to be able to cause non-deterministic
-> results. But is the motivation "pinctrl_select_state() is an
-> EXPORT_SYMBOL, so let's make it thread safe", or is the motivation
-EXPORT_SYMBOL pinctrl_select_state, let's make it thread safe is a 
-motivation here. As above reason explained.
-> "during async probing of devices it's possible to end up in
-> pinctrl_select_state() from multiple contexts simultaneously, so make it
-> thread safe"?
-> 
->> The whole serials discussion can be found link here:
->> [1] https://lore.kernel.org/lkml/e011b3e9-7c09-4214-8e9c-90e12c38bbaa@quicinc.com/
->> [2]
->> https://lore.kernel.org/lkml/20231115102824.23727-1-quic_aiquny@quicinc.com/
->> [3]
->> https://lore.kernel.org/lkml/20221027065408.36977-1-quic_aiquny@quicinc.com/
->>
->>>
->>> The recursive error print sounds like a distinct problem of its own,
->>> that warrants being introduced in a patch of its own. But as with the
->>> other part, I'm not able to spot a code path in the upstream kernel
->>> where this hppens, so please properly describe the scenario where
->>> touching the console would result back in another pinctrl_select_state().
->> For this part, I am thinking about a spin lock is introduced and have the
->> error log out of the lock will be safer.
->> The current patch disable irq during the lock, and some console driver rely
->> on interrupt to get tx dma/fifo ready.
-> 
-> Logging outside the region with interrupts disabled make total sense,
-> I'm definitely in favor of this.
-Fair enough.
-> 
->> Also console driver will be a pinctrl client, so avoid unnecessary recursive
->> in theory.
-> 
-> I don't think a console driver should pinctrl_select_state() from its
-> tx path, that's why I'm asking.
-> 
-Got you. I haven't seen in-tree console driver have tx path call 
-pinctrl_select_state. Will re-vise the commit comments accordingly.
-> But perhaps I'm missing some scenario, if so please describe this in the
-> commit message.
-> 
+u.kleine-koenig@pengutronix.de wrote on Tue, 5 Dec 2023 08:39:11 +0100:
 
->> Just incase some out of tree concole driver was able to use the
->> pinctrl_select_state in console write related APIs as well.
-> 
-> If there is a valid usage pattern I think we should consider that, but
-> we do not care about out-of-tree drivers misusing/abusing framework
-> APIs.
-Fair.
-> 
-> Regards,
-> Bjorn
+> Hello Miquel,
+>=20
+> On Tue, Dec 05, 2023 at 07:51:10AM +0100, Miquel Raynal wrote:
+> > u.kleine-koenig@pengutronix.de wrote on Mon,  4 Dec 2023 19:30:40 +0100=
+: =20
+> > > (implicit) v1 of this series can be found at
+> > > https://lore.kernel.org/netdev/20231117095922.876489-1-u.kleine-koeni=
+g@pengutronix.de.
+> > > Changes since then:
+> > >=20
+> > >  - Dropped patch #1 as Alex objected. Patch #1 (was #2 before) now
+> > >    converts ipa to remove_new() and introduces an error message in the
+> > >    error path that failed before.
+> > >=20
+> > >  - Rebased to today's next
+> > >=20
+> > >  - Add the tags received in the previous round.
+> > >=20
+> > > Uwe Kleine-K=C3=B6nig (9):
+> > >   net: ipa: Convert to platform remove callback returning void
+> > >   net: fjes: Convert to platform remove callback returning void
+> > >   net: pcs: rzn1-miic: Convert to platform remove callback returning
+> > >     void
+> > >   net: sfp: Convert to platform remove callback returning void
+> > >   net: wan/fsl_ucc_hdlc: Convert to platform remove callback returning
+> > >     void
+> > >   net: wan/ixp4xx_hss: Convert to platform remove callback returning
+> > >     void
+> > >   net: wwan: qcom_bam_dmux: Convert to platform remove callback
+> > >     returning void
+> > >   ieee802154: fakelb: Convert to platform remove callback returning v=
+oid
+> > >   ieee802154: hwsim: Convert to platform remove callback returning vo=
+id =20
+> >=20
+> > FYI, I plan on taking patches 8 and 9 through wpan-next. =20
+>=20
+> I forgot to mention explicitly that there are no interdependencies in
+> this series. So each maintainer picking up up their patches is fine.
 
--- 
-Thx and BRs,
-Aiqun(Maria) Yu
+Yes, no problem, it was quick to figure out.
 
+Thanks,
+Miqu=C3=A8l
 
