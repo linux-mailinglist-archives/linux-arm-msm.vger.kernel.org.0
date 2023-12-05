@@ -1,42 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-3477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE1E2805CB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 19:01:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AE92805CBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 19:01:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 617E5B20B5F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 18:01:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A36B41C20F95
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 18:01:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CB826A342;
-	Tue,  5 Dec 2023 18:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D83C6A34E;
+	Tue,  5 Dec 2023 18:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="FksvE4Ga"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="otLhxBWn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFD0B2;
-	Tue,  5 Dec 2023 10:00:57 -0800 (PST)
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E54E90;
+	Tue,  5 Dec 2023 10:01:48 -0800 (PST)
 Received: from [100.95.196.25] (cola.collaboradmins.com [195.201.22.229])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: koike)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 3F433660715D;
-	Tue,  5 Dec 2023 18:00:51 +0000 (GMT)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id D3F3F66072EC;
+	Tue,  5 Dec 2023 18:01:41 +0000 (GMT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1701799256;
-	bh=RgkVHjxMEsdXllUes00vbSqVmLybs60goWYS6kaWos8=;
+	s=mail; t=1701799307;
+	bh=VwHWq49kjTDZ3UF6CffpL7rnWqXYoSvsZ2/8l2HARl4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FksvE4Ga17Z+a4BzWvMY/16U6sbJxavWMiB1tuCqhvG2l/iOMPypzK0mWMcq0yjTQ
-	 bhX/HsWwRYZHkW8QgV14rI4VOvDjYtTH01HaqZR0rqOwr3B35KNPl4Tgq0UaWn2/hQ
-	 agqC7hEHzp7ekxcJX6CbAb0xtepUiCUkaUTm3zM7CaR1aF3teuzGmGtzaJV7eUUzB1
-	 oAgJuZlvXBgdK3hIsLxIEjBFaWjsOg+GLAyutPNqQvZS29FMf6a/1DmN6etZfVfxlS
-	 4RIsFTFctyCuX+dBSDMNrU4wTwAfIm1MbdFFv+209MYurr+5GIbWWHgpGKW/nq0low
-	 DnpSecXjQGzTQ==
-Message-ID: <03724cf8-e7c1-462a-80a4-587f5df202ef@collabora.com>
-Date: Tue, 5 Dec 2023 15:00:50 -0300
+	b=otLhxBWn+wz/7Hfc8AtWtVJRHG5bcDHllMU1uJjJTdQiBHYi9AY871hD/AP9jwOaT
+	 3RcXR9XKK385uT6/VZq++0TvIgSCaK4+vhaecmaZzXFCtSyr2PXD1AlzM7otyZdcSK
+	 OHBJKNl21TPaFg2iXjbhiw8UW51wJiEzFA2O7LxJNAoAiVGRTNgTYMpOJ8Zel6P9+J
+	 Ar2ixBYuanGVjPJBBpRhnropxXrqLwMNvK/kUmnWgwKyho4g/pSTKj88kiGU7AkZ3G
+	 QKM8eMXNRutHPKdX9yuQ67x3Ikebe7uXaCKVr2YK93fZhJn9smqAF3yxh1JqcpzV1f
+	 jIRY+gSyCcXsg==
+Message-ID: <8a773fef-c3e4-44ec-931c-de2a92d2d835@collabora.com>
+Date: Tue, 5 Dec 2023 15:01:41 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -44,7 +44,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 08/10] drm: ci: uprev IGT
+Subject: Re: [PATCH v6 09/10] drm/doc: ci: Add IGT version details for flaky
+ tests
 Content-Language: en-US
 To: Vignesh Raman <vignesh.raman@collabora.com>, airlied@gmail.com,
  daniel@ffwll.ch
@@ -56,43 +57,19 @@ Cc: david.heidelberg@collabora.com, sergi.blanch.torne@collabora.com,
  virtualization@lists.linux-foundation.org,
  linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org
 References: <20231129121841.253223-1-vignesh.raman@collabora.com>
- <20231129121841.253223-9-vignesh.raman@collabora.com>
+ <20231129121841.253223-10-vignesh.raman@collabora.com>
 From: Helen Koike <helen.koike@collabora.com>
-In-Reply-To: <20231129121841.253223-9-vignesh.raman@collabora.com>
+In-Reply-To: <20231129121841.253223-10-vignesh.raman@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 
 
 On 29/11/2023 09:18, Vignesh Raman wrote:
-> virtio-gpu kernel driver reports 16 for count_crtcs
-> which exceeds IGT_MAX_PIPES set to 8 in igt-gpu-tools.
-> This results in below memory corruption,
-> 
->   malloc(): corrupted top size
->   Received signal SIGABRT.
->   Stack trace:
->    #0 [fatal_sig_handler+0x17b]
->    #1 [__sigaction+0x40]
->    #2 [pthread_key_delete+0x14c]
->    #3 [gsignal+0x12]
->    #4 [abort+0xd3]
->    #5 [__fsetlocking+0x290]
->    #6 [timer_settime+0x37a]
->    #7 [__default_morecore+0x1f1b]
->    #8 [__libc_calloc+0x161]
->    #9 [drmModeGetPlaneResources+0x44]
->    #10 [igt_display_require+0x194]
->    #11 [__igt_unique____real_main1356+0x93c]
->    #12 [main+0x3f]
->    #13 [__libc_init_first+0x8a]
->    #14 [__libc_start_main+0x85]
->    #15 [_start+0x21]
->   
-> This is fixed in igt-gpu-tools by increasing IGT_MAX_PIPES to 16.
-> https://patchwork.freedesktop.org/series/126327/
->   
-> Uprev IGT to include the patches which fixes this issue.
+> Document the IGT version in the flaky tests reporting template.
+
+Nice!
+
 > 
 > Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
 
@@ -104,23 +81,33 @@ Helen
 > ---
 > 
 > v6:
->    - Added a new patch in the series to uprev IGT to fix memory corruption
+>    - Added a new patch in the series to update drm ci documentation
 > 
 > ---
->   drivers/gpu/drm/ci/gitlab-ci.yml | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   Documentation/gpu/automated_testing.rst | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
-> index aeb9bab1b069..dac92cc2777c 100644
-> --- a/drivers/gpu/drm/ci/gitlab-ci.yml
-> +++ b/drivers/gpu/drm/ci/gitlab-ci.yml
-> @@ -5,7 +5,7 @@ variables:
->     UPSTREAM_REPO: git://anongit.freedesktop.org/drm/drm
->     TARGET_BRANCH: drm-next
+> diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst
+> index 240e29d5ba68..2d5a28866afe 100644
+> --- a/Documentation/gpu/automated_testing.rst
+> +++ b/Documentation/gpu/automated_testing.rst
+> @@ -69,14 +69,15 @@ the result. They will still be run.
 >   
-> -  IGT_VERSION: d1db7333d9c5fbbb05e50b0804123950d9dc1c46
-> +  IGT_VERSION: d2af13d9f5be5ce23d996e4afd3e45990f5ab977
+>   Each new flake entry must be associated with a link to the email reporting the
+>   bug to the author of the affected driver, the board name or Device Tree name of
+> -the board, the first kernel version affected, and an approximation of the
+> -failure rate.
+> +the board, the first kernel version affected, the IGT version used for tests,
+> +and an approximation of the failure rate.
 >   
->     DEQP_RUNNER_GIT_URL: https://gitlab.freedesktop.org/anholt/deqp-runner.git
->     DEQP_RUNNER_GIT_TAG: v0.15.0
+>   They should be provided under the following format::
+>   
+>     # Bug Report: $LORE_OR_PATCHWORK_URL
+>     # Board Name: broken-board.dtb
+> -  # Version: 6.6-rc1
+> +  # Linux Version: 6.6-rc1
+> +  # IGT Version: 1.28-gd2af13d9f
+>     # Failure Rate: 100
+>     flaky-test
+>   
 
