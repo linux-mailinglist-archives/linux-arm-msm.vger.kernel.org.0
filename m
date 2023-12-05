@@ -1,151 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-3399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D79C80464A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 04:26:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52977804981
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 06:53:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 607A61C20C94
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 03:26:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0243A1F21467
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 05:53:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 757468F62;
-	Tue,  5 Dec 2023 03:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BCABD2EA;
+	Tue,  5 Dec 2023 05:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GDgdc/xh"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="azAj7eL1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E50FA
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 19:26:04 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2c9f72176cfso28533371fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 19:26:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701746762; x=1702351562; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6W8X0Xiz1rA5PuHrR5WvXZZqhPL6WYEsL1snRk/kwzg=;
-        b=GDgdc/xh94NY6bNAOfsBWgCzEfPKoqFLnzeYRIiPyT0VjxEfgg75ihMV37TnfIfo6/
-         g8E0fLQcXMENEfGxEy+e1e6wBBXXCxXLhR04xk+n74d7SnDZHGleMyey4ZZt6nDOoiuS
-         wfbMBjaJyRzdbJOhjfbykSMJOmObUD70eU/C7+n1tS18uYz4ws0NPtXnkZZivcPmfq+B
-         B4KEMmpWkA1Ds4PisDJVniWGP1vMZmfB+rM/HulKqf1xj2CyisAoOcZdSEN94o6PgP3N
-         3/AcO+8KqpDJuj2OgBCxrh8QMDUoP0IU2lvpB6iwKKP5nkWGIffMMVRSqLtbX6M1QNXi
-         M/Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701746762; x=1702351562;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6W8X0Xiz1rA5PuHrR5WvXZZqhPL6WYEsL1snRk/kwzg=;
-        b=kpoZInkj45c2Np8bnRaCLN7I58QBLZXECiYXdL+hVkmHL4faYuLqX7stQBVLU6eU9U
-         fIiNu07hpTsf282d3djITfpe3vaplS7vcgrWozVUgWeUpqybmB59YGZ8FkQS/7aZ/jzk
-         jDml0QNOZ593VdFcQDtBTw5dTg0MYyb+zbRn2xhgaFUPXvU3ZgfmxMQ2zU/NbEpeyntG
-         zPlzsRmZQTp1DzxW/i9UEAU8ciDzppB7rQKf6IkD/5PbkofWGl8kFvrIniTCrXWwv6xD
-         +3UVbfzCYmY7Q7Utmw+SeN3HYpd+BZ1wI7aD8UhZtpyQ5bKjVbioudxMRi7yYChdV+hM
-         c/8Q==
-X-Gm-Message-State: AOJu0Yx73s+rV1J5tLhoz8sJpvQFQfRqnYXQlpZachGc6nEGQSXdQamL
-	cZTD96X7zBxQS/qHXRCBthGl5w==
-X-Google-Smtp-Source: AGHT+IG7Sa2ycH3+D2e5Ym67hXWBh8DjHLnN4QQMy8yRJTycCpKTHca7Op95ckMRZ+Xd+lTH3G1qKQ==
-X-Received: by 2002:a2e:818a:0:b0:2c9:fece:5bf9 with SMTP id e10-20020a2e818a000000b002c9fece5bf9mr671206ljg.88.1701746762422;
-        Mon, 04 Dec 2023 19:26:02 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id e16-20020a05651c04d000b002ca12be2b63sm127277lji.18.2023.12.04.19.26.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 19:26:01 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH v3 9/9] arm64: dts: qcom: sm8450: switch UFS QMP PHY to new style of bindings
-Date: Tue,  5 Dec 2023 06:25:52 +0300
-Message-Id: <20231205032552.1583336-10-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231205032552.1583336-1-dmitry.baryshkov@linaro.org>
-References: <20231205032552.1583336-1-dmitry.baryshkov@linaro.org>
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.88])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57BE8AA;
+	Mon,  4 Dec 2023 21:53:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701755619; x=1733291619;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=bFFeeF8hJ3DxE50au0V2o4iCp73fC+lbzXYWg5k/A/o=;
+  b=azAj7eL1U16j4HcCYOXpiTtrsJDi5jsAjhd4CXRGeMvER9FQISvS0raS
+   GSeP3vgeox4W2Txfvgbm6Ypu4osD+pwu/3PAZfy0tqyV6Dfeo/8niKHnO
+   7cyj0siOEefqYQKg/uS36JLWD9mKlWgQocyUXCNFhGO9NqDyWwbks/Vky
+   uzex9G8SMTyTjIdCc9S61G4qCidN5fDfOsUCEjxpTUfpu8biHMsm8ELL7
+   A3D5u7hj7ctdAaH25T+iKXbrHshDSK5Sof28MKLbccTcHw507hNJ2B+k4
+   G8uvYXiIT53a/8Vp7T7/9rvxHC1Omj9wJHG6tu8nGLz3n2BLhljxTobHG
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="425008173"
+X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
+   d="scan'208";a="425008173"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 21:53:39 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="841329822"
+X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
+   d="scan'208";a="841329822"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by fmsmga004.fm.intel.com with ESMTP; 04 Dec 2023 21:53:35 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rAONA-0008PG-1l;
+	Tue, 05 Dec 2023 05:53:32 +0000
+Date: Tue, 5 Dec 2023 13:53:09 +0800
+From: kernel test robot <lkp@intel.com>
+To: Sneh Shah <quic_snehshah@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, netdev@vger.kernel.org,
+	Sneh Shah <quic_snehshah@quicinc.com>, kernel@quicinc.com,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: Re: [PATCH net-next] net: stmmac: qcom-ethqos: Add sysfs nodes for
+ qcom ethqos
+Message-ID: <202312051347.L3L2pNLv-lkp@intel.com>
+References: <20231204084854.31543-1-quic_snehshah@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231204084854.31543-1-quic_snehshah@quicinc.com>
 
-Change the UFS QMP PHY to use newer style of QMP PHY bindings (single
-resource region, no per-PHY subnodes).
+Hi Sneh,
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 28 ++++++++++------------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+kernel test robot noticed the following build warnings:
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 12e55a0c7417..972d8de22182 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -754,9 +754,9 @@ gcc: clock-controller@100000 {
- 				 <&pcie0_phy>,
- 				 <&pcie1_phy>,
- 				 <0>,
--				 <&ufs_mem_phy_lanes 0>,
--				 <&ufs_mem_phy_lanes 1>,
--				 <&ufs_mem_phy_lanes 2>,
-+				 <&ufs_mem_phy 0>,
-+				 <&ufs_mem_phy 1>,
-+				 <&ufs_mem_phy 2>,
- 				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
- 			clock-names = "bi_tcxo",
- 				      "sleep_clk",
-@@ -4127,7 +4127,7 @@ ufs_mem_hc: ufshc@1d84000 {
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01d84000 0 0x3000>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
--			phys = <&ufs_mem_phy_lanes>;
-+			phys = <&ufs_mem_phy>;
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-@@ -4176,10 +4176,8 @@ ufs_mem_hc: ufshc@1d84000 {
- 
- 		ufs_mem_phy: phy@1d87000 {
- 			compatible = "qcom,sm8450-qmp-ufs-phy";
--			reg = <0 0x01d87000 0 0x1c4>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+			reg = <0 0x01d87000 0 0x1000>;
-+
- 			clock-names = "ref", "ref_aux", "qref";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-@@ -4187,17 +4185,11 @@ ufs_mem_phy: phy@1d87000 {
- 
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
--			status = "disabled";
- 
--			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x188>,
--				      <0 0x01d87600 0 0x200>,
--				      <0 0x01d87c00 0 0x200>,
--				      <0 0x01d87800 0 0x188>,
--				      <0 0x01d87a00 0 0x200>;
--				#clock-cells = <1>;
--				#phy-cells = <0>;
--			};
-+			#clock-cells = <1>;
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
- 		};
- 
- 		ice: crypto@1d88000 {
+[auto build test WARNING on net-next/main]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Sneh-Shah/net-stmmac-qcom-ethqos-Add-sysfs-nodes-for-qcom-ethqos/20231204-165232
+base:   net-next/main
+patch link:    https://lore.kernel.org/r/20231204084854.31543-1-quic_snehshah%40quicinc.com
+patch subject: [PATCH net-next] net: stmmac: qcom-ethqos: Add sysfs nodes for qcom ethqos
+config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20231205/202312051347.L3L2pNLv-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231205/202312051347.L3L2pNLv-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312051347.L3L2pNLv-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c: In function 'gvm_queue_mapping_store':
+>> drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c:770:13: warning: variable 'prio' set but not used [-Wunused-but-set-variable]
+     770 |         u32 prio;
+         |             ^~~~
+
+
+vim +/prio +770 drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+
+   762	
+   763	static ssize_t gvm_queue_mapping_store(struct device *dev,
+   764					       struct device_attribute *attr,
+   765					       const char *user_buf, size_t size)
+   766	{
+   767		struct net_device *netdev = to_net_dev(dev);
+   768		struct stmmac_priv *priv;
+   769		struct qcom_ethqos *ethqos;
+ > 770		u32 prio;
+   771		s8 input = 0;
+   772	
+   773		if (!netdev) {
+   774			pr_err("netdev is NULL\n");
+   775			return -EINVAL;
+   776		}
+   777	
+   778		priv = netdev_priv(netdev);
+   779		if (!priv) {
+   780			pr_err("priv is NULL\n");
+   781			return -EINVAL;
+   782		}
+   783	
+   784		ethqos = priv->plat->bsp_priv;
+   785		if (!ethqos) {
+   786			pr_err("ethqos is NULL\n");
+   787			return -EINVAL;
+   788		}
+   789	
+   790		if (kstrtos8(user_buf, 0, &input)) {
+   791			pr_err("Error in reading option from user\n");
+   792			return -EINVAL;
+   793		}
+   794	
+   795		if (input == ethqos->gvm_queue)
+   796			pr_err("No effect as duplicate input\n");
+   797	
+   798		ethqos->gvm_queue = input;
+   799		prio  = 1 << input;
+   800	
+   801		return size;
+   802	}
+   803	
+
 -- 
-2.39.2
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
