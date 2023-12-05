@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-3382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 319698044F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 03:32:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 062148044F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 03:32:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B371CB20B8C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 02:31:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8248CB20C2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 02:32:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBE7BCA72;
-	Tue,  5 Dec 2023 02:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5435DCA53;
+	Tue,  5 Dec 2023 02:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pbsQ/euN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZCRnPbXx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B511113
-	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 18:31:54 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50bf898c43cso1579395e87.1
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08E65138
+	for <linux-arm-msm@vger.kernel.org>; Mon,  4 Dec 2023 18:31:55 -0800 (PST)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-50bf4f97752so2287088e87.1
         for <linux-arm-msm@vger.kernel.org>; Mon, 04 Dec 2023 18:31:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701743512; x=1702348312; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701743513; x=1702348313; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eKmAR1ZSmrFWzNntIYs9o86wF8PusWlLEZwSpUuaDNg=;
-        b=pbsQ/euNceeTOsF4gE1iFY+/cbsGr3xJs0w0MKUxNyQ2gjX5BEaAB1zTmbVvyH2FJw
-         bRQiv7COXZcCLyUDtqiT7YYzXSqrDn6Zbg7QuPhgfYgYpGj4cbO/DOVlecCi2FWtGnVd
-         CRGnp5EKwPg1av6YeqZOfVEZ8uuoXSFgmsqeqcIdPSFPiJq/FgEw+uel/e08gdc/Vej0
-         dIjz7reulqy5odD03ludKhu+imIjmkLIQ/s70P+p22/YUjQcNQrZ2aXTtsj2Sbi3CZWd
-         kzYFlLg05OXSiT8SUHEXBjBHpm+GELJ/0ODCfrZyBqAbPutM/XZKLMhCK9ws3g9aMipY
-         mpHQ==
+        bh=HBAqK5na52vzzJw+TiPu+r/BK0W0RfVpJwm0wSsQoZ8=;
+        b=ZCRnPbXx2PqIqUy3IkS0u748t9j39PG8Goh0foahvvhRTrG9Lkb6Q77t79LagIRIun
+         VOcxLsTyOft3vk/iYAFPLdxfHCT+EdYgdn7Nz6U1Q9bIYNdjhWsR2nNX4w7Lk6R6AbUj
+         0/nYU8+/UZzHsNnuH6H0E8BSr5Ru4f4HFnc9CY+OuGWIjgO1IBOYM8VmU/LCumWevMR9
+         ebENx2Udtf4X0mpHtaqW7+XzmZLgbLVcP52ZXwHt320VA2ekn1SMe4n3qlWiKvfQ4VHG
+         dzRTnVIDhOfT63mAWPraGtPJXrBmcorxbVhCzIf4hHAVpnpAvPVCzSrDow0oNqN4b3Xp
+         dEIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701743512; x=1702348312;
+        d=1e100.net; s=20230601; t=1701743513; x=1702348313;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eKmAR1ZSmrFWzNntIYs9o86wF8PusWlLEZwSpUuaDNg=;
-        b=W4r/SKKKvCqYMZGdHHscdok59PqeMOqeVE6v9kC4pEvPL5Rc0XvBrQrNmtOjc/daby
-         d5asd79GD1SdMMNRM3NGVtqRkJIrdz8a0fBbENBPJYPRrbbfQSlnKos4S9mVRY9mNcUJ
-         kOETWqCsgMFAI2nxGISeYBJWR9HCkKGVAOT7PyHu0THoWkn5G6NLofUBfx/XHgHYw3GQ
-         r3bMq7Z37X7O68C2cOw9j72R5AvIOTNwB4Jf72IwN+sUdqlJWrCiP0wL/Gsx4An0TyhU
-         zto5msneSULiKuh8/MmhkSvwu77ybvkokmBp3v1dEBbKy2RJCjDHYD6s0WHmJVBOfrO8
-         00fw==
-X-Gm-Message-State: AOJu0YzKAFF1l9gob7xsX05PWC33S/Ih00iOHho8Tci083klD+YHZR72
-	0aXdQ2P+lOTm5Z7CqBmXL0ZQNw==
-X-Google-Smtp-Source: AGHT+IGQsXPjJtaRhJ9I4NkQQlNOo3ibdg5W003wqXFm46ovMCUpG70P7y3UsMXcmF7MG524E3PkfQ==
-X-Received: by 2002:a05:6512:480b:b0:50b:d764:2938 with SMTP id eo11-20020a056512480b00b0050bd7642938mr1957294lfb.208.1701743512438;
-        Mon, 04 Dec 2023 18:31:52 -0800 (PST)
+        bh=HBAqK5na52vzzJw+TiPu+r/BK0W0RfVpJwm0wSsQoZ8=;
+        b=oX9B56zKKgeA49S0Kcp2Tgynb+7WOKoHxgaJnbDqHtwd2kVoOMCTykGwhUqZUzMaMw
+         Bd+kZSB6j0eocWCQnvMl2haINtigXSrHk2gb7KVFQAUm/8Gv2wPZ6CTWYhwXRgrTUGPm
+         RZF6GQDwRlGOTv2vNZmW1oXU8V96M/uhk5TmqltnasIF+75nP7UOAAjdS13RxAstyem5
+         7lzIHHGT8I+fOvyKiviWDOp2uwtzvqe/YjNKiHoPrNBixQnMxZFnz3rEruOk1xcFjwJ/
+         /d6FUzE1mkb46cVjRTmgDGYrPVnRrxh0YA2HB28Pc4N4htv9j5a84Fv/a6ASBCe002kb
+         /TYg==
+X-Gm-Message-State: AOJu0YwAdwRAIdcZug0Wapoo37ZYnkTjIfVV72+uiatslINghOFIlY5P
+	gTTuFFkJkYhnHJy72cJQ2lE96g==
+X-Google-Smtp-Source: AGHT+IH9UwgeVuMspv8xoiJVwYH/BlCXJM8XenBUUZc2vkOvNjr6cbHX1Q2lc9ZOjhV/+YkEGhyYkA==
+X-Received: by 2002:ac2:4a81:0:b0:50b:e6e4:c6c9 with SMTP id l1-20020ac24a81000000b0050be6e4c6c9mr2128004lfp.85.1701743513266;
+        Mon, 04 Dec 2023 18:31:53 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t10-20020ac24c0a000000b0050bc57ec288sm1414726lfq.44.2023.12.04.18.31.51
+        by smtp.gmail.com with ESMTPSA id t10-20020ac24c0a000000b0050bc57ec288sm1414726lfq.44.2023.12.04.18.31.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 18:31:51 -0800 (PST)
+        Mon, 04 Dec 2023 18:31:52 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
 	Maxime Ripard <mripard@kernel.org>,
@@ -68,9 +68,9 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 1/2] drm/atomic-helper: rename drm_atomic_helper_check_wb_encoder_state
-Date: Tue,  5 Dec 2023 05:31:49 +0300
-Message-Id: <20231205023150.1581875-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 2/2] drm/vkms: move wb's atomic_check from encoder to connector
+Date: Tue,  5 Dec 2023 05:31:50 +0300
+Message-Id: <20231205023150.1581875-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231205023150.1581875-1-dmitry.baryshkov@linaro.org>
 References: <20231205023150.1581875-1-dmitry.baryshkov@linaro.org>
@@ -82,106 +82,90 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The drm_atomic_helper_check_wb_encoder_state() function doesn't use
-encoder for anything other than getting the drm_device instance. The
-function's description talks about checking the writeback connector
-state, not the encoder state. Moreover, there is no such thing as an
-encoder state, encoders generally do not have a state on their own.
-
-Rename the function to drm_atomic_helper_check_wb_connector_state()
-and change arguments to drm_writeback_connector and drm_atomic_state.
+As the renamed drm_atomic_helper_check_wb_connector_state() now accepts
+drm_writeback_connector as the first argument (instead of drm_encoder),
+move the VKMS writeback atomic_check from drm_encoder_helper_funcs to
+drm_connector_helper_funcs. Also drop the vkms_wb_encoder_helper_funcs,
+which have become empty now.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/drm_atomic_helper.c   | 16 +++++++++-------
- drivers/gpu/drm/vkms/vkms_writeback.c |  5 ++++-
- include/drm/drm_atomic_helper.h       |  5 ++---
- 3 files changed, 15 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/vkms/vkms_writeback.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index c3f677130def..67489b3561ec 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -795,9 +795,9 @@ drm_atomic_helper_check_modeset(struct drm_device *dev,
- EXPORT_SYMBOL(drm_atomic_helper_check_modeset);
- 
- /**
-- * drm_atomic_helper_check_wb_encoder_state() - Check writeback encoder state
-- * @encoder: encoder state to check
-- * @conn_state: connector state to check
-+ * drm_atomic_helper_check_wb_connector_state() - Check writeback connector state
-+ * @connector: corresponding connector
-+ * @state: the driver state object
-  *
-  * Checks if the writeback connector state is valid, and returns an error if it
-  * isn't.
-@@ -806,9 +806,11 @@ EXPORT_SYMBOL(drm_atomic_helper_check_modeset);
-  * Zero for success or -errno
-  */
- int
--drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder,
--					 struct drm_connector_state *conn_state)
-+drm_atomic_helper_check_wb_connector_state(struct drm_writeback_connector *wb_conn,
-+					   struct drm_atomic_state *state)
- {
-+	struct drm_connector_state *conn_state =
-+		drm_atomic_get_new_connector_state(state, &wb_conn->base);
- 	struct drm_writeback_job *wb_job = conn_state->writeback_job;
- 	struct drm_property_blob *pixel_format_blob;
- 	struct drm_framebuffer *fb;
-@@ -827,11 +829,11 @@ drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder,
- 		if (fb->format->format == formats[i])
- 			return 0;
- 
--	drm_dbg_kms(encoder->dev, "Invalid pixel format %p4cc\n", &fb->format->format);
-+	drm_dbg_kms(wb_conn->base.dev, "Invalid pixel format %p4cc\n", &fb->format->format);
- 
- 	return -EINVAL;
- }
--EXPORT_SYMBOL(drm_atomic_helper_check_wb_encoder_state);
-+EXPORT_SYMBOL(drm_atomic_helper_check_wb_connector_state);
- 
- /**
-  * drm_atomic_helper_check_plane_state() - Check plane state for validity
 diff --git a/drivers/gpu/drm/vkms/vkms_writeback.c b/drivers/gpu/drm/vkms/vkms_writeback.c
-index d7e63aa14663..23c4f7b61cb6 100644
+index 23c4f7b61cb6..ebb5183794db 100644
 --- a/drivers/gpu/drm/vkms/vkms_writeback.c
 +++ b/drivers/gpu/drm/vkms/vkms_writeback.c
-@@ -34,6 +34,9 @@ static int vkms_wb_encoder_atomic_check(struct drm_encoder *encoder,
- 					struct drm_crtc_state *crtc_state,
- 					struct drm_connector_state *conn_state)
+@@ -30,20 +30,27 @@ static const struct drm_connector_funcs vkms_wb_connector_funcs = {
+ 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
+ };
+ 
+-static int vkms_wb_encoder_atomic_check(struct drm_encoder *encoder,
+-					struct drm_crtc_state *crtc_state,
+-					struct drm_connector_state *conn_state)
++static int vkms_wb_atomic_check(struct drm_connector *connector,
++				struct drm_atomic_state *state)
  {
-+	struct drm_connector *connector = conn_state->connector;
-+	struct drm_writeback_connector *wb_conn =
-+		drm_connector_to_writeback(connector);
+-	struct drm_connector *connector = conn_state->connector;
++	struct drm_connector_state *conn_state =
++		drm_atomic_get_new_connector_state(state, connector);
+ 	struct drm_writeback_connector *wb_conn =
+ 		drm_connector_to_writeback(connector);
++	struct drm_crtc_state *crtc_state;
  	struct drm_framebuffer *fb;
- 	const struct drm_display_mode *mode = &crtc_state->mode;
+-	const struct drm_display_mode *mode = &crtc_state->mode;
++	const struct drm_display_mode *mode;
  	int ret;
-@@ -48,7 +51,7 @@ static int vkms_wb_encoder_atomic_check(struct drm_encoder *encoder,
+ 
+ 	if (!conn_state->writeback_job || !conn_state->writeback_job->fb)
+ 		return 0;
+ 
++	if (!conn_state->crtc)
++		return 0;
++
++	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
++	mode = &crtc_state->mode;
++
+ 	fb = conn_state->writeback_job->fb;
+ 	if (fb->width != mode->hdisplay || fb->height != mode->vdisplay) {
+ 		DRM_DEBUG_KMS("Invalid framebuffer size %ux%u\n",
+@@ -51,17 +58,13 @@ static int vkms_wb_encoder_atomic_check(struct drm_encoder *encoder,
  		return -EINVAL;
  	}
  
--	ret = drm_atomic_helper_check_wb_encoder_state(encoder, conn_state);
-+	ret = drm_atomic_helper_check_wb_connector_state(wb_conn, conn_state->state);
+-	ret = drm_atomic_helper_check_wb_connector_state(wb_conn, conn_state->state);
++	ret = drm_atomic_helper_check_wb_connector_state(wb_conn, state);
  	if (ret < 0)
  		return ret;
  
-diff --git a/include/drm/drm_atomic_helper.h b/include/drm/drm_atomic_helper.h
-index 536a0b0091c3..1ab448217732 100644
---- a/include/drm/drm_atomic_helper.h
-+++ b/include/drm/drm_atomic_helper.h
-@@ -49,9 +49,8 @@ struct drm_private_state;
+ 	return 0;
+ }
  
- int drm_atomic_helper_check_modeset(struct drm_device *dev,
- 				struct drm_atomic_state *state);
--int
--drm_atomic_helper_check_wb_encoder_state(struct drm_encoder *encoder,
--					 struct drm_connector_state *conn_state);
-+int drm_atomic_helper_check_wb_connector_state(struct drm_writeback_connector *wb_conn,
-+					       struct drm_atomic_state *state);
- int drm_atomic_helper_check_plane_state(struct drm_plane_state *plane_state,
- 					const struct drm_crtc_state *crtc_state,
- 					int min_scale,
+-static const struct drm_encoder_helper_funcs vkms_wb_encoder_helper_funcs = {
+-	.atomic_check = vkms_wb_encoder_atomic_check,
+-};
+-
+ static int vkms_wb_connector_get_modes(struct drm_connector *connector)
+ {
+ 	struct drm_device *dev = connector->dev;
+@@ -164,6 +167,7 @@ static const struct drm_connector_helper_funcs vkms_wb_conn_helper_funcs = {
+ 	.prepare_writeback_job = vkms_wb_prepare_job,
+ 	.cleanup_writeback_job = vkms_wb_cleanup_job,
+ 	.atomic_commit = vkms_wb_atomic_commit,
++	.atomic_check = vkms_wb_atomic_check,
+ };
+ 
+ int vkms_enable_writeback_connector(struct vkms_device *vkmsdev)
+@@ -174,7 +178,7 @@ int vkms_enable_writeback_connector(struct vkms_device *vkmsdev)
+ 
+ 	return drm_writeback_connector_init(&vkmsdev->drm, wb,
+ 					    &vkms_wb_connector_funcs,
+-					    &vkms_wb_encoder_helper_funcs,
++					    NULL,
+ 					    vkms_wb_formats,
+ 					    ARRAY_SIZE(vkms_wb_formats),
+ 					    1);
 -- 
 2.39.2
 
