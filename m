@@ -1,136 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-3420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19DE3804BEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 09:10:54 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E25A804C19
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 09:17:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7D6A1F21490
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 08:10:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B5E1C1F21484
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 08:17:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECEA73B2A6;
-	Tue,  5 Dec 2023 08:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DA383BB5F;
+	Tue,  5 Dec 2023 08:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ocilNGWZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vQ+DxPlL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E55B6D6F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 00:10:33 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-a195a1474easo516129366b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Dec 2023 00:10:33 -0800 (PST)
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54B9CFA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 00:17:30 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-54c77e0835bso3693670a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Dec 2023 00:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701763832; x=1702368632; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ipnJdp7mJoRPcpkndnemBdivVzYSFsiz8nUEcYGP2gg=;
-        b=ocilNGWZXwuYEE/rbwutfvl9jqeBY0xScxc+nmH07ipSRUMrNO6tnBvaqu7KdwWS4j
-         cZ25zLVxAGuxV02V6MBYJzXDig5ner+Qg6L1YuvQ6Avo8uEJUHZLei/CMlB+iw2SL5R4
-         0juO6E5/42teGuLfRfA2CqtLhB6UVWU6F9UonulZZfm/4rwJPKHCmLAFAJ2TAzBMofMW
-         sqso83yXM4Vb45XOejrDga/KQiMD/0G9wpGng7oyqM1MRHmLN/w9opGBF7b3qPO0GNMv
-         1EQAURiFCHrvG2g3G/KaC6s8hUt/7680C9KN1FfwHLMhpVFxFfTzFF4uQEpvu5ZhnCUs
-         eu8A==
+        d=linaro.org; s=google; t=1701764249; x=1702369049; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mPz9jfaMy9WfW8hg0phqJVMwKyt+kROV74/4yAXSMZY=;
+        b=vQ+DxPlLquOkdYgvREoP5asjJkibHqEmit3FJ/TuyGUm56+tGgPI8vZ0idCSn9ENH/
+         8J72bC4ieq/tcEKXyIPVJ8J6j8/poGEnsQud2XlZRbS+0st1X2Gijom5f2cqwF3OdtYz
+         3OSWGyAX02KNvJz8rWCTzAzCUYcFgtT5txqDogigebQtnqz4x/3H//9zz+jqfpJtMylC
+         V97wBhoOrUKK3gKEDEyOvaP57Pqm3eVtTrYG+CvUFGwOTM5c4hxIwQ9Z1SMJIvas5ilW
+         kmb0CFgcOhHfoY9a8Q3JAt9YtjADxtbPA3hrcYhjn4LlvNKfhNfEsA2OttP+R0VOa/uH
+         u7oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701763832; x=1702368632;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ipnJdp7mJoRPcpkndnemBdivVzYSFsiz8nUEcYGP2gg=;
-        b=oZvU4OCz9yzX1R/8Hxskg0XMBS96hBicYvJ4rLh9LWKBN9NB1aIAI/GgCwvnlP8v2J
-         7vhWlmHI5tYsArXCRMkHhB74O1TMtfFWz7tBRi/Iju48uxktw7kypDRx+hhqkNDesLXl
-         Cud3WFyyxu+4vmeDONNaT7H32phXzd9wbrv5sapCqOOcCIRNOSi5cdekJ2dIEksY3N4H
-         BXDZEZmp+fgEybI/9VfgKGSMS3VuU2G20JQdqEXaWb1uLsZU4w8jVUjjpWHxz8PItW/Y
-         xQALdPShZNAfUQqAl3cT0B0majom5tmH/VJBnzqrmwVbf2jyBKjXEVpcpXajKnXIfmOe
-         EAMg==
-X-Gm-Message-State: AOJu0YxiehOah+4LE0otyl73b1oVRqyWkxKVRpkNecOaY5PpXGe8IevQ
-	a9lHZ5Ydjy4kBnKED6a3cMVw2w==
-X-Google-Smtp-Source: AGHT+IF6ASHTCJrg8w88p8r6cfFGVG4bFlEXyKcC+xXKM6td01zQgJMjtawNPeSmKDddkhPrigqIwg==
-X-Received: by 2002:a17:906:314d:b0:a1c:9c1a:3d36 with SMTP id e13-20020a170906314d00b00a1c9c1a3d36mr158896eje.59.1701763832218;
-        Tue, 05 Dec 2023 00:10:32 -0800 (PST)
-Received: from [127.0.1.1] ([82.77.85.67])
-        by smtp.gmail.com with ESMTPSA id qx1-20020a170907b58100b00a0ad580e1b6sm541667ejc.48.2023.12.05.00.10.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 00:10:31 -0800 (PST)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Tue, 05 Dec 2023 10:10:29 +0200
-Subject: [PATCH] soc: qcom: llcc: Add missing description for members in
- slice config
+        d=1e100.net; s=20230601; t=1701764249; x=1702369049;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mPz9jfaMy9WfW8hg0phqJVMwKyt+kROV74/4yAXSMZY=;
+        b=OWk8P95AvwPa5lw1BjrW8lkHFShl5bEcLKAP4syrJnP+TqoQyrheBc7Edy1A6AjvE/
+         F2qzKAA8ZQ4sYcy/cdU7DCUuvknTMp5qSuP/44V17cyfbDFoddD1N7aKF7XqBHPEPPNA
+         R4xRxpSrRbuV0LOuZDakR7fr3C8ZaR3rNqDLYqu07Z9U0IY3baGLeTlRHjHoXCzztABm
+         reuZ1Grjt7HgnamJTEGIAVdog0L2Eba9Cwykud9wAQWexsF1Ievcr2IWWSch44AARcIB
+         FL7aJ5ID2hq72g2nb5omiD3jsK8GL0sJU7nRQLPR9sf1mP80856QHYHUMgJziUwlpiKN
+         d3Pw==
+X-Gm-Message-State: AOJu0YzEZdUxlHq3x3a1NgR7tZWLjhnblqhAakGatPUsMC0XKpfOQGV8
+	bxh74kzgmW2UfY66/I18dsC4/w==
+X-Google-Smtp-Source: AGHT+IGTGq8eZUL21L0GK2BlMpKAGOWw5jstOd/ML65SceMiyLpFSFpWoNQeZKIFnXC3kBTLDlYjDw==
+X-Received: by 2002:a17:906:fd45:b0:a09:589f:8853 with SMTP id wi5-20020a170906fd4500b00a09589f8853mr260147ejb.66.1701764248814;
+        Tue, 05 Dec 2023 00:17:28 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id e20-20020a1709067e1400b00a10ec36ad10sm6208987ejr.204.2023.12.05.00.17.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Dec 2023 00:17:28 -0800 (PST)
+Message-ID: <c957a1fa-0189-425f-8333-f423c09161b1@linaro.org>
+Date: Tue, 5 Dec 2023 09:17:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add
+ X1E80100 USB PHY binding
+Content-Language: en-US
+To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ Johan Hovold <johan@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231122-phy-qualcomm-usb3-uniphy-x1e80100-v2-0-1a3e1d98564e@linaro.org>
+ <20231122-phy-qualcomm-usb3-uniphy-x1e80100-v2-1-1a3e1d98564e@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231122-phy-qualcomm-usb3-uniphy-x1e80100-v2-1-1a3e1d98564e@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231205-llcc-fix-slice-config-warnings-v1-1-d6331d601dd3@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAPTabmUC/x3NQQrCQAyF4auUrA3MpIjiVcTFNKbTwJDKBK1Qe
- neDy/8tvreDS1dxuA07dPmo62oR+TQAL8WqoD6jgRKNmdIZW2PGWb/oTVmQV5u14la6qVVHTlR
- yvo5EF4JApuKCUy/GSzD2bi3GV5cQ/q/3x3H8AK5/Rh2FAAAA
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- kernel test robot <lkp@intel.com>, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1833; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=jUwKJoHWjeRb21ldnTZQvf0NN0juAGv2FWSaUgUqmYU=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBlbtr2inKGF5rLgE276S6VOS9BlsZaqEOGOxGKm
- oqr8r9Rv0uJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZW7a9gAKCRAbX0TJAJUV
- VuNDD/0U9hjLeyfd/Nu8KPu21vwggb5wUXK/lSGSmb6aAcOvQO7dud4JNCOfi16qhzXMhn8SSqt
- N70jpo6Gy1xUYiCeaTCkQe6POnFh/I5FydiUm2kV2fTVzXzwdePC9oIqSausnUy5mNDGY+Wubcy
- oEbfAaRIUROR5PcPutpmHZWAcal/zA0FyF8JmH/DO/W2tMdguoPG/whIQd5Ai1ejSMNiRdSXBHr
- WDA7HAgLIxqZKIymOcChsuOSp+bLlhUB9uOfGMloOLphKbD2nXKHWOkTu/EviLeDgSVDJcGdbce
- LmRVT3submKJTRpiC/LYcGQINOQalQ1wyUM+lkmeKs83+d87x0H5J7TDinyAGvxMGmA9OguB7sB
- HX4EpNGRG7G4slH07yVybfj68CJib6lv1Rs7TIabC/axtu76zu4gIm7/4nYTnV6qi3BVfvsteY0
- U6OmLLLz1mGeCtM+dZW2812nMWZojegxWN6rvh/8giEMM+vhwLVyxFToBrqjKWBhhB2kR1vYlDe
- qasl+GruE0pwghKg0CPBB10AQfTjQWBRiBP66xA0uwqprIe9gYsXPbLI9v6WksNJL5cqAW0PH0B
- HjTsJ5qyfp5uAMervfsmiaAWrYSldeq9t1M9/489kVIU+cCS2POu1aPwRQXlcw9T+GDyOtdAo9A
- SWvv1lkZ9q6gyVw==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Fix all warnings thrown due to missing description for some of the
-members in llcc_slice_config.
+On 04/12/2023 14:50, Abel Vesa wrote:
+> Add compatible string for Qualcomm QMP Super Speed (SS) UNI PHY found
+> in X1E80100.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml        | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202312050519.mup4Q8mD-lkp@intel.com/
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/soc/qcom/llcc-qcom.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index fb4085b7cb19..76157e3a96b2 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -92,6 +92,19 @@
-  * @write_scid_en: Bit enables write cache support for a given scid.
-  * @write_scid_cacheable_en: Enables write cache cacheable support for a
-  *			     given scid (not supported on v2 or older hardware).
-+ * @stale_en: Bit enables stale.
-+ * @stale_cap_en: Bit enables stale only if current scid is over-cap.
-+ * @mru_uncap_en: Roll-over on reserved cache ways if current scid is
-+ *                under-cap.
-+ * @mru_rollover: Roll-over on reserved cache ways.
-+ * @alloc_oneway_en: Allways allocate one way on over-cap even if there's no
-+ *                   same-scid lines for replacement.
-+ * @ovcap_en: Once current scid is over-capacity, allocate other over-cap SCID.
-+ * @ovcap_prio: Once current scid is over-capacity, allocate other low priority
-+ *              over-cap scid. Depends on corresponding bit being set in
-+ *              ovcap_en.
-+ * @vict_prio: When current scid is under-capacity, allocate over other
-+ *             lower-than victim priority-line threshold scid.
-  */
- struct llcc_slice_config {
- 	u32 usecase_id;
-
----
-base-commit: 0f5f12ac05f36f117e793656c3f560625e927f1b
-change-id: 20231205-llcc-fix-slice-config-warnings-c02a11832272
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
+Krzysztof
 
 
