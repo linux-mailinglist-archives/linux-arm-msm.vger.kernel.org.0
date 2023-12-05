@@ -1,251 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-3456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF927805537
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 13:52:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CA421805608
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 14:34:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C0FA1F214E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:52:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 575121F21514
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 13:34:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40F274E624;
-	Tue,  5 Dec 2023 12:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92F8A5C90C;
+	Tue,  5 Dec 2023 13:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dslG6bDO"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="acfNOIG7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1727F4CDF7;
-	Tue,  5 Dec 2023 12:52:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31E0C433C8;
-	Tue,  5 Dec 2023 12:52:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701780752;
-	bh=6OBtOvpyrx0wR/KfCMCttoDVEX6P49xuNZ+3YdQODp8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dslG6bDOrwrTyl6vp44aPHWUHLlJ/2JZtiQINypEYJ7wyuFWkCCmtiHLH1AgFPoJf
-	 5PKDllxff8XfWof763DKBaWf50/QUTpxD0HO+Vc4LiFZTIX5BMlJ8MBAdIxfQSZXnZ
-	 YrMUEg+VcD7BOujNZwCHN0Og2q+lddUC7mHiX56hoh/yxuPxTD33C/5JPdVrYjvrL4
-	 /2zKIez1jDnH6aWIzkOWPiAj/w6xCgoBMon/+6lcHkvdRHoLZnuAn8BtTXLE4Ji2xf
-	 sRegasgnca3c/1e38Awrn028ADeyKbMAKYQkTGmw7oa+Zruvse270rL7BgSH2dHEup
-	 vT6aTXveaUrsw==
-Date: Tue, 5 Dec 2023 18:22:16 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Nitin Rawat <quic_nitirawa@quicinc.com>, Andy Gross <agross@kernel.org>,
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 702B6181
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 05:34:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701783243; x=1733319243;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=b2GfwFST1ueM5U/2wKHdX45CfQpeB2wtXVu/9e0FuVQ=;
+  b=acfNOIG7zR+IoEGfbF8TBIr0Lgoz0b4yqiAwUlVcU2F+Ml1UwCoMjNvW
+   zLYrnnstIGkPajMtYY/JB20bBDqBavvpCzO1WOILzMgyWrvhRLAGjD5LN
+   BZ9YoT2pIefxvcosRB3FheYibkNkdHNyZ5z+ZtuZ1+yX6UAoIFkj1rmDD
+   y4b8HGdMD69ZrQz+zHoEl1c9SMSh+W3Hb8Df1LpGI6ZJPh+HJXXc6NeKZ
+   AkjmdF3C3r8x5YGGlsupMh0h4VvKHTO57u5FdDvdIIg4YdcHBXJR+vVV1
+   h7ECpi11EkaBwCgFYsx2KXXlT6ubqCMPo22hmm9g6T6IcclSZ0KNprkOS
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="396688867"
+X-IronPort-AV: E=Sophos;i="6.04,252,1695711600"; 
+   d="scan'208";a="396688867"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Dec 2023 05:34:02 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="747232424"
+X-IronPort-AV: E=Sophos;i="6.04,252,1695711600"; 
+   d="scan'208";a="747232424"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by orsmga006.jf.intel.com with ESMTP; 05 Dec 2023 05:33:59 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rAVYg-000934-1P;
+	Tue, 05 Dec 2023 13:33:54 +0000
+Date: Tue, 5 Dec 2023 21:32:53 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
 	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Avri Altman <avri.altman@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: sc7280: Add UFS nodes for
- sc7280 soc
-Message-ID: <20231205125216.GA3208@thinkpad>
-References: <20231204-sc7280-ufs-v5-0-926ceed550da@fairphone.com>
- <20231204-sc7280-ufs-v5-2-926ceed550da@fairphone.com>
- <621388b9-dcee-4af2-9763-e5d623d722b7@quicinc.com>
- <CXFJNBNKTRHH.2CS6TO2MEGJWL@fairphone.com>
- <20231204172829.GA69580@thinkpad>
- <CXG8INYXCEXN.C6TF6FALDP6D@fairphone.com>
+	dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [RFT PATCH v2 1/4] drm/msm/dpu: enable writeback on SM8150
+Message-ID: <202312052138.qMYI7bXS-lkp@intel.com>
+References: <20231203003203.1293087-2-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CXG8INYXCEXN.C6TF6FALDP6D@fairphone.com>
+In-Reply-To: <20231203003203.1293087-2-dmitry.baryshkov@linaro.org>
 
-On Tue, Dec 05, 2023 at 08:51:05AM +0100, Luca Weiss wrote:
-> On Mon Dec 4, 2023 at 6:28 PM CET, Manivannan Sadhasivam wrote:
-> > On Mon, Dec 04, 2023 at 01:21:42PM +0100, Luca Weiss wrote:
-> > > On Mon Dec 4, 2023 at 1:15 PM CET, Nitin Rawat wrote:
-> > > >
-> > > >
-> > > > On 12/4/2023 3:54 PM, Luca Weiss wrote:
-> > > > > From: Nitin Rawat <quic_nitirawa@quicinc.com>
-> > > > > 
-> > > > > Add UFS host controller and PHY nodes for sc7280 soc.
-> > > > > 
-> > > > > Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> > > > > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > > > > Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # QCM6490 FP5
-> > > > > [luca: various cleanups and additions as written in the cover letter]
-> > > > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > > > > ---
-> > > > >   arch/arm64/boot/dts/qcom/sc7280.dtsi | 74 +++++++++++++++++++++++++++++++++++-
-> > > > >   1 file changed, 73 insertions(+), 1 deletion(-)
-> > > > > 
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > > > index 04bf85b0399a..8b08569f2191 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > > > @@ -15,6 +15,7 @@
-> > > > >   #include <dt-bindings/dma/qcom-gpi.h>
-> > > > >   #include <dt-bindings/firmware/qcom,scm.h>
-> > > > >   #include <dt-bindings/gpio/gpio.h>
-> > > > > +#include <dt-bindings/interconnect/qcom,icc.h>
-> > > > >   #include <dt-bindings/interconnect/qcom,osm-l3.h>
-> > > > >   #include <dt-bindings/interconnect/qcom,sc7280.h>
-> > > > >   #include <dt-bindings/interrupt-controller/arm-gic.h>
-> > > > > @@ -906,7 +907,7 @@ gcc: clock-controller@100000 {
-> > > > >   			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> > > > >   				 <&rpmhcc RPMH_CXO_CLK_A>, <&sleep_clk>,
-> > > > >   				 <0>, <&pcie1_phy>,
-> > > > > -				 <0>, <0>, <0>,
-> > > > > +				 <&ufs_mem_phy 0>, <&ufs_mem_phy 1>, <&ufs_mem_phy 2>,
-> > > > >   				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
-> > > > >   			clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk",
-> > > > >   				      "pcie_0_pipe_clk", "pcie_1_pipe_clk",
-> > > > > @@ -2238,6 +2239,77 @@ pcie1_phy: phy@1c0e000 {
-> > > > >   			status = "disabled";
-> > > > >   		};
-> > > > >   
-> > > > > +		ufs_mem_hc: ufs@1d84000 {
-> > > > > +			compatible = "qcom,sc7280-ufshc", "qcom,ufshc",
-> > > > > +				     "jedec,ufs-2.0";
-> > > > > +			reg = <0x0 0x01d84000 0x0 0x3000>;
-> > > > > +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-> > > > > +			phys = <&ufs_mem_phy>;
-> > > > > +			phy-names = "ufsphy";
-> > > > > +			lanes-per-direction = <2>;
-> > > > > +			#reset-cells = <1>;
-> > > > > +			resets = <&gcc GCC_UFS_PHY_BCR>;
-> > > > > +			reset-names = "rst";
-> > > > > +
-> > > > > +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-> > > > > +			required-opps = <&rpmhpd_opp_nom>;
-> > > > > +
-> > > > > +			iommus = <&apps_smmu 0x80 0x0>;
-> > > > > +			dma-coherent;
-> > > > > +
-> > > > > +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
-> > > > > +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
-> > > > > +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
-> > > > > +					 &cnoc2 SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
-> > > > > +			interconnect-names = "ufs-ddr", "cpu-ufs";
-> > > > > +
-> > > > > +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
-> > > > > +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
-> > > > > +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
-> > > > > +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
-> > > > > +				 <&rpmhcc RPMH_CXO_CLK>,
-> > > > > +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
-> > > > > +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
-> > > > > +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-> > > > > +			clock-names = "core_clk",
-> > > > > +				      "bus_aggr_clk",
-> > > > > +				      "iface_clk",
-> > > > > +				      "core_clk_unipro",
-> > > > > +				      "ref_clk",
-> > > > > +				      "tx_lane0_sync_clk",
-> > > > > +				      "rx_lane0_sync_clk",
-> > > > > +				      "rx_lane1_sync_clk";
-> > > > > +			freq-table-hz =
-> > > > > +				<75000000 300000000>,
-> > > > > +				<0 0>,
-> > > > > +				<0 0>,
-> > > > > +				<75000000 300000000>,
-> > > > > +				<0 0>,
-> > > > > +				<0 0>,
-> > > > > +				<0 0>,
-> > > > > +				<0 0>;
-> > > > > +			status = "disabled";
-> > > > > +		};
-> > > > > +
-> > > > > +		ufs_mem_phy: phy@1d87000 {
-> > > > > +			compatible = "qcom,sc7280-qmp-ufs-phy";
-> > > > > +			reg = <0x0 0x01d87000 0x0 0xe00>;
-> > > > > +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> > > > > +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-> > > > > +				 <&gcc GCC_UFS_1_CLKREF_EN>;
-> > > > > +			clock-names = "ref", "ref_aux", "qref";
-> > > > > +
-> > > > > +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
-> > > 
-> > > Hi Nitin,
-> > > 
-> > > >
-> > > > GCC_UFS_PHY_GDSC is UFS controller GDSC. For sc7280 Phy we don't need this.
-> > > 
-> > > In the current dt-bindings the power-domains property is required.
-> > > 
-> > > Is there another power-domain for the PHY to use, or do we need to
-> > > adjust the bindings to not require power-domains property for ufs phy on
-> > > sc7280?
-> > > 
-> >
-> > PHYs are backed by MX power domain. So you should use that.
-> 
-> Sounds reasonable (though I understand little how the SoC is wired up
-> internally).
-> 
+Hi Dmitry,
 
-I digged a bit more and found that the new SoCs (SM8550, etc,...) has
-separate GDSC for PHY and UFS HC. So for those SoCs, we should use the
-respective GDSC as the power domain.
+kernel test robot noticed the following build errors:
 
-But for old SoCs like this one, we should use MX as the power domain.
+[auto build test ERROR on drm-misc/drm-misc-next]
+[also build test ERROR on linus/master v6.7-rc4 next-20231205]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> >
-> > > Also, with "PHY" in the name, it's interesting that this is not for the
-> > > phy ;)
-> > > 
-> >
-> > Yes, confusing indeed. But the controllers (PCIe, UFS, USB etc...) are backed by
-> > GDSCs and all the analog components (PHYs) belong to MX domain since it is kind
-> > of always ON.
-> >
-> > I'll submit a series to fix this for the rest of the SoCs.
-> 
-> Great!
-> 
-> So I'll send v6 with power-domains = <&rpmhpd SC7280_MX>; for the phy.
-> 
+url:    https://github.com/intel-lab-lkp/linux/commits/Dmitry-Baryshkov/drm-msm-dpu-enable-writeback-on-SM8150/20231203-083350
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20231203003203.1293087-2-dmitry.baryshkov%40linaro.org
+patch subject: [RFT PATCH v2 1/4] drm/msm/dpu: enable writeback on SM8150
+config: powerpc-allmodconfig (https://download.01.org/0day-ci/archive/20231205/202312052138.qMYI7bXS-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231205/202312052138.qMYI7bXS-lkp@intel.com/reproduce)
 
-Sounds good.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312052138.qMYI7bXS-lkp@intel.com/
 
-- Mani
+All errors (new ones prefixed by >>):
 
-> Regards
-> Luca
-> 
-> >
-> > - Mani
-> >
-> > > Regards
-> > > Luca
-> > > 
-> > > >
-> > > > > +
-> > > > > +			resets = <&ufs_mem_hc 0>;
-> > > > > +			reset-names = "ufsphy";
-> > > > > +
-> > > > > +			#clock-cells = <1>;
-> > > > > +			#phy-cells = <0>;
-> > > > > +
-> > > > > +			status = "disabled";
-> > > > > +		};
-> > > > > +
-> > > > >   		ipa: ipa@1e40000 {
-> > > > >   			compatible = "qcom,sc7280-ipa";
-> > > > >   
-> > > > > 
-> > > 
-> 
+   In file included from drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c:658:
+>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h:299:15: error: use of undeclared identifier 'WB_SDM845_MASK'
+     299 |                 .features = WB_SDM845_MASK,
+         |                             ^
+>> drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h:404:14: error: invalid application of 'sizeof' to an incomplete type 'const struct dpu_wb_cfg[]'
+     404 |         .wb_count = ARRAY_SIZE(sm8150_wb),
+         |                     ^~~~~~~~~~~~~~~~~~~~~
+   include/linux/array_size.h:11:32: note: expanded from macro 'ARRAY_SIZE'
+      11 | #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
+         |                                ^~~~~
+   2 errors generated.
+
+
+vim +/WB_SDM845_MASK +299 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+
+   294	
+   295	static const struct dpu_wb_cfg sm8150_wb[] = {
+   296		{
+   297			.name = "wb_2", .id = WB_2,
+   298			.base = 0x65000, .len = 0x2c8,
+ > 299			.features = WB_SDM845_MASK,
+   300			.format_list = wb2_formats,
+   301			.num_formats = ARRAY_SIZE(wb2_formats),
+   302			.clk_ctrl = DPU_CLK_CTRL_WB2,
+   303			.xin_id = 6,
+   304			.vbif_idx = VBIF_RT,
+   305			.maxlinewidth = 4096,
+   306			.intr_wb_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 4),
+   307		},
+   308	};
+   309	
+   310	static const struct dpu_intf_cfg sm8150_intf[] = {
+   311		{
+   312			.name = "intf_0", .id = INTF_0,
+   313			.base = 0x6a000, .len = 0x280,
+   314			.features = INTF_SC7180_MASK,
+   315			.type = INTF_DP,
+   316			.controller_id = MSM_DP_CONTROLLER_0,
+   317			.prog_fetch_lines_worst_case = 24,
+   318			.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+   319			.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+   320		}, {
+   321			.name = "intf_1", .id = INTF_1,
+   322			.base = 0x6a800, .len = 0x2bc,
+   323			.features = INTF_SC7180_MASK,
+   324			.type = INTF_DSI,
+   325			.controller_id = MSM_DSI_CONTROLLER_0,
+   326			.prog_fetch_lines_worst_case = 24,
+   327			.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+   328			.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+   329			.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
+   330		}, {
+   331			.name = "intf_2", .id = INTF_2,
+   332			.base = 0x6b000, .len = 0x2bc,
+   333			.features = INTF_SC7180_MASK,
+   334			.type = INTF_DSI,
+   335			.controller_id = MSM_DSI_CONTROLLER_1,
+   336			.prog_fetch_lines_worst_case = 24,
+   337			.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+   338			.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+   339			.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
+   340		}, {
+   341			.name = "intf_3", .id = INTF_3,
+   342			.base = 0x6b800, .len = 0x280,
+   343			.features = INTF_SC7180_MASK,
+   344			.type = INTF_DP,
+   345			.controller_id = MSM_DP_CONTROLLER_1,
+   346			.prog_fetch_lines_worst_case = 24,
+   347			.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+   348			.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+   349		},
+   350	};
+   351	
+   352	static const struct dpu_perf_cfg sm8150_perf_data = {
+   353		.max_bw_low = 12800000,
+   354		.max_bw_high = 12800000,
+   355		.min_core_ib = 2400000,
+   356		.min_llcc_ib = 800000,
+   357		.min_dram_ib = 800000,
+   358		.min_prefill_lines = 24,
+   359		.danger_lut_tbl = {0xf, 0xffff, 0x0},
+   360		.safe_lut_tbl = {0xfff8, 0xf000, 0xffff},
+   361		.qos_lut_tbl = {
+   362			{.nentry = ARRAY_SIZE(sm8150_qos_linear),
+   363			.entries = sm8150_qos_linear
+   364			},
+   365			{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
+   366			.entries = sc7180_qos_macrotile
+   367			},
+   368			{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
+   369			.entries = sc7180_qos_nrt
+   370			},
+   371			/* TODO: macrotile-qseed is different from macrotile */
+   372		},
+   373		.cdp_cfg = {
+   374			{.rd_enable = 1, .wr_enable = 1},
+   375			{.rd_enable = 1, .wr_enable = 0}
+   376		},
+   377		.clk_inefficiency_factor = 105,
+   378		.bw_inefficiency_factor = 120,
+   379	};
+   380	
+   381	static const struct dpu_mdss_version sm8150_mdss_ver = {
+   382		.core_major_ver = 5,
+   383		.core_minor_ver = 0,
+   384	};
+   385	
+   386	const struct dpu_mdss_cfg dpu_sm8150_cfg = {
+   387		.mdss_ver = &sm8150_mdss_ver,
+   388		.caps = &sm8150_dpu_caps,
+   389		.mdp = &sm8150_mdp,
+   390		.ctl_count = ARRAY_SIZE(sm8150_ctl),
+   391		.ctl = sm8150_ctl,
+   392		.sspp_count = ARRAY_SIZE(sm8150_sspp),
+   393		.sspp = sm8150_sspp,
+   394		.mixer_count = ARRAY_SIZE(sm8150_lm),
+   395		.mixer = sm8150_lm,
+   396		.dspp_count = ARRAY_SIZE(sm8150_dspp),
+   397		.dspp = sm8150_dspp,
+   398		.dsc_count = ARRAY_SIZE(sm8150_dsc),
+   399		.dsc = sm8150_dsc,
+   400		.pingpong_count = ARRAY_SIZE(sm8150_pp),
+   401		.pingpong = sm8150_pp,
+   402		.merge_3d_count = ARRAY_SIZE(sm8150_merge_3d),
+   403		.merge_3d = sm8150_merge_3d,
+ > 404		.wb_count = ARRAY_SIZE(sm8150_wb),
+   405		.wb = sm8150_wb,
+   406		.intf_count = ARRAY_SIZE(sm8150_intf),
+   407		.intf = sm8150_intf,
+   408		.vbif_count = ARRAY_SIZE(sdm845_vbif),
+   409		.vbif = sdm845_vbif,
+   410		.perf = &sm8150_perf_data,
+   411	};
+   412	
 
 -- 
-மணிவண்ணன் சதாசிவம்
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
