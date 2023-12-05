@@ -1,96 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-3453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3454-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFB2A8053DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 13:11:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4727C80545B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 13:37:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A9C2528163A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:11:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 030EA28184F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:37:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 335D45B1E4;
-	Tue,  5 Dec 2023 12:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EC435C8F4;
+	Tue,  5 Dec 2023 12:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SfHfVYnO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nZNsJQVT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61173A7
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 04:10:54 -0800 (PST)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2c9ea37ac87so46710001fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Dec 2023 04:10:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701778252; x=1702383052; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3d56aD4ZvOlwf3rQa8BE6a+ZHLUy7yitH/6f5sNjUAc=;
-        b=SfHfVYnOecitImpbyc2wCLQQQY+YExur+xxaRnDA2s+lOFi7RBX8IbGBP/T6H6wUd2
-         op67pPmYciuhdpH8qjHm3pTsgk1y5piMUMH3Kk1Q0SBqtoJbjh+U/xLySPnPSu+dyeLE
-         ja/6L8D1kdc8CiolGYWl8+luydwFHqynJWXHDbg/2tVgQPDZbt8J59eLFLYICEyRgrbS
-         s5SSURQ8+fQemzjU6Dxd8kq7z9aCLUfn8hG6ncsl1bmyJaBOmd8mUmA7HCy+CJyZ5bU3
-         783H0Y2lhfcSiTzKfzDZQu4+Bf+zWVMtwSk+RnrkGiimWkhqIe5dOZrWmq3K6bpD7R9K
-         gCnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701778252; x=1702383052;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3d56aD4ZvOlwf3rQa8BE6a+ZHLUy7yitH/6f5sNjUAc=;
-        b=szTkcVV0v7yjF4wT4YWOtlXeT5nz/KSaPvvwSaQ5JmcuGLVsrXeSnuy7EfkHoi4NZ+
-         eHYqwiOC+yh0r3hZUtU56EIZMNblSfkrgVx6+3xFtE0zgp/CRDfeoI/5ardz5AVT4Ces
-         YsOl2y5aewvTHUiL4PUQCLgtuTkfdpEP6Wu6Fez4TBXDUzcpkHqwiO+qigQ0e9TH9VSV
-         ho7YTfFbopH+9b8cUDubqdSRRauQ5REYKc6HiuUIEn/atpRFShJ3jlspXrDPMlw1Kkpi
-         NO43Omv1jgFZA/ZHSXqacsLQARYIJ2tnnM/uIdFNeLPlk5FhX9f6BzxyloecwZzwB1dv
-         TnBA==
-X-Gm-Message-State: AOJu0YyqwxtLXwwUqRRA4d1PAtzbMy4LPGgUREHFYlODRn5/QBbQ5gui
-	HHoQhvi174Q8zA1NnU58sa0EHA==
-X-Google-Smtp-Source: AGHT+IE+WjEqqHU2fdHdPRsbnB3CFXOLpcnW7QXcMtkl+6Oy/uQyfG5hwppL1Mvv/N+RgdCZ5vfsuQ==
-X-Received: by 2002:a05:651c:89:b0:2ca:3b1:1da8 with SMTP id 9-20020a05651c008900b002ca03b11da8mr1567631ljq.104.1701778252652;
-        Tue, 05 Dec 2023 04:10:52 -0800 (PST)
-Received: from [172.30.204.197] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id s22-20020a2e2c16000000b002c9f7c2635fsm956195ljs.1.2023.12.05.04.10.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Dec 2023 04:10:52 -0800 (PST)
-Message-ID: <44840b00-4016-43df-987a-5db0c46c70b0@linaro.org>
-Date: Tue, 5 Dec 2023 13:10:51 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3EF5C900
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 12:37:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD64C433C7;
+	Tue,  5 Dec 2023 12:37:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701779840;
+	bh=iGTjPkwj63UI3pgczFyX1KRc4/zzeEEsLeEmlVyP4vM=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=nZNsJQVTzRQPB6YS5aI2h4NZgbhUAde9Lz7SRTpGNj0eKfBINYB7c63WugNkQ5Rgn
+	 keLNusDZqDK6D+qoB9GoyhT/5TdqXW1U4FI8PPd67P6UW6j2dvGfeTS+iLwek3stXa
+	 KJIi4hxw4XvwnUCbsS8a3GlFcnf9OJDTf8NskjI1oTd3uD/UmZaQ0Vyn9F9lRabr4T
+	 H11C4nvBu9ul9vt26jP9QlEyySRbwJNOGNZIaGv1uUbQsLeCpYZoB4BIZc6c4Mm5dk
+	 DClNJ4i9Mrk+vWoVR8+RJf1h65YwWKbKDttwUqm6S1CIW0uj2xB36tTAnGzA6jeDA9
+	 lTL+in7hkKiEA==
+From: Kalle Valo <kvalo@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: ath10k@lists.infradead.org,  "open list:DRM DRIVER FOR MSM ADRENO GPU"
+ <linux-arm-msm@vger.kernel.org>
+Subject: Re: ath10k / WCN3990: firmware-5.bin and wlanmdsp.mbn being out of
+ sync
+References: <CAA8EJpp+SJpX4FFmcTm133KNtztTJH0ovTLRm0bftahPT8a1kw@mail.gmail.com>
+	<87leaaqg7a.fsf@kernel.org>
+	<CAA8EJpomDw0sBOT_t5F33Uqn4FeWRBewv_=_4q4OzvU+JzXH-g@mail.gmail.com>
+	<878r6aq71z.fsf@kernel.org>
+	<CAA8EJpoeozL_Vo0ivV6Gc3sPvANjz69e9jLrSgiegbv5LJUFXw@mail.gmail.com>
+Date: Tue, 05 Dec 2023 14:37:17 +0200
+In-Reply-To: <CAA8EJpoeozL_Vo0ivV6Gc3sPvANjz69e9jLrSgiegbv5LJUFXw@mail.gmail.com>
+	(Dmitry Baryshkov's message of "Mon, 4 Dec 2023 18:49:00 +0200")
+Message-ID: <87r0k0q0zm.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] arm64: dts: qcom: sm8650: add ADSP audio codec
- macros
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-References: <20231204155746.302323-1-krzysztof.kozlowski@linaro.org>
- <20231204155746.302323-3-krzysztof.kozlowski@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231204155746.302323-3-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Level: *
+Content-Type: text/plain
 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
+> On Mon, 4 Dec 2023 at 18:14, Kalle Valo <kvalo@kernel.org> wrote:
+>
+>>
+>> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>>
+>> > On Mon, 4 Dec 2023 at 14:56, Kalle Valo <kvalo@kernel.org> wrote:
+>> >
+>> >>
+>> >> Hi Dmitry,
+>> >>
+>> >> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>> >>
+>> >> > I wanted to ask your opinion regarding one of the issues we stumbled
+>> >> > upon on the Qualcomm RB1 and RB2 platforms. These platforms use ath10k
+>> >> > snoc (WCN3990) WiFi "card". We noticed the following messages being
+>> >> > spawned on the console, which I traced it to the
+>> >> > ATH10K_FW_FEATURE_SINGLE_CHAN_INFO_PER_CHANNEL feature:
+>> >> >
+>> >> > ath10k_snoc c800000.wifi: chan info: invalid frequency 0 (idx 41 out of bounds)
+>> >> >
+>> >> > As a reminder, on this platform the wlan firmware and firmware-N.bin
+>> >> > files come separately.
+>> >> > The wlanmdsp.mbn is downloaded by the onboard modem DSP via the
+>> >> > tqftpserv request (which is served from the board-specific folder
+>> >> > qcom/qcm2210). The firmware-N.bin file is loaded by the WiFi driver
+>> >> > itself from the generic folder, ath10k/WCN3990/hw1.0. Current
+>> >> > firmware-5.bin file was provided with the sdm845's wlanmdsp.mbn, which
+>> >> > is older than qcm2210/qrb4210's wlanmdsp.mbn.
+>> >> >
+>> >> > I'm looking for suggestions on how to make ath10k driver load
+>> >> > firmware-N.bin file which corresponds to the board-specific
+>> >> > wlanmdsp.mbn.
+>> >>
+>> >> We have had similar discussions in the past but it didn't go very far.
+>> >> It would be so nice if you could finally fix this :) At one point we
+>> >> even had a discussion that we might need something similar for ath11k
+>> >> but it didn't go anywhere.
+>> >>
+>> >> > In particular I'd like to hear your opinion on the following proposal:
+>> >> >
+>> >> > Add the  optional property to the board DT, that specifies:
+>> >> > firmware-name = "path/to/wlanmdsp.mbn".  The property, if present,
+>> >> > will be used as an override for the firmware directory. So, while the
+>> >> > ath10k driver will not load wlanmdsp.mbn on its own, it will still
+>> >> > look for the firmware-N files in the specified directory.
+>> >>
+>> >> Back in the day I was thinking something like below, please let me know
+>> >> what you think.
+>> >>
+>> >> So the normal firmware path for WCN3990 is:
+>> >>
+>> >> ath10k/WCN3990/hw1.0/
+>> >>
+>> >> My idea was that if we could extend it for different "platforms" (not
+>> >> sure what's the proper term for this) by having platform specific
+>> >> directories:
+>> >>
+>> >> ath10k/WCN3990/hw1.0-platform/
+>> >>
+>> >> (Replace "platform" with a unique name for the platform, for example
+>> >> "acme-kv7" for a product from Acme with model name kv7.)
+>> >>
+>> >> Then DT could inform ath10k about this "platform" string and ath10k
+>> >> would then download boath firmware-N.bin and board-2.bin from the
+>> >> platform specific directory.
+>> >>
+>> >> And even cleaner if we could have the *.mbn firmware files in the same
+>> >> directory, even if ath10k doesn't access them directly.
+>> >
+>> > We can, and a symlink from qcom/SoC/.../dir to that subdir.
+>> >
+>> > So, for example, for Pixel-3, using your schema we will have:
+>> >
+>> > ath10k/WCN3990/hw1.0-blueline/wlanmdsp.mbn
+>> > ath10k/WCN3990/hw1.0-blueline/firmware-5.bin
+>> > ath10k/WCN3990/hw1.0-blueline/board-2.bin
+>> >
+>> > qcom/sdm845/Google/blueline/wlanmdsp.mbn ->
+>> > ../../../../ath10k/WCN3990/hw1.0-blueline/wlanmdsp.mbn
+>> >
+>> > This sounds mostly fine to me. My only suggestions is to change it as following:
+>> >
+>> > ath10k/WCN3990/hw1.0/board-2.bin
+>> >
+>> > ath10k/WCN3990/hw1.0/blueline/wlanmdsp.mbn
+>> > ath10k/WCN3990/hw1.0/blueline/firmware-5.bin
+>> > ath10k/WCN3990/hw1.0/blueline/board-2.bin
+>> >
+>> > qcom/sdm845/Google/blueline/wlanmdsp.mbn ->
+>> > ../../../../ath10k/WCN3990/hw1.0/blueline/wlanmdsp.mbn
+>>
+>> Is there a specific reason why you propose adding a new subdirectory?
+>> Personally I find it confusing that hw1.0 directory contains the
+>> firmware files and then there's a subdirectory which also contains
+>> similar firmware files.
+>
+> My main idea was to allow fallback at least for board-2.bin. I don't
+> think we should have 10 instances of the file (or load it from the
+> platform-specific location).
 
-On 12/4/23 16:57, Krzysztof Kozlowski wrote:
-> Add the Low Power Audio SubSystem (LPASS) / ADSP audio codec macros on
-> Qualcomm SM8650.  The nodes are very similar to SM8550.
-> 
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+A very good point, I didn't think of board files. I agree, we should
+avoid having several board-2.bin files. But I don't see how a
+subdirectory would solve that? What if we have symlinks for board-2.bin
+file:
 
-Konrad
+ath10k/WCN3990/hw1.0-blueline/board-2.bin -> ath10k/WCN3990/hw1.0/board-2.bin
+
+That way we can have just one board-2.bin file to maintain. And I
+suspect this would be easier to implement in ath10k driver.
+
+In my previous mail I forgot to mention about backwards compatibility
+which is important. So we need to be careful that older kernels continue
+to work.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
