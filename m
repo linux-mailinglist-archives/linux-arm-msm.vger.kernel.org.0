@@ -1,131 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-3435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01DCE805197
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:09:24 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 491058051DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:17:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 327541C20E08
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 11:09:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04B11281405
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 11:17:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14A304F5E4;
-	Tue,  5 Dec 2023 11:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA69056750;
+	Tue,  5 Dec 2023 11:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="AriwKoZq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Be41f6x4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFE17129
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 03:09:14 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-40b4746ae3bso51025025e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Dec 2023 03:09:14 -0800 (PST)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D53E09A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 03:17:18 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-54cd8f5bb5cso2121810a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Dec 2023 03:17:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1701774553; x=1702379353; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JYTGnhkqGwWYczwtIdABCmZR2C7e/8FCJmHj5tNfaFU=;
-        b=AriwKoZqI3g2eUZ7tfm3UnQesl5Af+lwFZ6KCntpq7857sQoOFEc4F1UzlGt2i0R44
-         EWW+Uu3JGELbY9dLnpe/ebQ2FlmWVZhfXp3YXv/vL3rZJnvEVJUeAjgcoX4daDeUgBCp
-         Bzcl2MMkgbLGlZOXG49vMR2geRlwsomPptj66AuTOlMWDvMMeaRV6JIGW4N5njCezdw4
-         RYBVjexYeumMlApt3UnNSKkbAIxSVG3cUA0AGVmSg/kiX12ooKvG9jVMYdTINhHsHWXB
-         T1Es8vluHM6+Y/xtN/x+ggq9rLAKz5fDW+zNQyYuQur7RN7NCeEy2awvJNy+F1SkNGu0
-         ibgQ==
+        d=linaro.org; s=google; t=1701775037; x=1702379837; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9bFWvbHdZ+yBWjkG2AjCOWgUeQFJsO6N0KpFAtG5kgs=;
+        b=Be41f6x48JSYW40Nf+sf7VQmx2ksdDqrd/auftSDo6qYt9rI/nCKTELdIumiJFxfZx
+         Fk9m6piQfiWC/wyJnkTFjQEN0NXLRWcDFqft/mqgywFzC4KnxM0z9G/tKbUMJP3mluyk
+         NeUK2uCOI4cMpKbzKWdiRQfDPRJHI6gRbjyEnAcum0BNdGOcmibzwjRFyG4lSwQ15rNy
+         BcfG6RPFvcronsd0X1hYtisZxk3s8SqOGEOH/BlnRAK7Tx71baqlTK1f7DPFJcVH4gN1
+         vfpoThtPAJXofP0UNflMxmeiPGraklWHmMl1c/p4nf7tcayFy88iicVLQH3ijWn/N2xv
+         153Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701774553; x=1702379353;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JYTGnhkqGwWYczwtIdABCmZR2C7e/8FCJmHj5tNfaFU=;
-        b=khqFWFrY2pOm3/B2C36HYivL/9KycNAefstKbECUfVi7+Cv+w/R/fAZoWgmrjWuNBm
-         0szMk27uMZEroBQ0HJrieJh89z6IG6nKsBIgLgdir5h5QYLco0Rimf14XuhRDnRFy7nf
-         Oz2IDEEcw2AfP/OXtqGLrSlLXTcreJdKCoHdPwScqhtclOWNBIqmdLcOKlLVNr2sbeK5
-         M9PuKLbjL1qPcppY9YRL1BXwyG+8Pxr0Rd40ov/uKkCvFN4ZZMahn42f9NWzZ6bFtS+y
-         rDP9RrmIR3bmomV7sKfdiMhQTkcd/tCULyzLqua/jyISfRGJk5WuSpUM+5Zh5t5D9hbw
-         obXQ==
-X-Gm-Message-State: AOJu0YymsAHqvbOPlhY661Z0XfSEdSj01N0T9+k63nXo6lesMB+BpTqX
-	7Sf1rPWocpw9hkD2LUeKsZkiXQ==
-X-Google-Smtp-Source: AGHT+IFuuXyyJdBBfJwb4MoIOZkXw4s5AF/QSxcpiM9U0ZGQathPtLg2/v3mEvMGLTwB2kEKnfcAxQ==
-X-Received: by 2002:a05:600c:3ba3:b0:40b:5e21:cc23 with SMTP id n35-20020a05600c3ba300b0040b5e21cc23mr347905wms.78.1701774553286;
-        Tue, 05 Dec 2023 03:09:13 -0800 (PST)
-Received: from brgl-build.home ([2a01:cb1d:334:ac00:2efb:ffdf:fa22:d5ee])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05600c4fd200b0040b45282f88sm21798166wmq.36.2023.12.05.03.09.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 03:09:12 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 2/2] Bluetooth: qca: run the power-on/off sequence for QCA6390 too
-Date: Tue,  5 Dec 2023 12:09:03 +0100
-Message-Id: <20231205110903.68898-2-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231205110903.68898-1-brgl@bgdev.pl>
-References: <20231205110903.68898-1-brgl@bgdev.pl>
+        d=1e100.net; s=20230601; t=1701775037; x=1702379837;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9bFWvbHdZ+yBWjkG2AjCOWgUeQFJsO6N0KpFAtG5kgs=;
+        b=pJMq+CY84/lFG4HA3vY4v5ZrP+QevFFJuiFoeq6x/dTgUoIQ9TVQZ1RIOa8NPyd8ry
+         TENUJ2jmv1QllnbHEMH5vN8+WV4IDSiRSem+9hpVqb7UzBCD588fXER5CVDcimm+cpYU
+         gznVBKHqcupx+x/TYAPRINKkNVBp7FYvMW7uBDwm+JIC+QhAoJTsELfIO96Pv9zQ/XJm
+         UBEEdQn4dd8Ct+PN3gYUUHsA6ppsc9MN6vksQt0si4bM85kP0Kl72z1O1+h8LVwDvvpi
+         bT6533aPiZD1TJ3IURH49SQEQB9KLvfWumv5eJ0VmNcLxoDtxFrM2hMpYxna3H7WKIbj
+         mP1Q==
+X-Gm-Message-State: AOJu0Yw7hN4PVzKgR7Aercxagh0DK4sIAGJKXbY00PtYofOGigbJlOPo
+	+RVBayDZKe0us2SOsiekJq2LYQ==
+X-Google-Smtp-Source: AGHT+IFxEB0bUAN14B30xmG0RvzRxnAklPYvA45XIZ8ORyABH1tKv+IfQodqEJ35m4YFxPMADQHx5A==
+X-Received: by 2002:a05:6402:5190:b0:54c:c744:da7e with SMTP id q16-20020a056402519000b0054cc744da7emr1929309edd.40.1701775037298;
+        Tue, 05 Dec 2023 03:17:17 -0800 (PST)
+Received: from ?IPV6:2001:1c06:2302:5600:366d:ca8f:f3af:381? (2001-1c06-2302-5600-366d-ca8f-f3af-0381.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:366d:ca8f:f3af:381])
+        by smtp.gmail.com with ESMTPSA id g21-20020aa7c595000000b0054b3d8e65d7sm935118edq.47.2023.12.05.03.17.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Dec 2023 03:17:16 -0800 (PST)
+Message-ID: <1c62dd8b-72b2-4204-8284-a1dd90d4f909@linaro.org>
+Date: Tue, 5 Dec 2023 12:17:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916/39-samsung-a2015: Add PMIC and
+ charger
+Content-Language: en-US
+To: Raymond Hackley <raymondhackley@protonmail.com>,
+ linux-kernel@vger.kernel.org
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jakob Hauser <jahau@rocketmail.com>,
+ Stephan Gerhold <stephan@gerhold.net>, Nikita Travkin <nikita@trvn.ru>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht
+References: <20231205093841.24325-1-raymondhackley@protonmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20231205093841.24325-1-raymondhackley@protonmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 05/12/2023 10:38, Raymond Hackley wrote:
+> The phones listed below have Richtek RT5033 PMIC and charger.
+> Add them to the device trees.
+> 
+> - Samsung Galaxy A3/A5/A7 2015
+> - Samsung Galaxy E5/E7
+> - Samsung Galaxy Grand Max
+> 
+> Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+> ---
+>   .../qcom/msm8916-samsung-a2015-common.dtsi    | 59 +++++++++++++++++-
+>   .../boot/dts/qcom/msm8916-samsung-a3u-eur.dts |  6 ++
+>   .../boot/dts/qcom/msm8916-samsung-a5u-eur.dts |  6 ++
+>   .../qcom/msm8916-samsung-e2015-common.dtsi    |  6 ++
+>   .../boot/dts/qcom/msm8916-samsung-e5.dts      |  6 ++
+>   .../boot/dts/qcom/msm8916-samsung-e7.dts      |  7 +++
+>   .../dts/qcom/msm8916-samsung-grandmax.dts     |  6 ++
+>   .../boot/dts/qcom/msm8939-samsung-a7.dts      | 62 ++++++++++++++++++-
+>   8 files changed, 156 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+> index 2937495940ea..e6355e5e2177 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+> @@ -28,6 +28,12 @@ tz-apps@85500000 {
+>   		};
+>   	};
+>   
+> +	battery: battery {
+> +		compatible = "simple-battery";
+> +		precharge-current-microamp = <450000>;
+> +		precharge-upper-limit-microvolt = <3500000>;
+> +	};
+> +
+>   	clk_pwm: pwm {
+>   		compatible = "clk-pwm";
+>   		#pwm-cells = <2>;
+> @@ -128,6 +134,12 @@ muic: extcon@25 {
+>   
+>   			pinctrl-names = "default";
+>   			pinctrl-0 = <&muic_int_default>;
+> +
+> +			usb_con: connector {
+> +				compatible = "usb-b-connector";
+> +				label = "micro-USB";
+> +				type = "micro";
+> +			};
 
-The Bluetooth module on QCA6390 needs to be powered-on by enabling the
-relevant regulators and driving the enable GPIO high. We can reuse the
-power sequence for the WNC models.
+It would be nice to break this up into individual patches
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+One patch for the battery, one patch for the usb-b-connector per device 
+you are targetting.
+
+More work but better practice to have more granular commits.
+
+
+> +		regulators {
+> +			rt5033_reg_safe_ldo: SAFE_LDO {
+> +				regulator-min-microvolt = <4900000>;
+> +				regulator-max-microvolt = <4900000>;
+> +				regulator-always-on;
+> +			};
+> +
+> +			/*
+> +			 * Needed for camera, but not used yet.
+> +			 * Define empty nodes to allow disabling the unused
+> +			 * regulators.
+> +			 */
+> +			LDO {};
+> +			BUCK {};
+> +		};
+
+Aren't the camera regulators off until enabled ?
+
 ---
- drivers/bluetooth/hci_qca.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 7f25931a946e..351ba904c8c2 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1788,6 +1788,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_QCA6390:
- 		ret = qca_regulator_init(hu);
- 		break;
- 
-@@ -2137,6 +2138,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_QCA6390:
- 		gpiod_set_value_cansleep(qcadev->bt_en, 0);
- 		msleep(100);
- 		qca_regulator_disable(qcadev);
-@@ -2284,6 +2286,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_QCA6390:
- 		qcadev->bt_power = devm_kzalloc(&serdev->dev,
- 						sizeof(struct qca_power),
- 						GFP_KERNEL);
-@@ -2394,6 +2397,7 @@ static void qca_serdev_remove(struct serdev_device *serdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_QCA6390:
- 		if (power->vregs_on) {
- 			qca_power_shutdown(&qcadev->serdev_hu);
- 			break;
--- 
-2.40.1
+bod
 
 
