@@ -1,110 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-3413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32490804A96
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 07:51:31 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8CDD804A9B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 07:51:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7ED4B20A96
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 06:51:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 452C21F20F49
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 06:51:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3ECB812E61;
-	Tue,  5 Dec 2023 06:51:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 677413FC2;
+	Tue,  5 Dec 2023 06:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="HzwMXPNm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mrdeGsnd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::226])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D20FF;
-	Mon,  4 Dec 2023 22:51:21 -0800 (PST)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 6524CC0006;
-	Tue,  5 Dec 2023 06:51:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1701759080;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=HmV/ix9amwJ7r86i5eKjinKKZ2rsJiuszC6Rdqdxvkc=;
-	b=HzwMXPNmz6whc7Lpk85Qn6zY/OATY25BeMWTJQcAXyjnM7VJJ2VXeAX+YWpdVRQT5Vur3R
-	QhFZ7m94EhMmFpc68Pu+TvXUbkN3AaCfoqMJ0YM3jNWfTv11ZKeKS7C84B6FNIcMZ89Qdd
-	f89dxnTRE9h3fG5NI+WkwypaPQVKVGnFiIr48c7zyn6ybn2r/QuBMHWvDYFzi6znO8Y3qN
-	XPXYuxTqDh3Xqrxv3JjU1Am74IpMqk2rwYgmjR25xwAIZbpmMtvveNvFwlEljiCzPDcsKq
-	xIkKhTMqxIgnw5KCI9gpuOxkCqGDN40qtrKms0AhQXax6Bc4/UCoa1hw6m14cg==
-Date: Tue, 5 Dec 2023 07:51:10 +0100
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Uwe =?UTF-8?B?S2xlaW5lLUvDtm5pZw==?= <u.kleine-koenig@pengutronix.de>
-Cc: "David S. Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni
- <pabeni@redhat.com>, Alex Elder <elder@kernel.org>, netdev@vger.kernel.org,
- kernel@pengutronix.de, Marc Kleine-Budde <mkl@pengutronix.de>, Nick Child
- <nnac123@linux.ibm.com>, Christian Marangi <ansuelsmth@gmail.com>,
- =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <clement.leger@bootlin.com>, Andrew Lunn
- <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>, Russell King
- <linux@armlinux.org.uk>, linux-renesas-soc@vger.kernel.org, Zhao Qiang
- <qiang.zhao@nxp.com>, linuxppc-dev@lists.ozlabs.org, Linus Walleij
- <linusw@kernel.org>, Imre Kaloz <kaloz@openwrt.org>,
- linux-arm-kernel@lists.infradead.org, Stephan Gerhold
- <stephan@gerhold.net>, Andy Gross <agross@kernel.org>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Loic
- Poulain <loic.poulain@linaro.org>, Sergey Ryazanov
- <ryazanov.s.a@gmail.com>, Johannes Berg <johannes@sipsolutions.net>,
- linux-arm-msm@vger.kernel.org, Alexander Aring <alex.aring@gmail.com>,
- Stefan Schmidt <stefan@datenfreihafen.org>, linux-wpan@vger.kernel.org
-Subject: Re: [PATCH net-next v2 0/9] net*: Convert to platform remove
- callback returning void
-Message-ID: <20231205075110.795b88d2@xps-13>
-In-Reply-To: <cover.1701713943.git.u.kleine-koenig@pengutronix.de>
-References: <cover.1701713943.git.u.kleine-koenig@pengutronix.de>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A934011F;
+	Mon,  4 Dec 2023 22:51:40 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B55gaWY022792;
+	Tue, 5 Dec 2023 06:51:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=BVvNCdvGjyZq25vNtHzXGLk/rYdZ12wJoWOL0EDbIEQ=;
+ b=mrdeGsndkw7uIl7/xk91UKGGsYoo9PYaaG388R+pSPf5Ub4JCoQxXFhygR8qBP9TvNTw
+ uuIK5iHeAB2pbaVi9BpHM1WIkfDA7PFw+9FyoMQVxH8tSDHwESwm9wAvd5o6/gWffJyH
+ eS4qHYIadznO7UXUx2j8gnI1QPZbk4UkrX1K/d3NKKsMh1Wgswze09bZpKxWiDRpRnSV
+ xVhy3kTtclLkVH6GExesdxQbj2cAsBFCnv7m12wtQDrFVvt2CoO7j4BBE0ZiXXd/xsJ7
+ mwTLQbl29DCLNcS6NcaJR7U78bWVnK7LufnBiacycO8zNyFXz1rSfmwy6YbmUZIVk4y2 oA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3usdfwjf55-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 05 Dec 2023 06:51:36 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B56pZRs025392
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 5 Dec 2023 06:51:35 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 4 Dec
+ 2023 22:51:30 -0800
+Message-ID: <2e874228-b1b4-48b8-87e4-c81e0957cfd1@quicinc.com>
+Date: Tue, 5 Dec 2023 14:51:28 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-Sasl: miquel.raynal@bootlin.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/4] pinctrl: qcom: Add SM4450 pinctrl driver
+To: Jeff Johnson <quic_jjohnson@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzk@kernel.org>, <andersson@kernel.org>,
+        <agross@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linus.walleij@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20231130024046.25938-1-quic_tengfan@quicinc.com>
+ <20231130024046.25938-3-quic_tengfan@quicinc.com>
+ <1d2fbb36-9476-4f32-8bcd-33fd5dcbd6e4@kernel.org>
+ <d192f32a-130f-4568-9622-d3465c709853@quicinc.com>
+ <1b65f67a-8142-4690-af6e-4a0bf641b7be@kernel.org>
+ <e3817ea6-3cdc-418f-bbeb-ed93e7f537e3@quicinc.com>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <e3817ea6-3cdc-418f-bbeb-ed93e7f537e3@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QDYWXb2KgkVSCoGuVMRso-YW7uBKY_Bn
+X-Proofpoint-ORIG-GUID: QDYWXb2KgkVSCoGuVMRso-YW7uBKY_Bn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-05_03,2023-12-04_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=827 mlxscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 malwarescore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311060000 definitions=main-2312050053
 
-Hi Uwe,
 
-u.kleine-koenig@pengutronix.de wrote on Mon,  4 Dec 2023 19:30:40 +0100:
 
-> Hello,
->=20
-> (implicit) v1 of this series can be found at
-> https://lore.kernel.org/netdev/20231117095922.876489-1-u.kleine-koenig@pe=
-ngutronix.de.
-> Changes since then:
->=20
->  - Dropped patch #1 as Alex objected. Patch #1 (was #2 before) now
->    converts ipa to remove_new() and introduces an error message in the
->    error path that failed before.
->=20
->  - Rebased to today's next
->=20
->  - Add the tags received in the previous round.
->=20
-> Uwe Kleine-K=C3=B6nig (9):
->   net: ipa: Convert to platform remove callback returning void
->   net: fjes: Convert to platform remove callback returning void
->   net: pcs: rzn1-miic: Convert to platform remove callback returning
->     void
->   net: sfp: Convert to platform remove callback returning void
->   net: wan/fsl_ucc_hdlc: Convert to platform remove callback returning
->     void
->   net: wan/ixp4xx_hss: Convert to platform remove callback returning
->     void
->   net: wwan: qcom_bam_dmux: Convert to platform remove callback
->     returning void
->   ieee802154: fakelb: Convert to platform remove callback returning void
->   ieee802154: hwsim: Convert to platform remove callback returning void
+在 12/5/2023 12:04 AM, Jeff Johnson 写道:
+> On 12/3/2023 11:56 PM, Krzysztof Kozlowski wrote:
+>> On 04/12/2023 02:57, Tengfei Fan wrote:
+>>>
+>>>
+>>> 在 11/30/2023 7:57 PM, Krzysztof Kozlowski 写道:
+>>>> On 30/11/2023 03:40, Tengfei Fan wrote:
+>>>>> Add pinctrl driver for TLMM block found in SM4450 SoC.
+>>>>>
+>>>>> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+>>>>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>>>>> ---
+>>>>>    drivers/pinctrl/qcom/Kconfig.msm      |    8 +
+>>>>>    drivers/pinctrl/qcom/Makefile         |    1 +
+>>>>>    drivers/pinctrl/qcom/pinctrl-sm4450.c | 1013 +++++++++++++++++++++++++
+>>>>>    3 files changed, 1022 insertions(+)
+>>>>>    create mode 100644 drivers/pinctrl/qcom/pinctrl-sm4450.c
+>>>>>
+>>>>
+>>>> Hm, was this patch ever built?
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>>>
+>>> This patch has been built before, I will check and compare if there are
+>>> any errors and changes when I submitted this patch series.
+>>>
+>>
+>> No, it wasn't built. I just tried - applied it and:
+>>
+>> pinctrl-sm4450.c:996:19: error: initialization of ‘int (*)(struct
+>> platform_device *)’ from incompatible pointer type ‘void (*)(struct
+>> platform_device *)’ [-Werror=incompatible-pointer-types]
+>>    996 |         .remove = msm_pinctrl_remove,
+>>        |                   ^~~~~~~~~~~~~~~~~~
+>> ../drivers/pinctrl/qcom/pinctrl-sm4450.c:996:19: note: (near
+>> initialization for ‘sm4450_tlmm_driver.remove’)
+>>
+>> So you just sent a patch which was not even compiled.
+>>
+>> NAK.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> 
+> The problem here is patch 2/4 incorrectly initializes .remove and patch
+> 3/4 changes it to correctly use .remove_new. Bisection at patch 2
+> doesn't build.
+> 
+> Those two patches should be squashed
+Yes, next version patch series will squash these two patches.
 
-FYI, I plan on taking patches 8 and 9 through wpan-next.
-
-Thanks,
-Miqu=C3=A8l
+-- 
+Thx and BRs,
+Tengfei Fan
 
