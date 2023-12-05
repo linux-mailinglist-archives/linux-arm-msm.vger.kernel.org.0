@@ -1,124 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-3438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C62A88052B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:25:29 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8A758052E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 12:31:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 03B0E1C20E59
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 11:25:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62D602816A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 11:31:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D29525786C;
-	Tue,  5 Dec 2023 11:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 504AE6979D;
+	Tue,  5 Dec 2023 11:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="F/jjh+2S"
+	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="M7XiLvX7";
+	dkim=permerror (0-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="wcXJG4s/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4F3349E5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 03:23:55 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-33338c67d20so2831945f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Dec 2023 03:23:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1701775404; x=1702380204; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ws3CIsjXWSfN6YwtDvaoTEO5x+PGXRNs+10Uc6B7SBs=;
-        b=F/jjh+2SbO/nDuRw1+DNL3qRyJRMZ3O5jVHjnl5qxYS5mmWW1cSBYQSuFSQpTE/JSG
-         5se6XGHYQKxxlv6LLCNYGie/UcbaY5LerxWvqP+2sI4Wp0dd0aw7q2F07Wo25L6O4VfJ
-         o5+BlHSW01mV5a21rLj2ksIY5so3Uuy6wVPYDleL9IjJqqnXrqhmZKksz3W5S84MxVsv
-         4+WrHEDTgiK2E0Jmz69woawQO4t16gW9M1fknalqFcXIOnHapKNsycda5MY659lBYCEb
-         +kdWQg0giqnFidPdHtZHPxA3cYHnAvRQl4wSa0D1xJb/Q1HADjg4RN48TfGnGJRe22s0
-         siOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701775404; x=1702380204;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ws3CIsjXWSfN6YwtDvaoTEO5x+PGXRNs+10Uc6B7SBs=;
-        b=fBxZsZPxM3fu9EgZE8/tzJjx9nwJKpasNDC9QF0XmHMYOXmlft9XIkKpN1M5HSrQCG
-         eIU7dkdd+JPDHuVBL5d+tcJkSX2++hTAUtRIrdg6peD5Gnjm9taPQxkFLtzpA+j8kGtP
-         cHl+0J3VnSgwmU1xzuL+t2NvrIKtGPIUcNfSc98kcoTQQK+7x3QHM6cekYre7kvX5zHb
-         vQxcZB/Zhk6ZCzsq5zji+04TGvsXzrrwL+YKsItYdKr06gGwNePHo2pq99H8QAOXfIty
-         jRjHSzLYjulgmW0RxoLuALeZXRucQ0GL3L7p9CA2BFISMm4P+/3R1dvgUZdPxVQJ9Fqr
-         9Zhw==
-X-Gm-Message-State: AOJu0Ywq42V+nbxn6fEhVd4O9REhewF9KUwJ1G3GmaOzO14WIZ7k/FCB
-	fhlp0J2EEdSh3oJN3sGkZmhImA==
-X-Google-Smtp-Source: AGHT+IGZrmoqP+nMIa/3cBLgBOq9hwyxZg/PZmzJay6finlPfcxRqwVG7R5axg0/t55/zRkDaEQxBw==
-X-Received: by 2002:a5d:66c1:0:b0:333:a27:2326 with SMTP id k1-20020a5d66c1000000b003330a272326mr3908774wrw.25.1701775404274;
-        Tue, 05 Dec 2023 03:23:24 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:2dd9:dce:96c5:9e9a])
-        by smtp.gmail.com with ESMTPSA id p8-20020a5d59a8000000b003333ed23356sm8127775wrr.4.2023.12.05.03.23.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 03:23:23 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Andy Gross <agross@kernel.org>,
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8112C1B9;
+	Tue,  5 Dec 2023 03:31:16 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1701775857; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=j8ERvUoQFRjxzG3q+WoTBj1tiSAUaNNRRWQVzv3YChJpuqqjq5wIMapskHmrZ/dxQn
+    +nKRxGQOx6sQbb4VS2JbtwukY5kfaegoSRxR9hJUtpRj+EsdsI9kDlOUsS6DT/uNKZiV
+    E3oaZANWqdrl7ieUdYqoH8yNUOXdqqYpdyZf11MRpkAcPw6K5+Jn+wh1emKGR+Gy0d5V
+    COveT6qXTRG25t8X78MCMe59XUDiSHVGjGR7FEFFFWMaUr9V+YYfL6thiAScqmghyFL1
+    v7I4Ez06vPu+n4Y1+aEDP9PFo71j0K+ba4D7wdbaNG8d9EKc4H5Y9mf1I9oMN2JkhlWr
+    yp1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1701775857;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=R8hAw3u8uqXybhgsoJbMwSKfmEEJh0/vArUEqpnDzW8=;
+    b=Xuo2z92jnhvalBzoA/FJv5RM/4iFyeugNtj6kUQdMnOLBCqg5rKX3+xbNHURiAADij
+    qpxe45n6q99RsaPrYpcoxZyI4UegrYWSgyXBh8CYzjPXiX3uVk2KhQ7cqjkLVBFewx5y
+    rFtVEdHS/oZLKqaxEUIBwJFwdAksVZilS7a0lKVib6QkFbmx32eXpacWS96hkPbyy281
+    7loYXdggQt2wVeYQuw0HYoEihJ//VDF0EWXTBkGpUjlfBCwXBgdDiXbNuwVmS3IF1rr5
+    PdSELmVfXHMTMGbJDLOhGu7IfsdlNit91/eFnupQgGvfgJVRxSbcy8K1POjlNLS1DZK1
+    rfNw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1701775857;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=R8hAw3u8uqXybhgsoJbMwSKfmEEJh0/vArUEqpnDzW8=;
+    b=M7XiLvX73qoQax2FX0WCdtSotvrXrkdQu0DAmf1qcF9qH0wnlpwaNKMCuXVB17FC7r
+    c4nXgffq+mYxza2XOpLGCGV9chiVi8ngsOFUf2VOOSdhpzGQ9H3Fr8nt9uVo3gc5sKvi
+    2tSdbtMPm2zogOqbBHig8FQIMMflhs/uh6jZqLZf4t0wVbosyx/VG/fziMa2z3NV1FIf
+    mNQxj7JhcwGw3loI6xByyfVBqdBGKXLH0hqUeBnRgRoNf+KQlwqWmmoKMH0IiVrEPr7l
+    BARz5m3nXqWcC71+LbBtYsOleD/Lw1NsvnCnI/iBiYy2OjX/wo1e8ND7iXElkYuv4pg6
+    5nRg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1701775857;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=R8hAw3u8uqXybhgsoJbMwSKfmEEJh0/vArUEqpnDzW8=;
+    b=wcXJG4s/z88ltIwTsAmmSfGUkunYw8ndfagKoH9cZ5jWXVCPV736ww7fHo65T71Bco
+    75BdiM0wjzv+sI5D1sDg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paF1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.10.0 DYNA|AUTH)
+    with ESMTPSA id 58bb61zB5BUu12y
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Tue, 5 Dec 2023 12:30:56 +0100 (CET)
+Date: Tue, 5 Dec 2023 12:30:50 +0100
+From: Stephan Gerhold <stephan@gerhold.net>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Raymond Hackley <raymondhackley@protonmail.com>,
+	linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: qrb5165-rb5: add the Bluetooth node
-Date: Tue,  5 Dec 2023 12:23:11 +0100
-Message-Id: <20231205112311.16391-3-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231205112311.16391-1-brgl@bgdev.pl>
-References: <20231205112311.16391-1-brgl@bgdev.pl>
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jakob Hauser <jahau@rocketmail.com>,
+	Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916/39-samsung-a2015: Add PMIC and
+ charger
+Message-ID: <ZW8J6vYKg82Q4JFV@gerhold.net>
+References: <20231205093841.24325-1-raymondhackley@protonmail.com>
+ <1c62dd8b-72b2-4204-8284-a1dd90d4f909@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1c62dd8b-72b2-4204-8284-a1dd90d4f909@linaro.org>
+Content-Transfer-Encoding: 7bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Tue, Dec 05, 2023 at 12:17:15PM +0100, Bryan O'Donoghue wrote:
+> On 05/12/2023 10:38, Raymond Hackley wrote:
+> > The phones listed below have Richtek RT5033 PMIC and charger.
+> > Add them to the device trees.
+> > 
+> > - Samsung Galaxy A3/A5/A7 2015
+> > - Samsung Galaxy E5/E7
+> > - Samsung Galaxy Grand Max
+> > 
+> > Signed-off-by: Raymond Hackley <raymondhackley@protonmail.com>
+> > [...]
+> > +			/*
+> > +			 * Needed for camera, but not used yet.
+> > +			 * Define empty nodes to allow disabling the unused
+> > +			 * regulators.
+> > +			 */
+> > +			LDO {};
+> > +			BUCK {};
+> > +		};
+> 
+> Aren't the camera regulators off until enabled ?
+> 
 
-Add the Bluetooth node for RB5.
+We don't know for sure what state they are in during boot. If we omit
+these nodes the regulator core will ignore these regulators completely
+and just leave them in whatever state they are.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+I would indeed expect them to be off after reset, but there are also
+other situations in which Linux might be booted, such as kexec. That's
+why it's usually better to be explicit and avoid relying on boot/reset
+states altogether.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index ead0c45ba60c..fbdf8fdb532c 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1308,6 +1308,26 @@ sdc2_card_det_n: sd-card-det-n-state {
- 	};
- };
- 
-+&uart6 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,qca6390-bt";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en_state>;
-+
-+		enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-+
-+		vddio-supply = <&vreg_s4a_1p8>;
-+		vddpmu-supply = <&vreg_s2f_0p95>;
-+		vddaon-supply = <&vreg_s6a_0p95>;
-+		vddrfa1-supply = <&vreg_s2f_0p95>;
-+		vddrfa2-supply = <&vreg_s8c_1p3>;
-+		vddrfa3-supply = <&vreg_s5a_1p9>;
-+	};
-+};
-+
- &uart12 {
- 	status = "okay";
- };
--- 
-2.40.1
-
+Thanks,
+Stephan
 
