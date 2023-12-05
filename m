@@ -1,124 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-3484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00BB78060B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 22:25:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E08CF806159
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 23:05:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFED1281CD0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 21:25:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 95DE8B2112B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Dec 2023 22:05:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 767786E2A2;
-	Tue,  5 Dec 2023 21:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0A936FCF9;
+	Tue,  5 Dec 2023 22:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WDTkjQC/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KiI9iW8/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD80D43
-	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 13:25:30 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B5K9uQY029820;
-	Tue, 5 Dec 2023 21:25:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=rpmbVQ6G2nMcHvVGDQXnH+yhqXwn5yt86CzMe9CHXKs=;
- b=WDTkjQC/b5Sw0FrbmnPqFY/1xv4J04FJBCwkff9r3C7Q/TJWXHd5DPBvdseK+6sFALDY
- OVNnPkLOPwTA0CRKdp8W7wMsvVAADT9UkzlCAKLCEUIS4qW6GPG/U1A1YPF3tKXLnwMk
- l8AejQDN1FaGBmV1dGSIezOaRpYKlLsIO1vOTuUeNI+qPpPZDIE7AucDJ5Sjc6jHpn5R
- HoscjhwfugcKk7rpj7AAVMJzZChkKyZhl2lFXgdZ514a+x9f6T7YfVPFg7Oprc6uPr3Y
- CSuW5Tnmq7PYEV7Y/+eAodWq6BZxtwOJMyiIWER+5RVLFeryUbfzQyjXse1OrQM2FTOt wg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3utanm84s2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 05 Dec 2023 21:25:21 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B5LPLju014223
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 5 Dec 2023 21:25:21 GMT
-Received: from [10.71.111.96] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 5 Dec
- 2023 13:25:20 -0800
-Message-ID: <fcf07bc3-9d09-939e-c66b-3ff2a5bbbb83@quicinc.com>
-Date: Tue, 5 Dec 2023 13:25:20 -0800
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20254D40;
+	Tue,  5 Dec 2023 14:05:48 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id 41be03b00d2f7-5c6734e0c22so1680969a12.0;
+        Tue, 05 Dec 2023 14:05:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701813947; x=1702418747; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Lt1kIBCZQd3LG/iBwo/J1swllC6IeMh/7niRSSG8eSM=;
+        b=KiI9iW8/vZH6wVEg2akCBm+IZzAOP2WxbGHKfqXBcLOfPjJvgzTdGTCDsn/XyR6D3Y
+         hbhmQOT/dYPpPWl6MskXnyRFN0FKciAIsmthwZX+5QIv7R2T1wScaKAqV54Egmx+dtE+
+         LPHD8R0vSfn64enrBkEm/iwr+EH+JZX+tKW7tLpXr2GMTcv8cRwkq8JDWl4Ae63ls8iP
+         ySyXUeWb7I5w0dx8N5oPLLAcvzuONH8sYGyH83Vng6q2KWxsv/y3z3Ezljr/B6Nh63p3
+         LymicdqfvisGF3aokMaitKHNxXrpc0X7vnTXdBa/GT9MtZFk5Uc5ixUvaWdTXitvmSTa
+         IBdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701813947; x=1702418747;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Lt1kIBCZQd3LG/iBwo/J1swllC6IeMh/7niRSSG8eSM=;
+        b=PZF9P/lq2ZkJJZQgjymjr36KJqhRCwDv3AT5j57GbQkWejDQtfVKmop4GTIwJk82LM
+         3/RuubqyYRhB1MvgB7vCHJnKD8021klazA7NtStbWq6W0OpsJNR/mU3eVIX6N364qjxd
+         UFL+sB12Gbm/072KMrj/StEjJ5OPArEOH2PcYapP2lnFafYZ7y1DFgvakSDfUxXSHgHc
+         Ht+vk/RPzsnTk/HqvCjM0DRylgzXTMXMHmHcEl9n/5MWijb4CnprGpoMKKof5XWKwjw8
+         qM3l8sToFnR+wMxT9oW+Kt8gDEoRgVNB7oyinJRwq0Z6VLkDBsNpKjcoY623EV/WHH6E
+         dm3w==
+X-Gm-Message-State: AOJu0Yx4k0zkhAhXHeqAuQAfgW9rel4F1UawHrWS+FI8yVT4NCoLjWBV
+	Ko6gmvSR38VzcUIlcVKMjPE=
+X-Google-Smtp-Source: AGHT+IGCYdrq8ZCbOguCKZk5oP4hEivw111igFkO+eYDHvqYTmFBPkRzxrRBea62JTpfvkPxKwziLA==
+X-Received: by 2002:a17:90b:1e0b:b0:286:bd82:1435 with SMTP id pg11-20020a17090b1e0b00b00286bd821435mr1671891pjb.22.1701813947284;
+        Tue, 05 Dec 2023 14:05:47 -0800 (PST)
+Received: from localhost ([2a00:79e1:2e00:1301:e1c5:6354:b45d:8ffc])
+        by smtp.gmail.com with ESMTPSA id bt10-20020a17090af00a00b00286e69c8fb1sm1498921pjb.52.2023.12.05.14.05.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Dec 2023 14:05:46 -0800 (PST)
+From: Rob Clark <robdclark@gmail.com>
+To: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	Rob Clark <robdclark@chromium.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-kernel@vger.kernel.org (open list),
+	linux-pm@vger.kernel.org (open list:SUSPEND TO RAM),
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Sean Paul <sean@poorly.run>,
+	Stephen Boyd <swboyd@chromium.org>
+Subject: [PATCH 0/5] drm/msm/adreno: Introduce/rework device hw catalog
+Date: Tue,  5 Dec 2023 14:03:26 -0800
+Message-ID: <20231205220526.417719-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.42.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v2] drm/msm/dpu: correct clk bit for WB2 block
-Content-Language: en-US
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul
-	<sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        "Stephen Boyd" <swboyd@chromium.org>
-References: <20231203002437.1291595-1-dmitry.baryshkov@linaro.org>
- <684b467c-a4f2-9c8d-b81c-0a21cefdb422@quicinc.com>
-From: Paloma Arellano <quic_parellan@quicinc.com>
-In-Reply-To: <684b467c-a4f2-9c8d-b81c-0a21cefdb422@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wsZKFap8M6fhRl6Pk6AX9C73O5hbrLWL
-X-Proofpoint-ORIG-GUID: wsZKFap8M6fhRl6Pk6AX9C73O5hbrLWL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-05_17,2023-12-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
- bulkscore=0 mlxlogscore=557 clxscore=1011 malwarescore=0 adultscore=0
- impostorscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312050166
 
+From: Rob Clark <robdclark@chromium.org>
 
-On 12/5/2023 12:30 PM, Abhinav Kumar wrote:
->
->
-> On 12/2/2023 4:24 PM, Dmitry Baryshkov wrote:
->> On sc7280 there are two clk bits for WB2: vbif_cli and clk_ctrl. While
->> programming the VBIF params of WB, the driver should be toggling the
->> former bit, while the sc7180_mdp, sc7280_mdp and sm8250_mdp structs
->> list the latter one.
->>
->> Correct that to ensure proper programming sequence for WB2 on these
->> platforms.
->>
->> Fixes: 255f056181ac ("drm/msm/dpu: sc7180: add missing WB2 clock 
->> control")
->> Fixes: 3ce166380567 ("drm/msm/dpu: add writeback support for sc7280")
->> Fixes: 53324b99bd7b ("drm/msm/dpu: add writeback blocks to the sm8250 
->> DPU catalog")
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>
->> Changes since v1:
->>   - Fixed the bits for all three platforms supporting WB (Abhinav)
->>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 2 +-
->>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h | 2 +-
->>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
->>   3 files changed, 3 insertions(+), 3 deletions(-)
->>
->
-> LGTM now.
->
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Tested-by: Paloma Arellano <quic_parellan@quicinc.com>
+Split the single flat gpulist table into per-gen tables that exist in
+their own per-gen files, and start moving more info into the device
+table.  This at least gets all the big tables of register settings out
+of the heart of the a6xx_gpu code.  Probably more could be moved, to
+remove at least some of the per-gen if/else ladders, but this seemed
+like a reasonably good start.
+
+Rob Clark (5):
+  drm/msm/adreno: Split up giant device table
+  drm/msm/adreno: Split catalog into separate files
+  drm/msm/adreno: Move hwcg regs to a6xx hw catalog
+  drm/msm/adreno: Move hwcg table into a6xx specific info
+  drm/msm/adreno: Move CP_PROTECT settings to hw catalog
+
+ drivers/gpu/drm/msm/Makefile               |    5 +
+ drivers/gpu/drm/msm/adreno/a2xx_catalog.c  |   53 +
+ drivers/gpu/drm/msm/adreno/a3xx_catalog.c  |   75 ++
+ drivers/gpu/drm/msm/adreno/a4xx_catalog.c  |   51 +
+ drivers/gpu/drm/msm/adreno/a5xx_catalog.c  |  145 +++
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c  | 1118 ++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      |  817 +-------------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h      |   11 +
+ drivers/gpu/drm/msm/adreno/adreno_device.c |  559 +---------
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |   22 +-
+ 10 files changed, 1506 insertions(+), 1350 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/adreno/a2xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/adreno/a3xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/adreno/a4xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/adreno/a5xx_catalog.c
+ create mode 100644 drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+
+-- 
+2.42.0
+
 
