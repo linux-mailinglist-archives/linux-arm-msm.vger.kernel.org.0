@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57528806FAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:29:11 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D6C5806FBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:31:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF5DC1F21299
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 12:29:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 396EB281B96
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 12:31:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69FFE364BE;
-	Wed,  6 Dec 2023 12:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C77BF36AE8;
+	Wed,  6 Dec 2023 12:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LtbUYi9j"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uvlailFV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CD49D45
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 04:29:03 -0800 (PST)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50be58a751cso5411475e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 04:29:03 -0800 (PST)
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979A1112
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 04:31:09 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-a1da1017a09so74401266b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 04:31:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701865742; x=1702470542; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1701865868; x=1702470668; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=XbeCAkVoLRW1/oUOSwS276hLe38ZJEWn0mKn2xkZbLg=;
-        b=LtbUYi9jmGWTCm/kbZyIHSg9J09KNKZmslhZibRrPa1VP4Blvm5ALOGVEcsmt9qenp
-         TrSSswE05xjd6r01/GjhFULE1U/XKIshSaH8VnO+wSWHFgv0RF/Oy8WT5UfU7pNOrLLa
-         FXzG1bIgMaUjcdvJw/0ec1zbeOxGry7tfEo0gHUyKK7hmIEqtoaJxqm3OLG51N3C5HqT
-         NSJnLfo4CAHysPojdLfoNx4O3VezPQS7VhXzK3m21RrW8MXBPc+aM7L1o2zk5zcENmnt
-         DV+br3KsweAU1gbLWr+8f0oxjHKxwc+zU6qGGs9xEynUihF/tjNXMkTrQeZtGE9q9+zm
-         sj2Q==
+        bh=yi4zOH5EgQ6KZ7fi+yXGQ0dznNFg3ENppTL/x2upyeQ=;
+        b=uvlailFVAhFVKw8+TZ1bqtbhtoWykUD7iN4z03PkE6x4Z5p9MMghPbeF+aYbrmnHjz
+         t4TIanJE5heC8oTTarUP9Gf9Sz34vsLGwKueOTyUKMbRiX4cgChz0AmrQBtXiJ0MmBW+
+         cAHoP7R6aH5ct3ygpTGQ1BkCFn+NDRwUeGMSGOsC8LzDOIa7LH+mm0o1rkO0eAlvPg1/
+         JCtDafZuYj49SFZKOQ5d/J5v5Rcms8cT1m8/VfrmEHd/zcgeCjonnrmLYwBdC6T4yvGs
+         LSQPVCjqsyFiF2HT1iPbihzj61Af5gsdfWTF9Y/2AhtIgWmIDMgRf5Z58IrAmCthTGeT
+         AEqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701865742; x=1702470542;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1701865868; x=1702470668;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XbeCAkVoLRW1/oUOSwS276hLe38ZJEWn0mKn2xkZbLg=;
-        b=fKow9xG57MnO4H4IxBes2VbuJoKt1KA4obIctmmHdyz1Up26+fZTLoaSpy4TFHvqwu
-         SgRtbS/M0jSnx92PnYTpPHOvEvz9FRpYo1/EUT/YFbp1YaY0lj37M9Hk3Q8KP3kB9J3q
-         QOiS3pesNu8PH8xDlOqf5y02KkQWmBULFdSfxvvzogA5GvtiNqwbscerovl7oV64T69t
-         LP5ZvQpXaAKS59hrPHG1BsmiMEIy219eNb6pNv9ufRReS5t4CFnER2L2EYCJyePPlxRT
-         83uwV4MYfD5Am2dP20NtIjCU9HaLxROCRh8byQYNXO13No/5dksQMBf7a5HrnCpvPxLb
-         D2Vg==
-X-Gm-Message-State: AOJu0YzNgS85gFULK0vkwbSvJ1FNLs9ZlZU/CDrRgS5vPDxycREefc1n
-	UMjT3scsDQ6Q3DmHx4buNg/w1w==
-X-Google-Smtp-Source: AGHT+IHXO4wz3BPJVKoSrUkPWIa3dz1+hdplRoJCBOZolWa+GweffzORSxbnuIQaVl9JSecGILn6jg==
-X-Received: by 2002:a19:e001:0:b0:50b:f817:14f8 with SMTP id x1-20020a19e001000000b0050bf81714f8mr452276lfg.19.1701865741726;
-        Wed, 06 Dec 2023 04:29:01 -0800 (PST)
-Received: from [172.30.205.186] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id o12-20020a056512050c00b0050be625999esm1317257lfb.110.2023.12.06.04.28.59
+        bh=yi4zOH5EgQ6KZ7fi+yXGQ0dznNFg3ENppTL/x2upyeQ=;
+        b=JIrk+R8V2gM2cin3K0qC5CneKarZff6YWtnTPv2A1oLTzoIChiQF+dSODu8RfNLjJC
+         EkYnps4cvRnWmUPlabijxZ1uaXY6hJ/lcMp70fPYPeH4Hthy0FizS1OrWZ5QvWAzJqIY
+         OIwTvdvrc8+AHvfHTLbce0wDcE105FJKm/jM3SfuWPuX36h2hUMU47RxHCGR63Y3T8En
+         AFvZ+Ss2ZpCXJ2S2TtqxhjX50vXZp2NlGvjciW5GuQ0afjg101uPZGdF6PYsKf79MvGk
+         vYYmTbHrpk5AVMA+NtsKhe01zNQgN3aUppYRL43vOcUhenUuiq/o/LBs83KpZT0xA2Jj
+         4Tzg==
+X-Gm-Message-State: AOJu0YxWZfTqUF/Ae+ajrBvKKH3oE65E/YVQFFlglCxxCIXw2IZ+td5e
+	WHN0fGTTxhfO+x0bG4i71aBvgw==
+X-Google-Smtp-Source: AGHT+IHaBw6MjX2oi33Xl9n5xImePCY+aIpkG3Iu6AvHiQ23BQY7VFb/VWXrWuwj2kD215YHS9NnUQ==
+X-Received: by 2002:a17:907:9150:b0:a19:a19b:78c8 with SMTP id l16-20020a170907915000b00a19a19b78c8mr466712ejs.139.1701865868123;
+        Wed, 06 Dec 2023 04:31:08 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id bh15-20020a170906a0cf00b00a1d754b30a9sm1084975ejb.86.2023.12.06.04.31.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Dec 2023 04:29:01 -0800 (PST)
-Message-ID: <19ca53ae-b180-4ec6-9294-dd45825af653@linaro.org>
-Date: Wed, 6 Dec 2023 13:28:58 +0100
+        Wed, 06 Dec 2023 04:31:07 -0800 (PST)
+Message-ID: <a1cfc6af-080c-4aa1-8200-e230640f7ca3@linaro.org>
+Date: Wed, 6 Dec 2023 13:31:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,149 +62,114 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] drm/msm/adreno: Split up giant device table
+Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: ipq9574: Fix USB
+ 'vdda-pll-supply'
 Content-Language: en-US
-To: Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- Rob Clark <robdclark@chromium.org>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- open list <linux-kernel@vger.kernel.org>
-References: <20231205220526.417719-1-robdclark@gmail.com>
- <20231205220526.417719-2-robdclark@gmail.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231205220526.417719-2-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ lgirdwood@gmail.com, broonie@kernel.org, dmitry.baryshkov@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <cover.1701160842.git.varada@hu-varada-blr.qualcomm.com>
+ <f98bbf0a515236709d999010f08c8f2470a31209.1701160842.git.varada@hu-varada-blr.qualcomm.com>
+ <832a6d4f-f561-4cf5-b1cb-7e4b2d4d50b4@linaro.org>
+ <ZWW9oF24YUGfev+2@hu-varada-blr.qualcomm.com>
+ <0acdc122-b7fa-4bb4-b838-6420cd43d0e0@linaro.org>
+ <ZXBdHQpJYBmZbd76@hu-varada-blr.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <ZXBdHQpJYBmZbd76@hu-varada-blr.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Level: *
 
-
-
-On 12/5/23 23:03, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On 06/12/2023 12:38, Varadarajan Narayanan wrote:
+> On Tue, Nov 28, 2023 at 03:01:12PM +0100, Krzysztof Kozlowski wrote:
+>> On 28/11/2023 11:14, Varadarajan Narayanan wrote:
+>>> On Tue, Nov 28, 2023 at 09:51:50AM +0100, Krzysztof Kozlowski wrote:
+>>>> On 28/11/2023 09:46, Varadarajan Narayanan wrote:
+>>>>> From: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>>>
+>>>>> The earlier patch ec4f047679d5, incorrectly used 'l2'
+>>>>> as the vdda-pll-supply. However, 'l5' is the correct
+>>>>> ldo that supplies power to the USB PHY.
+>>>>>
+>>>>> Fixes: ec4f047679d5 ("arm64: dts: qcom: ipq9574: Enable USB")
+>>>>
+>>>> Doesn't this depend on the driver change?
+>>>
+>>> Yes, will mention in the cover letter.
+>>
+>> This commit should have it in its changelog ---
+>>
+>>>
+>>>> It affects both existing
+>>>> kernel and backports which you claim here should happen.
+>>>
+>>> Ok. Will include stable@vger.kernel.org in the next revision.
+>>
+>> I wasn't speaking about Cc. You indicated this should be backported.
+>> Then please backport it, without previous commit, and check the result.
+>> Is stable tree working correctly or not?
 > 
-> Split into a separate table per generation, in preparation to move each
-> gen's device table to it's own file.
+> Without the previous commit, it would fail in both the latest
+> and stable tree. (Please see below for the error messages and
+> stack dump)
 > 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->   drivers/gpu/drm/msm/adreno/adreno_device.c | 59 +++++++++++++++++++---
->   1 file changed, 51 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 41b13dec9bef..36392801f929 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -20,7 +20,7 @@ bool allow_vram_carveout = false;
->   MODULE_PARM_DESC(allow_vram_carveout, "Allow using VRAM Carveout, in place of IOMMU");
->   module_param_named(allow_vram_carveout, allow_vram_carveout, bool, 0600);
->   
-> -static const struct adreno_info gpulist[] = {
-> +static const struct adreno_info a2xx_gpus[] = {
->   	{
->   		.chip_ids = ADRENO_CHIP_IDS(0x02000000),
->   		.family = ADRENO_2XX_GEN1,
-> @@ -55,6 +55,12 @@ static const struct adreno_info gpulist[] = {
->   		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
->   		.init  = a2xx_gpu_init,
->   	}, {
-> +		/* sentinal */
-sentinel?
+> The previous commit is necessary for this commit to work.
 
-> +	}
-> +};
-> +
-> +static const struct adreno_info a3xx_gpus[] = {
-> +	{
->   		.chip_ids = ADRENO_CHIP_IDS(
->   			0x03000512,
->   			0x03000520
-> @@ -110,6 +116,12 @@ static const struct adreno_info gpulist[] = {
->   		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
->   		.init  = a3xx_gpu_init,
->   	}, {
-> +		/* sentinal */
-> +	}
-> +};
-> +
-> +static const struct adreno_info a4xx_gpus[] = {
-> +	{
->   		.chip_ids = ADRENO_CHIP_IDS(0x04000500),
->   		.family = ADRENO_4XX,
->   		.revn  = 405,
-> @@ -143,6 +155,12 @@ static const struct adreno_info gpulist[] = {
->   		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
->   		.init  = a4xx_gpu_init,
->   	}, {
-> +		/* sentinal */
-> +	}
-> +};
-> +
-> +static const struct adreno_info a5xx_gpus[] = {
-> +	{
->   		.chip_ids = ADRENO_CHIP_IDS(0x05000600),
->   		.family = ADRENO_5XX,
->   		.revn = 506,
-> @@ -268,6 +286,12 @@ static const struct adreno_info gpulist[] = {
->   		.init = a5xx_gpu_init,
->   		.zapfw = "a540_zap.mdt",
->   	}, {
-> +		/* sentinal */
-> +	}
-> +};
-> +
-> +static const struct adreno_info a6xx_gpus[] = {
-> +	{
->   		.chip_ids = ADRENO_CHIP_IDS(0x06010000),
->   		.family = ADRENO_6XX_GEN1,
->   		.revn = 610,
-> @@ -493,6 +517,12 @@ static const struct adreno_info gpulist[] = {
->   		.hwcg = a690_hwcg,
->   		.address_space_size = SZ_16G,
->   	}, {
-> +		/* sentinal */
-> +	}
-> +};
-> +
-> +static const struct adreno_info a7xx_gpus[] = {
-> +	{
->   		.chip_ids = ADRENO_CHIP_IDS(0x07030001),
->   		.family = ADRENO_7XX_GEN1,
->   		.fw = {
-> @@ -522,7 +552,18 @@ static const struct adreno_info gpulist[] = {
->   		.zapfw = "a740_zap.mdt",
->   		.hwcg = a740_hwcg,
->   		.address_space_size = SZ_16G,
-> -	},
-> +	}, {
-> +		/* sentinal */
-> +	}
-> +};
-> +
-> +static const struct adreno_info *gpulist[] = {
-> +	a2xx_gpus,
-> +	a3xx_gpus,
-> +	a4xx_gpus,
-> +	a5xx_gpus,
-> +	a6xx_gpus,
-> +	a7xx_gpus,
->   };
->   
->   MODULE_FIRMWARE("qcom/a300_pm4.fw");
-> @@ -557,12 +598,14 @@ static const struct adreno_info *adreno_info(uint32_t chip_id)
->   {
->   	/* identify gpu: */
->   	for (int i = 0; i < ARRAY_SIZE(gpulist); i++) {
-> -		const struct adreno_info *info = &gpulist[i];
-> -		if (info->machine && !of_machine_is_compatible(info->machine))
-> -			continue;
-> -		for (int j = 0; info->chip_ids[j]; j++)
-I'm not sure using sentinels here is a good idea, it adds a
-whole lot of stack size. Perhaps gpulist could be a struct
-of array pointers and an array of sizes?
+Yep, exactly. It's visible from the patches. I don't know how to solve
+this exactly. The Fixes tag here is logically correct, but then any
+backporting must include previous commit. Dependency can be provided in
+cc-stable tag, but you did not cc-stable, I suppose on purpose.
 
-Konrad
+If this is chosen by AUTOSEL, are you going to check if backport
+includes previous patch and object/review such backport?
+
+Best regards,
+Krzysztof
+
 
