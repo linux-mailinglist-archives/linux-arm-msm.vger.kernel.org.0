@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5789806A87
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 10:18:17 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80114806A9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 10:23:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8764A1F21530
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 09:18:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 149031F21047
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 09:23:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C4B71A588;
-	Wed,  6 Dec 2023 09:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DB3F1A730;
+	Wed,  6 Dec 2023 09:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VuZU/dxi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mIfeycM5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7B4421395
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 01:00:02 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-40c0f3a7717so26323355e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 01:00:02 -0800 (PST)
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8084AD69
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 01:04:43 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-a1915034144so71369866b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 01:04:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701853201; x=1702458001; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701853482; x=1702458282; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JBvPr0PZUw4iL8VewNbXoGCLGjcXLwTfxDXr0QEOcN4=;
-        b=VuZU/dxiuF1u+CJJh+L33p48X/00qPNIxClT58TIjvjdToZbyPWyra+xX93l7Ohg9e
-         iUfHvuZbKev7NxMjHFGZLPQvJc34cMttcsoGl6PGrlllTRZBsCgdh13aEnSG9oapoZHF
-         iirkdClGtiF9NBV3NZL4/0FyOnzOdyMTPnSKyb9vEeVM9pumaH9fvUFhHUyjFnqhF+Hm
-         iGakYh9mLi8hdL2lpiMZQKY5kcZ1NuguCpiTT8dtYWGqA21l3VtISmwhxmuIzzSkVcq9
-         dHpK0OUbo/h/TbtmMkh0kqJBGO/mokGAw8vasMjlOBbX0rkOXroDN3+AkJ44Z27qklpe
-         NRTw==
+        bh=ZsHiL2ZUmiIgS6rkHU6mVjEXHdpiWr472PzKVF3t02Y=;
+        b=mIfeycM5lr69e85N9cYknYU7h6Qpu0YKf7jlXDVu2bGeCL3KJjJj5ccAA7jsT1FThk
+         OoPWSZwMrgitL9K0k1JqSmvOj2L8intXawlwkJmkwYE617CK2kLRwojDB+Pc5bbEnjh3
+         1mELZdPFnQyjiNVIG+9O6LsGd6mAVj5xOVo3fiXWJE5MmFnQj2lqX6mfOppO/33ofTCB
+         Wp44MUK3Mt7Yr4mBCpCd19kvX929wUsKmKNGPFp269PA1pZcKph5m0jK2/pKdgfimPNh
+         9evLkw1jn6XYa+YP34xVNwddDoMIatYDdisDB6P0SCaiPHXd9UBd4Wsa/UIBUeBwt+U1
+         nImw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701853201; x=1702458001;
+        d=1e100.net; s=20230601; t=1701853482; x=1702458282;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JBvPr0PZUw4iL8VewNbXoGCLGjcXLwTfxDXr0QEOcN4=;
-        b=LA/TsojSA2/grgYAzPSGENGvaL2uKuNwppFNturrhxMe0KHocAAm0dogU6+6RLedjX
-         Hh/VqdBSlIIuYdU3Wt6VhSRsQ31Y3yUetzzj+OwtihPzl8psEbtLJ6DB1Z32LBlsYoQx
-         x1MHp8r1duASLaYpV8/+oAEXbBUSdwD7Gza6RDq4qxU2dwZshpGbSfyFeGGREvMDlX5h
-         xx49hzrc7DAXzk2pk3dYCaMcmpXghVSPww036jXebpwnqoib9N3JlScVHNG0KJ1lFtDz
-         bny/YPspOrcZ5wFAQQvswmj6GXzHyXoTBEG2EjnnQXOvwomevjUVxaFgkDP0XihGyDcP
-         YfUA==
-X-Gm-Message-State: AOJu0YynLqZ78odQfpZsHCO63gYUfrOQHORGkx8LaWR0i90Qa8Lc18H1
-	dBtDMLCJnbBvh7s4uHyK7FGidA==
-X-Google-Smtp-Source: AGHT+IHL02/F68rsAj1m9y5YPgBGNVLtZiIoHgkZPY9K89mPetYsux6h9+XcW2vWd1enK/4XjY+JeQ==
-X-Received: by 2002:a05:600c:600f:b0:40b:5f03:b42d with SMTP id az15-20020a05600c600f00b0040b5f03b42dmr201110wmb.335.1701853201119;
-        Wed, 06 Dec 2023 01:00:01 -0800 (PST)
+        bh=ZsHiL2ZUmiIgS6rkHU6mVjEXHdpiWr472PzKVF3t02Y=;
+        b=NnQEzklTbJ72rO6P5JcpL/o/TmD1nEjDUb/m1W0cp9e1sdjFYWSVz9mtbj7AeMj5IK
+         ILQo5HXQ5UlQwlXYCoJs8zPP+NTavVLw/rm/F+Zto9bSCkzJ2rWBYVhe9j6VOODJ97Hn
+         EyacEpstit/Ezz+dlF3Ub8FtkTPjLcXxg6667lxaIZtfGDfnZwXn8HJbYKVPStYk5Z8d
+         l1VX8mhkMH2q3bC/2pl9NMWY4VMh2+qaKi83rxXrqyhVHusPrseEqIAFbUecCdN7Vs/F
+         CGbZ9pl3bpW07UKmYBxTPirmfdjCWiyqNw2y1SSjAKnTnI7i2yCgeaPgJy56w5521ILH
+         KhJg==
+X-Gm-Message-State: AOJu0YxhygFQqy8cgPrF8SvWk/NGwclacuAYFi9izW+8GCGiFGpjjzwG
+	IWLmk7DKgpl2p04JHf0dVUyt4g==
+X-Google-Smtp-Source: AGHT+IFDqGfCU7cCs8W3QH11Ja59brTp7kkVgXhBt+rEkaeoTbSzFzHT3nKfiZVp9FaW8PUWP2/DOA==
+X-Received: by 2002:a17:906:e8b:b0:a1d:7f40:bebe with SMTP id p11-20020a1709060e8b00b00a1d7f40bebemr321125ejf.126.1701853481998;
+        Wed, 06 Dec 2023 01:04:41 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id o18-20020a05600c511200b004064e3b94afsm24839147wms.4.2023.12.06.00.59.59
+        by smtp.gmail.com with ESMTPSA id z17-20020a170906715100b00a1dc4307ecfsm352823ejj.188.2023.12.06.01.04.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Dec 2023 01:00:00 -0800 (PST)
-Message-ID: <957060a5-1d99-4dee-a83d-004622e79262@linaro.org>
-Date: Wed, 6 Dec 2023 09:59:58 +0100
+        Wed, 06 Dec 2023 01:04:41 -0800 (PST)
+Message-ID: <006c3c39-5266-4177-ae7f-263af5f0821c@linaro.org>
+Date: Wed, 6 Dec 2023 10:04:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/2] pinctl: qcom: sm4450: Add SM4450 pinctrl driver
+Subject: Re: [PATCH v6 1/2] dt-bindings: pinctrl: qcom: Add SM4450 pinctrl
 Content-Language: en-US
 To: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
  andersson@kernel.org, konrad.dybcio@linaro.org, linus.walleij@linaro.org,
@@ -70,6 +70,7 @@ To: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
 Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
 References: <20231206020840.33228-1-quic_tengfan@quicinc.com>
+ <20231206020840.33228-2-quic_tengfan@quicinc.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -115,20 +116,28 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231206020840.33228-1-quic_tengfan@quicinc.com>
+In-Reply-To: <20231206020840.33228-2-quic_tengfan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 06/12/2023 03:08, Tengfei Fan wrote:
-> Add SM4450 pinctrl driver for support enable uart console.
+> Add device tree binding Documentation details for Qualcomm SM4450
+> TLMM device.
 > 
 > Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
 > ---
-> v5 -> v6:
->   - squash the fixups into the newly added driver
->   - drop reviewed-by due to update patch as new comments
+>  .../bindings/pinctrl/qcom,sm4450-tlmm.yaml    | 151 ++++++++++++++++++
+>  1 file changed, 151 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm4450-tlmm.yaml
+> 
 
-Really? Why? What exactly changed in the patch you dropped my review?
+There was no reason to drop my review tag here. You did not explain why
+it had to be dropped and changing indentation on example is for sure not
+the case.
+
+Please read submitting-patches before posting new patches to mailing list.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
