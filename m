@@ -1,482 +1,410 @@
-Return-Path: <linux-arm-msm+bounces-3508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BB1C806605
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 05:11:52 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0567880662D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 05:31:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68FAE1C21061
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 04:11:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75CE11F21790
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 04:31:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AE87DF46;
-	Wed,  6 Dec 2023 04:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88A99A38;
+	Wed,  6 Dec 2023 04:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eXNpuY6N"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZtgeNBZe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.100])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81BD31B9;
-	Tue,  5 Dec 2023 20:11:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701835900; x=1733371900;
-  h=date:from:to:cc:subject:message-id;
-  bh=CVFGsSsfUy62FhgnFw/WQA+qWzDe203shlMH+YoZmOQ=;
-  b=eXNpuY6NcEYhwkNmHnlqjsd3/AMP+tHnykCV9KGpR+6a/GSA8c5PPcHN
-   7OHOc+k05gjK/sSjppL4wWW3Edw+0SY3rEjLPIMHV4EhhF9yjoCf5eHlg
-   pWWGoVJ8HCYudlT0vOdEX8geiE/sL8uT+rBl+NxOCj5ZadjrIuDNJZk6H
-   kXrtz9ktl5LEoG33/nAQTS3hPY+jkeDWPpHWHkJhohfjw/GmrZ5XqiVvw
-   fxJfF7qwTgPwEoPm5iqbFt7GbQkuU6nHHBgVe5vLwGJE+PHD+M4SOP6ZW
-   Rzi/CaK4m/Kx9VWKgz7wPhATCgcd8ZabaAe9KjM9D6/NfVbJDEKoeK5DI
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10915"; a="460492260"
-X-IronPort-AV: E=Sophos;i="6.04,254,1695711600"; 
-   d="scan'208";a="460492260"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Dec 2023 20:11:39 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10915"; a="1102684530"
-X-IronPort-AV: E=Sophos;i="6.04,254,1695711600"; 
-   d="scan'208";a="1102684530"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by fmsmga005.fm.intel.com with ESMTP; 05 Dec 2023 20:11:34 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rAjG0-000AEW-1I;
-	Wed, 06 Dec 2023 04:11:32 +0000
-Date: Wed, 06 Dec 2023 12:11:06 +0800
-From: kernel test robot <lkp@intel.com>
-To: Andrew Morton <akpm@linux-foundation.org>
-Cc: Linux Memory Management List <linux-mm@kvack.org>,
- amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- intel-gfx@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-bcachefs@vger.kernel.org,
- linux-block@vger.kernel.org, linux-leds@vger.kernel.org,
- linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev,
- linuxppc-dev@lists.ozlabs.org, sparclinux@vger.kernel.org
-Subject: [linux-next:master] BUILD REGRESSION
- 0f5f12ac05f36f117e793656c3f560625e927f1b
-Message-ID: <202312061258.nAVYPFq2-lkp@intel.com>
-User-Agent: s-nail v14.9.24
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93027137
+	for <linux-arm-msm@vger.kernel.org>; Tue,  5 Dec 2023 20:31:13 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-6ce32821a53so2158211b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Dec 2023 20:31:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701837073; x=1702441873; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SfeQxumI0PHw0UwdzP2daWYbnp5sISbogIw9MPq84jk=;
+        b=ZtgeNBZenh9WI6MRBSyMA13AZc24U7SvfzXPslTy4kkQXgfEZYz/EqYYjgt4jDF/HZ
+         6driuYOOn3nvXmjU4XaqUzLhkha2q4nHbBnWaLf+12fgbvE+RLl9V2z1Po9nmeozbjjC
+         75sD9J5MYoQb5mnGT9/ytkANBYKRDP86mCB+yUD4CnDE62ufJXmCHErlqhUump1lgJ+h
+         rRS2/5BLGXuNbIJDFp39384r2q5Ev9ziIsU3XEvp/J6uq8S+mqoz0cIK8pwxHmx6n6FS
+         5BoEa/CoauWCZSkOwQWd47y9YZqqkFGhWs57IK/8oh5HmlcwbhKDuv1TvxZjCZd1bhZR
+         BY1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701837073; x=1702441873;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SfeQxumI0PHw0UwdzP2daWYbnp5sISbogIw9MPq84jk=;
+        b=cf6Nw4JcVkBm855jqMgv79r7y6lUX2SzXKN1KZC6307X+k7AFbAGYuzgO8CwRe8DRf
+         gYtCKzZdu10JX2brrIsVsKg4Q85ZtOq5LQShXqaU0yJ0NRCsAFEA+kR2SwAlhpXQG9mB
+         GZvxGu2FWc+aZabRtKNfaRzDc8IsE6chV3C4t1qSp1ldCBle/UcZf9/XZ8kQ1uUWoqYK
+         0rC0SsRJ02TisCCfBCpp3bGyEu5+YvwalWdPDjenTLaGcXYlySvmzLiO74Ou0suCbZCy
+         nVObCwMooMyXUUCSVmygcLJYwSzfkumJePSvLjXr7DEF5G/bDGT8jA3PeRk4YDkHbrLU
+         XD/A==
+X-Gm-Message-State: AOJu0Yzgcktz9RuJnRURy6Bxy4JEszE1rhQm40ocZUo9mXkR1+DH1iZI
+	ONoqLfrmuh5vX2GpM82BTdd5
+X-Google-Smtp-Source: AGHT+IEI9FCS2feasSxWKI37Bacq7XeUiz42xYyRt1InJH++Ohc+d7zUMVqrILOB310SErWFRUZGKQ==
+X-Received: by 2002:a05:6a00:2d23:b0:6ce:2731:c234 with SMTP id fa35-20020a056a002d2300b006ce2731c234mr158444pfb.35.1701837072898;
+        Tue, 05 Dec 2023 20:31:12 -0800 (PST)
+Received: from thinkpad ([117.202.188.104])
+        by smtp.gmail.com with ESMTPSA id s24-20020a62e718000000b006ce6b0d76d1sm2257266pfh.69.2023.12.05.20.31.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Dec 2023 20:31:12 -0800 (PST)
+Date: Wed, 6 Dec 2023 10:00:53 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: vireshk@kernel.org, nm@ti.com, sboyd@kernel.org,
+	myungjoo.ham@samsung.com, kyungmin.park@samsung.com,
+	cw00.choi@samsung.com, andersson@kernel.org,
+	konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+	jejb@linux.ibm.com, martin.petersen@oracle.com,
+	alim.akhtar@samsung.com, avri.altman@wdc.com, bvanassche@acm.org,
+	linux-scsi@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	quic_asutoshd@quicinc.com, quic_cang@quicinc.com,
+	quic_nitirawa@quicinc.com, quic_narepall@quicinc.com,
+	quic_bhaskarv@quicinc.com, quic_richardp@quicinc.com,
+	quic_nguyenb@quicinc.com, quic_ziqichen@quicinc.com,
+	bmasney@redhat.com, krzysztof.kozlowski@linaro.org,
+	linux-kernel@vger.kernel.org, alessandro.carminati@gmail.com,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v7 5/5] arm64: dts: qcom: sm8250: Add OPP table support
+ to UFSHC
+Message-ID: <20231206043053.GA2899@thinkpad>
+References: <20231012172129.65172-1-manivannan.sadhasivam@linaro.org>
+ <20231012172129.65172-6-manivannan.sadhasivam@linaro.org>
+ <CGME20231205205609eucas1p2609b01ca4e3527e8b5281dec1d92653c@eucas1p2.samsung.com>
+ <486716ef-d099-4613-b2f7-a9fcc42da90c@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <486716ef-d099-4613-b2f7-a9fcc42da90c@samsung.com>
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
-branch HEAD: 0f5f12ac05f36f117e793656c3f560625e927f1b  Add linux-next specific files for 20231205
+On Tue, Dec 05, 2023 at 09:56:07PM +0100, Marek Szyprowski wrote:
+> On 12.10.2023 19:21, Manivannan Sadhasivam wrote:
+> > UFS host controller, when scaling gears, should choose appropriate
+> > performance state of RPMh power domain controller along with clock
+> > frequency. So let's add the OPP table support to specify both clock
+> > frequency and RPMh performance states replacing the old "freq-table-hz"
+> > property.
+> >
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> 
+> 
+> This patch landed in today's linux-next as commit 725be1d6318e ("arm64: 
+> dts: qcom: sm8250: Add OPP table support to UFSHC"). Unfortunately it 
+> breaks booting of my RB5 board with the following messages:
+> 
 
-Error/Warning reports:
+Thanks for reporting. The issue is due to a regression in the UFS OPP code and
+I've already requested Bjorn [1] to drop these DTS patches until the driver fix
+gets merged.
 
-https://lore.kernel.org/oe-kbuild-all/202312051416.YiRWCYmp-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312051418.JkBRBDyP-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312051419.DsbnPGym-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312051913.e5iif8Qz-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312051935.IXiYU8Kn-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312052245.yFpBSgNH-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312060025.BdeqZrWx-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312060311.Tnsv2fl2-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312060355.M0eJtq4X-lkp@intel.com
-https://lore.kernel.org/oe-kbuild-all/202312061137.QgjJ4nTc-lkp@intel.com
+- Mani
 
-Error/Warning: (recently discovered and may have been fixed)
+[1] https://lore.kernel.org/linux-arm-msm/20231204120137.GE35383@thinkpad/
 
-aarch64-linux-ld: qcom_stats.c:(.text+0x470): undefined reference to `qmp_send'
-arch/mips/kernel/crash.c:96:6: warning: no previous prototype for 'default_machine_crash_shutdown' [-Wmissing-prototypes]
-arch/mips/kernel/machine_kexec.c:161:6: warning: no previous prototype for 'kexec_nonboot_cpu_jump' [-Wmissing-prototypes]
-arch/mips/kernel/machine_kexec.c:170:6: warning: conflicting types for 'kexec_reboot'; have 'void(void)'
-arch/mips/kernel/machine_kexec.c:170:6: warning: no previous prototype for 'kexec_reboot' [-Wmissing-prototypes]
-arch/mips/kernel/machine_kexec.c:77:17: error: 'kexec_args' undeclared (first use in this function)
-drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_process.c:1671:9: sparse:    struct dma_fence *
-drivers/gpu/drm/amd/amdgpu/../amdkfd/kfd_process.c:1671:9: sparse:    struct dma_fence [noderef] __rcu *
-drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c:2765:36: sparse:    struct dma_fence *
-drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c:2765:36: sparse:    struct dma_fence [noderef] __rcu *
-drivers/leds/leds-sun50i-a100.c:309:12: error: call to __compiletime_assert_280 declared with 'error' attribute: FIELD_PREP: value too large for the field
-drivers/media/i2c/saa6752hs.c:598:18: error: implicit declaration of function 'v4l2_subdev_state_get_format' [-Werror=implicit-function-declaration]
-qcom_stats.c:(.text+0x33c): undefined reference to `qmp_send'
-qcom_stats.c:(.text+0x398): undefined reference to `__aeabi_uldivmod'
-qcom_stats.c:(.text+0x6c4): undefined reference to `__udivdi3'
-qcom_stats.c:(.text+0x8a0): undefined reference to `qmp_get'
-qcom_stats.c:(.text.qcom_ddr_stats_show+0x14c): undefined reference to `__udivdi3'
-
-Unverified Error/Warning (likely false positive, please contact us if interested):
-
-drivers/gpu/drm/i915/display/intel_fbdev_fb.c:111 intel_fbdev_fb_fill_info() error: uninitialized symbol 'vaddr'.
-
-Error/Warning ids grouped by kconfigs:
-
-gcc_recent_errors
-|-- alpha-randconfig-r013-20211213
-|   |-- (.init.text):undefined-reference-to-__auxiliary_driver_register
-|   |-- (.text):undefined-reference-to-auxiliary_device_init
-|   |-- alpha-linux-ld:(.init.text):undefined-reference-to-__auxiliary_driver_register
-|   |-- alpha-linux-ld:(.text):undefined-reference-to-__auxiliary_device_add
-|   `-- alpha-linux-ld:(.text):undefined-reference-to-auxiliary_device_init
-|-- arc-randconfig-c031-20221114
-|   `-- drivers-media-i2c-saa6752hs.c:error:implicit-declaration-of-function-v4l2_subdev_state_get_format
-|-- arm-allyesconfig
-|   `-- qcom_stats.c:(.text):undefined-reference-to-__aeabi_uldivmod
-|-- arm64-randconfig-r034-20230701
-|   |-- aarch64-linux-ld:qcom_stats.c:(.text):undefined-reference-to-qmp_send
-|   |-- qcom_stats.c:(.text):undefined-reference-to-qmp_get
-|   `-- qcom_stats.c:(.text):undefined-reference-to-qmp_send
-|-- i386-randconfig-061-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- i386-randconfig-063-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- i386-randconfig-141-20231205
-|   |-- block-bdev.c-bdev_open_by_dev()-warn:possible-memory-leak-of-handle
-|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_connectors.c-amdgpu_connector_dvi_detect()-warn:inconsistent-indenting
-|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_ras.c-amdgpu_ras_query_error_status_helper()-error:we-previously-assumed-info-could-be-null-(see-line-)
-|   |-- drivers-gpu-drm-drm_gpuvm.c-drm_gpuvm_exec_lock_range()-error:uninitialized-symbol-ret-.
-|   |-- drivers-hwtracing-stm-core.c-stm_register_device()-error:double-free-of-stm
-|   |-- fs-bcachefs-btree_update_interior.c-bch2_btree_update_start()-warn:inconsistent-returns-c-gc_lock-.
-|   |-- fs-bcachefs-btree_write_buffer.c-bch2_btree_write_buffer_flush_locked()-error:we-previously-assumed-iter.path-could-be-null-(see-line-)
-|   |-- fs-bcachefs-recovery.c-bch2_journal_replay()-error:uninitialized-symbol-ret-.
-|   |-- lib-zstd-common-bits.h-ZSTD_countLeadingZeros32()-warn:inconsistent-indenting
-|   |-- lib-zstd-common-bits.h-ZSTD_countTrailingZeros32()-warn:inconsistent-indenting
-|   |-- lib-zstd-compress-..-common-bits.h-ZSTD_countLeadingZeros32()-warn:inconsistent-indenting
-|   |-- lib-zstd-compress-..-common-bits.h-ZSTD_countLeadingZeros64()-warn:inconsistent-indenting
-|   |-- lib-zstd-compress-..-common-bits.h-ZSTD_countTrailingZeros32()-warn:inconsistent-indenting
-|   |-- lib-zstd-compress-..-common-bits.h-ZSTD_countTrailingZeros64()-warn:inconsistent-indenting
-|   |-- lib-zstd-decompress-..-common-bits.h-ZSTD_countLeadingZeros32()-warn:inconsistent-indenting
-|   |-- lib-zstd-decompress-..-common-bits.h-ZSTD_countTrailingZeros32()-warn:inconsistent-indenting
-|   `-- lib-zstd-decompress-..-common-bits.h-ZSTD_countTrailingZeros64()-warn:inconsistent-indenting
-|-- mips-allyesconfig
-|   `-- qcom_stats.c:(.text.qcom_ddr_stats_show):undefined-reference-to-__udivdi3
-|-- mips-randconfig-r006-20221108
-|   `-- cache.c:(.text):undefined-reference-to-r3k_cache_init
-|-- mips-randconfig-r021-20230305
-|   |-- arch-mips-kernel-crash.c:warning:no-previous-prototype-for-default_machine_crash_shutdown
-|   |-- arch-mips-kernel-machine_kexec.c:warning:conflicting-types-for-kexec_reboot-have-void(void)
-|   |-- arch-mips-kernel-machine_kexec.c:warning:no-previous-prototype-for-kexec_nonboot_cpu_jump
-|   `-- arch-mips-kernel-machine_kexec.c:warning:no-previous-prototype-for-kexec_reboot
-|-- mips-randconfig-r032-20220731
-|   `-- arch-mips-kernel-machine_kexec.c:error:kexec_args-undeclared-(first-use-in-this-function)
-|-- mips-randconfig-s051-20220905
-|   `-- arch-mips-mm-cache.c:(.text.cpu_cache_init):undefined-reference-to-r3k_cache_init
-|-- nios2-randconfig-r112-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- parisc-randconfig-r133-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- powerpc-randconfig-003-20231205
-|   `-- qcom_stats.c:(.text):undefined-reference-to-__udivdi3
-|-- powerpc-randconfig-r111-20231205
-|   |-- lib-raid6-altivec4.c:sparse:incomplete-type-static-toplevel-unative_t
-|   |-- lib-raid6-altivec4.c:sparse:int-static-signed-toplevel-__preempt_count_sub(-...-)
-|   |-- lib-raid6-altivec4.c:sparse:int-static-signed-toplevel-disable_kernel_altivec(-...-)
-|   |-- lib-raid6-altivec4.c:sparse:int-static-toplevel-unative_t
-|   |-- lib-raid6-altivec8.c:sparse:incomplete-type-static-toplevel-unative_t
-|   |-- lib-raid6-altivec8.c:sparse:int-static-signed-toplevel-__preempt_count_sub(-...-)
-|   |-- lib-raid6-altivec8.c:sparse:int-static-signed-toplevel-disable_kernel_altivec(-...-)
-|   |-- lib-raid6-altivec8.c:sparse:int-static-toplevel-unative_t
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- powerpc-randconfig-r123-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- powerpc64-randconfig-002-20231205
-|   `-- arch-powerpc-include-asm-book3s-pgtable-64k.h:warning:no-return-statement-in-function-returning-non-void
-|-- sh-randconfig-r035-20230105
-|   `-- standard-input:Error:missing-expression-in-.size-directive
-|-- sh-randconfig-r112-20231205
-|   `-- include-drm-bridge-aux-bridge.h:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- sparc-allmodconfig
-|   |-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|   `-- arch-sparc-mm-init_64.c:warning:variable-hv_pgsz_idx-set-but-not-used
-|-- sparc-allnoconfig
-|   |-- arch-sparc-mm-leon_mm.c:warning:variable-paddrbase-set-but-not-used
-|   `-- arch-sparc-mm-srmmu.c:warning:variable-clear-set-but-not-used
-|-- sparc-defconfig
-|   |-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|   |-- arch-sparc-mm-leon_mm.c:warning:variable-paddrbase-set-but-not-used
-|   `-- arch-sparc-mm-srmmu.c:warning:variable-clear-set-but-not-used
-|-- sparc-randconfig-001-20231205
-|   `-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|-- sparc-randconfig-r006-20230514
-|   `-- parport_pc.c:(.text):undefined-reference-to-ebus_dma_prepare
-|-- sparc-randconfig-r036-20230809
-|   `-- sparc-linux-ld:arch-sparc-include-asm-parport.h:(.text):undefined-reference-to-ebus_dma_enable
-|-- sparc-randconfig-r062-20231205
-|   |-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|   `-- arch-sparc-mm-init_64.c:warning:variable-pagecv_flag-set-but-not-used
-|-- sparc-randconfig-r121-20231205
-|   |-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|   |-- arch-sparc-mm-leon_mm.c:warning:variable-paddrbase-set-but-not-used
-|   |-- arch-sparc-mm-srmmu.c:warning:variable-clear-set-but-not-used
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- sparc-sparc64_defconfig
-|   |-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|   `-- arch-sparc-mm-init_64.c:warning:variable-hv_pgsz_idx-set-but-not-used
-|-- sparc64-allmodconfig
-|   |-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|   `-- arch-sparc-mm-init_64.c:warning:variable-hv_pgsz_idx-set-but-not-used
-|-- sparc64-allyesconfig
-|   |-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|   `-- arch-sparc-mm-init_64.c:warning:variable-hv_pgsz_idx-set-but-not-used
-|-- sparc64-defconfig
-|   |-- arch-sparc-kernel-module.c:warning:variable-strtab-set-but-not-used
-|   `-- arch-sparc-mm-init_64.c:warning:variable-hv_pgsz_idx-set-but-not-used
-`-- x86_64-randconfig-161-20231205
-    |-- drivers-hwtracing-stm-core.c-stm_register_device()-error:double-free-of-stm
-    |-- lib-zstd-common-bits.h-ZSTD_countLeadingZeros32()-warn:inconsistent-indenting
-    |-- lib-zstd-common-bits.h-ZSTD_countTrailingZeros32()-warn:inconsistent-indenting
-    |-- lib-zstd-decompress-..-common-bits.h-ZSTD_countLeadingZeros32()-warn:inconsistent-indenting
-    `-- lib-zstd-decompress-..-common-bits.h-ZSTD_countTrailingZeros64()-warn:inconsistent-indenting
-clang_recent_errors
-|-- arm-randconfig-r133-20231204
-|   `-- arch-arm-kernel-machine_kexec.c:sparse:sparse:incorrect-type-in-argument-(different-address-spaces)-expected-void-const-volatile-noderef-__user-ptr-got-restricted-__be32-usertype
-|-- arm64-allmodconfig
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- arm64-allyesconfig
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- hexagon-allmodconfig
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- hexagon-allyesconfig
-|   |-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|   |-- ld.lld:error:vmlinux.a(arch-hexagon-kernel-head.o):(.init.text):relocation-R_HEX_B22_PCREL-out-of-range:is-not-in-references-__vmnewmap
-|   |-- ld.lld:error:vmlinux.a(arch-hexagon-kernel-head.o):(.init.text):relocation-R_HEX_B22_PCREL-out-of-range:is-not-in-references-__vmsetvec
-|   `-- ld.lld:error:vmlinux.a(arch-hexagon-kernel-head.o):(.init.text):relocation-R_HEX_B22_PCREL-out-of-range:is-not-in-references-memset
-|-- hexagon-randconfig-r113-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- i386-allmodconfig
-|   |-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|   `-- fs-bcachefs-replicas.c:error:builtin-functions-must-be-directly-called
-|-- i386-allyesconfig
-|   |-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|   `-- fs-bcachefs-replicas.c:error:builtin-functions-must-be-directly-called
-|-- i386-randconfig-061-20231206
-|   |-- drivers-soc-qcom-pmic_pdcharger_ulog.c:sparse:sparse:incorrect-type-in-initializer-(different-base-types)-expected-restricted-__le32-usertype-opcode-got-int
-|   |-- drivers-soc-qcom-pmic_pdcharger_ulog.c:sparse:sparse:incorrect-type-in-initializer-(different-base-types)-expected-restricted-__le32-usertype-owner-got-int
-|   `-- drivers-soc-qcom-pmic_pdcharger_ulog.c:sparse:sparse:incorrect-type-in-initializer-(different-base-types)-expected-restricted-__le32-usertype-type-got-int
-|-- powerpc-allmodconfig
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- powerpc-allyesconfig
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- powerpc64-randconfig-r123-20231126
-|   `-- drivers-leds-leds-sun50i-a100.c:error:call-to-__compiletime_assert_NNN-declared-with-error-attribute:FIELD_PREP:value-too-large-for-the-field
-|-- powerpc64-randconfig-r131-20231205
-|   |-- lib-raid6-altivec4.c:sparse:incomplete-type-static-toplevel-unative_t
-|   |-- lib-raid6-altivec4.c:sparse:int-static-signed-toplevel-__preempt_count_sub(-...-)
-|   |-- lib-raid6-altivec4.c:sparse:int-static-signed-toplevel-disable_kernel_altivec(-...-)
-|   |-- lib-raid6-altivec4.c:sparse:int-static-toplevel-unative_t
-|   |-- lib-raid6-altivec8.c:sparse:incomplete-type-static-toplevel-unative_t
-|   |-- lib-raid6-altivec8.c:sparse:int-static-signed-toplevel-__preempt_count_sub(-...-)
-|   |-- lib-raid6-altivec8.c:sparse:int-static-signed-toplevel-disable_kernel_altivec(-...-)
-|   |-- lib-raid6-altivec8.c:sparse:int-static-toplevel-unative_t
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- s390-randconfig-001-20231205
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- s390-randconfig-002-20231205
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- x86_64-allmodconfig
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- x86_64-allyesconfig
-|   `-- drivers-leds-leds-max5970.c:warning:variable-num_leds-set-but-not-used
-|-- x86_64-randconfig-121-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- x86_64-randconfig-122-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- x86_64-randconfig-123-20231203
-|   |-- drivers-gpu-drm-amd-amdgpu-..-amdkfd-kfd_process.c:sparse:sparse:incompatible-types-in-comparison-expression-(different-address-spaces):
-|   |-- drivers-gpu-drm-amd-amdgpu-..-amdkfd-kfd_process.c:sparse:struct-dma_fence
-|   |-- drivers-gpu-drm-amd-amdgpu-..-amdkfd-kfd_process.c:sparse:struct-dma_fence-noderef-__rcu
-|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_amdkfd_gpuvm.c:sparse:sparse:incompatible-types-in-comparison-expression-(different-address-spaces):
-|   |-- drivers-gpu-drm-amd-amdgpu-amdgpu_amdkfd_gpuvm.c:sparse:struct-dma_fence
-|   `-- drivers-gpu-drm-amd-amdgpu-amdgpu_amdkfd_gpuvm.c:sparse:struct-dma_fence-noderef-__rcu
-|-- x86_64-randconfig-123-20231205
-|   `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-|-- x86_64-randconfig-161-20231206
-|   `-- drivers-gpu-drm-i915-display-intel_fbdev_fb.c-intel_fbdev_fb_fill_info()-error:uninitialized-symbol-vaddr-.
-`-- x86_64-randconfig-r132-20231205
-    `-- lib-zstd-compress-zstd_fast.c:sparse:sparse:Using-plain-integer-as-NULL-pointer
-
-elapsed time: 1453m
-
-configs tested: 177
-configs skipped: 3
-
-tested configs:
-alpha                             allnoconfig   gcc  
-alpha                            allyesconfig   gcc  
-alpha                               defconfig   gcc  
-arc                              allmodconfig   gcc  
-arc                               allnoconfig   gcc  
-arc                              allyesconfig   gcc  
-arc                          axs103_defconfig   gcc  
-arc                      axs103_smp_defconfig   gcc  
-arc                                 defconfig   gcc  
-arc                   randconfig-001-20231205   gcc  
-arc                   randconfig-002-20231205   gcc  
-arm                              allmodconfig   gcc  
-arm                               allnoconfig   gcc  
-arm                              allyesconfig   gcc  
-arm                     am200epdkit_defconfig   clang
-arm                         axm55xx_defconfig   gcc  
-arm                                 defconfig   clang
-arm                   randconfig-001-20231205   gcc  
-arm                   randconfig-002-20231205   gcc  
-arm                   randconfig-003-20231205   gcc  
-arm                   randconfig-004-20231205   gcc  
-arm                           sunxi_defconfig   gcc  
-arm64                            allmodconfig   clang
-arm64                             allnoconfig   gcc  
-arm64                               defconfig   gcc  
-arm64                 randconfig-001-20231205   gcc  
-arm64                 randconfig-002-20231205   gcc  
-arm64                 randconfig-003-20231205   gcc  
-arm64                 randconfig-004-20231205   gcc  
-csky                             allmodconfig   gcc  
-csky                              allnoconfig   gcc  
-csky                             allyesconfig   gcc  
-csky                                defconfig   gcc  
-csky                  randconfig-001-20231205   gcc  
-csky                  randconfig-002-20231205   gcc  
-hexagon                          allmodconfig   clang
-hexagon                           allnoconfig   clang
-hexagon                          allyesconfig   clang
-hexagon                             defconfig   clang
-hexagon               randconfig-001-20231205   clang
-hexagon               randconfig-002-20231205   clang
-i386                             allmodconfig   clang
-i386                              allnoconfig   clang
-i386                             allyesconfig   clang
-i386         buildonly-randconfig-001-20231205   gcc  
-i386         buildonly-randconfig-002-20231205   gcc  
-i386         buildonly-randconfig-003-20231205   gcc  
-i386         buildonly-randconfig-004-20231205   gcc  
-i386         buildonly-randconfig-005-20231205   gcc  
-i386         buildonly-randconfig-006-20231205   gcc  
-i386                                defconfig   gcc  
-i386                  randconfig-001-20231205   gcc  
-i386                  randconfig-002-20231205   gcc  
-i386                  randconfig-003-20231205   gcc  
-i386                  randconfig-004-20231205   gcc  
-i386                  randconfig-005-20231205   gcc  
-i386                  randconfig-006-20231205   gcc  
-i386                  randconfig-011-20231205   clang
-i386                  randconfig-012-20231205   clang
-i386                  randconfig-013-20231205   clang
-i386                  randconfig-014-20231205   clang
-i386                  randconfig-015-20231205   clang
-i386                  randconfig-016-20231205   clang
-loongarch                        allmodconfig   gcc  
-loongarch                         allnoconfig   gcc  
-loongarch                           defconfig   gcc  
-loongarch             randconfig-001-20231205   gcc  
-loongarch             randconfig-002-20231205   gcc  
-m68k                             allmodconfig   gcc  
-m68k                              allnoconfig   gcc  
-m68k                             allyesconfig   gcc  
-m68k                                defconfig   gcc  
-microblaze                       allmodconfig   gcc  
-microblaze                        allnoconfig   gcc  
-microblaze                       allyesconfig   gcc  
-microblaze                          defconfig   gcc  
-mips                              allnoconfig   clang
-mips                             allyesconfig   gcc  
-mips                           xway_defconfig   gcc  
-nios2                            alldefconfig   gcc  
-nios2                            allmodconfig   gcc  
-nios2                             allnoconfig   gcc  
-nios2                            allyesconfig   gcc  
-nios2                               defconfig   gcc  
-nios2                 randconfig-001-20231205   gcc  
-nios2                 randconfig-002-20231205   gcc  
-openrisc                          allnoconfig   gcc  
-openrisc                         allyesconfig   gcc  
-openrisc                            defconfig   gcc  
-openrisc                       virt_defconfig   gcc  
-parisc                           allmodconfig   gcc  
-parisc                            allnoconfig   gcc  
-parisc                           allyesconfig   gcc  
-parisc                              defconfig   gcc  
-parisc                generic-64bit_defconfig   gcc  
-parisc                randconfig-001-20231205   gcc  
-parisc                randconfig-002-20231205   gcc  
-parisc64                            defconfig   gcc  
-powerpc                          allmodconfig   clang
-powerpc                           allnoconfig   gcc  
-powerpc                          allyesconfig   clang
-powerpc                 canyonlands_defconfig   gcc  
-powerpc                      ep88xc_defconfig   gcc  
-powerpc                 mpc8315_rdb_defconfig   clang
-powerpc               randconfig-001-20231205   gcc  
-powerpc               randconfig-002-20231205   gcc  
-powerpc               randconfig-003-20231205   gcc  
-powerpc64             randconfig-001-20231205   gcc  
-powerpc64             randconfig-002-20231205   gcc  
-powerpc64             randconfig-003-20231205   gcc  
-riscv                            allmodconfig   gcc  
-riscv                             allnoconfig   clang
-riscv                            allyesconfig   gcc  
-riscv                               defconfig   gcc  
-riscv                 randconfig-001-20231205   gcc  
-riscv                 randconfig-002-20231205   gcc  
-riscv                          rv32_defconfig   clang
-s390                             allmodconfig   gcc  
-s390                              allnoconfig   gcc  
-s390                             allyesconfig   gcc  
-s390                                defconfig   gcc  
-s390                  randconfig-001-20231205   clang
-s390                  randconfig-002-20231205   clang
-sh                               allmodconfig   gcc  
-sh                                allnoconfig   gcc  
-sh                               allyesconfig   gcc  
-sh                                  defconfig   gcc  
-sh                               j2_defconfig   gcc  
-sh                          r7780mp_defconfig   gcc  
-sh                    randconfig-001-20231205   gcc  
-sh                    randconfig-002-20231205   gcc  
-sh                           se7751_defconfig   gcc  
-sparc                            allmodconfig   gcc  
-sparc                       sparc64_defconfig   gcc  
-sparc64                          allmodconfig   gcc  
-sparc64                          allyesconfig   gcc  
-sparc64                             defconfig   gcc  
-sparc64               randconfig-001-20231205   gcc  
-sparc64               randconfig-002-20231205   gcc  
-um                               allmodconfig   clang
-um                                allnoconfig   clang
-um                               allyesconfig   clang
-um                                  defconfig   gcc  
-um                             i386_defconfig   gcc  
-um                    randconfig-001-20231205   gcc  
-um                    randconfig-002-20231205   gcc  
-um                           x86_64_defconfig   gcc  
-x86_64                            allnoconfig   gcc  
-x86_64                           allyesconfig   clang
-x86_64       buildonly-randconfig-001-20231205   gcc  
-x86_64       buildonly-randconfig-002-20231205   gcc  
-x86_64       buildonly-randconfig-003-20231205   gcc  
-x86_64       buildonly-randconfig-004-20231205   gcc  
-x86_64       buildonly-randconfig-005-20231205   gcc  
-x86_64       buildonly-randconfig-006-20231205   gcc  
-x86_64                              defconfig   gcc  
-x86_64                randconfig-001-20231205   clang
-x86_64                randconfig-002-20231205   clang
-x86_64                randconfig-003-20231205   clang
-x86_64                randconfig-004-20231205   clang
-x86_64                randconfig-005-20231205   clang
-x86_64                randconfig-006-20231205   clang
-x86_64                randconfig-011-20231205   gcc  
-x86_64                randconfig-012-20231205   gcc  
-x86_64                randconfig-013-20231205   gcc  
-x86_64                randconfig-014-20231205   gcc  
-x86_64                randconfig-015-20231205   gcc  
-x86_64                randconfig-016-20231205   gcc  
-x86_64                randconfig-071-20231205   gcc  
-x86_64                randconfig-072-20231205   gcc  
-x86_64                randconfig-073-20231205   gcc  
-x86_64                randconfig-074-20231205   gcc  
-x86_64                randconfig-075-20231205   gcc  
-x86_64                randconfig-076-20231205   gcc  
-x86_64                          rhel-8.3-rust   clang
-xtensa                            allnoconfig   gcc  
-xtensa                randconfig-002-20231205   gcc  
+>   ufshcd-qcom 1d84000.ufshc: Adding to iommu group 5
+>   ufshcd-qcom 1d84000.ufshc: freq-table-hz property not specified
+>   ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: Unable to find 
+> vdd-hba-supply regulator, assuming enabled
+>   ufshcd-qcom 1d84000.ufshc: freq-table-hz property not specified
+>   ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: Unable to find 
+> vdd-hba-supply regulator, assuming enabled
+>   scsi host0: ufshcd
+>   ufshcd-qcom 1d84000.ufshc: UNIPRO clk freq 0 MHz not supported
+>   ufshcd-qcom 1d84000.ufshc: cfg core clk ctrl failed
+>   clk: Disabling unused clocks
+>   ALSA device list:
+>     No soundcards found.
+>   Waiting 2 sec before mounting root device...
+>   ufshcd-qcom 1d84000.ufshc: uic cmd 0x16 with arg3 0x0 completion timeout
+>   ufshcd-qcom 1d84000.ufshc: Controller enable failed
+>   ufshcd-qcom 1d84000.ufshc: Controller enable failed
+>   ufshcd-qcom 1d84000.ufshc: Controller enable failed
+>   ufshcd-qcom 1d84000.ufshc: Controller enable failed
+>   ufshcd-qcom 1d84000.ufshc: link startup failed -110
+>   ufshcd-qcom 1d84000.ufshc: UFS Host state=0
+>   ufshcd-qcom 1d84000.ufshc: outstanding reqs=0x0 tasks=0x0
+>   ufshcd-qcom 1d84000.ufshc: saved_err=0x0, saved_uic_err=0x0
+>   ufshcd-qcom 1d84000.ufshc: Device power mode=1, UIC link state=0
+>   ufshcd-qcom 1d84000.ufshc: PM in progress=0, sys. suspended=0
+>   ufshcd-qcom 1d84000.ufshc: Auto BKOPS=0, Host self-block=0
+>   ufshcd-qcom 1d84000.ufshc: Clk gate=1
+>   ufshcd-qcom 1d84000.ufshc: last_hibern8_exit_tstamp at 0 us, 
+> hibern8_exit_cnt=0
+>   ufshcd-qcom 1d84000.ufshc: last intr at 2889168 us, last intr status=0x400
+>   ufshcd-qcom 1d84000.ufshc: error handling flags=0x0, req. abort count=0
+>   ufshcd-qcom 1d84000.ufshc: hba->ufs_version=0x300, Host 
+> capabilities=0x1587031f, caps=0x12cf
+>   ufshcd-qcom 1d84000.ufshc: quirks=0x80000, dev. quirks=0x0
+>   host_regs: 00000000: 1587031f 00000000 00000300 00000000
+>   host_regs: 00000010: 01000000 00010217 00000000 00000000
+>   host_regs: 00000020: 00000000 00000000 00000000 00000000
+>   host_regs: 00000030: 00000008 00000000 00000000 00000000
+>   host_regs: 00000040: 00000000 00000000 00000000 00000000
+>   host_regs: 00000050: 00000000 00000000 00000000 00000000
+>   host_regs: 00000060: 00000000 00000000 00000000 00000000
+>   host_regs: 00000070: 00000000 00000000 00000000 00000000
+>   host_regs: 00000080: 00000000 00000000 00000000 00000000
+>   host_regs: 00000090: 00000000 00000001 00000000 00000000
+>   ufshcd-qcom 1d84000.ufshc: No record of pa_err
+>   ufshcd-qcom 1d84000.ufshc: No record of dl_err
+>   ufshcd-qcom 1d84000.ufshc: No record of nl_err
+>   ufshcd-qcom 1d84000.ufshc: No record of tl_err
+>   ufshcd-qcom 1d84000.ufshc: No record of dme_err
+>   ufshcd-qcom 1d84000.ufshc: No record of auto_hibern8_err
+>   ufshcd-qcom 1d84000.ufshc: No record of fatal_err
+>   ufshcd-qcom 1d84000.ufshc: link_startup_fail[0] = 0xffffff92 at 3663462 us
+>   ufshcd-qcom 1d84000.ufshc: link_startup_fail: total cnt=1
+>   ufshcd-qcom 1d84000.ufshc: No record of resume_fail
+>   ufshcd-qcom 1d84000.ufshc: No record of suspend_fail
+>   ufshcd-qcom 1d84000.ufshc: No record of wlun resume_fail
+>   ufshcd-qcom 1d84000.ufshc: No record of wlun suspend_fail
+>   ufshcd-qcom 1d84000.ufshc: No record of dev_reset
+>   ufshcd-qcom 1d84000.ufshc: No record of host_reset
+>   ufshcd-qcom 1d84000.ufshc: No record of task_abort
+>   HCI Vendor Specific Registers 00000000: 0000012c 00000000 00000000 
+> 00000000
+>   HCI Vendor Specific Registers 00000010: 00000042 00000000 00000001 
+> 1c00052c
+>   HCI Vendor Specific Registers 00000020: 3f011300 40020000 00000000 
+> 00000000
+>   HCI Vendor Specific Registers 00000030: 00000000 00000000 00000000 
+> 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000000: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000010: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000020: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000030: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000040: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000050: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000060: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000070: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000080: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 00000090: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_REG_OCSC 000000a0: 00000000 00000000 00000000 00000000
+>   UFS_UFS_DBG_RD_EDTL_RAM 00000000: 00000000 7147f7fd 47857989 b7556f16
+>   UFS_UFS_DBG_RD_EDTL_RAM 00000010: ad69b114 7cd5fd55 41d57796 0e55e717
+>   UFS_UFS_DBG_RD_EDTL_RAM 00000020: 04558745 efc573b5 4f35f49b b2697d16
+>   UFS_UFS_DBG_RD_EDTL_RAM 00000030: 5c7563d5 7755f4d6 cf65dd90 6591d535
+>   UFS_UFS_DBG_RD_EDTL_RAM 00000040: 4151f597 ffaf75a9 57442485 f7654511
+>   UFS_UFS_DBG_RD_EDTL_RAM 00000050: fc57e046 ff57f5b5 c7c53417 adb56f55
+>   UFS_UFS_DBG_RD_EDTL_RAM 00000060: 9b753f4c 5155a115 245525f1 77755d51
+>   UFS_UFS_DBG_RD_EDTL_RAM 00000070: 5791ffdf 77555756 7cd5b941 431ce192
+>   UFS_UFS_DBG_RD_DESC_RAM 00000000: 7dfffedf 001fbffb ff7fffff 003ffffd
+>   UFS_UFS_DBG_RD_DESC_RAM 00000010: 7f3dfff5 003fffff 7ffdfff3 0017fff7
+>   UFS_UFS_DBG_RD_DESC_RAM 00000020: 3fdd595f 003ff5b7 ffffdfdf 003f77f7
+>   UFS_UFS_DBG_RD_DESC_RAM 00000030: fffff7d7 003f75f7 7fffffff 0037ffff
+>   UFS_UFS_DBG_RD_DESC_RAM 00000040: fdff7f7f 003f57df fdfeffbf 003ffff7
+>   UFS_UFS_DBG_RD_DESC_RAM 00000050: 7d7d7fff 00379d7f 7ffd7fff 001f3fff
+>   UFS_UFS_DBG_RD_DESC_RAM 00000060: 7f7fdeff 003fffd5 f7f7fffd 003fffff
+>   UFS_UFS_DBG_RD_DESC_RAM 00000070: 777ffd7d 003ffd75 ff7ffffd 003f7ffd
+>   UFS_UFS_DBG_RD_DESC_RAM 00000080: ff15fddf 003edfd7 df5ffff7 003fffdf
+>   UFS_UFS_DBG_RD_DESC_RAM 00000090: ffe57f5f 003fbff7 ddd7ff75 003f7fff
+>   UFS_UFS_DBG_RD_DESC_RAM 000000a0: fd4ffffd 003dddff eefffff7 003fbfff
+>   UFS_UFS_DBG_RD_DESC_RAM 000000b0: 67fffffd 001ff7fd bdd75f7f 0031bfff
+>   UFS_UFS_DBG_RD_DESC_RAM 000000c0: ffdddf75 003fff5d 7f5fffdd 002f7fdf
+>   UFS_UFS_DBG_RD_DESC_RAM 000000d0: ff7d5ffd 0037fdff df675fd5 001ffbdf
+>   UFS_UFS_DBG_RD_DESC_RAM 000000e0: b5ff7dff 00337ffc ff7ff7fb 003ffff7
+>   UFS_UFS_DBG_RD_DESC_RAM 000000f0: 5ffdffdd 001ddfff 75ffddff 003fffff
+>   UFS_UFS_DBG_RD_DESC_RAM 00000100: ff5f5fdf 003d37bf ff77dfff 0017edb7
+>   UFS_UFS_DBG_RD_DESC_RAM 00000110: ff7ff7ff 003ffd7f ff5f7fdd 003f3fd7
+>   UFS_UFS_DBG_RD_DESC_RAM 00000120: 7fffffdf 003ff5d9 55ffffdf 003f79d5
+>   UFS_UFS_DBG_RD_DESC_RAM 00000130: d5ffe7f5 002767fe ffdd75df 003d7fdf
+>   UFS_UFS_DBG_RD_DESC_RAM 00000140: 7fff77ff 003dff5f 7d7ff7ff 002f7fff
+>   UFS_UFS_DBG_RD_DESC_RAM 00000150: fdff7ddf 003fe7dd 5df77ddd 0037f7ff
+>   UFS_UFS_DBG_RD_DESC_RAM 00000160: f7f16977 003f9fdf 5775ff77 00357ff5
+>   UFS_UFS_DBG_RD_DESC_RAM 00000170: 7ffdfffb 003dff5f 7f7f77f7 003fffff
+>   UFS_UFS_DBG_RD_DESC_RAM 00000180: 57dff7df 003dffff fffdd7ff 001efffd
+>   UFS_UFS_DBG_RD_DESC_RAM 00000190: 7dffffed 003f7fce 77d9f7ff 001fdddd
+>   UFS_UFS_DBG_RD_DESC_RAM 000001a0: ddffdffd 001fd57d 7f7ff777 003f78dd
+>   UFS_UFS_DBG_RD_DESC_RAM 000001b0: d5eff77f 0037dfdf ed7d77ff 003ffffd
+>   UFS_UFS_DBG_RD_DESC_RAM 000001c0: cf7fdfff 001f5f7e ffffffff 003f57df
+>   UFS_UFS_DBG_RD_DESC_RAM 000001d0: fdfffffd 003f7dff 556ffddf 003fdd7f
+>   UFS_UFS_DBG_RD_DESC_RAM 000001e0: fdff71df 003e7fff ff3f7fd7 0037f77b
+>   UFS_UFS_DBG_RD_DESC_RAM 000001f0: 7f7f7677 00355fdf 7feffdff 0037ffff
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000000: d1700001 0000192c 3d9edf71 00075d51
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000010: 4561073f 0000415d ddde6dd9 000ff55f
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000020: adb7185f 000df971 579caffd 000de54d
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000030: 45e55747 00057559 7f5e5dbd 000377df
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000040: dd175467 0007dc9c 4e775d77 0007555f
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000050: 1f15dd77 000d195d f1c9e535 0007b75f
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000060: 15bd75f3 0007675f dfd59d77 00057b5c
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000070: d4f09dee 00017d39 52857d56 000c6ddd
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000080: c333fcd6 000545df 1d57f51d 000577e9
+>   UFS_UFS_DBG_RD_PRDT_RAM 00000090: 9f83d45d 00055d18 d4e7d7ee 000713df
+>   UFS_UFS_DBG_RD_PRDT_RAM 000000a0: fdfe39d7 000754df d54f5d77 000746f1
+>   UFS_UFS_DBG_RD_PRDT_RAM 000000b0: 5a40c5f5 000c45d4 17471fe3 000e9d1d
+>   UFS_UFS_DBG_RD_PRDT_RAM 000000c0: 1747dd5f 00074577 d540d75d 00044d67
+>   UFS_UFS_DBG_RD_PRDT_RAM 000000d0: de3545d3 000c4757 5f845115 00063795
+>   UFS_UFS_DBG_RD_PRDT_RAM 000000e0: d15d776c 000c7fd5 1f5f5d75 00067d75
+>   UFS_UFS_DBG_RD_PRDT_RAM 000000f0: d71d4c7d 0007bd13 7557d77d 000355df
+>   UFS_DBG_RD_REG_UAWM 00000000: 00000000 0fe00000 00000004 f4000102
+>   UFS_DBG_RD_REG_UARM 00000000: 00000000 00000000 00000001 00000001
+>   UFS_DBG_RD_REG_TXUC 00000000: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000010: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000020: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000030: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000040: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000050: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000060: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000070: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000080: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 00000090: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 000000a0: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TXUC 000000b0: 00000001 00000000 00000000 00000004
+>   UFS_DBG_RD_REG_RXUC 00000000: 00000000 00000000 00000000 00000004
+>   UFS_DBG_RD_REG_RXUC 00000010: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_RXUC 00000020: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_RXUC 00000030: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_RXUC 00000040: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_RXUC 00000050: 00000000 00000000 00000000 00000001
+>   UFS_DBG_RD_REG_RXUC 00000060: 00000000 00000000 00000004
+>   UFS_DBG_RD_REG_DFC 00000000: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_DFC 00000010: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_DFC 00000020: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_DFC 00000030: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_DFC 00000040: ffffffff 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000000: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000010: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000020: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000030: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000040: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000050: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000060: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000070: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TRLUT 00000080: 00000000 00000000
+>   UFS_DBG_RD_REG_TMRLUT 00000000: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TMRLUT 00000010: 00000000 00000000 00000000 00000000
+>   UFS_DBG_RD_REG_TMRLUT 00000020: 00000000
+>   ------------[ cut here ]------------
+>   gcc_ufs_phy_axi_clk status stuck at 'off'
+>   WARNING: CPU: 3 PID: 103 at drivers/clk/qcom/clk-branch.c:86 
+> clk_branch_wait+0x144/0x15c
+>   Modules linked in:
+>   CPU: 3 PID: 103 Comm: kworker/u17:0 Not tainted 
+> 6.7.0-rc4-next-20231205 #14278
+>   Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+>   Workqueue: ufs_clk_gating_0 ufshcd_ungate_work
+>   pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>   pc : clk_branch_wait+0x144/0x15c
+>   lr : clk_branch_wait+0x144/0x15c
+>   sp : ffff80008160bc20
+>   x29: ffff80008160bc20 x28: ffffa967de7ea200 x27: 0000000000000000
+>   x26: ffff03ffc7bb18e8 x25: 0000000112be0f33 x24: 0000000000000001
+>   x23: ffffa967dd981888 x22: 0000000000000001 x21: ffffa967dc27166c
+>   x20: 0000000000000000 x19: ffffa967deae9920 x18: 0000000000000038
+>   x17: 0000000000000000 x16: 0000000000003ff1 x15: fffffffffffe9c68
+>   x14: ffffa967de815360 x13: 0000000000000669 x12: 0000000000000223
+>   x11: fffffffffffe9c68 x10: fffffffffffe9c30 x9 : 00000000fffff223
+>   x8 : ffffa967de815360 x7 : ffffa967de86d360 x6 : 00000000000019a4
+>   x5 : 000000000000bff4 x4 : 00000000fffff223 x3 : 0000000000000000
+>   x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff03ffc7266500
+>   Call trace:
+>    clk_branch_wait+0x144/0x15c
+>    clk_branch2_enable+0x30/0x40
+>    clk_core_enable+0xe8/0x284
+>    clk_enable+0x2c/0x4c
+>    ufshcd_setup_clocks+0x268/0x3d4
+>    ufshcd_ungate_work+0xc0/0x134
+>    process_one_work+0x1ec/0x53c
+>    worker_thread+0x298/0x408
+>    kthread+0x124/0x128
+>    ret_from_fork+0x10/0x20
+>   irq event stamp: 76
+>   hardirqs last  enabled at (75): [<ffffa967dcc9ced0>] 
+> _raw_spin_unlock_irq+0x30/0x6c
+>   hardirqs last disabled at (76): [<ffffa967dc224250>] 
+> clk_enable_lock+0x7c/0xf0
+>   softirqs last  enabled at (0): [<ffffa967dbb186c8>] 
+> copy_process+0x650/0x21d8
+>   softirqs last disabled at (0): [<0000000000000000>] 0x0
+>   ---[ end trace 0000000000000000 ]---
+>   ufshcd-qcom 1d84000.ufshc: ufshcd_setup_clocks: core_clk prepare 
+> enable failed, -16
+> 
+> 
+> Let me know if you need more logs or information.
+> 
+> 
+> >   arch/arm64/boot/dts/qcom/sm8250.dtsi | 39 +++++++++++++++++++++-------
+> >   1 file changed, 30 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > index a4e58ad731c3..33abd84aae53 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > @@ -2198,21 +2198,42 @@ ufs_mem_hc: ufshc@1d84000 {
+> >   				<&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> >   				<&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
+> >   				<&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
+> > -			freq-table-hz =
+> > -				<37500000 300000000>,
+> > -				<0 0>,
+> > -				<0 0>,
+> > -				<37500000 300000000>,
+> > -				<0 0>,
+> > -				<0 0>,
+> > -				<0 0>,
+> > -				<0 0>;
+> > +
+> > +			operating-points-v2 = <&ufs_opp_table>;
+> >   
+> >   			interconnects = <&aggre1_noc MASTER_UFS_MEM 0 &mc_virt SLAVE_EBI_CH0 0>,
+> >   					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_UFS_MEM_CFG 0>;
+> >   			interconnect-names = "ufs-ddr", "cpu-ufs";
+> >   
+> >   			status = "disabled";
+> > +
+> > +			ufs_opp_table: opp-table {
+> > +				compatible = "operating-points-v2";
+> > +
+> > +				opp-37500000 {
+> > +					opp-hz = /bits/ 64 <37500000>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <37500000>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>;
+> > +					required-opps = <&rpmhpd_opp_low_svs>;
+> > +				};
+> > +
+> > +				opp-300000000 {
+> > +					opp-hz = /bits/ 64 <300000000>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <300000000>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>,
+> > +						 /bits/ 64 <0>;
+> > +					required-opps = <&rpmhpd_opp_nom>;
+> > +				};
+> > +			};
+> >   		};
+> >   
+> >   		ufs_mem_phy: phy@1d87000 {
+> 
+> Best regards
+> -- 
+> Marek Szyprowski, PhD
+> Samsung R&D Institute Poland
+> 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+மணிவண்ணன் சதாசிவம்
 
