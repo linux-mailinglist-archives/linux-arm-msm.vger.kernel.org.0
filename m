@@ -1,99 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-3544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA25F806F9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:23:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6DF5806F9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:25:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 278961C20831
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 12:23:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4115FB208F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 12:25:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78E0B3589D;
-	Wed,  6 Dec 2023 12:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E0FC364BE;
+	Wed,  6 Dec 2023 12:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ggWffWZZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L7E3hyDL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A73998
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 04:23:27 -0800 (PST)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-50bfd3a5b54so3654593e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 04:23:27 -0800 (PST)
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBCCCD3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 04:25:06 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-a1c8512349dso95303166b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 04:25:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701865405; x=1702470205; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/DzoPfWTSCdQs7IBgaNCNhvytcrfnmBWz8SmUAIpH50=;
-        b=ggWffWZZE8syarCQnPoiLlt+LrdjL73MRmMimlOv0gfzxcfnHaPNTGVUqWTKlLhqkl
-         VTOirlZ3uf8vDkiMiIBoe9QHCs1WrBH+8653noE6NHcmoPdQExaMHp2i2ohn6UkhFxCu
-         pG+tIqmhkwU3FU7PNBMG3OC2bwwfLlEjE3SY76OgrRreYZYnmvAbaXuJC+jjWDMp5wV9
-         NLVhl4p1ZDRN9GskyKCVjBV+4iZPq3hU8C5ZNY8YJv+A4PkNeQaAJzj9gS+0KCOUAQei
-         1NXTvYDmpcmdOumS4oVz6TepYoFpYdEIAlY53Bfct36VzurKVYqKwxC4AOjcqBJ+DFPW
-         fsfQ==
+        d=linaro.org; s=google; t=1701865505; x=1702470305; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bSPJqgRu7qPi+l+hmtBMdBdRoK+soEQmisUntrPtTec=;
+        b=L7E3hyDLPETIVo6Mm8tHN2xAZSS7M80MQ/DlspehVsODjU4ROfs9Sg47z0PjkI5fPI
+         vRqf1Irz2RrNMhKQ06qWb3KW96Jr8OtVFGAeCo/+uPcnkeYSnyGFP0C2UrrqjYUTrGN0
+         q0z3Hv717Ev/hgYB0upmm+X2EfFyVF2LD3khSZaTjKwG3itzCCzMzMRQz8GLsVx5hPo4
+         W0DQWxlu27iBHzBSQlj/BNB2KAIWvRAZlY0nW0NN6IJ7llIt891+eJl9WExf0RZvNIN6
+         zY0N8aDdHKMwWGkEEmCBLE2nRK0Tou3iQ3aOSCR1iLQlE9FyZrMGscUJs48dXiwxyoGj
+         Fkvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701865405; x=1702470205;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/DzoPfWTSCdQs7IBgaNCNhvytcrfnmBWz8SmUAIpH50=;
-        b=aEWEi1RSWpMdluhAtdzED/XnpntcSLqB9I6TDO7LXvqJeQXDdyAbJr7W+7KAsu4UXL
-         BurGhtSkQelwHzQfeYVcw9piqPfFPSTxI5vKPD6UNVd5EffoiZzoSgBKhrnBEI5XkdzA
-         Dqhz4ZF4RA/DWPn79/aiQjkn/7TLR6ZfcEBsKpHYtUnCqUQCOoYsCVWNWBUuCws8s4zm
-         l/13WIGsLJnfjn+3ourz0V81GgxqPg9QPZagPjhk492A2wI6P3h79gwGY3tc5FWRXbvh
-         fkX8pDC+bW/yKmXMyu62xL1YchO3qtvUsu9FbSXym4nDTtEwI9k03ZbKqBo6J2EnGAiI
-         2ZLQ==
-X-Gm-Message-State: AOJu0Ywt7cYCvER98iPqM8m6I/Ut0V/Jefsgt59+YUXpmrwwGbA6nriY
-	V0HJuff05Fj8y/WOdaqTctf5HQ==
-X-Google-Smtp-Source: AGHT+IEHcut6JD7Iz6Iiz3DWN0UgHPNJrxzg3ZHmF7UW6BWBbcPknaYhXwQQ+JjJMy0hNTFAHMQ9Ig==
-X-Received: by 2002:a05:6512:3986:b0:50c:bbb:e3ce with SMTP id j6-20020a056512398600b0050c0bbbe3cemr614570lfu.112.1701865405360;
-        Wed, 06 Dec 2023 04:23:25 -0800 (PST)
-Received: from [172.30.205.186] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id z19-20020a056512309300b0050bfc6dbb8asm755053lfd.302.2023.12.06.04.23.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Dec 2023 04:23:25 -0800 (PST)
-Message-ID: <e8fdf6ca-488a-4ccf-99d9-ffa753d35067@linaro.org>
-Date: Wed, 6 Dec 2023 13:23:23 +0100
+        d=1e100.net; s=20230601; t=1701865505; x=1702470305;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bSPJqgRu7qPi+l+hmtBMdBdRoK+soEQmisUntrPtTec=;
+        b=OB+ZSD9PiuA4kkeQ5bsyxkb7HolKSs4Qj8nqIs5bks9SaMcdmSrLZhTkb3AOm7UL+K
+         /Q2ApHQec75M4CfhTzhV0lE2dNoK5kYliyD4WEE1RoRZyBsBYOPn+BvhVDlKdAqX8whS
+         tQK6UPYIa7+jRbxrNXId5guBFXubED2jTEKAn1qnqNqRLwVGtA2i5OzXHIM8KroRPQKT
+         EpAQyc2QkBMuITHbvbYO64pwJg3mAvIwkVwqL/+Mj+1hm6BBep92LkW5KzGBRn+CKrwR
+         8Rlg09+U/YO/xpyrlY6uAP7nIbTvmH+nmSwRheQ3DbH8HKpbfZ/OJHd9Ncy7qsifK510
+         Yiyw==
+X-Gm-Message-State: AOJu0Yyd/9k9R1MtQt8Wh2RImRx7kK2EVIOrjn7P7nvKL9ffmgz6XK5Q
+	lsl/ygg0kw0UdPH57AlulQVrUA==
+X-Google-Smtp-Source: AGHT+IHtG3wgmSPxClZN+MYAjNI7aaFnXOPpyZPkxuMt1SL2AMOnDm2wdd1rH0jDoZWCCdIW+DoTtw==
+X-Received: by 2002:a17:906:fc06:b0:a1c:fdb2:e9a7 with SMTP id ov6-20020a170906fc0600b00a1cfdb2e9a7mr476301ejb.141.1701865505354;
+        Wed, 06 Dec 2023 04:25:05 -0800 (PST)
+Received: from localhost.localdomain (2001-1c06-2302-5600-366d-ca8f-f3af-0381.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:366d:ca8f:f3af:381])
+        by smtp.gmail.com with ESMTPSA id oz23-20020a170906cd1700b00a0ad10b3f68sm8188085ejb.205.2023.12.06.04.25.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Dec 2023 04:25:04 -0800 (PST)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To: laurent.pinchart@ideasonboard.com,
+	rfoss@kernel.org,
+	todor.too@gmail.com,
+	agross@kernel.org,
+	andersson@kernel.org,
+	konrad.dybcio@linaro.org,
+	mchehab@kernel.org,
+	matti.lehtimaki@gmail.com,
+	quic_grosikop@quicinc.com
+Cc: linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v6.1] media: qcom: camss: Add support for named power-domains
+Date: Wed,  6 Dec 2023 13:25:00 +0100
+Message-ID: <20231206122500.3798228-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <43621420-2482-4634-9c3e-1a3278481540@xs4all.nl>
+References: <43621420-2482-4634-9c3e-1a3278481540@xs4all.nl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] soc: qcom: stats: Express AOSS QMP module dependency
-Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel test robot <lkp@intel.com>
-References: <20231205-qcom_stats-aoss_qmp-dependency-v1-1-8dabe1b5c32a@quicinc.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231205-qcom_stats-aoss_qmp-dependency-v1-1-8dabe1b5c32a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Level: *
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Right now we use fixed indexes to assign power-domains, with a
+requirement for the TOP GDSC to come last in the list.
 
+Adding support for named power-domains means the declaration in the dtsi
+can come in any order.
 
-On 12/6/23 05:38, Bjorn Andersson wrote:
-> In the case that the Qualcomm Sleep stats driver is builtin and the AOSS
-> QMP driver is built as a module, neither the implementation nor the stub
-> functions are available during linking, resulting in the following
-> errors:
-> 
->    qcom_stats.c:(.text+0x33c): undefined reference to `qmp_send'
->    qcom_stats.c:(.text+0x8a0): undefined reference to `qmp_get'
-> 
-> Resolve this by expressing the dependency between the two modules.
-> 
-> Fixes: e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/linux-arm-msm/202312061258.nAVYPFq2-lkp@intel.com/
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+After this change we continue to support the old indexing - if a SoC
+resource declaration or the in-use dtb doesn't declare power-domain names
+we fall back to the default legacy indexing.
 
-Konrad
+From this point on though new SoC additions should contain named
+power-domains, eventually we will drop support for legacy indexing.
+
+Tested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+ drivers/media/platform/qcom/camss/camss-vfe.c | 24 +++++++++++++-
+ drivers/media/platform/qcom/camss/camss.c     | 31 +++++++++++++++----
+ drivers/media/platform/qcom/camss/camss.h     |  2 ++
+ 3 files changed, 50 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 60c4730e7c9d..083d1445a6e2 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -1382,7 +1382,29 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+ 	if (!res->line_num)
+ 		return -EINVAL;
+ 
+-	if (res->has_pd) {
++	/* Power domain */
++
++	if (res->pd_name) {
++		vfe->genpd = dev_pm_domain_attach_by_name(camss->dev,
++							  res->pd_name);
++		if (IS_ERR(vfe->genpd)) {
++			ret = PTR_ERR(vfe->genpd);
++			return ret;
++		}
++	}
++
++	if (!vfe->genpd && res->has_pd) {
++		/*
++		 * Legacy magic index.
++		 * Requires
++		 * power-domain = <VFE_X>,
++		 *                <VFE_Y>,
++		 *                <TITAN_TOP>
++		 * id must correspondng to the index of the VFE which must
++		 * come before the TOP GDSC. VFE Lite has no individually
++		 * collapasible domain which is why id < vfe_num is a valid
++		 * check.
++		 */
+ 		vfe->genpd = dev_pm_domain_attach_by_id(camss->dev, id);
+ 		if (IS_ERR(vfe->genpd))
+ 			return PTR_ERR(vfe->genpd);
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 35918cf837bd..8de0e9e8d34b 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1522,13 +1522,32 @@ static int camss_configure_pd(struct camss *camss)
+ 		return 0;
+ 
+ 	/*
+-	 * VFE power domains are in the beginning of the list, and while all
+-	 * power domains should be attached, only if TITAN_TOP power domain is
+-	 * found in the list, it should be linked over here.
++	 * If a power-domain name is defined try to use it.
++	 * It is possible we are running a new kernel with an old dtb so
++	 * fallback to indexes even if a pd_name is defined but not found.
+ 	 */
+-	camss->genpd = dev_pm_domain_attach_by_id(camss->dev, camss->genpd_num - 1);
+-	if (IS_ERR(camss->genpd)) {
+-		ret = PTR_ERR(camss->genpd);
++	if (camss->res->pd_name) {
++		camss->genpd = dev_pm_domain_attach_by_name(camss->dev,
++							    camss->res->pd_name);
++		if (IS_ERR(camss->genpd)) {
++			ret = PTR_ERR(camss->genpd);
++			goto fail_pm;
++		}
++	}
++
++	if (!camss->genpd) {
++		/*
++		 * Legacy magic index. TITAN_TOP GDSC must be the last
++		 * item in the power-domain list.
++		 */
++		camss->genpd = dev_pm_domain_attach_by_id(camss->dev,
++							  camss->genpd_num - 1);
++	}
++	if (IS_ERR_OR_NULL(camss->genpd)) {
++		if (!camss->genpd)
++			ret = -ENODEV;
++		else
++			ret = PTR_ERR(camss->genpd);
+ 		goto fail_pm;
+ 	}
+ 	camss->genpd_link = device_link_add(camss->dev, camss->genpd,
+diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/platform/qcom/camss/camss.h
+index 1ba824a2cb76..cd8186fe1797 100644
+--- a/drivers/media/platform/qcom/camss/camss.h
++++ b/drivers/media/platform/qcom/camss/camss.h
+@@ -48,6 +48,7 @@ struct camss_subdev_resources {
+ 	u32 clock_rate[CAMSS_RES_MAX][CAMSS_RES_MAX];
+ 	char *reg[CAMSS_RES_MAX];
+ 	char *interrupt[CAMSS_RES_MAX];
++	char *pd_name;
+ 	u8 line_num;
+ 	bool has_pd;
+ 	const void *ops;
+@@ -84,6 +85,7 @@ enum icc_count {
+ 
+ struct camss_resources {
+ 	enum camss_version version;
++	const char *pd_name;
+ 	const struct camss_subdev_resources *csiphy_res;
+ 	const struct camss_subdev_resources *csid_res;
+ 	const struct camss_subdev_resources *ispif_res;
+-- 
+2.42.0
+
 
