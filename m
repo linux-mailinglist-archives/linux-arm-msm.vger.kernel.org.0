@@ -1,122 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-3559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CE3380714C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:53:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84101807154
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:56:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9BA4AB20E66
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:53:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 336B81F2142F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:56:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD80A3BB3D;
-	Wed,  6 Dec 2023 13:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D515241F4;
+	Wed,  6 Dec 2023 13:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="do5UeC6Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VGVCEW5C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F2BD1;
-	Wed,  6 Dec 2023 05:53:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=ZMxTBdEVgr5LReWJcDBdaRxFXxTwHu3OEqZQ7L+jIbM=; b=do5UeC6QVxG1xmzolqXjm+3JpY
-	GmBPI2dyYiXm60UrnGOB1kz1kAjIJunZLfwJvNbSi24xsWBjTaNZE9wDwhmqhLA0r/6dj2eYb48QS
-	mlyiwn4scZdJXBHokrPHA/spCX6H+04UoP226065WLKdi86tYQ4RV62a6ibl/zAwNHGM=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1rAsKh-002DA0-Os; Wed, 06 Dec 2023 14:52:59 +0100
-Date: Wed, 6 Dec 2023 14:52:59 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Sneh Shah <quic_snehshah@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	kernel@quicinc.com, Andrew Halaney <ahalaney@redhat.com>,
-	andersson@kernel.org
-Subject: Re: [PATCH net-next] net: stmmac: qcom-ethqos: Add sysfs nodes for
- qcom ethqos
-Message-ID: <0c966845-2bbc-4196-806d-6a33e435bf7d@lunn.ch>
-References: <20231204084854.31543-1-quic_snehshah@quicinc.com>
- <3e4a1b9c-ed0f-466e-ba11-fc5b7ef308a1@lunn.ch>
- <5d5f3955-fc30-428c-99f4-42f9b7580a84@quicinc.com>
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE45DD47
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 05:55:53 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6cc02e77a9cso6582464b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 05:55:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701870953; x=1702475753; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jo4sjmVaV/TBAMJQg43OcyML+wJBUfl40Ts13Xx0yio=;
+        b=VGVCEW5CyMHN8E1h+aLD/A+6crvPQMWmcbbuWt2k06l3JtSk6Wg5L64bNPXGygSB5D
+         SysxNdeZIA7Rta1jwrz637PiEMinkzsfNNI9NUrS83rdED3Ad7C8y8quhRm+ib13IMBb
+         gAgx0fhJj6lV7tpIeGWWVI/jUm/naom4JBKzECJTygamAvUf4zz/baATD0jj3bVsTog2
+         tx8SmYWhYq8l3QNcz38WSklkzOZiJ4p568ls6Wwrzp1xpmo2G6e2PApJv7xcwR/8LLGC
+         NzclMFoRoJ8j081uno4YK0Ipvex1oRpD04GKl8oQG3d0Go5StE/6emG99Nuvw608SQKN
+         9PQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701870953; x=1702475753;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jo4sjmVaV/TBAMJQg43OcyML+wJBUfl40Ts13Xx0yio=;
+        b=nBCxH126JsmqTRrEYiLVTU6gYlNOVy8Gnh6ZAatilaxVTOXt+ioscBTe3ln5G6lLQO
+         hLK9I3QGwdw8yBfOpJFlQoAcmewiAkQY4pVFjU9CXc6pJT0F79XQIXMtNkhOMiDMP8zc
+         IcUn0VS9WrHU285lJAGwo2S+EcGedSI6tW6imU+BOVoNOTV0Ib2qVePpum7IWK7eyAb6
+         hMgnrso0X8eE6YLXNs7Z5Hb9tloEM94YUvCsGujZGNoUL43BkQy0466lr9SQPJsJXZYg
+         +cBA3/EGSICO1G2sBZZklQhrNqtSG05gqHjVm90pCeaXxanC/nGxf0vSFMOEH7quYmT/
+         nDHw==
+X-Gm-Message-State: AOJu0YxG9/GfuP04N2OcQZh2ZEUilmKEwBd84zsrn6nOxgQ6Ksg+j+DQ
+	Mw9+Tzz2THrTPQu3drEa9Dx1n27DssX8ge4qqg==
+X-Google-Smtp-Source: AGHT+IFtRa9+0838RSSI9ko0zFdJdodaKRgyzIqc6JbiWzTHnFiflLRfRI9fQ6/eZ/NpRcFfWuZ26w==
+X-Received: by 2002:a05:6a00:3391:b0:6ce:3f6b:638a with SMTP id cm17-20020a056a00339100b006ce3f6b638amr947618pfb.48.1701870953263;
+        Wed, 06 Dec 2023 05:55:53 -0800 (PST)
+Received: from localhost.localdomain ([117.202.188.104])
+        by smtp.gmail.com with ESMTPSA id n38-20020a056a000d6600b006ce91cdb1c4sm1366056pfv.188.2023.12.06.05.55.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Dec 2023 05:55:52 -0800 (PST)
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: andersson@kernel.org,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	konrad.dybcio@linaro.org,
+	conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 0/3] Qcom PCIe DTS fixes
+Date: Wed,  6 Dec 2023 19:25:37 +0530
+Message-Id: <20231206135540.17068-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5d5f3955-fc30-428c-99f4-42f9b7580a84@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Dec 06, 2023 at 05:17:25PM +0530, Sneh Shah wrote:
-> 
-> 
-> On 12/5/2023 8:38 PM, Andrew Lunn wrote:
-> > On Mon, Dec 04, 2023 at 02:18:54PM +0530, Sneh Shah wrote:
-> >> Add sysfs nodes to conifigure routing of specific vlan id to GVM queue.
-> >> GVM queue is not exposed to PVM stmmac, so TC ops can't configure routing.
-> > 
-> > Adding files in /sysfs has ~0 chance of being accepted.
-> > 
-> > As requested, please explain what all these different hardware blocks
-> > are, and what you are trying to achieve. We can then recommend the
-> > correct interface.
-> > 
-> >     Andrew
-> > 
-> > ---
-> > pw-bot: cr
-> 
+Hi,
 
-> We have multiVM Architecture here. PVM will have stmmac running with
-> 4 Rx Tx queues. stmmac in PVM is responsible to configure whole
-> ethernet HW MAC/DMA/MTL ( including clocks, regulators and other
-> core bsp elements).
+This small series has some fixes for the PCIe nodes in Qcom DTS.
 
-Please remember that stmmac is mostly used in embedded systems. People
-used to embedded systems generally don't know virtual machine
-terminology. So please spell out what PBM, GVM, etc mean.
+- Mani
 
-> In GVM we have thin Ethernet driver, which is responsible to
-> configure and manage only 1 Rx/TX queue, i.e 5th Rx/Tx ethernet
-> queue. GVM can't access any other resisters apart from this 5th
-> queue specific MTL and DMA registers.
- 
-> We need to route vlan traffic of a specific Priority to GVM Queue
-> (Ethernet queue 5) via programming a MAC register. The MAC register
-> is not accessible in GVM and has to be programmed from PVM. stmmac
-> already has TC OPS to program this routing via vlan
-> priority. However, as PVM has only 4 queues enabled, TC tool will
-> not take 5th queue as input. Hence, these nodes were added to
-> conifure the MAC register to route specific vlan packets to 5th
-> queue in GVM.
- 
-> Note: The queues mentioned above are HW MTL Queues and DMA
-> Channels. The routing can be done in the HW itself based on vlan pcp
-> before the packets reach to driver.
+Manivannan Sadhasivam (3):
+  ARM: dts: qcom: Use "pcie" as the node name instead of "pci"
+  arm64: dts: qcom: Use "pcie" as the node name instead of "pci"
+  arm64: dts: qcom: sa8775p: Add missing space between node name and
+    braces
 
-Is the normal way you would do this is like this:
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi           | 2 +-
+ arch/arm/boot/dts/qcom/qcom-ipq4019-ap.dk04.1.dtsi | 2 +-
+ arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi           | 2 +-
+ arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi           | 6 +++---
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              | 2 +-
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi              | 4 ++--
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              | 2 +-
+ arch/arm64/boot/dts/qcom/qcs404.dtsi               | 2 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              | 4 ++--
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 2 +-
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi              | 8 ++++----
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               | 6 +++---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8450.dtsi               | 4 ++--
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               | 4 ++--
+ 17 files changed, 31 insertions(+), 31 deletions(-)
 
-tc qdisc add dev eth1 parent root handle 100 \
-mqprio num_tc 4 \
-map 0 1 2 3 0 0 0 0 0 0 0 0 0 0 0 0 \
-queues 1@0 1@1 1@2 1@3 \
-hw 1
+-- 
+2.25.1
 
-But you are saying that you cannot extend this to 5 queues?
-
-    Andrew
 
