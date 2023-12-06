@@ -1,235 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-3583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9546C807692
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 18:26:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6368C8076F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 18:50:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 51CFF281F79
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 17:26:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB2D81F211A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 17:50:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DDDC63DF8;
-	Wed,  6 Dec 2023 17:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C94BB6D1D1;
+	Wed,  6 Dec 2023 17:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hPWreFpJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GiDMfU/f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D86CC3
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 09:26:07 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B6FR9gY028872;
-	Wed, 6 Dec 2023 17:25:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=tuG2z+nXVzkDdG4hxWToy86zuTi7p41qp9hxkSQEr58=;
- b=hPWreFpJePjqzc74HKnLMvCmWlkpk2NtS+wbjZlU+AnzoBEc+gBrkAqUGm2Uon40HZUy
- wXHkdo2sweBbKPtPRlRRZJ/haRMPW6GeDmNsfW0suqVHLpWSAiyGBRyubE+O0QMjIrcN
- KPAo1Wzxzc99hPwbw12J5PYJwwMbdVeaRaC4vDyanNPbAyO3uiv2WcZey7t5hJigYq/c
- 9yWUdtGgANOHO71wEv5vIh7C2MpT/C/5g2UmaRm6c68RafMLerS8k1HFDHYBMN4Cw7Uk
- V8SxNCLW6duAERbDnlgXR0BRUcBJBbE4kwKDrM7fCx2OA5U6G5Gd4Q5BfbvkS78uklk9 fw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3utd0qjkya-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Dec 2023 17:25:57 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B6HPuXo031389
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Dec 2023 17:25:56 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Dec
- 2023 09:25:53 -0800
-Message-ID: <abdc8491-9c56-0525-ff2c-918367f1bc5e@quicinc.com>
-Date: Wed, 6 Dec 2023 09:25:52 -0800
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83E48D46
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 09:50:06 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-548ce39b101so61778a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 09:50:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701885005; x=1702489805; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OnB/pZwqKGUMreunlrpcEChm3w0duvNE2K6RYHvDVWs=;
+        b=GiDMfU/fjiBzt7naWXFtfF9uH2kEpHhk07f/NQtEe86BksSKPD2d3G4/5Y+LPw1vhO
+         CND5Oce1YcYVyjfAAEdwFzTJ3wRpfyS6aT8kLn3QNRmXn7KBX68PNWRgsYZGP8CjUefT
+         uVmgUyZKMiCGVlLc6UH92wbqj4Az8fVxPZ27EB8quE/NAgdu6vOyyJwh5thrzCW790Y9
+         JPc69k2T1IiXnkT8p2QFhwQjfGuLZh03+9pkouVGxQZLs1vKeZDR8bmMLeVlfKbbUvMa
+         uQUVp9jq3VRpoG1acxhqgaPSjmb1AHS38fmz/VBkmB1LJAjqkoXlT6FeSHqGPzpOO4C+
+         +nyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701885005; x=1702489805;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OnB/pZwqKGUMreunlrpcEChm3w0duvNE2K6RYHvDVWs=;
+        b=nYt8xlWvVS8ubFTLf/YA0b7tnEPwi4xY8qSKh3cRnmMhhO4LUeKzAdM3A8S2xjK62/
+         eKkxhV14blTGBS8+DNQ6VU20+ovn5UaATnfcS4zL8DCVgxBWdiKtbPejmDY0SNXlFr2C
+         Nd+J62bWOCJZnjDyYVg4AQY6IYO6R5VYQci2e7+iLTKbvgQEXTEljv8JbqPPIgX5yWez
+         TJ9FFgbNuMTgNq9PmHgG/JvFwTuBMmD5/EfD3ShWifnnF/sffvrDR8NPONil+uhC17Ue
+         PujKX44J2vyxwL4HL3Qm778LbKSUHGv0g7z96UugQkKRTob662dBuq02C7NnFqHkaWi/
+         lTHg==
+X-Gm-Message-State: AOJu0Yy9+dGV3QBDmczmegTPyk2aLGQtbvhHcvEhtrFB5L4YeGp49sit
+	cc/fJUjQnM6rQx9wqbx8V4y9Pw==
+X-Google-Smtp-Source: AGHT+IFyxkopgO+0RjCaNN4boeFAqOxV8pGjpl1yz2CCNa32uEuUCHVlG9ZxJWDqOQFfufEnaqG6sQ==
+X-Received: by 2002:a05:6402:2070:b0:54c:47cc:caef with SMTP id bd16-20020a056402207000b0054c47cccaefmr548288edb.53.1701885005016;
+        Wed, 06 Dec 2023 09:50:05 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id u13-20020a056402064d00b0054bde4df7f0sm218309edx.66.2023.12.06.09.50.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Dec 2023 09:50:04 -0800 (PST)
+Message-ID: <6c268dcd-81b4-451c-99f8-87090558e9dc@linaro.org>
+Date: Wed, 6 Dec 2023 18:50:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 2/2] drm/msm/dpu: Add mutex lock in control vblank irq
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
+ qcom,refclk-always-on property
 Content-Language: en-US
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>,
-        Paloma Arellano <quic_parellan@quicinc.com>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <seanpaul@chromium.org>, <swboyd@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <marijn.suijten@somainline.org>,
-        <steev@kali.org>
-References: <20231201014101.15802-1-quic_parellan@quicinc.com>
- <20231201014101.15802-3-quic_parellan@quicinc.com>
- <20231201034710.GB1766637@hu-bjorande-lv.qualcomm.com>
- <CAA8EJpqFya5H+4PPZ8A3CqqqRJXsJ3KKbbcfS=C13QTr1vAtSw@mail.gmail.com>
- <20231201162252.GG1766637@hu-bjorande-lv.qualcomm.com>
- <a78c42d1-6ce0-2c34-5513-c04948d2ff31@quicinc.com>
- <knm2uvjuad47famhr5uzibxxx3reknxdpb5raj3fox2vlkarvc@w6xer6jo4yok>
- <14e6d232-8e6d-0b5f-4ec4-a23244bcd701@quicinc.com>
- <20231206035107.GK1766637@hu-bjorande-lv.qualcomm.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231206035107.GK1766637@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+ quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+ quic_vpernami@quicinc.com, quic_parass@quicinc.com
+References: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
+ <20231127-refclk_always_on-v3-1-26d969fa8f1d@quicinc.com>
+ <78815f1b-7390-40de-8afd-ac71806f4051@linaro.org>
+ <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
+ <20231201060716.GJ4009@thinkpad>
+ <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
+ <20231201111033.GL4009@thinkpad>
+ <f844cd1e-7e4f-4836-bc9a-2e1ed13f064f@linaro.org>
+ <20231201123054.GM4009@thinkpad>
+ <3a7376aa-18a2-41cb-a4c9-680e735ce75b@linaro.org>
+ <20231206131009.GD12802@thinkpad>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231206131009.GD12802@thinkpad>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3cz5BTUq_QRrYPCybttpVr2r8MFR2RO6
-X-Proofpoint-ORIG-GUID: 3cz5BTUq_QRrYPCybttpVr2r8MFR2RO6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-06_14,2023-12-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2312060140
 
-
-
-On 12/5/2023 7:51 PM, Bjorn Andersson wrote:
-> On Mon, Dec 04, 2023 at 11:22:24AM -0800, Abhinav Kumar wrote:
->>
->>
->> On 12/3/2023 7:31 PM, Bjorn Andersson wrote:
->>> On Fri, Dec 01, 2023 at 11:43:36AM -0800, Abhinav Kumar wrote:
->>>>
->>>>
->>>> On 12/1/2023 8:22 AM, Bjorn Andersson wrote:
->>>>> On Fri, Dec 01, 2023 at 10:34:50AM +0200, Dmitry Baryshkov wrote:
->>>>>> On Fri, 1 Dec 2023 at 05:47, Bjorn Andersson <quic_bjorande@quicinc.com> wrote:
->>>>>>> On Thu, Nov 30, 2023 at 05:40:55PM -0800, Paloma Arellano wrote:
->>>>> [..]
->>>>>>>> @@ -2386,6 +2390,7 @@ struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
->>>>>>>>          dpu_enc->enabled = false;
->>>>>>>>          mutex_init(&dpu_enc->enc_lock);
->>>>>>>>          mutex_init(&dpu_enc->rc_lock);
->>>>>>>> +     mutex_init(&dpu_enc->vblank_ctl_lock);
->>>>>>>
->>>>>>> Is this somehow propagated to multiple different dpu_encoder_phys
->>>>>>> instances, or why do you need to initialize it here and pass the pointer
->>>>>>> through 2 different intermediate structures before assigning it to
->>>>>>> phys_enc->vblank_ctl_lock below?
->>>>>>
->>>>>> Yes, there can be two phys_enc instances for a single encoder, so this
->>>>>> part is fine.
->>>>>>
->>>>>
->>>>> Thanks for the clarification, Dmitry. Sounds like it make sense then.
->>>>>
->>>>> But, if I read the code correctly the two instances will have separate
->>>>> vblank_refcount copies, and the dpu_core_irq_*() interface does mutual
->>>>> exclusion within. So why do we need shared mutual exclusion between the
->>>>> two? (This is where a proper description of the problem in the commit
->>>>> message would have been very helpful)
->>>>>
->>>>
->>>> Are you suggesting we just have one vblank_ctl_lock per encoder and not have
->>>> one vblank_ctl_lock per phys encoder? I cannot think of a display specific
->>>> reason for that other than just the SW layout.
->>>>
->>>> The reason its like this today is that control_vblank_irq is an encoder phys
->>>> op because it does different things based on the type of encoder.
->>>>
->>>> Because its an encoder phys op, it has the vblank_ctl_lock at the phys
->>>> structure and not the encoder one.
->>>>
->>>> Its just more about how the phys op is defined that each phys op operates on
->>>> its phys's structure.
->>>>
->>>> Generally, if we have one encoder with two physical encoders we anyways bail
->>>> out early for the other encoder so this is mostly a no-op for the slave phys
->>>> encoder.
->>>>
->>>> Please take a look at below return point.
->>>>
->>>> 715 	/* Slave encoders don't report vblank */
->>>> 716 	if (!sde_encoder_phys_vid_is_master(phys_enc))
->>>> 717 		goto end;
->>>> 718
->>>>
->>>> So technically its still providing protection for the same phys encoder but
->>>> the catch is this control_vblank_irq can get called from different threads
->>>> hence we need exclusion.
->>>>
+On 06/12/2023 14:10, Manivannan Sadhasivam wrote:
 >>>
->>> The way I understand the code is that the atomic is used to refcount
->>> when to enable/disable the interrupt, and the new lock protects this
->>> refcount during concurrent updates. I have no concerns with this part.
->>>
->>
->> Correct.
->>
->>>
->>> What I'm seeing is that the refcount it per phys_enc, and as such there
->>> would be no reason to have a common mutex to protect the two independent
->>> refcounts.
->>>
->>> But I'm probably misunderstanding something here...
->>>
->>
->> There is no reason to have a common mutex to protect the two independent
->> refcounts. In fact, there is no need to even have two independent refcounts
->> because whenever we have one encoder with two physical encoders, we use only
->> the master physical encoder for vblanks like I pointed above.
->>
->> The only reason we have it like this is because today the vblank_refcount is
->> part of phys_enc so the mutex handle is also now a part of it.
->>
->> Do you think if we move both the mutex and the vblank_refcount to the
->> dpu_encoder from the dpu_encoder_phys and maintain the mutex at that level
->> it will be less confusing for you?
+>>> If you say they are wrong, why are they approved in the first place?
+>> Because we don't have time to keep digging what the driver is doing and
+>> what is claimed in DT. Some people don't even CC us on the driver.
 >>
 > 
-> The two functions operate on dpu_encoder_phys objects, and as you say
-> above the two instances doesn't need to be handled under shared mutual
-> exclusion.
-> 
-> Moving the serialization mechanism to dpu_encoder seems like it would
-> create an entanglement, for the sake of making the lock common. If
-> nothing else this would act as documentation to me that the two
-> functions are intertwined somehow.
-> 
-> I was rather hoping that we'd move the mutex_init() to
-> dpu_encoder_phys_init() and avoid passing a reference around in
-> unrelated parts of the code just to set up the sharing, if that's not
-> necessary.
-> 
-> Regards,
-> Bjorn
+> OK. How about, "qcom,broken-refclk"? This reflects the fact that the default
+> refclk operation is broken on this platform, so the OS should be prepared for
+> it (by keeping it always on).
 > 
 
-In principle we need only one mutex per encoder and not per encoder phys.
+Sounds very good to me.
 
-Hence the two phys encoders are having the handle to the same mutex for 
-that reason.
+Best regards,
+Krzysztof
 
-If having it that way is confusing you for some reason, I offered the 
-alternative.
-
-Otherwise I think what we have is enough and correct. We can update the 
-commit text and doc around the mutex to explain what it does.
-
-I dont think your suggestion will work.
-
-dpu_encoder_phys_init() will be called once per each phys encoder so it 
-can get called twice. Are you suggesting we have one mutex per phys 
-encoder? Thats not necessary and its not correct as well.
-
-If not, perhaps you can post something for us to review your idea.
-
-
-
->> I am fine with that.
->>
->>> Regards,
->>> Bjorn
->>>
 
