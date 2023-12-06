@@ -1,154 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-3564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B09FC8071BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 15:05:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BD038071C5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 15:07:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8B35C281965
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:05:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F20AC1F21616
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:07:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC0403D3A0;
-	Wed,  6 Dec 2023 14:05:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R/EGB0VQ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DABDD3A8FA;
+	Wed,  6 Dec 2023 14:07:36 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB255D1;
-	Wed,  6 Dec 2023 06:05:27 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B68bbfK026852;
-	Wed, 6 Dec 2023 14:04:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=QG7okk0DW5cV2WX4FjsH7Jm7c1uVFG7K9CMd5t4kVqM=;
- b=R/EGB0VQNpyP9G8YGeD+aYjHJrPIZ87QLxDYt9FULf6eovzWHcl2GY1i0n2VDA/1UTjs
- 1QlfpucLmuR7ky+kKyqdCLOgeN0l2LZ2oFZIXMEFyrmxop3EgFqgGoma/dT+WiAlbKYR
- Ek2Yh33hMuvU4PiYFkhVAea0D2r2+hpI0f03DLa8AbIJzb/O50TsHHK/cym9sCFvVaT9
- l5/+wSqbXa9Gonryq3rz5CUuOYGUeE1ycfUIG4OoY3lXpgzfG6LQYcvD8MVcvGT3NTSl
- UK4NyeTiwh/F/4wYDz0DncNzI/xrxNqBzoUCmBzgH33Ez/aE/GVXoP/nowRQLXuZyLDv xw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3utd1n1yy2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Dec 2023 14:04:19 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B6E4HoZ025004
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Dec 2023 14:04:18 GMT
-Received: from [10.218.37.200] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Dec
- 2023 06:02:57 -0800
-Message-ID: <b9373252-710c-4a54-95cc-046314796960@quicinc.com>
-Date: Wed, 6 Dec 2023 19:32:54 +0530
+Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47234D1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 06:07:33 -0800 (PST)
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mta-7-5G7ujnPPMmWNFdy5sMVPRg-1; Wed, 06 Dec 2023 14:07:30 +0000
+X-MC-Unique: 5G7ujnPPMmWNFdy5sMVPRg-1
+Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
+ (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Wed, 6 Dec
+ 2023 14:07:16 +0000
+Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
+ id 15.00.1497.048; Wed, 6 Dec 2023 14:07:16 +0000
+From: David Laight <David.Laight@ACULAB.COM>
+To: 'Bjorn Andersson' <quic_bjorande@quicinc.com>, Andy Gross
+	<agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+	<konrad.dybcio@linaro.org>
+CC: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, Randy Dunlap
+	<rdunlap@infradead.org>
+Subject: RE: [PATCH] soc: qcom: stats: Fix division issue on 32-bit platforms
+Thread-Topic: [PATCH] soc: qcom: stats: Fix division issue on 32-bit platforms
+Thread-Index: AQHaJ91idnM3hlhTbEOITLQ741XLZ7CcR/PQ
+Date: Wed, 6 Dec 2023 14:07:16 +0000
+Message-ID: <e59bb661054945f7a77b2f67c70d30f7@AcuMS.aculab.com>
+References: <20231205-qcom_stats-aeabi_uldivmod-fix-v1-1-f94ecec5e894@quicinc.com>
+In-Reply-To: <20231205-qcom_stats-aeabi_uldivmod-fix-v1-1-f94ecec5e894@quicinc.com>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/3] ufs: core: Add CPU latency QoS support for ufs
- driver
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
 Content-Language: en-US
-To: Bart Van Assche <bvanassche@acm.org>,
-        "James E.J. Bottomley"
-	<jejb@linux.ibm.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Peter Wang <peter.wang@mediatek.com>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Matthias
- Brugger" <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@collabora.com>,
-        <chu.stanley@gmail.com>
-CC: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
-        <linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mediatek@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_cang@quicinc.com>,
-        <quic_nguyenb@quicinc.com>, Nitin Rawat <quic_nitirawa@quicinc.com>
-References: <20231204143101.64163-1-quic_mnaresh@quicinc.com>
- <20231204143101.64163-2-quic_mnaresh@quicinc.com>
- <590ade27-b4da-49be-933b-e9959aa0cd4c@acm.org>
- <692cd503-5b14-4be6-831d-d8e9c282a95e@quicinc.com>
- <5e7c5c75-cb5f-4afe-9d57-b0cab01a6f26@acm.org>
-From: Naresh Maramaina <quic_mnaresh@quicinc.com>
-In-Reply-To: <5e7c5c75-cb5f-4afe-9d57-b0cab01a6f26@acm.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jNdJXZIgOmEwSo1frEafsf1-O-ipzEFK
-X-Proofpoint-GUID: jNdJXZIgOmEwSo1frEafsf1-O-ipzEFK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-06_10,2023-12-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 adultscore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
- phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311290000 definitions=main-2312060113
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
+RnJvbTogQmpvcm4gQW5kZXJzc29uDQo+IFNlbnQ6IDA2IERlY2VtYmVyIDIwMjMgMDA6NDQNCj4g
+DQo+IGNvbW1pdCAnZTg0ZTYxYmRiOTdjICgic29jOiBxY29tOiBzdGF0czogQWRkIEREUiBzbGVl
+cCBzdGF0cyIpJyBtYWRlIGl0DQo+IGluIHdpdGggYSBtdWx0X2ZyYWMoKSB3aGljaCBjYXVzZXMg
+bGluayBlcnJvcnMgb24gQXJtIGFuZCBQb3dlclBDDQo+IGJ1aWxkczoNCj4gDQo+ICAgRVJST1I6
+IG1vZHBvc3Q6ICJfX2FlYWJpX3VsZGl2bW9kIiBbZHJpdmVycy9zb2MvcWNvbS9xY29tX3N0YXRz
+LmtvXSB1bmRlZmluZWQhDQo+IA0KPiBFeHBhbmQgdGhlIG11bHRfZnJhYygpIHRvIGF2b2lkIHRo
+aXMgcHJvYmxlbS4NCj4gDQo+IEZpeGVzOiBlODRlNjFiZGI5N2MgKCJzb2M6IHFjb206IHN0YXRz
+OiBBZGQgRERSIHNsZWVwIHN0YXRzIikNCj4gUmVwb3J0ZWQtYnk6IFJhbmR5IER1bmxhcCA8cmR1
+bmxhcEBpbmZyYWRlYWQub3JnPg0KPiBTaWduZWQtb2ZmLWJ5OiBCam9ybiBBbmRlcnNzb24gPHF1
+aWNfYmpvcmFuZGVAcXVpY2luYy5jb20+DQo+IC0tLQ0KPiAgZHJpdmVycy9zb2MvcWNvbS9xY29t
+X3N0YXRzLmMgfCAzICsrLQ0KPiAgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMSBk
+ZWxldGlvbigtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvc29jL3Fjb20vcWNvbV9zdGF0
+cy5jIGIvZHJpdmVycy9zb2MvcWNvbS9xY29tX3N0YXRzLmMNCj4gaW5kZXggNDc2M2Q2MmE4Y2Iw
+Li41YmE2MTIzMjMxM2UgMTAwNjQ0DQo+IC0tLSBhL2RyaXZlcnMvc29jL3Fjb20vcWNvbV9zdGF0
+cy5jDQo+ICsrKyBiL2RyaXZlcnMvc29jL3Fjb20vcWNvbV9zdGF0cy5jDQo+IEBAIC0yMjEsNyAr
+MjIxLDggQEAgc3RhdGljIGludCBxY29tX2Rkcl9zdGF0c19zaG93KHN0cnVjdCBzZXFfZmlsZSAq
+cywgdm9pZCAqdW51c2VkKQ0KPiANCj4gIAlmb3IgKGkgPSAwOyBpIDwgZGRyLmVudHJ5X2NvdW50
+OyBpKyspIHsNCj4gIAkJLyogQ29udmVydCB0aGUgcGVyaW9kIHRvIG1zICovDQo+IC0JCWVudHJ5
+W2ldLmR1ciA9IG11bHRfZnJhYyhNU0VDX1BFUl9TRUMsIGVudHJ5W2ldLmR1ciwgQVJDSF9USU1F
+Ul9GUkVRKTsNCj4gKwkJZW50cnlbaV0uZHVyICo9IE1TRUNfUEVSX1NFQzsNCj4gKwkJZW50cnlb
+aV0uZHVyID0gZGl2X3U2NChlbnRyeVtpXS5kdXIsIEFSQ0hfVElNRVJfRlJFUSk7DQoNCklzIHRo
+YXQgcmlnaHQ/DQpBdCBhIGd1ZXNzIG11bHRfZnJhYyhhLCBiLCBjKSBpcyBkb2luZyBhIDMyeDMy
+IG11bHRpcGx5IGFuZCB0aGVuIGEgNjR4MzINCmRpdmlkZSB0byBnZW5lcmF0ZSBhIDMyYml0IHJl
+c3VsdC4NClNvIEknZCBndWVzcyBlbnRyeVtpXS5kdXIgaXMgMzJiaXQ/ICh0aGlzIGNvZGUgaXNu
+J3QgaW4gLXJjNCAuLi4pLg0KV2hpY2ggbWVhbnMgeW91IGFyZSBub3cgZGlzY2FyZGluZyB0aGUg
+aGlnaCBiaXRzLg0KDQpZb3UndmUgYWxzbyBhZGRlZCBhIHZlcnkgc2xvdyA2NGJpdCBkaXZpZGUu
+DQpBIG11bHRpcGxlIGJ5IHJlY2lwcm9jYWwgY2FsY3VsYXRpb24gd2lsbCBiZSBtdWNoIGJldHRl
+ci4NClNpbmNlIGFic29sdXRlIGFjY3VyYWN5IGFsbW9zdCBjZXJ0YWlubHkgZG9lc24ndCBtYXR0
+ZXIgaGVyZSBjb252ZXJ0Og0KCWR1ciAqIDEwMDAgLyBGUkVRDQp0bw0KCShkdXIgKiAodTMyKSgx
+MDAwdWxsIDw8IDMyIC8gRlJFUSkpID4+IDMyDQp3aGljaCB3aWxsIGJlIGZpbmUgcHJvdmlkZWQg
+RlJFUSA+PSAxMDAwDQoNCglEYXZpZA0KDQotDQpSZWdpc3RlcmVkIEFkZHJlc3MgTGFrZXNpZGUs
+IEJyYW1sZXkgUm9hZCwgTW91bnQgRmFybSwgTWlsdG9uIEtleW5lcywgTUsxIDFQVCwgVUsNClJl
+Z2lzdHJhdGlvbiBObzogMTM5NzM4NiAoV2FsZXMpDQo=
 
-
-On 12/5/2023 10:41 PM, Bart Van Assche wrote:
-> On 12/4/23 21:58, Naresh Maramaina wrote:
->> On 12/5/2023 12:30 AM, Bart Van Assche wrote:
->>> On 12/4/23 06:30, Maramaina Naresh wrote:
->>>> +    /* This capability allows the host controller driver to use the 
->>>> PM QoS
->>>> +     * feature.
->>>> +     */
->>>> +    UFSHCD_CAP_PM_QOS                = 1 << 13,
->>>>   };
->>>
->>> Why does it depend on the host driver whether or not PM QoS is
->>> enabled? Why isn't it enabled unconditionally?
->>
->> For some platform vendors power KPI might be more important than 
->> random io KPI. Hence this flag is disabled by default and can be 
->> enabled based on platform requirement.
-> 
-> How about leaving this flag out unless if a host vendor asks explicitly
-> for this flag?
-
-IMHO, instead of completely removing this flag, how about having
-flag like "UFSHCD_CAP_DISABLE_PM_QOS" which will make PMQOS enable
-by default and if some host vendor wants to disable it explicitly,
-they can enable that flag.
-Please let me know your opinion.
-
->>>
->>>> + * @pm_qos_req: PM QoS request handle
->>>> + * @pm_qos_init: flag to check if pm qos init completed
->>>>    */
->>>
->>> Documentation for pm_qos_init is missing.
->>>
->> Sorry, i didn't get your comment, i have already added documentation 
->> for @pm_qos_init, @pm_qos_req variable as above. Do you want me to add 
->> this information some where else as well?
-> 
-> Oops, I meant 'qos_vote'.
-
-Sure. I'll take of this in next patchset.
-
-> 
-> Thanks,
-> 
-> Bart.
-> 
-
-Thanks,
-Naresh
 
