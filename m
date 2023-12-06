@@ -1,127 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-3522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 550AE806AD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 10:37:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 31105806BA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 11:15:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0C6D41F2135B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 09:37:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB43F1F215C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 10:15:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC2811A5BF;
-	Wed,  6 Dec 2023 09:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D99F2D043;
+	Wed,  6 Dec 2023 10:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yv3GXFmH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Yjas3BWW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E0F1BD
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 01:37:33 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2c9f72176cfso47938651fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 01:37:33 -0800 (PST)
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15FA518F
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 02:14:58 -0800 (PST)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2c9fdf53abcso7253561fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 02:14:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701855451; x=1702460251; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U9AmJwkDE0GOCanY4DoOGUdEEjQ004fTwlj8Vhw/CU8=;
-        b=yv3GXFmHUzY09KPma7CuwF5PFmN6eqXT3/fEuCkrYlc2HngU8eSTtGatDv98IJ93vF
-         x5jymA3A8Edzig9FDNGR74WoHTvo0vcWHw8dTkPFnENVlzgtcGTR47Ecu5tgd9dHuObH
-         2hi/xC7V54wDbqOJ7rZ8Gxe65FmMEpfPF8t68q9NDmhsQ+0jWw1t8qAuPrrAfiODIrKz
-         C6+NcVeyoCW0MLzaS11fZvTsFpu4gyC4OAR0c3im4h7z7HwBILRD7RRFYwPQb7ZoFiGE
-         74Ip6lIyV1vlpGdF/gEbw0tFJHWKl+RxFse1TkLcmlQ2AM4TsvjEKAK/oEPmRmLUh/Ld
-         6LKQ==
+        d=linaro.org; s=google; t=1701857696; x=1702462496; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F0q7XUDhzaMOZKwK/U9NUPrOCd+WjD1tbsbFwSHG0q8=;
+        b=Yjas3BWWMyxe8u66487slqciRPRVCndYg7i+c3/gd9Ee53RjLP113cbWjr4/DA6poT
+         2YYElTylC+oBqqdILzbqqU7MuEx1qIH2bm37Zq9kf2ffyDIGXXeNAAd6gyNqrIXuUJMk
+         8Hz2H68QgHMY5egiQ0VDGaNnR0LfAhY77nchG1Lk6ob4y2qkmI2cMtrJXONVspDHN15w
+         fuo02hNrs2TbkierNNDlqBZUzr6TvXd6CPjxyIV4Wm8qpW/HMKpYvsNvCe0jJSeDUyHv
+         +r9nTYyxDsAOSb8ZzCIhfAZXrL19+Iqi71HaxGBcgYffJcpi38oLJoTI+gbJrge/6NMf
+         MbOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701855451; x=1702460251;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U9AmJwkDE0GOCanY4DoOGUdEEjQ004fTwlj8Vhw/CU8=;
-        b=JqgDSGG/dunQoEDU4uDAI/TycYtuzfuqWSTdGXMoU9c30sK0VRMNr84+Kni6zgUcFb
-         N+vI0HcQraqWU99m5fi4CW5PrNciRrt6byXK71eW8tCcs7w17ETa4d9kAIILKCA1Qrd+
-         87qQVGs6plh5D96Q19/BsvGCDnovx7yyNk4EHRX65tySwncRNSgq8GiYXXgRXqoZ1Z4n
-         4vs0picZmocAsfMdDW+DtkAmbXoOWpmBEU6ADS6oawDbT9AKBfXUxrv3vr/GefhgdOvF
-         Zbv1tZ+hz2qLVP5UWahY/GndMZ9rFS4bWwTEOrOqJFEa3R9N/OgsLqvlqLjAJxoFSjW3
-         0lPg==
-X-Gm-Message-State: AOJu0YweDYzn0m3lG9obqqZM/iJl5iTv5CvPAnScCv3vcSTObB9IKIjP
-	opeyw9FWH66A4+YSfgtpA5h8EA==
-X-Google-Smtp-Source: AGHT+IEY4J/JJbM2WamIhwg19X8ihrG/RFqOdsJ0LKU3kUEbxrVchenGFzk46YBsD//sLu4y397VAQ==
-X-Received: by 2002:a2e:7802:0:b0:2ca:68b:4abb with SMTP id t2-20020a2e7802000000b002ca068b4abbmr209304ljc.202.1701855451548;
-        Wed, 06 Dec 2023 01:37:31 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701857696; x=1702462496;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F0q7XUDhzaMOZKwK/U9NUPrOCd+WjD1tbsbFwSHG0q8=;
+        b=esyIDD7BwFXeKJ/Rk4OcC+O+91yBzvcl8a14Z2RYalASuXkcCpOt+4YbyJoTNYg8OM
+         0zUd8XDoK9+q9uFG6E+jDR5YCeMAG8xXjMzjEjAUOJMsEMaSJxys8DOiemuvB0JQWLqL
+         2PcXqLTIT49yxplvsDoDggFYXyl+rpLNYWVvWbTi7GP2r2FVEsMz7j9H+0mI1bDC0Mc4
+         yfPX5baOa06D9vbJG+i/TJAyA7o6KT/cDu1/jm68P7eGilrTsVodyDyiNlzEA5Z89LR9
+         HKZx1jZXTOTWJGHBFVIf/kGi9rue20VYjQcJBeW9C12eLZFc3sg3IglECRZYlTOnIvIA
+         qRZA==
+X-Gm-Message-State: AOJu0YxVlOvBnqvZlOPlw73o5lDCNAadPdEq12I++etVAaEiWolLo9yY
+	LxyySg6mrg9/qPDlH5I5rKxYng==
+X-Google-Smtp-Source: AGHT+IFfEsB482WXWBkGa7lRzgwjsje7EsqALaPTbxoFRxxsL9ZnfVH2CwoU2HQS3fRCcJBk72H9ww==
+X-Received: by 2002:a05:651c:14c:b0:2c9:e81e:81ac with SMTP id c12-20020a05651c014c00b002c9e81e81acmr552024ljd.11.1701857696297;
+        Wed, 06 Dec 2023 02:14:56 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id b10-20020a2e894a000000b002c9fbb50770sm1120102ljk.90.2023.12.06.01.37.30
+        by smtp.gmail.com with ESMTPSA id f1-20020a05651c03c100b002c9e6cbf78esm1519012ljp.19.2023.12.06.02.14.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 01:37:30 -0800 (PST)
+        Wed, 06 Dec 2023 02:14:55 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Stephen Boyd <swboyd@chromium.org>,
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	David Airlie <airlied@gmail.com>,
 	Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
+	Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
+	Melissa Wen <melissa.srw@gmail.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
+	Haneen Mohammed <hamohammed.sa@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v4 00/13] drm/msm/dpu: use managed memory allocations
-Date: Wed,  6 Dec 2023 12:37:29 +0300
-Message-Id: <170185542751.1626201.7605667574857624404.b4-ty@linaro.org>
+	freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3 0/2] drm/atomic-helper: rename drm_atomic_helper_check_wb_encoder_state
+Date: Wed,  6 Dec 2023 13:14:53 +0300
+Message-Id: <20231206101455.1664463-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231201211845.1026967-1-dmitry.baryshkov@linaro.org>
-References: <20231201211845.1026967-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
+The function drm_atomic_helper_check_wb_encoder_state() doesn't use
+drm_encoder for anything sensible. Internally it checks
+drm_writeback_connector's state. Thus it makes sense to let this
+function accept drm_connector object and the drm_atomic_state
+and rename it to drm_atomic_helper_check_wb_connector_state().
 
-On Sat, 02 Dec 2023 00:18:32 +0300, Dmitry Baryshkov wrote:
-> In a lots of places in DPU driver memory is allocated by using the
-> kzalloc and then manually freed using kfree. However thes memory chunks
-> have a well-defined life cycle. They are either a part of the driver's
-> runtime and can be devm_kzalloc'ed or are exposed to userspace via the
-> DRM objects and thus can be drmm_alloc'ed. Implement corresponding
-> runtime resource manangement for the DPU driver.
-> 
-> [...]
+Changes since v2:
+- Make the function accept drm_connector instead of
+  drm_writeback_connector (Maxime)
 
-Applied, thanks!
+Changes since v1:
+- Make the function accept drm_writeback_connector and drm_atomic_state
+  (Maxime)
+- Added a patch for VKMS to move atomic_check of WB path from encoder to
+  connector helpers.
 
-[01/13] drm/msm/dpu: cleanup dpu_kms_hw_init error path
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/134c78c96227
-[02/13] drm/msm/dpu: remove IS_ERR_OR_NULL for dpu_hw_intr_init() error handling
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/b830b06f0087
-[03/13] drm/msm/dpu: use devres-managed allocation for interrupts data
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/b19e6f7dd2e7
-[04/13] drm/msm/dpu: use devres-managed allocation for VBIF data
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/bdfa47d9b17a
-[05/13] drm/msm/dpu: use devres-managed allocation for MDP TOP
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/1e897dcc4c67
-[06/13] drm/msm/dpu: use devres-managed allocation for HW blocks
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/a106ed98af68
-[07/13] drm/msm/dpu: drop unused dpu_plane::lock
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/b0311c1c4e06
-[08/13] drm/msm/dpu: remove QoS teardown on plane destruction
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/bcc54a4c063a
-[09/13] drm/msm/dpu: use drmm-managed allocation for dpu_plane
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/0e00f9af95bb
-[10/13] drm/msm/dpu: use drmm-managed allocation for dpu_crtc
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/3637af92de2b
-[11/13] drm/msm/dpu: use drmm-managed allocation for dpu_encoder_phys
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/73169b45e1ed
-[12/13] drm/msm/dpu: drop dpu_encoder_phys_ops::destroy
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/3285f4acb23c
-[13/13] drm/msm/dpu: use drmm-managed allocation for dpu_encoder_virt
-        https://gitlab.freedesktop.org/lumag/msm/-/commit/cd42c56d9c0b
+Dmitry Baryshkov (2):
+  drm/atomic-helper: rename drm_atomic_helper_check_wb_encoder_state
+  drm/vkms: move wb's atomic_check from encoder to connector
 
-Best regards,
+ drivers/gpu/drm/drm_atomic_helper.c   | 16 +++++++++-------
+ drivers/gpu/drm/vkms/vkms_writeback.c | 25 +++++++++++++++----------
+ include/drm/drm_atomic_helper.h       |  5 ++---
+ 3 files changed, 26 insertions(+), 20 deletions(-)
+
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
+
 
