@@ -1,214 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-3595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 190CF8079F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 22:02:21 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7BF8807A3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 22:21:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C6FD1C20B9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 21:02:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23A9B1C20FF2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 21:21:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CCE841861;
-	Wed,  6 Dec 2023 21:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BCAC6F629;
+	Wed,  6 Dec 2023 21:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J/s/eqVV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="F/UIDWYY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DB9BD5F;
-	Wed,  6 Dec 2023 13:02:13 -0800 (PST)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B6KMuXZ004301;
-	Wed, 6 Dec 2023 21:02:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=A/TdFogqS98WsB2VdzA9zHOz7vrXoiXkxMW3XDsQTvA=;
- b=J/s/eqVVWUmM7wih7vlBzxjMHzaBK1yrcf8WioWBdJDspIa6XqwQCdCUv2CemfdBS05b
- 7cZ9JB50VhWneVhHwksqu210JFLn+PPBZ7DHNqxniX3qtquncBM1RNzr2Xsp3TKTjQbw
- 3QtFkLCka/GDxq/A826FsjoOQWlK+FTuCHAg1n0/T8/j3QOjaFoK/+xY3owVg+bwy5j2
- mbUc4jUkIDfKaTYNa2xpjjegq59r+38gjIKYbe40wCcowjCZ0uM4IRz3Iu3aF2N4/UDS
- wArkWUJeqotDIAVc3yFsUYzKaqD5FLTiGb8L5Oz3LTDfsNV3CR+JjHnvX+9iDEP417bP 8A== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3utd0qk3ga-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Dec 2023 21:02:05 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B6L24s6028235
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Dec 2023 21:02:04 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Dec
- 2023 13:02:03 -0800
-Message-ID: <27074b58-25ed-dbcc-1048-dbd9ba3135c9@quicinc.com>
-Date: Wed, 6 Dec 2023 13:02:01 -0800
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46BCED5E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 13:21:15 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-54c671acd2eso317742a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 13:21:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701897674; x=1702502474; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6eHL/dN/qRcrKzFWjeWh9PSQOYj5S62HkgJQDrTF094=;
+        b=F/UIDWYYvkwgRW/g4H4VCgNJnooVoPAX7Ws2YHmoX8xyhvQsnztByB+rd3q9p/aPiw
+         lk6IUzSX/Zwf5kfwcdVhdDBhql1UYwiAIHZ+omAxTxJnbMICRF7SYcMOxNlqvVQKBXMf
+         RrOsP94OuBW9Cb/Zg+uUqgJIF6lJe9Xqd7b8j/ihEucJ7AdruP7PIlqDTZeKgH8rpK9I
+         fal03+LzIg16hkdKqsIs4crVVNWrN0LaBJFw2jhDpv9ezWRok/pUbMampyJv72+mibnS
+         RIaiCVEqYTQB83l+m1CluYRwvx8Z6ZRb+8y1MK55yQxsLfS7zNJf0g8HWzB5w8P74y63
+         Glzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701897674; x=1702502474;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6eHL/dN/qRcrKzFWjeWh9PSQOYj5S62HkgJQDrTF094=;
+        b=kqfBZtWcIaKgKn3k3/Xs+ba2md7jUkTbHR+tpUMxmfpfA8Vik/TP4et3r3Gcs8qgH4
+         xG28lIcOwGCG6k7j1ncuUkSiZqRONar4wGFwlN9ttCyU09wT8UMqtxmH9Nb59ac7TlHD
+         QB4NzdLLtdiHY6rA4Uo3OfKB+VoOzKEbXI1GNmAuxuF3SJGBJQl+2IMeN/aHGGl65WX1
+         9xzQUNKB7ZcbQg12gKoExbOSLTc+GGcgBZf4PHj3/Ej9Y/8mjidNM34HDgh1uP11eTbn
+         MRx6/hTBEhjvheYm8WlU3qQK5k9hBcBln/X1PapKnnmM+z4liUqNnVy+v107SUijbs76
+         Jijg==
+X-Gm-Message-State: AOJu0Yweo95ecwZL1N/IX8gpUheGUMdqNrwxvGJPXGvyBy8VnbTymOOS
+	DPxO25oRIcUcMLapquDzhbXO/g==
+X-Google-Smtp-Source: AGHT+IGc+dDMW9dkb1ZkmEGUnnVdZSMIE832JsEWrrD5zfx3lvPWRNCWR48Ww5HEZRT+9SQfWvkV0A==
+X-Received: by 2002:a05:6402:17c5:b0:54c:e632:e629 with SMTP id s5-20020a05640217c500b0054ce632e629mr881004edy.44.1701897673701;
+        Wed, 06 Dec 2023 13:21:13 -0800 (PST)
+Received: from ?IPV6:2001:1c06:2302:5600:366d:ca8f:f3af:381? (2001-1c06-2302-5600-366d-ca8f-f3af-0381.cable.dynamic.v6.ziggo.nl. [2001:1c06:2302:5600:366d:ca8f:f3af:381])
+        by smtp.gmail.com with ESMTPSA id f11-20020aa7d84b000000b0054c7dfc63b4sm385980eds.43.2023.12.06.13.21.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Dec 2023 13:21:13 -0800 (PST)
+Message-ID: <a058827a-b025-4ee5-b2a4-d6c8963a6b73@linaro.org>
+Date: Wed, 6 Dec 2023 22:21:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 07/16] drm/msm/dpu: add cdm blocks to RM
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] usb: typec: qcom-pmic: add CONFIG_OF dependency
 Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <quic_khsieh@quicinc.com>, <quic_parellan@quicinc.com>,
-        <quic_jesszhan@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Sean Paul <sean@poorly.run>
-References: <20230830224910.8091-1-quic_abhinavk@quicinc.com>
- <20230830224910.8091-8-quic_abhinavk@quicinc.com>
- <CAA8EJpoRcdHtyp3mym5HB2A=O6V4qUNTpnMkvm+OiSt7nHuXJw@mail.gmail.com>
- <5bcbb092-1d29-f795-3be4-5ab1c708cba0@quicinc.com>
-In-Reply-To: <5bcbb092-1d29-f795-3be4-5ab1c708cba0@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Uh0pt5t0JoG5-gBSUVzKlZjor24-Zu7e
-X-Proofpoint-ORIG-GUID: Uh0pt5t0JoG5-gBSUVzKlZjor24-Zu7e
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-06_14,2023-12-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
- impostorscore=0 bulkscore=0 mlxlogscore=981 lowpriorityscore=0 spamscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2312060140
+To: Randy Dunlap <rdunlap@infradead.org>, Guenter Roeck <linux@roeck-us.net>
+Cc: linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ Arnd Bergmann <arnd@arndb.de>, Nathan Chancellor <nathan@kernel.org>
+References: <20231206172037.12072-1-rdunlap@infradead.org>
+ <d0323841-a3a7-45b7-b702-0a08f9250c55@roeck-us.net>
+ <0c1bb5e8-1ad2-4bda-b038-456d9791f9b7@infradead.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <0c1bb5e8-1ad2-4bda-b038-456d9791f9b7@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-
-On 11/30/2023 3:47 PM, Abhinav Kumar wrote:
+On 06/12/2023 20:46, Randy Dunlap wrote:
 > 
 > 
-> On 8/30/2023 4:48 PM, Dmitry Baryshkov wrote:
->> On Thu, 31 Aug 2023 at 01:50, Abhinav Kumar 
->> <quic_abhinavk@quicinc.com> wrote:
+> On 12/6/23 10:49, Guenter Roeck wrote:
+>> On Wed, Dec 06, 2023 at 09:20:37AM -0800, Randy Dunlap wrote:
+>>> DRM_AUX_BRIDGE depends on CONFIG_OF, so that is also needed here
+>>> to fix a kconfig warning:
 >>>
->>> Add the RM APIs necessary to initialize and allocate CDM
->>> blocks by the rest of the DPU pipeline.
+>>> WARNING: unmet direct dependencies detected for DRM_AUX_HPD_BRIDGE
+>>>    Depends on [n]: HAS_IOMEM [=y] && DRM_BRIDGE [=y] && OF [=n]
+>>>    Selected by [y]:
+>>>    - TYPEC_QCOM_PMIC [=y] && USB_SUPPORT [=y] && TYPEC [=y] && TYPEC_TCPM [=y] && (ARCH_QCOM || COMPILE_TEST [=y]) && (DRM [=y] || DRM [=y]=n) && DRM_BRIDGE [=y]
+>>>
 >>
->> ... to be used by the rest?
+>> All but impossible for me to determine if this patch or
+>> https://lore.kernel.org/all/20231205-drm_aux_bridge-fixes-v1-2-d242a0ae9df4@kernel.org/
+>> is more appropriate.
 >>
+>> Guenter
 > 
-> Yes, thanks.
+> I guess that Bryan is the person to ask about that.
 > 
-> 
->>>
->>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 17 +++++++++++++++++
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h |  2 ++
->>>   2 files changed, 19 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> index f9215643c71a..7b6444a3fcb1 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
->>> @@ -8,6 +8,7 @@
->>>   #include "dpu_kms.h"
->>>   #include "dpu_hw_lm.h"
->>>   #include "dpu_hw_ctl.h"
->>> +#include "dpu_hw_cdm.h"
->>>   #include "dpu_hw_pingpong.h"
->>>   #include "dpu_hw_sspp.h"
->>>   #include "dpu_hw_intf.h"
->>> @@ -90,6 +91,9 @@ int dpu_rm_destroy(struct dpu_rm *rm)
->>>                  }
->>>          }
->>>
->>> +       if (rm->cdm_blk)
->>> +               dpu_hw_cdm_destroy(to_dpu_hw_cdm(rm->cdm_blk));
->>> +
->>>          for (i = 0; i < ARRAY_SIZE(rm->hw_wb); i++)
->>>                  dpu_hw_wb_destroy(rm->hw_wb[i]);
->>>
->>> @@ -240,6 +244,19 @@ int dpu_rm_init(struct dpu_rm *rm,
->>>                  rm->hw_sspp[sspp->id - SSPP_NONE] = hw;
->>>          }
->>>
->>> +       if (cat->cdm) {
->>> +               struct dpu_hw_cdm *hw;
->>> +
->>> +               hw = dpu_hw_cdm_init(cat->cdm, mmio);
->>> +               /* CDM is optional so no need to bail out */
->>> +               if (IS_ERR(hw)) {
->>> +                       rc = PTR_ERR(hw);
->>> +                       DPU_DEBUG("failed cdm object creation: err 
->>> %d\n", rc);
->>
->> No. If it is a part of the catalog, we should fail here as we do in 
->> other cases.
->>
-> 
-> I guess, the only reason for not failing here was other hw blocks are 
-> needed even for basic display to come up but cdm is only for YUV formats.
-> 
-> Thats the only reason to mark this a failure which is "OK" to ignore.
-> 
-> But I see your point that if someone is listing this in the catalog but 
-> still RM fails thats an error.
-> 
-> Hence, ack.
-> 
->>
->>> +               } else {
->>> +                       rm->cdm_blk = &hw->base;
->>> +               }
->>> +       }
->>> +
->>>          return 0;
->>>
->>>   fail:
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->>> index 2b551566cbf4..29b221491926 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
->>> @@ -22,6 +22,7 @@ struct dpu_global_state;
->>>    * @hw_wb: array of wb hardware resources
->>>    * @dspp_blks: array of dspp hardware resources
->>>    * @hw_sspp: array of sspp hardware resources
->>> + * @cdm_blk: cdm hardware resource
->>>    */
->>>   struct dpu_rm {
->>>          struct dpu_hw_blk *pingpong_blks[PINGPONG_MAX - PINGPONG_0];
->>> @@ -33,6 +34,7 @@ struct dpu_rm {
->>>          struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
->>>          struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
->>>          struct dpu_hw_sspp *hw_sspp[SSPP_MAX - SSPP_NONE];
->>> +       struct dpu_hw_blk *cdm_blk;
->>
->> struct dpu_hw_cdm *cdm (or cdm_blk), please.
-> 
-> Ack.
+> I don't see anything wrong with Nathan's patch. It should clear up the kconfig warning,
+> so as long as it builds cleanly, it seems OK.
 > 
 
-I was going through this more. I think its better we leave this as a 
-dpu_hw_blk because if you see the other blks in struct dpu_rm, all the 
-blocks which are allocated dynamically / can change dynamically are of 
-dpu_hw_blk type. That way the dpu_rm_get_assigned_resources() remains 
-generic. Hence I would prefer to leave it this way.
+So, I see both versions of this fix
 
->>
->>>   };
->>>
->>>   /**
->>> -- 
->>> 2.40.1
->>>
->>
->>
->> -- 
->> With best wishes
->> Dmitry
+Nathan's
+drivers/gpu/drm/renesas/rcar-du/Kconfig
+
+Yours
+drivers/gpu/drm/tve200/Kconfig
+
+and virtually equivalent commit text. I think we agree its 1:1
+
+So, maybe stick with Nathan's since he posted first.
+
+---
+bod
 
