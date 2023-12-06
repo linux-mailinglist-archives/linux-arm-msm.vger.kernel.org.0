@@ -1,204 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-3568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC1E3807207
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 15:15:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C51F680721C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 15:17:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5EEBD1F219A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:15:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 56C96B20E27
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:17:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E7DD3E489;
-	Wed,  6 Dec 2023 14:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="At7upStP"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BCAC3DB85;
+	Wed,  6 Dec 2023 14:17:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7E4BD4B;
-	Wed,  6 Dec 2023 06:15:21 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B6APpo5029869;
-	Wed, 6 Dec 2023 14:15:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=epupJxbLnE3q/89ZQF8hZ0X0NAXOB0INxckkyrikmMQ=;
- b=At7upStP0f1mHRsfKV5PFNav1xm2w+E/BWukjpbUH3MISrM/L9tz3BbGcG8zeBQtCUwu
- 0PeWnS7I+Z5c7zqEn7PkmI6kRTjZLHFfXpvmXxHe33+CIs50JVg5TKu/w4ZuFzmD7xmB
- SKwJ+W4KZEJQy/MIpIXgeJdJs5tCUqQ+Qtk4bVF+fRIsJBQXemi+lSHR9XgcuB8gQVe0
- Dk/MWTrkxfFVYO7PrTSzFnFuWYXumrJM322VXjquVSOYsTf1wi3NSCQ49vCLJP6LNe7U
- 4HRc4uB8mefPSOE6ggoWZvBq4zPGhkWTXsK7Y4wqLT8059WfQpGsyJJwuE8az2s8qXlM 8A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3utd1n20qt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 06 Dec 2023 14:15:17 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B6EFGIU023831
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 6 Dec 2023 14:15:16 GMT
-Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Wed, 6 Dec 2023 06:15:15 -0800
-From: Mao Jinlong <quic_jinlmao@quicinc.com>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        "Tao
- Zhang" <quic_taozha@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 4/4] arm64: dts: qcom: Fix coresight warnings in in-ports and out-ports
-Date: Wed, 6 Dec 2023 06:14:59 -0800
-Message-ID: <20231206141502.27016-5-quic_jinlmao@quicinc.com>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20231206141502.27016-1-quic_jinlmao@quicinc.com>
-References: <20231206141502.27016-1-quic_jinlmao@quicinc.com>
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A93A5D1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 06:17:14 -0800 (PST)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rAshz-00046l-92; Wed, 06 Dec 2023 15:17:03 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rAshy-00Dyxm-6P; Wed, 06 Dec 2023 15:17:02 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rAshx-00FWPh-TA; Wed, 06 Dec 2023 15:17:01 +0100
+Date: Wed, 6 Dec 2023 15:16:58 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Arnd Bergmann <arnd@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] soc: qcom: stats: fix 64-bit division
+Message-ID: <20231206141658.kjpjwjy7utdux6b5@pengutronix.de>
+References: <20231206123717.524009-1-arnd@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3efLkN7B-VlqC914OQNgavrAGBjTPfAC
-X-Proofpoint-GUID: 3efLkN7B-VlqC914OQNgavrAGBjTPfAC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-06_10,2023-12-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 adultscore=0 bulkscore=0 mlxscore=0 mlxlogscore=732
- phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2311290000 definitions=main-2312060115
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bt3retbuplb4zmrk"
+Content-Disposition: inline
+In-Reply-To: <20231206123717.524009-1-arnd@kernel.org>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 
-When a node is only one in port or one out port, address-cells and
-size-cells are not required in in-ports and out-ports. And the number
-and reg of the port need to be removed.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi |  5 +----
- arch/arm64/boot/dts/qcom/sm8150.dtsi |  5 +----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 24 ++++--------------------
- 3 files changed, 6 insertions(+), 28 deletions(-)
+--bt3retbuplb4zmrk
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index bf5e6eb9d313..c4dbca4c15f2 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -3545,11 +3545,8 @@ etf_out: endpoint {
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 
--				port@1 {
--					reg = <1>;
-+				port {
- 					etf_in: endpoint {
- 						remote-endpoint =
- 						  <&merge_funnel_out>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 97623af13464..7bae3bc6af06 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -2957,11 +2957,8 @@ replicator1_out: endpoint {
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 
--				port@1 {
--					reg = <1>;
-+				port {
- 					replicator1_in: endpoint {
- 						remote-endpoint = <&replicator_out1>;
- 					};
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index be970472f6c4..fa4e8887d53b 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3095,11 +3095,8 @@ tpda@6004000 {
- 			clock-names = "apb_pclk";
- 
- 			out-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 
--				port@0 {
--					reg = <0>;
-+				port {
- 					tpda_out_funnel_qatb: endpoint {
- 						remote-endpoint = <&funnel_qatb_in_tpda>;
- 					};
-@@ -3142,11 +3139,7 @@ funnel_qatb_out_funnel_in0: endpoint {
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
--				port@0 {
--					reg = <0>;
-+				port {
- 					funnel_qatb_in_tpda: endpoint {
- 						remote-endpoint = <&tpda_out_funnel_qatb>;
- 					};
-@@ -3355,11 +3348,8 @@ etf_out: endpoint {
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 
--				port@0 {
--					reg = <0>;
-+				port {
- 					etf_in_funnel_swao_out: endpoint {
- 						remote-endpoint = <&funnel_swao_out_etf>;
- 					};
-@@ -3443,8 +3433,6 @@ funnel@6c2d000 {
- 			clock-names = "apb_pclk";
- 
- 			out-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
- 				port {
- 					tpdm_mm_out_tpda9: endpoint {
- 						remote-endpoint = <&tpda_9_in_tpdm_mm>;
-@@ -3710,11 +3698,7 @@ funnel_apss_merg_out_funnel_in1: endpoint {
- 			};
- 
- 			in-ports {
--				#address-cells = <1>;
--				#size-cells = <0>;
--
--				port@0 {
--					reg = <0>;
-+				port {
- 					funnel_apss_merg_in_funnel_apss: endpoint {
- 					remote-endpoint = <&funnel_apss_out_funnel_apss_merg>;
- 					};
--- 
-2.41.0
+Hallo Arnd,
 
+On Wed, Dec 06, 2023 at 01:37:06PM +0100, Arnd Bergmann wrote:
+> Unguarded 64-bit division is not allowed on 32-bit kernels because this
+> is very slow. The result of trying anyway is a link failure:
+>=20
+> arm-linux-gnueabi-ld: drivers/soc/qcom/qcom_stats.o: in function `qcom_dd=
+r_stats_show':
+> qcom_stats.c:(.text+0x334): undefined reference to `__aeabi_uldivmod'
+>=20
+> As this function is only used for debugging and not performance critical,
+> rewrite it to use div_u64() instead. ARCH_TIMER_FREQ is a multiple of
+> MSEC_PER_SEC anyway, so there is no loss in precisison.
+
+Maybe add this information in a comment?
+
+We have
+
+	#define ARCH_TIMER_FREQ         19200000
+
+so it's a multiple of MSEC_PER_SEC (=3D 1000) indeed.
+
+Reviewed-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
+
+--bt3retbuplb4zmrk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmVwgloACgkQj4D7WH0S
+/k5/EQgAjoPq0DwSBp9X9Iw7m71/SG3pDFB7cCoO87XsgX3HZcF0OkXvXPg35ls3
+Ai4k8vvrjnmR+JgG7gOcGTHEeszInVUaRptidX8DejmgCet0CveSYp1LCnhk+ZxP
+GjfYwWBDyx7YwMMvT1bLjBGg2p1DBEfXyaz4+MBaGkblJX24w1CvHqGQHjAXN5SL
+YAl9RqqN2l+2+Bdx6BwKAXAPD6MdZva0/xOiHunIa0g5r2wYnRoxaQQnWnRPmzaC
+tvt9C4NSuKCKSW8+VhVCiBgcYtUKFq0qT/dqmaahPX33SmRL0wyQTVNR6vIeJ14i
+SGw6GGmjZRuGf+SDNQfFlwzwyVbv5g==
+=X2bc
+-----END PGP SIGNATURE-----
+
+--bt3retbuplb4zmrk--
 
