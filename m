@@ -1,133 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-3555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5163807091
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:10:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCFC38070D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:26:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 154E4281C31
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:10:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A1D1281C1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:26:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8C2637169;
-	Wed,  6 Dec 2023 13:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20A5F381B6;
+	Wed,  6 Dec 2023 13:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VyouUSNz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="auPhkiNw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 115DA122
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 05:10:20 -0800 (PST)
-Received: by mail-qk1-x733.google.com with SMTP id af79cd13be357-77d63b733e4so421381985a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 05:10:20 -0800 (PST)
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3919ED71;
+	Wed,  6 Dec 2023 05:26:28 -0800 (PST)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c9bd3ec4f6so87403431fa.2;
+        Wed, 06 Dec 2023 05:26:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701868219; x=1702473019; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Pt/oMfKEoVvZOs+7PtxgU3lL9BlJV64pat4giYOfloo=;
-        b=VyouUSNz7lObsDlIxiFkNVNrje85/ifEopn61t9jrtHNWhbMDqcWDqcDLnIazw8JHX
-         hY5fnLOPUpRU/O4qVXdO7KlUjJwNfrpnyL2UgD1ADir23NuHLHhGWJQ5CXnnxH4sh/uo
-         YNkILWU2+ABjQ3/r1M8pglvTgeij+87ZbKrkWJkhsHHATs8inGnejdsT4I2NACJZ6P5x
-         OhwRGyD3umhxmdClHVJzrUWJ1mSDToMvt/xe7Yq8PSDUNu+tU21y9wvY7BM6FmnrustK
-         BNrsB9vAtoD6MS5Z6eAUYfkUlAswkJ9fp/MZiUkx5Z3mqCwpZSgyD0PyOIat7RyXmdSs
-         tS+A==
+        d=gmail.com; s=20230601; t=1701869186; x=1702473986; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=R3sIhfDT+5Uo8u+SaAKl1HY/QwZqblPvSAxqf2hisKU=;
+        b=auPhkiNwekoxhVOKKoTLOrNop7pv/Ql2DKUTAdtfh6/9kLm4e5WcAhCyB0BLWF/82L
+         ay0KBppwEjDoTDAWI90Ai2zg4OlXtDy9eg0sUKDkUOxer3m1vD2ybwns3TjhcODafLKs
+         WvrXJ6oIj2M0ns1CGrc7L2MdmHIsfKJdHwveHrXC1451IeWew1NVvr3GMIsK+NeKpTCW
+         TE229E78sXlrL4G0ya7T0oELB1+vWlGd9qjaRBu6sDnyVuFtOm89IQ1jQV0QwEbnirDw
+         MUI2KLPvhcz0d4M+1B2bSlZIraPcy7nW3+vWpiXdsK5rZvKsPZGAKRyjJKqZE/854aTc
+         HSRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701868219; x=1702473019;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pt/oMfKEoVvZOs+7PtxgU3lL9BlJV64pat4giYOfloo=;
-        b=avGmZZns0bwvyauyIkzlqxojdR3SvG5d84qm+SaxQMQADxBNDkNuz796VE3XIeqNBx
-         l2IjGglQ76mb9NpQBbcJrjfjXDVPLvmMfX/kU2Ja1fnXYAxrVkNt3j6AOCn9wjjsljix
-         siIeklQ6aICnr9zaNEmqaXoP2RFW4BNvvYC6B4IruOd9E6kuBpGe8/jnfahOG52KvRCE
-         2KBJnr9jvZwYxmh5ij3a9X6cF7OIjnPXsogYGxKwJFhssTwNwGmm9OjIs5mLpWyaYHI8
-         LE2ZU6O+mkGz1NnSg1meri47Iy9iT3thcQR+46fjiCt+o7InuvYiBsTdyaKXwy3vI86n
-         gX5g==
-X-Gm-Message-State: AOJu0Ywavy9mDyzkHADxzPEWtArmpr/NDtZkhFHCYcfXI5E8RHB+IVUV
-	afq91J4mLqAb+gtas1YlsK8t
-X-Google-Smtp-Source: AGHT+IEb4yi9gh7VHo+zZIBCifs1fd4gKseVxyxJ41S1V0cBHCI6vFd8Vt9p32/kxIhAFm7YSoNr0g==
-X-Received: by 2002:a05:6214:76a:b0:67a:bbfe:4edf with SMTP id f10-20020a056214076a00b0067abbfe4edfmr868908qvz.30.1701868219103;
-        Wed, 06 Dec 2023 05:10:19 -0800 (PST)
-Received: from thinkpad ([117.202.188.104])
-        by smtp.gmail.com with ESMTPSA id c9-20020a0ce7c9000000b0067a97f6b0c6sm5052738qvo.32.2023.12.06.05.10.12
+        d=1e100.net; s=20230601; t=1701869186; x=1702473986;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R3sIhfDT+5Uo8u+SaAKl1HY/QwZqblPvSAxqf2hisKU=;
+        b=uAGk3l4gBowbv0WijKdq08TCgUXIxz1PWf22tH8zWfy/nNWxKWx8vyd2omxwQR8vla
+         DLmVWnccZj/++sdzI78rAd/OQ0TIRimugYFLH4O7rsuv8+03js6BfDxs40q1lAQ8JmHb
+         GxxGGBbkL5VO0oUz1Cmxy5KVViJQdw/YH3JUfKR43EMus7oiCN7iBmPTAPUR/y+/rgd0
+         hEGhc1xLBy/Mc29By+oQ3NYFy6unHT6Kv2sF9jNgRb5hDkFkAhc/bth7cTqhezO90Pg5
+         GgJojkweI5hIAu4KFWl/DiYHoRRNGg7QQSUV3PMtVbBtjNcT2ue/O51JEYeHYYODV88r
+         BY/w==
+X-Gm-Message-State: AOJu0Yx2e9wxzf/MLASBQvkBsJCqhnFni0cYaWR6GizeGp3NlZDbH2Ic
+	o9xwdx2olxLzqiT4djr+LmA=
+X-Google-Smtp-Source: AGHT+IF/3/O+lRxfcjlZj5S9IZLV6IYSTw6CFIYRNs7/vndFIUU1NMf+Vz+sn9MCrJ6O7QF/vkBl0g==
+X-Received: by 2002:a2e:2c11:0:b0:2c9:d773:894b with SMTP id s17-20020a2e2c11000000b002c9d773894bmr358870ljs.30.1701869185872;
+        Wed, 06 Dec 2023 05:26:25 -0800 (PST)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id q186-20020a2e2ac3000000b002ca03b29031sm972751ljq.72.2023.12.06.05.26.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 05:10:18 -0800 (PST)
-Date: Wed, 6 Dec 2023 18:40:09 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
- qcom,refclk-always-on property
-Message-ID: <20231206131009.GD12802@thinkpad>
-References: <20231127-refclk_always_on-v3-0-26d969fa8f1d@quicinc.com>
- <20231127-refclk_always_on-v3-1-26d969fa8f1d@quicinc.com>
- <78815f1b-7390-40de-8afd-ac71806f4051@linaro.org>
- <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
- <20231201060716.GJ4009@thinkpad>
- <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
- <20231201111033.GL4009@thinkpad>
- <f844cd1e-7e4f-4836-bc9a-2e1ed13f064f@linaro.org>
- <20231201123054.GM4009@thinkpad>
- <3a7376aa-18a2-41cb-a4c9-680e735ce75b@linaro.org>
+        Wed, 06 Dec 2023 05:26:25 -0800 (PST)
+Date: Wed, 6 Dec 2023 16:26:22 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+Cc: Andrew Halaney <ahalaney@redhat.com>, Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, Prasad Sodagudi <psodagud@quicinc.com>, kernel@quicinc.com
+Subject: Re: [PATCH net-next v3 0/3] Ethernet DWMAC5 fault IRQ support
+Message-ID: <eudnbxyuf5yl2cuoyx6527l47amdwzlejwpwtyrpkyvbb4s6ng@lgpoqzr4rltt>
+References: <cover.1701695218.git.quic_jsuraj@quicinc.com>
+ <rw5vfdvre5rt4rwytfsp3qy6sgsdr3dm6oefr4sap2aqbvpw42@c2dxz42tucby>
+ <zzkw5obc3z5fndowmrycy77gtjf6wscvkj7klnn34f3ycs3her@hmh5aebpbi3s>
+ <0a5f769e-a474-40c6-a886-135716e90dd2@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3a7376aa-18a2-41cb-a4c9-680e735ce75b@linaro.org>
+In-Reply-To: <0a5f769e-a474-40c6-a886-135716e90dd2@quicinc.com>
 
-On Fri, Dec 01, 2023 at 02:25:44PM +0100, Krzysztof Kozlowski wrote:
-> On 01/12/2023 13:30, Manivannan Sadhasivam wrote:
-> >> What I said before:
-> >> "Again, third time (once from Bjorn, once from Dmitry), rephrase
-> >> property name and description to describe the hardware issue. I see
-> >> description improved, but not the property name. Again in the end of
-> >> description you say what Linux should do. Bindings do not describe Linux
-> >> OS."
+On Tue, Dec 05, 2023 at 10:18:07PM +0530, Suraj Jaiswal wrote:
+> Hi @serge,
+> there is some more DT_CHECKER warning & need to fix that before uploading the new patch .
+> Will fix the warning & then will update the version ,
+> 
+> Thanks
+> Suraj
+
+Ok. Thanks.
+
+-Serge(y)
+
+> 
+> On 12/5/2023 3:35 PM, Serge Semin wrote:
+> > Hi Suraj
+> > 
+> > On Mon, Dec 04, 2023 at 02:16:12PM -0600, Andrew Halaney wrote:
+> >> On Mon, Dec 04, 2023 at 06:56:14PM +0530, Suraj Jaiswal wrote:
+> >>> Add support to listen Ethernet HW safery IRQ. The safety IRQ will be
 > >>
+> >> s/safery/safety/
+> >>
+> >>> triggered for ECC, DPP, FSM error.
+> >>>
+> >>> Changes since v3:
+> >>
+> >> This is listed as v3 in the subject, but it should now be v4 since the
+> >> last version was v3.
 > > 
-> > You didn't answer my question:
+> > There are several style-type problems I would like to share. But as
+> > Andrew correctly noted the series version was incorrectly left
+> > unchanged. Please resubmit the series with the version incremented.
+> > I'll send my comments to that new thread so the discussion history and
+> > the lore archive would look cleaner. Thanks.
 > > 
-> > "I see a plenty of properties similar to this one instructing the OS to keep some
-> > resource ON to workaround hardware issues. So they are all wrong?"
-> 
-> They are not the best, but it all depends on the individual case.
-> 
+> > -Serge(y)
 > > 
-> > If you say they are wrong, why are they approved in the first place?
-> Because we don't have time to keep digging what the driver is doing and
-> what is claimed in DT. Some people don't even CC us on the driver.
-> 
-
-OK. How about, "qcom,broken-refclk"? This reflects the fact that the default
-refclk operation is broken on this platform, so the OS should be prepared for
-it (by keeping it always on).
-
-- Mani
-
-> 
-> Best regards,
-> Krzysztof
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+> >>
+> >>> - Fix DT_CHECKER warning
+> >>> - use name safety for the IRQ.
+> >>>  
+> >>>
+> >>> Suraj Jaiswal (3):
+> >>>   dt-bindings: net: qcom,ethqos: add binding doc for safety IRQ for
+> >>>     sa8775p
+> >>>   arm64: dts: qcom: sa8775p: enable safety IRQ
+> >>>   net: stmmac: Add driver support for DWMAC5 safety IRQ Support
+> >>>
+> >>>  .../devicetree/bindings/net/qcom,ethqos.yaml   |  9 ++++++---
+> >>>  .../devicetree/bindings/net/snps,dwmac.yaml    |  5 +++--
+> >>>  arch/arm64/boot/dts/qcom/sa8775p.dtsi          | 10 ++++++----
+> >>>  drivers/net/ethernet/stmicro/stmmac/common.h   |  1 +
+> >>>  drivers/net/ethernet/stmicro/stmmac/stmmac.h   |  2 ++
+> >>>  .../net/ethernet/stmicro/stmmac/stmmac_main.c  | 18 ++++++++++++++++++
+> >>>  .../ethernet/stmicro/stmmac/stmmac_platform.c  |  9 +++++++++
+> >>>  7 files changed, 45 insertions(+), 9 deletions(-)
+> >>>
+> >>> -- 
+> >>> 2.25.1
+> >>>
+> >>
+> >>
 
