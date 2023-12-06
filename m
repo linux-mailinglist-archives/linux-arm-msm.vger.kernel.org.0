@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-3589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21DC38077C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 19:43:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2BF68077AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 19:41:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BB7ADB20E2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 18:43:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 857A51F21366
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 18:41:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1935B41864;
-	Wed,  6 Dec 2023 18:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FF8A6ABBD;
+	Wed,  6 Dec 2023 18:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="bI+FAkbj"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="XXbyO/HR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85666D44
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 10:43:15 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8669A84
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 10:41:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1701888194;
+	s=mimecast20190719; t=1701888094;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=KvnpSQri5arb6xwcBFDZQI0HnLnuARbU/naBERSZQac=;
-	b=bI+FAkbjAb/U9zU91MQoyl7Q4BFni0hGqc/QUYP9cL5jXm22PNcXhchYaKY0wG5SVuFYsP
-	UPrBbZZZPz8itqdi8jq1YUfu/h2Jqf8uDc48bhuWCs8Rg4Y1zVN1jHQtrzUBlGM4gNxjKU
-	fTLb5Cqbx1eAJ56mSQg5190LZ829iGs=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=2YDjLMepeuXQAOfLexw9wJ/G5xIz4DXfzdIVQzgockk=;
+	b=XXbyO/HRGOrvpMrUuMZWXVBpXSXt6OrZAQF1J+Nfxf6hhXFda8i4xxnPnXIDJbgTAwpCFp
+	vH7lSJ4FIDHP+3LCx0Bb0zdRkNRx9obsRljjSvmXHrlawotQAL6DY4F46toU4B6n+mr29D
+	CK8KIoXJijf2lO/AfhtaEYBC9qpnuyM=
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
+ [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-571-KsuTErsZNRCTnY_R4PUC4w-1; Wed, 06 Dec 2023 13:41:52 -0500
-X-MC-Unique: KsuTErsZNRCTnY_R4PUC4w-1
-Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-58d53348a03so47070eaf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 10:41:46 -0800 (PST)
+ us-mta-433-0cRnLOpxNd-XcW3fQWk2CQ-1; Wed, 06 Dec 2023 13:41:31 -0500
+X-MC-Unique: 0cRnLOpxNd-XcW3fQWk2CQ-1
+Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-1faa81282d1so463285fac.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 10:41:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701887804; x=1702492604;
+        d=1e100.net; s=20230601; t=1701888091; x=1702492891;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KvnpSQri5arb6xwcBFDZQI0HnLnuARbU/naBERSZQac=;
-        b=r60eNwmulKcfjlb/0zHOczEccvLCycW3GNfDtHflPgqNyT2l9S9XvwqVElhXxEWf9G
-         MTftx8I0LL1yLVZpK4+OqflwPWy+P50PBvzbO5ZmOh6RmZjTWWwRS/UhlLGIvILHRocY
-         aHLG6aO+47pZqaHurXPCkpOu9d7MDlVEmoc05lep/jTrmaxDjYgxJClO36qpfrFPACzn
-         tzQNbYjijN+GXvu9Tfme+eET2j/CPpXlq+j6WbY2tC1rnLS2gmTp2cMMnESASAJNmGLD
-         XtGp3yJjeouhl0+ZdNc3w6eWxsdLvp7OogAXuJOG5EcChf1+kLo6POugcvLMdQxl3ACH
-         WSgw==
-X-Gm-Message-State: AOJu0YzhNNWp1GW+kBEFkQLFtB/wXOU7OLv/WeTzbjVmy95Cz1Quwxea
-	UlYzHg1SJz9TYjt4rhhR3FZkqE6AXd9RXodWhaw8h4q77ZA3LI9ZQvvKKNA74UK0hujCLBQnjUy
-	C7+SJCjQ6zPZ+dGcduxSg/3NSHtrAHR6Vsg==
-X-Received: by 2002:a05:6358:7206:b0:16d:fe33:4c63 with SMTP id h6-20020a056358720600b0016dfe334c63mr1635757rwa.24.1701887804315;
-        Wed, 06 Dec 2023 10:36:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVXVpDI2N4zq6TmLP+46EyCJXTztwSBXqvdJFhrfnSKXRuRptwKjhGCPJ0XHZcWj52RCTA0Q==
-X-Received: by 2002:a05:6358:7206:b0:16d:fe33:4c63 with SMTP id h6-20020a056358720600b0016dfe334c63mr1635747rwa.24.1701887803917;
-        Wed, 06 Dec 2023 10:36:43 -0800 (PST)
+        bh=2YDjLMepeuXQAOfLexw9wJ/G5xIz4DXfzdIVQzgockk=;
+        b=OEzbBxI2unJlV7ymL7bM8cFDl+qP2a/oaJLvR0Szfu//3NhPzGkHOXjzo7b4q+RRuX
+         cRLmkvGP3MC7AZFLvr1O30+gqQmpolZSr0QlasPPUb6eVjHOAgIFGcHwDNMyQf2xaPJe
+         K/RURlmH9HPjpXg4OJYSyRpz8HdRAq8EFrs376mPPWE9tp38zm4TOfwXWhM/LRD/Cczx
+         xjVMMjpiLibWiZu8pf2sokOrpmri1n6ICbih6zzgqeL00sF7i+3RE09VqTLCak57tIyH
+         NtWPwiXYKaZtBmAq/BVIM5S0GbTfm7Am+iXvGj0lf6NymNsWh5vNJJtN0Dp1WhjxI7Pa
+         u0mQ==
+X-Gm-Message-State: AOJu0Yy+WtJxlTaGcNMBA7MWq/T0VoeS71oeM3FrgIqtiq4ga0NSDMU9
+	3/DkxzMTqOkc1rEcflAK6QVmr8qGSscxDBOnq6U5Yeh+TEBwZumZJbmZ/H7lAhLOT+h4aLGGY/d
+	6/yjFyYiFQy0xCO+Z8mJkCo7ybg==
+X-Received: by 2002:a05:6871:3402:b0:1fb:d89:48c3 with SMTP id nh2-20020a056871340200b001fb0d8948c3mr1475755oac.27.1701888091167;
+        Wed, 06 Dec 2023 10:41:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEh12IvLMDJGznFqN4fzVBxPyYWXOTCG2Cau5TEzfYtnO6TcRlyHWdIYXkx8j3uxxYSu2oFjg==
+X-Received: by 2002:a05:6871:3402:b0:1fb:d89:48c3 with SMTP id nh2-20020a056871340200b001fb0d8948c3mr1475741oac.27.1701888090916;
+        Wed, 06 Dec 2023 10:41:30 -0800 (PST)
 Received: from fedora ([2600:1700:1ff0:d0e0::47])
-        by smtp.gmail.com with ESMTPSA id g7-20020ac84807000000b004258264d166sm149989qtq.60.2023.12.06.10.36.42
+        by smtp.gmail.com with ESMTPSA id r6-20020a056870e8c600b001fadabf6626sm91503oan.23.2023.12.06.10.41.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 10:36:43 -0800 (PST)
-Date: Wed, 6 Dec 2023 12:36:41 -0600
+        Wed, 06 Dec 2023 10:41:30 -0800 (PST)
+Date: Wed, 6 Dec 2023 12:41:28 -0600
 From: Andrew Halaney <ahalaney@redhat.com>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Cc: martin.petersen@oracle.com, jejb@linux.ibm.com, andersson@kernel.org, 
 	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, quic_cang@quicinc.com
-Subject: Re: [PATCH 05/13] scsi: ufs: qcom: Remove the warning message when
- core_reset is not available
-Message-ID: <ru2zdpls5tx2wjt3oknqndikuc4we7d3haeawzrdyl7cbsycti@clx55b27nzvn>
+Subject: Re: [PATCH 07/13] scsi: ufs: qcom: Fail ufs_qcom_power_up_sequence()
+ when core_reset fails
+Message-ID: <iecwyzsamuwhatodicsfptf3dgl5nglrdqyennmhagpjz7yrtr@r72gejcvhi6w>
 References: <20231201151417.65500-1-manivannan.sadhasivam@linaro.org>
- <20231201151417.65500-6-manivannan.sadhasivam@linaro.org>
+ <20231201151417.65500-8-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,37 +77,45 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231201151417.65500-6-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <20231201151417.65500-8-manivannan.sadhasivam@linaro.org>
 
-On Fri, Dec 01, 2023 at 08:44:09PM +0530, Manivannan Sadhasivam wrote:
-> core_reset is optional, so there is no need to warn the user if it is not
-> available (that too not while doing host reset each time).
-
-What's the bit in the parenthesis mean here? I'm having a hard time
-following. Otherwise, this looks good to me.
-
+On Fri, Dec 01, 2023 at 08:44:11PM +0530, Manivannan Sadhasivam wrote:
+> Even though core_reset is optional, a failure during assert/deassert should
+> be considered fatal, if core_reset is available. So fail
+> ufs_qcom_power_up_sequence() if an error happens during reset and also get
+> rid of the redundant warning as the ufs_qcom_host_reset() function itself
+> prints error messages.
 > 
 > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 > ---
->  drivers/ufs/host/ufs-qcom.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+>  drivers/ufs/host/ufs-qcom.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
 > 
 > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index dc93b1c5ca74..d474de0739e4 100644
+> index 604273a22afd..4948dd732aae 100644
 > --- a/drivers/ufs/host/ufs-qcom.c
 > +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -296,10 +296,8 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
->  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->  	bool reenable_intr;
+> @@ -359,8 +359,7 @@ static int ufs_qcom_power_up_sequence(struct ufs_hba *hba)
+>  	/* Reset UFS Host Controller and PHY */
+>  	ret = ufs_qcom_host_reset(hba);
+
+I noticed that ufs_qcom_host_reset() doesn't return an error if
+reset_control_deassert() fails. Can you address this in the next spin of
+the series (I don't think its in the following patches that I glanced
+through).
+
+Thanks,
+Andrew
+
+>  	if (ret)
+> -		dev_warn(hba->dev, "%s: host reset returned %d\n",
+> -				  __func__, ret);
+> +		return ret;
 >  
-> -	if (!host->core_reset) {
-> -		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
-> +	if (!host->core_reset)
->  		return 0;
-> -	}
->  
->  	reenable_intr = hba->is_irq_enabled;
->  	disable_irq(hba->irq);
+>  	/* phy initialization - calibrate the phy */
+>  	ret = phy_init(phy);
 > -- 
 > 2.25.1
 > 
