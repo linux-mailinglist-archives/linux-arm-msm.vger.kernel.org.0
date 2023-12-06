@@ -1,99 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-3550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EA1E806FCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:33:30 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 300E5806FE1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:37:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D0D581C20A4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 12:33:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA3E51F2157A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 12:37:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C43B36AFD;
-	Wed,  6 Dec 2023 12:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 459B23035A;
+	Wed,  6 Dec 2023 12:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IXNKmmkA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RcwhKY5d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC426112
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 04:33:25 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ca02def690so44786591fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 04:33:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701866004; x=1702470804; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i3zRu4zCL27OConZJ/dXxv4eky6lJ797ekbzBQIQO04=;
-        b=IXNKmmkALdUYmNCaLPOkOPzqsmIR7eY3on8YPuaVQt9Wr0q/dtToVesgPg4MUPA+ZJ
-         z+U9mfFROvwRFGAxIkSDReE9QHMz4qlVvmMommnBQH1+C276M1WErDuG7IhR4nTLZ+hT
-         GFrdf9wvNA9ODHi9inf9verkrEekHGwv2qzVmrE7rvIJp8Ec5QH1ZcaFGq5KZNA+c58V
-         qLJ+k/Jt4lUUNQDrBwjpSLMtohQcQmzVjzRwzRjpBMhZwFquFk+B+YD5ua0a20DgJHsM
-         h/ck/AQlpHSqyn+avhpilp+LgLnNBK970InRUxwkXzUAPl4DijmCl9UtY+LCsqU6z4AH
-         TCoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701866004; x=1702470804;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i3zRu4zCL27OConZJ/dXxv4eky6lJ797ekbzBQIQO04=;
-        b=jPByFWVMbHQtiGLnVklvE/0T6lYxRZPoUgtQ+tkWsNKqpjj/byujaksuBntHkA/FR6
-         0Woyyh+2GF0OQXLDkdBIv+Tui/dosOxIDH8NOo1ngqJV+sQqrVnq5VEd+4aOLzJobD//
-         Lspxc324y0Xl+KXSvECQaodAr7P6CaWvt2YMiU89m3e7bylardX2awHlDb30T9TJSH2P
-         VvY+9DsT9/DeVOhfEJHFivDUq1iilvjvOgl7uC41/g9uxsrePZ4C0U0u52kfpZANFD6A
-         s6U/2rKbtLEjtEIGCPYZ+1PVH4Z90PylZw++QjOtaoX5mS7lDm+p0/yLgpffB5bUZPSI
-         R/dw==
-X-Gm-Message-State: AOJu0Yy12c4jgIOSmDOf0aDC7I+a2fvohhzTcuTdstFt00uUWtSNGgt2
-	8+Abfugd8erY660+PYaVrjcoYn75GbXGUN18Q6PfGQ==
-X-Google-Smtp-Source: AGHT+IFoYrIWZweW4wNRjzDa/vyq7mAaeL49kvARBEPAN6JpcwCEEcJFFsb4LcNLy+7tTIH6iLUxbg==
-X-Received: by 2002:a2e:9b15:0:b0:2c9:fe01:7014 with SMTP id u21-20020a2e9b15000000b002c9fe017014mr515733lji.62.1701866003949;
-        Wed, 06 Dec 2023 04:33:23 -0800 (PST)
-Received: from [172.30.205.186] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id t21-20020a2e8e75000000b002c9f82eb099sm1267851ljk.113.2023.12.06.04.33.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Dec 2023 04:33:23 -0800 (PST)
-Message-ID: <88432969-a4ea-4fa4-a2c6-93d5fc9e8af8@linaro.org>
-Date: Wed, 6 Dec 2023 13:33:21 +0100
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AE8241F4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 12:37:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D26C433C9;
+	Wed,  6 Dec 2023 12:37:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701866243;
+	bh=rpE8tUM2R/1vhSlb7IqgfgIczGVZAD4AZUaewUYEnhI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=RcwhKY5dkx9Ra+6ZK+fh2xWlEwOwFl2Uw0B/m5v5ovvziWI3hRlO9ai6VnyxAbMvD
+	 czgNL9W6WnTLezAjG9C7ktlYhjZ0/Ys3rIq1JVuCXEMozsspQiGWGP+Zt7lm7UZ6HD
+	 5stWmarfaqI1ioZHFJ/tfzfiQ6xm6Kdj8oT2wP088PshaGGDfeIp/aUSmPqUnomUTl
+	 XGIWpnhbLg4QoHCyyFEju904l8+NQHc0fnTom+IW+jXMUC++rq+YnUJ+PtuHQssq5l
+	 IlMwmyO993Kzr7qSwhLocupRq+e3c4wDXWG6yb2mMUBzrvJDIm9KoV2yw80+hqR3RS
+	 ARURZ/fpvvO5g==
+From: Arnd Bergmann <arnd@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] soc: qcom: stats: fix 64-bit division
+Date: Wed,  6 Dec 2023 13:37:06 +0100
+Message-Id: <20231206123717.524009-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] ARM: dts: qcom: use defines for interrupts
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231205153317.346109-1-krzysztof.kozlowski@linaro.org>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20231205153317.346109-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Level: *
+Content-Transfer-Encoding: 8bit
 
+From: Arnd Bergmann <arnd@arndb.de>
 
+Unguarded 64-bit division is not allowed on 32-bit kernels because this
+is very slow. The result of trying anyway is a link failure:
 
-On 12/5/23 16:33, Krzysztof Kozlowski wrote:
-> Replace hard-coded interrupt parts (GIC, flags) with standard defines
-> for readability.  No changes in resulting DTBs.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes in v2:
-> 1. Convert few more values to defines (GIC_PPI) - the tedious part which
->     Konrad wanted.
-> ---
-Thanks!
+arm-linux-gnueabi-ld: drivers/soc/qcom/qcom_stats.o: in function `qcom_ddr_stats_show':
+qcom_stats.c:(.text+0x334): undefined reference to `__aeabi_uldivmod'
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+As this function is only used for debugging and not performance critical,
+rewrite it to use div_u64() instead. ARCH_TIMER_FREQ is a multiple of
+MSEC_PER_SEC anyway, so there is no loss in precisison.
 
-Konrad
+Fixes: e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/soc/qcom/qcom_stats.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+index 4763d62a8cb0..5ec8a754b22b 100644
+--- a/drivers/soc/qcom/qcom_stats.c
++++ b/drivers/soc/qcom/qcom_stats.c
+@@ -221,7 +221,7 @@ static int qcom_ddr_stats_show(struct seq_file *s, void *unused)
+ 
+ 	for (i = 0; i < ddr.entry_count; i++) {
+ 		/* Convert the period to ms */
+-		entry[i].dur = mult_frac(MSEC_PER_SEC, entry[i].dur, ARCH_TIMER_FREQ);
++		entry[i].dur = div_u64(entry[i].dur, ARCH_TIMER_FREQ / MSEC_PER_SEC);
+ 	}
+ 
+ 	for (i = 0; i < ddr.entry_count; i++)
+-- 
+2.39.2
+
 
