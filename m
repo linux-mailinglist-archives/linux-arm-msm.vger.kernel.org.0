@@ -1,112 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-3563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 190AB80715F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:56:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B09FC8071BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 15:05:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AD58DB20E43
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:56:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8B35C281965
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 14:05:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80C233BB53;
-	Wed,  6 Dec 2023 13:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC0403D3A0;
+	Wed,  6 Dec 2023 14:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qi+zFd1p"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R/EGB0VQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C124D45
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 05:56:08 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-5c5fb06b131so2760906a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 05:56:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701870968; x=1702475768; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tmeVczC6Kot8sni16e+Ayovssumb8h1f89h2BntZbU8=;
-        b=qi+zFd1pKs4/92DpWwD/AyAMTPXgXLHYFxbn4IXjI+2TBbNGiqQEkf5C+6BJQuc1AU
-         kTvTJMToI54hNRMOb/0J6uw0jjU28rYmzck9b4wF/xRvAPWAeraO69xJPnolUA+O6Cn9
-         C5p8qhPujKhTTv77mVU8JKH4/yrDlA6NnOzJz84Q8JVpxjtrd7aVYO9fpTRIENXmz3vX
-         yEnYJwOU2+t+xvblSGALLUX29pG5ZDUdspXxlXcd5gb30mgG34rB/OZf3FHpg7mHfigl
-         N5nHcluF3q0upTw9WIkYsNZC94QIA79CaRSsu7ZnX+UzIWH9yEXDb3COjUu4QDX5v/8o
-         WtaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701870968; x=1702475768;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tmeVczC6Kot8sni16e+Ayovssumb8h1f89h2BntZbU8=;
-        b=Y3+S9lGiSJTfcIhVSQkPJLS0gDJRIqdSYeXBprHbhTw1m/nMm4qP29w5kSaYbXRKLo
-         Dt6AUcy56294u7AGiIwGlNpjTjzK3i6wvGxdCm84sSyx6igt/+V85KwT7YpydSwR22aZ
-         5Z1fB2cPwEyVKqpERY4slRday2EJZShkn4+umgZgsabaXmMvYST+68yGkEOF4zQSrbgT
-         j1lNVpGGArbteb6XcSKLRBp+GnOdG5A8otEZiNEKwGTo51OOUYAcPtRYZeF/zl3dEwzU
-         IoL6nIjNItqEwkqlj25PDfLCKMUwzLa5iHls0OBXkm6kFhGS+2TOvqfFRfaaYpWp6AVP
-         8I1w==
-X-Gm-Message-State: AOJu0YzZZddGyMJcrAY5cF0NhOxLrXw09RVbUFFqqKhhOa0BhE2ODovQ
-	eRBAjqQgXp9dGKtbTen5s+us
-X-Google-Smtp-Source: AGHT+IEMtc+F14NCFOrDcgQa9/dMsC3lwjS1LLoH43LSGscYSP/Z2ZlNqN8F20DLDUreWf1jJt7lIg==
-X-Received: by 2002:a05:6a20:e124:b0:18f:c3ea:2904 with SMTP id kr36-20020a056a20e12400b0018fc3ea2904mr662700pzb.33.1701870968130;
-        Wed, 06 Dec 2023 05:56:08 -0800 (PST)
-Received: from localhost.localdomain ([117.202.188.104])
-        by smtp.gmail.com with ESMTPSA id n38-20020a056a000d6600b006ce91cdb1c4sm1366056pfv.188.2023.12.06.05.56.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 05:56:07 -0800 (PST)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: andersson@kernel.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	konrad.dybcio@linaro.org,
-	conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sa8775p: Add missing space between node name and braces
-Date: Wed,  6 Dec 2023 19:25:40 +0530
-Message-Id: <20231206135540.17068-4-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20231206135540.17068-1-manivannan.sadhasivam@linaro.org>
-References: <20231206135540.17068-1-manivannan.sadhasivam@linaro.org>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB255D1;
+	Wed,  6 Dec 2023 06:05:27 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B68bbfK026852;
+	Wed, 6 Dec 2023 14:04:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=QG7okk0DW5cV2WX4FjsH7Jm7c1uVFG7K9CMd5t4kVqM=;
+ b=R/EGB0VQNpyP9G8YGeD+aYjHJrPIZ87QLxDYt9FULf6eovzWHcl2GY1i0n2VDA/1UTjs
+ 1QlfpucLmuR7ky+kKyqdCLOgeN0l2LZ2oFZIXMEFyrmxop3EgFqgGoma/dT+WiAlbKYR
+ Ek2Yh33hMuvU4PiYFkhVAea0D2r2+hpI0f03DLa8AbIJzb/O50TsHHK/cym9sCFvVaT9
+ l5/+wSqbXa9Gonryq3rz5CUuOYGUeE1ycfUIG4OoY3lXpgzfG6LQYcvD8MVcvGT3NTSl
+ UK4NyeTiwh/F/4wYDz0DncNzI/xrxNqBzoUCmBzgH33Ez/aE/GVXoP/nowRQLXuZyLDv xw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3utd1n1yy2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 06 Dec 2023 14:04:19 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B6E4HoZ025004
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 6 Dec 2023 14:04:18 GMT
+Received: from [10.218.37.200] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Dec
+ 2023 06:02:57 -0800
+Message-ID: <b9373252-710c-4a54-95cc-046314796960@quicinc.com>
+Date: Wed, 6 Dec 2023 19:32:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 1/3] ufs: core: Add CPU latency QoS support for ufs
+ driver
+Content-Language: en-US
+To: Bart Van Assche <bvanassche@acm.org>,
+        "James E.J. Bottomley"
+	<jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Peter Wang <peter.wang@mediatek.com>,
+        Manivannan Sadhasivam
+	<mani@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Matthias
+ Brugger" <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        <chu.stanley@gmail.com>
+CC: Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+        <linux-scsi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, Nitin Rawat <quic_nitirawa@quicinc.com>
+References: <20231204143101.64163-1-quic_mnaresh@quicinc.com>
+ <20231204143101.64163-2-quic_mnaresh@quicinc.com>
+ <590ade27-b4da-49be-933b-e9959aa0cd4c@acm.org>
+ <692cd503-5b14-4be6-831d-d8e9c282a95e@quicinc.com>
+ <5e7c5c75-cb5f-4afe-9d57-b0cab01a6f26@acm.org>
+From: Naresh Maramaina <quic_mnaresh@quicinc.com>
+In-Reply-To: <5e7c5c75-cb5f-4afe-9d57-b0cab01a6f26@acm.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jNdJXZIgOmEwSo1frEafsf1-O-ipzEFK
+X-Proofpoint-GUID: jNdJXZIgOmEwSo1frEafsf1-O-ipzEFK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-06_10,2023-12-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 adultscore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
+ phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2312060113
 
-Add missing space between node name and braces to match the style.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index d73fc3983709..8ba6785038fa 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -2409,7 +2409,7 @@ arch_timer: timer {
- 			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
- 	};
- 
--	pcie0: pcie@1c00000{
-+	pcie0: pcie@1c00000 {
- 		compatible = "qcom,pcie-sa8775p";
- 		reg = <0x0 0x01c00000 0x0 0x3000>,
- 		      <0x0 0x40000000 0x0 0xf20>,
-@@ -2509,7 +2509,7 @@ pcie0_phy: phy@1c04000 {
- 		status = "disabled";
- 	};
- 
--	pcie1: pcie@1c10000{
-+	pcie1: pcie@1c10000 {
- 		compatible = "qcom,pcie-sa8775p";
- 		reg = <0x0 0x01c10000 0x0 0x3000>,
- 		      <0x0 0x60000000 0x0 0xf20>,
--- 
-2.25.1
+On 12/5/2023 10:41 PM, Bart Van Assche wrote:
+> On 12/4/23 21:58, Naresh Maramaina wrote:
+>> On 12/5/2023 12:30 AM, Bart Van Assche wrote:
+>>> On 12/4/23 06:30, Maramaina Naresh wrote:
+>>>> +    /* This capability allows the host controller driver to use the 
+>>>> PM QoS
+>>>> +     * feature.
+>>>> +     */
+>>>> +    UFSHCD_CAP_PM_QOS                = 1 << 13,
+>>>>   };
+>>>
+>>> Why does it depend on the host driver whether or not PM QoS is
+>>> enabled? Why isn't it enabled unconditionally?
+>>
+>> For some platform vendors power KPI might be more important than 
+>> random io KPI. Hence this flag is disabled by default and can be 
+>> enabled based on platform requirement.
+> 
+> How about leaving this flag out unless if a host vendor asks explicitly
+> for this flag?
 
+IMHO, instead of completely removing this flag, how about having
+flag like "UFSHCD_CAP_DISABLE_PM_QOS" which will make PMQOS enable
+by default and if some host vendor wants to disable it explicitly,
+they can enable that flag.
+Please let me know your opinion.
+
+>>>
+>>>> + * @pm_qos_req: PM QoS request handle
+>>>> + * @pm_qos_init: flag to check if pm qos init completed
+>>>>    */
+>>>
+>>> Documentation for pm_qos_init is missing.
+>>>
+>> Sorry, i didn't get your comment, i have already added documentation 
+>> for @pm_qos_init, @pm_qos_req variable as above. Do you want me to add 
+>> this information some where else as well?
+> 
+> Oops, I meant 'qos_vote'.
+
+Sure. I'll take of this in next patchset.
+
+> 
+> Thanks,
+> 
+> Bart.
+> 
+
+Thanks,
+Naresh
 
