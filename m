@@ -1,60 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-3548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D6C5806FBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:31:14 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67850806FC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 13:33:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 396EB281B96
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 12:31:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1C034281C3A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Dec 2023 12:33:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C77BF36AE8;
-	Wed,  6 Dec 2023 12:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88BAC364D8;
+	Wed,  6 Dec 2023 12:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uvlailFV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qq7Baz/b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979A1112
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 04:31:09 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-a1da1017a09so74401266b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 04:31:09 -0800 (PST)
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF11D3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 04:33:20 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-54c77e0835bso5571634a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 04:33:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701865868; x=1702470668; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yi4zOH5EgQ6KZ7fi+yXGQ0dznNFg3ENppTL/x2upyeQ=;
-        b=uvlailFVAhFVKw8+TZ1bqtbhtoWykUD7iN4z03PkE6x4Z5p9MMghPbeF+aYbrmnHjz
-         t4TIanJE5heC8oTTarUP9Gf9Sz34vsLGwKueOTyUKMbRiX4cgChz0AmrQBtXiJ0MmBW+
-         cAHoP7R6aH5ct3ygpTGQ1BkCFn+NDRwUeGMSGOsC8LzDOIa7LH+mm0o1rkO0eAlvPg1/
-         JCtDafZuYj49SFZKOQ5d/J5v5Rcms8cT1m8/VfrmEHd/zcgeCjonnrmLYwBdC6T4yvGs
-         LSQPVCjqsyFiF2HT1iPbihzj61Af5gsdfWTF9Y/2AhtIgWmIDMgRf5Z58IrAmCthTGeT
-         AEqA==
+        d=linaro.org; s=google; t=1701865999; x=1702470799; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=wGA/xtcMV2HKJLHLm1EFBvPOWpjlohok6HgUxRjC258=;
+        b=qq7Baz/bVwrWKOxvrzc/QJiqQNdsR1athH0etrLNQxKGUwPBcav4Vlt10kbmcQKOI0
+         ZUdVPoE59OfayunOwy1cz0gM5kRYalT5X98jQTKiyKLWCDP/O60xMvmYSwjzRh2XRDNi
+         62oDfbhL3Q9+zH0kOb+lysxEO/dRc3IyUkx27yB7meF73LbwqfMO4MzCthMhlIup2w7b
+         W4eXtEiEfcHLKhOFj1dEzrTW+x3utU8tTOQc/0TAvJ/AIjB7LSIXq/j4KWePtDElbj4/
+         ySt8ETZKh6/GfV19DkPlT/Idovg3aQZKcFK2zLi27u9/9hAQn6ZEvd9fN49a6Lxe7uY3
+         07KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701865868; x=1702470668;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yi4zOH5EgQ6KZ7fi+yXGQ0dznNFg3ENppTL/x2upyeQ=;
-        b=JIrk+R8V2gM2cin3K0qC5CneKarZff6YWtnTPv2A1oLTzoIChiQF+dSODu8RfNLjJC
-         EkYnps4cvRnWmUPlabijxZ1uaXY6hJ/lcMp70fPYPeH4Hthy0FizS1OrWZ5QvWAzJqIY
-         OIwTvdvrc8+AHvfHTLbce0wDcE105FJKm/jM3SfuWPuX36h2hUMU47RxHCGR63Y3T8En
-         AFvZ+Ss2ZpCXJ2S2TtqxhjX50vXZp2NlGvjciW5GuQ0afjg101uPZGdF6PYsKf79MvGk
-         vYYmTbHrpk5AVMA+NtsKhe01zNQgN3aUppYRL43vOcUhenUuiq/o/LBs83KpZT0xA2Jj
-         4Tzg==
-X-Gm-Message-State: AOJu0YxWZfTqUF/Ae+ajrBvKKH3oE65E/YVQFFlglCxxCIXw2IZ+td5e
-	WHN0fGTTxhfO+x0bG4i71aBvgw==
-X-Google-Smtp-Source: AGHT+IHaBw6MjX2oi33Xl9n5xImePCY+aIpkG3Iu6AvHiQ23BQY7VFb/VWXrWuwj2kD215YHS9NnUQ==
-X-Received: by 2002:a17:907:9150:b0:a19:a19b:78c8 with SMTP id l16-20020a170907915000b00a19a19b78c8mr466712ejs.139.1701865868123;
-        Wed, 06 Dec 2023 04:31:08 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701865999; x=1702470799;
+        h=content-transfer-encoding:in-reply-to:autocrypt:references:cc:to
+         :from:content-language:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wGA/xtcMV2HKJLHLm1EFBvPOWpjlohok6HgUxRjC258=;
+        b=Nhl9Eav9pOQnRuifYpXFMQlCMOwerOXGueTFqhqtWz8QTH/IC59rb7Wz9CrB9rX3XK
+         qg4/mtS90uBSUbgsemZFuf7Na/SrozGOuUs7ZR2tasJpO4S9hZ+MlsIreFoBbR7oeuim
+         CsHXtaoX+jJkDCgNk9he2n4Jh5YBOo3hymFSwX4aS473Y5uZ+SUklgTVtKWx0ktyoseU
+         LzEaepb0aBdQisdRmSKSIdds1Kuivtpu/+jOPb3VCH6bt2VpDH7PYn7h38qr9DcmqVW3
+         n2DBJ+p1dMcQlYXtnRwJiqrjc/pV7fmgtrJKmHjUCtZgzoi48alKKpiXBmIs57qGvrz8
+         ixoQ==
+X-Gm-Message-State: AOJu0YzfDf8Rca0fZ3/jLH02zf4J8MGkEyl8esr7Nq7vokU7ngr57rey
+	xmzNOnV6oU+Z6SK3VfkgFIXPwA==
+X-Google-Smtp-Source: AGHT+IGZRcF9mAGrBFZKpW624HMI9IOgAbK774ZZXRT5jUoJx5XXulseB5AATNir/jdE0QpZsdWqrA==
+X-Received: by 2002:a05:6402:11d0:b0:54c:c464:5b5 with SMTP id j16-20020a05640211d000b0054cc46405b5mr712503edw.46.1701865998863;
+        Wed, 06 Dec 2023 04:33:18 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id bh15-20020a170906a0cf00b00a1d754b30a9sm1084975ejb.86.2023.12.06.04.31.06
+        by smtp.gmail.com with ESMTPSA id y10-20020a056402134a00b0054c86f882bcsm2357480edw.22.2023.12.06.04.33.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Dec 2023 04:31:07 -0800 (PST)
-Message-ID: <a1cfc6af-080c-4aa1-8200-e230640f7ca3@linaro.org>
-Date: Wed, 6 Dec 2023 13:31:06 +0100
+        Wed, 06 Dec 2023 04:33:18 -0800 (PST)
+Message-ID: <81bdac87-59e0-4618-a51d-ebe5cec6f54c@linaro.org>
+Date: Wed, 6 Dec 2023 13:33:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,6 +66,7 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: ipq9574: Fix USB
  'vdda-pll-supply'
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Varadarajan Narayanan <quic_varada@quicinc.com>
 Cc: agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
  robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
@@ -77,7 +79,7 @@ References: <cover.1701160842.git.varada@hu-varada-blr.qualcomm.com>
  <ZWW9oF24YUGfev+2@hu-varada-blr.qualcomm.com>
  <0acdc122-b7fa-4bb4-b838-6420cd43d0e0@linaro.org>
  <ZXBdHQpJYBmZbd76@hu-varada-blr.qualcomm.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ <a1cfc6af-080c-4aa1-8200-e230640f7ca3@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -122,52 +124,62 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <ZXBdHQpJYBmZbd76@hu-varada-blr.qualcomm.com>
+In-Reply-To: <a1cfc6af-080c-4aa1-8200-e230640f7ca3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 06/12/2023 12:38, Varadarajan Narayanan wrote:
-> On Tue, Nov 28, 2023 at 03:01:12PM +0100, Krzysztof Kozlowski wrote:
->> On 28/11/2023 11:14, Varadarajan Narayanan wrote:
->>> On Tue, Nov 28, 2023 at 09:51:50AM +0100, Krzysztof Kozlowski wrote:
->>>> On 28/11/2023 09:46, Varadarajan Narayanan wrote:
->>>>> From: Varadarajan Narayanan <quic_varada@quicinc.com>
+On 06/12/2023 13:31, Krzysztof Kozlowski wrote:
+> On 06/12/2023 12:38, Varadarajan Narayanan wrote:
+>> On Tue, Nov 28, 2023 at 03:01:12PM +0100, Krzysztof Kozlowski wrote:
+>>> On 28/11/2023 11:14, Varadarajan Narayanan wrote:
+>>>> On Tue, Nov 28, 2023 at 09:51:50AM +0100, Krzysztof Kozlowski wrote:
+>>>>> On 28/11/2023 09:46, Varadarajan Narayanan wrote:
+>>>>>> From: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>>>>>
+>>>>>> The earlier patch ec4f047679d5, incorrectly used 'l2'
+>>>>>> as the vdda-pll-supply. However, 'l5' is the correct
+>>>>>> ldo that supplies power to the USB PHY.
+>>>>>>
+>>>>>> Fixes: ec4f047679d5 ("arm64: dts: qcom: ipq9574: Enable USB")
 >>>>>
->>>>> The earlier patch ec4f047679d5, incorrectly used 'l2'
->>>>> as the vdda-pll-supply. However, 'l5' is the correct
->>>>> ldo that supplies power to the USB PHY.
->>>>>
->>>>> Fixes: ec4f047679d5 ("arm64: dts: qcom: ipq9574: Enable USB")
+>>>>> Doesn't this depend on the driver change?
 >>>>
->>>> Doesn't this depend on the driver change?
+>>>> Yes, will mention in the cover letter.
 >>>
->>> Yes, will mention in the cover letter.
->>
->> This commit should have it in its changelog ---
->>
+>>> This commit should have it in its changelog ---
 >>>
->>>> It affects both existing
->>>> kernel and backports which you claim here should happen.
+>>>>
+>>>>> It affects both existing
+>>>>> kernel and backports which you claim here should happen.
+>>>>
+>>>> Ok. Will include stable@vger.kernel.org in the next revision.
 >>>
->>> Ok. Will include stable@vger.kernel.org in the next revision.
+>>> I wasn't speaking about Cc. You indicated this should be backported.
+>>> Then please backport it, without previous commit, and check the result.
+>>> Is stable tree working correctly or not?
 >>
->> I wasn't speaking about Cc. You indicated this should be backported.
->> Then please backport it, without previous commit, and check the result.
->> Is stable tree working correctly or not?
+>> Without the previous commit, it would fail in both the latest
+>> and stable tree. (Please see below for the error messages and
+>> stack dump)
+>>
+>> The previous commit is necessary for this commit to work.
 > 
-> Without the previous commit, it would fail in both the latest
-> and stable tree. (Please see below for the error messages and
-> stack dump)
+> Yep, exactly. It's visible from the patches. I don't know how to solve
+> this exactly. The Fixes tag here is logically correct, but then any
+> backporting must include previous commit. Dependency can be provided in
+> cc-stable tag, but you did not cc-stable, I suppose on purpose.
 > 
-> The previous commit is necessary for this commit to work.
+> If this is chosen by AUTOSEL, are you going to check if backport
+> includes previous patch and object/review such backport?
 
-Yep, exactly. It's visible from the patches. I don't know how to solve
-this exactly. The Fixes tag here is logically correct, but then any
-backporting must include previous commit. Dependency can be provided in
-cc-stable tag, but you did not cc-stable, I suppose on purpose.
+One more point. Except issues with backporting, you did not annotate any
+dependency so patches can be applied independently. This will lead to
+non-bisectable tree or even broken tree. What's more DTS goes always via
+separate tree and branches, so this patch must be delayed.
 
-If this is chosen by AUTOSEL, are you going to check if backport
-includes previous patch and object/review such backport?
+You always must explicitly mention such dependencies and changes to
+default applying process, so maintainers know what to do. Nothing like
+this was explained anywhere here.
 
 Best regards,
 Krzysztof
