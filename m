@@ -1,124 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-3724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 294F7808949
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:36:06 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDB5880896E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:46:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8CEF282624
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 13:36:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 343831F2147B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 13:46:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C2DD640BF0;
-	Thu,  7 Dec 2023 13:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C26183BB2D;
+	Thu,  7 Dec 2023 13:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NnYaHdj6"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HnFVJREz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27393D0DD;
-	Thu,  7 Dec 2023 13:36:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093C0C433C8;
-	Thu,  7 Dec 2023 13:36:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701956160;
-	bh=mFp8ParZIu7BFVIzOTUQQcSiCU1gOg9JVYkNdX0stLc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NnYaHdj6Pmizr43mxvzX8DdtfGzQbuNgm01szEtBlMZEwikYTje4vBkFBRMeo/0M0
-	 hy4Ij2Kh5sCnscX9Dzkc4YVPr3I3ZZxRHFRoO3DoecbSQt0L4YU9KODGQNWynZ+Itn
-	 J3QbXMd3C7yzkXMFQRHYxUsyjI+BEvzNzqQtUf7BThkUrk5ZoM0svG+nSG3B1RWBhL
-	 MS06NU+56eWf1rdzFOzV9mcUfOqPnrOKN1JVqaGHSFPkPhNXVD55iDCDpTMosZS9lz
-	 SbKy5wtY3PYRa+ybl+c78d+a4y+1T51ofkdLP1fdrNN9/lHWyYHeMrpqcKNfXmp7WU
-	 OHx7NNGxvVrfA==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rBEYb-0000T6-0T;
-	Thu, 07 Dec 2023 14:36:49 +0100
-Date: Thu, 7 Dec 2023 14:36:49 +0100
-From: Johan Hovold <johan@kernel.org>
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11F7E10CA
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 05:46:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1701956782;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MayE2jstjV8R9mQ7ezeMnZEaKl2NQz8vMG8UW7Z3nRs=;
+	b=HnFVJREzmV0+5B+WRfsa3Auj1wBsxEz2bPLl3/fI/LP7zdXHX50b86t3ZV+zkSbUBQ03vl
+	DKdbFJeXnMAktHe5bhIStoVzemF9lHkK3wGoM7R6+ZNCgjfnLi5UsuJPUMBRjMXH/DV7Q0
+	f+jsH8UUO0nW09h3oX/VKGSLdbC4+ZA=
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com
+ [209.85.161.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-437-QXI_lxpsOI-pBKhk06ylUA-1; Thu, 07 Dec 2023 08:46:21 -0500
+X-MC-Unique: QXI_lxpsOI-pBKhk06ylUA-1
+Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-58dcb502313so770132eaf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 05:46:20 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701956780; x=1702561580;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MayE2jstjV8R9mQ7ezeMnZEaKl2NQz8vMG8UW7Z3nRs=;
+        b=HGDKpfAQHIK+9ZTiQnDN8Wa3YckyMYz9RgYLBHYj5DgEtYe+IrDnpElSRp+zXDFctX
+         tYu8C5txbS0trr3WXZnAyQ+qz3DZq/7UWHP4nnkTLY+zWiY8rXwyG2YS0R3qjb031uY8
+         mizI9BxDqUmvtE/YogvMHyMr/jCc5OBvN2nIpb4Bktvit7YCJ8citZS4KlBufRNkHPfr
+         gm7zhjRQ0vOg44PwYpBy0MbaZKli04lkDU/8yFZjxZaA8wavzETvgGO0sZ6hbIvMhLcV
+         Y9v82LS1NxfBC0E/otmb/1puKq3BydsPkmi98YS7Jq/031qeDSvzZmdstA4U93YDi7g+
+         CDCQ==
+X-Gm-Message-State: AOJu0YxLhwcPg3LZH7YIqJNjR+8XLj8RAAgD37soDiyoUTtytSLqg2sG
+	DoyEtP1jE3rurrXKhkFuHM5mEo6+k522RqDG+n9NcQnonZGhiamNei+6wLFwkhTgntfwyUClVFP
+	5ZfbJJChW8gZ4LK0YGtc+Xdxr1A==
+X-Received: by 2002:a05:6358:7244:b0:170:2cff:b57e with SMTP id i4-20020a056358724400b001702cffb57emr3149557rwa.28.1701956780352;
+        Thu, 07 Dec 2023 05:46:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEkleS9nA9h1C/ufo8zCGD9PAxaOCQltjexOMuG5X9Zhtpyj8pooXqvLS0Uxwdd3bswk+SUxQ==
+X-Received: by 2002:a05:6358:7244:b0:170:2cff:b57e with SMTP id i4-20020a056358724400b001702cffb57emr3149542rwa.28.1701956780083;
+        Thu, 07 Dec 2023 05:46:20 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::47])
+        by smtp.gmail.com with ESMTPSA id cx11-20020a056214188b00b0067ac01d39bdsm496309qvb.47.2023.12.07.05.46.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Dec 2023 05:46:19 -0800 (PST)
+Date: Thu, 7 Dec 2023 07:46:17 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
 To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
- qcom,refclk-always-on property
-Message-ID: <ZXHKcToXzTgoDCLW@hovoldconsulting.com>
-References: <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
- <20231201111033.GL4009@thinkpad>
- <f844cd1e-7e4f-4836-bc9a-2e1ed13f064f@linaro.org>
- <20231201123054.GM4009@thinkpad>
- <3a7376aa-18a2-41cb-a4c9-680e735ce75b@linaro.org>
- <20231206131009.GD12802@thinkpad>
- <ZXGVjY9gYMD6-xFJ@hovoldconsulting.com>
- <20231207101252.GJ2932@thinkpad>
- <ZXHDCNosx8PCUzao@hovoldconsulting.com>
- <20231207132032.GL2932@thinkpad>
+Cc: martin.petersen@oracle.com, jejb@linux.ibm.com, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_cang@quicinc.com
+Subject: Re: [PATCH 11/13] scsi: ufs: qcom: Remove unused ufs_qcom_hosts
+ struct array
+Message-ID: <ca4ag4xrnw3cegbfqjcjf4ejidi2oblabcrkxadpgv6yda26a4@2khffdooqvlj>
+References: <20231201151417.65500-1-manivannan.sadhasivam@linaro.org>
+ <20231201151417.65500-12-manivannan.sadhasivam@linaro.org>
+ <sqdgnfedt5j3epypmsvb7lv6gvmjrymtuieji3yhqsfvniiodl@f3aj73mlshxy>
+ <20231207053159.GC2932@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20231207132032.GL2932@thinkpad>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231207053159.GC2932@thinkpad>
 
-On Thu, Dec 07, 2023 at 06:50:32PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Dec 07, 2023 at 02:05:12PM +0100, Johan Hovold wrote:
-> > On Thu, Dec 07, 2023 at 03:42:52PM +0530, Manivannan Sadhasivam wrote:
-> > > On Thu, Dec 07, 2023 at 10:51:09AM +0100, Johan Hovold wrote:
-
-> > > > Shouldn't that be
-> > > > 
-> > > > 	qcom,broken-clkreq
-> > > > 
-> > > > since its the CLKREQ# signal used to request REFCLK that is broken, not
-> > > > the REFCLK itself?
-> > > > 
+On Thu, Dec 07, 2023 at 11:01:59AM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Dec 06, 2023 at 12:54:43PM -0600, Andrew Halaney wrote:
+> > On Fri, Dec 01, 2023 at 08:44:15PM +0530, Manivannan Sadhasivam wrote:
+> > > ufs_qcom_hosts array is assigned, but not used anywhere. So let's remove
+> > > it.
 > > > 
-> > > Darn... You are right. I got carried away by the initial property name. Thanks
-> > > for spotting!
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  drivers/ufs/host/ufs-qcom.c | 5 -----
+> > >  1 file changed, 5 deletions(-)
+> > > 
+> > > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> > > index a86f6620abc8..824c006be093 100644
+> > > --- a/drivers/ufs/host/ufs-qcom.c
+> > > +++ b/drivers/ufs/host/ufs-qcom.c
+> > > @@ -90,8 +90,6 @@ static const struct __ufs_qcom_bw_table {
+> > >  	[MODE_MAX][0][0]		    = { 7643136,	307200 },
+> > >  };
+> > >  
+> > > -static struct ufs_qcom_host *ufs_qcom_hosts[MAX_UFS_QCOM_HOSTS];
+> > > -
 > > 
-> > Thinking some more on this after hitting send: It may still be wrong
-> > with a 'broken-clkreq' property in the PHY instead of in the controller
-> > (or endpoint).
+> > I think we can get rid of MAX_UFS_QCOM_HOSTS as well with this change in
+> > place?
 > > 
-> > Could there not be other ways to handle a broken clkreq signal so that
-> > this really should be a decision made by the OS, for example, to disable
-> > L1 substates and clock PM?
 > 
-> One has to weigh the power consumption between keeping refclk always on and
-> disabling L1SS. Chaitanya, can you measure power consumption in both cases?
+> Yes, thanks for spotting.
 
-Sure, my point was just that that's a policy decision and not something
-that should be encoded in the devicetree (as was initially proposed).
+With that in place please add:
 
-And that the right place for the renamed property is not necessarily in
-the PHY node either.
+    Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-> > Simply leaving the refclk always on in the PHY seems like a bit of a
-> > hack and I'm not even sure that can be considered correct.
 > 
-> I wouldn't agree it is a hack, even though it may sound like one. The option to
-> keep refclk always on in the PHY is precisely there for usecase like this.
+> - Mani
+> 
+> > >  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
+> > >  static int ufs_qcom_set_core_clk_ctrl(struct ufs_hba *hba, bool is_scale_up);
+> > >  
+> > > @@ -1192,9 +1190,6 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+> > >  
+> > >  	ufs_qcom_setup_clocks(hba, true, POST_CHANGE);
+> > >  
+> > > -	if (hba->dev->id < MAX_UFS_QCOM_HOSTS)
+> > > -		ufs_qcom_hosts[hba->dev->id] = host;
+> > > -
+> > >  	ufs_qcom_get_default_testbus_cfg(host);
+> > >  	err = ufs_qcom_testbus_config(host);
+> > >  	if (err)
+> > > -- 
+> > > 2.25.1
+> > > 
+> > > 
+> > 
+> > 
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
+> 
 
-I just skimmed the spec so perhaps I'm missing something, but there's
-definitely wordings in there that explicitly says that L1 PM substates
-must not be enabling unless you have a functioning CLKREQ# signal.
-
-Johan
 
