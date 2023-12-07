@@ -1,122 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-3664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E68B980853E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 11:13:16 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCD4880855F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 11:27:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9EC31283F10
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 10:13:15 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 08962B21982
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 10:27:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC20635889;
-	Thu,  7 Dec 2023 10:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD318328C6;
+	Thu,  7 Dec 2023 10:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ciHMHUep"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="me+C4CHy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5321193
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 02:13:04 -0800 (PST)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-dae0ab8ac3eso806151276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 02:13:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701943984; x=1702548784; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=e3B67B1TYSjUdt6Cc8K4XbRIZ1QzqkY0WH6+puDGmn4=;
-        b=ciHMHUepSltr4g56V7l6mEs/NQDP3xPGlRjPxmgeIFK9L3OwSp/sA8/mHv8AUxjiYS
-         e38OTUXVtymi0rj3uhgT6ZMNS5pLylLhBx+FW4FO75IRJDqh2PAI8rf6k26iJfCAmMsl
-         ImCm1tuuvvmeQ9v3D9vBEw1iVv9ZoQ+h5E7X5aGpyB9/kb50VxEK8xILiauHQGXpVGA7
-         T9m64BQZp16DqTYhAZZm6ylqgK92grDQZ59BWN+nOi5RW2X75smZM6vf0pwk5ufyGROk
-         a3X5ENF7ZA7wwstyrHaT+fAxZsq3JIJUXOVQa2RO0xLMcMduq/X1EUyDcGQqzLUeavSo
-         /HWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701943984; x=1702548784;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=e3B67B1TYSjUdt6Cc8K4XbRIZ1QzqkY0WH6+puDGmn4=;
-        b=TTRRRYNxWTnS3Uu9fCzsjyX6Fb1Ww9Kg2LQZ5l4RpF0z555WgHeJkKRz9o1KUjgRmw
-         taMSkfnSvZsgJtSF0kUNcdSGHp1beg8gDJ17WL9Yz8Fi/MpEYaUnis+USM2EhHYz+xd7
-         s5U3TII10qD75Om4De+b/d2qDsMmb/f7I84mJMDFcHeAAdEBf2aSz29fg6uGo+FndiEK
-         KSPZf2JPeDr7PAOiDoQS26DMy0FYm1GPvXtHjl2xiLxyDRKgPJlOnx1nWSNa0RSeXAPt
-         D/MdrnaWJn9jN/pMl54E0cw/TTCbfZoaJfpaAX6/F54cmEKa3Y6ArKtgaqjd13ezNLQh
-         W8eA==
-X-Gm-Message-State: AOJu0YxLTynL2Qy2URsAFUl30r6lOR8IAmZg8QxgMhrgWfzVlEEaaDtd
-	ubsuEptoKlDYZkhwB+Gk4s/6
-X-Google-Smtp-Source: AGHT+IFNn1HUFDtLCOGTeA3m9Ta/i3bQvpYxwVgKKLYlxLDmi9pfv/W/T/9B2nxE7SkRSL3QSWQJtw==
-X-Received: by 2002:a25:243:0:b0:db5:4503:6de5 with SMTP id 64-20020a250243000000b00db545036de5mr1932607ybc.60.1701943983997;
-        Thu, 07 Dec 2023 02:13:03 -0800 (PST)
-Received: from thinkpad ([117.248.6.133])
-        by smtp.gmail.com with ESMTPSA id l13-20020a0cc20d000000b0067a22bb8d57sm373453qvh.56.2023.12.07.02.12.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 02:13:03 -0800 (PST)
-Date: Thu, 7 Dec 2023 15:42:52 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
-	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
- qcom,refclk-always-on property
-Message-ID: <20231207101252.GJ2932@thinkpad>
-References: <78815f1b-7390-40de-8afd-ac71806f4051@linaro.org>
- <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
- <20231201060716.GJ4009@thinkpad>
- <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
- <20231201111033.GL4009@thinkpad>
- <f844cd1e-7e4f-4836-bc9a-2e1ed13f064f@linaro.org>
- <20231201123054.GM4009@thinkpad>
- <3a7376aa-18a2-41cb-a4c9-680e735ce75b@linaro.org>
- <20231206131009.GD12802@thinkpad>
- <ZXGVjY9gYMD6-xFJ@hovoldconsulting.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E54128;
+	Thu,  7 Dec 2023 02:27:17 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B79XKj2011699;
+	Thu, 7 Dec 2023 10:26:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=RuICPUQra4CeTJPKT9XkYJ/b9ZFT1AHX1daHHwFg8KY=;
+ b=me+C4CHyioh3xO7xx7c9nqXvkzL+5bEER0WA0y7rPCG+yEunUh1LVCeEp1xBYpwRgbz8
+ ooeApKYNdo50OET8cjorU2xc+OY1fwBWydHQ0a1ZrYxwO+nPxGgXJl5Y7dKhuB+faejB
+ dbtcjmJxjoBLOSlsBNBUUcID1qO8LiqWSbGBgjJZEeLoBbM6e5GgEHTt7awQQOR80/GW
+ 1KxjbvHfaiVTg9iRCMtHeryEeedVSeuqGFk90n5CwxHXzpnXXjBs+lTbEOnvublRJgnk
+ 7uMObRwT2HW32Lui89pkuBqWwQPo+l5kByVNcdQklurGjOF3jU9NlkMI7WLCU5bZyfRG Rw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uu928geh0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Dec 2023 10:26:57 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B7AQton012717
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Dec 2023 10:26:55 GMT
+Received: from [10.218.45.181] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 7 Dec
+ 2023 02:26:48 -0800
+Message-ID: <286b6f8a-c634-19ed-cf53-276cfe05d03f@quicinc.com>
+Date: Thu, 7 Dec 2023 15:56:43 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.2
+Subject: Re: [PATCH V2 1/3] ufs: core: Add CPU latency QoS support for ufs
+ driver
+To: Manivannan Sadhasivam <mani@kernel.org>,
+        Bart Van Assche
+	<bvanassche@acm.org>
+CC: Naresh Maramaina <quic_mnaresh@quicinc.com>,
+        "James E.J. Bottomley"
+	<jejb@linux.ibm.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Peter Wang <peter.wang@mediatek.com>, Andy Gross <agross@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        <chu.stanley@gmail.com>, "Alim
+ Akhtar" <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>, <linux-scsi@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>
+References: <20231204143101.64163-1-quic_mnaresh@quicinc.com>
+ <20231204143101.64163-2-quic_mnaresh@quicinc.com>
+ <590ade27-b4da-49be-933b-e9959aa0cd4c@acm.org>
+ <692cd503-5b14-4be6-831d-d8e9c282a95e@quicinc.com>
+ <5e7c5c75-cb5f-4afe-9d57-b0cab01a6f26@acm.org>
+ <b9373252-710c-4a54-95cc-046314796960@quicinc.com>
+ <20231206153242.GI12802@thinkpad>
+ <effb603e-ca7a-4f24-9783-4d62790165ae@acm.org>
+ <20231207094357.GI2932@thinkpad>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <20231207094357.GI2932@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZXGVjY9gYMD6-xFJ@hovoldconsulting.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xV9ZucUUu1VnH6KXAtu8Z4m5o650ce8x
+X-Proofpoint-GUID: xV9ZucUUu1VnH6KXAtu8Z4m5o650ce8x
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-07_08,2023-12-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ phishscore=0 impostorscore=0 clxscore=1011 bulkscore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2312070084
 
-On Thu, Dec 07, 2023 at 10:51:09AM +0100, Johan Hovold wrote:
-> On Wed, Dec 06, 2023 at 06:40:09PM +0530, Manivannan Sadhasivam wrote:
+
+
+On 12/7/2023 3:13 PM, Manivannan Sadhasivam wrote:
+> On Wed, Dec 06, 2023 at 03:02:04PM -1000, Bart Van Assche wrote:
+>> On 12/6/23 05:32, Manivannan Sadhasivam wrote:
+>>> On Wed, Dec 06, 2023 at 07:32:54PM +0530, Naresh Maramaina wrote:
+>>>> On 12/5/2023 10:41 PM, Bart Van Assche wrote:
+>>>>> On 12/4/23 21:58, Naresh Maramaina wrote:
+>>>>>> On 12/5/2023 12:30 AM, Bart Van Assche wrote:
+>>>>>>> On 12/4/23 06:30, Maramaina Naresh wrote:
+>>>>>>>> +    /* This capability allows the host controller driver to
+>>>>>>>> use the PM QoS
+>>>>>>>> +     * feature.
+>>>>>>>> +     */
+>>>>>>>> +    UFSHCD_CAP_PM_QOS                = 1 << 13,
+>>>>>>>>     };
+>>>>>>>
+>>>>>>> Why does it depend on the host driver whether or not PM QoS is
+>>>>>>> enabled? Why isn't it enabled unconditionally?
+>>>>>>
+>>>>>> For some platform vendors power KPI might be more important than
+>>>>>> random io KPI. Hence this flag is disabled by default and can be
+>>>>>> enabled based on platform requirement.
+>>>>>
+>>>>> How about leaving this flag out unless if a host vendor asks explicitly
+>>>>> for this flag?
+>>>>
+>>>> IMHO, instead of completely removing this flag, how about having
+>>>> flag like "UFSHCD_CAP_DISABLE_PM_QOS" which will make PMQOS enable
+>>>> by default and if some host vendor wants to disable it explicitly,
+>>>> they can enable that flag.
+>>>> Please let me know your opinion.
+>>
+>> That would result in a flag that is tested but that is never set by
+>> upstream code. I'm not sure that's acceptable.
+>>
 > 
-> > OK. How about, "qcom,broken-refclk"? This reflects the fact that the default
-> > refclk operation is broken on this platform, so the OS should be prepared for
-> > it (by keeping it always on).
+> Agree. The flag shouldn't be introduced if there are no users.
 > 
-> Shouldn't that be
+>>> If a vendor wants to disable this feature, then the driver has to be modified.
+>>> That won't be very convenient. So either this has to be configured through sysfs
+>>> or Kconfig if flexibility matters.
+>>
+>> Kconfig sounds worse to me because changing any Kconfig flag requires a
+>> modification of the Android GKI kernel.
+>>
 > 
-> 	qcom,broken-clkreq
+> Hmm, ok. Then I think we can have a sysfs hook to toggle the enable switch.
+
+Hi Bart, Mani
+
+How about keeping this feature enabled by default and having a module 
+parameter to disable pmqos feature if required ?
+
+Regards,
+Nitin
+
 > 
-> since its the CLKREQ# signal used to request REFCLK that is broken, not
-> the REFCLK itself?
+> - Mani
+> 
+>> Thanks,
+>>
+>> Bart.
 > 
 
-Darn... You are right. I got carried away by the initial property name. Thanks
-for spotting!
-
-- Mani
-
-> Johan
-
--- 
-மணிவண்ணன் சதாசிவம்
 
