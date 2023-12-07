@@ -1,48 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-3733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80A78808B1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:54:31 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16AA0808B21
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:55:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F73BB20A8B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:54:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4647B1C209A1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:55:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1F742A9D;
-	Thu,  7 Dec 2023 14:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 082A842ABE;
+	Thu,  7 Dec 2023 14:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W38QkOno"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TUmhWBrH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA033A8C1
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 14:54:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6238C433C8;
-	Thu,  7 Dec 2023 14:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72B741847;
+	Thu,  7 Dec 2023 14:55:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362E2C433C8;
+	Thu,  7 Dec 2023 14:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701960865;
-	bh=CxIdohRv9UZtivNiBrUGey9rAm5WPxTs1mLv0AuDN84=;
+	s=k20201202; t=1701960923;
+	bh=Uhqwn4e8NYkWS0QZNCGhJ/sVj57HJ9Z86Fu38hB/5RM=;
 	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=W38QkOnokdVaXUS5nlqLGGHPRKM4SN0BOzdHmFFLBGcYEVn9k6hdxZVxrNwsETd0K
-	 Gv82ueV5YcCRRz5S2j2Z5lZ4CJcKxprOQX8TcyH84T1WcSigSvv/PKIm8f50wvdovh
-	 5ssM7EaLBUEqglYbKbWJ9FIapwEUmQjzeYCI8u49mtTehTdwncwYwRM0dwn7cxO4vm
-	 VA1Mw5qY5JwgTQhPCymR6m5lTSsG3c5Kr0oJOJyQ3WNKxPv8PsIzEyakyAYD6L//9K
-	 4hIz58+Q1iFCTDEf4wJWuxgk6fiMt5oq0/t6MtsElvIIPpr2vr5GrSS+3un3vK3JGK
-	 KYGe7kDfbhm5w==
+	b=TUmhWBrHpl4gV1UNoTpIh1wlYwXheV8g8XsWmzWdgZ+x5/2uIMzA0vtLkw5w2m0kd
+	 y9C+SkdlgYy+Gewa4i0kAwCuQPMV/4dZImgV9rWnm+lgg3SY7PCCIyQ1qbeOm9RJ6M
+	 kLr98MabDMhrlaZ5rT18K+20uDGx4YeDykTLGPAebhaSfi+v62dHl/Y0axU2uhD7Bs
+	 +dLsc5RiOcIF2rdcdAXZVmMrwXML4VcA8tkyZ7bKFhkvlYTYX7zm55oAbXceR6tiR0
+	 88LzhWUInMjv5KCgDZCQrC4soOdmmFKb0zqzrSS997hya41VvgW9OBW1PkNIHDHS2E
+	 mL/Xx3kHfC30A==
 From: Kalle Valo <kvalo@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: ath10k@lists.infradead.org,  "open list:DRM DRIVER FOR MSM ADRENO GPU"
- <linux-arm-msm@vger.kernel.org>
-Subject: Re: ath10k-firmware: WCN3990: Add board file for the Qualcomm
- Robotics RB2 platform
-References: <CAA8EJprLZVdxfWGZhQGHN_CejD8GsRZE8i1-MFa7froWTvs5ew@mail.gmail.com>
-Date: Thu, 07 Dec 2023 16:54:22 +0200
-In-Reply-To: <CAA8EJprLZVdxfWGZhQGHN_CejD8GsRZE8i1-MFa7froWTvs5ew@mail.gmail.com>
-	(Dmitry Baryshkov's message of "Fri, 25 Aug 2023 00:52:10 +0300")
-Message-ID: <87jzpqnjvl.fsf@kernel.org>
+To: Dylan Van Assche <me@dylanvanassche.be>
+Cc: ath10k@lists.infradead.org,  linux-arm-msm@vger.kernel.org,
+  ~postmarketos/upstreaming@lists.sr.ht,  phone-devel@vger.kernel.org
+Subject: Re: ath10k-firmware: WCN3990: Add board file for Oneplus 6/6T
+References: <b71aa947-4644-e1a3-40e1-99d11d0ab8d7@dylanvanassche.be>
+Date: Thu, 07 Dec 2023 16:55:20 +0200
+In-Reply-To: <b71aa947-4644-e1a3-40e1-99d11d0ab8d7@dylanvanassche.be> (Dylan
+	Van Assche's message of "Fri, 25 Aug 2023 17:16:10 +0200")
+Message-ID: <87fs0enjtz.fsf@kernel.org>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -50,74 +49,62 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+Dylan Van Assche <me@dylanvanassche.be> writes:
 
-> We'd like to ask for inclusion of the board file for the Qualcomm
-> Robotics RB2 platform. It is
-> an IOT platform manufactured by Thundercomm, using the Snapdragon QRB4210 SoC.
+> I would like to include the board file for the Oneplus 6/6T smartphone.
+> This smartphone is manufactured by Oneplus and uses the Snapdragon
+> SDM845 SoC.
+> At postmarketOS, we run the mainline kernel on this phone so shipping
+> this board file
+> from upstream would be a great addition. Below, the questions from the wi=
+ki:
 >
-> Following the questions from the ath10k wiki page:
+> * description for what hardware this is:
 >
-> * description for what hardware this is
-> - It is an QRB4210-based platform (QRB4210)
-> - It uses wcn3990 chip as a WiFi and BT radio
-> - For the reference:
+> Smartphone with a SDM845 chip and a WCN3990 Bluetooth/WiFi chip.
+> The WCN3990 chip is connected to 2 QM488xx radios, one is used
+> for 2.4Ghz and the other one for 5Ghz radio.
 >
-> ath10k_snoc c800000.wifi: qmi chip_id 0x150 chip_family 0x4002
-> board_id 0xff soc_id 0x40670000
-> ath10k_snoc c800000.wifi: qmi fw_version 0x337302d3 fw_build_timestamp
-> 2023-01-06 01:50 fw_build_id
-> QC_IMAGE_VERSION_STRING=WLAN.HL.3.3.7.c2-00723-QCAHLSWMTPLZ-1
-> ath10k_snoc c800000.wifi: wcn3990 hw1.0 target 0x00000008 chip_id
-> 0x00000000 sub 0000:0000
-> ath10k_snoc c800000.wifi: kconfig debug 0 debugfs 0 tracing 0 dfs 0 testmode 0
-> ath10k_snoc c800000.wifi: firmware ver  api 5 features
-> wowlan,mgmt-tx-by-reference,non-bmi crc32 b3d4b790
-> ath10k_snoc c800000.wifi: htt-ver 3.114 wmi-op 4 htt-op 3 cal file
-> max-sta 32 raw 0 hwcrypto 1
+> * origin of the board file (did you create it yourself or where you
+> =C2=A0 downloaded)
 >
-> * origin of the board file
->   - It comes from the firmware package provided by Thundercomm for
-> redistribution.
+> Extracted from the stock firmware.
 >
-> * ids to be used with the board file
+> * ids to be used with the board file (ATH10K_BD_IE_BOARD_NAME in ath10k)
 >
-> bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2
+> - WCN3990 hw1.0
+> =C2=A0 + bus=3Dsnoc,qmi-board-id=3Dff,qmi-chip-id=3D30214,variant=3Donepl=
+us_sdm845
+> =C2=A0=C2=A0=C2=A0 sha256sum:
+> a46790bc201026e8f38a19f3acd749640b54b73d14e09287659a647b9cc3ee8e
+> =C2=A0=C2=A0=C2=A0 md5sum: f744a3402e260d7fd330cbc964972a5c
 >
-> Note, the device comes with the board_id not changed from 0xff.
-> Following the example of existing boards we are adding the
-> calibration variant.
+> * attach the actual board file (board.bin)
 >
-> * md5sum of each new board file to add
->
-> $ md5sum *
-> 5003239259d8cb68097a941dde86dcc7
-> bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2.bin
->
-> $ sha256sum *
-> 0eeffb43040b216b0f3210b8db69e4558844dd9df52caf9c25f56a79401f442c
-> bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2.bin
+> The name of the files are equal to the id string in the board-2.bin
+> (minus the ".bin")
 
 Thanks, added to WCN3990/hw1.0/board-2.bin:
 
 New:
-bus=snoc,qmi-board-id=ff,qmi-chip-id=150,variant=Thundercomm_RB2
+bus=3Dsnoc,qmi-board-id=3Dff,qmi-chip-id=3D30214,variant=3Doneplus_sdm845
 
 Changed:
 
 
 Deleted:
 
-1 board image(s) added, 0 changed, 0 deleted, 23 in total
+1 board image(s) added, 0 changed, 0 deleted, 24 in total
 
-https://github.com/kvalo/ath10k-firmware/commit/7435e1eeeeea4b065634071d21ba691597f345bb
+https://github.com/kvalo/ath10k-firmware/commit/328aea229a35920e3f54fc7b7ff=
+0070a95ef421f
 
-
-
--- 
+--=20
 https://patchwork.kernel.org/project/linux-wireless/list/
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatc=
+hes
 
