@@ -1,223 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-3642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 266D2808436
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 10:19:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53CE180844B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 10:21:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DBFC1F22782
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 09:19:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9CB47B20C66
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 09:21:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8BD134186;
-	Thu,  7 Dec 2023 09:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FD6A14A85;
+	Thu,  7 Dec 2023 09:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ApftZSL9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mTjwf7xo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2345810C0;
-	Thu,  7 Dec 2023 01:19:21 -0800 (PST)
-Received: from localhost.localdomain (cola.collaboradmins.com [195.201.22.229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 9BEA36607390;
-	Thu,  7 Dec 2023 09:19:16 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1701940759;
-	bh=INyCn6Vuwem17/GlgP/15kN4dX/+WaIIZzg0L0SOwa0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ApftZSL9Rl03obAwPHD9W4/AXYzvvnsArh0MEm2euHAN3MQ6WlCC+rzGtN7JQRx3r
-	 t4q69ZLLJrfEUIZnRGd5zYT1GGC2jl1TH068kVChPA6WLzTzcBm8QQ8SWqPMx0YzSc
-	 /iN81gnh5dLf/RPcCySP+vuMaAmoAZFNnRGIv38w9TkpWcs+Ge2LMyFdCjjMfHezXq
-	 SsciHLC1uvMlJPtq+GRpqAjBs84CsCUJJZ1nLLSXID/xqK584QLZ3KLvZ01OGlnN4/
-	 h9HZEDCOEtGtVU6Ndg5lEUUe88aAeQgc0Zo/h+N1iHPfJKleu+FR+wmanzHkRq4fPo
-	 JBgxP9H0SPSyA==
-From: Vignesh Raman <vignesh.raman@collabora.com>
-To: helen.koike@collabora.com,
-	airlied@gmail.com,
-	daniel@ffwll.ch
-Cc: david.heidelberg@collabora.com,
-	sergi.blanch.torne@collabora.com,
-	guilherme.gallo@collabora.com,
-	daniels@collabora.com,
-	gustavo.padovan@collabora.com,
-	emma@anholt.net,
-	robdclark@gmail.com,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	virtualization@lists.linux-foundation.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v7 10/10] drm: ci: Update xfails
-Date: Thu,  7 Dec 2023 14:48:31 +0530
-Message-Id: <20231207091831.660054-11-vignesh.raman@collabora.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231207091831.660054-1-vignesh.raman@collabora.com>
-References: <20231207091831.660054-1-vignesh.raman@collabora.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 179841723;
+	Thu,  7 Dec 2023 01:21:35 -0800 (PST)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B78xATn017704;
+	Thu, 7 Dec 2023 09:21:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=UPK6JgHMg+43fthh/PfcoABgDSewRXvyr2FyzyOmAWg=;
+ b=mTjwf7xonT0zCzUlD6ANKLSVPajLIw2vXYl+btdpoyYvPFwWKXU7sFIGdXAorK1hQJct
+ VWS2+SEOelzBUFGeWl0+KFH+a0DC7mv6Wth/1JTrANL/o8402eukt0PIlur16orpibL1
+ ZX5jcYLgRK8tAJDjNeYpxtbmo6jdF6n/H2a7r/Ef0DIVPhUJyMcdD0an1bkYcTjhHBdc
+ vCLKuelrs+zNC2EcxAfrohdyI5T1Zl0o+sz6kM/n3rVwb9dzgRfI1/vBLy8k2TuLiaXC
+ fdfjeBYLU64AaShLZaixGuO669KBXVvjPqtJk6CMbTk0ZDBGGW0tfXDk7FC5KULhvIRT rw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uu2trgyj2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Dec 2023 09:21:24 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B79KuE9016213
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Dec 2023 09:20:56 GMT
+Received: from [10.253.35.241] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 7 Dec
+ 2023 01:20:54 -0800
+Message-ID: <c12b0ed6-4189-4625-84bf-abd835b9b364@quicinc.com>
+Date: Thu, 7 Dec 2023 17:20:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 4/4] bus: mhi: host: Take irqsave lock after TRE is
+ generated
+Content-Language: en-US
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>,
+        Hemant Kumar
+	<quic_hemantk@quicinc.com>,
+        Lazarus Motha <quic_lmotha@quicinc.com>
+References: <1699939661-7385-1-git-send-email-quic_qianyu@quicinc.com>
+ <1699939661-7385-5-git-send-email-quic_qianyu@quicinc.com>
+ <20231124100916.GB4536@thinkpad>
+ <ae1514d1-1cdf-42f8-ac8c-6e6c2005922f@quicinc.com>
+ <20231207063851.GD2932@thinkpad>
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <20231207063851.GD2932@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rYNauRuawIpTuYpOhS5AX1iwU8SIXg4h
+X-Proofpoint-ORIG-GUID: rYNauRuawIpTuYpOhS5AX1iwU8SIXg4h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-07_06,2023-12-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ malwarescore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 mlxscore=0 adultscore=0 priorityscore=1501 mlxlogscore=897
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2312070075
 
-Update msm-apq8016-fails, mediatek-mt8173-fails and
-virtio_gpu-none-fails to include the tests which fail.
 
-Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
----
+On 12/7/2023 2:38 PM, Manivannan Sadhasivam wrote:
+> On Mon, Nov 27, 2023 at 03:19:49PM +0800, Qiang Yu wrote:
+>> On 11/24/2023 6:09 PM, Manivannan Sadhasivam wrote:
+>>> On Tue, Nov 14, 2023 at 01:27:41PM +0800, Qiang Yu wrote:
+>>>> From: Hemant Kumar <quic_hemantk@quicinc.com>
+>>>>
+>>>> If CONFIG_TRACE_IRQFLAGS is enabled, irq will be enabled once __local_bh_
+>>>> enable_ip is called as part of write_unlock_bh. Hence, let's take irqsave
+>>> "__local_bh_enable_ip" is a function name, so you should not break it.
+>> Thanks for let me know, will note this in following patch.
+>>>> lock after TRE is generated to avoid running write_unlock_bh when irqsave
+>>>> lock is held.
+>>>>
+>>> I still don't understand this commit message. Where is the write_unlock_bh()
+>>> being called?
+>>>
+>>> - Mani
+>> Write_unlock_bh() is invoked in mhi_gen_te()
+>> The calling flow is like
+>> mhi_queue
+>>      read_lock_irqsave(&mhi_cntrl->pm_lock, flags)
+>>      mhi_gen_tre
+>>          write_lock_bh(&mhi_chan->lock)
+>>          write_unlock_bh(&mhi_chan->lock)   // Will enable irq if
+>> CONFIG_TRACE_IRQFLAGS is enabled
+>>      read_lock_irqsave(&mhi_cntrl->pm_lock, flags)
+>>
+>> after adding this patch, the calling flow becomes
+>>
+>> mhi_queue
+>>      mhi_gen_tre
+>>          write_lock_bh(&mhi_chan->lock)
+>>          write_unlock_bh(&mhi_chan->lock)
+>>      read_lock_irqsave(&mhi_cntrl->pm_lock, flags)
+>>      read_lock_irqsave(&mhi_cntrl->pm_lock, flags)
+> So this patch essentially fixes the issue caused by patch 1? If so, this should
+> be squashed into patch 1.
+>
+> - Mani
 
-v2:
-  - No changes
+Yes, this patch is to fix the issue caused by patch 1. Will squash patch 
+1 and this patch into one patch
 
-v3:
-  - No changes
+in next version.
 
-v4:
-  - No changes
-
-v5:
-  - Generate fails and flakes file with the updated xfails script - https://www.spinics.net/lists/kernel/msg4959630.html
-
-v6:
-  - Generate fails file with drm-misc-next
-
-v7:
-  - No changes
-
----
- .../drm/ci/xfails/mediatek-mt8173-fails.txt   | 13 ++++--
- .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |  5 ++
- .../drm/ci/xfails/virtio_gpu-none-fails.txt   | 46 +++++++++++++++++++
- 3 files changed, 61 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
-index 671916067dba..ef0cb7c3698c 100644
---- a/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/mediatek-mt8173-fails.txt
-@@ -1,5 +1,4 @@
- kms_3d,Fail
--kms_addfb_basic@addfb25-bad-modifier,Fail
- kms_bw@linear-tiling-1-displays-1920x1080p,Fail
- kms_bw@linear-tiling-1-displays-2560x1440p,Fail
- kms_bw@linear-tiling-1-displays-3840x2160p,Fail
-@@ -9,13 +8,19 @@ kms_bw@linear-tiling-2-displays-3840x2160p,Fail
- kms_bw@linear-tiling-3-displays-1920x1080p,Fail
- kms_bw@linear-tiling-3-displays-2560x1440p,Fail
- kms_bw@linear-tiling-3-displays-3840x2160p,Fail
-+kms_color@invalid-gamma-lut-sizes,Fail
- kms_color@pipe-A-invalid-gamma-lut-sizes,Fail
- kms_color@pipe-B-invalid-gamma-lut-sizes,Fail
--kms_force_connector_basic@force-connector-state,Fail
-+kms_cursor_legacy@cursor-vs-flip-atomic,Fail
-+kms_cursor_legacy@cursor-vs-flip-legacy,Fail
-+kms_flip@flip-vs-modeset-vs-hang,Fail
-+kms_flip@flip-vs-panning-vs-hang,Fail
-+kms_flip@flip-vs-suspend,Fail
-+kms_flip@flip-vs-suspend-interruptible,Fail
- kms_force_connector_basic@force-edid,Fail
- kms_force_connector_basic@force-load-detect,Fail
- kms_force_connector_basic@prune-stale-modes,Fail
--kms_invalid_mode@int-max-clock,Fail
-+kms_hdmi_inject@inject-4k,Fail
- kms_plane_scaling@planes-upscale-20x20,Fail
- kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-25,Fail
- kms_plane_scaling@planes-upscale-20x20-downscale-factor-0-5,Fail
-@@ -27,3 +32,5 @@ kms_properties@get_properties-sanity-atomic,Fail
- kms_properties@plane-properties-atomic,Fail
- kms_properties@plane-properties-legacy,Fail
- kms_rmfb@close-fd,Fail
-+kms_selftest@drm_format,Timeout
-+kms_selftest@drm_format_helper,Timeout
-diff --git a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-index 9981682feab2..d39d254c935e 100644
---- a/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/msm-apq8016-fails.txt
-@@ -6,10 +6,15 @@ kms_cursor_legacy@all-pipes-single-bo,Fail
- kms_cursor_legacy@all-pipes-single-move,Fail
- kms_cursor_legacy@all-pipes-torture-bo,Fail
- kms_cursor_legacy@all-pipes-torture-move,Fail
-+kms_cursor_legacy@forked-bo,Fail
-+kms_cursor_legacy@forked-move,Fail
- kms_cursor_legacy@pipe-A-forked-bo,Fail
- kms_cursor_legacy@pipe-A-forked-move,Fail
- kms_cursor_legacy@pipe-A-single-bo,Fail
- kms_cursor_legacy@pipe-A-single-move,Fail
- kms_cursor_legacy@pipe-A-torture-bo,Fail
- kms_cursor_legacy@pipe-A-torture-move,Fail
-+kms_force_connector_basic@force-edid,Fail
- kms_hdmi_inject@inject-4k,Fail
-+kms_selftest@drm_format,Timeout
-+kms_selftest@drm_format_helper,Timeout
-diff --git a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
-index 9586b2339f6f..007f21e56d89 100644
---- a/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
-+++ b/drivers/gpu/drm/ci/xfails/virtio_gpu-none-fails.txt
-@@ -10,6 +10,49 @@ kms_bw@linear-tiling-1-displays-3840x2160p,Fail
- kms_bw@linear-tiling-2-displays-1920x1080p,Fail
- kms_bw@linear-tiling-2-displays-2560x1440p,Fail
- kms_bw@linear-tiling-2-displays-3840x2160p,Fail
-+kms_bw@linear-tiling-3-displays-1920x1080p,Fail
-+kms_bw@linear-tiling-3-displays-2560x1440p,Fail
-+kms_bw@linear-tiling-3-displays-3840x2160p,Fail
-+kms_bw@linear-tiling-4-displays-1920x1080p,Fail
-+kms_bw@linear-tiling-4-displays-2560x1440p,Fail
-+kms_bw@linear-tiling-4-displays-3840x2160p,Fail
-+kms_bw@linear-tiling-5-displays-1920x1080p,Fail
-+kms_bw@linear-tiling-5-displays-2560x1440p,Fail
-+kms_bw@linear-tiling-5-displays-3840x2160p,Fail
-+kms_bw@linear-tiling-6-displays-1920x1080p,Fail
-+kms_bw@linear-tiling-6-displays-2560x1440p,Fail
-+kms_bw@linear-tiling-6-displays-3840x2160p,Fail
-+kms_bw@linear-tiling-7-displays-1920x1080p,Fail
-+kms_bw@linear-tiling-7-displays-2560x1440p,Fail
-+kms_bw@linear-tiling-7-displays-3840x2160p,Fail
-+kms_bw@linear-tiling-8-displays-1920x1080p,Fail
-+kms_bw@linear-tiling-8-displays-2560x1440p,Fail
-+kms_bw@linear-tiling-8-displays-3840x2160p,Fail
-+kms_flip@absolute-wf_vblank,Fail
-+kms_flip@absolute-wf_vblank-interruptible,Fail
-+kms_flip@basic-flip-vs-wf_vblank,Fail
-+kms_flip@blocking-absolute-wf_vblank,Fail
-+kms_flip@blocking-absolute-wf_vblank-interruptible,Fail
-+kms_flip@blocking-wf_vblank,Fail
-+kms_flip@busy-flip,Fail
-+kms_flip@dpms-vs-vblank-race,Fail
-+kms_flip@dpms-vs-vblank-race-interruptible,Fail
-+kms_flip@flip-vs-absolute-wf_vblank,Fail
-+kms_flip@flip-vs-absolute-wf_vblank-interruptible,Fail
-+kms_flip@flip-vs-blocking-wf-vblank,Fail
-+kms_flip@flip-vs-expired-vblank,Fail
-+kms_flip@flip-vs-expired-vblank-interruptible,Fail
-+kms_flip@flip-vs-modeset-vs-hang,Fail
-+kms_flip@flip-vs-panning-vs-hang,Fail
-+kms_flip@flip-vs-wf_vblank-interruptible,Fail
-+kms_flip@modeset-vs-vblank-race,Fail
-+kms_flip@modeset-vs-vblank-race-interruptible,Fail
-+kms_flip@plain-flip-fb-recreate,Fail
-+kms_flip@plain-flip-fb-recreate-interruptible,Fail
-+kms_flip@plain-flip-ts-check,Fail
-+kms_flip@plain-flip-ts-check-interruptible,Fail
-+kms_flip@wf_vblank-ts-check,Fail
-+kms_flip@wf_vblank-ts-check-interruptible,Fail
- kms_invalid_mode@int-max-clock,Fail
- kms_plane_scaling@downscale-with-modifier-factor-0-25,Fail
- kms_plane_scaling@downscale-with-rotation-factor-0-25,Fail
-@@ -22,6 +65,9 @@ kms_plane_scaling@upscale-with-modifier-factor-0-25,Fail
- kms_plane_scaling@upscale-with-pixel-format-20x20,Fail
- kms_plane_scaling@upscale-with-pixel-format-factor-0-25,Fail
- kms_plane_scaling@upscale-with-rotation-20x20,Fail
-+kms_selftest@drm_format,Timeout
-+kms_selftest@drm_format_helper,Timeout
-+kms_setmode@basic,Fail
- kms_vblank@crtc-id,Fail
- kms_vblank@invalid,Fail
- kms_vblank@pipe-A-accuracy-idle,Fail
--- 
-2.40.1
-
+>
+>>>> Signed-off-by: Hemant Kumar <quic_hemantk@quicinc.com>
+>>>> Signed-off-by: Lazarus Motha <quic_lmotha@quicinc.com>
+>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>> ---
+>>>>    drivers/bus/mhi/host/main.c | 13 +++++--------
+>>>>    1 file changed, 5 insertions(+), 8 deletions(-)
+>>>>
+>>>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+>>>> index 33f27e2..d7abd0b 100644
+>>>> --- a/drivers/bus/mhi/host/main.c
+>>>> +++ b/drivers/bus/mhi/host/main.c
+>>>> @@ -1128,17 +1128,15 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+>>>>    	if (unlikely(MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state)))
+>>>>    		return -EIO;
+>>>> -	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+>>>> -
+>>>>    	ret = mhi_is_ring_full(mhi_cntrl, tre_ring);
+>>>> -	if (unlikely(ret)) {
+>>>> -		ret = -EAGAIN;
+>>>> -		goto exit_unlock;
+>>>> -	}
+>>>> +	if (unlikely(ret))
+>>>> +		return -EAGAIN;
+>>>>    	ret = mhi_gen_tre(mhi_cntrl, mhi_chan, buf_info, mflags);
+>>>>    	if (unlikely(ret))
+>>>> -		goto exit_unlock;
+>>>> +		return ret;
+>>>> +
+>>>> +	read_lock_irqsave(&mhi_cntrl->pm_lock, flags);
+>>>>    	/* Packet is queued, take a usage ref to exit M3 if necessary
+>>>>    	 * for host->device buffer, balanced put is done on buffer completion
+>>>> @@ -1158,7 +1156,6 @@ static int mhi_queue(struct mhi_device *mhi_dev, struct mhi_buf_info *buf_info,
+>>>>    	if (dir == DMA_FROM_DEVICE)
+>>>>    		mhi_cntrl->runtime_put(mhi_cntrl);
+>>>> -exit_unlock:
+>>>>    	read_unlock_irqrestore(&mhi_cntrl->pm_lock, flags);
+>>>>    	return ret;
+>>>> -- 
+>>>> 2.7.4
+>>>>
+>>>>
 
