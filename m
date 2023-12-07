@@ -1,84 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-3745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8E86808CC5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:58:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB4A4808CF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:12:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 519ABB209E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:58:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 26B451C20A41
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:12:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08F8D4439F;
-	Thu,  7 Dec 2023 15:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 515A946544;
+	Thu,  7 Dec 2023 16:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D/+rAQ/F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mgdsO7OI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B4A01719
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 07:57:31 -0800 (PST)
-Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-d9caf5cc948so1192166276.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 07:57:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701964650; x=1702569450; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=el4KRznzVU5IlewCKT4pxzzQ73Z3gnpPLuO51EUCaHk=;
-        b=D/+rAQ/FIcc7nzt7y9CEwkjZKoitB7zKSIr3aIdm135mVxsim2DC7kLTYwgPWAS4vb
-         VulvCHMFIGxR9molOuCG9kzNTV9Ph6s47G+hAJrXBBWkE1yW0dd4URCCEsNfkr2UKgFR
-         Wa2QvXq06yenqQ2QKB7A3QLLvyhSD2vOMkMp0dmizSuO5xUXVdVdfEYrRNjDFVIbb9rH
-         EaswOXKt5w0e08FN4rBh/XDIzCFLr2usyQ7V0cjpB420H6KIajItxnSwhyAi1rjLhcJ0
-         Gh8sQye0VdjdfzW/atpZ2s9y1wnX5nCt3nkbOPHy+4uIYv4LZWcpp0Dr1kVLRbz4M/ae
-         EHbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701964650; x=1702569450;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=el4KRznzVU5IlewCKT4pxzzQ73Z3gnpPLuO51EUCaHk=;
-        b=LD+K1eV1vxpmpJyu94d8r2Vj3dGf8ecP4Xwu6RUEfIPDFl9NEcQJagTCTXdWBHxQS4
-         81v5Rq02SjRBqfID87TKiMB7UMQ+/Fsd3tDsjfr1zQ2lDVbSqkjTeNAye+kLOu7LXnxh
-         hi8IMqo3EaZaPi9At8CCHiVu40bwCvM6Xohp5sz610rvVUV1Y8mjDYKYdENdsrQstRoA
-         IWY815JiwXUitSH4+3drxoXp6uN82werZUIalXn6bJV8giCDFblaaB7Fp+2tUot2MXJ/
-         +zYvo2CzDnS6rzZAu4xbbfl4rGDP8Pro6UL4w13tE5+qgx6j7Mc8Sfz7CD97kP59eg3G
-         9B5Q==
-X-Gm-Message-State: AOJu0YwUBjV67eaNease2GzbhahDuaeJ+oQNbQ/PjDUzocUyuCCD2oMF
-	cqY3VVGBUPXekncQK7X6iSESrk4ati9+GGO56C7BCLjLDn6TIj7V
-X-Google-Smtp-Source: AGHT+IG9r4TtcMNcv43vr160Du4eCcoL2z6SGity1U+65JMKznfVphViB/nGW5INoL0z0okFG84CnjiYfCvR/DgIFGA=
-X-Received: by 2002:a25:2cb:0:b0:db7:dacf:3fc9 with SMTP id
- 194-20020a2502cb000000b00db7dacf3fc9mr2323879ybc.118.1701964650372; Thu, 07
- Dec 2023 07:57:30 -0800 (PST)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEFB40BE5;
+	Thu,  7 Dec 2023 16:12:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9396DC433C8;
+	Thu,  7 Dec 2023 16:12:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701965531;
+	bh=oDFKU6He3TF2Z/VxsatMVTx0wO+MupzIPTDKqHifMUQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mgdsO7OIKFVnsRpXfPzhSFtBbKHmi+fLTH0WyXQIbUw+SmRKpaiHLmHcaQhxMjxng
+	 9IHefwqe3Ryh6cPXGecRg3Hubb0SDQ6+CfcPRYxMyquIqGqdF9+dc1Crptxu320g/y
+	 L7bSFC0PRGMrGe20aQYp6+X3X8+KuJlVundGC64PrvmFcG9BBJVX5ojLNHrxjMsjIy
+	 65Wu5b7SCS6kM/XlzY2FjFsjnDIskG1bAX2I+AuPz+xSdWTJPJkNtp4u39MMeyWE4T
+	 +p1VNFAwPB1qdJdm/n6vp6YYGvXOiIxbvB6s087lgX3gV8dzUcg/nBw/iSDI+oYRN3
+	 YDxGY6xtqQcUw==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rBGzl-00011w-1k;
+	Thu, 07 Dec 2023 17:13:01 +0100
+Date: Thu, 7 Dec 2023 17:13:01 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-usb@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, quic_ppratap@quicinc.com,
+	quic_jackp@quicinc.com
+Subject: Re: [PATCH v2 1/6] dt-bindings: usb: dwc3: Clean up hs_phy_irq in
+ bindings
+Message-ID: <ZXHvDaeoG1SuZ9xj@hovoldconsulting.com>
+References: <20231204100950.28712-1-quic_kriskura@quicinc.com>
+ <20231204100950.28712-2-quic_kriskura@quicinc.com>
+ <ZXHjXGEbdtbCiOck@hovoldconsulting.com>
+ <028097f3-9056-4c07-a868-4eeac9bc8c94@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAA8EJpqg-CrbzpSqO9W6W2c=V6TN0Yx5mfih3j4cYeOLNRz+Ng@mail.gmail.com>
- <87wmtqm536.fsf@kernel.org>
-In-Reply-To: <87wmtqm536.fsf@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 7 Dec 2023 17:57:19 +0200
-Message-ID: <CAA8EJpr5WUN81qezPx0t8H+AZSHt98Uq78kJJ7wqayAZy0NhYA@mail.gmail.com>
-Subject: Re: ath10k-firmware: WCN3990: Add board file for the Qualcomm SDM845
- MTP platform
-To: Kalle Valo <kvalo@kernel.org>
-Cc: ath10k@lists.infradead.org, 
-	"open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <028097f3-9056-4c07-a868-4eeac9bc8c94@quicinc.com>
 
-On Thu, 7 Dec 2023 at 16:59, Kalle Valo <kvalo@kernel.org> wrote:
->
->
-> I don't see any attachments, forgot to attach to it? Please resend the
-> whole file.
+On Thu, Dec 07, 2023 at 09:14:55PM +0530, Krishna Kurapati PSSNV wrote:
+ 
+> >> +        - qusb2_phy:: SoCs with QUSB2 PHY do not have separate DP/DM IRQs and
+> >> +                      expose only a single IRQ whose behavior can be modified
+> >> +                      by the QUSB2PHY_INTR_CTRL register. The required DPSE/
+> >> +                      DMSE configuration is done in QUSB2PHY_INTR_CTRL register
+> >> +                      of phy address space.
+> >> +        - {dp/dm}_hs_phy_irq:: These IRQ's directly reflect changes on the DP/
+> >> +                               DM pads of the SoC. These are used for wakeup
+> >> +                               only on SoCs with non-QUSBb2 targets with
+> > 
+> > QUSB2 typo
+> > 
+> >> +                               exception of SDM670/SDM845/SM6350.
+> >> +        - ss_phy_irq:: When in super speed mode of operation, interrupts are
+> > 
+> > Capitalise 'Super Speed'
+> > 
+> >> +                       received when a wakeup event is received on ss_phy_irq.
+> > 
+> > The description as it stands sounds circular. And this one is only used
+> > for remote wakeup right?
+> > 
+> Yes. It is used for remote wakeup. Mentioning it as wakeup event should 
+> be changed ?
 
-Oops. Done.
+It would be good to clarify that this one is the IIUC not used for
+connect/disconnect events but just for remote wakeup, that is, unlike
+the qusb2_phy and dp/dm_hs_phy interrupts.
 
+The old descriptions just vaguely said "wakeup event" and
+connect/disconnect events aren't necessarily wakeup events.
 
+> > Also have you set up the tools so that you can verify your bindings
+> > before posing them? I assume the above wouldn't pass (e.g. due to the
+> > "(optional)" strings).
+> > 
+> > There's some more details here:
+> > 
+> > 	https://docs.kernel.org/devicetree/bindings/writing-schema.html
+> > 
+> > under "Running checks".
+> 
+> I did do a dt-binding check and got the following line as well:
+> 
+>    DTC_CHK Documentation/devicetree/bindings/usb/qcom,dwc3.example.dtb
+> /local/mnt/workspace/sriramd/upstream/torvalds/linux/Documentation/devicetree/bindings/usb/qcom,dwc3.example.dtb: 
+> usb@a6f8800: interrupt-names:4: 'ss_phy_irq (optional)' was expected
+>          From schema:
 
--- 
-With best wishes
-Dmitry
+Good that you got that set up.
+
+Johan
 
