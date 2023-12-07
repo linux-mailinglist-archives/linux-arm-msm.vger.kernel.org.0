@@ -1,125 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-3606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 220CC80800F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 06:18:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D93E808024
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 06:27:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5FAE728176D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 05:18:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 292CE28179E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 05:27:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC6C210953;
-	Thu,  7 Dec 2023 05:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7782D33C4;
+	Thu,  7 Dec 2023 05:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hlXRPPdy"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PCdcqISz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A804D51
-	for <linux-arm-msm@vger.kernel.org>; Wed,  6 Dec 2023 21:18:42 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-2868cf6cb82so470070a91.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Dec 2023 21:18:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701926321; x=1702531121; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0i9fCVWdp8675S0rpZslXHDfs7IhFjRrMa9ntmatNFw=;
-        b=hlXRPPdyhTYYOaLEQlrtacYNVduZJoQLEWsWK1F6Lzlj5MTs31ReaC57eMKziuHYru
-         NQcCy6+TZh1WDThAVEqRNP77BHLnPtEmQgDxFegRDKSK/ct0oY7jr7IRMnfeAiHV/rqX
-         C/HPYZkij4SkqRtMi+evJeXHKyidY0q8s+YVDOuoXzFZaBFbK/hJ2bZLP7Ph74uhRMNn
-         vl5iuSsuNQE7ot8gXvYjWNwvABPbPYWgeOqODKKuk8hUVJGvXsZldwDQnB6UBRzx0gQu
-         H7mLh22yK23WCd0pgMjM8Y1KZGp2BYzfFwyU2o9E0PWYUeVunydJxZOQUKAfZyp60caf
-         gHSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701926321; x=1702531121;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0i9fCVWdp8675S0rpZslXHDfs7IhFjRrMa9ntmatNFw=;
-        b=mZMlfpRd7aH8UjzRfzeUW1g3QUhHIVTSXTQHlOgRogSAEfvtijF8fElZPxZP/VxEU+
-         SKPOaa+HrVI6pKeBqVLOziX3uf9h6+q6SW/0QqL1Qg8HKiZPm7W2/lckh1yzjiA0dlCI
-         0zORuYO42fpakUa/r/Ccu1OEgznZEy9kOmj7nVA4tq0v98W0IeqoDYoSZz2iuHp17fgR
-         U/jXI0vl4vakPBwR9aiTREozflerS7LDKhX/0WMJeXlWmZYiKch5p5R+sGjy/T7N0yoo
-         bODC8BpMJCwmwOBMUHjqQi7Glby3lBLdh3THxfILrzlp/0KjPnWYMIXuMP+Zraf96zxV
-         z0Dg==
-X-Gm-Message-State: AOJu0Yy/YZ3Ht8mwvYNFrKbaUM+ZuflTLE6W0bJ/RjQLXjBRivsGF9Y2
-	gUFtKnXwTYPWg/Q7xqccPa7i
-X-Google-Smtp-Source: AGHT+IFDinIj0ePzDqdc1lVKsz5u851IMvfdtrGp+1wkUAw4kbBceg5pw5hiGidd8o9jy3RJCW8KMQ==
-X-Received: by 2002:a17:90b:1289:b0:286:b484:a5ce with SMTP id fw9-20020a17090b128900b00286b484a5cemr1692666pjb.58.1701926321408;
-        Wed, 06 Dec 2023 21:18:41 -0800 (PST)
-Received: from thinkpad ([117.248.6.133])
-        by smtp.gmail.com with ESMTPSA id gc4-20020a17090b310400b00288622137dfsm362540pjb.5.2023.12.06.21.18.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 21:18:40 -0800 (PST)
-Date: Thu, 7 Dec 2023 10:48:35 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Andrew Halaney <ahalaney@redhat.com>
-Cc: martin.petersen@oracle.com, jejb@linux.ibm.com, andersson@kernel.org,
-	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_cang@quicinc.com
-Subject: Re: [PATCH 05/13] scsi: ufs: qcom: Remove the warning message when
- core_reset is not available
-Message-ID: <20231207051835.GA2932@thinkpad>
-References: <20231201151417.65500-1-manivannan.sadhasivam@linaro.org>
- <20231201151417.65500-6-manivannan.sadhasivam@linaro.org>
- <ru2zdpls5tx2wjt3oknqndikuc4we7d3haeawzrdyl7cbsycti@clx55b27nzvn>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09BADD44;
+	Wed,  6 Dec 2023 21:27:18 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B74VJdx006324;
+	Thu, 7 Dec 2023 05:27:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=sJtq/mf3IaDcHrZEnV/Gxwe8zGF+t6C09xMyyojnKQs=;
+ b=PCdcqISz+1ZdhIslnfuyA/zxzGgA3fNrYl6nnZnJ0D1+G+NOpuTa3SODZmODoLbgFqp6
+ ZcvhagraZqtBE9eDJU4x9LMT9miYeHGne8SlSg2vVHG7opkNjFxpIjkUy8YNqZKT/nJo
+ G3OyTYKjWH97Os+6OjVdxG7p38bXksaAyFQbr1xxxEfXubxJaO3/iZ+HIDrenIcNuJot
+ dWpc/As+0P4NIJIiy9dwHsLmV6T8Ani5W0v0OV7zHAPAmG9A1lywMg76g823VMDUqAEk
+ gaYB58J+2GZDMiIsMFdSndNAF9TtfuA2IhI181lEBFfoCprO/7JJzT20iOv/hLzVcLul +g== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uu2p88jye-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Dec 2023 05:27:11 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B75RAGK011917
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Dec 2023 05:27:10 GMT
+Received: from [10.253.35.241] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 6 Dec
+ 2023 21:25:25 -0800
+Message-ID: <d72ce764-41ee-4a6b-994c-7a6507dcb032@quicinc.com>
+Date: Thu, 7 Dec 2023 13:25:23 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/4] bus: mhi: host: Drop chan lock before queuing
+ buffers
+Content-Language: en-US
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_cang@quicinc.com>, <quic_mrana@quicinc.com>
+References: <1699939661-7385-1-git-send-email-quic_qianyu@quicinc.com>
+ <1699939661-7385-3-git-send-email-quic_qianyu@quicinc.com>
+ <20231124100403.GA4536@thinkpad>
+ <639d6008-bdfa-4b6e-b622-e916003ec908@quicinc.com>
+ <20231128133252.GX3088@thinkpad>
+ <5eb0a521-0b72-4d15-9a65-429c4c123833@quicinc.com>
+ <20231130053157.GB3043@thinkpad>
+ <9873ee7b-7ef1-4327-8e22-49e1cd3872f1@quicinc.com>
+ <20231206134848.GG12802@thinkpad>
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <20231206134848.GG12802@thinkpad>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ru2zdpls5tx2wjt3oknqndikuc4we7d3haeawzrdyl7cbsycti@clx55b27nzvn>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: v4W9o8s88LPsw8WWVMjZ_K60gCrzS_9F
+X-Proofpoint-ORIG-GUID: v4W9o8s88LPsw8WWVMjZ_K60gCrzS_9F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-07_03,2023-12-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ suspectscore=0 mlxlogscore=733 mlxscore=0 adultscore=0 lowpriorityscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 spamscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2312070039
 
-On Wed, Dec 06, 2023 at 12:36:41PM -0600, Andrew Halaney wrote:
-> On Fri, Dec 01, 2023 at 08:44:09PM +0530, Manivannan Sadhasivam wrote:
-> > core_reset is optional, so there is no need to warn the user if it is not
-> > available (that too not while doing host reset each time).
-> 
-> What's the bit in the parenthesis mean here? I'm having a hard time
-> following. Otherwise, this looks good to me.
-> 
 
-I was just mentioning that the core reset can happen multiple times depending on
-the scenario, so it doesn't make sense to print a warning each time if the reset
-was not available.
-
-- Mani
-
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >  drivers/ufs/host/ufs-qcom.c | 4 +---
-> >  1 file changed, 1 insertion(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > index dc93b1c5ca74..d474de0739e4 100644
-> > --- a/drivers/ufs/host/ufs-qcom.c
-> > +++ b/drivers/ufs/host/ufs-qcom.c
-> > @@ -296,10 +296,8 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
-> >  	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> >  	bool reenable_intr;
-> >  
-> > -	if (!host->core_reset) {
-> > -		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
-> > +	if (!host->core_reset)
-> >  		return 0;
-> > -	}
-> >  
-> >  	reenable_intr = hba->is_irq_enabled;
-> >  	disable_irq(hba->irq);
-> > -- 
-> > 2.25.1
-> > 
-> > 
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+On 12/6/2023 9:48 PM, Manivannan Sadhasivam wrote:
+> On Wed, Dec 06, 2023 at 10:25:12AM +0800, Qiang Yu wrote:
+>> On 11/30/2023 1:31 PM, Manivannan Sadhasivam wrote:
+>>> On Wed, Nov 29, 2023 at 11:29:07AM +0800, Qiang Yu wrote:
+>>>> On 11/28/2023 9:32 PM, Manivannan Sadhasivam wrote:
+>>>>> On Mon, Nov 27, 2023 at 03:13:55PM +0800, Qiang Yu wrote:
+>>>>>> On 11/24/2023 6:04 PM, Manivannan Sadhasivam wrote:
+>>>>>>> On Tue, Nov 14, 2023 at 01:27:39PM +0800, Qiang Yu wrote:
+>>>>>>>> Ensure read and write locks for the channel are not taken in succession by
+>>>>>>>> dropping the read lock from parse_xfer_event() such that a callback given
+>>>>>>>> to client can potentially queue buffers and acquire the write lock in that
+>>>>>>>> process. Any queueing of buffers should be done without channel read lock
+>>>>>>>> acquired as it can result in multiple locks and a soft lockup.
+>>>>>>>>
+>>>>>>> Is this patch trying to fix an existing issue in client drivers or a potential
+>>>>>>> issue in the future drivers?
+>>>>>>>
+>>>>>>> Even if you take care of disabled channels, "mhi_event->lock" acquired during
+>>>>>>> mhi_mark_stale_events() can cause deadlock, since event lock is already held by
+>>>>>>> mhi_ev_task().
+>>>>>>>
+>>>>>>> I'd prefer not to open the window unless this patch is fixing a real issue.
+>>>>>>>
+>>>>>>> - Mani
+>>>>>> In [PATCH v4 1/4] bus: mhi: host: Add spinlock to protect WP access when
+>>>>>> queueing
+>>>>>> TREs,  we add
+>>>>>> write_lock_bh(&mhi_chan->lock)/write_unlock_bh(&mhi_chan->lock)
+>>>>>> in mhi_gen_tre, which may be invoked as part of mhi_queue in client xfer
+>>>>>> callback,
+>>>>>> so we have to use read_unlock_bh(&mhi_chan->lock) here to avoid acquiring
+>>>>>> mhi_chan->lock
+>>>>>> twice.
+>>>>>>
+>>>>>> Sorry for confusing you. Do you think we need to sqush this two patch into
+>>>>>> one?
+>>>>> Well, if patch 1 is introducing a potential deadlock, then we should fix patch
+>>>>> 1 itself and not introduce a follow up patch.
+>>>>>
+>>>>> But there is one more issue that I pointed out in my previous reply.
+>>>> Sorry, I can not understand why "mhi_event->lock" acquired during
+>>>> mhi_mark_stale_events() can cause deadlock. In mhi_ev_task(), we will
+>>>> not invoke mhi_mark_stale_events(). Can you provide some interpretation?
+>>> Going by your theory that if a channel gets disabled while processing the event,
+>>> the process trying to disable the channel will try to acquire "mhi_event->lock"
+>>> which is already held by the process processing the event.
+>>>
+>>> - Mani
+>> OK, I get you. Thank you for kind explanation. Hopefully I didn't intrude
+>> too much.
+> Not at all. Btw, did you actually encounter any issue that this patch is trying
+> to fix? Or just fixing based on code inspection.
+>
+> - Mani
+Yes, we actually meet the race issue in downstream driver. But I can not 
+find more details about the issue.
+>>>>> Also, I'm planning to cleanup the locking mess within MHI in the coming days.
+>>>>> Perhaps we can revisit this series at that point of time. Will that be OK for
+>>>>> you?
+>>>> Sure, that will be great.
+>>>>> - Mani
+>>>>>
+>>>>>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>>>>>> ---
+>>>>>>>>      drivers/bus/mhi/host/main.c | 4 ++++
+>>>>>>>>      1 file changed, 4 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+>>>>>>>> index 6c6d253..c4215b0 100644
+>>>>>>>> --- a/drivers/bus/mhi/host/main.c
+>>>>>>>> +++ b/drivers/bus/mhi/host/main.c
+>>>>>>>> @@ -642,6 +642,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>>>>>>>>      			mhi_del_ring_element(mhi_cntrl, tre_ring);
+>>>>>>>>      			local_rp = tre_ring->rp;
+>>>>>>>> +			read_unlock_bh(&mhi_chan->lock);
+>>>>>>>> +
+>>>>>>>>      			/* notify client */
+>>>>>>>>      			mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+>>>>>>>> @@ -667,6 +669,8 @@ static int parse_xfer_event(struct mhi_controller *mhi_cntrl,
+>>>>>>>>      					kfree(buf_info->cb_buf);
+>>>>>>>>      				}
+>>>>>>>>      			}
+>>>>>>>> +
+>>>>>>>> +			read_lock_bh(&mhi_chan->lock);
+>>>>>>>>      		}
+>>>>>>>>      		break;
+>>>>>>>>      	} /* CC_EOT */
+>>>>>>>> -- 
+>>>>>>>> 2.7.4
+>>>>>>>>
+>>>>>>>>
 
