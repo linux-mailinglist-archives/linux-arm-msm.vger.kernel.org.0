@@ -1,127 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-3765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0ADC88090B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 19:54:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DAC0780910D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 20:10:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35E5C1C20381
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 18:54:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 179021C20866
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 19:10:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D05242ABB;
-	Thu,  7 Dec 2023 18:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 739EC46BA8;
+	Thu,  7 Dec 2023 19:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JyVyKqnZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DRqd+z8m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7223A10F9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 10:54:44 -0800 (PST)
-Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-db549f869a3so1482787276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 10:54:44 -0800 (PST)
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 603F5A9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 11:10:48 -0800 (PST)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2c9f84533beso13522651fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 11:10:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701975283; x=1702580083; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VM/OB/atyyebuFQPzZqELsxx0GGeVNPiGK0+7436XGQ=;
-        b=JyVyKqnZ0zR9VhqUNS131X8g0gbTA12SQgmRz/G0YPoABiFVMPN9feobU5w3L37ztS
-         zGLIdU5QWIbub6rYf62JgY8IsXEnBiOYeDR89V80cn6VaZXw9F7V6GbIE71LtYu4m0F9
-         bEiRFxG51xP6DVqT7QusxvDb6yB7jOWSSnK482lDorpP55HwJ2RXxjzmABUEGpoMWLvg
-         HUwAPZZYYTF+16zbcwb4twmBc1DtHcn+PYVDtKFrhiyqvMTqzISF9fKsgdp9TQozkf7K
-         k0hUzkX8oDTInHxZ+vlj2vVldQ0h/jhMLitFgQSPkElXl/7PVO+rpAkm1IoVqbrm2lHl
-         R9hQ==
+        d=linaro.org; s=google; t=1701976246; x=1702581046; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OfswJHbbaE8lthgCuxsCEF+7HdLrX0KCYICyRwFYL8Q=;
+        b=DRqd+z8mWcy9cSBAJFc7XovxoM6gE47GuGITuKPQK4NkbBOVry5J6gPE5gfcD7lwWi
+         WEbLXO3DL86Lbj9d5q23MNd9tTDTZC8Mr8KaAEt4r6uQvnySUNmNuu4RYzP6kJ4UI8mN
+         XkqfyYS6hm7YZfnvTc4641eYzQ/UUuHa1xBsTOIe82yQ5BIS89bO3wIE+lPe0juZC6Jx
+         rikzEimLdfdtjE5VLlpagn4OC1KYSVaV28sMGdmAXaYmO9++Hn7K7gSfPut3utapgvRL
+         42WyR44zjJ+bsH8VtCk024ehGbooNIlnpJmAxokVqUTKRNgTYfPNOlRBMuAfJODG8F4C
+         gpfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701975283; x=1702580083;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VM/OB/atyyebuFQPzZqELsxx0GGeVNPiGK0+7436XGQ=;
-        b=Md5KPxzjvzyC1cRQMpHdMOqihAKFpwZzLP6gzyqY06FgNr43rWU0QnS/2oCG8xZeIO
-         UGmbM2omjXdMgFzjTf85h6+ziRrBdG813NUTZAWjjHkcFRO6SO2eGcm7TyJLF89uNt8f
-         mk9q+r2qVX6XB/uCVMsauTOvOex+2WIpdfQuNMliFyUcDEpT1BpSvwObAwtAIB8/aOki
-         6d+svXKxzReX8i975LQsgGTOfjgA0LEUWmbjzVoULwbLUV3Aa0NItJ+4Aptut5fy3Qe/
-         CGM97kP5BFZbM0hVHgRtbU4AZWb30DfkJ40c1Lp4E4sAxqjNEO7/UGo3iKjDJLHRQvQv
-         JLQQ==
-X-Gm-Message-State: AOJu0YztUom7gJe9bltrTRkQY3EHIWfWNc05d5aIQxyu9DJhA9GNGoQy
-	QQ8N1byP/clrcP2PP1nto6t9Ck4n3NbE/Tfsj5bQtw==
-X-Google-Smtp-Source: AGHT+IFlacu8sH5jffAkUmShEDfKHbhNH/lx1OTgs7+dmfSvxJnCl7jLU98Pa20ue8jwSTu33MsxlIj5FJXitFDPNOQ=
-X-Received: by 2002:a25:b31b:0:b0:db7:dacf:ed7a with SMTP id
- l27-20020a25b31b000000b00db7dacfed7amr3095673ybj.91.1701975283665; Thu, 07
- Dec 2023 10:54:43 -0800 (PST)
+        d=1e100.net; s=20230601; t=1701976246; x=1702581046;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OfswJHbbaE8lthgCuxsCEF+7HdLrX0KCYICyRwFYL8Q=;
+        b=UK+hkgf3e35QvGkqeLZzjAz2o35/lMuZ77/C9kgxXu5bHUHSh0WJwZh+QgsIwaDSuQ
+         w3k0tNCsapJY+VAMzDXF8LQG9GyL5FiR/dRngN1Vzuz5kekFTXkqyCuPAPZ2mbmwQxvc
+         p8uMGfvDpQsyl274ra984I/bticz+3sIwFhRGVMl3VvwwPfRmTzEpaijuD+vv1hsSP3/
+         kNYOWaJhrwVKoiNgB+VVrQihQzlWgga25Vf7FwK7yHr7Pxn8iMIt54RqUlGOrWwkgygq
+         p7g6tw4KGTWRNjZdZR+oZtoIYBT0QsktgTJxeeryPiUdWb5Lt6F5obAaD+7NBYagORgA
+         JJWQ==
+X-Gm-Message-State: AOJu0YyR0suRMBV47mmk8HN+BAEn8Y2MKCx1cSSckftcW6aaY1yWf6Od
+	Si4YojkVPi42WJbyCuxlASAs7w==
+X-Google-Smtp-Source: AGHT+IHHZzDwVjEoqj5L0COX7ANyUFp8QKEMmxG3cMwdjoXkbsmuUH84Uxh48VDZssIMNDNTOto8AQ==
+X-Received: by 2002:a2e:9991:0:b0:2c9:c8f4:1c0c with SMTP id w17-20020a2e9991000000b002c9c8f41c0cmr1649768lji.32.1701976246456;
+        Thu, 07 Dec 2023 11:10:46 -0800 (PST)
+Received: from [172.30.205.181] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
+        by smtp.gmail.com with ESMTPSA id o18-20020a2e9b52000000b002c9f75a48fcsm23408ljj.16.2023.12.07.11.10.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Dec 2023 11:10:45 -0800 (PST)
+Message-ID: <014a4a44-0da2-49e9-ab1c-f4cc1ca2e218@linaro.org>
+Date: Thu, 7 Dec 2023 20:10:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231115205318.2536441-1-pvorel@suse.cz> <2bferiemkljxua63v6ogifpzhlbj6m2gycxrbitgmc3ybj2a4p@7kfnzcrjj6jr>
-In-Reply-To: <2bferiemkljxua63v6ogifpzhlbj6m2gycxrbitgmc3ybj2a4p@7kfnzcrjj6jr>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 7 Dec 2023 20:54:32 +0200
-Message-ID: <CAA8EJpoEzTeOSVy5qVCs6eSBTxWKRfDq0UzrEjz1Kx1sG9xkCg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] arm64: defconfig: Enable SDM660 Clock Controllers
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org, 
-	Petr Vorel <petr.vorel@gmail.com>, Martin Botka <martin.botka@somainline.org>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Aboothahir U <aboothahirpkd@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-
-On Thu, 7 Dec 2023 at 18:27, Bjorn Andersson <andersson@kernel.org> wrote:
->
-> On Wed, Nov 15, 2023 at 09:53:18PM +0100, Petr Vorel wrote:
-> > From: Petr Vorel <petr.vorel@gmail.com>
-> >
-> > Enable support for the multimedia clock controller on SDM660 devices
-> > and graphics clock controller on SDM630/636/660 devices.
-> >
-> > Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
-> > ---
-> > Changes v1->v2:
-> > * added commit message (not just the subject)
-> >
-> > NOTE motivation for this is that some not yet mainlined DTS already use
-> > both:
-> >
-> > https://github.com/sdm660-mainline/linux/blob/sdm660-next-stable/arch/arm64/boot/dts/qcom/sdm636-asus-x00td.dts
-> >
-> > Kind regards,
-> > Petr
-> >
-> >  arch/arm64/configs/defconfig | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > index acba803835b9..10a098aa8b1b 100644
-> > --- a/arch/arm64/configs/defconfig
-> > +++ b/arch/arm64/configs/defconfig
-> > @@ -1235,6 +1235,8 @@ CONFIG_SC_GCC_8180X=y
-> >  CONFIG_SC_GCC_8280XP=y
-> >  CONFIG_SC_GPUCC_8280XP=m
-> >  CONFIG_SC_LPASSCC_8280XP=m
-> > +CONFIG_SDM_MMCC_660=m
-> > +CONFIG_SDM_GPUCC_660=y
->
-> I'd expect the GPU clock controller to be a module, can you please
-> clarify why it needs to be builtin?
-
-To allow the display to be enabled early enough?
-
->
-> Regards,
-> Bjorn
->
-> >  CONFIG_SDM_CAMCC_845=m
-> >  CONFIG_SDM_GPUCC_845=y
-> >  CONFIG_SDM_VIDEOCC_845=y
-> > --
-> > 2.42.0
-> >
->
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] interconnect: qcom: Add MSM8909 interconnect provider
+ driver
+To: kernel test robot <lkp@intel.com>,
+ Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+ Georgi Djakov <djakov@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Adam Skladowski <a39.skl@gmail.com>
+References: <20231206-icc-msm8909-v1-2-fe0dd632beff@kernkonzept.com>
+ <202312071325.M9cg1wry-lkp@intel.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <202312071325.M9cg1wry-lkp@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
--- 
-With best wishes
-Dmitry
+
+On 12/7/23 07:06, kernel test robot wrote:
+> Hi Stephan,
+> 
+> kernel test robot noticed the following build errors:
+(.remove -> .remove_new)
+
+Konrad
 
