@@ -1,75 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-3781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CA2C8094E5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 22:48:25 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 643838096B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 00:41:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2F781F210F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 21:48:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0BD5D1F211DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 23:41:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49C99840D8;
-	Thu,  7 Dec 2023 21:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5C03563BE;
+	Thu,  7 Dec 2023 23:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="wr2voJ1Q";
-	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="tW/MJDf0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fVsGFRUV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2a07:de40:b251:101:10:150:64:1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7AFF1984
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 13:48:18 -0800 (PST)
-Received: from imap2.dmz-prg2.suse.org (imap2.dmz-prg2.suse.org [10.150.64.98])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 2CFAD21D8F;
-	Thu,  7 Dec 2023 21:48:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1701985697;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8/XLa3KDxqRWHmGVjr8d/G+sX8hjiP3/Fno8wa2agTg=;
-	b=wr2voJ1QFWfZP2KIHtm4oN2BdmUqpmUqm3AYq4oJGkTLrzgyveYk7uVzwijyM4sLgmxiky
-	ZRwp9COxYa6TMxRiASkU1wRAGgMlV1W4wjG8X/bFZ06JAPBbmva2PvaRiLMkG09Qmfrfm/
-	MTvZXclIUOCvKm4LebY32UjKjYWjszc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1701985697;
-	h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
-	 cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8/XLa3KDxqRWHmGVjr8d/G+sX8hjiP3/Fno8wa2agTg=;
-	b=tW/MJDf07Vx91n7qtQF1Hc2imtmSWTY5n8hk1TXpsaB/38iXIPY6XGvcTInvR/AbrAxdAu
-	9PtW08jvnTuM9ZCg==
-Received: from imap2.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap2.dmz-prg2.suse.org (Postfix) with ESMTPS id 5E69113907;
-	Thu,  7 Dec 2023 21:48:15 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
-	by imap2.dmz-prg2.suse.org with ESMTPSA
-	id PoKtFZ89cmXLIgAAn2gu4w
-	(envelope-from <pvorel@suse.cz>); Thu, 07 Dec 2023 21:48:15 +0000
-Date: Thu, 7 Dec 2023 22:48:09 +0100
-From: Petr Vorel <pvorel@suse.cz>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org, Petr Vorel <petr.vorel@gmail.com>,
-	Martin Botka <martin.botka@somainline.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Aboothahir U <aboothahirpkd@gmail.com>,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>
-Subject: Re: [PATCH v2 1/1] arm64: defconfig: Enable SDM660 Clock Controllers
-Message-ID: <20231207214809.GA302808@pevik>
-Reply-To: Petr Vorel <pvorel@suse.cz>
-References: <20231115205318.2536441-1-pvorel@suse.cz>
- <2bferiemkljxua63v6ogifpzhlbj6m2gycxrbitgmc3ybj2a4p@7kfnzcrjj6jr>
- <CAA8EJpoEzTeOSVy5qVCs6eSBTxWKRfDq0UzrEjz1Kx1sG9xkCg@mail.gmail.com>
- <644f49ae-26f0-4a4b-9a3a-53076be31d87@linaro.org>
- <CAA8EJpqmvKQHzPtzseCJ=y0GwP5Y5H_cR4RpjU97y=8q=b-zDQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B668342ABB;
+	Thu,  7 Dec 2023 23:41:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F705C433C7;
+	Thu,  7 Dec 2023 23:41:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701992467;
+	bh=F3yFkrBoPvYgnjqkAbhACfF2pHqxuP+Z8Rav20Zxl9M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fVsGFRUVrs4k5SOD5D4kjazODSA2OlpFebdxjWr9QRTQE34EGts47fCXyNNrWcQSu
+	 0we2lGdWGyCpY5jzbRxaB4KUQqrchdbtak2IZLwjdLovJHc3/GG3eT8gF0l+Q6R1wh
+	 8IuMxwKflIvH0bvQJiN1d7xTqY3fXPMM/pitmNzkk+RGGhzwJTAydRSXrNTzJ26iWP
+	 IxRs1McwWB/6Dk8gYMrYE1Qf7oxw3aOX3+BzM6i8xjm2+gdBGr8kS7ZFzKTt3QBw1f
+	 BOzJRCOAx/r2vMeuFOU+adlKp+RpubHa7AjsTb0KVYC1NaPExMotCjZApyPHR7dpx4
+	 GMeQdBaS7+H0w==
+Date: Thu, 7 Dec 2023 15:44:25 -0800
+From: Bjorn Andersson <andersson@kernel.org>
+To: Deepak Kumar Singh <quic_deesin@quicinc.com>
+Cc: quic_bjorande@quicinc.com, andersson@kernel.org, quic_clew@quicinc.com, 
+	mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org, quic_sarannya@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH V1] rpmsg: glink: smem: validate index before fifo read
+ write
+Message-ID: <yqa3hodfpdisdncluoojkqk533lqko5ymbzms3mstjfcxvbkvm@dwwzg24zxpxm>
+References: <20231201110631.669085-1-quic_deesin@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,112 +51,118 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpqmvKQHzPtzseCJ=y0GwP5Y5H_cR4RpjU97y=8q=b-zDQ@mail.gmail.com>
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spam-Level: 
-X-Spam-Score: -2.00
-X-Spamd-Result: default: False [-2.00 / 50.00];
-	 HAS_REPLYTO(0.30)[pvorel@suse.cz];
-	 RCVD_VIA_SMTP_AUTH(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 RCVD_COUNT_THREE(0.00)[3];
-	 NEURAL_HAM_SHORT(-0.20)[-1.000];
-	 RCPT_COUNT_SEVEN(0.00)[9];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 BAYES_HAM(-3.00)[100.00%];
-	 ARC_NA(0.00)[];
-	 REPLYTO_EQ_FROM(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 TAGGED_RCPT(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 URIBL_BLOCKED(0.00)[linaro.org:email];
-	 DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 MID_RHS_NOT_FQDN(0.50)[];
-	 FREEMAIL_CC(0.00)[linaro.org,kernel.org,vger.kernel.org,gmail.com,somainline.org,collabora.com,postmarketos.org];
-	 RCVD_TLS_ALL(0.00)[];
-	 SUSPICIOUS_RECIPS(1.50)[]
+In-Reply-To: <20231201110631.669085-1-quic_deesin@quicinc.com>
 
-Hi all,
+On Fri, Dec 01, 2023 at 04:36:31PM +0530, Deepak Kumar Singh wrote:
+> Fifo head and tail index can be modified with wrong values from
+> untrusted remote procs. Glink smem is not validating these index
+> before using to read or write fifo. This can result in out of
+> bound memory access if head and tail have incorrect values.
+> 
+> Add check for validation of head and tail index. This check will
+> put index within fifo boundaries, so that no invalid memory access
+> is made. Further this may result in certain packet drops unless
+> glink finds a valid packet header in fifo again and recovers.
+> 
+> Crash signature and calltrace with wrong head and tail values:
+> 
+> Internal error: Oops: 96000007 [#1] PREEMPT SMP
+> pc : __memcpy_fromio+0x34/0xb4
+> lr : glink_smem_rx_peak+0x68/0x94
+> 
+> __memcpy_fromio+0x34/0xb4
+> glink_smem_rx_peak+0x68/0x94
+> qcom_glink_native_intr+0x90/0x888
+> 
+> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
+> ---
+>  drivers/rpmsg/qcom_glink_smem.c | 21 ++++++++++++++++++---
+>  1 file changed, 18 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
+> index 7a982c60a8dd..9eba0aaae916 100644
+> --- a/drivers/rpmsg/qcom_glink_smem.c
+> +++ b/drivers/rpmsg/qcom_glink_smem.c
+> @@ -86,9 +86,14 @@ static size_t glink_smem_rx_avail(struct qcom_glink_pipe *np)
+>  	tail = le32_to_cpu(*pipe->tail);
+>  
+>  	if (head < tail)
+> -		return pipe->native.length - tail + head;
+> +		len = pipe->native.length - tail + head;
+>  	else
+> -		return head - tail;
+> +		len = head - tail;
+> +
+> +	if (WARN_ON_ONCE(len > pipe->native.length))
+> +		len = 0;
+> +
+> +	return len;
+>  }
+>  
+>  static void glink_smem_rx_peek(struct qcom_glink_pipe *np,
+> @@ -99,6 +104,10 @@ static void glink_smem_rx_peek(struct qcom_glink_pipe *np,
+>  	u32 tail;
+>  
+>  	tail = le32_to_cpu(*pipe->tail);
+> +
+> +	if (WARN_ON_ONCE(tail > pipe->native.length))
+> +		return;
 
-[ Cc Alexey Minnekhanov ]
+Just returning here will leave the caller with garbage in @data, which
+they will act upon. It does avoid the out of bounds read, but I'm not
+confident in what happens next.
 
-> On Thu, 7 Dec 2023 at 21:26, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+> +
+>  	tail += offset;
+>  	if (tail >= pipe->native.length)
+>  		tail -= pipe->native.length;
+> @@ -121,7 +130,7 @@ static void glink_smem_rx_advance(struct qcom_glink_pipe *np,
+>  
+>  	tail += count;
+>  	if (tail >= pipe->native.length)
+> -		tail -= pipe->native.length;
+> +		tail %= pipe->native.length;
 
-> > On 12/7/23 19:54, Dmitry Baryshkov wrote:
-> > > On Thu, 7 Dec 2023 at 18:27, Bjorn Andersson <andersson@kernel.org> wrote:
+If @tail had a bogus value before we incremented then we now have a
+completely random value. The next time the FIFO is read these values
+will be OK and we will return some random values to the caller.
 
-> > >> On Wed, Nov 15, 2023 at 09:53:18PM +0100, Petr Vorel wrote:
-> > >>> From: Petr Vorel <petr.vorel@gmail.com>
+>  
+>  	*pipe->tail = cpu_to_le32(tail);
+>  }
+> @@ -146,6 +155,9 @@ static size_t glink_smem_tx_avail(struct qcom_glink_pipe *np)
+>  	else
+>  		avail -= FIFO_FULL_RESERVE + TX_BLOCKED_CMD_RESERVE;
+>  
+> +	if (WARN_ON_ONCE(avail > pipe->native.length))
+> +		avail = 0;
+> +
+>  	return avail;
+>  }
+>  
+> @@ -155,6 +167,9 @@ static unsigned int glink_smem_tx_write_one(struct glink_smem_pipe *pipe,
+>  {
+>  	size_t len;
+>  
+> +	if (WARN_ON_ONCE(head > pipe->native.length))
+> +		return head;
 
-> > >>> Enable support for the multimedia clock controller on SDM660 devices
-> > >>> and graphics clock controller on SDM630/636/660 devices.
+As above, but with less probability, this might end up adjusting
+pipe->head (in glink_smem_tx_write()) to a random position within the
+FIFO - which then upon next access will corrupt the data.
 
-> > >>> Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
-> > >>> ---
-> > >>> Changes v1->v2:
-> > >>> * added commit message (not just the subject)
+This shouldn't cause any direct issues on the Linux side though, we will
+just corrupt the outgoing FIFO (which probably don't matter given that
+things are already broken).
 
-> > >>> NOTE motivation for this is that some not yet mainlined DTS already use
-> > >>> both:
+Regards,
+Bjorn
 
-> > >>> https://github.com/sdm660-mainline/linux/blob/sdm660-next-stable/arch/arm64/boot/dts/qcom/sdm636-asus-x00td.dts
-
-> > >>> Kind regards,
-> > >>> Petr
-
-> > >>>   arch/arm64/configs/defconfig | 2 ++
-> > >>>   1 file changed, 2 insertions(+)
-
-> > >>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > >>> index acba803835b9..10a098aa8b1b 100644
-> > >>> --- a/arch/arm64/configs/defconfig
-> > >>> +++ b/arch/arm64/configs/defconfig
-> > >>> @@ -1235,6 +1235,8 @@ CONFIG_SC_GCC_8180X=y
-> > >>>   CONFIG_SC_GCC_8280XP=y
-> > >>>   CONFIG_SC_GPUCC_8280XP=m
-> > >>>   CONFIG_SC_LPASSCC_8280XP=m
-> > >>> +CONFIG_SDM_MMCC_660=m
-> > >>> +CONFIG_SDM_GPUCC_660=y
-
-> > >> I'd expect the GPU clock controller to be a module, can you please
-> > >> clarify why it needs to be builtin?
-
-> > > To allow the display to be enabled early enough?
-
-Yes, I feared that it would not work when it's a module.
-Also, we already have CONFIG_SDM_GPUCC_845=y.
-I suppose I'm wrong, but I don't have any sdm660 device to test that.
-
-BTW people who are using this use both as builtin (CONFIG_SDM_MMCC_660) [2], but
-maybe it's just to help testing (boot the kernel and don't bother with modules).
-
-@Alexey, you added sdm660_defconfig [2], do you have sdm660 based device to test
-if both options work well when compiled as modules?
-
-> > That sounds like a terrible bug in drm/msm.. Display should
-> > be wholly separate from Adreno.
-
-> Let me quote Rob's email ([1])
-
-> Userspace does have better support for split display/gpu these days
-> than it did when drm/msm was first merged.  It _might_ just work if
-> one device only advertised DRIVER_RENDER and the other
-> MODESET/ATOMIC.. but I'd be a bit concerned about breaking things.  I
-> guess you could try some sort of kconfig knob to have two "msm"
-> devices and see what breaks, but I'm a bit skeptical that we could
-> make this the default anytime soon.
-
-Thanks for pointing out this.
-
-Kind regards,
-Petr
-
-> [1] https://lore.kernel.org/dri-devel/CAF6AEGs89FRmFsENLkP-Dg1ZJN2LzCfxY2-+do9jH9b8L-XZxg@mail.gmail.com/
-[2] https://github.com/sdm660-mainline/linux/blob/sdm660-next-stable/arch/arm64/configs/sdm660_defconfig#L504-L505
+> +
+>  	len = min_t(size_t, count, pipe->native.length - head);
+>  	if (len)
+>  		memcpy(pipe->fifo + head, data, len);
+> -- 
+> 2.34.1
+> 
 
