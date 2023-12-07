@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-3751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20EE2808D99
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:37:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 229F3808DA1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:37:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 51CF41C20AF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:37:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8B579B20C6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:37:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33EE9481A7;
-	Thu,  7 Dec 2023 16:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95A5446BB9;
+	Thu,  7 Dec 2023 16:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fX9x1/9e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z2VxIqSl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20E2C133
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 08:37:32 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-40b27726369so12752645e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 08:37:32 -0800 (PST)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ABDD10F1
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 08:37:33 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-40c2c65e6aaso6118245e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 08:37:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701967050; x=1702571850; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701967051; x=1702571851; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=irqia8R6fGw+gVdCZPObqSm/BhoAsGfI688KkfIakSE=;
-        b=fX9x1/9evezldx6066lfWzi5pKIfgQECUezE0gOXsdG8K+lKjkpqPWGUaa2ri7CrVA
-         WO/DYwpNxX+XuzLKYxviT/iDAAl7xY5V8v6JoVrhPZqRPM5wxy3gt/8dyqXoqAM5+Ag6
-         eqw7UXZQz3hQ5wZk98XtU4w9sJfVPk46bPBaCGfN7gOfJWNx0+0ScaIpSuRz1BQMd5mT
-         t9OyVOQn5ea5qAjuYwZxMb7dEBTvNvAxeQ5KoKJsP47tOe2vr5wd747yDH3vQBDtU2Vf
-         yKJLgzwPPW9vP2rWxYZQJk1mCNW2LuIdHJ/jEkoAUVzvFpSA8Ke3dpFcxl6MSKnuOodN
-         oyZg==
+        bh=bxKGdImuRLZ2ff2aA33QkmE9DJSE3GmgdmadEo3VeMw=;
+        b=Z2VxIqSlgQ/yQwR09JTdDuqdnj9TlsWFIlHpp39UfK4qkPcdmOOOhb3FZd375i9xFO
+         PwoeiksdIO+uIgDKOTwrSBGt5ntcpAgYgmi5HrmTw5FMqyVhbvOIsDWDsy21d5neIzFa
+         9D6alUWhOHJA2R6DlQBsyh/6qUdRTj6+RrdblE60tDSE/qg/OyXdNYQypR6775Rgg/LU
+         ZUgqP6ByMbjYzaZ4Qobn2Vk5Pv1kq20IImqhpr8LNYt1blmTG9nLiKuw39XKAoJ/1lsV
+         m2GSc5tEB4xE9BIrWi9hL0OVRxK3J1o9r4EXGp0gGnt1aqRbtY9lYACx0zY94D60xwr8
+         fCEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701967050; x=1702571850;
+        d=1e100.net; s=20230601; t=1701967051; x=1702571851;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=irqia8R6fGw+gVdCZPObqSm/BhoAsGfI688KkfIakSE=;
-        b=cES8EuBSzgOF43UbQvKTaJerU8sUQgH2T6uXg84zukHVndhVD5H8ToqrImcINLVVvK
-         TmBqB+p+3FjwU6uL+l9TxQA60DuYZrIXwyqJsJO6vUfDkhYdpPlii0XtGyHqqixENiGO
-         laMSsTXtNiMbo5L/nez/SU86IQbQihxN6LRvsBYXEESJ2C8VStMq50P+kPxqnYJSVqvk
-         F5TU+ZVthxquMlQzaqBL1PZepIamJWHjo2NAdYEHQOQcJE3f9vtl/P1W3cih+Cglb8E6
-         07LYdacWlV+yWFkAOXv6VBxScsfCDIUMo/E7O+yqpJDrdGzPTeSE8grzLyEQ8/XbAmN9
-         S+yg==
-X-Gm-Message-State: AOJu0YyoTTSyidqlbwmG16RObm+WHuAnIQ1SSF1kW7QVYzjcdKOf3Es8
-	SIPTr5LhEDqleOF9h2l+2v2FlA==
-X-Google-Smtp-Source: AGHT+IHMS/gd/XK1hnTjye0u6FJVczbf/wcZbbi+0BQsKGN+SRrXd9ba1C8zxyC14ryCDBNMElvbMA==
-X-Received: by 2002:a05:600c:1686:b0:40c:258d:2f01 with SMTP id k6-20020a05600c168600b0040c258d2f01mr1274196wmn.105.1701967050473;
-        Thu, 07 Dec 2023 08:37:30 -0800 (PST)
+        bh=bxKGdImuRLZ2ff2aA33QkmE9DJSE3GmgdmadEo3VeMw=;
+        b=BK6JGVSS0GgBMPYeGHvxdKFF50KvlECKGDfRN1fCFn2GY6zfeND7FqT2RfCWmjyai9
+         KXN/Fjom6EjxnIERkZSgzvy6mVvDAW92fw3UvAdZm5bwTtSHQUO+MPLBYgiu66aAbiDI
+         UzDHAoMJ94eRfLe/hqKa/Xl3RWORq+7J1ky99WKZ7XAMJsIbWgAddVko4KR9mw0h2r4b
+         Im+l2R5joCXt4nhaJ6ckvK7epZS7MOM+nM30kz1NUVDh2D6EZmwOKMgTbtZSg34bcWMG
+         tjnETdGxGMmeLvCClxfPG2yG6STEyNMdLa5ZVnbOqGPvC40/c46f+Bk8i0i3ojsJ4RSM
+         iCqw==
+X-Gm-Message-State: AOJu0YzQdpa8Ryfinil854MZD4ID8RKuACC8Zpv9TM/98tC5hzuMtJIh
+	VshZ0SmaxxyY/QfCnJZb8WSGBQ==
+X-Google-Smtp-Source: AGHT+IGVT4tSfLvOkF6hsdQi11xAyGnLY+Gwv96d9zkBtDv5hMF0tPmOR1j4mEuFufAdNy4eSoS+Ng==
+X-Received: by 2002:a7b:ce08:0:b0:40b:5e4a:407a with SMTP id m8-20020a7bce08000000b0040b5e4a407amr1749791wmc.154.1701967051666;
+        Thu, 07 Dec 2023 08:37:31 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id r5-20020a05600c35c500b004080f0376a0sm175424wmq.42.2023.12.07.08.37.29
+        by smtp.gmail.com with ESMTPSA id r5-20020a05600c35c500b004080f0376a0sm175424wmq.42.2023.12.07.08.37.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 08:37:30 -0800 (PST)
+        Thu, 07 Dec 2023 08:37:31 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Thu, 07 Dec 2023 17:37:18 +0100
-Subject: [PATCH 2/3] drm/msm/dp: Add DisplayPort controller for SM8650
+Date: Thu, 07 Dec 2023 17:37:19 +0100
+Subject: [PATCH 3/3] arm64: dts: qcom: sm8650: Add DisplayPort device nodes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,7 +64,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231207-topic-sm8650-upstream-dp-v1-2-b762c06965bb@linaro.org>
+Message-Id: <20231207-topic-sm8650-upstream-dp-v1-3-b762c06965bb@linaro.org>
 References: <20231207-topic-sm8650-upstream-dp-v1-0-b762c06965bb@linaro.org>
 In-Reply-To: <20231207-topic-sm8650-upstream-dp-v1-0-b762c06965bb@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -83,56 +83,183 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1359;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3909;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=pN1DcwJDKt86C9TW3cEpaDhQ15k1t6TN12ykZTFzySY=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlcfTGbloDh694L9Md9HCAYNQJZjwBRUQhOoTt+iAP
- 0zEYWiGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXH0xgAKCRB33NvayMhJ0fYLEA
- CbsGLaMiwD1kcwOST8v4C5TMqPU9pPOI+dae+FGp34VtT1Ga+UMXEDs5zNpZl9E5BFudRGsrOjTi/l
- yoygODhsUN8cCR8aJdrVC3MqnyPL8wF+GNbNLtNlO9ONfnbq2Rt6NEWSujGJH2t4t+ewJFT3KoBQTN
- U3+TGwtxrfgjvRj0mHxvCbugSg/wZTc/aoNRLHWK/P4LCcfy6AHXzqzVllW5Dzx2Zo8cWCAzqAX+/J
- fo75TfqW1BaDzpZGR7QFGB7Ovk78gBZkXTm3nfQhzpjomDIkLE9/BoSA9NtBd4sKCnQ+ERRqd43/nW
- d9JuIs7UM0Y5KoZclVi+plusRPprD49neLDk1PG735Qcbm7dhxUxlFdhfr3uuUVarB8GFMlfUFPswe
- 18TF1P/3qxt5YJb8caSK9+Jm4IKXknvPsTpYO2LsHBmRFBmUwh7oneZ+gHlpTcJJt+zZxzSFnk2tDM
- R6xxTv7Bvohw1e8HcSA3celeOcEndHbbWOfNRpchoyGvJr3NQS/+EvwhfKHcMd20HZbZrdZm3jD3Hq
- dAppg8+2HZEJYBbHvl6zjCONoavtRs07X2OhP/X7tz5jI4QCttG636AdmsvMzQaChwhvkZ/e9csB1Z
- C6yWedHpThENBtF9oobuWrGoFcdkSc23gENibredkt2w/S3yYHPC8SF1HISg==
+ bh=aQc/B+CmR/QYjLu3hk14Lm4+Zuwr6dr+9leZQG/FbkU=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlcfTGzVWS/u+tTB+TPj8R775ji3F5H3TRfRW0gv7p
+ 7CfO2cKJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXH0xgAKCRB33NvayMhJ0UCZD/
+ 9gpDy/fAE5K1IsOD/6M0Yx9T7gOTXX50h9JvKS9634rExhas0Ozv4C8fXyEbyMVqP859ku9XJ2Zjje
+ k3dRAQMKxrhv2+Nb2ufzrTpSrKJUiLJCiR7Ny1Bhk7o5Mx+JAQusDdSB5Oqh2PLWjJP7MADslJJwA7
+ IQvHroyKPoHBt5LsyJ+ze28TPQf0n9jY8aBH86S58EEQBZuwO6KAENkW4wG7JBGfS33XCwbeMxoMHq
+ hjrJNL9JQ3X+Hl1rj+RpKP5GPmwJ0/WW+Olav64ZkpcRupJU8JmbDN0J7O762PkcC5QFfGqrf43Rli
+ mf0BnwJN4guVqMmYOdKPOKVB7w3jiw5mLgusnHxFptUDmRqhHBkBMZDUt+p1G1MbeGQYGGNQuDkR3B
+ Rllmy9sjH8EeZFNuFa5R1omqWib4cYbZvgN9hsu33sKlPUmtG7qdVrL3OvqdLVED9qINfndO2TheSz
+ VVtIy5ZZobIzacQYreGM6w2M1dnBpwjUKoaNqVbnQ1ohUzgeY4PRT5WBSv1seNxOhocykDiiNpfAnD
+ qCixc73HrMU5PXOa4BX2W7WINAK6waIJEZQTYP0L0Nm7NfBrLmx6erg7Nv9Te2Nwem9n1YpEre+hQj
+ BVfEmXp7OcjlcZ4F40+0cEPbDDooPqG1Bi2QOXmFL2viWnlcKUgpKrlub9rw==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-The Qualcomm SM8650 platform comes with a DisplayPort controller
-with a different base offset than the previous SM8550 SoC,
-add support for this in the DisplayPort driver.
+Declare the displayport controller present on the Qualcomm SM8650 SoC
+and connected to the USB3/DP Combo PHY.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 120 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 118 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index b57ff6c3215d..923517046ab6 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -168,6 +168,11 @@ static const struct msm_dp_desc sm8350_dp_descs[] = {
- 	{}
- };
- 
-+static const struct msm_dp_desc sm8650_dp_descs[] = {
-+	{ .io_start = 0x0af54000, .id = MSM_DP_CONTROLLER_0, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
-+	{}
-+};
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index d1442b100e79..b2a50686d419 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -2781,6 +2781,14 @@ dpu_intf2_out: endpoint {
+ 							remote-endpoint = <&mdss_dsi1_in>;
+ 						};
+ 					};
 +
- static const struct of_device_id dp_dt_match[] = {
- 	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_descs },
- 	{ .compatible = "qcom,sc7280-dp", .data = &sc7280_dp_descs },
-@@ -178,6 +183,7 @@ static const struct of_device_id dp_dt_match[] = {
- 	{ .compatible = "qcom,sc8280xp-edp", .data = &sc8280xp_edp_descs },
- 	{ .compatible = "qcom,sdm845-dp", .data = &sc7180_dp_descs },
- 	{ .compatible = "qcom,sm8350-dp", .data = &sm8350_dp_descs },
-+	{ .compatible = "qcom,sm8650-dp", .data = &sm8650_dp_descs },
- 	{}
- };
++					port@2 {
++						reg = <2>;
++
++						dpu_intf0_out: endpoint {
++							remote-endpoint = <&mdss_dp0_in>;
++						};
++					};
+ 				};
  
+ 				mdp_opp_table: opp-table {
+@@ -2982,6 +2990,88 @@ mdss_dsi1_phy: phy@ae97000 {
+ 
+ 				status = "disabled";
+ 			};
++
++			mdss_dp0: displayport-controller@af54000 {
++				compatible = "qcom,sm8650-dp";
++				reg = <0 0xaf54000 0 0x200>,
++				      <0 0xaf54200 0 0x200>,
++				      <0 0xaf55000 0 0xc00>,
++				      <0 0xaf56000 0 0x400>,
++				      <0 0xaf57000 0 0x400>;
++
++				interrupts-extended = <&mdss 12>;
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
++				clock-names = "core_iface",
++					      "core_aux",
++					      "ctrl_link",
++					      "ctrl_link_iface",
++					      "stream_pixel";
++
++				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
++				assigned-clock-parents = <&usb_dp_qmpphy QMP_USB43DP_DP_LINK_CLK>,
++							 <&usb_dp_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
++
++				operating-points-v2 = <&dp_opp_table>;
++
++				power-domains = <&rpmhpd RPMHPD_MX>;
++
++				phys = <&usb_dp_qmpphy QMP_USB43DP_DP_PHY>;
++				phy-names = "dp";
++
++				#sound-dai-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss_dp0_in: endpoint {
++							remote-endpoint = <&dpu_intf0_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss_dp0_out: endpoint {
++						};
++					};
++				};
++
++				dp_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-162000000 {
++						opp-hz = /bits/ 64 <162000000>;
++						required-opps = <&rpmhpd_opp_low_svs_d1>;
++					};
++
++					opp-270000000 {
++						opp-hz = /bits/ 64 <270000000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-540000000 {
++						opp-hz = /bits/ 64 <540000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++
++					opp-810000000 {
++						opp-hz = /bits/ 64 <810000000>;
++						required-opps = <&rpmhpd_opp_nom>;
++					};
++				};
++			};
+ 		};
+ 
+ 		dispcc: clock-controller@af00000 {
+@@ -2996,8 +3086,8 @@ dispcc: clock-controller@af00000 {
+ 				 <&mdss_dsi0_phy 1>,
+ 				 <&mdss_dsi1_phy 0>,
+ 				 <&mdss_dsi1_phy 1>,
+-				 <0>, /* dp0 */
+-				 <0>,
++				 <&usb_dp_qmpphy QMP_USB43DP_DP_LINK_CLK>,
++				 <&usb_dp_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
+ 				 <0>, /* dp1 */
+ 				 <0>,
+ 				 <0>, /* dp2 */
+@@ -3054,6 +3144,32 @@ usb_dp_qmpphy: phy@88e8000 {
+ 			#phy-cells = <1>;
+ 
+ 			status = "disabled";
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					usb_dp_qmpphy_out: endpoint {
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					usb_dp_qmpphy_usb_ss_in: endpoint {
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					usb_dp_qmpphy_dp_in: endpoint {
++					};
++				};
++			};
+ 		};
+ 
+ 		usb_1: usb@a6f8800 {
 
 -- 
 2.34.1
