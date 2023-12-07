@@ -1,172 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-3777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5EA78092B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 21:47:26 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F008C8092C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 21:51:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 378B01F20EE6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 20:47:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8F657B20AD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 20:51:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 613325025E;
-	Thu,  7 Dec 2023 20:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59BA210947;
+	Thu,  7 Dec 2023 20:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BABDhGje"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PbTq95zo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A18A50248;
-	Thu,  7 Dec 2023 20:47:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D638EC433C7;
-	Thu,  7 Dec 2023 20:47:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701982038;
-	bh=szsXL9Pkyj4AVfw+UsXxMv2rdIObYfpxXnQD6RrB26Q=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=BABDhGjeDklAokNm+6dGqWNnZfxS3OO2Vc3g2Y+0ipyVsnBwl0U98CGmYZstopMuq
-	 E8i88OMhYZnALskRuMHpJ2CNniaeZ0NGLWFqjpI7P05HYTqLDzCIFUzz0u0FURk7v2
-	 p/KaNNFB51Liqer6Jc/o5I4JIL9b6ozn1mPSw4vv/1zzvivbFuGkfVI+67ktZE4TnX
-	 UXZVVLEAWRhaPsMVE5S5FHw+xdc09hx0cSW4EIIP4RP7RBi9nIDBH6SopoPsiEAUzm
-	 iPRc8TR+1Rfgeq7H5DBoF9WxMVuP4rD4F6GbBcVlLFZ+JqzW4b3SCn9aBp3Zlqj/SE
-	 GD7C2o9DZgltg==
-Date: Thu, 7 Dec 2023 14:47:16 -0600
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Bjorn Helgaas <bhelgaas@google.com>, Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Jonathan Derrick <jonathan.derrick@linux.dev>,
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Michael Bottini <michael.a.bottini@linux.intel.com>,
-	"David E . Box" <david.e.box@linux.intel.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>
-Subject: Re: [PATCH v2 1/6] PCI/ASPM: Add locked helper for enabling link
- state
-Message-ID: <20231207204716.GA764883@bhelgaas>
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B161715
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 12:50:59 -0800 (PST)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-5d3644ca426so12643517b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 12:50:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701982258; x=1702587058; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GHFnN9FjnDUyIm3ImJ93WmZwuwHXaZZaOetdBgpVvF0=;
+        b=PbTq95zoRmZD0Zr3XdWEkk7aWOCw88Cqs9S5pinhMf2r3ErXDzoyca2XfPu2OrVBsn
+         aG+YGu+auZ73bmHd4Z3QhDSQyOnEX7kWBaMJyIgKaDRdD8WoLM+s/+xZes/2Xv8+JO9H
+         O3jd8ZCeHua0+ulCEZO+u/aBbJZuEHtqD8gthdxm10+hiaXOqQStbPdVgpw8aFet/+cE
+         95+5CWWg0mSL/wS2Au+tfl/k3ilqVPgGXfwR2633YEKNmxkCJncVD1dhgWjHEeo+7feY
+         rKegQuMzLtodXFxCqBtvzbU/05E8Y5od+dPaXj0MCmhfMIsjOlGFoA5XUq66FN213oYb
+         WAcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701982258; x=1702587058;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GHFnN9FjnDUyIm3ImJ93WmZwuwHXaZZaOetdBgpVvF0=;
+        b=m0qR5BVJOWHlIg9tKMcbmTHZqMAOehtTbPUl9iYUfcoeSNhXaqdenTWhzuUXlaJ9s/
+         5qm7dLSaCmnXLBy4LMY0pW3MYQBIlq3OyrHUhfBAl+jfEnKqe7weydTpiQIppXfo6hxC
+         oU1TGYWA8uPjwN3/dLrLRunAfYzxqD7iR6+MRqElxbFpkYsf8Mjc8zQKwagwPL0HFpYy
+         T4nl19BXFY4TIM7rdRrjGNMHawVMujPRbLAzYUlhiidwQqi4X5/7BDxxr+4wwA8aZbPH
+         2/0BFmcOpKA4k9T6KqEmYyBr56XiV9yvoh78//KkvgRD/5Hm6lVTmvVsmQOnGETBX5zR
+         25jg==
+X-Gm-Message-State: AOJu0YyJfX8FrC+QfSXJvWv36DYjnJC00+QnHXovMlfnqsr9WyfYjn4V
+	PJTS7lgReqXXjeFeQ2kj5ZEDLGCeHt0KcR3Fup7AiQ==
+X-Google-Smtp-Source: AGHT+IEA1n39KJnSZo/hJu8BTwfWY7XwZpY7hxF+ePAJ9IpCjhaqeMU1yQaNgkLu+U39JXPMy/N8smQsdJiMZkL0r7Y=
+X-Received: by 2002:a0d:ca82:0:b0:5d8:96c:68e7 with SMTP id
+ m124-20020a0dca82000000b005d8096c68e7mr3453640ywd.45.1701982258345; Thu, 07
+ Dec 2023 12:50:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231128081512.19387-2-johan+linaro@kernel.org>
+References: <20231115205318.2536441-1-pvorel@suse.cz> <2bferiemkljxua63v6ogifpzhlbj6m2gycxrbitgmc3ybj2a4p@7kfnzcrjj6jr>
+ <CAA8EJpoEzTeOSVy5qVCs6eSBTxWKRfDq0UzrEjz1Kx1sG9xkCg@mail.gmail.com> <644f49ae-26f0-4a4b-9a3a-53076be31d87@linaro.org>
+In-Reply-To: <644f49ae-26f0-4a4b-9a3a-53076be31d87@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 7 Dec 2023 22:50:47 +0200
+Message-ID: <CAA8EJpqmvKQHzPtzseCJ=y0GwP5Y5H_cR4RpjU97y=8q=b-zDQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] arm64: defconfig: Enable SDM660 Clock Controllers
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org, 
+	Petr Vorel <petr.vorel@gmail.com>, Martin Botka <martin.botka@somainline.org>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Aboothahir U <aboothahirpkd@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-[+cc Kai-Heng]
+On Thu, 7 Dec 2023 at 21:26, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>
+>
+>
+> On 12/7/23 19:54, Dmitry Baryshkov wrote:
+> > On Thu, 7 Dec 2023 at 18:27, Bjorn Andersson <andersson@kernel.org> wrote:
+> >>
+> >> On Wed, Nov 15, 2023 at 09:53:18PM +0100, Petr Vorel wrote:
+> >>> From: Petr Vorel <petr.vorel@gmail.com>
+> >>>
+> >>> Enable support for the multimedia clock controller on SDM660 devices
+> >>> and graphics clock controller on SDM630/636/660 devices.
+> >>>
+> >>> Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+> >>> ---
+> >>> Changes v1->v2:
+> >>> * added commit message (not just the subject)
+> >>>
+> >>> NOTE motivation for this is that some not yet mainlined DTS already use
+> >>> both:
+> >>>
+> >>> https://github.com/sdm660-mainline/linux/blob/sdm660-next-stable/arch/arm64/boot/dts/qcom/sdm636-asus-x00td.dts
+> >>>
+> >>> Kind regards,
+> >>> Petr
+> >>>
+> >>>   arch/arm64/configs/defconfig | 2 ++
+> >>>   1 file changed, 2 insertions(+)
+> >>>
+> >>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> >>> index acba803835b9..10a098aa8b1b 100644
+> >>> --- a/arch/arm64/configs/defconfig
+> >>> +++ b/arch/arm64/configs/defconfig
+> >>> @@ -1235,6 +1235,8 @@ CONFIG_SC_GCC_8180X=y
+> >>>   CONFIG_SC_GCC_8280XP=y
+> >>>   CONFIG_SC_GPUCC_8280XP=m
+> >>>   CONFIG_SC_LPASSCC_8280XP=m
+> >>> +CONFIG_SDM_MMCC_660=m
+> >>> +CONFIG_SDM_GPUCC_660=y
+> >>
+> >> I'd expect the GPU clock controller to be a module, can you please
+> >> clarify why it needs to be builtin?
+> >
+> > To allow the display to be enabled early enough?
+> That sounds like a terrible bug in drm/msm.. Display should
+> be wholly separate from Adreno.
 
-On Tue, Nov 28, 2023 at 09:15:07AM +0100, Johan Hovold wrote:
-> Add a helper for enabling link states that can be used in contexts where
-> a pci_bus_sem read lock is already held (e.g. from pci_walk_bus()).
-> 
-> This helper will be used to fix a couple of potential deadlocks where
-> the current helper is called with the lock already held, hence the CC
-> stable tag.
-> 
-> Fixes: f492edb40b54 ("PCI: vmd: Add quirk to configure PCIe ASPM and LTR")
-> Cc: stable@vger.kernel.org	# 6.3
-> Cc: Michael Bottini <michael.a.bottini@linux.intel.com>
-> Cc: David E. Box <david.e.box@linux.intel.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  drivers/pci/pcie/aspm.c | 53 +++++++++++++++++++++++++++++++----------
->  include/linux/pci.h     |  3 +++
->  2 files changed, 43 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> index 50b04ae5c394..5eb462772354 100644
-> --- a/drivers/pci/pcie/aspm.c
-> +++ b/drivers/pci/pcie/aspm.c
-> @@ -1109,17 +1109,7 @@ int pci_disable_link_state(struct pci_dev *pdev, int state)
->  }
->  EXPORT_SYMBOL(pci_disable_link_state);
->  
-> -/**
-> - * pci_enable_link_state - Clear and set the default device link state so that
-> - * the link may be allowed to enter the specified states. Note that if the
-> - * BIOS didn't grant ASPM control to the OS, this does nothing because we can't
-> - * touch the LNKCTL register. Also note that this does not enable states
-> - * disabled by pci_disable_link_state(). Return 0 or a negative errno.
-> - *
-> - * @pdev: PCI device
-> - * @state: Mask of ASPM link states to enable
-> - */
-> -int pci_enable_link_state(struct pci_dev *pdev, int state)
-> +static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
->  {
->  	struct pcie_link_state *link = pcie_aspm_get_link(pdev);
->  
-> @@ -1136,7 +1126,8 @@ int pci_enable_link_state(struct pci_dev *pdev, int state)
->  		return -EPERM;
->  	}
->  
-> -	down_read(&pci_bus_sem);
-> +	if (!locked)
-> +		down_read(&pci_bus_sem);
->  	mutex_lock(&aspm_lock);
->  	link->aspm_default = 0;
->  	if (state & PCIE_LINK_STATE_L0S)
-> @@ -1157,12 +1148,48 @@ int pci_enable_link_state(struct pci_dev *pdev, int state)
->  	link->clkpm_default = (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
->  	pcie_set_clkpm(link, policy_to_clkpm_state(link));
->  	mutex_unlock(&aspm_lock);
-> -	up_read(&pci_bus_sem);
-> +	if (!locked)
-> +		up_read(&pci_bus_sem);
->  
->  	return 0;
->  }
-> +
-> +/**
-> + * pci_enable_link_state - Clear and set the default device link state so that
-> + * the link may be allowed to enter the specified states. Note that if the
-> + * BIOS didn't grant ASPM control to the OS, this does nothing because we can't
-> + * touch the LNKCTL register. Also note that this does not enable states
-> + * disabled by pci_disable_link_state(). Return 0 or a negative errno.
-> + *
-> + * @pdev: PCI device
-> + * @state: Mask of ASPM link states to enable
-> + */
-> +int pci_enable_link_state(struct pci_dev *pdev, int state)
-> +{
-> +	return __pci_enable_link_state(pdev, state, false);
-> +}
->  EXPORT_SYMBOL(pci_enable_link_state);
+Let me quote Rob's email ([1])
 
-As far as I can see, we end up with pci_enable_link_state() defined
-but never called and pci_enable_link_state_locked() being called only
-by pcie-qcom.c and vmd.c.
+Userspace does have better support for split display/gpu these days
+than it did when drm/msm was first merged.  It _might_ just work if
+one device only advertised DRIVER_RENDER and the other
+MODESET/ATOMIC.. but I'd be a bit concerned about breaking things.  I
+guess you could try some sort of kconfig knob to have two "msm"
+devices and see what breaks, but I'm a bit skeptical that we could
+make this the default anytime soon.
 
-Can we just rename pci_enable_link_state() to
-pci_enable_link_state_locked() and assert that pci_bus_sem is held, so
-we don't end up with a function that's never used?
+[1] https://lore.kernel.org/dri-devel/CAF6AEGs89FRmFsENLkP-Dg1ZJN2LzCfxY2-+do9jH9b8L-XZxg@mail.gmail.com/
 
-I hope we can obsolete this whole idea someday.  Using pci_walk_bus()
-in qcom and vmd to enable ASPM is an ugly hack to work around this
-weird idea that "the OS isn't allowed to enable more ASPM states than
-the BIOS did because the BIOS might have left ASPM disabled because it
-knows about hardware issues."  More history at
-https://lore.kernel.org/linux-pci/20230615070421.1704133-1-kai.heng.feng@canonical.com/T/#u
 
-I think we need to get to a point where Linux enables all supported
-ASPM features by default.  If we really think x86 BIOS assumes an
-implicit contract that the OS will never enable ASPM more
-aggressively, we might need some kind of arch quirk for that.
 
-If we can get there, the qcom use of pci_enable_link_state() could go
-away, and the vmd use could be replaced by some kind of "if device is
-below VMD, get rid of the legacy x86 ASPM assumption" quirk.
-
-Bjorn
+--
+With best wishes
+Dmitry
 
