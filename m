@@ -1,114 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-3715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1910A8088E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:07:39 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A23D808912
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:24:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 31D5B1C20BA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 13:07:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26C211F20FF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 13:24:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E1EB3FE24;
-	Thu,  7 Dec 2023 13:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87591405CD;
+	Thu,  7 Dec 2023 13:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EPfspUHA"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BkX+5ZMl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E738910F8
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 05:07:13 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50bf3efe2cbso763196e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 05:07:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701954432; x=1702559232; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Rzx9Bm824S2wRWYFO7S2MdJvHvf/jzSVekqRFumNr7k=;
-        b=EPfspUHAaW2n2DMq53kC5SqD0ittU+JLEp5tHIdXq65MemzEH5REBYMtZvRyLSg4eC
-         uU+O77mXMv+WpWrsX1gCM9veFNGfBnLeWB6PHMVtROx07NPmhN7kU0AHz5WL1aXdlcLd
-         NPw9bHKbARoEqsSi58yOEfUGw4tsydFUl7mwYyzxb+5jdVqURtqM+wflJUy/tFQkiMWx
-         45boftz/AFYH+GEdKpol3Ft3uaZiAUja8JAUAsQhT/N2OorZuNg7U8ylAI9QpOQFTDEm
-         rGmcwoow+6s8hB84B+CBgNgX/jfnnUQOxWwpLHCdmD8BDrTiz9E7eRhtS24iLxRPbvQD
-         3LvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701954432; x=1702559232;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Rzx9Bm824S2wRWYFO7S2MdJvHvf/jzSVekqRFumNr7k=;
-        b=OXxdST9Qb9miJTmU9Xs0B2ROT/ik5rxqyAMivy8bFrcU/wZQUmSI1mYITMVL4G89wf
-         19RyfaEhlu5HtlhRJzODFPYnbX6ClBngUvguNGRWwT/egYwztXXQYHZ98d7Cv5Q0zSwl
-         7Ydl6uFRz7WfBWyDKwBZn1cKkTOnYie4jMAoVVHSD5CcYd8I5E4/zngtB1a651s7kHoA
-         QQvsd4V1WkFcDlD1wGFmPugWxtEL9hgRZ5s86NpnNeWMxd4HXm7BJH9aIQennsMxpWpG
-         Z6WS/aCRWqOf2zRK1OzfsBRSKzK3hbcQNU+BWLEggeQDPG8EnHJcFQHV9RptgXJjw0sA
-         kWlQ==
-X-Gm-Message-State: AOJu0YwwjgFx7so0Rar7D8KIiRDhLlfVMJbhwnLKSdhdYMV554iwvLKa
-	SsBNqyzxDTAWQWSYf5IEWP69Jg==
-X-Google-Smtp-Source: AGHT+IEixdCLjEiNkYl5kW0kOJkWUb5tlY3oudtq5QiueW8AwcUOjFVFYhCiOZUnstWypxs6Zc71WA==
-X-Received: by 2002:a19:f018:0:b0:50b:e3c2:7e14 with SMTP id p24-20020a19f018000000b0050be3c27e14mr689094lfc.15.1701954432222;
-        Thu, 07 Dec 2023 05:07:12 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j21-20020a056512109500b0050bc41caf04sm167685lfg.304.2023.12.07.05.07.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 05:07:11 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Andy Gross <agross@kernel.org>,
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 295ACAA;
+	Thu,  7 Dec 2023 05:24:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701955440; x=1733491440;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=NyaA+nnXoQWzMmCkDluoshiTF/uj4vBECGOztPiEMCQ=;
+  b=BkX+5ZMlvtt4w5iDW9qDRKG995jUElR3xAn8U77VRx8NO9zPVOGQMtU5
+   bJxY03E4m8jqIHdA8Cha/ZHCUXXy+cbuKu5Z3AEUt7j/zegOwwbvCfWbh
+   fgQxMlY0iBZO2878mWnx9Kz/jN+QrimfnoyuVUA90x7AIIgNZHHObXZG4
+   Foz4n7PMh9+xGv9Zl0z+9JIwqHL7vb7pRusWXnzEkLcOKbKtDVkoSbV2r
+   EsogKuV4bG3hScIF6T2Qv8JxALaTPAL6IcxTmRhC0hMZg/iPd8rMiYGKK
+   uWpjnSWVIcot1ppaQ4MOyxHADEmhY0tCL9NFJdsJocEdjJaN38ECjOzBz
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10916"; a="480418401"
+X-IronPort-AV: E=Sophos;i="6.04,256,1695711600"; 
+   d="scan'208";a="480418401"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 05:14:29 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10916"; a="895143152"
+X-IronPort-AV: E=Sophos;i="6.04,256,1695711600"; 
+   d="scan'208";a="895143152"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orsmga004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 05:14:19 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1rBECk-00000002bf1-3JAj;
+	Thu, 07 Dec 2023 15:14:14 +0200
+Date: Thu, 7 Dec 2023 15:14:14 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Jianlong Huang <jianlong.huang@starfivetech.com>,
+	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	openbmc@lists.ozlabs.org, linux-mips@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Dong Aisheng <aisheng.dong@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Sean Wang <sean.wang@kernel.org>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>,
 	Bjorn Andersson <andersson@kernel.org>,
+	Andy Gross <agross@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH v5 10/10] ARM: dts: qcom: ipq8064: drop 'regulator' property from SAW2 devices
-Date: Thu,  7 Dec 2023 16:07:03 +0300
-Message-Id: <20231207130703.3322321-11-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231207130703.3322321-1-dmitry.baryshkov@linaro.org>
-References: <20231207130703.3322321-1-dmitry.baryshkov@linaro.org>
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Hal Feng <hal.feng@starfivetech.com>
+Subject: Re: [PATCH v4 00/23] pinctrl: Convert struct group_desc to use
+ struct pingroup
+Message-ID: <ZXHFJgs5y4RxhtBf@smile.fi.intel.com>
+References: <20231129161459.1002323-1-andriy.shevchenko@linux.intel.com>
+ <CACRpkdZhpXcx2FZYKM69j3x4dP5Nu-=3sXW+BQAw3k6c5aRrWw@mail.gmail.com>
+ <ZW3m-KDhs39i0E5n@smile.fi.intel.com>
+ <CACRpkdaDDJfDznGZE1OGNt0Rc6Wbh0-0suu6PgL+veJea9rBRQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACRpkdaDDJfDznGZE1OGNt0Rc6Wbh0-0suu6PgL+veJea9rBRQ@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 
-The SAW2 device should describe the regulator constraints rather than
-just declaring that it has the regulator.
+On Thu, Dec 07, 2023 at 10:50:29AM +0100, Linus Walleij wrote:
+> On Mon, Dec 4, 2023 at 3:49 PM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
+> > On Mon, Dec 04, 2023 at 03:38:43PM +0100, Linus Walleij wrote:
 
-Drop the 'regulator' property. If/when CPU voltage scaling is
-implemented for this platform, proper regulator nodes show be added
-instead.
+...
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+> > > >   pinctrl: core: Make pins const unsigned int pointer in struct
+> > > >     group_desc
+> > > >   pinctrl: equilibrium: Convert to use struct pingroup
+> > > >   pinctrl: keembay: Convert to use struct pingroup
+> > > >   pinctrl: nuvoton: Convert to use struct pingroup and
+> > > >     PINCTRL_PINGROUP()
+> >
+> > Hmm... Why these to be dropped?
+> 
+> I couldn't tell apart which ones could cross depend on the others,
+> simple as that...
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
-index c3677440b786..191d1cb27cb7 100644
---- a/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi
-@@ -589,7 +589,6 @@ acc0: clock-controller@2088000 {
- 		saw0: regulator@2089000 {
- 			compatible = "qcom,saw2";
- 			reg = <0x02089000 0x1000>, <0x02009000 0x1000>;
--			regulator;
- 		};
- 
- 		acc1: clock-controller@2098000 {
-@@ -604,7 +603,6 @@ acc1: clock-controller@2098000 {
- 		saw1: regulator@2099000 {
- 			compatible = "qcom,saw2";
- 			reg = <0x02099000 0x1000>, <0x02009000 0x1000>;
--			regulator;
- 		};
- 
- 		nss_common: syscon@3000000 {
+No problem as I have noticed a warning which had been fixed in a separate
+series I sent earlier and which you already applied today. Thanks!
+
 -- 
-2.39.2
+With Best Regards,
+Andy Shevchenko
+
 
 
