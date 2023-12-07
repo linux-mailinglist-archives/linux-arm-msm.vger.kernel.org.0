@@ -1,47 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-3736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88D6A808B2E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:57:23 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6253B808B3B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:59:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43A8D2834CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:57:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0DBC81F21382
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:59:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA9524437C;
-	Thu,  7 Dec 2023 14:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA0DD4437B;
+	Thu,  7 Dec 2023 14:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oOFdanfm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZJSGJf5+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F50125C5;
-	Thu,  7 Dec 2023 14:57:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BC2C433C8;
-	Thu,  7 Dec 2023 14:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE41B125C5
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 14:59:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F75CC433C7;
+	Thu,  7 Dec 2023 14:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701961035;
-	bh=rTtlsCFWDKnwMZqpHuScxag2sRjsNC4CcU7JsWRzNu8=;
+	s=k20201202; t=1701961152;
+	bh=y6sbrC0UKWgFPnZhhuODfPQ13nP8OhJjDLMyQHLhdxU=;
 	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=oOFdanfmCzaeLly9lYQnKgl7XbmVJgHTKA39+tTEAFzBoFJ81xOdLYBV3uqtSPJVE
-	 Dl0GHeEuvhADJmnCHwz0cdMjdfjPcXFtEFOZPSb1XcRwqxFV1GjSlyynYMJtB5bQzm
-	 4QZ4+67A75BaLfU1dqIrXTzKz4CHf9ZjSCmtup3XwjXYClFFYtEELJuVG2Q6J8fVLX
-	 IVw9u5kR83ODJeVSelyytqyVlfJqrFnYYO8xSRw2ygfmaXKfXY4irFELAkKtWyB0sO
-	 ifm0v6XG3IFgR0yZVueqLXf861kLj8OSgiJsx+90zzQHiVdPBxrPiukTofaccRSqnK
-	 JYlxFvYL5qSlA==
+	b=ZJSGJf5+qkZkZmvcigxY4/843aQv5gyy6SChop4yTEOEqVivwPEdAxxaXNmM/gEcL
+	 X2IvBX2IFHYt/j9Vic1Rd98w0N8miYBRe0FBUgE5pIKSy6qQoA/POrNPZsr89wf34K
+	 1WrO/wRVXm8hnaHV4yOzAaaqT9NdWO5cJu63DmqS9FuXr6+oNPgld6X7egeefmNq0w
+	 3TDXfbFRF0ARYswuG5efYcMraS7J/qoSetvckdafTObDIzSa5PSLZExLarv9l/hohk
+	 bnEeuXEDlsqKSPu2kbHv23NV9XkOI74xqOTvJy2DmTM1kond1uyYpSX5pOep9j06+E
+	 J/Pwof4u5EGMg==
 From: Kalle Valo <kvalo@kernel.org>
-To: Dylan Van Assche <me@dylanvanassche.be>
-Cc: ath10k@lists.infradead.org,  linux-arm-msm@vger.kernel.org,
-  ~postmarketos/upstreaming@lists.sr.ht,  phone-devel@vger.kernel.org
-Subject: Re: ath10k-firmware: WCN3990: Add board file for Xiaomi POCOPHONE F1
-References: <b4989ba4-5d14-0683-d3a9-cf0e983fa921@dylanvanassche.be>
-Date: Thu, 07 Dec 2023 16:57:12 +0200
-In-Reply-To: <b4989ba4-5d14-0683-d3a9-cf0e983fa921@dylanvanassche.be> (Dylan
-	Van Assche's message of "Fri, 25 Aug 2023 17:16:17 +0200")
-Message-ID: <877clqnjqv.fsf@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: ath10k@lists.infradead.org,  "open list:DRM DRIVER FOR MSM ADRENO GPU"
+ <linux-arm-msm@vger.kernel.org>
+Subject: Re: ath10k-firmware: WCN3990: Add board file for the Qualcomm
+ SDM845 MTP platform
+References: <CAA8EJpqg-CrbzpSqO9W6W2c=V6TN0Yx5mfih3j4cYeOLNRz+Ng@mail.gmail.com>
+Date: Thu, 07 Dec 2023 16:59:09 +0200
+In-Reply-To: <CAA8EJpqg-CrbzpSqO9W6W2c=V6TN0Yx5mfih3j4cYeOLNRz+Ng@mail.gmail.com>
+	(Dmitry Baryshkov's message of "Mon, 28 Aug 2023 16:38:52 +0300")
+Message-ID: <87wmtqm536.fsf@kernel.org>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -49,67 +50,67 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Dylan Van Assche <me@dylanvanassche.be> writes:
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-> I would like to include the board file for the Xiaomi POCOPHONE F1
-> smartphone.
-> This smartphone is manufactured by Xiaomi and uses the Snapdragon
-> SDM845 SoC.
-> At postmarketOS, we run the mainline kernel on this phone so shipping
-> this board file
-> from upstream would be a great addition. A variant property was needed
-> to avoid colliding
-> with other SDM8845-based smartphones since they all share the same
-> qmi-board-id and qmi-chip-id values.
+> We'd like to ask for inclusion of the board file for the Qualcomm
+> SDM845 MTP board. It is a hardware development kit manufactured by
+> Qualcomm, using the Snapdragon SDM845 SoC and a variant of wcn3990
+> BT/WiFi chip.
 >
-> Below, the questions from the wiki:
+> Following the questions from the ath10k wiki page:
 >
-> * description for what hardware this is:
+> * description for what hardware this is
+> - It is SDM845-based platform
+> - It uses wcn3990 chip as a WiFi and BT radio
+> - For the reference:
 >
-> Smartphone with a SDM845 chip and a WCN3990 Bluetooth/WiFi chip.
-> The WCN3990 chip is connected to 2 QM488xx radios, one is used
-> for 2.4Ghz and the other one for 5Ghz radio.
+> ath10k_snoc 18800000.wifi: qmi chip_id 0x30214 chip_family 0x4001
+> board_id 0x3f soc_id 0x40030001
+> ath10k_snoc 18800000.wifi: qmi fw_version 0x2009856b
+> fw_build_timestamp 2018-07-19 12:28 fw_build_id
+> QC_IMAGE_VERSION_STRING=WLAN.HL.2.0-01387-QCAHLSWMTPLZ-1
+> ath10k_snoc 18800000.wifi: failed to fetch board data for
+> bus=snoc,qmi-board-id=3f,qmi-chip-id=30214,variant=Qualcomm_sdm845mtp
+> from ath10k/WCN3990/hw1.0/board-2.bin
+> ath10k_snoc 18800000.wifi: wcn3990 hw1.0 target 0x00000008 chip_id
+> 0x00000000 sub 0000:0000
+> ath10k_snoc 18800000.wifi: kconfig debug 1 debugfs 0 tracing 0 dfs 0 testmode 0
+> ath10k_snoc 18800000.wifi: firmware ver  api 5 features
+> wowlan,mgmt-tx-by-reference,non-bmi crc32 b3d4b790
+> ath10k_snoc 18800000.wifi: htt-ver 3.53 wmi-op 4 htt-op 3 cal file
+> max-sta 32 raw 0 hwcrypto 1
+> ath10k_snoc 18800000.wifi: invalid MAC address; choosing random
 >
-> * origin of the board file (did you create it yourself or where you
-> =C2=A0 downloaded)
+> * origin of the board file
+>   - This file comes from the firmware package provided by Thundercomm for
+> the RB3 platform (also sdm845-based), cross-checked to be the same as
+> the file provided together with the sdm845-mtp board.
 >
-> Extracted from the stock firmware.
+> * ids to be used with the board file
 >
-> * ids to be used with the board file (ATH10K_BD_IE_BOARD_NAME in ath10k)
+> bus=snoc,qmi-board-id=3f,qmi-chip-id=30214,variant=Qualcomm_sdm845mtp
 >
-> - WCN3990 hw1.0
-> =C2=A0 + bus=3Dsnoc,qmi-board-id=3Dff,qmi-chip-id=3D30214,variant=3Dxiaom=
-i_beryllium
-> =C2=A0=C2=A0=C2=A0 sha256sum:
-> 470a670fa15fd1f5625246556c83cb3aa811b0e954813da518e241e3a48bf4a2
-> =C2=A0=C2=A0=C2=A0 md5sum: 0655a0b7865c13172c43422c035d02a2
+> Note, the device comes with the board_id not changed from 0xff.
+> Following the example of existing boards we are adding the
+> calibration variant.
 >
-> * attach the actual board file (board.bin)
+> * md5sum of each new board file to add
 >
-> The name of the files are equal to the id string in the board-2.bin
-> (minus the ".bin")
+> $ md5sum *
+> c1f5ff1660cf6dcd74bff7b41c9e693f
+> bus=snoc,qmi-board-id=3f,qmi-chip-id=30214,variant=Qualcomm_sdm845mtp.bin
+>
+> $ sha256sum *
+> 8b250ac1bea81825cc6f4a70105dea89b0952340a9c77a8ab37e99cbfa63e53d
+> bus=snoc,qmi-board-id=3f,qmi-chip-id=30214,variant=Qualcomm_sdm845mtp.bin
 
-Thanks, added to WCN3990/hw1.0/board-2.bin:
+I don't see any attachments, forgot to attach to it? Please resend the
+whole file.
 
-New:
-bus=3Dsnoc,qmi-board-id=3Dff,qmi-chip-id=3D30214,variant=3Dxiaomi_beryllium
-
-Changed:
-
-
-Deleted:
-
-1 board image(s) added, 0 changed, 0 deleted, 26 in total
-
-https://github.com/kvalo/ath10k-firmware/commit/a041131869db6eadcf0d4533e5b=
-340a81d055a3b
-
---=20
+-- 
 https://patchwork.kernel.org/project/linux-wireless/list/
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatc=
-hes
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
