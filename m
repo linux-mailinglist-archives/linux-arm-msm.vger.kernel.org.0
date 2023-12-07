@@ -1,122 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-3759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98874808E0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:57:47 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E50CC808E1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 18:02:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41AE5281767
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:57:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 85AC2B20DD0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:02:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44C76481C0;
-	Thu,  7 Dec 2023 16:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA31481D6;
+	Thu,  7 Dec 2023 17:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MseZB7+K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SUXL88G2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07DB71704;
-	Thu,  7 Dec 2023 08:57:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701968262; x=1733504262;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Gz/YhlEPqHemYXUvHjjd7D2SyWR2QGO2GITEF/SCnbY=;
-  b=MseZB7+Ky0+c1Bd6J17kAMR0tTSv6k34qNmT+T0G8jWAGWD5uJO1ABx8
-   7IMobCRAUVQlM4VayuKivp+7mEktUSIWeirZIW65rQVgNV8Wnb7vQAcLt
-   GJps9plRapFoN8cwmOGA2wIs1/9HZ6TsX/XkbCFHfq+F9BefUyxFn3Ut3
-   F+rVXcepRx5oVsamftS+KsY7osT9Y6VXtas+g9cDvARdK7VtXnk7Y4xxu
-   onJuJMza9vtTxoeRPfe7WAIUZNw7ESLUqgjC38ZcHjdOJwRQXtYgbnm8q
-   iFywbgrSk5SKYcyIoSlZ41iuU6HxS37C2vM5dldHqia9V8gl03bUB553U
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="373761370"
-X-IronPort-AV: E=Sophos;i="6.04,258,1695711600"; 
-   d="scan'208";a="373761370"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2023 08:57:41 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10917"; a="1019018026"
-X-IronPort-AV: E=Sophos;i="6.04,258,1695711600"; 
-   d="scan'208";a="1019018026"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by fmsmga006.fm.intel.com with ESMTP; 07 Dec 2023 08:57:38 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rBHgu-000CYl-11;
-	Thu, 07 Dec 2023 16:57:36 +0000
-Date: Fri, 8 Dec 2023 00:57:04 +0800
-From: kernel test robot <lkp@intel.com>
-To: Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-	Georgi Djakov <djakov@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>,
-	Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add MSM8909 interconnect
- provider driver
-Message-ID: <202312080018.m4nXAKLG-lkp@intel.com>
-References: <20231206-icc-msm8909-v1-2-fe0dd632beff@kernkonzept.com>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1A8481D2;
+	Thu,  7 Dec 2023 17:02:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0221C433CB;
+	Thu,  7 Dec 2023 17:02:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701968544;
+	bh=Fb3OEJrH9btLg9K1FmUX1cmvE3pr36zNrQMZ9E7ShWA=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=SUXL88G2c/Hr8KQtofUGU+sEfTDuCefgTxtVpsw3sxg7UMDVFje98c8wewAHxL/rM
+	 XaKam7ipwURuIuhShSovT85YC04IHDxnCP+Z4w6Ul+WmiR8nNJf/3lPDaG8ysRFaTY
+	 XfjfPlTMET2MT4XokKp+MgpEfMoQXMLs6H2EWglGLJZXpnkIkitkP+1mOR6+NM2DCm
+	 Ju1BxETuX8y6xgiMPgWAhGiL9z8e+p6lDJ2eXDv4cFonnDoREdMDqQniScuwMG+AZh
+	 ekoDzo3xG9bgTD8BA/eSL26MMJqX6RXYgJcw0PJ3EbykKR0MB9l8pSipBqvv44Q92E
+	 PrmXlTKszeQDg==
+From: Lee Jones <lee@kernel.org>
+To: Lee Jones <lee@kernel.org>, Johan Hovold <johan+linaro@kernel.org>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+In-Reply-To: <20231206111754.7410-1-johan+linaro@kernel.org>
+References: <20231206111754.7410-1-johan+linaro@kernel.org>
+Subject: Re: [PATCH v3 0/4] dt-bindings: mfd: fix up PMIC examples
+Message-Id: <170196854169.143088.10044379957904828667.b4-ty@kernel.org>
+Date: Thu, 07 Dec 2023 17:02:21 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231206-icc-msm8909-v1-2-fe0dd632beff@kernkonzept.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.12.3
 
-Hi Stephan,
+On Wed, 06 Dec 2023 12:17:50 +0100, Johan Hovold wrote:
+> When reviewing the various SPMI PMIC bindings, I noticed that several
+> examples were incorrect and misleading and could also use some cleanup.
+> 
+> This series addresses the mfd ones along with some related issues.
+> 
+> [ The PM8008 actually sits on an i2c bus but it is related to the other
+>   Qualcomm SPMI PMICs. ]
+> 
+> [...]
 
-kernel test robot noticed the following build errors:
+Applied, thanks!
 
-[auto build test ERROR on feaf241ae2da2a73cb421473f52a4732128a996f]
+[1/4] dt-bindings: mfd: hisilicon,hi6421-spmi-pmic: fix up binding reference
+      commit: e23f1530eab97e8d9dfbbdd9af3802c9c1e026a4
+[2/4] dt-bindings: mfd: hisilicon,hi6421-spmi-pmic: fix regulator binding
+      commit: d5c005ff9fe33dc7c2c3e13d1bdca698f441ac86
+[3/4] dt-bindings: mfd: hisilicon,hi6421-spmi-pmic: clean up example
+      commit: 1aa77a7ed020721c6c4a3da16ea3a970f2ce4eea
+[4/4] dt-bindings: mfd: pm8008: clean up example node names
+      commit: 7bb6a356ed6392c5e78e3d668055090970c1f9da
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Stephan-Gerhold/dt-bindings-interconnect-Add-Qualcomm-MSM8909-DT-bindings/20231206-223626
-base:   feaf241ae2da2a73cb421473f52a4732128a996f
-patch link:    https://lore.kernel.org/r/20231206-icc-msm8909-v1-2-fe0dd632beff%40kernkonzept.com
-patch subject: [PATCH 2/2] interconnect: qcom: Add MSM8909 interconnect provider driver
-config: arm64-allyesconfig (https://download.01.org/0day-ci/archive/20231208/202312080018.m4nXAKLG-lkp@intel.com/config)
-compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project.git 4a5ac14ee968ff0ad5d2cc1ffa0299048db4c88a)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231208/202312080018.m4nXAKLG-lkp@intel.com/reproduce)
+--
+Lee Jones [李琼斯]
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202312080018.m4nXAKLG-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
->> drivers/interconnect/qcom/msm8909.c:1319:12: error: incompatible function pointer types initializing 'int (*)(struct platform_device *)' with an expression of type 'void (struct platform_device *)' [-Wincompatible-function-pointer-types]
-    1319 |         .remove = qnoc_remove,
-         |                   ^~~~~~~~~~~
-   1 error generated.
-
-
-vim +1319 drivers/interconnect/qcom/msm8909.c
-
-  1316	
-  1317	static struct platform_driver msm8909_noc_driver = {
-  1318		.probe = qnoc_probe,
-> 1319		.remove = qnoc_remove,
-  1320		.driver = {
-  1321			.name = "qnoc-msm8909",
-  1322			.of_match_table = msm8909_noc_of_match,
-  1323			.sync_state = icc_sync_state,
-  1324		},
-  1325	};
-  1326	module_platform_driver(msm8909_noc_driver);
-  1327	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
