@@ -1,173 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-3616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F560808234
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 08:55:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59F3380824B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 09:00:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 953ACB21674
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 07:55:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11486283155
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 08:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 930EC1E4A7;
-	Thu,  7 Dec 2023 07:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D59D1DDE2;
+	Thu,  7 Dec 2023 08:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ENVZhDKs"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ilPCaLe3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715B91E4A2;
-	Thu,  7 Dec 2023 07:55:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F360C433C7;
-	Thu,  7 Dec 2023 07:55:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701935730;
-	bh=h2qXX+SDRSNTW3YzbKtkw81hP5ImdwnjfPNFY/0DW7Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ENVZhDKsDCJEWt2gqs/Itk/W+0OBm1YSOWMeUtZbDTk+La8+6ONji9ytbE5xtzLGm
-	 hDJIXrXUQkWer4CkV1ipNAMAtbzP/OL5Aza0NbY6nV13HVkd8kfn2h6EDEqRAEQX+5
-	 98oh/IsLPYu+UItkolSoxPsSX8TTHDNhforVEFonu75ZWM56GdtK7nGaz1F4NaRB6z
-	 /wTuPiNrMexMtLkwPFxBEFQpZP8tCnhgtnz3VWdYRraaz2yZKGszwwXmIHxT/RSQ70
-	 DUwXvzNxPTXZudre5Cp3iXAzBGJUqJ8NFtZrKDjiq65QZlXM6mRiZR1f/3xWXoaORK
-	 Rfn6B976M696w==
-Date: Thu, 7 Dec 2023 13:25:20 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Can Guo <quic_cang@quicinc.com>
-Cc: bvanassche@acm.org, mani@kernel.org, adrian.hunter@intel.com,
-	vkoul@kernel.org, beanhuo@micron.com, avri.altman@wdc.com,
-	junwoo80.lee@samsung.com, martin.petersen@oracle.com,
-	linux-scsi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	"Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v8 08/10] scsi: ufs: ufs-qcom: Add support for UFS device
- version detection
-Message-ID: <20231207075520.GF2932@thinkpad>
-References: <1701520577-31163-1-git-send-email-quic_cang@quicinc.com>
- <1701520577-31163-9-git-send-email-quic_cang@quicinc.com>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41CEBB2;
+	Thu,  7 Dec 2023 00:00:11 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B76Igpp028697;
+	Thu, 7 Dec 2023 08:00:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=lGjg+eMB7ihoQUbzm2j98upCYMWjjJlXLBUfI58OJP4=;
+ b=ilPCaLe3G8fTRmgELV/+eppm5dcISeKA12S/8uAm3k0rRSOYmjWaPSlEKnEv1hSHJQ7T
+ jU3iBnZ+PYlj9wjJs0hsh9YMdQILLJ2QnR/BMrL2HoHlaCsQ35vWZe8MJ1xYQxTxdihF
+ KNpYGmvvaudPZnaFhlKW5vvUyHJnW1D8dUMIgtsiyx08GKEvrn1JJrHObmUOPlREZk9y
+ hCP8fEOopB2HL47rn3Z0T9mU0mgz6aA0ytyA9LnGMf6fPn6AUUghxPjfL4QBO4BScQVV
+ ZmFLEklgnsoAkKbMY0BV4NGc6YJPBxtEFiEY0l4adrCTLP8/D20A28s+ZGJQwWdz3tQ3 Hw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3utuhfa09x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Dec 2023 08:00:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B7807Ln005793
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Dec 2023 08:00:07 GMT
+Received: from [10.239.132.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 7 Dec
+ 2023 00:00:04 -0800
+Message-ID: <775026a4-82d1-4369-9d22-c33a031a8f70@quicinc.com>
+Date: Thu, 7 Dec 2023 15:59:59 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/2] pinctl: qcom: sm4450: Add SM4450 pinctrl driver
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <linus.walleij@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20231206020840.33228-1-quic_tengfan@quicinc.com>
+ <957060a5-1d99-4dee-a83d-004622e79262@linaro.org>
+From: Tengfei Fan <quic_tengfan@quicinc.com>
+In-Reply-To: <957060a5-1d99-4dee-a83d-004622e79262@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1701520577-31163-9-git-send-email-quic_cang@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GYy-VF-8Jx1yM5filw1g7EFapqgOzPYd
+X-Proofpoint-GUID: GYy-VF-8Jx1yM5filw1g7EFapqgOzPYd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-07_06,2023-12-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
+ lowpriorityscore=0 mlxscore=0 mlxlogscore=486 phishscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2312070063
 
-On Sat, Dec 02, 2023 at 04:36:14AM -0800, Can Guo wrote:
-> From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
-> 
-> Start from HW ver 5, a spare register in UFS host controller is added and
-> used to indicate the UFS device version. The spare register is populated by
-> bootloader for now, but in future it will be populated by HW automatically
-> during link startup with its best efforts in any boot stage prior to Linux.
-> 
-> During host driver init, read the spare register, if it is not populated
-> with a UFS device version, go ahead with the dual init mechanism. If a UFS
-> device version is in there, use the UFS device version together with host
-> controller's HW version to decide the proper PHY gear which should be used
-> to configure the UFS PHY without going through the second init.
-> 
-> Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
-> Signed-off-by: Can Guo <quic_cang@quicinc.com>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-- Mani
+在 12/6/2023 4:59 PM, Krzysztof Kozlowski 写道:
+> On 06/12/2023 03:08, Tengfei Fan wrote:
+>> Add SM4450 pinctrl driver for support enable uart console.
+>>
+>> Signed-off-by: Tengfei Fan <quic_tengfan@quicinc.com>
+>> ---
+>> v5 -> v6:
+>>    - squash the fixups into the newly added driver
+>>    - drop reviewed-by due to update patch as new comments
+> 
+> Really? Why? What exactly changed in the patch you dropped my review?
+> 
+> Best regards,
+> Krzysztof
+> 
+There was a wrong understanging of reviewed-by tag before. reviewed-by 
+tag will be added again in the next version patch series.
 
-> ---
-> 
-> v7 -> v8:
-> Fixed a BUG introduced from v6 -> v7. The spare register is added since HW ver 5, hence exclude HW ver == 4.
-> 
-> ---
->  drivers/ufs/host/ufs-qcom.c | 35 ++++++++++++++++++++++++++++-------
->  drivers/ufs/host/ufs-qcom.h |  4 ++++
->  2 files changed, 32 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index ee3f07a..968a4c0 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1065,17 +1065,38 @@ static void ufs_qcom_advertise_quirks(struct ufs_hba *hba)
->  static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
->  {
->  	struct ufs_host_params *host_params = &host->host_params;
-> +	u32 val, dev_major;
->  
->  	host->phy_gear = host_params->hs_tx_gear;
->  
-> -	/*
-> -	 * For controllers whose major HW version is < 4, power up the PHY using
-> -	 * minimum supported gear (UFS_HS_G2). Switching to max gear will be
-> -	 * performed during reinit if supported. For newer controllers, whose
-> -	 * major HW version is >= 4, power up the PHY using max supported gear.
-> -	 */
-> -	if (host->hw_ver.major < 0x4)
-> +	if (host->hw_ver.major < 0x4) {
-> +		/*
-> +		 * For controllers whose major HW version is < 4, power up the
-> +		 * PHY using minimum supported gear (UFS_HS_G2). Switching to
-> +		 * max gear will be performed during reinit if supported.
-> +		 * For newer controllers, whose major HW version is >= 4, power
-> +		 * up the PHY using max supported gear.
-> +		 */
->  		host->phy_gear = UFS_HS_G2;
-> +	} else if (host->hw_ver.major >= 0x5) {
-> +		val = ufshcd_readl(host->hba, REG_UFS_DEBUG_SPARE_CFG);
-> +		dev_major = FIELD_GET(UFS_DEV_VER_MAJOR_MASK, val);
-> +
-> +		/*
-> +		 * Since the UFS device version is populated, let's remove the
-> +		 * REINIT quirk as the negotiated gear won't change during boot.
-> +		 * So there is no need to do reinit.
-> +		 */
-> +		if (dev_major != 0x0)
-> +			host->hba->quirks &= ~UFSHCD_QUIRK_REINIT_AFTER_MAX_GEAR_SWITCH;
-> +
-> +		/*
-> +		 * For UFS 3.1 device and older, power up the PHY using HS-G4
-> +		 * PHY gear to save power.
-> +		 */
-> +		if (dev_major > 0x0 && dev_major < 0x4)
-> +			host->phy_gear = UFS_HS_G4;
-> +	}
->  }
->  
->  static void ufs_qcom_set_host_params(struct ufs_hba *hba)
-> diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-> index 11419eb..32e51d9 100644
-> --- a/drivers/ufs/host/ufs-qcom.h
-> +++ b/drivers/ufs/host/ufs-qcom.h
-> @@ -23,6 +23,8 @@
->  #define UFS_HW_VER_MINOR_MASK	GENMASK(27, 16)
->  #define UFS_HW_VER_STEP_MASK	GENMASK(15, 0)
->  
-> +#define UFS_DEV_VER_MAJOR_MASK	GENMASK(7, 4)
-> +
->  /* vendor specific pre-defined parameters */
->  #define SLOW 1
->  #define FAST 2
-> @@ -54,6 +56,8 @@ enum {
->  	UFS_AH8_CFG				= 0xFC,
->  
->  	REG_UFS_CFG3				= 0x271C,
-> +
-> +	REG_UFS_DEBUG_SPARE_CFG			= 0x284C,
->  };
->  
->  /* QCOM UFS host controller vendor specific debug registers */
-> -- 
-> 2.7.4
-> 
 
 -- 
-மணிவண்ணன் சதாசிவம்
+Thx and BRs,
+Tengfei Fan
 
