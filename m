@@ -1,42 +1,42 @@
-Return-Path: <linux-arm-msm+bounces-3740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0147808BC5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:27:56 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA2AD808BDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:31:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8A2801F21340
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:27:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AA659B20A47
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:31:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2455144C88;
-	Thu,  7 Dec 2023 15:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10C9444C9D;
+	Thu,  7 Dec 2023 15:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TgL9KtdY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tKI5e+Z7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F196040BFC;
-	Thu,  7 Dec 2023 15:27:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5FDC433C7;
-	Thu,  7 Dec 2023 15:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82C244C96;
+	Thu,  7 Dec 2023 15:31:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE94C433C9;
+	Thu,  7 Dec 2023 15:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701962869;
-	bh=WuHw8xBDQ4YPG0E788n4gpBGlBKTZtk7wXdWqhrweF4=;
+	s=k20201202; t=1701963089;
+	bh=6F4ahMF1HkJD/fLnjNXZvdSTw88g4sCNHF10gcN6v14=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TgL9KtdYlG4PFBVAkV/sg39gPBkBc1aKidxwfqYRrzk2ZA4RHPcOPy0HGyeZso8Z9
-	 bhTJU6U4hfQspY18LbEMb55CsfoESrH1Tg1OqsgRGFNMxO62AlQRTGZZXNuSo/sbAK
-	 wgoumdqFMPTxtnbfsBKet6cgEgWu/Lh16lt5PMi/wfTyaBqDvOuW3KJ0chfmEWDSo9
-	 bpe9/6+b75Tzpp6pHxxT1hlnHTVzvXVXlked6bsW6oetQnPGFgjpBZHaxXuGle+8h4
-	 RgooKFeqnIWvdCRijDdkC3u+hFpn747kWtx/08ovW73iluc+N74sD1qPEZv1+Jvbnq
-	 h5hls87q6xxfQ==
+	b=tKI5e+Z7SRmOTHUEIpDvA0cfxmqVkOIgYb/ExhWL1GIr38FKOpv+LUlJTrLJmw/Bt
+	 kM3hr9wKXV16NNrg/pDjrwLb1mRts+uOP3R44iRTU40lzeWP9KauCr8PZ7WUp+STg8
+	 +6l/Vp8jg4G9pxQq105DqH4p+pcWSYSerhKYSW7lanNTLa9u0bFDNCBVZLEe0yHMMB
+	 zh5Qr7k6SxCPfKrXIvi1NSDri9SQEIqW5qHx6+E8w+u+vv0N53+ImF6jTg/Od2hmYP
+	 BPpJGR8RMkWWCo8AF1WQQgSGAKDn0UHq0GjoYj+PrT/O2vfUwy/F+/Cuj54Y6dJWRC
+	 F6hfLSUK5kokQ==
 Received: from johan by xi.lan with local (Exim 4.96.2)
 	(envelope-from <johan@kernel.org>)
-	id 1rBGIp-0000q6-1V;
-	Thu, 07 Dec 2023 16:28:39 +0100
-Date: Thu, 7 Dec 2023 16:28:39 +0100
+	id 1rBGMN-0000r2-1S;
+	Thu, 07 Dec 2023 16:32:19 +0100
+Date: Thu, 7 Dec 2023 16:32:19 +0100
 From: Johan Hovold <johan@kernel.org>
 To: Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
@@ -52,11 +52,10 @@ Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org, quic_ppratap@quicinc.com,
 	quic_jackp@quicinc.com
-Subject: Re: [PATCH v2 2/6] usb: dwc3: qcom: Rename hs_phy_irq to
- qusb2_phy_irq
-Message-ID: <ZXHkpwji_AzXMjfm@hovoldconsulting.com>
+Subject: Re: [PATCH v2 3/6] arm64: dts: qcom: Fix hs_phy_irq for QUSB2 targets
+Message-ID: <ZXHlg3orGSEXjO7w@hovoldconsulting.com>
 References: <20231204100950.28712-1-quic_kriskura@quicinc.com>
- <20231204100950.28712-3-quic_kriskura@quicinc.com>
+ <20231204100950.28712-4-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,28 +64,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231204100950.28712-3-quic_kriskura@quicinc.com>
+In-Reply-To: <20231204100950.28712-4-quic_kriskura@quicinc.com>
 
-On Mon, Dec 04, 2023 at 03:39:46PM +0530, Krishna Kurapati wrote:
-> For wakeup to work, driver needs to enable interrupts that depict what is
-> happening on th DP/DM lines. On QUSB targets, this is identified by
+On Mon, Dec 04, 2023 at 03:39:47PM +0530, Krishna Kurapati wrote:
+> On several QUSB2 Targets, the hs_phy_irq mentioned is actually
+> qusb2_phy interrupt specific to QUSB2 Phy's. Rename hs_phy_irq
 
-typo: the
+('PHY' throughout)
 
-> qusb2_phy whereas on SoCs using Femto PHY, separate {dp,dm}_hs_phy_irq's
-> are used instead.
+> to qusb_phy for such targets.
+
+'qusb2_phy'
+
+> In actuality, the hs_phy_irq is also present in these targets, but
+> kept in for debug purposes in hw test environments. This is not
+> triggered by default and its functionality is mutually exclusive
+> to that of qusb2_phy interrupt.
 > 
-> The implementation incorrectly names qusb2_phy interrupts as "hs_phy_irq".
-> Clean this up so that driver would be using only qusb2/(dp & dm) for wakeup
-> purposes.
+> Add missing hs_phy_irq's, pwr_event irq's for qusb2 phy targets.
 
-Here too you should say something about why this won't break any systems
-booting using an older devicetree. Specifically, the QUSB2 PHY interrupt
-has never been armed on any system running mainline as those bits never
-made it upstream.
+You also add some SS_PHY interrupts which could potentially enable
+remote wakeup.
 
-So an alternative to this could also be to just drop the QUSB2 PHY
-interrupt handling from this driver for now.
+> Also modify order of interrupts in accordance to bindings update.
+
+Say something here to as to why this is safe (e.g. all known current
+users look up these interrupts by name).
+ 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 
 Johan
 
