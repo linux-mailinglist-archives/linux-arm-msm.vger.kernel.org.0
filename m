@@ -1,84 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-3760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E50CC808E1C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 18:02:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F10E2808E1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 18:03:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 85AC2B20DD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:02:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 374AC1C20AD8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:03:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA31481D6;
-	Thu,  7 Dec 2023 17:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A29D6125C5;
+	Thu,  7 Dec 2023 17:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SUXL88G2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tzhsdZt5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1A8481D2;
-	Thu,  7 Dec 2023 17:02:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0221C433CB;
-	Thu,  7 Dec 2023 17:02:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701968544;
-	bh=Fb3OEJrH9btLg9K1FmUX1cmvE3pr36zNrQMZ9E7ShWA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=SUXL88G2c/Hr8KQtofUGU+sEfTDuCefgTxtVpsw3sxg7UMDVFje98c8wewAHxL/rM
-	 XaKam7ipwURuIuhShSovT85YC04IHDxnCP+Z4w6Ul+WmiR8nNJf/3lPDaG8ysRFaTY
-	 XfjfPlTMET2MT4XokKp+MgpEfMoQXMLs6H2EWglGLJZXpnkIkitkP+1mOR6+NM2DCm
-	 Ju1BxETuX8y6xgiMPgWAhGiL9z8e+p6lDJ2eXDv4cFonnDoREdMDqQniScuwMG+AZh
-	 ekoDzo3xG9bgTD8BA/eSL26MMJqX6RXYgJcw0PJ3EbykKR0MB9l8pSipBqvv44Q92E
-	 PrmXlTKszeQDg==
-From: Lee Jones <lee@kernel.org>
-To: Lee Jones <lee@kernel.org>, Johan Hovold <johan+linaro@kernel.org>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20231206111754.7410-1-johan+linaro@kernel.org>
-References: <20231206111754.7410-1-johan+linaro@kernel.org>
-Subject: Re: [PATCH v3 0/4] dt-bindings: mfd: fix up PMIC examples
-Message-Id: <170196854169.143088.10044379957904828667.b4-ty@kernel.org>
-Date: Thu, 07 Dec 2023 17:02:21 +0000
+Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34D351709
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 09:03:07 -0800 (PST)
+Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5d400779f16so7582497b3.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 09:03:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701968586; x=1702573386; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=eGavWJn3BFskMXePj8G/Gc7zkKDdmqreyDRTVCoA6Wg=;
+        b=tzhsdZt53Pilc43ombspsat/1H/XDEHaxgmBs0PvPDtLvUOjabuRf8zD121xPX2o6K
+         u1Dqb+z+8knUXY8FjpB7awzCOT1UvOsPEKflAxYa++5tIh+rf9g7DwauL1dLdEVJHpq9
+         RbtFyScBYxKdo7HF4r0+5KHl7d8YJto4mNPHpd8riTiJzKFQnNU3G6N9r8+amOpqUsl1
+         OR/zu3QWtM0RHnKxMLvavkkyoLRv9tA/INkAW8tGylF/Fcelic6Q3Wqss0tJ0mPFlcHZ
+         yKhRJalXKfJeYptKR5SIiS/q0CM9M/4kwyTl5Qr1zBLPiOayRC5yjzUBEWJ0wmeEgC6+
+         Lf2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701968586; x=1702573386;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eGavWJn3BFskMXePj8G/Gc7zkKDdmqreyDRTVCoA6Wg=;
+        b=UFrGrEZtZxhF2Gg5CEdNNDOjosWhSjpdy/H3+UBFoBQTCx8VK5ckOAU4yZG4S9BpmK
+         ziFI8XkaUUk5+IJkQ7plINoElkGHZkt3MrgD5uDO+GjqpSousD/spKgNvWxEemf6LP6w
+         urovdSCowsDuusrzgd0IGdJiBXW4UakiurfBjr1PIDy++f9Ni7Ck8S457b4NkYchbicI
+         tgxwEVP1oSI8hZCIcrEBScK4H4tOxUkmH8NVjydf8EfvuueKd+l1Ucp+ZMamc6/HR4VL
+         RJYK0JQXUDiJ6BXcwVaPtA19CSSmbeSNSMSb3a3XoCYcFeQLlTdOXjVYcJsPuedtadxV
+         9+jQ==
+X-Gm-Message-State: AOJu0YxQxXVtieE0MeE9qYIJ4J5L1chf428dRziTQcHEjeehyWKl7G6W
+	50QmzaT6CdG3E4D6Kd5sF7HBR7zDKjSto62QSyrmVg==
+X-Google-Smtp-Source: AGHT+IFi1Lw+dYQG5rp3RmkzlgCLipb19CQiXyiuFQHGeZdsmEG6DXb3riJxACss4LeAc2sE3dJFU23/biQpd2Etzf8=
+X-Received: by 2002:a05:690c:2b06:b0:5d3:b71b:4d30 with SMTP id
+ em6-20020a05690c2b0600b005d3b71b4d30mr3163725ywb.17.1701968586143; Thu, 07
+ Dec 2023 09:03:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.12.3
+References: <20231207-topic-sm8650-upstream-dp-v1-0-b762c06965bb@linaro.org> <20231207-topic-sm8650-upstream-dp-v1-2-b762c06965bb@linaro.org>
+In-Reply-To: <20231207-topic-sm8650-upstream-dp-v1-2-b762c06965bb@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 7 Dec 2023 19:02:55 +0200
+Message-ID: <CAA8EJprskAYWm6M_yOOmUEHdWV9Ot3_VBxo4MtPYDKBizPHyuQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] drm/msm/dp: Add DisplayPort controller for SM8650
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, 06 Dec 2023 12:17:50 +0100, Johan Hovold wrote:
-> When reviewing the various SPMI PMIC bindings, I noticed that several
-> examples were incorrect and misleading and could also use some cleanup.
-> 
-> This series addresses the mfd ones along with some related issues.
-> 
-> [ The PM8008 actually sits on an i2c bus but it is related to the other
->   Qualcomm SPMI PMICs. ]
-> 
-> [...]
+On Thu, 7 Dec 2023 at 18:37, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>
+> The Qualcomm SM8650 platform comes with a DisplayPort controller
+> with a different base offset than the previous SM8550 SoC,
+> add support for this in the DisplayPort driver.
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Applied, thanks!
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[1/4] dt-bindings: mfd: hisilicon,hi6421-spmi-pmic: fix up binding reference
-      commit: e23f1530eab97e8d9dfbbdd9af3802c9c1e026a4
-[2/4] dt-bindings: mfd: hisilicon,hi6421-spmi-pmic: fix regulator binding
-      commit: d5c005ff9fe33dc7c2c3e13d1bdca698f441ac86
-[3/4] dt-bindings: mfd: hisilicon,hi6421-spmi-pmic: clean up example
-      commit: 1aa77a7ed020721c6c4a3da16ea3a970f2ce4eea
-[4/4] dt-bindings: mfd: pm8008: clean up example node names
-      commit: 7bb6a356ed6392c5e78e3d668055090970c1f9da
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
---
-Lee Jones [李琼斯]
-
+-- 
+With best wishes
+Dmitry
 
