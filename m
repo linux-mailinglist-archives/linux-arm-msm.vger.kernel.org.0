@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CD4980911B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 20:16:33 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40F7C809137
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 20:25:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7EE11C2085B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 19:16:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EABD928177E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 19:25:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54F9F4F5F1;
-	Thu,  7 Dec 2023 19:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55AD24F5FE;
+	Thu,  7 Dec 2023 19:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RFX5feVU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aapZXh8g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98DC2A9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 11:16:27 -0800 (PST)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-50bf82f4409so1120725e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 11:16:27 -0800 (PST)
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAFE71731
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 11:24:57 -0800 (PST)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c9f7fe6623so14583681fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 11:24:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701976586; x=1702581386; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1701977096; x=1702581896; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9Njx3DTvexbkSox5QqyKZyNLg2RSJfBg1X63hFLY1KM=;
-        b=RFX5feVUGwwvw6KncI/OM6otptG18NUUXkWhNnzK6QIG44A9waHYmUTtutgoqeS1qD
-         S2hREuw0HtX7v+sRc10pi9U7rbmxKdQ8NeWlV6sWgy1Ba+Z712nHorjj9VOrvOvLtpka
-         HLVslUo3UHgFRIFvPn+Qdg6AWGBsvdqVbNf2msLP1yKFcqMdU7BEKIsus5c1UWUx3kDj
-         uib01GYELW951rLfukQ6P1fry6rvq4fpYooa7gk/C7/JjYYt8fStyK8QgNMcCwQqPYXn
-         DlJwYjeS74QcXZeRG8htoXWjXIvfcekYwcodpYebt2CxWUFlLrd+P6yOLex+w/GtbKoh
-         dI/w==
+        bh=YVaODAR3o/Ibyy68Y5wtq42VvON75SYxd68wi+HuMbg=;
+        b=aapZXh8gNXnkNDyCEaF2CkI3afCG7YiDlbr+psnIu7TKK+I8/1APWcUZ/u96GhYc3M
+         UpWSLUmZcpReZ/5bXvPoD41Zf1ZAOKWUW6N1kFXXonaaM3Qq6aTGFI6t/Axs7U+Sihbp
+         m3JuYFAE7Es77L8dQvZi8lCSL1rpK3E54UVHBiLNCU72XGWTvgxdaZZU5mG+5kwleuDM
+         yvz5E0GKj0yO4vLf2hbozliSLvwOQbfqOIMDoETznw2dlNtk2sTXK5yg9eUDCWj6fpH9
+         U7PKdF1m54Bgobii2+ki5ZHodDNnyMVjNXjTIiYPq6azn/ckmQbX53D937kEwDl3YP9l
+         avGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701976586; x=1702581386;
+        d=1e100.net; s=20230601; t=1701977096; x=1702581896;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Njx3DTvexbkSox5QqyKZyNLg2RSJfBg1X63hFLY1KM=;
-        b=lMeYJODdCNm6n4rcuR4g1zsYeAdbISabH6CunyhPCXCjApvgkOduRSpKhuaiMf64jr
-         VNaGE3pEuftkwn+hQF9XRNdqh0vROVrsKQA9IiIYEr946pqo73jY0ZRtq3OnRj3VoUa2
-         GtTgZz/uvT7wAS0+XrdpJ+scuKn9no+BOr97QbE6sFGPYv4+4TXcZwUc9OwkMsz8AM5d
-         c8DuBUfKOJLo6RjigRfrqkb7ZU4llc4MOm49QF08jVvV8uDgt+eJj6EfOWV1Hp1WV+Uy
-         zLf+LTwHUYDH/ByUYSBnnxIU4JPEVeAO0uow9US6RotvVY0XPn+DaSMkoxe9aiVjADTP
-         cROg==
-X-Gm-Message-State: AOJu0Yx8v5oOvhqQLSx1tGuGVBfufxBZldFj8MNDHb46IbwrgbH4nPjX
-	tT3XTthtcAtcQ3eIY3Zjog4hfg==
-X-Google-Smtp-Source: AGHT+IGaN3FmyZNrLbkDLl2aF5fW0Mr4v/txXTd2hd8fE41nJB/ar2K2hjxM7QHkmGusyTiDEXZ88g==
-X-Received: by 2002:a05:6512:4d0:b0:50b:fa6e:e386 with SMTP id w16-20020a05651204d000b0050bfa6ee386mr3129058lfq.30.1701976585818;
-        Thu, 07 Dec 2023 11:16:25 -0800 (PST)
+        bh=YVaODAR3o/Ibyy68Y5wtq42VvON75SYxd68wi+HuMbg=;
+        b=mrGCO7zjLDqqCd2tEPH75ujfQwNr3m5QSlHTBEdEkgzYVy3AYW8dkyPb2etXD1vDtv
+         SZcnNaFZbtzJ8D7/+K0PpX9uio898WnK7wY691CIMZ9Hcw3u597Br8kxkz/hbtUWXY5Z
+         EVxbKcxw2oqnKjtYrTdtk/dX4UjmmjUyvuKnRGwkMsXhEX0WrPRkDR9Ai82JWlMB4Cbj
+         zL6HGwt2xbrd7ua0BMoLcGYbfpSJaSNFG+6p1QR1tbyyGJaXuQ409u273WHQHj+tRGy9
+         7DkXL712V2u1JsQwbGom8TIgS4u8JE2lPG0C+ujj/318SBAZnpO9G406b9M2UJsnf+6F
+         riPw==
+X-Gm-Message-State: AOJu0YyTZSMm8pG9RVoyMDBC9tBT06FUExQCllU5faIiYDs4VZfNV2W1
+	NXSzTUeJBZgGfvOKwPBB9asYwg==
+X-Google-Smtp-Source: AGHT+IFbt/5mwz2PM1xcvV0ngLhtlHgCEprELvE1ziPZmZYPzXnNF0jvMRZNxbcmV6BSINZKU+pZmw==
+X-Received: by 2002:a2e:97d3:0:b0:2ca:18de:126b with SMTP id m19-20020a2e97d3000000b002ca18de126bmr1347468ljj.43.1701977095729;
+        Thu, 07 Dec 2023 11:24:55 -0800 (PST)
 Received: from [172.30.205.181] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id f20-20020a193814000000b0050c219545efsm23109lfa.200.2023.12.07.11.16.24
+        by smtp.gmail.com with ESMTPSA id a11-20020a05651c010b00b002ca0a5dc73csm24380ljb.9.2023.12.07.11.24.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Dec 2023 11:16:25 -0800 (PST)
-Message-ID: <545d3ace-66e5-4470-b3a4-cbdac5ae473d@linaro.org>
-Date: Thu, 7 Dec 2023 20:16:23 +0100
+        Thu, 07 Dec 2023 11:24:55 -0800 (PST)
+Message-ID: <71459bab-05b9-41f6-bb32-2b744736487d@linaro.org>
+Date: Thu, 7 Dec 2023 20:24:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,83 +62,102 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] dt-bindings: phy: qcom-edp: Add X1E80100 PHY
- compatibles
+Subject: Re: [PATCH 2/3] power: supply: Add Acer Aspire 1 embedded controller
+ driver
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring
- <robh+dt@kernel.org>, Krzysztof Kozlowski
- <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Johan Hovold <johan@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231122-phy-qualcomm-edp-x1e80100-v3-0-576fc4e9559d@linaro.org>
- <20231122-phy-qualcomm-edp-x1e80100-v3-2-576fc4e9559d@linaro.org>
- <b6d3928c-75ba-47a3-93fc-a60729be2e35@linaro.org>
+To: Nikita Travkin <nikita@trvn.ru>, Sebastian Reichel <sre@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20231207-aspire1-ec-v1-0-ba9e1c227007@trvn.ru>
+ <20231207-aspire1-ec-v1-2-ba9e1c227007@trvn.ru>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <b6d3928c-75ba-47a3-93fc-a60729be2e35@linaro.org>
+In-Reply-To: <20231207-aspire1-ec-v1-2-ba9e1c227007@trvn.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 
 
-On 12/7/23 17:51, Krzysztof Kozlowski wrote:
+On 12/7/23 12:20, Nikita Travkin wrote:
+> Acer Aspire 1 is a Snapdragon 7c based laptop. It uses an embedded
+> controller to control the charging and battery management, as well as to
+> perform a set of misc functions.
+> 
+> Unfortunately, while all this functionality is implemented in ACPI, it's
+> currently not possible to use ACPI to boot Linux on such Qualcomm
+> devices. To allow Linux to still support the features provided by EC,
+> this driver reimplments the relevant ACPI parts. This allows us to boot
+> the laptop with Device Tree and retain all the features.
+> 
+> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+> ---
+[...]
+
+> +	case POWER_SUPPLY_PROP_CAPACITY:
+> +		val->intval = le16_to_cpu(ddat.capacity_now) * 100
+> +			      / le16_to_cpu(sdat.capacity_full);
+It may be just my OCD and im not the maintainer here, but I'd do
+/= here
 
 [...]
 
->> +allOf:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,x1e80100-dp-phy
->> +    then:
->> +      properties:
->> +        phy-type:
->> +          description: DP (default) or eDP type
-> 
-> Properties must be defined in top-level "properties:" block. In
-> allOf:if:then you only disallow them for other variants.
-> 
->> +          enum: [ 6, 13 ]
->> +          default: 6
-> 
-> Anyway, I was thinking this should be rather argument to phy-cells.
-I'm not sure I'm for this, because the results would be:
+> +	case POWER_SUPPLY_PROP_MODEL_NAME:
+> +		if (sdat.model_id - 1 < ARRAY_SIZE(aspire_ec_psy_battery_model))
+> +			val->strval = aspire_ec_psy_battery_model[sdat.model_id - 1];
+> +		else
+> +			val->strval = "Unknown";
+Would it make sense to print the model_id that's absent from the LUT
+here and similarly below?
 
---- device.dts ---
-&dp_controller0 {
-     phys = <&dp_phy0 PHY_EDP>;
-};
+> +		break;
+> +
+> +	case POWER_SUPPLY_PROP_MANUFACTURER:
+> +		if (sdat.vendor_id - 3 < ARRAY_SIZE(aspire_ec_psy_battery_vendor))
+> +			val->strval = aspire_ec_psy_battery_vendor[sdat.vendor_id - 3];
+> +		else
+> +			val->strval = "Unknown";
+> +		break;
+> +
+> +	default:
+> +		return -EINVAL;
+> +	}
+Another ocd trip, i'd add a newline before return
 
-&dp_controller1 {
-     phys = <&dp_phy1 PHY_DP>;
-};
-------------------
+> +	return 0;
+> +}
+[...]
 
-as opposed to:
+> +	/*
+> +	 * The original ACPI firmware actually has a small sleep in the handler.
+> +	 *
+> +	 * It seems like in most cases it's not needed but when the device
+> +	 * just exits suspend, our i2c driver has a brief time where data
+> +	 * transfer is not possible yet. So this delay allows us to suppress
+> +	 * quite a bunch of spurious error messages in dmesg. Thus it's kept.
+Ouch.. do you think i2c-geni needs fixing on this part?
 
---- device.dts ---
-&dp_phy0 {
-     phy-type <PHY_EDP>;
-};
+[...]
 
-&dp_phy1 {
-     phy-type = <PHY_DP>;
-};
-------------------
+> +	switch (id) {
+> +	case 0x0: /* No event */
+> +		break;
+Is this a NOP/watchdog sort of thing?
 
-i.e., we would be saying "this board is connected to this phy
-instead" vs "this phy is of this type on this board".
+[...]
 
-While none of them really fit the "same hw, different config"
-situation, I'd vote for the latter one being closer to the
-truth
+> +
+> +static struct i2c_driver aspire_ec_driver = {
+> +	.driver = {
+> +		.name = "aspire-ec",
+> +		.of_match_table = aspire_ec_of_match,
+> +		.pm = pm_sleep_ptr(&aspire_ec_pm_ops),
+> +	},
+> +	.probe = aspire_ec_probe,
+> +	.id_table = aspire_ec_id,
+Since it's tristate, I'd expect an entry for .remove_new here
 
 Konrad
 
