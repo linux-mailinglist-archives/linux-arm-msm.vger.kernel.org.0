@@ -1,99 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-3730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2652F808B08
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:50:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E98A2808B14
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 15:53:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4EDD51C208FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:50:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 940B11F212FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:53:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75E823D0D4;
-	Thu,  7 Dec 2023 14:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18F7A42A9D;
+	Thu,  7 Dec 2023 14:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="a9mwNEUW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AkJvStpk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0799D170A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 06:50:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1701960628;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=z40f2Fj9Y4MJPtpLN8oop6sdLxqO9gAb+p2VS6poMvg=;
-	b=a9mwNEUWP8tWD2dKlRhFpoFef6AkM8uYVNKLtJU31szh8Ud5uzLQQQBgQLJVeQ8orPhtEq
-	OLGOAu1123NRsCNorB0j/xoDi7PIWDJz/uCY4Hi4aKlrrXuUMv+jjlRiVixBc8fNLaIDQZ
-	JGIA7z5rdiEUoELh/hYrBZOs0/tU+N0=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-9ByeB6BHONa7tJzfOiOj9w-1; Thu, 07 Dec 2023 09:50:26 -0500
-X-MC-Unique: 9ByeB6BHONa7tJzfOiOj9w-1
-Received: by mail-oo1-f72.google.com with SMTP id 006d021491bc7-58a276efa48so1002446eaf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 06:50:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701960626; x=1702565426;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z40f2Fj9Y4MJPtpLN8oop6sdLxqO9gAb+p2VS6poMvg=;
-        b=Lx/RYxg2eR3yliylvNgEHAm4V9fRse2sRcZTT0gsCtfpZcqG3Mm0A0x8Y8cvxdj7ug
-         qNhfwDOWZkUMaxbclqYxVnK+u85XKCMyFzbicvjzioXzsJQb3IR+LSzyThKRswgJPopH
-         koPRZyHWAnsiYCwWLKgT7xotLvZkQBiKthX7QrzRQKIjAmUB827+Wjd4Np5OofuRfwGl
-         6SAhHw9nnVOelYKV7G+tbQOWdTIdB2eEv3PfVOEdG1g8w7Mt3I1mj2Xs0Dad+2lO7Oqz
-         TbjGOUVX51396QpbscS7UVmSrdYcW/D74hVwzX9g3L0msqjjbHAqieU43sIRtnB5AiTs
-         R0Gg==
-X-Gm-Message-State: AOJu0YyfOYbWFKc2Xu7fAXgD6csyqstErvoZR0QqvN86gLJ/Fx1dTidl
-	j+Ls10EOofxN+2lNNx4SMKH+q6UedqT3g5TH8uXSPP46zwErRoACczcKnaIQGunddCwljdh5MQ5
-	F4/gduRK5p5BcUwZFkGvqB6fuug==
-X-Received: by 2002:a05:6358:938c:b0:16f:eb38:e930 with SMTP id h12-20020a056358938c00b0016feb38e930mr2901432rwb.13.1701960626273;
-        Thu, 07 Dec 2023 06:50:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFN6r3K4vxPrfCUgyW4H13rPHjCx4Kbxc3KQVv9VJAn/47jz87juDBKDdsYhKUTxdaPY9iGhA==
-X-Received: by 2002:a05:6358:938c:b0:16f:eb38:e930 with SMTP id h12-20020a056358938c00b0016feb38e930mr2901423rwb.13.1701960625993;
-        Thu, 07 Dec 2023 06:50:25 -0800 (PST)
-Received: from fedora ([2600:1700:1ff0:d0e0::47])
-        by smtp.gmail.com with ESMTPSA id m16-20020ad44b70000000b0067a2b91f969sm540730qvx.117.2023.12.07.06.50.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 06:50:25 -0800 (PST)
-Date: Thu, 7 Dec 2023 08:50:23 -0600
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] soc: qcom: pmic_pdcharger_ulog: fix sparse warnings
-Message-ID: <tavnoj3mt7ylwuqn6giyqimppxn4s6ig2b2uusu2dgd6knybkt@p6ljuiq7nkef>
-References: <20231207-topic-sm8x50-upstream-fix-pdcharger-ulog-sparse-v1-1-43f75455a9e3@linaro.org>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E984141C88
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 14:53:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3766C433C7;
+	Thu,  7 Dec 2023 14:53:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701960781;
+	bh=LXSs+8RJL1znQ6oY9ZxWI0HONEsynqIj/M/NtbC+bsQ=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=AkJvStpkNbiCVcZG57zBkoP+C9BhLHF6WoB/YA22wpO11n9v0FeQOfAj89VAls3o0
+	 oskhmfy1CubkTHkESeQF6u/GHinYDfE8JwlqLqVyx9aWYOgmTUGlX9/o461nh84qK4
+	 y/9s+1y6NbhUw6dhXIqN0pQ4rNMdcj/ARrA2bC4D8jtwfXzc/vmJZK9md7Z3LDS+kZ
+	 98Po47udv7sJLCkemxKHq2d95864AUf84mO2fv2TgEKEWVBoZ1EC4cITh7sHFr2z0a
+	 UvKr3iSf+KmR6+m9LtuhQFhVYFgtI1rrdWy8hOiv2HGgsA27KhAPQ2PtIAqj6fAgRi
+	 q7Giw7P1mtGcw==
+From: Kalle Valo <kvalo@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: ath10k@lists.infradead.org,  "open list:DRM DRIVER FOR MSM ADRENO GPU"
+ <linux-arm-msm@vger.kernel.org>
+Subject: Re: ath10k-firmware: WCN3990: Add board file for the Qualcomm
+ Robotics RB1 platform
+References: <CAA8EJpoMoLTLz9UOFt4gwHcnyLVzBoUhAeRSs_Tkz=d3zzq_HA@mail.gmail.com>
+Date: Thu, 07 Dec 2023 16:52:58 +0200
+In-Reply-To: <CAA8EJpoMoLTLz9UOFt4gwHcnyLVzBoUhAeRSs_Tkz=d3zzq_HA@mail.gmail.com>
+	(Dmitry Baryshkov's message of "Fri, 25 Aug 2023 00:50:03 +0300")
+Message-ID: <87o7f2njxx.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231207-topic-sm8x50-upstream-fix-pdcharger-ulog-sparse-v1-1-43f75455a9e3@linaro.org>
+Content-Type: text/plain
 
-Hey Neil,
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-On Thu, Dec 07, 2023 at 09:31:54AM +0100, Neil Armstrong wrote:
-> Fix sparse warning by comverting values to le32() as expected
-> in the get_ulog_req_msg.hdr struct.
-> 
-> Fixes: 086fdb48bc65 ("soc: qcom: add ADSP PDCharger ULOG driver")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202312060355.M0eJtq4X-lkp@intel.com/
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Hello Kalle,
+>
+> We'd like to ask for inclusion of the board file for the Qualcomm
+> Robotics RB1 platform. It is
+> an IOT platform manufactured by Thundercomm, using the Snapdragon QRB2210 SoC.
+>
+> Following the questions from the ath10k wiki page:
+>
+> * description for what hardware this is
+> - It is an QRB2210-based platform (QRB2210)
+> - It uses wcn3990 chip as a WiFi and BT radio
+> - For the reference:
+>
+> ath10k_snoc c800000.wifi: qmi chip_id 0x120 chip_family 0x4007
+> board_id 0xff soc_id 0x40670000
+> ath10k_snoc c800000.wifi: qmi fw_version 0x337302d3 fw_build_timestamp
+> 2023-01-06 01:50 fw_build_id
+> QC_IMAGE_VERSION_STRING=WLAN.HL.3.3.7.c2-00723-QCAHLSWMTPLZ-1
+> ath10k_snoc c800000.wifi: wcn3990 hw1.0 target 0x00000008 chip_id
+> 0x00000000 sub 0000:0000
+> ath10k_snoc c800000.wifi: kconfig debug 0 debugfs 0 tracing 0 dfs 0 testmode 0
+> ath10k_snoc c800000.wifi: firmware ver  api 5 features
+> wowlan,mgmt-tx-by-reference,non-bmi crc32 b3d4b790
+> ath10k_snoc c800000.wifi: htt-ver 3.114 wmi-op 4 htt-op 3 cal file
+> max-sta 32 raw 0 hwcrypto 1
+>
+> * origin of the board file
+>   - It comes from the firmware package provided by Thundercomm for
+> redistribution.
+>
+> * ids to be used with the board file
+>
+> bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1
+>
+> Note, the device comes with the board_id not changed from 0xff.
+> Following the example of existing boards we are adding the
+> calibration variant.
+>
+> * md5sum of each new board file to add
+>
+> $ md5sum *
+> 5003239259d8cb68097a941dde86dcc7
+> bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1.bin
+>
+> $ sha256sum *
+> 0eeffb43040b216b0f3210b8db69e4558844dd9df52caf9c25f56a79401f442c
+> bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1.bin
 
-I already sent this change (among two other small issues I found) over
-at:
+Thanks, added to WCN3990/hw1.0/board-2.bin:
 
-    https://lore.kernel.org/linux-arm-msm/20231205-pmicpdcharger-ulog-fixups-v1-0-71c95162cb84@redhat.com/
+New:
+bus=snoc,qmi-board-id=ff,qmi-chip-id=120,variant=Thundercomm_RB1
 
-Thanks,
-Andrew
+Changed:
 
+
+Deleted:
+
+1 board image(s) added, 0 changed, 0 deleted, 22 in total
+
+https://github.com/kvalo/ath10k-firmware/commit/7d5e852d125d4ca3feba6a3fff9d04a0e488e584
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
