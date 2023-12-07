@@ -1,128 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-3749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7148D808D6D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:33:13 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2374E808D95
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:37:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B3F31F21271
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:33:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B1321C209AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 16:37:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79EBF1E4BF;
-	Thu,  7 Dec 2023 16:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58A6D41C93;
+	Thu,  7 Dec 2023 16:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HCcs02/9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mV4ucfrW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5453D46BB6;
-	Thu,  7 Dec 2023 16:33:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3D2C433CA;
-	Thu,  7 Dec 2023 16:33:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701966790;
-	bh=8rENzAp0p8TNocu2nRhngKa8SFr6isL6RTBVJp6KrZs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HCcs02/9Ogdjyp9dN1TdkXfGx1t09VNdtVuisKSk/2MgsrOLpeYKzVj3D+aV97LHX
-	 A3fg2Kt+4eRUxoJpfAikLZEZe1B9RFgR1oUsFhgRfKKCz9uAdpCDei+73Kdk7dQfLl
-	 c7Uu5wk6hld0DUq53ArASqtQFqJPm3Jc/pAsFh/c5lU8LnEM8tMlEnF8wAb1ty8VQe
-	 a/plY608cmUIQ46TGaWwosU31iy0MCsDS1VUJinwiMRN+r5iA5+KZoOHc13xUJD+SP
-	 nTjwd2/rH8VbbD4PhCbPYJ+eotlhbrWoMTmMgeEBeRFgSVebMNt1zZXdltX3b4frg9
-	 TtMxCobQJmozQ==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rBHK4-00019F-0o;
-	Thu, 07 Dec 2023 17:34:00 +0100
-Date: Thu, 7 Dec 2023 17:34:00 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, linux-usb@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH v2 2/6] usb: dwc3: qcom: Rename hs_phy_irq to
- qusb2_phy_irq
-Message-ID: <ZXHz-HYgVLbgFp2k@hovoldconsulting.com>
-References: <20231204100950.28712-1-quic_kriskura@quicinc.com>
- <20231204100950.28712-3-quic_kriskura@quicinc.com>
- <ZXHkpwji_AzXMjfm@hovoldconsulting.com>
- <9d52fa8c-41d1-46a7-be89-5c1c11ca09b4@quicinc.com>
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B3F412D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 08:37:30 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40c1e3ea2f2so11884575e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 08:37:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701967048; x=1702571848; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QHPdC8oASRump8lliefjp+VWx5EqaK9zM/MQaDjAajM=;
+        b=mV4ucfrW9wptvGNc+9fzSZUE6HXLdfTBCbfpXfmQLXViLTqd//tU+OKjE54qOvrJ6f
+         RDDBDcvOWU/ZAzOmRjgLmSEG8w8C7wcL9L3UvlHVvaa4yfYmPNlOPJG7YT80w1T1JqGr
+         HJl2dwVGJOBDZfCzsZ7Ym2UAC/UgGYtWdBcfvqJYnFMJ90XRjtfAy0lqo39A/Yh8HZqM
+         yNQDWSLQUH05R8/R3sS9Xurk7fhe8nvi+tJyOK7II/80EdE3gxltco5f/RHz8f2JHZti
+         lSSjkvW+657U7l8/pwhBKJPKnF/lCN3xBB17+diF4kZXNwGZAV9qYjvR+Ri6rhsJuSvE
+         fycQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701967048; x=1702571848;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QHPdC8oASRump8lliefjp+VWx5EqaK9zM/MQaDjAajM=;
+        b=P4QxDu7qQgGUsji9WmPVIgCBbcBINxGIGQer2CcwX+xgkg8UMkgvsL7xqEjPdI69Il
+         gMzlbdBkAAYwn4sA2XGVJqQY7Hb9YbErXJLmhP8u5tLSt86wdobS40x07Yux5o8PEwVj
+         PjGOtOKM4LJ2SbMagoLLhq1SbFn1wXEU4T6Cfxlv5wcnkSxa+fsGJ6mrzPZvLVHRC10d
+         SYQkkyNpbNXNZoK4bfUVpUe+WfTnEebTP0xJ3d/b1/jwlSwg+W9vdy/JvtHisWtQ4I7Z
+         N1w/Wk+tJ6+RQ8mezAdWKNu2uUxX6WkruxDRqMOp5pFz65hM4D2iwQrxp5Nu331Ss2WO
+         X7Ng==
+X-Gm-Message-State: AOJu0YwUKhThPokfw160AXBkdQRtDy8lLOt78M2AtQ4TWsZmYQNhIlAu
+	wlF5LLJn4kqG4BtJC1BmqQONTw==
+X-Google-Smtp-Source: AGHT+IECup8lerGo7s57uB+PYd5IipnuMCyZOc5WNaL7TCPdJGJcwc1h0hxkWIrWeL4zEkuayTbOoQ==
+X-Received: by 2002:a05:600c:3144:b0:40b:4812:22e2 with SMTP id h4-20020a05600c314400b0040b481222e2mr1703251wmo.11.1701967048113;
+        Thu, 07 Dec 2023 08:37:28 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id r5-20020a05600c35c500b004080f0376a0sm175424wmq.42.2023.12.07.08.37.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Dec 2023 08:37:27 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/3] arm64: qcom: sm8650: add support for DisplayPort
+ Controller
+Date: Thu, 07 Dec 2023 17:37:16 +0100
+Message-Id: <20231207-topic-sm8650-upstream-dp-v1-0-b762c06965bb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9d52fa8c-41d1-46a7-be89-5c1c11ca09b4@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALz0cWUC/x3MPQqAMAxA4atIZgNtxR+8ijjUmmoGtTQqQvHuF
+ sdveC+BUGQS6IsEkW4WPvYMXRbgVrsvhDxng1Gm0ka1eB6BHcrWNbXCK8gZyW44B7ST9k5PXrm
+ 2gZyHSJ6ffz2M7/sBJqqDj2oAAAA=
+To: Rob Clark <robdclark@gmail.com>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1244;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=DEk4ut9+Eb2hTaXLTn1gbajtsrPpbY3ybidbDLfSO9Q=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBlcfTF8nxT5gy3VCqOv83+EH5YSHq5f3Ed4xnl1LWe
+ ZxBTOLeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXH0xQAKCRB33NvayMhJ0ZPiD/
+ 9QHLYS27pZ9P60USW8oJeQkpKWQjoQgC+eO7xx3SzfI+MhRT9RJvkGfp1hWx1FGPoQ/YP3ybHuKFzZ
+ du3eCISSqUDhdcHiGyTKQp3TU+5EfGCyHk6CJBgJwZdrNDFjalZwNqFxg5lxTBdSFjS++Y0+Oc2E5v
+ N+dQzxs84pmHQXQxc/ZmgvtqWYFBINQ9ncOpNt1CFIo7fYT29OtzPL70Fmz71HWndOkri7dp7N2FBg
+ PX6MKINs1IYdKejUuPRllLcPD/x6d8wBqsfIM0oSjOQ2HLKGsvuGRQsbThbjl0fjt0kqMwZ5hWSHbf
+ kw9hPoO4OMp/Ne7JipYvLEAlk72leZI7AjYv6xHNkrnBV1Sj5nWiYW5Iq9k2yv0a0c0Nmibc2NVJ0h
+ hSfHurZfTIhqFE5gAYNYmE/9efCZBVas0cUZgGi+y8V2uq57DAjymJQECJsCJ6lzbwlQ0y99935u7p
+ Rgd4fRXvPAlgrWZDd2keO0/t5MbM5iegD2NAxHMqflhJTKLKUVNDWRxmALC9cswBSVjl+se9i2dn0Y
+ ZfwA6JlGmLxWsyc31WJovzYUfiseZKo2Ly82uZVPQJf6M/5QOxVlNIHPE3yEn3a//ekJi2Rcvq7bnK
+ V2Nc9jAGz6JOKrn3/sBCYJyWjDbVzMhUvmkSYdW4lgW3sxcUYeugMAJP1llw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On Thu, Dec 07, 2023 at 09:17:32PM +0530, Krishna Kurapati PSSNV wrote:
-> On 12/7/2023 8:58 PM, Johan Hovold wrote:
+This adds support for the DisplayPort Controller found in the SM8650
+SoC, but it requires a specific compatible because the registers offsets
+has changed since SM8550.
 
-> > Here too you should say something about why this won't break any systems
-> > booting using an older devicetree. Specifically, the QUSB2 PHY interrupt
-> > has never been armed on any system running mainline as those bits never
-> > made it upstream.
-> > 
-> > So an alternative to this could also be to just drop the QUSB2 PHY
-> > interrupt handling from this driver for now. >
+This also updates the SM8650 MDSS bindings to allow a displayport subnode,
+and adds the necessary changes in the SM8650 DTSI to declare the DisplayPort
+Controller.
 
-> So, are you suggesting that we drop the whole patch ?
+Dependencies:
+- DT: https://lore.kernel.org/all/20231130-topic-sm8650-upstream-dt-v5-0-b25fb781da52@linaro.org/
 
-No, I meant that an alternative could be to drop the current hs_phy_irq
-handling from the driver.
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (3):
+      dt-bindings: display: msm: dp-controller: document SM8650 compatible
+      drm/msm/dp: Add DisplayPort controller for SM8650
+      arm64: dts: qcom: sm8650: Add DisplayPort device nodes
 
-> I assume if the older kernels are using old DT, they would be using an 
-> old driver version too right ?
+ .../bindings/display/msm/dp-controller.yaml        |   1 +
+ .../bindings/display/msm/qcom,sm8650-mdss.yaml     |   6 ++
+ arch/arm64/boot/dts/qcom/sm8650.dtsi               | 120 ++++++++++++++++++++-
+ drivers/gpu/drm/msm/dp/dp_display.c                |   6 ++
+ 4 files changed, 131 insertions(+), 2 deletions(-)
+---
+base-commit: 9ea914fd2cc702e8be88c0666d4df3e58ffe8131
+change-id: 20231207-topic-sm8650-upstream-dp-ab1fc1bf0c76
 
-No, and this is part of the devicetree ABI as we discussed the other
-week.
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
-You should generally be able to continue booting with an older devicetree
-on a newer kernel (even if newer functionality may not be enabled then).
-
-> Is there a case where DT is not updated but driver is ? Because if we
-> drop this patch from series, targets with updated DT's would break.
-
-Actually they would not due to the fact that the QUSB2 PHY interrupt is
-currently never armed in the PHY (and the interrupts are looked up by
-name and are considered optional by the driver).
-
-But simply dropping this patch is not an option here. I'm fine with this
-patch as it is, but the reason we can merge it is that those interrupts
-are currently not actually used. Otherwise, this would break older
-devicetrees.
-
-But this also means, we could consider dropping the current hs_phy_irq
-handling altogether.
-
-Hmm. Looking at the qusb2_phy_runtime_suspend() again now I see that the
-interrupt is actually armed on runtime suspend, it's just that it is
-configured incorrectly and would wakeup immediately if someone ever
-exercised this path.
-
-Specifically, the bits that would set those PHY_MODE_USB_HOST_HS modes
-(that should never have been merged) never made it upstream so this code
-is just dead code currently. I said before I'll look into ripping this
-out, but yeah, I'm swamped with work as usual (and it has been sitting
-there dead for years so there's no rush).
-
-So to summarise, the QUSB2 wakeup handling is incomplete and broken, so
-we won't actually make things worse by renaming the interrupts. If this
-was working, we would need to continue supporting the old names, though.
-
-Johan
 
