@@ -1,163 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-3764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57243808F2F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 18:58:50 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ADC88090B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 19:54:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C08352814BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 17:58:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35E5C1C20381
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 18:54:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4498E4B154;
-	Thu,  7 Dec 2023 17:58:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D05242ABB;
+	Thu,  7 Dec 2023 18:54:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JyVyKqnZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F7331718;
-	Thu,  7 Dec 2023 09:58:23 -0800 (PST)
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3b9d23c8bf7so820311b6e.0;
-        Thu, 07 Dec 2023 09:58:23 -0800 (PST)
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7223A10F9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 10:54:44 -0800 (PST)
+Received: by mail-yb1-xb2e.google.com with SMTP id 3f1490d57ef6-db549f869a3so1482787276.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 10:54:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1701975283; x=1702580083; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VM/OB/atyyebuFQPzZqELsxx0GGeVNPiGK0+7436XGQ=;
+        b=JyVyKqnZ0zR9VhqUNS131X8g0gbTA12SQgmRz/G0YPoABiFVMPN9feobU5w3L37ztS
+         zGLIdU5QWIbub6rYf62JgY8IsXEnBiOYeDR89V80cn6VaZXw9F7V6GbIE71LtYu4m0F9
+         bEiRFxG51xP6DVqT7QusxvDb6yB7jOWSSnK482lDorpP55HwJ2RXxjzmABUEGpoMWLvg
+         HUwAPZZYYTF+16zbcwb4twmBc1DtHcn+PYVDtKFrhiyqvMTqzISF9fKsgdp9TQozkf7K
+         k0hUzkX8oDTInHxZ+vlj2vVldQ0h/jhMLitFgQSPkElXl/7PVO+rpAkm1IoVqbrm2lHl
+         R9hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701971902; x=1702576702;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XlGlC1SkIL9mmE58AXO5RRQ634yhMDTeXthN1KRiRhM=;
-        b=oulV3p8FKKu1N+MwwHPqu8KgOslcNAkL3l2U1hkNhCEQhnIDKEHgmWXr7RZJ8S46EI
-         ITOYSAEk4Z/PLR4NXDtMO9PeiITRrqLn+3IG3TbUlmo7FHXjB6z1nKyHE5/a9HPFRyzy
-         8tKp9VIel2Ea3fWNQgHaf3LOUS6fR4bDt/ksslyWhWOKdn5o65tsOboaa5nxcxplMRGb
-         nYIuwlxyf76ZJvDIsNaR6pgl9dAdfaQPrDj4QUIBmkWebf6VdaPDK5NlgcAY50ITW6G6
-         wY8laqR6eXehqLe3rt/0zrDQP+gOTax6M/lnwVnTMVN19NYHIneOSYooSipUvp4HFr7b
-         L4fw==
-X-Gm-Message-State: AOJu0YyKMNGpq2OUlT6gGqYKe8COqKy4af05z06ZQ4dicF+4lu+I2vL9
-	NNOtx1+6gE+uAq2zjPSPoAra5JkGrA==
-X-Google-Smtp-Source: AGHT+IHxq2Dw8sFsLLI+z4S9TgWxaf6l0cocAGF+yc2TisyC49euiJvcC1n+Yr/0HeIX18RO0y1CyA==
-X-Received: by 2002:a05:6870:390c:b0:1fa:fee1:6f1e with SMTP id b12-20020a056870390c00b001fafee16f1emr3075427oap.10.1701971902619;
-        Thu, 07 Dec 2023 09:58:22 -0800 (PST)
-Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id k29-20020a05687022dd00b001fb0edac63csm58231oaf.6.2023.12.07.09.58.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 09:58:22 -0800 (PST)
-Received: (nullmailer pid 2977746 invoked by uid 1000);
-	Thu, 07 Dec 2023 17:58:20 -0000
-Date: Thu, 7 Dec 2023 11:58:20 -0600
-From: Rob Herring <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Nishanth Menon <nm@ti.com>, linux-mediatek@lists.infradead.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Olof Johansson <olof@lixom.net>, linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, 
-	Andrew Davis <afd@ti.com>, Andrew Lunn <andrew@lunn.ch>, linux-rockchip@lists.infradead.org, 
-	Michal Simek <michal.simek@amd.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jonathan Corbet <corbet@lwn.net>, Konrad Dybcio <konradybcio@kernel.org>, Chen-Yu Tsai <wens@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-amlogic@lists.infradead.org, 
-	Bjorn Andersson <andersson@kernel.org>, =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>, 
-	linux-kernel@vger.kernel.org, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	workflows@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, 
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, devicetree@vger.kernel.org, 
-	Heiko Stuebner <heiko@sntech.de>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-kernel@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org
-Subject: Re: [PATCH v4] docs: dt-bindings: add DTS Coding Style document
-Message-ID: <170197172648.2974247.13097453111547800548.robh@kernel.org>
-References: <20231203174622.18402-1-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20230601; t=1701975283; x=1702580083;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VM/OB/atyyebuFQPzZqELsxx0GGeVNPiGK0+7436XGQ=;
+        b=Md5KPxzjvzyC1cRQMpHdMOqihAKFpwZzLP6gzyqY06FgNr43rWU0QnS/2oCG8xZeIO
+         UGmbM2omjXdMgFzjTf85h6+ziRrBdG813NUTZAWjjHkcFRO6SO2eGcm7TyJLF89uNt8f
+         mk9q+r2qVX6XB/uCVMsauTOvOex+2WIpdfQuNMliFyUcDEpT1BpSvwObAwtAIB8/aOki
+         6d+svXKxzReX8i975LQsgGTOfjgA0LEUWmbjzVoULwbLUV3Aa0NItJ+4Aptut5fy3Qe/
+         CGM97kP5BFZbM0hVHgRtbU4AZWb30DfkJ40c1Lp4E4sAxqjNEO7/UGo3iKjDJLHRQvQv
+         JLQQ==
+X-Gm-Message-State: AOJu0YztUom7gJe9bltrTRkQY3EHIWfWNc05d5aIQxyu9DJhA9GNGoQy
+	QQ8N1byP/clrcP2PP1nto6t9Ck4n3NbE/Tfsj5bQtw==
+X-Google-Smtp-Source: AGHT+IFlacu8sH5jffAkUmShEDfKHbhNH/lx1OTgs7+dmfSvxJnCl7jLU98Pa20ue8jwSTu33MsxlIj5FJXitFDPNOQ=
+X-Received: by 2002:a25:b31b:0:b0:db7:dacf:ed7a with SMTP id
+ l27-20020a25b31b000000b00db7dacfed7amr3095673ybj.91.1701975283665; Thu, 07
+ Dec 2023 10:54:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231203174622.18402-1-krzysztof.kozlowski@linaro.org>
+References: <20231115205318.2536441-1-pvorel@suse.cz> <2bferiemkljxua63v6ogifpzhlbj6m2gycxrbitgmc3ybj2a4p@7kfnzcrjj6jr>
+In-Reply-To: <2bferiemkljxua63v6ogifpzhlbj6m2gycxrbitgmc3ybj2a4p@7kfnzcrjj6jr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 7 Dec 2023 20:54:32 +0200
+Message-ID: <CAA8EJpoEzTeOSVy5qVCs6eSBTxWKRfDq0UzrEjz1Kx1sG9xkCg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] arm64: defconfig: Enable SDM660 Clock Controllers
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org, 
+	Petr Vorel <petr.vorel@gmail.com>, Martin Botka <martin.botka@somainline.org>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Aboothahir U <aboothahirpkd@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+
+On Thu, 7 Dec 2023 at 18:27, Bjorn Andersson <andersson@kernel.org> wrote:
+>
+> On Wed, Nov 15, 2023 at 09:53:18PM +0100, Petr Vorel wrote:
+> > From: Petr Vorel <petr.vorel@gmail.com>
+> >
+> > Enable support for the multimedia clock controller on SDM660 devices
+> > and graphics clock controller on SDM630/636/660 devices.
+> >
+> > Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+> > ---
+> > Changes v1->v2:
+> > * added commit message (not just the subject)
+> >
+> > NOTE motivation for this is that some not yet mainlined DTS already use
+> > both:
+> >
+> > https://github.com/sdm660-mainline/linux/blob/sdm660-next-stable/arch/arm64/boot/dts/qcom/sdm636-asus-x00td.dts
+> >
+> > Kind regards,
+> > Petr
+> >
+> >  arch/arm64/configs/defconfig | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> > index acba803835b9..10a098aa8b1b 100644
+> > --- a/arch/arm64/configs/defconfig
+> > +++ b/arch/arm64/configs/defconfig
+> > @@ -1235,6 +1235,8 @@ CONFIG_SC_GCC_8180X=y
+> >  CONFIG_SC_GCC_8280XP=y
+> >  CONFIG_SC_GPUCC_8280XP=m
+> >  CONFIG_SC_LPASSCC_8280XP=m
+> > +CONFIG_SDM_MMCC_660=m
+> > +CONFIG_SDM_GPUCC_660=y
+>
+> I'd expect the GPU clock controller to be a module, can you please
+> clarify why it needs to be builtin?
+
+To allow the display to be enabled early enough?
+
+>
+> Regards,
+> Bjorn
+>
+> >  CONFIG_SDM_CAMCC_845=m
+> >  CONFIG_SDM_GPUCC_845=y
+> >  CONFIG_SDM_VIDEOCC_845=y
+> > --
+> > 2.42.0
+> >
+>
 
 
-On Sun, 03 Dec 2023 18:46:22 +0100, Krzysztof Kozlowski wrote:
-> Document preferred coding style for Devicetree sources (DTS and DTSI),
-> to bring consistency among all (sub)architectures and ease in reviews.
-> 
-> Cc: Andrew Davis <afd@ti.com>
-> cc: Andrew Lunn <andrew@lunn.ch>
-> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-> Cc: Arnd Bergmann <arnd@arndb.de>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Chen-Yu Tsai <wens@kernel.org>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Jonathan Corbet <corbet@lwn.net>
-> Cc: Matthias Brugger <matthias.bgg@gmail.com>
-> Cc: Michal Simek <michal.simek@amd.com>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: Nishanth Menon <nm@ti.com>
-> Cc: Olof Johansson <olof@lixom.net>
-> Cc: Rafał Miłecki <zajec5@gmail.com>
-> Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Acked-by: Heiko Stuebner <heiko@sntech.de>
-> Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> Acked-by: Konrad Dybcio <konradybcio@kernel.org>
-> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Merging idea: Rob/DT bindings
-> 
-> Changes in v4
-> =============
-> 1. Drop label at the top (Jon)
-> 2. Grammar fixes (Laurent, Dragan)
-> 3. "Unless a bus defines differently, unit addresses shall ..." (Rob)
-> 4. Use hex in example of dma-controller (Andrew)
-> 5. Example: soc@ -> soc@0
-> 6. Reverse points 2 and 3 in "Indentation" (Andrew)
-> 7. Use full path to coding style doc (Conor)
-> 
-> Changes in v3
-> =============
-> 1. should->shall (Angelo)
-> 2. Comments // -> /* (Angelo, Michal)
-> 3. Use imaginary example in "Order of Properties in Device Node"
->    (Angelo)
-> 4. Added paragraphs for three sections with justifications of chosen
->    style.
-> 5. Allow two style of ordering overrides in board DTS: alphabetically or
->    by order of DTSI (Rob).
-> 6. I did not incorporate feedback about, due to lack of consensus and my
->    disagreement:
->    a. SoM being DTS without DTSI in "Organizing DTSI and DTS"
-> 
-> Changes in v2
-> =============
-> 1. Hopefully incorporate entire feedback from comments:
-> a. Fix \ { => / { (Rob)
-> b. Name: dts-coding-style (Rob)
-> c. Exceptions for ordering nodes by name for Renesas and pinctrl (Geert,
->    Konrad)
-> d. Ordering properties by common/vendor (Rob)
-> e. Array entries in <> (Rob)
-> 
-> 2. New chapter: Organizing DTSI and DTS
-> 
-> 3. Several grammar fixes (missing articles)
-> 
-> Cc: linux-rockchip@lists.infradead.org
-> Cc: linux-mediatek@lists.infradead.org
-> Cc: linux-samsung-soc@vger.kernel.org
-> Cc: linux-amlogic@lists.infradead.org
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: workflows@vger.kernel.org
-> Cc: linux-doc@vger.kernel.org
-> ---
->  .../devicetree/bindings/dts-coding-style.rst  | 196 ++++++++++++++++++
->  Documentation/devicetree/bindings/index.rst   |   1 +
->  2 files changed, 197 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/dts-coding-style.rst
-> 
-
-I added the quotes as discussed and applied, thanks!
-
-Rob
+-- 
+With best wishes
+Dmitry
 
