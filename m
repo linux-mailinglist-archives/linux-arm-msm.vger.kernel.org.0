@@ -1,108 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-3720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AE1280890B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:23:13 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 15A70808917
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:24:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 09D0A1F21080
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 13:23:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BFD7E1F212FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 13:24:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB64F405D6;
-	Thu,  7 Dec 2023 13:23:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FB05405DF;
+	Thu,  7 Dec 2023 13:24:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aXrrkKzy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gGDYoQUa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43883DBAA;
-	Thu,  7 Dec 2023 13:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B9BC433C8;
-	Thu,  7 Dec 2023 13:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1761405CD;
+	Thu,  7 Dec 2023 13:24:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC5BC433C8;
+	Thu,  7 Dec 2023 13:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1701955388;
-	bh=I6VKUBz8o9t+7VdPGnfzwU3XXwc4tF4BarRxfr/X83k=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=aXrrkKzycQXF1DaodPy9EJobslQMnXI0fllif8Ux+xDjbWBqC/2Fwc8pRbfkxoumD
-	 cb2L5XnVGYt6TSjJETgI11pn+XZCwCU6AvFWGHo+o9E0jQyD+RNlLZLX3izgCiYaUr
-	 IOrLyv+qH27KhC/79h8C6G7e/1WrNJM6GWDx4okJ3N4oFk1cGNoX8Uv7uo5n/gBTmu
-	 s5rDZdi1uCtvGfcG3AHEbCkBhus2sHP8BlZkJjxGlZmcUeJi7P2oKhcCkr+V3PzFne
-	 IWdJmxIYXmpcseziC24K2fAYIogq5qYsgNz+QHN7lFellBNzsOZ1Owm6ukg7wvBhio
-	 4d3oKW+3GlzGQ==
-Message-ID: <5f0d75dc-dd44-45b7-bad3-551a3c33e9ae@kernel.org>
-Date: Thu, 7 Dec 2023 15:23:00 +0200
+	s=k20201202; t=1701955450;
+	bh=Jox1QVTW8FXBAFs6KYjS5LP35vS3J8LsKIserpsx4M4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gGDYoQUazfRrRuCGF4JdheCnrSUcHxAIAbG6QHlxeYxdA9W1ASLJ7tmX/W0IndNBP
+	 FzxogXB9Ae/rUfISxZEtYCtZ4HUei+hSYS3rK41aQ5sQmFzArfEQuH06HOV21MfZ+m
+	 dGY2Qwat3aSBQi3zaerNoRjURTPiEDsr2bKRSiiUzfKP34SJPriCH/UNJoPRvpUhhO
+	 /2zRt2YM9VrE8hJaOnMNQ1d+BlOOVel4X+NJgZABowrAjCZvH6s7sHRazn6hCvIIAo
+	 zJC+M2aJjfn0EA5EjH+gs7Ox0beesWs7tZ8dZ6lmceyc4KTBmsMvcljuOdNBPQgvjl
+	 hmiUksYrzbmvQ==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rBENA-0000PW-0p;
+	Thu, 07 Dec 2023 14:25:00 +0100
+Date: Thu, 7 Dec 2023 14:25:00 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, regressions@leemhuis.info
+Subject: Re: [PATCH v2 0/6] PCI: Fix deadlocks when enabling ASPM
+Message-ID: <ZXHHrCDKKQbGIxli@hovoldconsulting.com>
+References: <20231128081512.19387-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] SM6115 interconnect
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- Konrad Dybcio <konradybcio@kernel.org>
-References: <20231125-topic-6115icc-v3-0-bd8907b8cfd7@linaro.org>
-From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <20231125-topic-6115icc-v3-0-bd8907b8cfd7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231128081512.19387-1-johan+linaro@kernel.org>
 
-On 29.11.23 16:41, Konrad Dybcio wrote:
-> As it says on the can.
-> 
-> Georgi, Bjorn, can we please set up an immutable branch with the bindings?
+Hi PCI maintainers,
 
-Thanks for the patches, Konrad. Here is the branch:
-https://git.kernel.org/pub/scm/linux/kernel/git/djakov/icc.git/log/?h=icc-sm6115
+On Tue, Nov 28, 2023 at 09:15:06AM +0100, Johan Hovold wrote:
+> The pci_enable_link_state() helper is currently only called from
+> pci_walk_bus(), something which can lead to a deadlock as both helpers
+> take a pci_bus_sem read lock.
+> 
+> Add a new locked helper which can be called with the read lock held and
+> fix up the two current users (the second is new in 6.7-rc1).
+> 
+> Note that there are no users left of the original unlocked variant after
+> this series, but I decided to leave it in place for now (e.g. to mirror
+> the corresponding helpers to disable link states).
+> 
+> Included are also a couple of related cleanups.
 
-BR,
-Georgi
+> Johan Hovold (6):
+>   PCI/ASPM: Add locked helper for enabling link state
+>   PCI: vmd: Fix deadlock when enabling ASPM
+>   PCI: qcom: Fix deadlock when enabling ASPM
+>   PCI: qcom: Clean up ASPM comment
+>   PCI/ASPM: Clean up disable link state parameter
+>   PCI/ASPM: Add lockdep assert to link state helper
 
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-> Changes in v3:
-> - Actually define clock-names before using it in conditional blocks (oops)
-> - Link to v2: https://lore.kernel.org/r/20231125-topic-6115icc-v2-0-69d05d90871b@linaro.org
-> 
-> Changes in v2:
-> bindings:
-> - Remove unnecessary '|' after description:
-> - sort property definitions in a manner that resembles their proper ordering
-> - define clock{s/-names} before using them in conditional blocks
-> - drop unnecessary allOf:
-> - move unevaluatedProperties after the conditional blocks
-> - disallow clock{s,-names} when unnecessary
-> - fix up the example
-> C:
-> - Apply my own fixup (ebi channel configuration)
-> - Link to v1: https://lore.kernel.org/r/20231125-topic-6115icc-v1-0-fa51c0b556c9@linaro.org
-> 
-> ---
-> Konrad Dybcio (2):
->        dt-bindings: interconnect: Add Qualcomm SM6115 NoC
->        interconnect: qcom: Add SM6115 interconnect provider driver
-> 
->   .../bindings/interconnect/qcom,sm6115.yaml         |  152 +++
->   drivers/interconnect/qcom/Kconfig                  |    9 +
->   drivers/interconnect/qcom/Makefile                 |    2 +
->   drivers/interconnect/qcom/sm6115.c                 | 1427 ++++++++++++++++++++
->   include/dt-bindings/interconnect/qcom,sm6115.h     |  111 ++
->   5 files changed, 1701 insertions(+)
-> ---
-> base-commit: 48bbaf8b793e0770798519f8ee1ea2908ff0943a
-> change-id: 20231125-topic-6115icc-a187f5989af7
-> 
-> Best regards,
+Could we get this merged for 6.7-rc5? Even if the risk of a deadlock is
+not that great, this bug prevents using lockdep on Qualcomm platforms so
+that more locking issues can potentially make their way into the kernel.
 
+And for Qualcomm platforms, this is a regression in 6.7-rc1.
+
+Johan
+
+
+#regzbot introduced: 9f4f3dfad8cf
 
