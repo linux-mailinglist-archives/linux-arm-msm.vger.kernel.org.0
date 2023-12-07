@@ -1,140 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-3702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 392D880888F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 13:55:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 817C38088BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 14:04:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CC858B213B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 12:55:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B481AB20C42
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 13:04:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 891033D0D5;
-	Thu,  7 Dec 2023 12:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 334423D39A;
+	Thu,  7 Dec 2023 13:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EDhtN4RT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e01Eyt0r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C563610CB
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 04:55:05 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50bfd8d5c77so752236e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 04:55:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701953704; x=1702558504; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j5KSmEP1TGocOwJYVVwYZKa9nj2Hg1ok92vdy7xwTe8=;
-        b=EDhtN4RT4tBoe43bD3lk3YMoUGa/IxbdmBxoclZny95f7xW6QJUAC1B5RrybY7X9xU
-         oQcyAv/cczxJQMjHnoTUoZPJeyQAkOiUKSqM9e6Tg8HuiDQEDFgVHvNPH9Y0inn83aLt
-         5Zuf4KouuYFcCR1+XAT4Iai7xYFPsqMLoc3twyNDzLAaYcke2JspuYFbHr38UbDr7/LF
-         pZ0ZDN6ABFnHzdV7fY2+ZIjxmnoUhIW/brqgZ57odpfqacJHGPMetGEHewKkkSiNOfvj
-         6pLVBMlwnAeyxxuWhzfaokkeuPIfGjAUc9FSjzo7gR+OHGSPb/SX98DNgROZlA0JI+GP
-         bpAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701953704; x=1702558504;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=j5KSmEP1TGocOwJYVVwYZKa9nj2Hg1ok92vdy7xwTe8=;
-        b=f9eHwqfW6KMYsbTYi9QfRs4Xl/lyDuMCya0SyDJAr17S2UiVKrzzaHbzREnKQzX68h
-         6/nsFgiWZGcKL82k+X7iEG71Y5W4YMQMKEniM7wXj2pQkrnPByqsZFd9qX7IfiN6zumY
-         aRq5uIq+6jc5igQz5elR1I00+Ffdyz51S+Z5RrjT9ftBxHpYlPpF6WgaJVoKR1TDIYc7
-         lQ8ouGtSKf3AqPc39f/xO93XejFDAwBsf2x+1+w560LOKNLHnXjte3ram5vi3UtDo2UL
-         gbmPHB2O9HxlE32BQADlINN0JNbkfGXDrxFkbtQJLlFZ3p8BQ89H1oT/z9QuBSGxseW4
-         LVrw==
-X-Gm-Message-State: AOJu0YzCblQ2klJWHFZmykkBVnuUUWhOhh+lSnNiyF5U7hLpng+NzN7n
-	FfJNd4+1ZGrkB32CqV4QQAmIBw==
-X-Google-Smtp-Source: AGHT+IEPd3y1di3O6hl7akm24VuD+UvFlBj59LsViuKsxVfNbyodkQMJ3vhlHaDmvfNAZZhg7vxVeA==
-X-Received: by 2002:ac2:538b:0:b0:50b:f881:862a with SMTP id g11-20020ac2538b000000b0050bf881862amr704995lfh.128.1701953703825;
-        Thu, 07 Dec 2023 04:55:03 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id cf30-20020a056512281e00b0050bfc6dbb8asm163659lfb.302.2023.12.07.04.55.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 04:55:03 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F7F34183;
+	Thu,  7 Dec 2023 13:04:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D67BC433C7;
+	Thu,  7 Dec 2023 13:04:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701954263;
+	bh=4jBaR1qmNEDVE39mC30/eFVzEXe5bQ1xUwFeHyj0RXY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=e01Eyt0rpcM1Ytp27Vi/5Ux5jIZUUg3qNyVEgLwye46M3zTNK5v/AhaEytBZ4LHRj
+	 BPtpM4DFz6IHzU1/ql9R7G78du7TsHXIPrhm8VN+4RsUrHks32ZqIjv0yWEMIaFqNB
+	 jOd3IVBrVb9tKtDTZulik5qo9s57vl4bxKLhS/RSV1gmsVUAREBJnf/BImCYnPvMGK
+	 d1z96fqnY6a1WjT9XfmIt+ou7UN8pd+TQrHhALYpDyKHW1CkCwBzxdPJxH6g9QhFSx
+	 D83TwKDW42u9M/tS8nbeKhFC9yXF4/YbUPkVLUdlp112U3z+4NmNtoKzbviQHDoMQk
+	 qBfWp47EIJBJQ==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rBE40-0000IF-2r;
+	Thu, 07 Dec 2023 14:05:12 +0100
+Date: Thu, 7 Dec 2023 14:05:12 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+	Andy Gross <agross@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Clark <robdclark@gmail.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	iommu@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH 3/3] ARM: qcom: merge remaining subplatforms into sensible Kconfig entry
-Date: Thu,  7 Dec 2023 15:55:00 +0300
-Message-Id: <20231207125500.3322229-4-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231207125500.3322229-1-dmitry.baryshkov@linaro.org>
-References: <20231207125500.3322229-1-dmitry.baryshkov@linaro.org>
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_ramkri@quicinc.com, quic_nitegupt@quicinc.com,
+	quic_skananth@quicinc.com, quic_vpernami@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH v3 1/3] dt-bindings: phy: qcom,qmp: Add PCIe
+ qcom,refclk-always-on property
+Message-ID: <ZXHDCNosx8PCUzao@hovoldconsulting.com>
+References: <24fae40a-453b-b14c-923f-88758a246aa7@quicinc.com>
+ <20231201060716.GJ4009@thinkpad>
+ <166d307e-7d1b-48b5-90db-9b6df01d87c2@linaro.org>
+ <20231201111033.GL4009@thinkpad>
+ <f844cd1e-7e4f-4836-bc9a-2e1ed13f064f@linaro.org>
+ <20231201123054.GM4009@thinkpad>
+ <3a7376aa-18a2-41cb-a4c9-680e735ce75b@linaro.org>
+ <20231206131009.GD12802@thinkpad>
+ <ZXGVjY9gYMD6-xFJ@hovoldconsulting.com>
+ <20231207101252.GJ2932@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231207101252.GJ2932@thinkpad>
 
-Three remaining Qualcomm platforms have special handling of the
-TEXT_OFFSET to reserve the memory at the beginnig of the system RAM, see
-the commit 9e775ad19f52 ("ARM: 7012/1: Set proper TEXT_OFFSET for newer
-MSMs"). This is required for older platforms like IPQ40xx, MSM8x60,
-MSM8960 and APQ8064 and is compatible with other 32-bit Qualcomm
-platforms.
+On Thu, Dec 07, 2023 at 03:42:52PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Dec 07, 2023 at 10:51:09AM +0100, Johan Hovold wrote:
+> > On Wed, Dec 06, 2023 at 06:40:09PM +0530, Manivannan Sadhasivam wrote:
+> > 
+> > > OK. How about, "qcom,broken-refclk"? This reflects the fact that the default
+> > > refclk operation is broken on this platform, so the OS should be prepared for
+> > > it (by keeping it always on).
+> > 
+> > Shouldn't that be
+> > 
+> > 	qcom,broken-clkreq
+> > 
+> > since its the CLKREQ# signal used to request REFCLK that is broken, not
+> > the REFCLK itself?
+> > 
+> 
+> Darn... You are right. I got carried away by the initial property name. Thanks
+> for spotting!
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/Makefile          |  4 +---
- arch/arm/mach-qcom/Kconfig | 13 +++++--------
- 2 files changed, 6 insertions(+), 11 deletions(-)
+Thinking some more on this after hitting send: It may still be wrong
+with a 'broken-clkreq' property in the PHY instead of in the controller
+(or endpoint).
 
-diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-index 5ba42f69f8ce..45fa8ac001c5 100644
---- a/arch/arm/Makefile
-+++ b/arch/arm/Makefile
-@@ -158,9 +158,7 @@ textofs-$(CONFIG_ARCH_REALTEK)  := 0x00108000
- ifeq ($(CONFIG_ARCH_SA1100),y)
- textofs-$(CONFIG_SA1111) := 0x00208000
- endif
--textofs-$(CONFIG_ARCH_IPQ40XX) := 0x00208000
--textofs-$(CONFIG_ARCH_MSM8X60) := 0x00208000
--textofs-$(CONFIG_ARCH_MSM8960) := 0x00208000
-+textofs-$(CONFIG_ARCH_QCOM_SMEM) := 0x00208000
- textofs-$(CONFIG_ARCH_MESON) := 0x00208000
- textofs-$(CONFIG_ARCH_AXXIA) := 0x00308000
- 
-diff --git a/arch/arm/mach-qcom/Kconfig b/arch/arm/mach-qcom/Kconfig
-index 27d5ca0043be..0c99d0a746d4 100644
---- a/arch/arm/mach-qcom/Kconfig
-+++ b/arch/arm/mach-qcom/Kconfig
-@@ -15,13 +15,10 @@ menuconfig ARCH_QCOM
- 
- if ARCH_QCOM
- 
--config ARCH_IPQ40XX
--	bool "Enable support for IPQ40XX"
--
--config ARCH_MSM8X60
--	bool "Enable support for MSM8X60"
--
--config ARCH_MSM8960
--	bool "Enable support for MSM8960"
-+config ARCH_QCOM_SMEM
-+	bool "Reserve SMEM at the beginning of RAM"
-+	help
-+	  Reserve 2MB at the beginning of the System RAM for shared mem.
-+	  This is required on IPQ40xx, MSM8x60 and MSM8960 platforms.
- 
- endif
--- 
-2.39.2
+Could there not be other ways to handle a broken clkreq signal so that
+this really should be a decision made by the OS, for example, to disable
+L1 substates and clock PM?
 
+Simply leaving the refclk always on in the PHY seems like a bit of a
+hack and I'm not even sure that can be considered correct.
+
+Having a property that maps directly to that behaviour has rightly been
+rejected, but it seems that simply renaming the flag but keeping it in
+the PHY may still not be the right thing to do here.
+
+Johan
 
