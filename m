@@ -1,128 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-3770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B0AF809140
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 20:26:27 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22F608091D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 20:47:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3421B1F21046
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 19:26:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 538EA1C20898
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Dec 2023 19:47:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B3304F5FE;
-	Thu,  7 Dec 2023 19:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5200A4F1EF;
+	Thu,  7 Dec 2023 19:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I6FtnZ0D"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="btLjF+Q1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F0131725
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 11:26:20 -0800 (PST)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50bf26f8988so1405203e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 11:26:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701977178; x=1702581978; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aOzcubbEVdDz75w1DZaKyechBEFmqFyKaigVY3nKiTY=;
-        b=I6FtnZ0DB1W63MhHpCebuHpkJ7Ml6H5p5StGsWng+eDHgX+hmhKnwz6prcCPWIr9i1
-         qMuCixrZ9/zfahgd4/1aSWL80fb7LLdVEZ0Gj5jZLWG6yq4sxqvPP6vocziMsbmKnUPN
-         7pEzBwqekaQ8oT8hLt3M6PjjldkritZ2QdRaVCkXaiynydFC8k2IwOQXBXCUoCOc10sD
-         eC3vYKYKctsPlToWlwI5zSz4U5bt9OnnEJMAJDHn62qu0I3BNvKyaLVTTCdswMMVvnp6
-         coT0JUk4q6eIdsk8/iHoj8IWxl+NlOjOzWDZkB1WJMgqsZxFUTDBb9YGAappfYY/ugKx
-         ENnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701977178; x=1702581978;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aOzcubbEVdDz75w1DZaKyechBEFmqFyKaigVY3nKiTY=;
-        b=iWoKf4nP3hTCSOkkmm9JJWYnf7EtzxrOhARDb6XRaF3ebRHg4Qsbaq1EGM/KVRR7Kb
-         YHpQdzqjW4s5bfve4csAZHXG0TGX98Uiin9/J/VpLq3iMbu/NUEB31ABDabUQtzZiKSH
-         0iUwgU4nz2PcjpjWZ/So2RcuTS3LGsRzkGN7uzIiH24yXZ83wXCzpYNQ8P36Ox9xUnwe
-         HOJu2EVNJGnp1mbPcNxNrAz0K9ahZUlv84EKX+eJiiEkQGzIx/fEICQzDYI9H3LxAKng
-         q3TnSukGwu56miGwpzcUG6ZARG2PpH+ZEz4mgfyE80MyepH04FJOJwqVFWqHrDG7J9gF
-         KsGg==
-X-Gm-Message-State: AOJu0YzvyraN006WJd6u3Vjk3u8QY0hvvOsTPjjQDp1m6Kz6Ma0GFa1K
-	2rRs2yEuiFiLAHRfGHl70uy2Yw==
-X-Google-Smtp-Source: AGHT+IF/nD3esvE8SFz2Rih4t9vnlpWDFruNy5/u5hg3+t5tefJU7CmIg4sky/bghnuX2LbWm+n2jA==
-X-Received: by 2002:a2e:b604:0:b0:2ca:6b1:f750 with SMTP id r4-20020a2eb604000000b002ca06b1f750mr2304235ljn.33.1701977178466;
-        Thu, 07 Dec 2023 11:26:18 -0800 (PST)
-Received: from [172.30.205.181] (UNUSED.212-182-62-129.lubman.net.pl. [212.182.62.129])
-        by smtp.gmail.com with ESMTPSA id a11-20020a05651c010b00b002ca0a5dc73csm24380ljb.9.2023.12.07.11.26.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Dec 2023 11:26:18 -0800 (PST)
-Message-ID: <644f49ae-26f0-4a4b-9a3a-53076be31d87@linaro.org>
-Date: Thu, 7 Dec 2023 20:26:16 +0100
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B08E10EF;
+	Thu,  7 Dec 2023 11:47:19 -0800 (PST)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B7HaXv0025803;
+	Thu, 7 Dec 2023 19:47:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ content-transfer-encoding : in-reply-to; s=qcppdkim1;
+ bh=NF0QjdXOzsYzP6ZLyN8MP/4RJJ3NV8QqXpHthSi5yfI=;
+ b=btLjF+Q1EtSAGUjZW7YiuSwa26dzZMtyJK1231oGJKzHmy0Z/M6VEZwEiCwixzp7+Y3q
+ xWnH2zrJKzxfGAbAdT+cBztOWBTtQ/d+iY1l5rcRSOL2hdLjQRnC52k/Yd55m+cYhecC
+ 8TLsXulbL+IW+Gxjk45er/kwNlxdPJmFO9lvzUsOaCtFpzOD0rUaw1D/tLinO9E56dUf
+ I62Phr2JgJASrO/J/vfillCX0NFZ/DdzXYmcHJ78fnWEHigVTFo2UULLWNgfdb1YOxs4
+ /Rc5d93INgGTkSoSWGIXeIDftDKRqBXCOg92eKGKcac/8zqBl2So9T0JwiJaphP08j2x dg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uubdm1pbh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Dec 2023 19:47:04 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B7Jl3Rx022664
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 7 Dec 2023 19:47:03 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Thu, 7 Dec 2023 11:46:58 -0800
+Date: Fri, 8 Dec 2023 01:16:55 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Danila Tikhonov <danila@jiaxyga.com>
+CC: Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>, <robdclark@gmail.com>,
+        <quic_abhinavk@quicinc.com>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <airlied@gmail.com>,
+        <daniel@ffwll.ch>, <johan+linaro@kernel.org>, <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/1] drm/msm/adreno: Add support for SM7150 SoC machine
+Message-ID: <n3y5vfgznufdzdkyv6ygtohkepat5ayrpklearjw6jin57ussu@6uds6wtgaeaq>
+References: <20230926174243.161422-1-danila@jiaxyga.com>
+ <20230926174243.161422-2-danila@jiaxyga.com>
+ <42a1d0ab-4e8d-461d-bb2c-977a793e52b2@linaro.org>
+ <1695755445.902336096@f165.i.mail.ru>
+ <84e63b82-4fef-416b-8dbe-3838ad788824@linaro.org>
+ <c684d0a7-3336-48e3-9d2b-5c92f9132550@linaro.org>
+ <f76637f9-8242-4258-932e-b879145a5cfd@linaro.org>
+ <99ffd03f-b888-4222-939b-603c10f2307b@jiaxyga.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] arm64: defconfig: Enable SDM660 Clock Controllers
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org,
- Petr Vorel <petr.vorel@gmail.com>, Martin Botka
- <martin.botka@somainline.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Aboothahir U <aboothahirpkd@gmail.com>
-References: <20231115205318.2536441-1-pvorel@suse.cz>
- <2bferiemkljxua63v6ogifpzhlbj6m2gycxrbitgmc3ybj2a4p@7kfnzcrjj6jr>
- <CAA8EJpoEzTeOSVy5qVCs6eSBTxWKRfDq0UzrEjz1Kx1sG9xkCg@mail.gmail.com>
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpoEzTeOSVy5qVCs6eSBTxWKRfDq0UzrEjz1Kx1sG9xkCg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <99ffd03f-b888-4222-939b-603c10f2307b@jiaxyga.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: GqjrpESuv_j_AGaNy9HqaIuR4ssENHFN
+X-Proofpoint-GUID: GqjrpESuv_j_AGaNy9HqaIuR4ssENHFN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-07_17,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=954
+ adultscore=0 impostorscore=0 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 bulkscore=0 clxscore=1011 phishscore=0 spamscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2312070165
 
-
-
-On 12/7/23 19:54, Dmitry Baryshkov wrote:
-> On Thu, 7 Dec 2023 at 18:27, Bjorn Andersson <andersson@kernel.org> wrote:
->>
->> On Wed, Nov 15, 2023 at 09:53:18PM +0100, Petr Vorel wrote:
->>> From: Petr Vorel <petr.vorel@gmail.com>
->>>
->>> Enable support for the multimedia clock controller on SDM660 devices
->>> and graphics clock controller on SDM630/636/660 devices.
->>>
->>> Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
->>> ---
->>> Changes v1->v2:
->>> * added commit message (not just the subject)
->>>
->>> NOTE motivation for this is that some not yet mainlined DTS already use
->>> both:
->>>
->>> https://github.com/sdm660-mainline/linux/blob/sdm660-next-stable/arch/arm64/boot/dts/qcom/sdm636-asus-x00td.dts
->>>
->>> Kind regards,
->>> Petr
->>>
->>>   arch/arm64/configs/defconfig | 2 ++
->>>   1 file changed, 2 insertions(+)
->>>
->>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
->>> index acba803835b9..10a098aa8b1b 100644
->>> --- a/arch/arm64/configs/defconfig
->>> +++ b/arch/arm64/configs/defconfig
->>> @@ -1235,6 +1235,8 @@ CONFIG_SC_GCC_8180X=y
->>>   CONFIG_SC_GCC_8280XP=y
->>>   CONFIG_SC_GPUCC_8280XP=m
->>>   CONFIG_SC_LPASSCC_8280XP=m
->>> +CONFIG_SDM_MMCC_660=m
->>> +CONFIG_SDM_GPUCC_660=y
->>
->> I'd expect the GPU clock controller to be a module, can you please
->> clarify why it needs to be builtin?
+On Thu, Nov 23, 2023 at 12:03:56AM +0300, Danila Tikhonov wrote:
 > 
-> To allow the display to be enabled early enough?
-That sounds like a terrible bug in drm/msm.. Display should
-be wholly separate from Adreno.
+> sc7180/sm7125 (atoll) expects speedbins from atoll.dtsi:
+> And has a parameter: /delete-property/ qcom,gpu-speed-bin;
+> 107 for 504Mhz max freq, pwrlevel 4
+> 130 for 610Mhz max freq, pwrlevel 3
+> 159 for 750Mhz max freq, pwrlevel 5
+> 169 for 800Mhz max freq, pwrlevel 2
+> 174 for 825Mhz max freq, pwrlevel 1 (Downstream says 172, but thats probably
+> typo)
+A bit confused. where do you see 172 in downstream code? It is 174 in the downstream
+code when I checked.
+> For rest of the speed bins, speed-bin value is calulated as
+> FMAX/4.8MHz + 2 round up to zero decimal places.
+> 
+> sm7150 (sdmmagpie) expects speedbins from sdmmagpie-gpu.dtsi:
+> 128 for 610Mhz max freq, pwrlevel 3
+> 146 for 700Mhz max freq, pwrlevel 2
+> 167 for 800Mhz max freq, pwrlevel 4
+> 172 for 504Mhz max freq, pwrlevel 1
+> For rest of the speed bins, speed-bin value is calulated as
+> FMAX/4.8 MHz round up to zero decimal places.
+> 
+> Creating a new entry does not make much sense.
+> I can suggest expanding the standard entry:
+> 
+> .speedbins = ADRENO_SPEEDBINS(
+>     { 0, 0 },
+>     /* sc7180/sm7125 */
+>     { 107, 3 },
+>     { 130, 4 },
+>     { 159, 5 },
+>     { 168, 1 }, has already
+>     { 174, 2 }, has already
+>     /* sm7150 */
+>     { 128, 1 },
+>     { 146, 2 },
+>     { 167, 3 },
+>     { 172, 4 }, ),
+> 
 
-Konrad
+A difference I see between atoll and sdmmagpie is that the former
+doesn't support 180Mhz. If you want to do the same, then you need to use
+a new bit in the supported-hw bitfield instead of reusing an existing one.
+Generally it is better to stick to exactly what downstream does.
+
+-Akhil.
+
+> All the best,
+> Danila
+> 
+> On 11/22/23 23:28, Konrad Dybcio wrote:
+> > 
+> > 
+> > On 10/16/23 16:32, Dmitry Baryshkov wrote:
+> > > On 26/09/2023 23:03, Konrad Dybcio wrote:
+> > > > On 26.09.2023 21:10, Danila Tikhonov wrote:
+> > > > > 
+> > > > > I think you mean by name downstream dt - sdmmagpie-gpu.dtsi
+> > > > > 
+> > > > > You can see the forked version of the mainline here:
+> > > > > https://github.com/sm7150-mainline/linux/blob/next/arch/arm64/boot/dts/qcom/sm7150.dtsi
+> > > > > 
+> > > > > 
+> > > > > All fdt that we got here, if it is useful for you:
+> > > > > https://github.com/sm7150-mainline/downstream-fdt
+> > > > > 
+> > > > > Best wishes, Danila
+> > > > Taking a look at downstream, atoll.dtsi (SC7180) includes
+> > > > sdmmagpie-gpu.dtsi.
+> > > > 
+> > > > Bottom line is, they share the speed bins, so it should be
+> > > > fine to just extend the existing entry.
+> > > 
+> > > But then atoll.dtsi rewrites speed bins and pwrlevel bins. So they
+> > > are not shared.
+> > +Akhil
+> > 
+> > could you please check internally?
+> > 
+> > Konrad
+> 
 
