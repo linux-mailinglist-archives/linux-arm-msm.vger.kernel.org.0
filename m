@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB393809FF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:51:57 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9D8D809FFD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:52:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8139E1F217EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:51:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84917281C54
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:52:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96CCE125DD;
-	Fri,  8 Dec 2023 09:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3651812B94;
+	Fri,  8 Dec 2023 09:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BSaJ74Lq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b0EUNmU9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490AE1991
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 01:51:46 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3333b46f26aso1876448f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 01:51:46 -0800 (PST)
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 267401723
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 01:52:40 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40c09dfd82aso25497175e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 01:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702029105; x=1702633905; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702029158; x=1702633958; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:cc:references
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0FY8AYNSKeDwoS/SICzwBlUh0Fod4aFCnOTtellaPn4=;
-        b=BSaJ74LqLvqeo/ZJMkwbq49LPvEc9eTmnZSeJ/4fxvnxwEfbLFib8Ab/NHd66Fisap
-         ST8aCmKOwG+7NXrYDjCPtwCN2fbyfxmCO9DxrVeqevBiBbjPFW+wUBIFBpZceym8mDuE
-         n+vEs4ayP7F9y6kdYy7hLvZyToemYJNUVQcDQCJlgRxTNSnZzzy/ZnLjJtXO5RqewHFo
-         gRLA8Xodgy69u5NNb4zgaSFOItcYdSOd73UXb02YaB6m44+jelB/UVJ01z2EQxQ5IZAl
-         rpzloJEKxtY7b/1j5gkVpXDdcbZ1CLMyWjksvHrA8cNt7zoecP7HazCLCCSjwwcPRO0f
-         qiDw==
+        bh=cy1ynQiCsa9hXIviflMSaOGY1IRNHwAjxco9Nm8WCoc=;
+        b=b0EUNmU9lKV2g70chFITM/go+hRjoE/TKV1im/LqTSw0mWn1sjfeQcusl18InBtmO2
+         tXWyohBBpfoWjigqVygvFSHN7eR2ED8mJEnUIlypy31aWb1LVOr0EoFeYIZ+XS+7yQs1
+         pu+ki5zOsp/Qt798JVHpIv15ZJ6eoP5ymF6Yu/v6J/XXvTtVv9YS80b15JqPN7W4w1pa
+         HF4ZXpHGOzhAg29okfDISOrRa6IyWONybxN77VPv8MIIMHeDhAoXGCkkFpKoO/o66jec
+         neQJ0lRKKO3qk4oUnGfQi1StjheIcKAHdxWrj5LL+XAAsjDrFCNCFaXF7T0W/x2/bKdj
+         ur4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702029105; x=1702633905;
+        d=1e100.net; s=20230601; t=1702029158; x=1702633958;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:cc:references
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0FY8AYNSKeDwoS/SICzwBlUh0Fod4aFCnOTtellaPn4=;
-        b=whs3bIxESQHpgz7gZcp14jLJBceMotRmxJEJaVqUwz82WeKIpGhUTWc6kcmz6R+qoK
-         VooELwVAs7UvLE24OxXb+vlXCBq89wYDjgB0AI9bMrFQpbaIWhKdek3xycebMOaGzTCh
-         mHRksiiV2tGf/R6UuDBTShBf+w9P68gy2peHPFJeJwZNlTDyKDoqkpW3MnFqzh0zlEjO
-         6FJ6Pb2Cbn3t1qYpx0NerE2JeFvSCHAMoW13xGQRgUsO/Q1dmXGGZmXeAHgWlXlVT0c7
-         ByLKvxN4WTUHoodM6mOGwTJxc9I5ul9E/LiuC7qgJCY/UnKY0G1nUrhoo6Lo7GwMFTz8
-         tO8Q==
-X-Gm-Message-State: AOJu0Yx+BdOA28ur+CPRsyhL/ML3r/bmqCdig+WYOg39JQNtuLVZGYGv
-	bpd7ngApRsxI5EfkOksCXCpmgw==
-X-Google-Smtp-Source: AGHT+IFi9EIss32NZngMA52VabciS8ywNCTnEBIUZ1cqWPN+NvNaDpIW/zHNXMI8M6+Jk5govSOIyg==
-X-Received: by 2002:a05:600c:5385:b0:40b:5e59:b7d5 with SMTP id hg5-20020a05600c538500b0040b5e59b7d5mr2498808wmb.178.1702029104698;
-        Fri, 08 Dec 2023 01:51:44 -0800 (PST)
+        bh=cy1ynQiCsa9hXIviflMSaOGY1IRNHwAjxco9Nm8WCoc=;
+        b=X4YSrI4xEltIu7oM60xrVCCFZz/88vA/FMZ88tJW7Q4gzixzUX3oTV23PLDfXRKC6d
+         V4cCRkCZB4KWvCsmr3kITGLsLJ68oNCZzJbxXZPv810WZjFi+QnMSQgcIstNPV7vpRor
+         9Uyij2ouIpikFeYpfgoulR58gqhnVU7WRSpzz7Fqyn8qnZoOXgw+suiXfW3afoc41VxM
+         uT3e2DDbr5VnclTYnZJ4pWNaV+EAYymhBxtV33nx2Ub+gAy/64iX7c16IbTARyIb3Rk6
+         nVDpAfBxp7mgC0bliGAU/1TOBLJZXkg2JIeQ8u3tsarZS7S3Six+RXp13YRGKeLIk4JQ
+         mCPg==
+X-Gm-Message-State: AOJu0YyqszVqp2P3+UIy09Vi6ASWWdQYOxYWMSFFHjlhqIArP+dadE62
+	6a8sClzaLxgBQkyR8DH/8BX3upT5h7yXmqTHPw4=
+X-Google-Smtp-Source: AGHT+IHzyW0VgJFg7ZlEDwoOEEIOPZn3Dwo7sXSmZodnTAIi1ME/YFztbQv2ctdswME0tuv9X5yYYA==
+X-Received: by 2002:a7b:c84e:0:b0:40b:5e1d:83a9 with SMTP id c14-20020a7bc84e000000b0040b5e1d83a9mr2452899wml.61.1702029158404;
+        Fri, 08 Dec 2023 01:52:38 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id j13-20020a05600c190d00b0040b478da760sm2277323wmq.48.2023.12.08.01.51.43
+        by smtp.gmail.com with ESMTPSA id j13-20020a05600c190d00b0040b478da760sm2277323wmq.48.2023.12.08.01.52.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Dec 2023 01:51:44 -0800 (PST)
-Message-ID: <173513e2-d2ec-4932-886a-7c9074633093@linaro.org>
-Date: Fri, 8 Dec 2023 10:51:42 +0100
+        Fri, 08 Dec 2023 01:52:37 -0800 (PST)
+Message-ID: <9f611e20-9530-42de-b794-b6210f465bf1@linaro.org>
+Date: Fri, 8 Dec 2023 10:52:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,19 +62,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: PCI: qcom: Correct reset-names property
+Subject: Re: [PATCH v5 0/3] mailbox/arm64: qcom: rework compatibles for
+ fallback (continued)
 Content-Language: en-US
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?=
- <kw@linux.com>
-References: <20231111142006.51883-1-krzysztof.kozlowski@linaro.org>
+To: Jassi Brar <jassisinghbrar@gmail.com>
+References: <20231111204916.35835-1-krzysztof.kozlowski@linaro.org>
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -120,20 +117,23 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231111142006.51883-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231111204916.35835-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/11/2023 15:20, Krzysztof Kozlowski wrote:
-> There is no "resets-names" property, but "reset-names".
+On 11/11/2023 21:49, Krzysztof Kozlowski wrote:
+> Hi,
 > 
-> Fixes: 075a9d55932e ("dt-bindings: PCI: qcom: Convert to YAML")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
+> Changes since v4
+> ================
+> v3: https://lore.kernel.org/linux-devicetree/20230322174148.810938-1-krzysztof.kozlowski@linaro.org/
+> v4: https://lore.kernel.org/linux-devicetree/20230327140752.163009-1-krzysztof.kozlowski@linaro.org/
+> 
+> Important: v3 and v4 are quite different.
 
-Krzysztof W., Bjorn H., Lorenzo,
+Jassi,
 
-Can you pick this one via PCI tree?
+Any comments from your side? Can you pick this patchset?
 
 Best regards,
 Krzysztof
