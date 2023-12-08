@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2CF780A2FD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 13:18:10 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9C6C80A312
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 13:21:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A7981F2135A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:18:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CC3E7B20B1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:21:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0232F1C287;
-	Fri,  8 Dec 2023 12:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EFDD1C296;
+	Fri,  8 Dec 2023 12:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="x8LaE5n+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IgFYXOiJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0906D1986
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 04:18:02 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-54c5d041c23so2782619a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 04:18:01 -0800 (PST)
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA8C198C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 04:21:02 -0800 (PST)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2c9f85eff28so28733091fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 04:21:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702037880; x=1702642680; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702038060; x=1702642860; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wgne8jfuv4ytpfcfNboMQl6PQ6PgOyvGX4p3ndjzRIU=;
-        b=x8LaE5n+jgW4jQluoChfkLj2gG4ajnmV7mP2zrLjAvtDFaI42WUpsVeLyeBwNud9nv
-         n72dWN+Owxa30ayEhi/bYKhxumn+mLRhHB+QBvNpnfmlUrTKXNaV99zJw4DSuA4wSwG/
-         iByRh13cByD9UTUkGH67JdXdLm6XVfaaPD5D8ua/yXmWJidyKnmFMpsNv8IrW/zaJmxN
-         gAJQlgoglw3AZHFIIkX9FjtZpBZX6MngCd627MqHsz7kvT+nYOSmyPKPKL2QsKmGV74U
-         uZKUm6Kv243XmQpvYuQ1hSIjMozVVebes5cpRd4NevAZJ5xJhHiVYxCL9GMxUfg+nsBT
-         FeJg==
+        bh=pl0clnwrD65PTyvZ51AXFWygx4cIxP6ccg197Ec+HPE=;
+        b=IgFYXOiJRduaqhdL7d8MG02RwhYaXCTYi0psb3soRWlrsx1PYp+atZAH9syrXKY7Oa
+         qhgzWxd7OT5Ydo047GMrx+3Kvo3Fw6UJgEi4iV7MARFokwE+QEAn4LgH5rF23xXBhGJ3
+         L//TAlN1LDNEfs4AUA0UfHmneVx1kOD+/vvb/8z2yZ/eN68zKwoBiLJrTDGaGbgJM/l8
+         dt8ps/27pQGVW99gGcp9zONVZt1xgS/equL5+Ru1GXiemMyXKhdavmTMQKG420ViXf/C
+         ND0OifQ1U9LTe98jy7VdC4nJyd6dydv0pt1a6Z/Uz4tWd5ZugJzlSfuZ6OabDLGR+/B3
+         QBYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702037880; x=1702642680;
+        d=1e100.net; s=20230601; t=1702038060; x=1702642860;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wgne8jfuv4ytpfcfNboMQl6PQ6PgOyvGX4p3ndjzRIU=;
-        b=NTe4PpPC4+YWSZEBTZ/6pHxt0xcEcvBIsLvDrQs0YaKbT9UuAFiYsvPzY8s8OWzEFX
-         JNQC5i4pmFP0On5Y3BAHcabUawHBtYvgdknD2pAeRp+XW0BxNGq8cBJA/p3TXg2fVgxf
-         5QzRscURaZazh9JWcfUNexCqSd88YZ5uFHjlTkcR41yo5Xy+nYKec/rcGKgWIBVB6h8W
-         6VNIHWf4yTN0WDt8jFJXloHMtuoFAlq+v21DSSxIEFIf9RI2xDXTX/ulnGa6hilDT5ea
-         cX4kcA8pKhg5Xupq4cy6lXFQb7sXM77ZtwwbvsNIBaBLQdx6mQ77wQb2pA7iTzR7f+zr
-         AAcg==
-X-Gm-Message-State: AOJu0Yw52Ml9pwiKQ13AecHwNSiTLADyHBbXrVGEJTJdkqbCC52HGgQm
-	crs6a8cxGfi7viKiLJ8xbpTeIA==
-X-Google-Smtp-Source: AGHT+IE5mm9M0WWE4uEledG8cubJBa0sU3xgeZ/S2appl4lxKPZsg4b42mDhYcH+wYRiHysvOmUfsw==
-X-Received: by 2002:a50:c2ca:0:b0:54c:4837:9fe1 with SMTP id u10-20020a50c2ca000000b0054c48379fe1mr8018edf.56.1702037880419;
-        Fri, 08 Dec 2023 04:18:00 -0800 (PST)
+        bh=pl0clnwrD65PTyvZ51AXFWygx4cIxP6ccg197Ec+HPE=;
+        b=GC2gkad6OPyRfxWQtcd779VmzXFy+5yv8ca2m9gWe6m+lRhlqofd2paf/n/bibzHrt
+         ji86CMSqZNYkEPG+StxvLvq8PJJn1ZIEuoC2lAmcPu4PvXrXr8vSUROVi/Wyd64ISDTG
+         LxKsaEs29FjkufAl7TCZnYBb7u5SLSmFkYV/7dqeIv3x1QFqbhjDu3OAGG5+hDAlNq7U
+         CCiAlWXNegwB9KMl/ZycPHtOez50l9JJRI93oWZBL38IlwyJj/VKAQfQ4d0qwxXE490x
+         8KFYKdC3C3POiowt5PqCjpokXTn/oWTUMgHYd+oGL8F0NI1OIEkt8NGYm/jXSv4VlPew
+         VYxg==
+X-Gm-Message-State: AOJu0Yy5YsM3gWpNN8k8/Pfe1su7EIYyAh3QJ89ld37idko805glsSvT
+	lUCBTuCK1XQ6sdaRITTByiS3tQ==
+X-Google-Smtp-Source: AGHT+IER4YlgGGyKEHV9dQr5tdof58Pqyht6yuF2QXUJoFt24Q9DtS/qCkLD1Wd5t4lITLKwjr/tWA==
+X-Received: by 2002:a2e:361a:0:b0:2ca:24c:e252 with SMTP id d26-20020a2e361a000000b002ca024ce252mr2846721lja.91.1702038060334;
+        Fri, 08 Dec 2023 04:21:00 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id o29-20020a509b1d000000b0054ca1d90410sm790428edi.85.2023.12.08.04.17.58
+        by smtp.gmail.com with ESMTPSA id he43-20020a1709073dab00b00a1e21893a26sm936349ejc.222.2023.12.08.04.20.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Dec 2023 04:18:00 -0800 (PST)
-Message-ID: <cbf0b9a6-2752-4ab5-ab21-af28e87fc1e6@linaro.org>
-Date: Fri, 8 Dec 2023 13:17:58 +0100
+        Fri, 08 Dec 2023 04:20:59 -0800 (PST)
+Message-ID: <d885928d-035b-4abd-890b-c9626b925d76@linaro.org>
+Date: Fri, 8 Dec 2023 13:20:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,22 +62,27 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] dt-bindings: PCI: qcom: correct clocks for SM8150
+Subject: Re: [PATCH v3 2/3] dt-bindings: phy: qcom-edp: Add X1E80100 PHY
+ compatibles
 Content-Language: en-US
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Helgaas
- <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
- Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-References: <20231208105155.36097-1-krzysztof.kozlowski@linaro.org>
- <20231208105155.36097-3-krzysztof.kozlowski@linaro.org>
- <CAA8EJpqKM45=6R0fHjDjNWfZpR-QxRoJo-ioB-t-WT188jpqnA@mail.gmail.com>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Abel Vesa
+ <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Johan Hovold <johan@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231122-phy-qualcomm-edp-x1e80100-v3-0-576fc4e9559d@linaro.org>
+ <20231122-phy-qualcomm-edp-x1e80100-v3-2-576fc4e9559d@linaro.org>
+ <b6d3928c-75ba-47a3-93fc-a60729be2e35@linaro.org>
+ <545d3ace-66e5-4470-b3a4-cbdac5ae473d@linaro.org>
+ <ab7223a2-9f3f-4c9c-ab97-31512e7a0123@linaro.org>
+ <CAA8EJpoboN85bLiayXJgn5iwh+Gn0OtK0aZ26ZJu9H3xkTT2Tw@mail.gmail.com>
+ <d9d27fa4-6ede-4958-b717-db425be61068@linaro.org>
+ <CAA8EJpq7dB+45fiq2WmkMmSO7KszY0Et_t1gZ9ZvfsSxftpm8g@mail.gmail.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -123,61 +128,69 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <CAA8EJpqKM45=6R0fHjDjNWfZpR-QxRoJo-ioB-t-WT188jpqnA@mail.gmail.com>
+In-Reply-To: <CAA8EJpq7dB+45fiq2WmkMmSO7KszY0Et_t1gZ9ZvfsSxftpm8g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/12/2023 12:09, Dmitry Baryshkov wrote:
-> On Fri, 8 Dec 2023 at 12:52, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
+On 08/12/2023 13:17, Dmitry Baryshkov wrote:
+>>>>>> Anyway, I was thinking this should be rather argument to phy-cells.
+>>>>> I'm not sure I'm for this, because the results would be:
+>>>>>
+>>>>> --- device.dts ---
+>>>>> &dp_controller0 {
+>>>>>      phys = <&dp_phy0 PHY_EDP>;
+>>>>> };
+>>>>>
+>>>>> &dp_controller1 {
+>>>>>      phys = <&dp_phy1 PHY_DP>;
+>>>>> };
+>>>>> ------------------
+>>>>>
+>>>>> as opposed to:
+>>>>>
+>>>>> --- device.dts ---
+>>>>> &dp_phy0 {
+>>>>>      phy-type <PHY_EDP>;
+>>>>> };
+>>>>>
+>>>>> &dp_phy1 {
+>>>>>      phy-type = <PHY_DP>;
+>>>>> };
+>>>>> ------------------
+>>>>
+>>>> Which is exactly what I proposed/wanted to see.
+>>>>
+>>>>>
+>>>>> i.e., we would be saying "this board is connected to this phy
+>>>>> instead" vs "this phy is of this type on this board".
+>>>>>
+>>>>> While none of them really fit the "same hw, different config"
+>>>>> situation, I'd vote for the latter one being closer to the
+>>>>> truth
+>>>>
+>>>> Then maybe I miss the bigger picture, but commit msg clearly says:
+>>>> "multiple PHYs that can work in both eDP or DP mode"
+>>>>
+>>>> If this is not the case, describe the hardware correctly in the commit
+>>>> msg, so people will not ask stupid questions...
+>>>
+>>> There are multiple PHYs (each of them at its own address space). Each
+>>> of the PHYs in question can be used either for the DisplayPort output
+>>> (directly or through the USB-C) or to drive the eDP panel.
+>>>
+>>> Same applies to the displayport-controller. It can either drive the DP
+>>> or eDP output, hardware-wise it is the same.
 >>
->> PCI node in Qualcomm SM8150 should have exactly 8 clocks, including the
->> ref clock.
->>
->> Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> ---
->>
->> Please take the patch via PCI tree.
->>
->> Changes in v3:
->> 1. New patch: Split from sc8180x change.
->> 2. Add refclk as explained here:
->>    https://lore.kernel.org/all/20231121065440.GB3315@thinkpad/
->> ---
->>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 26 +++++++++++++++++++
->>  1 file changed, 26 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> index 5214bf7a9045..a93ab3b54066 100644
->> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
->> @@ -559,6 +559,32 @@ allOf:
->>            contains:
->>              enum:
->>                - qcom,pcie-sm8150
->> +    then:
->> +      properties:
->> +        clocks:
->> +          minItems: 8
->> +          maxItems: 8
->> +        clock-names:
->> +          items:
->> +            - const: pipe # PIPE clock
->> +            - const: aux # Auxiliary clock
->> +            - const: cfg # Configuration clock
->> +            - const: bus_master # Master AXI clock
->> +            - const: bus_slave # Slave AXI clock
->> +            - const: slave_q2a # Slave Q2A clock
->> +            - const: tbu # PCIe TBU clock
->> +            - const: ref # REFERENCE clock
+>> Therefore what I proposed was correct - the block which uses the phy
+>> configures its mode. Because this part:
+>>   "this phy is of this type on this board".
+>> is not true. The phy is both types.
 > 
-> Can we change the order of the tbu and ref clocks and fold this into
-> the sc810x case?
+> But hopefully you don't mean using #phy-cells here. There are no
+> sub-PHYs or anything like that.
 
-I prefer not, because this is an ABI-concern and we are supposed to keep
-things stable.
+I am exactly talking about phy-cells. Look at first example from Abel's
+code.
 
 Best regards,
 Krzysztof
