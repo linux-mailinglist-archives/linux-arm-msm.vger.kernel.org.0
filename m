@@ -1,127 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-4014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 145CE80A8FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 17:31:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41E0480A914
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 17:34:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 45F831C209C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 16:31:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 021FB281879
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 16:34:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9791E38FB3;
-	Fri,  8 Dec 2023 16:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 993BA249F8;
+	Fri,  8 Dec 2023 16:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SUW1i7iJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iXJyMguF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C4B01998
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 08:31:47 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B8FZ5eZ010556;
-	Fri, 8 Dec 2023 16:31:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=0/xFryJYdQtGqhQu7j0ktsPp2eeMwd1xi2TFweVHTyQ=;
- b=SUW1i7iJqGrbn5X1/6N74N/NdhU/HrvkAFgZmt7pz/fKfcCQiqWemwuISLx9m5/ALud4
- X+2A6IuVFuPapX1Vvxs+liOpNDUelvhGk/nwfSz8h5x3ynz0oTkuuVmyqlANjge0zubK
- ksLTxO8dVv6uu1LnIUEobvRKGY1Ocnrc+xtVv/jeudNsoywtjTWHoLGpJhW3bub0+iXP
- +zK8cUzZUlvLCXRQIdpyhAVK7iY2oSWgNacoXHMTURh9/39W4E0TVpH4RWOltnkLmOJn
- 9pNbfAEoAyVrI4zl7YLY+pCkYX8U7u6sLO8bvwhRr1ru0WZyJO3t5Xcz16YMYKVsHreO lg== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uv5wpg63q-1
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC8D919A9;
+	Fri,  8 Dec 2023 08:34:23 -0800 (PST)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B8CAp1k005766;
+	Fri, 8 Dec 2023 16:34:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xZepUCZ6oEW8wRoBDKzVd/MYAdFVGbSFBsuQdlUTUbY=;
+ b=iXJyMguFUXyRij6PzrFM1ghPnPK1NwAsF3LvK4H00Ru4+2iSz+a4Bz/BvU2dVj1PYXmt
+ y/uGbM1zpbP3o0GR6a0GkpHQskGpupLmBZttbLFb12syuWgson8z9c6jKMa3AnF5uWKB
+ 8SDaR15dAUGLmk4KVs7ItMi2YcDunSuSyBuJGlBDLKcDgI6rkSjnkcnKMAMQbSOSE+We
+ lIDvl5ZsDoZYkhVLQAgMe0tVkDjOzE9AhM1/N+NRPL51wwsfXudoGh9VqU3n5ztUqfTB
+ tBFm8IWZvay7BFxUv0VPzi7Qz+/HnvoL8wSgVnQfxwOKnQGsNSbNMistJphrYN1GRIEV jw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uuuu4sen2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Dec 2023 16:31:30 +0000
+	Fri, 08 Dec 2023 16:34:13 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B8GVTZ6016675
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B8GXq4s011161
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Dec 2023 16:31:29 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Fri, 8 Dec 2023 08:31:28 -0800
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
-        <stanislaw.gruszka@linux.intel.com>,
-        <jacek.lawrynowicz@linux.intel.com>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <ogabbay@kernel.org>, Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH 2/2] accel/qaic: Implement quirk for SOC_HW_VERSION
-Date: Fri, 8 Dec 2023 09:31:01 -0700
-Message-ID: <20231208163101.1295769-3-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231208163101.1295769-1-quic_jhugo@quicinc.com>
-References: <20231208163101.1295769-1-quic_jhugo@quicinc.com>
+	Fri, 8 Dec 2023 16:33:52 GMT
+Received: from [10.110.30.94] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Dec
+ 2023 08:33:50 -0800
+Message-ID: <188e0168-a45b-6e38-ac49-8b0fd41e9110@quicinc.com>
+Date: Fri, 8 Dec 2023 08:33:48 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 14/16] drm/msm/dpu: reserve cdm blocks for writeback in
+ case of YUV output
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Sean
+ Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <dri-devel@lists.freedesktop.org>, <quic_jesszhan@quicinc.com>,
+        <quic_parellan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20231208050641.32582-1-quic_abhinavk@quicinc.com>
+ <20231208050641.32582-15-quic_abhinavk@quicinc.com>
+ <CAA8EJpo4XVMJ7RqsZZ6Eh_PjoPeWiMmAW3P1a4dkZ_EHqz7GkQ@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpo4XVMJ7RqsZZ6Eh_PjoPeWiMmAW3P1a4dkZ_EHqz7GkQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cV-CnrrWz-tyOuhKjv8ij5S20HX6ooOE
-X-Proofpoint-ORIG-GUID: cV-CnrrWz-tyOuhKjv8ij5S20HX6ooOE
+X-Proofpoint-GUID: 88loezmmNtNqOB2q57NA__9kvADl_G3q
+X-Proofpoint-ORIG-GUID: 88loezmmNtNqOB2q57NA__9kvADl_G3q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-08_11,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 impostorscore=0 adultscore=0 priorityscore=1501 mlxscore=0
- clxscore=1011 malwarescore=0 phishscore=0 suspectscore=0 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312080136
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 bulkscore=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 spamscore=0 phishscore=0 mlxlogscore=961 adultscore=0
+ malwarescore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2312080137
 
-The SOC_HW_VERSION register in the BHI space is not correctly initialized
-by the device and in many cases contains uninitialized data. The register
-could contain 0xFFFFFFFF which is a special value to indicate a link
-error in PCIe, therefore if observed, we could incorrectly think the
-device is down.
 
-Intercept reads for this register, and provide the correct value - every
-production instance would read 0x60110200 if the device was operating as
-intended.
 
-Fixes: a36bf7af868b ("accel/qaic: Add MHI controller")
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
----
- drivers/accel/qaic/mhi_controller.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+On 12/8/2023 3:54 AM, Dmitry Baryshkov wrote:
+> On Fri, 8 Dec 2023 at 07:07, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>> Reserve CDM blocks for writeback if the format of the output fb
+>> is YUV. At the moment, the reservation is done only for writeback
+>> but can easily be extended by relaxing the checks once other
+>> interfaces are ready to output YUV.
+>>
+>> changes in v2:
+>>          - use needs_cdm from topology struct
+>>          - drop fb related checks from atomic_mode_set()
+> 
+> It looks like this should be squashed with the patch 11. The 'unbind
+> CDM' doesn't really make sense without this patch. We need to allocate
+> it first,  before touching it.
+> 
 
-diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
-index 5036e58e7235..1405623b03e4 100644
---- a/drivers/accel/qaic/mhi_controller.c
-+++ b/drivers/accel/qaic/mhi_controller.c
-@@ -404,8 +404,21 @@ static struct mhi_controller_config aic100_config = {
- 
- static int mhi_read_reg(struct mhi_controller *mhi_cntrl, void __iomem *addr, u32 *out)
- {
--	u32 tmp = readl_relaxed(addr);
-+	u32 tmp;
- 
-+	/*
-+	 * SOC_HW_VERSION quirk
-+	 * The SOC_HW_VERSION register (offset 0x224) is not reliable and
-+	 * may contain uninitialized values, including 0xFFFFFFFF. This could
-+	 * cause a false positive link down error.  Instead, intercept any
-+	 * reads and provide the correct value of the register.
-+	 */
-+	if (addr - mhi_cntrl->regs == 0x224) {
-+		*out = 0x60110200;
-+		return 0;
-+	}
-+
-+	tmp = readl_relaxed(addr);
- 	if (tmp == U32_MAX)
- 		return -EIO;
- 
--- 
-2.34.1
+The way I was thinking was that patch just completes the 
+dpu_encoder_phys_cleanup() and yes it was intentionally kept ahead 
+because that will not kick in till hw_cdm is assigned.
 
+Then, this patch only handles reserving/assignment of hw_cdm when needed.
+
+That was the motivation behind this split.
+
+>>
+>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 27 +++++++++++++++++++++
+>>   1 file changed, 27 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index 862912727925..a576e3e62429 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -16,6 +16,7 @@
+>>   #include <drm/drm_crtc.h>
+>>   #include <drm/drm_file.h>
+>>   #include <drm/drm_probe_helper.h>
+>> +#include <drm/drm_framebuffer.h>
+>>
+>>   #include "msm_drv.h"
+>>   #include "dpu_kms.h"
+>> @@ -583,6 +584,7 @@ static int dpu_encoder_virt_atomic_check(
+>>          struct drm_display_mode *adj_mode;
+>>          struct msm_display_topology topology;
+>>          struct dpu_global_state *global_state;
+>> +       struct drm_framebuffer *fb;
+>>          struct drm_dsc_config *dsc;
+>>          int i = 0;
+>>          int ret = 0;
+>> @@ -623,6 +625,22 @@ static int dpu_encoder_virt_atomic_check(
+>>
+>>          topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state, dsc);
+>>
+>> +       /*
+>> +        * Use CDM only for writeback at the moment as other interfaces cannot handle it.
+>> +        * if writeback itself cannot handle cdm for some reason it will fail in its atomic_check()
+>> +        * earlier.
+>> +        */
+>> +       if (dpu_enc->disp_info.intf_type == INTF_WB && conn_state->writeback_job) {
+>> +               fb = conn_state->writeback_job->fb;
+>> +
+>> +               if (fb && DPU_FORMAT_IS_YUV(to_dpu_format(msm_framebuffer_format(fb))))
+>> +                       topology.needs_cdm = true;
+>> +               if (topology.needs_cdm && !dpu_enc->cur_master->hw_cdm)
+>> +                       crtc_state->mode_changed = true;
+>> +               else if (!topology.needs_cdm && dpu_enc->cur_master->hw_cdm)
+>> +                       crtc_state->mode_changed = true;
+>> +       }
+>> +
+>>          /*
+>>           * Release and Allocate resources on every modeset
+>>           * Dont allocate when active is false.
+>> @@ -1063,6 +1081,15 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>>
+>>          dpu_enc->dsc_mask = dsc_mask;
+>>
+>> +       if (dpu_enc->disp_info.intf_type == INTF_WB && conn_state->writeback_job) {
+>> +               struct dpu_hw_blk *hw_cdm = NULL;
+>> +
+>> +               dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>> +                                             drm_enc->base.id, DPU_HW_BLK_CDM,
+>> +                                             &hw_cdm, 1);
+>> +               dpu_enc->cur_master->hw_cdm = hw_cdm ? to_dpu_hw_cdm(hw_cdm) : NULL;
+>> +       }
+>> +
+>>          cstate = to_dpu_crtc_state(crtc_state);
+>>
+>>          for (i = 0; i < num_lm; i++) {
+>> --
+>> 2.40.1
+>>
+> 
+> 
+> --
+> With best wishes
+> 
+> Dmitry
 
