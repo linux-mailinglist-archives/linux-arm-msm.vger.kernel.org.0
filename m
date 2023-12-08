@@ -1,92 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-3887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83E1A809DC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:00:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE5A5809DCA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:00:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2048DB20ABC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 08:00:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 091C81C208AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 08:00:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5834510946;
-	Fri,  8 Dec 2023 07:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C32010944;
+	Fri,  8 Dec 2023 08:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SyLG3rBj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AZ6Ap3sl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E84435A5;
-	Thu,  7 Dec 2023 23:59:27 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B87vo3g012930;
-	Fri, 8 Dec 2023 07:59:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iYObFqKSCtyk4kLsupha60eckv7V1mIxUPQFYzg53KU=;
- b=SyLG3rBjWyR0AougwnjknfiYBPLjKx5pUtLrY7rrUcLb7vEmZcDBYbnSdeKKedHOmuSo
- fzTsQ0DuAbyCORz53qFE1TzjiMCkzDPLFrn63E1+xiD+kOmebhaVE1w2OuyWep51gr1s
- UwOB78xXU+TIdACTWEJk/Eo2lATHLk/1oIR4mHL/1/TnomLP3lzKSZ82KIA579qwzyu+
- OHcmaEpGMyldsGj5L9A2Hwd5Yyo17QPl8TuMAYoG/vybbHYznMi0zxe3lDOH7S7tLcT7
- YzMakM30mntqSQOU1SCptE7aTWzBIFZUYXmVB6hDcMrR7T9J/qdr08DriV+s+2CFBMX3 cA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uu8p0b9pm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Dec 2023 07:59:24 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B87wx5a010599
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Dec 2023 07:58:59 GMT
-Received: from [10.216.14.21] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 7 Dec
- 2023 23:55:04 -0800
-Message-ID: <0f0649c6-4a2c-49b5-a4ac-356b7a67c582@quicinc.com>
-Date: Fri, 8 Dec 2023 13:24:59 +0530
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C025107B5;
+	Fri,  8 Dec 2023 08:00:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED718C433C8;
+	Fri,  8 Dec 2023 08:00:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702022408;
+	bh=KHV0ZGPq3MX7s2HDIPDrsThZSX5szDZVhE9ErAHo8tU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AZ6Ap3slRyF3YOWOEdPCjpEcYV/WFG+MzvEYoskaV3JjcRPj/DXi4sJwrnDEfiROs
+	 /B8tYAoITAczfm+WZgkiHC3TQv1T9L/5HMBNuqayfsAA65hq5A1Dn0kko1JFRM4BOE
+	 arOc5GuDHJhI92B9guVaicWT2ktdtjJc+pRoPl1R65B60jIRjh69cN+g0NXzzCKtNP
+	 14DNELaKEs7cPaz2sOKer4ZCljM2Y6YAx7OLE7oZ1W++x9HEWedtLL9XtOlAFK/35X
+	 3J7QLVD28YI/w8ekJTrka6m1DE5vAYoQjE9QDLyR1S3uxsIIpbB4jioEdDzMgJ5jdN
+	 JKT96xnf21b9g==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rBVn6-0001Vo-1K;
+	Fri, 08 Dec 2023 09:00:57 +0100
+Date: Fri, 8 Dec 2023 09:00:56 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	Michael Bottini <michael.a.bottini@linux.intel.com>,
+	"David E . Box" <david.e.box@linux.intel.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>
+Subject: Re: [PATCH v2 1/6] PCI/ASPM: Add locked helper for enabling link
+ state
+Message-ID: <ZXLNONZRafTkOk9U@hovoldconsulting.com>
+References: <20231128081512.19387-2-johan+linaro@kernel.org>
+ <20231207204716.GA764883@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/12] ufs: host: wrapped keys support in ufs qcom
-Content-Language: en-US
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-mmc@vger.kernel.org>, <linux-block@vger.kernel.org>,
-        <linux-fscrypt@vger.kernel.org>, <omprsing@qti.qualcomm.com>,
-        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>,
-        <quic_spuppala@quicinc.com>, <kernel@quicinc.com>
-References: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
- <20231122053817.3401748-7-quic_gaurkash@quicinc.com>
-From: Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <20231122053817.3401748-7-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nqQhXKxJ9XV8p1snuQlt0YNTBQXZSHIP
-X-Proofpoint-ORIG-GUID: nqQhXKxJ9XV8p1snuQlt0YNTBQXZSHIP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-08_04,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 mlxscore=0 suspectscore=0 adultscore=0 bulkscore=0
- mlxlogscore=617 impostorscore=0 spamscore=0 lowpriorityscore=0
- clxscore=1015 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312080065
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231207204716.GA764883@bhelgaas>
 
+On Thu, Dec 07, 2023 at 02:47:16PM -0600, Bjorn Helgaas wrote:
+> [+cc Kai-Heng]
+> 
+> On Tue, Nov 28, 2023 at 09:15:07AM +0100, Johan Hovold wrote:
+> > Add a helper for enabling link states that can be used in contexts where
+> > a pci_bus_sem read lock is already held (e.g. from pci_walk_bus()).
+> > 
+> > This helper will be used to fix a couple of potential deadlocks where
+> > the current helper is called with the lock already held, hence the CC
+> > stable tag.
 
+> As far as I can see, we end up with pci_enable_link_state() defined
+> but never called and pci_enable_link_state_locked() being called only
+> by pcie-qcom.c and vmd.c.
 
-On 11/22/2023 11:08 AM, Gaurav Kashyap wrote:
-> 1. Implement derive software secret defined in ufs core. 2. Use the 
-> wrapped keys quirk when hwkm is supported. The assumption here is that 
-> if Qualcomm ICE supports HWKM, then all ICE keys will be treated as 
-> hardware wrapped keys.
-As per convention need to submit this in two separate patch
+Correct, I mentioned this in the cover letter.
+
+> Can we just rename pci_enable_link_state() to
+> pci_enable_link_state_locked() and assert that pci_bus_sem is held, so
+> we don't end up with a function that's never used?
+
+That would work too. I went with adding a new helper to facilitate
+stable backports and to mirror pci_disable_link_state(). The variants
+are simple wrappers around the implementation so there's no real cost to
+having the unused one.
+
+But it seems like you think there will never be a need to call this
+helper outside of pci_walk_bus() and if so we can drop the unlocked
+variant right away.
+
+Would you prefer basically squashing the first three patches and mark
+the result for stable even though that patch will fail to apply to older
+kernels as the Qualcomm bits went into -rc1?
+
+Or should I send a follow-on patch removing the unused helper after
+merging this series?
+
+The end-result will be identical.
+
+Johan
 
