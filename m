@@ -1,159 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-3901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C9D1809EE3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:11:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3F49809F1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:19:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB2491F20ECB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:11:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 669641F2188C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:19:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1ED612E44;
-	Fri,  8 Dec 2023 09:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F3C125B1;
+	Fri,  8 Dec 2023 09:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="oePBDBDJ"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="c5ZzOKjG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E112D1986
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 01:10:36 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-3332e351670so1723765f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 01:10:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1702026635; x=1702631435; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=abIGam56kSZ3DhSDuEO3BjQb5HXWW5MMfEQ3kw2b1bA=;
-        b=oePBDBDJ0hWA47MUtbrdqGt8RXbD6BJlZOhrNvbdepjE2sd1ueDG6RspnS2QDJ0vik
-         w2MQXu87pC/opdB+1sp98DShtYdppLC8UaGWiEyCIeEA8XQOr1Jo/FWf7GAClzaXiJab
-         /wNTXn/yhR6GNjtxCKorxufU/rjkeIDnEoQ3RHIU0rPSpRtSdALJnMOSLd3lIRaR2Hjo
-         3YTXYVjdkYpPGRR0xz0GYTdKb+LMzD9a5nDZLvpU2n+3LGcec0xnyahBf/Z28QXgdcWg
-         25Gh+/JbNRtY5RFF5xAeXZWmyDj8OQ7f4QdPKix+X1u9zridv9IKVPkJiWzyyPz+DQqa
-         y+HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702026635; x=1702631435;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=abIGam56kSZ3DhSDuEO3BjQb5HXWW5MMfEQ3kw2b1bA=;
-        b=eXWQY4GQnbqgidCV9tK6JJeCSmSWn+dLKerYX7OAkKJy9owYUywFPq45e1iAf5qWF4
-         prRoUmm9dtLeGueAkpvoaow3VpeubMYNK5RffFHahqZoEpS5byT1/CZ1PSPuR3rjZ4GR
-         qKEEywfysgFr0sEkP+hT/XUpNHg4ZGejP/Ffk8jAdHivajxwF2AHsLJO5LYT2WbMpz41
-         +kvkptTejcoazt9YxL5jaV6swGljEyHHp1knzlmUODDKGT9pMUVvodbBhyyPnDI87R4J
-         ahmfoPNDOGzqJ4/Lj3h0Y4qCiH/ouxsZsw6D0stgA8q4VRObPDxszp6KgJv+5C6HHV3g
-         JupQ==
-X-Gm-Message-State: AOJu0Yz6WTFkpZlvUuw0tABHxJpHjIJpOI7UHfEpm7J168rh4ruXem79
-	KnTFRjq8KEAULVW6265bf0IhBA==
-X-Google-Smtp-Source: AGHT+IEffTxMrB0wVXm8iKV0mWClhcJ3Rprr261syCocmzE/zRP7gqxm1rAxN42bfZ6Xqn9vwOI4fg==
-X-Received: by 2002:a5d:668a:0:b0:333:4635:c914 with SMTP id l10-20020a5d668a000000b003334635c914mr1260391wru.82.1702026635358;
-        Fri, 08 Dec 2023 01:10:35 -0800 (PST)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:b162:2510:4488:c0c3])
-        by smtp.gmail.com with ESMTPSA id a18-20020a5d5092000000b00333415503a7sm1572705wrt.22.2023.12.08.01.10.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Dec 2023 01:10:35 -0800 (PST)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Rocky Liao <quic_rjliao@quicinc.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [RESEND PATCH v2 3/3] Bluetooth: qca: run the power-on/off sequence for QCA6390 too
-Date: Fri,  8 Dec 2023 10:09:36 +0100
-Message-Id: <20231208090936.27769-4-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231208090936.27769-1-brgl@bgdev.pl>
-References: <20231208090936.27769-1-brgl@bgdev.pl>
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17A051716;
+	Fri,  8 Dec 2023 01:19:15 -0800 (PST)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 8F7AB42C2B;
+	Fri,  8 Dec 2023 14:19:12 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1702027153; bh=t+bjnp+qG/kG37IDVL7TIjl1JfM4ev6dMaDhwWJWoEY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=c5ZzOKjG5Er4dNbgmllmXYOsiIHPwE5TyX4xo+D+YBfHVtUCASUfamcRjT3c8o9nJ
+	 xftb5qT+I7W/lZmrK8L5UPuiOqgg6QHdD/5+uUVWF82gmyzlhyuIVJkyqR0Lz8ujSA
+	 uE7aY2O8jJnddaRcNxyXhcduMbfcxWZwIENIfiaDJ84LXL84XVv15fRjlyOs8gX/Hy
+	 rUo0y2HjToj/1tn268OMGRl51BCdHuJHxj5dPCjQPD2rxf+bVgqYik+l3q5xI/b4Le
+	 fc4tKeIlsigqahrjXrTI4TOShSw/Pn7BU2bDeWxyW8TyZNa9uZB10EYowMkdoNLDx6
+	 DM7h54nbzUfUg==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Fri, 08 Dec 2023 14:19:11 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Andy Gross <agross@kernel.org>, Konrad Dybcio
+ <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof
+ Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley
+ <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, Stephen Boyd
+ <sboyd@kernel.org>, ~postmarketos/upstreaming@lists.sr.ht,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: pm8916: Add BMS and charger
+In-Reply-To: <mmxk4dko6ib2pgrzcotxf65q5c7d4eaykd4sfh2ryrmfbdabd7@wnttadck2mda>
+References: <20231120-pm8916-dtsi-bms-lbc-v4-0-4f91056c8252@trvn.ru>
+ <20231120-pm8916-dtsi-bms-lbc-v4-2-4f91056c8252@trvn.ru>
+ <mmxk4dko6ib2pgrzcotxf65q5c7d4eaykd4sfh2ryrmfbdabd7@wnttadck2mda>
+Message-ID: <1a6be726b31919a31f369c64e75e0f41@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Bjorn Andersson писал(а) 08.12.2023 07:48:
+> On Mon, Nov 20, 2023 at 07:03:04PM +0500, Nikita Travkin wrote:
+>> diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+> [..]
+>>
+>> +		pm8916_bms: battery@4000 {
+> 
+> "battery" is not a valid child of the pmic according to
+> mfd/qcom,spmi-pmic.yaml, so please update the binding to remove the
+> warnings that this introduces.
+> 
 
-The Bluetooth module on QCA6390 needs to be powered-on by enabling the
-relevant regulators and driving the enable GPIO high. We can reuse the
-power sequence for the WNC models if we add the list of required
-regulators to the OF match data.
+This should be done in 1/3 which is already accepted to mfd,
+so the warning should be gone when the stuff is pulled together.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/bluetooth/hci_qca.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+Sorry for not making sure it's in earlier
+Nikita
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 35f74f209d1f..b27be08a1f6f 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1788,6 +1788,7 @@ static int qca_power_on(struct hci_dev *hdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_QCA6390:
- 		ret = qca_regulator_init(hu);
- 		break;
- 
-@@ -2044,7 +2045,15 @@ static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
- 
- static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
- 	.soc_type = QCA_QCA6390,
--	.num_vregs = 0,
-+	.vregs = (struct qca_vreg []) {
-+		{ "vddio", 20000 },
-+		{ "vddaon", 100000 },
-+		{ "vddpmu", 1250000 },
-+		{ "vddrfa0p9", 200000 },
-+		{ "vddrfa1p3", 400000 },
-+		{ "vddrfa1p9", 400000 },
-+	},
-+	.num_vregs = 6,
- };
- 
- static const struct qca_device_data qca_soc_data_wcn6750 __maybe_unused = {
-@@ -2129,6 +2138,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
- 
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
-+	case QCA_QCA6390:
- 		gpiod_set_value_cansleep(qcadev->bt_en, 0);
- 		msleep(100);
- 		qca_regulator_disable(qcadev);
-@@ -2276,6 +2286,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_QCA6390:
- 		qcadev->bt_power = devm_kzalloc(&serdev->dev,
- 						sizeof(struct qca_power),
- 						GFP_KERNEL);
-@@ -2386,6 +2397,7 @@ static void qca_serdev_remove(struct serdev_device *serdev)
- 	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
-+	case QCA_QCA6390:
- 		if (power->vregs_on) {
- 			qca_power_shutdown(&qcadev->serdev_hu);
- 			break;
--- 
-2.40.1
-
+> Thanks,
+> Bjorn
 
