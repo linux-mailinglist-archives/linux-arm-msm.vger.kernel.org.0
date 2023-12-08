@@ -1,283 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-4064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5CB780AF2D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 22:56:22 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BD0880AF6C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 23:08:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5AF3F1F2119E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 21:56:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ABBCAB20AF6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 22:08:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E8A95915C;
-	Fri,  8 Dec 2023 21:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A72C5915B;
+	Fri,  8 Dec 2023 22:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HN2Axzd1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GGCJsY3C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7AB41BFC
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 13:56:05 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-40c236624edso26707085e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 13:56:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702072564; x=1702677364; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UvC2I0iVSlYBpEavv2s399rriLt9p7Wi8wI8jxxuqwI=;
-        b=HN2Axzd1k7d5XS15kimiPVxU/tBKxHzYrL72HmoeMTvfHdMvqvTy3M4GX9yGjcA5Wc
-         sAjNH2no70KagIU9EO3dJT5PsuDzZ69p+PPNQLlJpAA5qOLd48Kga2zVZQjkWM2BFNZ+
-         KVmHvcznwy1iF1fgc4x+ctb3hUuUCeC/pn43lg75gZtX56qRExyxnHfo7OiZpnLTjuCy
-         e/NHCJgSbBsuI2pyvzd2q1bQwBQNUjNfoXrjIQd4X8t+XWcteR6HRIawztpzolOngQso
-         rjVH40aJ5W2OBtDjZzxELvLFmsJaJJtoDhI8DSIXAQ5UWM1kk60QpW9yxAb8FvLuuVpE
-         6obg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702072564; x=1702677364;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UvC2I0iVSlYBpEavv2s399rriLt9p7Wi8wI8jxxuqwI=;
-        b=F3R7niM5hMJpDUBYJqirxEzQDb232EP5YoPQBFpbe1S9Lyu4T3iwa4He1UDtQM+Lrs
-         dO0NUD7coc3q2iKqT1K/SMwpWl32ASYucXHKHqvCaplRQBOeM3tRmY6WRwsGRNRnEFHp
-         UhKAI8czIxwVRAKRdoPYA+e9TiK6xQXd7Ka4ta6xf4PxtQ/gK6/BtRMEWnVd7b3qwz2/
-         i/0iV4go/SKUDW/BJzWpMzfEe2Vw6j7cCoRllD1qGC16lSCtpw/4HX/Bm1Iv3izCArtT
-         Rk2/LY0uhFD5o66CyGFleiJCR5dH3+L59cUANORvbe9J2g0wtlsBfc2R1hv+kZu4Du/L
-         XUZQ==
-X-Gm-Message-State: AOJu0Yws9BuaRWXyyd8yivBpp2LR1McVooaBbmLy6ejrVmAvKyj7SOGS
-	RdB/60AXFb02BEu0jnfBHYWblw==
-X-Google-Smtp-Source: AGHT+IHLd+VpGbjg/tFEPW8k1pPQPgy1gAyO7UJpce+iYdBJ5bhqIvWJcUX+OVaIvYh3JG9cQw8pSw==
-X-Received: by 2002:a05:600c:3542:b0:401:b2c7:34a8 with SMTP id i2-20020a05600c354200b00401b2c734a8mr364557wmq.7.1702072563935;
-        Fri, 08 Dec 2023 13:56:03 -0800 (PST)
-Received: from krzk-bin.. ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id r20-20020a05600c459400b0040b349c91acsm6321789wmo.16.2023.12.08.13.56.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Dec 2023 13:56:03 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Shawn Guo <shawn.guo@linaro.org>,
-	Melody Olvera <quic_molvera@quicinc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Richard Acayan <mailingradian@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	krishna Lanka <quic_vamslank@quicinc.com>,
-	Rohit Agarwal <quic_rohiagar@quicinc.com>,
-	Iskren Chernev <me@iskren.info>,
-	Martin Botka <martin.botka@somainline.org>,
-	Danila Tikhonov <danila@jiaxyga.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 10/10] dt-bindings: pinctrl: qcom: drop common properties and allow wakeup-parent
-Date: Fri,  8 Dec 2023 22:55:34 +0100
-Message-Id: <20231208215534.195854-10-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231208215534.195854-1-krzysztof.kozlowski@linaro.org>
-References: <20231208215534.195854-1-krzysztof.kozlowski@linaro.org>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95E22171E;
+	Fri,  8 Dec 2023 14:08:45 -0800 (PST)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B8M1qn5026906;
+	Fri, 8 Dec 2023 22:08:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
+ subject : mime-version : content-type : content-transfer-encoding :
+ message-id : to : cc; s=qcppdkim1;
+ bh=B23GovXxqp99o/l4fZ6ai8goWBskAqHEnHVpvbkPoWE=;
+ b=GGCJsY3CyuhTGLZUXlKGQo/1tTO/smZX8Rut95r8qZnXNYfuOMTcxdU9tmRsAdH9/YFr
+ /DDrHSEQteGIZgf5auZQlPWpCCFAt+SbatKXqzL4kktNcAfdOkf+K3RABunYco36Swpw
+ beR6aESXWjFSUivS55RWSIFeGRRne09oSuV1kaBOM1rR3fQcU3w6hCSwjoBXmWTkDfmT
+ wV+DashsilIAkTt3hgTgX21NJE50U9I2F2e+P/xLUXZ0eTj0MVANTJWQXHZnMQGWZJ9n
+ qdUJCoZPLhYiqVzqW35qiplZREfCHrVLn7VLiACnZsSWMUO0hK2+PMaw658hVz5CWza3 5w== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uuu1dt3cm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 08 Dec 2023 22:08:31 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B8M8VlJ000510
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 8 Dec 2023 22:08:31 GMT
+Received: from [169.254.0.1] (10.49.16.6) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Dec
+ 2023 14:08:30 -0800
+From: Elliot Berman <quic_eberman@quicinc.com>
+Date: Fri, 8 Dec 2023 14:08:29 -0800
+Subject: [PATCH] clang-format: Add maple tree's for_each macros
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20231208-clang-format-mt-for-each-v1-1-b4b73186b886@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIANyTc2UC/x2MSwqAMAwFryJZG7C1LvQq4iK0UQP+aEWE4t2N7
+ mYG3suQOAon6IoMkS9Jsm8qpizAz7RNjBLUwVa2NrYy6BetOO5xpRPX8yNk8jN6CtQG54iaADo
+ /Io9y/9f98DwvQ5nILmoAAAA=
+To: Miguel Ojeda <ojeda@kernel.org>, Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Bill Wendling <morbo@google.com>,
+        Justin Stitt <justinstitt@google.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <llvm@lists.linux.dev>, Elliot Berman <quic_eberman@quicinc.com>
+X-Mailer: b4 0.13-dev
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: KzngbB3wzlZSq2qL5v8BZQAwCgEY3oet
+X-Proofpoint-ORIG-GUID: KzngbB3wzlZSq2qL5v8BZQAwCgEY3oet
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-08_14,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ adultscore=0 clxscore=1011 bulkscore=0 mlxlogscore=569 phishscore=0
+ suspectscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2312080184
 
-Drop common properties already defined in referenced common Qualcomm SoC
-TLMM bindings and use "unevaluatedProperties: false".  This makes the
-binding smaller and easier to review.  Additionally this allows now
-"wakeup-parent" property coming from common TLMM bindings.
+Add maple tree's for_each macros so clang-format operates correctly on
+{mt,mas}_for_each.
 
-In few places move the "required:" block to bottom, to match convention.
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 ---
- .../bindings/pinctrl/qcom,ipq6018-pinctrl.yaml |  8 +-------
- .../bindings/pinctrl/qcom,mdm9615-pinctrl.yaml | 18 ++++++------------
- .../bindings/pinctrl/qcom,msm8226-pinctrl.yaml |  8 +-------
- .../bindings/pinctrl/qcom,msm8953-pinctrl.yaml |  7 +------
- .../bindings/pinctrl/qcom,sdx55-pinctrl.yaml   |  8 +-------
- .../bindings/pinctrl/qcom,sdx65-tlmm.yaml      |  8 +-------
- 6 files changed, 11 insertions(+), 46 deletions(-)
+ .clang-format | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-index 7c3e5e043f07..ed00fbaec11b 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq6018-pinctrl.yaml
-@@ -22,12 +22,6 @@ properties:
-   interrupts:
-     maxItems: 1
- 
--  interrupt-controller: true
--  "#interrupt-cells": true
--  gpio-controller: true
--  "#gpio-cells": true
--  gpio-ranges: true
--
- patternProperties:
-   "-state$":
-     oneOf:
-@@ -100,7 +94,7 @@ required:
-   - compatible
-   - reg
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,mdm9615-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,mdm9615-pinctrl.yaml
-index 5885aee95c98..299e0b4b0ab4 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,mdm9615-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,mdm9615-pinctrl.yaml
-@@ -23,18 +23,6 @@ properties:
-   interrupts:
-     maxItems: 1
- 
--  interrupt-controller: true
--  '#interrupt-cells': true
--  gpio-controller: true
--  '#gpio-cells': true
--  gpio-ranges: true
--
--required:
--  - compatible
--  - reg
--
--additionalProperties: false
--
- patternProperties:
-   "-state$":
-     oneOf:
-@@ -74,6 +62,12 @@ $defs:
-     required:
-       - pins
- 
-+required:
-+  - compatible
-+  - reg
-+
-+unevaluatedProperties: false
-+
- examples:
-   - |
-     #include <dt-bindings/interrupt-controller/arm-gic.h>
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8226-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8226-pinctrl.yaml
-index a602bf0d27fb..68d3fa2105b8 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8226-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8226-pinctrl.yaml
-@@ -23,12 +23,6 @@ properties:
-   interrupts:
-     maxItems: 1
- 
--  interrupt-controller: true
--  "#interrupt-cells": true
--  gpio-controller: true
--  "#gpio-cells": true
--  gpio-ranges: true
--
-   gpio-reserved-ranges:
-     maxItems: 1
- 
-@@ -82,7 +76,7 @@ required:
-   - compatible
-   - reg
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
-index 798aac9e6e31..8a3a962f6c00 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,msm8953-pinctrl.yaml
-@@ -22,12 +22,7 @@ properties:
-   interrupts:
-     maxItems: 1
- 
--  interrupt-controller: true
--  "#interrupt-cells": true
--  gpio-controller: true
-   gpio-reserved-ranges: true
--  "#gpio-cells": true
--  gpio-ranges: true
- 
- patternProperties:
-   "-state$":
-@@ -117,7 +112,7 @@ required:
-   - compatible
-   - reg
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
-index 67af99dd8f14..edbcff92bbf9 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx55-pinctrl.yaml
-@@ -23,12 +23,6 @@ properties:
-   interrupts:
-     maxItems: 1
- 
--  interrupt-controller: true
--  "#interrupt-cells": true
--  gpio-controller: true
--  "#gpio-cells": true
--  gpio-ranges: true
--
-   gpio-reserved-ranges:
-     maxItems: 1
- 
-@@ -102,7 +96,7 @@ required:
-   - compatible
-   - reg
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-index 27319782d94b..a31b638c456d 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-tlmm.yaml
-@@ -22,12 +22,6 @@ properties:
-   interrupts:
-     maxItems: 1
- 
--  interrupt-controller: true
--  "#interrupt-cells": true
--  gpio-controller: true
--  "#gpio-cells": true
--  gpio-ranges: true
--
-   gpio-reserved-ranges:
-     maxItems: 1
- 
-@@ -122,7 +116,7 @@ required:
-   - compatible
-   - reg
- 
--additionalProperties: false
-+unevaluatedProperties: false
- 
- examples:
-   - |
+diff --git a/.clang-format b/.clang-format
+index 0bbb1991defe..54bab11d38f0 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -494,11 +494,13 @@ ForEachMacros:
+   - 'map_for_each_metric'
+   - 'maps__for_each_entry'
+   - 'maps__for_each_entry_safe'
++  - 'mas_for_each'
+   - 'mci_for_each_dimm'
+   - 'media_device_for_each_entity'
+   - 'media_device_for_each_intf'
+   - 'media_device_for_each_link'
+   - 'media_device_for_each_pad'
++  - 'mt_for_each'
+   - 'msi_for_each_desc'
+   - 'nanddev_io_for_each_page'
+   - 'netdev_for_each_lower_dev'
+
+---
+base-commit: 5eda217cee887e595ba2265435862d585d399769
+change-id: 20231201-clang-format-mt-for-each-cada9d44aa5d
+
+Best regards,
 -- 
-2.34.1
+Elliot Berman <quic_eberman@quicinc.com>
 
 
