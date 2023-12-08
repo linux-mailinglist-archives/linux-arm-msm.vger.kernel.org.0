@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-3865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46368809C61
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 07:32:59 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61D6E809C90
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 07:42:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 775731C20C76
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 06:32:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEB2E282958
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 06:42:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91FF16105;
-	Fri,  8 Dec 2023 06:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA9345240;
+	Fri,  8 Dec 2023 06:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dGUwH2oH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PL6ge/nj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7B08C6;
-	Thu,  7 Dec 2023 22:32:54 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B85KFXV011564;
-	Fri, 8 Dec 2023 06:32:36 GMT
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC6A61723;
+	Thu,  7 Dec 2023 22:42:41 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B86KZ04011091;
+	Fri, 8 Dec 2023 06:42:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=iCkKyaxiYdxzfg/WwZHBxHNJPERVT37Zd6iR0xmfKus=;
- b=dGUwH2oHTjHJoccjkkQT0XK+DUPBQ0Z2jhP9UW8rKYqEFjFe5BmVeWVns6ymQ0PkV3GH
- xbOfQnxyH+tatJvzYIDcUwl0GW4WT/12EqN84dJNc4O3C4CjhPZ63gFXW37I/jGBiC+C
- QOWDBeYak+oZcVZK84My9R1xXqGcqMXdHw/r65S7SalXWTfcggOhlVDpGSyek65NSXtr
- GJdh8VAqGBw+cwfw3ii5VHqMXv7owgLbBEhoaqPD+97E0K9u6SF6ngfTzdhi+xD/x2k7
- aAJHAi7EXdAAHFKhHDXF4AF78CSVv4AV67SlPgv7oN8AVzv70UjGbF6XcJ73McnhnIGB nQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uuu2089t6-1
+ bh=KzzN6S733xQH5Xrq7RBS+FTw1kHcnk6Z6QkJm+rY9ks=;
+ b=PL6ge/njeVWwOAdSJVduGkvZoSZ+8B6/JScVmURya1XzzZWJO3ycYRB14kThgv8Kj28V
+ 0R4zSTP7peThZDiYo3wj/aR4eNVJqsFZGtS2DGwiaonBTcOKcEmrXJ+IwqJzsF1pqGAn
+ p2S8J8QeXDI/yBQwt86bldNOJXF0PJEgZfj7XvrEyUG4nI2ftMfMR4JezWN/uwzIPNzp
+ qyheIb48iI5YBR7ihT156ox4xvSkfctO8df1gAsVp0dum1+3CsbMpyjX/nI1wzfa8zM8
+ VxtWwxEWHiwLJ9vCwUmATWRQs5r/0wPZiBfaZnM0DbD5raukLT0t6/g2/5S5JZ2kvQwD Ig== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uubd82rpc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Dec 2023 06:32:36 +0000
+	Fri, 08 Dec 2023 06:42:39 +0000
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B86WZjY000662
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B86gcZ8021524
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Dec 2023 06:32:35 GMT
-Received: from [10.216.0.250] (10.80.80.8) by nalasex01b.na.qualcomm.com
+	Fri, 8 Dec 2023 06:42:38 GMT
+Received: from [10.216.14.21] (10.80.80.8) by nalasex01b.na.qualcomm.com
  (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Thu, 7 Dec
- 2023 22:28:30 -0800
-Message-ID: <dd585977-50c4-40a4-a664-0ecb5a84807a@quicinc.com>
-Date: Fri, 8 Dec 2023 11:58:26 +0530
+ 2023 22:38:49 -0800
+Message-ID: <30a12c5e-8336-43e8-9bca-1180e046af1e@quicinc.com>
+Date: Fri, 8 Dec 2023 12:08:45 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,109 +51,164 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next] net: stmmac: qcom-ethqos: Add sysfs nodes for
- qcom ethqos
+Subject: Re: [PATCH v3 02/12] qcom_scm: scm call for deriving a software
+ secret
 Content-Language: en-US
-To: Andrew Lunn <andrew@lunn.ch>
-CC: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu
-	<joabreu@synopsys.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet
-	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni
-	<pabeni@redhat.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>,
-        <andersson@kernel.org>
-References: <20231204084854.31543-1-quic_snehshah@quicinc.com>
- <3e4a1b9c-ed0f-466e-ba11-fc5b7ef308a1@lunn.ch>
- <5d5f3955-fc30-428c-99f4-42f9b7580a84@quicinc.com>
- <0c966845-2bbc-4196-806d-6a33e435bf7d@lunn.ch>
-From: Sneh Shah <quic_snehshah@quicinc.com>
-In-Reply-To: <0c966845-2bbc-4196-806d-6a33e435bf7d@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"
+To: Gaurav Kashyap <quic_gaurkash@quicinc.com>, <linux-scsi@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <ebiggers@google.com>,
+        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>
+CC: <linux-mmc@vger.kernel.org>, <linux-block@vger.kernel.org>,
+        <linux-fscrypt@vger.kernel.org>, <omprsing@qti.qualcomm.com>,
+        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>,
+        <quic_spuppala@quicinc.com>, <kernel@quicinc.com>
+References: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
+ <20231122053817.3401748-3-quic_gaurkash@quicinc.com>
+From: Om Prakash Singh <quic_omprsing@quicinc.com>
+In-Reply-To: <20231122053817.3401748-3-quic_gaurkash@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: B99xYamoXjrVNY8d7lbmhBPPKShxHT9-
-X-Proofpoint-ORIG-GUID: B99xYamoXjrVNY8d7lbmhBPPKShxHT9-
+X-Proofpoint-GUID: iP9lA8ykY04IaEM6H1mVekqFd9XzQWba
+X-Proofpoint-ORIG-GUID: iP9lA8ykY04IaEM6H1mVekqFd9XzQWba
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-08_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=948
- lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0 clxscore=1015
- impostorscore=0 malwarescore=0 priorityscore=1501 phishscore=0 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312080051
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
+ suspectscore=0 mlxlogscore=845 impostorscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 mlxscore=0 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2312080052
 
 
 
-On 12/6/2023 7:22 PM, Andrew Lunn wrote:
-> On Wed, Dec 06, 2023 at 05:17:25PM +0530, Sneh Shah wrote:
->>
->>
->> On 12/5/2023 8:38 PM, Andrew Lunn wrote:
->>> On Mon, Dec 04, 2023 at 02:18:54PM +0530, Sneh Shah wrote:
->>>> Add sysfs nodes to conifigure routing of specific vlan id to GVM queue.
->>>> GVM queue is not exposed to PVM stmmac, so TC ops can't configure routing.
->>>
->>> Adding files in /sysfs has ~0 chance of being accepted.
->>>
->>> As requested, please explain what all these different hardware blocks
->>> are, and what you are trying to achieve. We can then recommend the
->>> correct interface.
->>>
->>>     Andrew
->>>
->>> ---
->>> pw-bot: cr
->>
+On 11/22/2023 11:08 AM, Gaurav Kashyap wrote:
+> Inline storage encryption requires deriving a sw secret from
+> the hardware wrapped keys. For non-wrapped keys, this can be
+> directly done as keys are in the clear.
 > 
->> We have multiVM Architecture here. PVM will have stmmac running with
->> 4 Rx Tx queues. stmmac in PVM is responsible to configure whole
->> ethernet HW MAC/DMA/MTL ( including clocks, regulators and other
->> core bsp elements).
+> However, when keys are hardware wrapped, it can be unwrapped
+> by HWKM (Hardware Key Manager) which is accessible only from Qualcomm
+> Trustzone. Hence, it also makes sense that the software secret is also
+> derived there and returned to the linux kernel . This can be invoked by
+> using the crypto profile APIs provided by the block layer.
 > 
-> Please remember that stmmac is mostly used in embedded systems. People
-> used to embedded systems generally don't know virtual machine
-> terminology. So please spell out what PBM, GVM, etc mean.
+> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+> ---
+>   drivers/firmware/qcom/qcom_scm.c       | 71 ++++++++++++++++++++++++++
+>   drivers/firmware/qcom/qcom_scm.h       |  1 +
+>   include/linux/firmware/qcom/qcom_scm.h |  2 +
+>   3 files changed, 74 insertions(+)
 > 
->> In GVM we have thin Ethernet driver, which is responsible to
->> configure and manage only 1 Rx/TX queue, i.e 5th Rx/Tx ethernet
->> queue. GVM can't access any other resisters apart from this 5th
->> queue specific MTL and DMA registers.
->  
->> We need to route vlan traffic of a specific Priority to GVM Queue
->> (Ethernet queue 5) via programming a MAC register. The MAC register
->> is not accessible in GVM and has to be programmed from PVM. stmmac
->> already has TC OPS to program this routing via vlan
->> priority. However, as PVM has only 4 queues enabled, TC tool will
->> not take 5th queue as input. Hence, these nodes were added to
->> conifure the MAC register to route specific vlan packets to 5th
->> queue in GVM.
->  
->> Note: The queues mentioned above are HW MTL Queues and DMA
->> Channels. The routing can be done in the HW itself based on vlan pcp
->> before the packets reach to driver.
-> 
-> Is the normal way you would do this is like this:
-> 
-> tc qdisc add dev eth1 parent root handle 100 \
-> mqprio num_tc 4 \
-> map 0 1 2 3 0 0 0 0 0 0 0 0 0 0 0 0 \
-> queues 1@0 1@1 1@2 1@3 \
-> hw 1
-> 
-> But you are saying that you cannot extend this to 5 queues?
-> 
->     Andrew
-
-Yes this can't extend to 5 queues. Because, stmmac in primary virtual machine will only have 4 netdev queues. So TC won't take input for 5th queue.
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 520de9b5633a..6dfb913f3e33 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -1214,6 +1214,77 @@ int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
+>   }
+>   EXPORT_SYMBOL_GPL(qcom_scm_ice_set_key);
+>   
+> +/**
+> + * qcom_scm_derive_sw_secret() - Derive software secret from wrapped key
+> + * @wkey: the hardware wrapped key inaccessible to software
+> + * @wkey_size: size of the wrapped key
+> + * @sw_secret: the secret to be derived which is exactly the secret size
+> + * @sw_secret_size: size of the sw_secret
+> + *
+> + * Derive a software secret from a hardware wrapped key for software crypto
+> + * operations.
+> + * For wrapped keys, the key needs to be unwrapped, in order to derive a
+> + * software secret, which can be done in the hardware from a secure execution
+> + * environment.
+> + *
+> + * For more information on sw secret, please refer to "Hardware-wrapped keys"
+> + * section of Documentation/block/inline-encryption.rst.
+> + *
+> + * Return: 0 on success; -errno on failure.
+> + */
+> +int qcom_scm_derive_sw_secret(const u8 *wkey, size_t wkey_size,
+> +			      u8 *sw_secret, size_t sw_secret_size)
+> +{
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_ES,
+> +		.cmd =  QCOM_SCM_ES_DERIVE_SW_SECRET,
+> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RW,
+> +					 QCOM_SCM_VAL, QCOM_SCM_RW,
+> +					 QCOM_SCM_VAL),
+> +		.args[1] = wkey_size,
+> +		.args[3] = sw_secret_size,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +
+> +	void *wkey_buf, *secret_buf;
+> +	dma_addr_t wkey_phys, secret_phys;
+> +	int ret;
+> +
+> +	/*
+> +	 * Like qcom_scm_ice_set_key(), we use dma_alloc_coherent() to properly
+> +	 * get a physical address, while guaranteeing that we can zeroize the
+> +	 * key material later using memzero_explicit().
+> +	 */
+> +	wkey_buf = dma_alloc_coherent(__scm->dev, wkey_size, &wkey_phys, GFP_KERNEL);
+> +	if (!wkey_buf)
+> +		return -ENOMEM;
+> +	secret_buf = dma_alloc_coherent(__scm->dev, sw_secret_size, &secret_phys, GFP_KERNEL);
+> +	if (!secret_buf) {
+> +		ret = -ENOMEM;
+> +		goto err_free_wrapped;
+> +	}
+> +
+> +	memcpy(wkey_buf, wkey, wkey_size);
+> +	desc.args[0] = wkey_phys;
+> +	desc.args[2] = secret_phys;
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, NULL);
+> +	if (!ret)
+> +		memcpy(sw_secret, secret_buf, sw_secret_size);
+> +
+> +	memzero_explicit(secret_buf, sw_secret_size);
+> +
+> +	dma_free_coherent(__scm->dev, sw_secret_size, secret_buf, secret_phys);
+> +
+> +err_free_wrapped:
+> +	memzero_explicit(wkey_buf, wkey_size);
+In error handling case the operation is being performed on unallocated 
+memory.
+> +
+> +	dma_free_coherent(__scm->dev, wkey_size, wkey_buf, wkey_phys);
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL(qcom_scm_derive_sw_secret);
+> +
+>   /**
+>    * qcom_scm_hdcp_available() - Check if secure environment supports HDCP.
+>    *
+> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+> index 4532907e8489..c75456aa6ac5 100644
+> --- a/drivers/firmware/qcom/qcom_scm.h
+> +++ b/drivers/firmware/qcom/qcom_scm.h
+> @@ -121,6 +121,7 @@ int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+>   #define QCOM_SCM_SVC_ES			0x10	/* Enterprise Security */
+>   #define QCOM_SCM_ES_INVALIDATE_ICE_KEY	0x03
+>   #define QCOM_SCM_ES_CONFIG_SET_ICE_KEY	0x04
+> +#define QCOM_SCM_ES_DERIVE_SW_SECRET	0x07
+>   
+>   #define QCOM_SCM_SVC_HDCP		0x11
+>   #define QCOM_SCM_HDCP_INVOKE		0x01
+> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
+> index ccaf28846054..c65f2d61492d 100644
+> --- a/include/linux/firmware/qcom/qcom_scm.h
+> +++ b/include/linux/firmware/qcom/qcom_scm.h
+> @@ -103,6 +103,8 @@ bool qcom_scm_ice_available(void);
+>   int qcom_scm_ice_invalidate_key(u32 index);
+>   int qcom_scm_ice_set_key(u32 index, const u8 *key, u32 key_size,
+>   			 enum qcom_scm_ice_cipher cipher, u32 data_unit_size);
+> +int qcom_scm_derive_sw_secret(const u8 *wkey, size_t wkey_size,
+> +			      u8 *sw_secret, size_t sw_secret_size);
+>   
+>   bool qcom_scm_hdcp_available(void);
+>   int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt, u32 *resp);
 
