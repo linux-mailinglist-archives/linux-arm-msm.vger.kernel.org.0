@@ -1,114 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-3906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8472809F99
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:39:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB393809FF4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:51:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 805A41F2159F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:39:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8139E1F217EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:51:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86C18125CE;
-	Fri,  8 Dec 2023 09:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96CCE125DD;
+	Fri,  8 Dec 2023 09:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qap8WeWJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BSaJ74Lq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A08828E;
-	Fri,  8 Dec 2023 01:39:27 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B89SGhD002936;
-	Fri, 8 Dec 2023 09:39:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=K+knPPXNQpzYP4zps31BoCsqwPGV2DcWwsw+dVvYV9E=;
- b=Qap8WeWJW6HAw131h7G0bTMPTAliu25ppr88Za9rkBKzyJfN+N0M3cAdr9zDs26irxaL
- JF8SQS8154koOgfrRhptkj4thvicy1j1rw/7OoUJUf0p+YUD4LPbGd5houfJ59jn4ONi
- GHrkB/d3TxBlaQojH3fHLnkccAOpKOrFsl6qFzafOKpkN1CwmeH70c1ZjS7UXUzPdGt3
- LK36JAPn9NZsnCyi8RJJQq9e0DFj29KhONzHyfQ6rexjPOwnVJiGzLqBIq1bhOFAFgIK
- J6kVk1T+QdKgXPvzz5Dk1ZaUGb29UtUldCbbXYGryuGtkOEbCK+KwXnNOUGnQ/Ae63Z6 lg== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uu928kd67-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Dec 2023 09:39:21 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B89dJLD016371
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Dec 2023 09:39:19 GMT
-Received: from [10.50.44.194] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Dec
- 2023 01:39:15 -0800
-Message-ID: <331d2288-382a-9abb-fd3a-d0973b8542af@quicinc.com>
-Date: Fri, 8 Dec 2023 15:09:11 +0530
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 490AE1991
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 01:51:46 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3333b46f26aso1876448f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 01:51:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702029105; x=1702633905; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc:references
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0FY8AYNSKeDwoS/SICzwBlUh0Fod4aFCnOTtellaPn4=;
+        b=BSaJ74LqLvqeo/ZJMkwbq49LPvEc9eTmnZSeJ/4fxvnxwEfbLFib8Ab/NHd66Fisap
+         ST8aCmKOwG+7NXrYDjCPtwCN2fbyfxmCO9DxrVeqevBiBbjPFW+wUBIFBpZceym8mDuE
+         n+vEs4ayP7F9y6kdYy7hLvZyToemYJNUVQcDQCJlgRxTNSnZzzy/ZnLjJtXO5RqewHFo
+         gRLA8Xodgy69u5NNb4zgaSFOItcYdSOd73UXb02YaB6m44+jelB/UVJ01z2EQxQ5IZAl
+         rpzloJEKxtY7b/1j5gkVpXDdcbZ1CLMyWjksvHrA8cNt7zoecP7HazCLCCSjwwcPRO0f
+         qiDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702029105; x=1702633905;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc:references
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0FY8AYNSKeDwoS/SICzwBlUh0Fod4aFCnOTtellaPn4=;
+        b=whs3bIxESQHpgz7gZcp14jLJBceMotRmxJEJaVqUwz82WeKIpGhUTWc6kcmz6R+qoK
+         VooELwVAs7UvLE24OxXb+vlXCBq89wYDjgB0AI9bMrFQpbaIWhKdek3xycebMOaGzTCh
+         mHRksiiV2tGf/R6UuDBTShBf+w9P68gy2peHPFJeJwZNlTDyKDoqkpW3MnFqzh0zlEjO
+         6FJ6Pb2Cbn3t1qYpx0NerE2JeFvSCHAMoW13xGQRgUsO/Q1dmXGGZmXeAHgWlXlVT0c7
+         ByLKvxN4WTUHoodM6mOGwTJxc9I5ul9E/LiuC7qgJCY/UnKY0G1nUrhoo6Lo7GwMFTz8
+         tO8Q==
+X-Gm-Message-State: AOJu0Yx+BdOA28ur+CPRsyhL/ML3r/bmqCdig+WYOg39JQNtuLVZGYGv
+	bpd7ngApRsxI5EfkOksCXCpmgw==
+X-Google-Smtp-Source: AGHT+IFi9EIss32NZngMA52VabciS8ywNCTnEBIUZ1cqWPN+NvNaDpIW/zHNXMI8M6+Jk5govSOIyg==
+X-Received: by 2002:a05:600c:5385:b0:40b:5e59:b7d5 with SMTP id hg5-20020a05600c538500b0040b5e59b7d5mr2498808wmb.178.1702029104698;
+        Fri, 08 Dec 2023 01:51:44 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id j13-20020a05600c190d00b0040b478da760sm2277323wmq.48.2023.12.08.01.51.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Dec 2023 01:51:44 -0800 (PST)
+Message-ID: <173513e2-d2ec-4932-886a-7c9074633093@linaro.org>
+Date: Fri, 8 Dec 2023 10:51:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: [PATCH v2 09/17] scsi: ufs: qcom: Remove redundant error print
- for devm_kzalloc() failure
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: PCI: qcom: Correct reset-names property
 Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <martin.petersen@oracle.com>, <jejb@linux.ibm.com>
-CC: <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <ahalaney@redhat.com>
-References: <20231208065902.11006-1-manivannan.sadhasivam@linaro.org>
- <20231208065902.11006-10-manivannan.sadhasivam@linaro.org>
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <20231208065902.11006-10-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?=
+ <kw@linux.com>
+References: <20231111142006.51883-1-krzysztof.kozlowski@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzTRLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnp5c3p0b2Yua296bG93c2tpQGxpbmFyby5vcmc+wsGUBBMBCgA+FiEE
+ m9B+DgxR+NWWd7dUG5NDfTtBYpsFAmI+BxMCGwMFCRRfreEFCwkIBwIGFQoJCAsCBBYCAwEC
+ HgECF4AACgkQG5NDfTtBYptgbhAAjAGunRoOTduBeC7V6GGOQMYIT5n3OuDSzG1oZyM4kyvO
+ XeodvvYv49/ng473E8ZFhXfrre+c1olbr1A8pnz9vKVQs9JGVa6wwr/6ddH7/yvcaCQnHRPK
+ mnXyP2BViBlyDWQ71UC3N12YCoHE2cVmfrn4JeyK/gHCvcW3hUW4i5rMd5M5WZAeiJj3rvYh
+ v8WMKDJOtZFXxwaYGbvFJNDdvdTHc2x2fGaWwmXMJn2xs1ZyFAeHQvrp49mS6PBQZzcx0XL5
+ cU9ZjhzOZDn6Apv45/C/lUJvPc3lo/pr5cmlOvPq1AsP6/xRXsEFX/SdvdxJ8w9KtGaxdJuf
+ rpzLQ8Ht+H0lY2On1duYhmro8WglOypHy+TusYrDEry2qDNlc/bApQKtd9uqyDZ+rx8bGxyY
+ qBP6bvsQx5YACI4p8R0J43tSqWwJTP/R5oPRQW2O1Ye1DEcdeyzZfifrQz58aoZrVQq+innR
+ aDwu8qDB5UgmMQ7cjDSeAQABdghq7pqrA4P8lkA7qTG+aw8Z21OoAyZdUNm8NWJoQy8m4nUP
+ gmeeQPRc0vjp5JkYPgTqwf08cluqO6vQuYL2YmwVBIbO7cE7LNGkPDA3RYMu+zPY9UUi/ln5
+ dcKuEStFZ5eqVyqVoZ9eu3RTCGIXAHe1NcfcMT9HT0DPp3+ieTxFx6RjY3kYTGLOwU0EVUNc
+ NAEQAM2StBhJERQvgPcbCzjokShn0cRA4q2SvCOvOXD+0KapXMRFE+/PZeDyfv4dEKuCqeh0
+ hihSHlaxTzg3TcqUu54w2xYskG8Fq5tg3gm4kh1Gvh1LijIXX99ABA8eHxOGmLPRIBkXHqJY
+ oHtCvPc6sYKNM9xbp6I4yF56xVLmHGJ61KaWKf5KKWYgA9kfHufbja7qR0c6H79LIsiYqf92
+ H1HNq1WlQpu/fh4/XAAaV1axHFt/dY/2kU05tLMj8GjeQDz1fHas7augL4argt4e+jum3Nwt
+ yupodQBxncKAUbzwKcDrPqUFmfRbJ7ARw8491xQHZDsP82JRj4cOJX32sBg8nO2N5OsFJOcd
+ 5IE9v6qfllkZDAh1Rb1h6DFYq9dcdPAHl4zOj9EHq99/CpyccOh7SrtWDNFFknCmLpowhct9
+ 5ZnlavBrDbOV0W47gO33WkXMFI4il4y1+Bv89979rVYn8aBohEgET41SpyQz7fMkcaZU+ok/
+ +HYjC/qfDxT7tjKXqBQEscVODaFicsUkjheOD4BfWEcVUqa+XdUEciwG/SgNyxBZepj41oVq
+ FPSVE+Ni2tNrW/e16b8mgXNngHSnbsr6pAIXZH3qFW+4TKPMGZ2rZ6zITrMip+12jgw4mGjy
+ 5y06JZvA02rZT2k9aa7i9dUUFggaanI09jNGbRA/ABEBAAHCwXwEGAEKACYCGwwWIQSb0H4O
+ DFH41ZZ3t1Qbk0N9O0FimwUCYDzvagUJFF+UtgAKCRAbk0N9O0Fim9JzD/0auoGtUu4mgnna
+ oEEpQEOjgT7l9TVuO3Qa/SeH+E0m55y5Fjpp6ZToc481za3xAcxK/BtIX5Wn1mQ6+szfrJQ6
+ 59y2io437BeuWIRjQniSxHz1kgtFECiV30yHRgOoQlzUea7FgsnuWdstgfWi6LxstswEzxLZ
+ Sj1EqpXYZE4uLjh6dW292sO+j4LEqPYr53hyV4I2LPmptPE9Rb9yCTAbSUlzgjiyyjuXhcwM
+ qf3lzsm02y7Ooq+ERVKiJzlvLd9tSe4jRx6Z6LMXhB21fa5DGs/tHAcUF35hSJrvMJzPT/+u
+ /oVmYDFZkbLlqs2XpWaVCo2jv8+iHxZZ9FL7F6AHFzqEFdqGnJQqmEApiRqH6b4jRBOgJ+cY
+ qc+rJggwMQcJL9F+oDm3wX47nr6jIsEB5ZftdybIzpMZ5V9v45lUwmdnMrSzZVgC4jRGXzsU
+ EViBQt2CopXtHtYfPAO5nAkIvKSNp3jmGxZw4aTc5xoAZBLo0OV+Ezo71pg3AYvq0a3/oGRG
+ KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
+ fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231111142006.51883-1-krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: v0pp7oH1URjfLvc7qoHUaqL--_qr-otF
-X-Proofpoint-GUID: v0pp7oH1URjfLvc7qoHUaqL--_qr-otF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-08_04,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 lowpriorityscore=0
- phishscore=0 impostorscore=0 clxscore=1015 bulkscore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312080078
 
-
-
-On 12/8/2023 12:28 PM, Manivannan Sadhasivam wrote:
-> devm_kzalloc() will itself print the error message on failure. So let's get
-> rid of the redundant error message in ufs_qcom_init().
+On 11/11/2023 15:20, Krzysztof Kozlowski wrote:
+> There is no "resets-names" property, but "reset-names".
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Fixes: 075a9d55932e ("dt-bindings: PCI: qcom: Convert to YAML")
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->   drivers/ufs/host/ufs-qcom.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index b141dd2a9346..05a9a25bc34c 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -1109,10 +1109,8 @@ static int ufs_qcom_init(struct ufs_hba *hba)
->   	struct ufs_clk_info *clki;
->   
->   	host = devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
-> -	if (!host) {
-> -		dev_err(dev, "%s: no memory for qcom ufs host\n", __func__);
-> +	if (!host)
->   		return -ENOMEM;
-> -	}
->   
->   	/* Make a two way bind between the qcom host and the hba */
->   	host->hba = hba;
 
-Reviewed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Krzysztof W., Bjorn H., Lorenzo,
+
+Can you pick this one via PCI tree?
+
+Best regards,
+Krzysztof
+
 
