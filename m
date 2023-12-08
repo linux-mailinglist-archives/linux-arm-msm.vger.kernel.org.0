@@ -1,92 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-3893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ED36809E26
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:33:25 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 589DB809E70
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:39:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3037D1F216FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 08:33:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 89DA41C20BF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 08:39:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 742BC12B71;
-	Fri,  8 Dec 2023 08:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5C9A6D1B;
+	Fri,  8 Dec 2023 08:39:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Dmrvpn6X"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ooIB+cJB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9632E171C;
-	Fri,  8 Dec 2023 00:33:18 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B88CCdm017745;
-	Fri, 8 Dec 2023 08:33:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=s9YJ0/5J+OYeH8kQUcQ78n8ox5YkNEpfvV4LxpEjAWM=;
- b=Dmrvpn6XIOApSXNoDwjHP3beKb36wOXSv8w4gl4o2v7yLNElWfh64fo9SBCiutpmNt5Q
- rHxw0dit6ON18gpMaLrz1yj4O9L78gYjj0Xoq9J7jJMFUE6Da0m0zVaD6iLOoUcUimDX
- ALug8MUzBZt29U3mC8uG3o1z9yZJyE/9YRKtppd9iLXmulPYdP7zqZt71TyppQ+dBLOZ
- LvdXuOO1J8NBSNmwOejrLrnSAlDaGRuBxFVLuhuTx2zQLfeFUZH9m19SXAC36jmGyYM3
- tak9yIjnhA1XL8gX4NtS2ZVYwUAVZaAKSlK0nKkPUlXleTUYJKkNIgnFYvmbxzjgwZfX Lw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3utynu4c6c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Dec 2023 08:33:15 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B88XEH7002134
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Dec 2023 08:33:14 GMT
-Received: from [10.216.14.21] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Dec
- 2023 00:29:23 -0800
-Message-ID: <3973b4f2-2173-427a-8ad5-8b954e3b43cd@quicinc.com>
-Date: Fri, 8 Dec 2023 13:59:19 +0530
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5041125B8;
+	Fri,  8 Dec 2023 08:39:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2BFC433C7;
+	Fri,  8 Dec 2023 08:39:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702024792;
+	bh=Pw4Eb7AKWlmZ7qhGxk+DnQn5VwPy9d+b6klBHvzAo9c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ooIB+cJBPw8bbCgaY3LP1/osy1fQDRCZyb0Ni7mJNXYxcDZ42zGT3wt2UkoiZlvt2
+	 anAYPBVUZprv5eYf0aXbfNub7SncVkGamjklodoFVa6gYg+SSsOQzTiAwnpeAZq8yE
+	 r4x3JKnlklHP5jC9F5nepWWLaeodUpCnCmdAkQsekXsI03iQhAfUk+zz7kkG7AHkwA
+	 LMF+Wp3igkZSRll9ETiAvyAmkCXDmiYoGxk4gce9IpD6+RKA5A9JXjDzItlAq2hNwj
+	 CQ2wawbvhu+JQU8EJhHpMMiMc3sA1bFxwA37qG928Mm+wrS3CFFCl/jxe32AN6IGEB
+	 1P5hKwe7VvjjQ==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rBWPZ-0003vN-2O;
+	Fri, 08 Dec 2023 09:40:41 +0100
+Date: Fri, 8 Dec 2023 09:40:41 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Rob Herring <robh@kernel.org>, linux-usb@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] usb: typec: ucsi: add workaround for several
+ Qualcomm platforms
+Message-ID: <ZXLWiVJYWdlwOBou@hovoldconsulting.com>
+References: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/12] ufs: host: support for generate, import and
- prepare key
-Content-Language: en-US
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-mmc@vger.kernel.org>, <linux-block@vger.kernel.org>,
-        <linux-fscrypt@vger.kernel.org>, <omprsing@qti.qualcomm.com>,
-        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>,
-        <quic_spuppala@quicinc.com>, <kernel@quicinc.com>
-References: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
- <20231122053817.3401748-11-quic_gaurkash@quicinc.com>
-From: Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <20231122053817.3401748-11-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ldAH3tmugLUrumfkWT8_TTgqC7Np9Rd5
-X-Proofpoint-ORIG-GUID: ldAH3tmugLUrumfkWT8_TTgqC7Np9Rd5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-08_04,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=628
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 bulkscore=0
- phishscore=0 malwarescore=0 spamscore=0 impostorscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312080069
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
 
+On Wed, Oct 25, 2023 at 02:49:28PM +0300, Dmitry Baryshkov wrote:
+> The UCSI firmware on Qualcomm SC8180X, SC8280XP and SM8350 are buggy.
+> Submitting UCSI_GET_PDOS command for partners which do not actually
+> support PD and do not have PDOs causes firmware to crash, preventing
+> further UCSI activity. Firmware on newer platforms have fixed this
+> issue. In order to still be able to use UCSI functionality on the
+> mentioned platforms (e.g. to be able to handle USB role switching),
+> apply a workaround that completely shortcuts UCSI_GET_PDOS command for
+> the USB-C partner.
+> 
+> This has been tested on sm8350 only, but should apply to other
+> platforms. I did not enable UCSI for sc8180x yet, it has slightly
+> different implementation, which I'd like to get tested first.
 
+Has no one tested this on sc8280xp/x13s before merging?
 
-On 11/22/2023 11:08 AM, Gaurav Kashyap wrote:
-> Implements the vops for generate, prepare and import key apis in ufs 
-> qcom and call the respective ICE module apis for them. Signed-off-by: 
-> Gaurav Kashyap <quic_gaurkash@quicinc.com> ---
-Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+I see a bunch of errors with this series applied to 6.7-rc4:
+
+[   11.999960] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
+[   12.000430] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: ucsi_handle_connector_change: GET_CONNECTOR_STATUS failed (-110)
+[   17.120515] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
+[   17.124204] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
+[   23.264792] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
+[   23.264953] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
+
+Is it just broken or am I missing some undocumented dependency that is
+only in linux-next?
+
+Johan
 
