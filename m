@@ -1,173 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-4042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C67180ADAA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 21:20:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AE2D80ADB4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 21:20:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 109ADB20A7F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 20:20:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9450F281275
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 20:20:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AF634F8AD;
-	Fri,  8 Dec 2023 20:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27FBD57324;
+	Fri,  8 Dec 2023 20:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="MgiS2uWQ"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="AEj7wduW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0928AB5
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 12:20:02 -0800 (PST)
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E3A610DE
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 12:20:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1702066802;
+	s=mimecast20190719; t=1702066834;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Dmhz6YelCeMUGlAbZoc9SE3nXBabjlnAcn1GMpcxzgg=;
-	b=MgiS2uWQ2zvk1V8W3IJl5rYDPdTq5UwP8eQZATCLUAjhTSBpVpBPDGteftd84t+3ZIufMY
-	Xiga+EzNDrYl/peDNy3SZW39fHXVp85d0Zyde7OXvncMxIbDF1FC4xkKTy1KOd5nSKEL6l
-	sXCpuNujPnUUMuwPLyLlXBlBjDlZ578=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	 in-reply-to:in-reply-to:references:references;
+	bh=2FTOMdJpRPbHn3vU2n7KIGDnUrhFTCYmrUCTOtwVngI=;
+	b=AEj7wduWuOMjhRtIoYB/xGVSxs0CBorjhRxcPuJCu5G8k5sjTKhpR7NQCyVZe4a4cbEKi/
+	cvi47nyLgA25gfMMp7hPmuoGJCzd68zWEti5aJDuXSnR98jmF+R2ksDK06xtf0uWWCAiM+
+	ToMCqMxX8eSliaCo57JWbWclIgyxUAQ=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-U827NCuRN8iLZC0qqC_igQ-1; Fri, 08 Dec 2023 15:20:01 -0500
-X-MC-Unique: U827NCuRN8iLZC0qqC_igQ-1
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-1fb3db72d92so4199369fac.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 12:20:00 -0800 (PST)
+ us-mta-440-g9SavWQPMBOwrG6gFT_SNg-1; Fri, 08 Dec 2023 15:20:31 -0500
+X-MC-Unique: g9SavWQPMBOwrG6gFT_SNg-1
+Received: by mail-oa1-f71.google.com with SMTP id 586e51a60fabf-1fb33566583so4843910fac.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 12:20:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702066797; x=1702671597;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Dmhz6YelCeMUGlAbZoc9SE3nXBabjlnAcn1GMpcxzgg=;
-        b=mLBc46XqqLDBhI9ZYyNpjHD3eWnRdoTbouW/4yec03MgBSWK3pu1sMPDosOmk8qlVR
-         4iwQvI7OaLXJKtC+1J/EiIzbIayLGTXmXv4yvX0nqFiM5akj1gV8OPBpD3Bm095Ahh1r
-         PvGiK+lAUE2+Z6btvVU4sgirSA1vAltswMWd5WrKhuww6kjweUat4QdCOxFdeXYjCvis
-         FucLTRk1vmtCJ0jmxxQPw1QwxQzBsoB4rdfGAVCd1OhL4iOJ0Tf4FdskVw/ZK6/a/L4u
-         0284XGaGgntm9aoOzNjpSJ9iKTD7/yEfVdJUS+VcidrXyS7e9LX3mtsuvEVhNg8Uj3W5
-         QpnA==
-X-Gm-Message-State: AOJu0YwniY9pwaQbt37vIqDhWbGkX/qXgFcfszqxuuzJ38R/LjOB3KUI
-	TIWKzPQcjYvxs5/7WItHfG13SAvNQBfVWdQXj1iVVy0eQEJbjUfNOHVP5O2v5hKMyNL3SurMxle
-	65xgKs0zXbNqP0ZaWKUVArChkOA==
-X-Received: by 2002:a05:6870:70a4:b0:1fb:75a:de6d with SMTP id v36-20020a05687070a400b001fb075ade6dmr796062oae.91.1702066796774;
-        Fri, 08 Dec 2023 12:19:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGt/wDbYfJpmyXdtxehEwlxdvCK3ovj8X10LRECzRE+Gbq8Lqd47/8LIfx9oZolHJvvXhpEYg==
-X-Received: by 2002:a05:6870:70a4:b0:1fb:75a:de6d with SMTP id v36-20020a05687070a400b001fb075ade6dmr796054oae.91.1702066796483;
-        Fri, 08 Dec 2023 12:19:56 -0800 (PST)
-Received: from [192.168.1.164] ([2600:1700:1ff0:d0e0::47])
-        by smtp.gmail.com with ESMTPSA id f16-20020a0cc310000000b0067cd016819esm1055342qvi.131.2023.12.08.12.19.55
+        d=1e100.net; s=20230601; t=1702066830; x=1702671630;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2FTOMdJpRPbHn3vU2n7KIGDnUrhFTCYmrUCTOtwVngI=;
+        b=Bl/igJElVBZ/uB0u5TVQHzjiFWUB344X4UbRwsW5DQ8Yq7vySS515U7j+tzlDuwolD
+         /ofmRHy/XphySdVj3DY1TE4v+SuCZe794B7Ue+I4S2653JXg9Ky8BB8FYuFwBbxRMDsh
+         fCKVbyFJwt4mSGaZwQeZzXqu2QSSmhYzHemNstbtBV+ItsqioKCK0U5A5Fu2GfQ7LJkA
+         HiBTUJbTztJKqfUihtIaeYNrSLFdHV5YsNvtr6MQv8OwrvMy/Oy3DKGnsiDj1vOIvUbG
+         zq/xifOhair0N8xmYWlYqsfJtgspnLehLWako9wM6sLxEHA04HCNyf3gxSTbE79dl6o9
+         dDvw==
+X-Gm-Message-State: AOJu0Ywk94BnkGmaWVOhv3ygRmJNlhHtkH48GNa62flKt3h5fXZhQdJm
+	hDet6Uy+ESAGRxm93Y7HiKKqCKXcPX1aAIfaEZcgpO7kPqtUQm1g8iwIl8DBQuCpJGZSssA846O
+	PFRNUC/6OxKPrrIQ2HDGW96TN1A==
+X-Received: by 2002:a05:6359:4585:b0:170:17eb:9c51 with SMTP id no5-20020a056359458500b0017017eb9c51mr481906rwb.50.1702066830526;
+        Fri, 08 Dec 2023 12:20:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFLWmk2lhCMiTr98WkK9KeFFVT1gu2su5EkI3YZa49gE9uU8KYl5h62TvxFqSxd5sJ7laeJbw==
+X-Received: by 2002:a05:6359:4585:b0:170:17eb:9c51 with SMTP id no5-20020a056359458500b0017017eb9c51mr481899rwb.50.1702066830252;
+        Fri, 08 Dec 2023 12:20:30 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::47])
+        by smtp.gmail.com with ESMTPSA id po8-20020a05620a384800b0077f0a9ec24bsm927364qkn.105.2023.12.08.12.20.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Dec 2023 12:19:56 -0800 (PST)
+        Fri, 08 Dec 2023 12:20:29 -0800 (PST)
+Date: Fri, 8 Dec 2023 14:20:27 -0600
 From: Andrew Halaney <ahalaney@redhat.com>
-Date: Fri, 08 Dec 2023 14:19:44 -0600
-Subject: [PATCH] scsi: ufs: qcom: Perform read back after writing reset bit
+To: Sneh Shah <quic_snehshah@quicinc.com>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Paolo Abeni <pabeni@redhat.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, kernel@quicinc.com
+Subject: Re: [PATCH net v3] net: stmmac: update Rx clk divider for 10M SGMII
+Message-ID: <2yx7snbvbvjycuszzonmwxokr4pvqslz2bpy4eoyrri5tzlymb@t3t23x7eeknq>
+References: <20231208062502.13124-1-quic_snehshah@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20231208-ufs-reset-ensure-effect-before-delay-v1-1-8a0f82d7a09e@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAF96c2UC/x3NQQ6CMBBG4auQWTtJW5RQr2JYIP2rk5hiZsBIC
- He3cflt3tvJoAKja7OT4iMmc6nwp4am51geYEnVFFxofXA9r9lYYVgYxVYFI2dMC9+R56qE17h
- xB9f1MabL2Ueqqbciy/e/uQ3H8QMeH83ydgAAAA==
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- "James E.J. Bottomley" <jejb@linux.ibm.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Yaniv Gardi <ygardi@codeaurora.org>, Dov Levenglick <dovl@codeaurora.org>
-Cc: Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Andrew Halaney <ahalaney@redhat.com>
-X-Mailer: b4 0.12.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231208062502.13124-1-quic_snehshah@quicinc.com>
 
-Currently, the reset bit for the UFS provided reset controller (used by
-its phy) is written to, and then a mb() happens to try and ensure that
-hit the device. Immediately afterwards a usleep_range() occurs.
+On Fri, Dec 08, 2023 at 11:55:02AM +0530, Sneh Shah wrote:
+> SGMII 10MBPS mode needs RX clock divider to avoid drops in Rx.
+> Update configure SGMII function with rx clk divider programming.
+> 
+> Fixes: 463120c31c58 ("net: stmmac: dwmac-qcom-ethqos: add support for SGMII")
 
-mb() ensure that the write completes, but completion doesn't mean that
-it isn't stored in a buffer somewhere. The recommendation for
-ensuring this bit has taken effect on the device is to perform a read
-back to force it to make it all the way to the device. This is
-documented in device-io.rst and a talk by Will Deacon on this can
-be seen over here:
+You didn't add my:
 
-    https://youtu.be/i6DayghhA8Q?si=MiyxB5cKJXSaoc01&t=1678
+    Tested-by: Andrew Halaney <ahalaney@redhat.com>
 
-Let's do that to ensure the bit hits the device. By doing so and
-guaranteeing the ordering against the immediately following
-usleep_range(), the mb() can safely be removed.
+from the last version. Typically that's fine to do even if you post a
+new version as long as the changes are minor (in your case it's just the
+comment that was added since I tested, so definitely fine to do).
 
-Fixes: 81c0fc51b7a7 ("ufs-qcom: add support for Qualcomm Technologies Inc platforms")
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
----
-This is based on top of:
+> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
+> ---
+> v3 changelog:
+> - Added comment to explain why MAC needs to be reconfigured for SGMII
+> v2 changelog:
+> - Use FIELD_PREP to prepare bifield values in place of GENMASK
+> - Add fixes tag
+> ---
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index d3bf42d0fceb..ab2245995bc6 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -34,6 +34,7 @@
+>  #define RGMII_CONFIG_LOOPBACK_EN		BIT(2)
+>  #define RGMII_CONFIG_PROG_SWAP			BIT(1)
+>  #define RGMII_CONFIG_DDR_MODE			BIT(0)
+> +#define RGMII_CONFIG_SGMII_CLK_DVDR		GENMASK(18, 10)
+>  
+>  /* SDCC_HC_REG_DLL_CONFIG fields */
+>  #define SDCC_DLL_CONFIG_DLL_RST			BIT(30)
+> @@ -598,6 +599,9 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos)
+>  	return 0;
+>  }
+>  
+> +/* On interface toggle MAC registetrs gets reset.
+> + * Configure MAC block for SGMII on ethernet phy link up
+> + */
 
-    https://lore.kernel.org/linux-arm-msm/20231208065902.11006-1-manivannan.sadhasivam@linaro.org/T/#ma6bf749cc3d08ab8ce05be98401ebce099fa92ba
+s/registetrs/registers/
 
-Since it mucks with the reset as well, and looks like it will go in
-soon.
-
-I'm unsure if this is totally correct. The goal of this
-seems to be "ensure the device reset bit has taken effect before
-delaying afterwards". As I describe in the commit message, mb()
-doesn't guarantee that, the read back does... if it's against a udelay().
-I can't quite totally 100% convince myself that applies to usleep_range(),
-but I think it should be.
-
-In either case, I think the read back makes sense, the question is "is
-it safe to remove the mb()?".
-
-Sorry, Will's talk over has inspired me to poke the bear whenever I see
-a memory barrier in a driver I play with :)
-
-    https://youtu.be/i6DayghhA8Q?si=12B0wCqImx1lz8QX&t=1677
----
- drivers/ufs/host/ufs-qcom.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/ufs/host/ufs-qcom.h b/drivers/ufs/host/ufs-qcom.h
-index cdceeb795e70..c8cd59b1b8a8 100644
---- a/drivers/ufs/host/ufs-qcom.h
-+++ b/drivers/ufs/host/ufs-qcom.h
-@@ -147,10 +147,10 @@ static inline void ufs_qcom_assert_reset(struct ufs_hba *hba)
- 	ufshcd_rmwl(hba, UFS_PHY_SOFT_RESET, UFS_PHY_SOFT_RESET, REG_UFS_CFG1);
- 
- 	/*
--	 * Make sure assertion of ufs phy reset is written to
--	 * register before returning
-+	 * Dummy read to ensure the write takes effect before doing any sort
-+	 * of delay
- 	 */
--	mb();
-+	ufshcd_readl(hba, REG_UFS_CFG1);
- }
- 
- static inline void ufs_qcom_deassert_reset(struct ufs_hba *hba)
-@@ -158,10 +158,10 @@ static inline void ufs_qcom_deassert_reset(struct ufs_hba *hba)
- 	ufshcd_rmwl(hba, UFS_PHY_SOFT_RESET, 0, REG_UFS_CFG1);
- 
- 	/*
--	 * Make sure de-assertion of ufs phy reset is written to
--	 * register before returning
-+	 * Dummy read to ensure the write takes effect before doing any sort
-+	 * of delay
- 	 */
--	mb();
-+	ufshcd_readl(hba, REG_UFS_CFG1);
- }
- 
- /* Host controller hardware version: major.minor.step */
-
----
-base-commit: 8fdfb333a099b142b49510f2e55778d654a5b224
-change-id: 20231208-ufs-reset-ensure-effect-before-delay-6e06899d5419
-
-Best regards,
--- 
-Andrew Halaney <ahalaney@redhat.com>
+>  static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+>  {
+>  	int val;
+> @@ -617,6 +621,9 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
+>  	case SPEED_10:
+>  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
+>  		val &= ~ETHQOS_MAC_CTRL_SPEED_MODE;
+> +		rgmii_updatel(ethqos, RGMII_CONFIG_SGMII_CLK_DVDR,
+> +			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR, 0x31),
+> +			      RGMII_IO_MACRO_CONFIG);
+>  		break;
+>  	}
+>  
+> -- 
+> 2.17.1
+> 
 
 
