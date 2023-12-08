@@ -1,137 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-3951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7233780A362
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 13:36:57 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C274380A3A4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 13:43:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27F25281860
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:36:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 46335B20B2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:43:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 375CF1C68C;
-	Fri,  8 Dec 2023 12:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 398A011CA5;
+	Fri,  8 Dec 2023 12:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XOfpj0vx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bt/OT6Bf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 932761989
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 04:36:48 -0800 (PST)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5c8c26cf056so18305597b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 04:36:48 -0800 (PST)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF79210EB
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 04:43:35 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-a1ec87a7631so180244266b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 04:43:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702039008; x=1702643808; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kl14rNbix2kUzr/44N3YRDcJydiYUcssbsUy/Lxl2Z8=;
-        b=XOfpj0vxlepbk0G6TFcUUXcXEywmHU2GDIJnhha/hYzdL2OueK2wQbOBCdBOiR2h9H
-         DI6XJFGO133UJHu7mHxGqBMSntnC2Thto84DmkEHkuqLvYA8fUcFJQGS70TIH343u2q0
-         tDJOeRYU9IDZPY6ob7fgpTjdIqpqyIc9Envf4uE0DEjhpZ/DsKch/VTSD7awleJgpSOt
-         OG5TCyfQsez4hObwE1/3yBO9yUyRGBW2hld7jGnkttq6fSxV+rA9RR5tY0Kfguz6ulOZ
-         KZ6hnM1tkx3FeAKugSneE2eScgnTnNEJDsoBrl0FUoXUt0V9ZO/lqoL0/fPIwskxm3SI
-         aYPA==
+        d=linaro.org; s=google; t=1702039414; x=1702644214; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hq7OTSSO5jL1zKGxG1x1x9EuleHIb2ireoAXlk/78G4=;
+        b=bt/OT6BftpmxfmrZdmLWcD44IKMo1plC5Ty2ggONm/epmqqOfvYFRREYCtomJgc643
+         2S7yC2InRyPKZxV5dNlf5+nJGAuQ8y907WxOdCFPmwTsB9PmbNbJH73HL5rkFe2YL+yC
+         4tmZ4QBTGeqiqiDBndUk3P6z0oUKo0sYYufmykjHHGhnn5mPC+ruuazM+wpEhLhNREO8
+         zU9P98QfSpzuAHsdRGhm9y1xdJbyIIwxWsY5ZlC0rw8Bz99p4GiHiiOqjDXbjzq1OefH
+         Y61wZfYH+KnMDaFppAfyCdsuXHz5ABrblb+nqFMdBJXO2S9v47YPXkUKbtje6HWGQFmf
+         mv4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702039008; x=1702643808;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1702039414; x=1702644214;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Kl14rNbix2kUzr/44N3YRDcJydiYUcssbsUy/Lxl2Z8=;
-        b=stfiU3CHs8/ASvYyKOvwj9rRm1zYHdnRo1OL4O4fdxg5Fq4XRR0Xdz//HsXDnb1DGy
-         HtIE+uy5PYRLxTCpUE/TOTMqkgn5pSTrSVyLbo4A85UzQAOUyrG0hStHbvda/rJ+g6jE
-         6SeXbhK4hxokO8QajL+AIiGDCbgjCIjnYhKfPZRrlxZmEaeBjH7Fg/YCkxjSmCrmDYft
-         9P1/6kO6jAVHdscujF/X00LB58dUPPpv5x8vSB05VzTpJYKClSFnUCPVzCa93BKBTApY
-         BeW0cP0XkuZPwPf3Mz54nd+wcxcdwVZ0X1NlehZbCcP0y//CNdtlLxgGYITp6Tkzhy34
-         MrTg==
-X-Gm-Message-State: AOJu0YwKgRy91NJ+D/C5AgfRBu99rEzeR5/xxzDl2kTg1B4FfUxE7+cf
-	OZgQc48oGnBJjDdEABZ6mdBapcL2qS9AYNSEu3RXig==
-X-Google-Smtp-Source: AGHT+IHy1Q9+E3f10R2PU3el+hjqwtKsVqfZDIhUgZWe8w1MbNoJfMJQ2xQDqxpqyqTpj4DJAI8bmmBSs7ObsVLSxWY=
-X-Received: by 2002:a05:690c:fc3:b0:5d3:9f2d:658c with SMTP id
- dg3-20020a05690c0fc300b005d39f2d658cmr4498370ywb.24.1702039007771; Fri, 08
- Dec 2023 04:36:47 -0800 (PST)
+        bh=hq7OTSSO5jL1zKGxG1x1x9EuleHIb2ireoAXlk/78G4=;
+        b=SiRcUJ8Yj3nvmL8Rh3JVnfmFNyEI/i0Y7h45eBpYr3Ba2V8K00VSvtn3JHCjzX6GYX
+         ZwT9Z6ttulZtf+gYOho6oP12JDJgQYSSadU8GM5PJikISryiDT/UNbWuofCwj/G1AK8U
+         6fN8Y3FOaCZymNB2iNRXqQdA01WhgebGBjnwKrxkP6HH66U8m+bQgNMsCdXQBekm6ZHQ
+         uEQjig42Vg+E9npGN4xZoJYQ24Jqos5BLcIYk6xblrsgadB95q9pJB1y9Q9auGanjuXp
+         1Rwfe1DhsgL2AJUJC9N1ERzWIaaVFKX2QaIf1uW/5j/JJJW6ktl7JlQbvt0csTI4cCb4
+         Uyvg==
+X-Gm-Message-State: AOJu0YwQRTaJwuBhozrhINM1utVjTLMihuVdpe7yn57GWImSiZCceho7
+	QqqPDLk0szGAk+zdlSHMGbmlLQ==
+X-Google-Smtp-Source: AGHT+IFa7aLm3Iljw5/1elYh9fWl8/YSbM+A6pDPRDKw9/FBaWRFdTpLVngwjQVe+S9O/f4BEVF2vw==
+X-Received: by 2002:a17:906:2618:b0:a09:e781:97ef with SMTP id h24-20020a170906261800b00a09e78197efmr2237620ejc.73.1702039414441;
+        Fri, 08 Dec 2023 04:43:34 -0800 (PST)
+Received: from krzk-bin.. ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id tl18-20020a170907c31200b00a1da2c9b06asm970989ejc.42.2023.12.08.04.43.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Dec 2023 04:43:34 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: pm8550: drop PWM address/size cells
+Date: Fri,  8 Dec 2023 13:43:32 +0100
+Message-Id: <20231208124332.48636-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231208105155.36097-1-krzysztof.kozlowski@linaro.org>
- <20231208105155.36097-3-krzysztof.kozlowski@linaro.org> <CAA8EJpqKM45=6R0fHjDjNWfZpR-QxRoJo-ioB-t-WT188jpqnA@mail.gmail.com>
- <cbf0b9a6-2752-4ab5-ab21-af28e87fc1e6@linaro.org>
-In-Reply-To: <cbf0b9a6-2752-4ab5-ab21-af28e87fc1e6@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 8 Dec 2023 14:36:36 +0200
-Message-ID: <CAA8EJppBTVw5ZoVGCxx9LYu-1dtEPqiE-H6SMk+6BCDd4O_DSA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] dt-bindings: PCI: qcom: correct clocks for SM8150
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Fri, 8 Dec 2023 at 14:18, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 08/12/2023 12:09, Dmitry Baryshkov wrote:
-> > On Fri, 8 Dec 2023 at 12:52, Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >>
-> >> PCI node in Qualcomm SM8150 should have exactly 8 clocks, including the
-> >> ref clock.
-> >>
-> >> Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >>
-> >> ---
-> >>
-> >> Please take the patch via PCI tree.
-> >>
-> >> Changes in v3:
-> >> 1. New patch: Split from sc8180x change.
-> >> 2. Add refclk as explained here:
-> >>    https://lore.kernel.org/all/20231121065440.GB3315@thinkpad/
-> >> ---
-> >>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 26 +++++++++++++++++++
-> >>  1 file changed, 26 insertions(+)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> index 5214bf7a9045..a93ab3b54066 100644
-> >> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
-> >> @@ -559,6 +559,32 @@ allOf:
-> >>            contains:
-> >>              enum:
-> >>                - qcom,pcie-sm8150
-> >> +    then:
-> >> +      properties:
-> >> +        clocks:
-> >> +          minItems: 8
-> >> +          maxItems: 8
-> >> +        clock-names:
-> >> +          items:
-> >> +            - const: pipe # PIPE clock
-> >> +            - const: aux # Auxiliary clock
-> >> +            - const: cfg # Configuration clock
-> >> +            - const: bus_master # Master AXI clock
-> >> +            - const: bus_slave # Slave AXI clock
-> >> +            - const: slave_q2a # Slave Q2A clock
-> >> +            - const: tbu # PCIe TBU clock
-> >> +            - const: ref # REFERENCE clock
-> >
-> > Can we change the order of the tbu and ref clocks and fold this into
-> > the sc810x case?
->
-> I prefer not, because this is an ABI-concern and we are supposed to keep
-> things stable.
+The address/size cells in PWM node are needed only if individual LEDs
+are listed.  If multi-led is used, then this leads to dtc W=1 warnings:
 
-Ack, fair enough.
+  pm8550.dtsi:65.19-73.5: Warning (avoid_unnecessary_addr_size): /soc@0/spmi@c400000/pmic@1/pwm:
+    unnecessary #address-cells/#size-cells without "ranges" or child "reg" property
 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/pm8550.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/pm8550.dtsi b/arch/arm64/boot/dts/qcom/pm8550.dtsi
+index db3d5c17a77d..797a18c249a4 100644
+--- a/arch/arm64/boot/dts/qcom/pm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8550.dtsi
+@@ -64,9 +64,6 @@ pm8550_flash: led-controller@ee00 {
+ 
+ 		pm8550_pwm: pwm {
+ 			compatible = "qcom,pm8550-pwm", "qcom,pm8350c-pwm";
+-
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+ 			#pwm-cells = <2>;
+ 
+ 			status = "disabled";
 -- 
-With best wishes
-Dmitry
+2.34.1
+
 
