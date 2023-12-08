@@ -1,161 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-3956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED70280A42B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 14:09:50 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D84C80A463
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 14:24:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96FC61F2102D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 13:09:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42D9B1F2117F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 13:24:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB2831C698;
-	Fri,  8 Dec 2023 13:09:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LoCAaWSF"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C6481CAA5;
+	Fri,  8 Dec 2023 13:24:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF6A1720
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 05:09:41 -0800 (PST)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-db632fef2dcso2195757276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 05:09:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702040981; x=1702645781; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9LGacmcIHoUBXEI5ozVl+HOy1oDLjhGzrBNeMtvAN8A=;
-        b=LoCAaWSF8yLQ9kVM5NCnE/QXwlq1gRd05U5DWPBy0Amit8kFcpgkZhF9VnefvMR/XY
-         fLPThnovmbcpiQ2J5gbx3dcoNRcIGggQ1l3y93A2Fq9r4f7sPQGxex0vKnlb0vcaR0tb
-         OprFVFyz1xPKf73YV8NoRTIJ98FHmSejlfGZ54MAT3mukf+Qcv58ma52tk+xSE1JYQ1v
-         UwSambp5P9cRBkfEBsRpcgVoxp1IvHqQ+4+Z2Ez16buggGVXHYbzJJrFgXod3sAlAXk1
-         QmOjRJspfCjM/dSlcMJ0o/GRZzyLJjqdkXFy4cmZ8ht8o8g7zDbLf963F2A1nfjpXqbF
-         DSLg==
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE869A;
+	Fri,  8 Dec 2023 05:24:01 -0800 (PST)
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6d9daa5207eso1024691a34.0;
+        Fri, 08 Dec 2023 05:24:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702040981; x=1702645781;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9LGacmcIHoUBXEI5ozVl+HOy1oDLjhGzrBNeMtvAN8A=;
-        b=u7kr5/M9GGmAhOasygZD8HVcbEbKxwKcsUIwOFCEAupHRZ0mlDIqGCHaFTb4dJAIKZ
-         2/1Zmka9gfBM2jCDFTMBvBXKnAJsZVDM4p1yMt6X2DqpyrsREzuiGlIrQD7zzIc8rZYg
-         Cdsy1lIaR1PK2Iwte6xKnU8pmo4NWoD3KU/qDIpbZA6G6gZM9tKsRlPz312Z4L+4p/Qv
-         uA5Mu7IQXdjLmSAOlFUScwKs1RXJj4mOeoEEINNiiCfyHtUSHeNkENvTU1I8mwiUUL79
-         Ia2cnzPZLULWGdKaCkFARG+jINLVhvkvgpnYfye9qzQXfotCXUcp1PXZvydy9/TsyKym
-         z+jA==
-X-Gm-Message-State: AOJu0YxVtElsNK+oQGh4/VPQjKZvAiEd8WHd8OLDPi8KkPtWMMRYlSFA
-	w1vA9QBVpBOyv5yMWxDoXBh8BV9N/33cWhigYPNE7A==
-X-Google-Smtp-Source: AGHT+IFcz1TMb/FbYR1pHalLsvmxDPmXYW2foZedR2lu/jYaHLKXoqS0Df6ZyEAz4BqzcPrk+GlvLoXpcBivch69Ws4=
-X-Received: by 2002:a25:381:0:b0:d9a:dfd2:cce3 with SMTP id
- 123-20020a250381000000b00d9adfd2cce3mr3650992ybd.58.1702040980913; Fri, 08
- Dec 2023 05:09:40 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702041841; x=1702646641;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UFeKun/Ab01EZFKqneUQr7Yz/7P4BKP04UwHAmDFXZo=;
+        b=g7OLXy2t030lvz0Vu+PFn6e5O0nXTmdCHwZscc8NnGKEzquQMPpBWkGi9B8Mg5Oh1/
+         UTstChPU5rJS+/IFZbMKQT0f0rWK2TPgWzAJb0I+TSfzxTFBPHM0h7MUBmbCOY6ahMT/
+         jKXSkZGJaQqLdb/DsKia9O710NjoNvErOcPNymMXpSeTYSajVPy5f/QWMGlEGaNduvx1
+         6ul7AzBq4je6UWy4vxVZyTPfJQqVX/mZZ8uPmIEOVf9+hcvFQuZvgUHUUWTNmzMoi/nU
+         flEIibMx6P4LV39lvvpTRN1D7I21i5RFGUSssddr34vMylhOg7+LeOEVtvc6m+eHVBeW
+         9DaA==
+X-Gm-Message-State: AOJu0YyOtlrMll/iZ9R/Nzg9oeFj73uB+NC9kORGamO/peknIGZcXV+T
+	R1lW6t0zx5+7hj8qfIfC+Myj9ny5FA==
+X-Google-Smtp-Source: AGHT+IEwvAkq9jK6mGhGY5c1svm3c0hRJ957nkwsNCjpz2Tmg7njhNnkY9qrkTB/OkIZBtm29yuCYQ==
+X-Received: by 2002:a05:6830:1159:b0:6d6:441a:a6c with SMTP id x25-20020a056830115900b006d6441a0a6cmr21946otq.12.1702041841089;
+        Fri, 08 Dec 2023 05:24:01 -0800 (PST)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id w26-20020a056830061a00b006ce28044207sm297875oti.58.2023.12.08.05.24.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Dec 2023 05:24:00 -0800 (PST)
+Received: (nullmailer pid 1155913 invoked by uid 1000);
+	Fri, 08 Dec 2023 13:23:59 -0000
+Date: Fri, 8 Dec 2023 07:23:59 -0600
+From: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH] dt-bindings: cache: qcom,llcc: correct QDU1000 reg
+ entries
+Message-ID: <170204182670.1155646.3136881067040734815.robh@kernel.org>
+References: <20231107080436.16747-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231122-phy-qualcomm-edp-x1e80100-v3-0-576fc4e9559d@linaro.org>
- <20231122-phy-qualcomm-edp-x1e80100-v3-2-576fc4e9559d@linaro.org>
- <b6d3928c-75ba-47a3-93fc-a60729be2e35@linaro.org> <545d3ace-66e5-4470-b3a4-cbdac5ae473d@linaro.org>
- <ab7223a2-9f3f-4c9c-ab97-31512e7a0123@linaro.org> <CAA8EJpoboN85bLiayXJgn5iwh+Gn0OtK0aZ26ZJu9H3xkTT2Tw@mail.gmail.com>
- <d9d27fa4-6ede-4958-b717-db425be61068@linaro.org> <CAA8EJpq7dB+45fiq2WmkMmSO7KszY0Et_t1gZ9ZvfsSxftpm8g@mail.gmail.com>
- <d885928d-035b-4abd-890b-c9626b925d76@linaro.org> <CAA8EJpr+C23evpRWMHatF6ChNvr3G-sAuXOi4e-7Tix23JV=Fg@mail.gmail.com>
- <29d7c97f-cc98-4f67-9bdc-3005796180c9@linaro.org>
-In-Reply-To: <29d7c97f-cc98-4f67-9bdc-3005796180c9@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 8 Dec 2023 15:09:29 +0200
-Message-ID: <CAA8EJprU8AW3D77zv0qc-ANnjWw+c-Z9Nx2nA+ZF6bqEFh3+=A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] dt-bindings: phy: qcom-edp: Add X1E80100 PHY compatibles
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Johan Hovold <johan@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231107080436.16747-1-krzysztof.kozlowski@linaro.org>
 
-On Fri, 8 Dec 2023 at 14:47, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 08/12/2023 13:35, Dmitry Baryshkov wrote:
-> >>>>> Same applies to the displayport-controller. It can either drive the DP
-> >>>>> or eDP output, hardware-wise it is the same.
-> >>>>
-> >>>> Therefore what I proposed was correct - the block which uses the phy
-> >>>> configures its mode. Because this part:
-> >>>>   "this phy is of this type on this board".
-> >>>> is not true. The phy is both types.
-> >>>
-> >>> But hopefully you don't mean using #phy-cells here. There are no
-> >>> sub-PHYs or anything like that.
-> >>
-> >> I am exactly talking about phy-cells. Look at first example from Abel's
-> >> code.
-> >
-> > I always had an impression that #foo-cells means that there are
-> > different units within the major handler. I.e. #clock-cells mean that
-> > there are several different clocks, #reset-cells mean that there are
-> > several resets, etc.
-> > Ok, maybe this is not a perfect description. We need cells to identify
-> > a particular instance within the major block. Maybe that sounds more
-> > correct.
->
-> No, the cells have also meaning of additional arguments. See usage of
-> phy-type (not the one here, but the correct one) and PWMs.
 
-phy-type being used for the 7nm DSI PHY, where it specify exactly the
-same thing: whether the connected device uses D-PHY or C-PHY modes of
-the PHY.
-cdns,phy-type - selecs between PCIe, DP, USB3 or other modes of the PHY
-ti/emif.txt: phy-type specifies which PHY is attached / used in the controller
-xlnx,phy-type: deprecated in favour of phy-mode, selects MII mode for the PHY
-marvell,xenon-phy-type: I _think_ this specifies the actual PHY
-attached to the controller in hardware.
+On Tue, 07 Nov 2023 09:04:36 +0100, Krzysztof Kozlowski wrote:
+> Qualcomm QDU1000 DTSI comes with one LLCC0 base address as pointed by
+> dtbs_check:
+> 
+>   qdu1000-idp.dtb: system-cache-controller@19200000: reg-names:2: 'llcc2_base' was expected
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Recent LLCC patches were not tested on QDU1000 thus the LLCC is there
+> broken.  This patch at least tries to bring some sense according to
+> DTSI, but I have no clue what is here correct: driver, DTS or bindings.
+> ---
+>  Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-> > For the USB+DP PHY we use #phy-cells to select between USB3 and DP
-> > PHYs. But for these PHYs we do not have sub-devices, sub-blocks, etc.
-> > There is a single PHY which works in either of the modes.
->
-> Is it different than case here?
+Applied, thanks!
 
-Hmm, I was not clear enough.
-
-USB+DP = two different PHYs in the same hardware block.
-DP-eDP = single PHY, working in one of the modes.
-
->
-> >
-> > Last, but not least, using #phy-cells in this way would create
-> > asymmetry with all the other PHYs (and especially other QMP PHYs)
-> > present on these platforms.
->
-> OK. Is phy-type not something different?
-
-No. It doesn't redefine what we already have for other QMP PHYs, it
-defines new property.
-
->
-> >
-> > If you feel that phy-type is not an appropriate solution, I'd vote for
-> > not having the type in DT at all, letting the DP controller determine
-> > the proper mode on its own.
->
-> Can we do it? That's BTW the best option.
-
-That's a good question. We have separate -dp and -edp compatibles for
-the DP controller, but I think those also should go, at least for
-newer platforms. And the reason is the same, there is a single
-hardware block, just two modes of operation. See mdss_dp3 in the
-X13s's DT file.
-
-I had a thought of using aux-bus presence to determine whether the
-controller is working in the DP or eDP modes. But this might need
-additional care for older DT files.
-
--- 
-With best wishes
-Dmitry
 
