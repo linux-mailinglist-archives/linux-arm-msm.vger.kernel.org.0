@@ -1,187 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-3912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B67480A101
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:32:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4F7080A10E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:33:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B088B20AC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:32:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E3021C20D03
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:33:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADCCA18E2D;
-	Fri,  8 Dec 2023 10:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55DB119471;
+	Fri,  8 Dec 2023 10:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="RajIO39J"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xh8FPfmr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE331BD8;
-	Fri,  8 Dec 2023 02:31:32 -0800 (PST)
-Received: from authenticated-user (box.trvn.ru [194.87.146.52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-	(No client certificate requested)
-	by box.trvn.ru (Postfix) with ESMTPSA id 68CCB40553;
-	Fri,  8 Dec 2023 15:31:28 +0500 (+05)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
-	t=1702031488; bh=4y6IzqXuYCaOZRj832BYim9z7oqNFMfqjRtC49eFuJM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=RajIO39JCopnXz/UHAH8GGunqq6K8NXh+7Gh0Dt2D6EgmpAC+4kKE5u/kc+Y9iixy
-	 3T5ijAlEqz4za3cgDx7IBwfTV5qtghTKX4ohClLUiDAb1v7P+yXl5B7Q7p626uIS5x
-	 dyqDln9a+E4mUV/2S3ydRIS9OvlPoqbd1kRnGhyT0BO0XFhytw48ew8PqkMA4I1rqY
-	 uekI9IP8XCIvPcQE/Eb8ve0s0NvR8o37C0Ne9Gp/QyecP/QFiXC6ZBtTDuq4+idi1k
-	 AHqTv+rh4NLCJVZ3GV74fac680lt9V3tSWBVACxKWf/RFNU4rHbYeye+O1e1v+c7YF
-	 nUjuTgBa2Zo9Q==
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BB8D324F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 02:32:34 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1d098b87eeeso17245755ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 02:32:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702031554; x=1702636354; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=YssbbUCPI2cVXvHWriFdE5fhn9Moo9Wlhv3uqYqJSwE=;
+        b=Xh8FPfmrGihDVbvCvqyvLIEkN/nTMwBQbdeBdYzU6vcwaJYth2GHEjduYC1ySt8vFp
+         KhLx1gU+NX7qe7OTGUAO7m+ZsqHuI1zF28JyT+tv23Y7TZbrWMXyfy8StfuyDu29OeOf
+         M6pL/jecgFuW0/zeUsRwWSPSMJNd7YmmeLvdXJoNXYkw3nvbZBr/K4yV0F3QUaU1/pe7
+         2UY7Q433JtjjUM11QY7TVR4aKSb8oqopK9yqGfpDtF5YDvT5TzG0EdvCRgVU7IEfHLZx
+         yMe+ybv/6sCQUeq0OCayMubJCxCdWm4JQ9xSwvvNipPnUF4RsXctGL5sqYHN3g74ZYUV
+         NrYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702031554; x=1702636354;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YssbbUCPI2cVXvHWriFdE5fhn9Moo9Wlhv3uqYqJSwE=;
+        b=BL4I6klMddtspYdftDIa9xjJteWHlkRa+53uX/J8d/T/UfGXQ8uAFvHI5/9XZUbxI9
+         J+zGh6iROl4eHIXvoAJJzrK/FpK0Ja+5tlXQR5F6Y4CxYiwRpxZCwsm7snAGDoLHpE7H
+         pcM2PP6AffQEaeLG3brq6XJDGNw0oGFSQElp/6+4mvqj76Z47NqD2VrY24L21AKazcgE
+         rdhkNliSYhxmD14wM6RcLrTPwzM0zOTmklZ0hmD9CoMbxfLdUFQBBtLNOzGToeNjlW9B
+         V+qWyLsY9LbBa8vW2W3DYBCSQHKx4AUOjQiekzp59IiAOl/9hD5XLrV2DLwubT1YcZ0F
+         gi2Q==
+X-Gm-Message-State: AOJu0Yyp9enuQz3k7quw0Y7KtZ9OXzhfz9hXJPWlIG6dpR7aN7hcIQmg
+	x8YRe33NbNj9qEGIWmGODd+M
+X-Google-Smtp-Source: AGHT+IGNfp9Ep6LAjKWWdk4BU7zk1Hj3bGaTZHBgdMaZGRdi4WR6/bUXwRY+x/gs7QUpuEH3SEgcTQ==
+X-Received: by 2002:a17:903:244e:b0:1cc:53d1:10b8 with SMTP id l14-20020a170903244e00b001cc53d110b8mr4898083pls.50.1702031553834;
+        Fri, 08 Dec 2023 02:32:33 -0800 (PST)
+Received: from thinkpad ([117.216.123.142])
+        by smtp.gmail.com with ESMTPSA id c21-20020a170902b69500b001d1d1ef8be6sm1347559pls.267.2023.12.08.02.32.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Dec 2023 02:32:33 -0800 (PST)
+Date: Fri, 8 Dec 2023 16:02:22 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S . Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+	Rocky Liao <quic_rjliao@quicinc.com>, Alex Elder <elder@linaro.org>,
+	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [RESEND PATCH v2 0/3] Bluetooth: power-on QCA6390 correctly
+Message-ID: <20231208103222.GB3008@thinkpad>
+References: <20231208090936.27769-1-brgl@bgdev.pl>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 08 Dec 2023 15:31:27 +0500
-From: Nikita Travkin <nikita@trvn.ru>
-To: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley
- <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, Andy Gross
- <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] power: supply: Add Acer Aspire 1 embedded controller
- driver
-In-Reply-To: <71459bab-05b9-41f6-bb32-2b744736487d@linaro.org>
-References: <20231207-aspire1-ec-v1-0-ba9e1c227007@trvn.ru>
- <20231207-aspire1-ec-v1-2-ba9e1c227007@trvn.ru>
- <71459bab-05b9-41f6-bb32-2b744736487d@linaro.org>
-Message-ID: <8fe5cb8cecf92d98f2768b811deb3ea0@trvn.ru>
-X-Sender: nikita@trvn.ru
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20231208090936.27769-1-brgl@bgdev.pl>
 
-Konrad Dybcio писал(а) 08.12.2023 00:24:
-> On 12/7/23 12:20, Nikita Travkin wrote:
->> Acer Aspire 1 is a Snapdragon 7c based laptop. It uses an embedded
->> controller to control the charging and battery management, as well as to
->> perform a set of misc functions.
->>
->> Unfortunately, while all this functionality is implemented in ACPI, it's
->> currently not possible to use ACPI to boot Linux on such Qualcomm
->> devices. To allow Linux to still support the features provided by EC,
->> this driver reimplments the relevant ACPI parts. This allows us to boot
->> the laptop with Device Tree and retain all the features.
->>
->> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
->> ---
-> [...]
+On Fri, Dec 08, 2023 at 10:09:33AM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
->> +	case POWER_SUPPLY_PROP_CAPACITY:
->> +		val->intval = le16_to_cpu(ddat.capacity_now) * 100
->> +			      / le16_to_cpu(sdat.capacity_full);
-> It may be just my OCD and im not the maintainer here, but I'd do
-> /= here
-
-Hm you're right, this did look a bit ugly to me when I split the line
-(it was 101/100), Will probably use /= to make it nicer in v2.
-
+> Resending with all maintainers in CC.
 > 
-> [...]
-> 
->> +	case POWER_SUPPLY_PROP_MODEL_NAME:
->> +		if (sdat.model_id - 1 < ARRAY_SIZE(aspire_ec_psy_battery_model))
->> +			val->strval = aspire_ec_psy_battery_model[sdat.model_id - 1];
->> +		else
->> +			val->strval = "Unknown";
-> Would it make sense to print the model_id that's absent from the LUT
-> here and similarly below?
+> Patch 1 is just a typo fix as we're already touching this bindings. The
+> second patch adds more regulator definitions and enforces them for the
+> QCA6390 model. The final patch enables the power sequence for the BT
+> module of QCA6390 in the hci_qca driver.
 > 
 
-The original ACPI code returns "Unknown" like this when the value
-is not in the table. I suppose I could warn here but not sure how
-useful it would be... And since this is a rather "hot" path, would
-need to warn only once, so extra complexity for a very unlikely
-situation IMO.
+Is bluetooth fully functional without handling WLAN specific resources like
+regulators, enable GPIO? When I checked last time, the chip requires both
+Bluetooth and WLAN resources to become fully operational.
 
->> +		break;
->> +
->> +	case POWER_SUPPLY_PROP_MANUFACTURER:
->> +		if (sdat.vendor_id - 3 < ARRAY_SIZE(aspire_ec_psy_battery_vendor))
->> +			val->strval = aspire_ec_psy_battery_vendor[sdat.vendor_id - 3];
->> +		else
->> +			val->strval = "Unknown";
->> +		break;
->> +
->> +	default:
->> +		return -EINVAL;
->> +	}
-> Another ocd trip, i'd add a newline before return
->
+- Mani
 
-Yeah I agree here, missed this. Will add in v2.
-
->> +	return 0;
->> +}
-> [...]
+> v1 -> v2:
+> - squashed the two bluetooth patches into one
+> - changed the naming convention for the RFA regulators to follow the
+>   existing ones
+> - added dt-bindings patches
 > 
->> +	/*
->> +	 * The original ACPI firmware actually has a small sleep in the handler.
->> +	 *
->> +	 * It seems like in most cases it's not needed but when the device
->> +	 * just exits suspend, our i2c driver has a brief time where data
->> +	 * transfer is not possible yet. So this delay allows us to suppress
->> +	 * quite a bunch of spurious error messages in dmesg. Thus it's kept.
-> Ouch.. do you think i2c-geni needs fixing on this part?
-
-Not sure, it seems like when we exit suspend, this handler
-gets triggered before geni (or it's dependencies?) is considered
-"awake" (my guess is when the clocks are still off):
-
-[  119.246867] PM: suspend entry (s2idle)
-(...)
-[  119.438052] printk: Suspending console(s) (use no_console_suspend to debug)
-[  119.942498] geni_i2c 888000.i2c: error turning SE resources:-13
-[  119.942550] aspire-ec 2-0076: Failed to read event id: -EACCES
-(...)
-[  119.942657] geni_i2c 888000.i2c: error turning SE resources:-13
-[  119.942666] aspire-ec 2-0076: Failed to read event id: -EACCES
-(...)
-[  120.881452] PM: suspend exit
-
-FWIW it doesn't seem to be a big problem since this is
-a level interrupt, so it will be retried until the event
-can be cleared, but since ACPI also has the sleep, I'm
-happy to inherit in and suppress a couple of red lines :)
-
+> Bartosz Golaszewski (3):
+>   dt-bindings: net: bluetooth: qualcomm: fix a typo
+>   dt-bindings: net: bluetooth: qualcomm: add regulators for QCA6390
+>   Bluetooth: qca: run the power-on/off sequence for QCA6390 too
 > 
-> [...]
+>  .../net/bluetooth/qualcomm-bluetooth.yaml     | 26 ++++++++++++++++++-
+>  drivers/bluetooth/hci_qca.c                   | 14 +++++++++-
+>  2 files changed, 38 insertions(+), 2 deletions(-)
 > 
->> +	switch (id) {
->> +	case 0x0: /* No event */
->> +		break;
-> Is this a NOP/watchdog sort of thing?
+> -- 
+> 2.40.1
+> 
 > 
 
-This is a NOP, yes. I think I was hitting spurious interrupts
-once or twice so I suppressed this.
-
-> [...]
-> 
->> +
->> +static struct i2c_driver aspire_ec_driver = {
->> +	.driver = {
->> +		.name = "aspire-ec",
->> +		.of_match_table = aspire_ec_of_match,
->> +		.pm = pm_sleep_ptr(&aspire_ec_pm_ops),
->> +	},
->> +	.probe = aspire_ec_probe,
->> +	.id_table = aspire_ec_id,
-> Since it's tristate, I'd expect an entry for .remove_new here
-> 
-
-All the resources I allocate are devm_ so I believe I shouldn't need
-to clean anything up on remove...
-
-Thanks for the review!
-Nikita
-
-> Konrad
+-- 
+மணிவண்ணன் சதாசிவம்
 
