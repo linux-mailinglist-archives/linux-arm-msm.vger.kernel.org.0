@@ -1,117 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-3937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A685C80A289
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:47:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B82B080A28D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:49:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D7C81F20F05
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:47:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72F4928176B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:49:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAC431B29F;
-	Fri,  8 Dec 2023 11:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HL6EAGVg"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 866EF1BDC9;
+	Fri,  8 Dec 2023 11:49:17 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F9A1B279;
-	Fri,  8 Dec 2023 11:47:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D92C433C7;
-	Fri,  8 Dec 2023 11:47:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702036048;
-	bh=c+8rgroX2GbrXmRTiQanTq09WC+M7m+1jdhYPCQ312w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HL6EAGVgixZ6TirEcHCeCCknReZy1UaxH236/FRY4IbJRsyt6yUppXKPDnagcxOXO
-	 1LMQ3AyF8oyVO4u69YuX5FKkkY0YsU4ksh9Mkku9kT+3t0goXAd/YquMEYJlRIB88B
-	 b4e/spaSR+mZEX2C81pGis2kwjvPdOypaucNXJcQPAVzN6eWgkQ5PWvE9Luq3LjrCj
-	 ltBE11ZiO5a30HDsLxnpsCr5eZxPi8JMGlZQJLZcMAN7uO/UlZ1z/YsdtFEO7tBzx5
-	 /SIt0VHVEnD771P64sR37hEu22uv9krw7ajeoyagZQKYR9byA66jpzTGLs998C7RM5
-	 b3oe3PbFi4nkg==
-Received: from johan by xi.lan with local (Exim 4.96.2)
-	(envelope-from <johan@kernel.org>)
-	id 1rBZL7-0006Fm-2o;
-	Fri, 08 Dec 2023 12:48:17 +0100
-Date: Fri, 8 Dec 2023 12:48:17 +0100
-From: Johan Hovold <johan@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Rob Herring <robh@kernel.org>, linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] usb: typec: ucsi: add workaround for several
- Qualcomm platforms
-Message-ID: <ZXMCgVWNCfwmY8oS@hovoldconsulting.com>
-References: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
- <ZXLWiVJYWdlwOBou@hovoldconsulting.com>
- <CAA8EJpp-BsabZB3FXnFsWZBNbF7keCrOKPPg3Qb7MzE3puMFeg@mail.gmail.com>
- <ZXL5jvDHr-MuxMoz@hovoldconsulting.com>
- <CAA8EJpoG-qg24wV953Xd9KQ957gpJVHc20Te2cYQWfs9imC63w@mail.gmail.com>
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTP id B6A0D1723;
+	Fri,  8 Dec 2023 03:49:14 -0800 (PST)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 221FB1063;
+	Fri,  8 Dec 2023 03:50:00 -0800 (PST)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 294493F762;
+	Fri,  8 Dec 2023 03:49:12 -0800 (PST)
+Message-ID: <8e4b3c92-f2e4-48f3-848e-776a64fe1d31@arm.com>
+Date: Fri, 8 Dec 2023 11:49:10 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpoG-qg24wV953Xd9KQ957gpJVHc20Te2cYQWfs9imC63w@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: Add missing GMU entry to match table
+Content-Language: en-GB
+To: Rob Clark <robdclark@gmail.com>, iommu@lists.linux-foundation.org
+Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+ Rob Clark <robdclark@chromium.org>, Will Deacon <will@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Elliot Berman <quic_eberman@quicinc.com>,
+ Richard Acayan <mailingradian@gmail.com>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+ "open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20231207212441.6199-1-robdclark@gmail.com>
+From: Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <20231207212441.6199-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 08, 2023 at 01:10:59PM +0200, Dmitry Baryshkov wrote:
-> On Fri, 8 Dec 2023 at 13:09, Johan Hovold <johan@kernel.org> wrote:
-> > On Fri, Dec 08, 2023 at 12:58:29PM +0200, Dmitry Baryshkov wrote:
-> > > On Fri, 8 Dec 2023 at 10:39, Johan Hovold <johan@kernel.org> wrote:
-> > > > On Wed, Oct 25, 2023 at 02:49:28PM +0300, Dmitry Baryshkov wrote:
-> > > > > The UCSI firmware on Qualcomm SC8180X, SC8280XP and SM8350 are buggy.
-> > > > > Submitting UCSI_GET_PDOS command for partners which do not actually
-> > > > > support PD and do not have PDOs causes firmware to crash, preventing
-> > > > > further UCSI activity. Firmware on newer platforms have fixed this
-> > > > > issue. In order to still be able to use UCSI functionality on the
-> > > > > mentioned platforms (e.g. to be able to handle USB role switching),
-> > > > > apply a workaround that completely shortcuts UCSI_GET_PDOS command for
-> > > > > the USB-C partner.
-> > > > >
-> > > > > This has been tested on sm8350 only, but should apply to other
-> > > > > platforms. I did not enable UCSI for sc8180x yet, it has slightly
-> > > > > different implementation, which I'd like to get tested first.
-> > > >
-> > > > Has no one tested this on sc8280xp/x13s before merging?
-> > > >
-> > > > I see a bunch of errors with this series applied to 6.7-rc4:
-> > > >
-> > > > [   11.999960] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
-> > > > [   12.000430] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: ucsi_handle_connector_change: GET_CONNECTOR_STATUS failed (-110)
-> > > > [   17.120515] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
-> > > > [   17.124204] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
-> > > > [   23.264792] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
-> > > > [   23.264953] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
-> > >
-> > > Can you please post previous messages or is the first timeout the
-> > > first error from ucsi?
-> >
-> > These are all the ucsi messages in the log (dmesg | grep ucsi).
-> >
-> > The first error is sometimes GET_CONNECTOR_STATUS failed (-95) instead:
+On 07/12/2023 9:24 pm, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Ack, thank you. This is pending on my side together with the UCSI
-> glink / altmode rework. I hope to have patches for that closer to the
-> NY.
+> We also want the default domain for the GMU to be an identy domain,
+> so it does not get a context bank assigned.  Without this, both
+> of_dma_configure() and drm/msm's iommu_domain_attach() will trigger
+> allocating and configuring a context bank.  So GMU ends up attached
+> to both cbndx 1 and cbndx 2.
 
-What does that mean? That we shall revert these patches until that work
-is finished? I don't want to have these errors littering the logs,
-scaring users and possibly slowing down boot (those are five second
-timeouts).
+I can't help but read this as implying that it gets attached to both *at 
+the same time*, which would be indicative of a far more serious problem 
+in the main driver and/or IOMMU core code.
 
-Also, if this was known issue, why wasn't it mentioned the cover letter
-or commit messages?
+However, from what we discussed on IRC last night, it sounds like the 
+key point here is more straightforwardly that firmware expects the GMU 
+to be using context bank 1, in a vaguely similar fashion to how context 
+bank 0 is special for the GPU. Clarifying that would help explain why 
+we're just doing this as a trick to influence the allocator (i.e. unlike 
+some of the other devices in this list we don't actually need the 
+properties of the identity domain itself).
 
-Johan
+In future it might be nice to reserve this explicitly on platforms which 
+need it and extend qcom_adreno_smmu_alloc_context_bank() to handle the 
+GMU as well, but I don't object to this patch as an immediate quick fix 
+for now, especially as something nice and easy for stable (I'd agree 
+with Johan in that regard).
+
+Thanks,
+Robin.
+
+>  This arrangement seemingly confounds
+> and surprises the firmware if the GPU later triggers a translation
+> fault, resulting (on sc8280xp / lenovo x13s, at least) in the SMMU
+> getting wedged and the GPU stuck without memory access.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 549ae4dba3a6..d326fa230b96 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -243,6 +243,7 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>   
+>   static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+>   	{ .compatible = "qcom,adreno" },
+> +	{ .compatible = "qcom,adreno-gmu" },
+>   	{ .compatible = "qcom,mdp4" },
+>   	{ .compatible = "qcom,mdss" },
+>   	{ .compatible = "qcom,sc7180-mdss" },
 
