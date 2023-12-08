@@ -1,53 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-3963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2ACDB80A5E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 15:51:13 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AE4F80A5EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 15:51:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA2BC281C62
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 14:51:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D910C281168
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 14:51:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 916541E53C;
-	Fri,  8 Dec 2023 14:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E8A2200B6;
+	Fri,  8 Dec 2023 14:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YpgiesEX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EC4pKFyO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA9E179A7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617911F959;
+	Fri,  8 Dec 2023 14:51:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F34FC433CC;
 	Fri,  8 Dec 2023 14:51:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FC2C433CA;
-	Fri,  8 Dec 2023 14:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702047066;
-	bh=QRMVM5h4+fVEvQ0BvMG0bbOAh/7k4oCayZJfWKA4imo=;
+	s=k20201202; t=1702047067;
+	bh=OOSG2z2H6unvPrg8WJZMqPGKC5UIGuJtfqrzdP2lRYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpgiesEX76rqOf3Umuv4sB18o2BP4ybYBXCgiIQNXubhSFpzd8lrdic4ClTuKvjtV
-	 MwjxSYgio6/nBIqQZXUf8/MuynMefNyBJItd2ckY693B/oTFfnRBZ/jkUCdbz3staq
-	 SvfaL5UIHvIHXWRU/bEtGKRF9UkMzBD4f7bJh04C2RHndKZf5hQC+JkDvtm/WLNVt1
-	 Hngt//7K4X529PdtDEKFZH+BFNxSKhcfyR7SQSW5ylpqRIZt7T5o2xAfbiTZ+uWSI0
-	 qM359snqYkzfvLbg/zWaYVnVa8BJ/REZKmeBSI1cdnrqDta6Hl0ASV1PvqxqU+CpHg
-	 +IE1b/dEv0Rtg==
+	b=EC4pKFyO5VaHe4xsYYtycR5gLba7A0Ij/M6At7MUNL4bgqlu2S7H4fqpH6iPTsUDC
+	 /LDu1p6sgrN5T1LvL+LPTFnnuTOtVDSKvDnTdWXcuP1i2d8eaUIya4aheS24Jqgi9b
+	 942MldcpSRuT+RURtoSR8JsAWkWIASPc6gNOYG/dRGY7lUS+4g9yr10FG31r4P9i7E
+	 MdMNNTlGbMT8R/IjhkbLs/tMxSIR8Z0l5aS9i5+6nfo5Jjtu2X8qg3FU+yZESYn3oG
+	 B6WFasUp2V1+t/qmEMlzOgWSe1jdi+Qyzn58I3KH30GvepgFF7qAIjIhoXcYCeeFKh
+	 OB96OoSR//WJQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Gross <agross@kernel.org>,
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Andy Gross <agross@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Herring <robh@kernel.org>,
-	linux-usb@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] usb: typec: ucsi: add workaround for several Qualcomm platforms
-Date: Fri,  8 Dec 2023 06:55:16 -0800
-Message-ID: <170204733611.342318.16716488555248581167.b4-ty@kernel.org>
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH 00/11] ARM/arm64: dts: qcom: fix USB wakeup interrupt types
+Date: Fri,  8 Dec 2023 06:55:17 -0800
+Message-ID: <170204733623.342318.1053426997273097691.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
-References: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231120164331.8116-1-johan+linaro@kernel.org>
+References: <20231120164331.8116-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,24 +59,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 25 Oct 2023 14:49:28 +0300, Dmitry Baryshkov wrote:
-> The UCSI firmware on Qualcomm SC8180X, SC8280XP and SM8350 are buggy.
-> Submitting UCSI_GET_PDOS command for partners which do not actually
-> support PD and do not have PDOs causes firmware to crash, preventing
-> further UCSI activity. Firmware on newer platforms have fixed this
-> issue. In order to still be able to use UCSI functionality on the
-> mentioned platforms (e.g. to be able to handle USB role switching),
-> apply a workaround that completely shortcuts UCSI_GET_PDOS command for
-> the USB-C partner.
+On Mon, 20 Nov 2023 17:43:20 +0100, Johan Hovold wrote:
+> When testing a recent series that addresses resource leaks in the
+> Qualcomm dwc3 glue driver [1], I realised that probe deferral can break
+> wakeup from suspend due to how the wakeup interrupts are currently
+> requested.
+> 
+> The following series fixes this by no longer overriding the firmware
+> defined trigger types for the wakeup interrupts:
 > 
 > [...]
 
 Applied, thanks!
 
-[1/2] usb: typec: ucsi: fix UCSI on buggy Qualcomm devices
-      commit: 1d103d6af241dbfc7e11eb9a46dff65db257a37f
-[2/2] soc: qcom: pmic_glink: enable UCSI by default
-      commit: 4db09e7b967b905ba3036a4d96e81c06b896b1bf
+[01/11] ARM: dts: qcom: sdx55: fix USB wakeup interrupt types
+        commit: d0ec3c4c11c3b30e1f2d344973b2a7bf0f986734
 
 Best regards,
 -- 
