@@ -1,49 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-3894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86FA0809E2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:33:34 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24D03809E1B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:28:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9BBB31C20B34
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 08:33:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18B521C20B3A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 08:28:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FCEA134C1;
-	Fri,  8 Dec 2023 08:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E40D10781;
+	Fri,  8 Dec 2023 08:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J7MhzpG8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FcSuAn1K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 964A11724;
-	Fri,  8 Dec 2023 00:33:18 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B88SLix003999;
-	Fri, 8 Dec 2023 08:33:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=j6GaBLldicDw/0P7tgcpOsjF79gmOmP68u8D6awqG98=;
- b=J7MhzpG8/WSamw7EsDiZjG+QAFdkHHBeOSrqnc1NOxAMvYM0/Uqy4TUCF3Q2ZY5SscJX
- 0yQxJeUGJLeijkW3rRQNb1wW05hg85ZT5sLjSw+j9xSHd1n8qJ8BIqAHc6ScOmhFJ1f3
- HtzUs0mESOfrYLYELQb7405ju1mbvsKEHifGAqYBBAoCY2sg1h0Gx+iiwu/DDXmebXR3
- jAex4pm6R7cOYGE2A4MdfbuTBVj2MPnxwVPtlU2R1bfJgUpl5x+jXUy0yveK2ZCLeQSa
- 3Ht618RJyL3PiYzKrk4RDC3GoaBRKE4gxim1rCdhrEo7+1ZFesCmut2dxbynL8EA3hWT /g== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uuj96hn31-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Dec 2023 08:33:15 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B88XEH8002134
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Dec 2023 08:33:14 GMT
-Received: from [10.216.14.21] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Dec
- 2023 00:26:41 -0800
-Message-ID: <180d6f11-82aa-439f-914d-981454a7599b@quicinc.com>
-Date: Fri, 8 Dec 2023 13:56:38 +0530
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2497F1718
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 00:28:38 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3316c6e299eso1834934f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 00:28:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702024116; x=1702628916; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tvDaevsK7/OdtIN4ZZ92+SBkN0d/AhKeYYJWkWcCFcM=;
+        b=FcSuAn1KrqbYDw4xiCZ7uXhkbxkynTINBzFrevNjcT7Tci9S0wuBnX4+ZQCEzqQxWq
+         RQYguPoCXRUec4vdbVkJyGzKnknpUEgTwN5QZUTXqgESSIyswiimIcWkimUZ9IFXcCIj
+         Ex8jB30v5/U3aY5Vy61J4y0PgTXArWNxT0Qm2JC3NzeLPuUktTIOll0NGDEzywUnOVow
+         F6DaELHBbR5qH57X6qGU5gkSsR2DdL1nO/OhN2/NxX/vCnTQcpgZG5XbDLVrwkKK+5tB
+         rdEtYEc8A7FkLf713NH8W3A4PprDxAnV31nHZRbCAAmRh3AXNYg5aa+u2RGxg1edjKV3
+         9eCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702024116; x=1702628916;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :references:cc:to:content-language:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tvDaevsK7/OdtIN4ZZ92+SBkN0d/AhKeYYJWkWcCFcM=;
+        b=Q2Na8fJs0xaKdSU9X6e4U+pBONT+zK5bFzDFL7Kgf3SDKsKhnnSKNj7ZJH0Sl1m7FF
+         No4tQa0dBUDndKlYnFds3/CW8FwYYWbCo/4Ggx+QcyYCCQSEntW2IBE9ruc0ebCPso0o
+         S/fLdQOyAO7lJSPfi42a4zfiX4+F2cgvPuCMjRPHjEBPF3pXRn6cC7f4gmbKg+TyXbxD
+         6wHQ9omyVQKEINCSMVIrMBIWmQEZHl/tN0LkMEF35guRkX0tlMWdn82cafxVZREUr9ss
+         r5c6vTDzgbksLIICsl9JaL+lAKRDeoJgty2BF/VmsolS8DUi1sfSUYXFKdSbiY/tl981
+         LIMA==
+X-Gm-Message-State: AOJu0Ywi4DJGnPwy4mKOquGGSY5SMRX5VdTb7xuDtxsKnltqGYIY1pGb
+	E0tyqvbQaC0Ed7FEgH16rhpfFw==
+X-Google-Smtp-Source: AGHT+IEBO5Hb/8bJQCK/Qq3DsVqqs4n08jSKkaq3CCjQjLLptybMAMNqJbrR+mF21o23C48+AF1EzQ==
+X-Received: by 2002:adf:f752:0:b0:333:2fd2:3be2 with SMTP id z18-20020adff752000000b003332fd23be2mr1651859wrp.155.1702024116507;
+        Fri, 08 Dec 2023 00:28:36 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:982:cbb0:8ada:86ec:5358:ef2a? ([2a01:e0a:982:cbb0:8ada:86ec:5358:ef2a])
+        by smtp.gmail.com with ESMTPSA id o10-20020a5d58ca000000b0033338c3ba42sm1483097wrf.111.2023.12.08.00.28.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Dec 2023 00:28:36 -0800 (PST)
+Message-ID: <a0e0e803-47a6-4b66-bc14-7a9f7db696fd@linaro.org>
+Date: Fri, 8 Dec 2023 09:28:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,158 +64,137 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/12] soc: qcom: support for generate, import and
- prepare key
-Content-Language: en-US
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-mmc@vger.kernel.org>, <linux-block@vger.kernel.org>,
-        <linux-fscrypt@vger.kernel.org>, <omprsing@qti.qualcomm.com>,
-        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>,
-        <quic_spuppala@quicinc.com>, <kernel@quicinc.com>
-References: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
- <20231122053817.3401748-10-quic_gaurkash@quicinc.com>
-From: Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <20231122053817.3401748-10-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8650: Add DisplayPort device
+ nodes
+Content-Language: en-US, fr
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
+ Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231207-topic-sm8650-upstream-dp-v1-0-b762c06965bb@linaro.org>
+ <20231207-topic-sm8650-upstream-dp-v1-3-b762c06965bb@linaro.org>
+ <bcecxzpogq6pndwmhgrl52ia3orni2q5brg6mpc6fkn5widigb@v6dy4minwajx>
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro Developer Services
+In-Reply-To: <bcecxzpogq6pndwmhgrl52ia3orni2q5brg6mpc6fkn5widigb@v6dy4minwajx>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nr8BJ9Tj-FqXCsfIe5Rt1ERp2tek8Nbf
-X-Proofpoint-ORIG-GUID: nr8BJ9Tj-FqXCsfIe5Rt1ERp2tek8Nbf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-08_04,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- mlxlogscore=882 malwarescore=0 phishscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312080069
 
-
-
-On 11/22/2023 11:08 AM, Gaurav Kashyap wrote:
-> Implements the ICE apis for generate, prepare and import key
-> apis and hooks it up the scm calls defined for them.
-
-We can avoid mentioning below text as it is also possibility to have 
-HWKM Linux driver.
-> Key management has to be done from Qualcomm Trustzone as only
-> it can interface with HWKM.
+On 08/12/2023 04:38, Bjorn Andersson wrote:
+> On Thu, Dec 07, 2023 at 05:37:19PM +0100, Neil Armstrong wrote:
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> [..]
+>> +
+>> +			mdss_dp0: displayport-controller@af54000 {
+>> +				compatible = "qcom,sm8650-dp";
+>> +				reg = <0 0xaf54000 0 0x200>,
+>> +				      <0 0xaf54200 0 0x200>,
+>> +				      <0 0xaf55000 0 0xc00>,
+>> +				      <0 0xaf56000 0 0x400>,
+>> +				      <0 0xaf57000 0 0x400>;
+>> +
+>> +				interrupts-extended = <&mdss 12>;
+>> +
+>> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+>> +					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
+>> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
+>> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
+>> +					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
+>> +				clock-names = "core_iface",
+>> +					      "core_aux",
+>> +					      "ctrl_link",
+>> +					      "ctrl_link_iface",
+>> +					      "stream_pixel";
+>> +
+>> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
+>> +						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
+>> +				assigned-clock-parents = <&usb_dp_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+>> +							 <&usb_dp_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+>> +
+>> +				operating-points-v2 = <&dp_opp_table>;
+>> +
+>> +				power-domains = <&rpmhpd RPMHPD_MX>;
 > 
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> ---
->   drivers/soc/qcom/ice.c | 66 ++++++++++++++++++++++++++++++++++++++++++
->   include/soc/qcom/ice.h |  8 +++++
->   2 files changed, 74 insertions(+)
+> Are you sure the DP TX block sits in MX? I'd expect this to be
+> RPMHPD_MMCX, and then the PHY partially in MX...
+
+Hmm, yeah probably, will switch to MMCX
+
 > 
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> index ee7c0beef3d2..b00f314521ca 100644
-> --- a/drivers/soc/qcom/ice.c
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -21,6 +21,13 @@
->   
->   #define AES_256_XTS_KEY_SIZE			64
->   
-> +/*
-> + * Wrapped key sizes from HWKm is different for different versions of
-"HWKM"
-> + * HW. It is not expected to change again in the future.
-we can avoid mentioning "It is not expected to change again in the future"
-> + */
-> +#define QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(v)	\
-> +	((v) == 1 ? 68 : 100)
-> +
->   /* QCOM ICE registers */
->   #define QCOM_ICE_REG_VERSION			0x0008
->   #define QCOM_ICE_REG_FUSE_SETTING		0x0010
-> @@ -426,6 +433,65 @@ int qcom_ice_derive_sw_secret(struct qcom_ice *ice, const u8 wkey[],
->   }
->   EXPORT_SYMBOL_GPL(qcom_ice_derive_sw_secret);
->   
-> +/**
-> + * qcom_ice_generate_key() - Generate a wrapped key for inline encryption
-> + * @lt_key: longterm wrapped key that is generated, which is
-> + *          BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE in size.
-> + *
-> + * Make a scm call into trustzone to generate a wrapped key for storage
-> + * encryption using hwkm.
-> + *
-> + * Return: 0 on success; err on failure.
-> + */
-> +int qcom_ice_generate_key(struct qcom_ice *ice,
-> +			  u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-> +{
-> +	return qcom_scm_generate_ice_key(lt_key,
-> +					 QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_ice_generate_key);
-> +
-> +/**
-> + * qcom_ice_prepare_key() - Prepare a longterm wrapped key for inline encryption
-> + * @lt_key: longterm wrapped key that is generated or imported.
-> + * @lt_key_size: size of the longterm wrapped_key
-> + * @eph_key: wrapped key returned which has been wrapped with a per-boot ephemeral key,
-> + *           size of which is BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE in size.
-> + *
-> + * Make a scm call into trustzone to prepare a wrapped key for storage
-> + * encryption by rewrapping the longterm wrapped key with a per boot ephemeral
-> + * key using hwkm.
-> + *
-> + * Return: 0 on success; err on failure.
-avoid Return value documentation as it is not adding any specific 
-information.
-> + */
-> +int qcom_ice_prepare_key(struct qcom_ice *ice, const u8 *lt_key, size_t lt_key_size,
-> +			 u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-> +{
-> +	return qcom_scm_prepare_ice_key(lt_key, lt_key_size, eph_key,
-> +					QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_ice_prepare_key);
-> +
-> +/**
-> + * qcom_ice_import_key() - Import a raw key for inline encryption
-> + * @imp_key: raw key that has to be imported
-> + * @imp_key_size: size of the imported key
-> + * @lt_key: longterm wrapped key that is imported, which is
-> + *          BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE in size.
-> + *
-> + * Make a scm call into trustzone to import a raw key for storage encryption
-> + * and generate a longterm wrapped key using hwkm.
-> + *
-> + * Return: 0 on success; err on failure.
-> + */
-> +int qcom_ice_import_key(struct qcom_ice *ice, const u8 *imp_key, size_t imp_key_size,
-> +			u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-> +{
-> +	return qcom_scm_import_ice_key(imp_key, imp_key_size, lt_key,
-> +				       QCOM_ICE_HWKM_WRAPPED_KEY_SIZE(ice->hwkm_version));
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_ice_import_key);
-> +
->   static struct qcom_ice *qcom_ice_create(struct device *dev,
->   					void __iomem *base)
->   {
-> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
-> index dabe0d3a1fd0..dcf277d196ff 100644
-> --- a/include/soc/qcom/ice.h
-> +++ b/include/soc/qcom/ice.h
-> @@ -39,5 +39,13 @@ bool qcom_ice_hwkm_supported(struct qcom_ice *ice);
->   int qcom_ice_derive_sw_secret(struct qcom_ice *ice, const u8 wkey[],
->   			      unsigned int wkey_size,
->   			      u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE]);
-> +int qcom_ice_generate_key(struct qcom_ice *ice,
-> +			  u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
-> +int qcom_ice_prepare_key(struct qcom_ice *ice,
-> +			 const u8 *lt_key, size_t lt_key_size,
-> +			 u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
-> +int qcom_ice_import_key(struct qcom_ice *ice,
-> +			const u8 *imp_key, size_t imp_key_size,
-> +			u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
->   struct qcom_ice *of_qcom_ice_get(struct device *dev);
->   #endif /* __QCOM_ICE_H__ */
+>> +
+>> +				phys = <&usb_dp_qmpphy QMP_USB43DP_DP_PHY>;
+>> +				phy-names = "dp";
+>> +
+>> +				#sound-dai-cells = <0>;
+>> +
+>> +				status = "disabled";
+>> +
+>> +				ports {
+>> +					#address-cells = <1>;
+>> +					#size-cells = <0>;
+>> +
+>> +					port@0 {
+>> +						reg = <0>;
+>> +
+>> +						mdss_dp0_in: endpoint {
+>> +							remote-endpoint = <&dpu_intf0_out>;
+>> +						};
+>> +					};
+>> +
+>> +					port@1 {
+>> +						reg = <1>;
+>> +
+>> +						mdss_dp0_out: endpoint {
+>> +						};
+>> +					};
+>> +				};
+>> +
+>> +				dp_opp_table: opp-table {
+> 
+> Is there any reason why we keep sorting 'o' after 'p' in these nodes?
+
+No, seems it's a copy-paste issue, will fix
+
+Thanks,
+Neil
+
+> 
+> Regards,
+> Bjorn
+
 
