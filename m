@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-4045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8345D80ADC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 21:25:20 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4703580ADC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 21:25:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23DC0B20816
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 20:25:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0104D281194
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 20:25:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 038395732A;
-	Fri,  8 Dec 2023 20:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AA1450259;
+	Fri,  8 Dec 2023 20:25:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 649CBAC;
-	Fri,  8 Dec 2023 12:25:11 -0800 (PST)
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6d9e993d94dso681494a34.0;
-        Fri, 08 Dec 2023 12:25:11 -0800 (PST)
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1A3A10D;
+	Fri,  8 Dec 2023 12:25:42 -0800 (PST)
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3b844357f7cso1820024b6e.1;
+        Fri, 08 Dec 2023 12:25:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702067110; x=1702671910;
+        d=1e100.net; s=20230601; t=1702067142; x=1702671942;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lr7zkwOoLBfyCLCg94nAiJAmi03dFdCpOu33YZSALko=;
-        b=A0q0PIMIUaVbQ+k9R1FNkAa/zb+guzECDyWZJhopeVHz5ztsJyvZuUR2CbXAUBiWxM
-         AM3eq3kzDhbMRCeweQupP6RQybcVNbMhOCwtZpTiqgF3pkaRmpwspxRZwQ7e1FTnzUd5
-         Bm7lEUtpLxd3KpO6k/+uSjUZkKeqrgH8OpTLsnzssB8jMjSizZtAOhP14Ey0vD5PbqfY
-         vjPah+UMTN7tAixdYva2rMbAkuYhusL4JOqyrgjY5EE9fYsLUcyryHbz5/ixyBziZCvx
-         m2Ht6Qiok8QJe79KWbILgd3KoFP2UrENpuFFR5sEURQpBuc8ugY5r2fO0bqvuG1uFPl2
-         HBYw==
-X-Gm-Message-State: AOJu0YwFy+YOF8OJT9fZ95SoHjk7u3fcftD2/RFHQj/NoN11219B3Sl2
-	2V9W6UAOUYnVyhQolHR7QA==
-X-Google-Smtp-Source: AGHT+IH0RixrzN+ybNdY6v5BHDJrNsRlLfRmnS5EWbdDjN4Jy1s3zqAP9zg37VcDTJnKQ0TdII77Dg==
-X-Received: by 2002:a05:6870:c192:b0:1fb:75a:c414 with SMTP id h18-20020a056870c19200b001fb075ac414mr783695oad.61.1702067110619;
-        Fri, 08 Dec 2023 12:25:10 -0800 (PST)
+        bh=B0IasXQvJWdqGOSJT9mbD+TBCwZWsYzoBaQM5NAJ5Vk=;
+        b=maZEwoXKaplx4RioXH3M/bFF8vuBD1Hex4eonFmbDPKTatoxu4sErLv6TtUT8lvQts
+         8SvhIp81Mr6rAtOI9vNl3PPsPVQJV5LFPLwWP4nR4PBkM1ukbJKConA7Bjo1PK3fC1bf
+         oeFl4YMP7nefsoZGVMLf2wgIFcJnLM9CdFoJroXD3hqvwZ9n19mfz1wGJUwiUhcYQcUV
+         ukvwg0Na/695HBuOCUjnDXx2GWFgAIbpfFTwbFr2hJa1K8Y+zY5GyhcTetnefMXo5kS8
+         2D+wLMGDpWYeh8Ev0zo52RDKPs5XplbncpDb/G6ECrUmGK5NnmE5h6dE04UrDQ/E9PzG
+         jhPw==
+X-Gm-Message-State: AOJu0YxPIuUy4Jh+YHsZSuZgdNTMoh451q/IDfZIHLU76Jcb+NsItrW0
+	Y+jVIj5IRZhtWZfATHzbog==
+X-Google-Smtp-Source: AGHT+IFjHxqoIzR0RbuwiW28r+05JTaViqeBRKZvgBhK0CJ8WntAGX4XOSvgUidV37wumW/9bax6Bg==
+X-Received: by 2002:a05:6808:16a4:b0:3b8:b063:6bae with SMTP id bb36-20020a05680816a400b003b8b0636baemr651068oib.93.1702067142007;
+        Fri, 08 Dec 2023 12:25:42 -0800 (PST)
 Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id iv7-20020a056870b9c700b001fb3240116bsm571502oab.7.2023.12.08.12.25.09
+        by smtp.gmail.com with ESMTPSA id i26-20020a54409a000000b003b2e2d134a5sm467888oii.35.2023.12.08.12.25.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Dec 2023 12:25:10 -0800 (PST)
-Received: (nullmailer pid 2645496 invoked by uid 1000);
-	Fri, 08 Dec 2023 20:25:08 -0000
-Date: Fri, 8 Dec 2023 14:25:08 -0600
+        Fri, 08 Dec 2023 12:25:41 -0800 (PST)
+Received: (nullmailer pid 2646256 invoked by uid 1000);
+	Fri, 08 Dec 2023 20:25:40 -0000
+Date: Fri, 8 Dec 2023 14:25:40 -0600
 From: Rob Herring <robh@kernel.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: James Clark <james.clark@arm.com>, Rob Herring <robh+dt@kernel.org>, Mao Jinlong <quic_jinlmao@quicinc.com>, devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Hao Zhang <quic_hazha@quicinc.com>, Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Mike Leach <mike.leach@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Suzuki K Poulose <suzuki.poulose@arm.com>, Tao Zhang <quic_taozha@quicinc.com>, coresight@lists.linaro.org
-Subject: Re: [PATCH 2/3] dt-bindings: arm: qcom,coresight-tpda: drop
- redundant type from ports
-Message-ID: <170206710810.2645438.5895151737393865069.robh@kernel.org>
+Cc: Tao Zhang <quic_taozha@quicinc.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, devicetree@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>, linux-kernel@vger.kernel.org, Hao Zhang <quic_hazha@quicinc.com>, Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>, linux-arm-kernel@lists.infradead.org, James Clark <james.clark@arm.com>, linux-arm-msm@vger.kernel.org, Mike Leach <mike.leach@linaro.org>, Conor Dooley <conor+dt@kernel.org>, coresight@lists.linaro.org, Mao Jinlong <quic_jinlmao@quicinc.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH 3/3] dt-bindings: arm: qcom,coresight-tpda: fix
+ indentation in the example
+Message-ID: <170206713968.2646196.10411372196062019776.robh@kernel.org>
 References: <20231206115332.22712-1-krzysztof.kozlowski@linaro.org>
- <20231206115332.22712-2-krzysztof.kozlowski@linaro.org>
+ <20231206115332.22712-3-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,17 +58,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231206115332.22712-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231206115332.22712-3-krzysztof.kozlowski@linaro.org>
 
 
-On Wed, 06 Dec 2023 12:53:31 +0100, Krzysztof Kozlowski wrote:
-> "in-ports" and "out-ports" are defined by graph schema, so defining its
-> type is redundant.
+On Wed, 06 Dec 2023 12:53:32 +0100, Krzysztof Kozlowski wrote:
+> Fix triple-space indentation to double-space in the example DTS.
 > 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  Documentation/devicetree/bindings/arm/qcom,coresight-tpda.yaml | 2 --
->  1 file changed, 2 deletions(-)
+>  .../bindings/arm/qcom,coresight-tpda.yaml     | 32 +++++++++----------
+>  1 file changed, 15 insertions(+), 17 deletions(-)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
