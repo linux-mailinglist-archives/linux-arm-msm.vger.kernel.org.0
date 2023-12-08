@@ -1,86 +1,321 @@
-Return-Path: <linux-arm-msm+bounces-4068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC65480B001
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 23:58:19 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BC8F80B065
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 00:09:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78A80281B28
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 22:58:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 75AD9B20AE5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 23:09:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A1CF41840;
-	Fri,  8 Dec 2023 22:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28D0559160;
+	Fri,  8 Dec 2023 23:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DxJak9az"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RGQOq4w0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 267CA10D0;
-	Fri,  8 Dec 2023 14:58:14 -0800 (PST)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-db7d198e791so2592122276.3;
-        Fri, 08 Dec 2023 14:58:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702076293; x=1702681093; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8vkZJWyCONDAHz0FaVDvZB6zmKrAESqJ9IE9pDa4fis=;
-        b=DxJak9az09YX+RrcjR0SqywDrRGIkChSW8jPuyhrRazmcBYGGCltlV0X6aH+Ka0DN2
-         6bUJMiNHGGhvS6Kua+aZWm6nzQg6r8djsSQCxlRex5Jm8RomRKPe/RdHDe0hx6aQVs+C
-         ZwzUQjrNE3VCerZ+FGKRYEUWetzywvSMuTNsnU06Eqw6IqXctGKZRv1lxeGPVFc8/S0k
-         4VoFiHdLfx/gqBHqCUDMJZlsZHjW0NirsuZ2/xrMn2E5hO1mEosfN/tDP1Hw/VWUMRHR
-         yDzIMxEtK7ITJ9OapZmb+8lBQmW0KkFkUptVgUv5sVbqz1ZtDeXjUgI/Z2helHxfcoBs
-         wp0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702076293; x=1702681093;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8vkZJWyCONDAHz0FaVDvZB6zmKrAESqJ9IE9pDa4fis=;
-        b=QenGuk6ugn+Pm9hew0BT6PDbvMGSqO80bikl8qcjWSQbIcmcxuznZwYR9IwJCJI8cF
-         /cYQskHKYxcIfJL+BhfEw9i82U3QNhRqUUB9KS57AoFrC76GnNyI1lTA6/RPtAJ6YjFQ
-         l8QdzJqCeSOouOkPse3SE8xnOBTzmebLa65CCHm0T5JuhgYjYMxKeDIu1mMR2v70LOd8
-         YOOTYSvPkoYxKtbKA8K92+OmmZ9wYxOxCaxqCYmkt5gt7Cuz8FbQYmT0oZihVKzT/z8y
-         xqW4TFsGrRzpxS8XKaeCf2BQ0BoRqzLiXG7dzC4tHdawhbZDp/xWa0b/1jiZwXRDjFiB
-         7bUw==
-X-Gm-Message-State: AOJu0YzWG2JwlsuwzZs+Cus5gE83GEaZdwSl65pU85BcHXe2ApQr7FDi
-	XFiytpM8yEJ2Flm0HUF10rkGf373BESp7jW8Ao0=
-X-Google-Smtp-Source: AGHT+IHRjn7Lp5sdB7NwuF75Sg/gHbOAxY9dG8W4KlGbjzvaQdcV0/6nyKSUuPNwpydoRSS5n2lAP/D1SdV+eaxYSZI=
-X-Received: by 2002:a25:6b4c:0:b0:db4:72de:ba0a with SMTP id
- o12-20020a256b4c000000b00db472deba0amr615111ybm.36.1702076293359; Fri, 08 Dec
- 2023 14:58:13 -0800 (PST)
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05BF590;
+	Fri,  8 Dec 2023 15:09:44 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B8MHQrc026832;
+	Fri, 8 Dec 2023 23:09:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=tQ6grR4LJdqpwYa3CRtd1/jjh2P7zwynOMleaQIDQh8=;
+ b=RGQOq4w0mqobbvlFfrHSYweW/KymVO3Li2xkVks2Ap8ISiiF9jcB5XAmYTJH+YWnUb+M
+ VItQr8POsCSZ01OxR77hrehWT0MNyawjb5EepOjL5YO6bBveuvI7asx7/uN/gAoC62gy
+ 43lIWY5vTNtPRo7UZs7Xu2nEm0zqSmPcjmwC4eMPPsKG4Tkqzjk9ilVDqL75/n0ozTz0
+ tFkV6Y8JltV/XkKOCS0gERPQseP62Tq6uqC81skYpG6T0F+1Sn/C9hTtFy2ITrcS8fnU
+ 8vkON6aDGjwJ2yKOHZpNd8Okb2qhCIrY4NAdneXJnq2uAn7vWSzC9iJU/2+Y9cp0ym7T 8g== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uuyxb1nqv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 08 Dec 2023 23:09:36 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B8N9Zvb028854
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 8 Dec 2023 23:09:35 GMT
+Received: from [10.110.30.94] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Dec
+ 2023 15:09:33 -0800
+Message-ID: <1ab1862b-f486-00ee-91b4-ae20ff9e4321@quicinc.com>
+Date: Fri, 8 Dec 2023 15:09:31 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231208-clang-format-mt-for-each-v1-1-b4b73186b886@quicinc.com>
-In-Reply-To: <20231208-clang-format-mt-for-each-v1-1-b4b73186b886@quicinc.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Fri, 8 Dec 2023 23:58:02 +0100
-Message-ID: <CANiq72n_9woLVKCTnhXAQcUkpS59O2QW_HzTLmpHXnkoGPiCQQ@mail.gmail.com>
-Subject: Re: [PATCH] clang-format: Add maple tree's for_each macros
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 15/16] drm/msm/dpu: introduce separate wb2_format
+ arrays for rgb and yuv
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Sean
+ Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <quic_jesszhan@quicinc.com>, <quic_parellan@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20231208050641.32582-1-quic_abhinavk@quicinc.com>
+ <20231208050641.32582-16-quic_abhinavk@quicinc.com>
+ <CAA8EJpqfCfETawp1up76S6gryO+Q4KxPB3ThwZCe7DCkp=GkBQ@mail.gmail.com>
+ <8eea4a8e-0c70-3768-79f0-1a2bfe083ed7@quicinc.com>
+ <CAA8EJpoLzgwEYRcSKZUY1W9KUE9s3WR_bzpA3hmf5X9JGDGutA@mail.gmail.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpoLzgwEYRcSKZUY1W9KUE9s3WR_bzpA3hmf5X9JGDGutA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dIwmZZZBLyp8LljmQfK7fpc6qbz1m5Ye
+X-Proofpoint-GUID: dIwmZZZBLyp8LljmQfK7fpc6qbz1m5Ye
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-08_14,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 impostorscore=0 spamscore=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 clxscore=1015 adultscore=0 mlxscore=0
+ phishscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2311290000 definitions=main-2312080193
 
-On Fri, Dec 8, 2023 at 11:08=E2=80=AFPM Elliot Berman <quic_eberman@quicinc=
-.com> wrote:
->
-> Add maple tree's for_each macros so clang-format operates correctly on
-> {mt,mas}_for_each.
 
-Thanks, applied (moved `mt_for_each` to the right spot).
 
-I have also applied a full update of the list on top, since it has
-been a while since we have done so.
+On 12/8/2023 12:45 PM, Dmitry Baryshkov wrote:
+> On Fri, 8 Dec 2023 at 19:53, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>> On 12/8/2023 3:44 AM, Dmitry Baryshkov wrote:
+>>> On Fri, 8 Dec 2023 at 07:07, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>>>
+>>>> Lets rename the existing wb2_formats array wb2_formats_rgb to indicate
+>>>> that it has only RGB formats and can be used on any chipset having a WB
+>>>> block.
+>>>>
+>>>> Introduce a new wb2_formats_rgb_yuv array to the catalog to
+>>>> indicate support for YUV formats to writeback in addition to RGB.
+>>>>
+>>>> Chipsets which have support for CDM block will use the newly added
+>>>> wb2_formats_rgb_yuv array.
+>>>
+>>> This means that the catalog can go out of sync, if one adds a CDM
+>>> block but doesn't update wb_formats and vice versa.
+>>> Can we deduce the format list from the WB code? Is the format list
+>>> really static or does it change between platforms (please keep msm8996
+>>> / msm8998 in mind).
+>>>
+>>
+>> Yes this is a valid concern. catalog could potentially go out of sync.
+>>
+>> I checked a few chipsets now and the WB formats didnt change among them.
+>>
+>> I do need to check more chipsets but downstream does not maintain this
+>> in devicetree which means we can just move these arrays to WB code
+>> instead of maintaining them in the catalog.
+> 
+> I think we should be comparing to some of the oldest generations, like
+> msm8998/sdm660 or ideally even msm8996/37/17/53.
+> 
 
-Cheers,
-Miguel
+I compared msm8998 just now and it does have different wb2 formats 
+supported as compared to sc7280/sm8250.
+
+So unfortunately, this will have to remain in catalog for now.
+
+>> We will still need to maintain two arrays. One to be used if CDM block
+>> has been added and the other if not.
+> 
+> Yes.
+> 
+
+>> I must confess one point though. I have not seen any chipset yet where
+>> WB block is present but CDM block is not.
+> 
+> I think this was the case for some of mdp5 1.x chips, but according to
+> my data this is correct for all the platforms that we want to support.
+> 
+>> So at this point, the only purpose of the two arrays will be till the
+>> point where CDM blk has been added to all the required chipsets in the
+>> catalog. Then we can drop the RGB only array and maintain the one which
+>> has all formats.
+>>
+
+I think if we have to generalize this, some more study is needed of how 
+to maintain this in the catalog without missing out on some more 
+formats. But for now, what do you think of below approach:
+
+1) We have these two arrays as I have added these only for sc7280/sm8250 
+and have confirmed that the formats listed there are accurate. At the 
+very least, they do not expose more formats than what is supported. So 
+even if someone adds CDM for other chipsets, they can re-use 
+wb2_formats_rgb_and_yuv. It will certainly work just that its not the 
+full list of supported formats.
+
+2) Even if we do add CDM to other chipsets, what I can confirm is this 
+will not break them as the list of formats we have right now are only 
+lesser than the full list and not more.
+
+3) In the follow up RFT which we discussed in the cover letter, let me 
+try to re-factor wb2_formats based on the list of chipsets that are 
+present in catalog including the older ones you have listed.
+
+The issue is wb2_formats (so writeback) and not CDM itself as these are 
+supported WB formats. So I think we need to re-work this a bit.
+
+>>>>
+>>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>>> ---
+>>>>    .../msm/disp/dpu1/catalog/dpu_10_0_sm8650.h   |  4 +-
+>>>>    .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  4 +-
+>>>>    .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  4 +-
+>>>>    .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  4 +-
+>>>>    .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  4 +-
+>>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 37 ++++++++++++++++++-
+>>>>    6 files changed, 46 insertions(+), 11 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
+>>>> index 04d2a73dd942..eb5dfff2ec4f 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h
+>>>> @@ -341,8 +341,8 @@ static const struct dpu_wb_cfg sm8650_wb[] = {
+>>>>                   .name = "wb_2", .id = WB_2,
+>>>>                   .base = 0x65000, .len = 0x2c8,
+>>>>                   .features = WB_SM8250_MASK,
+>>>> -               .format_list = wb2_formats,
+>>>> -               .num_formats = ARRAY_SIZE(wb2_formats),
+>>>> +               .format_list = wb2_formats_rgb,
+>>>> +               .num_formats = ARRAY_SIZE(wb2_formats_rgb),
+>>>>                   .xin_id = 6,
+>>>>                   .vbif_idx = VBIF_RT,
+>>>>                   .maxlinewidth = 4096,
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+>>>> index 58b0f50518c8..a57d50b1f028 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+>>>> @@ -336,8 +336,8 @@ static const struct dpu_wb_cfg sm8250_wb[] = {
+>>>>                   .name = "wb_2", .id = WB_2,
+>>>>                   .base = 0x65000, .len = 0x2c8,
+>>>>                   .features = WB_SM8250_MASK,
+>>>> -               .format_list = wb2_formats,
+>>>> -               .num_formats = ARRAY_SIZE(wb2_formats),
+>>>> +               .format_list = wb2_formats_rgb_yuv,
+>>>> +               .num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
+>>>>                   .clk_ctrl = DPU_CLK_CTRL_WB2,
+>>>>                   .xin_id = 6,
+>>>>                   .vbif_idx = VBIF_RT,
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+>>>> index bcfedfc8251a..7382ebb6e5b2 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+>>>> @@ -157,8 +157,8 @@ static const struct dpu_wb_cfg sc7180_wb[] = {
+>>>>                   .name = "wb_2", .id = WB_2,
+>>>>                   .base = 0x65000, .len = 0x2c8,
+>>>>                   .features = WB_SM8250_MASK,
+>>>> -               .format_list = wb2_formats,
+>>>> -               .num_formats = ARRAY_SIZE(wb2_formats),
+>>>> +               .format_list = wb2_formats_rgb,
+>>>> +               .num_formats = ARRAY_SIZE(wb2_formats_rgb),
+>>>>                   .clk_ctrl = DPU_CLK_CTRL_WB2,
+>>>>                   .xin_id = 6,
+>>>>                   .vbif_idx = VBIF_RT,
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>>> index 19c2b7454796..2f153e0b5c6a 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+>>>> @@ -169,8 +169,8 @@ static const struct dpu_wb_cfg sc7280_wb[] = {
+>>>>                   .name = "wb_2", .id = WB_2,
+>>>>                   .base = 0x65000, .len = 0x2c8,
+>>>>                   .features = WB_SM8250_MASK,
+>>>> -               .format_list = wb2_formats,
+>>>> -               .num_formats = ARRAY_SIZE(wb2_formats),
+>>>> +               .format_list = wb2_formats_rgb_yuv,
+>>>> +               .num_formats = ARRAY_SIZE(wb2_formats_rgb_yuv),
+>>>>                   .clk_ctrl = DPU_CLK_CTRL_WB2,
+>>>>                   .xin_id = 6,
+>>>>                   .vbif_idx = VBIF_RT,
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>>> index bf56265967c0..ad48defa154f 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+>>>> @@ -315,8 +315,8 @@ static const struct dpu_wb_cfg sm8550_wb[] = {
+>>>>                   .name = "wb_2", .id = WB_2,
+>>>>                   .base = 0x65000, .len = 0x2c8,
+>>>>                   .features = WB_SM8250_MASK,
+>>>> -               .format_list = wb2_formats,
+>>>> -               .num_formats = ARRAY_SIZE(wb2_formats),
+>>>> +               .format_list = wb2_formats_rgb,
+>>>> +               .num_formats = ARRAY_SIZE(wb2_formats_rgb),
+>>>>                   .xin_id = 6,
+>>>>                   .vbif_idx = VBIF_RT,
+>>>>                   .maxlinewidth = 4096,
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>> index 1be3156cde05..c52cac7a2288 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>>> @@ -202,7 +202,7 @@ static const u32 rotation_v2_formats[] = {
+>>>>           /* TODO add formats after validation */
+>>>>    };
+>>>>
+>>>> -static const uint32_t wb2_formats[] = {
+>>>> +static const uint32_t wb2_formats_rgb[] = {
+>>>>           DRM_FORMAT_RGB565,
+>>>>           DRM_FORMAT_BGR565,
+>>>>           DRM_FORMAT_RGB888,
+>>>> @@ -236,6 +236,41 @@ static const uint32_t wb2_formats[] = {
+>>>>           DRM_FORMAT_XBGR4444,
+>>>>    };
+>>>>
+>>>> +static const uint32_t wb2_formats_rgb_yuv[] = {
+>>>> +       DRM_FORMAT_RGB565,
+>>>> +       DRM_FORMAT_BGR565,
+>>>> +       DRM_FORMAT_RGB888,
+>>>> +       DRM_FORMAT_ARGB8888,
+>>>> +       DRM_FORMAT_RGBA8888,
+>>>> +       DRM_FORMAT_ABGR8888,
+>>>> +       DRM_FORMAT_XRGB8888,
+>>>> +       DRM_FORMAT_RGBX8888,
+>>>> +       DRM_FORMAT_XBGR8888,
+>>>> +       DRM_FORMAT_ARGB1555,
+>>>> +       DRM_FORMAT_RGBA5551,
+>>>> +       DRM_FORMAT_XRGB1555,
+>>>> +       DRM_FORMAT_RGBX5551,
+>>>> +       DRM_FORMAT_ARGB4444,
+>>>> +       DRM_FORMAT_RGBA4444,
+>>>> +       DRM_FORMAT_RGBX4444,
+>>>> +       DRM_FORMAT_XRGB4444,
+>>>> +       DRM_FORMAT_BGR565,
+>>>> +       DRM_FORMAT_BGR888,
+>>>> +       DRM_FORMAT_ABGR8888,
+>>>> +       DRM_FORMAT_BGRA8888,
+>>>> +       DRM_FORMAT_BGRX8888,
+>>>> +       DRM_FORMAT_XBGR8888,
+>>>> +       DRM_FORMAT_ABGR1555,
+>>>> +       DRM_FORMAT_BGRA5551,
+>>>> +       DRM_FORMAT_XBGR1555,
+>>>> +       DRM_FORMAT_BGRX5551,
+>>>> +       DRM_FORMAT_ABGR4444,
+>>>> +       DRM_FORMAT_BGRA4444,
+>>>> +       DRM_FORMAT_BGRX4444,
+>>>> +       DRM_FORMAT_XBGR4444,
+>>>> +       DRM_FORMAT_NV12,
+>>>> +};
+>>>> +
+>>>>    /*************************************************************
+>>>>     * SSPP sub blocks config
+>>>>     *************************************************************/
+>>>> --
+>>>> 2.40.1
+>>>>
+>>>
+>>>
+> 
+> 
+> 
 
