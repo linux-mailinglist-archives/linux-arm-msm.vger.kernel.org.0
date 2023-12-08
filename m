@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-3908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9D8D809FFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:52:48 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B666680A088
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:22:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84917281C54
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:52:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6AB55281889
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:22:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3651812B94;
-	Fri,  8 Dec 2023 09:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F09D14F68;
+	Fri,  8 Dec 2023 10:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b0EUNmU9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SV+miMDs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 267401723
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 01:52:40 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-40c09dfd82aso25497175e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 01:52:40 -0800 (PST)
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB327170F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 02:22:12 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-a1f0616a15bso179835566b.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 02:22:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702029158; x=1702633958; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc:references
+        d=linaro.org; s=google; t=1702030931; x=1702635731; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cy1ynQiCsa9hXIviflMSaOGY1IRNHwAjxco9Nm8WCoc=;
-        b=b0EUNmU9lKV2g70chFITM/go+hRjoE/TKV1im/LqTSw0mWn1sjfeQcusl18InBtmO2
-         tXWyohBBpfoWjigqVygvFSHN7eR2ED8mJEnUIlypy31aWb1LVOr0EoFeYIZ+XS+7yQs1
-         pu+ki5zOsp/Qt798JVHpIv15ZJ6eoP5ymF6Yu/v6J/XXvTtVv9YS80b15JqPN7W4w1pa
-         HF4ZXpHGOzhAg29okfDISOrRa6IyWONybxN77VPv8MIIMHeDhAoXGCkkFpKoO/o66jec
-         neQJ0lRKKO3qk4oUnGfQi1StjheIcKAHdxWrj5LL+XAAsjDrFCNCFaXF7T0W/x2/bKdj
-         ur4g==
+        bh=+yvrt7W/d1SiBz3UL7ujd7zn3tqLECPBrn8dAOWmH0c=;
+        b=SV+miMDsNkI8s3I/bBcPM1qNCUamfAFOX6ea2NsX/IK+OFyO5jOftGGMkMuXlZYX7f
+         eQkvKW+CfPPdaFceAs8V6mVvujuOFXKdi3lJKrbYxjmIKFXAekRiQKD/az+V6QxxJjrW
+         3Hb6nfy2weZZvr1PXvs13yaWTAP2CDeGnxeEiqgWbbxCPDntMPF+AXXw1hR9mg5HyqSC
+         H8jl3VP7ljQLM4oHpIJE8gsPZGWyTnlWhxPYiJZOUNi5WSiMgOBlcDrQztbHT+FqRM8q
+         5IYjipyc0IRIYNZI3T4zT0nYs1YGNYjiXFiHehgcxvMhssFY0qVYpOEXPWt93VEogOz5
+         qjig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702029158; x=1702633958;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:cc:references
+        d=1e100.net; s=20230601; t=1702030931; x=1702635731;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cy1ynQiCsa9hXIviflMSaOGY1IRNHwAjxco9Nm8WCoc=;
-        b=X4YSrI4xEltIu7oM60xrVCCFZz/88vA/FMZ88tJW7Q4gzixzUX3oTV23PLDfXRKC6d
-         V4cCRkCZB4KWvCsmr3kITGLsLJ68oNCZzJbxXZPv810WZjFi+QnMSQgcIstNPV7vpRor
-         9Uyij2ouIpikFeYpfgoulR58gqhnVU7WRSpzz7Fqyn8qnZoOXgw+suiXfW3afoc41VxM
-         uT3e2DDbr5VnclTYnZJ4pWNaV+EAYymhBxtV33nx2Ub+gAy/64iX7c16IbTARyIb3Rk6
-         nVDpAfBxp7mgC0bliGAU/1TOBLJZXkg2JIeQ8u3tsarZS7S3Six+RXp13YRGKeLIk4JQ
-         mCPg==
-X-Gm-Message-State: AOJu0YyqszVqp2P3+UIy09Vi6ASWWdQYOxYWMSFFHjlhqIArP+dadE62
-	6a8sClzaLxgBQkyR8DH/8BX3upT5h7yXmqTHPw4=
-X-Google-Smtp-Source: AGHT+IHzyW0VgJFg7ZlEDwoOEEIOPZn3Dwo7sXSmZodnTAIi1ME/YFztbQv2ctdswME0tuv9X5yYYA==
-X-Received: by 2002:a7b:c84e:0:b0:40b:5e1d:83a9 with SMTP id c14-20020a7bc84e000000b0040b5e1d83a9mr2452899wml.61.1702029158404;
-        Fri, 08 Dec 2023 01:52:38 -0800 (PST)
+        bh=+yvrt7W/d1SiBz3UL7ujd7zn3tqLECPBrn8dAOWmH0c=;
+        b=NSH2e5E6W1k0uDk/hVJjY43e+9XgkXABYux5dN79/oKWTaYpmAPUiqAW8LZyyVSdp4
+         6fFMtZT48tcS0NIowliL3oTsCMOT250wy7YG9v5PTTB7Y09M/pIXzUVssKQU9Aa9XVgr
+         Qkdinnh6jRexYXan6y3yOTTB+hCglg779sZfc06HzKwGaOI5R9nqtBLGQrr5Jvg0/dbT
+         L+m1xjY5nN78YYmlEwQRMuhw2q974UuCMnth0qKhnH5YdiXeuxt0AuIywAZiTXOl542b
+         u3yIqU6z6fNi0N1B1I0sJtiawPs51iFM7J/xsCLRr+bSnl3BM1yhNtspfyGIfifejgpj
+         7nmA==
+X-Gm-Message-State: AOJu0YzC6XEGqasdoqQ/9R9T+Iztpoaqn7BkhyjCw8WuE+AstkUoYGHH
+	bwX5qhvwj8u6Z1j+l93w+pzqxw==
+X-Google-Smtp-Source: AGHT+IEA1UEbJmtE49E+bfcwyM4iml2h+H/RfFF9l3cjsk+5c63pPIw6Mos/DvWFPLoJLcEglo3gpw==
+X-Received: by 2002:a17:906:103:b0:a1c:85bc:e9ca with SMTP id 3-20020a170906010300b00a1c85bce9camr2902465eje.13.1702030931279;
+        Fri, 08 Dec 2023 02:22:11 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id j13-20020a05600c190d00b0040b478da760sm2277323wmq.48.2023.12.08.01.52.36
+        by smtp.gmail.com with ESMTPSA id tm6-20020a170907c38600b00a1db955c809sm820179ejc.73.2023.12.08.02.22.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Dec 2023 01:52:37 -0800 (PST)
-Message-ID: <9f611e20-9530-42de-b794-b6210f465bf1@linaro.org>
-Date: Fri, 8 Dec 2023 10:52:36 +0100
+        Fri, 08 Dec 2023 02:22:10 -0800 (PST)
+Message-ID: <76db86d3-5e43-4d76-82fd-89c629f9d35c@linaro.org>
+Date: Fri, 8 Dec 2023 11:22:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,16 +62,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/3] mailbox/arm64: qcom: rework compatibles for
- fallback (continued)
+Subject: Re: [RESEND PATCH v2 1/3] dt-bindings: net: bluetooth: qualcomm: fix
+ a typo
 Content-Language: en-US
-To: Jassi Brar <jassisinghbrar@gmail.com>
-References: <20231111204916.35835-1-krzysztof.kozlowski@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann
+ <marcel@holtmann.org>, Johan Hedberg <johan.hedberg@gmail.com>,
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+ Conor Dooley <conor+dt@kernel.org>,
+ Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+ Rocky Liao <quic_rjliao@quicinc.com>, Alex Elder <elder@linaro.org>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20231208090936.27769-1-brgl@bgdev.pl>
+ <20231208090936.27769-2-brgl@bgdev.pl>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -117,23 +127,19 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231111204916.35835-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20231208090936.27769-2-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/11/2023 21:49, Krzysztof Kozlowski wrote:
-> Hi,
+On 08/12/2023 10:09, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Changes since v4
-> ================
-> v3: https://lore.kernel.org/linux-devicetree/20230322174148.810938-1-krzysztof.kozlowski@linaro.org/
-> v4: https://lore.kernel.org/linux-devicetree/20230327140752.163009-1-krzysztof.kozlowski@linaro.org/
+> Spell supply correctly.
 > 
-> Important: v3 and v4 are quite different.
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
 
-Jassi,
-
-Any comments from your side? Can you pick this patchset?
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
