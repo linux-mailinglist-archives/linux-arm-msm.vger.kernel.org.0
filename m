@@ -1,141 +1,187 @@
-Return-Path: <linux-arm-msm+bounces-3911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46D4080A0DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:29:13 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B67480A101
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:32:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 785AF1C208EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:29:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6B088B20AC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 10:32:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF7D818E13;
-	Fri,  8 Dec 2023 10:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADCCA18E2D;
+	Fri,  8 Dec 2023 10:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RQRHtWg/"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="RajIO39J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C70252701
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 02:28:42 -0800 (PST)
-Received: by mail-pg1-x535.google.com with SMTP id 41be03b00d2f7-5bdbe2de25fso1567567a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 02:28:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702031322; x=1702636122; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SUV+KrS/M1PX7b2cWkbcJDPyrMmWw0crWFGMGpiuR+Q=;
-        b=RQRHtWg/2ACiwRcoKfXTM57yi+/U22p2yk8gM3UGCdkD2xLP7dMfax23W4FJKCwtnR
-         z8BNgRo9O8a+hEV6eKzw6geclLDgyNy9TVDk+K9b6KcXaAzQl2pVl/cO/CV3Ep6ubdYZ
-         SNZmPfOOm7REoVGiNmeNPXGTJ1db1r599Z9zZBREhi3W1MSEkZ1mVoDPjSQ391QdSRWW
-         6Vq9Mgit7INzHOtLRhAYkK+E6Geml8ZLwDtoaixWc9MYFNadivhyTw3wn6UlOQG+CHL9
-         P9+0DfuBFr07y633OJ5rwIB1jD8qVNTm9x0PPJ3WvCew+3SXwI+zjZPK8x9dZwsUoQ5p
-         KYdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702031322; x=1702636122;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SUV+KrS/M1PX7b2cWkbcJDPyrMmWw0crWFGMGpiuR+Q=;
-        b=Q54r2IoHcBK4VlhjyOGxXp1FDXp/oL47Av1IBKxmgrEuTHRNw1ABNRXSqaIJDMYWb/
-         5uurwPDUbbxFdseKHXgYuoJOD9tZPlcmmjjJEqdnsUjJctlcKXcuZl02hUoXv/54xE0j
-         e3f4HZAMzMjM6SeH4/BFz/gKZLvVnBRtGzwHp1m7WY6QT7LFR+uC3+2ubbY9Pe6ZTEx1
-         RqbSNMw5cq6UVohwFc8EJ8HZ91Rg0Y0xCnflEm1yzDlA6j7nHqdlDkHcE7/ATV/CVdIG
-         xjVHtMynAHm7t1R3pjT/UsHowPfHh29K+HiCU3amGiGow/35XYSPfmQhmJ3vC6ZTfEao
-         82mQ==
-X-Gm-Message-State: AOJu0YwnjYoXBVESAtfi4Q6ENvoRKZ+WU76DpTHa50ZCobBX/nevIQp4
-	d9Dru+tMpxB+h4dvXpcStoMB
-X-Google-Smtp-Source: AGHT+IF2FRydo8njGp04OKtgX72qcMhY6Q36zNhjSrP9AlmGihq0Ok6RbEQ7vZs61mh+BlsQIlwCcg==
-X-Received: by 2002:a05:6a20:9410:b0:18b:c96b:a433 with SMTP id hl16-20020a056a20941000b0018bc96ba433mr3565998pzb.56.1702031321911;
-        Fri, 08 Dec 2023 02:28:41 -0800 (PST)
-Received: from thinkpad ([117.216.123.142])
-        by smtp.gmail.com with ESMTPSA id p25-20020aa78619000000b006ce71af841bsm1241285pfn.4.2023.12.08.02.28.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Dec 2023 02:28:41 -0800 (PST)
-Date: Fri, 8 Dec 2023 15:58:32 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: martin.petersen@oracle.com, jejb@linux.ibm.com, andersson@kernel.org,
-	konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org,
-	linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_cang@quicinc.com, ahalaney@redhat.com
-Subject: Re: [PATCH v2 05/17] scsi: ufs: qcom: Remove the warning message
- when core_reset is not available
-Message-ID: <20231208102832.GA3008@thinkpad>
-References: <20231208065902.11006-1-manivannan.sadhasivam@linaro.org>
- <20231208065902.11006-6-manivannan.sadhasivam@linaro.org>
- <7472fe73-e7a0-5c8c-6e85-655db028a5c3@quicinc.com>
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DE331BD8;
+	Fri,  8 Dec 2023 02:31:32 -0800 (PST)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id 68CCB40553;
+	Fri,  8 Dec 2023 15:31:28 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1702031488; bh=4y6IzqXuYCaOZRj832BYim9z7oqNFMfqjRtC49eFuJM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=RajIO39JCopnXz/UHAH8GGunqq6K8NXh+7Gh0Dt2D6EgmpAC+4kKE5u/kc+Y9iixy
+	 3T5ijAlEqz4za3cgDx7IBwfTV5qtghTKX4ohClLUiDAb1v7P+yXl5B7Q7p626uIS5x
+	 dyqDln9a+E4mUV/2S3ydRIS9OvlPoqbd1kRnGhyT0BO0XFhytw48ew8PqkMA4I1rqY
+	 uekI9IP8XCIvPcQE/Eb8ve0s0NvR8o37C0Ne9Gp/QyecP/QFiXC6ZBtTDuq4+idi1k
+	 AHqTv+rh4NLCJVZ3GV74fac680lt9V3tSWBVACxKWf/RFNU4rHbYeye+O1e1v+c7YF
+	 nUjuTgBa2Zo9Q==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Date: Fri, 08 Dec 2023 15:31:27 +0500
+From: Nikita Travkin <nikita@trvn.ru>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/3] power: supply: Add Acer Aspire 1 embedded controller
+ driver
+In-Reply-To: <71459bab-05b9-41f6-bb32-2b744736487d@linaro.org>
+References: <20231207-aspire1-ec-v1-0-ba9e1c227007@trvn.ru>
+ <20231207-aspire1-ec-v1-2-ba9e1c227007@trvn.ru>
+ <71459bab-05b9-41f6-bb32-2b744736487d@linaro.org>
+Message-ID: <8fe5cb8cecf92d98f2768b811deb3ea0@trvn.ru>
+X-Sender: nikita@trvn.ru
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7472fe73-e7a0-5c8c-6e85-655db028a5c3@quicinc.com>
 
-On Fri, Dec 08, 2023 at 02:55:21PM +0530, Nitin Rawat wrote:
+Konrad Dybcio писал(а) 08.12.2023 00:24:
+> On 12/7/23 12:20, Nikita Travkin wrote:
+>> Acer Aspire 1 is a Snapdragon 7c based laptop. It uses an embedded
+>> controller to control the charging and battery management, as well as to
+>> perform a set of misc functions.
+>>
+>> Unfortunately, while all this functionality is implemented in ACPI, it's
+>> currently not possible to use ACPI to boot Linux on such Qualcomm
+>> devices. To allow Linux to still support the features provided by EC,
+>> this driver reimplments the relevant ACPI parts. This allows us to boot
+>> the laptop with Device Tree and retain all the features.
+>>
+>> Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+>> ---
+> [...]
 > 
+>> +	case POWER_SUPPLY_PROP_CAPACITY:
+>> +		val->intval = le16_to_cpu(ddat.capacity_now) * 100
+>> +			      / le16_to_cpu(sdat.capacity_full);
+> It may be just my OCD and im not the maintainer here, but I'd do
+> /= here
+
+Hm you're right, this did look a bit ugly to me when I split the line
+(it was 101/100), Will probably use /= to make it nicer in v2.
+
 > 
-> On 12/8/2023 12:28 PM, Manivannan Sadhasivam wrote:
-> > core_reset is optional, so there is no need to warn the user if it is not
-> > available.
-> > 
-> > Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > ---
-> >   drivers/ufs/host/ufs-qcom.c | 4 +---
-> >   1 file changed, 1 insertion(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> > index dc93b1c5ca74..d474de0739e4 100644
-> > --- a/drivers/ufs/host/ufs-qcom.c
-> > +++ b/drivers/ufs/host/ufs-qcom.c
-> > @@ -296,10 +296,8 @@ static int ufs_qcom_host_reset(struct ufs_hba *hba)
-> >   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> >   	bool reenable_intr;
-> > -	if (!host->core_reset) {
-> > -		dev_warn(hba->dev, "%s: reset control not set\n", __func__);
-> > +	if (!host->core_reset)
-> >   		return 0;
-> > -	}
-> >   	reenable_intr = hba->is_irq_enabled;
-> >   	disable_irq(hba->irq);
+> [...]
 > 
-> 
-> Hi Mani,
-> 
-> I think core reset is not frequent. It happen during only probe ,error
-> handler.
-> 
-> core reset is needed in kernel to cleanup UFS phy and controller
-> configuration before UFS HLOS operation starts as per HPG.
+>> +	case POWER_SUPPLY_PROP_MODEL_NAME:
+>> +		if (sdat.model_id - 1 < ARRAY_SIZE(aspire_ec_psy_battery_model))
+>> +			val->strval = aspire_ec_psy_battery_model[sdat.model_id - 1];
+>> +		else
+>> +			val->strval = "Unknown";
+> Would it make sense to print the model_id that's absent from the LUT
+> here and similarly below?
 > 
 
-This sounds like core reset is not an optional property but a required one. I
-just checked the upstream DT files for all SoCs, and looks like pretty much all
-of them support core reset.
+The original ACPI code returns "Unknown" like this when the value
+is not in the table. I suppose I could warn here but not sure how
+useful it would be... And since this is a rather "hot" path, would
+need to warn only once, so extra complexity for a very unlikely
+situation IMO.
 
-Only MSM8996 doesn't have the reset property, but the reset is available in GCC.
-So we should be able to use it in dtsi.
+>> +		break;
+>> +
+>> +	case POWER_SUPPLY_PROP_MANUFACTURER:
+>> +		if (sdat.vendor_id - 3 < ARRAY_SIZE(aspire_ec_psy_battery_vendor))
+>> +			val->strval = aspire_ec_psy_battery_vendor[sdat.vendor_id - 3];
+>> +		else
+>> +			val->strval = "Unknown";
+>> +		break;
+>> +
+>> +	default:
+>> +		return -EINVAL;
+>> +	}
+> Another ocd trip, i'd add a newline before return
+>
 
-I also skimmed through the HPG and looks like core reset is not optional. Please
-confirm.
+Yeah I agree here, missed this. Will add in v2.
 
-- Mani
-
-> Having existing warn print can be used to to debug or atleast know
-> core_reset is missed in device tree to give indication complete reset hasn't
-> been done and we could still be operating in bootloader configuration.
+>> +	return 0;
+>> +}
+> [...]
 > 
+>> +	/*
+>> +	 * The original ACPI firmware actually has a small sleep in the handler.
+>> +	 *
+>> +	 * It seems like in most cases it's not needed but when the device
+>> +	 * just exits suspend, our i2c driver has a brief time where data
+>> +	 * transfer is not possible yet. So this delay allows us to suppress
+>> +	 * quite a bunch of spurious error messages in dmesg. Thus it's kept.
+> Ouch.. do you think i2c-geni needs fixing on this part?
+
+Not sure, it seems like when we exit suspend, this handler
+gets triggered before geni (or it's dependencies?) is considered
+"awake" (my guess is when the clocks are still off):
+
+[  119.246867] PM: suspend entry (s2idle)
+(...)
+[  119.438052] printk: Suspending console(s) (use no_console_suspend to debug)
+[  119.942498] geni_i2c 888000.i2c: error turning SE resources:-13
+[  119.942550] aspire-ec 2-0076: Failed to read event id: -EACCES
+(...)
+[  119.942657] geni_i2c 888000.i2c: error turning SE resources:-13
+[  119.942666] aspire-ec 2-0076: Failed to read event id: -EACCES
+(...)
+[  120.881452] PM: suspend exit
+
+FWIW it doesn't seem to be a big problem since this is
+a level interrupt, so it will be retried until the event
+can be cleared, but since ACPI also has the sleep, I'm
+happy to inherit in and suppress a couple of red lines :)
+
 > 
-> Regards,
-> Nitin
+> [...]
+> 
+>> +	switch (id) {
+>> +	case 0x0: /* No event */
+>> +		break;
+> Is this a NOP/watchdog sort of thing?
 > 
 
--- 
-மணிவண்ணன் சதாசிவம்
+This is a NOP, yes. I think I was hitting spurious interrupts
+once or twice so I suppressed this.
+
+> [...]
+> 
+>> +
+>> +static struct i2c_driver aspire_ec_driver = {
+>> +	.driver = {
+>> +		.name = "aspire-ec",
+>> +		.of_match_table = aspire_ec_of_match,
+>> +		.pm = pm_sleep_ptr(&aspire_ec_pm_ops),
+>> +	},
+>> +	.probe = aspire_ec_probe,
+>> +	.id_table = aspire_ec_id,
+> Since it's tristate, I'd expect an entry for .remove_new here
+> 
+
+All the resources I allocate are devm_ so I believe I shouldn't need
+to clean anything up on remove...
+
+Thanks for the review!
+Nikita
+
+> Konrad
 
