@@ -1,163 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-3942-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3F1C80A2E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 13:15:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5622B80A2EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 13:16:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27E6D28184B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:15:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 795AC1C208E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:16:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A3391C283;
-	Fri,  8 Dec 2023 12:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 452E01C28A;
+	Fri,  8 Dec 2023 12:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="k7fdtT5E"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J9LIN2hd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75021199F;
-	Fri,  8 Dec 2023 04:15:05 -0800 (PST)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B8BBngr009546;
-	Fri, 8 Dec 2023 12:14:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=84Cc+cs4mWLxWjEijA/iCSxp8CdOJhiE3inczZ/76mQ=;
- b=k7fdtT5EG4riH7s+A0QqatjvRUUqbZeROdaQFblzse6o6wSZkx/jL/7tu/tpPLh9iQPj
- hphr80P1+LPiLxpf5DI5U/KjWeel33z81A+HXBJftF/2LgJXovgFwYmfNe1iOs+bhivI
- yWOQ5daehdJd1gtGP/a4t0aEIqYzxe2ERzJ93JYLRKSvZ2MMnkSl/B2+RLOtH1HsT5Af
- Lfs2soRGw4+9FWy9Y/8vRlzxpJwKehQ9CwfQ56HnmCT0zFcDSv4D6LLOvdkVWvjU6D1K
- bDimQ51Md+XefURibdbhPF7wU5Wu0yjnOocDUNTbQ3lkl4sVPyWs4Af7LSXvSWGOs7/H 1g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uuj96j1ff-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Dec 2023 12:14:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B8CEp1j029351
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Dec 2023 12:14:51 GMT
-Received: from [10.216.26.153] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Dec
- 2023 04:14:45 -0800
-Message-ID: <516aeb55-69ad-460c-9757-6ad8a203b693@quicinc.com>
-Date: Fri, 8 Dec 2023 17:44:41 +0530
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4012F1985
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 04:16:39 -0800 (PST)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-db8892a5f96so2132155276.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 04:16:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702037798; x=1702642598; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lbMkvfvuSaUjn9nmS0/+yIbpDF8ZOV3Mm+1JCLQ4Ra4=;
+        b=J9LIN2hdF9kT+Jb5t2nEnhWx70EO9899TOH54OkykJLPCXPbNFh1KDq5kbybvyEuYF
+         p1nJaspB29ASGOSowWaQ0Sxumd2WnDXMMZGCnBp+FRHEGYzP3ZbpajKQ0P0Ew1HhKN/q
+         XD0PGYMs6RlOV9+f9e2czRwD+6MtnUpYDOKTJnatxkN2YhTz+bMBWMWOafHq7aBtKQ6X
+         fnOXxthY+SyIR4gOjqi/RfX4txNx4GT2yZkf0FAHtJsTK0efQnI7BU1TKcpvs0X5ItSJ
+         jiByV8HhXo7WmPwqVyhhfX1Rjsvkjg2emd0sGiqgoVhGRwWBXxNT17qLO3RSYda+4cj6
+         VCDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702037798; x=1702642598;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lbMkvfvuSaUjn9nmS0/+yIbpDF8ZOV3Mm+1JCLQ4Ra4=;
+        b=Havs+HgLzq73IDxrmE/QRLJGg7P9CDzmdxmsIYDFvpqwGo86mo3fkH7ayTZd4KxHjr
+         A9psyjq6+GZhnAzrrdJ0EdWjWut8ihcVfBMufIHRlGpoWpofOgx7FkecOhhpcSkjOa6e
+         W0R4MhqEZz2xp5mSLJFYV/ZSsFBCVQWwIky/YdDWWvlR8v9GmnMFhkn9xs+kKNPS1rnR
+         oZo8x5BwMVLNBu5V0ajJ2ObPgWLfTs9BIxzGZ6FpKzrgKHuwoB+xi29C+kJ0nchTUlhK
+         dMJI75NblMYLrhg2zxqQunvhy9C0Kcs20vjbUthcNbzHZq8iCkxSougOJsZbylj5v4Vu
+         SC9w==
+X-Gm-Message-State: AOJu0YwwroD5xbrQvDQ4YI2oQqqNR0Q3muHJiuWYcwlhml4th0mfLn9i
+	uH+8JP+1g+KFTyWtRYBYMc3CZyGmPBXbzkCR6IAMvQ==
+X-Google-Smtp-Source: AGHT+IFkSuKgYjZ1Ot8B8JpiHzczbdIkGfzpW23lqrYveANKbH4KHfieyvcJF1lSuK0a7WBnilZliVdaqqE931/ecEQ=
+X-Received: by 2002:a05:6902:7:b0:db7:dacf:6227 with SMTP id
+ l7-20020a056902000700b00db7dacf6227mr3623543ybh.121.1702037798381; Fri, 08
+ Dec 2023 04:16:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] usb: dwc3: qcom: Rename hs_phy_irq to
- qusb2_phy_irq
+References: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
+ <ZXLWiVJYWdlwOBou@hovoldconsulting.com> <CAA8EJpp-BsabZB3FXnFsWZBNbF7keCrOKPPg3Qb7MzE3puMFeg@mail.gmail.com>
+ <ZXL5jvDHr-MuxMoz@hovoldconsulting.com> <CAA8EJpoG-qg24wV953Xd9KQ957gpJVHc20Te2cYQWfs9imC63w@mail.gmail.com>
+ <ZXMCgVWNCfwmY8oS@hovoldconsulting.com>
+In-Reply-To: <ZXMCgVWNCfwmY8oS@hovoldconsulting.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 8 Dec 2023 14:16:27 +0200
+Message-ID: <CAA8EJpqqekmGrHt11czTTfdM1DVtY5g3j3k-0aM8u1PDQUDHRw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] usb: typec: ucsi: add workaround for several
+ Qualcomm platforms
 To: Johan Hovold <johan@kernel.org>
-CC: Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>
-References: <20231204100950.28712-1-quic_kriskura@quicinc.com>
- <20231204100950.28712-3-quic_kriskura@quicinc.com>
- <ZXHkpwji_AzXMjfm@hovoldconsulting.com>
- <9d52fa8c-41d1-46a7-be89-5c1c11ca09b4@quicinc.com>
- <ZXHz-HYgVLbgFp2k@hovoldconsulting.com>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZXHz-HYgVLbgFp2k@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SFyHIducnV-0mN69EJA_ZT_2NW7IOWjW
-X-Proofpoint-ORIG-GUID: SFyHIducnV-0mN69EJA_ZT_2NW7IOWjW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-08_06,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- mlxlogscore=497 malwarescore=0 phishscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 mlxscore=0 priorityscore=1501
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312080102
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andy Gross <agross@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, linux-usb@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Fri, 8 Dec 2023 at 13:47, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Fri, Dec 08, 2023 at 01:10:59PM +0200, Dmitry Baryshkov wrote:
+> > On Fri, 8 Dec 2023 at 13:09, Johan Hovold <johan@kernel.org> wrote:
+> > > On Fri, Dec 08, 2023 at 12:58:29PM +0200, Dmitry Baryshkov wrote:
+> > > > On Fri, 8 Dec 2023 at 10:39, Johan Hovold <johan@kernel.org> wrote:
+> > > > > On Wed, Oct 25, 2023 at 02:49:28PM +0300, Dmitry Baryshkov wrote:
+> > > > > > The UCSI firmware on Qualcomm SC8180X, SC8280XP and SM8350 are buggy.
+> > > > > > Submitting UCSI_GET_PDOS command for partners which do not actually
+> > > > > > support PD and do not have PDOs causes firmware to crash, preventing
+> > > > > > further UCSI activity. Firmware on newer platforms have fixed this
+> > > > > > issue. In order to still be able to use UCSI functionality on the
+> > > > > > mentioned platforms (e.g. to be able to handle USB role switching),
+> > > > > > apply a workaround that completely shortcuts UCSI_GET_PDOS command for
+> > > > > > the USB-C partner.
+> > > > > >
+> > > > > > This has been tested on sm8350 only, but should apply to other
+> > > > > > platforms. I did not enable UCSI for sc8180x yet, it has slightly
+> > > > > > different implementation, which I'd like to get tested first.
+> > > > >
+> > > > > Has no one tested this on sc8280xp/x13s before merging?
+> > > > >
+> > > > > I see a bunch of errors with this series applied to 6.7-rc4:
+> > > > >
+> > > > > [   11.999960] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
+> > > > > [   12.000430] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: ucsi_handle_connector_change: GET_CONNECTOR_STATUS failed (-110)
+> > > > > [   17.120515] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
+> > > > > [   17.124204] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
+> > > > > [   23.264792] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
+> > > > > [   23.264953] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
+> > > >
+> > > > Can you please post previous messages or is the first timeout the
+> > > > first error from ucsi?
+> > >
+> > > These are all the ucsi messages in the log (dmesg | grep ucsi).
+> > >
+> > > The first error is sometimes GET_CONNECTOR_STATUS failed (-95) instead:
+> >
+> > Ack, thank you. This is pending on my side together with the UCSI
+> > glink / altmode rework. I hope to have patches for that closer to the
+> > NY.
+>
+> What does that mean? That we shall revert these patches until that work
+> is finished? I don't want to have these errors littering the logs,
+> scaring users and possibly slowing down boot (those are five second
+> timeouts).
 
+Just send a patch disabling ucsi for sc8280xp.
 
-On 12/7/2023 10:04 PM, Johan Hovold wrote:
-> On Thu, Dec 07, 2023 at 09:17:32PM +0530, Krishna Kurapati PSSNV wrote:
->> On 12/7/2023 8:58 PM, Johan Hovold wrote:
-> 
->>> Here too you should say something about why this won't break any systems
->>> booting using an older devicetree. Specifically, the QUSB2 PHY interrupt
->>> has never been armed on any system running mainline as those bits never
->>> made it upstream.
->>>
->>> So an alternative to this could also be to just drop the QUSB2 PHY
->>> interrupt handling from this driver for now. >
-> 
->> So, are you suggesting that we drop the whole patch ?
-> 
-> No, I meant that an alternative could be to drop the current hs_phy_irq
-> handling from the driver.
-> 
->> I assume if the older kernels are using old DT, they would be using an
->> old driver version too right ?
-> 
-> No, and this is part of the devicetree ABI as we discussed the other
-> week.
-> 
-> You should generally be able to continue booting with an older devicetree
-> on a newer kernel (even if newer functionality may not be enabled then).
-> 
->> Is there a case where DT is not updated but driver is ? Because if we
->> drop this patch from series, targets with updated DT's would break.
-> 
-> Actually they would not due to the fact that the QUSB2 PHY interrupt is
-> currently never armed in the PHY (and the interrupts are looked up by
-> name and are considered optional by the driver).
-> 
-> But simply dropping this patch is not an option here. I'm fine with this
-> patch as it is, but the reason we can merge it is that those interrupts
-> are currently not actually used. Otherwise, this would break older
-> devicetrees.
-> 
-> But this also means, we could consider dropping the current hs_phy_irq
-> handling altogether.
-> 
-> Hmm. Looking at the qusb2_phy_runtime_suspend() again now I see that the
-> interrupt is actually armed on runtime suspend, it's just that it is
-> configured incorrectly and would wakeup immediately if someone ever
-> exercised this path.
-> 
-> Specifically, the bits that would set those PHY_MODE_USB_HOST_HS modes
-> (that should never have been merged) never made it upstream so this code
-> is just dead code currently. I said before I'll look into ripping this
-> out, but yeah, I'm swamped with work as usual (and it has been sitting
-> there dead for years so there's no rush).
-> 
-> So to summarise, the QUSB2 wakeup handling is incomplete and broken, so
-> we won't actually make things worse by renaming the interrupts. If this
-> was working, we would need to continue supporting the old names, though.
-> 
+>
+> Also, if this was known issue, why wasn't it mentioned the cover letter
+> or commit messages?
 
-Thanks for the review. Since renaming the interrupts won't be an issue, 
-I will keep this patch as is in that case in v3.
+Surely it was not the known issue, otherwise I would not have sent the series.
 
-Regards,
-Krishna,
+-- 
+With best wishes
+Dmitry
 
