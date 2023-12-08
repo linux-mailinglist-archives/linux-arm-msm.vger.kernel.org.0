@@ -1,193 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-3891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2BC5809E03
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:19:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B7F2809E00
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 09:18:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 532BF1F21079
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 08:19:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 301401F21095
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 08:18:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A84C910A3F;
-	Fri,  8 Dec 2023 08:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8355110A3F;
+	Fri,  8 Dec 2023 08:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R4ozkcX7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tm2W3sFT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68811B5;
-	Fri,  8 Dec 2023 00:19:21 -0800 (PST)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3B86uL4j032586;
-	Fri, 8 Dec 2023 08:19:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=C2hKHVuo5pBf5bnruKdO8cHrz+iaFEu6konihm1cVvI=;
- b=R4ozkcX7dRMO173or5/GV9MQ5BYUG7Qt5xZ4YXeylmLZDev2Ui4mlUZrniuAn6weCvY1
- K+ndE6S9DGr/u0fg8D9demj9/BHR7x1tMVE66YcU/91/tz/P4y3J3wNvpENHoQBNhu61
- 6Tmxl85qPa9vM4hrm9SMVIxfvkDHbojaKZDnf5vGONjhYBsIcJc4ZOHswkDmDlzu2nXz
- TJashaluo3e2BRpo7J0GUbFv7NIVT8gwOcM84HQiqD59KGa6IoSTigZeZVhTkUf0q8DJ
- avDxfsZLqZU/8WXw338hOyOodQUl3gHscCllgnBYyAGgRmWpSupFcST573R78xVh/6Lg Aw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uubdm2xue-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 08 Dec 2023 08:19:18 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3B88JIAW012238
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 8 Dec 2023 08:19:18 GMT
-Received: from [10.216.14.21] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Fri, 8 Dec
- 2023 00:19:10 -0800
-Message-ID: <e28ffc90-1c78-4ccb-8251-9a22243f7b20@quicinc.com>
-Date: Fri, 8 Dec 2023 13:47:40 +0530
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEB01094B;
+	Fri,  8 Dec 2023 08:18:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8FEC433C7;
+	Fri,  8 Dec 2023 08:18:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702023514;
+	bh=85cnqYAPP8hKzPB4QuuMegY8qDFlijd/F4k4kPybf3U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tm2W3sFTrdPwgFXfQ0kjCMqNCQivTotVWHI8wacQElTC6famiPCWqVVWsk7bln4vp
+	 tUL7BJzSCSqgK444YJtm50jydcW0s13t8tAhLD7DDXAQFjlBArujRsBSrzFlNjBcM4
+	 5+ZCLAc3hCHUkVhC7KHLOh43Jc+k97r71e3aR+cF4P7oV3kRhd+Hq/+XLzx+49T9Cz
+	 vT5sJSQNI9qoVQSUlcD0ky8FqwYNpbFZ56uVbZ9k24humMK4PCDGc8/03fI3di/E8C
+	 N+mLtBN4kt/YNG/89mmkzzMhuBPMPUDei6bILv7l2gfKwvYuHn1l0O8a+R8y3rpjnZ
+	 3+u4Vx4cimnZA==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rBW4y-0001eK-11;
+	Fri, 08 Dec 2023 09:19:24 +0100
+Date: Fri, 8 Dec 2023 09:19:24 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Rob Clark <robdclark@gmail.com>
+Cc: iommu@lists.linux-foundation.org, freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
+	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <joro@8bytes.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+	"open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] iommu/arm-smmu-qcom: Add missing GMU entry to match table
+Message-ID: <ZXLRjDZn9bgiREPf@hovoldconsulting.com>
+References: <20231207212441.6199-1-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/12] ufs: core: add support for generate, import and
- prepare keys
-Content-Language: en-US
-To: Gaurav Kashyap <quic_gaurkash@quicinc.com>, <linux-scsi@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <ebiggers@google.com>,
-        <neil.armstrong@linaro.org>, <srinivas.kandagatla@linaro.org>
-CC: <linux-mmc@vger.kernel.org>, <linux-block@vger.kernel.org>,
-        <linux-fscrypt@vger.kernel.org>, <omprsing@qti.qualcomm.com>,
-        <quic_psodagud@quicinc.com>, <abel.vesa@linaro.org>,
-        <quic_spuppala@quicinc.com>, <kernel@quicinc.com>
-References: <20231122053817.3401748-1-quic_gaurkash@quicinc.com>
- <20231122053817.3401748-9-quic_gaurkash@quicinc.com>
-From: Om Prakash Singh <quic_omprsing@quicinc.com>
-In-Reply-To: <20231122053817.3401748-9-quic_gaurkash@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: V8MRZrhASFdP1vKjgUZCPkMZPMEi-77R
-X-Proofpoint-GUID: V8MRZrhASFdP1vKjgUZCPkMZPMEi-77R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-08_04,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- adultscore=0 impostorscore=0 lowpriorityscore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 clxscore=1015 phishscore=0 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2312080067
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231207212441.6199-1-robdclark@gmail.com>
 
-
-
-On 11/22/2023 11:08 AM, Gaurav Kashyap wrote:
-> This patch contains two changes in UFS for wrapped keys.
-> 1. Implements the blk_crypto_profile ops for generate, import
->     and prepare key apis.
-> 2. Defines UFS vops for generate, import and prepare keys so
->     that vendors can hook into them.
-
-re-write commit message as it is single change.
-using numbering in commit message is indication of making multiple 
-independent changes in single patch, which should be avoided.
-
+On Thu, Dec 07, 2023 at 01:24:39PM -0800, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> ---
->   drivers/ufs/core/ufshcd-crypto.c | 41 ++++++++++++++++++++++++++++++++
->   include/ufs/ufshcd.h             | 11 +++++++++
->   2 files changed, 52 insertions(+)
-> 
-> diff --git a/drivers/ufs/core/ufshcd-crypto.c b/drivers/ufs/core/ufshcd-crypto.c
-> index 3edbca87c322..cf34f4a9cda8 100644
-> --- a/drivers/ufs/core/ufshcd-crypto.c
-> +++ b/drivers/ufs/core/ufshcd-crypto.c
-> @@ -143,10 +143,51 @@ static int ufshcd_crypto_derive_sw_secret(struct blk_crypto_profile *profile,
->   	return -EOPNOTSUPP;
->   }
->   
-> +static int ufshcd_crypto_generate_key(struct blk_crypto_profile *profile,
-> +				      u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-> +{
-> +	struct ufs_hba *hba =
-> +		container_of(profile, struct ufs_hba, crypto_profile);
-> +
-> +	if (hba->vops && hba->vops->generate_key)
-> +		return  hba->vops->generate_key(hba, lt_key);
-Please fix double space.
-> +
-> +	return -EOPNOTSUPP;
-> +}
-> +
-> +static int ufshcd_crypto_prepare_key(struct blk_crypto_profile *profile,
-> +				     const u8 *lt_key, size_t lt_key_size,
-> +				     u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-> +{
-> +	struct ufs_hba *hba =
-> +		container_of(profile, struct ufs_hba, crypto_profile);
-> +
-> +	if (hba->vops && hba->vops->prepare_key)
-> +		return  hba->vops->prepare_key(hba, lt_key, lt_key_size, eph_key);
-Please fix double space.
-> +
-> +	return -EOPNOTSUPP;
-> +}
-> +
-> +static int ufshcd_crypto_import_key(struct blk_crypto_profile *profile,
-> +				    const u8 *imp_key, size_t imp_key_size,
-> +				    u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-> +{
-> +	struct ufs_hba *hba =
-> +		container_of(profile, struct ufs_hba, crypto_profile);
-> +
-> +	if (hba->vops && hba->vops->import_key)
-> +		return  hba->vops->import_key(hba, imp_key, imp_key_size, lt_key);
-Please fix double space.
-> +
-> +	return -EOPNOTSUPP;
-> +}
-> +
->   static const struct blk_crypto_ll_ops ufshcd_crypto_ops = {
->   	.keyslot_program	= ufshcd_crypto_keyslot_program,
->   	.keyslot_evict		= ufshcd_crypto_keyslot_evict,
->   	.derive_sw_secret	= ufshcd_crypto_derive_sw_secret,
-> +	.generate_key		= ufshcd_crypto_generate_key,
-> +	.prepare_key		= ufshcd_crypto_prepare_key,
-> +	.import_key		= ufshcd_crypto_import_key,
->   };
->   
->   static enum blk_crypto_mode_num
-> diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-> index 86677788b5bd..49657a5d1e34 100644
-> --- a/include/ufs/ufshcd.h
-> +++ b/include/ufs/ufshcd.h
-> @@ -321,6 +321,9 @@ struct ufs_pwr_mode_info {
->    * @config_scaling_param: called to configure clock scaling parameters
->    * @program_key: program or evict an inline encryption key
->    * @derive_sw_secret: derive sw secret from a wrapped key
-> + * @generate_key: generate a storage key and return longterm wrapped key
-> + * @prepare_key: unwrap longterm key and return ephemeral wrapped key
-> + * @import_key: import sw storage key and return longterm wrapped key
->    * @event_notify: called to notify important events
->    * @reinit_notify: called to notify reinit of UFSHCD during max gear switch
->    * @mcq_config_resource: called to configure MCQ platform resources
-> @@ -368,6 +371,14 @@ struct ufs_hba_variant_ops {
->   	int	(*derive_sw_secret)(struct ufs_hba *hba, const u8 wkey[],
->   				    unsigned int wkey_size,
->   				    u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE]);
-> +	int	(*generate_key)(struct ufs_hba *hba,
-> +				u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
-> +	int	(*prepare_key)(struct ufs_hba *hba,
-> +			       const u8 *lt_key, size_t lt_key_size,
-> +			       u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
-> +	int	(*import_key)(struct ufs_hba *hba,
-> +			      const u8 *imp_key, size_t imp_key_size,
-> +			      u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
->   	void	(*event_notify)(struct ufs_hba *hba,
->   				enum ufs_event_type evt, void *data);
->   	void	(*reinit_notify)(struct ufs_hba *);
+> We also want the default domain for the GMU to be an identy domain,
+> so it does not get a context bank assigned.  Without this, both
+> of_dma_configure() and drm/msm's iommu_domain_attach() will trigger
+> allocating and configuring a context bank.  So GMU ends up attached
+> to both cbndx 1 and cbndx 2.  This arrangement seemingly confounds
+> and surprises the firmware if the GPU later triggers a translation
+> fault, resulting (on sc8280xp / lenovo x13s, at least) in the SMMU
+> getting wedged and the GPU stuck without memory access.
+
+This sounds like something that should be backported. Should you add a
+Fixes and CC-stable tag?
+ 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+
+Johan
 
