@@ -1,170 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-3800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD03C809855
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 02:03:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AFDA80986B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 02:11:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B4F61C20C1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 01:03:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AB2BD1F21129
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 01:11:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05773EDB;
-	Fri,  8 Dec 2023 01:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F3B2EDB;
+	Fri,  8 Dec 2023 01:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kvzECAe+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LuF7Njc9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D32D0D59
-	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 17:03:21 -0800 (PST)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2c9fe0ef02aso14191141fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 17:03:21 -0800 (PST)
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44C151715
+	for <linux-arm-msm@vger.kernel.org>; Thu,  7 Dec 2023 17:11:06 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ca0715f0faso20849061fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Dec 2023 17:11:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701997400; x=1702602200; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KH74X69CknSJEAqKADUYJy0tIjkWf/mm9wfbBS4QRQA=;
-        b=kvzECAe+BjW2AVb2g9KaZrbvKqORN/R8Ha9WL5mOLpW0u/Hr4JxuMa/KiSZjtPsdPe
-         WlUFNXTzRTuP9owMe5uE/bax1Dhj1AAUmNN2L9WbLL5i6JgKM7p3OhKFgs2gxUAOLuD6
-         GXEz33zPfAdqIedCG0hMm94TLuK2Bh085V6nrcO/9FVfpL3V/1qknwUNRimb9gJyG2pV
-         cS2l/V8fZwOMaWIExFWyDIZjFV0JJUyDogQABiIokjmamemxOtY6U/d7uZ8zle5yvmyY
-         zsQeVDp0pqxThaKraQRKZEnSlMRRNxUZcqHo2G8bBRSfzutLxkpEakHtAoChWKvac/9L
-         FH/w==
+        d=linaro.org; s=google; t=1701997864; x=1702602664; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cPIpR2OhS8FsOJYuELc4EcfXoYVEFO3KDU00U/AniAY=;
+        b=LuF7Njc9/olaMgMGhQBUoHypebXo/IuLosXImsBj/fW9c82Bmrt3ByXfbFvi/QG5AJ
+         iX7bO5WajAfWZ2492D/mvRUYekJQcCP/CUpodDecmS4a3QdKG9RwLeNU3dG6MIih6uND
+         g5iWJosCpPBxM4e7BOdsX9ZS0hARDdgqkNV2xRmJ5SLNQITopIXOHnUm4n4b2qJSACtC
+         49+XMtDDRS1/jFRHchndv+MHMajZvmySCMfFAXbtRsjMr3LQ6HWIC/9dq5UYk+fCAkL2
+         Kyxjp50I5tzAs7bzdWull4syDLxcec/ukTlVk/vN8fwUJJcxZXg+6Wk7gZFlbjejbalR
+         GZvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701997400; x=1702602200;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KH74X69CknSJEAqKADUYJy0tIjkWf/mm9wfbBS4QRQA=;
-        b=kuFptzLWqJQzHQRBjS1acWbDRP+Jsdk8C4gjzdQXAEIlY3No2vQ1cP+2c8wIwZYVyC
-         5OyVFR9vTPKwL5rNeYz7ZIKQKV/gm+SXP6ZSrMZjdndM7DkcDERjTzq3Ld6pacYYVc7o
-         Wr/xosrXlYzHqA3HVobqfyan7ko7K1uMfGOcoPwZivU1RdyuFgViuaNSaDhmdyvtOH2U
-         KyJuLgPsgmOnqtakXOQ2bBphTz0Vi0FqcSULpR49WkkTPwWOhSbC6idXSuKt+Pd7e+hM
-         75wviAom5EJP7wra/XIPBBMVK2RkG9oVewmhI9NhaDoz9V8gHVX7YWTSzE55NWOp6iRz
-         bLQA==
-X-Gm-Message-State: AOJu0Ywz7adQ0GYur+RAH9+K0Bk5bNJQtmdSQu2yWrbWyJceg32wTpnU
-	JLtauMymZ8+Zk5/GONX3p30rTw==
-X-Google-Smtp-Source: AGHT+IGp18wUjpiOvhYgSK2UicMqSaBn8WCyD/Y+QwBeT3gAg85czosN3/RcOwKmUieKQg9qE+WKWA==
-X-Received: by 2002:a05:6512:10d2:b0:50b:efbc:185d with SMTP id k18-20020a05651210d200b0050befbc185dmr50714lfg.18.1701997400242;
-        Thu, 07 Dec 2023 17:03:20 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id t28-20020ac2549c000000b0050bcb5b443dsm68415lfk.171.2023.12.07.17.03.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Dec 2023 17:03:18 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Rodrigo Siqueira <rodrigosiqueiramelo@gmail.com>,
-	Melissa Wen <melissa.srw@gmail.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
-	Haneen Mohammed <hamohammed.sa@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH v4 2/2] drm/vkms: move wb's atomic_check from encoder to connector
-Date: Fri,  8 Dec 2023 04:03:14 +0300
-Message-Id: <20231208010314.3395904-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231208010314.3395904-1-dmitry.baryshkov@linaro.org>
-References: <20231208010314.3395904-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20230601; t=1701997864; x=1702602664;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cPIpR2OhS8FsOJYuELc4EcfXoYVEFO3KDU00U/AniAY=;
+        b=EwrZ2ggeDENOih26fzYYeBijhzIY2uloXj5y5nC6rqaf7OTzN4ajqONUSP+s6zVJb+
+         HI+9T3JehXyNPjyHqpHUgRCMbomvntyIr4yO/RdttqtHT1/NQZFzGsOkeUUes/oa4EhY
+         r9cAFkMtc4ILGVozr+BPElXkRt8yyxEuEfDSslpcgzgel80ZlWGpwNXU8mDXfKRgIOo0
+         eL733dm7Aj7KXNKtwDqRsTOtgGBiflOQ37Yby/fbZ9XBELOUE6dRN7HmS111zLAMd6fc
+         IgQHolDPgjhRQhbSKAa4cTS41+eS5G6I62r6RiIhhADA8iF2qKYeSlF609EcdPt8dCkO
+         rKIw==
+X-Gm-Message-State: AOJu0YykaRLOsCfWhHJ1UkXFgcLIqxq7FtL+KUGKUExaoNjYhQRhTE0N
+	UJsCNaWoHrUdFprJaB19lgHadQ==
+X-Google-Smtp-Source: AGHT+IEWZjda2fsJ0zD6R8OaPvGCIhuiY+08NdpNxfUAkKx96xvmVTnzBUfNL5Fr1v/oeWTLLPMssw==
+X-Received: by 2002:a05:651c:117:b0:2c9:fa20:89e1 with SMTP id a23-20020a05651c011700b002c9fa2089e1mr2063453ljb.9.1701997864531;
+        Thu, 07 Dec 2023 17:11:04 -0800 (PST)
+Received: from ?IPV6:2001:14ba:a0db:1f00::227? (dzdqv0yyyyyyyyyyyykxt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::227])
+        by smtp.gmail.com with ESMTPSA id r1-20020a2e94c1000000b002c9e6cbf78esm86616ljh.19.2023.12.07.17.11.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 07 Dec 2023 17:11:03 -0800 (PST)
+Message-ID: <22f39a38-6293-424e-898e-77edc071ef75@linaro.org>
+Date: Fri, 8 Dec 2023 03:11:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/dp: Fix platform_get_irq() check
+Content-Language: en-GB
+To: Dan Carpenter <dan.carpenter@linaro.org>,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Bjorn Andersson <quic_bjorande@quicinc.com>,
+ Vinod Polimera <quic_vpolimer@quicinc.com>,
+ Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+References: <c12bb69b-d676-4345-9712-48aab48f2b48@moroto.mountain>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <c12bb69b-d676-4345-9712-48aab48f2b48@moroto.mountain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-As the renamed drm_atomic_helper_check_wb_connector_state() now accepts
-drm_writeback_connector as the first argument (instead of drm_encoder),
-move the VKMS writeback atomic_check from drm_encoder_helper_funcs to
-drm_connector_helper_funcs. Also drop the vkms_wb_encoder_helper_funcs,
-which have become empty now.
+On 06/12/2023 14:02, Dan Carpenter wrote:
+> The platform_get_irq() function returns negative error codes.  It never
+> returns zero.  Fix the check accordingly.
+> 
+> Fixes: 82c2a5751227 ("drm/msm/dp: tie dp_display_irq_handler() with dp driver")
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/vkms/vkms_writeback.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-diff --git a/drivers/gpu/drm/vkms/vkms_writeback.c b/drivers/gpu/drm/vkms/vkms_writeback.c
-index fef7f3daf2c9..bc724cbd5e3a 100644
---- a/drivers/gpu/drm/vkms/vkms_writeback.c
-+++ b/drivers/gpu/drm/vkms/vkms_writeback.c
-@@ -30,18 +30,25 @@ static const struct drm_connector_funcs vkms_wb_connector_funcs = {
- 	.atomic_destroy_state = drm_atomic_helper_connector_destroy_state,
- };
- 
--static int vkms_wb_encoder_atomic_check(struct drm_encoder *encoder,
--					struct drm_crtc_state *crtc_state,
--					struct drm_connector_state *conn_state)
-+static int vkms_wb_atomic_check(struct drm_connector *connector,
-+				struct drm_atomic_state *state)
- {
--	struct drm_connector *connector = conn_state->connector;
-+	struct drm_connector_state *conn_state =
-+		drm_atomic_get_new_connector_state(state, connector);
-+	struct drm_crtc_state *crtc_state;
- 	struct drm_framebuffer *fb;
--	const struct drm_display_mode *mode = &crtc_state->mode;
-+	const struct drm_display_mode *mode;
- 	int ret;
- 
- 	if (!conn_state->writeback_job || !conn_state->writeback_job->fb)
- 		return 0;
- 
-+	if (!conn_state->crtc)
-+		return 0;
-+
-+	crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
-+	mode = &crtc_state->mode;
-+
- 	fb = conn_state->writeback_job->fb;
- 	if (fb->width != mode->hdisplay || fb->height != mode->vdisplay) {
- 		DRM_DEBUG_KMS("Invalid framebuffer size %ux%u\n",
-@@ -49,17 +56,13 @@ static int vkms_wb_encoder_atomic_check(struct drm_encoder *encoder,
- 		return -EINVAL;
- 	}
- 
--	ret = drm_atomic_helper_check_wb_connector_state(connector, conn_state->state);
-+	ret = drm_atomic_helper_check_wb_connector_state(connector, state);
- 	if (ret < 0)
- 		return ret;
- 
- 	return 0;
- }
- 
--static const struct drm_encoder_helper_funcs vkms_wb_encoder_helper_funcs = {
--	.atomic_check = vkms_wb_encoder_atomic_check,
--};
--
- static int vkms_wb_connector_get_modes(struct drm_connector *connector)
- {
- 	struct drm_device *dev = connector->dev;
-@@ -162,6 +165,7 @@ static const struct drm_connector_helper_funcs vkms_wb_conn_helper_funcs = {
- 	.prepare_writeback_job = vkms_wb_prepare_job,
- 	.cleanup_writeback_job = vkms_wb_cleanup_job,
- 	.atomic_commit = vkms_wb_atomic_commit,
-+	.atomic_check = vkms_wb_atomic_check,
- };
- 
- int vkms_enable_writeback_connector(struct vkms_device *vkmsdev)
-@@ -172,7 +176,7 @@ int vkms_enable_writeback_connector(struct vkms_device *vkmsdev)
- 
- 	return drm_writeback_connector_init(&vkmsdev->drm, wb,
- 					    &vkms_wb_connector_funcs,
--					    &vkms_wb_encoder_helper_funcs,
-+					    NULL,
- 					    vkms_wb_formats,
- 					    ARRAY_SIZE(vkms_wb_formats),
- 					    1);
 -- 
-2.39.2
+With best wishes
+Dmitry
 
 
