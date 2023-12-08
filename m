@@ -1,131 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-3924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8793380A1DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:11:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8944B80A1E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 12:12:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B87801C20916
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:11:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43B5528187D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 11:12:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA12E1A293;
-	Fri,  8 Dec 2023 11:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEC6112B9F;
+	Fri,  8 Dec 2023 11:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y1p4CXX3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FI9UmczH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A8761728
-	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 03:11:11 -0800 (PST)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-5d77a1163faso14600317b3.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 03:11:11 -0800 (PST)
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9097B122
+	for <linux-arm-msm@vger.kernel.org>; Fri,  8 Dec 2023 03:11:56 -0800 (PST)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-db7d198e791so1997584276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Dec 2023 03:11:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702033870; x=1702638670; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702033916; x=1702638716; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lQ/xpupr9bHbhk+XXvEulWb5mVWg/ARpa/Sw0R7vnGo=;
-        b=y1p4CXX3oCOynLvmW4ZYlnuEuOa9EICRyoR0x5E0WkEy7iWmrxUM+G37FaIv/BCWXI
-         e0yXaM5QGy7w3rr8hmsz2am2dIfOYfX3Jx4+aQLJa0nCeEA42l7uzuCtU1b6sgYhvZly
-         rTH8iPTQnt4/bhOeyDl0wyo7kFE816a+tkR6TLQSRw43O/qDX8HaBhD2dtOG1qgILkFV
-         XtEuwdNpVAyO/JNh5Xut3QOJ0fLF4Kq/M9DMWiwpSZALDJgK+kBmadzAKmLBmOcCNvG7
-         3XySMP/FUT+p9V5kKh6fSHkidJ2xKkJ2sq/MqA2/0Ze24qqclKKf/prftuc7S5xCVe/V
-         S4zg==
+        bh=d5sTiUJetif/fgYO2zq3XsvRjD/RlEkJTpjxX1dPW9o=;
+        b=FI9UmczH+EOkyJ9SmpY8NjmlO9WMp4nc5kX0QGlmMgSgsvJ5zz9EqRYQJP7R7ycegJ
+         O0mowC1pIBhhSD6995KWu0XC06qlwPvyxtObE8xfBl/AqhXvksEaI235BuHc48+DPF9o
+         C7p9O5duCemIcyXLGVQQLh7EW0NhYf8uFdywN7OvSRXbyxKuGdFywp3gUxd9QZ3DKNml
+         jBmqH64mVATFI6By2Y86ox0w0mg38HCR30jwqCOpAfNjhhRdJnyxE7Ivgek1r0ACNwbV
+         YiIpOptEEvxEE/irX52WPsQxZm94HCv9qoAYYwCm1UV2vQpO2rF0AwpVWCznMzc5tPdV
+         YrsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702033870; x=1702638670;
+        d=1e100.net; s=20230601; t=1702033916; x=1702638716;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lQ/xpupr9bHbhk+XXvEulWb5mVWg/ARpa/Sw0R7vnGo=;
-        b=Zv+pq0s363B5OsPJ546JVRH4eh6T5InGf7wejF22w66uwfTxxw020vdKyuJsLXRkZb
-         CqA0y0Aqd30QnGQm0Ht5Oa3W6z/tugsUksFzK4tSrH4JRioS3TDrD9REiY8HIlf68Z88
-         wDMqLc4+2kJ/nnhs5ZwXO2OHxzfsCv+0QzF7zFi8VDJnLRjw3zUb69RctQMuqU0Ry3cx
-         ciuGDBOBPJ1SUBXSGDqHymF6Ua8RIlQE8OSpd2ZXQvDS7IrIEgL42qMDNPyvhqC1LF0x
-         lvaJ7NzphXPBFXgVChF3XPmwF/fXZRwDWysxUJGeQpY/6IoYZnXuPK+TyEby3UTaIW3Y
-         hrJA==
-X-Gm-Message-State: AOJu0YzfQm6OF1/q3Z5m5C/ifLo8K4zuBIGXh1DWZHpCyscePQ+tTmPr
-	8fX4Bey7uBXuUwbplcO8hYbrFedHhFYsqRNIID01mGA6eVuJedIf
-X-Google-Smtp-Source: AGHT+IFVa2cDPG9X0rerhkAjoKB34/4e59kPEje3jf8VcVLSmkZc/nmWR6L9pWN+tEKxMowY8xPF4d8fr/hhEsiGCws=
-X-Received: by 2002:a0d:dd08:0:b0:5d7:1940:3f02 with SMTP id
- g8-20020a0ddd08000000b005d719403f02mr365229ywe.51.1702033870154; Fri, 08 Dec
- 2023 03:11:10 -0800 (PST)
+        bh=d5sTiUJetif/fgYO2zq3XsvRjD/RlEkJTpjxX1dPW9o=;
+        b=KbVchifGwuqwr6hfrAfmYQbmEBrWf4dFb7CMK7sgp4s8uvkIVwdhNB8Ez6JL+d7MY9
+         HRNcjJZ1oPreBWcJ5nnsJjEXqswcRLbkoiQ9IsXVCmPVg8RWD/BxPMkUinAilcMeLnk/
+         gP2ob178ig2j/PlKafgqEyGEqVkvaxt0hznlvmsZajP3rRUK4ZK48z0kuy8NFEJF8EHj
+         6AiRnq/rYIflYu73SU6cDnGol1FpXshr2OGSm6kUdRkWmQKNYaDuMxXqf5XN/pt5MwM4
+         V0r9qmZ/qZ3Xwqmr60JKJ+18JxXncWDrWjSqU6KQwf8Jry+0jSXQ9/mA8Dk8WSgL1Wka
+         4geg==
+X-Gm-Message-State: AOJu0YwGRjRFLYEYrfn5KPR02mOLK6n/ygO2ey8hcBMG8Lu8yBJZ286G
+	rp4xn6n9wCELs4BKxSjMNZP7dhboER9Q9uDUKwDSfrV4Dqkn07zt1Tc=
+X-Google-Smtp-Source: AGHT+IGadWRb7RLKWnHwQIGRXCckpkVS7uf7R7LgUD+cmDd+xOtJ0ovssIG5r2vaLiyKiudQIHYP9pqYEOJNDQwjEx0=
+X-Received: by 2002:a81:ae01:0:b0:5d0:aa04:7b71 with SMTP id
+ m1-20020a81ae01000000b005d0aa047b71mr3251777ywh.24.1702033915757; Fri, 08 Dec
+ 2023 03:11:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231025115620.905538-1-dmitry.baryshkov@linaro.org>
- <ZXLWiVJYWdlwOBou@hovoldconsulting.com> <CAA8EJpp-BsabZB3FXnFsWZBNbF7keCrOKPPg3Qb7MzE3puMFeg@mail.gmail.com>
- <ZXL5jvDHr-MuxMoz@hovoldconsulting.com>
-In-Reply-To: <ZXL5jvDHr-MuxMoz@hovoldconsulting.com>
+References: <20231208050641.32582-1-quic_abhinavk@quicinc.com> <20231208050641.32582-4-quic_abhinavk@quicinc.com>
+In-Reply-To: <20231208050641.32582-4-quic_abhinavk@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 8 Dec 2023 13:10:59 +0200
-Message-ID: <CAA8EJpoG-qg24wV953Xd9KQ957gpJVHc20Te2cYQWfs9imC63w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] usb: typec: ucsi: add workaround for several
- Qualcomm platforms
-To: Johan Hovold <johan@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>, linux-usb@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
+Date: Fri, 8 Dec 2023 13:11:44 +0200
+Message-ID: <CAA8EJpqaZc7xB8Jb8uweKZHgLRb8SBtEN_rUCxWAK_u7hW8H-A@mail.gmail.com>
+Subject: Re: [PATCH v2 03/16] drm/msm/dpu: fix writeback programming for YUV cases
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
+	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 8 Dec 2023 at 13:09, Johan Hovold <johan@kernel.org> wrote:
+On Fri, 8 Dec 2023 at 07:07, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
 >
-> On Fri, Dec 08, 2023 at 12:58:29PM +0200, Dmitry Baryshkov wrote:
-> > On Fri, 8 Dec 2023 at 10:39, Johan Hovold <johan@kernel.org> wrote:
-> > >
-> > > On Wed, Oct 25, 2023 at 02:49:28PM +0300, Dmitry Baryshkov wrote:
-> > > > The UCSI firmware on Qualcomm SC8180X, SC8280XP and SM8350 are buggy.
-> > > > Submitting UCSI_GET_PDOS command for partners which do not actually
-> > > > support PD and do not have PDOs causes firmware to crash, preventing
-> > > > further UCSI activity. Firmware on newer platforms have fixed this
-> > > > issue. In order to still be able to use UCSI functionality on the
-> > > > mentioned platforms (e.g. to be able to handle USB role switching),
-> > > > apply a workaround that completely shortcuts UCSI_GET_PDOS command for
-> > > > the USB-C partner.
-> > > >
-> > > > This has been tested on sm8350 only, but should apply to other
-> > > > platforms. I did not enable UCSI for sc8180x yet, it has slightly
-> > > > different implementation, which I'd like to get tested first.
-> > >
-> > > Has no one tested this on sc8280xp/x13s before merging?
-> > >
-> > > I see a bunch of errors with this series applied to 6.7-rc4:
-> > >
-> > > [   11.999960] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
-> > > [   12.000430] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: ucsi_handle_connector_change: GET_CONNECTOR_STATUS failed (-110)
-> > > [   17.120515] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
-> > > [   17.124204] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
-> > > [   23.264792] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
-> > > [   23.264953] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
-> >
-> > Can you please post previous messages or is the first timeout the
-> > first error from ucsi?
+> For YUV cases, setting the required format bits was missed
+> out in the register programming. Lets fix it now in preparation
+> of adding YUV formats support for writeback.
 >
-> These are all the ucsi messages in the log (dmesg | grep ucsi).
+> changes in v2:
+>     - dropped the fixes tag as its not a fix but adding
+>       new functionality
 >
-> The first error is sometimes GET_CONNECTOR_STATUS failed (-95) instead:
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c | 3 +++
+>  1 file changed, 3 insertions(+)
 
-Ack, thank you. This is pending on my side together with the UCSI
-glink / altmode rework. I hope to have patches for that closer to the
-NY.
-
->
-> [    9.012421] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-95)
-> [   14.047379] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
-> [   14.050708] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
-> [   20.192382] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
-> [   20.192542] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
->
-> I see that one if I boot with only the charger connected, the later -110
-> timeouts go away if I disconnect my r8152 ethernet adapter.
->
-> Johan
-
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
