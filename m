@@ -1,60 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-3807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-3808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D90C480998C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 03:53:27 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6E6D809990
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 03:53:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EFD571C20C67
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 02:53:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7CAAA1F211DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Dec 2023 02:53:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDB721FB2;
-	Fri,  8 Dec 2023 02:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09F611FC8;
+	Fri,  8 Dec 2023 02:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EhsuP/qL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VoPqPnkw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A3A1FA4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0D81FA4;
+	Fri,  8 Dec 2023 02:53:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF056C433C7;
 	Fri,  8 Dec 2023 02:53:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71012C433D9;
-	Fri,  8 Dec 2023 02:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702004001;
-	bh=C4X0usRvU4SfNeCQDVnHklxdxVogajuqYsj5EA8PLTg=;
+	s=k20201202; t=1702004002;
+	bh=e0VlqsTG0pB8Rl5+YyJh0QUhq2ltOPMQvtTm4uUb7kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhsuP/qLqzU09UVyqPJv6qVzvYH6KqJzocZId2ZFWF/ZfGN8r3I2qedC+fXF8+CRC
-	 2NHrZLWFoCxYSlZNB4KRG5dxW562DeoifTB5h6OMf4oGoaydyBLuwjCoCKeYriejjv
-	 dmquoSqUJQwnuRtcflYf/l6Oujnxa3yMml7IzeMMHgfPn2FtnbXTR/+ttB+z/qGt3N
-	 ijHzqBcNYho8zX0nfWEfo2mllD6PYoWeBwNgpN35xqI3VcFckoF7m3aO+66cSQQ4Pm
-	 QQE9cwqQDNws+D5bpYvf0bOG6krddzh90DlLXJxShLTFuJyLILb7mXpe0+ETIq77xA
-	 RfFMHO9RKpaCQ==
+	b=VoPqPnkwvu1h36SYGXu2TMSAtFpXCijdbVOIakxte47LdMIUMbR8nInNiyZnfldFz
+	 c9ka3TBfgm/friwEY9oc4/NJxPHA6tmdOoObQhI6gXe09pWpe3NootKPc2OaW5Yhnc
+	 g+70eZqtuPpWKwzS5rmXJ9WSBYjPTzX7NFg9i664iaGLXplDvxQjzmiQRLmBTK3ykv
+	 SFVY0vxGJHk51GO4Wy4prSmgLHM8AQlAXA9TZchJ32RhXGaPgSPePj9w+o/Zm/dUrg
+	 cHqEQ5ba7SgJjVTe4a3tk8RhqUpZ5UDnt7TpZh/sfgWOAv0hKw/2DAHAt98mxSqvLJ
+	 7KRchPscm+xTw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: agross@kernel.org,
-	konrad.dybcio@linaro.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	dmitry.baryshkov@linaro.org,
-	robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	conor+dt@kernel.org,
-	jonathan@marek.ca,
-	quic_tdas@quicinc.com,
-	vladimir.zapolskiy@linaro.org,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To: Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [RESEND PATCH v4 0/4] Add sc8280xp CAMCC bindings and driver
-Date: Thu,  7 Dec 2023 18:57:26 -0800
-Message-ID: <170200426913.2871025.848912452747333557.b4-ty@kernel.org>
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qrb2210-rb1: use USB host mode
+Date: Thu,  7 Dec 2023 18:57:27 -0800
+Message-ID: <170200426907.2871025.14366002711786377960.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231026105345.3376-1-bryan.odonoghue@linaro.org>
-References: <20231026105345.3376-1-bryan.odonoghue@linaro.org>
+In-Reply-To: <20231025-b4-rb1-usb-host-v1-1-522616c575ef@linaro.org>
+References: <20231025-b4-rb1-usb-host-v1-1-522616c575ef@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,22 +57,21 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 26 Oct 2023 11:53:41 +0100, Bryan O'Donoghue wrote:
-> v4-resend:
-> - Remove erroneous "--in-reply-to" from git send-email
+On Wed, 25 Oct 2023 12:58:00 +0100, Caleb Connolly wrote:
+> The default for the QCM2290 platform that this board is based on is OTG
+> mode, however the role detection logic is not hooked up for this board
+> and the dwc3 driver is configured to not allow role switching from
+> userspace.
 > 
-> v4:
-> - Resend of v3.2 addendum as v4 for tooling purposes
-> 
-> Link: https://lore.kernel.org/linux-arm-msm/20231024093919.226050-1-bryan.odonoghue@linaro.org/
-> Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/qcom-linux-clk-for-6.7-camcc-sc8280xp-v4
+> Force this board to host mode as this is the preferred usecase until we
+> get role switching hooked up.
 > 
 > [...]
 
 Applied, thanks!
 
-[4/4] arm64: dts: qcom: sc8280xp: Add in CAMCC for sc8280xp
-      commit: 9bd07f2c558f9c7d41f3761df3e93bd9ebaa0d4f
+[1/1] arm64: dts: qcom: qrb2210-rb1: use USB host mode
+      commit: e0cee8dc6757f9f18718eec553be9fffa503e103
 
 Best regards,
 -- 
