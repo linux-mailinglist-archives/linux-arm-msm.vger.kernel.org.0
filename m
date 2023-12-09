@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-4094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0114B80B5B7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 18:47:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D1D580B5C7
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 18:54:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0896280E06
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 17:47:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F192FB20D10
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 17:54:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A142318E39;
-	Sat,  9 Dec 2023 17:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BFCB19470;
+	Sat,  9 Dec 2023 17:54:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z+DYad8O"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I4xr/Iv6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE8C10D9
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 09:47:05 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-54c5ed26cf6so4055196a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Dec 2023 09:47:05 -0800 (PST)
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7970D10DF
+	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 09:54:20 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-54cd8f5bb5cso4172912a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Dec 2023 09:54:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702144024; x=1702748824; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702144459; x=1702749259; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vg/ZHOS0VL4Nf8G+0mW63NIqEBrZ4JhvgjdkN33zotw=;
-        b=Z+DYad8OFy0NALPzaKHfhMccb7hO7KM9EE/kwiHEwpRvacThk8ESJlqthdVlisIb7u
-         17QNyCikdE5VhaC5ViP2+8DjY1RIAm+UcgTNqggbsgiV3J/XZuiRIOk6yCUDlaRECOX+
-         yuZuy3R5HJ0bqchIgbCP3jn1BubYAMktAMBd+vO6VwggtlDYYqos8BCe5U0GkzM3os9y
-         yNVAzpC2TnraxtJtK/QcMa4xJ7GDu7D/JW4HFBsB/Eh0wnqy7efE204Pqx5kRFW6L//Y
-         U4SHYFr8NUKK7GNOqsMCYQfbNBqDsEr3v34x7TdUcEMZwqdRbDCC+44rfuTwLPCMEmHh
-         Er1w==
+        bh=HvHND4P/HoZ0eN5ekFdH68Ldcd5nj6SfIoXhqMddDPY=;
+        b=I4xr/Iv6SLgHHpwdkZtQCtK4UjSqyVe1HwfXmM7YRkjlRRrcSunBkhcVCzgj/gQt4c
+         ZGxal6YgS+6Y8oPmPvGTSilrUfyQJgD1uHTQ5CtzxLYLH/iBLg77ny/zvSnjSC3XwdaS
+         NqTJ1rphqOhZ8449ZshDQLWin1gOejFml1n7SQxBswVY7S145nrkI3hN9JVth6AF8dCh
+         RIUzSByM+R2gyiQ473lGLr9AzPmrSLyH1879BpUvsYmWkWvDe33FIhrFi+rUUKQsLlpW
+         3UMNvbtXi2Z9x9fmjv0YEzCNKNaw2sOul/2/+TahAdC6MAprQDidhE+hrtLDM/MXoogP
+         +aLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702144024; x=1702748824;
+        d=1e100.net; s=20230601; t=1702144459; x=1702749259;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vg/ZHOS0VL4Nf8G+0mW63NIqEBrZ4JhvgjdkN33zotw=;
-        b=dmtuwICU+BFMImE10BByXRql5RE+mmRqFjHRGMXWU99mx8THPDxnL/bVsszhbZauxe
-         Q4vc+hjLHMHhc3A92WCLc6ryoBd7xLLdRsP2Yk2nfRq9DVTn8qOaS6VUai6oZvW/3t3e
-         dh9kHWFa+/jL8jtVBWGVsjSBAii2PCOF3RBrXP447cZJhmWDU0m3hbs2yVOY5jkxNKfr
-         dwhA3MUVCbBCDENsQpOYSLuXwI3TQu95QJsBFUgdPhB8zS/N2ra7uLa1uA2sV4fmp5Os
-         s4tgMCDbHj01Pthcwtf7RAuWtGVkF7ZqwMHPAXmO/EnhuCBBzuNl+LZs9V2JhADMemvJ
-         11Xg==
-X-Gm-Message-State: AOJu0YyULCmRapfV4LGzJjNpLJsGmBa/S/IBB5wcCO5NZXdF3o7tuFwi
-	TAc4lyHWvh2W7+76wlWX1IKM2Q==
-X-Google-Smtp-Source: AGHT+IEXZJMODaq91N5OUX8Oy5Bqg+b8kDIzEei+JNjhZRFUDiQxQs8FNVFhChAVdm0MBnfpo2dy0g==
-X-Received: by 2002:a17:906:1083:b0:a19:a19b:5608 with SMTP id u3-20020a170906108300b00a19a19b5608mr883612eju.152.1702144024279;
-        Sat, 09 Dec 2023 09:47:04 -0800 (PST)
+        bh=HvHND4P/HoZ0eN5ekFdH68Ldcd5nj6SfIoXhqMddDPY=;
+        b=jWIYypzOKEbVR9e8uQkMUsB2ArCYblNqNovew89h2lPs26EyVOiF9FUaA6mBz9TeQK
+         ykHpZbLBtjh/H6wcd2XxrmjFji9Ei8kVXXeC3Lq4mwtJzLl8bqCLK8bdBZmYoDVyJGzL
+         A5o6HMilW1IwCSdpTbwuFj7VliHvmhT4pQleOk+G/B4+AnMCbtmECmVU3bRu2q73P0Pa
+         LN6UkleHkcLreT+FzLDQcv4+ERT8Uxgzj+8yQHJPEKA0oWtaZR6eJ5/Pb6oPHyR4kIqz
+         QYoUXzQQRV+W3KRk5Gb9V+WsRbEHjF05NsZUECkr/btrn26t1udqZ5TZ8REG5ZhuLbBu
+         8mkg==
+X-Gm-Message-State: AOJu0Yypa5Gy75TFP5hkTgLA8LtG7liS/LDgn9yUFEG+Q7R3iuT4F7iW
+	T0y+7mPDKCVmh3aiVpjZF0ciJA==
+X-Google-Smtp-Source: AGHT+IFbUBIScunhp/10BaKOKvxkgMMwaF3LauB+6T2wH4SVYcWBBxfmq1CkdZ3cs0JM9TjOOGO9cQ==
+X-Received: by 2002:a17:907:6190:b0:a1f:6761:c8dc with SMTP id mt16-20020a170907619000b00a1f6761c8dcmr796454ejc.124.1702144458937;
+        Sat, 09 Dec 2023 09:54:18 -0800 (PST)
 Received: from [192.168.36.128] (178235179179.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.179])
-        by smtp.gmail.com with ESMTPSA id ss27-20020a170907c01b00b00a1d9afe42f0sm2447390ejc.35.2023.12.09.09.47.01
+        by smtp.gmail.com with ESMTPSA id rm6-20020a1709076b0600b00a1bec12448csm2457107ejc.150.2023.12.09.09.54.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Dec 2023 09:47:03 -0800 (PST)
-Message-ID: <0af91794-69d6-459a-8566-c8c408489f2b@linaro.org>
-Date: Sat, 9 Dec 2023 18:47:00 +0100
+        Sat, 09 Dec 2023 09:54:18 -0800 (PST)
+Message-ID: <3f921a53-8eac-48e6-be17-43c07a0313d0@linaro.org>
+Date: Sat, 9 Dec 2023 18:54:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,25 +62,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v4 1/3] dt-bindings: net: qcom,ethqos: add
- binding doc for safety IRQ for sa8775p
+Subject: Re: [PATCH 2/2] interconnect: qcom: Add MSM8909 interconnect provider
+ driver
 Content-Language: en-US
-To: Suraj Jaiswal <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
- Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+To: Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+ Georgi Djakov <djakov@kernel.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Jose Abreu <joabreu@synopsys.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- Prasad Sodagudi <psodagud@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>
-Cc: kernel@quicinc.com
-References: <cover.1701939695.git.quic_jsuraj@quicinc.com>
- <87bdedf3c752d339bf7f45a631aa8d5bf5d07763.1701939695.git.quic_jsuraj@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Adam Skladowski <a39.skl@gmail.com>
+References: <20231206-icc-msm8909-v1-0-fe0dd632beff@kernkonzept.com>
+ <20231206-icc-msm8909-v1-2-fe0dd632beff@kernkonzept.com>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -117,15 +111,47 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <87bdedf3c752d339bf7f45a631aa8d5bf5d07763.1701939695.git.quic_jsuraj@quicinc.com>
+In-Reply-To: <20231206-icc-msm8909-v1-2-fe0dd632beff@kernkonzept.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 7.12.2023 10:21, Suraj Jaiswal wrote:
-> Add binding doc for safety IRQ. The safety IRQ will be
-> triggered for ECC, DPP, FSM error.
-ECC is widely understood, but the DPP and FSM acronyms could be
-expanded..
+On 6.12.2023 15:35, Stephan Gerhold wrote:
+> From: Adam Skladowski <a39.skl@gmail.com>
+> 
+> Add driver for interconnect busses found in MSM8909 based platforms.
+> The topology consists of three NoCs that are partially controlled by a
+> RPM processor.
+> 
+> In the downstream/vendor kernel from Qualcomm there is an additional
+> "mm-snoc". However, it doesn't have a separate RPM clock assigned. It
+> looks like this is actually the same NoC in hardware and the "mm-snoc"
+> was only defined to assign a different "qcom,util-fact". In mainline we
+> can represent this by assigning the equivalent "ab_coeff" to all the
+> nodes that are part of "mm-snoc" downstream.
+Worth mentioning that snoc_mm used the same clock as snoc, which is not
+obvious with some of these older designs:
+
+static DEFINE_CLK_VOTER(snoc_msmbus_a_clk,  &snoc_a_clk.c,  LONG_MAX);
+static DEFINE_CLK_VOTER(snoc_mm_msmbus_a_clk,  &snoc_a_clk.c,  LONG_MAX);
+
+[...]
+
+> +
+> +static struct platform_driver msm8909_noc_driver = {
+> +	.probe = qnoc_probe,
+> +	.remove = qnoc_remove,
+> +	.driver = {
+> +		.name = "qnoc-msm8909",
+> +		.of_match_table = msm8909_noc_of_match,
+> +		.sync_state = icc_sync_state,
+> +	},
+> +};
+> +module_platform_driver(msm8909_noc_driver);
+And you may want this to be a bit higher up in the food chain!
+
+Otherwise I don't see anything obviously wrong, I assume you tested
+this without clk/pd_ignore_unused, with rpmcc cleanup and can confirm
+the QoS programming went through without angry resets.
 
 Konrad
 
