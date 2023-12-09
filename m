@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-4100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F5CE80B699
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 22:56:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2110180B69C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 22:56:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 26FF1280CA5
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 21:56:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D2574280FF1
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 21:56:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63F8C1D6BC;
-	Sat,  9 Dec 2023 21:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B70BF1C69E;
+	Sat,  9 Dec 2023 21:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lkAEoxxP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lBoFVRlE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B85E10A
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 13:56:06 -0800 (PST)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2c9f559b82cso36477801fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Dec 2023 13:56:06 -0800 (PST)
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C6E3103
+	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 13:56:07 -0800 (PST)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2ca2573d132so39917121fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Dec 2023 13:56:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702158964; x=1702763764; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702158965; x=1702763765; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5Xe0ItZ9gNc3ezmOAnEcbT+smftoMzThFnuNn/+rBU0=;
-        b=lkAEoxxPZznLyp/1759OSQ4TMtlb6l46PbEbfi6rNL2fsCODwSjGAbZjLz1h0ePU7B
-         oi8qGWC7X+v3ybIvvkzKsOPAaGEe0bi2R9sQjtmWdqoSGP2wP6PVMXE6QeSV0eLkbBDy
-         p4lMcTmR27/MRz7FWynV80H4ltqD3eJfHFBYYAuqveg7MtBSYyEe2rHuq/Adg7bCL366
-         3bumlYCu+bDkxeQFm8IZlsfAiKmuKzUJvjncIrezxBzYOguc4h5Bg8YFUtRSMJgTfloP
-         0USUll3YfMMqhgyw8OrP2pJT8M8ndWpq98JybZQn1qV4r70YcQAbdOz3RPYL9rNXpbse
-         L1mA==
+        bh=Iqjo5dHisDRwrhKSHqJTPFQ5wOEs+diDPVCxtZ4wynw=;
+        b=lBoFVRlEXC02haX04GCWKepLwzKRAI0Zw/eE2D/3XnG+7Vk/AbgoBLxnp5qOD2r1YW
+         gccqgB50cmjaRzmPIopaxEX7JhMR19j+6WSALJ+TC+tvuU3UWEyirQHzKBmZOVpk2Eb7
+         DEnQTtWFG7+stBExj4qKIoloWQxyoDTEoVTSoLvu83e44k9pCtxrbw4/X+/M2dfyCuJi
+         w8lPlaZRKJM0ZlyzHw0ydjlHMUkVlcWSHA1m7+EkRIxVFBFBaKucmFxWUC73moTG3g5E
+         /4TH2Z6qchrX12Dh5nXnHODNS2rUnrbG9ghbo0/0zkQvtp2p9OvawWy4i3Xp126NWhOz
+         rOjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702158964; x=1702763764;
+        d=1e100.net; s=20230601; t=1702158965; x=1702763765;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5Xe0ItZ9gNc3ezmOAnEcbT+smftoMzThFnuNn/+rBU0=;
-        b=SHIF0lqGmT6ZCjAncJR8z4Tfic2KJY8A3OvWW15vBsPHJeKtdazCjQVkZYTKGkhYab
-         rkVGJRLzPGHueFWw+xLRlcH4UWZrzpvJIHKpAQa3O8D3V13yfJr3M+mX7ny0EArR7VWz
-         8+iZOF0MHg/D07DhpZZJCknmYmITAaTGgflwQvviBWgkwaQnHERApCyo5UCV/vwXT/LM
-         BNn/BbnDBO9ZuM+6BblFPbaIKt1hNtGhkY+rKpXpFMA7p5SorrPUSDE9eFgx3wfsY1Qp
-         8C9B6QoS3t/pFRG+r5aRKP9WY7g6SYHpRUVCaZR15H2PCpaA73Dxv+ZzZMsx+7D+Lwkq
-         7FcA==
-X-Gm-Message-State: AOJu0YxL2N9Rk7aGLluV936RYxBqIf9e3st7V7UY0tPcwH+5d/6HJAXe
-	EHpjN9krxM+zsVPYgZ5PWMiwFA==
-X-Google-Smtp-Source: AGHT+IErQmHVfNHx3Ohpg253x96JGBoeWyJxk1TcVprDIAcd3s5js6efjoe7bTTdOLUjsUL3pBlrOw==
-X-Received: by 2002:a2e:a22c:0:b0:2cb:82a1:9893 with SMTP id i12-20020a2ea22c000000b002cb82a19893mr174778ljm.88.1702158964615;
-        Sat, 09 Dec 2023 13:56:04 -0800 (PST)
+        bh=Iqjo5dHisDRwrhKSHqJTPFQ5wOEs+diDPVCxtZ4wynw=;
+        b=lE5coCQQtpOkThLHedVX6lnnv0cBX9gEktMpAtxNbiVNRWthWLgM77q9oQZahVYPAv
+         MqPV9fFOpB2fY3HBnoDMNAp8fvOWRtvPiqWJP/ILWqy0pqNp6RY/sbBvLKnlQzk3+4Kl
+         fz2vCyAGB0TnsFIETHUxf7Ig1peupmz493Vsa68ZVG79XuThzpbD49rbKq8cuSdoou6q
+         RHUpFRt+3xmJ9tPnRspnTG07pfEwpO8hYhl+7iXOGXdfP75V/l2eMsZBTWOA+2huvyoN
+         PsuXC3IFkFkvaFtiz8SsVbVvdeSWQlsppEq4j3QmgGx/OBE0tP7zupsoEt+TpKXqyT2l
+         i8og==
+X-Gm-Message-State: AOJu0YxA8pcgAmdJlKqpRy6WVUIXeF1irEU0FKIfPkPLftCK06ezWuyW
+	GpHmcnIEoM0zqRmLcvDShQ7n+Q==
+X-Google-Smtp-Source: AGHT+IFubAjWZ4do8wQKj0af641r5+JD+IPoRZQF6ZK1TTErrrW6ML9sa5dMf7REXgAo6IcdWIKv/g==
+X-Received: by 2002:a2e:8041:0:b0:2ca:cb5:2ed8 with SMTP id p1-20020a2e8041000000b002ca0cb52ed8mr902219ljg.103.1702158965566;
+        Sat, 09 Dec 2023 13:56:05 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id e22-20020a2e9856000000b002ca061aa9d1sm665103ljj.88.2023.12.09.13.56.03
+        by smtp.gmail.com with ESMTPSA id e22-20020a2e9856000000b002ca061aa9d1sm665103ljj.88.2023.12.09.13.56.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sat, 09 Dec 2023 13:56:04 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -61,9 +61,9 @@ To: Andy Gross <agross@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH 3/4] soc: qcom: stats: support SM8150 platform
-Date: Sun, 10 Dec 2023 00:56:00 +0300
-Message-Id: <20231209215601.3543895-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 4/4] arm64: dts: qcom: sm8150: use SoC-specific compat for RPMh stats
+Date: Sun, 10 Dec 2023 00:56:01 +0300
+Message-Id: <20231209215601.3543895-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231209215601.3543895-1-dmitry.baryshkov@linaro.org>
 References: <20231209215601.3543895-1-dmitry.baryshkov@linaro.org>
@@ -75,41 +75,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On SM8150 the RPMh stats have 3 data records, but no DDR sleep stats,
-which demands platform-specific compatible and data.
+The SM8150 platform doesn't support DDR sleep stats, so it needs
+SoC-specific compat string for the RPMh stats data.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/soc/qcom/qcom_stats.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
-index 813c9f3c6bec..dd1b6fee7739 100644
---- a/drivers/soc/qcom/qcom_stats.c
-+++ b/drivers/soc/qcom/qcom_stats.c
-@@ -438,6 +438,14 @@ static const struct stats_config rpmh_data_sdm845 = {
- 	.subsystem_stats_in_smem = true,
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 3cba87e00123..fb41f91cefc6 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3950,7 +3950,7 @@ aoss_qmp: power-management@c300000 {
+ 		};
  
-+static const struct stats_config rpmh_data_sm8150 = {
-+	.stats_offset = 0x48,
-+	.num_records = 3,
-+	.appended_stats_avail = false,
-+	.dynamic_offset = false,
-+	.subsystem_stats_in_smem = true,
-+};
-+
- static const struct stats_config rpmh_data = {
- 	.stats_offset = 0x48,
- 	.num_records = 3,
-@@ -455,6 +463,7 @@ static const struct of_device_id qcom_stats_table[] = {
- 	{ .compatible = "qcom,rpm-stats", .data = &rpm_data },
- 	{ .compatible = "qcom,rpmh-stats", .data = &rpmh_data },
- 	{ .compatible = "qcom,sdm845-rpmh-stats", .data = &rpmh_data_sdm845 },
-+	{ .compatible = "qcom,sm8150-rpmh-stats", .data = &rpmh_data_sm8150 },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qcom_stats_table);
+ 		sram@c3f0000 {
+-			compatible = "qcom,rpmh-stats";
++			compatible = "qcom,sm8150-rpmh-stats";
+ 			reg = <0 0x0c3f0000 0 0x400>;
+ 		};
+ 
 -- 
 2.39.2
 
