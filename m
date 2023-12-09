@@ -1,49 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-4072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E973D80B1D4
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 04:04:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 394C780B1E2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 04:19:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83B0428179C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 03:04:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 907F428155A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 03:19:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D547810;
-	Sat,  9 Dec 2023 03:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C440610F6;
+	Sat,  9 Dec 2023 03:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="euQO/kIO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WWGblCDC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDA07F
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 03:04:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DFC8C433C7;
-	Sat,  9 Dec 2023 03:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A127F
+	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 03:19:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96368C433C8;
+	Sat,  9 Dec 2023 03:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702091047;
-	bh=3vQltoRukTTkz1lHKqidQXyH2BgK0KFdahQb9p9Gphg=;
+	s=k20201202; t=1702091957;
+	bh=SLaF6IE1Yn5LfSEved29p+6U9oFQ5UxNbVEWHYgWroI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=euQO/kIOq9QJRIEbTN3QKzcG2KrxK7XjTbfxD/08JVC4ltMtWrMiMj5KtaHAQqCbK
-	 Awft419GqWojtfhlvVcl784n4M4hq76nuRFzW+Df+ETPv4zGOagqg8LO34U7iH9xSP
-	 ZShHcrhDrKMyMMNCeIxX9O5m07CrOfRAByqEMZ7PAS/mw1jxp+7AXYoWsoMZqvClDA
-	 CdUlNMyNInmaHXo15pivb07FziAr/zHGBNwUVQe3rib/C3bPjTbKVuDEOietn4QFnj
-	 mvCz9BTzHeVThdYYsGFgQ6ctJLz56ZZ2vgUmsOWWcxRkmiyW9Gb3XzwIrJS/4maPDw
-	 8Ye/66y3CZzzg==
-Date: Fri, 8 Dec 2023 19:08:41 -0800
+	b=WWGblCDCoYH1Yt3S514ZcwZfMnwlKoOox75g1Hwe0D9a05eO3Ij375MDOVH00cfB7
+	 F9GSmpPY0qsgPlVdlD+BztWy3UrErQrwLV7Sb+RamBia2AZhc5BoMS3LNzqHt2P/oj
+	 zdRy6OVi6ZQLYJ9S3OH7WBv5qbbhhkJLpH87zkVHCovy+4WW29Q1kmcr0oeSSAD8kh
+	 R0r3cCDTMx5MIjBaE/M3V39vUVWRV+ZrpCvEI+oUa32tAIt75g7dGNp7pJ+e3gIvZl
+	 YXnTMSVQhTMGzNCy5T39kX9AbHITYWHzuNle2XYqjG/zcD6+arijgJs+bJSEyf91Ho
+	 MqaSQYU20KGfQ==
+Date: Fri, 8 Dec 2023 19:23:51 -0800
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Petr Vorel <pvorel@suse.cz>, linux-arm-msm@vger.kernel.org, 
-	Petr Vorel <petr.vorel@gmail.com>, Martin Botka <martin.botka@somainline.org>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Aboothahir U <aboothahirpkd@gmail.com>
-Subject: Re: [PATCH v2 1/1] arm64: defconfig: Enable SDM660 Clock Controllers
-Message-ID: <xvbvpefm5gwr5yogd6vvnhhxzjktdxlu7dpya3pms35e6b6dcq@gibfakuohmtc>
-References: <20231115205318.2536441-1-pvorel@suse.cz>
- <2bferiemkljxua63v6ogifpzhlbj6m2gycxrbitgmc3ybj2a4p@7kfnzcrjj6jr>
- <CAA8EJpoEzTeOSVy5qVCs6eSBTxWKRfDq0UzrEjz1Kx1sG9xkCg@mail.gmail.com>
+To: David Laight <David.Laight@aculab.com>
+Cc: 'Bjorn Andersson' <quic_bjorande@quicinc.com>, 
+	Andy Gross <agross@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	Randy Dunlap <rdunlap@infradead.org>
+Subject: Re: [PATCH] soc: qcom: stats: Fix division issue on 32-bit platforms
+Message-ID: <i6umadq3losoudlpdpj3pst2gizevwlvqgohcewcaanvu2svow@ojionieh722v>
+References: <20231205-qcom_stats-aeabi_uldivmod-fix-v1-1-f94ecec5e894@quicinc.com>
+ <e59bb661054945f7a77b2f67c70d30f7@AcuMS.aculab.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,78 +51,78 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpoEzTeOSVy5qVCs6eSBTxWKRfDq0UzrEjz1Kx1sG9xkCg@mail.gmail.com>
+In-Reply-To: <e59bb661054945f7a77b2f67c70d30f7@AcuMS.aculab.com>
 
-On Thu, Dec 07, 2023 at 08:54:32PM +0200, Dmitry Baryshkov wrote:
-> On Thu, 7 Dec 2023 at 18:27, Bjorn Andersson <andersson@kernel.org> wrote:
-> >
-> > On Wed, Nov 15, 2023 at 09:53:18PM +0100, Petr Vorel wrote:
-> > > From: Petr Vorel <petr.vorel@gmail.com>
-> > >
-> > > Enable support for the multimedia clock controller on SDM660 devices
-> > > and graphics clock controller on SDM630/636/660 devices.
-> > >
-> > > Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
-> > > ---
-> > > Changes v1->v2:
-> > > * added commit message (not just the subject)
-> > >
-> > > NOTE motivation for this is that some not yet mainlined DTS already use
-> > > both:
-> > >
-> > > https://github.com/sdm660-mainline/linux/blob/sdm660-next-stable/arch/arm64/boot/dts/qcom/sdm636-asus-x00td.dts
-> > >
-> > > Kind regards,
-> > > Petr
-> > >
-> > >  arch/arm64/configs/defconfig | 2 ++
-> > >  1 file changed, 2 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> > > index acba803835b9..10a098aa8b1b 100644
-> > > --- a/arch/arm64/configs/defconfig
-> > > +++ b/arch/arm64/configs/defconfig
-> > > @@ -1235,6 +1235,8 @@ CONFIG_SC_GCC_8180X=y
-> > >  CONFIG_SC_GCC_8280XP=y
-> > >  CONFIG_SC_GPUCC_8280XP=m
-> > >  CONFIG_SC_LPASSCC_8280XP=m
-> > > +CONFIG_SDM_MMCC_660=m
-> > > +CONFIG_SDM_GPUCC_660=y
-> >
-> > I'd expect the GPU clock controller to be a module, can you please
-> > clarify why it needs to be builtin?
+On Wed, Dec 06, 2023 at 02:07:16PM +0000, David Laight wrote:
+> From: Bjorn Andersson
+> > Sent: 06 December 2023 00:44
+> > 
+> > commit 'e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")' made it
+> > in with a mult_frac() which causes link errors on Arm and PowerPC
+> > builds:
+> > 
+> >   ERROR: modpost: "__aeabi_uldivmod" [drivers/soc/qcom/qcom_stats.ko] undefined!
+> > 
+> > Expand the mult_frac() to avoid this problem.
+> > 
+> > Fixes: e84e61bdb97c ("soc: qcom: stats: Add DDR sleep stats")
+> > Reported-by: Randy Dunlap <rdunlap@infradead.org>
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> >  drivers/soc/qcom/qcom_stats.c | 3 ++-
+> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/soc/qcom/qcom_stats.c b/drivers/soc/qcom/qcom_stats.c
+> > index 4763d62a8cb0..5ba61232313e 100644
+> > --- a/drivers/soc/qcom/qcom_stats.c
+> > +++ b/drivers/soc/qcom/qcom_stats.c
+> > @@ -221,7 +221,8 @@ static int qcom_ddr_stats_show(struct seq_file *s, void *unused)
+> > 
+> >  	for (i = 0; i < ddr.entry_count; i++) {
+> >  		/* Convert the period to ms */
+> > -		entry[i].dur = mult_frac(MSEC_PER_SEC, entry[i].dur, ARCH_TIMER_FREQ);
+> > +		entry[i].dur *= MSEC_PER_SEC;
+> > +		entry[i].dur = div_u64(entry[i].dur, ARCH_TIMER_FREQ);
 > 
-> To allow the display to be enabled early enough?
+> Is that right?
+> At a guess mult_frac(a, b, c) is doing a 32x32 multiply and then a 64x32
+> divide to generate a 32bit result.
+> So I'd guess entry[i].dur is 32bit? (this code isn't in -rc4 ...).
+> Which means you are now discarding the high bits.
 > 
 
-If that's your goal, then it might be less optimal to have MMCC as a
-module...
+entry[i].dur is 64 bit, so this should work just fine.
 
-We should keep drivers essential for reaching the ramdisk as builtin
-(which pretty much means the stuff necessary to establish /dev/console),
-and then the rest as modules.
+Arnd proposed that as ARCH_TIMER_FREQ is evenly divisible by
+MSEC_PER_SEC we just div_u64(dur, ARCH_TIMER_FREQ / MSEC_PER_SEC), and I
+picked that patch instead.
 
-There are several here which are =y because it used to be that probe
-deferral on power-domains didn't work. We should drop those to =m as
-well...
+> You've also added a very slow 64bit divide.
 
-Thanks,
+Without checking the generated code, I'd expect this to be a slow 64-bit
+division already. But this is a debug function, so it should be fine to
+take that penalty.
+
+> A multiple by reciprocal calculation will be much better.
+> Since absolute accuracy almost certainly doesn't matter here convert:
+> 	dur * 1000 / FREQ
+> to
+> 	(dur * (u32)(1000ull << 32 / FREQ)) >> 32
+> which will be fine provided FREQ >= 1000
+> 
+
+I'm quite sure you're right regarding the accuracy. I think as this
+isn't in a hot path, the more readable div_u64() feels like a reasonable
+choice.
+
+Thank you for your input and suggestion though!
+
+Regards,
 Bjorn
 
-> >
-> > Regards,
-> > Bjorn
-> >
-> > >  CONFIG_SDM_CAMCC_845=m
-> > >  CONFIG_SDM_GPUCC_845=y
-> > >  CONFIG_SDM_VIDEOCC_845=y
-> > > --
-> > > 2.42.0
-> > >
-> >
+> 	David
 > 
-> 
-> -- 
-> With best wishes
-> Dmitry
+> -
+> Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
+> Registration No: 1397386 (Wales)
 
