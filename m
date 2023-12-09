@@ -1,61 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-4087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1113B80B4B1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 15:00:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C703B80B4D8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 15:23:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1FDB281118
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 14:00:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5BB511F2108D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 14:23:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1011A13FE6;
-	Sat,  9 Dec 2023 14:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D47E1549F;
+	Sat,  9 Dec 2023 14:23:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Tt3H48c2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QHoIi1T8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9C191703
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 06:00:36 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-a1f6433bc1eso353508466b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Dec 2023 06:00:36 -0800 (PST)
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D2A10E7
+	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 06:23:14 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-a1e83adfe72so293856066b.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Dec 2023 06:23:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702130435; x=1702735235; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LnMLcnjkb1BIc/27S0iNwDJ0c/b6qRVcdQruabcLx60=;
-        b=Tt3H48c20r9rf6i1v7GjVz7t+jZESqRLhj0PumLX47D9fOXt5DIMl8zGHPKyvHM6Cl
-         brMfUxQuspFky8Em4KMRJ1lwEH0GpE245FDH/THJCNwXfQQROwsf1xhFjqleLZIHh0Wu
-         Sd7l8wOO4UBjroot3HJtu9yKMy7ELvJ5hVY/SARdt0TXnuO0j4C0aV9eyarZYWtLU10i
-         PdsnPAcZ+Jm8nC7OrsOz79bNOB3tkMFREtyCZTUpUetmM9/NhfVQU4RFey0EQNgQ/ZV6
-         ss1q5xgVXIdp7rLSfZOlDTvnf1F0UQMMRCOAPn9i88djBYLqKjYRMv/yOg8wAq/FIDy8
-         UE0g==
+        d=linaro.org; s=google; t=1702131792; x=1702736592; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4g0Ql0HSI1unyhrbNS+xVTJppYqi/HCOhP+DhZyP3C0=;
+        b=QHoIi1T8IHWPlxDIYARIPVNEzTeAyD7LXqImrtc1ZhTcNS8EhtOkqp4lwJqTIvXvkY
+         R4TeTFUvwiWqxuKyPPuxM+1Nho+KyFyKg4OYx3oDpXO3bxjuIFUtkTYO/678qc8fH2Rl
+         +fqrxKouThlYZcFAKoxd+a3yU0A3vbUb9wqeOe9FE04zicT/kyPnftArjFM2EayR8Jz2
+         UgFiYGXmdp7F/aVJORRPw0N6ne8AGp4m4UNa0Y90GcQqNStGumslRM1HNpzJBKq1cwVI
+         bjhItoMh9jNQ//MrWGn/zKI2kFoHZFSD78hrdrIAW1vnJy3ZEkUi8Kd7gxqvw5yq3Ran
+         ZAPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702130435; x=1702735235;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LnMLcnjkb1BIc/27S0iNwDJ0c/b6qRVcdQruabcLx60=;
-        b=AP7s6c/8Kry3S/T6bcBUSGDFcx7xMEdxNpxopNPiLcJwghvhVuzKFpzV1XjFQ8XT4T
-         Sd0y6tiYaXjSIgrIjwrFHtRzAGjvj9s/1hVUTGg9o4R0p8eat6hcPdlsBEvgLuay6Jcm
-         KNdQoAQcz996aof9+crxLmoc+7OeQcDDdeLUC1mZn9E7WD8NxbXUHdwTTpVL+6XC3HXj
-         AF/0Q6lJ5Vjdt06sVY/WNyr+OxlvTldGoSJFiLL8mmxTfU9WmSxJmGVkfBZgV6QzregC
-         MbUQoOr8waoc4fk9HG3QjnHsWYGyvqa7rOArLquqQ+pgNkt5iYyaVAXMSgRVKjseZjQ6
-         NNFw==
-X-Gm-Message-State: AOJu0YwKSbzRz1TRY3ulyeC2FcfWUdwjFjesJ1rCpTyvMovtHcX02gcM
-	z34grNpFHxVLfL9L94rxC7oVfA==
-X-Google-Smtp-Source: AGHT+IEXr1lXL0lwzMvYm5jiS6MD218fxa0+rOiA5rToq8olz4MZ+/x9svL77Z5q+Gp6YBnv7KJSCw==
-X-Received: by 2002:a17:906:292:b0:a1c:892e:9e68 with SMTP id 18-20020a170906029200b00a1c892e9e68mr1952384ejf.29.1702130434849;
-        Sat, 09 Dec 2023 06:00:34 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702131792; x=1702736592;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4g0Ql0HSI1unyhrbNS+xVTJppYqi/HCOhP+DhZyP3C0=;
+        b=YvpNXbKbG6Wp61ejZv2aCHK6Hc+K3Yrlgrt2aCNorEyY4sCNsG+qPuCm565RB00zwh
+         SZAwTWtj0ox45T1DXMxc3/N+mGsuApg5zKj1WmblDkdyJr2Ld+eodiqMFmaw4X5qmEn0
+         PJ08dX5TdQp48OGKdltinrStOA3blLb6BHnK4MnCBqgxOmXcwI5pJ0DW2nJjZRLr57cb
+         5oUOw/3Fg9smvoE5vqfhc4yee1d/2fqZeeRsoXrNNk6FjhvLigFFA0K4cFvI7grvG8vz
+         +kUgGj1pLdpOT6uPiowomMXOSQKKChfOeC4g+5aZTFls0o3ji7gffunK0DRzEGes3+tJ
+         LZJA==
+X-Gm-Message-State: AOJu0YwKxmnyl32zAu0MbimMtEALs1fpdDM6Y+KyViGGZzJD8Oibklim
+	eVrG1C9Rj4Zr759mA9LBkjEiTw==
+X-Google-Smtp-Source: AGHT+IF/+osBbGWpGXWQzTH9f0PuH26cfc5YGS5PW9IGpDDm9sF3L5L005T3bLJ5Vv7bl/Tc3vVXDQ==
+X-Received: by 2002:a17:906:106:b0:a10:ef07:fa9e with SMTP id 6-20020a170906010600b00a10ef07fa9emr1117110eje.6.1702131792580;
+        Sat, 09 Dec 2023 06:23:12 -0800 (PST)
 Received: from [192.168.36.128] (178235179179.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.179])
-        by smtp.gmail.com with ESMTPSA id mn6-20020a1709077b0600b00a1dbda310f4sm2231561ejc.158.2023.12.09.06.00.32
+        by smtp.gmail.com with ESMTPSA id tb19-20020a1709078b9300b00a1cd30d06d1sm2311036ejc.14.2023.12.09.06.23.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Dec 2023 06:00:34 -0800 (PST)
-Message-ID: <1c99bb49-51e9-458e-acef-a0615dca95ce@linaro.org>
-Date: Sat, 9 Dec 2023 15:00:31 +0100
+        Sat, 09 Dec 2023 06:23:12 -0800 (PST)
+Message-ID: <b71982c3-9f28-4586-8528-3a4f5dbc6eae@linaro.org>
+Date: Sat, 9 Dec 2023 15:23:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,7 +62,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/2] Resolve MPM register space situation
+Subject: Re: [PATCH v7 2/2] irqchip: irq-qcom-mpm: Support passing a slice of
+ SRAM as reg space
+Content-Language: en-US
 To: Thomas Gleixner <tglx@linutronix.de>, Andy Gross <agross@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>, Marc Zyngier <maz@kernel.org>,
  Rob Herring <robh+dt@kernel.org>,
@@ -71,12 +72,10 @@ To: Thomas Gleixner <tglx@linutronix.de>, Andy Gross <agross@kernel.org>,
  Shawn Guo <shawn.guo@linaro.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ devicetree@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 References: <20230328-topic-msgram_mpm-v7-0-6ee2bfeaac2c@linaro.org>
- <87il58sr12.ffs@tglx>
-Content-Language: en-US
+ <20230328-topic-msgram_mpm-v7-2-6ee2bfeaac2c@linaro.org>
+ <87fs0csqu1.ffs@tglx>
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  xsFNBF9ALYUBEADWAhxdTBWrwAgDQQzc1O/bJ5O7b6cXYxwbBd9xKP7MICh5YA0DcCjJSOum
@@ -113,47 +112,47 @@ Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
  bGqMHex48FVZhexNPYOd58EY9/7mL5u0sJmo+jTeb4JBgIbFPJCFyng4HwbniWgQJZ1WqaUC
  nas9J77uICis2WH7N8Bs9jy0wQYezNzqS+FxoNXmDQg2jetX8en4bO2Di7Pmx0jXA4TOb9TM
  izWDgYvmBE8=
-In-Reply-To: <87il58sr12.ffs@tglx>
+In-Reply-To: <87fs0csqu1.ffs@tglx>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 8.12.2023 15:33, Thomas Gleixner wrote:
-> Konrad!
-> 
+On 8.12.2023 15:37, Thomas Gleixner wrote:
 > On Mon, Nov 27 2023 at 16:52, Konrad Dybcio wrote:
 > 
-> This list of version changes is useful, but seriously not on top of the
-> cover letter. It makes me scroll down 60 lines to find the real meat.
-Ack
+> The prefix in the subject is wrong. Also please write out register. This
+> is not Xitter.
+Had a feeling it would be too long, but actually it'd be perfect
+72 chars :)
 
 > 
-> <SNIP>
+>> The MPM hardware is accessible to us from the ARM CPUs through a shared
 > 
->> Depends on resolution of https://github.com/devicetree-org/dt-schema/issues/104
-> 
-> Is this resolved? I can't figure out from this non-format whether this
-> belongs to V1 or to the actual cover letter...
-Yes it has been resolved since
+> to us? Can you access that hardware? I doubt it.
+With a small enough "stick".. but I get your point
 
 > 
->> The MPM (and some other things, irrelevant to this patchset) resides
->> (as far as the ARM cores are concerned, anyway) in a MMIO-mapped region
->> that's a portion of the RPM (low-power management core)'s RAM, known
->> as the RPM Message RAM. Representing this relation in the Device Tree
->> creates some challenges, as one would either have to treat a memory
->> region as a bus, map nodes in a way such that their reg-s would be
->> overlapping, or supply the nodes with a slice of that region.
->>
->> This series implements the third option, by adding a qcom,rpm-msg-ram
->> property, which has been used for some drivers poking into this region
->> before. Bindings ABI compatibility is preserved through keeping the
->> "normal" (a.k.a read the reg property and map that region) way of
->> passing the register space.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Please use neutral tone as documented in Documentation/process/
 > 
-> Signed-off-by on the cover letter is completely meaningless.
-Yes, I realize that. Blame b4.
+>> memory region (RPM MSG RAM) that's also concurrently accessed by other
+>> kinds of cores on the system (like modem, ADSP etc.). Modeling this
+>> relation in a (somewhat) sane manner in the device tree basically
+>> requires us to either present the MPM as a child of said memory region
+>> (which makes little sense, as a mapped memory carveout is not a bus),
+>> define nodes which bleed their register spaces into one another, or
+>> passing their slice of the MSG RAM through some kind of a property.
+>>
+>> Go with the third option and add a way to map a region passed through
+>> the "qcom,rpm-msg-ram" property as our register space.
+>>
+>> The current way of using 'reg' is preserved for ABI reasons.
+> 
+> It's not an ABI reason. It's backwards compatibility with old device
+> trees, right?
+Yes, I thought of something else.
+
+> 
+> I'll fix it up for you this time. No need to resend.
+Thanks!
 
 Konrad
 
