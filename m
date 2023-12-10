@@ -1,204 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-4123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AC6E80BB87
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 15:07:44 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD83B80BBE8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 16:20:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15854280DF1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 14:07:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 67A3BB20A73
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 15:20:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88E53F9E2;
-	Sun, 10 Dec 2023 14:07:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SJ2LnbdZ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3E9415E90;
+	Sun, 10 Dec 2023 15:20:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67F3FF3;
-	Sun, 10 Dec 2023 06:07:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702217257; x=1733753257;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=AqMQ12hypplovnBMfrnx3Zg6ItOfjkwRtKkMHvGMTUQ=;
-  b=SJ2LnbdZKqcEGWcnOaXiM1zfoP+4U6Vhrep/6d3RrWSh23MFacewplb0
-   Sq05Y/dG8lObddFbVlvwec0SI+XPgjT8h2bwaEq+qgiHv5UqIZOJ34Lqu
-   gtLazybtQdqykJfCE7t/huhU1MufZesBVBXflKB5Dj4GmXmiP6ue+clBx
-   DiZ2O+MbfYzH+hnNtffm2lwUua6YYCV6pebWBUsCPVhkTVjMxMUXSi/MG
-   aaB4p/e19VfKj30ASUg2nzUE1kLausuLi50tYNp0di7nuwnjRUCg/sIVH
-   hHT1xQ7pfZHBYlgSlQoeP6QxWpueQ/pa+DyeHnHL94o3mz0RAzDFE8yLC
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10920"; a="7914854"
-X-IronPort-AV: E=Sophos;i="6.04,265,1695711600"; 
-   d="scan'208";a="7914854"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2023 06:07:36 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10920"; a="722435368"
-X-IronPort-AV: E=Sophos;i="6.04,265,1695711600"; 
-   d="scan'208";a="722435368"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by orsmga003.jf.intel.com with ESMTP; 10 Dec 2023 06:07:32 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rCKSv-000GuU-29;
-	Sun, 10 Dec 2023 14:07:29 +0000
-Date: Sun, 10 Dec 2023 22:06:59 +0800
-From: kernel test robot <lkp@intel.com>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 12/16] drm/msm/dpu: add an API to setup the CDM block
- for writeback
-Message-ID: <202312102149.qmbCdsg2-lkp@intel.com>
-References: <20231208050641.32582-13-quic_abhinavk@quicinc.com>
+Received: from mail-m17244.xmail.ntesmail.com (mail-m17244.xmail.ntesmail.com [45.195.17.244])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 382D3F0;
+	Sun, 10 Dec 2023 07:20:37 -0800 (PST)
+Received: from amadeus-Vostro-3710.lan (unknown [113.118.189.146])
+	by mail-m121145.qiye.163.com (Hmail) with ESMTPA id 4F7F08000A2;
+	Sun, 10 Dec 2023 23:20:18 +0800 (CST)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Andy Gross <agross@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH 1/1] arm64: dts: qcom: ipq8074: add MicroSD node
+Date: Sun, 10 Dec 2023 23:20:15 +0800
+Message-Id: <20231210152015.2243310-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231208050641.32582-13-quic_abhinavk@quicinc.com>
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCTUIfVk1NSUJITBgZQkgeTVUTARMWGhIXJBQOD1
+	lXWRgSC1lBWUpKSFVKSkNVSkNCVUpPTVlXWRYaDxIVHRRZQVlPS0hVSkpLSEpDVUpLS1VLWQY+
+X-HM-Tid: 0a8c54509dc1b03akuuu4f7f08000a2
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6OlE6TTo5TjwwFkwPFypKGBcp
+	IxRPCy5VSlVKTEtJSUlKTUpCSUJKVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
+	SFVKSkNVSkNCVUpPTVlXWQgBWUFJT05CNwY+
 
-Hi Abhinav,
+Enable MicroSD card found on ipq8074 devices.
+Tested fine when SD card IO voltage is 3.3v.
 
-kernel test robot noticed the following build warnings:
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-[auto build test WARNING on next-20231207]
-[also build test WARNING on v6.7-rc4]
-[cannot apply to drm-misc/drm-misc-next linus/master v6.7-rc4 v6.7-rc3 v6.7-rc2]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Abhinav-Kumar/drm-msm-dpu-add-formats-check-for-writeback-encoder/20231208-130820
-base:   next-20231207
-patch link:    https://lore.kernel.org/r/20231208050641.32582-13-quic_abhinavk%40quicinc.com
-patch subject: [PATCH v2 12/16] drm/msm/dpu: add an API to setup the CDM block for writeback
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20231210/202312102149.qmbCdsg2-lkp@intel.com/config)
-compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231210/202312102149.qmbCdsg2-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202312102149.qmbCdsg2-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c:267: warning: expecting prototype for dpu_encoder_phys_wb_setup_cdp(). Prototype was for dpu_encoder_helper_phys_setup_cdm() instead
-
-
-vim +267 drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-
-   261	
-   262	/**
-   263	 * dpu_encoder_phys_wb_setup_cdp - setup chroma down sampling block
-   264	 * @phys_enc:Pointer to physical encoder
-   265	 */
-   266	static void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys *phys_enc)
- > 267	{
-   268		struct dpu_hw_cdm *hw_cdm;
-   269		struct dpu_hw_cdm_cfg *cdm_cfg;
-   270		struct dpu_hw_pingpong *hw_pp;
-   271		struct dpu_encoder_phys_wb *wb_enc;
-   272		const struct msm_format *format;
-   273		const struct dpu_format *dpu_fmt;
-   274		struct drm_writeback_job *wb_job;
-   275		int ret;
-   276	
-   277		if (!phys_enc)
-   278			return;
-   279	
-   280		wb_enc = to_dpu_encoder_phys_wb(phys_enc);
-   281		cdm_cfg = &wb_enc->cdm_cfg;
-   282		hw_pp = phys_enc->hw_pp;
-   283		hw_cdm = phys_enc->hw_cdm;
-   284		wb_job = wb_enc->wb_job;
-   285	
-   286		format = msm_framebuffer_format(wb_enc->wb_job->fb);
-   287		dpu_fmt = dpu_get_dpu_format_ext(format->pixel_format, wb_job->fb->modifier);
-   288	
-   289		if (!hw_cdm)
-   290			return;
-   291	
-   292		if (!DPU_FORMAT_IS_YUV(dpu_fmt)) {
-   293			DPU_DEBUG("[enc:%d] cdm_disable fmt:%x\n", DRMID(phys_enc->parent),
-   294				  dpu_fmt->base.pixel_format);
-   295			if (hw_cdm->ops.disable)
-   296				hw_cdm->ops.disable(hw_cdm);
-   297	
-   298			return;
-   299		}
-   300	
-   301		memset(cdm_cfg, 0, sizeof(struct dpu_hw_cdm_cfg));
-   302	
-   303		cdm_cfg->output_width = wb_job->fb->width;
-   304		cdm_cfg->output_height = wb_job->fb->height;
-   305		cdm_cfg->output_fmt = dpu_fmt;
-   306		cdm_cfg->output_type = CDM_CDWN_OUTPUT_WB;
-   307		cdm_cfg->output_bit_depth = DPU_FORMAT_IS_DX(dpu_fmt) ?
-   308				CDM_CDWN_OUTPUT_10BIT : CDM_CDWN_OUTPUT_8BIT;
-   309		cdm_cfg->csc_cfg = dpu_hw_get_csc_cfg(DPU_HW_RGB2YUV_601L_10BIT);
-   310		if (!cdm_cfg->csc_cfg) {
-   311			DPU_ERROR("valid csc not found\n");
-   312			return;
-   313		}
-   314	
-   315		/* enable 10 bit logic */
-   316		switch (cdm_cfg->output_fmt->chroma_sample) {
-   317		case DPU_CHROMA_RGB:
-   318			cdm_cfg->h_cdwn_type = CDM_CDWN_DISABLE;
-   319			cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
-   320			break;
-   321		case DPU_CHROMA_H2V1:
-   322			cdm_cfg->h_cdwn_type = CDM_CDWN_COSITE;
-   323			cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
-   324			break;
-   325		case DPU_CHROMA_420:
-   326			cdm_cfg->h_cdwn_type = CDM_CDWN_COSITE;
-   327			cdm_cfg->v_cdwn_type = CDM_CDWN_OFFSITE;
-   328			break;
-   329		case DPU_CHROMA_H1V2:
-   330		default:
-   331			DPU_ERROR("[enc:%d] unsupported chroma sampling type\n",
-   332				  DRMID(phys_enc->parent));
-   333			cdm_cfg->h_cdwn_type = CDM_CDWN_DISABLE;
-   334			cdm_cfg->v_cdwn_type = CDM_CDWN_DISABLE;
-   335			break;
-   336		}
-   337	
-   338		DPU_DEBUG("[enc:%d] cdm_enable:%d,%d,%X,%d,%d,%d,%d]\n",
-   339			  DRMID(phys_enc->parent), cdm_cfg->output_width,
-   340			  cdm_cfg->output_height, cdm_cfg->output_fmt->base.pixel_format,
-   341			  cdm_cfg->output_type, cdm_cfg->output_bit_depth,
-   342			  cdm_cfg->h_cdwn_type, cdm_cfg->v_cdwn_type);
-   343	
-   344		if (hw_cdm->ops.enable) {
-   345			cdm_cfg->pp_id = hw_pp->idx;
-   346			ret = hw_cdm->ops.enable(hw_cdm, cdm_cfg);
-   347			if (ret < 0) {
-   348				DPU_ERROR("[enc:%d] failed to enable CDM; ret:%d\n",
-   349					  DRMID(phys_enc->parent), ret);
-   350				return;
-   351			}
-   352		}
-   353	}
-   354	
-
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index a4f7ae35be27..4f23c4459112 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -422,6 +422,26 @@ sdhc_1: mmc@7824900 {
+ 			status = "disabled";
+ 		};
+ 
++		sdhc_2: mmc@7864900 {
++			compatible = "qcom,sdhci-msm-v4";
++			reg = <0x7864900 0x500>, <0x7864000 0x800>;
++			reg-names = "hc", "core";
++
++			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 221 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
++
++			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
++				 <&gcc GCC_SDCC2_APPS_CLK>,
++				 <&xo>;
++			clock-names = "iface", "core", "xo";
++			resets = <&gcc GCC_SDCC2_BCR>;
++			max-frequency = <192000000>;
++			bus-width = <4>;
++
++			status = "disabled";
++		};
++
+ 		blsp_dma: dma-controller@7884000 {
+ 			compatible = "qcom,bam-v1.7.0";
+ 			reg = <0x07884000 0x2b000>;
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.25.1
+
 
