@@ -1,283 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-4111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BBC780B78E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 00:22:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4653B80B849
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 02:18:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4DC98280FB0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Dec 2023 23:22:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7712D1C20340
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 01:18:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E874120DD2;
-	Sat,  9 Dec 2023 23:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 382A37FF;
+	Sun, 10 Dec 2023 01:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d3xp09Fd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OdBxe7yl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFE9D1A1
-	for <linux-arm-msm@vger.kernel.org>; Sat,  9 Dec 2023 15:21:42 -0800 (PST)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2c9f7fe6623so39898311fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Dec 2023 15:21:42 -0800 (PST)
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADD86D0;
+	Sat,  9 Dec 2023 17:18:37 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-3332e351670so3169978f8f.0;
+        Sat, 09 Dec 2023 17:18:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702164101; x=1702768901; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CB+gYpOOF5znwwoZmws+FfZHIzH+rl1BpCW0+2oHpfo=;
-        b=d3xp09Fdnd5tosEwSWsfNALi1B0TZ6EeKmROgdO6NPApzyalsQoW3xsypWtVgbcySi
-         XlYH52JYPjZP8cV0mq2fqnknMjB9FDXJexaCDid8OMGYjWSU8JPZ9dXprV6wquA0xR/j
-         OgyCsmc2fnxAvjdsnWomGikSU4vjnWTQwwj3vLbv7H3Xp9E4KuCIaqw5pkMFHSyxhAUb
-         zTJcBxrLRR2Vst44xuf4wu5GAlvbeoOW3xH4l4AKycMpJOII8UV9zaeSBHYnokvspOXB
-         0HmfDG9xs8SZlVKCxV1yRArc6tvsJIPUY2rfBVoUdUbHGiVCQDgLfX5F7LGjQXC8Fueu
-         JP9w==
+        d=gmail.com; s=20230601; t=1702171116; x=1702775916; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OSqJ3Gq1m5O067Yev9/OhXEqr6xxNOyvhwu0WzwCQqM=;
+        b=OdBxe7ylAJGaQPnQB2Y92RuHLAXnc+aAeYX4FOmIHvOrNyG8PNVnGqV8R7yNVZQtfB
+         uolsb+OQpFJ+BeJk3SCBXSuqvqZ7hpIS6bAKiBfs6Pc8p2cCJ2IluGioYchsIBsVkm5V
+         WA+AhaQXjXUQMxNc0GpJKPvLpQ/YfU/O9AGQ59Zjt80Fqjm1gTr9ClonQR56rXrnyJrU
+         bgUFEgSXaz3pG5fkeFR4l4l3UHma71zrhpG3eQlHOmu63BR851//bJMddgRsty8klcf5
+         /6fneuE3vBAzYPjhdL6z5OOFFFEaNcbh70FgURPS5t0WpYeWhChJng+7ioy1YVHekv2O
+         ELNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702164101; x=1702768901;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CB+gYpOOF5znwwoZmws+FfZHIzH+rl1BpCW0+2oHpfo=;
-        b=OT/hRTdQLBi25mHb0igzocg3yELmGonXWIVcZcFE21rJzUJBIWtyWMbHj2ck43CbRc
-         gVUCsR0XfkfcDVIjDLnHfGbGWkZqRXoJiYJfLgp9mhYZ25MjMET1F/4PGbd0s+HvhwAN
-         rfxVegEtHHE3+8N1BIahhJBkFnAq3Txz0k5m1jGI9pNJ4rRk48IVW3hOOmEAL9P+hSRF
-         a3f+y0/OjI6tEacvJnGdrVHV4q7AeLj8caZP5EU6rcWuu1iWdxa3kJ138iY1iGZQ8Mau
-         b/c5Ragwwz7m/f+7rdq63RiPqete6Q9BFbs2TI7Qjo0r9f2c3Yssds110WaRJpCv3qxP
-         8kYQ==
-X-Gm-Message-State: AOJu0YyXKHkxYFZKKcOnDWDQ+Dg5SnLtg1jCyXFdN36I/RMuuMSpVkDC
-	Gc3vNxg7I1BZXzZU2fTqTMThyA==
-X-Google-Smtp-Source: AGHT+IErepnmxlUSSu2LtUamdHgtGjBYsOtJfnOnFgtxzoGlTjAlnVsfcK+Nm6HU/oPr4UL1C2+jSg==
-X-Received: by 2002:a2e:380b:0:b0:2c9:f874:d93a with SMTP id f11-20020a2e380b000000b002c9f874d93amr563537lja.59.1702164101144;
-        Sat, 09 Dec 2023 15:21:41 -0800 (PST)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id z18-20020a2ebe12000000b002c9f59f1748sm685258ljq.7.2023.12.09.15.21.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Dec 2023 15:21:40 -0800 (PST)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc: Stephen Boyd <swboyd@chromium.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: [PATCH 9/9] arm64: dts: qcom: sm8150-hdk: enable DisplayPort and USB-C altmode
-Date: Sun, 10 Dec 2023 02:21:32 +0300
-Message-Id: <20231209232132.3580045-10-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231209232132.3580045-1-dmitry.baryshkov@linaro.org>
-References: <20231209232132.3580045-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20230601; t=1702171116; x=1702775916;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OSqJ3Gq1m5O067Yev9/OhXEqr6xxNOyvhwu0WzwCQqM=;
+        b=lot2+BMaZ0Y7zfkM3j0lc300tg4IY7JcmIUoxyon0UeBolJzIv/8BJrM8cW3zPXjq3
+         eJRFI9unOA+FQTsWzvebBtbX5mjJOFeb5en2Mq/qVIgg5kr3K+tIFhE+b7YaHqU0io3h
+         R3Hnl3VB03AxtnPO4YRhsiimkK53svk7azeR8u08k7dYhGums6zAM9yIYkSfBff7DhkQ
+         XJVPCaXUi2PpqnM2cUVISE+NVbJwLfbLerdG6/YIBdF1Q9wn1e1SSPpLOGtAsnWTHV2Q
+         HSE2ORby1xotD049LF4hIAaIDIcqrVQgp+kPGPAi/VRubfvrfR3Mc6wbI11gQRqfkWGj
+         boMw==
+X-Gm-Message-State: AOJu0YyU2zvLxbJfQRKSA7Ji41EOP54uG8MtJbiKew3u1DFTg5nT9ZAl
+	NSwjrJSIxMrJk3/JhZVxiJYykn5DoRM=
+X-Google-Smtp-Source: AGHT+IEBEg+/hyyuNVUclgs1+x3sTO6RBlnRuYIq+IYOYB62kMo2yWcnmanqfWJcnvBzv4DfWnvXLA==
+X-Received: by 2002:adf:f882:0:b0:333:3117:c453 with SMTP id u2-20020adff882000000b003333117c453mr666048wrp.228.1702171115790;
+        Sat, 09 Dec 2023 17:18:35 -0800 (PST)
+Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
+        by smtp.gmail.com with ESMTPSA id a9-20020a5d5709000000b003332aa97101sm5322013wrv.38.2023.12.09.17.18.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 09 Dec 2023 17:18:35 -0800 (PST)
+Message-ID: <b9e70eae-dad5-4775-8def-596344cf3c8b@gmail.com>
+Date: Sun, 10 Dec 2023 02:18:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 01/13] firmware: qcom: qseecom: fix memory leaks in
+ error paths
+Content-Language: en-US
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Andy Gross <agross@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Elliot Berman <quic_eberman@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Guru Das Srinagesh <quic_gurus@quicinc.com>,
+ Andrew Halaney <ahalaney@redhat.com>, Alex Elder <elder@linaro.org>,
+ Srini Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kernel@quicinc.com,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ kernel test robot <lkp@intel.com>, Dan Carpenter <error27@gmail.com>
+References: <20231127141600.20929-1-brgl@bgdev.pl>
+ <20231127141600.20929-2-brgl@bgdev.pl>
+From: Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <20231127141600.20929-2-brgl@bgdev.pl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Enable the USB-C related functionality for the USB-C port on this board.
-This includes OTG, PowerDelivery and DP AltMode. Also enable the
-DisplayPort itself.
+On 11/27/23 15:15, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Fix instances of returning error codes directly instead of jumping to
+> the relevant labels where memory allocated for the SCM calls would be
+> freed.
+> 
+> Fixes: 759e7a2b62eb ("firmware: Add support for Qualcomm UEFI Secure Application")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Dan Carpenter <error27@gmail.com>
+> Closes: https://lore.kernel.org/r/202311270828.k4HGcjiL-lkp@intel.com/
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 124 +++++++++++++++++++++++-
- 1 file changed, 123 insertions(+), 1 deletion(-)
+Thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-index ea4d75308ac8..3b9499b0bbe8 100644
---- a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
-@@ -7,6 +7,7 @@
- 
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/usb/pd.h>
- #include "sm8150.dtsi"
- #include "pm8150.dtsi"
- #include "pm8150b.dtsi"
-@@ -374,6 +375,10 @@ &gmu {
- 	status = "okay";
- };
- 
-+&gpi_dma0 {
-+	status = "okay";
-+};
-+
- &gpi_dma1 {
- 	status = "okay";
- };
-@@ -382,6 +387,29 @@ &gpu {
- 	status = "okay";
- };
- 
-+&i2c4 {
-+	clock-frequency = <100000>;
-+
-+	status = "okay";
-+
-+	typec-mux@42 {
-+		compatible = "fcs,fsa4480";
-+		reg = <0x42>;
-+
-+		interrupts-extended = <&tlmm 152 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vcc-supply = <&vreg_bob>;
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			fsa4480_sbu_mux: endpoint {
-+				remote-endpoint = <&pm8150b_typec_sbu_out>;
-+			};
-+		};
-+	};
-+};
-+
- &i2c9 {
- 	status = "okay";
- 	clock-frequency = <400000>;
-@@ -436,6 +464,15 @@ &mdss {
- 	status = "okay";
- };
- 
-+&mdss_dp {
-+	status = "okay";
-+};
-+
-+&mdss_dp_out {
-+	data-lanes = <0 1>;
-+	remote-endpoint = <&usb_1_qmpphy_dp_in>;
-+};
-+
- &mdss_dsi0 {
- 	status = "okay";
- 	vdda-supply = <&vreg_l3c_1p2>;
-@@ -483,6 +520,65 @@ &mdss_dsi1_phy {
- 	status = "okay";
- };
- 
-+&pm8150b_vbus {
-+	regulator-min-microamp = <500000>;
-+	regulator-max-microamp = <3000000>;
-+	status = "okay";
-+};
-+
-+&pm8150b_typec {
-+	status = "okay";
-+
-+	vdd-pdphy-supply = <&vreg_l2a_3p1>;
-+
-+	connector {
-+		compatible = "usb-c-connector";
-+
-+		power-role = "source";
-+		data-role = "dual";
-+		self-powered;
-+
-+		source-pdos = <PDO_FIXED(5000, 3000,
-+					 PDO_FIXED_DUAL_ROLE |
-+					 PDO_FIXED_USB_COMM |
-+					 PDO_FIXED_DATA_SWAP)>;
-+
-+		altmodes {
-+			displayport {
-+				svid = <0xff01>;
-+				vdo = <0x00001c46>;
-+			};
-+		};
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+				pm8150b_role_switch_in: endpoint {
-+					remote-endpoint = <&usb_1_dwc3_hs>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+				pm8150b_typec_mux_in: endpoint {
-+					remote-endpoint = <&usb_1_qmpphy_out>;
-+				};
-+			};
-+
-+			port@2 {
-+				reg = <2>;
-+
-+				pm8150b_typec_sbu_out: endpoint {
-+					remote-endpoint = <&fsa4480_sbu_mux>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &pon_pwrkey {
- 	status = "okay";
- };
-@@ -493,6 +589,10 @@ &pon_resin {
- 	linux,code = <KEY_VOLUMEDOWN>;
- };
- 
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
- &qupv3_id_1 {
- 	status = "okay";
- };
-@@ -568,6 +668,19 @@ &usb_1_qmpphy {
- 	status = "okay";
- 	vdda-phy-supply = <&vreg_l3c_1p2>;
- 	vdda-pll-supply = <&vreg_l18a_0p8>;
-+	orientation-switch;
-+};
-+
-+&usb_1_qmpphy_dp_in {
-+	remote-endpoint = <&mdss_dp_out>;
-+};
-+
-+&usb_1_qmpphy_out {
-+	remote-endpoint = <&pm8150b_typec_mux_in>;
-+};
-+
-+&usb_1_qmpphy_usb_ss_in {
-+	remote-endpoint = <&usb_1_dwc3_ss>;
- };
- 
- &usb_2_qmpphy {
-@@ -585,7 +698,16 @@ &usb_2 {
- };
- 
- &usb_1_dwc3 {
--	dr_mode = "peripheral";
-+	dr_mode = "otg";
-+	usb-role-switch;
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pm8150b_role_switch_in>;
-+};
-+
-+&usb_1_dwc3_ss {
-+	remote-endpoint = <&usb_1_qmpphy_usb_ss_in>;
- };
- 
- &usb_2_dwc3 {
--- 
-2.39.2
+Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
 
+> ---
+>   .../firmware/qcom/qcom_qseecom_uefisecapp.c   | 20 ++++++++++++-------
+>   1 file changed, 13 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+> index a33acdaf7b78..32188f098ef3 100644
+> --- a/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+> +++ b/drivers/firmware/qcom/qcom_qseecom_uefisecapp.c
+> @@ -325,8 +325,10 @@ static efi_status_t qsee_uefi_get_variable(struct qcuefi_client *qcuefi, const e
+>   	req_data->length = req_size;
+>   
+>   	status = ucs2_strscpy(((void *)req_data) + req_data->name_offset, name, name_length);
+> -	if (status < 0)
+> -		return EFI_INVALID_PARAMETER;
+> +	if (status < 0) {
+> +		efi_status = EFI_INVALID_PARAMETER;
+> +		goto out_free;
+> +	}
+>   
+>   	memcpy(((void *)req_data) + req_data->guid_offset, guid, req_data->guid_size);
+>   
+> @@ -471,8 +473,10 @@ static efi_status_t qsee_uefi_set_variable(struct qcuefi_client *qcuefi, const e
+>   	req_data->length = req_size;
+>   
+>   	status = ucs2_strscpy(((void *)req_data) + req_data->name_offset, name, name_length);
+> -	if (status < 0)
+> -		return EFI_INVALID_PARAMETER;
+> +	if (status < 0) {
+> +		efi_status = EFI_INVALID_PARAMETER;
+> +		goto out_free;
+> +	}
+>   
+>   	memcpy(((void *)req_data) + req_data->guid_offset, guid, req_data->guid_size);
+>   
+> @@ -563,8 +567,10 @@ static efi_status_t qsee_uefi_get_next_variable(struct qcuefi_client *qcuefi,
+>   	memcpy(((void *)req_data) + req_data->guid_offset, guid, req_data->guid_size);
+>   	status = ucs2_strscpy(((void *)req_data) + req_data->name_offset, name,
+>   			      *name_size / sizeof(*name));
+> -	if (status < 0)
+> -		return EFI_INVALID_PARAMETER;
+> +	if (status < 0) {
+> +		efi_status = EFI_INVALID_PARAMETER;
+> +		goto out_free;
+> +	}
+>   
+>   	status = qcom_qseecom_app_send(qcuefi->client, req_data, req_size, rsp_data, rsp_size);
+>   	if (status) {
+> @@ -635,7 +641,7 @@ static efi_status_t qsee_uefi_get_next_variable(struct qcuefi_client *qcuefi,
+>   		 * have already been validated above, causing this function to
+>   		 * bail with EFI_BUFFER_TOO_SMALL.
+>   		 */
+> -		return EFI_DEVICE_ERROR;
+> +		efi_status = EFI_DEVICE_ERROR;
+>   	}
+>   
+>   out_free:
 
