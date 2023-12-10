@@ -1,67 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-4131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91F7280BE1B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 00:21:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6437D80BE1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 00:21:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3BAC4B20968
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 23:21:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FA3A1F20F39
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 23:21:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 547B91EB2E;
-	Sun, 10 Dec 2023 23:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70CAB1F607;
+	Sun, 10 Dec 2023 23:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ttK2msjg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBbRV8SI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E85B1EA95;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8681DDE0;
+	Sun, 10 Dec 2023 23:21:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BC2C433D9;
 	Sun, 10 Dec 2023 23:21:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A15C433C7;
-	Sun, 10 Dec 2023 23:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702250478;
-	bh=0SwR15QKyjc4lI66xJvZglqK8JbLrcKKmOUbpXT8Ayo=;
+	s=k20201202; t=1702250479;
+	bh=oezeBfZo/+ckCa0S1GKmQyyh1vQrPZkPD1HeZu+TTPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttK2msjgOje+AoxFh73cyyDL/lrykNpcUpeXiFWJMvx8Za1tDvJSg0vKx1kD9WGGK
-	 qn2jNIJQp7eGXUIwuGOh6fYFCD+EiXj+IxSGKvwoEifkwhmQfIYNivBNpgMWRjsh/O
-	 HLJIROmPDGIllA1ZB4PZSD9CK13aNuisPFY5UoVS/f+Dtldj68giHvOtyNdyw8nJSE
-	 7AAlxr0i//sdJmy3d0jsZpxocv1/tFwTrmQFXXKBHwJG++5di3+m4xbacyqEGE3voM
-	 Pw+AZL33Vho3chOCavh7kG98m81p/99b0KmkgNYsrgZFpvHHiOifIXrJf+DYf4yF7j
-	 tkcLb2KHoBRtQ==
+	b=tBbRV8SI1oBJIwgABz3q/FoKvwfhfUEFgqgtrmTtuH5YO++x13jpxNV6LpxzEix4U
+	 3gPwCfDQaP7hwW/SoOrCZYaK6DTIQxUhp2Zt+B9UwxR8KN/vilTDdrzFoBdtWBdTsn
+	 JWhVb6h0A8VtYBfSuvFhoTHy1aS/QfNjR9T4vHrqpLqO1DD+eTjEyHzFJthvPtSu2c
+	 MCwA78v+mjIl8i2iJhWRsydqcYkoADDW0nafLm9rU1Lm8fs2MoB9REVRhWLgbSZ1Lu
+	 TdPXsBIz8zn6ctio80//NKhPgAcFgyFZj9ZCbHRMaMR0mZvMPffX34tiUNYKelmIdu
+	 yuZy4j/mQKYtA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: ~postmarketos/upstreaming@lists.sr.ht,
 	phone-devel@vger.kernel.org,
-	Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Luca Weiss <luca@z3ntu.xyz>
 Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/3] Add GPU support for MSM8226 (Adreno A305B)
-Date: Sun, 10 Dec 2023 15:25:39 -0800
-Message-ID: <170225073880.1947106.13814955780498135531.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Bryant Mairs <bryant@mai.rs>
+Subject: Re: [PATCH] ARM: dts: qcom: Disable pm8941 & pm8226 smbb charger by default
+Date: Sun, 10 Dec 2023 15:25:40 -0800
+Message-ID: <170225073875.1947106.17270085860203406913.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231130-msm8226-gpu-v1-0-6bb2f1b29e49@z3ntu.xyz>
-References: <20231130-msm8226-gpu-v1-0-6bb2f1b29e49@z3ntu.xyz>
+In-Reply-To: <20231203-smbb-pm8941-pm8226-v1-1-9ad75909604b@z3ntu.xyz>
+References: <20231203-smbb-pm8941-pm8226-v1-1-9ad75909604b@z3ntu.xyz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,17 +61,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Thu, 30 Nov 2023 21:35:17 +0100, Luca Weiss wrote:
-> Add the necessary bits to bring up the GPU on msm8226.
+On Sun, 03 Dec 2023 15:19:18 +0100, Luca Weiss wrote:
+> Some platforms don't use the built-in charging hardware (e.g. milletwifi).
+> As this is an optional peripheral, default it to off.
 > 
-> Tested on apq8026-lg-lenok.
+> Keep it enabled for all other boards that use smbb.
 > 
 > 
 
 Applied, thanks!
 
-[3/3] ARM: dts: qcom: msm8226: Add GPU
-      commit: fc209f869310776c437daba478246df64d82c38b
+[1/1] ARM: dts: qcom: Disable pm8941 & pm8226 smbb charger by default
+      commit: c9c8179d0ccdf024ce467b4c9cf5de8821bc02cb
 
 Best regards,
 -- 
