@@ -1,159 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-4121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E801880BAAB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 13:30:16 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E777A80BAB3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 13:35:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E119B1C2085A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 12:30:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2DC7280577
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Dec 2023 12:35:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D804BE7E;
-	Sun, 10 Dec 2023 12:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RUG1I/mu"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69F563D72;
+	Sun, 10 Dec 2023 12:35:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E897310E;
-	Sun, 10 Dec 2023 04:30:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702211410; x=1733747410;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=1hFKZaaYa0isYOfuRccRS7bdXdTSP+jzodb5aJcq+Mo=;
-  b=RUG1I/muz6cT8eihjn9A6NXShrQdHopGDqrQDWcvGUy8jc0+O8DUzMsd
-   yqeW7ZM0Yht9iyzxqaT+MxGgC5boiGoYvTeqxuz1Vs5FbcqKF0xI7QLgj
-   xbBoALEXVpVjUQfAXCcqV9MOPXJVBBaEJDceiErtH/CuWNppx0jyYFbAi
-   d3erj4NKyos1xsUzI5hYK9KE6tfoGTqgUt/ITtnAn3is8wxsre9LNHalS
-   i22QJQDE3NW6Ge+//TQIXG7tNfyP8v2JwC0cF5Q0rvyWsuBM+TdrbaKqt
-   +CdbrVvWdSUjBcmocKk2hQDZcos+m4uLoUFib7G0ukLCWqeWneBOfSTlY
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10919"; a="7910833"
-X-IronPort-AV: E=Sophos;i="6.04,265,1695711600"; 
-   d="scan'208";a="7910833"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2023 04:30:09 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10919"; a="1104116213"
-X-IronPort-AV: E=Sophos;i="6.04,265,1695711600"; 
-   d="scan'208";a="1104116213"
-Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
-  by fmsmga005.fm.intel.com with ESMTP; 10 Dec 2023 04:30:05 -0800
-Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1rCIwd-000Gp8-0G;
-	Sun, 10 Dec 2023 12:30:03 +0000
-Date: Sun, 10 Dec 2023 20:29:23 +0800
-From: kernel test robot <lkp@intel.com>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	quic_jesszhan@quicinc.com, quic_parellan@quicinc.com,
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 10/16] drm/msm/dpu: add CDM related logic to
- dpu_hw_ctl layer
-Message-ID: <202312102047.S0I69pCs-lkp@intel.com>
-References: <20231208050641.32582-11-quic_abhinavk@quicinc.com>
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E46110A;
+	Sun, 10 Dec 2023 04:35:52 -0800 (PST)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	id 1rCJ2E-0002b3-Qg; Sun, 10 Dec 2023 13:35:50 +0100
+Message-ID: <daa0c12e-49be-4047-933f-26823117b3db@leemhuis.info>
+Date: Sun, 10 Dec 2023 13:35:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231208050641.32582-11-quic_abhinavk@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] PCI: Fix deadlocks when enabling ASPM
+Content-Language: en-US, de-DE
+To: Linux kernel regressions list <regressions@lists.linux.dev>
+Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20231128081512.19387-1-johan+linaro@kernel.org>
+ <ZXHHrCDKKQbGIxli@hovoldconsulting.com>
+From: "Linux regression tracking #update (Thorsten Leemhuis)"
+ <regressions@leemhuis.info>
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+In-Reply-To: <ZXHHrCDKKQbGIxli@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1702211752;201925f3;
+X-HE-SMSGID: 1rCJ2E-0002b3-Qg
 
-Hi Abhinav,
+[TLDR: This mail in primarily relevant for Linux kernel regression
+tracking. See link in footer if these mails annoy you.]
 
-kernel test robot noticed the following build warnings:
+On 07.12.23 14:25, Johan Hovold wrote:
+> On Tue, Nov 28, 2023 at 09:15:06AM +0100, Johan Hovold wrote:
+>> The pci_enable_link_state() helper is currently only called from
+>> pci_walk_bus(), something which can lead to a deadlock as both helpers
+>> take a pci_bus_sem read lock.
+>>
+>> Add a new locked helper which can be called with the read lock held and
+>> fix up the two current users (the second is new in 6.7-rc1).
+>>
+>> Note that there are no users left of the original unlocked variant after
+>> this series, but I decided to leave it in place for now (e.g. to mirror
+>> the corresponding helpers to disable link states).
+>>
+>> Included are also a couple of related cleanups.
+> 
+>> Johan Hovold (6):
+>>   PCI/ASPM: Add locked helper for enabling link state
+>>   PCI: vmd: Fix deadlock when enabling ASPM
+>>   PCI: qcom: Fix deadlock when enabling ASPM
+>>   PCI: qcom: Clean up ASPM comment
+>>   PCI/ASPM: Clean up disable link state parameter
+>>   PCI/ASPM: Add lockdep assert to link state helper
+> 
+> Could we get this merged for 6.7-rc5? Even if the risk of a deadlock is
+> not that great, this bug prevents using lockdep on Qualcomm platforms so
+> that more locking issues can potentially make their way into the kernel.
+> 
+> And for Qualcomm platforms, this is a regression in 6.7-rc1.
+> 
+> #regzbot introduced: 9f4f3dfad8cf
 
-[auto build test WARNING on next-20231207]
-[also build test WARNING on v6.7-rc4]
-[cannot apply to drm-misc/drm-misc-next linus/master v6.7-rc4 v6.7-rc3 v6.7-rc2]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Fixes are now here:
+https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/log/?h=for-linus
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Abhinav-Kumar/drm-msm-dpu-add-formats-check-for-writeback-encoder/20231208-130820
-base:   next-20231207
-patch link:    https://lore.kernel.org/r/20231208050641.32582-11-quic_abhinavk%40quicinc.com
-patch subject: [PATCH v2 10/16] drm/msm/dpu: add CDM related logic to dpu_hw_ctl layer
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20231210/202312102047.S0I69pCs-lkp@intel.com/config)
-compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231210/202312102047.S0I69pCs-lkp@intel.com/reproduce)
+#regzbot fix: 075268be58232b0a2ae
+#regzbot ignore-activity
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202312102047.S0I69pCs-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c:537:6: warning: variable 'cdm_active' set but not used [-Wunused-but-set-variable]
-           u32 cdm_active = 0;
-               ^
-   1 warning generated.
-
-
-vim +/cdm_active +537 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-
-   528	
-   529	
-   530	static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
-   531			struct dpu_hw_intf_cfg *cfg)
-   532	{
-   533		struct dpu_hw_blk_reg_map *c = &ctx->hw;
-   534		u32 intf_active = 0;
-   535		u32 wb_active = 0;
-   536		u32 mode_sel = 0;
- > 537		u32 cdm_active = 0;
-   538	
-   539		/* CTL_TOP[31:28] carries group_id to collate CTL paths
-   540		 * per VM. Explicitly disable it until VM support is
-   541		 * added in SW. Power on reset value is not disable.
-   542		 */
-   543		if ((test_bit(DPU_CTL_VM_CFG, &ctx->caps->features)))
-   544			mode_sel = CTL_DEFAULT_GROUP_ID  << 28;
-   545	
-   546		if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
-   547			mode_sel |= BIT(17);
-   548	
-   549		intf_active = DPU_REG_READ(c, CTL_INTF_ACTIVE);
-   550		wb_active = DPU_REG_READ(c, CTL_WB_ACTIVE);
-   551		cdm_active = DPU_REG_READ(c, CTL_CDM_ACTIVE);
-   552	
-   553		if (cfg->intf)
-   554			intf_active |= BIT(cfg->intf - INTF_0);
-   555	
-   556		if (cfg->wb)
-   557			wb_active |= BIT(cfg->wb - WB_0);
-   558	
-   559		DPU_REG_WRITE(c, CTL_TOP, mode_sel);
-   560		DPU_REG_WRITE(c, CTL_INTF_ACTIVE, intf_active);
-   561		DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
-   562	
-   563		if (cfg->merge_3d)
-   564			DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
-   565				      BIT(cfg->merge_3d - MERGE_3D_0));
-   566	
-   567		if (cfg->dsc)
-   568			DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
-   569	
-   570		if (cfg->cdm)
-   571			DPU_REG_WRITE(c, CTL_CDM_ACTIVE, cfg->cdm);
-   572	}
-   573	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+That page also explains what to do if mails like this annoy you.
 
