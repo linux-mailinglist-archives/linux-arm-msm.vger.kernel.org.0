@@ -1,186 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-4163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFB3080C378
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:41:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 699F480C3BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:58:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7AB491F20EFE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 08:41:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25B3F280AB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 08:58:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9B3720DFC;
-	Mon, 11 Dec 2023 08:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CFB5210E9;
+	Mon, 11 Dec 2023 08:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S07VF9zu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ki9H31C7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0A13C2;
-	Mon, 11 Dec 2023 00:41:25 -0800 (PST)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BB5e83k028548;
-	Mon, 11 Dec 2023 08:41:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=OloedqYYUwZtP1M5Bxe8DI7g155sUm6orY/Vc0ddjpQ=; b=S0
-	7VF9zuMN40gCdvHqZEoX31bTBTiH6yAPJRNo3yN0WZK62FAyZW4NYpZBJRqomyJB
-	berLXW7aag42QXv1pkJNxX7ka1pRJsHjqIid2BBBYm3CYrwiD9aeMoFT4FK8YqYF
-	+pAh6TtWrycQUzlRxjML2k+fhkp73QKJvTwL7OE2vaIP5vNInoSE+KFiKDYd8IJc
-	jN+AWwJZIwnNrPS03EB3Oqhh5Ajx07QT5/bEz7dCWDf3nfPzMZYkKagGF+qMREwx
-	WW75AR3S2+dpSBmr2eQEEurk5q4xvup3zMJquTdj9dlsuALiepRC6gjxzEodzKej
-	OA+8cxjnnWlldENNjioQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uvnhdtq45-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 08:41:06 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BB8f5J6018074
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 08:41:05 GMT
-Received: from [10.217.91.61] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Dec
- 2023 00:40:57 -0800
-Message-ID: <9d8250a9-8e00-4233-8bd9-9e49bd15fac5@quicinc.com>
-Date: Mon, 11 Dec 2023 14:10:54 +0530
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBDDEDB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 00:58:34 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-40c41b43e1eso14590965e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 00:58:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702285113; x=1702889913; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gMUJTjvA3J26dSdTiEt4TdDVTDH3n4BQkpvTQmQkiVg=;
+        b=ki9H31C7X8vN9idXqx1kUJrbMeA8MnKiviO8LYjZ0fJzagZtJCA76b9xZB9K2iAdUG
+         +3uJHQHwmBwtzNd3gXx9Ghm83YnQM0Ue0VD6pwOip1rXgJEbxqRmXH4NsPWixenzuiCA
+         IsCJHvv7WBHXsvz1Fck5jxcJv0Kt5fu8LN021qGFBe/LweomEFGGQE5fbSwDpQWAYAGe
+         nyzCpOoAIkOb4BpX2G6tTuQ42M6PFWxdrqdPT0UDRFl1JB85zta7g8IiCGCT/OzBdbRM
+         gNKzLixGoSJuwVnuIq4CjD9EQDs3kUdFH4f0vTwicNfy5YYzQYZ3uB9Sc61wURuC2JlR
+         Hidg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702285113; x=1702889913;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gMUJTjvA3J26dSdTiEt4TdDVTDH3n4BQkpvTQmQkiVg=;
+        b=Lz+rtMQj/5UYpIwyNQ4LKlGTTtjlap1z2QSr7PFOF7+eLS7+Uk/aWGllafE9gOVNau
+         7jSCP6IQIRY5DwIDcnaVSo5Vn0zOkyQdoqxCxcfoutEaN4TlIp1OShn4tJcefBy5nL8U
+         yzt4RkCyyJvswR2CvY2M1QMDhfDYRS0SZAv2dQxnY9R6pzfFx7CT0Vn1OSxBkpyAD7TW
+         PR2jHJhVaLB2HCOsQF5zdtEINh7EIpwTAHEA4ltMJ0U+66FeH+hV3z2LvHouPgTPDbrN
+         iX5cbwnN1/CkYViSFaI5+cYhG+1HUPSg05b8CyPSjWWJLW0+HAHKDWpyd89f4b/N1pG+
+         WhyQ==
+X-Gm-Message-State: AOJu0Yz4V9ExY5gFkq7Edd6YUy5iOhZHwsldAYheBCzL98brEK2D4+CN
+	m6kHjwsLi0Zo1j5r82z3czQwng==
+X-Google-Smtp-Source: AGHT+IEdVHw9x75OQSgV0Tjh5ujbDy6v33ypmF+84RpcH9f9bSjyFP0uMPL2YIKrHrKqXdtkfHAc2g==
+X-Received: by 2002:a05:600c:2108:b0:40c:24a2:6b0f with SMTP id u8-20020a05600c210800b0040c24a26b0fmr1777549wml.212.1702285113287;
+        Mon, 11 Dec 2023 00:58:33 -0800 (PST)
+Received: from krzk-bin.. ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id fl9-20020a05600c0b8900b0040b43da0bbasm12315067wmb.30.2023.12.11.00.58.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Dec 2023 00:58:32 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	linux-mmc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/3] dt-bindings: mmc: sdhci-msm: document dedicated IPQ4019 and IPQ8074
+Date: Mon, 11 Dec 2023 09:58:28 +0100
+Message-Id: <20231211085830.25380-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net v3] net: stmmac: update Rx clk divider for 10M SGMII
-Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Vinod Koul <vkoul@kernel.org>, Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu
-	<joabreu@synopsys.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet
-	<edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni
-	<pabeni@redhat.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Andrew Halaney <ahalaney@redhat.com>
-References: <20231208062502.13124-1-quic_snehshah@quicinc.com>
- <5luxwdjyzkg5o6w27mqixggr65ebosnn53vaqrbtsclfudet4v@kse23pgyj7ld>
-From: Sneh Shah <quic_snehshah@quicinc.com>
-In-Reply-To: <5luxwdjyzkg5o6w27mqixggr65ebosnn53vaqrbtsclfudet4v@kse23pgyj7ld>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wRHaFD2ugsi6Wj-ZGlreTuhfCFad-N5a
-X-Proofpoint-ORIG-GUID: wRHaFD2ugsi6Wj-ZGlreTuhfCFad-N5a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 adultscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312110073
+Content-Transfer-Encoding: 8bit
 
+Add dedicated compatibles for the Qualcomm IPQ4019 and IPQ8074 SoCs,
+because usage of generic qcom,sdhci-msm-v4 compatible alone is
+deprecated.
 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-On 12/9/2023 9:54 AM, Bjorn Andersson wrote:
-> On Fri, Dec 08, 2023 at 11:55:02AM +0530, Sneh Shah wrote:
->> SGMII 10MBPS mode needs RX clock divider to avoid drops in Rx.
->> Update configure SGMII function with rx clk divider programming.
-> 
-> Are you trying saying that the RX clock is completely wrong in 10MBps
-> mode? Or is the RX clock good, but without some division of some other
-> clock signal you loose some packets now and then?
+diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+index 86fae733d9a0..c24c537f62b1 100644
+--- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
++++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+@@ -22,6 +22,8 @@ properties:
+       - items:
+           - enum:
+               - qcom,apq8084-sdhci
++              - qcom,ipq4019-sdhci
++              - qcom,ipq8074-sdhci
+               - qcom,msm8226-sdhci
+               - qcom,msm8953-sdhci
+               - qcom,msm8974-sdhci
+-- 
+2.34.1
 
-Without the divider, Rx clock is completely wrong. All the packets will dropped.  
-> 
-> Please write your commit message such that it describe the actual
-> problem you're having. This will help others to know if this fix is
-> applicable to some issue they are seeing on their hardware, now and in
-> the future.
-> 
-Rx clock divider is must for 10M SGMII to work for my hardware. Hence, It was mentioned that SGMII needs Rx clock divider for 10MBPS to work.
-Will update the commit message to emphasize on how rx clock is completely wrong without this.
->>
->> Fixes: 463120c31c58 ("net: stmmac: dwmac-qcom-ethqos: add support for SGMII")
->> Signed-off-by: Sneh Shah <quic_snehshah@quicinc.com>
->> ---
->> v3 changelog:
->> - Added comment to explain why MAC needs to be reconfigured for SGMII
->> v2 changelog:
->> - Use FIELD_PREP to prepare bifield values in place of GENMASK
->> - Add fixes tag
->> ---
->>  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 7 +++++++
->>  1 file changed, 7 insertions(+)
->>
->> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->> index d3bf42d0fceb..ab2245995bc6 100644
->> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
->> @@ -34,6 +34,7 @@
->>  #define RGMII_CONFIG_LOOPBACK_EN		BIT(2)
->>  #define RGMII_CONFIG_PROG_SWAP			BIT(1)
->>  #define RGMII_CONFIG_DDR_MODE			BIT(0)
->> +#define RGMII_CONFIG_SGMII_CLK_DVDR		GENMASK(18, 10)
-> 
-> This new bitfield overlaps with existing fields, is it the same
-> register? Did the fields move? Is it applicable to all versions?
-> 
-It is same register but bitfield is moved for new SGMII based HW version. Not applicable to older version. few bitfields of older HW version's RGMII register are repurposed in the new hw version for SGMII config.
-
-> What will existing writes to RGMII_IO_MACRO_CONFIG do to this new
-> layout? What will the new write do to hardware with the existing field
-> layout?
-> 
-we have two functions to configure MAC IOMACRO interface.
-1. ethqos_configure_sgmii( this used this new bifield) 2. ethqos_configure_rgmii ( this used old layout)
-Old HW version uses ethqos_configure_rgmii only. New HW version used ethqos_configure_sgmii only.
-
-Old HW version is not going to use this new layout. New HW version is not going to use old layout configuration.
-
->>  
->>  /* SDCC_HC_REG_DLL_CONFIG fields */
->>  #define SDCC_DLL_CONFIG_DLL_RST			BIT(30)
->> @@ -598,6 +599,9 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos)
->>  	return 0;
->>  }
->>  
->> +/* On interface toggle MAC registetrs gets reset.
->> + * Configure MAC block for SGMII on ethernet phy link up
->> + */
->>  static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
->>  {
->>  	int val;
->> @@ -617,6 +621,9 @@ static int ethqos_configure_sgmii(struct qcom_ethqos *ethqos)
->>  	case SPEED_10:
->>  		val |= ETHQOS_MAC_CTRL_PORT_SEL;
->>  		val &= ~ETHQOS_MAC_CTRL_SPEED_MODE;
->> +		rgmii_updatel(ethqos, RGMII_CONFIG_SGMII_CLK_DVDR,
->> +			      FIELD_PREP(RGMII_CONFIG_SGMII_CLK_DVDR, 0x31),
-> 
-> Is this just a magic constant, or does 0x31 of some convenient unit?
-> Could we give it name/define?
-> 
-It is just a constant based on programming guide of HW.  Will add a #define for it.
-> Regards,
-> Bjorn
-> 
->> +			      RGMII_IO_MACRO_CONFIG);
->>  		break;
->>  	}
->>  
->> -- 
->> 2.17.1
->>
->>
 
