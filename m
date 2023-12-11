@@ -1,121 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-4240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB93580D022
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:56:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA51880D066
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 17:03:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C9312820B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 15:56:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 74C3E1F218DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:03:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D754BAB9;
-	Mon, 11 Dec 2023 15:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MFl9GU4g"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AFA84C3B6;
+	Mon, 11 Dec 2023 16:03:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0345B4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:56:22 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-a1c7d8f89a5so618731866b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:56:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702310181; x=1702914981; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RybQrZs+eLSsMdObNv4v0HXZw2o3tDH/SAM3kDy3DRI=;
-        b=MFl9GU4gvkIyipf5vnUO2TXGyOFCU5csi5ZOr8UiBcs+oM9u6kyeGXozcEz8nghU06
-         VBqttOGHrgSFr9mCFKg7aEBkkpBvFdo0ga9Avkp5xACchYtbKMYepoMqenS282k/8A3b
-         l7+zn2iO4bk9v6KfRdcZBIVh2tNZvdB5N7BAFGjja+dDJxOmkF3ueBNm5cX0UCkpOeV5
-         O1lCursH1zOa82vYffK9xF0Y9/hvZJUtv0vpaHAcSN4S6HVaOD3MXs7ePhjb5dwF7rsw
-         +INzjOIWG4SHHHopcBZKrIGVffZDDt1n0vJK90xkMNrJJCP4NuHZudp5Hzu4T9IvuFZe
-         JoCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702310181; x=1702914981;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RybQrZs+eLSsMdObNv4v0HXZw2o3tDH/SAM3kDy3DRI=;
-        b=KZ3kJCZjIOQgBbkkFJ4dYtp85VmOzkVBaiYRn9hn9UDHNRXWM97VE/IzKWQoPitgja
-         Quiqime7F5TWD6S/gXcUvcgo2L7NgtIqHSkwaHU9GjzUz9X3YL4J2EFgOd2PzXah6PYq
-         y6kklQxaChGapwgrC0ToTAKSZ8SkPjhiWIZVvfnMKsBL80tOqqqa4WTiq5ZE2nt9BMWl
-         WVuGH7/Z424VgWtIMYymgwUsum+tQptcoqnGlMsC0IT5jyl2heWLKdFN2NmZ0FRwtUGi
-         cb6UYbi/MAkXxwNoneqA2mbcJ2+u9YRwJ3Q8ERensF6hcZDS02eDf29dD47RbEE9T2tU
-         dfXQ==
-X-Gm-Message-State: AOJu0YwKurr/J7HGMF5NSpX2lX9Q0ZEBaNuaK5HdicvV7pabSFxmQrUC
-	vsM6OnpZqsOyK3hccZvKP5FHSg9XHyQCPQYstpY=
-X-Google-Smtp-Source: AGHT+IEQ5hYta5LdO6d4vzHPw3b9RjbZ+VcrlqMEDmZGTKb+VdwmNjF/2DI6kyj5TmutkUe3+P4XLw==
-X-Received: by 2002:a17:907:94c9:b0:a11:2ad2:6563 with SMTP id dn9-20020a17090794c900b00a112ad26563mr2910577ejc.26.1702310181330;
-        Mon, 11 Dec 2023 07:56:21 -0800 (PST)
-Received: from krzk-bin.. ([2a04:ee41:3:e085:3572:d83d:98f3:19dd])
-        by smtp.gmail.com with ESMTPSA id lm11-20020a17090718cb00b00a1cf3fce937sm4983602ejc.162.2023.12.11.07.56.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Dec 2023 07:56:20 -0800 (PST)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+Received: from IND01-MAX-obe.outbound.protection.outlook.com (mail-maxind01on2076.outbound.protection.outlook.com [40.107.222.76])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 305944496;
+	Mon, 11 Dec 2023 08:02:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Jdw14UWCwkDMN17hAY4t3ekc2aFwB2u1n9G2BURHmiUOUbY9J/le7QGnkHQeQkimqiTLSgaiIBhqCmfgBDXLg3yP/+unfHXDd3liGPQhCpcLR2vXurrxjoBdAsCv6D4KgPVPs1rrU7ycgjZCQqO0mrUGGXjwiEWJ6s2RUj44P5Lz/qds2sO1e64LqKAlzOlDeZik5UdPjoReMp2EBSCtaTOHllK80aJO1m3EuIEWsUJVJnDFXn1o9NlT9vk96+QatNcxz+PwmcFfedd1DFW8b0F+nhOzS8JHLBz8M+NTlN/1yrp5OBw/jyq+nmjtMXLw0LchsQ4BB60KJ+jyNRn5uA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uXCuKq2aEipcXMxO5N7fW37qXF/k6g8FxLkPkM3ea/M=;
+ b=lbjVsmeEFtISrsngrIH7WHWtVg1RIEfLMejlAD32yasmpSReNzYcf+lP/KUbEwGaxqmES3N+qLh/aIydDsaHe9Tf7TuhuTylgBKqz5htHoc+48yvW42AjqYBh86QQNepTLrlUBPj20/Ltbm2P917Qvqku2CIj1ZMj8/hd8lYJfHWGa3W6WTUMyFi6/lJdAKQh+/cR02XKIMP9yedkLoNFPQyAskW60N9Yk0jBL+L+u1tXEMBumHDlf9Gt5y7Wa52maqxBH0iC4XCer/GI4lK98Kw95QvuvzTkzKBgwIo97PbIXAWgQ/w14Ykxb7Gg3Ntw6GJiLW32co3CIW/yGAaog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siliconsignals.io; dmarc=pass action=none
+ header.from=siliconsignals.io; dkim=pass header.d=siliconsignals.io; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siliconsignals.io;
+Received: from MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:31::9)
+ by PNXPR01MB6786.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:ba::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7068.32; Mon, 11 Dec
+ 2023 16:02:45 +0000
+Received: from MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::eb15:266a:cd6a:e0f1]) by MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::eb15:266a:cd6a:e0f1%7]) with mapi id 15.20.7068.033; Mon, 11 Dec 2023
+ 16:02:45 +0000
+From: Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals.io>
+To: agross@kernel.org,
+	andersson@kernel.org
+Cc: hardevsinh.palaniya@siliconsignals.io,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH] qcom: MAINTAINERS: move Andy Gross to credits
-Date: Mon, 11 Dec 2023 16:55:33 +0100
-Message-Id: <20231211155533.106003-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Subject: [PATCH] rpmsg: glink: Fix buffer overflow
+Date: Mon, 11 Dec 2023 21:32:20 +0530
+Message-Id: <20231211160221.2843339-1-hardevsinh.palaniya@siliconsignals.io>
+X-Mailer: git-send-email 2.25.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PN3PR01CA0144.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:bf::11) To MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:31::9)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MA0PR01MB7145:EE_|PNXPR01MB6786:EE_
+X-MS-Office365-Filtering-Correlation-Id: 71e6ed76-8018-4cd6-e85a-08dbfa629d59
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	H0KnjL29GRnaJcCUbIr2wiZKt0D9GEeJQKM/z/sPRWgvjlUgVEmzJP/AcR0UyMFrwkm1E+lDAgydF0USLMTCQziNtipaCMlgwrkZLD45wtDi9IYq++VDNG480aO5cbxYz3bL2uyR08ctDkOwWRqCAx3EVm4IGSxmHGUj/F55FL9kKghM1O9v8vLsZR2tG54Z4vMbj5Wb8LxJhZEgc5BHgCs+OXdrVucY1Vz3EM8OR3EO0VOIxHOvIMOItHsrqCWhcjsMy/pxn/gUWwBeI7g2c8VNfWhXfZhJUu3v4z1opAjHDSka9C2w748pZ5bI8wGR80fz2nVHHWDHC82H6W+rRZo9Sf7qUrdAkUmifmNHzi49ReXYOnvO5V7+JXeBK+mt96IO73yO12jzVz9OxTyJDKKxUpcRf+e1v5lwJw7z4+c200c8CGCHCnVEzsp0tNdip1O6zlA8QerNm7Hg+ztSxyeZbFAr93QYzulwPjigLiYa9o9clgQhUIvtObn3AKQTUD2L1+UkWybRXsqrI4barMwxOkkHPrvIYthlbUQ6h1YlDwR6sPLClZ8YGpH4VXSA/urLjuC/wCZnRf9S3ILP/+cKrktl3e+pDZR0a5Ms3gMwM1vTLiCs+sHt2yOgKRWP
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(346002)(376002)(136003)(39830400003)(366004)(396003)(230922051799003)(1800799012)(186009)(451199024)(64100799003)(1076003)(6512007)(2616005)(26005)(6486002)(478600001)(52116002)(6666004)(6506007)(41300700001)(4744005)(5660300002)(44832011)(2906002)(54906003)(66476007)(66556008)(66946007)(316002)(4326008)(8676002)(8936002)(38100700002)(38350700005)(86362001)(36756003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?oqDLGel4uYTYONAeYXmXVzD9dGmrFiZCj+mdq5GpbpLtx0RQG5VYw2mbySn5?=
+ =?us-ascii?Q?neWPg7dxsACorTyFWWaVL/3h4TAPQsnBIwFiALjebcDZHcu0llUb8JCKu3St?=
+ =?us-ascii?Q?l9ivv6qoz3sISC2t/gvyGxuraILyv8ejBue4VEYhfXHPkHmaP4a0obUzbNnw?=
+ =?us-ascii?Q?xDnnx7OdT/iFGqSPgPSpGXfQLzUIcCIP/c2ETJLwpbemdz421Gy+G3+bzeNr?=
+ =?us-ascii?Q?c4iP+ryvKNzvVHbVyyzGy845dhl0sO0h4RPFMK8hQ+doZfnp89lSTjgk02bC?=
+ =?us-ascii?Q?Ioq3D7/xiZ2sB36izgqKQ/vaiMJu/GSmuQuJeZ9IgAjgTerPZC8XzXORcGpj?=
+ =?us-ascii?Q?w/R1v2as07i5xbMaw4JpFaWO7pQbH2BtMLzT8ZH5H/X8iIJVpyRz5ImY532Y?=
+ =?us-ascii?Q?QTeqYrgujBuOt+ufE2hv/6SZ1lTr8T59TNSQhj+FWxqonRUrzxiYgxZ15v8h?=
+ =?us-ascii?Q?yIzjhma1y1MSXToRraB2Yejq9mFTP/MMnTo1nVYyDRy+3DPBdQ8/hjxn9JDj?=
+ =?us-ascii?Q?KnaYnS5hOlrXeCKhR9WySZNNiZmIBk15l/m1PmAM8NDCCgLxHfSdWaM6duvo?=
+ =?us-ascii?Q?bhMo9b1WE/FePkCkwLiUX513LaWR4ZJHkaagNnsZISRzcgbH+E3HKMrduFA9?=
+ =?us-ascii?Q?jKmeyOmdyi2gy0rIyEUxSXccga2Hvpm/VGYkVaYpM3no3MquIjgID1vyZ+xH?=
+ =?us-ascii?Q?9TYEOgM7hdBHX8P3SWqLYH4Gt5pknRmEXU3eOmdLGb5eMCsHGG1nicWht4kx?=
+ =?us-ascii?Q?2k8/A+Aohqtjh2wqjRZxUGg1RYHzyzEjek6/FHZyjsAATKox45nQf3JzKfLn?=
+ =?us-ascii?Q?MS+GUeipJqJQoxg+BVC8ibTvh5/uaBg8rbNyvVmXoGIJ3+D4StRTB06MLLOp?=
+ =?us-ascii?Q?01koEnp21wHsA3UDSuNZbKe52JPEGEPsylPpBa2BMtMkG4xrIJNyZAQZmkdY?=
+ =?us-ascii?Q?EAhXBY6DFXfdObMeeEtpatjXsjZxrbW6p+VfMAuk5+DqY6Ijvsx6cGckCJfd?=
+ =?us-ascii?Q?DnEZkBagpZdDVAiZfsbqCpUMaHiu+19Q1qNp7/YTdYT9ddzEtnzbXzXuUoNo?=
+ =?us-ascii?Q?+gzd5MlR9pXy7HHui6J291nEdlueqAti0psW1F+N5hrmBiEmsM4A7KJK81IH?=
+ =?us-ascii?Q?7aseSdrA+uuNABpRA5Dt0sOUmWGGu0lmEA17xfa45rfK47VTADNJALjIb6rF?=
+ =?us-ascii?Q?VlxZgNYKkYq57eKzkj7DwO0x/u38KyTB4t4vNal1IYgWCkEu74eH9R7dbShV?=
+ =?us-ascii?Q?YD8y/tRuuuAX+iBR3gp5jXSw0S5EnwuLvxKwKDbMrCegGU5y4aEFSsZNKYlP?=
+ =?us-ascii?Q?d8lcSwsaPtj3AY8J2aGw84Sew+KEEmqt8oJmD4dboGkMgGhFoiZwldY7m6LO?=
+ =?us-ascii?Q?J+meLl8xmVL4MQjJdmTMNiNTkHdkk2H47mGP9pMxawDD13e3tRupGmTeKYCF?=
+ =?us-ascii?Q?pN9hMylV6FgmSqN95nYZ3dGU6T8OXgT0YT0rlmSbcIu4GWTV6C6if/6riN4P?=
+ =?us-ascii?Q?al0KDP9z6Q0bHgW+6QqpOmfJpEMebXeSwMJkSCzgizBT9J/pDLmWWhiFL4Kb?=
+ =?us-ascii?Q?fY8p6lkY2p8yuK4JCKNRMVw28lZ+NNhlU/snuxi52akPJPdog2wYwoClyQ+J?=
+ =?us-ascii?Q?qym3MF00iIZX6gTTV9fvXyA=3D?=
+X-OriginatorOrg: siliconsignals.io
+X-MS-Exchange-CrossTenant-Network-Message-Id: 71e6ed76-8018-4cd6-e85a-08dbfa629d59
+X-MS-Exchange-CrossTenant-AuthSource: MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2023 16:02:45.8270
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 7ec5089e-a433-4bd1-a638-82ee62e21d37
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: djOIM3mWpYChPj84U+kQG9qQaF5g+z3i6W0uJlM3rYxEbXiIU0Ftk0Rw8ARcR8gkbyPp/TQcM2b8U0WZKZd+y/aSuJn/Ez5Zh4u3LK3uqkBFBXka8NGaxs2yWzvoF3ub
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNXPR01MB6786
 
-Andy's last emails related to Qualcomm SoC ARM subarchitecture are from
-November 2019, so move him to credits.  Stale maintainer entries hide
-information whether subsystem needs help, has a bus-factor or is even
-orphaned.
+In qcom_glink_send_open_req() remove error: strcpy() 'channel->name'
+too large for 'req.name' (1010102 vs 32)
 
-Link: https://lore.kernel.org/all/?q=f%3A%22Andy+Gross%22
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Andy Gross <agross@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- CREDITS     | 4 ++++
- MAINTAINERS | 1 -
- 2 files changed, 4 insertions(+), 1 deletion(-)
+Signed-off-by: Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals.io>
 
-diff --git a/CREDITS b/CREDITS
-index 59cdc6a9c8fd..6cb661c46985 100644
---- a/CREDITS
-+++ b/CREDITS
-@@ -1421,6 +1421,10 @@ S: University of Stellenbosch
- S: Stellenbosch, Western Cape
- S: South Africa
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 82d460ff4777..2d6a592e1c72 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -479,7 +479,7 @@ static int qcom_glink_send_open_req(struct qcom_glink *glink,
+ 	req.msg.cmd = cpu_to_le16(GLINK_CMD_OPEN);
+ 	req.msg.param1 = cpu_to_le16(channel->lcid);
+ 	req.msg.param2 = cpu_to_le32(name_len);
+-	strcpy(req.name, channel->name);
++	strscpy_pad(req.name, channel->name, sizeof(req.name));
  
-+N: Andy Gross
-+E: agross@kernel.org
-+D: Qualcomm SoC subsystem and drivers
-+
- N: Grant Grundler
- E: grantgrundler@gmail.com
- W: http://obmouse.sourceforge.net/
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 82ef00014f41..37d1bb7b1fc5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2550,7 +2550,6 @@ F:	arch/arm64/boot/dts/qcom/sc7280*
- F:	arch/arm64/boot/dts/qcom/sdm845-cheza*
- 
- ARM/QUALCOMM SUPPORT
--M:	Andy Gross <agross@kernel.org>
- M:	Bjorn Andersson <andersson@kernel.org>
- M:	Konrad Dybcio <konrad.dybcio@linaro.org>
- L:	linux-arm-msm@vger.kernel.org
+ 	ret = qcom_glink_tx(glink, &req, req_len, NULL, 0, true);
+ 	if (ret)
 -- 
-2.34.1
+2.25.1
 
 
