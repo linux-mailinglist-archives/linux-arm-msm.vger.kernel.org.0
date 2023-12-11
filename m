@@ -1,103 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-4243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EE8E80D10F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 17:20:16 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E023E80D218
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 17:38:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 140351F20FC8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:20:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8BDBB1F21803
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:38:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1842A4C62C;
-	Mon, 11 Dec 2023 16:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0941B3985C;
+	Mon, 11 Dec 2023 16:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IhwDGvMD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V0sdzlHz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C724C612;
-	Mon, 11 Dec 2023 16:20:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A08C433C7;
-	Mon, 11 Dec 2023 16:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B5A34546;
+	Mon, 11 Dec 2023 16:38:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58BFCC433C8;
+	Mon, 11 Dec 2023 16:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702311610;
-	bh=tgoKaQNovHS9RWp3+K6M2LkRytAhgXwHG6PjpqOenpU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=IhwDGvMDayZhO/ouKOmDaaOJzNx/xwMIjs9YhcTCcKs+t6IObyGFBnqQRsygnWr3/
-	 g8LzhS5VFgM9/a6Dce6Uqb/y5hcsD/2R2ap+NbMQGlvJjQLhjbPNJhppNcVSCciB/p
-	 YDlLzd8uaya95w/+DaKbPa55aUs7hW0YF1bx49uOY4HFCG7BbjKNGpN808LQ0EZOnP
-	 4FgU7ocVEVgoDDxqI0DE5Uf5KKImlv0jsMu9OZpuxGPCCa8fAL9Hsk1uTR67sGVzpr
-	 pRSmAieOqPpI3s4IwjjaxlyX31RaEMJa1bdhhOfpeERwX+9iNrSoCpHy+3JQU9Ish3
-	 f9k5ov4vq0YYA==
-From: Mark Brown <broonie@kernel.org>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
- Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-In-Reply-To: <20231129113014.38837-1-krzysztof.kozlowski@linaro.org>
-References: <20231129113014.38837-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 1/4] ASoC: dt-bindings: qcom,lpass-rx-macro: Add SM8650
- LPASS RX
-Message-Id: <170231160677.85457.6870068020415164910.b4-ty@kernel.org>
-Date: Mon, 11 Dec 2023 16:20:06 +0000
+	s=k20201202; t=1702312698;
+	bh=uT3+vtv8HvVFAQ4LBmaj/5ll70qrpowhUoWCN8h1EKg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=V0sdzlHzEI3Kvyn+aJJE+//AB/HyRXlUCzj0PeNF1vDfIfo7i+WeYD+xwuZD4/6zO
+	 qWZe6lIs0vd/eMbwZsURybmS1k8ZlnKdurb/8l6F2jlWJGnYM+OSEMkXU30EAcpu4Y
+	 h8sx+bHkmZKNuilNAIa7em232OhoPJSO+vtQu6C5q56xi36ly/8bjmOxldnx09zl5+
+	 J+A2REZGk8Xbv2htMOBm59RaZ/8UaW8tSvR1wYX7p9MlRwJM28obbFvRAYq3Iw40Gq
+	 6yX0/lW7c5v7Y02JrYRme9mLIbNgGJWgZQ8eq+QPhbG0rnxcd64Ldoje70yUjfqcm9
+	 fze+I5j0TV/hQ==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rCjJB-00069a-0E;
+	Mon, 11 Dec 2023 17:39:05 +0100
+Date: Mon, 11 Dec 2023 17:39:05 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 00/11] ARM/arm64: dts: qcom: fix USB wakeup interrupt
+ types
+Message-ID: <ZXc7KcjF82EgiXWd@hovoldconsulting.com>
+References: <20231120164331.8116-1-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13-dev-5c066
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231120164331.8116-1-johan+linaro@kernel.org>
 
-On Wed, 29 Nov 2023 12:30:11 +0100, Krzysztof Kozlowski wrote:
-> Add bindings for Qualcomm SM8650 Low Power Audio SubSystem (LPASS) RX
-> macro codec, which looks like compatible with earlier SM8550.
+On Mon, Nov 20, 2023 at 05:43:20PM +0100, Johan Hovold wrote:
+
+> It turns out a number Qualcomm devicetrees have also gotten the trigger
+> types wrong, something which this series addresses.
 > 
+> Specifically, the HS/SS PHY wakeup interrupts are level triggered while
+> the DP/DM HS PHY interrupts are edge triggered, and which edge to
+> trigger on depends both on the use-case and on whether a Low speed or
+> Full/High speed device is connected.
 > 
+> Fortunately, there should be no dependency between this series and USB
+> one as all devicetree use the correct trigger type for the HS/SS PHY
+> interrupts and the HS one has never been armed by Linux anyway. The
+> DP/DM interrupt trigger types are also updated on suspend currently.
 
-Applied to
+Konrad reported off-list that the sc8180x patch in this series breaks
+probe of the dwc3 driver.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+Turns out a number of these SoCs were using GIC interrupts for the
+DP/DM_HS_PHY interrupts despite the fact that the driver tries to
+reconfigure these as IRQ_TYPE_EDGE_FALLING (which the GIC does not
+support) to detect disconnect events during suspend.
 
-Thanks!
+This is obviously broken and the proper fix is to replace the GIC
+interrupts with the corresponding PDC interrupts. I believe Konrad is
+digging out the magic numbers at this moment.
 
-[1/4] ASoC: dt-bindings: qcom,lpass-rx-macro: Add SM8650 LPASS RX
-      commit: 0bfa20b18acbcdd133d41e04e07a2d78bcc04bc5
-[2/4] ASoC: dt-bindings: qcom,lpass-tx-macro: Add SM8650 LPASS TX
-      commit: 5a5085c9ce381f92399c755be6deaf1d76ad57e8
-[3/4] ASoC: dt-bindings: qcom,lpass-va-macro: Add SM8650 LPASS VA
-      commit: f243ef746d0ace20fe092fc1ee9987ecf003f7a4
-[4/4] ASoC: dt-bindings: qcom,lpass-wsa-macro: Add SM8650 LPASS WSA
-      commit: ab8921e1da8fdca14192c44775151f50c1cdb763
+The following patches will need a follow-up fix:
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+>   ARM: dts: qcom: sdx55: fix USB wakeup interrupt types
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+>   arm64: dts: qcom: sc8180x: fix USB wakeup interrupt types
+>   arm64: dts: qcom: sdm670: fix USB wakeup interrupt types
+>   arm64: dts: qcom: sdm845: fix USB wakeup interrupt types
+>   arm64: dts: qcom: sm6375: fix USB wakeup interrupt types
+>   arm64: dts: qcom: sm8150: fix USB wakeup interrupt types
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+Sorry about not noticing this.
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Johan
 
