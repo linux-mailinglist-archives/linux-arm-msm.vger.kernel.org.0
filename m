@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-4187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14BD080C51B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 10:46:36 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05F4B80C51F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 10:46:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 351061C2097D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:46:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3BA5AB2100F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:46:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 542D9219F1;
-	Mon, 11 Dec 2023 09:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AAAE219E4;
+	Mon, 11 Dec 2023 09:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="njyTUaf3"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AQ/fGjd9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C64AFD8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 01:46:25 -0800 (PST)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-5b383b4184fso36322757b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 01:46:25 -0800 (PST)
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9086FB8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 01:46:43 -0800 (PST)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-5d279bcce64so40150097b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 01:46:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702287985; x=1702892785; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702288003; x=1702892803; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ztyXivNuoKy+BneSWBkP9rSJnlB8B4ezbvE54Oo1NlU=;
-        b=njyTUaf3QvDiCSwjCwaAIG7S5UCt1cjiAFoNlC1tWka/9mYvZNgh3bA8o0CBMy1jQS
-         7vjB8AoHltjMlSA7gJrZGMaXwbqhORSwZl0M9auBSCHiSIkwZUMysUQpdFBoDatRvRBl
-         7JGrjiVP9v2SMionehLDTPRuHm7hAA6NufW3ecRHLBYEKPAc1xBLe+1Pg+FXIwLfMiYA
-         kPojistpa+LUKX8OYIdcqX+JN950aOghtJgIda4IYnsHhYkBngn/ELejey1M08c0dFNl
-         HrAyjv/79XNSS6ftd+ZUxB1QEMvU8USWCGZMIyC8vwkZqY3CjtnLcqoBXWRYx0P/A+/h
-         IKuA==
+        bh=ceCUCLPLXDWP9zuR7v88iAKVRPzXXELnTgB4Os6l22g=;
+        b=AQ/fGjd9sDjd3HVML4PO5m6XqonbJweLzw3M2pSZgDtwdJGIMlIKdjnpKiHadXN/Ze
+         MB1jhiEiA/r5bXluEb3Pc5NuIYcQnJj4VCUNCri5C+R5GbfEFFOx/rYzuCME9QTpfiT0
+         9UIwoenQFC623BAwPFjEJTaStvlR/jOHibEsirAESWTOTqD2rI08GyysBFSC+FI5UQe3
+         OyQ+QCcC5q2nXgnFIwRZJQxvofhyNvMU8bjiKmpER12xrwxQJYiyMU6NnUCoWlLJC55M
+         X8L9yuQQwID0nzpuLK2z4DKqiB41GlY18k9sx2KancFcA4QLHwIYsXkounQeJQ47V/6N
+         jEIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702287985; x=1702892785;
+        d=1e100.net; s=20230601; t=1702288003; x=1702892803;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ztyXivNuoKy+BneSWBkP9rSJnlB8B4ezbvE54Oo1NlU=;
-        b=gnmKrlIKqB6CotHu+E2VumnyNYybndlxg6Wbso/+7i6NXhZmXUtxA81ubqGEH7J9hA
-         JYsmLJPD/nYdqbUCd6g6VBbhoiSLcWI0g59dBQrhraiNNWYTc1zpYaJkaauGhvGg52JJ
-         CasM1ttTz7ujkvBHSnCiDAZIhBU/yEeem1r2nAS0e2L4kUg1G1RpXMPhXNqgfSYlY4bW
-         ReKXFOgvsyTh33VFeQgCaT534zaGSdGWHUIITbq6vloD6VukxitIzaOYtIAZoLWOKyRX
-         RRSH1PJGq+nJvi4nyy+FmnCqv4QJIdcSQuJu0/K+gyZqekByqW8LCtBiQ1bOsxzDyfIJ
-         JdLg==
-X-Gm-Message-State: AOJu0YwRMHqGqUnsu6I6j041ojjKbx61cX3Oy54C0zKDnqUjsQ78++01
-	N4QfH+8eRRnl/p4BxJq76Jzn07LCyRCN+2sQwsuK2cNwjaYqALq7Z65a+g==
-X-Google-Smtp-Source: AGHT+IHURBFzCJzZFsNF1co2h/izQ0cL38z/U3Y37n9DKZ7fTanIIaYzh9eONAyPtqR8UEIN3d2Z/6hvKEoyRrb3Guw=
-X-Received: by 2002:a5b:20d:0:b0:da0:350f:fd6a with SMTP id
- z13-20020a5b020d000000b00da0350ffd6amr1668920ybl.46.1702287984965; Mon, 11
- Dec 2023 01:46:24 -0800 (PST)
+        bh=ceCUCLPLXDWP9zuR7v88iAKVRPzXXELnTgB4Os6l22g=;
+        b=XWFNjNrbe7Z50En8BjpuMfL8VpBk320tjSmNCZnXRSkZlh9D/xMIwz9bnYZMQXPHlz
+         +8TKMbFRrdDjwa4iqe3ZbplEiiEnKvJ7GaeUaS4nFvJEpfGrrTHuZPQQ6FT/4is+s9wG
+         fES3hUPMQc6aKuN7Gq7FmkZEvFkjZodp+UdCD2iErL6oHjtyBwwge5mVwKvl2lDf3gym
+         DLWzNrz+34udQ7IhKJWyL4TruWeuU9wRnJdo426q0vIM/BzwA9bXTJldJGxPV4TZ32cl
+         hG76F2VzCLv3hatvwFSE1tQGXvxGw249pr8Ir9UhBylqU5X/WRyLMDcDbfOzHpnzWDuL
+         7jXQ==
+X-Gm-Message-State: AOJu0Yw3FXOhcX3PIeWL4S9IfKOMPlPEYH9sjDqR01TSO1TEik7ubtEw
+	kpdJv2QurS6LiORbOJOUCcvgkhCnect1i6fUJS0OlQ==
+X-Google-Smtp-Source: AGHT+IFOa8DSXLPHUigw9G0yCtlmvsBIW84hlWI/2hqEX9J672xst4rq91Q4Tzd92Qk+L8dSWiirXnvbHK1KGoEHH7M=
+X-Received: by 2002:a81:d550:0:b0:5d4:20bc:403 with SMTP id
+ l16-20020a81d550000000b005d420bc0403mr3018887ywj.2.1702288002808; Mon, 11 Dec
+ 2023 01:46:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,13 +56,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20231209232132.3580045-1-dmitry.baryshkov@linaro.org>
- <20231209232132.3580045-8-dmitry.baryshkov@linaro.org> <5025892d-0cbc-462a-b7d8-95828680dd8b@linaro.org>
-In-Reply-To: <5025892d-0cbc-462a-b7d8-95828680dd8b@linaro.org>
+ <20231209232132.3580045-10-dmitry.baryshkov@linaro.org> <7d459b20-80f5-4d9a-88b0-9e5769d1d9be@linaro.org>
+In-Reply-To: <7d459b20-80f5-4d9a-88b0-9e5769d1d9be@linaro.org>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 11 Dec 2023 11:46:14 +0200
-Message-ID: <CAA8EJprp+Rf5BKEnaoCooWVKGfg6SRg-uc=NRywc10qy=Yj2Xw@mail.gmail.com>
-Subject: Re: [PATCH 7/9] arm64: dts: qcom: sm8150: add USB-C ports to the
- USB+DP QMP PHY
+Date: Mon, 11 Dec 2023 11:46:31 +0200
+Message-ID: <CAA8EJpqpdvV6-Yxf7njg2srqEyiWJiF3fUGFi1XYBAPvUN3SOg@mail.gmail.com>
+Subject: Re: [PATCH 9/9] arm64: dts: qcom: sm8150-hdk: enable DisplayPort and
+ USB-C altmode
 To: Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
 	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
@@ -77,51 +77,37 @@ Content-Type: text/plain; charset="UTF-8"
 On Mon, 11 Dec 2023 at 11:33, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
 > On 10.12.2023 00:21, Dmitry Baryshkov wrote:
-> > Expand Combo USB+DP QMP PHY device node with the OF ports required to
-> > support USB-C / DisplayPort switching.
+> > Enable the USB-C related functionality for the USB-C port on this board.
+> > This includes OTG, PowerDelivery and DP AltMode. Also enable the
+> > DisplayPort itself.
 > >
 > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > > ---
-> >  arch/arm64/boot/dts/qcom/sm8150.dtsi | 23 +++++++++++++++++++++++
-> >  1 file changed, 23 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > index ea7c92c0e405..38423a9f8408 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> > @@ -3447,6 +3447,29 @@ usb_1_qmpphy: phy@88e8000 {
-> >                       #phy-cells = <1>;
-> >
-> >                       status = "disabled";
-> > +
-> > +                     ports {
-> > +                             #address-cells = <1>;
-> > +                             #size-cells = <0>;
-> > +
-> > +                             port@0 {
-> > +                                     reg = <0>;
-> > +                                     usb_1_qmpphy_out: endpoint {};
-> style 1
-> > +                             };
-> > +
-> > +                             port@1 {
-> > +                                     reg = <1>;
-> > +
-> > +                                     usb_1_qmpphy_usb_ss_in: endpoint {
-> > +                                     };
-> style 2
-> > +                             };
-> > +
-> > +                             port@2 {
-> > +                                     reg = <2>;
-> > +
-> > +                                     usb_1_qmpphy_dp_in: endpoint {};
-> style 3
+> [...]
 >
-> :(
+> > +&pm8150b_typec {
+> > +     status = "okay";
+> > +
+> > +     vdd-pdphy-supply = <&vreg_l2a_3p1>;
+> > +
+> > +     connector {
+> > +             compatible = "usb-c-connector";
+> > +
+> > +             power-role = "source";
+> > +             data-role = "dual";
+> > +             self-powered;
+> > +
+> > +             source-pdos = <PDO_FIXED(5000, 3000,
+> > +                                      PDO_FIXED_DUAL_ROLE |
+> > +                                      PDO_FIXED_USB_COMM |
+> > +                                      PDO_FIXED_DATA_SWAP)>;
+> > +
+> > +             altmodes {
+> > +                     displayport {
+> > +                             svid = <0xff01>;
+> /bits/ 16?
 
-Which one should I stick to?
-
+Ugh, yes.
 
 -- 
 With best wishes
