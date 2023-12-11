@@ -1,114 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-4160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB98C80C2B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:07:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C93480C2D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:12:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 965EA1F20F16
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 08:07:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBCDC1F20FDC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 08:12:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDA6720B1D;
-	Mon, 11 Dec 2023 08:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8381020B2D;
+	Mon, 11 Dec 2023 08:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lXS/Bf6Y"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="IWzoCn5Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C33ED;
-	Mon, 11 Dec 2023 00:06:57 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BB6mpwa009470;
-	Mon, 11 Dec 2023 08:06:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=XNenH5aJV/ZldxK+c+V4J8ZQ9r6vQ48/MsxKcIZksSc=; b=lX
-	S/Bf6YmS+m8tmVkCxnp+adZtLhWcWMmy/nV9G8/GgqFVA5iitlAtVWKK2QxgdLtZ
-	f8Sac78UUyLewB8w0Cj0kIKcOKpJjAWizYQMbSnC+HuolpJmONWbqxqI3nIJv/u3
-	OD5+2zOaCCFErq93f1YXAmHMR519SeOtpUNmwnFwzlJbFgPOCzWM6WyFC0fnGN3Q
-	D0+MUVZU6VnEaF4i4VUKxc9MzpyhaEcVbcOyTlsY4DOgCCER+09inGThRBLnnoRM
-	THPNeJ94cmzqmR8syKaXJCqNg7DPO2g9Buh5U3fMDOFHUygo2v6qnR9h9d2dgG3T
-	6WKvAPS0L9u2dFICNX7w==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uvnyvajqq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 08:06:51 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BB86n8C030106
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 08:06:49 GMT
-Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Dec
- 2023 00:06:46 -0800
-Message-ID: <f521df97-dfd7-b56d-3799-0a72c22edf83@quicinc.com>
-Date: Mon, 11 Dec 2023 13:36:37 +0530
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A770FE
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 00:12:24 -0800 (PST)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-54c77e0835bso5971405a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 00:12:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1702282342; x=1702887142; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i2VetfWENefg3NNH186dWhmbJJvG28uTk+9EusPe8Vs=;
+        b=IWzoCn5QVb3w1w2lMSzZnMBn5t9TP5Aqik7RyQP14t/Wwf+c9Bs7mVgGR9UVhKFqLt
+         metGWAbyRoK0ZwDTWwypTUttdtS8dRgGc87bqYfqc3aGdvjOX2oa3Ue77XQS86kMhtg8
+         aX5OSVGUANn9JaA/rWKiLVAgTDPYTWzS1TwdLAM1f0LHMLioLoqeH+1NHJNno0IYKrzT
+         m8siL/3r6XHkbPwJIrJGB4oE6QgSyLFj48fVAtsNaVBehXRwbJQBw8uNJ+znoFVZLMGo
+         8OKVEHs4seK2wT7egtr2R+9qcgvNaWiv4eIEUQ2r/Ub2ThsxMDQ3t2ZWr4akCNGebAuv
+         DMuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702282342; x=1702887142;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=i2VetfWENefg3NNH186dWhmbJJvG28uTk+9EusPe8Vs=;
+        b=DaVEB0igY5ga7Hbz7BtLq8YC8nCEQ2Cq3TzyYXRCcA5CTYHlEwKwn6tWQHBPsGAdjT
+         5y4QLSclT5xfb1eePuWyJprfu4OmoJ7dWS81RW5MZkBvh9dUFs8doxoPj55d+gyo0hgq
+         92P3T2/QiNm2/tBvD3ztczt7CIZ5MStb2PSrhxy8h333EKwGN13pwV5yKcido2J5TPcy
+         Ib2HDOqlbg6g8OHfvStDDxpgQyrgjCCFhTECT36C8n4X3hPCzIDiZtIWGUMxq3qKPP2B
+         CmUnVq/ymeN1Zmz5jp7PsePLByk6WlxC7RGqhNaa9uTHeFDEkAvG1wRCJh8tqC+Wg8uz
+         VNbw==
+X-Gm-Message-State: AOJu0YzB+a5OdS/jGTdrXs7PxBS1ryMztJgQXao/NySifZmWatkRtvlo
+	MteisLaFPkf+iMR26O988h3+tA==
+X-Google-Smtp-Source: AGHT+IG4I/qnppSWLttR4KLdZdwYth/8ysJQzdDaMQv6IkPfpXivrhMdOVuG36BLT3aWZ2Qa9tUkeA==
+X-Received: by 2002:a50:ab5a:0:b0:54c:4837:8b72 with SMTP id t26-20020a50ab5a000000b0054c48378b72mr2555831edc.64.1702282342593;
+        Mon, 11 Dec 2023 00:12:22 -0800 (PST)
+Received: from localhost (dhcp-089-099-055-216.chello.nl. [89.99.55.216])
+        by smtp.gmail.com with ESMTPSA id m27-20020a50d7db000000b0054c0264a7fasm3502968edj.64.2023.12.11.00.12.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Dec 2023 00:12:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: (subset) [PATCH v2 1/4] dt-bindings: mfd: qcom,tcsr: Add
- compatible for sm8250/sm8350
-To: Bjorn Andersson <andersson@kernel.org>, <agross@kernel.org>,
-        <konrad.dybcio@linaro.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1698253601-11957-1-git-send-email-quic_mojha@quicinc.com>
- <170200426910.2871025.1931459275540622967.b4-ty@kernel.org>
-Content-Language: en-US
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <170200426910.2871025.1931459275540622967.b4-ty@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3UsKlVjhObpSIAv0_WQW-pZXeBKRyJiz
-X-Proofpoint-ORIG-GUID: 3UsKlVjhObpSIAv0_WQW-pZXeBKRyJiz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=615 suspectscore=0 spamscore=0 bulkscore=0 clxscore=1015
- phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312110067
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 11 Dec 2023 09:12:21 +0100
+Message-Id: <CXLCQ7VTPXN3.3SX0FHWBB1MQK@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH v3 1/3] media: venus: core: Set up secure memory ranges
+ for SC7280
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Stanimir Varbanov"
+ <stanimir.k.varbanov@gmail.com>, "Vikash Garodia"
+ <quic_vgarodia@quicinc.com>, "Bryan O'Donoghue"
+ <bryan.odonoghue@linaro.org>, "Andy Gross" <agross@kernel.org>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konrad.dybcio@linaro.org>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+ <cros-qcom-dts-watchers@chromium.org>, "Rob Herring" <robh+dt@kernel.org>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Hans Verkuil" <hverkuil-cisco@xs4all.nl>
+X-Mailer: aerc 0.15.2
+References: <20231201-sc7280-venus-pas-v3-0-bc132dc5fc30@fairphone.com>
+ <20231201-sc7280-venus-pas-v3-1-bc132dc5fc30@fairphone.com>
+In-Reply-To: <20231201-sc7280-venus-pas-v3-1-bc132dc5fc30@fairphone.com>
 
-Hi Bjorn,
+On Fri Dec 1, 2023 at 10:33 AM CET, Luca Weiss wrote:
+> Not all SC7280 devices ship with ChromeOS firmware. Other devices need
+> PAS for image authentication. That requires the predefined virtual
+> address ranges to be passed via scm calls. Define them to enable Venus
+> on non-CrOS SC7280 devices.
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  drivers/media/platform/qcom/venus/core.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 
-I have said in one of the thread here,
+Hi Hans,
 
-https://lore.kernel.org/lkml/57eed7c3-e884-a28b-a1ff-e5aecbb11137@quicinc.com/
+Is there anything missing for this to be applied or could you pick this
+up for v6.8?
 
-There is a wrong register offset given for sm8550 in 4/4.
-Since, you applied the changes in your tree, shall i send
-the separate patch for it, or would you mind fixing it ?
+Regards
+Luca
 
--Mukesh
+>
+> diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/pla=
+tform/qcom/venus/core.c
+> index 9cffe975581b..a712dd4f02a5 100644
+> --- a/drivers/media/platform/qcom/venus/core.c
+> +++ b/drivers/media/platform/qcom/venus/core.c
+> @@ -881,6 +881,10 @@ static const struct venus_resources sc7280_res =3D {
+>  	.vmem_size =3D 0,
+>  	.vmem_addr =3D 0,
+>  	.dma_mask =3D 0xe0000000 - 1,
+> +	.cp_start =3D 0,
+> +	.cp_size =3D 0x25800000,
+> +	.cp_nonpixel_start =3D 0x1000000,
+> +	.cp_nonpixel_size =3D 0x24800000,
+>  	.fwname =3D "qcom/vpu-2.0/venus.mbn",
+>  };
+> =20
 
-On 12/8/2023 8:27 AM, Bjorn Andersson wrote:
-> 
-> On Wed, 25 Oct 2023 22:36:38 +0530, Mukesh Ojha wrote:
->> Document the compatible for both sm8250 and sm8350 SoCs.
->>
->>
-> 
-> Applied, thanks!
-> 
-> [2/4] arm64: dts: qcom: sm8250: Add TCSR halt register space
->        commit: d59653233e8779e3fe082eb5635b9785f2095af6
-> [3/4] arm64: dts: qcom: sm8350: Add TCSR halt register space
->        commit: 1accc6031d925c6045c4776d5f3646996b0b242a
-> [4/4] arm64: dts: qcom: sm8550: Enable download mode register write
->        commit: 44b1f64cad5703c87918cc9ffbf9b79bb959418d
-> 
-> Best regards,
 
