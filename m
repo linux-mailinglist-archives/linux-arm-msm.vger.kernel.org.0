@@ -1,215 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-4159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B4FB80C29D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:03:05 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB98C80C2B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:07:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9DCCC280D82
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 08:03:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 965EA1F20F16
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 08:07:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E333720B11;
-	Mon, 11 Dec 2023 08:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDA6720B1D;
+	Mon, 11 Dec 2023 08:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jaoQqXLk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lXS/Bf6Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA385101;
-	Mon, 11 Dec 2023 00:02:54 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BB7aoV9013723;
-	Mon, 11 Dec 2023 08:02:41 GMT
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50C33ED;
+	Mon, 11 Dec 2023 00:06:57 -0800 (PST)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BB6mpwa009470;
+	Mon, 11 Dec 2023 08:06:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=+FEzrFKs6ZPhCQRBlfYnh24zV5xaPlV/IKpddkGjXTw=; b=ja
-	oQqXLkSUd5O5JXVKrGhXAYK5sZ/4VSVYd3xR7Iknkbqi8y3vIR3OPp/FxBNu+XC5
-	aXMgVwVDIDU1UWeCU1Lh2Pkk97hCi8l/p94KLqE3knOPklp6nP+fApnGoRYsfR4X
-	kLx4kiXqTuyqsvqDciG/tQdCnbi1hyUxyReQ/eG8dtroTxDpmLTg770IVUXzaTnN
-	0+/8umhD3ToL0IcAuiEKSajMadLigc9F5vuH2eNqbzmiiCmUPpWxR5TZTvjsk+65
-	IXak+PtHVomGeN1ytfsPqi27ma93Wzjd19bw/9gHkeSpk8gTwYJSqZ+VyL2InmCW
-	hxM2QwA4dQoXlWYOy9uA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uwjyjrynx-1
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=XNenH5aJV/ZldxK+c+V4J8ZQ9r6vQ48/MsxKcIZksSc=; b=lX
+	S/Bf6YmS+m8tmVkCxnp+adZtLhWcWMmy/nV9G8/GgqFVA5iitlAtVWKK2QxgdLtZ
+	f8Sac78UUyLewB8w0Cj0kIKcOKpJjAWizYQMbSnC+HuolpJmONWbqxqI3nIJv/u3
+	OD5+2zOaCCFErq93f1YXAmHMR519SeOtpUNmwnFwzlJbFgPOCzWM6WyFC0fnGN3Q
+	D0+MUVZU6VnEaF4i4VUKxc9MzpyhaEcVbcOyTlsY4DOgCCER+09inGThRBLnnoRM
+	THPNeJ94cmzqmR8syKaXJCqNg7DPO2g9Buh5U3fMDOFHUygo2v6qnR9h9d2dgG3T
+	6WKvAPS0L9u2dFICNX7w==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uvnyvajqq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 08:02:41 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BB82eYp003204
+	Mon, 11 Dec 2023 08:06:51 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BB86n8C030106
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 08:02:40 GMT
-Received: from hu-jsuraj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 11 Dec 2023 00:02:30 -0800
-From: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-To: <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma
-	<bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        "Jose
- Abreu" <joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Prasad Sodagudi
-	<psodagud@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>, Rob Herring
-	<robh@kernel.org>
-CC: <kernel@quicinc.com>
-Subject: [PATCH net-next v5 3/3] net: stmmac: Add driver support for DWMAC5 safety IRQ support
-Date: Mon, 11 Dec 2023 13:31:53 +0530
-Message-ID: <20231211080153.3005122-4-quic_jsuraj@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20231211080153.3005122-1-quic_jsuraj@quicinc.com>
-References: <20231211080153.3005122-1-quic_jsuraj@quicinc.com>
+	Mon, 11 Dec 2023 08:06:49 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Dec
+ 2023 00:06:46 -0800
+Message-ID: <f521df97-dfd7-b56d-3799-0a72c22edf83@quicinc.com>
+Date: Mon, 11 Dec 2023 13:36:37 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: (subset) [PATCH v2 1/4] dt-bindings: mfd: qcom,tcsr: Add
+ compatible for sm8250/sm8350
+To: Bjorn Andersson <andersson@kernel.org>, <agross@kernel.org>,
+        <konrad.dybcio@linaro.org>, <lee@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1698253601-11957-1-git-send-email-quic_mojha@quicinc.com>
+ <170200426910.2871025.1931459275540622967.b4-ty@kernel.org>
+Content-Language: en-US
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <170200426910.2871025.1931459275540622967.b4-ty@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: x5JuBftQhK7WbrtJsDHr2lL8fsUiMgXn
-X-Proofpoint-ORIG-GUID: x5JuBftQhK7WbrtJsDHr2lL8fsUiMgXn
+X-Proofpoint-GUID: 3UsKlVjhObpSIAv0_WQW-pZXeBKRyJiz
+X-Proofpoint-ORIG-GUID: 3UsKlVjhObpSIAv0_WQW-pZXeBKRyJiz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- bulkscore=0 priorityscore=1501 impostorscore=0 malwarescore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 mlxlogscore=999 phishscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312110066
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=615 suspectscore=0 spamscore=0 bulkscore=0 clxscore=1015
+ phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312110067
 
-Add IRQ support to listen HW safety IRQ like ECC(error
-correction code), DPP(data path parity), FSM(finite state
-machine) fault and print the fault information in the kernel
-log.
+Hi Bjorn,
 
-Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
----
- drivers/net/ethernet/stmicro/stmmac/common.h   |  1 +
- drivers/net/ethernet/stmicro/stmmac/stmmac.h   |  2 ++
- .../net/ethernet/stmicro/stmmac/stmmac_main.c  | 18 ++++++++++++++++++
- .../ethernet/stmicro/stmmac/stmmac_platform.c  |  9 +++++++++
- 4 files changed, 30 insertions(+)
+I have said in one of the thread here,
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/common.h b/drivers/net/ethernet/stmicro/stmmac/common.h
-index 721c1f8e892f..cb9645fe16d8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/common.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-@@ -347,6 +347,7 @@ enum request_irq_err {
- 	REQ_IRQ_ERR_SFTY_UE,
- 	REQ_IRQ_ERR_SFTY_CE,
- 	REQ_IRQ_ERR_LPI,
-+	REQ_IRQ_ERR_SAFETY,
- 	REQ_IRQ_ERR_WOL,
- 	REQ_IRQ_ERR_MAC,
- 	REQ_IRQ_ERR_NO,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 9f89acf31050..aa2eda6fb927 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -33,6 +33,7 @@ struct stmmac_resources {
- 	int irq;
- 	int sfty_ce_irq;
- 	int sfty_ue_irq;
-+	int safety_common_irq;
- 	int rx_irq[MTL_MAX_RX_QUEUES];
- 	int tx_irq[MTL_MAX_TX_QUEUES];
- };
-@@ -299,6 +300,7 @@ struct stmmac_priv {
- 	unsigned long active_vlans[BITS_TO_LONGS(VLAN_N_VID)];
- 	int sfty_ce_irq;
- 	int sfty_ue_irq;
-+	int safety_common_irq;
- 	int rx_irq[MTL_MAX_RX_QUEUES];
- 	int tx_irq[MTL_MAX_TX_QUEUES];
- 	/*irq name */
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 47de466e432c..e4a0d9ec8b3f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3592,6 +3592,10 @@ static void stmmac_free_irq(struct net_device *dev,
- 		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
- 			free_irq(priv->wol_irq, dev);
- 		fallthrough;
-+	case REQ_IRQ_ERR_SAFETY:
-+		if (priv->safety_common_irq > 0 && priv->safety_common_irq != dev->irq)
-+			free_irq(priv->safety_common_irq, dev);
-+		fallthrough;
- 	case REQ_IRQ_ERR_WOL:
- 		free_irq(dev->irq, dev);
- 		fallthrough;
-@@ -3798,6 +3802,18 @@ static int stmmac_request_irq_single(struct net_device *dev)
- 		}
- 	}
- 
-+	if (priv->safety_common_irq > 0 && priv->safety_common_irq != dev->irq) {
-+		ret = request_irq(priv->safety_common_irq, stmmac_safety_interrupt,
-+				  0, "safety", dev);
-+		if (unlikely(ret < 0)) {
-+			netdev_err(priv->dev,
-+				   "%s: alloc safety failed %d (error: %d)\n",
-+				   __func__, priv->safety_common_irq, ret);
-+			irq_err = REQ_IRQ_ERR_SAFETY;
-+			goto irq_error;
-+		}
-+	}
-+
- 	return 0;
- 
- irq_error:
-@@ -7464,6 +7480,8 @@ int stmmac_dvr_probe(struct device *device,
- 	priv->lpi_irq = res->lpi_irq;
- 	priv->sfty_ce_irq = res->sfty_ce_irq;
- 	priv->sfty_ue_irq = res->sfty_ue_irq;
-+	priv->safety_common_irq = res->safety_common_irq;
-+
- 	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
- 		priv->rx_irq[i] = res->rx_irq[i];
- 	for (i = 0; i < MTL_MAX_TX_QUEUES; i++)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index 1ffde555da47..41a4a253d75b 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -726,6 +726,15 @@ int stmmac_get_platform_resources(struct platform_device *pdev,
- 		dev_info(&pdev->dev, "IRQ eth_lpi not found\n");
- 	}
- 
-+	stmmac_res->safety_common_irq =
-+		platform_get_irq_byname_optional(pdev, "safety");
-+
-+	if (stmmac_res->safety_common_irq < 0) {
-+		if (stmmac_res->safety_common_irq == -EPROBE_DEFER)
-+			return -EPROBE_DEFER;
-+		dev_info(&pdev->dev, "IRQ safety IRQ not found\n");
-+	}
-+
- 	stmmac_res->addr = devm_platform_ioremap_resource(pdev, 0);
- 
- 	return PTR_ERR_OR_ZERO(stmmac_res->addr);
--- 
-2.25.1
+https://lore.kernel.org/lkml/57eed7c3-e884-a28b-a1ff-e5aecbb11137@quicinc.com/
 
+There is a wrong register offset given for sm8550 in 4/4.
+Since, you applied the changes in your tree, shall i send
+the separate patch for it, or would you mind fixing it ?
+
+-Mukesh
+
+On 12/8/2023 8:27 AM, Bjorn Andersson wrote:
+> 
+> On Wed, 25 Oct 2023 22:36:38 +0530, Mukesh Ojha wrote:
+>> Document the compatible for both sm8250 and sm8350 SoCs.
+>>
+>>
+> 
+> Applied, thanks!
+> 
+> [2/4] arm64: dts: qcom: sm8250: Add TCSR halt register space
+>        commit: d59653233e8779e3fe082eb5635b9785f2095af6
+> [3/4] arm64: dts: qcom: sm8350: Add TCSR halt register space
+>        commit: 1accc6031d925c6045c4776d5f3646996b0b242a
+> [4/4] arm64: dts: qcom: sm8550: Enable download mode register write
+>        commit: 44b1f64cad5703c87918cc9ffbf9b79bb959418d
+> 
+> Best regards,
 
