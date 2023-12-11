@@ -1,80 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-4258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B10F80D4D4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 18:59:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D3E680D4FD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 19:10:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CF05C1F219E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 17:59:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC69F2817F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 18:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 229BE4EB4D;
-	Mon, 11 Dec 2023 17:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 674CC4F21E;
+	Mon, 11 Dec 2023 18:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EArWtRW9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A38C9C3;
-	Mon, 11 Dec 2023 09:59:29 -0800 (PST)
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1d2e6e14865so21498905ad.0;
-        Mon, 11 Dec 2023 09:59:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702317569; x=1702922369;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8TG12YyuQcIlIUIhJpok1Z9XhgvnLDNR3xx7iZohyHA=;
-        b=F67ZyNzD63Qx4pluM/am8tEL13aLrpl+Qph7Hf8agm7nqr79KZE8QOUY0CM3gRro2V
-         Q+yHzKs+wyaj4Fsl4wDFi49FvhF77MSVOZ/u8mQMhDwBaLj65fjDweSfxV4NOpl4AX7B
-         SQK7W1aBTfcPYaU5/ORr4Q+3+sdJrqZeRKwhW0eC49PDKnNCTAmnqLlS26JxpwQLcXkl
-         71/ksIzPyspdYcqtIN78Pj0wPrjb2YXKxarCC2OFSqLBKTy7iHXpU7ewCHAEQpYpjnuI
-         5ZenvxsCKEZ5WWCPODa9F4yL+Vj6XDyHKCNcXXaooytPxwOQxh/uPRVz5uLLq5YROz0U
-         7oiQ==
-X-Gm-Message-State: AOJu0Yz2X+2fbjtc3oeycDDG35AIH2n+eEtxGsuYsMaPY49sHr/FxJJU
-	/hcv1gdx4Fe4ue3poh43R18=
-X-Google-Smtp-Source: AGHT+IE5lNotrSQSHXP57Xi5usYbH8Ac+LXzWL6rFd610YIZtYdxRXvrh/HMoTpbtPoScBauDbOVKA==
-X-Received: by 2002:a17:902:e810:b0:1d0:6ffd:6e60 with SMTP id u16-20020a170902e81000b001d06ffd6e60mr2382910plg.88.1702317568985;
-        Mon, 11 Dec 2023 09:59:28 -0800 (PST)
-Received: from ?IPV6:2620:0:1000:8411:3431:681a:6403:d100? ([2620:0:1000:8411:3431:681a:6403:d100])
-        by smtp.gmail.com with ESMTPSA id w18-20020a170902e89200b001d0855ce7c8sm6979575plg.252.2023.12.11.09.59.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Dec 2023 09:59:28 -0800 (PST)
-Message-ID: <0d59681d-2d7d-4459-b79c-c5f41f20b7a5@acm.org>
-Date: Mon, 11 Dec 2023 09:59:25 -0800
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35D3AD8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 10:10:28 -0800 (PST)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BBFhNGW032546;
+	Mon, 11 Dec 2023 18:10:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=qcppdkim1; bh=XHwxvdnorYSN/lc1MHmTN
+	BeycNeOZrCvtYEa6cs0SAY=; b=EArWtRW921xLIGy4mz+bXFE3gFj8UU5TWBzD6
+	DO+5xXbh72iAq0B1EMEYauHcgehlSAWyLGV2EXmHyBXlwXa0rw07NBTv4m0F7dUe
+	uhU+t72EwD3hH8uRb4JTyzzkNM9r1ULGXBqCkpSBonpS7u6s7W+PGHt0NLExDIl+
+	5ARjoyxGJBTtkC1bzsLLOX1QgQ/LjtcKNi4lTaIRGDLJ/85dsQC/mvNmtykDVbZs
+	7I5BTKXPyVlYTvSyOYgZ2gwNhxl/rk78/WxrQs0LNp0Du1DoimHI/dt4l3Ghk2ka
+	6DrXv9njnAwrIAVGhOTFxBzDA7ecMtZYZzyIJplTrW9uktqvg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ux25u0v57-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Dec 2023 18:10:20 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BBIAKXx001678
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 11 Dec 2023 18:10:20 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 11 Dec 2023 10:10:19 -0800
+Date: Mon, 11 Dec 2023 10:10:18 -0800
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Sankeerth Billakanti
+	<quic_sbillaka@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>, David Airlie
+	<airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH] drm/msm/dp: call dp_display_get_next_bridge() during
+ probe
+Message-ID: <20231211181018.GL1766637@hu-bjorande-lv.qualcomm.com>
+References: <20231107004424.2112698-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scsi: ufs: qcom: Perform read back after writing reset
- bit
-Content-Language: en-US
-To: Andrew Halaney <ahalaney@redhat.com>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Manivannan Sadhasivam <mani@kernel.org>,
- "James E.J. Bottomley" <jejb@linux.ibm.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Yaniv Gardi <ygardi@codeaurora.org>, Dov Levenglick <dovl@codeaurora.org>
-Cc: Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231208-ufs-reset-ensure-effect-before-delay-v1-1-8a0f82d7a09e@redhat.com>
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20231208-ufs-reset-ensure-effect-before-delay-v1-1-8a0f82d7a09e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20231107004424.2112698-1-dmitry.baryshkov@linaro.org>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EjheDSGwnJGoZIDX5olxx_NyFLrysbMG
+X-Proofpoint-GUID: EjheDSGwnJGoZIDX5olxx_NyFLrysbMG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ mlxscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312110149
+
+On Tue, Nov 07, 2023 at 02:43:33AM +0200, Dmitry Baryshkov wrote:
+> The funcion dp_display_get_next_bridge() can return -EPROBE_DEFER if the
+> next bridge is not (yet) available. However returning -EPROBE_DEFER from
+> msm_dp_modeset_init() is not ideal. This leads to -EPROBE return from
+> component_bind, which can easily result in -EPROBE_DEFR loops.
+> 
+
+Nice!
+
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> 
+> Dependencies: https://patchwork.freedesktop.org/series/120375/
+> 
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 36 +++++++++++++++++------------
+>  1 file changed, 21 insertions(+), 15 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index d542db37763a..ddb3c84f39a2 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1197,15 +1197,27 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
+>  	return NULL;
+>  }
+>  
+> -static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
+> +static int dp_display_get_next_bridge(struct msm_dp *dp);
+> +
+> +static int dp_display_probe_tail(struct device *dev)
+>  {
+> -	int rc;
+> +	struct msm_dp *dp = dev_get_drvdata(dev);
+> +	int ret;
+>  
+> -	rc = component_add(aux->dev, &dp_display_comp_ops);
+> -	if (rc)
+> -		DRM_ERROR("eDP component add failed, rc=%d\n", rc);
+> +	ret = dp_display_get_next_bridge(dp);
+> +	if (ret)
+> +		return ret;
+>  
+> -	return rc;
+> +	ret = component_add(dev, &dp_display_comp_ops);
+> +	if (ret)
+> +		DRM_ERROR("component add failed, rc=%d\n", ret);
+> +
+> +	return ret;
+> +}
+> +
+> +static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
+> +{
+> +	return dp_display_probe_tail(aux->dev);
+>  }
+>  
+>  static int dp_display_probe(struct platform_device *pdev)
+> @@ -1280,11 +1292,9 @@ static int dp_display_probe(struct platform_device *pdev)
+>  			goto err;
+>  		}
+>  	} else {
+> -		rc = component_add(&pdev->dev, &dp_display_comp_ops);
+> -		if (rc) {
+> -			DRM_ERROR("component add failed, rc=%d\n", rc);
+> +		rc = dp_display_probe_tail(&pdev->dev);
+> +		if (rc)
+>  			goto err;
+> -		}
+>  	}
+>  
+>  	return rc;
+> @@ -1415,7 +1425,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
+>  	 * For DisplayPort interfaces external bridges are optional, so
+>  	 * silently ignore an error if one is not present (-ENODEV).
+>  	 */
+> -	rc = devm_dp_parser_find_next_bridge(dp->drm_dev->dev, dp_priv->parser);
+> +	rc = devm_dp_parser_find_next_bridge(&dp->pdev->dev, dp_priv->parser);
+
+This transition worried me, but after reading the code the current model
+of mixing devices for devres scares me more. So, nice cleanup! But I
+think we have a few more of these...
 
 
-On 12/8/23 12:19, Andrew Halaney wrote:
-> The recommendation for ensuring this bit has taken effect on the
-> device is to perform a read back to force it to make it all the way
-> to the device. This is documented in device-io.rst  [... ]
-There are more mb()'s that need to be replaced, namely the mb() calls in
-ufshcd_system_restore() and ufshcd_init().
+That said, &dp->pdev->dev is dp_priv->parser->dev, the function no
+longer relate to the "parser module", and we stash the return value of
 
-Thanks,
+  devm_drm_of_get_bridge(dev, dev->of_node, 1, 0)
 
-Bart.
+in parser->next_brigde, so that we 5 lines below this call can move it
+into dp->next_bridge.
+
+As such, I'd like to propose that we change
+devm_dp_parser_find_next_bridge() to just take &dp->pdev->dev and return
+the next_bridge, in an ERR_PTR().
+
+But that's follow-up-patch material.
+
+
+Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+
+Regards,
+Bjorn
+
+>  	if (!dp->is_edp && rc == -ENODEV)
+>  		return 0;
+>  
+> @@ -1435,10 +1445,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
+>  
+>  	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
+>  
+> -	ret = dp_display_get_next_bridge(dp_display);
+> -	if (ret)
+> -		return ret;
+> -
+>  	ret = dp_bridge_init(dp_display, dev, encoder);
+>  	if (ret) {
+>  		DRM_DEV_ERROR(dev->dev,
+> -- 
+> 2.42.0
+> 
+> 
 
