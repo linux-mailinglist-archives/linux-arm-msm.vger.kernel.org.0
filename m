@@ -1,161 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-4255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47AEA80D457
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 18:46:02 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FDF680D4BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 18:55:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EE6492810C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 17:46:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 010B8B20FE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 17:55:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C7B84E630;
-	Mon, 11 Dec 2023 17:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 637264EB51;
+	Mon, 11 Dec 2023 17:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="siz1Izml"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Wy+XZfm/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DF74E1C0;
-	Mon, 11 Dec 2023 17:45:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C71C433C8;
-	Mon, 11 Dec 2023 17:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B824EB34;
+	Mon, 11 Dec 2023 17:55:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCD5C433CA;
+	Mon, 11 Dec 2023 17:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702316756;
-	bh=O7wjFCJQlMWHBmegNZT1hxTWnkBth0ZVbCZUnv29/lw=;
+	s=k20201202; t=1702317350;
+	bh=TDsZZcW//Yjkn4AZvJmsYsqi1Yqt03hg0vEJ8F1Khno=;
 	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=siz1Izml3pxtqg7z6WiQUs5+dXCMkv1u/VDIhoWyfA4LlmfO8X334fiSq4xlsydzW
-	 kgmseEhhpvnpyEudgGwmIgDWQRZ5m0i/280tEYjQbGTmV0wAgjlH9GnveMzhhnxen0
-	 P4gxfzYlUJjbTGVTFB2BM8d2+3uvcQ8uoUsLRCR35eeE7SyZtl3h+4m6ZiFaXv9ZPM
-	 MYfOIlIznWeUlNcubiLjOgonzXjRhN5h+JS531Tu7mdGHwywfQ+GZ995nwaHNTp7Zf
-	 Y6jLp2JUq+tu/J/6RI2bNB752rH9PGqSILroGKdZ8q+66GCWDEQ0FhIKD0m10rsgGw
-	 5ndum0w0LRS+A==
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2c9f099cf3aso71215661fa.1;
-        Mon, 11 Dec 2023 09:45:56 -0800 (PST)
-X-Gm-Message-State: AOJu0Yxitm9euZwgLpT1HLyi3PkNWQ9wdpreiG53XOmgi5T0r7b2Al4P
-	+2LmVhIs2f216C/fCV2A1Vz/Pf/aPl25RIh89w==
-X-Google-Smtp-Source: AGHT+IGAdABMDRq4vTTJBpK5U/6vD+zrpbpPPjjj1jukQ1ZAJnbCUkfAC9Da5KG1CLO16tfEBQkodtzt3t8iWp163mg=
-X-Received: by 2002:ac2:4d91:0:b0:50b:f87a:66a9 with SMTP id
- g17-20020ac24d91000000b0050bf87a66a9mr2390805lfe.110.1702316754903; Mon, 11
- Dec 2023 09:45:54 -0800 (PST)
+	b=Wy+XZfm/xBwdGjaMO0iafORqU7AYUAKBrpmfPhZnS63W2LD+9lIUmmY85M7iDotZV
+	 RUUIwg0POXN4Tkdavv6UXUiOqqIzFni8VQZhDxQXeupY9UVawI9v08XKg2gq0caO+p
+	 bb/oY/p81QaSRDsWLnEdSbbaXi5FUQWA3fN2rcUuikHcWh1dLUY3aINV97NKCubO1y
+	 l1tEo9YR5UB1hVIpFdg/ivykxGAYb0eRvemLSdGk5XfxND1zVPvoEgRkS3FVf/9l7S
+	 zVh3HSiOyx1yr1oE8BoiPzfD3sQ8wFq0jjsCHcAeefrs846eDBoTAiVYXqLGpWcnwo
+	 b9f2qqc7TPtxw==
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-50bdec453c8so5633504e87.3;
+        Mon, 11 Dec 2023 09:55:50 -0800 (PST)
+X-Gm-Message-State: AOJu0YyLwFCyWuctzlW9fzX+J6DSrjCi45cu081ACeOFixmvpNgPC2AV
+	KKcTdsOTobn3vI5bNHtGG82xlRREQ9jGiF+fcA==
+X-Google-Smtp-Source: AGHT+IEv/8aN3PfaLGZ9JYm4t5UMDrJAklhI4W9r08evSljkXdLA6kO7mL8YfS3YKHyNIbwwq6+C5bGH+jkLyGQVaN8=
+X-Received: by 2002:a05:6512:2242:b0:50b:f812:b313 with SMTP id
+ i2-20020a056512224200b0050bf812b313mr2431265lfu.77.1702317348971; Mon, 11 Dec
+ 2023 09:55:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231206-icc-msm8909-v1-0-fe0dd632beff@kernkonzept.com> <20231206-icc-msm8909-v1-2-fe0dd632beff@kernkonzept.com>
-In-Reply-To: <20231206-icc-msm8909-v1-2-fe0dd632beff@kernkonzept.com>
+References: <20231125-topic-6115icc-v3-0-bd8907b8cfd7@linaro.org> <20231125-topic-6115icc-v3-2-bd8907b8cfd7@linaro.org>
+In-Reply-To: <20231125-topic-6115icc-v3-2-bd8907b8cfd7@linaro.org>
 From: Rob Herring <robh+dt@kernel.org>
-Date: Mon, 11 Dec 2023 11:45:42 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqL0wxBRE7umsD3CXaskcrK7Pp7y2POaUNWAxGqeSc0tgQ@mail.gmail.com>
-Message-ID: <CAL_JsqL0wxBRE7umsD3CXaskcrK7Pp7y2POaUNWAxGqeSc0tgQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] interconnect: qcom: Add MSM8909 interconnect provider driver
-To: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Adam Skladowski <a39.skl@gmail.com>
+Date: Mon, 11 Dec 2023 11:55:36 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+FNYS-Ue1NQgDW_0D_NgONfsJj4Q-nzFWHHXpm0Ka=_Q@mail.gmail.com>
+Message-ID: <CAL_Jsq+FNYS-Ue1NQgDW_0D_NgONfsJj4Q-nzFWHHXpm0Ka=_Q@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] interconnect: qcom: Add SM6115 interconnect
+ provider driver
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Georgi Djakov <djakov@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+	Konrad Dybcio <konradybcio@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 6, 2023 at 8:35=E2=80=AFAM Stephan Gerhold
-<stephan.gerhold@kernkonzept.com> wrote:
+On Wed, Nov 29, 2023 at 8:41=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
 >
-> From: Adam Skladowski <a39.skl@gmail.com>
+> Add a driver for managing NoC providers on SM6115.
 >
-> Add driver for interconnect busses found in MSM8909 based platforms.
-> The topology consists of three NoCs that are partially controlled by a
-> RPM processor.
->
-> In the downstream/vendor kernel from Qualcomm there is an additional
-> "mm-snoc". However, it doesn't have a separate RPM clock assigned. It
-> looks like this is actually the same NoC in hardware and the "mm-snoc"
-> was only defined to assign a different "qcom,util-fact". In mainline we
-> can represent this by assigning the equivalent "ab_coeff" to all the
-> nodes that are part of "mm-snoc" downstream.
->
-> Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-> [Stephan: Drop separate mm-snoc that exists downstream since it's
->  actually the same NoC as SNoC in hardware, add qos_offset for BIMC,
->  add ab_coeff for mm-snoc nodes and BIMC]
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  drivers/interconnect/qcom/Kconfig   |    9 +
->  drivers/interconnect/qcom/Makefile  |    2 +
->  drivers/interconnect/qcom/msm8909.c | 1329 +++++++++++++++++++++++++++++=
+>  drivers/interconnect/qcom/Kconfig  |    9 +
+>  drivers/interconnect/qcom/Makefile |    2 +
+>  drivers/interconnect/qcom/sm6115.c | 1427 ++++++++++++++++++++++++++++++=
 ++++++
->  3 files changed, 1340 insertions(+)
+>  3 files changed, 1438 insertions(+)
 >
 > diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qco=
 m/Kconfig
-> index 4d15ce2dab16..ad03182b0587 100644
+> index 4d15ce2dab16..697f96c49f6f 100644
 > --- a/drivers/interconnect/qcom/Kconfig
 > +++ b/drivers/interconnect/qcom/Kconfig
-> @@ -8,6 +8,15 @@ config INTERCONNECT_QCOM
->  config INTERCONNECT_QCOM_BCM_VOTER
->         tristate
+> @@ -191,6 +191,15 @@ config INTERCONNECT_QCOM_SDX75
+>           This is a driver for the Qualcomm Network-on-Chip on sdx75-base=
+d
+>           platforms.
 >
-> +config INTERCONNECT_QCOM_MSM8909
-> +       tristate "Qualcomm MSM8909 interconnect driver"
+> +config INTERCONNECT_QCOM_SM6115
+> +       tristate "Qualcomm SM6115 interconnect driver"
 > +       depends on INTERCONNECT_QCOM
 > +       depends on QCOM_SMD_RPM
 > +       select INTERCONNECT_QCOM_SMD_RPM
 > +       help
-> +         This is a driver for the Qualcomm Network-on-Chip on msm8909-ba=
-sed
+> +         This is a driver for the Qualcomm Network-on-Chip on sm6115-bas=
+ed
 > +         platforms.
 > +
->  config INTERCONNECT_QCOM_MSM8916
->         tristate "Qualcomm MSM8916 interconnect driver"
->         depends on INTERCONNECT_QCOM
+>  config INTERCONNECT_QCOM_SM6350
+>         tristate "Qualcomm SM6350 interconnect driver"
+>         depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
 > diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qc=
 om/Makefile
-> index 3a8a6ef67543..69eaddccd4f1 100644
+> index 3a8a6ef67543..704846165022 100644
 > --- a/drivers/interconnect/qcom/Makefile
 > +++ b/drivers/interconnect/qcom/Makefile
-> @@ -4,6 +4,7 @@ obj-$(CONFIG_INTERCONNECT_QCOM) +=3D interconnect_qcom.o
->
->  interconnect_qcom-y                    :=3D icc-common.o
->  icc-bcm-voter-objs                     :=3D bcm-voter.o
-> +qnoc-msm8909-objs                      :=3D msm8909.o
->  qnoc-msm8916-objs                      :=3D msm8916.o
->  qnoc-msm8939-objs                      :=3D msm8939.o
->  qnoc-msm8974-objs                      :=3D msm8974.o
-> @@ -35,6 +36,7 @@ qnoc-x1e80100-objs                    :=3D x1e80100.o
->  icc-smd-rpm-objs                       :=3D smd-rpm.o icc-rpm.o icc-rpm-=
-clocks.o
->
->  obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) +=3D icc-bcm-voter.o
-> +obj-$(CONFIG_INTERCONNECT_QCOM_MSM8909) +=3D qnoc-msm8909.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) +=3D qnoc-msm8916.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8939) +=3D qnoc-msm8939.o
->  obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) +=3D qnoc-msm8974.o
-> diff --git a/drivers/interconnect/qcom/msm8909.c b/drivers/interconnect/q=
-com/msm8909.c
+> @@ -24,6 +24,7 @@ qnoc-sdm845-objs                      :=3D sdm845.o
+>  qnoc-sdx55-objs                                :=3D sdx55.o
+>  qnoc-sdx65-objs                                :=3D sdx65.o
+>  qnoc-sdx75-objs                                :=3D sdx75.o
+> +qnoc-sm6115-objs                       :=3D sm6115.o
+>  qnoc-sm6350-objs                       :=3D sm6350.o
+>  qnoc-sm8150-objs                       :=3D sm8150.o
+>  qnoc-sm8250-objs                       :=3D sm8250.o
+> @@ -55,6 +56,7 @@ obj-$(CONFIG_INTERCONNECT_QCOM_SDM845) +=3D qnoc-sdm845=
+.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SDX55) +=3D qnoc-sdx55.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SDX65) +=3D qnoc-sdx65.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SDX75) +=3D qnoc-sdx75.o
+> +obj-$(CONFIG_INTERCONNECT_QCOM_SM6115) +=3D qnoc-sm6115.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SM6350) +=3D qnoc-sm6350.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SM8150) +=3D qnoc-sm8150.o
+>  obj-$(CONFIG_INTERCONNECT_QCOM_SM8250) +=3D qnoc-sm8250.o
+> diff --git a/drivers/interconnect/qcom/sm6115.c b/drivers/interconnect/qc=
+om/sm6115.c
 > new file mode 100644
-> index 000000000000..81335476aa51
+> index 000000000000..c49a83c87739
 > --- /dev/null
-> +++ b/drivers/interconnect/qcom/msm8909.c
-> @@ -0,0 +1,1329 @@
-> +// SPDX-License-Identifier: GPL-2.0
+> +++ b/drivers/interconnect/qcom/sm6115.c
+> @@ -0,0 +1,1427 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reser=
+ved.
+> + * Copyright (c) 2023, Linaro Limited
+> + */
 > +
+> +#include <dt-bindings/interconnect/qcom,sm6115.h>
 > +#include <linux/clk.h>
 > +#include <linux/device.h>
 > +#include <linux/interconnect-provider.h>
 > +#include <linux/io.h>
 > +#include <linux/module.h>
-
 > +#include <linux/of_device.h>
+
+You probably don't need this header and the implicit includes it makes
+are dropped now in linux-next. Please check what you actually need and
+make them explicit.
+
 > +#include <linux/of_platform.h>
 
-You probably don't need these 2 headers and the implicit includes it
-makes are dropped now in linux-next. Please check what you actually
-need and make them explicit.
+Also probably not needed. Please double check.
 
 Rob
 
