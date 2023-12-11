@@ -1,176 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-4189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4190-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEB9380C530
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 10:49:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 317D880C53F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 10:51:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 807BF1F2145F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:49:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B65E3B20EA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 09:50:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFDD6219F1;
-	Mon, 11 Dec 2023 09:49:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 490042137E;
+	Mon, 11 Dec 2023 09:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=windriver.com header.i=@windriver.com header.b="eDWpKhKe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nv0tcRVX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0064b401.pphosted.com (mx0a-0064b401.pphosted.com [205.220.166.238])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FFC4D7;
-	Mon, 11 Dec 2023 01:49:00 -0800 (PST)
-Received: from pps.filterd (m0250810.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BB5Eh5v030119;
-	Mon, 11 Dec 2023 01:48:44 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=windriver.com;
-	 h=from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	PPS06212021; bh=PoiiWUzRFeTheOdRjkrDEE8JNrQqQk/GgJ9siaFpBAU=; b=
-	eDWpKhKefghm9RTliDC4eJNHjb3aF2Lhv286zyaI0uUgc+dXWzis3f+vqmL71o2H
-	LKJ26zOnT1zGXduqBKfUuAJbLY3PvfB/EtOPbx8mMrygysTWwiLu+4Qn8mQP1tQg
-	e2xA2ODi1cUG4vJRdbWSwUjDcIihUGDCyUpSrnPXxdnMnqifnrljGxqpk0jnG15h
-	U3AYxt6UI2y9NbMxO6rlJm96s3/PJSw4gcvQ7YuzT7BGFmPAPcYP3brJiXg8eYb5
-	z50SSoRSDaGQnm17ArbCZQfF0ZBxg+AQBXIeCq6GqR1iPeWBl2mipQ08q5TCwfLD
-	Wu304vH33JT1KVC2Wp/h5A==
-Received: from ala-exchng01.corp.ad.wrs.com (ala-exchng01.wrs.com [147.11.82.252])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 3uvmd49bg3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 11 Dec 2023 01:48:43 -0800 (PST)
-Received: from ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 11 Dec 2023 01:48:47 -0800
-Received: from pek-lpd-ccm6.wrs.com (147.11.136.210) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server id
- 15.1.2507.35 via Frontend Transport; Mon, 11 Dec 2023 01:48:45 -0800
-From: Lizhi Xu <lizhi.xu@windriver.com>
-To: <syzbot+006987d1be3586e13555@syzkaller.appspotmail.com>
-CC: <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <mani@kernel.org>, <netdev@vger.kernel.org>, <pabeni@redhat.com>,
-        <syzkaller-bugs@googlegroups.com>
-Subject: [PATCH] radix-tree: fix memory leak in radix_tree_insert
-Date: Mon, 11 Dec 2023 17:48:39 +0800
-Message-ID: <20231211094840.642118-1-lizhi.xu@windriver.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <000000000000bfba3a060bf4ffcf@google.com>
-References: <000000000000bfba3a060bf4ffcf@google.com>
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C06B8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 01:50:47 -0800 (PST)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2ca2573d132so52616711fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 01:50:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702288246; x=1702893046; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6oPzKPB/JI4JD29Cnv2t+WcboH2VSMBFNuDqFFM+Zco=;
+        b=nv0tcRVXdiBUAice+CwxbXiCNft8QM3iPL8It/ZJ5Nwq7SiRINTsqqLl+Esj2Fibdp
+         pXmL8s0Np+yGEjegy5zv3kN3pTkysZvhViy0ayyl7K+CQJoA3cDFjCiPR1O9J+X/rXfW
+         jEECKZTn2uNcB4k8Le4DyHzpvUYIdIrHer04iwCz+VBVWmU9dhU3GGO7OqW3Bqkhbebf
+         XyMm0YzIAlTTXwP2R3x/3E2TwDR/EjoiSjWi1HT0JyxjiK61lf0AsxsXqPKVnHS/eY3C
+         uRS78OTqErH1K8FMq3ysYeE5vdpCrxVfceZymQtwN8bY/QcMXMji/c6bIUh4XWE//s6K
+         mfZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702288246; x=1702893046;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6oPzKPB/JI4JD29Cnv2t+WcboH2VSMBFNuDqFFM+Zco=;
+        b=nNZ6ehErf+4lGW/hO26t6fo9rc8R0fak42swN7JNY6+/AbFOLLOu+IzQ1fYw1bhw6g
+         fhNw2NQq42NUsjs68IfY+Nun/cgWRWrOwei8qcqo/9VljGiFoesl1iQFBDqoGL5jdfZC
+         VAlR86w9pZ2RYHbaBvXqqQhD4XgrTuFVltcXACFXXkSAzuKA2rzNXzAGgOK+LXn5GjmK
+         rfNottucCmuocwz+BnS2/y3lTGDh5vRE8zkec/BplIoykuN/yrdS3XdGTdXXOKQsGKh1
+         gzPrw8DHN2mpgt2H0Iy//9qtrQMIKmIJET4b5s1XO3qXe6xH0qKHEA8WHMYmjfcKMWil
+         FldA==
+X-Gm-Message-State: AOJu0Yx5AvNhzwxSqMNa26job2aGN0qa3lK3LHk4IQC3JL5vDJFnWAqV
+	YIdM+GEkIqc138v18OAwUGH3HQ==
+X-Google-Smtp-Source: AGHT+IHVXN2lZ0qMDVaBcf5J4hhfE66D7j825cTMnjVADkLX/SKiDjjoAWvn5rnMzGqeyhKJHeemCw==
+X-Received: by 2002:a2e:be9c:0:b0:2cc:1fb5:2a0 with SMTP id a28-20020a2ebe9c000000b002cc1fb502a0mr778737ljr.57.1702288245862;
+        Mon, 11 Dec 2023 01:50:45 -0800 (PST)
+Received: from [192.168.36.128] (178235179179.dynamic-4-waw-k-1-3-0.vectranet.pl. [178.235.179.179])
+        by smtp.gmail.com with ESMTPSA id vg16-20020a170907d31000b00a1cdf29af64sm4536638ejc.45.2023.12.11.01.50.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Dec 2023 01:50:45 -0800 (PST)
+Message-ID: <f0f40f33-ebcd-4d68-86b2-3839bb8e49a3@linaro.org>
+Date: Mon, 11 Dec 2023 10:50:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-GUID: pNPi7wZfZzeAjCWv6vYlAjJ8orPVZAcd
-X-Proofpoint-ORIG-GUID: pNPi7wZfZzeAjCWv6vYlAjJ8orPVZAcd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.987,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-11-16_25,2023-11-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=900 bulkscore=0
- phishscore=0 spamscore=0 adultscore=0 malwarescore=0 clxscore=1011
- mlxscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312110079
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/9] arm64: dts: qcom: sm8150: add USB-C ports to the
+ USB+DP QMP PHY
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20231209232132.3580045-1-dmitry.baryshkov@linaro.org>
+ <20231209232132.3580045-8-dmitry.baryshkov@linaro.org>
+ <5025892d-0cbc-462a-b7d8-95828680dd8b@linaro.org>
+ <CAA8EJprp+Rf5BKEnaoCooWVKGfg6SRg-uc=NRywc10qy=Yj2Xw@mail.gmail.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Autocrypt: addr=konrad.dybcio@linaro.org; keydata=
+ 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
+ izWDgYvmBE8=
+In-Reply-To: <CAA8EJprp+Rf5BKEnaoCooWVKGfg6SRg-uc=NRywc10qy=Yj2Xw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-[Syz report]
-BUG: memory leak
-unreferenced object 0xffff88810bbf56d8 (size 576):
-  comm "syz-executor250", pid 5051, jiffies 4294951219 (age 12.920s)
-  hex dump (first 32 bytes):
-    3c 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00  <...............
-    f0 a9 2d 0c 81 88 ff ff f0 56 bf 0b 81 88 ff ff  ..-......V......
-  backtrace:
-    [<ffffffff81631398>] kmemleak_alloc_recursive include/linux/kmemleak.h:42 [inline]
-    [<ffffffff81631398>] slab_post_alloc_hook mm/slab.h:766 [inline]
-    [<ffffffff81631398>] slab_alloc_node mm/slub.c:3478 [inline]
-    [<ffffffff81631398>] slab_alloc mm/slub.c:3486 [inline]
-    [<ffffffff81631398>] __kmem_cache_alloc_lru mm/slub.c:3493 [inline]
-    [<ffffffff81631398>] kmem_cache_alloc+0x298/0x430 mm/slub.c:3502
-    [<ffffffff84b5094c>] radix_tree_node_alloc.constprop.0+0x7c/0x1a0 lib/radix-tree.c:276
-    [<ffffffff84b524cf>] __radix_tree_create lib/radix-tree.c:624 [inline]
-    [<ffffffff84b524cf>] radix_tree_insert+0x14f/0x360 lib/radix-tree.c:712
-    [<ffffffff84ae105d>] qrtr_tx_wait net/qrtr/af_qrtr.c:277 [inline]
-    [<ffffffff84ae105d>] qrtr_node_enqueue+0x57d/0x630 net/qrtr/af_qrtr.c:348
-    [<ffffffff84ae26f6>] qrtr_bcast_enqueue+0x66/0xd0 net/qrtr/af_qrtr.c:891
-    [<ffffffff84ae32d2>] qrtr_sendmsg+0x232/0x450 net/qrtr/af_qrtr.c:992
-    [<ffffffff83ec3c32>] sock_sendmsg_nosec net/socket.c:730 [inline]
-    [<ffffffff83ec3c32>] __sock_sendmsg+0x52/0xa0 net/socket.c:745
-    [<ffffffff83ec3d7b>] sock_write_iter+0xfb/0x180 net/socket.c:1158
-    [<ffffffff816961a7>] call_write_iter include/linux/fs.h:2020 [inline]
-    [<ffffffff816961a7>] new_sync_write fs/read_write.c:491 [inline]
-    [<ffffffff816961a7>] vfs_write+0x327/0x590 fs/read_write.c:584
-    [<ffffffff816966fb>] ksys_write+0x13b/0x170 fs/read_write.c:637
-    [<ffffffff84b6ddcf>] do_syscall_x64 arch/x86/entry/common.c:51 [inline]
-    [<ffffffff84b6ddcf>] do_syscall_64+0x3f/0x110 arch/x86/entry/common.c:82
-    [<ffffffff84c0008b>] entry_SYSCALL_64_after_hwframe+0x63/0x6b
+On 11.12.2023 10:46, Dmitry Baryshkov wrote:
+> On Mon, 11 Dec 2023 at 11:33, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>> On 10.12.2023 00:21, Dmitry Baryshkov wrote:
+>>> Expand Combo USB+DP QMP PHY device node with the OF ports required to
+>>> support USB-C / DisplayPort switching.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 23 +++++++++++++++++++++++
+>>>  1 file changed, 23 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+>>> index ea7c92c0e405..38423a9f8408 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+>>> @@ -3447,6 +3447,29 @@ usb_1_qmpphy: phy@88e8000 {
+>>>                       #phy-cells = <1>;
+>>>
+>>>                       status = "disabled";
+>>> +
+>>> +                     ports {
+>>> +                             #address-cells = <1>;
+>>> +                             #size-cells = <0>;
+>>> +
+>>> +                             port@0 {
+>>> +                                     reg = <0>;
+>>> +                                     usb_1_qmpphy_out: endpoint {};
+>> style 1
+>>> +                             };
+>>> +
+>>> +                             port@1 {
+>>> +                                     reg = <1>;
+>>> +
+>>> +                                     usb_1_qmpphy_usb_ss_in: endpoint {
+>>> +                                     };
+>> style 2
+>>> +                             };
+>>> +
+>>> +                             port@2 {
+>>> +                                     reg = <2>;
+>>> +
+>>> +                                     usb_1_qmpphy_dp_in: endpoint {};
+>> style 3
+>>
+>> :(
+> 
+> Which one should I stick to?
+style 2 seems to be used in 8650
 
-[Analysis]
-When creating child nodes, if not all child nodes used to store indexes are created,
-so the child nodes created before the failure should be released.
-
-Reported-and-tested-by: syzbot+006987d1be3586e13555@syzkaller.appspotmail.com
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
----
- lib/radix-tree.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
-
-diff --git a/lib/radix-tree.c b/lib/radix-tree.c
-index a89df8afa510..c5caf5b7523a 100644
---- a/lib/radix-tree.c
-+++ b/lib/radix-tree.c
-@@ -616,9 +616,10 @@ static int __radix_tree_create(struct radix_tree_root *root,
- 	struct radix_tree_node *node = NULL, *child;
- 	void __rcu **slot = (void __rcu **)&root->xa_head;
- 	unsigned long maxindex;
--	unsigned int shift, offset = 0;
-+	unsigned int shift, offset = 0, mmshift = 0;
- 	unsigned long max = index;
- 	gfp_t gfp = root_gfp_mask(root);
-+	int ret;
- 
- 	shift = radix_tree_load_root(root, &child, &maxindex);
- 
-@@ -628,6 +629,7 @@ static int __radix_tree_create(struct radix_tree_root *root,
- 		if (error < 0)
- 			return error;
- 		shift = error;
-+		mmshift = error;
- 		child = rcu_dereference_raw(root->xa_head);
- 	}
- 
-@@ -637,8 +639,10 @@ static int __radix_tree_create(struct radix_tree_root *root,
- 			/* Have to add a child node.  */
- 			child = radix_tree_node_alloc(gfp, node, root, shift,
- 							offset, 0, 0);
--			if (!child)
--				return -ENOMEM;
-+			if (!child) {
-+				 ret = -ENOMEM;
-+				 goto freec;
-+			}
- 			rcu_assign_pointer(*slot, node_to_entry(child));
- 			if (node)
- 				node->count++;
-@@ -656,6 +660,17 @@ static int __radix_tree_create(struct radix_tree_root *root,
- 	if (slotp)
- 		*slotp = slot;
- 	return 0;
-+freec:
-+	if (mmshift > 0) {
-+		struct radix_tree_node *pn;
-+		while (shift < mmshift && node) {
-+			pn = node->parent;
-+			radix_tree_node_rcu_free(&node->rcu_head);
-+			shift += RADIX_TREE_MAP_SHIFT;
-+			node = pn;
-+		}
-+	}
-+	return ret;
- }
- 
- /*
--- 
-2.43.0
-
+Konrad
 
