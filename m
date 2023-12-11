@@ -1,93 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-4293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E79B80DEBE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 23:59:28 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22EE380DF3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 00:05:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 376FE2825E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 22:59:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EE7E3B20E11
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 23:05:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E21455C3E;
-	Mon, 11 Dec 2023 22:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78EEC56459;
+	Mon, 11 Dec 2023 23:05:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S8dVs2fB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTP id 350B4FF;
-	Mon, 11 Dec 2023 14:59:03 -0800 (PST)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 35F631007;
-	Mon, 11 Dec 2023 14:59:50 -0800 (PST)
-Received: from [10.57.85.194] (unknown [10.57.85.194])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DF0CF3F5A1;
-	Mon, 11 Dec 2023 14:59:00 -0800 (PST)
-Message-ID: <86d3ee06-7c8d-4f60-bcba-80b772ec0faf@arm.com>
-Date: Mon, 11 Dec 2023 22:58:58 +0000
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A408D2;
+	Mon, 11 Dec 2023 15:05:00 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-a1e116f2072so1036550366b.0;
+        Mon, 11 Dec 2023 15:05:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702335899; x=1702940699; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3jQYYFfWpf7CH1ngpQ1NcqsuXdIAKOgOrjyMZygJ2rc=;
+        b=S8dVs2fBXhB/9vVPRaCCj5uC/ZgiUpBLiJCwMZbrODWH73Ps4NF5ETjSKCOpgPzys8
+         w+Y0jzodYt/1UmyB0UFu45a1ggu2ol+FO6cRAswrqzO5FCxHWykYBZOR1alp3rGUAoyK
+         ocQ+kCknCyB5OC49qxPdsxhf161fjv56m3wxXeFSLrsKYlu9EtEFGPvvmhTdYJH88Z7e
+         7ABRraq3d++SlOLIK0XNrW60fFWoKVF7yJqQEhi5ZlBqYftqxl36dRAiTqzajLSaJsph
+         jt17Y8NT1qgmja6CY3ctM7ooYCLmep60M8p70rNFlr1rvyYHP3ckDBZaA14Xn3368I3v
+         eDyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702335899; x=1702940699;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3jQYYFfWpf7CH1ngpQ1NcqsuXdIAKOgOrjyMZygJ2rc=;
+        b=YSBLCIJ4Y28BTwBGoNpCm6vpV4cmyb3XCmG0brOdT14sNGLueHnH1TCAM5PbmLbBPh
+         hxpJSNoYIKNWGLR38FCdms0g9bKwjTNwr4jqvqqpTFQMowRUv27n6sNDZKCFAVob3Jp6
+         NBykwGGX+DSvCC+S+7xCvlRFZTlIssSnl/oAdFNgzaEd+Sua75aKQ72cVqPzmR7ARuz+
+         AG5LlbyjbVXYkpS7Nlty7kZGXlVau+HQAZ0Y3AL4igOFZN0KZeS5R698hMfYC635pudt
+         0okLoH9FX18NA+GvOGmyeSONqeARHjmC3J5W2yGqe9QEXP88AlNRU+3ptqLyjCwVVDuC
+         0ZYA==
+X-Gm-Message-State: AOJu0Yxvb9v9WWv3MQ4TRhF1f3cIEXILViAZRFrCtlF0fumnSITfHsD1
+	WpXJlqFkK5cSi/+lycHWkkvD36jAPqIWG1nDA2Q=
+X-Google-Smtp-Source: AGHT+IGv1cLz0t866ueXVHy5ghVNbgQJzgAl2BxW5r/d50wmAbeYk9+UMuBO56nOEw9vyXo96C9trllOkQcn66jNQj8=
+X-Received: by 2002:a17:907:a087:b0:a1f:6ec8:2f6f with SMTP id
+ hu7-20020a170907a08700b00a1f6ec82f6fmr5419382ejc.28.1702335898650; Mon, 11
+ Dec 2023 15:04:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] iommu/arm-smmu-qcom: Add missing GMU entry to match
- table
-Content-Language: en-GB
-To: Rob Clark <robdclark@gmail.com>, iommu@lists.linux-foundation.org
-Cc: freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- Johan Hovold <johan@kernel.org>, Rob Clark <robdclark@chromium.org>,
- stable@vger.kernel.org, Will Deacon <will@kernel.org>,
- Joerg Roedel <joro@8bytes.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <quic_bjorande@quicinc.com>,
- Manivannan Sadhasivam <mani@kernel.org>, Danila Tikhonov
- <danila@jiaxyga.com>, Elliot Berman <quic_eberman@quicinc.com>,
- "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
- "open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
- open list <linux-kernel@vger.kernel.org>
-References: <20231210180655.75542-1-robdclark@gmail.com>
-From: Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <20231210180655.75542-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20231211182000.218088-1-robdclark@gmail.com> <lcsqjcqwvmhys3tzrznyqhlmk3p4wbv2rcu77tecbsioscxbal@3s4qeztkktx5>
+In-Reply-To: <lcsqjcqwvmhys3tzrznyqhlmk3p4wbv2rcu77tecbsioscxbal@3s4qeztkktx5>
+From: Rob Clark <robdclark@gmail.com>
+Date: Mon, 11 Dec 2023 15:04:46 -0800
+Message-ID: <CAF6AEGtrA=ay_xT17HrLaecKUnMkUKrDn7DHS=_tibsDR8WRbA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: Ratelimit framedone timeout msgs
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Kuogee Hsieh <quic_khsieh@quicinc.com>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Vinod Polimera <quic_vpolimer@quicinc.com>, Kalyan Thota <quic_kalyant@quicinc.com>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2023-12-10 6:06 pm, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> In some cases the firmware expects cbndx 1 to be assigned to the GMU,
-> so we also want the default domain for the GMU to be an identy domain.
-> This way it does not get a context bank assigned.  Without this, both
-> of_dma_configure() and drm/msm's iommu_domain_attach() will trigger
-> allocating and configuring a context bank.  So GMU ends up attached to
-> both cbndx 1 and later cbndx 2.  This arrangement seemingly confounds
-> and surprises the firmware if the GPU later triggers a translation
-> fault, resulting (on sc8280xp / lenovo x13s, at least) in the SMMU
-> getting wedged and the GPU stuck without memory access.
+On Mon, Dec 11, 2023 at 2:09=E2=80=AFPM Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2023-12-11 10:19:55, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > When we start getting these, we get a *lot*.  So ratelimit it to not
+> > flood dmesg.
+> >
+> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > ---
+> >
+> > dpu should probably stop rolling it's own trace macros, but that would
+> > be a larger cleanup.
+>
+> That would be lovely, use is currently all over the place.
+>
+> Should this patch also ratelimit the corresponding:
+>
+>         [drm:dpu_encoder_phys_cmd_prepare_for_kickoff] *ERROR* failed wai=
+t_for_idle: id:31 ret:-110 pp:0
+>
+> On CMD-mode panels?
 
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Probably it should for consistency.  But I think you normally wouldn't
+get this error at 60Hz with a cmd mode panel, so probably ok to make
+it ratelimited for cmd mode later.
 
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
-> 
-> I didn't add a fixes tag because really this issue has been there
-> all along, but either didn't matter with other firmware or we didn't
-> notice the problem.
-> 
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 549ae4dba3a6..d326fa230b96 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -243,6 +243,7 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->   
->   static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
->   	{ .compatible = "qcom,adreno" },
-> +	{ .compatible = "qcom,adreno-gmu" },
->   	{ .compatible = "qcom,mdp4" },
->   	{ .compatible = "qcom,mdss" },
->   	{ .compatible = "qcom,sc7180-mdss" },
+BR,
+-R
+
+> Note that this is a prime example of using DRM_ERROR over DPU_ERROR*, res=
+ulting
+> in unnecessary divergence (and un-readability) between error messages and=
+ the
+> code (DPU_DEBUG_CMDENC, which has a corresponding DPU_ERROR variant, is a=
+lso
+> used within that function...)
+>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 ++++-
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     | 1 +
+> >  2 files changed, 5 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/=
+drm/msm/disp/dpu1/dpu_encoder.c
+> > index 82538844614b..7c22235d0eba 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -39,6 +39,9 @@
+> >  #define DPU_ERROR_ENC(e, fmt, ...) DPU_ERROR("enc%d " fmt,\
+> >               (e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
+> >
+> > +#define DPU_ERROR_ENC_RATELIMITED(e, fmt, ...) DPU_ERROR_RATELIMITED("=
+enc%d " fmt,\
+> > +             (e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
+> > +
+> >  /*
+> >   * Two to anticipate panels that can do cmd/vid dynamic switching
+> >   * plan is to create all possible physical encoder types, and switch b=
+etween
+> > @@ -2339,7 +2342,7 @@ static void dpu_encoder_frame_done_timeout(struct=
+ timer_list *t)
+> >               return;
+> >       }
+> >
+> > -     DPU_ERROR_ENC(dpu_enc, "frame done timeout\n");
+> > +     DPU_ERROR_ENC_RATELIMITED(dpu_enc, "frame done timeout\n");
+> >
+> >       event =3D DPU_ENCODER_FRAME_EVENT_ERROR;
+> >       trace_dpu_enc_frame_done_timeout(DRMID(drm_enc), event);
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/=
+msm/disp/dpu1/dpu_kms.h
+> > index b6f53ca6e962..f5473d4dea92 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > @@ -51,6 +51,7 @@
+> >       } while (0)
+> >
+> >  #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
+> > +#define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error=
+]" fmt, ##__VA_ARGS__)
+> >
+> >  /**
+> >   * ktime_compare_safe - compare two ktime structures
+> > --
+> > 2.43.0
+> >
 
