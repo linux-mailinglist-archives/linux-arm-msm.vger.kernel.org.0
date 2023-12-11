@@ -1,205 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-4259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D3E680D4FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 19:10:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9F5080D506
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 19:11:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EC69F2817F3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 18:10:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A54A72817EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 18:11:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 674CC4F21E;
-	Mon, 11 Dec 2023 18:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF08A4F617;
+	Mon, 11 Dec 2023 18:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EArWtRW9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S9tGGdET"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35D3AD8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 10:10:28 -0800 (PST)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BBFhNGW032546;
-	Mon, 11 Dec 2023 18:10:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=qcppdkim1; bh=XHwxvdnorYSN/lc1MHmTN
-	BeycNeOZrCvtYEa6cs0SAY=; b=EArWtRW921xLIGy4mz+bXFE3gFj8UU5TWBzD6
-	DO+5xXbh72iAq0B1EMEYauHcgehlSAWyLGV2EXmHyBXlwXa0rw07NBTv4m0F7dUe
-	uhU+t72EwD3hH8uRb4JTyzzkNM9r1ULGXBqCkpSBonpS7u6s7W+PGHt0NLExDIl+
-	5ARjoyxGJBTtkC1bzsLLOX1QgQ/LjtcKNi4lTaIRGDLJ/85dsQC/mvNmtykDVbZs
-	7I5BTKXPyVlYTvSyOYgZ2gwNhxl/rk78/WxrQs0LNp0Du1DoimHI/dt4l3Ghk2ka
-	6DrXv9njnAwrIAVGhOTFxBzDA7ecMtZYZzyIJplTrW9uktqvg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ux25u0v57-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 18:10:20 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BBIAKXx001678
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 18:10:20 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 11 Dec 2023 10:10:19 -0800
-Date: Mon, 11 Dec 2023 10:10:18 -0800
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Sankeerth Billakanti
-	<quic_sbillaka@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>, David Airlie
-	<airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH] drm/msm/dp: call dp_display_get_next_bridge() during
- probe
-Message-ID: <20231211181018.GL1766637@hu-bjorande-lv.qualcomm.com>
-References: <20231107004424.2112698-1-dmitry.baryshkov@linaro.org>
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD0A4F1FD;
+	Mon, 11 Dec 2023 18:11:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23130C433C7;
+	Mon, 11 Dec 2023 18:11:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702318315;
+	bh=d/QXMCGNkdm/FGe7jzUVoJUZiNL9n1uu27MJIv/ZnTk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=S9tGGdET6EYJ55LzwK2/6jfxwPY+v+UcpfAbKynnvMOUhoOe2P8ilqjibT0NLSTJj
+	 QLidBZPKeGrLTGQxJEI53/xFK3DZJbUjj1SiZ4htdSipxIzQEejCKmQ03bAEu/lYH/
+	 kjuiwJcaZM2bpjRMWAiztjJsL0kKtCc+YKeDir83oI+THSvfhgt2rTwEcll+Gz4DIV
+	 uB8QbR3AUdPlEYvgSEfIrEgyfUS8HUoEfoSpZJit2hqXYcd5XR2/ghn2EWiIo3aDiI
+	 sPPOdqERtbM1i6/ghc5OnEJMroC0rf3AhU3bIeZlAh5z4FP7fKS3hrabAahAgQ5Kvs
+	 QpxY4WJPvK/0A==
+Date: Mon, 11 Dec 2023 12:11:53 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/6] PCI: Fix deadlocks when enabling ASPM
+Message-ID: <20231211181153.GA959586@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231107004424.2112698-1-dmitry.baryshkov@linaro.org>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: EjheDSGwnJGoZIDX5olxx_NyFLrysbMG
-X-Proofpoint-GUID: EjheDSGwnJGoZIDX5olxx_NyFLrysbMG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- mlxscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 suspectscore=0 adultscore=0 priorityscore=1501
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312110149
+In-Reply-To: <ZXdIcle5oKJTaQB6@hovoldconsulting.com>
 
-On Tue, Nov 07, 2023 at 02:43:33AM +0200, Dmitry Baryshkov wrote:
-> The funcion dp_display_get_next_bridge() can return -EPROBE_DEFER if the
-> next bridge is not (yet) available. However returning -EPROBE_DEFER from
-> msm_dp_modeset_init() is not ideal. This leads to -EPROBE return from
-> component_bind, which can easily result in -EPROBE_DEFR loops.
+On Mon, Dec 11, 2023 at 06:35:46PM +0100, Johan Hovold wrote:
+> Hi Bjorn,
 > 
-
-Nice!
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> On Fri, Dec 08, 2023 at 11:53:12AM -0600, Bjorn Helgaas wrote:
+> > On Tue, Nov 28, 2023 at 09:15:06AM +0100, Johan Hovold wrote:
 > 
-> Dependencies: https://patchwork.freedesktop.org/series/120375/
+> > > Johan Hovold (6):
+> > >   PCI/ASPM: Add locked helper for enabling link state
+> > >   PCI: vmd: Fix deadlock when enabling ASPM
+> > >   PCI: qcom: Fix deadlock when enabling ASPM
+> > >   PCI: qcom: Clean up ASPM comment
+> > >   PCI/ASPM: Clean up disable link state parameter
+> > >   PCI/ASPM: Add lockdep assert to link state helper
 > 
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 36 +++++++++++++++++------------
->  1 file changed, 21 insertions(+), 15 deletions(-)
+> > Applied to for-linus for v6.7, thanks, Johan!
 > 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index d542db37763a..ddb3c84f39a2 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1197,15 +1197,27 @@ static const struct msm_dp_desc *dp_display_get_desc(struct platform_device *pde
->  	return NULL;
->  }
->  
-> -static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
-> +static int dp_display_get_next_bridge(struct msm_dp *dp);
-> +
-> +static int dp_display_probe_tail(struct device *dev)
->  {
-> -	int rc;
-> +	struct msm_dp *dp = dev_get_drvdata(dev);
-> +	int ret;
->  
-> -	rc = component_add(aux->dev, &dp_display_comp_ops);
-> -	if (rc)
-> -		DRM_ERROR("eDP component add failed, rc=%d\n", rc);
-> +	ret = dp_display_get_next_bridge(dp);
-> +	if (ret)
-> +		return ret;
->  
-> -	return rc;
-> +	ret = component_add(dev, &dp_display_comp_ops);
-> +	if (ret)
-> +		DRM_ERROR("component add failed, rc=%d\n", ret);
-> +
-> +	return ret;
-> +}
-> +
-> +static int dp_auxbus_done_probe(struct drm_dp_aux *aux)
-> +{
-> +	return dp_display_probe_tail(aux->dev);
->  }
->  
->  static int dp_display_probe(struct platform_device *pdev)
-> @@ -1280,11 +1292,9 @@ static int dp_display_probe(struct platform_device *pdev)
->  			goto err;
->  		}
->  	} else {
-> -		rc = component_add(&pdev->dev, &dp_display_comp_ops);
-> -		if (rc) {
-> -			DRM_ERROR("component add failed, rc=%d\n", rc);
-> +		rc = dp_display_probe_tail(&pdev->dev);
-> +		if (rc)
->  			goto err;
-> -		}
->  	}
->  
->  	return rc;
-> @@ -1415,7 +1425,7 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
->  	 * For DisplayPort interfaces external bridges are optional, so
->  	 * silently ignore an error if one is not present (-ENODEV).
->  	 */
-> -	rc = devm_dp_parser_find_next_bridge(dp->drm_dev->dev, dp_priv->parser);
-> +	rc = devm_dp_parser_find_next_bridge(&dp->pdev->dev, dp_priv->parser);
-
-This transition worried me, but after reading the code the current model
-of mixing devices for devres scares me more. So, nice cleanup! But I
-think we have a few more of these...
-
-
-That said, &dp->pdev->dev is dp_priv->parser->dev, the function no
-longer relate to the "parser module", and we stash the return value of
-
-  devm_drm_of_get_bridge(dev, dev->of_node, 1, 0)
-
-in parser->next_brigde, so that we 5 lines below this call can move it
-into dp->next_bridge.
-
-As such, I'd like to propose that we change
-devm_dp_parser_find_next_bridge() to just take &dp->pdev->dev and return
-the next_bridge, in an ERR_PTR().
-
-But that's follow-up-patch material.
-
-
-Reviewed-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-
-Regards,
-Bjorn
-
->  	if (!dp->is_edp && rc == -ENODEV)
->  		return 0;
->  
-> @@ -1435,10 +1445,6 @@ int msm_dp_modeset_init(struct msm_dp *dp_display, struct drm_device *dev,
->  
->  	dp_priv = container_of(dp_display, struct dp_display_private, dp_display);
->  
-> -	ret = dp_display_get_next_bridge(dp_display);
-> -	if (ret)
-> -		return ret;
-> -
->  	ret = dp_bridge_init(dp_display, dev, encoder);
->  	if (ret) {
->  		DRM_DEV_ERROR(dev->dev,
-> -- 
-> 2.42.0
+> I've noticed that you're pretty keen on amending commit messages.
 > 
+> For this series, for example, I noticed that you added an American comma
+> after "e.g." even though this is not expected in British English that I
+> (try to) use. This risks introducing inconsistencies and frankly I see no
+> reason for this kind of editing. British English is not an error. :)
 > 
+> You also added a plus sign after the stable kernel versions in the
+> comments after the CC-stable tags even though this is not the right
+> notation for this (see the stable kernel rules).
+
+Fixed, sorry.
 
