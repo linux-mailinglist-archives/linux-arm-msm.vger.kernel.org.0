@@ -1,165 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-4294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22EE380DF3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 00:05:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C115A80DF59
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 00:17:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EE7E3B20E11
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 23:05:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7720C282515
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 23:17:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78EEC56459;
-	Mon, 11 Dec 2023 23:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B37BD56468;
+	Mon, 11 Dec 2023 23:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S8dVs2fB"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UHLNimI1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A408D2;
-	Mon, 11 Dec 2023 15:05:00 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-a1e116f2072so1036550366b.0;
-        Mon, 11 Dec 2023 15:05:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702335899; x=1702940699; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3jQYYFfWpf7CH1ngpQ1NcqsuXdIAKOgOrjyMZygJ2rc=;
-        b=S8dVs2fBXhB/9vVPRaCCj5uC/ZgiUpBLiJCwMZbrODWH73Ps4NF5ETjSKCOpgPzys8
-         w+Y0jzodYt/1UmyB0UFu45a1ggu2ol+FO6cRAswrqzO5FCxHWykYBZOR1alp3rGUAoyK
-         ocQ+kCknCyB5OC49qxPdsxhf161fjv56m3wxXeFSLrsKYlu9EtEFGPvvmhTdYJH88Z7e
-         7ABRraq3d++SlOLIK0XNrW60fFWoKVF7yJqQEhi5ZlBqYftqxl36dRAiTqzajLSaJsph
-         jt17Y8NT1qgmja6CY3ctM7ooYCLmep60M8p70rNFlr1rvyYHP3ckDBZaA14Xn3368I3v
-         eDyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702335899; x=1702940699;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3jQYYFfWpf7CH1ngpQ1NcqsuXdIAKOgOrjyMZygJ2rc=;
-        b=YSBLCIJ4Y28BTwBGoNpCm6vpV4cmyb3XCmG0brOdT14sNGLueHnH1TCAM5PbmLbBPh
-         hxpJSNoYIKNWGLR38FCdms0g9bKwjTNwr4jqvqqpTFQMowRUv27n6sNDZKCFAVob3Jp6
-         NBykwGGX+DSvCC+S+7xCvlRFZTlIssSnl/oAdFNgzaEd+Sua75aKQ72cVqPzmR7ARuz+
-         AG5LlbyjbVXYkpS7Nlty7kZGXlVau+HQAZ0Y3AL4igOFZN0KZeS5R698hMfYC635pudt
-         0okLoH9FX18NA+GvOGmyeSONqeARHjmC3J5W2yGqe9QEXP88AlNRU+3ptqLyjCwVVDuC
-         0ZYA==
-X-Gm-Message-State: AOJu0Yxvb9v9WWv3MQ4TRhF1f3cIEXILViAZRFrCtlF0fumnSITfHsD1
-	WpXJlqFkK5cSi/+lycHWkkvD36jAPqIWG1nDA2Q=
-X-Google-Smtp-Source: AGHT+IGv1cLz0t866ueXVHy5ghVNbgQJzgAl2BxW5r/d50wmAbeYk9+UMuBO56nOEw9vyXo96C9trllOkQcn66jNQj8=
-X-Received: by 2002:a17:907:a087:b0:a1f:6ec8:2f6f with SMTP id
- hu7-20020a170907a08700b00a1f6ec82f6fmr5419382ejc.28.1702335898650; Mon, 11
- Dec 2023 15:04:58 -0800 (PST)
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60A9A9A;
+	Mon, 11 Dec 2023 15:17:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1702336634; x=1733872634;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Ck35hHnCHFtH+d2GzNW7cjDeYHKAdUN4ZsaO0xxGAYs=;
+  b=UHLNimI1LelydaQiGSTQ3hybOJ+yJ2Sxafvaf3/x7gPJKQpFoFM4zIib
+   f3z87HL5sGbArumVRSOSE4YF/InKQjJdpx1p277IkIj7BUZzvzNStJkgv
+   EW/rK1j0OHdNfZcCTBIdgL/n/8N7H17vr75v0Rp/24CbCMzgbeW7SsgMS
+   guFB7Tt5NHWKcsaAVvsiCrWRtGj0nSiH5GGEbm3BYN6hdk3KsHhoo3RhC
+   rL/PoXJAAZPYusL8ofbgDEtX7CDxboggrJKISKZdMf4l9PWxEIxZrkppJ
+   9HJa1ahqJTcsmvrcEkjAOG8oGj1x1eVs+BJdSuH0sNDZ+cHwO7iIBlUui
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10921"; a="374230372"
+X-IronPort-AV: E=Sophos;i="6.04,268,1695711600"; 
+   d="scan'208";a="374230372"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Dec 2023 15:17:13 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10921"; a="722996351"
+X-IronPort-AV: E=Sophos;i="6.04,268,1695711600"; 
+   d="scan'208";a="722996351"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by orsmga003.jf.intel.com with ESMTP; 11 Dec 2023 15:17:10 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rCpWM-000IYd-2i;
+	Mon, 11 Dec 2023 23:17:07 +0000
+Date: Tue, 12 Dec 2023 07:16:50 +0800
+From: kernel test robot <lkp@intel.com>
+To: Lizhi Xu <lizhi.xu@windriver.com>,
+	syzbot+006987d1be3586e13555@syzkaller.appspotmail.com
+Cc: oe-kbuild-all@lists.linux.dev, davem@davemloft.net, edumazet@google.com,
+	kuba@kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mani@kernel.org,
+	netdev@vger.kernel.org, pabeni@redhat.com,
+	syzkaller-bugs@googlegroups.com
+Subject: Re: [PATCH] radix-tree: fix memory leak in radix_tree_insert
+Message-ID: <202312120651.92GGXeX4-lkp@intel.com>
+References: <20231211094840.642118-1-lizhi.xu@windriver.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231211182000.218088-1-robdclark@gmail.com> <lcsqjcqwvmhys3tzrznyqhlmk3p4wbv2rcu77tecbsioscxbal@3s4qeztkktx5>
-In-Reply-To: <lcsqjcqwvmhys3tzrznyqhlmk3p4wbv2rcu77tecbsioscxbal@3s4qeztkktx5>
-From: Rob Clark <robdclark@gmail.com>
-Date: Mon, 11 Dec 2023 15:04:46 -0800
-Message-ID: <CAF6AEGtrA=ay_xT17HrLaecKUnMkUKrDn7DHS=_tibsDR8WRbA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dpu: Ratelimit framedone timeout msgs
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Vinod Polimera <quic_vpolimer@quicinc.com>, Kalyan Thota <quic_kalyant@quicinc.com>, 
-	Dan Carpenter <dan.carpenter@linaro.org>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231211094840.642118-1-lizhi.xu@windriver.com>
 
-On Mon, Dec 11, 2023 at 2:09=E2=80=AFPM Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> On 2023-12-11 10:19:55, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > When we start getting these, we get a *lot*.  So ratelimit it to not
-> > flood dmesg.
-> >
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >
-> > dpu should probably stop rolling it's own trace macros, but that would
-> > be a larger cleanup.
->
-> That would be lovely, use is currently all over the place.
->
-> Should this patch also ratelimit the corresponding:
->
->         [drm:dpu_encoder_phys_cmd_prepare_for_kickoff] *ERROR* failed wai=
-t_for_idle: id:31 ret:-110 pp:0
->
-> On CMD-mode panels?
+Hi Lizhi,
 
-Probably it should for consistency.  But I think you normally wouldn't
-get this error at 60Hz with a cmd mode panel, so probably ok to make
-it ratelimited for cmd mode later.
+kernel test robot noticed the following build warnings:
 
-BR,
--R
+[auto build test WARNING on akpm-mm/mm-nonmm-unstable]
+[also build test WARNING on linus/master v6.7-rc5 next-20231211]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> Note that this is a prime example of using DRM_ERROR over DPU_ERROR*, res=
-ulting
-> in unnecessary divergence (and un-readability) between error messages and=
- the
-> code (DPU_DEBUG_CMDENC, which has a corresponding DPU_ERROR variant, is a=
-lso
-> used within that function...)
->
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 5 ++++-
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     | 1 +
-> >  2 files changed, 5 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/=
-drm/msm/disp/dpu1/dpu_encoder.c
-> > index 82538844614b..7c22235d0eba 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > @@ -39,6 +39,9 @@
-> >  #define DPU_ERROR_ENC(e, fmt, ...) DPU_ERROR("enc%d " fmt,\
-> >               (e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
-> >
-> > +#define DPU_ERROR_ENC_RATELIMITED(e, fmt, ...) DPU_ERROR_RATELIMITED("=
-enc%d " fmt,\
-> > +             (e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
-> > +
-> >  /*
-> >   * Two to anticipate panels that can do cmd/vid dynamic switching
-> >   * plan is to create all possible physical encoder types, and switch b=
-etween
-> > @@ -2339,7 +2342,7 @@ static void dpu_encoder_frame_done_timeout(struct=
- timer_list *t)
-> >               return;
-> >       }
-> >
-> > -     DPU_ERROR_ENC(dpu_enc, "frame done timeout\n");
-> > +     DPU_ERROR_ENC_RATELIMITED(dpu_enc, "frame done timeout\n");
-> >
-> >       event =3D DPU_ENCODER_FRAME_EVENT_ERROR;
-> >       trace_dpu_enc_frame_done_timeout(DRMID(drm_enc), event);
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/=
-msm/disp/dpu1/dpu_kms.h
-> > index b6f53ca6e962..f5473d4dea92 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> > @@ -51,6 +51,7 @@
-> >       } while (0)
-> >
-> >  #define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
-> > +#define DPU_ERROR_RATELIMITED(fmt, ...) pr_err_ratelimited("[dpu error=
-]" fmt, ##__VA_ARGS__)
-> >
-> >  /**
-> >   * ktime_compare_safe - compare two ktime structures
-> > --
-> > 2.43.0
-> >
+url:    https://github.com/intel-lab-lkp/linux/commits/Lizhi-Xu/radix-tree-fix-memory-leak-in-radix_tree_insert/20231211-174951
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm.git mm-nonmm-unstable
+patch link:    https://lore.kernel.org/r/20231211094840.642118-1-lizhi.xu%40windriver.com
+patch subject: [PATCH] radix-tree: fix memory leak in radix_tree_insert
+config: i386-randconfig-061-20231212 (https://download.01.org/0day-ci/archive/20231212/202312120651.92GGXeX4-lkp@intel.com/config)
+compiler: gcc-7 (Ubuntu 7.5.0-6ubuntu2) 7.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231212/202312120651.92GGXeX4-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312120651.92GGXeX4-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+   lib/radix-tree.c:266:36: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node *nodes @@     got struct xa_node [noderef] __rcu *parent @@
+   lib/radix-tree.c:266:36: sparse:     expected struct xa_node *nodes
+   lib/radix-tree.c:266:36: sparse:     got struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:284:29: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node [noderef] __rcu *parent @@     got struct xa_node *parent @@
+   lib/radix-tree.c:284:29: sparse:     expected struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:284:29: sparse:     got struct xa_node *parent
+   lib/radix-tree.c:344:38: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node [noderef] __rcu *parent @@     got struct xa_node *nodes @@
+   lib/radix-tree.c:344:38: sparse:     expected struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:344:38: sparse:     got struct xa_node *nodes
+   lib/radix-tree.c:446:54: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node [noderef] __rcu *parent @@     got struct xa_node *node @@
+   lib/radix-tree.c:446:54: sparse:     expected struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:446:54: sparse:     got struct xa_node *node
+   lib/radix-tree.c:558:24: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node *parent @@     got struct xa_node [noderef] __rcu *parent @@
+   lib/radix-tree.c:558:24: sparse:     expected struct xa_node *parent
+   lib/radix-tree.c:558:24: sparse:     got struct xa_node [noderef] __rcu *parent
+>> lib/radix-tree.c:653:28: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node *pn @@     got struct xa_node [noderef] __rcu *parent @@
+   lib/radix-tree.c:653:28: sparse:     expected struct xa_node *pn
+   lib/radix-tree.c:653:28: sparse:     got struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:687:31: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node *[assigned] child @@     got struct xa_node [noderef] __rcu *parent @@
+   lib/radix-tree.c:687:31: sparse:     expected struct xa_node *[assigned] child
+   lib/radix-tree.c:687:31: sparse:     got struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:962:22: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node *node @@     got struct xa_node [noderef] __rcu *parent @@
+   lib/radix-tree.c:962:22: sparse:     expected struct xa_node *node
+   lib/radix-tree.c:962:22: sparse:     got struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:1022:22: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node *node @@     got struct xa_node [noderef] __rcu *parent @@
+   lib/radix-tree.c:1022:22: sparse:     expected struct xa_node *node
+   lib/radix-tree.c:1022:22: sparse:     got struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:1542:38: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node *[assigned] node @@     got struct xa_node [noderef] __rcu *parent @@
+   lib/radix-tree.c:1542:38: sparse:     expected struct xa_node *[assigned] node
+   lib/radix-tree.c:1542:38: sparse:     got struct xa_node [noderef] __rcu *parent
+   lib/radix-tree.c:1602:28: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected struct xa_node *nodes @@     got struct xa_node [noderef] __rcu *parent @@
+   lib/radix-tree.c:1602:28: sparse:     expected struct xa_node *nodes
+   lib/radix-tree.c:1602:28: sparse:     got struct xa_node [noderef] __rcu *parent
+
+vim +653 lib/radix-tree.c
+
+   581	
+   582	/**
+   583	 *	__radix_tree_create	-	create a slot in a radix tree
+   584	 *	@root:		radix tree root
+   585	 *	@index:		index key
+   586	 *	@nodep:		returns node
+   587	 *	@slotp:		returns slot
+   588	 *
+   589	 *	Create, if necessary, and return the node and slot for an item
+   590	 *	at position @index in the radix tree @root.
+   591	 *
+   592	 *	Until there is more than one item in the tree, no nodes are
+   593	 *	allocated and @root->xa_head is used as a direct slot instead of
+   594	 *	pointing to a node, in which case *@nodep will be NULL.
+   595	 *
+   596	 *	Returns -ENOMEM, or 0 for success.
+   597	 */
+   598	static int __radix_tree_create(struct radix_tree_root *root,
+   599			unsigned long index, struct radix_tree_node **nodep,
+   600			void __rcu ***slotp)
+   601	{
+   602		struct radix_tree_node *node = NULL, *child;
+   603		void __rcu **slot = (void __rcu **)&root->xa_head;
+   604		unsigned long maxindex;
+   605		unsigned int shift, offset = 0, mmshift = 0;
+   606		unsigned long max = index;
+   607		gfp_t gfp = root_gfp_mask(root);
+   608		int ret;
+   609	
+   610		shift = radix_tree_load_root(root, &child, &maxindex);
+   611	
+   612		/* Make sure the tree is high enough.  */
+   613		if (max > maxindex) {
+   614			int error = radix_tree_extend(root, gfp, max, shift);
+   615			if (error < 0)
+   616				return error;
+   617			shift = error;
+   618			mmshift = error;
+   619			child = rcu_dereference_raw(root->xa_head);
+   620		}
+   621	
+   622		while (shift > 0) {
+   623			shift -= RADIX_TREE_MAP_SHIFT;
+   624			if (child == NULL) {
+   625				/* Have to add a child node.  */
+   626				child = radix_tree_node_alloc(gfp, node, root, shift,
+   627								offset, 0, 0);
+   628				if (!child) {
+   629					 ret = -ENOMEM;
+   630					 goto freec;
+   631				}
+   632				rcu_assign_pointer(*slot, node_to_entry(child));
+   633				if (node)
+   634					node->count++;
+   635			} else if (!radix_tree_is_internal_node(child))
+   636				break;
+   637	
+   638			/* Go a level down */
+   639			node = entry_to_node(child);
+   640			offset = radix_tree_descend(node, &child, index);
+   641			slot = &node->slots[offset];
+   642		}
+   643	
+   644		if (nodep)
+   645			*nodep = node;
+   646		if (slotp)
+   647			*slotp = slot;
+   648		return 0;
+   649	freec:
+   650		if (mmshift > 0) {
+   651			struct radix_tree_node *pn;
+   652			while (shift < mmshift && node) {
+ > 653				pn = node->parent;
+   654				radix_tree_node_rcu_free(&node->rcu_head);
+   655				shift += RADIX_TREE_MAP_SHIFT;
+   656				node = pn;
+   657			}
+   658		}
+   659		return ret;
+   660	}
+   661	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
