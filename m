@@ -1,57 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-4231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6724E80CFE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:44:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 54E3780CFE6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:45:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 590F8B21517
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 15:44:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EA08BB21562
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 15:44:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A7144BAA1;
-	Mon, 11 Dec 2023 15:44:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9566F4BA95;
+	Mon, 11 Dec 2023 15:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="umOCXOcr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kRblFCtQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C64A0BD
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:44:48 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50bffb64178so5419084e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:44:48 -0800 (PST)
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83431CD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:44:49 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50bf26b677dso4358266e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:44:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702309487; x=1702914287; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hdsbz8sb9Hj8XgnhSW7DmZ4IXqWL9DwyDiWpjOSfMt8=;
-        b=umOCXOcrob+TsBOOUbh1d+pG+0c0wboi2GLffGzQ1dGELD0jZD3kdWBASV1HKo9WV+
-         Ea1GkpAr1G/6DwgBlKevGDqEuG39ZNkDpmuCn6cf928OPDSnna7CZv05pETsJQxg3hJ2
-         gvezWjBNYkLTAEOoO0Jm3C8VkvXz4bTP3+Cl3shbhw1kp+3H7NunFJr0hc7iEqekfkMn
-         wjN8+lZqZSqa0awciAyguLFYqCx5MukWpaddFhwf6nH1DfED/IWjjKccXoUDQhZ36OJD
-         TLzND6/gtosFClrvkkSCUqy53Lh1PXZd5aSuaHeIjxz2K1YdsmpUHacXKuC/68HCWOVp
-         3ilA==
+        d=linaro.org; s=google; t=1702309488; x=1702914288; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bSK6mZ8dw5NPtYdF0SRIR2pFCQDMWgaic2V9yiXRbes=;
+        b=kRblFCtQ9E7dVNB4QULppxR64rUSx5msOMDbyZKv8a6BNOVfXdDupgVzD2gMPZ6IZh
+         lnP4bTiuh+B5/Zxk/lcMTMLjM7S6XIynigdNk5/l9ZH/mQmHwDRW1WCLv81OqZQVvosV
+         R2ZbjpQRIZYVTf0BNkkDNwjk1uk4wOVvGCf1z7iVyiPw+uVN0F+pSUjCWIsTKp67AH3E
+         4KfmZ0ta60A50vqt4+2o0/TlopIoyq8S3J4UKtFLB+vWCU8n0UDP2wA4BNn9uiTQgzXu
+         gxi2E4w51UbNPXlq9qzEzdAzQ3kFI6ZOdCZ6/ZYPchXBt44dqkeR46jjmg9u/WgUlKX7
+         BOjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702309487; x=1702914287;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Hdsbz8sb9Hj8XgnhSW7DmZ4IXqWL9DwyDiWpjOSfMt8=;
-        b=IP3NSPcAosHY9VP/04mu6FnrXSyoenq1ogzNofJE677YmCslepWkysYZh9R6MB85bm
-         GuEpezqLzwEkU2Df6jqmOaww9gMnbS4za646llQ8FWJTzG3KrCbxe5WKb52m4KRw9Wtj
-         q57sBqlf525ChZkl1XFR/ErpFYLnbJurTwpkmFur2vkOBqUetzQhGTJ9iPtBeDJ/AJri
-         +G3VKfN2/iBmmIjQmXTbFn/+0KCkCowh/OVHVFFF9EHVqG5C8Y445378tSXfpEWrxuqb
-         oqenvPRRJzOcCTBilT2wiYh8r6XaE4vl9je4D4TBZzr8JDV8wIiE8eA1eeWxqJOGIwZS
-         ndmw==
-X-Gm-Message-State: AOJu0YxcYeBygYnwWOPiwzujXzfWfnxrb79Wf236aJxBOHyzBLZnyLDH
-	m+lPXXMmZEgc//EaMYXQCDg47Q==
-X-Google-Smtp-Source: AGHT+IHxCoL+l7KSHEGd7xaqHpmuKdHomR8emcbB6urk0ah7wnrXlsfrXB4VbFDvVisb924E6PSOAg==
-X-Received: by 2002:a05:6512:1329:b0:50d:f93b:97a9 with SMTP id x41-20020a056512132900b0050df93b97a9mr1464713lfu.1.1702309486926;
-        Mon, 11 Dec 2023 07:44:46 -0800 (PST)
+        d=1e100.net; s=20230601; t=1702309488; x=1702914288;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bSK6mZ8dw5NPtYdF0SRIR2pFCQDMWgaic2V9yiXRbes=;
+        b=lSLobhaUcwBzt7w6/6b0DQafWU9mtKGulGX/S0uUgLRNyMvK4QUY0PUa/uWsmHHLKn
+         N0u6vW53j9Sz4u4IrnrrKUEApqnerxTLOVlMEtSXUU9k0vqGAxJSxMQR4D2D9XfSaRAd
+         oXf3oE5iOWfkroeUKHJDbmh5mx1oAXLO9jESnpwTgQY90sfWbpPqEDtB/3CEEUuvPC3n
+         wGxK4p3pum51rXhztRFcQi1b0hqTgGL3HtZjtIxGEAj9MMlyw5Vih+6WXGLvRLHHZTuS
+         6e9gMJ1ZCpQ98NP0UYo2CeSYq9X7B3jGRxO7ONrP3dFsFn/znHAy1iCtrCi26VAuDVhy
+         lgZg==
+X-Gm-Message-State: AOJu0YwNbnPwScwD0bJnl8Mgg7QIywidVNQ2IzhMmd7OuIhHE5eAbNuh
+	djZBf/kECT8m1TPd033qLDrGlw==
+X-Google-Smtp-Source: AGHT+IFswBGhPJF8OSSb4EYKPIsJHib8hdzLokZ9b6fqCBPavnujwJZYpKaaXCUUP0UheLDOZEjz1g==
+X-Received: by 2002:ac2:491a:0:b0:50b:d764:290b with SMTP id n26-20020ac2491a000000b0050bd764290bmr1115916lfi.163.1702309487906;
+        Mon, 11 Dec 2023 07:44:47 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c5-20020ac244a5000000b0050aa6e2ae87sm1109646lfm.2.2023.12.11.07.44.45
+        by smtp.gmail.com with ESMTPSA id c5-20020ac244a5000000b0050aa6e2ae87sm1109646lfm.2.2023.12.11.07.44.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Dec 2023 07:44:46 -0800 (PST)
+        Mon, 11 Dec 2023 07:44:47 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Sean Paul <sean@poorly.run>,
@@ -64,10 +65,12 @@ Cc: Stephen Boyd <swboyd@chromium.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH v2 0/8] arm64: dts: qcom: sm8150-hdk: enable display output
-Date: Mon, 11 Dec 2023 18:44:37 +0300
-Message-Id: <20231211154445.3666732-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/8] dt-bindings: display: msm: dp: declare compatible string for sm8150
+Date: Mon, 11 Dec 2023 18:44:38 +0300
+Message-Id: <20231211154445.3666732-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20231211154445.3666732-1-dmitry.baryshkov@linaro.org>
+References: <20231211154445.3666732-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,30 +79,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Enable display output on the SM8150 HDK device. This includes HDMI
-output through the onboard DSI-HDMI bridge and DP output on the USB-C
-port.
+Add compatible string for the DisplayPort controller found on the
+Qualcomm SM8150 platform.
 
-Changes since v1
-- Dropped irrelevant stats patch
-- Fixed endpoint stye (Konrad)
-- Changed SVID from u32 to 16-bits value (Konrad)
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Dmitry Baryshkov (8):
-  dt-bindings: display: msm: dp: declare compatible string for sm8150
-  arm64: dts: qcom: sm8150: make dispcc cast minimal vote on MMCX
-  arm64: dts: qcom: sm8150-hdk: enable HDMI output
-  arm64: dts: qcom: sm8150-hdk: fix SS USB regulators
-  arm64: dts: qcom: sm8150: add DisplayPort controller
-  arm64: dts: qcom: sm8150: add USB-C ports to the USB+DP QMP PHY
-  arm64: dts: qcom: sm8150: add USB-C ports to the OTG USB host
-  arm64: dts: qcom: sm8150-hdk: enable DisplayPort and USB-C altmode
-
- .../bindings/display/msm/dp-controller.yaml   |   1 +
- arch/arm64/boot/dts/qcom/sm8150-hdk.dts       | 264 +++++++++++++++++-
- arch/arm64/boot/dts/qcom/sm8150.dtsi          | 133 +++++++++
- 3 files changed, 388 insertions(+), 10 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+index dbe398f84ffb..f850bd9b8263 100644
+--- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+@@ -28,6 +28,7 @@ properties:
+           - qcom,sm8350-dp
+       - items:
+           - enum:
++              - qcom,sm8150-dp
+               - qcom,sm8250-dp
+               - qcom,sm8450-dp
+               - qcom,sm8550-dp
 -- 
 2.39.2
 
