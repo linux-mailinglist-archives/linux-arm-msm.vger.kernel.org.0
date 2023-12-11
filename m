@@ -1,137 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-4241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4242-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA51880D066
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 17:03:14 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BBD180D078
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 17:05:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 74C3E1F218DB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:03:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 167741F21857
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AFA84C3B6;
-	Mon, 11 Dec 2023 16:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33B0D4C3BA;
+	Mon, 11 Dec 2023 16:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m7+02ZjY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from IND01-MAX-obe.outbound.protection.outlook.com (mail-maxind01on2076.outbound.protection.outlook.com [40.107.222.76])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 305944496;
-	Mon, 11 Dec 2023 08:02:49 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Jdw14UWCwkDMN17hAY4t3ekc2aFwB2u1n9G2BURHmiUOUbY9J/le7QGnkHQeQkimqiTLSgaiIBhqCmfgBDXLg3yP/+unfHXDd3liGPQhCpcLR2vXurrxjoBdAsCv6D4KgPVPs1rrU7ycgjZCQqO0mrUGGXjwiEWJ6s2RUj44P5Lz/qds2sO1e64LqKAlzOlDeZik5UdPjoReMp2EBSCtaTOHllK80aJO1m3EuIEWsUJVJnDFXn1o9NlT9vk96+QatNcxz+PwmcFfedd1DFW8b0F+nhOzS8JHLBz8M+NTlN/1yrp5OBw/jyq+nmjtMXLw0LchsQ4BB60KJ+jyNRn5uA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uXCuKq2aEipcXMxO5N7fW37qXF/k6g8FxLkPkM3ea/M=;
- b=lbjVsmeEFtISrsngrIH7WHWtVg1RIEfLMejlAD32yasmpSReNzYcf+lP/KUbEwGaxqmES3N+qLh/aIydDsaHe9Tf7TuhuTylgBKqz5htHoc+48yvW42AjqYBh86QQNepTLrlUBPj20/Ltbm2P917Qvqku2CIj1ZMj8/hd8lYJfHWGa3W6WTUMyFi6/lJdAKQh+/cR02XKIMP9yedkLoNFPQyAskW60N9Yk0jBL+L+u1tXEMBumHDlf9Gt5y7Wa52maqxBH0iC4XCer/GI4lK98Kw95QvuvzTkzKBgwIo97PbIXAWgQ/w14Ykxb7Gg3Ntw6GJiLW32co3CIW/yGAaog==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siliconsignals.io; dmarc=pass action=none
- header.from=siliconsignals.io; dkim=pass header.d=siliconsignals.io; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siliconsignals.io;
-Received: from MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:31::9)
- by PNXPR01MB6786.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:ba::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7068.32; Mon, 11 Dec
- 2023 16:02:45 +0000
-Received: from MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::eb15:266a:cd6a:e0f1]) by MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::eb15:266a:cd6a:e0f1%7]) with mapi id 15.20.7068.033; Mon, 11 Dec 2023
- 16:02:45 +0000
-From: Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals.io>
-To: agross@kernel.org,
-	andersson@kernel.org
-Cc: hardevsinh.palaniya@siliconsignals.io,
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EB54C3B8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 16:04:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED72C433C7;
+	Mon, 11 Dec 2023 16:04:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702310697;
+	bh=9rFmEbQU4MZkS3VQLzOd79r5Gp+jBwJMXH7fo8EetM4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=m7+02ZjY/7X8I/+BgJsrca+AzH+JW3BiOsETthZ0M9Vy7eaTItqHsJcrgWBRn8soO
+	 rVp5qql1We0uh/D8VVWFFRS1A6b6PaPBi15MPddWQ1fWyDverZdOnqYGkHxPleO/ux
+	 qAN0BJpImE2sI5oftTYXEA69rUYE42RHMP4+UZZQgaXU3gEpsHBZJn4MShy7kKtW2o
+	 N5f3ND/61rdANPxq3eJ+LIot31/hF39tWN3mq0G8LJ5xyxIi2Sy+U4uJnQnjv6DJwG
+	 ByvveGsUNa8IwOtSpv5VaQZrBiFY2KTpj46N/GEiaTxwvKze2Ir+yNqgLtdyhy57Yf
+	 EaAEbRKPq53fA==
+Received: from johan by xi.lan with local (Exim 4.96.2)
+	(envelope-from <johan@kernel.org>)
+	id 1rCimu-0005sB-2h;
+	Mon, 11 Dec 2023 17:05:44 +0100
+Date: Mon, 11 Dec 2023 17:05:44 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Andy Gross <agross@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] rpmsg: glink: Fix buffer overflow
-Date: Mon, 11 Dec 2023 21:32:20 +0530
-Message-Id: <20231211160221.2843339-1-hardevsinh.palaniya@siliconsignals.io>
-X-Mailer: git-send-email 2.25.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PN3PR01CA0144.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:bf::11) To MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:31::9)
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: pmic_glink: disable UCSI on sc8280xp
+Message-ID: <ZXczWLyZHhxnraZh@hovoldconsulting.com>
+References: <20231208125730.10323-1-johan+linaro@kernel.org>
+ <CAA8EJpp+wZbHwetDD5pDAXJJLVO+URoZJuW8OQavf5rSTPNWzg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MA0PR01MB7145:EE_|PNXPR01MB6786:EE_
-X-MS-Office365-Filtering-Correlation-Id: 71e6ed76-8018-4cd6-e85a-08dbfa629d59
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	H0KnjL29GRnaJcCUbIr2wiZKt0D9GEeJQKM/z/sPRWgvjlUgVEmzJP/AcR0UyMFrwkm1E+lDAgydF0USLMTCQziNtipaCMlgwrkZLD45wtDi9IYq++VDNG480aO5cbxYz3bL2uyR08ctDkOwWRqCAx3EVm4IGSxmHGUj/F55FL9kKghM1O9v8vLsZR2tG54Z4vMbj5Wb8LxJhZEgc5BHgCs+OXdrVucY1Vz3EM8OR3EO0VOIxHOvIMOItHsrqCWhcjsMy/pxn/gUWwBeI7g2c8VNfWhXfZhJUu3v4z1opAjHDSka9C2w748pZ5bI8wGR80fz2nVHHWDHC82H6W+rRZo9Sf7qUrdAkUmifmNHzi49ReXYOnvO5V7+JXeBK+mt96IO73yO12jzVz9OxTyJDKKxUpcRf+e1v5lwJw7z4+c200c8CGCHCnVEzsp0tNdip1O6zlA8QerNm7Hg+ztSxyeZbFAr93QYzulwPjigLiYa9o9clgQhUIvtObn3AKQTUD2L1+UkWybRXsqrI4barMwxOkkHPrvIYthlbUQ6h1YlDwR6sPLClZ8YGpH4VXSA/urLjuC/wCZnRf9S3ILP/+cKrktl3e+pDZR0a5Ms3gMwM1vTLiCs+sHt2yOgKRWP
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(346002)(376002)(136003)(39830400003)(366004)(396003)(230922051799003)(1800799012)(186009)(451199024)(64100799003)(1076003)(6512007)(2616005)(26005)(6486002)(478600001)(52116002)(6666004)(6506007)(41300700001)(4744005)(5660300002)(44832011)(2906002)(54906003)(66476007)(66556008)(66946007)(316002)(4326008)(8676002)(8936002)(38100700002)(38350700005)(86362001)(36756003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?oqDLGel4uYTYONAeYXmXVzD9dGmrFiZCj+mdq5GpbpLtx0RQG5VYw2mbySn5?=
- =?us-ascii?Q?neWPg7dxsACorTyFWWaVL/3h4TAPQsnBIwFiALjebcDZHcu0llUb8JCKu3St?=
- =?us-ascii?Q?l9ivv6qoz3sISC2t/gvyGxuraILyv8ejBue4VEYhfXHPkHmaP4a0obUzbNnw?=
- =?us-ascii?Q?xDnnx7OdT/iFGqSPgPSpGXfQLzUIcCIP/c2ETJLwpbemdz421Gy+G3+bzeNr?=
- =?us-ascii?Q?c4iP+ryvKNzvVHbVyyzGy845dhl0sO0h4RPFMK8hQ+doZfnp89lSTjgk02bC?=
- =?us-ascii?Q?Ioq3D7/xiZ2sB36izgqKQ/vaiMJu/GSmuQuJeZ9IgAjgTerPZC8XzXORcGpj?=
- =?us-ascii?Q?w/R1v2as07i5xbMaw4JpFaWO7pQbH2BtMLzT8ZH5H/X8iIJVpyRz5ImY532Y?=
- =?us-ascii?Q?QTeqYrgujBuOt+ufE2hv/6SZ1lTr8T59TNSQhj+FWxqonRUrzxiYgxZ15v8h?=
- =?us-ascii?Q?yIzjhma1y1MSXToRraB2Yejq9mFTP/MMnTo1nVYyDRy+3DPBdQ8/hjxn9JDj?=
- =?us-ascii?Q?KnaYnS5hOlrXeCKhR9WySZNNiZmIBk15l/m1PmAM8NDCCgLxHfSdWaM6duvo?=
- =?us-ascii?Q?bhMo9b1WE/FePkCkwLiUX513LaWR4ZJHkaagNnsZISRzcgbH+E3HKMrduFA9?=
- =?us-ascii?Q?jKmeyOmdyi2gy0rIyEUxSXccga2Hvpm/VGYkVaYpM3no3MquIjgID1vyZ+xH?=
- =?us-ascii?Q?9TYEOgM7hdBHX8P3SWqLYH4Gt5pknRmEXU3eOmdLGb5eMCsHGG1nicWht4kx?=
- =?us-ascii?Q?2k8/A+Aohqtjh2wqjRZxUGg1RYHzyzEjek6/FHZyjsAATKox45nQf3JzKfLn?=
- =?us-ascii?Q?MS+GUeipJqJQoxg+BVC8ibTvh5/uaBg8rbNyvVmXoGIJ3+D4StRTB06MLLOp?=
- =?us-ascii?Q?01koEnp21wHsA3UDSuNZbKe52JPEGEPsylPpBa2BMtMkG4xrIJNyZAQZmkdY?=
- =?us-ascii?Q?EAhXBY6DFXfdObMeeEtpatjXsjZxrbW6p+VfMAuk5+DqY6Ijvsx6cGckCJfd?=
- =?us-ascii?Q?DnEZkBagpZdDVAiZfsbqCpUMaHiu+19Q1qNp7/YTdYT9ddzEtnzbXzXuUoNo?=
- =?us-ascii?Q?+gzd5MlR9pXy7HHui6J291nEdlueqAti0psW1F+N5hrmBiEmsM4A7KJK81IH?=
- =?us-ascii?Q?7aseSdrA+uuNABpRA5Dt0sOUmWGGu0lmEA17xfa45rfK47VTADNJALjIb6rF?=
- =?us-ascii?Q?VlxZgNYKkYq57eKzkj7DwO0x/u38KyTB4t4vNal1IYgWCkEu74eH9R7dbShV?=
- =?us-ascii?Q?YD8y/tRuuuAX+iBR3gp5jXSw0S5EnwuLvxKwKDbMrCegGU5y4aEFSsZNKYlP?=
- =?us-ascii?Q?d8lcSwsaPtj3AY8J2aGw84Sew+KEEmqt8oJmD4dboGkMgGhFoiZwldY7m6LO?=
- =?us-ascii?Q?J+meLl8xmVL4MQjJdmTMNiNTkHdkk2H47mGP9pMxawDD13e3tRupGmTeKYCF?=
- =?us-ascii?Q?pN9hMylV6FgmSqN95nYZ3dGU6T8OXgT0YT0rlmSbcIu4GWTV6C6if/6riN4P?=
- =?us-ascii?Q?al0KDP9z6Q0bHgW+6QqpOmfJpEMebXeSwMJkSCzgizBT9J/pDLmWWhiFL4Kb?=
- =?us-ascii?Q?fY8p6lkY2p8yuK4JCKNRMVw28lZ+NNhlU/snuxi52akPJPdog2wYwoClyQ+J?=
- =?us-ascii?Q?qym3MF00iIZX6gTTV9fvXyA=3D?=
-X-OriginatorOrg: siliconsignals.io
-X-MS-Exchange-CrossTenant-Network-Message-Id: 71e6ed76-8018-4cd6-e85a-08dbfa629d59
-X-MS-Exchange-CrossTenant-AuthSource: MA0PR01MB7145.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2023 16:02:45.8270
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 7ec5089e-a433-4bd1-a638-82ee62e21d37
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: djOIM3mWpYChPj84U+kQG9qQaF5g+z3i6W0uJlM3rYxEbXiIU0Ftk0Rw8ARcR8gkbyPp/TQcM2b8U0WZKZd+y/aSuJn/Ez5Zh4u3LK3uqkBFBXka8NGaxs2yWzvoF3ub
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNXPR01MB6786
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpp+wZbHwetDD5pDAXJJLVO+URoZJuW8OQavf5rSTPNWzg@mail.gmail.com>
 
-In qcom_glink_send_open_req() remove error: strcpy() 'channel->name'
-too large for 'req.name' (1010102 vs 32)
+On Fri, Dec 08, 2023 at 06:34:00PM +0200, Dmitry Baryshkov wrote:
+> On Fri, 8 Dec 2023 at 14:56, Johan Hovold <johan+linaro@kernel.org> wrote:
+> >
+> > Enabling UCSI on sc8280xp and the Lenovo ThinkPad X13s in particular
+> > results in a number of errors and timeouts during boot:
+> >
+> > [    9.012421] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-95)
+> > [   14.047379] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
+> > [   14.050708] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
+> > [   20.192382] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: timeout waiting for UCSI sync write response
+> > [   20.192542] ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: GET_CONNECTOR_STATUS failed (-110)
+> >
+> > Disable UCSI on sc8280xp until this has been resolved.
 
-Signed-off-by: Hardevsinh Palaniya <hardevsinh.palaniya@siliconsignals.io>
+> Johan, if you can capture message traces in
+> pmic_glink_ucsi_locked_write() / pmic_glink_ucsi_read() /
+> pmic_glink_ucsi_callback(), this would help me understand what is
+> causing the issue.
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 82d460ff4777..2d6a592e1c72 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -479,7 +479,7 @@ static int qcom_glink_send_open_req(struct qcom_glink *glink,
- 	req.msg.cmd = cpu_to_le16(GLINK_CMD_OPEN);
- 	req.msg.param1 = cpu_to_le16(channel->lcid);
- 	req.msg.param2 = cpu_to_le32(name_len);
--	strcpy(req.name, channel->name);
-+	strscpy_pad(req.name, channel->name, sizeof(req.name));
- 
- 	ret = qcom_glink_tx(glink, &req, req_len, NULL, 0, true);
- 	if (ret)
--- 
-2.25.1
+I don't have time to dig into this at the moment, and its probably
+easiest for everyone if you just try this on your own X13s.
 
+Johan
 
