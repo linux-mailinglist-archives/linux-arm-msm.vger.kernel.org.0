@@ -1,129 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-4149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91B6A80C014
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 04:39:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C02ED80C0AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 06:24:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 16EB3B208B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 03:39:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3EB82B20849
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 05:24:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4C7A171DC;
-	Mon, 11 Dec 2023 03:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF19C1CAA7;
+	Mon, 11 Dec 2023 05:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RdFYcCip"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GvFI3s8/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37716D43;
-	Sun, 10 Dec 2023 19:38:29 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BB27kGn029249;
-	Mon, 11 Dec 2023 03:38:20 GMT
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E387FC3;
+	Sun, 10 Dec 2023 21:24:21 -0800 (PST)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BB3T42R013989;
+	Mon, 11 Dec 2023 05:24:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:date:subject:mime-version:content-type
-	:content-transfer-encoding:message-id:references:in-reply-to:to
-	:cc; s=qcppdkim1; bh=9NfvdFC2EYrrss4aSEXmAl9jdp0/puQebxdHhbUnyac
-	=; b=RdFYcCipNJgwLzZPVkch4UBAR2M4rfxKfb4MVNVLYA9VpKUxq+yozWhORHK
-	z+d0Lp26LBnvbxD0jyLHlf6Wobx+79osIXuCBVi7fgjrs/ZdL8+Tlf0GiMTDRDaD
-	nQ7sDdlX1bzKJKDoPZuYXyvHP9w/J483CYq0bvS5JvzZpllDvIg+aCmcHT/qJjH2
-	ItCkLdQLtInfC62h0lvdLJ9nvURJpPbbLrKL/kwaCo451szIK4gIUcFM80R0SGJZ
-	eS+fg/3UVSBIEw73PzAuKiGR14OoXXj5Ls6lp4PjUezZYz9ktV8+HRjWWifJfZlt
-	5ZvunAaZo3rLyygj2rQSeiOsAqA==
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=BSoh5DNo4RPdGyiQXkB5TaMxmdd0nuO8yq4OLyw7zZc=; b=Gv
+	FI3s8/04Wgx5X2sQ/cRny7rUx9fJebDdVCWf/HXNZUOHRQ1U6fc6nmgDbr1CezRX
+	NL4/QrddtNjJfBEecbPYMHJLttgjV2gPTb16loRrwe2xGy30ftuBn1OrX0EHoAwp
+	xbS7/8n58eZqp9QPXOsiAW352wzKngMnpdMokLXFbvDpTCSbP9yF8VfJ4696XjpZ
+	zYvHeVAMq1tjpliY5rwoTM3Qxryjihv3Nzgl95QuUXRt35xMekzplYgbIXXFbrSA
+	WJi0PdJbMeCjBCDcV6PHDAldeg8KPgKA6iMW4ijkiUXlgagjJAs82GX3FpmT3OXz
+	evx06I+3ulw7JjGqXnbA==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uvnyva3r6-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uvnk5tb5c-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 03:38:19 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BB3cI4i013230
+	Mon, 11 Dec 2023 05:24:06 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BB5O58C017881
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 11 Dec 2023 03:38:19 GMT
-Received: from hu-kathirav-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Sun, 10 Dec 2023 19:38:13 -0800
-From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Date: Mon, 11 Dec 2023 09:07:30 +0530
-Subject: [PATCH v3 8/8] arm64: defconfig: build NSS Clock Controller driver
- for Qualcomm IPQ5332
+	Mon, 11 Dec 2023 05:24:05 GMT
+Received: from [10.216.5.30] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Sun, 10 Dec
+ 2023 21:23:54 -0800
+Message-ID: <ff71793b-eab1-4dc2-b58a-fc2d34b2d0d9@quicinc.com>
+Date: Mon, 11 Dec 2023 10:53:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20231211-ipq5332-nsscc-v3-8-ad13bef9b137@quicinc.com>
-References: <20231211-ipq5332-nsscc-v3-0-ad13bef9b137@quicinc.com>
-In-Reply-To: <20231211-ipq5332-nsscc-v3-0-ad13bef9b137@quicinc.com>
-To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh+dt@kernel.org>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v4 1/3] dt-bindings: net: qcom,ethqos: add
+ binding doc for safety IRQ for sa8775p
+Content-Language: en-US
+To: Konrad Dybcio <konrad.dybcio@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+	<kuba@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski
 	<krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Catalin Marinas
-	<catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        "Kathiravan
- Thirumoorthy" <quic_kathirav@quicinc.com>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1702265852; l=770;
- i=quic_kathirav@quicinc.com; s=20230906; h=from:subject:message-id;
- bh=Wyt/ZD2zWouzMmJKcqtLO2jKDDDuwiTIji8eQvd5l8U=;
- b=3hLQRYFXCDtmBM/AuWKgfyZWbOdH1wuR/+L6LD7teKTOtSKNdc8aEfnCW9M1QuR0QDqz45wzD
- HCfBuzJ5TrlACluSA5w+U5sZqud2GVu//2kgitNMh3iIlIzMktRrTTf
-X-Developer-Key: i=quic_kathirav@quicinc.com; a=ed25519;
- pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu
+	<joabreu@synopsys.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Prasad Sodagudi
+	<psodagud@quicinc.com>,
+        Andrew Halaney <ahalaney@redhat.com>
+CC: <kernel@quicinc.com>
+References: <cover.1701939695.git.quic_jsuraj@quicinc.com>
+ <87bdedf3c752d339bf7f45a631aa8d5bf5d07763.1701939695.git.quic_jsuraj@quicinc.com>
+ <0af91794-69d6-459a-8566-c8c408489f2b@linaro.org>
+From: Suraj Jaiswal <quic_jsuraj@quicinc.com>
+In-Reply-To: <0af91794-69d6-459a-8566-c8c408489f2b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Wobte5RxnbFxxQdpbZQZASP8Jegg0c2L
-X-Proofpoint-ORIG-GUID: Wobte5RxnbFxxQdpbZQZASP8Jegg0c2L
+X-Proofpoint-ORIG-GUID: Os34XW_GzOcrfJPdr_qXjunD5rB5DdhM
+X-Proofpoint-GUID: Os34XW_GzOcrfJPdr_qXjunD5rB5DdhM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=771 suspectscore=0 spamscore=0 bulkscore=0 clxscore=1015
- phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312110028
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=731
+ priorityscore=1501 malwarescore=0 spamscore=0 mlxscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 phishscore=0 impostorscore=0
+ suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312110042
 
-NSSCC driver is needed to enable the ethernet interfaces and not
-necessary for the bootup of the SoC, hence build it as a module.
+Sure . will expand below .
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
----
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index be89fa9e6468..a12182cc8cc9 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1229,6 +1229,7 @@ CONFIG_QCOM_CLK_SMD_RPM=y
- CONFIG_QCOM_CLK_RPMH=y
- CONFIG_IPQ_APSS_6018=y
- CONFIG_IPQ_GCC_5332=y
-+CONFIG_IPQ_NSSCC_5332=m
- CONFIG_IPQ_APSS_5018=y
- CONFIG_IPQ_GCC_5018=y
- CONFIG_IPQ_GCC_6018=y
-
--- 
-2.34.1
-
+On 12/9/2023 11:17 PM, Konrad Dybcio wrote:
+> On 7.12.2023 10:21, Suraj Jaiswal wrote:
+>> Add binding doc for safety IRQ. The safety IRQ will be
+>> triggered for ECC, DPP, FSM error.
+> ECC is widely understood, but the DPP and FSM acronyms could be
+> expanded..
+> 
+> Konrad
 
