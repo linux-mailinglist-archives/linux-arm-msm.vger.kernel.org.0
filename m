@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-4238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF50680CFEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:45:06 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18F3580CFF1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 16:45:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9A7971F21932
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 15:45:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3D0D71C21440
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Dec 2023 15:45:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 906764BAA3;
-	Mon, 11 Dec 2023 15:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E6524BAA1;
+	Mon, 11 Dec 2023 15:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BxufRkNt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bnyiioDK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 831A4A1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:44:54 -0800 (PST)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50dfac6c0beso1643922e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:44:54 -0800 (PST)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95F95E5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:44:55 -0800 (PST)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-50be9e6427dso4780168e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 07:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702309493; x=1702914293; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702309494; x=1702914294; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4rRpPZt2SIJA5F3cMHV1T35kXBcvXzQb5IQ83qE8OmA=;
-        b=BxufRkNt5iWw7YXltiIpONzGsgwFUiKcyCxfso5xS7d5/HyeEFBF1WOroUO+OQPMUB
-         NDio7cqpSx10FXjSG7A5bVMExjjGZxGFRLLNj03Tlyp1/ZDX5qwLLdjvnlfXNmkP/wM/
-         2bPXssjdM5RZLz+1eoccDxH2saeiuxn1nHCQPjRahEsi2s23WL4j5A+zPxi2HFs3dQ1W
-         IUTylrLQM/j8VC+JMt1laafNPquh+pqKxYzrDti12hyHzG3foS3i2V20go0xlRY/JCjn
-         Mr/VHNNZfEKajawiXVEB05K7JX2ULbamjPa9fTFb2cqSVS6O3OIGQQ+VsUloD0l5c7rq
-         LdWQ==
+        bh=k8dkuDe12KUDih6A7/RQFvtHwM9BSgTJEf5IzSsqtrw=;
+        b=bnyiioDKEHiW/sHwV/EYXnsH2zQrLqkT/aw9XAZnVcMdz7+MH3Yphu1UuARivfrX0b
+         d8379ePKPivNW+HoU24AUv96JCnfSwbPoL3d5WhuZKHmkTMW/g/q1VpP5754Ec4WGfuz
+         vzR1Asr5vr0tv3OQN78gpMogCmmgu2KCjxeRaCrroqAHr+u3Nef4GGzO9rZXzh3Ld8D4
+         +yfOC7juKWHdqb7TGcVvzMrcZFcaHcIAXDSdHyiWj/QoX805aMQSylF1AEs+CibMrWmf
+         O6QFwCP4vHLL3qSKTiFUeGNJu60WXrTI7C2aMvaCl8FOhXfmRNThtmafVPwENw6nShLj
+         pBAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702309493; x=1702914293;
+        d=1e100.net; s=20230601; t=1702309494; x=1702914294;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4rRpPZt2SIJA5F3cMHV1T35kXBcvXzQb5IQ83qE8OmA=;
-        b=DEhPI4XT7wepG2JmAODcA9yeXNtrBuuwMJPSFlbkd7XDZwFM8klTP4Lfb8p0gvfz2o
-         x4PTylemeYFEDf6IPMx8ttgId6ZJ5X+topyYjzcy2B0RgXL6rL0brqhIxfZ4bkFDm/a5
-         c5NAEcLIzx1Hv8LJkEbOHQ0p/MCpKBS74oz0WSMprTJeSS9x4qMX/ekOlQlYD+49Hvpt
-         HPq/vtjxlPizqV0092jz7XdOFoYKBuLxFzsQAeLg+PFNa43Jusd4QYDeaYXNSuPcaGVh
-         9uHrThqL7gwJZAmYWSCX2le1Ir1MyzQLM4Xi48zioNV8G5zwkbC9ZGCkd8GsrVb9eVgR
-         2ZlA==
-X-Gm-Message-State: AOJu0YzerH5ptII9gfXwrduFIAJ0OcZ3OvlwzpMa80PmlCHKLocenCg+
-	+UFjUpzL78xQXtZpT1dvJ5M23A==
-X-Google-Smtp-Source: AGHT+IFUQ7tenzLmGboSIZEJbzghc3TiEVAs0ezbRXq678xu7S9Thy7y/lL/0Q2no+4vGl12ga2xGA==
-X-Received: by 2002:a05:6512:3d22:b0:50b:c4f1:9058 with SMTP id d34-20020a0565123d2200b0050bc4f19058mr2981841lfv.12.1702309492912;
-        Mon, 11 Dec 2023 07:44:52 -0800 (PST)
+        bh=k8dkuDe12KUDih6A7/RQFvtHwM9BSgTJEf5IzSsqtrw=;
+        b=n30gxNeXb0TUOCTbxvMBnsjNNB4FqH5wvo7oiHPs55WAmW4Wo5BE1xY3UDTqRDmD6w
+         I53kdyeRSytjrHv6+ox6SLPMq0d8ur2prnmdSHVL0ls4A8e2N4gbFnZ9Jem5fCBBCT52
+         vNUWCXpMQMfu+nFnNMTCBPwBw+MSOSMfOzfMGQWtgiZ6By8ik4xjhMBYTi1SyPqLU4fO
+         ij67WPv50lxF5TDHxslNWmEO5PSo4uT1TAZlhzYY0ekownO6crkeinoSLViOR/wkUGAP
+         zZyGkKSw2Nd8TAchG9IjshZFJ55TQgqnYFgfZlLf+eglFEDhg6e/2Toahb92JLiUK5eF
+         XBDA==
+X-Gm-Message-State: AOJu0Yy8bNfh6wETBpOyki9ia21al13gNO5ObTtwXfsRnbngoOFduy4E
+	pF1LAFQ5VhkBU5OWQ1mobKpBkA==
+X-Google-Smtp-Source: AGHT+IEO27rtGBmhegZ3X6tTcN+fT+yJyjxtK061Yf/preFBXtMv1vIIngTGSawIZYXmuAOoHNYEcg==
+X-Received: by 2002:a19:ad4b:0:b0:50b:df82:3137 with SMTP id s11-20020a19ad4b000000b0050bdf823137mr1798023lfd.43.1702309493631;
+        Mon, 11 Dec 2023 07:44:53 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id c5-20020ac244a5000000b0050aa6e2ae87sm1109646lfm.2.2023.12.11.07.44.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Dec 2023 07:44:52 -0800 (PST)
+        Mon, 11 Dec 2023 07:44:53 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Rob Clark <robdclark@gmail.com>,
 	Sean Paul <sean@poorly.run>,
@@ -65,9 +65,9 @@ Cc: Stephen Boyd <swboyd@chromium.org>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH v2 7/8] arm64: dts: qcom: sm8150: add USB-C ports to the OTG USB host
-Date: Mon, 11 Dec 2023 18:44:44 +0300
-Message-Id: <20231211154445.3666732-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 8/8] arm64: dts: qcom: sm8150-hdk: enable DisplayPort and USB-C altmode
+Date: Mon, 11 Dec 2023 18:44:45 +0300
+Message-Id: <20231211154445.3666732-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20231211154445.3666732-1-dmitry.baryshkov@linaro.org>
 References: <20231211154445.3666732-1-dmitry.baryshkov@linaro.org>
@@ -79,44 +79,199 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Expand first USB host controller device node with the OF ports required
-to support USB-C / DisplayPort switching.
+Enable the USB-C related functionality for the USB-C port on this board.
+This includes OTG, PowerDelivery and DP AltMode. Also enable the
+DisplayPort itself.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8150-hdk.dts | 124 +++++++++++++++++++++++-
+ 1 file changed, 123 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 77d32f4fe7da..168d49b01807 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -3608,6 +3608,25 @@ usb_1_dwc3: usb@a600000 {
- 				snps,dis_enblslpm_quirk;
- 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+
-+						usb_1_dwc3_hs: endpoint {
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+
-+						usb_1_dwc3_ss: endpoint {
-+						};
-+					};
-+				};
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
+index ea4d75308ac8..de670b407ef1 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
++++ b/arch/arm64/boot/dts/qcom/sm8150-hdk.dts
+@@ -7,6 +7,7 @@
  
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/usb/pd.h>
+ #include "sm8150.dtsi"
+ #include "pm8150.dtsi"
+ #include "pm8150b.dtsi"
+@@ -374,6 +375,10 @@ &gmu {
+ 	status = "okay";
+ };
+ 
++&gpi_dma0 {
++	status = "okay";
++};
++
+ &gpi_dma1 {
+ 	status = "okay";
+ };
+@@ -382,6 +387,29 @@ &gpu {
+ 	status = "okay";
+ };
+ 
++&i2c4 {
++	clock-frequency = <100000>;
++
++	status = "okay";
++
++	typec-mux@42 {
++		compatible = "fcs,fsa4480";
++		reg = <0x42>;
++
++		interrupts-extended = <&tlmm 152 IRQ_TYPE_LEVEL_LOW>;
++
++		vcc-supply = <&vreg_bob>;
++		mode-switch;
++		orientation-switch;
++
++		port {
++			fsa4480_sbu_mux: endpoint {
++				remote-endpoint = <&pm8150b_typec_sbu_out>;
++			};
++		};
++	};
++};
++
+ &i2c9 {
+ 	status = "okay";
+ 	clock-frequency = <400000>;
+@@ -436,6 +464,15 @@ &mdss {
+ 	status = "okay";
+ };
+ 
++&mdss_dp {
++	status = "okay";
++};
++
++&mdss_dp_out {
++	data-lanes = <0 1>;
++	remote-endpoint = <&usb_1_qmpphy_dp_in>;
++};
++
+ &mdss_dsi0 {
+ 	status = "okay";
+ 	vdda-supply = <&vreg_l3c_1p2>;
+@@ -483,6 +520,65 @@ &mdss_dsi1_phy {
+ 	status = "okay";
+ };
+ 
++&pm8150b_vbus {
++	regulator-min-microamp = <500000>;
++	regulator-max-microamp = <3000000>;
++	status = "okay";
++};
++
++&pm8150b_typec {
++	status = "okay";
++
++	vdd-pdphy-supply = <&vreg_l2a_3p1>;
++
++	connector {
++		compatible = "usb-c-connector";
++
++		power-role = "source";
++		data-role = "dual";
++		self-powered;
++
++		source-pdos = <PDO_FIXED(5000, 3000,
++					 PDO_FIXED_DUAL_ROLE |
++					 PDO_FIXED_USB_COMM |
++					 PDO_FIXED_DATA_SWAP)>;
++
++		altmodes {
++			displayport {
++				svid = /bits/ 16 <0xff01>;
++				vdo = <0x00001c46>;
++			};
++		};
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++				pm8150b_role_switch_in: endpoint {
++					remote-endpoint = <&usb_1_dwc3_hs>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++				pm8150b_typec_mux_in: endpoint {
++					remote-endpoint = <&usb_1_qmpphy_out>;
++				};
++			};
++
++			port@2 {
++				reg = <2>;
++
++				pm8150b_typec_sbu_out: endpoint {
++					remote-endpoint = <&fsa4480_sbu_mux>;
++				};
++			};
++		};
++	};
++};
++
+ &pon_pwrkey {
+ 	status = "okay";
+ };
+@@ -493,6 +589,10 @@ &pon_resin {
+ 	linux,code = <KEY_VOLUMEDOWN>;
+ };
+ 
++&qupv3_id_0 {
++	status = "okay";
++};
++
+ &qupv3_id_1 {
+ 	status = "okay";
+ };
+@@ -568,6 +668,19 @@ &usb_1_qmpphy {
+ 	status = "okay";
+ 	vdda-phy-supply = <&vreg_l3c_1p2>;
+ 	vdda-pll-supply = <&vreg_l18a_0p8>;
++	orientation-switch;
++};
++
++&usb_1_qmpphy_dp_in {
++	remote-endpoint = <&mdss_dp_out>;
++};
++
++&usb_1_qmpphy_out {
++	remote-endpoint = <&pm8150b_typec_mux_in>;
++};
++
++&usb_1_qmpphy_usb_ss_in {
++	remote-endpoint = <&usb_1_dwc3_ss>;
+ };
+ 
+ &usb_2_qmpphy {
+@@ -585,7 +698,16 @@ &usb_2 {
+ };
+ 
+ &usb_1_dwc3 {
+-	dr_mode = "peripheral";
++	dr_mode = "otg";
++	usb-role-switch;
++};
++
++&usb_1_dwc3_hs {
++	remote-endpoint = <&pm8150b_role_switch_in>;
++};
++
++&usb_1_dwc3_ss {
++	remote-endpoint = <&usb_1_qmpphy_usb_ss_in>;
+ };
+ 
+ &usb_2_dwc3 {
 -- 
 2.39.2
 
