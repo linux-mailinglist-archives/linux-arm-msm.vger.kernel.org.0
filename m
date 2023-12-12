@@ -1,153 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-4347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D90AB80E655
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:37:06 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A365280E689
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:45:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3303C1C212F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:37:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0A234B20CD4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:45:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 883A5171B0;
-	Tue, 12 Dec 2023 08:37:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64FD12554C;
+	Tue, 12 Dec 2023 08:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IHsm754r"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oMPOOqW7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E74EDC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:37:01 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-54c79968ffbso7095619a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:37:01 -0800 (PST)
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63F9ACF
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:45:25 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-54c77e0835bso7656992a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:45:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702370220; x=1702975020; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0qv/I4rV9NkH79/3gXpBE8U5PS14fuph1QN2S3bCrs8=;
-        b=IHsm754r3Tr1D0xEkTzWG5dYRNqd9ZAB7mKjXomJsVhgbTgxRbnL+z/ImuMQHcELIE
-         3vfpSmzcNxc1qYfaPEy5eh/XyD4Kt14n10v3X6Z1gJr2VT8nH8Im5FmY1WltexxbTVkc
-         YA1BuLiH8pA6wWrXstybP7QttMFJw2bphJSWiM08zzK/a6VDdexCpNL0prEbN7bF/4IR
-         AbmdqmrLCqC9a+kUaWLs76I8aePMXvE1Z1Q5lnUQLit7vAzVZighRYkEheV5/PLjyqZf
-         QinhhBLvi6TgyAvbBJME529mcKPbSRzgpGORNvYc+nYcErVJtlVL9v/GMQPbHu+Z/EVx
-         pbvA==
+        d=linaro.org; s=google; t=1702370724; x=1702975524; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ppbHQCYSLppdUFWWFW0lWAd6TucauVUU4s32x2RiPZ0=;
+        b=oMPOOqW7ueV8Vvvu6PcGcwo/lVfPQB8GB7q4rjFuF8Y0DZaHb5o87z0HVoGRuWs4Yt
+         iIHxTmxIoQKFhtRZ/dqxdFZE9BspCUUoCxyDfuchKUzXScDdJDrT68VLciB5aUflSiPi
+         yWZ9QZqYDS5XUOSFJQ0Ov9/GRIRBvV8jjmudSvwDU9zP/iYxeeduiNtbIYajtYHw7AKk
+         uzNiUTI5pGDcgSPEWV+8eRa2UoUYw6ckPa9Eq9bw/rHqpkyfHjvUaj0FJ8Aqx6QUaSHW
+         Fs8jaHceq+zQfAuZVtzsEjwW9ZhXzl53RrAaMfj55u4X++7litI6hGc+QmnAxhXpgusi
+         tl7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702370220; x=1702975020;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
-         :to:content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0qv/I4rV9NkH79/3gXpBE8U5PS14fuph1QN2S3bCrs8=;
-        b=e4q4/YxN+FdyxAizsQUAZwTSdwUwsobmhEUrTIxSJu1aerDLtt1QnXCDW+cSNcrLoa
-         kO7eoZ3/XEly++2vpLcjaarCnxyEe5Eg7pzSlHuV189OXA+5f0uCY8aoWURQ6BKEE2eH
-         gEaLDL/0EzrKpRKTGkw8LAOYU9IuSa2UDxLmhDHB4FA5Z/z2/1OMkt2uyWEdp9Qw0gdR
-         S7vUfNUmVI9Gkj6Hx4l/lPLpjDKu3xC6+QTyXvtLxVCLMP9wLiOIH1l6YVjczcCyPJQh
-         zqGo6+Dl2X3LyhU5m1Xo/UnAd/BHesj45nj8DL0Lwok7+NeCtToxrRgfcz0F67Rowj2c
-         0yKA==
-X-Gm-Message-State: AOJu0YwxRnkcWw8HmN9UHtGV/PnQG0YBaaXqMsC0/skUm7MffQZxd88n
-	RuDEoKfX/qZC9qSYmrM9Jxhrrw==
-X-Google-Smtp-Source: AGHT+IGgkw78dam21CNgKGYxMvMpItftQPatt0T1b1i422/3w05Y+y0mipCGrDHJ42Y4O/aU4zDeGw==
-X-Received: by 2002:a50:8dc5:0:b0:54c:4837:7589 with SMTP id s5-20020a508dc5000000b0054c48377589mr3008088edh.53.1702370219909;
-        Tue, 12 Dec 2023 00:36:59 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id l28-20020a50d6dc000000b0054ca3df2257sm4684520edj.36.2023.12.12.00.36.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Dec 2023 00:36:59 -0800 (PST)
-Message-ID: <ff5dc990-70f4-47a6-8ef2-c93135c08b9b@linaro.org>
-Date: Tue, 12 Dec 2023 09:36:57 +0100
+        d=1e100.net; s=20230601; t=1702370724; x=1702975524;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ppbHQCYSLppdUFWWFW0lWAd6TucauVUU4s32x2RiPZ0=;
+        b=SS+ISoTUkEx1FR3Eg2wZopTSNslBGGOepumfVY13eabAS3O61pbkRjyQ9FfEhbDAww
+         7zKvnS8dnlCV2Mt3jpl0Mn6xZxD/YE7cMIRW6B6CTadgtC8sNQPLEQ7jHDIgBQ50Ejkf
+         FHGkWaVFahhEUtaRPnDZX6wXrAxJzVq8tXklF3/hTYT9XL2vOfxz4A0eFIGULdOrxIWi
+         TPOVj+AHehPRefZtjWeiChyDt0Y7qRciEbhc1G9ZXtG4r5sVI7lBmjz3pgxMAalAPaYt
+         yvgzKNIuVQjyKi+HKFPga+BeL2+YE3jBPyZL5GSXGLbmKM8D0dOxv2SMaveA6lu1UXrW
+         yGWg==
+X-Gm-Message-State: AOJu0Yz1MHTdJ7724dHJhnbsSBFBQqyMcYM2I6cQ10Pqg6MULHnwP2c9
+	WfiveigL44knIagZzfa/vLvwWQ==
+X-Google-Smtp-Source: AGHT+IG461CE58DfQwEvLrH77MxkX0z0TE6W4JC9lMkEpoJudRh2B5fAl6/htiSe24WyJoA/xUQYXA==
+X-Received: by 2002:a50:9b1b:0:b0:551:5646:ade8 with SMTP id o27-20020a509b1b000000b005515646ade8mr663044edi.34.1702370723657;
+        Tue, 12 Dec 2023 00:45:23 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id c27-20020a50d65b000000b0054c9bbd07e7sm4650471edj.54.2023.12.12.00.45.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 00:45:23 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v5 0/3] remoteproc: qcom: Introduce DSP support for SM8650
+Date: Tue, 12 Dec 2023 09:45:16 +0100
+Message-Id: <20231212-topic-sm8650-upstream-remoteproc-v5-0-e749a1a48268@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] ASoC: qcom: sc8280xp: Add support for SM8650
-Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>, Andy Gross
- <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20231212-topic-sm8650-upstream-snd-card-v1-0-fbfc38471204@linaro.org>
- <20231212-topic-sm8650-upstream-snd-card-v1-2-fbfc38471204@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231212-topic-sm8650-upstream-snd-card-v1-2-fbfc38471204@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJwdeGUC/43QTWrDMBAF4KsErasy+rWcVe8RupDlcSKoLTNyR
+ Urw3SuHQlqyqJdvFt/jzY1lpIiZHQ83RlhijmmqwbwcWLj46Yw89jUzCVIJEJYvaY6B59FZA/x
+ zzguhHznhmBacKQVurXcNYmcHRFaZmXCI13vF6b3mS8xLoq97YxHb9QeX5n+8CA7cu14C6oDCh
+ bePOHlKr4nObNOL/CUq2CHKKlpoEU0jEbx8EtVDFLDjAUVVse96HXznsdPNk6gfogS3Q9Tb6tY
+ GhWaAVqg/4rqu3yaeVXfHAQAA
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, 
+ Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Mukesh Ojha <quic_mojha@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2551;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=Iwq0UgF1Yfv2WGtfwDWdmFW885Pn0Zt75TkNM8ie22Y=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBleB2gJrAs43nJqREqAHg1quOoAM11tEKc/BpKQWLA
+ UuKNAt2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXgdoAAKCRB33NvayMhJ0baOEA
+ C27sssh9IXoAtR1jXjfupwN1RCi9y8Y4ylNBJ7kFAm2h+yZDNEnEQfQ8Qa3dSx8A6zcyY540U4nJXN
+ e32uSvmE8H1tF5v2UddXzu4ShNIQNpdHdR3FQaM7+N1zOeB7Qe4pAIl497SFfYMuYjA9EnMaOufMqe
+ 8dGiaGXAdQ2QZR2HYU9B9AWBU8ul2NoDGP6yBEHR8ISNFwaYk9Z8DnE3X5tV/u0E81LlWHzu+Y1iMy
+ nmcy9MD3BwokhIRuBCZtoAovGRC1fUFCW6hvWToXA8W7PKvXj0rGAWsqr920DpPzLogf60FqiBswub
+ rMM5Lk784pVXDVC1Vr8z8DAAnFH7jogYxSCB5owQfJIgXCstLcEJLYrO4WpWaIoIyyDHmIf0P8Qgzg
+ xJouPL7OGltD/6SQcQBfKCO+Ab+1flPAQQ7zqfCGNKfki2JZKJ+toyRFaN7ZL952HEgHzCv7l+2Klb
+ zjQ+MVU9Y6gwVqIYGQRBZcfcUs3AsLn3mHuaZbpFmr1oeNSzJrdXvZgtIhQrPWKMZoHwDX2u6aN660
+ 2CTT0wQlkTWQRCcySiAbM4Rc5tC4vUtBjePNsNnyUWpKihtX/Qk7n+R9iUuMVgT5ewnN9Sabj6mquc
+ aiu0JxZER79G0Df/6UWF5NDo27yaUK2pt9IUHLMdPytizNWPsYH5y/zdNzDQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 12/12/2023 09:08, Neil Armstrong wrote:
-> Add compatibles for sound card on Qualcomm SM8650 boards.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  sound/soc/qcom/sc8280xp.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-> index 1e8f9452cd28..494f284875d2 100644
-> --- a/sound/soc/qcom/sc8280xp.c
-> +++ b/sound/soc/qcom/sc8280xp.c
-> @@ -170,6 +170,7 @@ static const struct of_device_id snd_sc8280xp_dt_match[] = {
->  	{.compatible = "qcom,sc8280xp-sndcard", "sc8280xp"},
->  	{.compatible = "qcom,sm8450-sndcard", "sm8450"},
->  	{.compatible = "qcom,sm8550-sndcard", "sm8550"},
-> +	{.compatible = "qcom,sm8650-sndcard", "sm8650"},
+Add the bindings and driver changes for DSP support on the
+SM8650 platform in order to enable the aDSP, cDSP and MPSS
+subsystems to boot.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Compared to SM8550, where SM8650 uses the same dual firmware files,
+(dtb file and main firmware) the memory zones requirement has changed:
+- cDSP: now requires 2 memory zones to be configured as shared
+  between the cDSP and the HLOS subsystem
+- MPSS: In addition to the memory zone required for the SM8550
+  MPSS, another one is required to be configured for MPSS
+  usage only.
+
+In order to handle this and avoid code duplication, the region_assign_*
+code patch has been made more generic and is able handle multiple
+DSP-only memory zones (for MPSS) or DSP-HLOS shared memory zones (cDSP)
+in the same region_assign functions.
+
+Dependencies: None
+
+For convenience, a regularly refreshed linux-next based git tree containing
+all the SM8650 related work is available at:
+https://git.codelinaro.org/neil.armstrong/linux/-/tree/topic/sm8650/upstream/integ
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v5:
+- Rename _perms to _owners per Konrad suggestion
+- Link to v4: https://lore.kernel.org/r/20231208-topic-sm8650-upstream-remoteproc-v4-0-a96c3e5f0913@linaro.org
+
+Changes in v4:
+- Collected review from Mukesh Ojha
+- Fixed adsp_unassign_memory_region() as suggested by Mukesh Ojha
+- Link to v3: https://lore.kernel.org/r/20231106-topic-sm8650-upstream-remoteproc-v3-0-dbd4cabaeb47@linaro.org
+
+Changes in v3:
+- Collected bindings review tags
+- Small fixes suggested by Mukesh Ojha
+- Link to v2: https://lore.kernel.org/r/20231030-topic-sm8650-upstream-remoteproc-v2-0-609ee572e0a2@linaro.org
+
+Changes in v2:
+- Fixed sm8650 entries in allOf:if:then to match Krzysztof's comments
+- Collected reviewed-by on patch 3
+- Link to v1: https://lore.kernel.org/r/20231025-topic-sm8650-upstream-remoteproc-v1-0-a8d20e4ce18c@linaro.org
+
+---
+Neil Armstrong (3):
+      dt-bindings: remoteproc: qcom,sm8550-pas: document the SM8650 PAS
+      remoteproc: qcom: pas: make region assign more generic
+      remoteproc: qcom: pas: Add SM8650 remoteproc support
+
+ .../bindings/remoteproc/qcom,sm8550-pas.yaml       |  44 +++++-
+ drivers/remoteproc/qcom_q6v5_pas.c                 | 150 ++++++++++++++++-----
+ 2 files changed, 159 insertions(+), 35 deletions(-)
+---
+base-commit: bbd220ce4e29ed55ab079007cff0b550895258eb
+change-id: 20231016-topic-sm8650-upstream-remoteproc-66a87eeb6fee
 
 Best regards,
-Krzysztof
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
