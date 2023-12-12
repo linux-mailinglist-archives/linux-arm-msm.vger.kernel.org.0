@@ -1,122 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-4369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 818E380E782
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 10:26:03 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E3B980E7A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 10:30:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9BBC91C21370
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:26:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F49FB20AF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:30:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3496584D8;
-	Tue, 12 Dec 2023 09:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 317B2584E4;
+	Tue, 12 Dec 2023 09:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jsm7tUKQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AQzqdmXo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82939EA;
-	Tue, 12 Dec 2023 01:25:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702373153; x=1733909153;
-  h=date:from:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=J7oOLumnJZHBFS2dqddnZ8wo64mptqlvLB8nSpsJYv4=;
-  b=jsm7tUKQb/17tVcTfBJUGHMxhyHTV/1s5erm7YNYBAe3bUZT2SmMQRBf
-   RjMnzH5ma+IgxltPs8935aK2X2T5lOfEFJ+wW1w/v1gYq6QfxsPSXVyG3
-   u5GOPI/JKeNet5zinQ9PP1dmwIReMm4e+I8B3eLhbXcHwnKYU9T2AN1yz
-   9fo+D8wK+HXgzd57YNGH0/35XtMTCzBEclFyAkeAKYK2L6lWKSl1sYvp7
-   CEshtN69QtTnRi2VX5JWU3uQC+IQQeDr3gCKFHHYAgkFFnevgPhBxsWqX
-   m8e0qRT3dM+rcjxjYD1ms//8Pn3ubgG7xxp4M7PWKE8tdAeD9rfYjLkeO
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10921"; a="1930671"
-X-IronPort-AV: E=Sophos;i="6.04,269,1695711600"; 
-   d="scan'208";a="1930671"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Dec 2023 01:25:52 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10921"; a="843847927"
-X-IronPort-AV: E=Sophos;i="6.04,269,1695711600"; 
-   d="scan'208";a="843847927"
-Received: from tdietric-mobl.ger.corp.intel.com ([10.252.32.93])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Dec 2023 01:25:46 -0800
-Date: Tue, 12 Dec 2023 11:25:44 +0200 (EET)
-From: =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>
-To: Bjorn Helgaas <helgaas@kernel.org>
-cc: Johan Hovold <johan@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kw@linux.com>, 
-    Bjorn Helgaas <bhelgaas@google.com>, Andy Gross <agross@kernel.org>, 
-    Bjorn Andersson <andersson@kernel.org>, 
-    Konrad Dybcio <konrad.dybcio@linaro.org>, 
-    Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
-    Nirmal Patel <nirmal.patel@linux.intel.com>, 
-    Jonathan Derrick <jonathan.derrick@linux.dev>, 
-    linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-    LKML <linux-kernel@vger.kernel.org>, stable@vger.kernel.org, 
-    Michael Bottini <michael.a.bottini@linux.intel.com>, 
-    "David E . Box" <david.e.box@linux.intel.com>, 
-    Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-    Kai-Heng Feng <kai.heng.feng@canonical.com>
-Subject: Re: [PATCH v2 1/6] PCI/ASPM: Add locked helper for enabling link
- state
-In-Reply-To: <20231208173932.GA798089@bhelgaas>
-Message-ID: <f0beb640-5c87-7c8e-64ba-908324347613@linux.intel.com>
-References: <20231208173932.GA798089@bhelgaas>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2F6D2;
+	Tue, 12 Dec 2023 01:30:19 -0800 (PST)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BC7ga3q028772;
+	Tue, 12 Dec 2023 09:30:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=CKm/3xL+1KN3jFbIu0q3bENZbD/pAYxnXVYmTsZSXKM=; b=AQ
+	zqdmXo8SdHDgRzC19Eb27JRatNUrV1lDMnHmRs+bdY/4/CFFhtr9R9MTlrmUyph2
+	v6dymZeBywgLqKst7lwyFDVrv8eesORhahv7iBy+erydbPjBj7OXCYtrb+jXVV2h
+	U88wNQU3FHEAsHve+viL/YW0aM7LVPrJidmpriqlBTNrRm8eAhASCxAbl3dgnrKg
+	NvioJbxxTN5cOt4d2leowHNyBEe3FsOYNZ8U/+zYhv22Zf6BJv5GrHaL4pQa/Cki
+	VrkJJP8NbTFMCheXPQSnR0C78vfxMaFvN+AWeGVOr9szaEPQTIMaFftCMiJpFXQx
+	D9iUjEDiWsWks1Ssf5fA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uxkc8089j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Dec 2023 09:30:16 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BC9UESe009141
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Dec 2023 09:30:14 GMT
+Received: from [10.216.15.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Dec
+ 2023 01:30:10 -0800
+Message-ID: <06354190-b572-46e4-8036-0fae7f15dd15@quicinc.com>
+Date: Tue, 12 Dec 2023 15:00:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/11] ARM/arm64: dts: qcom: fix USB wakeup interrupt
+ types
+To: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20231120164331.8116-1-johan+linaro@kernel.org>
+ <ZXc7KcjF82EgiXWd@hovoldconsulting.com>
+Content-Language: en-US
+From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZXc7KcjF82EgiXWd@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: f4nHxxn8XQaS_EOlrkWKkZkYZKC5X6aa
+X-Proofpoint-ORIG-GUID: f4nHxxn8XQaS_EOlrkWKkZkYZKC5X6aa
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ priorityscore=1501 mlxlogscore=435 suspectscore=0 bulkscore=0
+ malwarescore=0 adultscore=0 impostorscore=0 spamscore=0 mlxscore=0
+ phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312120074
 
-On Fri, 8 Dec 2023, Bjorn Helgaas wrote:
 
-> On Fri, Dec 08, 2023 at 09:00:56AM +0100, Johan Hovold wrote:
-> > On Thu, Dec 07, 2023 at 02:47:16PM -0600, Bjorn Helgaas wrote:
-> > > On Tue, Nov 28, 2023 at 09:15:07AM +0100, Johan Hovold wrote:
-> > > > Add a helper for enabling link states that can be used in contexts where
-> > > > a pci_bus_sem read lock is already held (e.g. from pci_walk_bus()).
-> > > > 
-> > > > This helper will be used to fix a couple of potential deadlocks where
-> > > > the current helper is called with the lock already held, hence the CC
-> > > > stable tag.
-> > 
-> > > As far as I can see, we end up with pci_enable_link_state() defined
-> > > but never called and pci_enable_link_state_locked() being called only
-> > > by pcie-qcom.c and vmd.c.
-> > 
-> > Correct, I mentioned this in the cover letter.
+
+On 12/11/2023 10:09 PM, Johan Hovold wrote:
+> On Mon, Nov 20, 2023 at 05:43:20PM +0100, Johan Hovold wrote:
 > 
-> Ah, right.  I really don't like these exported locked/unlocked
-> interfaces because pci_bus_sem is internal to the PCI core, and the
-> caller shouldn't need to know or be able to specify whether it is held
-> or not.  They exist for now, but I think we should try to get rid of
-> them.
+>> It turns out a number Qualcomm devicetrees have also gotten the trigger
+>> types wrong, something which this series addresses.
+>>
+>> Specifically, the HS/SS PHY wakeup interrupts are level triggered while
+>> the DP/DM HS PHY interrupts are edge triggered, and which edge to
+>> trigger on depends both on the use-case and on whether a Low speed or
+>> Full/High speed device is connected.
+>>
+>> Fortunately, there should be no dependency between this series and USB
+>> one as all devicetree use the correct trigger type for the HS/SS PHY
+>> interrupts and the HS one has never been armed by Linux anyway. The
+>> DP/DM interrupt trigger types are also updated on suspend currently.
 > 
-> > > Can we just rename pci_enable_link_state() to
-> > > pci_enable_link_state_locked() and assert that pci_bus_sem is held, so
-> > > we don't end up with a function that's never used?
-> > 
-> > That would work too. I went with adding a new helper to facilitate
-> > stable backports and to mirror pci_disable_link_state(). The variants
-> > are simple wrappers around the implementation so there's no real cost to
-> > having the unused one.
+> Konrad reported off-list that the sc8180x patch in this series breaks
+> probe of the dwc3 driver.
 > 
-> Makes good sense.  There's no real machine cost to the unused one; I'm
-> more concerned about the human cost here.
+> Turns out a number of these SoCs were using GIC interrupts for the
+> DP/DM_HS_PHY interrupts despite the fact that the driver tries to
+> reconfigure these as IRQ_TYPE_EDGE_FALLING (which the GIC does not
+> support) to detect disconnect events during suspend.
+> 
+> This is obviously broken and the proper fix is to replace the GIC
+> interrupts with the corresponding PDC interrupts. I believe Konrad is
+> digging out the magic numbers at this moment.
+> 
+> The following patches will need a follow-up fix:
+> 
+>>    ARM: dts: qcom: sdx55: fix USB wakeup interrupt types
+> 
+>>    arm64: dts: qcom: sc8180x: fix USB wakeup interrupt types
+>>    arm64: dts: qcom: sdm670: fix USB wakeup interrupt types
+>>    arm64: dts: qcom: sdm845: fix USB wakeup interrupt types
+>>    arm64: dts: qcom: sm6375: fix USB wakeup interrupt types
+>>    arm64: dts: qcom: sm8150: fix USB wakeup interrupt types
+> 
+Hi Johan,
 
-I know these were already applied but I want to correct one small 
-misconcept that seems to be floating around thanks the misleading name...
+  If it helps, I tried to dig up the PDC numbers for corresponding 
+GIC_SPI vectors:
 
-pci_enable_link_state() is not really a pair/mirror of 
-pci_disable_link_state() despite its name. It would be better called
-pci_set_default_link_state() to better match what it does.
 
--- 
- i.
+SM8150:
 
+eud_p0_dpse_int_mx	apps_pdc_irq_out[9]	SYS_apcsQgicSPI[489]
+eud_p0_dmse_int_mx    apps_pdc_irq_out[8]	SYS_apcsQgicSPI[488]
+qmp_usb3_lfps_rxterm_irq apps_pdc_irq_out[6]	SYS_apcsQgicSPI[486]
+usb31_power_event_irq	SYS_apcsQgicSPI[130]
+usb31_hs_phy_irq	SYS_apcsQgicSPI[131]
+
+interrupts-extended = <&pdc 9 IRQ_TYPE_EDGE_RISING>,
+			<&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+			<&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
+			<&pdc 8 IRQ_TYPE_EDGE_RISING>;
+
+interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
+		"ss_phy_irq", "dm_hs_phy_irq";
+
+--
+
+sdm845-670-usb-common.dtsi
+
+interrupts = <0 489 0>, <0 130 0>, <0 486 0>, <0 488 0>;
+interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
+		"ss_phy_irq", "dm_hs_phy_irq";
+
+interrupts = <0 491 0>, <0 135 0>, <0 487 0>, <0 490 0>;
+interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
+		"ss_phy_irq", "dm_hs_phy_irq";
+
+eud_p0_dpse_int_mx	apps_pdc_irq_out[9]	SYS_apssQgicSPI[489]
+eud_p0_dmse_int_mx	apps_pdc_irq_out[8]	SYS_apssQgicSPI[488]
+eud_p1_dmse_int_mx	apps_pdc_irq_out[10]	SYS_apssQgicSPI[490]
+eud_p1_dpse_int_mx	apps_pdc_irq_out[11]	SYS_apssQgicSPI[491]
+qmp_usb3_lfps_rxterm_irq	apps_pdc_irq_out[7]	SYS_apssQgicSPI[487]
+qmp_usb3_lfps_rxterm_irq	apps_pdc_irq_out[6]	SYS_apssQgicSPI[486]
+
+--
+
+SDX55:
+
+interrupts = <0 157 0>, <0 130 0>, <0 158 0>, <0 198 0>;
+interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
+		"dm_hs_phy_irq", "ss_phy_irq";
+
+eud_p1_dpse_int_mx	apps_pdc_irq_out[10]	SYS_apcsQgicSPI[157]
+eud_p1_dmse_int_mx	apps_pdc_irq_out[11]	SYS_apcsQgicSPI[158]
+apps_pdc.gp_irq_mux[31]	apps_pdc_irq_out[51]	SYS_apcsQgicSPI[198]
+
+--
+
+SM6375, I think GIC_SPI is fine but I will try to get back on this.
+
+Sorry for bad formatting.
+
+Regards,
+Krishna,
 
