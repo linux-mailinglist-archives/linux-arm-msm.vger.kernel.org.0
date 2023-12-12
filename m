@@ -1,117 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-4330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F35080E439
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 07:23:23 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22F2980E449
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 07:32:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2D89EB219F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 06:23:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 542D01C218D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 06:32:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 846D215AC5;
-	Tue, 12 Dec 2023 06:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 643A9635;
+	Tue, 12 Dec 2023 06:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EdFQLTHn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SP96YnY6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FE14C7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 22:23:16 -0800 (PST)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5e1f852cb46so341267b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 22:23:16 -0800 (PST)
+Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FA4BBF
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 22:31:59 -0800 (PST)
+Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-5d3758fdd2eso51775607b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 22:31:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702362195; x=1702966995; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702362719; x=1702967519; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=iiILM31E6DkzVgO2qo0gFXNyzTl9J/ly6YMsqQ+U4+s=;
-        b=EdFQLTHnWygyrMxwQIZO8uzzre+Gf3nFfUScatS22dLPR9M+DHU5kEiUGnZ3PMpLPV
-         T+lbZaG/Pwi1VxnDerEKJt0KnvRWGR0GE39J/X+0XJTOHzq2AcH+P0hIOOH0epmu7a/o
-         DEckI/8lTIlWkWrlKFPZwDPMDrXxgEGKCXZ6YtUdoyb9iVkUnF8sgRtGOI5Wp/H26Byr
-         5aKBtYVBjcDhIgYpEivdYEhlAj2Zftqe+a4qEHUEf7lqbHWlPIcwHNeHXbPqgt4n1Ycq
-         mWwn72pMfuevDNuJJee9KDzgDsJSRxGA5q+ZiUhMfU5ONzeUiLBtpz9ixhYnVJLcsXvB
-         JngQ==
+        bh=GTyimt7NL0UKlmZiXkz9uafKVfa8o+8ACsFlcy9zsvM=;
+        b=SP96YnY6GQafSBIMWcKBHkXDjR3K0Km9NxcDDSY7i9dE6ZVvVA2ToXtu/baWiCaF6W
+         IDK5mmkm3/Bfw26piaVm6XoaQiVXBdjIhn2qFL4lsBZUOpcZ1N8TbEcfW1JzI2wXMFTf
+         EU68wdDb2EFVtFFip04Jg9HTei7LWz/t4RNq6N3Bb9GwtCSeJ5P83knOSEXc/JG4UiBP
+         xpPXKr/njJ9vaeVVg3trjHCQSHKbc9mocfs3YgOC27uMgUdBylaHp9qEBRqidwHVbifX
+         tVh/TesCxc5SbJ8H0N364gr8wifRgUmjDNUDKVUnVhrZbTTrDLGr8EpiOVFupgru0a3J
+         5W1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702362195; x=1702966995;
+        d=1e100.net; s=20230601; t=1702362719; x=1702967519;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iiILM31E6DkzVgO2qo0gFXNyzTl9J/ly6YMsqQ+U4+s=;
-        b=j9Rxf4cee2NEPOajEsTw9slnZHq/SkaKT9kBc1rRgv9Q5Ign5W8tg53DpUvRtAoaxE
-         yNylHPemBtPJ6HYphGu1wUiqRvQUcPCIqRY1fvl90mJS3MkLnrFGkfIuMTEXtGcsZ5yS
-         3pq7Dj2UQcU7sdTfYO+VjtCm24enQvx0y0VlK3e9p2m6z1/zyKHJNcAgGxN07etnAEQo
-         knH/VnHhTUyHzwOzHTc6TGDfPtLNmESk/rtIT8fKJPl3Zhda095fZz3V03AsvPPd8cYR
-         AOYOUJrvU/8WHh4k5cko60lgn+M5RPL9+/6Pj///0I4pVj2Aj0j6PsHJk21/W7cbYspy
-         Cm9g==
-X-Gm-Message-State: AOJu0YxUGXeOezaoExXFZjgQv+97liSVdSM7SML6+fnFZb3ongofqrkN
-	KZigD5f63qMklImjvbsge7cpsgvoaEPI1HBSWOSrVg==
-X-Google-Smtp-Source: AGHT+IHMSmzL1GhX733i9qyeRqWSt5GjXz2vhpxca8+A+ee2K5EieVksUobvlXU13YxCT8ZtBI1vuiBvCLvFDFFustg=
-X-Received: by 2002:a81:7b42:0:b0:5d7:1940:8dd4 with SMTP id
- w63-20020a817b42000000b005d719408dd4mr2237054ywc.59.1702362195612; Mon, 11
- Dec 2023 22:23:15 -0800 (PST)
+        bh=GTyimt7NL0UKlmZiXkz9uafKVfa8o+8ACsFlcy9zsvM=;
+        b=fVRRsxp32vykAuAl1WIg2L51kISf8ti8gcDwe6KX50AH6NxmgiWviz/sIR+SXUEPMe
+         yOBy0RBhsaRhpK3uSv2Pgt0H6RVbvc0+E7E7SoIjPU3TVsuWSzMT8+PkYaPIohyG0PM+
+         FwGZ3FhhQ0heFpgLRX5i/HAhlSvKS3UXrR/jYYsgMpriBnlLJChI+fBjPPVU07oMQZsb
+         FK3KCPh2jV1xeUSC4e4ZGa3dSpCH2W3wEk8cIvxZtSqhFGI7SuTxl/YA9a+679cZpdN7
+         x6y1Tpt4g39LZX7VpEdQPDifJazWDT6WONc5m29vLdoznUSbsyvgiK55Aox+RfqrS8ww
+         XRwg==
+X-Gm-Message-State: AOJu0YwQZGP6yVxjGPZ0GF6ouWls8AhkwLKzH7ZSLhzdZWOk8UDcsloh
+	YKJIOjKcOm5XBNP8fsP/93CVK91lfwM5a7YDfJvoBQ==
+X-Google-Smtp-Source: AGHT+IGs3HI6JS3zf1kNU/4zxKRcKFHbTh53Sxa3Dui91Qy2eQXtvbSqGZ/ne5wF8+f6nUF/3SZPXetlFOQSuaig8Ag=
+X-Received: by 2002:a0d:d305:0:b0:5d7:2c6b:623 with SMTP id
+ v5-20020a0dd305000000b005d72c6b0623mr4258949ywd.39.1702362718756; Mon, 11 Dec
+ 2023 22:31:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org> <06daf3a5-f069-1209-8029-79c766e034e4@quicinc.com>
-In-Reply-To: <06daf3a5-f069-1209-8029-79c766e034e4@quicinc.com>
+References: <1702319923-24518-1-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJpqAch3Qhq_nfecA06d9fk1jUMD1Dx0ZgNGrom6BrwFo5A@mail.gmail.com> <baf2ebe7-7895-9249-8487-a7c7e61a67c6@quicinc.com>
+In-Reply-To: <baf2ebe7-7895-9249-8487-a7c7e61a67c6@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 12 Dec 2023 08:23:04 +0200
-Message-ID: <CAA8EJpqYAmbX6=wKYJ34=FxewCaqp9Lb8kqqCumL1i_wSZdvfw@mail.gmail.com>
-Subject: Re: [RFT PATCH v2 0/4] drm/msm/dpu: enable writeback on the other platforms
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Stephen Boyd <swboyd@chromium.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Date: Tue, 12 Dec 2023 08:31:47 +0200
+Message-ID: <CAA8EJpoN8OVhPEyHzAjO7DUK9b+7_iJmc0k-XO8B8PrG12ZTVA@mail.gmail.com>
+Subject: Re: [PATCH v3] drm/msm/dpu: improve DSC allocation
+To: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc: dri-devel@lists.freedesktop.org, robdclark@gmail.com, sean@poorly.run, 
+	swboyd@chromium.org, dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch, 
+	airlied@gmail.com, agross@kernel.org, andersson@kernel.org, 
+	quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com, 
+	quic_sbillaka@quicinc.com, marijn.suijten@somainline.org, 
+	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 12 Dec 2023 at 02:30, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+On Tue, 12 Dec 2023 at 02:03, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
 >
 >
+> On 12/11/2023 1:30 PM, Dmitry Baryshkov wrote:
+> > On Mon, 11 Dec 2023 at 20:38, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+> >> A DCE (Display Compression Engine) contains two DSC hard slice
+> >> encoders. Each DCE start with even DSC encoder index followed by
+> > "starts". But it will not be correct. The DCE doesn't start with the
+> > DSC encoder. DCE consists of two DSC encoders, one has an odd index
+> > and another one has an even index.
+> >
+> >> an odd DSC encoder index. Each encoder can work independently.
+> >> But Only two DSC encoders from same DCE can be paired to work
+> > only
+> >
+> >> together to support merge mode. In addition, the DSC with even
+> > There are different merge modes. Here you are talking about the DSC merge mode.
+> >
+> >> index have to mapping to even pingpong index and DSC with odd
+> > PINGPONG (end everywhere else).
+> >
+> > have to be mapped, should be used, etc.
+> >
+> >> index have to mapping to odd pingpong index at its data path.
+> >> This patch improve DSC allocation mechanism with consideration
+> > improves
+> >
+> >> of above factors.
+> > of these factors.
+> >
+> >> Changes in V3:
+> >> -- add dpu_rm_pingpong_dsc_check()
+> >> -- for pair allocation use i += 2 at for loop
+> >>
+> >> Changes in V2:
+> >>      -- split _dpu_rm_reserve_dsc() into _dpu_rm_reserve_dsc_single() and
+> >>         _dpu_rm_reserve_dsc_pair()
+> >>
+> >> Fixes: f2803ee91a41 ("drm/msm/disp/dpu1: Add DSC support in RM")
+> > This tag is incorrect. The patch should be split into two pieces. One
+> > which fixes DSC allocation for DSC 1.1 encoders, where there were no
+> > DCE blocks, another one which adds proper handling for DCE.
+> > Unless the paired allocation requirement also applies to pre-DCE DSC
+> > encoders. But in that case the commit message doesn't make any sense.
+> >
+> > I checked 4.x Qualcomm kernels. None of them contained any of these
+> > restrictions for DSC blocks. Only the displaypack targeting 4.19
+> > kernel got these changes. But it predates DCE pairs support.
 >
-> On 12/2/2023 4:31 PM, Dmitry Baryshkov wrote:
-> > I was not able to test it on my own, this is a call for testing for the
-> > owners of these platforms. The git version of modetest now fully
-> > supports writeback.
-> >
-> > Use libdrm >= 2.4.117, run modetest -ac to determine the writeback
-> > connector, cat /sys/kernel/debug/dri/0/state to determine
-> > spare CRTC and plane, then run something like:
-> >
-> > modetest -M msm -a -s 36@85:1024x768 -o test.d -P 79@85:1024x768
-> >
-> > where 36 is the Writeback connector id, 85 is CRTC and 79 is the plane.
-> >
-> > Then press Enter and check the test.d file for the raw image dump.
-> >
-> > Changes since v1:
-> > - Fixed the DPU_CLK_CTRL_WB2 definition
-> >
+> as I said earlier the rule of odd/even pp-index map to odd/even
+> dsc-index is there since dsc v1.1.
 >
-> I think this series needs to be re-based as WB_SDM845_MASK is no longer
-> present in msm-next and 3/4 patches in this series use that.
+> I think current code (including down stream code) works by luck to not
+> encounter a configuration with two independence paths, one with single
+> dsc and the other one use two dsc to support dsc merge mode.
+>
+> this patch is the fix to enforce this rule for both dsc v1.1 and v1.2
+> and I will rework commit message yo have better description.
 
-Quite the contrary: the WB_SDM845_MASK was added in
-https://patchwork.freedesktop.org/patch/570189/?series=127245&rev=1,
-which is now merged to msm-next-lumag
+Good. Does this apply to paired allocation too? I think so, as the
+techpack first got the paired allocation and only afterwards it has
+got the DSC/PP idx check.
 
->
-> > Dmitry Baryshkov (4):
-> >    drm/msm/dpu: enable writeback on SM8150
-> >    drm/msm/dpu: enable writeback on SC8108X
-> >    drm/msm/dpu: enable writeback on SM6125
-> >    drm/msm/dpu: enable writeback on SM6350
-> >
-> >   .../drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 18 ++++++++++++++++++
-> >   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 18 ++++++++++++++++++
-> >   .../drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h | 18 ++++++++++++++++++
-> >   .../drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h | 18 ++++++++++++++++++
-> >   4 files changed, 72 insertions(+)
-> >
+Regarding the patch itself. May I suggest an alternative approach,
+which should work better, I think. At least it will not require
+'deleting' the PP indices. First you preprocess the pp_to_enc_id array
+and list all PP indices selected for this encoder. Then you work with
+this array, matching PP and DSC blocks.
+
 
 
 
