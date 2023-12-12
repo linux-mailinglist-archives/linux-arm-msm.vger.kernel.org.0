@@ -1,175 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-4342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47F9D80E551
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:59:44 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9582580E57A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:08:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E64D280F0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 07:59:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 049A41F212E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:08:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BB48179AE;
-	Tue, 12 Dec 2023 07:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA84818049;
+	Tue, 12 Dec 2023 08:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TnO6yorV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ypR8TEwi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D438A0;
-	Mon, 11 Dec 2023 23:59:27 -0800 (PST)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BC7udCt003711;
-	Tue, 12 Dec 2023 07:59:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=/seUik955UQWg68KwzoQTWDJHGnHWX+SuCpnFn49NjA=; b=Tn
-	O6yorVxYFZsZ0wnu8CAeL/UOySXIZNCyaaTCjk/dGryIvCdzzeWVmUTRAsLtnXAW
-	UD8bSMFf2avxJ1XVd/Xyodk1y9NJy/4Agfl7YMrOQMDArFp6Z6askchPjoZAXUIY
-	krsMtZGGiVR4SBvJeET7AQMuG8wWTDnxCoN2WCmtiepxnWCeRlB/sSakmS7OUbYQ
-	iiG30vd15LG8LX1lzrqg65sMQHtLRUuvGNZAOR63HHK9OFXFp0Ta6pnKWi6aUDp8
-	mdVGODgWYbWqTv1/X/T2Yoe33Esj2xxo+31jXIrTvyFWXi1AAaVCyq4mMY7kqKbU
-	HZNVdVYGZob1a7zCKkRA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uxg6xgek4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 07:59:20 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BC7xJFR030966
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 07:59:19 GMT
-Received: from [10.216.17.154] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Dec
- 2023 23:59:14 -0800
-Message-ID: <42fb155b-60b6-bbfb-f52e-cca66ad5b11d@quicinc.com>
-Date: Tue, 12 Dec 2023 13:29:11 +0530
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB8B1114
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:08:26 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40c2718a768so55179095e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:08:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702368505; x=1702973305; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=j7Vc7WfA6zO/nZVypNJ5ZSKRNw4vlGrxvFfZBsf6PZE=;
+        b=ypR8TEwi15vwvn3g/orot97Fje5Tu/eDiE672QuyLOJC/zyA/t8BoQfaWZNI1cTKcX
+         G0QY5dxFRxawWLO/uT4YaaVGiO8UiYdGIg5aoxu9PRRAR1EQNs19fcaGpldWwTGLM91w
+         cOEeEs4++AoJeCartG5mpjYHpPLjLToQEYKok3KI5p/ToztrrLq+vlwvGZhFAu/Cep0v
+         w1Gw7Skd+Q3zGb6yitFOHaV77C99gWt6Of7mxPEkmWczlPDWfTsD0GHbjipQ2034MvTz
+         ThT4++/J4RkBpb8U75kcxnZU7lwVy8WNiSdAfe7irgP24wZJhoTLQSqwtwPWrWKMJijD
+         1DyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702368505; x=1702973305;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j7Vc7WfA6zO/nZVypNJ5ZSKRNw4vlGrxvFfZBsf6PZE=;
+        b=YJMxrBOsqBYOf93V1KDJYtbwHjanz9dYDayzeDlIDKyo1MYYorug8X1nsujgVSbIun
+         pzjyvb4S8fX6JJMDqMEKcg0/zh8MfxK92XJjG5WzKucSJsB8A3VsKuPUxttuWKgJ6+Qg
+         NS8FMiEgwWM37zh95nMb8lGuDr3nmm9A2XS4fq2ukRPB2fLTBlb9lOWWRV2KkpRYaTrD
+         Nql7biNbCZbhDCZ8UKWO0CFB6ZBgNXYxkccCbVl8dpNMyfglrgc4hlYZwhOx96AZz3w7
+         9ht3Bgb8QVND91+9JJMbWB0dh1jzL5msw5xh66bjV4LZ9X/vjDKRpFICKN/dFpMZU1Fw
+         RVDw==
+X-Gm-Message-State: AOJu0Ywj1tmLqfRrWrcE2lkDzPP7cTjv48QPwcBeNywCb88B21rt4TF8
+	vNE4nrnRLQOUGSjsQ8SOzm85Og==
+X-Google-Smtp-Source: AGHT+IFpC7/sT0VIDkEJ9Oag1ij5lW+BcSQjyEaC79Eoj7mJ9V5d7dc5CmiB4lNlsj8FfFfc2beOKw==
+X-Received: by 2002:a1c:4c07:0:b0:40b:5e1b:54ae with SMTP id z7-20020a1c4c07000000b0040b5e1b54aemr3470007wmf.58.1702368504657;
+        Tue, 12 Dec 2023 00:08:24 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id n10-20020a05600c500a00b004094e565e71sm15609355wmr.23.2023.12.12.00.08.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 00:08:24 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/2] ASoC: qcom: add sound card support for SM8650
+Date: Tue, 12 Dec 2023 09:08:18 +0100
+Message-Id: <20231212-topic-sm8650-upstream-snd-card-v1-0-fbfc38471204@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sc7280: Move video-firmware to
- chrome-common
-To: Luca Weiss <luca.weiss@fairphone.com>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro
- Carvalho Chehab <mchehab@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>
-References: <20231201-sc7280-venus-pas-v3-0-bc132dc5fc30@fairphone.com>
- <20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com>
-Content-Language: en-US
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: VWlmNUropSG8foccOOtBS8ydXSl6gZIe
-X-Proofpoint-ORIG-GUID: VWlmNUropSG8foccOOtBS8ydXSl6gZIe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
- phishscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0 suspectscore=0
- mlxscore=0 bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312120061
+X-B4-Tracking: v=1; b=H4sIAPIUeGUC/x3NMQ7CMAxA0atUnrHUGJUCV0EMJnHAQ9PILgip6
+ t0bdXzL/yu4mIrDvVvB5Keuc2kIpw7ih8tbUFMzUE/nQIFwmatG9Ol6GXr8Vl9MeEIvCSNbwjD
+ Ia+TMNOYbtEg1yfo/Bo/ntu1u7ASicAAAAA==
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Banajit Goswami <bgoswami@quicinc.com>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Mark Brown <broonie@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, 
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=744;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=OrzPyzSnlQ4w2hZz/Baas4f3W1LzsV2V/lHEDAWTjGs=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBleBT2CPZAHiWYnl772ED0TNHbAgYjtuRnkahPbmGn
+ 3VyDLO+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXgU9gAKCRB33NvayMhJ0UBCD/
+ 9aS6SDPueYXQWfGRWKZB57ZqiqxFUMnfUecohs0K3A9LsjgvoT4R7lH6F34NLx6LH+WvzRW6pk1TUx
+ 3UoDBwn8tSItLhAVVeMl2CVJASIf/WjJ4yfBJ/h1lSbcrK0w6BbudEgoa8IrWHbvs2hkG4RJKWxyRl
+ wKw6QHOrLYa8tkL+R2KNBq1ncJrCvClS4BKKEuWE1fE/1++ETTHrFA5N83pK/aOmyTgLhxSZVI/e4A
+ jpkOIe6EZ832SoOZqB1R8p9HE92d73wgl6jkTSIY9wGdlvtyGuzwiIoDQvJLrmIdbWXKm2M5dWEoZ3
+ wqQ34Q1SEXvdQRdOXxNh1RvMvNFm2vM4Ustviq0Tq0vDzA7ipLgB/J4PpPK7w66xhchhKCYEqQN2F8
+ GFLAFbRPO4EWOCMNGHL0lDHrma6kQxN0NzNRuys1ZVCgj4iLwWk+y/8Usf2pABq4lZQB3dY+BiuKkb
+ c6BlS2j1VD9GlzdWVVgWRgW9/AC1byA/lpMtuvC7UdbHBwPijaSd9iMPzXvAm8+o+pmY1u6DpphYNU
+ 8p0cQKWqjzRHhWwwhiDRQV2OZPoq+HBSTYWSL6E3C+ufMgyPh+hfynBBUDUplSGC3gt2yeIU6wLgrh
+ qOxB2BpJRdk/+JUqbesJAv1m9D6tXx14XEFPbdEBR3szRjrFgz2NzdQvBUGw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 12/1/2023 3:03 PM, Luca Weiss wrote:
-> If the video-firmware node is present, the venus driver assumes we're on
-> a system that doesn't use TZ for starting venus, like on ChromeOS
-> devices.
-> 
-> Move the video-firmware node to chrome-common.dtsi so we can use venus
-> on a non-ChromeOS devices. We also need to move the secure SID 0x2184
-> for iommu since (on some boards) we cannot touch that.
-> 
-> At the same time also disable the venus node by default in the dtsi,
-> like it's done on other SoCs.
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Document the SM8650 sound card using the SM8450 fallback
+and add the SM8650 compatible to the sc8280xp sound card
+driver to use the sm8650 card driver_name like SM8450 & SM8550.
 
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (2):
+      ASoC: dt-bindings: qcom,sm8250: document SM8650 sound card
+      ASoC: qcom: sc8280xp: Add support for SM8650
 
-Regards,
-Vikash
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi | 11 +++++++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               |  9 +++------
->  2 files changed, 14 insertions(+), 6 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> index 5d462ae14ba1..459ff877df54 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi
-> @@ -104,6 +104,17 @@ &scm {
->  	dma-coherent;
->  };
->  
-> +&venus {
-> +	iommus = <&apps_smmu 0x2180 0x20>,
-> +		 <&apps_smmu 0x2184 0x20>;
-> +
-> +	status = "okay";
-> +
-> +	video-firmware {
-> +		iommus = <&apps_smmu 0x21a2 0x0>;
-> +	};
-> +};
-> +
->  &watchdog {
->  	status = "okay";
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 326897af117a..0ff9a2484096 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -3836,10 +3836,11 @@ venus: video-codec@aa00000 {
->  					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
->  			interconnect-names = "cpu-cfg", "video-mem";
->  
-> -			iommus = <&apps_smmu 0x2180 0x20>,
-> -				 <&apps_smmu 0x2184 0x20>;
-> +			iommus = <&apps_smmu 0x2180 0x20>;
->  			memory-region = <&video_mem>;
->  
-> +			status = "disabled";
-> +
->  			video-decoder {
->  				compatible = "venus-decoder";
->  			};
-> @@ -3848,10 +3849,6 @@ video-encoder {
->  				compatible = "venus-encoder";
->  			};
->  
-> -			video-firmware {
-> -				iommus = <&apps_smmu 0x21a2 0x0>;
-> -			};
-> -
->  			venus_opp_table: opp-table {
->  				compatible = "operating-points-v2";
->  
-> 
+ Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 1 +
+ sound/soc/qcom/sc8280xp.c                                | 1 +
+ 2 files changed, 2 insertions(+)
+---
+base-commit: bbd220ce4e29ed55ab079007cff0b550895258eb
+change-id: 20231212-topic-sm8650-upstream-snd-card-15eb7afa27f9
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
