@@ -1,61 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-4343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9582580E57A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:08:34 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60F2580E57E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:08:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 049A41F212E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:08:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7130281935
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:08:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA84818049;
-	Tue, 12 Dec 2023 08:08:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B4CE182DB;
+	Tue, 12 Dec 2023 08:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ypR8TEwi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MqppB9n0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB8B1114
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:08:26 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-40c2718a768so55179095e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:08:26 -0800 (PST)
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB51E11D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:08:27 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3332efd75c9so4834011f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:08:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1702368505; x=1702973305; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=j7Vc7WfA6zO/nZVypNJ5ZSKRNw4vlGrxvFfZBsf6PZE=;
-        b=ypR8TEwi15vwvn3g/orot97Fje5Tu/eDiE672QuyLOJC/zyA/t8BoQfaWZNI1cTKcX
-         G0QY5dxFRxawWLO/uT4YaaVGiO8UiYdGIg5aoxu9PRRAR1EQNs19fcaGpldWwTGLM91w
-         cOEeEs4++AoJeCartG5mpjYHpPLjLToQEYKok3KI5p/ToztrrLq+vlwvGZhFAu/Cep0v
-         w1Gw7Skd+Q3zGb6yitFOHaV77C99gWt6Of7mxPEkmWczlPDWfTsD0GHbjipQ2034MvTz
-         ThT4++/J4RkBpb8U75kcxnZU7lwVy8WNiSdAfe7irgP24wZJhoTLQSqwtwPWrWKMJijD
-         1DyQ==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SjsUBVi5G85rjw5NZnVt5dU+RrCBs8LjzvSepIHmMNg=;
+        b=MqppB9n0qOSb5krshvxyVlyFqO3hqqBC8bgXaBksGW6e7fkFIdruSgAN+hevdAqdao
+         P5eQnYUBeU0FUtJVWUAbW228hEgu0N3VDynpfyYOsacPbQeaatigY26B4TIsPSoHxyl3
+         gIJOh0YJtgF+irQ9GhB+kBdBytPlF2iqG4jWiMqY52V1AUoUYtiLqWwPrAxhkroxPNQL
+         /VzJQq4CpGyk9nv33tCgtbjQC7H5Bg3joW/sqgHwDq7MHn+EHZVgJcxgGagK8yu40C4B
+         0JRCDrFpXg1sIjHOzeHua51yluxtU+BXsFdcV9f0HNsgAgwm79qrxjPhfbAmle/VE1V5
+         8Z8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1702368505; x=1702973305;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j7Vc7WfA6zO/nZVypNJ5ZSKRNw4vlGrxvFfZBsf6PZE=;
-        b=YJMxrBOsqBYOf93V1KDJYtbwHjanz9dYDayzeDlIDKyo1MYYorug8X1nsujgVSbIun
-         pzjyvb4S8fX6JJMDqMEKcg0/zh8MfxK92XJjG5WzKucSJsB8A3VsKuPUxttuWKgJ6+Qg
-         NS8FMiEgwWM37zh95nMb8lGuDr3nmm9A2XS4fq2ukRPB2fLTBlb9lOWWRV2KkpRYaTrD
-         Nql7biNbCZbhDCZ8UKWO0CFB6ZBgNXYxkccCbVl8dpNMyfglrgc4hlYZwhOx96AZz3w7
-         9ht3Bgb8QVND91+9JJMbWB0dh1jzL5msw5xh66bjV4LZ9X/vjDKRpFICKN/dFpMZU1Fw
-         RVDw==
-X-Gm-Message-State: AOJu0Ywj1tmLqfRrWrcE2lkDzPP7cTjv48QPwcBeNywCb88B21rt4TF8
-	vNE4nrnRLQOUGSjsQ8SOzm85Og==
-X-Google-Smtp-Source: AGHT+IFpC7/sT0VIDkEJ9Oag1ij5lW+BcSQjyEaC79Eoj7mJ9V5d7dc5CmiB4lNlsj8FfFfc2beOKw==
-X-Received: by 2002:a1c:4c07:0:b0:40b:5e1b:54ae with SMTP id z7-20020a1c4c07000000b0040b5e1b54aemr3470007wmf.58.1702368504657;
-        Tue, 12 Dec 2023 00:08:24 -0800 (PST)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SjsUBVi5G85rjw5NZnVt5dU+RrCBs8LjzvSepIHmMNg=;
+        b=VLQrq9/NdYMhbs8QUwOGc5R3wZlGkUhOyGDz+dRqpvKNd0XPmJHTzm16GHN00Tbu2+
+         CYk0WlkWxlUV6E/AUyjcfmngVWWr4EibsIr0SxBjR378csyLbyvFwVbgyZIJreYTeZlF
+         RevQ63F522xrbO41V3WueLpsaY4ZeXoZvnTHM7IkLq5UUQK42Y2Wzfm978vYGHNLkRHT
+         Avb/n945Ji7BytP4dcR/r4RmD7rNjs0ltvVcfJgJ6DxyKtl+QwC1zsZAASZyPxuqddx/
+         6cM3Nfcb4BLyPGaz1CC4Od9JZUIP3MQopm4dfB4SvMXUMDf8Z6zCBZidIOeUCNTYEjUV
+         CW1Q==
+X-Gm-Message-State: AOJu0Yyjw5BifKmTISBixVjjHVYnKD0FmG2Vx2iQBxxOorLLTZyU0NEN
+	KcMNyzVrHD2lGtlCxL3xW4WDGA==
+X-Google-Smtp-Source: AGHT+IFfkyqKnzf9B3uP20udjSsmX09jF+/627Q+ZztERDXFFvY7vVxZCsWpO5slEmEBeeU9gP2qxw==
+X-Received: by 2002:a05:600c:6022:b0:40c:25c0:4927 with SMTP id az34-20020a05600c602200b0040c25c04927mr1539927wmb.302.1702368505751;
+        Tue, 12 Dec 2023 00:08:25 -0800 (PST)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id n10-20020a05600c500a00b004094e565e71sm15609355wmr.23.2023.12.12.00.08.23
+        by smtp.gmail.com with ESMTPSA id n10-20020a05600c500a00b004094e565e71sm15609355wmr.23.2023.12.12.00.08.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Dec 2023 00:08:24 -0800 (PST)
+        Tue, 12 Dec 2023 00:08:25 -0800 (PST)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 0/2] ASoC: qcom: add sound card support for SM8650
-Date: Tue, 12 Dec 2023 09:08:18 +0100
-Message-Id: <20231212-topic-sm8650-upstream-snd-card-v1-0-fbfc38471204@linaro.org>
+Date: Tue, 12 Dec 2023 09:08:19 +0100
+Subject: [PATCH 1/2] ASoC: dt-bindings: qcom,sm8250: document SM8650 sound
+ card
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,9 +65,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPIUeGUC/x3NMQ7CMAxA0atUnrHUGJUCV0EMJnHAQ9PILgip6
- t0bdXzL/yu4mIrDvVvB5Keuc2kIpw7ih8tbUFMzUE/nQIFwmatG9Ol6GXr8Vl9MeEIvCSNbwjD
- Ia+TMNOYbtEg1yfo/Bo/ntu1u7ASicAAAAA==
+Message-Id: <20231212-topic-sm8650-upstream-snd-card-v1-1-fbfc38471204@linaro.org>
+References: <20231212-topic-sm8650-upstream-snd-card-v1-0-fbfc38471204@linaro.org>
+In-Reply-To: <20231212-topic-sm8650-upstream-snd-card-v1-0-fbfc38471204@linaro.org>
 To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konrad.dybcio@linaro.org>, 
  Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
@@ -79,42 +80,45 @@ Cc: linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
  linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=744;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=801;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=OrzPyzSnlQ4w2hZz/Baas4f3W1LzsV2V/lHEDAWTjGs=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBleBT2CPZAHiWYnl772ED0TNHbAgYjtuRnkahPbmGn
- 3VyDLO+JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXgU9gAKCRB33NvayMhJ0UBCD/
- 9aS6SDPueYXQWfGRWKZB57ZqiqxFUMnfUecohs0K3A9LsjgvoT4R7lH6F34NLx6LH+WvzRW6pk1TUx
- 3UoDBwn8tSItLhAVVeMl2CVJASIf/WjJ4yfBJ/h1lSbcrK0w6BbudEgoa8IrWHbvs2hkG4RJKWxyRl
- wKw6QHOrLYa8tkL+R2KNBq1ncJrCvClS4BKKEuWE1fE/1++ETTHrFA5N83pK/aOmyTgLhxSZVI/e4A
- jpkOIe6EZ832SoOZqB1R8p9HE92d73wgl6jkTSIY9wGdlvtyGuzwiIoDQvJLrmIdbWXKm2M5dWEoZ3
- wqQ34Q1SEXvdQRdOXxNh1RvMvNFm2vM4Ustviq0Tq0vDzA7ipLgB/J4PpPK7w66xhchhKCYEqQN2F8
- GFLAFbRPO4EWOCMNGHL0lDHrma6kQxN0NzNRuys1ZVCgj4iLwWk+y/8Usf2pABq4lZQB3dY+BiuKkb
- c6BlS2j1VD9GlzdWVVgWRgW9/AC1byA/lpMtuvC7UdbHBwPijaSd9iMPzXvAm8+o+pmY1u6DpphYNU
- 8p0cQKWqjzRHhWwwhiDRQV2OZPoq+HBSTYWSL6E3C+ufMgyPh+hfynBBUDUplSGC3gt2yeIU6wLgrh
- qOxB2BpJRdk/+JUqbesJAv1m9D6tXx14XEFPbdEBR3szRjrFgz2NzdQvBUGw==
+ bh=YWJTETWYjknlxDQZ6R477l//xiaIfg4p6od8XS8m8RM=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBleBT2yc6YoUAH2Yn6SHJC6hShZxUVx5XttQcfq+LS
+ p6KqGJGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXgU9gAKCRB33NvayMhJ0cPdD/
+ 9ltn3cS4Ik/pOu00+WF+DCyWydbN4iIb8DYdAlHZT9eAx5hnUrzYTLWC6SzJXDu2WpTmm3HbmneVm5
+ rGH33RRDcwJUluu0waPT5w9o7mjdhpSe+98t/oBKomnI67GmknXEbCJIkYbPxFEDqyeuy9+1SNbUJt
+ ZeGvzitvxcekKYQNpiNUaHKbo8qx1NdPccOTg2QNqhy54wme7hNOLMYSPBYXevWBWaozpIp4dBTOf/
+ IeuUSfxx5VIYV3xEWGkA5sF8OxdMdkpSAU4MBhOE/hJ28RtpdKb6sPpAhzrU/HX0VXTjQ8j1fbZVhI
+ hOQe+kptCO5LRV2vCQTf5+Opqx8XuiuzVNigJe5/IM+VEhE58PSHYKS+YfdmiCCstIa20LeufBLuJ6
+ vGBYQOz7CjqiyyPe4fyxUtD9DEpetrN3JmEp2RsVBMIP5KJv8L9psxsZZEJi/2FOGgLG9N96Lf+H/j
+ +ejPqjoJ33jHC82iaSO+02S5vmRvm5oabY+DWSbcQe3KSCUyyBboV1sN/XID06WKefep+ElXWmdl/G
+ YjmwHyhDoAYicKK9DThir62fXIoWsqFdlN5yzTVOv8KVsCHtqb1IEv7VjkDtjjtQhBdwO2Sgf4TzLu
+ MISS+gzEkgKwCcYQi3KYk5PRbASLI3KrKj5lSqmDPqSULGYBPMHLXm87twAQ==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Document the SM8650 sound card using the SM8450 fallback
-and add the SM8650 compatible to the sc8280xp sound card
-driver to use the sm8650 card driver_name like SM8450 & SM8550.
+Add sound card for SM8650, which as of now looks fully compatible with
+SM8450.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Neil Armstrong (2):
-      ASoC: dt-bindings: qcom,sm8250: document SM8650 sound card
-      ASoC: qcom: sc8280xp: Add support for SM8650
-
  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 1 +
- sound/soc/qcom/sc8280xp.c                                | 1 +
- 2 files changed, 2 insertions(+)
----
-base-commit: bbd220ce4e29ed55ab079007cff0b550895258eb
-change-id: 20231212-topic-sm8650-upstream-snd-card-15eb7afa27f9
+ 1 file changed, 1 insertion(+)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+index ec641fa2cd4b..ce6b1242b06b 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
+@@ -24,6 +24,7 @@ properties:
+       - items:
+           - enum:
+               - qcom,sm8550-sndcard
++              - qcom,sm8650-sndcard
+           - const: qcom,sm8450-sndcard
+       - enum:
+           - qcom,apq8016-sbc-sndcard
+
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
 
