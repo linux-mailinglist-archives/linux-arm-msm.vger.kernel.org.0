@@ -1,166 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-4400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93D3D80EC68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 13:46:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C64A80EC70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 13:49:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23B84B20D22
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 12:46:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3D2931C20A92
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 12:49:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B86A5FF17;
-	Tue, 12 Dec 2023 12:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DC8660B9F;
+	Tue, 12 Dec 2023 12:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Iu4apoqu"
+	dkim=pass (2048-bit key) header.d=trvn.ru header.i=@trvn.ru header.b="vGRocFg6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD98F95;
-	Tue, 12 Dec 2023 04:46:25 -0800 (PST)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id F2B5DFF809;
-	Tue, 12 Dec 2023 12:46:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1702385184;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7jC7Y5dK/DICzEjb8YaubuwlA1bw7PTnQpe9efjGHWo=;
-	b=Iu4apoqukWOGrhU2BWLiEsyYNEfPQh71yNBQ+HHEfNPDTrAaEpCuiey8d0M+TokROaNNRQ
-	0ZugxcqTUr0sTLG5FKF6hdcwRcQQk01UbvJEd5nUFX0iVh6l1coDRhhFAbX1ytzBUkhP/v
-	Y1p85zIqaygZJ4kq9j65pLxzhnpgfs1KK+77un0dlMfhPBxHrT4NA3cKBgdOKtYq8HuoVY
-	FJYqBWq9WHNibMek65kMX/j18zB2Mp24AOYB+a4z3Kv5OUpZouP5YF4p+n3/MGyEO0Y6l4
-	9o3XvGjQyWB4ZekQsiJxwn+R6eW+u2sbsLqmO+j3sIj7UYMAxr7wWbXH25D+bg==
-Date: Tue, 12 Dec 2023 13:46:21 +0100
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: Luo Jie <quic_luoj@quicinc.com>
-Cc: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
- <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
- <pabeni@redhat.com>, <robh+dt@kernel.org>,
- <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
- <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
- <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
- <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
-Subject: Re: [PATCH v2 2/5] net: mdio: ipq4019: enable the SoC uniphy clocks
- for ipq5332 platform
-Message-ID: <20231212134621.0fe2583f@device.home>
-In-Reply-To: <20231212115151.20016-3-quic_luoj@quicinc.com>
-References: <20231212115151.20016-1-quic_luoj@quicinc.com>
-	<20231212115151.20016-3-quic_luoj@quicinc.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-redhat-linux-gnu)
+Received: from box.trvn.ru (box.trvn.ru [194.87.146.52])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DDE794;
+	Tue, 12 Dec 2023 04:49:24 -0800 (PST)
+Received: from authenticated-user (box.trvn.ru [194.87.146.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+	(No client certificate requested)
+	by box.trvn.ru (Postfix) with ESMTPSA id D0AC94055E;
+	Tue, 12 Dec 2023 17:49:19 +0500 (+05)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=trvn.ru; s=mail;
+	t=1702385360; bh=xFPFmz9fsOLXhhrMLkO4fvtQbfof7wfzBF6Z1Vazxa4=;
+	h=From:Subject:Date:To:Cc:From;
+	b=vGRocFg63MUT6d05xfPiF5NwJF6E0XmREHY5ilqf2t0mFSdJpVPxJh8I8irBMWKIf
+	 dcDtNOQCAVhyKh+eTaW9aLAdIQFRiM/12Fdi28QRcFqoGLrzBlIR8wEEASxz8DWtRE
+	 73eWgqqvEK7C6UNhXJ5wIb0G2M5E8OVxLgeVx62IOnEsGTtLPH7NQgaxCzo8d1c/5G
+	 Od8CIlHjeZW/eFvxf3mx+Z2eYUdZS/LDxdsHqJxzGJiAMmNrNDVflMf1EdaFVeq6XB
+	 KepJqulfMPv+Xa66s1HXsNfPn7oqAfRzroaoHYNiXVy6LYZGZEZwodmNPqXt1D+ssu
+	 7qFz50guLW5ZA==
+From: Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH v2 0/3] power: supply: Acer Aspire 1 embedded controller
+Date: Tue, 12 Dec 2023 17:49:08 +0500
+Message-Id: <20231212-aspire1-ec-v2-0-ca495ea0a7ac@trvn.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-GND-Sasl: maxime.chevallier@bootlin.com
+X-B4-Tracking: v=1; b=H4sIAMRWeGUC/03MQQrCMBCF4auUWRvJTKFBV95DukjT0c4mLZM2K
+ CV3NxYEl/+D9+2QWIUTXJsdlLMkmWMNOjUQJh+fbGSsDWSpRbKd8WkRZTQcTDe0IwUf0DuCeli
+ UH/I6sHtfe5K0zvo+7Izf9ce4fyajsWbwF8ZA5Kx1t1VzPOsGfSnlA+8AoN+iAAAA
+To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-pm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Nikita Travkin <nikita@trvn.ru>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1984; i=nikita@trvn.ru;
+ h=from:subject:message-id; bh=xFPFmz9fsOLXhhrMLkO4fvtQbfof7wfzBF6Z1Vazxa4=;
+ b=owEBbQKS/ZANAwAIAUMc7O4oGb91AcsmYgBleFbLLp9TgfCu2NMSxQbxwWH59fQ7saOPgfap6
+ BKmiM87cYmJAjMEAAEIAB0WIQTAhK9UUj+qg34uxUdDHOzuKBm/dQUCZXhWywAKCRBDHOzuKBm/
+ dYssD/99sUsXEvLbcayqGJCcrcNfTp4gYzWCpuAd3tzlIJjc+rHa7WDuq1ZwFObpq+E/2pTFUds
+ egv63KvAIm25HmkzPpC/EpzgThQquh7KFG/zqdWjrFKe8uacM+8MxEKgvvA4IXB3k39z6bu2o92
+ 6GIxy8dqybthxldv6+5TdGCWnoMC6PtknRYcujiOsQtjR0XfHGzZPs3/LUjTUBZZreLEkEmeHMA
+ fHa9lCO60KNryCAAzOp1P0eOdGvl4sihF9T1pqBTdX/o73YwWijLXYtX7Y7998BKeSpgu09AUtx
+ S3gQIIkZp4wfDgKQwxBBdVQifLl2q9uiSVE+YH0K2HfQi2whLLxSDjmXfs6E3sYo7TvpBucU/hf
+ xTLqllDW0ZYQxKuM+6j043G8KnZqO9LU4AF7NbqfaYIFjJYImlki3wxHZDraVmKC6jOEMFnejVD
+ aYm6SHN6rXzq1aa/WxiF79DFRzmOpct9v4T42bgst82LEKwi+rBzddfVb2Lxn0dE5bmI13i1oMz
+ m/oMElTSE0WiV7K0qW9uM6Ps0wdhsuN9aiJMEKp6QcWv8IpaY+A03012dNCLCPBnhRjeCwxjVg/
+ dL2wHceBS0ir2mdgqlzb/g4Dp3IEi6y9wAyUxlyEnuBvlCjMDTn42jEuhpY2V9lZI4S65rpAJds
+ VJGFW1LkvP+0zkA==
+X-Developer-Key: i=nikita@trvn.ru; a=openpgp;
+ fpr=C084AF54523FAA837E2EC547431CECEE2819BF75
 
-Hello,
+The laptop contains an embedded controller that provides a set of
+features:
 
-On Tue, 12 Dec 2023 19:51:47 +0800
-Luo Jie <quic_luoj@quicinc.com> wrote:
+- Battery and charger monitoring
+- USB Type-C DP alt mode HPD monitoring
+- Lid status detection
+- Small amount of keyboard configuration*
 
-> On the platform ipq5332, the related SoC uniphy GCC clocks need
-> to be enabled for making the MDIO slave devices accessible.
-> 
-> These UNIPHY clocks are from the SoC platform GCC clock provider,
-> which are enabled for the connected PHY devices working.
-> 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+[*] The keyboard is handled by the same EC but it has a dedicated i2c
+bus and is already enabled. This port only provides fn key behavior
+configuration.
 
-[...]
+Unfortunately, while all this functionality is implemented in ACPI, it's
+currently not possible to use ACPI to boot Linux on such Qualcomm
+devices. Thus this series implements and enables a new driver that
+provides support for the EC features.
 
->  static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
-> @@ -209,14 +230,43 @@ static int ipq4019_mdio_write_c22(struct mii_bus *bus, int mii_id, int regnum,
->  static int ipq_mdio_reset(struct mii_bus *bus)
->  {
->  	struct ipq4019_mdio_data *priv = bus->priv;
-> -	int ret;
-> +	int ret, index;
-> +	unsigned long rate;
+The EC would be one of the last pieces to get almost full support for the
+Acer Aspire 1 laptop in the upstream Linux kernel.
 
-Please remember to use reverse christmas-tree ordering, meaning longer
-declaration lines go first :
+This series is similar to the EC driver for Lenovo Yoga C630, proposed
+in [1] but seemingly never followed up...
 
-	struct ipq4019_mdio_data *priv = bus->priv;
-	unsigned long rate;
-	int ret, index;
+[1] https://lore.kernel.org/all/20230205152809.2233436-1-dmitry.baryshkov@linaro.org/
 
-> +
-> +	/* For the platform ipq5332, there are two SoC uniphies available
-> +	 * for connecting with ethernet PHY, the SoC uniphy gcc clock
-> +	 * should be enabled for resetting the connected device such
-> +	 * as qca8386 switch, qca8081 PHY or other PHYs effectively.
-> +	 *
-> +	 * Configure MDIO/UNIPHY clock source frequency if clock instance
-> +	 * is specified in the device tree.
-> +	 */
-> +	for (index = MDIO_CLK_MDIO_AHB; index < MDIO_CLK_CNT; index++) {
-> +		switch (index) {
-> +		case MDIO_CLK_MDIO_AHB:
-> +			rate = IPQ_MDIO_CLK_RATE;
-> +			break;
-> +		case MDIO_CLK_UNIPHY0_AHB:
-> +		case MDIO_CLK_UNIPHY1_AHB:
-> +			rate = IPQ_UNIPHY_AHB_CLK_RATE;
-> +			break;
-> +		case MDIO_CLK_UNIPHY0_SYS:
-> +		case MDIO_CLK_UNIPHY1_SYS:
-> +			rate = IPQ_UNIPHY_SYS_CLK_RATE;
-> +			break;
-> +		default:
-> +			break;
-> +		}
->  
-> -	/* Configure MDIO clock source frequency if clock is specified in the device tree */
-> -	ret = clk_set_rate(priv->mdio_clk, IPQ_MDIO_CLK_RATE);
-> -	if (ret)
-> -		return ret;
-> +		ret = clk_set_rate(priv->clk[index], rate);
-> +		if (ret)
-> +			return ret;
-> +
-> +		ret = clk_prepare_enable(priv->clk[index]);
-> +		if (ret)
-> +			return ret;
-> +	}
->  
-> -	ret = clk_prepare_enable(priv->mdio_clk);
->  	if (ret == 0)
->  		mdelay(10);
->  
-> @@ -240,10 +290,6 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
->  	if (IS_ERR(priv->membase))
->  		return PTR_ERR(priv->membase);
->  
-> -	priv->mdio_clk = devm_clk_get_optional(&pdev->dev, "gcc_mdio_ahb_clk");
-> -	if (IS_ERR(priv->mdio_clk))
-> -		return PTR_ERR(priv->mdio_clk);
-> -
->  	/* These platform resources are provided on the chipset IPQ5018 or
->  	 * IPQ5332.
->  	 */
-> @@ -271,6 +317,13 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
->  		}
->  	}
->  
-> +	for (index = 0; index < MDIO_CLK_CNT; index++) {
-> +		priv->clk[index] = devm_clk_get_optional(&pdev->dev,
-> +							 mdio_clk_name[index]);
-> +		if (IS_ERR(priv->clk[index]))
-> +			return PTR_ERR(priv->clk[index]);
-> +	}
+Signed-off-by: Nikita Travkin <nikita@trvn.ru>
+---
+Changes in v2:
+- Drop incorrectly allowed reg in the ec connector binding (Krzysztof)
+- Minor style changes (Konrad)
+- Link to v1: https://lore.kernel.org/r/20231207-aspire1-ec-v1-0-ba9e1c227007@trvn.ru
 
-You should be able to use devm_clk_bulk_get_optional(), to avoid that
-loop.
+---
+Nikita Travkin (3):
+      dt-bindings: power: supply: Add Acer Aspire 1 EC
+      power: supply: Add Acer Aspire 1 embedded controller driver
+      arm64: dts: qcom: acer-aspire1: Add embedded controller
 
-Thanks,
+ .../bindings/power/supply/acer,aspire1-ec.yaml     |  67 ++++
+ arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts   |  40 +-
+ drivers/power/supply/Kconfig                       |  14 +
+ drivers/power/supply/Makefile                      |   1 +
+ drivers/power/supply/acer-aspire1-ec.c             | 433 +++++++++++++++++++++
+ 5 files changed, 554 insertions(+), 1 deletion(-)
+---
+base-commit: abb240f7a2bd14567ab53e602db562bb683391e6
+change-id: 20231206-aspire1-ec-6b3d2cac1a72
 
-Maxime
+Best regards,
+-- 
+Nikita Travkin <nikita@trvn.ru>
+
 
