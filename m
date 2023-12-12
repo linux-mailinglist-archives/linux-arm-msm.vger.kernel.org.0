@@ -1,58 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-4442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 663D580F460
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 18:21:38 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D16A80F466
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 18:21:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9818F1C20CC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 17:21:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D72F1C20CB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 17:21:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AABB7D885;
-	Tue, 12 Dec 2023 17:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25D1D7D889;
+	Tue, 12 Dec 2023 17:21:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qlNhbvWP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DcX0iT+q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335027B3D9;
-	Tue, 12 Dec 2023 17:21:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8F4C433C9;
-	Tue, 12 Dec 2023 17:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C317B3CC;
+	Tue, 12 Dec 2023 17:21:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 508E4C433CA;
+	Tue, 12 Dec 2023 17:21:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702401694;
-	bh=ax1TJ8fcxuZhrG1GseVHnGGDWIWrJDvPmtLFkog0odM=;
+	s=k20201202; t=1702401702;
+	bh=95qSBRedvB7M5d2E+Y4LFzyqtZbthes0VM007xjmBkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qlNhbvWP0Dv5mgbzBG7ZiT/08F9m3fxzXLqsIJwvBHh+I9EfBGC7CZyz0H1dH6ZPt
-	 yGUHEwpENHdLF/PI7uaBOGFNzy9L1mq7dJaiPxb3X70KtJkH4F2PDGa1T3dO1fza4c
-	 CSZBXnVoInqWfDZ8XO30aei/keTJw4WQG52z/frNW6wIxR3dS9Z1XEz9cp9qZpSllk
-	 JiIKSjJDWurE5bIllI9w/QthMu4pvIuNQL05oJtpNTM0kcKwBmfs5FNEn/2JoKvek+
-	 gunH2c04ObuoBSXHTZQfvFkaNUtW3G36e6AW49Je/eL6f7cAIUkiV0YJAYscstlYw6
-	 f6c3AbTIg+2IQ==
+	b=DcX0iT+qutSFfhVVjuIVyyQEdkJMjTWaFHICz3BBoVAVwA7iLsdGtQAqkd7XI81GA
+	 OEfKpgO+vyAgYGbPLiHRkYvBcT4fsqxFnfE6vsYu3CrlrjOpWrWEPDgDQwK6/GTIcj
+	 /QvphctdOmQxXLsMsEg62nz1LuFsR6JMFJn4v8quG69prOXRgq6QhqCHHRJXftterQ
+	 HWgLiftxaGOcM02qoYdsoOMlyW1EMVN5LG1m/kK9+7PA1oZTIWpMAIbSRupnDa9OlL
+	 U4gRvhwS2urEu+EAjFeO+pcermczBiylwKXahYKwOsuldk3E05Mgr7DNR4o14Bc6ij
+	 3xQ3vEq81oc7w==
 From: Will Deacon <will@kernel.org>
-To: ~postmarketos/upstreaming@lists.sr.ht,
-	Robin Murphy <robin.murphy@arm.com>,
-	Rob Clark <robdclark@gmail.com>,
-	phone-devel@vger.kernel.org,
-	Joerg Roedel <joro@8bytes.org>,
-	Luca Weiss <luca@z3ntu.xyz>
+To: andersson@kernel.org,
+	robh+dt@kernel.org,
+	conor+dt@kernel.org,
+	robin.murphy@arm.com,
+	krzysztof.kozlowski+dt@linaro.org,
+	konrad.dybcio@linaro.org,
+	joro@8bytes.org,
+	Sibi Sankar <quic_sibis@quicinc.com>
 Cc: catalin.marinas@arm.com,
 	kernel-team@android.com,
 	Will Deacon <will@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	Vladimir Lypak <vladimir.lypak@gmail.com>,
 	iommu@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] iommu/qcom: restore IOMMU state if needed
-Date: Tue, 12 Dec 2023 17:20:57 +0000
-Message-Id: <170238443082.3098533.11843607939616442768.b4-ty@kernel.org>
+	quic_tsoni@quicinc.com,
+	quic_rjendra@quicinc.com,
+	neil.armstrong@linaro.org,
+	devicetree@vger.kernel.org,
+	abel.vesa@linaro.org,
+	quic_gurus@quicinc.com,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	agross@kernel.org,
+	vkoul@kernel.org
+Subject: Re: [PATCH V3 0/5] dt-bindings: Document gpi/pdc/scm/smmu for X1E80100
+Date: Tue, 12 Dec 2023 17:20:59 +0000
+Message-Id: <170238310080.3094703.7257298864480960361.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20231011-msm8953-iommu-restore-v1-1-48a0c93809a2@z3ntu.xyz>
-References: <20231011-msm8953-iommu-restore-v1-1-48a0c93809a2@z3ntu.xyz>
+In-Reply-To: <20231124100608.29964-1-quic_sibis@quicinc.com>
+References: <20231124100608.29964-1-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,20 +71,20 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Wed, 11 Oct 2023 19:57:26 +0200, Luca Weiss wrote:
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
+On Fri, 24 Nov 2023 15:36:03 +0530, Sibi Sankar wrote:
+> This series documents gpi/pdc/scm/smmu/soc for the Qualcomm X1E80100
+> platform, aka Snapdragon X Elite.
 > 
-> If the IOMMU has a power domain then some state will be lost in
-> qcom_iommu_suspend and TZ will reset device if we don't call
-> qcom_scm_restore_sec_cfg before accessing it again.
-> 
+> Our v1 post of the patchsets adding support for Snapdragon X Elite SoC had
+> the part number sc8380xp which is now updated to the new part number x1e80100
+> based on the new branding scheme and refers to the exact same SoC.
 > 
 > [...]
 
-Applied to will (for-joerg/arm-smmu/updates), thanks!
+Applied SMMU binding change to will (for-joerg/arm-smmu/bindings), thanks!
 
-[1/1] iommu/qcom: restore IOMMU state if needed
-      https://git.kernel.org/will/c/268dd4edb748
+[2/5] dt-bindings: arm-smmu: Add compatible for X1E80100 SoC
+      https://git.kernel.org/will/c/fa27b35c9102
 
 Cheers,
 -- 
