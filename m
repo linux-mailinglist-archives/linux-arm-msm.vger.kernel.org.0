@@ -1,125 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-4314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B4AD80E047
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 01:30:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DEC6080E130
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 03:04:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6C1E31C21414
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 00:30:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB2E31C2165A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 02:04:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B75A063E;
-	Tue, 12 Dec 2023 00:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A343A10F5;
+	Tue, 12 Dec 2023 02:04:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VtAPyQgA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NE71hSvD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0239C6
-	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 16:30:28 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BC0CeZo020265;
-	Tue, 12 Dec 2023 00:30:19 GMT
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 896F69F;
+	Mon, 11 Dec 2023 18:04:06 -0800 (PST)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BC1xlnu028454;
+	Tue, 12 Dec 2023 02:03:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=CMqWST5bdNwWiRVUIdt7OyY4kPBzACniIhEwyeau/kU=; b=Vt
-	APyQgAJkojxpEQmf6T/Ovt0EfGy7GNpKQ5FbCM4eo+HOSTDVJ2gEuF3EAmJiu6tu
-	sMqYMri/HvzTCE8Kq2XfxZ/uP9ofT4cHuDFQbLDV9NipMn2Dj0I5kx75XMNi8/2i
-	uXgpZIwZ+mAV3d5gPuL8OmpO5yiBTxGzOJShgR6aN0Iw3Nif8smz8jeZUoOUsfY0
-	H1+CTi72AkPWFLiCPjIXDhj40SH8YvJ/U8iXRNhXqmxfgpb2G+GF50B5Lw2AXcMY
-	bkrPiObfhBj3MDrJ3DAVJEw5r6q4wOtUpkBhhTFYylhMgfkcpOJ34rDNaJJAGnQJ
-	CLmq+dcq3Vi7K62KsyNQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ux1pdhp5n-1
+	from:to:cc:subject:date:message-id:mime-version
+	:content-transfer-encoding:content-type; s=qcppdkim1; bh=ggdoTQX
+	GQlyccgy7MpErs64XVDViBmAQKfJh1l2iFuU=; b=NE71hSvDtCqGF6ZJU1pqP3W
+	b3k4IVjTqakrn9W3oLJRfYvYbbSerBbukqqEqTfmYGys/asYPltlJoGkglv5GQr/
+	f+nVncIz+NG9UZDkVIgvGhzYVeLdg4kR2Hz3Ra+8deiFpoqk/1TYSejshY3cXaI3
+	NqFaFb7WBPBuDQDTE4uRG9oYhgyzSkEdlQ4WomJojJn5qMCZroDZWMh5sepTJE1o
+	eQylXL2K/vTd/ZieZcep+kZDh5TXAp+9roF9zV166TP7fTP/iBhRQB8eGYaBo9Dk
+	pC1At2l+u3ucq4Y7rXaFjbuJBe7s5/Pzytky57Y8vY3ydTVmXJxhRYCl9JgrGrA=
+	=
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ux20esrkq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 00:30:19 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BC0UI68009634
+	Tue, 12 Dec 2023 02:03:14 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BC23CXB012400
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 00:30:18 GMT
-Received: from [10.110.62.164] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Dec
- 2023 16:30:17 -0800
-Message-ID: <06daf3a5-f069-1209-8029-79c766e034e4@quicinc.com>
-Date: Mon, 11 Dec 2023 16:30:16 -0800
+	Tue, 12 Dec 2023 02:03:12 GMT
+Received: from hu-johmoo-lv.qualcomm.com (10.49.16.6) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1118.40; Mon, 11 Dec 2023 18:03:09 -0800
+From: John Moon <quic_johmoo@quicinc.com>
+To: Masahiro Yamada <masahiroy@kernel.org>,
+        Nathan Chancellor
+	<nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        "Nicolas
+ Schier" <nicolas@fjasle.eu>,
+        Jonathan Corbet <corbet@lwn.net>
+CC: John Moon <quic_johmoo@quicinc.com>, <linux-kbuild@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Rob Herring <robh@kernel.org>, Carlos O'Donell
+	<carlos@redhat.com>,
+        Randy Dunlap <rdunlap@infradead.org>, Arnd Bergmann
+	<arnd@arndb.de>,
+        Bjorn Andersson <andersson@kernel.org>, Todd Kjos
+	<tkjos@google.com>,
+        Matthias Maennich <maennich@google.com>,
+        Giuliano Procida
+	<gprocida@google.com>, <kernel-team@android.com>,
+        <libabigail@sourceware.org>, Dodji Seketeli <dodji@redhat.com>,
+        Trilok Soni
+	<quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala
+	<quic_satyap@quicinc.com>,
+        Jordan Crouse <jorcrous@amazon.com>
+Subject: [PATCH v7 0/3]  Validating UAPI backwards compatibility
+Date: Mon, 11 Dec 2023 18:02:56 -0800
+Message-ID: <20231212020259.2451253-1-quic_johmoo@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFT PATCH v2 0/4] drm/msm/dpu: enable writeback on the other
- platforms
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>
-CC: Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20231203003203.1293087-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1rqx_Dl5Zzp--hncGxxug2ZAIxrOle8u
-X-Proofpoint-ORIG-GUID: 1rqx_Dl5Zzp--hncGxxug2ZAIxrOle8u
+X-Proofpoint-GUID: -NGv-g96EJ6YXDR75wvtJ9LWiFr6MskK
+X-Proofpoint-ORIG-GUID: -NGv-g96EJ6YXDR75wvtJ9LWiFr6MskK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- spamscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
- clxscore=1015 mlxscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312120002
+ mlxscore=0 mlxlogscore=876 spamscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1011 suspectscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312120014
+
+The kernel community has rigorously enforced a policy of backwards
+compatibility in its userspace interfaces for a long time. This has
+allowed user applications to enjoy stability across kernel upgrades
+without recompiling. Our goal is to add tooling and documentation to
+help kernel developers maintain this stability.
+
+In terms of tooling, I've attached a couple of shell scripts we've been
+internally to validate backwards compatibility of our UAPI headers.
+
+The check-uapi.sh script uses libabigail's[1] tool abidiff[2] to compare a
+modified header's ABI before and after a patch is applied. If an existing
+UAPI is modified in a way that's not backwards compatibile, the script
+exits non-zero. We use this script in our continuous integration system
+to block changes that fail the check.
+
+It generates output like this when a backwards incompatible change is
+made to a UAPI header:
+
+ABI differences detected in include/uapi/linux/bpf.h from HEAD~1 -> HEAD
+    [C] 'struct bpf_insn' changed:
+      type size hasn't changed
+      2 data member changes:
+        '__u8 dst_reg' offset changed from 8 to 12 (in bits) (by +4 bits)
+        '__u8 src_reg' offset changed from 12 to 8 (in bits) (by -4 bits)
+
+The check-module-params.sh script is quite a bit simpler. It basically
+greps for module_param.* calls and compares their arguments before/after
+a change is applied.
+
+We wanted to share these scripts with the community and hopefully also
+receive general feedback when it comes to tooling/policy surrounding
+UAPI stability.
+
+Since v6 of this patch, I also presented a talk at LPC[4] on this topic
+in case anyone would like to review that. I've CC'd a few attendees who
+participated in discussion during the presentation.
+
+Previous discussion on v6 of this patch can be found here[5].
+
+[1] https://sourceware.org/libabigail/manual/libabigail-overview.html
+[2] https://sourceware.org/libabigail/manual/abidiff.html
+[3] http://mirrors.kernel.org/sourceware/libabigail/libabigail-2.4.tar.xz
+[4] https://www.youtube.com/watch?v=4ijcLgvmcek
+[5] https://lore.kernel.org/all/20231027193016.27516-1-quic_johmoo@quicinc.com/T/#t
+
+P.S. While at Qualcomm, Jordan Crouse <jorcrous@amazon.com> authored the
+original version of the UAPI checker script. Thanks Jordan!
+
+John Moon (3):
+  check-uapi: Introduce check-uapi.sh
+  docs: dev-tools: Add UAPI checker documentation
+  check-module-params: Introduce check-module-params.sh
+
+ Documentation/dev-tools/checkuapi.rst | 477 +++++++++++++++++++++
+ Documentation/dev-tools/index.rst     |   1 +
+ scripts/check-module-params.sh        | 371 +++++++++++++++++
+ scripts/check-uapi.sh                 | 573 ++++++++++++++++++++++++++
+ 4 files changed, 1422 insertions(+)
+ create mode 100644 Documentation/dev-tools/checkuapi.rst
+ create mode 100755 scripts/check-module-params.sh
+ create mode 100755 scripts/check-uapi.sh
 
 
+base-commit: a39b6ac3781d46ba18193c9dbb2110f31e9bffe9
+--
+2.34.1
 
-On 12/2/2023 4:31 PM, Dmitry Baryshkov wrote:
-> I was not able to test it on my own, this is a call for testing for the
-> owners of these platforms. The git version of modetest now fully
-> supports writeback.
-> 
-> Use libdrm >= 2.4.117, run modetest -ac to determine the writeback
-> connector, cat /sys/kernel/debug/dri/0/state to determine
-> spare CRTC and plane, then run something like:
-> 
-> modetest -M msm -a -s 36@85:1024x768 -o test.d -P 79@85:1024x768
-> 
-> where 36 is the Writeback connector id, 85 is CRTC and 79 is the plane.
-> 
-> Then press Enter and check the test.d file for the raw image dump.
-> 
-> Changes since v1:
-> - Fixed the DPU_CLK_CTRL_WB2 definition
-> 
-
-I think this series needs to be re-based as WB_SDM845_MASK is no longer 
-present in msm-next and 3/4 patches in this series use that.
-
-> Dmitry Baryshkov (4):
->    drm/msm/dpu: enable writeback on SM8150
->    drm/msm/dpu: enable writeback on SC8108X
->    drm/msm/dpu: enable writeback on SM6125
->    drm/msm/dpu: enable writeback on SM6350
-> 
->   .../drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 18 ++++++++++++++++++
->   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 18 ++++++++++++++++++
->   .../drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h | 18 ++++++++++++++++++
->   .../drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h | 18 ++++++++++++++++++
->   4 files changed, 72 insertions(+)
-> 
 
