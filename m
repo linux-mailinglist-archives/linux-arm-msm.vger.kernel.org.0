@@ -1,185 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-4423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FD4280EF10
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 15:44:12 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 133C280EF20
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 15:44:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 15B661F212A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 14:44:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 44ECB1C20B24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 14:44:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B2E160EDE;
-	Tue, 12 Dec 2023 14:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB953745E4;
+	Tue, 12 Dec 2023 14:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QLJlD/u4"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="huX7fXPs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21FE5D3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 06:44:03 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-40c580ba223so478265e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 06:44:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702392241; x=1702997041; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kWo777MN0DncSazKE0nHt1+1eF9bduFbpo2jm9olN20=;
-        b=QLJlD/u4kNstLRMM1Yq7BbcbNfwFlOU12w5CpnvMUjkaw8V+BnaL3va7gISpdXDNr9
-         BVh8WVuGwUvVrCFK9WcnwFqoZplucDWhuir1iJauRJraD1kyOkc1y88ZRjsQPygJdCbf
-         VU7kfrbBVWo87Y9pq5V2RG8mfzoBMur+wLyGlcLPp1+Al2Qc6yCql/bf2jvLhlD2uDy/
-         4F01uO8xp6ecHjQcDIGX05/w4wkmNau3X45q9snvNh4+97ZS+9qkY976bYUR9HHK29Ux
-         /xH/K9sMgK3K4vhu2laAqYP+5NzSKcS74gvIvT72k9VgSbDbwBor7GK+vwNV0qYRyyYd
-         qMOw==
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A62FE107
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 06:44:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1702392267;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2xjg0etbdLaR5lepvPpgd7mHNgfxLS6jqL5w2wbBqn4=;
+	b=huX7fXPsxB++vBVpzGCjinM2cfmxYdMybjGVwmNzsfOhpxulmQxOKLn3W8DxMLK+a6aIhk
+	isZJSb3cVEj1kKe8edmjedtBV10MLDzzDCCfFFUXKBm2j3AyPYTppnytwU5OvI5OOgwCO7
+	YAfAKVOv4l3K9vQwa3U0S058SklorV0=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-192-ihuw41QNNHSrGLjfZDsOCw-1; Tue, 12 Dec 2023 09:44:26 -0500
+X-MC-Unique: ihuw41QNNHSrGLjfZDsOCw-1
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4259975e20dso40892271cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 06:44:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702392241; x=1702997041;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kWo777MN0DncSazKE0nHt1+1eF9bduFbpo2jm9olN20=;
-        b=DRTTIKtvg+56JOWyBKkNvCkcsMNnR0j8CJFIJR5rdCFiL3kv+Jq4q93QIu9b9RCMgW
-         6sETI1pjOwE30NdHMJVP0HBgadP9fWLMsx/nN5Tc+dDTaKGAN67hfmk/J/qtsieRPwCg
-         85JA8FF8kV6IMS8sKVYdjIpMjSTMIGbySDrBSaBsN8+pQ339G0mW9VcjiNfGRJJ7RmcI
-         MV/nMy7nxbwb8Qf7HC6tJ9sm7TAVHAMgm9cpiHaedxEaSS+byYZ1H/zggo15mRkSG7Y0
-         fj1UmT3cGSXoLs0VfFVfldnR7pgPhX7xwjX0Kn1q3CMhLr+p6WY43WwPsk3symuuzSWD
-         OjCQ==
-X-Gm-Message-State: AOJu0YxVoreNIxNKmsJi2MsdmrNKQrsCtZTYXs++FOnKvcmhJF01Zoc3
-	dLClWz1ev/wxUEAGTb6QJFrylw==
-X-Google-Smtp-Source: AGHT+IHgst7o6eFwexZsyUHa+goT+CnzGuTjMsefbGfNNLLVXdOwdtf39J65EYjCP/XeXKI778GUgw==
-X-Received: by 2002:a05:600c:3b9f:b0:40b:5e59:ccac with SMTP id n31-20020a05600c3b9f00b0040b5e59ccacmr3244021wms.141.1702392241514;
-        Tue, 12 Dec 2023 06:44:01 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5894:fa62:26b4:bf82? ([2a01:e0a:982:cbb0:5894:fa62:26b4:bf82])
-        by smtp.gmail.com with ESMTPSA id bh15-20020a05600c3d0f00b0040b4ccdcffbsm17159922wmb.2.2023.12.12.06.44.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Dec 2023 06:44:01 -0800 (PST)
-Message-ID: <be39f74b-e04f-48c8-acc9-cc818adfc4db@linaro.org>
-Date: Tue, 12 Dec 2023 15:43:59 +0100
+        d=1e100.net; s=20230601; t=1702392266; x=1702997066;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2xjg0etbdLaR5lepvPpgd7mHNgfxLS6jqL5w2wbBqn4=;
+        b=ERv/jwE/STwimuPOwXlFQ9aXK9d+GT2szMk5S871MFaWKEsBtUQAC08UU81LylQHpC
+         jRVAL9LRa2PAb51iU21Nq2hmW+rta97Bjsqvxg/pastsx7NffcqjoHSoWQLhXILYIjaH
+         9yZ5hs5WVXBXAMPhbGOyv7BQtL67JDOK65qlC2FhiIdvz+TwWbHVcr5xAxNYy8se/kN1
+         SgabU1a3J1SGCs32UD1v4srSimgBCLTF7eNmxSqLC90fx3yzZBySRVFKX9tXLW2Gp5NZ
+         4SCAmg26qI4mYXGfkIF0i6umPjmhrcJO2EYonFe6DpMqF5oS0rnfORJ1hmC0zrn/ODeU
+         nquQ==
+X-Gm-Message-State: AOJu0YyTHqpwvRBgtqXfI4s3E8QgOILgPJXem/C3v0LK9JScZ86TPBFx
+	SSreTlsAO0CiBLa454Yg4uTHkQ7Gfk6Vr+w7IOgVyWhCQGkSs/tgT2sKNx6K4FXA+dD0A4F1pik
+	9EfIiYYHArctzwGBLOIEx/Qt7ASDUXolgWw==
+X-Received: by 2002:ac8:5bc1:0:b0:425:8b0b:c626 with SMTP id b1-20020ac85bc1000000b004258b0bc626mr5762285qtb.104.1702392265838;
+        Tue, 12 Dec 2023 06:44:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFDx2IDXua2e+C7h/fWf6gqwxTnbpKX6V9M6OZxvVKCE6ICM3c3GFpuRnOcNIKUdVzrhEBXqA==
+X-Received: by 2002:ac8:5bc1:0:b0:425:8b0b:c626 with SMTP id b1-20020ac85bc1000000b004258b0bc626mr5762274qtb.104.1702392265547;
+        Tue, 12 Dec 2023 06:44:25 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id z23-20020ac87117000000b00423de58d3d8sm4110652qto.40.2023.12.12.06.44.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 06:44:24 -0800 (PST)
+Date: Tue, 12 Dec 2023 08:44:21 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: 'Guanjun' <guanjun@linux.alibaba.com>
+Cc: neil.armstrong@linaro.org, agross@kernel.org, andersson@kernel.org, 
+	konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/1] soc: qcom: Fix compile error caused by uncorrectable
+ definition of TRACE_INCLUDE_PATH
+Message-ID: <kulysgxsa2lazwpbmovqtide3kvt6qq2dwtxmmi3ugznteo233@67ayvx2lduhi>
+References: <20231209074716.2689401-1-guanjun@linux.alibaba.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v12 2/4] Input: add core support for Goodix Berlin
- Touchscreen IC
-Content-Language: en-US, fr
-To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: linux-input@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, Bastien Nocera <hadess@hadess.net>,
- Hans de Goede <hdegoede@redhat.com>, Henrik Rydberg <rydberg@bitmath.org>,
- Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231209-topic-goodix-berlin-upstream-initial-v12-0-eaffaeb53fb5@linaro.org>
- <20231209-topic-goodix-berlin-upstream-initial-v12-2-eaffaeb53fb5@linaro.org>
- <ZXVgYuzE6jPPSfnZ@google.com>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <ZXVgYuzE6jPPSfnZ@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231209074716.2689401-1-guanjun@linux.alibaba.com>
 
-Hi Dmitry,
-
-On 10/12/2023 07:53, Dmitry Torokhov wrote:
-> Hi Neil,
+On Sat, Dec 09, 2023 at 03:47:16PM +0800, 'Guanjun' wrote:
+> From: Guanjun <guanjun@linux.alibaba.com>
 > 
-> On Sat, Dec 09, 2023 at 08:33:40AM +0100, Neil Armstrong wrote:
->> Add initial support for the new Goodix "Berlin" touchscreen ICs.
->>
->> These touchscreen ICs support SPI, I2C and I3C interface, up to
->> 10 finger touch, stylus and gestures events.
->>
->> This initial driver is derived from the Goodix goodix_ts_berlin
->> available at [1] and [2] and only supports the GT9916 IC
->> present on the Qualcomm SM8550 MTP & QRD touch panel.
->>
->> The current implementation only supports BerlinD, aka GT9916.
->>
->> Support for advanced features like:
->> - Firmware & config update
->> - Stylus events
->> - Gestures events
->> - Previous revisions support (BerlinA or BerlinB)
->> is not included in current version.
->>
->> The current support will work with currently flashed firmware
->> and config, and bail out if firmware or config aren't flashed yet.
->>
->> [1] https://github.com/goodix/goodix_ts_berlin
->> [2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
->>
->> Reviewed-by: Jeff LaBundy <jeff@labundy.com>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Compiler reports the error message when compiling the file drivers/soc/qcom/pmic_pdcharger_ulog.c:
+>   - ./include/trace/define_trace.h:95:42: fatal error: ./pmic_pdcharger_ulog.h: No such file or directory
+>       95 | #include TRACE_INCLUDE(TRACE_INCLUDE_FILE)
 > 
-> Thank you for resending the patch. I think there is an issue in how you
-> read and parse the data in case of more than 2 fingers. It looks like in
-> that case you are overwriting the checksum form the first 2 and then not
-> reading the new checksum but use some garbage past the touch data. I
-> might be mistaken though...
-
-I carefully inspected the code again, and it's correct, otherwise I would have experimented
-checksum errors, which isn't the case.
-
-First read from goodix_berlin_irq() is GOODIX_BERLIN_IRQ_READ_LEN(2) length in memory:
-
-[GOODIX_BERLIN_IRQ_EVENT_HEAD_LEN][GOODIX_BERLIN_COOR_DATA_CHECKSUM_SIZE][GOODIX_BERLIN_BYTES_PER_POINT * x]
-
-the pre_buf_len goodix_berlin_touch_handler() get is GOODIX_BERLIN_IRQ_READ_LEN(2), the we complete the
-read after the first read, but since the touch checksum is before the touch data, it works because
-we complete the data.
-
-I added some comments to clarify the memory layout and re-ordered the items
-in the GOODIX_BERLIN_IRQ_READ_LEN() macro to show GOODIX_BERLIN_COOR_DATA_CHECKSUM
-is before the GOODIX_BERLIN_BYTES_PER_POINT data.
-
+> TRACE_INCLUDE_PATH shoule be relative to the path include/trace/define_trace.h, not
+> the file including it. Fix it.
 > 
-> I also believe you are leaking afe_data in case of success. We have the
-> newfangled __free(kfree) from cleanup.h that should help there.
+> Fixes: 086fdb48bc65d(soc: qcom: add ADSP PDCharger ULOG driver)
+> Signed-off-by: Guanjun <guanjun@linux.alibaba.com>
 
-Indeed it was leaking.
+For what it is worth I sent a similar patch (which handled this by using
+the CFLAG -I recommendation) over here about a week ago:
 
-> 
-> Another request - we should not have anything in goodix_berlin.h that is
-> not used by the I2C and SPI sub-drivers, so the only thing it should
-> contain is goodix_berlin_probe() declaration and dev_pm_ops. All other
-> defines and definitions should go to goodix_berlin_core.h.
-> 
-> I made a few more cosmetic changes in the attached patch, please
-> consider applying it.
-> 
-> Thanks.
+    https://lore.kernel.org/linux-arm-msm/20231205-pmicpdcharger-ulog-fixups-v1-1-71c95162cb84@redhat.com/
 
-Thanks,
-Neil
+I keep disabling this driver locally when developing (or picking up that
+patch) until something gets scooped up.
+
+> ---
+>  drivers/soc/qcom/pmic_pdcharger_ulog.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/pmic_pdcharger_ulog.h b/drivers/soc/qcom/pmic_pdcharger_ulog.h
+> index 9d5d9af4fbe4..3ac994d160bd 100644
+> --- a/drivers/soc/qcom/pmic_pdcharger_ulog.h
+> +++ b/drivers/soc/qcom/pmic_pdcharger_ulog.h
+> @@ -28,7 +28,7 @@ TRACE_EVENT(pmic_pdcharger_ulog_msg,
+>  /* This part must be outside protection */
+>  
+>  #undef TRACE_INCLUDE_PATH
+> -#define TRACE_INCLUDE_PATH .
+> +#define TRACE_INCLUDE_PATH ../../../drivers/soc/qcom/
+>  
+>  #undef TRACE_INCLUDE_FILE
+>  #define TRACE_INCLUDE_FILE pmic_pdcharger_ulog
+> -- 
+> 2.39.3
+> 
+> 
 
 
