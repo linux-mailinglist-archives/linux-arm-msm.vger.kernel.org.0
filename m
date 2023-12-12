@@ -1,163 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-4439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4648D80F441
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 18:17:18 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CED8380F457
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 18:21:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3EE12819A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 17:17:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C1711C20CA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 17:21:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83CAC7B3CE;
-	Tue, 12 Dec 2023 17:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0951B7D896;
+	Tue, 12 Dec 2023 17:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="R9dtzSGB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ni5IZcri"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD66C99;
-	Tue, 12 Dec 2023 09:17:11 -0800 (PST)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BCH62MV023003;
-	Tue, 12 Dec 2023 17:17:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=hBDbpoMatSnLVbcj80k8t1w+6Q2nyJMKgtB38AzFUJ8=; b=R9
-	dtzSGB918gdNNjh7e5vfwqSH2I5593BV68g1/cCSt+WhY23Dx6ExIUzCIeAkTtN6
-	yw7MgNlAzHGdcYihvu+k7jii3HE335E/+YRHCRVv4i9nRaEqH+dH4taK6DrmfGLD
-	gLo1S/lOGaP6FaiN9H1zk22vGIQJTjuhrymWU5dlouRtwFa96KUXg4a/rFn+eut8
-	FNzYdlCHTHoigctMiqX5FWXVKlQ5HrNtW3gfeLON3kL0/wf2f0p65lBC16L8Lcqi
-	auWR8QxnwOvBGeaHgUBE7Yb4qed3tVFyx9icznWWL8Zs2tUa/zxRU7u9cgPygXvu
-	Z0YFHCnAssWNNpNPlUkQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uxru2ghtx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 17:17:01 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BCHH1hJ001880
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 17:17:01 GMT
-Received: from [10.71.109.77] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Dec
- 2023 09:17:00 -0800
-Message-ID: <59304cf8-33b7-bf27-f9e2-a15e323c869a@quicinc.com>
-Date: Tue, 12 Dec 2023 09:16:59 -0800
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F987B3CC;
+	Tue, 12 Dec 2023 17:21:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD5E0C433C8;
+	Tue, 12 Dec 2023 17:21:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1702401681;
+	bh=xLkBkixDQKbXEltygIuDMWgT2+tKHTyJguNt0oCZ1Dg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Ni5IZcrivfNznvASlMU0Q2n6Kp8hvI9+Q6CHG54W2Vku+AoedZxkjuqwdIEV7z/Bp
+	 rs89sLvn3o4hxHoeYW/sw1Znd8HQaLkOTQUUquwY8nhU4nTgiZOFLrjnKitcinbZ4P
+	 zcG41Qx/178fc5iXLGQEQqJn4g1xe0pXetJHH8xmNMihtZPi6mr/MeiBqjPEzuO9ji
+	 OVxegVdQpX9pM3Pij4Rr7tgC3yKfL4PW82A5jANb11ao9Lzd+bMn1vzv08R7ndAPgi
+	 0eq8fau88PzsfwBn1h4Wx4HXiyFI0I3rK+W1ZI1dT5Eib3+kUAdFHQlAGQWz8u/uyi
+	 5rro2tioVaSlQ==
+From: Will Deacon <will@kernel.org>
+To: Robin Murphy <robin.murphy@arm.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Andy Gross <agross@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Joerg Roedel <joro@8bytes.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: catalin.marinas@arm.com,
+	kernel-team@android.com,
+	Will Deacon <will@kernel.org>,
+	iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-kernel@lists.infradead.org,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>
+Subject: Re: [PATCH v2 0/6] SM8450 / SM8550 Adreno
+Date: Tue, 12 Dec 2023 17:20:54 +0000
+Message-Id: <170238387694.3096344.13849459949323517316.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20231127-topic-a7xx_dt-v2-0-2a437588e563@linaro.org>
+References: <20231127-topic-a7xx_dt-v2-0-2a437588e563@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 01/15] drm/msm/dpu: add formats check for writeback
- encoder
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <freedreno@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        "Sean
- Paul" <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        <dri-devel@lists.freedesktop.org>, <seanpaul@chromium.org>,
-        <quic_jesszhan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20231212002245.23715-1-quic_abhinavk@quicinc.com>
- <20231212002245.23715-2-quic_abhinavk@quicinc.com>
- <CAA8EJpqJOh0R1X3i1UGe9hHoezV4uBNDCWPFSdeuXyC6Ju4eHA@mail.gmail.com>
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpqJOh0R1X3i1UGe9hHoezV4uBNDCWPFSdeuXyC6Ju4eHA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PTGBhOdYEvx3Uwk0MYpCvXsN3SXwF_db
-X-Proofpoint-ORIG-GUID: PTGBhOdYEvx3Uwk0MYpCvXsN3SXwF_db
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 mlxscore=0
- clxscore=1015 priorityscore=1501 suspectscore=0 spamscore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=999 adultscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312120133
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-
-
-On 12/11/2023 10:40 PM, Dmitry Baryshkov wrote:
-> On Tue, 12 Dec 2023 at 02:23, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->> In preparation for adding more formats to dpu writeback add
->> format validation to it to fail any unsupported formats.
->>
->> changes in v3:
->>          - rebase on top of msm-next
->>          - replace drm_atomic_helper_check_wb_encoder_state() with
->>            drm_atomic_helper_check_wb_connector_state() due to the
->>            rebase
->>
->> changes in v2:
->>          - correct some grammar in the commit text
->>
->> Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 7 +++++++
->>   1 file changed, 7 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
->> index bb94909caa25..425415d45ec1 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
->> @@ -272,6 +272,7 @@ static int dpu_encoder_phys_wb_atomic_check(
->>   {
->>          struct drm_framebuffer *fb;
->>          const struct drm_display_mode *mode = &crtc_state->mode;
->> +       int ret;
->>
->>          DPU_DEBUG("[atomic_check:%d, \"%s\",%d,%d]\n",
->>                          phys_enc->hw_wb->idx, mode->name, mode->hdisplay, mode->vdisplay);
->> @@ -308,6 +309,12 @@ static int dpu_encoder_phys_wb_atomic_check(
->>                  return -EINVAL;
->>          }
->>
->> +       ret = drm_atomic_helper_check_wb_connector_state(conn_state->connector, conn_state->state);
->> +       if (ret < 0) {
->> +               DPU_ERROR("invalid pixel format %p4cc\n", &fb->format->format);
->> +               return ret;
->> +       }
+On Mon, 04 Dec 2023 13:55:19 +0100, Konrad Dybcio wrote:
+> Following the merging of related bindings, driver and mesa changes, enable
+> the GPU on both of these platforms.
 > 
-> There is no guarantee that there will be no other checks added to this
-> helper. So, I think this message is incorrect. If you wish, you can
-> promote the level of the message in the helper itself.
-> On the other hand, we rarely print such messages by default. Most of
-> the checks use drm_dbg.
-> 
-
-hmm...actually drm_atomic_helper_check_wb_connector_state() already has 
-a debug message to indicate invalid pixel formats.
-
-You are right, i should perhaps just say that "atomic_check failed" or 
-something.
-
-I can make this a DPU_DEBUG. Actually I didnt know that we are not 
-supposed to print out atomic_check() errors. Is it perhaps because its 
-okay for check to fail?
-
-But then we would not know why it failed.
-
->> +
->>          return 0;
->>   }
->>
->> --
->> 2.40.1
->>
+> P1 for Will/iommu, rest for qcom
 > 
 > 
+
+Applied SMMU bindings change to will (for-joerg/arm-smmu/bindings), thanks!
+
+[1/6] dt-bindings: arm-smmu: Document SM8[45]50 GPU SMMU
+      https://git.kernel.org/will/c/4fff78dc2490
+Cheers,
+-- 
+Will
+
+https://fixes.arm64.dev
+https://next.arm64.dev
+https://will.arm64.dev
 
