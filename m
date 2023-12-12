@@ -1,147 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-4449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4ADB780F5FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 20:06:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5ACEE80F629
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 20:11:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F280DB20B6B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 19:06:00 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04B02B20E7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 19:11:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7280880047;
-	Tue, 12 Dec 2023 19:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1FF780058;
+	Tue, 12 Dec 2023 19:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uCEFcw5Q"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="AB8mY2O5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D2169F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 11:05:54 -0800 (PST)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50d176eb382so5850019e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 11:05:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702407952; x=1703012752; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gk+33qG5mMsD2Pf/ecpSWilCtbmUpvnM36Mhb9UlmbE=;
-        b=uCEFcw5QDiHzlB6b0k20dS/kE5sCRrxAFssLu4hzy5SxK66Lx+gnPo1SGxTDRlg29f
-         4a2guomvx2w1eyv7iWyFq55NkNo1Py/3Siq1ZAfMyvjnZEFh9rIleamR3DBxVOpZQx7s
-         IxWkDTgVgAZ/Ge5iZ7ufu6VmeiC4caTx12YDh3ULWdAAa9J5gxOqEW5zcFpq5hl4lLmM
-         iHm6krlWJ38Ocs2R93YE4WMKoMfirKO8F+/iTFxNVLm+N0/5yEevfWaUHlhRuoL/QvfE
-         Mmxqr4ill0w8qBQKF9jkT1ZcgtExfEjNDDqZTyoiJTa6o5v++pPBZ1vl9BsRoujUlUrm
-         RUtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702407952; x=1703012752;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gk+33qG5mMsD2Pf/ecpSWilCtbmUpvnM36Mhb9UlmbE=;
-        b=TfpRcdJL17jX3WSyGxlvEfbjKeIfY0ifGgezKfiPQF+GXsCsRjFeKCjnFzSx4TUM4Z
-         Mk7OziQfjeD+b6s8fJzyMeGf7stz3qfTUqNcxptF2wevKruG03Nvj+AwEDear+hc1S7s
-         pQLs1U0CrwNWJK1y4RkxsReyCnDofVBkOevH2X9+q8MfQHBXtjqrnJkAj/WHbvg05Bb/
-         hLzHqX0039I4fvUblz7htPsFcaDfyw4GXJ2/UFokeUkSiWfV0NhH8TplBrhfZVo2n4ex
-         2tdxboeZflLRYhhG9CVRo4oXHTQv03ERPFAL8wqFAvC8o+k1ra4v20NA/MSX/xW5+E1r
-         fZBg==
-X-Gm-Message-State: AOJu0YylLJFGLudbd+VGXdLYtVBEWpaWBPSLzvfIj4oDEdQBZB8LVMrN
-	KPGZLROdzuEc+gmLlj9Z7eXp5g==
-X-Google-Smtp-Source: AGHT+IEukNRKT45tP6/egDMvn/HPARfZoQNQiDW5zwKEdUjpCsk3Wmlf1yqWmQI95KFk3e46O8dt1w==
-X-Received: by 2002:a05:6512:3187:b0:50b:f23f:d691 with SMTP id i7-20020a056512318700b0050bf23fd691mr3617578lfe.136.1702407952556;
-        Tue, 12 Dec 2023 11:05:52 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id tz4-20020a170907c78400b00a1aad4d92dbsm6592547ejc.123.2023.12.12.11.05.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Dec 2023 11:05:52 -0800 (PST)
-Message-ID: <562380aa-4ed5-49de-9c21-e650a3a84a1b@linaro.org>
-Date: Tue, 12 Dec 2023 20:05:50 +0100
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93C9B9F;
+	Tue, 12 Dec 2023 11:11:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=zu77ILlFi8UZdCwbbdfAli/r3ogJZ+gYD8KfnKz3Xto=; b=AB8mY2O5mM4iFFqvSp5DxuKAuA
+	3UDwlqlPYgVWn6YxS3AaRoWtBp9CQ68IQ0DuFL02tdbw+EX/7Q9AaDDztULKReD7U0zeTHDb2SiAB
+	Xg7P+/CZ2c9W/af8rDdr8aPb8tjeOcQmIxUL942L/03Y9eh5FOY9CVSHSflzZ1KrEGb2POHKc1+dM
+	2lpJJUYMMtLR9A2lEnef9sftipoOsK6cfi21cm1GJaxExy53Xap7TF+mAgbvnuc9PMVdBb7VQpEK+
+	ofcLhNWqlIRrRXqDQJXBC4Je4I14PQRM4wA1HEEiN50g5f21yZ40gweyU+u3kXzwIDQoZRw3CcnRu
+	bSHtO2jQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:41348)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rD89y-0007IH-0F;
+	Tue, 12 Dec 2023 19:11:14 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rD89z-0000h5-Ik; Tue, 12 Dec 2023 19:11:15 +0000
+Date: Tue, 12 Dec 2023 19:11:15 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Cc: Luo Jie <quic_luoj@quicinc.com>, agross@kernel.org,
+	andersson@kernel.org, konrad.dybcio@linaro.org, davem@davemloft.net,
+	edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, andrew@lunn.ch, hkallweit1@gmail.com,
+	robert.marko@sartura.hr, linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
+Subject: Re: [PATCH v2 1/5] net: mdio: ipq4019: move eth_ldo_rdy before MDIO
+ bus register
+Message-ID: <ZXiwU7XnIeSY1NG4@shell.armlinux.org.uk>
+References: <20231212115151.20016-1-quic_luoj@quicinc.com>
+ <20231212115151.20016-2-quic_luoj@quicinc.com>
+ <20231212135001.6bf40e4d@device.home>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: drop unneeded assigned-clocks
- from WSA macro
-Content-Language: en-US
-To: Konrad Dybcio <konrad.dybcio@linaro.org>, Andy Gross <agross@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231212133143.100575-1-krzysztof.kozlowski@linaro.org>
- <52aa1fdb-ebdf-4cef-80d6-6c1b83d626ab@linaro.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <52aa1fdb-ebdf-4cef-80d6-6c1b83d626ab@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231212135001.6bf40e4d@device.home>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On 12/12/2023 15:41, Konrad Dybcio wrote:
+On Tue, Dec 12, 2023 at 01:50:01PM +0100, Maxime Chevallier wrote:
+> Hello,
 > 
+> On Tue, 12 Dec 2023 19:51:46 +0800
+> Luo Jie <quic_luoj@quicinc.com> wrote:
+> > @@ -252,11 +244,32 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
+> >  	if (IS_ERR(priv->mdio_clk))
+> >  		return PTR_ERR(priv->mdio_clk);
+> >  
+> > -	/* The platform resource is provided on the chipset IPQ5018 */
+> > -	/* This resource is optional */
+> > -	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> > -	if (res)
+> > -		priv->eth_ldo_rdy = devm_ioremap_resource(&pdev->dev, res);
+> > +	/* These platform resources are provided on the chipset IPQ5018 or
+> > +	 * IPQ5332.
+> > +	 */
+> > +	/* This resource are optional */
+> > +	for (index = 0; index < ETH_LDO_RDY_CNT; index++) {
+> > +		res = platform_get_resource(pdev, IORESOURCE_MEM, index + 1);
+> > +		if (res) {
+> > +			priv->eth_ldo_rdy[index] = devm_ioremap(&pdev->dev,
+> > +								res->start,
+> > +								resource_size(res));
 > 
-> On 12/12/23 14:31, Krzysztof Kozlowski wrote:
->> Review of v1 patch resulting in commit 58872a54e4a8 ("arm64: dts: qcom:
->> sm8650: add ADSP audio codec macros") pointed to remove unneeded
->> assigned-clock-rates from macro codecs.  One assignment was left in WSA
->> macro codec, so drop it now as it is redundant: these clocks have fixed
->> 19.2 MHz frequency.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Thanks, could you also check if they're fixed on older platforms?
-> 
+> You can simplify that sequence by using
+> devm_platform_get_and_ioremap_resource(), which will do both the
+> platform_get_resource and the devm_ioremap at once for you.
 
-Ack. To my understand they should not be needed in none of Audioreach
-platforms (sc8280xp, sm8[45]50), but I can test only sm8550.
+Sadly it can't if resources are optional. __devm_ioremap_resource()
+which will be capped by devm_platform_get_and_ioremap_resource() will
+be passed a NULL 'res', which will lead to:
 
-Best regards,
-Krzysztof
+        if (!res || resource_type(res) != IORESOURCE_MEM) {
+                dev_err(dev, "invalid resource %pR\n", res);
+                return IOMEM_ERR_PTR(-EINVAL);
+        }
 
+There isn't an "optional" version of
+devm_platform_get_and_ioremap_resource().
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
