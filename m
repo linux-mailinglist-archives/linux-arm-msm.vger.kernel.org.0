@@ -1,136 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-4415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9012180EDDF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 14:43:54 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8733780EEA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 15:25:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 335FEB20D35
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 13:43:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42719281ABE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 14:25:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E64CB6D1C7;
-	Tue, 12 Dec 2023 13:43:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H0y18jh6"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF54473177;
+	Tue, 12 Dec 2023 14:25:41 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8512DAD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 05:43:43 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-40c3ceded81so31709725e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 05:43:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702388622; x=1702993422; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VaxH82QJraIFl4uUMJz9AaqNUeMrI8EkDXOMXTouMCA=;
-        b=H0y18jh6zmK/Zpxnp4ERKGNOHQi/RtfkUVsAIuoMtgvdQEqjCWPymvmvCDEhXMzLVo
-         OHRMu9H4M8B/ZRZ/o6tav43XuUR7ZZ8yOcj7grLGz4SGvAz0AeMZ6CUZEeKZ2J1v/N48
-         UI+sMsnlR7ei0ycwT1+jGxbXDRMXofXx5jQBkFNY3gqWzD7D3It/U6BFsDqOvpY7Da8n
-         7FNISLKwkj8snG/R9ArbJmynS1A266NiwK4t6m4iQfrd82aB5Ch80TkKWuvviY0yj+EV
-         Cn5KxhkzLdbIPvMV6Xx7scTw4BfV+TGzShpH+MHQEfzB0Mu7c4vBO+LsM2Gppaiz3Ovy
-         h9EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702388622; x=1702993422;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:to:content-language:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VaxH82QJraIFl4uUMJz9AaqNUeMrI8EkDXOMXTouMCA=;
-        b=Rlg2vUcncobDsEcUUwjWYqBxApemi2ZetIWbZBv2Vic0NIhcFNfLoVCtR6VnIxKU3n
-         XfG+t0o32jJwcqIlzTTgLTLKxqc+RCuppclNyq/hu2EMi0lb16qI55A4r2HY/3pC/FG7
-         kPEO2lsh6M63p9Pegzpq0eGqVfLVLv+k/9O+h9j59g/qt6xfp85jd0FSQiqZ0lRm9AHF
-         imjY5DsOdQTV1zB+d6YtCBy8aCOqSe+Vm1VGrLBafhX24qE2sPslxID9Vg6KiZRhGwgA
-         itSFT0Ly7wmRp4IaOJVRj6n9JFc7XiQKcjLYgyFuUqCAhpkiSE3+IvMhiG7orXLfSW22
-         6n+g==
-X-Gm-Message-State: AOJu0Yziv01Yrgda3FSnYGXFY/ACCl3CEPeL74WSedlVQLdk5lagrPfJ
-	WdJh7CrAwdGSPFgGJF/2FqjnGw==
-X-Google-Smtp-Source: AGHT+IGfSJ5cgkBojQ+N489dtsiHyqE4LG+YM2Nfd6VjGyi7K9SyJpoEypDbi0e/JubU7cH5foyNBQ==
-X-Received: by 2002:a05:600c:4fc7:b0:40c:3984:49a7 with SMTP id o7-20020a05600c4fc700b0040c398449a7mr3185542wmq.103.1702388621934;
-        Tue, 12 Dec 2023 05:43:41 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5894:fa62:26b4:bf82? ([2a01:e0a:982:cbb0:5894:fa62:26b4:bf82])
-        by smtp.gmail.com with ESMTPSA id a19-20020a05600c349300b004064cd71aa8sm16601998wmq.34.2023.12.12.05.43.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Dec 2023 05:43:41 -0800 (PST)
-Message-ID: <6aefcc5b-aa25-4405-929c-f1a90d678858@linaro.org>
-Date: Tue, 12 Dec 2023 14:43:40 +0100
+Received: from mail-m49198.qiye.163.com (mail-m49198.qiye.163.com [45.254.49.198])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35F3A8F;
+	Tue, 12 Dec 2023 06:25:32 -0800 (PST)
+Received: from amadeus-Vostro-3710.lan (unknown [113.118.189.146])
+	by mail-m121145.qiye.163.com (Hmail) with ESMTPA id 0AA0C800015;
+	Tue, 12 Dec 2023 22:25:13 +0800 (CST)
+From: Chukun Pan <amadeus@jmu.edu.cn>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Andy Gross <agross@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Ohad Ben-Cohen <ohad@wizery.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-remoteproc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Chukun Pan <amadeus@jmu.edu.cn>
+Subject: [PATCH 1/1] hwspinlock: qcom: fix tcsr data for ipq6018
+Date: Tue, 12 Dec 2023 22:25:09 +0800
+Message-Id: <20231212142509.655094-1-amadeus@jmu.edu.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8650: drop unneeded assigned-clocks
- from WSA macro
-Content-Language: en-US, fr
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231212133143.100575-1-krzysztof.kozlowski@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro Developer Services
-In-Reply-To: <20231212133143.100575-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZSEtNVkwdSh8ZTEoZQxhNGFUTARMWGhIXJBQOD1
+	lXWRgSC1lBWUpKSFVKSkNVSkNCVUpPTVlXWRYaDxIVHRRZQVlPS0hVSkpLSEpDVUpLS1VLWQY+
+X-HM-Tid: 0a8c5e6ae656b03akuuu0aa0c800015
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PiI6Agw5Cjw6Pz9PUR9JKRdK
+	CS8aCR5VSlVKTEtJSEJKSkpIQ0tJVTMWGhIXVRoWGh8eDgg7ERYOVR4fDlUYFUVZV1kSC1lBWUpK
+	SFVKSkNVSkNCVUpPTVlXWQgBWUFJQ0xINwY+
 
-On 12/12/2023 14:31, Krzysztof Kozlowski wrote:
-> Review of v1 patch resulting in commit 58872a54e4a8 ("arm64: dts: qcom:
-> sm8650: add ADSP audio codec macros") pointed to remove unneeded
-> assigned-clock-rates from macro codecs.  One assignment was left in WSA
-> macro codec, so drop it now as it is redundant: these clocks have fixed
-> 19.2 MHz frequency.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 ---
->   1 file changed, 3 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 425e1e50d945..3d55d08649ca 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -2773,9 +2773,6 @@ lpass_wsamacro: codec@6b00000 {
->   				      "dcodec",
->   				      "fsgen";
->   
-> -			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> -			assigned-clock-rates = <19200000>;
-> -
->   			#clock-cells = <0>;
->   			clock-output-names = "mclk";
->   			#sound-dai-cells = <1>;
+The tcsr_mutex hwlock register of the ipq6018 SoC is 0x20000[1], which
+should not use the max_register configuration of older SoCs. This will
+cause smem to be unable to probe, further causing devices that use
+smem-part to parse partitions to fail to boot.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+[    2.118227] qcom-smem: probe of 4aa00000.memory failed with error -110
+[   22.273120] platform 79b0000.nand-controller: deferred probe pending
+
+Remove 'qcom,ipq6018-tcsr-mutex' setting from of_match to fix this.
+
+[1] commit 72fc3d58b87b ("arm64: dts: qcom: ipq6018: Fix tcsr_mutex register size")
+Fixes: 5d4753f741d8 ("hwspinlock: qcom: add support for MMIO on older SoCs")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+---
+ drivers/hwspinlock/qcom_hwspinlock.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/drivers/hwspinlock/qcom_hwspinlock.c b/drivers/hwspinlock/qcom_hwspinlock.c
+index a0fd67fd2934..814dfe8697bf 100644
+--- a/drivers/hwspinlock/qcom_hwspinlock.c
++++ b/drivers/hwspinlock/qcom_hwspinlock.c
+@@ -115,7 +115,6 @@ static const struct of_device_id qcom_hwspinlock_of_match[] = {
+ 	{ .compatible = "qcom,sfpb-mutex", .data = &of_sfpb_mutex },
+ 	{ .compatible = "qcom,tcsr-mutex", .data = &of_tcsr_mutex },
+ 	{ .compatible = "qcom,apq8084-tcsr-mutex", .data = &of_msm8226_tcsr_mutex },
+-	{ .compatible = "qcom,ipq6018-tcsr-mutex", .data = &of_msm8226_tcsr_mutex },
+ 	{ .compatible = "qcom,msm8226-tcsr-mutex", .data = &of_msm8226_tcsr_mutex },
+ 	{ .compatible = "qcom,msm8974-tcsr-mutex", .data = &of_msm8226_tcsr_mutex },
+ 	{ .compatible = "qcom,msm8994-tcsr-mutex", .data = &of_msm8226_tcsr_mutex },
+-- 
+2.25.1
+
 
