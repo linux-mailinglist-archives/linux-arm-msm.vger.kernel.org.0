@@ -1,499 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-4338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C42480E4D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:27:33 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CECDF80E4EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:34:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3C5D1C22952
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 07:27:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5DE71B20E06
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 07:34:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C7D7168B1;
-	Tue, 12 Dec 2023 07:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5586A171A9;
+	Tue, 12 Dec 2023 07:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YJOMNVDO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N6OFXljg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E4EA1;
-	Mon, 11 Dec 2023 23:27:24 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BC6l4vm010724;
-	Tue, 12 Dec 2023 07:27:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=XU9zbZUcaCV50YCOtsO/5zfvVKw4GV2S5Ux9FdjDCKo=; b=YJ
-	OMNVDOzEA9P30e5teFerRldJRt+ufsTVjAW+ppBgCWDJ26sUm480uhZ88NfKs1ex
-	mXJsLMr0eZDYUjME3fjTEgJ8pdr6xJplHSs2TAYAAJxuRRkHezI2Qm3G6lmMB3Ji
-	0vzOGs8K7L01InoFTSD1KUQkvteR1S+80bx4qUOyWI0dfLk47AcWM0Ox/DsMU4tK
-	pvixq2oJ93AfKqpE/ljFJfDzCFNPICW5zwx5ogG1oV1AZBsR3eGFeRMO8BxF97t3
-	Uqk+ta5AQgUp2zSItkNYUb28hNqpjkAkKNBMWXuXwa8aZIBSPNGkYFtsIWCjL8B1
-	qVo82BZOsD4lRnI+x/AQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uxctarsbc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 07:27:04 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BC7R3cF013349
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 07:27:03 GMT
-Received: from [10.217.219.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Dec
- 2023 23:27:00 -0800
-Message-ID: <2fff7374-2865-7a95-d699-619f37ed98d4@quicinc.com>
-Date: Tue, 12 Dec 2023 12:56:57 +0530
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB18FE5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 23:34:23 -0800 (PST)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-dbc8b07ceddso1774520276.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Dec 2023 23:34:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702366463; x=1702971263; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+pdaSu1iaftES05p6Uxq/8Q9jwd2VkFxw1jEmWMZH5U=;
+        b=N6OFXljgRMKRBBcUUNCUgxE3195f9hurVTiltOAIAKikEoee83cPJQtWj+sK9Qma6T
+         fsX3/2V6BWHEZJLp1YH+aSmfOML/b1A41tOAHrSEraOm6iQep126ajEekxbb2HNyojLX
+         lW9TJrjkWB/B3uqowpBZPDFZqBodrup5HJxXp8kakdGp7EKDeo8xFgHhSQ6JEdRtuJ9F
+         mbiD8NEWobzwdZywCx4XYNNe++DCxk0dMEAEltdUGxWAplBbmbCmY4C4YBG9ddkQT1wX
+         1rkX0TdAJS6du1D52nBoJCwyGQn3qF6k4H99rhJtJ6LIpvgLsdBkhQKjX1/Qz+ypBx85
+         gOUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702366463; x=1702971263;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+pdaSu1iaftES05p6Uxq/8Q9jwd2VkFxw1jEmWMZH5U=;
+        b=mg1MsioPwJR/89SMH2Gk2UHtWgrkri3XuroTGf1e+8bQjcw+v6w79mQVRSq3+Zv9tb
+         BMmd0xixsCSh5WQmXqykUOyuCxWAERtRacEE5u80P1Wr+DJDfJhsL4w9y1TRYcEIHKZ0
+         6JcB0c/cF4fLOqqhbna/OOSFoE3rU/YzcLYOTFO99MlfVRf6reCWxfExRDf7PdSdyz/Y
+         QefMoE76gnf6ZZemNVGz8n6/ugpWOsDQTGZHJfEZoJ6fjvN1+wC4lCtBrCLPxZigiIsw
+         lDSzQ4tC90Oyf2omMHkLmVENWYutBalfsO8jNNFgz4hqP2wYfxCZIKgejPEhK/UU2eiH
+         t/HA==
+X-Gm-Message-State: AOJu0YzH30qP+mGy5d3ZVpthinHvwA7QsZhN4Eg2eLNuOBPIw7XJHkPy
+	YEQuW1ExjEix/7llgPbPczfpG72rQOVR3hBfdXghBQ==
+X-Google-Smtp-Source: AGHT+IG6+yn2hi4f5zQoiq02flHYyYZcOj3F9xkCU5tCJvPy/fwIAjloQC6Z6o1Vf2hildMHxeo0ve7vFrAyVXXqFMo=
+X-Received: by 2002:a25:d152:0:b0:db4:7ba7:cfbe with SMTP id
+ i79-20020a25d152000000b00db47ba7cfbemr3437327ybg.16.1702366462818; Mon, 11
+ Dec 2023 23:34:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v8] bus: mhi: host: Add tracing support
-Content-Language: en-US
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Steven Rostedt
-	<rostedt@goodmis.org>,
-        Masami Hiramatsu <mhiramat@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <mhi@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>, <linux-trace-kernel@vger.kernel.org>,
-        <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_parass@quicinc.com>
-References: <20231207-ftrace_support-v8-1-7f62d4558555@quicinc.com>
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20231207-ftrace_support-v8-1-7f62d4558555@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: JjxY7hN5y9C1Z8LD42wJ1DPwjGOuqUcD
-X-Proofpoint-ORIG-GUID: JjxY7hN5y9C1Z8LD42wJ1DPwjGOuqUcD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- lowpriorityscore=0 phishscore=0 impostorscore=0 bulkscore=0 mlxscore=0
- adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312120057
+References: <20231212-x1e80100-clock-controllers-v1-0-0de1af44dcb3@linaro.org> <20231212-x1e80100-clock-controllers-v1-6-0de1af44dcb3@linaro.org>
+In-Reply-To: <20231212-x1e80100-clock-controllers-v1-6-0de1af44dcb3@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 12 Dec 2023 09:34:12 +0200
+Message-ID: <CAA8EJprDT8s=JJaiesnQ0KJywmzS9y2Zwgv6T-k9PZxSGxtyLA@mail.gmail.com>
+Subject: Re: [PATCH 06/10] clk: qcom: clk-alpha-pll: Add support for zonda ole
+ pll configure
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, Rajendra Nayak <quic_rjendra@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Steven,
-
-Can you review it once.
-
-Thanks & Regards,
-
-Krishna Chaitanya.
-
-On 12/7/2023 10:00 AM, Krishna chaitanya chundru wrote:
-> This change adds ftrace support for following functions which
-> helps in debugging the issues when there is Channel state & MHI
-> state change and also when we receive data and control events:
-> 1. mhi_intvec_mhi_states
-> 2. mhi_process_data_event_ring
-> 3. mhi_process_ctrl_ev_ring
-> 4. mhi_gen_tre
-> 5. mhi_update_channel_state
-> 6. mhi_tryset_pm_state
-> 7. mhi_pm_st_worker
+On Tue, 12 Dec 2023 at 00:46, Abel Vesa <abel.vesa@linaro.org> wrote:
 >
-> Where ever the trace events are added, debug messages are removed.
+> From: Rajendra Nayak <quic_rjendra@quicinc.com>
 >
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Zonda ole pll has as extra PLL_OFF_CONFIG_CTL_U2 register, hence add
+> support for it.
+>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+
+The order of S-o-B trailers is incorrect.
+
 > ---
-> Changes in v8:
-> - Pass the structure and derefernce the variables in TP_fast_assign as suggested by steve
-> - Link to v7: https://lore.kernel.org/r/20231206-ftrace_support-v7-1-aca49a04268b@quicinc.com
+>  drivers/clk/qcom/clk-alpha-pll.c | 26 ++++++++++++++++++++++++++
+>  drivers/clk/qcom/clk-alpha-pll.h |  4 ++++
+>  2 files changed, 30 insertions(+)
 >
-> Changes in v7:
-> - change log format as pointed by mani.
-> - Link to v6: https://lore.kernel.org/r/20231204-ftrace_support-v6-1-9b206546dac2@quicinc.com
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index 05898d2a8b22..e1919b57fb65 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -52,6 +52,7 @@
+>  #define PLL_CONFIG_CTL(p)      ((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL])
+>  #define PLL_CONFIG_CTL_U(p)    ((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U])
+>  #define PLL_CONFIG_CTL_U1(p)   ((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U1])
+> +#define PLL_CONFIG_CTL_U2(p)   ((p)->offset + (p)->regs[PLL_OFF_CONFIG_CTL_U2])
+>  #define PLL_TEST_CTL(p)                ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL])
+>  #define PLL_TEST_CTL_U(p)      ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
+>  #define PLL_TEST_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U1])
+> @@ -228,6 +229,21 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
+>                 [PLL_OFF_ALPHA_VAL] = 0x24,
+>                 [PLL_OFF_ALPHA_VAL_U] = 0x28,
+>         },
+> +       [CLK_ALPHA_PLL_TYPE_ZONDA_OLE] =  {
+> +               [PLL_OFF_L_VAL] = 0x04,
+> +               [PLL_OFF_ALPHA_VAL] = 0x08,
+> +               [PLL_OFF_USER_CTL] = 0x0C,
+> +               [PLL_OFF_USER_CTL_U] = 0x10,
+> +               [PLL_OFF_CONFIG_CTL] = 0x14,
+> +               [PLL_OFF_CONFIG_CTL_U] = 0x18,
+> +               [PLL_OFF_CONFIG_CTL_U1] = 0x1C,
+> +               [PLL_OFF_CONFIG_CTL_U2] = 0x20,
+> +               [PLL_OFF_TEST_CTL] = 0x24,
+> +               [PLL_OFF_TEST_CTL_U] = 0x28,
+> +               [PLL_OFF_TEST_CTL_U1] = 0x2C,
+> +               [PLL_OFF_OPMODE] = 0x30,
+> +               [PLL_OFF_STATUS] = 0x3C,
+
+low-case hex please
+
+> +       },
+>  };
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
 >
-> Changes in v6:
-> - use 'rp' directly as suggested by jeffrey.
-> - Link to v5: https://lore.kernel.org/r/20231127-ftrace_support-v5-1-eb67daead4f1@quicinc.com
+> @@ -2093,6 +2109,16 @@ const struct clk_ops clk_alpha_pll_zonda_ops = {
+>  };
+>  EXPORT_SYMBOL_GPL(clk_alpha_pll_zonda_ops);
 >
-> Changes in v5:
-> - Use DECLARE_EVENT_CLASS for multiple events as suggested by steve.
-> - Instead of converting to u64 to print address, use %px to print the address to avoid
-> - warnings in some platforms.
-> - Link to v4: https://lore.kernel.org/r/20231111-ftrace_support-v4-1-c83602399461@quicinc.com
+> +const struct clk_ops clk_alpha_pll_zonda_ole_ops = {
+> +       .enable = clk_zonda_pll_enable,
+> +       .disable = clk_zonda_pll_disable,
+> +       .is_enabled = clk_trion_pll_is_enabled,
+> +       .recalc_rate = clk_trion_pll_recalc_rate,
+> +       .round_rate = clk_alpha_pll_round_rate,
+> +       .set_rate = clk_zonda_pll_set_rate,
+> +};
+> +EXPORT_SYMBOL(clk_alpha_pll_zonda_ole_ops);
+> +
+>  void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>                                  const struct alpha_pll_config *config)
+>  {
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+> index a1a75bb12fe8..99a3db9de4a1 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.h
+> +++ b/drivers/clk/qcom/clk-alpha-pll.h
+> @@ -21,6 +21,7 @@ enum {
+>         CLK_ALPHA_PLL_TYPE_LUCID = CLK_ALPHA_PLL_TYPE_TRION,
+>         CLK_ALPHA_PLL_TYPE_AGERA,
+>         CLK_ALPHA_PLL_TYPE_ZONDA,
+> +       CLK_ALPHA_PLL_TYPE_ZONDA_OLE,
+>         CLK_ALPHA_PLL_TYPE_LUCID_EVO,
+>         CLK_ALPHA_PLL_TYPE_LUCID_OLE,
+>         CLK_ALPHA_PLL_TYPE_RIVIAN_EVO,
+> @@ -42,6 +43,7 @@ enum {
+>         PLL_OFF_CONFIG_CTL,
+>         PLL_OFF_CONFIG_CTL_U,
+>         PLL_OFF_CONFIG_CTL_U1,
+> +       PLL_OFF_CONFIG_CTL_U2,
+>         PLL_OFF_TEST_CTL,
+>         PLL_OFF_TEST_CTL_U,
+>         PLL_OFF_TEST_CTL_U1,
+> @@ -119,6 +121,7 @@ struct alpha_pll_config {
+>         u32 config_ctl_val;
+>         u32 config_ctl_hi_val;
+>         u32 config_ctl_hi1_val;
+> +       u32 config_ctl_hi2_val;
+>         u32 user_ctl_val;
+>         u32 user_ctl_hi_val;
+>         u32 user_ctl_hi1_val;
+> @@ -173,6 +176,7 @@ extern const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops;
 >
-> Changes in v4:
-> - Fix compilation issues in previous patch which happended due to rebasing.
-> - In the defconfig FTRACE config is not enabled due to that the compilation issue is not
-> - seen in my workspace.
-> - Link to v3: https://lore.kernel.org/r/20231111-ftrace_support-v3-1-f358d2911a74@quicinc.com
+>  extern const struct clk_ops clk_alpha_pll_zonda_ops;
+>  #define clk_alpha_pll_postdiv_zonda_ops clk_alpha_pll_postdiv_fabia_ops
+> +extern const struct clk_ops clk_alpha_pll_zonda_ole_ops;
 >
-> Changes in v3:
-> - move trace header file from include/trace/events to drivers/bus/mhi/host/ so that
-> - we can include driver header files.
-> - Use macros directly in the trace events as suggested Jeffrey Hugo.
-> - Reorder the structure in the events as suggested by steve to avoid holes in the buffer.
-> - removed the mhi_to_physical function as this can give security issues.
-> - removed macros to define strings as we can get those from driver headers.
-> - Link to v2: https://lore.kernel.org/r/20231013-ftrace_support-v2-1-6e893ce010b5@quicinc.com
+>  extern const struct clk_ops clk_alpha_pll_lucid_evo_ops;
+>  extern const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops;
 >
-> Changes in v2:
-> - Passing the raw state into the trace event and using  __print_symbolic() as suggested by bjorn.
-> - Change mhi_pm_st_worker to mhi_pm_st_transition as suggested by bjorn.
-> - Fixed the kernel test rebot issues.
-> - Link to v1: https://lore.kernel.org/r/20231005-ftrace_support-v1-1-23a2f394fa49@quicinc.com
-> ---
->   drivers/bus/mhi/host/init.c  |   3 +
->   drivers/bus/mhi/host/main.c  |  19 ++--
->   drivers/bus/mhi/host/pm.c    |   7 +-
->   drivers/bus/mhi/host/trace.h | 205 +++++++++++++++++++++++++++++++++++++++++++
->   4 files changed, 221 insertions(+), 13 deletions(-)
+> --
+> 2.34.1
 >
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index f78aefd2d7a3..6acb85f4c5f8 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -20,6 +20,9 @@
->   #include <linux/wait.h>
->   #include "internal.h"
->   
-> +#define CREATE_TRACE_POINTS
-> +#include "trace.h"
-> +
->   static DEFINE_IDA(mhi_controller_ida);
->   
->   const char * const mhi_ee_str[MHI_EE_MAX] = {
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index dcf627b36e82..189f4786403e 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -15,6 +15,7 @@
->   #include <linux/skbuff.h>
->   #include <linux/slab.h>
->   #include "internal.h"
-> +#include "trace.h"
->   
->   int __must_check mhi_read_reg(struct mhi_controller *mhi_cntrl,
->   			      void __iomem *base, u32 offset, u32 *out)
-> @@ -491,11 +492,8 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->   
->   	state = mhi_get_mhi_state(mhi_cntrl);
->   	ee = mhi_get_exec_env(mhi_cntrl);
-> -	dev_dbg(dev, "local ee: %s state: %s device ee: %s state: %s\n",
-> -		TO_MHI_EXEC_STR(mhi_cntrl->ee),
-> -		mhi_state_str(mhi_cntrl->dev_state),
-> -		TO_MHI_EXEC_STR(ee), mhi_state_str(state));
->   
-> +	trace_mhi_intvec_states(mhi_cntrl, ee, state);
->   	if (state == MHI_STATE_SYS_ERR) {
->   		dev_dbg(dev, "System error detected\n");
->   		pm_state = mhi_tryset_pm_state(mhi_cntrl,
-> @@ -832,6 +830,8 @@ int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->   	while (dev_rp != local_rp) {
->   		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
->   
-> +		trace_mhi_ctrl_event(mhi_cntrl, local_rp);
-> +
->   		switch (type) {
->   		case MHI_PKT_TYPE_BW_REQ_EVENT:
->   		{
-> @@ -997,6 +997,8 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
->   	while (dev_rp != local_rp && event_quota > 0) {
->   		enum mhi_pkt_type type = MHI_TRE_GET_EV_TYPE(local_rp);
->   
-> +		trace_mhi_data_event(mhi_cntrl, local_rp);
-> +
->   		chan = MHI_TRE_GET_EV_CHID(local_rp);
->   
->   		WARN_ON(chan >= mhi_cntrl->max_chan);
-> @@ -1235,6 +1237,7 @@ int mhi_gen_tre(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
->   	mhi_tre->dword[0] = MHI_TRE_DATA_DWORD0(info->len);
->   	mhi_tre->dword[1] = MHI_TRE_DATA_DWORD1(bei, eot, eob, chain);
->   
-> +	trace_mhi_gen_tre(mhi_cntrl, mhi_chan, mhi_tre);
->   	/* increment WP */
->   	mhi_add_ring_element(mhi_cntrl, tre_ring);
->   	mhi_add_ring_element(mhi_cntrl, buf_ring);
-> @@ -1327,9 +1330,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
->   	enum mhi_cmd_type cmd = MHI_CMD_NOP;
->   	int ret;
->   
-> -	dev_dbg(dev, "%d: Updating channel state to: %s\n", mhi_chan->chan,
-> -		TO_CH_STATE_TYPE_STR(to_state));
-> -
-> +	trace_mhi_channel_command_start(mhi_cntrl, mhi_chan, to_state);
->   	switch (to_state) {
->   	case MHI_CH_STATE_TYPE_RESET:
->   		write_lock_irq(&mhi_chan->lock);
-> @@ -1396,9 +1397,7 @@ static int mhi_update_channel_state(struct mhi_controller *mhi_cntrl,
->   		write_unlock_irq(&mhi_chan->lock);
->   	}
->   
-> -	dev_dbg(dev, "%d: Channel state change to %s successful\n",
-> -		mhi_chan->chan, TO_CH_STATE_TYPE_STR(to_state));
-> -
-> +	trace_mhi_channel_command_end(mhi_cntrl, mhi_chan, to_state);
->   exit_channel_update:
->   	mhi_cntrl->runtime_put(mhi_cntrl);
->   	mhi_device_put(mhi_cntrl->mhi_dev);
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index 8a4362d75fc4..5a2394b5b2e1 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -15,6 +15,7 @@
->   #include <linux/slab.h>
->   #include <linux/wait.h>
->   #include "internal.h"
-> +#include "trace.h"
->   
->   /*
->    * Not all MHI state transitions are synchronous. Transitions like Linkdown,
-> @@ -123,6 +124,7 @@ enum mhi_pm_state __must_check mhi_tryset_pm_state(struct mhi_controller *mhi_cn
->   	if (unlikely(!(dev_state_transitions[index].to_states & state)))
->   		return cur_state;
->   
-> +	trace_mhi_tryset_pm_state(mhi_cntrl, state);
->   	mhi_cntrl->pm_state = state;
->   	return mhi_cntrl->pm_state;
->   }
-> @@ -753,7 +755,6 @@ void mhi_pm_st_worker(struct work_struct *work)
->   	struct mhi_controller *mhi_cntrl = container_of(work,
->   							struct mhi_controller,
->   							st_worker);
-> -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->   
->   	spin_lock_irq(&mhi_cntrl->transition_lock);
->   	list_splice_tail_init(&mhi_cntrl->transition_list, &head);
-> @@ -761,8 +762,8 @@ void mhi_pm_st_worker(struct work_struct *work)
->   
->   	list_for_each_entry_safe(itr, tmp, &head, node) {
->   		list_del(&itr->node);
-> -		dev_dbg(dev, "Handling state transition: %s\n",
-> -			TO_DEV_STATE_TRANS_STR(itr->state));
-> +
-> +		trace_mhi_pm_st_transition(mhi_cntrl, itr->state);
->   
->   		switch (itr->state) {
->   		case DEV_ST_TRANSITION_PBL:
-> diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
-> new file mode 100644
-> index 000000000000..73c129bb91d9
-> --- /dev/null
-> +++ b/drivers/bus/mhi/host/trace.h
-> @@ -0,0 +1,205 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#undef TRACE_SYSTEM
-> +#define TRACE_SYSTEM mhi_host
-> +
-> +#if !defined(_TRACE_EVENT_MHI_HOST_H) || defined(TRACE_HEADER_MULTI_READ)
-> +#define _TRACE_EVENT_MHI_HOST_H
-> +
-> +#include <linux/tracepoint.h>
-> +#include <linux/trace_seq.h>
-> +#include "../common.h"
-> +#include "internal.h"
-> +
-> +TRACE_EVENT(mhi_gen_tre,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan,
-> +		 struct mhi_ring_element *mhi_tre),
-> +
-> +	TP_ARGS(mhi_cntrl, mhi_chan, mhi_tre),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(int, ch_num)
-> +		__field(void *, wp)
-> +		__field(__le64, tre_ptr)
-> +		__field(__le32, dword0)
-> +		__field(__le32, dword1)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		__entry->ch_num = mhi_chan->chan;
-> +		__entry->wp = mhi_tre;
-> +		__entry->tre_ptr = mhi_tre->ptr;
-> +		__entry->dword0 = mhi_tre->dword[0];
-> +		__entry->dword1 = mhi_tre->dword[1];
-> +	),
-> +
-> +	TP_printk("%s: Chan: %d Tre: 0x%p Tre buf: 0x%llx dword0: 0x%08x dword1: 0x%08x\n",
-> +		  __get_str(name), __entry->ch_num, __entry->wp, __entry->tre_ptr,
-> +		  __entry->dword0, __entry->dword1)
-> +);
-> +
-> +TRACE_EVENT(mhi_intvec_states,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, int dev_ee, int dev_state),
-> +
-> +	TP_ARGS(mhi_cntrl, dev_ee, dev_state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(int, local_ee)
-> +		__field(int, state)
-> +		__field(int, dev_ee)
-> +		__field(int, dev_state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		__entry->local_ee = mhi_cntrl->ee;
-> +		__entry->state = mhi_cntrl->dev_state;
-> +		__entry->dev_ee = dev_ee;
-> +		__entry->dev_state = dev_state;
-> +	),
-> +
-> +	TP_printk("%s: local ee: %s state: %s device ee: %s state: %s\n",
-> +		  __get_str(name),
-> +		  TO_MHI_EXEC_STR(__entry->local_ee),
-> +		  mhi_state_str(__entry->state),
-> +		  TO_MHI_EXEC_STR(__entry->dev_ee),
-> +		  mhi_state_str(__entry->dev_state))
-> +);
-> +
-> +TRACE_EVENT(mhi_tryset_pm_state,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, int pm_state),
-> +
-> +	TP_ARGS(mhi_cntrl, pm_state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(int, pm_state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		if (pm_state)
-> +			pm_state = __fls(pm_state);
-> +		__entry->pm_state = pm_state;
-> +	),
-> +
-> +	TP_printk("%s: PM state: %s\n", __get_str(name),
-> +		  to_mhi_pm_state_str(__entry->pm_state))
-> +);
-> +
-> +DECLARE_EVENT_CLASS(mhi_process_event_ring,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_ring_element *rp),
-> +
-> +	TP_ARGS(mhi_cntrl, rp),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(__le32, dword0)
-> +		__field(__le32, dword1)
-> +		__field(int, state)
-> +		__field(__le64, ptr)
-> +		__field(void *, rp)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		__entry->rp = rp;
-> +		__entry->ptr = rp->ptr;
-> +		__entry->dword0 = rp->dword[0];
-> +		__entry->dword1 = rp->dword[1];
-> +		__entry->state = MHI_TRE_GET_EV_STATE(rp);
-> +	),
-> +
-> +	TP_printk("%s: Tre: 0x%p Tre buf: 0x%llx dword0: 0x%08x dword1: 0x%08x state: %s\n",
-> +		  __get_str(name), __entry->rp, __entry->ptr, __entry->dword0,
-> +		  __entry->dword1, mhi_state_str(__entry->state))
-> +);
-> +
-> +DEFINE_EVENT(mhi_process_event_ring, mhi_data_event,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_ring_element *rp),
-> +
-> +	TP_ARGS(mhi_cntrl, rp)
-> +);
-> +
-> +DEFINE_EVENT(mhi_process_event_ring, mhi_ctrl_event,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_ring_element *rp),
-> +
-> +	TP_ARGS(mhi_cntrl, rp)
-> +);
-> +
-> +DECLARE_EVENT_CLASS(mhi_update_channel_state,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan, int state),
-> +
-> +	TP_ARGS(mhi_cntrl, mhi_chan, state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(int, ch_num)
-> +		__field(int, state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		__entry->ch_num = mhi_chan->chan;
-> +		__entry->state = state;
-> +	),
-> +
-> +	TP_printk("%s: chan%d: Updating state to: %s\n",
-> +		  __get_str(name), __entry->ch_num,
-> +		  TO_CH_STATE_TYPE_STR(__entry->state))
-> +);
-> +
-> +DEFINE_EVENT(mhi_update_channel_state, mhi_channel_command_start,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan, int state),
-> +
-> +	TP_ARGS(mhi_cntrl, mhi_chan, state)
-> +);
-> +
-> +DEFINE_EVENT(mhi_update_channel_state, mhi_channel_command_end,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, struct mhi_chan *mhi_chan, int state),
-> +
-> +	TP_ARGS(mhi_cntrl, mhi_chan, state)
-> +);
-> +
-> +TRACE_EVENT(mhi_pm_st_transition,
-> +
-> +	TP_PROTO(struct mhi_controller *mhi_cntrl, int state),
-> +
-> +	TP_ARGS(mhi_cntrl, state),
-> +
-> +	TP_STRUCT__entry(
-> +		__string(name, mhi_cntrl->mhi_dev->name)
-> +		__field(int, state)
-> +	),
-> +
-> +	TP_fast_assign(
-> +		__assign_str(name, mhi_cntrl->mhi_dev->name);
-> +		__entry->state = state;
-> +	),
-> +
-> +	TP_printk("%s: Handling state transition: %s\n", __get_str(name),
-> +		  TO_DEV_STATE_TRANS_STR(__entry->state))
-> +);
-> +
-> +#endif
-> +#undef TRACE_INCLUDE_PATH
-> +#define TRACE_INCLUDE_PATH ../../drivers/bus/mhi/host
-> +#undef TRACE_INCLUDE_FILE
-> +#define TRACE_INCLUDE_FILE trace
-> +
-> +#include <trace/define_trace.h>
 >
-> ---
-> base-commit: 3006adf3be79cde4d14b1800b963b82b6e5572e0
-> change-id: 20231005-ftrace_support-6869d4156139
->
-> Best regards,
+
+
+-- 
+With best wishes
+Dmitry
 
