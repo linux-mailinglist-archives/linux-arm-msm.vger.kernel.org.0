@@ -1,165 +1,399 @@
-Return-Path: <linux-arm-msm+bounces-4322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADEEF80E1D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 03:30:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CBB8280E20A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 03:44:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 591BD1F21C85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 02:30:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A1631F21BA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 02:44:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78F965248;
-	Tue, 12 Dec 2023 02:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E7701FC5;
+	Tue, 12 Dec 2023 02:44:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="njGHFwOt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="henAiqxK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9804A10A;
-	Mon, 11 Dec 2023 18:28:23 -0800 (PST)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5e1a2253045so6491137b3.2;
-        Mon, 11 Dec 2023 18:28:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702348102; x=1702952902; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GRgDjRdiQ3wMwyUy9FFnN6Mv3fA6CH+t16OZs0Rwzhk=;
-        b=njGHFwOtcDU42X9C7bBuGmJbwSuGJhDrZkqPkOqBFbG6PPFGLe9QBiGaBn15QlYi8W
-         jVjA5H367FKG7+ERQpZg3RsW2a8hvP9g/5/kFgNk3oAOGRP7MbTmwffPMUs41SIj/rBE
-         F8xlM5uNC3dhHL/7ek0Cw3b6a+cRXg0HNIXtj5Fj45L1iPCuHFWqwVQ/qKnXLss41AhL
-         ahrgvw0tZSFa0P/RMkrJ2wmvtwy/rvAQW8HY3M4OuW1bcpfji1Wb6vcieHzgjAMCBMb/
-         NNN7sHxDh8lPEu9dMBzo0GOEkDr5EqYVLwi9c54O2LrQfXiFyy3drfinIIzCVb13d+8W
-         FX6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702348102; x=1702952902;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GRgDjRdiQ3wMwyUy9FFnN6Mv3fA6CH+t16OZs0Rwzhk=;
-        b=O3MDm5aAelhHdsp4jyWghMYO4ewkiW+/Mi/rhbfVkh9/wI5SBvYuKMOK+ypc6wXZIr
-         HAUACqBEogR5H7k/SFGsPdF+tP6O7jdBK+FFZ7PzRyu8Z1+SLlVQxVKjCycDNPrFIrT/
-         uokqGASXUcoUs9XLNve/bfp5DTz2nUS+gy7cVKXBMdhMDA6qE+H1MR5SiwvvOl64GAn1
-         EfF7I0j6KkXYrIqZuQryvsTJDXEDl3nR9QKJx/tcGhVyuW8TWcHu6mD4xyKbRLxhz5Gq
-         TlSVvaL3zwN/q3KUlm8s6McNE+cYL+lKK+0ZjVyzodvucxFnLTRzcPo87GGBoKchRCy0
-         CmCg==
-X-Gm-Message-State: AOJu0YwGZOlwEXnFsNXaEs1xOGwxdIS1lgzea2STdnQAI9MoqqfyWbQq
-	Uo1SaVDI48R45TEoFY0wvl2/aDC/QaPKjA==
-X-Google-Smtp-Source: AGHT+IGMwceB9+j1udge1W4cal0kKbCSQgG5Yh316/EdKS360cK7bZCjDy7dckWdtEwCMNE+mk/JJA==
-X-Received: by 2002:a05:690c:2c0a:b0:5e1:8405:8b3e with SMTP id eo10-20020a05690c2c0a00b005e184058b3emr1116070ywb.44.1702348101890;
-        Mon, 11 Dec 2023 18:28:21 -0800 (PST)
-Received: from localhost ([2601:344:8301:57f0:38aa:1c88:df05:9b73])
-        by smtp.gmail.com with ESMTPSA id ff9-20020a05690c320900b005e184771849sm519809ywb.93.2023.12.11.18.28.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Dec 2023 18:28:21 -0800 (PST)
-From: Yury Norov <yury.norov@gmail.com>
-To: linux-kernel@vger.kernel.org,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Yury Norov <yury.norov@gmail.com>,
-	linux-arm-kernel@lists.infradead.org,
-	iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org
-Cc: Jan Kara <jack@suse.cz>,
-	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Matthew Wilcox <willy@infradead.org>,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
-	Alexey Klimov <klimov.linux@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>
-Subject: [PATCH v3 19/35] iommu: optimize subsystem by using atomic find_bit() API
-Date: Mon, 11 Dec 2023 18:27:33 -0800
-Message-Id: <20231212022749.625238-20-yury.norov@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20231212022749.625238-1-yury.norov@gmail.com>
-References: <20231212022749.625238-1-yury.norov@gmail.com>
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90C05B5;
+	Mon, 11 Dec 2023 18:44:34 -0800 (PST)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BC2PiGr002115;
+	Tue, 12 Dec 2023 02:44:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=v04bdi64DE9YImBhMWuPysMHAj1EZZHaZn1b/bacBeU=; b=he
+	nAiqxK74VwtY5X/6UhTW5neaLvzneg2FkppEuojTOFfWKzQRM2z4wNG1h3BYZti6
+	YLyQlZsOeCHVJxvOAgJn8uS4ryk2mIQ1kK4M50Lc/Nasb4OHsS7ML4AVl79THBIa
+	rTRywFhE9te/JrWAvQ9eotiHY4vxhdAie96Z4RwLM2XnhKZxOch1cg7UBTFcJSaw
+	iR/35dETLk/4XQEWvipfhglmtE79Luvht+qygAXzZdBbi6h73rCJmaFrmHB+9NPO
+	l4MQ3+woPecovo6YTIGqmYbybazeVmJ8IHdxtyfjdNuyoNEo5+WpiZbNjYGSRoNn
+	1tbVN51DiaxlKfW7GQQw==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uvnv8cxxk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Dec 2023 02:44:28 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BC2iRQg019530
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Dec 2023 02:44:27 GMT
+Received: from [10.47.206.1] (10.49.16.6) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Mon, 11 Dec
+ 2023 18:44:23 -0800
+Message-ID: <cd104cd4-de02-d7ae-13e2-5d45dad5bd49@quicinc.com>
+Date: Mon, 11 Dec 2023 18:44:22 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/4] regulator: qcom-rpmh: extend to support multiple
+ linear voltage ranges
+Content-Language: en-US
+To: <quic_fenglinw@quicinc.com>, Andy Gross <agross@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        "Rob
+ Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, <kernel@quicinc.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_subbaram@quicinc.com>,
+        <quic_jprakash@quicinc.com>
+References: <20231211-pm8010-regulator-v1-0-571e05fb4ecc@quicinc.com>
+ <20231211-pm8010-regulator-v1-1-571e05fb4ecc@quicinc.com>
+From: David Collins <quic_collinsd@quicinc.com>
+In-Reply-To: <20231211-pm8010-regulator-v1-1-571e05fb4ecc@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: j1gevCUrL7QkQ1BSsYPFuPLhEvK9pWFm
+X-Proofpoint-GUID: j1gevCUrL7QkQ1BSsYPFuPLhEvK9pWFm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 mlxlogscore=963 suspectscore=0 priorityscore=1501
+ impostorscore=0 adultscore=0 mlxscore=0 phishscore=0 clxscore=1011
+ bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312120021
 
-Simplify  __arm_smmu_alloc_bitmap() and msm_iommu_alloc_ctx() by using
-a dedicated API, and make them nice one-liner wrappers.
+On 12/10/23 19:16, Fenglin Wu via B4 Relay wrote:
+> From: Fenglin Wu <quic_fenglinw@quicinc.com>
+> 
+> Update rpmh_vreg_hw_data to support multiple linear voltage ranges for
+> potential regulators which have discrete voltage program ranges.
+> 
+> Suggested-by: David Collins <quic_collinsd@quicinc.com>
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
 
-While here, refactor msm_iommu_attach_dev() and msm_iommu_alloc_ctx()
-so that error codes don't mismatch.
+Reviewed-by: David Collins <quic_collinsd@quicinc.com>
 
-Signed-off-by: Yury Norov <yury.norov@gmail.com>
----
- drivers/iommu/arm/arm-smmu/arm-smmu.h | 10 ++--------
- drivers/iommu/msm_iommu.c             | 18 ++++--------------
- 2 files changed, 6 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-index 703fd5817ec1..004a4704ebf1 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -453,15 +453,9 @@ struct arm_smmu_impl {
- 
- static inline int __arm_smmu_alloc_bitmap(unsigned long *map, int start, int end)
- {
--	int idx;
-+	int idx = find_and_set_next_bit(map, end, start);
- 
--	do {
--		idx = find_next_zero_bit(map, end, start);
--		if (idx == end)
--			return -ENOSPC;
--	} while (test_and_set_bit(idx, map));
--
--	return idx;
-+	return idx < end ? idx : -ENOSPC;
- }
- 
- static inline void __iomem *arm_smmu_page(struct arm_smmu_device *smmu, int n)
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index f86af9815d6f..67124f4228b1 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -185,17 +185,9 @@ static const struct iommu_flush_ops msm_iommu_flush_ops = {
- 	.tlb_add_page = __flush_iotlb_page,
- };
- 
--static int msm_iommu_alloc_ctx(unsigned long *map, int start, int end)
-+static int msm_iommu_alloc_ctx(struct msm_iommu_dev *iommu)
- {
--	int idx;
--
--	do {
--		idx = find_next_zero_bit(map, end, start);
--		if (idx == end)
--			return -ENOSPC;
--	} while (test_and_set_bit(idx, map));
--
--	return idx;
-+	return find_and_set_bit(iommu->context_map, iommu->ncb);
- }
- 
- static void msm_iommu_free_ctx(unsigned long *map, int idx)
-@@ -418,10 +410,8 @@ static int msm_iommu_attach_dev(struct iommu_domain *domain, struct device *dev)
- 					ret = -EEXIST;
- 					goto fail;
- 				}
--				master->num =
--					msm_iommu_alloc_ctx(iommu->context_map,
--							    0, iommu->ncb);
--				if (IS_ERR_VALUE(master->num)) {
-+				master->num = msm_iommu_alloc_ctx(iommu);
-+				if (master->num >= iommu->ncb) {
- 					ret = -ENODEV;
- 					goto fail;
- 				}
--- 
-2.40.1
+> ---
+>  drivers/regulator/qcom-rpmh-regulator.c | 115 ++++++++++++++++++++++++--------
+>  1 file changed, 89 insertions(+), 26 deletions(-)
+> 
+> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+> index cf502eec0915..43b45feb02e6 100644
+> --- a/drivers/regulator/qcom-rpmh-regulator.c
+> +++ b/drivers/regulator/qcom-rpmh-regulator.c
+> @@ -1,5 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  // Copyright (c) 2018-2021, The Linux Foundation. All rights reserved.
+> +// Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>  
+>  #define pr_fmt(fmt) "%s: " fmt, __func__
+>  
+> @@ -68,10 +69,11 @@ enum rpmh_regulator_type {
+>   * @regulator_type:		RPMh accelerator type used to manage this
+>   *				regulator
+>   * @ops:			Pointer to regulator ops callback structure
+> - * @voltage_range:		The single range of voltages supported by this
+> - *				PMIC regulator type
+> + * @voltage_ranges:		The possible ranges of voltages supported by this
+> + * 				PMIC regulator type
+> + * @n_linear_ranges:		Number of entries in voltage_ranges
+>   * @n_voltages:			The number of unique voltage set points defined
+> - *				by voltage_range
+> + *				by voltage_ranges
+>   * @hpm_min_load_uA:		Minimum load current in microamps that requires
+>   *				high power mode (HPM) operation.  This is used
+>   *				for LDO hardware type regulators only.
+> @@ -85,7 +87,8 @@ enum rpmh_regulator_type {
+>  struct rpmh_vreg_hw_data {
+>  	enum rpmh_regulator_type		regulator_type;
+>  	const struct regulator_ops		*ops;
+> -	const struct linear_range	voltage_range;
+> +	const struct linear_range		*voltage_ranges;
+> +	int					n_linear_ranges;
+>  	int					n_voltages;
+>  	int					hpm_min_load_uA;
+>  	const int				*pmic_mode_map;
+> @@ -449,8 +452,8 @@ static int rpmh_regulator_init_vreg(struct rpmh_vreg *vreg, struct device *dev,
+>  	vreg->mode = REGULATOR_MODE_INVALID;
+>  
+>  	if (rpmh_data->hw_data->n_voltages) {
+> -		vreg->rdesc.linear_ranges = &rpmh_data->hw_data->voltage_range;
+> -		vreg->rdesc.n_linear_ranges = 1;
+> +		vreg->rdesc.linear_ranges = rpmh_data->hw_data->voltage_ranges;
+> +		vreg->rdesc.n_linear_ranges = rpmh_data->hw_data->n_linear_ranges;
+>  		vreg->rdesc.n_voltages = rpmh_data->hw_data->n_voltages;
+>  	}
+>  
+> @@ -613,7 +616,10 @@ static unsigned int rpmh_regulator_pmic4_bob_of_map_mode(unsigned int rpmh_mode)
+>  static const struct rpmh_vreg_hw_data pmic4_pldo = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_drms_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(1664000, 0, 255, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(1664000, 0, 255, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 256,
+>  	.hpm_min_load_uA = 10000,
+>  	.pmic_mode_map = pmic_mode_map_pmic4_ldo,
+> @@ -623,7 +629,10 @@ static const struct rpmh_vreg_hw_data pmic4_pldo = {
+>  static const struct rpmh_vreg_hw_data pmic4_pldo_lv = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_drms_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(1256000, 0, 127, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +	       REGULATOR_LINEAR_RANGE(1256000, 0, 127, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 128,
+>  	.hpm_min_load_uA = 10000,
+>  	.pmic_mode_map = pmic_mode_map_pmic4_ldo,
+> @@ -633,7 +642,10 @@ static const struct rpmh_vreg_hw_data pmic4_pldo_lv = {
+>  static const struct rpmh_vreg_hw_data pmic4_nldo = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_drms_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(312000, 0, 127, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(312000, 0, 127, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 128,
+>  	.hpm_min_load_uA = 30000,
+>  	.pmic_mode_map = pmic_mode_map_pmic4_ldo,
+> @@ -643,7 +655,10 @@ static const struct rpmh_vreg_hw_data pmic4_nldo = {
+>  static const struct rpmh_vreg_hw_data pmic4_hfsmps3 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 216,
+>  	.pmic_mode_map = pmic_mode_map_pmic4_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -652,7 +667,10 @@ static const struct rpmh_vreg_hw_data pmic4_hfsmps3 = {
+>  static const struct rpmh_vreg_hw_data pmic4_ftsmps426 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 258, 4000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(320000, 0, 258, 4000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 259,
+>  	.pmic_mode_map = pmic_mode_map_pmic4_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -661,7 +679,10 @@ static const struct rpmh_vreg_hw_data pmic4_ftsmps426 = {
+>  static const struct rpmh_vreg_hw_data pmic4_bob = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_bypass_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(1824000, 0, 83, 32000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(1824000, 0, 83, 32000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 84,
+>  	.pmic_mode_map = pmic_mode_map_pmic4_bob,
+>  	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+> @@ -676,7 +697,10 @@ static const struct rpmh_vreg_hw_data pmic4_lvs = {
+>  static const struct rpmh_vreg_hw_data pmic5_pldo = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_drms_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(1504000, 0, 255, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(1504000, 0, 255, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 256,
+>  	.hpm_min_load_uA = 10000,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_ldo,
+> @@ -686,7 +710,10 @@ static const struct rpmh_vreg_hw_data pmic5_pldo = {
+>  static const struct rpmh_vreg_hw_data pmic5_pldo_lv = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_drms_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(1504000, 0, 62, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(1504000, 0, 62, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 63,
+>  	.hpm_min_load_uA = 10000,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_ldo,
+> @@ -696,7 +723,10 @@ static const struct rpmh_vreg_hw_data pmic5_pldo_lv = {
+>  static const struct rpmh_vreg_hw_data pmic5_pldo515_mv = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_drms_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(1800000, 0, 187, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(1800000, 0, 187, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 188,
+>  	.hpm_min_load_uA = 10000,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_ldo,
+> @@ -706,7 +736,10 @@ static const struct rpmh_vreg_hw_data pmic5_pldo515_mv = {
+>  static const struct rpmh_vreg_hw_data pmic5_nldo = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_drms_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 123, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(320000, 0, 123, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 124,
+>  	.hpm_min_load_uA = 30000,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_ldo,
+> @@ -716,7 +749,10 @@ static const struct rpmh_vreg_hw_data pmic5_nldo = {
+>  static const struct rpmh_vreg_hw_data pmic5_nldo515 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_drms_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 210, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(320000, 0, 210, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 211,
+>  	.hpm_min_load_uA = 30000,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_ldo,
+> @@ -726,7 +762,10 @@ static const struct rpmh_vreg_hw_data pmic5_nldo515 = {
+>  static const struct rpmh_vreg_hw_data pmic5_hfsmps510 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 216,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -735,7 +774,10 @@ static const struct rpmh_vreg_hw_data pmic5_hfsmps510 = {
+>  static const struct rpmh_vreg_hw_data pmic5_ftsmps510 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 263, 4000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(300000, 0, 263, 4000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 264,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -744,7 +786,10 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps510 = {
+>  static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 263, 4000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(300000, 0, 263, 4000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 264,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -753,7 +798,10 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
+>  static const struct rpmh_vreg_hw_data pmic5_ftsmps525_lv = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(300000, 0, 267, 4000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(300000, 0, 267, 4000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 268,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -762,7 +810,10 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps525_lv = {
+>  static const struct rpmh_vreg_hw_data pmic5_ftsmps525_mv = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(600000, 0, 267, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(600000, 0, 267, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 268,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -771,7 +822,10 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps525_mv = {
+>  static const struct rpmh_vreg_hw_data pmic5_ftsmps527 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(320000, 0, 215, 8000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 215,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -780,7 +834,10 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps527 = {
+>  static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(320000, 0, 235, 16000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 236,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -789,7 +846,10 @@ static const struct rpmh_vreg_hw_data pmic5_hfsmps515 = {
+>  static const struct rpmh_vreg_hw_data pmic5_hfsmps515_1 = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(900000, 0, 4, 16000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(900000, 0, 4, 16000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 5,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+>  	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+> @@ -798,7 +858,10 @@ static const struct rpmh_vreg_hw_data pmic5_hfsmps515_1 = {
+>  static const struct rpmh_vreg_hw_data pmic5_bob = {
+>  	.regulator_type = VRM,
+>  	.ops = &rpmh_regulator_vrm_bypass_ops,
+> -	.voltage_range = REGULATOR_LINEAR_RANGE(3000000, 0, 31, 32000),
+> +	.voltage_ranges = (struct linear_range[]) {
+> +		REGULATOR_LINEAR_RANGE(3000000, 0, 31, 32000),
+> +	},
+> +	.n_linear_ranges = 1,
+>  	.n_voltages = 32,
+>  	.pmic_mode_map = pmic_mode_map_pmic5_bob,
+>  	.of_map_mode = rpmh_regulator_pmic4_bob_of_map_mode,
+> 
 
 
