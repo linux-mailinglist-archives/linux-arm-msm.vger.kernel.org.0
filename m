@@ -1,188 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-4370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E3B980E7A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 10:30:29 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1B8580E7E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 10:40:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F49FB20AF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:30:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1EFC21C2040E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:40:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 317B2584E4;
-	Tue, 12 Dec 2023 09:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60C7E58AAA;
+	Tue, 12 Dec 2023 09:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AQzqdmXo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uhjbM8Jp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F2F6D2;
-	Tue, 12 Dec 2023 01:30:19 -0800 (PST)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BC7ga3q028772;
-	Tue, 12 Dec 2023 09:30:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=CKm/3xL+1KN3jFbIu0q3bENZbD/pAYxnXVYmTsZSXKM=; b=AQ
-	zqdmXo8SdHDgRzC19Eb27JRatNUrV1lDMnHmRs+bdY/4/CFFhtr9R9MTlrmUyph2
-	v6dymZeBywgLqKst7lwyFDVrv8eesORhahv7iBy+erydbPjBj7OXCYtrb+jXVV2h
-	U88wNQU3FHEAsHve+viL/YW0aM7LVPrJidmpriqlBTNrRm8eAhASCxAbl3dgnrKg
-	NvioJbxxTN5cOt4d2leowHNyBEe3FsOYNZ8U/+zYhv22Zf6BJv5GrHaL4pQa/Cki
-	VrkJJP8NbTFMCheXPQSnR0C78vfxMaFvN+AWeGVOr9szaEPQTIMaFftCMiJpFXQx
-	D9iUjEDiWsWks1Ssf5fA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uxkc8089j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 09:30:16 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BC9UESe009141
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 09:30:14 GMT
-Received: from [10.216.15.26] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Tue, 12 Dec
- 2023 01:30:10 -0800
-Message-ID: <06354190-b572-46e4-8036-0fae7f15dd15@quicinc.com>
-Date: Tue, 12 Dec 2023 15:00:07 +0530
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59922DB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 01:40:04 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-a1f37fd4b53so653774866b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 01:40:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702374003; x=1702978803; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=T7WSPbehcijEKgEJWzyVTs2cXCZ1wk5EWf1JMP+vpZw=;
+        b=uhjbM8JpQ5gJdMeBgxEi+hfHJmDWQeFVjq0k9Ld0LAzC/fsoNKUfSzLb9bp6DIqXln
+         3FpeX8h806MQW7gXHh0/Z+WuMGExkpojuFDWc0KmlN4h1rxVx2TDvgVjNrFoXCK/UQz2
+         8onqZZeeQCfJgF5MyE7VLp7zJqbSp1ucFIbss75NO26Fne2TAc6bbXbqFKz3NCo91aRU
+         DwLLq7eRqJUMyCRZu8OlBdrJS3M7EfXfC5cgCY4rrEB1NTD1Aux9ii6xKGqf9x2ybyvk
+         z6qaA8/ADyYDbOoznIjYaqZtB0/3DNSjNlmo9s6dIzf2TQwjPwbBBeUldki5BjDGdd8p
+         uM4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702374003; x=1702978803;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T7WSPbehcijEKgEJWzyVTs2cXCZ1wk5EWf1JMP+vpZw=;
+        b=WMW/I16jZsO2QiS6WtMT49vOroljKn2i9IgDUsYqN1+4QThj2rHlxUXPelbn8OlHGQ
+         dK3uFYf+TFOocU7WOiN8PpnJY86VziLNcT8yCZ3oHfkiONrXQR89BOy3Vuzzze7hW5xP
+         gMPlR0E/txAdbLoQ1wbJobvc6xpir2Bqli6xj9GJI3TPrkrKROr9+AORRh7Up0N2FtVl
+         niUctvMuYhz6zHvSCMmKFktBPEwEFEsdxgChsJwGl75soDQAUqpfhRL5s3373b7Qa647
+         lZsZ15INw5aHnDs8R43bdaCq8IMYXuKi6HsoJh8x9C058eM3fdf65ICJlZSgoFH8c8Vv
+         7LIQ==
+X-Gm-Message-State: AOJu0YxF+Qv3aNoPMl6xQ1VeQEYolOwY/76aZPS9bNsiaTuqUrbrmrFb
+	cybMB5BrioCuh5kKTMhAGfLljw==
+X-Google-Smtp-Source: AGHT+IFzFmwY5xwsSBjeFaYogBsab8uI25xMWlwPgCNrjrXjwWM9aMvv9w1//6BcPicBY41+tDiU/A==
+X-Received: by 2002:a17:907:3d8e:b0:a19:a1ba:da4b with SMTP id he14-20020a1709073d8e00b00a19a1bada4bmr3632691ejc.114.1702374002701;
+        Tue, 12 Dec 2023 01:40:02 -0800 (PST)
+Received: from [127.0.1.1] ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id ub26-20020a170907c81a00b00a1c96e987c4sm6037240ejc.101.2023.12.12.01.40.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 01:40:02 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Tue, 12 Dec 2023 11:39:52 +0200
+Subject: [PATCH] arm64: dts: qcom: Add SMB2360 pmic dtsi
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/11] ARM/arm64: dts: qcom: fix USB wakeup interrupt
- types
-To: Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20231120164331.8116-1-johan+linaro@kernel.org>
- <ZXc7KcjF82EgiXWd@hovoldconsulting.com>
-Content-Language: en-US
-From: Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZXc7KcjF82EgiXWd@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: f4nHxxn8XQaS_EOlrkWKkZkYZKC5X6aa
-X-Proofpoint-ORIG-GUID: f4nHxxn8XQaS_EOlrkWKkZkYZKC5X6aa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- priorityscore=1501 mlxlogscore=435 suspectscore=0 bulkscore=0
- malwarescore=0 adultscore=0 impostorscore=0 spamscore=0 mlxscore=0
- phishscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312120074
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20231212-x1e80100-dts-smb2360-v1-1-c28bb4d7105e@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGgqeGUC/x2NQQrCQAwAv1JyNpCkaMWviIfdbWoDdZWNSqH07
+ waPMzDMBq7N1OHSbdD0a27PGsCHDsqc6l3RxmAQkp6FGFfWMzERjm9Hf2TpT4RUhiLHSZTSAJH
+ m5Iq5pVrmiOtnWUK+mk62/l/X277/AMpXxoF7AAAA
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1778; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=cENQN0lGVHkALBwjCWgcaICqf2Y63xNy5bQr8heDzrk=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBleCpslNoWRkn7+O49nH1Q8ovNlCDxqv5SowLTF
+ dqdYY0TDS+JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZXgqbAAKCRAbX0TJAJUV
+ VsBSEADFIrPMRJ/aVC7MlIn49AwHaxVBk6HCuBNApbP82miRDGenqLS1IbGX2x+K8bIczuml1lX
+ MfI4P9guC3gn+lONJ8YIqAQVQW6v6UhS9nCJvSbkGFPYarnkT3QaDkm/xZ+YZVDJIRhtmZZbWZ7
+ XjT9P3NIf0vQf5s9p2MiBPhzEwK2rQUK0I48kEIhSzx4KGktO+TToQnVMhy1LyCz3L08oYXJtxm
+ sYzklmvwTOGQo8xiqgzveaUhJfgyQD/S6CRFplaCS0Z0/lPVbWLi7quw11SVbQftTYZoCNEz0wN
+ zXHP6RrIuPzCvmuQ7NnP/WxuZ3cGwrk54tF6IuA2ruQv800OLInJTkN1J3joPT5ieBt9ICSJmfO
+ Tn0XMmExWzSPr7sAe57E+Apv/czMvZGlt92BVMa/YX1gLHuE/cAEFNnN7r30jEOfSt0IJsW6Lsy
+ IwZZvkuubVNm7p0JJxhF++5apJTjV45nxPlpJS8gGhMx8JZWS2sXrJxIgVfXU5BqfnrPZW8/0i9
+ azs2DjW5XxlKKjpXezYzrQtD8ComuTaddbxWKF6pHEBisqTSW9i14GfxdevFxUxJJ4+cV4cIDAS
+ J41bS5uLg4pmTMBPtyuhhRd/ug+D2ZLYwHzgzysnLVNhb5w93+PfwAczyB14g5Oj7RTHlPxH/1i
+ ZJHSk97VOCoHzRQ==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
+Add nodes for SMB2360 in separate dtsi file.
+Also add the eUSB2 repeater nodes.
 
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/smb2360.dtsi | 51 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-On 12/11/2023 10:09 PM, Johan Hovold wrote:
-> On Mon, Nov 20, 2023 at 05:43:20PM +0100, Johan Hovold wrote:
-> 
->> It turns out a number Qualcomm devicetrees have also gotten the trigger
->> types wrong, something which this series addresses.
->>
->> Specifically, the HS/SS PHY wakeup interrupts are level triggered while
->> the DP/DM HS PHY interrupts are edge triggered, and which edge to
->> trigger on depends both on the use-case and on whether a Low speed or
->> Full/High speed device is connected.
->>
->> Fortunately, there should be no dependency between this series and USB
->> one as all devicetree use the correct trigger type for the HS/SS PHY
->> interrupts and the HS one has never been armed by Linux anyway. The
->> DP/DM interrupt trigger types are also updated on suspend currently.
-> 
-> Konrad reported off-list that the sc8180x patch in this series breaks
-> probe of the dwc3 driver.
-> 
-> Turns out a number of these SoCs were using GIC interrupts for the
-> DP/DM_HS_PHY interrupts despite the fact that the driver tries to
-> reconfigure these as IRQ_TYPE_EDGE_FALLING (which the GIC does not
-> support) to detect disconnect events during suspend.
-> 
-> This is obviously broken and the proper fix is to replace the GIC
-> interrupts with the corresponding PDC interrupts. I believe Konrad is
-> digging out the magic numbers at this moment.
-> 
-> The following patches will need a follow-up fix:
-> 
->>    ARM: dts: qcom: sdx55: fix USB wakeup interrupt types
-> 
->>    arm64: dts: qcom: sc8180x: fix USB wakeup interrupt types
->>    arm64: dts: qcom: sdm670: fix USB wakeup interrupt types
->>    arm64: dts: qcom: sdm845: fix USB wakeup interrupt types
->>    arm64: dts: qcom: sm6375: fix USB wakeup interrupt types
->>    arm64: dts: qcom: sm8150: fix USB wakeup interrupt types
-> 
-Hi Johan,
+diff --git a/arch/arm64/boot/dts/qcom/smb2360.dtsi b/arch/arm64/boot/dts/qcom/smb2360.dtsi
+new file mode 100644
+index 000000000000..782746a20403
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/smb2360.dtsi
+@@ -0,0 +1,51 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2023, Linaro Limited
++ */
++
++#include <dt-bindings/interrupt-controller/irq.h>
++#include <dt-bindings/spmi/spmi.h>
++
++/ {
++};
++
++&spmi1_bus {
++	smb2360h: pmic@7 {
++		compatible = "qcom,sm2360", "qcom,spmi-pmic";
++		reg = <0x7 SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		smb2360_1_eusb2_repeater: phy@fd00 {
++			compatible = "qcom,smb2360-eusb2-repeater";
++			reg = <0xfd00>;
++			#phy-cells = <0>;
++		};
++	};
++
++	smb2360k: pmic@a {
++		compatible = "qcom,sm2360", "qcom,spmi-pmic";
++		reg = <0xa SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		smb2360_2_eusb2_repeater: phy@fd00 {
++			compatible = "qcom,smb2360-eusb2-repeater";
++			reg = <0xfd00>;
++			#phy-cells = <0>;
++		};
++	};
++
++	smb2360l: pmic@b {
++		compatible = "qcom,sm2360", "qcom,spmi-pmic";
++		reg = <0xb SPMI_USID>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		smb2360_3_eusb2_repeater: phy@fd00 {
++			compatible = "qcom,smb2360-eusb2-repeater";
++			reg = <0xfd00>;
++			#phy-cells = <0>;
++		};
++	};
++};
 
-  If it helps, I tried to dig up the PDC numbers for corresponding 
-GIC_SPI vectors:
+---
+base-commit: bbd220ce4e29ed55ab079007cff0b550895258eb
+change-id: 20231201-x1e80100-dts-smb2360-0c7c25f2e0a7
 
+Best regards,
+-- 
+Abel Vesa <abel.vesa@linaro.org>
 
-SM8150:
-
-eud_p0_dpse_int_mx	apps_pdc_irq_out[9]	SYS_apcsQgicSPI[489]
-eud_p0_dmse_int_mx    apps_pdc_irq_out[8]	SYS_apcsQgicSPI[488]
-qmp_usb3_lfps_rxterm_irq apps_pdc_irq_out[6]	SYS_apcsQgicSPI[486]
-usb31_power_event_irq	SYS_apcsQgicSPI[130]
-usb31_hs_phy_irq	SYS_apcsQgicSPI[131]
-
-interrupts-extended = <&pdc 9 IRQ_TYPE_EDGE_RISING>,
-			<&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
-			<&pdc 6 IRQ_TYPE_LEVEL_HIGH>,
-			<&pdc 8 IRQ_TYPE_EDGE_RISING>;
-
-interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
-		"ss_phy_irq", "dm_hs_phy_irq";
-
---
-
-sdm845-670-usb-common.dtsi
-
-interrupts = <0 489 0>, <0 130 0>, <0 486 0>, <0 488 0>;
-interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
-		"ss_phy_irq", "dm_hs_phy_irq";
-
-interrupts = <0 491 0>, <0 135 0>, <0 487 0>, <0 490 0>;
-interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
-		"ss_phy_irq", "dm_hs_phy_irq";
-
-eud_p0_dpse_int_mx	apps_pdc_irq_out[9]	SYS_apssQgicSPI[489]
-eud_p0_dmse_int_mx	apps_pdc_irq_out[8]	SYS_apssQgicSPI[488]
-eud_p1_dmse_int_mx	apps_pdc_irq_out[10]	SYS_apssQgicSPI[490]
-eud_p1_dpse_int_mx	apps_pdc_irq_out[11]	SYS_apssQgicSPI[491]
-qmp_usb3_lfps_rxterm_irq	apps_pdc_irq_out[7]	SYS_apssQgicSPI[487]
-qmp_usb3_lfps_rxterm_irq	apps_pdc_irq_out[6]	SYS_apssQgicSPI[486]
-
---
-
-SDX55:
-
-interrupts = <0 157 0>, <0 130 0>, <0 158 0>, <0 198 0>;
-interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
-		"dm_hs_phy_irq", "ss_phy_irq";
-
-eud_p1_dpse_int_mx	apps_pdc_irq_out[10]	SYS_apcsQgicSPI[157]
-eud_p1_dmse_int_mx	apps_pdc_irq_out[11]	SYS_apcsQgicSPI[158]
-apps_pdc.gp_irq_mux[31]	apps_pdc_irq_out[51]	SYS_apcsQgicSPI[198]
-
---
-
-SM6375, I think GIC_SPI is fine but I will try to get back on this.
-
-Sorry for bad formatting.
-
-Regards,
-Krishna,
 
