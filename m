@@ -1,82 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-4316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CE1280E133
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 03:04:17 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D315380E16B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 03:28:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4E0091C216EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 02:04:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9393D2826FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 02:28:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CB3915B7;
-	Tue, 12 Dec 2023 02:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24D0823A0;
+	Tue, 12 Dec 2023 02:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KvB3QG5H"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L8PUrzs1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B2CD1;
-	Mon, 11 Dec 2023 18:04:07 -0800 (PST)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BBNeted027884;
-	Tue, 12 Dec 2023 02:03:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-transfer-encoding:content-type; s=
-	qcppdkim1; bh=kHub05U0B+zmWdZnOUL04+cyD7bS/dheX96Vem6982Q=; b=Kv
-	B3QG5HkYGmUZWAck21FxO4icmrvhYSRFK6CoKl56ykTTa2nQ7ougp7S5/zl45gdE
-	SfoRj7m7WcHKhYOJjxIvZcjp2I0lBl38nTHvTUtFJQ8KVTGwbwsV6D3xUzutv851
-	8K2yrqMDn868l88Yxbxy/Tj7fhxg0DupAB9xdWTq34v6wd1w76UkKr1QvTgc5Qup
-	G9JCLAhazJSS7ZNy5eiro4QqRULB6+fnlW6Uw2aGFE20l2wUVioHBdlc6P/JObCF
-	nAkmBrVlId5RN7eYd9IFi0y4tmCOhPFqrHoaNgeEkk6+kh/v3npcc09nTuRkXG4o
-	VFO/uMBp1obqpHUoM9Gw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ux653136b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 02:03:22 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BC23LxJ012477
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Dec 2023 02:03:21 GMT
-Received: from hu-johmoo-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.40; Mon, 11 Dec 2023 18:03:17 -0800
-From: John Moon <quic_johmoo@quicinc.com>
-To: Masahiro Yamada <masahiroy@kernel.org>,
-        Nathan Chancellor
-	<nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Nicolas
- Schier" <nicolas@fjasle.eu>,
-        Jonathan Corbet <corbet@lwn.net>
-CC: John Moon <quic_johmoo@quicinc.com>, <linux-kbuild@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <kernel@quicinc.com>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Rob Herring <robh@kernel.org>, Carlos O'Donell
-	<carlos@redhat.com>,
-        Randy Dunlap <rdunlap@infradead.org>, Arnd Bergmann
-	<arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>, Todd Kjos
-	<tkjos@google.com>,
-        Matthias Maennich <maennich@google.com>,
-        Giuliano Procida
-	<gprocida@google.com>, <kernel-team@android.com>,
-        <libabigail@sourceware.org>, Dodji Seketeli <dodji@redhat.com>,
-        Trilok Soni
-	<quic_tsoni@quicinc.com>,
-        Satya Durga Srinivasu Prabhala
-	<quic_satyap@quicinc.com>,
-        Jordan Crouse <jorcrous@amazon.com>
-Subject: [PATCH v7 3/3] check-module-params: Introduce check-module-params.sh
-Date: Mon, 11 Dec 2023 18:02:59 -0800
-Message-ID: <20231212020259.2451253-4-quic_johmoo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231212020259.2451253-1-quic_johmoo@quicinc.com>
-References: <20231212020259.2451253-1-quic_johmoo@quicinc.com>
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B958B8;
+	Mon, 11 Dec 2023 18:27:54 -0800 (PST)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-5d2d0661a8dso51961347b3.2;
+        Mon, 11 Dec 2023 18:27:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702348072; x=1702952872; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2rIXSzzj4Vn0OnxWzlgjGuiOUWfNx+9Oitq+JebsnVk=;
+        b=L8PUrzs1+qvtJTEy+7AGBZh1fWhl/E005JrdDhV3OiA5Ld3/JIjRDEygACFZqcwt2b
+         lu6DgfJ4W2IwASoaAz3iXbSaKTyFTeb6JRxx/kgZqoIj8eM2lV6OU3TkfACGDXVXIm7h
+         kB9aB0zJCrLAikCJjil2QmvKARkfe3iu04T9eChV3im6oep7YYGNtaKeyJsT6zWbHvnI
+         XsHkzl/No4fhuoA1756SOF3WzmfIsXLgsbphIF/8++iH2IZkAPkqLFuQVZTp3LwhU03P
+         3kPxlwaA6fdkxQ1BUfA2/RAgoi8aUU28QxQBc07LdhJdYCl/DYPHChFWXe4H5Mkx0ekk
+         3U8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702348072; x=1702952872;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2rIXSzzj4Vn0OnxWzlgjGuiOUWfNx+9Oitq+JebsnVk=;
+        b=okwHH4732d6Jd8ap/mlnoxgsH6pX3GM9cGmKTuetPBq8354a7xy4myY1B7Wva1OoOE
+         05/bqCeesp3sYNjrVwN3Zc37ThB7Yg5DFc3DZviREyP44ftLL/XYIO48HSVKi1nlQCHq
+         99mbm3U1dogZnKogzinuK4ZwN9/hWLsa3Hn8kgixopmZxAlukVRqrUCJmwSRumkkAO7K
+         iLOjIHwcMqdUDHlE2uJzt8ze5unuxjrx0IDLY0VKkp155kzebJJnE0eX/rinI8wER7Sx
+         JITTPPyI+jplqtUi/f92VhPp0cEqE/SPJ5/Iw5ZRew04Yf2qGGnscemICDDsFOVOGvah
+         WTWA==
+X-Gm-Message-State: AOJu0YwU8hTirw4gpUvRxlk8B7o7j/8Mc964WO4Y/ky/BtPe0Z79tSen
+	glopQHVGkCInCwDPKTXgEUG4lrP5u6yhBA==
+X-Google-Smtp-Source: AGHT+IGNrxiOB0CU5Pwp1l0+iyVygpKHBLCSMm3YHsDrVXT56LslkKopHRNY35LGYnIHsoxEKrxNng==
+X-Received: by 2002:a0d:f6c7:0:b0:5d7:1940:b37e with SMTP id g190-20020a0df6c7000000b005d71940b37emr4381333ywf.74.1702348071823;
+        Mon, 11 Dec 2023 18:27:51 -0800 (PST)
+Received: from localhost ([2601:344:8301:57f0:38aa:1c88:df05:9b73])
+        by smtp.gmail.com with ESMTPSA id y188-20020a0dd6c5000000b005d6da42e443sm3448474ywd.59.2023.12.11.18.27.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Dec 2023 18:27:51 -0800 (PST)
+From: Yury Norov <yury.norov@gmail.com>
+To: linux-kernel@vger.kernel.org,
+	"David S. Miller" <davem@davemloft.net>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	"Md. Haris Iqbal" <haris.iqbal@ionos.com>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	David Disseldorp <ddiss@suse.de>,
+	Edward Cree <ecree.xilinx@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jiri Pirko <jiri@resnulli.us>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Karsten Graul <kgraul@linux.ibm.com>,
+	Karsten Keil <isdn@linux-pingi.de>,
+	Kees Cook <keescook@chromium.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Martin Habets <habetsm.xilinx@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Michal Simek <monstr@monstr.eu>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Oliver Neukum <oneukum@suse.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Rich Felker <dalias@libc.org>,
+	Rob Herring <robh@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Wenjia Zhang <wenjia@linux.ibm.com>,
+	Will Deacon <will@kernel.org>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	GR-QLogic-Storage-Upstream@marvell.com,
+	alsa-devel@alsa-project.org,
+	ath10k@lists.infradead.org,
+	dmaengine@vger.kernel.org,
+	iommu@lists.linux.dev,
+	kvm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-block@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org,
+	linux-hyperv@vger.kernel.org,
+	linux-m68k@lists.linux-m68k.org,
+	linux-media@vger.kernel.org,
+	linux-mips@vger.kernel.org,
+	linux-net-drivers@amd.com,
+	linux-pci@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	linux-s390@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
+	linux-serial@vger.kernel.org,
+	linux-sh@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	mpi3mr-linuxdrv.pdl@broadcom.com,
+	netdev@vger.kernel.org,
+	sparclinux@vger.kernel.org,
+	x86@kernel.org
+Cc: Yury Norov <yury.norov@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Matthew Wilcox <willy@infradead.org>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>,
+	Alexey Klimov <klimov.linux@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>
+Subject: [PATCH v3 00/35] bitops: add atomic find_bit() operations
+Date: Mon, 11 Dec 2023 18:27:14 -0800
+Message-Id: <20231212022749.625238-1-yury.norov@gmail.com>
+X-Mailer: git-send-email 2.40.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,435 +164,234 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: p3ns36G_XC_4MnLHFgxIG4MlSACnGcuD
-X-Proofpoint-GUID: p3ns36G_XC_4MnLHFgxIG4MlSACnGcuD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
- mlxscore=0 mlxlogscore=999 clxscore=1015 adultscore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2311290000
- definitions=main-2312120014
 
-One part of maintaining backwards compatibility with older
-userspace programs is avoiding changes to module parameters.
+Add helpers around test_and_{set,clear}_bit() that allow to search for
+clear or set bits and flip them atomically.
 
-To that end, add a script (check-module-params.sh) which
-performs a simple check of module parameter changes across
-git references.
+The target patterns may look like this:
 
-For example, if this module parameter:
+	for (idx = 0; idx < nbits; idx++)
+		if (test_and_clear_bit(idx, bitmap))
+			do_something(idx);
 
-module_param(max_nullfunc_tries, int, 0644);
+Or like this:
 
-...restricted its mode parameter:
+	do {
+		bit = find_first_bit(bitmap, nbits);
+		if (bit >= nbits)
+			return nbits;
+	} while (!test_and_clear_bit(bit, bitmap));
+	return bit;
 
-module_param(max_nullfunc_tries, int, 0600);
+In both cases, the opencoded loop may be converted to a single function
+or iterator call. Correspondingly:
 
-The script would flag the change:
+	for_each_test_and_clear_bit(idx, bitmap, nbits)
+		do_something(idx);
 
-Module parameter "max_nullfunc_tries" in net/mac80211/mlme.c changed!
-  Original args: int,0644
-       New args: int,0600
+Or:
+	return find_and_clear_bit(bitmap, nbits);
 
-Signed-off-by: John Moon <quic_johmoo@quicinc.com>
+Obviously, the less routine code people have to write themself, the
+less probability to make a mistake.
+
+Those are not only handy helpers but also resolve a non-trivial
+issue of using non-atomic find_bit() together with atomic
+test_and_{set,clear)_bit().
+
+The trick is that find_bit() implies that the bitmap is a regular
+non-volatile piece of memory, and compiler is allowed to use such
+optimization techniques like re-fetching memory instead of caching it.
+
+For example, find_first_bit() is implemented like this:
+
+      for (idx = 0; idx * BITS_PER_LONG < sz; idx++) {
+              val = addr[idx];
+              if (val) {
+                      sz = min(idx * BITS_PER_LONG + __ffs(val), sz);
+                      break;
+              }
+      }
+
+On register-memory architectures, like x86, compiler may decide to
+access memory twice - first time to compare against 0, and second time
+to fetch its value to pass it to __ffs().
+
+When running find_first_bit() on volatile memory, the memory may get
+changed in-between, and for instance, it may lead to passing 0 to
+__ffs(), which is undefined. This is a potentially dangerous call.
+
+find_and_clear_bit() as a wrapper around test_and_clear_bit()
+naturally treats underlying bitmap as a volatile memory and prevents
+compiler from such optimizations.
+
+Now that KCSAN is catching exactly this type of situations and warns on
+undercover memory modifications. We can use it to reveal improper usage
+of find_bit(), and convert it to atomic find_and_*_bit() as appropriate.
+
+In some cases concurrent operations with plain find_bit() are acceptable.
+For example:
+
+ - two threads running find_*_bit(): safe wrt ffs(0) and returns correct
+   value, because underlying bitmap is unchanged;
+ - find_next_bit() in parallel with set or clear_bit(), when modifying
+   a bit prior to the start bit to search: safe and correct;
+ - find_first_bit() in parallel with set_bit(): safe, but may return wrong
+   bit number;
+ - find_first_zero_bit() in parallel with clear_bit(): same as above.
+
+In last 2 cases find_bit() may not return a correct bit number, but
+it may be OK if caller requires any (not exactly the first) set or clear
+bit, correspondingly.
+
+In such cases, KCSAN may be safely silenced with data_race(). But in most
+cases where KCSAN detects concurrency people should carefully review their
+code and likely protect critical sections or switch to atomic
+find_and_bit(), as appropriate.
+
+The 1st patch of the series adds the following atomic primitives:
+
+	find_and_set_bit(addr, nbits);
+	find_and_set_next_bit(addr, nbits, start);
+	...
+
+Here find_and_{set,clear} part refers to the corresponding
+test_and_{set,clear}_bit function. Suffixes like _wrap or _lock
+derive their semantics from corresponding find() or test() functions.
+
+For brevity, the naming omits the fact that we search for zero bit in
+find_and_set, and correspondingly search for set bit in find_and_clear
+functions.
+
+The patch also adds iterators with atomic semantics, like
+for_each_test_and_set_bit(). Here, the naming rule is to simply prefix
+corresponding atomic operation with 'for_each'.
+
+In [1] Jan reported 2% slowdown in a single-thread search test when
+switching find_bit() function to treat bitmaps as volatile arrays. On
+the other hand, kernel robot in the same thread reported +3.7% to the
+performance of will-it-scale.per_thread_ops test.
+
+Assuming that our compilers are sane and generate better code against
+properly annotated data, the above discrepancy doesn't look weird. When
+running on non-volatile bitmaps, plain find_bit() outperforms atomic
+find_and_bit(), and vice-versa.
+
+So, all users of find_bit() API, where heavy concurrency is expected,
+are encouraged to switch to atomic find_and_bit() as appropriate.
+
+The 1st patch of this series adds atomic find_and_bit() API, 2nd adds
+a basic test for new API, and all the following patches spread it over
+the kernel.
+
+They can be applied separately from each other on per-subsystems basis,
+or I can pull them in bitmap tree, as appropriate.
+
+[1] https://lore.kernel.org/lkml/634f5fdf-e236-42cf-be8d-48a581c21660@alu.unizg.hr/T/#m3e7341eb3571753f3acf8fe166f3fb5b2c12e615
+
 ---
-    - Added ability to filter out equivalent permission changes
-      (e.g. S_IRUGO -> 0444 is now considered compatible).
-    - Added flag to avoid filtering out equivalent permission changes
-      in case user doesn't have/want a host compiler.
-    - Added flag to skip flagging module param removals as this may
-      be too noisy in some cases.
-    - Fixed typos in log naming.
+v1: https://lore.kernel.org/netdev/20231118155105.25678-29-yury.norov@gmail.com/T/
+v2: https://lore.kernel.org/all/20231204185101.ddmkvsr2xxsmoh2u@quack3/T/
+v3:
+ - collect more reviews;
+ - align wording in commit messages @ Bjorn Helgaas;
+ - add examples where non-atomic find_bit() may safely race @ Jan Kara;
+ - patch  #3: use if-else instead of ternary operator @ Jens Axboe;
+ - patch #13: align coding style @ Vitaly Kuznetsov, Sean Christopherson;
 
- scripts/check-module-params.sh | 371 +++++++++++++++++++++++++++++++++
- 1 file changed, 371 insertions(+)
- create mode 100755 scripts/check-module-params.sh
+Yury Norov (35):
+  lib/find: add atomic find_bit() primitives
+  lib/find: add test for atomic find_bit() ops
+  lib/sbitmap; optimize __sbitmap_get_word() by using find_and_set_bit()
+  watch_queue: optimize post_one_notification() by using
+    find_and_clear_bit()
+  sched: add cpumask_find_and_set() and use it in __mm_cid_get()
+  mips: sgi-ip30: optimize heart_alloc_int() by using find_and_set_bit()
+  sparc: optimize alloc_msi() by using find_and_set_bit()
+  perf/arm: use atomic find_bit() API
+  drivers/perf: optimize ali_drw_get_counter_idx() by using
+    find_and_set_bit()
+  dmaengine: idxd: optimize perfmon_assign_event()
+  ath10k: optimize ath10k_snoc_napi_poll() with an atomic iterator
+  wifi: rtw88: optimize the driver by using atomic iterator
+  KVM: x86: hyper-v: optimize and cleanup kvm_hv_process_stimers()
+  PCI: hv: Optimize hv_get_dom_num() by using find_and_set_bit()
+  scsi: core: optimize scsi_evt_emit() by using an atomic iterator
+  scsi: mpi3mr: optimize the driver by using find_and_set_bit()
+  scsi: qedi: optimize qedi_get_task_idx() by using find_and_set_bit()
+  powerpc: optimize arch code by using atomic find_bit() API
+  iommu: optimize subsystem by using atomic find_bit() API
+  media: radio-shark: optimize driver by using atomic find_bit() API
+  sfc: optimize driver by using atomic find_bit() API
+  tty: nozomi: optimize interrupt_handler()
+  usb: cdc-acm: optimize acm_softint()
+  block: null_blk: replace get_tag() with a generic
+    find_and_set_bit_lock()
+  RDMA/rtrs: optimize __rtrs_get_permit() by using
+    find_and_set_bit_lock()
+  mISDN: optimize get_free_devid()
+  media: em28xx: cx231xx: optimize drivers by using find_and_set_bit()
+  ethernet: rocker: optimize ofdpa_port_internal_vlan_id_get()
+  serial: sc12is7xx: optimize sc16is7xx_alloc_line()
+  bluetooth: optimize cmtp_alloc_block_id()
+  net: smc: optimize smc_wr_tx_get_free_slot_index()
+  ALSA: use atomic find_bit() functions where applicable
+  m68k: optimize get_mmu_context()
+  microblaze: optimize get_mmu_context()
+  sh: mach-x3proto: optimize ilsel_enable()
 
-diff --git a/scripts/check-module-params.sh b/scripts/check-module-params.sh
-new file mode 100755
-index 000000000000..990b271a8dbf
---- /dev/null
-+++ b/scripts/check-module-params.sh
-@@ -0,0 +1,371 @@
-+#!/bin/bash
-+# SPDX-License-Identifier: GPL-2.0-only
-+# Script to check commits for UAPI backwards compatibility
-+
-+set -o errexit
-+set -o pipefail
-+
-+print_usage() {
-+	name=$(basename "$0")
-+	cat << EOF
-+$name - check for module parameter stability across git commits.
-+
-+By default, the script will check to make sure the latest commit (or current
-+dirty changes) did not introduce changes when compared to HEAD^1. You can
-+check against additional commit ranges with the -b and -p options.
-+
-+Usage: $name [-b BASE_REF] [-p PAST_REF] [-j N] [-l ERROR_LOG] [-P] [-R] [-q]
-+
-+Options:
-+    -b BASE_REF    Base git reference to use for comparison. If unspecified or empty,
-+                   will use any dirty changes in tree. If there are no dirty changes,
-+                   HEAD will be used.
-+    -p PAST_REF    Compare BASE_REF to PAST_REF (e.g. -p v6.1). If unspecified or empty,
-+                   will use BASE_REF^1. Must be an ancestor of BASE_REF. Only headers
-+                   that exist on PAST_REF will be checked for compatibility.
-+    -j JOBS        Number of checks to run in parallel (default: number of CPU cores).
-+    -l ERROR_LOG   Write error log to file (default: no error log is generated).
-+    -P             Flag all changes to permissions (even if they're compatible). This
-+                   option negates the need for a host C compiler.
-+    -R             Skip flagging parameter removals.
-+    -q             Quiet operation (suppress stdout, still print stderr).
-+
-+Environmental args:
-+    HOSTCC   C compiler for permission conversion to octal (default is "gcc")
-+
-+Exit codes:
-+    $SUCCESS) Success
-+    $FAILURE) Module param differences detected
-+EOF
-+}
-+
-+readonly SUCCESS=0
-+readonly FAILURE=1
-+
-+# Print to stderr
-+eprintf() {
-+	# shellcheck disable=SC2059
-+	printf "$@" >&2
-+}
-+
-+# Check if git tree is dirty
-+tree_is_dirty() {
-+	! git diff --quiet
-+}
-+
-+file_module_params_unmodified() {
-+	local file="$1"
-+	local base_ref="$2"
-+	local past_ref="$3"
-+	local base_params_file="${TMP_DIR}/${file}.base"
-+	local past_params_file="${TMP_DIR}/${file}.past"
-+	local error_log="${TMP_DIR}/${file}.error"
-+
-+	local -r awk_cmd='/^ *module_param.*\(/,/.*\);/'
-+
-+	mkdir -p "$(dirname "$error_log")"
-+	git show "${past_ref}:${file}" 2> /dev/null \
-+		| awk "$awk_cmd" > "$past_params_file" || true
-+
-+	if [ -z "$base_ref" ]; then
-+		awk "$awk_cmd" "${KERNEL_SRC}/${file}" \
-+			> "$base_params_file" 2> /dev/null || true
-+	else
-+		git show "${base_ref}:${file}" 2> /dev/null \
-+			| awk "$awk_cmd" > "$base_params_file" || true
-+	fi
-+
-+	# Ignore files that don't exist at the past ref or don't have module params
-+	if [ ! -s "$past_params_file" ]; then
-+		return 255 # Special return code for "no-op"
-+	fi
-+
-+	# Process the param data to come up with an associative array of param names to param data
-+	# For example:
-+	#   module_param_call(foo, set_result, get_result, NULL, 0600);
-+	#
-+	# is processed into:
-+	#   pre_change_params[foo]="set_result,get_result,NULL,0600"
-+	local -A pre_change_params
-+	local param_name
-+	local param_params
-+
-+	while read -r mod_param_args; do
-+		param_name="$(echo "$mod_param_args" | cut -d ',' -f 1)"
-+		param_params="$(echo "$mod_param_args" | cut -d ',' -f 2-)"
-+
-+		pre_change_params[$param_name]=$param_params
-+	done < <(tr -d '\t\n ' < "$past_params_file" | tr ';' '\n' | perl -lne '/\((.*)\)/ && print $1')
-+
-+	local -A post_change_params
-+	while read -r mod_param_args; do
-+		param_name="$(echo "$mod_param_args" | cut -d ',' -f 1)"
-+		param_params="$(echo "$mod_param_args" | cut -d ',' -f 2-)"
-+
-+		post_change_params[$param_name]=$param_params
-+	done < <(tr -d '\t\n ' < "$base_params_file" | tr ';' '\n' | perl -lne '/\((.*)\)/ && print $1')
-+
-+	#for param in "${!pre_change_params[@]}"; do
-+	#	echo "$param: ${pre_change_params[${param}]}"
-+	#done
-+
-+	# Flag any module param changes that:
-+	#  - Remove/rename a parameter
-+	#  - Change the arguments of the parameter
-+	local incompat_param_changes=0
-+	local pre
-+	local post
-+	for param_name in "${!pre_change_params[@]}"; do
-+		pre="${pre_change_params[$param_name]}"
-+		if [ ! "${post_change_params[$param_name]+set}" ]; then
-+			if [ "$SKIP_PARAM_REMOVALS" = "true" ]; then
-+				continue
-+			fi
-+			{
-+				printf "Module parameter \"%s\" in %s removed!\n" "$param_name" "$file"
-+				printf "  Original args: %s\n" "$pre"
-+			} > "$error_log"
-+			incompat_param_changes=$((incompat_param_changes + 1))
-+			continue
-+		fi
-+
-+		post="${post_change_params[$param_name]}"
-+		if [ "$pre" != "$post" ]; then
-+			if [ "$SKIP_SAFE_PERM_CHANGES" = "true" ] && perm_change_is_safe "$pre" "$post"; then
-+				continue
-+			fi
-+			{
-+				printf "Module parameter \"%s\" in %s changed!\n" "$param_name" "$file"
-+				printf "  Original args: %s\n" "$pre"
-+				printf "       New args: %s\n" "$post"
-+			} > "$error_log"
-+			incompat_param_changes=$((incompat_param_changes + 1))
-+			continue
-+		fi
-+	done
-+
-+	if [ "$incompat_param_changes" -gt 0 ]; then
-+		return 1
-+	fi
-+}
-+
-+perm_change_is_safe() {
-+	local -r pre="$1"
-+	local -r post="$2"
-+
-+	# Assume that the permission arg is always the last one.
-+	pre_perm_arg=$(echo "$pre" | grep -o '[^,]*$')
-+	post_perm_arg=$(echo "$post" | grep -o '[^,]*$')
-+
-+	# If the non-permission arguments are different, then
-+	# don't even bother checking the permission arg.
-+	if [ "${pre/,${pre_perm_arg}/}" != "${post/,${post_perm_arg}/}" ]; then
-+		return 1
-+	fi
-+
-+	# Convert both to octal representation to compare
-+	pre_perm_arg_octal=$(get_octal_val "$pre_perm_arg")
-+	post_perm_arg_octal=$(get_octal_val "$post_perm_arg")
-+
-+	if [ "$pre_perm_arg_octal" = "$post_perm_arg_octal" ]; then
-+		return 0
-+	else
-+		return 1
-+	fi
-+}
-+
-+get_octal_val() {
-+	local -r input="$1"
-+
-+	# Save needing to recompile for input we've seen before
-+	local -r input_hash="$(echo "$input" | md5sum | cut -d ' ' -f 1)"
-+
-+	local -r prog="${TMP_DIR}/get_octal_val_${input_hash}"
-+	local -r stat="include/linux/stat.h"
-+
-+	if [ ! -x "$prog" ]; then
-+		cat << EOF > "${prog}.c"
-+#include <stdio.h>
-+#include <sys/stat.h>
-+
-+$(grep '#define *S_IRWXUGO' "$stat")
-+$(grep '#define *S_IALLUGO' "$stat")
-+$(grep '#define *S_IRUGO' "$stat")
-+$(grep '#define *S_IWUGO' "$stat")
-+$(grep '#define *S_IXUGO' "$stat")
-+
-+int main(void) { printf("%04o\\n", $input); };
-+EOF
-+		"${HOSTCC:-gcc}" -o "$prog" "${prog}.c"
-+	fi
-+
-+	"$prog"
-+}
-+run() {
-+	local base_ref="$1"
-+	local past_ref="$2"
-+	local param_error_log="$3"
-+
-+	diff_args=("$past_ref")
-+	if [ -n "$base_ref" ]; then
-+		diff_args+=("$base_ref")
-+	fi
-+
-+	local -a threads=()
-+	local passed=0
-+	local failed=0
-+	printf "Checking files between %s and %s for module parameter compatibility...\n" \
-+		"$past_ref" "$base_ref"
-+	while read -r modified_file; do
-+		if [ "${#threads[@]}" -ge "$MAX_THREADS" ]; then
-+			wait "${threads[0]}" && ret="$?" || ret="$?"
-+			if [ "$ret" -eq 0 ]; then
-+				passed=$((passed + 1))
-+			elif [ "$ret" -eq 1 ]; then
-+				failed=$((failed + 1))
-+			fi
-+			threads=("${threads[@]:1}")
-+		fi
-+
-+		file_module_params_unmodified "$modified_file" "$base_ref" "$past_ref" &
-+		threads+=("$!")
-+	done < <(git diff --diff-filter=MCD --name-only "${diff_args[@]}" -- '*.c' '*.h')
-+
-+	for t in "${threads[@]}"; do
-+		wait "$t" && ret="$?" || ret="$?"
-+		if [ "$ret" -eq 0 ]; then
-+			passed=$((passed + 1))
-+		elif [ "$ret" -eq 1 ]; then
-+			failed=$((failed + 1))
-+		fi
-+	done
-+
-+	total=$((passed + failed))
-+	if [ "$total" -eq 0 ]; then
-+		printf "No files with module parameters modified between %s and %s\n" \
-+			"$past_ref" "${base_ref:-dirty tree}"
-+		exit "$SUCCESS"
-+	fi
-+
-+	if [ -n "$param_error_log" ]; then
-+		printf 'Generated by "%s %s" from git ref %s\n\n' \
-+			"$0" "$*" "$(git rev-parse HEAD)" > "$param_error_log"
-+	fi
-+
-+	while read -r error_file; do
-+		{
-+			cat "$error_file"
-+			printf "\n\n"
-+		} | tee -a "${param_error_log:-/dev/null}" >&2
-+	done < <(find "$TMP_DIR" -type f -name '*.error' | sort)
-+
-+	if [ "$failed" -gt 0 ]; then
-+		eprintf "error - %d/%d files with modules parameters appear _not_ to be backwards compatible\n" \
-+			"$failed" "$total"
-+		if [ -n "$param_error_log" ]; then
-+			eprintf "Failure summary saved to %s\n" "$param_error_log"
-+		fi
-+	else
-+		printf "All %d files with module_parameters checked appear to be backwards compatible\n" \
-+			"$total"
-+	fi
-+
-+	exit "$failed"
-+}
-+
-+# Make sure the git refs we have make sense
-+check_refs() {
-+	if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
-+		eprintf "error - this script requires the kernel tree to be initialized with Git\n"
-+		return 1
-+	fi
-+
-+	if ! git rev-parse --verify "$past_ref" > /dev/null 2>&1; then
-+		printf 'error - invalid git reference "%s"\n' "$past_ref"
-+		return 1
-+	fi
-+
-+	if [ -n "$base_ref" ]; then
-+		if ! git merge-base --is-ancestor "$past_ref" "$base_ref" > /dev/null 2>&1; then
-+			printf 'error - "%s" is not an ancestor of base ref "%s"\n' "$past_ref" "$base_ref"
-+			return 1
-+		fi
-+		if [ "$(git rev-parse "$base_ref")" = "$(git rev-parse "$past_ref")" ]; then
-+			printf 'error - "%s" and "%s" are the same reference\n' "$past_ref" "$base_ref"
-+			return 1
-+		fi
-+	fi
-+}
-+
-+main() {
-+	MAX_THREADS=$(nproc)
-+	SKIP_SAFE_PERM_CHANGES="true"
-+	SKIP_PARAM_REMOVALS="false"
-+	quiet="false"
-+	local base_ref=""
-+	while getopts "hb:p:j:l:PRq" opt; do
-+		case $opt in
-+		h)
-+			print_usage
-+			exit "$SUCCESS"
-+			;;
-+		b)
-+			base_ref="$OPTARG"
-+			;;
-+		p)
-+			past_ref="$OPTARG"
-+			;;
-+		j)
-+			MAX_THREADS="$OPTARG"
-+			;;
-+		l)
-+			param_error_log="$OPTARG"
-+			;;
-+		P)
-+			SKIP_SAFE_PERM_CHANGES="false"
-+			;;
-+		R)
-+			SKIP_PARAM_REMOVALS="true"
-+			;;
-+		q)
-+			quiet="true"
-+			;;
-+		*)
-+			exit "$FAILURE"
-+		esac
-+	done
-+
-+	if [ "$quiet" = "true" ]; then
-+		exec > /dev/null 2>&1
-+	fi
-+
-+	if [ -z "$KERNEL_SRC" ]; then
-+		KERNEL_SRC="$(realpath "$(dirname "$0")"/..)"
-+	fi
-+
-+	cd "$KERNEL_SRC"
-+
-+	if [ -z "$base_ref" ] && ! tree_is_dirty; then
-+		base_ref=HEAD
-+	fi
-+
-+	if [ -z "$past_ref" ]; then
-+		if [ -n "$base_ref" ]; then
-+			past_ref="${base_ref}^1"
-+		else
-+			past_ref=HEAD
-+		fi
-+	fi
-+
-+	if ! check_refs; then
-+		exit "$FAILURE"
-+	fi
-+
-+	TMP_DIR=$(mktemp -d)
-+	readonly TMP_DIR
-+	trap 'rm -rf "$TMP_DIR"' EXIT
-+
-+	run "$base_ref" "$past_ref" "$param_error_log"
-+}
-+
-+main "$@"
---
-2.34.1
+ arch/m68k/include/asm/mmu_context.h          |  11 +-
+ arch/microblaze/include/asm/mmu_context_mm.h |  11 +-
+ arch/mips/sgi-ip30/ip30-irq.c                |  12 +-
+ arch/powerpc/mm/book3s32/mmu_context.c       |  10 +-
+ arch/powerpc/platforms/pasemi/dma_lib.c      |  45 +--
+ arch/powerpc/platforms/powernv/pci-sriov.c   |  12 +-
+ arch/sh/boards/mach-x3proto/ilsel.c          |   4 +-
+ arch/sparc/kernel/pci_msi.c                  |   9 +-
+ arch/x86/kvm/hyperv.c                        |  40 +--
+ drivers/block/null_blk/main.c                |  41 +--
+ drivers/dma/idxd/perfmon.c                   |   8 +-
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c       |  15 +-
+ drivers/iommu/arm/arm-smmu/arm-smmu.h        |  10 +-
+ drivers/iommu/msm_iommu.c                    |  18 +-
+ drivers/isdn/mISDN/core.c                    |   9 +-
+ drivers/media/radio/radio-shark.c            |   5 +-
+ drivers/media/radio/radio-shark2.c           |   5 +-
+ drivers/media/usb/cx231xx/cx231xx-cards.c    |  16 +-
+ drivers/media/usb/em28xx/em28xx-cards.c      |  37 +--
+ drivers/net/ethernet/rocker/rocker_ofdpa.c   |  11 +-
+ drivers/net/ethernet/sfc/rx_common.c         |   4 +-
+ drivers/net/ethernet/sfc/siena/rx_common.c   |   4 +-
+ drivers/net/ethernet/sfc/siena/siena_sriov.c |  14 +-
+ drivers/net/wireless/ath/ath10k/snoc.c       |   9 +-
+ drivers/net/wireless/realtek/rtw88/pci.c     |   5 +-
+ drivers/net/wireless/realtek/rtw89/pci.c     |   5 +-
+ drivers/pci/controller/pci-hyperv.c          |   7 +-
+ drivers/perf/alibaba_uncore_drw_pmu.c        |  10 +-
+ drivers/perf/arm-cci.c                       |  24 +-
+ drivers/perf/arm-ccn.c                       |  10 +-
+ drivers/perf/arm_dmc620_pmu.c                |   9 +-
+ drivers/perf/arm_pmuv3.c                     |   8 +-
+ drivers/scsi/mpi3mr/mpi3mr_os.c              |  21 +-
+ drivers/scsi/qedi/qedi_main.c                |   9 +-
+ drivers/scsi/scsi_lib.c                      |   7 +-
+ drivers/tty/nozomi.c                         |   5 +-
+ drivers/tty/serial/sc16is7xx.c               |   8 +-
+ drivers/usb/class/cdc-acm.c                  |   5 +-
+ include/linux/cpumask.h                      |  12 +
+ include/linux/find.h                         | 293 +++++++++++++++++++
+ kernel/sched/sched.h                         |  14 +-
+ kernel/watch_queue.c                         |   6 +-
+ lib/find_bit.c                               |  85 ++++++
+ lib/sbitmap.c                                |  46 +--
+ lib/test_bitmap.c                            |  61 ++++
+ net/bluetooth/cmtp/core.c                    |  10 +-
+ net/smc/smc_wr.c                             |  10 +-
+ sound/pci/hda/hda_codec.c                    |   7 +-
+ sound/usb/caiaq/audio.c                      |  13 +-
+ 49 files changed, 631 insertions(+), 419 deletions(-)
+
+-- 
+2.40.1
 
 
