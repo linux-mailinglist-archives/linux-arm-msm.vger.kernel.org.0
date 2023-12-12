@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-4353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E608080E6C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:54:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C2F780E6CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 09:54:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 716EE1F22242
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:54:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8E5851C2139D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 08:54:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C943374EB;
-	Tue, 12 Dec 2023 08:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED1594B5CE;
+	Tue, 12 Dec 2023 08:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BftAJngO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MbPBRnQf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2F4ADB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:53:06 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9fa2714e828so703555766b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:53:06 -0800 (PST)
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A70DD0
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:53:29 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-54c64316a22so7145362a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 00:53:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702371185; x=1702975985; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702371208; x=1702976008; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Skev5mhgSycZ+0IAPG/qALIkG3HsL9tXL0lkVTUlICM=;
-        b=BftAJngOjCkB8n8MYmr9HfkG7MeZk68NihKzueLTClC+DQcNIhvQCU1Yo9k6hn8Lt4
-         DOaW/sUt3an6cuxzDCUAewxZkBE8bI+pb/0SeRZ1I/hUedg9o7gHdZfLQkwnORAsXVTV
-         L0I8WOwB3g5/Graj1a0+j4dXI03IrUDQ9oN/P8FeodDZRIJiwJDk6nKK6blLov1mU1mh
-         i6aG3y5TMa8rUKzc9rHe6phtCKgUJWEwvsq0XTMR4Rc8sP7j/mZUuUTO7XAzRjltAinU
-         JSvSKKIC+yC2XPzDz7E3rCNlVcpNR65TdHfWrJ/5UGLNcsPGXP4WIYCkhWDG8Oaig2mm
-         1CCA==
+        bh=dQltyttoGLCs/jPlZv/enHiDVjGAlH93zMMeXDkzmiE=;
+        b=MbPBRnQfJX9n95xHRjQGZKxxuBkb9Lan7KP0PqjSOIdd7EKk1Z3TbAI6v7GLokkVT3
+         K1r/ANulRVAEIER1VbX2oe3WyAtWEVsV25i3ZqdjdpA2RPB2r4PsK5RD8ZzVJKEkzMnf
+         EZ1DKajf0Xn0idrS4G5BQvLloAl9QwL8F/9BSIUFN5SSD2kELgn2uYUkVr8Zp069k9YJ
+         fp3qUst5oKBcX3M3JMvI1qOpIrVV097MO//PGNxw6+AZv8DYCTOsWjIpNYClSEiyqL3B
+         M21venWfQrffEFyfebv14Ff1oHUVo0aMTyjCO74LS/yP+D1frTlqvVR+nVWd5by1YiO1
+         jv4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702371185; x=1702975985;
+        d=1e100.net; s=20230601; t=1702371208; x=1702976008;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Skev5mhgSycZ+0IAPG/qALIkG3HsL9tXL0lkVTUlICM=;
-        b=aP99EdnjoXq4rshI7Pr1CPwTOFVgtRO0hOL16PEhAq0B+WOJb8id7fC4kFheQGssSD
-         LuIiUOGAk2I+pkcgJEh75tjXcP5OnoP9oYSySiFdOKKmn+bJkorUnzDGKHLpa6ek9lZB
-         2rYiEdlndLJCvAytJrzsSReCk9ivLOjKSQNtL3bE/4NbJLzT9USSVXlyVb0xxNiPuPqi
-         0Pqmhcov1AG1NvLtX68STif643sOYcTgHMPnxT+DgSUkz+q0+5M6pSyk+O8o3kXcFj94
-         hAdTFnO7gv1FaY62OuCVsWxyUWqAzoC21zo9xFIA2UoYGLgCYxRMeVGPlZWRbAoKLeFe
-         K/7w==
-X-Gm-Message-State: AOJu0YwQQPpM/JviUpxePvbYi/97rakjM7AKCcp/oHvXBB42fQ1/6uob
-	lvXLDQweyRjzA73Nlh/E/c3f0g==
-X-Google-Smtp-Source: AGHT+IFt8AtQhClpmjgTERxvW1fzAA05irQGBlIdrBW3l2G6CeFGzQPO1sT3ZOZOFY/XDpsD3wEjcw==
-X-Received: by 2002:a17:907:94d5:b0:a19:a19b:55f8 with SMTP id dn21-20020a17090794d500b00a19a19b55f8mr4118083ejc.136.1702371185365;
-        Tue, 12 Dec 2023 00:53:05 -0800 (PST)
+        bh=dQltyttoGLCs/jPlZv/enHiDVjGAlH93zMMeXDkzmiE=;
+        b=ML0++nnb16KsiTR3B80rp5oAYyWQi1LuD3ulKxNAeymmHTo3fONp1ugt2w0drGZaLo
+         cBqm61zSrMr2lIPhNWy1Ar1RzbeTBM6XkyF7KDmXycdGxc+rq50fwMtT3yP/yXq4MhRY
+         EhCuSjJrvMUC+iEdyPfbPwov+kisCphm2ZV/EVcdYJqDzaPZa2zeYlEY2tf17T+nNXX0
+         bF9v5n+txVGx75OiXXABJfCieuDY9OpgPbK5lhuxEYK615+Uv+aQugcMTpZ8NcenInlR
+         1y8CwqPHBnTCUe8qqqliGt9e7IumPWFBpb6tltjCyY27yLNVWCEXKasVecBkWDZ5lYY+
+         ctZg==
+X-Gm-Message-State: AOJu0Yx6epe4o3978PD9gb5ITjWqxCYUs2mlo3A7hgrpTJhNZ14tDFrl
+	Dbe8wSPsHzN1VO+eXjcDDRHooQ==
+X-Google-Smtp-Source: AGHT+IH3II1hXO44MERNBh2ByC1PTvXCnfxjV/vfbhBVou0qebYlptAo28H7dlCwzw7Z9p+3X9I2Rg==
+X-Received: by 2002:a17:906:101e:b0:9e4:121c:b9fd with SMTP id 30-20020a170906101e00b009e4121cb9fdmr3217462ejm.12.1702371207941;
+        Tue, 12 Dec 2023 00:53:27 -0800 (PST)
 Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id tm6-20020a170907c38600b00a1db955c809sm5899658ejc.73.2023.12.12.00.53.03
+        by smtp.gmail.com with ESMTPSA id tm6-20020a170907c38600b00a1db955c809sm5899658ejc.73.2023.12.12.00.53.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Dec 2023 00:53:04 -0800 (PST)
-Message-ID: <c39735ac-e173-4696-aba3-9753baa64764@linaro.org>
-Date: Tue, 12 Dec 2023 09:53:02 +0100
+        Tue, 12 Dec 2023 00:53:27 -0800 (PST)
+Message-ID: <6a609932-c02d-4264-ba0d-653b69d20425@linaro.org>
+Date: Tue, 12 Dec 2023 09:53:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,8 +62,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/10] dt-bindings: clock: qcom: Document the X1E80100 GPU
- Clock Controller
+Subject: Re: [PATCH 04/10] dt-bindings: clock: qcom: Document the X1E80100
+ TCSR Clock Controller
 Content-Language: en-US
 To: Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -78,7 +78,7 @@ Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
  Rajendra Nayak <quic_rjendra@quicinc.com>
 References: <20231212-x1e80100-clock-controllers-v1-0-0de1af44dcb3@linaro.org>
- <20231212-x1e80100-clock-controllers-v1-3-0de1af44dcb3@linaro.org>
+ <20231212-x1e80100-clock-controllers-v1-4-0de1af44dcb3@linaro.org>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -124,18 +124,21 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  KQ06ztUMRrj8eVtpImjsWCd0bDWRaaR4vqhCHvAG9iWXZu4qh3ipie2Y0oSJygcZT7H3UZxq
  fyYKiqEmRuqsvv6dcbblD8ZLkz1EVZL6djImH5zc5x8qpVxlA0A0i23v5QvN00m6G9NFF0Le
  D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20231212-x1e80100-clock-controllers-v1-3-0de1af44dcb3@linaro.org>
+In-Reply-To: <20231212-x1e80100-clock-controllers-v1-4-0de1af44dcb3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 11/12/2023 23:45, Abel Vesa wrote:
-> From: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Add bindings documentation for the X1E80100 TCSR Clock Controller.
 > 
-> Add bindings documentation for the X1E80100 Graphics Clock Controller.
-> 
+> Co-developed-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
 > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
+>  .../bindings/clock/qcom,sm8550-tcsr.yaml           |  1 +
+>  include/dt-bindings/clock/qcom,x1e80100-tcsr.h     | 23 ++++++++++++++++++++++
+>  2 files changed, 24 insertions(+)
+> 
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
