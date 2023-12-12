@@ -1,90 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-4383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DD4180E8C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 11:11:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 011B580E902
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 11:24:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DD11DB20A8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 10:11:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A2A871F218FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Dec 2023 10:24:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07D3C59536;
-	Tue, 12 Dec 2023 10:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58C0759539;
+	Tue, 12 Dec 2023 10:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V+lTMwWd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GFtDk35M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9103A95
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 02:11:30 -0800 (PST)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-5d7346442d4so53323807b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 02:11:30 -0800 (PST)
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3194AC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 02:24:26 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-a1915034144so724849166b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 02:24:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702375890; x=1702980690; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TrALaesQgyuM5VBjLsZWxJBv/FBiGl6WWHZcz62LCsQ=;
-        b=V+lTMwWdi+KCoS6VNABd5d0AjDjc+FHcqoAoW73OHZCNfVWG+YgkXkUSGJ3iBej9fb
-         W5fhcnLF9NJ7AvVCP9LHitkTMudo//LBHjXm13W0ESIDCAZw4MxtNRMjaPHPG6Odc+oh
-         bZgAlKu0Lrc7BcHgsAU1tbhCpII2LiaMeI8ESgPJkxuLkqH7k0kdjTVTil6kspl2fCoV
-         kcMHya9OAxx6Juam+uQCufMMZowefiYF0kP0AQfIVKxcxb0xeVRejgLtIiQn6lw1FF3M
-         iICVpE+PHrdCI2K7yqQNITUx7qVcRfp14hSJqu95ySqXz+Ezh9z793p6ysQwDHoKu0bc
-         Rf9Q==
+        d=linaro.org; s=google; t=1702376665; x=1702981465; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XTguM6PQ9T5zh1V2+n3dMiBXy0OpcHUacKeTSRi6+rE=;
+        b=GFtDk35MTBHTaJKECIw/cTF7zj5YpXmVpVrDMX+RPFle9bufkxjmVPH2/NeErsIUBW
+         DaHK2W1G9onMRngfKO0UYdk88YmnmmRF6PbKVbHOkPxSTwkiNKqp5tiwBENI0jAmu0t/
+         FX6pywNXg9qOen+ZC3hDb2wQEspyIMCAVx0b7tYVuyjscTosZgqdukcdVLITyC3I7okv
+         AgT5WVg6UkascVaBzPuR9tFu1R4Q7ShWLySgyKZp8AF1Rhs9KeMFgk4nSWQQxSdkwo68
+         CwD8qubukvYT7e11UjykgEv3S6vqnVdx0Q1P7Uuuu6BreYnstgueeaqoa7borKqVWKIW
+         y3eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702375890; x=1702980690;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1702376665; x=1702981465;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TrALaesQgyuM5VBjLsZWxJBv/FBiGl6WWHZcz62LCsQ=;
-        b=sqqJ1oXzQDcv1EIWi0od5MYH+T50zG/9cWgMrpLY0JGgXjhEyaUx13ICk7VSFawbg6
-         qySx9LiyLCad0MStRYikxS9yOdmhXGeiocRv0qYZjiDFZ/88icGNpWCl6dDy3raGdIlV
-         IephBTZ23+RyMnVKvetYttMTWS0PVJnqv/XCz/uqUX+Ck+XtEH5OlohxWJMSDqRq8zzs
-         auxSerA00gwy/+L5IhODoYDAO8LW7sdDq9Lk7z06OVPH6tc+hX3b+aNmaJGV02OQLUxT
-         EptCI43pkpZ1bku+OGfP+ZEqJCdVjAZk4AifpTP4u7Ajp5fW25IHkMGtoSo+3ZafSYqr
-         XOYg==
-X-Gm-Message-State: AOJu0YxKhx+6SC6PsSy89XCvJwvm9LONl326+sIbBqIo5VUpR/baEObf
-	Wv+CPvgbV/xUDTx0NNfyCVM7OQi5WpPDCdmF9jTveQ==
-X-Google-Smtp-Source: AGHT+IH4kRlISgKjiU5BqBf5v8muUL1cRp5jUmprgddz13Vqnjj9lFJY/CpDvj3Ul+mqmEg09KelU7DuIhO0LQXv9y0=
-X-Received: by 2002:a25:787:0:b0:dbc:be12:f04f with SMTP id
- 129-20020a250787000000b00dbcbe12f04fmr150338ybh.42.1702375889844; Tue, 12 Dec
- 2023 02:11:29 -0800 (PST)
+        bh=XTguM6PQ9T5zh1V2+n3dMiBXy0OpcHUacKeTSRi6+rE=;
+        b=fnv06y29bE9EXBVmxIpOpAGG5i4NhZrUCOly87oJ4lfDcUk6dSn0yHnb2V9rAe+S3A
+         sqVr7kWbhXSGM0auh9/uHrs8qxPcjiothF+nmeOKKK2914yayKnbsz+nal7m/AF08yOl
+         wVp/suy9NRL2kqVwEdNhnETfkmiuc+FiMderdg4ndEhtR05Smu8Mqcq8AfKtWur5xem3
+         Jk9ADc9J73ObEbJKZmpHkXPDE8Qg8mc9E3Q4XA8uVhxYp37tBejp8NBcKUZ6UH2JTML6
+         u6gR1nKJsNb0gswGTFmAV/E/N0QaVtjk0h/DNxtPY2IG/0vh5TQ5vcbeTUAhrAZXopbR
+         AlUg==
+X-Gm-Message-State: AOJu0YyhLSSPhiq25zSzOJNPjCYcS5lCc4qRdOA0f5fuyo2AhAYfbWWn
+	FoLsGL3CX/V1hn+GhQRqUwQY3A==
+X-Google-Smtp-Source: AGHT+IHx/LSmsYF58LhEO7TDQMI7uHt13h7X3MrU1QacUVufQHIgFVxLdKGC2BBXQBrKGoil9RkZsA==
+X-Received: by 2002:a17:907:76d5:b0:a1c:f745:e0b6 with SMTP id kf21-20020a17090776d500b00a1cf745e0b6mr3496139ejc.61.1702376665375;
+        Tue, 12 Dec 2023 02:24:25 -0800 (PST)
+Received: from [127.0.1.1] ([79.115.23.25])
+        by smtp.gmail.com with ESMTPSA id ga16-20020a1709070c1000b00a1c7f8fe581sm6052801ejc.221.2023.12.12.02.24.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 02:24:25 -0800 (PST)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: Add missing nodes to X1E80100 base
+ dtsi and CRD dts
+Date: Tue, 12 Dec 2023 12:24:09 +0200
+Message-Id: <20231212-x1e80100-dts-missing-nodes-v1-0-1472efec2b08@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20231211154445.3666732-1-dmitry.baryshkov@linaro.org>
- <20231211154445.3666732-2-dmitry.baryshkov@linaro.org> <b23c3d03-8b0f-43b9-90d1-8d5c3a9622cc@kernel.org>
-In-Reply-To: <b23c3d03-8b0f-43b9-90d1-8d5c3a9622cc@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 12 Dec 2023 12:11:18 +0200
-Message-ID: <CAA8EJppntst7FNnobURw--tdDzkrZWZhCDKRsELKNZ8RxpHyiw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/8] dt-bindings: display: msm: dp: declare compatible
- string for sm8150
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Stephen Boyd <swboyd@chromium.org>, David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMk0eGUC/z2OwQrCMBBEf6Xk7OJu9GD9FfGQNttmoSaSDaVQ+
+ u8mCs7tMbxhdqOchdXcu91kXkUlxQp06swYXJwZxFc2Fu2FLBJsxDckRPBF4SWqEmeIybOCw34
+ i9n2LqQODU4YhuziGNjFcz3/5V6VUoCTQwMvShHfmSbbvm8fzOD67Re6PnQAAAA==
+To: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+ Rajendra Nayak <quic_rjendra@quicinc.com>, 
+ Sibi Sankar <quic_sibis@quicinc.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=875; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=Nny2t8OlCViPk3BxX9ZWPLYgvvv2FpLQtO2ib/R0FhM=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBleDTQJU5Kc4im338f6d5NP54Ug8Eh0qaNqDo1a
+ BgVupvAUACJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZXg00AAKCRAbX0TJAJUV
+ Vo6NEAC5lHLTOTe/RLAcyhpltJTtZqJA1q6sslx5LDxGjywfLiwov4veC1HQ8MQAEzq91Hvpbz4
+ F69Lg3akmmDMtDuvF9f3G2YCf6n6GzRsfByysAtoMK1XzbOHvcnEWGrSbDBEdV5tgZAOIAnLFKW
+ 3Jkofm+GvXTVdBH+tQB4O9HQeulmySlAWuuN9AF1ThvT7A5LZ/mlORht4HAzEXCzFRXgeiOImqN
+ TVIjPIHUnXHtg7hLgisoKc4C38COP8jntxv6wQJX+zEE2Fr8ULb5UtFNYOlAQBOCs4RcDAAXKe1
+ d0xacWvx4QCOTBnCxaVKruS0mZw6qWK8+vYt0imK4riT8H4Ayl151fZgetYUfLQlXFoN8D4//QB
+ pm2LdnxJCFjDYytW0A7mjRm77tEfB4TxAfpuRChJfrBYX93IqbXbabUiWW2OtkdaL1Dayp3tcZ+
+ +W9/r6fKXQ98WD+LKvOVTb9XmTAXJP9UUEOnrLy+2SQyIwn0Fa+cA2Xv/SXWlhge+AXkou2rpvp
+ L1Wpg45D9EZE2ENgP1zyPsKrkKazbkbdCCLs0oPIkMNVM4zsHTnSRe3hQosVLpVwmdi1CG/GwD4
+ GgtWqetSTH6UZDVVNul/CpIpEYCaAJEaJtLyVb8ca2/w+QuEb7YOD/ZJWmNAbTkjtDeIQb/08NH
+ 6jjEmu4IXA3i9Mg==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On Tue, 12 Dec 2023 at 12:09, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On 11/12/2023 16:44, Dmitry Baryshkov wrote:
-> > Add compatible string for the DisplayPort controller found on the
-> > Qualcomm SM8150 platform.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
->
-> DT list...
+This patchset adds all missing nodes in order to describe the entire
+platform. Most of these have dependencies on multimedia clock
+controllers and so the entire patchset depends on the clock controllers
+patchset:
+https://lore.kernel.org/all/20231212-x1e80100-clock-controllers-v1-0-0de1af44dcb3@linaro.org/
 
-Yes...
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+Abel Vesa (2):
+      arm64: dts: qcom: x1e80100: Add all missing nodes
+      arm64: dts: qcom: x1e80100: Add missing nodes for CRD
 
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts |  303 +++++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 1282 ++++++++++++++++++++++++++++-
+ 2 files changed, 1580 insertions(+), 5 deletions(-)
+---
+base-commit: 10ef05bf74d045c6636bcbaf2cc60aabbda8a54c
+change-id: 20231201-x1e80100-dts-missing-nodes-a09f1ed99999
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Abel Vesa <abel.vesa@linaro.org>
+
 
