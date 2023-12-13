@@ -1,145 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-4540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D8C68119F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 17:46:20 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7F20811A8B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 18:13:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A56B1C2114E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 16:46:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40E021F21990
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 17:13:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA7CA39FCD;
-	Wed, 13 Dec 2023 16:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB8124C3A9;
+	Wed, 13 Dec 2023 17:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yQAZLgx0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AmbZDJpH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FEF3AC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 08:46:14 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-3332fc9b9b2so6235125f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 08:46:14 -0800 (PST)
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0AE0F7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 09:13:22 -0800 (PST)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ca0f21e48cso92337851fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 09:13:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702485973; x=1703090773; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gl8eoLUzBb22dSI7qdnrUzIaG/dfbsYNZdAqMzHLZ4E=;
-        b=yQAZLgx0pkjZq7nxJcuxXWkuYbqm3hpsd0n2bVSTdZCIKj4pV5NOOZsFiNDTgI5pTg
-         iXUvyrBojqCe8Ts5lM8G0srwqYpsMmOZJs/OTgRKyUVsyaHUkNxzpoF+E3lbGtf2FnAg
-         Il47sfTlcBZR+eqC3KX7htrOIUBL0pe241Nf2X7sU6afNONV1pMefoZ2d591N+oVkNxz
-         pfG4Sbwp7GIOdoQDQ4bd/UmDXhN3I+SBAmh6AwOVaXHb3DtJcO6u3lvzXQ1nM8ENbekb
-         XonoHp9Mvswb10L8ghDxDb73mYCHynASPLOK0RKspDcLOJLp2HBeXUuhA4dnZbLSzTpU
-         t51w==
+        d=linaro.org; s=google; t=1702487601; x=1703092401; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bfr047CJmFVYGyC6u7HATirhSSdF2uxrBFBr8iqJs6o=;
+        b=AmbZDJpHYhU4OvPXu9KSJqIKTl82+fTkcT/ivzcVCHbe9h/8GxsL5EnU6Yn4j/gvSH
+         IRCV+R4bIDHi/mRg4S225QsmW/nVfh6f3i+VSLjwGkiXrMwApgbOj2T3dtvOUeTWVe/d
+         ZfCiu6aAjGn/c+3mUwdLsD4IrLJgIszYtUYphALNypo+qD3wHBF9rlmes2Ll/3TOXHDy
+         a+mqqEVMM/ZTmIngP9a/v9h+sDFAQ+KsxCZzyuAUjQPYnLjtRhiilnNMMS4atCBlMciO
+         TKMVGdt2cZ5YlrPpr+7zhkYQ7WA+I1lCkaclKAk85vS6ZkZDOrFQ+ERTPRy54b43NsJo
+         udbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702485973; x=1703090773;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gl8eoLUzBb22dSI7qdnrUzIaG/dfbsYNZdAqMzHLZ4E=;
-        b=nSkvDR60wuvbG8mXzz1yrbdsQvXxpwQpySDSINysnw6Le7svgyWzbXaOm3w8AaKzw5
-         9Nyt3B0JkwY7hau/HNEc9HDhVL9xLyTGaEB/ZLoY/WF6tc/q4/xT4V3+3UjrI+5ybC6D
-         R92unMpup9B2VK0xCsPnRGHwdBTw6nd1QcnXxx5d+zqmMoJJoapAB98UxlMV+o5Q0Miz
-         HOJYwmohZaf2/0C2GPgvORzXBzhRjj3UxM1NggcVaheuNwHZx+F0oZlQmz35OWdiEPr+
-         +9j0O/o4jV7b5dv8F24TiMqpzkFDDlL138Liq9fke4aD4WSpG1eZkW833k0YfhDkXXXq
-         e5aA==
-X-Gm-Message-State: AOJu0YxJaogggHYcKTeY4k7Giphok7cuZL8t9S+g/OZ2EchCsp5luoXt
-	IP0t62CmYuouU387oDADSOgCDw==
-X-Google-Smtp-Source: AGHT+IGntbw26qTvU7nU58AgDpvBGkGyiiv8pmNjWoGN6o68fk+7KZkLwAFhZEuqZDdWhq0H3KhoPQ==
-X-Received: by 2002:a05:6000:1a4e:b0:336:3743:5a5d with SMTP id t14-20020a0560001a4e00b0033637435a5dmr484831wry.48.1702485972967;
-        Wed, 13 Dec 2023 08:46:12 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:982:cbb0:ac4e:a5fe:7f71:8d59? ([2a01:e0a:982:cbb0:ac4e:a5fe:7f71:8d59])
-        by smtp.gmail.com with ESMTPSA id o4-20020a5d58c4000000b0033333bee379sm13767115wrf.107.2023.12.13.08.46.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Dec 2023 08:46:12 -0800 (PST)
-Message-ID: <af14a2dd-75a4-4007-b9f2-207f2dc40ff9@linaro.org>
-Date: Wed, 13 Dec 2023 17:46:11 +0100
+        d=1e100.net; s=20230601; t=1702487601; x=1703092401;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Bfr047CJmFVYGyC6u7HATirhSSdF2uxrBFBr8iqJs6o=;
+        b=laDU80rzJfXrjdZ5ZwMQcPxxm3AUxOsFUCeFTvbLcXXaIwngyiW6KDeD4BfmDaOcTZ
+         n0wzKQtaU3lj5U4Dn8wtCv2urO4wTQM4IKh9C4Q7b0MUM4n5V+ZpGa05gfiEN7XrdHzs
+         TcYw1B+j6/QqpKubK6TZTyucOsz6RD06nQlabVDaPcfcKzpjv/5iHf+0WPEvX66+GGGR
+         kd8S31PgIgqD/q5X6jMZjKywdrq0Ng78AZEVG9SnB1CvEyoPlDPn6RzuFQIMbbMNzdRv
+         AGkVSkI8nV0dY3TO6MvQXNtQ6JfWjeIC0llZxnCEhmyqKeXRjudqCLcOx48AcGVNjAtU
+         PpfQ==
+X-Gm-Message-State: AOJu0YwmOlYryayb/daf3N1x9fQDxReb6w+cuf11LUIvTALn1iS1ke9U
+	G5S/s3he+V6ibEUvItUof4ENig==
+X-Google-Smtp-Source: AGHT+IHuvsNhveoE2ssuyookqE7k5MmOVDDPQahe1zDiITRQQdSxUcbASrzK4jWKuAjqrJqfaZUrzw==
+X-Received: by 2002:a2e:ab18:0:b0:2cc:219d:d42 with SMTP id ce24-20020a2eab18000000b002cc219d0d42mr4850151ljb.104.1702487600810;
+        Wed, 13 Dec 2023 09:13:20 -0800 (PST)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id fs27-20020a05600c3f9b00b0040b36050f1bsm20711039wmb.44.2023.12.13.09.13.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Dec 2023 09:13:20 -0800 (PST)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v13 0/4] Input: add initial support for Goodix Berlin
+ touchscreen IC
+Date: Wed, 13 Dec 2023 18:13:14 +0100
+Message-Id: <20231213-topic-goodix-berlin-upstream-initial-v13-0-5d7a26a5eaa2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sm8550: drop unneeded
- assigned-clocks from codec macros
-Content-Language: en-GB
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20231213162856.188566-1-krzysztof.kozlowski@linaro.org>
- <20231213162856.188566-5-krzysztof.kozlowski@linaro.org>
-From: Neil Armstrong <neil.armstrong@linaro.org>
-In-Reply-To: <20231213162856.188566-5-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACrmeWUC/53TwW7DIAwA0F+pch6TTSDATvuPaQcgpkXqkoqkV
+ aeq/z6nh7UTl6xHLPRsbHxpJiqZpuZtc2kKnfKUx4EP2L5smrjzw5ZE7jnQSJAtdNCJeTzkKLb
+ j2OezCFT2eRDHwzQX8l8iD3nOfi+Cd4YsRZtUbJgKfiIRih/ijrHhuN9z8FAo5fMt+ccnn3d5m
+ sfyfavlhEv0n1lPKEAoD0ZhsJ5S/87XfBlfx7Jtlgwn+YwqWZVd4McQkgOq1PYZtWU1gTYmku8
+ NuEpVz6iKVXDKRGVdIDSVqu+qBVyp6kU1TmrpWq1dW6ndXXUoV6odq0FRTF65FFw9LfOrIsBa1
+ bDKpTKISZO1lWof1XalallFgzwIBEl9V6nuQZVr++oWtU3cBGsN6lpFeGTXFos8LWEtUZSkMUK
+ o3ft6Ia5fr2W/dFSGnAETof4HeF8wlODWusuGkU/JU9DcDv3HvV6vP5EPwGanBAAA
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ linux-input@vger.kernel.org
+Cc: Rob Herring <robh+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bastien Nocera <hadess@hadess.net>, 
+ Hans de Goede <hdegoede@redhat.com>, Henrik Rydberg <rydberg@bitmath.org>, 
+ Jeff LaBundy <jeff@labundy.com>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Neil Armstrong <neil.armstrong@linaro.org>, Rob Herring <robh@kernel.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6485;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=pU9H2UHzkCsD41LinXb2qliV6+2X2qipa6vZEOGJNVE=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBleeYtmjdcpa4AmucGIHTpOVbLW/j/nWiGfglkR5zU
+ HFueerqJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZXnmLQAKCRB33NvayMhJ0RzhD/
+ wIcEUsR/4zpgij23fVG/KkaD9Yv5Ia2LELulabiLA6S0EXq9fxQ6LzVDQX1yq7lUetNBG1+kdYLkfv
+ N15xgMsuf+H9IO5o6jzOW4OqfJYfNfiXg0wlV/A3o7pEKkSEY22CIqp5cP20M7BOp97HhXpMYA2fBS
+ 7zSEgzSekUaKScym8M8BsdhthZUE6iKfr/4l0zS0LcggPEk+Y/TmjLIJH5WAd+emBFgCcWKE9W0hU8
+ PGC/mUs0JzMa63hehO2fnU4guWcPQckBE6DffJoaWQLKuK3mtGTwjiQHeEIEvSKTcbFRJzjuATYd21
+ N1zUuW1fOR/xvnBSFSlmwaDCjjh9Ooy99G62FTqQX1t8csHBrBqZoZ0XdGwKD6C6WdMMyCaJWe4810
+ 1nBBwL0y3cIRLcWGhGD0NJZBrMqALaITgjt9TRe3puXCw9yh9QOZqYKXOZrDlXhgw2+YHaRHE67JEH
+ n+8jzU9Z02FiJa1F6FDMlNUs9PcboCNBocneUeIbKtF7p+Xh8KdMfp3VDKrDdglbsrukeDplpX34Tm
+ RPD9uK2JgfwesOyYayAtrz2ngdeXujdjzM5Yu9NKZOTFyZX351K+KwsfTDEdzbuARLpPky36HHmq3y
+ WFGDrJOj8/2JFvrleduwiEwpH5YA68RIQCc8cKbtWPdYlAqSBA9WnOynJBEw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Le 13/12/2023 à 17:28, Krzysztof Kozlowski a écrit :
-> The MCLK clocks of codec macros have fixed 19.2 MHz frequency and
-> assigning clock rates is redundant.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 14 --------------
->   1 file changed, 14 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index d8f79b5895f5..68b05ab5f65f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -2045,8 +2045,6 @@ lpass_wsa2macro: codec@6aa0000 {
->   				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->   				 <&lpass_vamacro>;
->   			clock-names = "mclk", "macro", "dcodec", "fsgen";
-> -			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA2_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> -			assigned-clock-rates = <19200000>;
->   
->   			#clock-cells = <0>;
->   			clock-output-names = "wsa2-mclk";
-> @@ -2092,9 +2090,6 @@ lpass_rxmacro: codec@6ac0000 {
->   				 <&lpass_vamacro>;
->   			clock-names = "mclk", "macro", "dcodec", "fsgen";
->   
-> -			assigned-clocks = <&q6prmcc LPASS_CLK_ID_RX_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> -			assigned-clock-rates = <19200000>;
-> -
->   			#clock-cells = <0>;
->   			clock-output-names = "mclk";
->   			#sound-dai-cells = <1>;
-> @@ -2138,9 +2133,6 @@ lpass_txmacro: codec@6ae0000 {
->   				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
->   				 <&lpass_vamacro>;
->   			clock-names = "mclk", "macro", "dcodec", "fsgen";
-> -			assigned-clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> -
-> -			assigned-clock-rates = <19200000>;
->   
->   			#clock-cells = <0>;
->   			clock-output-names = "mclk";
-> @@ -2156,9 +2148,6 @@ lpass_wsamacro: codec@6b00000 {
->   				 <&lpass_vamacro>;
->   			clock-names = "mclk", "macro", "dcodec", "fsgen";
->   
-> -			assigned-clocks = <&q6prmcc LPASS_CLK_ID_WSA_CORE_TX_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> -			assigned-clock-rates = <19200000>;
-> -
->   			#clock-cells = <0>;
->   			clock-output-names = "mclk";
->   			#sound-dai-cells = <1>;
-> @@ -2233,9 +2222,6 @@ lpass_vamacro: codec@6d44000 {
->   				 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
->   			clock-names = "mclk", "macro", "dcodec";
->   
-> -			assigned-clocks = <&q6prmcc LPASS_CLK_ID_TX_CORE_MCLK LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-> -			assigned-clock-rates = <19200000>;
-> -
->   			#clock-cells = <0>;
->   			clock-output-names = "fsgen";
->   			#sound-dai-cells = <1>;
+These touchscreen ICs support SPI, I2C and I3C interface, up to
+10 finger touch, stylus and gestures events.
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+This initial driver is derived from the Goodix goodix_ts_berlin
+available at [1] and [2] and only supports the GT9916 IC
+present on the Qualcomm SM8550/SM8650 MTP & QRD touch panel.
+
+The current implementation only supports BerlinD, aka GT9916.
+
+Support for advanced features like:
+- Firmware & config update
+- Stylus events
+- Gestures events
+- Previous revisions support (BerlinA or BerlinB)
+is not included in current version.
+
+The current support will work with currently flashed firmware
+and config, and bail out if firmware or config aren't flashed yet.
+
+[1] https://github.com/goodix/goodix_ts_berlin
+[2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v13:
+- Thanks to Dmitry's suggestion:
+  - Move core defines and structs into goodix_berlin_core.c
+  - Comments typos and rephrasings
+  - Identation fixes
+  - Refactor of goodix_berlin_power_on
+  - goodix_berlin_get_ic_info move to __free(kfree) to avoid leaking
+- Added comment explaining how data is retrieved in irq handler
+- Link to v12: https://lore.kernel.org/r/20231209-topic-goodix-berlin-upstream-initial-v12-0-eaffaeb53fb5@linaro.org
+
+Changes in v12:
+- Rebased on next-20231208
+- Link to v11: https://lore.kernel.org/r/20231106-topic-goodix-berlin-upstream-initial-v11-0-5c47e9707c03@linaro.org
+
+Changes in v11:
+- Fixes according to Jeff's review:
+ - s/dev_info/dev_err/ in goodix_berlin_get_ic_info()
+ - remove spurious return instead of goto in goodix_berlin_get_ic_info()
+ - added back dropped msleep() in goodix_berlin_request_handle_reset()
+- Link to v10: https://lore.kernel.org/r/20231023-topic-goodix-berlin-upstream-initial-v10-0-88eec2e51c0b@linaro.org
+
+Changes in v10:
+- Fix according to Dmitry's review:
+ - move goodix_berlin_get_ic_info() afe_data to heap
+ - merge the goodix_berlin_parse_finger() loops and skip invalid fingers instead of returning
+ - remove unwanted goodix_berlin_touch_handler() "static" for buffer
+ - only call goodix_berlin_request_handle_reset() if gpio was provided
+ - use "error = func(); if(error) return error;" instead of "return func()" when function handles multiple error cases
+- Link to v9: https://lore.kernel.org/r/20231021-topic-goodix-berlin-upstream-initial-v9-0-13fb4e887156@linaro.org
+
+Changes in v9:
+- Rebased on next-20231020 
+- Link to v8: https://lore.kernel.org/r/20231003-topic-goodix-berlin-upstream-initial-v8-0-171606102ed6@linaro.org
+
+Changes in v8:
+- Add missing bitfield.h include in core
+- Link to v7: https://lore.kernel.org/r/20231002-topic-goodix-berlin-upstream-initial-v7-0-792fb91f5e88@linaro.org
+
+Changes in v7:
+- rebased on v6.6-rc3
+- Link to v6: https://lore.kernel.org/r/20230912-topic-goodix-berlin-upstream-initial-v6-0-b4ecfa49fb9d@linaro.org
+
+Changes in v6:
+- rebased on v6.6-rc1
+- changed commit message prefix to match the other Input commits
+- Link to v5: https://lore.kernel.org/r/20230801-topic-goodix-berlin-upstream-initial-v5-0-079252935593@linaro.org
+
+Changes in v5:
+- rebased on next-20230801
+- Link to v4: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v4-0-0947c489be17@linaro.org
+
+Changes in v4:
+- Core updates:
+ - drop kconfig depends, deps will be handled by _SPI and _I2C
+ - change power_on() error labels
+ - print errors on all dev_err() prints
+ - remove useless default variable initialization
+ - switch irq touch checksum error to dev_err()
+ - add Jeff's review tag
+- I2C changes
+ - change REGMAP_I2C Kconfig from depends to select
+ - add Jeff's review tag
+- SPI changes
+ - add select REGMAP to Kconfig
+ - added GOODIX_BERLIN_ prefix to defines
+ - switched from ret to error
+ - add Jeff's review tag
+- Link to v3: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v3-0-f0577cead709@linaro.org
+
+Changes in v3:
+- Another guge cleanups after Jeff's review:
+ - appended goodix_berlin_ before all defines
+ - removed some unused defines
+ - removed retries on most of read functions, can be added back later
+ - added __le to ic_info structures
+ - reworked and simplified irq handling, dropped enum and ts_event structs
+ - added struct for touch data
+ - simplified and cleaned goodix_berlin_check_checksum & goodix_berlin_is_dummy_data
+ - moved touch_data_addr to the end of the main code_data
+ - reworked probe to get_irq last and right before setip input device
+ - cleaned probe by removing the "cd->dev"
+ - added short paragraph to justify new driver for berlin devices
+ - defined all offsets & masks
+- Added bindings review tag
+- Link to v2: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v2-0-26bc8fe1e90e@linaro.org
+
+Changes in v2:
+- Huge cleanups after Jeff's review:
+ - switch to error instead of ret
+ - drop dummy vendor/product ids
+ - drop unused defined/enums
+ - drop unused ic_info and only keep needes values
+ - cleanup namings and use goodix_berlin_ everywhere
+ - fix regulator setup
+ - fix default variables value when assigned afterwars
+ - removed indirections
+ - dropped debugfs
+ - cleaned input_dev setup
+ - dropped _remove()
+ - sync'ed i2c and spi drivers
+- fixed yaml bindings
+- Link to v1: https://lore.kernel.org/r/20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org
+
+---
+Neil Armstrong (4):
+      dt-bindings: input: document Goodix Berlin Touchscreen IC
+      Input: add core support for Goodix Berlin Touchscreen IC
+      Input: goodix-berlin - add I2C support for Goodix Berlin Touchscreen IC
+      Input: goodix-berlin - add SPI support for Goodix Berlin Touchscreen IC
+
+ .../bindings/input/touchscreen/goodix,gt9916.yaml  |  95 +++
+ drivers/input/touchscreen/Kconfig                  |  31 +
+ drivers/input/touchscreen/Makefile                 |   3 +
+ drivers/input/touchscreen/goodix_berlin.h          |  24 +
+ drivers/input/touchscreen/goodix_berlin_core.c     | 766 +++++++++++++++++++++
+ drivers/input/touchscreen/goodix_berlin_i2c.c      |  74 ++
+ drivers/input/touchscreen/goodix_berlin_spi.c      | 177 +++++
+ 7 files changed, 1170 insertions(+)
+---
+base-commit: bc63de6e6ba0b16652c5fb4b9c9916b9e7ca1f23
+change-id: 20230606-topic-goodix-berlin-upstream-initial-ba97e8ec8f4c
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
