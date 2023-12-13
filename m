@@ -1,160 +1,351 @@
-Return-Path: <linux-arm-msm+bounces-4522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 822C4811409
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 15:04:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 768958115BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 16:06:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D9D39B20FFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 14:04:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B0257B20B50
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 15:05:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 788672E630;
-	Wed, 13 Dec 2023 14:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20B612FC41;
+	Wed, 13 Dec 2023 15:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cqSOY00x"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KRmgaa6I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99E7E121
-	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 06:04:05 -0800 (PST)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50be3611794so8127571e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 06:04:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702476244; x=1703081044; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xRbYe9ijnkLeFnAmPMRsBoKr6vdwNz/E+CbxpHOS9z8=;
-        b=cqSOY00xSeuVcTQjI3EAhR0SbR/L13ft1/uwuTBcaCLFJGrS69/oaSoOQZT9RQW1ka
-         Sk0vQpN+8I8zU3shBVHYAD/Ym1OOrMl5TtC98NqBL3EOrlbumLiS6UVoXXW2FUz8ZrwD
-         EWe4hVr/auKf+GCTE39xEteqV56glJi6Zgz1fAOBXiMCWpWhnWYFyI0pjGZFy4MTeY5U
-         VyzYzNYhZ5jkddW0ife0I/o0pXGl0wCL+Qc0KrkO8esGD3SAIKIsN566OgmzfS0taqJK
-         CK8sQTS30QxlGfcB9xh6yY2XC/dPl/s31UOhBMJorF8cAL8CWct31mJQ69+o7Y1LRYPr
-         iqeg==
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1179123
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 07:05:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1702479943;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=WoSF5mLh6ImJekJWin/fEZZ5avu/fIAyMfAem2xD4ZY=;
+	b=KRmgaa6IBURBwiqUqy7KlvizC0fD/M56Pq0t44WiGh1iiFtS6S4O1pFSzV8a0APDD1psT0
+	jUzcO7WP5AJA4ErZQgpS5NjnjhXHey/VHtJAaHa2TGpxIQBHq+6o1Y8Cm0mM+g5JjKwqmK
+	GpJ4o+94eiGd/FqezKFSgmvlsjvDK3o=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-FW0TetKdPqOJyol2mVKPHQ-1; Wed, 13 Dec 2023 10:05:41 -0500
+X-MC-Unique: FW0TetKdPqOJyol2mVKPHQ-1
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-67abf4618a2so120301086d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 07:05:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702476244; x=1703081044;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :references:cc:to:from:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xRbYe9ijnkLeFnAmPMRsBoKr6vdwNz/E+CbxpHOS9z8=;
-        b=Usxui5KFK4JKmJN7aDNsQWWxPor/tuHK4rWOU2GjYCgSaIAoy09vH7MXwwsEpG5ag0
-         faZL1iDwJqAzMNWxsy0tZUbSrrtu5b8ftakGYfqEiG0JJjnuawI2dU1AUEezDo1bCU9E
-         imHMcVZh9xsCtaySY06Dot4P0IsGNFEo5BDgXDqfm1jPaRfY1ornJKZJuzx5vcfUBQik
-         xEEzVXDslCSPDcAW7ThOH2lFqQLj7EsdI5cFik51f4Z6fFn5O3r/IhT5KyVwLkIq4oqv
-         BqwiG+7HbvWx3a2/AT9maBJZeGChU9Wxbw2LHEe0i6oo+w4cNLnbCtkBLZjqKBfWkmSP
-         RcQw==
-X-Gm-Message-State: AOJu0YwIHH43kqcpLyrqWyDE/8Jfdz4PmMYRnDD1msRPBNnJPHJyRbBq
-	ONxYscTO28UhQjV2uwOrXfbOUg==
-X-Google-Smtp-Source: AGHT+IHXMStjoFGz66MJFO4YavP1JUOwKIwmrthJWwEQF3M0eEgC1L39Fi8DAqirkU/xgjnBz1rgVw==
-X-Received: by 2002:ac2:4247:0:b0:50c:6e:98c6 with SMTP id m7-20020ac24247000000b0050c006e98c6mr3987375lfl.122.1702476243773;
-        Wed, 13 Dec 2023 06:04:03 -0800 (PST)
-Received: from [192.168.1.20] ([178.197.218.27])
-        by smtp.gmail.com with ESMTPSA id kw20-20020a170907771400b00a1dc4307ed5sm7758194ejc.195.2023.12.13.06.04.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Dec 2023 06:04:03 -0800 (PST)
-Message-ID: <11257e57-693f-46db-8f97-09e5d4c20238@linaro.org>
-Date: Wed, 13 Dec 2023 15:04:01 +0100
+        d=1e100.net; s=20230601; t=1702479941; x=1703084741;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WoSF5mLh6ImJekJWin/fEZZ5avu/fIAyMfAem2xD4ZY=;
+        b=FxqxQ0W7LndjljeUfZ4t4iofytULlab/jWbSIflAbl7EPjrQy9mMGrGX3YT1heFyEY
+         djFJCFws7v0naNyJP+i/OCyoiGgL0Lmb7CJTN+M9tRTqeW3TRA9qYi2/PeT4G13IzDaz
+         EIyhoshXC1YFICOn3cDzbVWtIxO4p0+P5gx1KMRxhZSumP7KyAo7nH16Yu++k/iAwoe0
+         +6tRZiteELxvmkSPwTBPvdnKN+pggjGNTvqLZktDWTNZpa3vgIkd/y3KzdOgZuLjYsHu
+         y2111PpjS99rjtTusfp1OVMUZxbXfBcfFr/IZZsl28wxi+7WfabwaBUH4QsIqBHchiaq
+         qwZQ==
+X-Gm-Message-State: AOJu0YzMlkmw0uhMiQf/Ca1xq6PQ+x2tTTxdOkB2yBXWECMZS9EU/+bo
+	inFAZeVUfHA6ub+rsdUB+aNawNvFyUogCXQsFvJ0oiMplt6+866Sapkabg7wGyuGFeodsIBC8fe
+	innAPC+zl4OeqTP/+mY0iusXHAg==
+X-Received: by 2002:ad4:5bcf:0:b0:67a:9a3f:e48a with SMTP id t15-20020ad45bcf000000b0067a9a3fe48amr14553535qvt.26.1702479940758;
+        Wed, 13 Dec 2023 07:05:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHrU/rRZmEhuTHny/kM8c/XsgJfvUPgXFsHqsWqJ4MkEhNvzeh7aSdIabdhvIGNLMTPrd8ByQ==
+X-Received: by 2002:ad4:5bcf:0:b0:67a:9a3f:e48a with SMTP id t15-20020ad45bcf000000b0067a9a3fe48amr14553521qvt.26.1702479940345;
+        Wed, 13 Dec 2023 07:05:40 -0800 (PST)
+Received: from fedora ([2600:1700:1ff0:d0e0::37])
+        by smtp.gmail.com with ESMTPSA id cw14-20020ad44dce000000b0067efe92457bsm308091qvb.0.2023.12.13.07.05.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Dec 2023 07:05:39 -0800 (PST)
+Date: Wed, 13 Dec 2023 09:05:37 -0600
+From: Andrew Halaney <ahalaney@redhat.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] soc: qcom: pmic_pdcharger_ulog: Search current
+ directory for headers
+Message-ID: <j35wn3cc6hnlmwy73ufpz7jyfhvfx54ziykmgcmpn64gbadakg@dil2csq63dqc>
+References: <20231205-pmicpdcharger-ulog-fixups-v1-0-71c95162cb84@redhat.com>
+ <20231205-pmicpdcharger-ulog-fixups-v1-1-71c95162cb84@redhat.com>
+ <320864f5-fdd2-4345-a0dd-b97bcf17f473@linaro.org>
+ <k77ayy4xwlnghjefvw3yl4aenwyq272pezjaazx65bvdle37et@5fnbae4fxnjz>
+ <zwzpbhcb4ggs3kdf72jvjlpe5cpa26vbjs6qw4nyedhcgwcrza@67in3h243yyx>
+ <139f9af0-ca6a-4a58-ae18-79ef6fac47e3@linaro.org>
+ <cea465e6-ff24-4552-b4f6-a0594ea9ea6c@linaro.org>
+ <qwp3lspu2k4awtn36jebslxqqstmtkoey2a2wnh5pstxbqhko5@i3ktuplsnkir>
+ <0346d0cf-d5e6-4d74-b563-1ad3ae717701@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: aim300: add AIM300 AIoT
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
- andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Abel Vesa
- <abel.vesa@linaro.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com,
- Qiang Yu <quic_qianyu@quicinc.com>, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-References: <20231207092801.7506-1-quic_tengfan@quicinc.com>
- <20231207092801.7506-8-quic_tengfan@quicinc.com>
- <02be9f46-2187-45d0-9929-31f6a2c18b35@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <02be9f46-2187-45d0-9929-31f6a2c18b35@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <0346d0cf-d5e6-4d74-b563-1ad3ae717701@linaro.org>
 
-On 11/12/2023 11:33, Krzysztof Kozlowski wrote:
->> @@ -0,0 +1,579 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include <dt-bindings/leds/common.h>
->> +#include "qcs8550-aim300.dtsi"
-> 
-> Which includes sm8550.dtsi thus I think this is compatible with sm8550.
-> You even use sm8550 compatibles here, which is one more hint for that
-> compatibility.
-> 
-> We followed this convention for RB5, although not for QRU/QDU1000 boards.
-> 
-> Anyway, if you add here new SoC compatible, I would expect to see new
-> SoC DTSI.
-> 
-> I don't have in my notes any previous consensus or decision in these
-> matters, so let's discuss now.
-> +CC few Linaro folks
+On Wed, Dec 13, 2023 at 11:23:12AM +0100, Neil Armstrong wrote:
+> Hi Andrew,
+>=20
+> On 12/12/2023 23:21, Andrew Halaney wrote:
+> > On Tue, Dec 12, 2023 at 08:21:41PM +0100, Neil Armstrong wrote:
+> > > On 12/12/2023 17:52, Neil Armstrong wrote:
+> > > > On 12/12/2023 17:15, Andrew Halaney wrote:
+> > > > > On Tue, Dec 12, 2023 at 09:54:48AM -0600, Andrew Halaney wrote:
+> > > > > > On Tue, Dec 12, 2023 at 04:23:20PM +0100, Neil Armstrong wrote:
+> > > > > > > Hi Andrew,
+> > > > > > >=20
+> > > > > > > On 06/12/2023 00:05, Andrew Halaney wrote:
+> > > > > > > > As specified in samples/trace_events/Makefile:
+> > > > > > > >=20
+> > > > > > > >  =A0=A0=A0=A0=A0 If you include a trace header outside of i=
+nclude/trace/events
+> > > > > > > >  =A0=A0=A0=A0=A0 then the file that does the #define CREATE=
+_TRACE_POINTS must
+> > > > > > > >  =A0=A0=A0=A0=A0 have that tracer file in its main search p=
+ath. This is because
+> > > > > > > >  =A0=A0=A0=A0=A0 define_trace.h will include it, and must b=
+e able to find it from
+> > > > > > > >  =A0=A0=A0=A0=A0 the include/trace directory.
+> > > > > > > >=20
+> > > > > > > > Without this the following compilation error is seen:
+> > > > > > > >=20
+> > > > > > > >  =A0=A0=A0=A0=A0=A0=A0 CC=A0=A0=A0=A0=A0 drivers/soc/qcom/p=
+mic_pdcharger_ulog.o
+> > > > > > > >  =A0=A0=A0=A0=A0 In file included from drivers/soc/qcom/pmi=
+c_pdcharger_ulog.h:36,
+> > > > > > > >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0 from drivers/soc/qcom/pmic_pdcharger_ulog.c:15:
+> > > > > > > >  =A0=A0=A0=A0=A0 ./include/trace/define_trace.h:95:42: fata=
+l error: ./pmic_pdcharger_ulog.h: No such file or directory
+> > > > > > > >  =A0=A0=A0=A0=A0=A0=A0=A0 95 | #include TRACE_INCLUDE(TRACE=
+_INCLUDE_FILE)
+> > > > > > > >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 |=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0=A0=A0 ^
+> > > > > > > >  =A0=A0=A0=A0=A0 compilation terminated.
+> > > > > > >=20
+> > > > > > > I never experienced such error, and no CI even reported it, c=
+an you explain how you got this ?
+> > > > > >=20
+> > > > > > To be honest, I am unsure why I'm experiencing this (and until =
+I saw
+> > > > > > another thread about it today I thought maybe I had screwed som=
+ething
+> > > > > > up!).
+> > > > > >=20
+> > > > > > I just took it as an opportunity to try and read up on the trac=
+ing
+> > > > > > infrastructure and sent this series. Definitely no expertise wi=
+th the
+> > > > > > in's and out's of tracing :)
+> > > > > >=20
+> > > > > > I'm able to reproduce this on next-20231211:
+> > > > > >=20
+> > > > > >  =A0=A0=A0=A0 ahalaney@fedora ~/git/linux-next (git)-[b4/b4-stm=
+mac-handle-mdio-enodev] % ARCH=3Darm64 CROSS_COMPILE=3Daarch64-linux-gnu- m=
+ake mrproper
+> > > > > >  =A0=A0=A0=A0 <snip>
+> > > > > >  =A0=A0=A0=A0 ahalaney@fedora ~/git/linux-next (git)-[b4/b4-stm=
+mac-handle-mdio-enodev] % ARCH=3Darm64 CROSS_COMPILE=3Daarch64-linux-gnu- m=
+ake defconfig
+> > > > > >  =A0=A0=A0=A0 <snip>
+> > > > > >  =A0=A0=A0=A0 *** Default configuration is based on 'defconfig'
+> > > > > >  =A0=A0=A0=A0 #
+> > > > > >  =A0=A0=A0=A0 # configuration written to .config
+> > > > > >  =A0=A0=A0=A0 #
+> > > > >=20
+> > > > > Realized I missed a step, actually enabling tracing and the drive=
+r at
+> > > > > play here... but the result is the same.
+> > > > >=20
+> > > > > Attached is a config where I hit this.
+> > > > >=20
+> > > > > >  =A0=A0=A0=A0 130 ahalaney@fedora ~/git/linux-next (git)-[b4/b4=
+-stmmac-handle-mdio-enodev] % ARCH=3Darm64 CROSS_COMPILE=3Daarch64-linux-gn=
+u- make drivers/soc/qcom/pmic_pdcharger_ulog.o
+> > > > > >  =A0=A0=A0=A0=A0=A0 HOSTCC=A0 scripts/dtc/dtc.o
+> > > > > >  =A0=A0=A0=A0 <snip>
+> > > > > >  =A0=A0=A0=A0=A0=A0 CC=A0=A0=A0=A0=A0 drivers/soc/qcom/pmic_pdc=
+harger_ulog.o
+> > > > > >  =A0=A0=A0=A0 In file included from drivers/soc/qcom/pmic_pdcha=
+rger_ulog.h:36,
+> > > > > >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 from drivers/soc/qcom/pmi=
+c_pdcharger_ulog.c:15:
+> > > > > >  =A0=A0=A0=A0 ./include/trace/define_trace.h:95:42: fatal error=
+: ./pmic_pdcharger_ulog.h: No such file or directory
+> > > > > >  =A0=A0=A0=A0=A0=A0=A0 95 | #include TRACE_INCLUDE(TRACE_INCLUD=
+E_FILE)
+> > > > > >  =A0=A0=A0=A0 <snip>
+> > > > > >  =A0=A0=A0=A0 2 ahalaney@fedora ~/git/linux-next (git)-[b4/b4-s=
+tmmac-handle-mdio-enodev] %
+> > > > > >=20
+> > > > > > I even tried it in a fedora container with the above build comm=
+ands and
+> > > > > > the following podman invocation (plus some package installs) an=
+d saw the error:
+> > > > > >=20
+> > > > > >  =A0=A0=A0=A0 podman run -it -v ~/git/linux-next:/linux-next:z =
+quay.io/fedora/fedora:latest /bin/bash
+> > > > > >=20
+> > > > > > So I'm unsure if it's a fedora package version thing (which I'm=
+ running on my host)
+> > > > > > or something else... Once I saw it was sort of spelled out in t=
+he
+> > > > > > examples I referenced here I just decided it was something need=
+ed
+> > > > > > fixing, regardless of why I'm hitting it while others seem ok.
+> > > >=20
+> > > > Interesting, I don't get the problem with the same tag, same .confi=
+g but with gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu
+> > > >=20
+> > > > I'll try with gcc 13.
+> > >=20
+> > > Ok tried with ARM's arm-gnu-toolchain-13.2.rel1-x86_64-aarch64-none-l=
+inux-gnu (https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads=
+),
+> > > and no error, and I even tried with https://mirrors.edge.kernel.org/p=
+ub/tools/crosstool/files/bin/x86_64/13.2.0/ and same no error...
+> >=20
+> > Hmm. I'm unsure what's up. I tried with a debian container and a fresh
+> > clone and still saw it :/
+> >=20
+> > If you want, something like (swap docker for podman if that's your
+> > thing): podman run -it debian:latest /bin/bash
+> > should let you reproduce after cloning etc.
+>=20
+> I was able to reproduce it in fedora:latest:
+>   CC [M]  drivers/soc/qcom/pmic_pdcharger_ulog.o
+> In file included from drivers/soc/qcom/pmic_pdcharger_ulog.h:36,
+>                  from drivers/soc/qcom/pmic_pdcharger_ulog.c:15:
+> ./include/trace/define_trace.h:95:42: fatal error: ./pmic_pdcharger_ulog.=
+h: No such file or directory
+>    95 | #include TRACE_INCLUDE(TRACE_INCLUDE_FILE)
+>       |                                          ^
+> and debian:latest:
+>   CC [M]  drivers/soc/qcom/pmic_pdcharger_ulog.o
+> In file included from drivers/soc/qcom/pmic_pdcharger_ulog.h:36,
+>                  from drivers/soc/qcom/pmic_pdcharger_ulog.c:15:
+> ./include/trace/define_trace.h:95:42: fatal error: ./pmic_pdcharger_ulog.=
+h: No such file or directory
+>    95 | #include TRACE_INCLUDE(TRACE_INCLUDE_FILE)
+>       |                                          ^
+>=20
+> But in my build setup I always build of of tree:
+>=20
+> $ ARCH=3Darm64 CROSS_COMPILE=3Daarch64-linux-gnu- make O=3D$PWD/out/ driv=
+ers/soc/qcom/pmic_pdcharger_ulog.o
+> ...
+>   CC      drivers/soc/qcom/pmic_pdcharger_ulog.o
+> make[1]: Leaving directory '/linux-next/out'
+>=20
+> So why building out of tree works ? (likewise all CI builds out of tree)
+>=20
 
-After some talks, the idea is to create qcs8550.dtsi, which will include
-sm8550.dtsi, and add top level compatible for qcs8550 using sm8550 fallback.
+Thanks for poking around with that until reproducing!
 
-Best regards,
-Krzysztof
+Out of curiosity I did this to see that the out of tree does -I the current
+directory when compiling (-d is probably not the best approach, but it work=
+ed):
+
+    # Assume I did this for the failing in tree build as well, to /tmp/in-t=
+ree.txt
+    # -d was the best thing I could find to make "make" be verbose enough...
+    ahalaney@fedora ~/git/linux-next (git)-[b4/b4-stmmac-handle-mdio-enodev=
+] % ARCH=3Darm64 CROSS_COMPILE=3Daarch64-linux-gnu-  make -d O=3D$PWD/out/ =
+drivers/soc/qcom/pmic_pdcharger_ulog.o &> /tmp/out-tree.txt
+    ahalaney@fedora ~/git/linux-next (git)-[b4/b4-stmmac-handle-mdio-enodev=
+] % grep -e "-I.\S*qcom" /tmp/in-tree.txt                                  =
+           :(
+    ahalaney@fedora ~/git/linux-next (git)-[b4/b4-stmmac-handle-mdio-enodev=
+] % grep -e "-I.\S*qcom" /tmp/out-tree.txt                                 =
+             :(
+    set -e;  echo '  CC [M]  drivers/soc/qcom/pmic_pdcharger_ulog.o';   tra=
+p 'rm -f drivers/soc/qcom/pmic_pdcharger_ulog.o; trap - HUP; kill -s HUP $$=
+' HUP;  trap 'rm -f drivers/soc/qcom/pmic_pdcharger_ulog.o; trap - INT; kil=
+l -s INT $$' INT;  trap 'rm -f drivers/soc/qcom/pmic_pdcharger_ulog.o; trap=
+ - QUIT; kill -s QUIT $$' QUIT;  trap 'rm -f drivers/soc/qcom/pmic_pdcharge=
+r_ulog.o; trap - TERM; kill -s TERM $$' TERM;  trap 'rm -f drivers/soc/qcom=
+/pmic_pdcharger_ulog.o; trap - PIPE; kill -s PIPE $$' PIPE; aarch64-linux-g=
+nu-gcc -Wp,-MMD,drivers/soc/qcom/.pmic_pdcharger_ulog.o.d -nostdinc -I../ar=
+ch/arm64/include -I./arch/arm64/include/generated -I../include -I./include =
+-I../arch/arm64/include/uapi -I./arch/arm64/include/generated/uapi -I../inc=
+lude/uapi -I./include/generated/uapi -include ../include/linux/compiler-ver=
+sion.h -include ../include/linux/kconfig.h -include ../include/linux/compil=
+er_types.h -D__KERNEL__ -mlittle-endian -DCC_USING_PATCHABLE_FUNCTION_ENTRY=
+ -DKASAN_SHADOW_SCALE_SHIFT=3D -fmacro-prefix-map=3D../=3D -std=3Dgnu11 -fs=
+hort-wchar -funsigned-char -fno-common -fno-PIE -fno-strict-aliasing -mgene=
+ral-regs-only -DCONFIG_CC_HAS_K_CONSTRAINT=3D1 -Wno-psabi -mabi=3Dlp64 -fno=
+-asynchronous-unwind-tables -fno-unwind-tables -mbranch-protection=3Dpac-re=
+t -Wa,-march=3Darmv8.5-a -DARM64_ASM_ARCH=3D'"armv8.5-a"' -DKASAN_SHADOW_SC=
+ALE_SHIFT=3D -fno-delete-null-pointer-checks -O2 -fno-allow-store-data-race=
+s -fstack-protector-strong -fno-omit-frame-pointer -fno-optimize-sibling-ca=
+lls -ftrivial-auto-var-init=3Dzero -fno-stack-clash-protection -fpatchable-=
+function-entry=3D4,2 -falign-functions=3D8 -fstrict-flex-arrays=3D3 -fno-st=
+rict-overflow -fno-stack-check -fconserve-stack -Wall -Wundef -Werror=3Dimp=
+licit-function-declaration -Werror=3Dimplicit-int -Werror=3Dreturn-type -We=
+rror=3Dstrict-prototypes -Wno-format-security -Wno-trigraphs -Wno-frame-add=
+ress -Wno-address-of-packed-member -Wmissing-declarations -Wmissing-prototy=
+pes -Wframe-larger-than=3D2048 -Wno-main -Wno-unused-but-set-variable -Wno-=
+unused-const-variable -Wno-dangling-pointer -Wvla -Wno-pointer-sign -Wcast-=
+function-type -Wstringop-overflow -Wno-array-bounds -Wno-alloc-size-larger-=
+than -Wimplicit-fallthrough=3D5 -Werror=3Ddate-time -Werror=3Dincompatible-=
+pointer-types -Werror=3Ddesignated-init -Wenum-conversion -Wno-unused-but-s=
+et-variable -Wno-unused-const-variable -Wno-restrict -Wno-packed-not-aligne=
+d -Wno-format-overflow -Wno-format-truncation -Wno-stringop-truncation -Wno=
+-missing-field-initializers -Wno-type-limits -Wno-shift-negative-value -Wno=
+-maybe-uninitialized -Wno-sign-compare -g -mstack-protector-guard=3Dsysreg =
+-mstack-protector-guard-reg=3Dsp_el0 -mstack-protector-guard-offset=3D1152 =
+-I ../drivers/soc/qcom -I ./drivers/soc/qcom  -DMODULE  -DKBUILD_BASENAME=
+=3D'"pmic_pdcharger_ulog"' -DKBUILD_MODNAME=3D'"pmic_pdcharger_ulog"' -D__K=
+BUILD_MODNAME=3Dkmod_pmic_pdcharger_ulog -c -o drivers/soc/qcom/pmic_pdchar=
+ger_ulog.o ../drivers/soc/qcom/pmic_pdcharger_ulog.c  ; scripts/basic/fixde=
+p drivers/soc/qcom/.pmic_pdcharger_ulog.o.d drivers/soc/qcom/pmic_pdcharger=
+_ulog.o 'aarch64-linux-gnu-gcc -Wp,-MMD,drivers/soc/qcom/.pmic_pdcharger_ul=
+og.o.d -nostdinc -I../arch/arm64/include -I./arch/arm64/include/generated -=
+I../include -I./include -I../arch/arm64/include/uapi -I./arch/arm64/include=
+/generated/uapi -I../include/uapi -I./include/generated/uapi -include ../in=
+clude/linux/compiler-version.h -include ../include/linux/kconfig.h -include=
+ ../include/linux/compiler_types.h -D__KERNEL__ -mlittle-endian -DCC_USING_=
+PATCHABLE_FUNCTION_ENTRY -DKASAN_SHADOW_SCALE_SHIFT=3D -fmacro-prefix-map=
+=3D../=3D -std=3Dgnu11 -fshort-wchar -funsigned-char -fno-common -fno-PIE -=
+fno-strict-aliasing -mgeneral-regs-only -DCONFIG_CC_HAS_K_CONSTRAINT=3D1 -W=
+no-psabi -mabi=3Dlp64 -fno-asynchronous-unwind-tables -fno-unwind-tables -m=
+branch-protection=3Dpac-ret -Wa,-march=3Darmv8.5-a -DARM64_ASM_ARCH=3D'\''"=
+armv8.5-a"'\'' -DKASAN_SHADOW_SCALE_SHIFT=3D -fno-delete-null-pointer-check=
+s -O2 -fno-allow-store-data-races -fstack-protector-strong -fno-omit-frame-=
+pointer -fno-optimize-sibling-calls -ftrivial-auto-var-init=3Dzero -fno-sta=
+ck-clash-protection -fpatchable-function-entry=3D4,2 -falign-functions=3D8 =
+-fstrict-flex-arrays=3D3 -fno-strict-overflow -fno-stack-check -fconserve-s=
+tack -Wall -Wundef -Werror=3Dimplicit-function-declaration -Werror=3Dimplic=
+it-int -Werror=3Dreturn-type -Werror=3Dstrict-prototypes -Wno-format-securi=
+ty -Wno-trigraphs -Wno-frame-address -Wno-address-of-packed-member -Wmissin=
+g-declarations -Wmissing-prototypes -Wframe-larger-than=3D2048 -Wno-main -W=
+no-unused-but-set-variable -Wno-unused-const-variable -Wno-dangling-pointer=
+ -Wvla -Wno-pointer-sign -Wcast-function-type -Wstringop-overflow -Wno-arra=
+y-bounds -Wno-alloc-size-larger-than -Wimplicit-fallthrough=3D5 -Werror=3Dd=
+ate-time -Werror=3Dincompatible-pointer-types -Werror=3Ddesignated-init -We=
+num-conversion -Wno-unused-but-set-variable -Wno-unused-const-variable -Wno=
+-restrict -Wno-packed-not-aligned -Wno-format-overflow -Wno-format-truncati=
+on -Wno-stringop-truncation -Wno-missing-field-initializers -Wno-type-limit=
+s -Wno-shift-negative-value -Wno-maybe-uninitialized -Wno-sign-compare -g -=
+mstack-protector-guard=3Dsysreg -mstack-protector-guard-reg=3Dsp_el0 -mstac=
+k-protector-guard-offset=3D1152 -I ../drivers/soc/qcom -I ./drivers/soc/qco=
+m  -DMODULE  -DKBUILD_BASENAME=3D'\''"pmic_pdcharger_ulog"'\'' -DKBUILD_MOD=
+NAME=3D'\''"pmic_pdcharger_ulog"'\'' -D__KBUILD_MODNAME=3Dkmod_pmic_pdcharg=
+er_ulog -c -o drivers/soc/qcom/pmic_pdcharger_ulog.o ../drivers/soc/qcom/pm=
+ic_pdcharger_ulog.c  ' > drivers/soc/qcom/.pmic_pdcharger_ulog.o.cmd; rm -f=
+ drivers/soc/qcom/.pmic_pdcharger_ulog.o.d
+    ahalaney@fedora ~/git/linux-next (git)-[b4/b4-stmmac-handle-mdio-enodev=
+] %
+
+I guess that makes sense, out of tree builds would need to include the local
+folder to grab local headers when compiling in the new working directory,
+whereas in tree works in the current directory so that's not a necessary
+inclusion by default (but is in this case for tracing purposes).
 
 
