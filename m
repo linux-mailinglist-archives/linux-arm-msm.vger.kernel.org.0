@@ -1,77 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-4485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C005C8106B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 01:37:46 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA2F08106B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 01:37:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A4752823AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 00:37:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7429C1F21D62
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 00:37:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D886110F0;
-	Wed, 13 Dec 2023 00:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F71439F;
+	Wed, 13 Dec 2023 00:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FZzmm5pY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OBEQkK8q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1585292
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8BD0B9
 	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 16:37:38 -0800 (PST)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50e0d1f9fe6so791545e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 16:37:37 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50bf1e32571so7428673e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 16:37:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702427856; x=1703032656; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1702427857; x=1703032657; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EcCa5+8uedoJBpp0MnZ9GK2xI8dvU5dB8nGMr3vqEDs=;
-        b=FZzmm5pYEk5h4NYC40Z9GO7ZR5iHB4lOlNg1KhCj2Npvk/gfKr7RVRLDXHM2QO5pJ5
-         aaKXnDIG9n4uMdtT94lCbPI0q4gocTkcanx1P3RzoN5dOnOksvpJiNuVt/XSRLHKD7B4
-         PQM2TuIQbcB/ngbzEBenvHPK3tNBM/y8IlvppRqRhXeqk3HUSLkrwxpYHJ38zMKKP16S
-         ySfqtOaRn8IKDAL+aRumRql9HdfUE4hw9f/zEiUPjqYhXuj99+/VOjBA0GQC2TbnFtVs
-         rmpqI6/SOP2gOSt48psTyQ3aGgmW+Y6XLKH7bgXb3Kb2uI/cMzjXiv8Hv2OQGYo5rW6U
-         YtQw==
+        bh=bSCgKJVh7Aq6raN1kOP54ZRfx8NzvoUiUSv9wHSRjAY=;
+        b=OBEQkK8q5O++ptSqr/VPPuK3IHpvLR33p0NtZCBPsL5MIq2hrTB7Lz3VAzrZJVVEsy
+         15Lka98q/kmNM5nHfhizE4ly0KZOippi1xkz6MUOFsk4l/vUIu4oV558Xyj/36lMjfKz
+         p9Ie3ab5VflaEU3yGhFKaUmuVgkNnHPDjKw6sZJ+urR4jfC3Ohzv4jRrstQtFvUzfn+4
+         OcVRJzWbxtc48lpPG9k4jCGy4HypNEcIafgpcK8BoXPpXWrM3+s1KoZRwz9DZJjGtxE9
+         ITEOIM63u65i6mj5ZiMk8ZC76O5JQqsJ1tAblDzOQ8kGe6ni7lhvb8DAavfw+wSXJs3w
+         NhHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702427856; x=1703032656;
+        d=1e100.net; s=20230601; t=1702427857; x=1703032657;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EcCa5+8uedoJBpp0MnZ9GK2xI8dvU5dB8nGMr3vqEDs=;
-        b=UOqyUKavX8WFX55WVR70G4rMl70h8NgnQ6J3TIVNw0deyJMJ8oFZ6a3li3SeHQp416
-         myiFjuo2MBg+QXPUE48pmQktlU+8buMuA3d+HfABkLA4le4g+y3XwX7/pnq/PuTPHkBX
-         o9HrmiYp8VPmgr8rQzMUGMHa8n47YOiS00ODZ+0+2gNLyDac8fjQlBGv2mB/TxBlrbEY
-         C6NNLZuLkEG2615Gj8TDw6JYd3c8/oQFLhyYzuvWBMu0iHZk7bOenek9EO7zeRpfFdUV
-         RM2LQC0Obeut7iPMcjO/IcIRtKk+2zq2JbGUXUs+DnlHwFGxoKyqmBmWKWbdOg9FYanK
-         BxEQ==
-X-Gm-Message-State: AOJu0YwB+4Bw8Euct2zSfRSU0aK4hAui1cLJbUTpukP9VCSyoCANCb0K
-	OKULkgBN4rxA92GiLl0yRWGjZA==
-X-Google-Smtp-Source: AGHT+IE+GQRoA1ZiyYAq2jc8Dda0H7QIS0w/1Sgg45+lga/dxNeYCdMHKNs0gNMWttXKUS5dDgrAcQ==
-X-Received: by 2002:ac2:5585:0:b0:50b:e635:be52 with SMTP id v5-20020ac25585000000b0050be635be52mr2676783lfg.78.1702427856319;
-        Tue, 12 Dec 2023 16:37:36 -0800 (PST)
+        bh=bSCgKJVh7Aq6raN1kOP54ZRfx8NzvoUiUSv9wHSRjAY=;
+        b=goBLUs+rFZ9Jp98HJ/FV6viQlze1xmyCCBNwVtKk1Tl2TkS0JIDT0HhzjP1L92Jo3T
+         j2OjKkdbURtmAFWaDMhOsg9iUH9uWYl3Kx8wWdjpV4ZPgVN83ebATp44tbQS9Rsa1vNh
+         miOl6LCPecc8ykpdB5kEy46XMauhRZT+RHUqe4hR9L4p5+Gbsl0EVRs4nJL4WSM7YCNY
+         3aguHu2bl6aKFIglqg44Tv2LzDyyiwFsZpCcDTIX45yyywK+XgqlQPVjNZ4J2m0Ud1Nk
+         eWowy3/crOQUM0UDtIJTt+SsU4Mxc38kpN7U7SWMWr3uoDt6BGMfiHML4FpU53kuG8+E
+         +o8w==
+X-Gm-Message-State: AOJu0YwsaRYzW4AhEmiPDQX8QwNEb5/0sQ55to3LhrteUaQCKgZub2zt
+	usonSSr5lQOFlDL/xjiJ767NWw==
+X-Google-Smtp-Source: AGHT+IF73nfm56nkB2mm650VJtqU71JG3ISCUoo3YLH1Caud8GmPxaBSrn51FVw0yj8hkxHfHPfmhA==
+X-Received: by 2002:ac2:499d:0:b0:50b:d990:39b5 with SMTP id f29-20020ac2499d000000b0050bd99039b5mr3112617lfl.11.1702427857210;
+        Tue, 12 Dec 2023 16:37:37 -0800 (PST)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a4-20020a194f44000000b0050bef1c5a50sm1517467lfk.267.2023.12.12.16.37.35
+        by smtp.gmail.com with ESMTPSA id a4-20020a194f44000000b0050bef1c5a50sm1517467lfk.267.2023.12.12.16.37.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Dec 2023 16:37:35 -0800 (PST)
+        Tue, 12 Dec 2023 16:37:36 -0800 (PST)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Stephen Boyd <swboyd@chromium.org>,
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	David Airlie <airlied@gmail.com>,
 	Daniel Vetter <daniel@ffwll.ch>,
-	Bjorn Andersson <andersson@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm/dpu: remove extra drm_encoder_cleanup from the error path
-Date: Wed, 13 Dec 2023 02:37:29 +0200
-Message-Id: <170242755503.12964.6049183129158135242.b4-ty@linaro.org>
+	freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH RESEND v2 0/3] drm: introduce per-encoder debugfs directory
+Date: Wed, 13 Dec 2023 02:37:30 +0200
+Message-Id: <170242755507.12964.9347100992434762477.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231211145440.3647001-1-dmitry.baryshkov@linaro.org>
-References: <20231211145440.3647001-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20231203115315.1306124-1-dmitry.baryshkov@linaro.org>
+References: <20231203115315.1306124-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,18 +81,23 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 11 Dec 2023 17:54:40 +0300, Dmitry Baryshkov wrote:
-> The drmm handler will perform drm_encoder_cleanup() for us. Moreover if
-> we call drm_encoder_cleanup() manually, the drmm_encoder_alloc_release()
-> will spawn warnings at drivers/gpu/drm/drm_encoder.c:214. Drop these
-> extra drm_encoder_cleanup() calls.
+On Sun, 03 Dec 2023 14:53:12 +0300, Dmitry Baryshkov wrote:
+> Resending, patch 1 needs review from DRM core maintainers, but it got no
+> attention since October.
 > 
+> Each of connectors and CRTCs used by the DRM device provides debugfs
+> directory, which is used by several standard debugfs files and can
+> further be extended by the driver. Add such generic debugfs directories
+> for encoder. As a showcase for this dir, migrate `bridge_chains' debugfs
+> file (which contains per-encoder data) and MSM custom encoder status to
+> this new debugfs directory.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] drm/msm/dpu: remove extra drm_encoder_cleanup from the error path
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/014a07f72a33
+[3/3] drm/msm/dpu: move encoder status to standard encoder debugfs dir
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/62d35629da80
 
 Best regards,
 -- 
