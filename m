@@ -1,214 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-4504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90549810B53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:17:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 80B70810BF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 09:05:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 20BA9B20FE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 07:17:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 28AC8B20A7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:05:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9414618053;
-	Wed, 13 Dec 2023 07:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BFC91C693;
+	Wed, 13 Dec 2023 08:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CPy5F8oW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jjNwQL5G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 134C2E8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 23:17:26 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-6ceba6c4b8dso5372252b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 23:17:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1702451845; x=1703056645; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tQkVZRL9vpSyDVIXwSM3uoJy33pbVTo1JnWRzA8kmd0=;
-        b=CPy5F8oWeEkRUHaaCAJanMmk4DosUapS/0hH5Cwk6zrNQt7QsT3rJZHq7MZGn1QX2Q
-         Z3wPIcCaZeOjp3v7EovIrQ/2Zm9ULT2gynm64I1meiyDH9BiUPWuUqeO45UtGiUjAgRi
-         T8dyokWzbIupOof7oAj8WaYAYY8ayXQZwfw7WzPF2w8S77IYrQa5tJeR7ndpe/7CcMZ7
-         90mqZ8tuqibMQxA07gIMQk8dSFs2z3AOhm9QJ+wf6Fh7lhfRMZ3SFHQwE8FKxq1MaQTf
-         vwnU2XbWNUdkFhCUJ5dAfebaeSrL5/khUNeh4gfiqACJxOQd5nUMTVWqpLhALHuCcm9c
-         kOWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702451845; x=1703056645;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tQkVZRL9vpSyDVIXwSM3uoJy33pbVTo1JnWRzA8kmd0=;
-        b=UOOu2XTV99JvaA4S+MOmtZFPYtGrvnxQrYmGWzh3+/qObyU9g2N74yN5oIMxhFn+mJ
-         Ot3y3oVsaX8MIgqTWoeExJ/Pas68cWColpMFks1I2NSSYABElscto0tEn0DsCWPKN46Z
-         1oWTQ+ug4JnTQfIasvH8EYXOXajnLClG7dEkOwnhoFRofZLyjHA/5YIHXSbX6g2S+WUG
-         rFe2mNp77y1bceICTiela0y0FDJk2WLFoe88RCkAWqBwVEXZ5juwteg3nGd65U8DZAOm
-         OW46oBCIh6qd/OA1u9rONsWmtz/kA9tAicdxYTmdOri/kakHBgu5XeN1a2powrLnLENz
-         aODw==
-X-Gm-Message-State: AOJu0YyGFZuJUthbijLxSiiFCxZTyjydI0s3Ty/hfWTmXMvBIY4uH8tf
-	vJnvBvJRAF9tT7c4MXJtaulCtA==
-X-Google-Smtp-Source: AGHT+IHiSXnDOemeyZyy/MLSWRxebQTdjMVtSLqQL6fptF1l9M0iOoG2O2S+n9eONFJnbFjX7Mf0dw==
-X-Received: by 2002:a05:6a21:a586:b0:18f:97c:975d with SMTP id gd6-20020a056a21a58600b0018f097c975dmr12961474pzc.69.1702451845050;
-        Tue, 12 Dec 2023 23:17:25 -0800 (PST)
-Received: from localhost ([122.172.82.6])
-        by smtp.gmail.com with ESMTPSA id so3-20020a17090b1f8300b0028ae8495d47sm571658pjb.21.2023.12.12.23.17.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Dec 2023 23:17:24 -0800 (PST)
-Date: Wed, 13 Dec 2023 12:47:22 +0530
-From: Viresh Kumar <viresh.kumar@linaro.org>
-To: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: catalin.marinas@arm.com, will@kernel.org, sudeep.holla@arm.com,
-	rafael@kernel.org, agross@kernel.org, andersson@kernel.org,
-	konrad.dybcio@linaro.org, mingo@redhat.com, peterz@infradead.org,
-	juri.lelli@redhat.com, dietmar.eggemann@arm.com,
-	rostedt@goodmis.org, bsegall@google.com, mgorman@suse.de,
-	bristot@redhat.com, vschneid@redhat.com, lukasz.luba@arm.com,
-	rui.zhang@intel.com, mhiramat@kernel.org, daniel.lezcano@linaro.org,
-	amit.kachhap@gmail.com, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-trace-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] cpufreq: Add a cpufreq pressure feedback for the
- scheduler
-Message-ID: <20231213071722.u6n2fokrfs7hf3nb@vireshk-i7>
-References: <20231212142730.998913-1-vincent.guittot@linaro.org>
- <20231212142730.998913-2-vincent.guittot@linaro.org>
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92560B2;
+	Wed, 13 Dec 2023 00:05:37 -0800 (PST)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BD7x5t5028802;
+	Wed, 13 Dec 2023 08:05:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=
+	qcppdkim1; bh=krym0HY/pPafi8NwsXn9ZFmG16blrZh3WAY8SGvQUec=; b=jj
+	NwQL5GbLj4obCxjevLbfa6D1x3Wu2DOzYaV6ynnbUxWbiGRYlaoaZr/2JWPLgamC
+	nZLs14TkfTenK7DKoyDWCJJRFMIV6GJkWez2Zh8LxYrJOBsQ8sZ+CQUYKXbo2qda
+	y3r/2XfQ9V4drpkRr+l7LNMyYhsNC2i2GbjLO2NUfRc8eUoLy/ZKHLYU2IcvQGd0
+	SQssq8Kdcv387oIqEPVeK0QsENMqndZqj7IkBzLEpHZ2HqCvL+ZvUSU7Ak0okEFj
+	brUi1+Q8Vew/IrQLUxn3hyl8/FV4JWXIhBxDPX2i8a6z5wI0nheW9iLGrA9Yi1Fh
+	76GPY6oxpRh1TkbBSuQw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uy3rprqnd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Dec 2023 08:05:12 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BD85Bju017157
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 13 Dec 2023 08:05:11 GMT
+Received: from [10.253.13.71] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Dec
+ 2023 00:05:06 -0800
+Message-ID: <0495f1c2-00e6-4fa5-aaae-cf01475ef2ba@quicinc.com>
+Date: Wed, 13 Dec 2023 16:05:03 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231212142730.998913-2-vincent.guittot@linaro.org>
-X-Spam-Level: *
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/5] net: mdio: ipq4019: enable the SoC uniphy clocks
+ for ipq5332 platform
+Content-Language: en-US
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
+        <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <20231212115151.20016-1-quic_luoj@quicinc.com>
+ <20231212115151.20016-3-quic_luoj@quicinc.com>
+ <20231212134621.0fe2583f@device.home>
+From: Jie Luo <quic_luoj@quicinc.com>
+In-Reply-To: <20231212134621.0fe2583f@device.home>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -nDUJhHxRajZkDQu6Fy_X7hz_TInw8sM
+X-Proofpoint-GUID: -nDUJhHxRajZkDQu6Fy_X7hz_TInw8sM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
+ mlxscore=0 suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=999 bulkscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312130057
 
-On 12-12-23, 15:27, Vincent Guittot wrote:
-> Provide to the scheduler a feedback about the temporary max available
-> capacity. Unlike arch_update_thermal_pressure, this doesn't need to be
-> filtered as the pressure will happen for dozens ms or more.
+
+
+On 12/12/2023 8:46 PM, Maxime Chevallier wrote:
+> Hello,
 > 
-> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-> ---
->  drivers/cpufreq/cpufreq.c | 48 +++++++++++++++++++++++++++++++++++++++
->  include/linux/cpufreq.h   | 10 ++++++++
->  2 files changed, 58 insertions(+)
+> On Tue, 12 Dec 2023 19:51:47 +0800
+> Luo Jie <quic_luoj@quicinc.com> wrote:
 > 
-> diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-> index 44db4f59c4cc..7d5f71be8d29 100644
-> --- a/drivers/cpufreq/cpufreq.c
-> +++ b/drivers/cpufreq/cpufreq.c
-> @@ -2563,6 +2563,50 @@ int cpufreq_get_policy(struct cpufreq_policy *policy, unsigned int cpu)
->  }
->  EXPORT_SYMBOL(cpufreq_get_policy);
->  
-> +DEFINE_PER_CPU(unsigned long, cpufreq_pressure);
-> +EXPORT_PER_CPU_SYMBOL_GPL(cpufreq_pressure);
-> +
-> +/**
-> + * cpufreq_update_pressure() - Update cpufreq pressure for CPUs
-> + * @cpus        : The related CPUs for which max capacity has been reduced
-> + * @capped_freq : The maximum allowed frequency that CPUs can run at
-> + *
-> + * Update the value of cpufreq pressure for all @cpus in the mask. The
-> + * cpumask should include all (online+offline) affected CPUs, to avoid
-> + * operating on stale data when hot-plug is used for some CPUs. The
-> + * @capped_freq reflects the currently allowed max CPUs frequency due to
-> + * freq_qos capping. It might be also a boost frequency value, which is bigger
-> + * than the internal 'capacity_freq_ref' max frequency. In such case the
-> + * pressure value should simply be removed, since this is an indication that
-> + * there is no capping. The @capped_freq must be provided in kHz.
-> + */
-> +static void cpufreq_update_pressure(const struct cpumask *cpus,
+>> On the platform ipq5332, the related SoC uniphy GCC clocks need
+>> to be enabled for making the MDIO slave devices accessible.
+>>
+>> These UNIPHY clocks are from the SoC platform GCC clock provider,
+>> which are enabled for the connected PHY devices working.
+>>
+>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> 
+> [...]
+> 
+>>   static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
+>> @@ -209,14 +230,43 @@ static int ipq4019_mdio_write_c22(struct mii_bus *bus, int mii_id, int regnum,
+>>   static int ipq_mdio_reset(struct mii_bus *bus)
+>>   {
+>>   	struct ipq4019_mdio_data *priv = bus->priv;
+>> -	int ret;
+>> +	int ret, index;
+>> +	unsigned long rate;
+> 
+> Please remember to use reverse christmas-tree ordering, meaning longer
+> declaration lines go first :
+> 
+> 	struct ipq4019_mdio_data *priv = bus->priv;
+> 	unsigned long rate;
+> 	int ret, index;
 
-Since this is defined as 'static', why not just pass policy here ?
+Thanks, i will update this.
 
-> +				      unsigned long capped_freq)
-> +{
-> +	unsigned long max_capacity, capacity, pressure;
-> +	u32 max_freq;
-> +	int cpu;
-> +
-> +	cpu = cpumask_first(cpus);
-> +	max_capacity = arch_scale_cpu_capacity(cpu);
+> 
+>> +
+>> +	/* For the platform ipq5332, there are two SoC uniphies available
+>> +	 * for connecting with ethernet PHY, the SoC uniphy gcc clock
+>> +	 * should be enabled for resetting the connected device such
+>> +	 * as qca8386 switch, qca8081 PHY or other PHYs effectively.
+>> +	 *
+>> +	 * Configure MDIO/UNIPHY clock source frequency if clock instance
+>> +	 * is specified in the device tree.
+>> +	 */
+>> +	for (index = MDIO_CLK_MDIO_AHB; index < MDIO_CLK_CNT; index++) {
+>> +		switch (index) {
+>> +		case MDIO_CLK_MDIO_AHB:
+>> +			rate = IPQ_MDIO_CLK_RATE;
+>> +			break;
+>> +		case MDIO_CLK_UNIPHY0_AHB:
+>> +		case MDIO_CLK_UNIPHY1_AHB:
+>> +			rate = IPQ_UNIPHY_AHB_CLK_RATE;
+>> +			break;
+>> +		case MDIO_CLK_UNIPHY0_SYS:
+>> +		case MDIO_CLK_UNIPHY1_SYS:
+>> +			rate = IPQ_UNIPHY_SYS_CLK_RATE;
+>> +			break;
+>> +		default:
+>> +			break;
+>> +		}
+>>   
+>> -	/* Configure MDIO clock source frequency if clock is specified in the device tree */
+>> -	ret = clk_set_rate(priv->mdio_clk, IPQ_MDIO_CLK_RATE);
+>> -	if (ret)
+>> -		return ret;
+>> +		ret = clk_set_rate(priv->clk[index], rate);
+>> +		if (ret)
+>> +			return ret;
+>> +
+>> +		ret = clk_prepare_enable(priv->clk[index]);
+>> +		if (ret)
+>> +			return ret;
+>> +	}
+>>   
+>> -	ret = clk_prepare_enable(priv->mdio_clk);
+>>   	if (ret == 0)
+>>   		mdelay(10);
+>>   
+>> @@ -240,10 +290,6 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
+>>   	if (IS_ERR(priv->membase))
+>>   		return PTR_ERR(priv->membase);
+>>   
+>> -	priv->mdio_clk = devm_clk_get_optional(&pdev->dev, "gcc_mdio_ahb_clk");
+>> -	if (IS_ERR(priv->mdio_clk))
+>> -		return PTR_ERR(priv->mdio_clk);
+>> -
+>>   	/* These platform resources are provided on the chipset IPQ5018 or
+>>   	 * IPQ5332.
+>>   	 */
+>> @@ -271,6 +317,13 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
+>>   		}
+>>   	}
+>>   
+>> +	for (index = 0; index < MDIO_CLK_CNT; index++) {
+>> +		priv->clk[index] = devm_clk_get_optional(&pdev->dev,
+>> +							 mdio_clk_name[index]);
+>> +		if (IS_ERR(priv->clk[index]))
+>> +			return PTR_ERR(priv->clk[index]);
+>> +	}
+> 
+> You should be able to use devm_clk_bulk_get_optional(), to avoid that
+> loop.
+> 
+> Thanks,
+> 
+> Maxime
 
-This anyway expects all of them to be from the same policy ..
+Thanks Maxime for the suggestion.
+These clocks need to be configured the different clock rate, MDIO system
+clock works on 100MHZ, but UNIPHY system clock works on 24MHZ.
 
-> +	max_freq = arch_scale_freq_ref(cpu);
-> +
-> +	/*
-> +	 * Handle properly the boost frequencies, which should simply clean
-> +	 * the thermal pressure value.
-> +	 */
-> +	if (max_freq <= capped_freq)
-> +		capacity = max_capacity;
-> +	else
-> +		capacity = mult_frac(max_capacity, capped_freq, max_freq);
-> +
-> +	pressure = max_capacity - capacity;
-> +
+For the clock rate set, i still need the loop to configure the different
+clock rate on the different clock instance.
 
-Extra blank line here.
+So i use the devm_clk_get_optional to acquire the exact clock ID here.
 
-> +
-> +	for_each_cpu(cpu, cpus)
-> +		WRITE_ONCE(per_cpu(cpufreq_pressure, cpu), pressure);
-> +}
-> +
->  /**
->   * cpufreq_set_policy - Modify cpufreq policy parameters.
->   * @policy: Policy object to modify.
-> @@ -2584,6 +2628,7 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
->  {
->  	struct cpufreq_policy_data new_data;
->  	struct cpufreq_governor *old_gov;
-> +	struct cpumask *cpus;
->  	int ret;
->  
->  	memcpy(&new_data.cpuinfo, &policy->cpuinfo, sizeof(policy->cpuinfo));
-> @@ -2618,6 +2663,9 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
->  	policy->max = __resolve_freq(policy, policy->max, CPUFREQ_RELATION_H);
->  	trace_cpu_frequency_limits(policy);
->  
-> +	cpus = policy->related_cpus;
 
-You don't need the extra variable anyway, but lets just pass policy
-instead to the routine.
-
-> +	cpufreq_update_pressure(cpus, policy->max);
-> +
->  	policy->cached_target_freq = UINT_MAX;
->  
->  	pr_debug("new min and max freqs are %u - %u kHz\n",
-> diff --git a/include/linux/cpufreq.h b/include/linux/cpufreq.h
-> index afda5f24d3dd..b1d97edd3253 100644
-> --- a/include/linux/cpufreq.h
-> +++ b/include/linux/cpufreq.h
-> @@ -241,6 +241,12 @@ struct kobject *get_governor_parent_kobj(struct cpufreq_policy *policy);
->  void cpufreq_enable_fast_switch(struct cpufreq_policy *policy);
->  void cpufreq_disable_fast_switch(struct cpufreq_policy *policy);
->  bool has_target_index(void);
-> +
-> +DECLARE_PER_CPU(unsigned long, cpufreq_pressure);
-> +static inline unsigned long cpufreq_get_pressure(int cpu)
-> +{
-> +	return per_cpu(cpufreq_pressure, cpu);
-> +}
->  #else
->  static inline unsigned int cpufreq_get(unsigned int cpu)
->  {
-> @@ -263,6 +269,10 @@ static inline bool cpufreq_supports_freq_invariance(void)
->  	return false;
->  }
->  static inline void disable_cpufreq(void) { }
-> +static inline unsigned long cpufreq_get_pressure(int cpu)
-> +{
-> +	return 0;
-> +}
->  #endif
->  
->  #ifdef CONFIG_CPU_FREQ_STAT
-> -- 
-> 2.34.1
-
--- 
-viresh
 
