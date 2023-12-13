@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-4509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0484810C67
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 09:27:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E166D810CA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 09:42:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 505F6B20BD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:27:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F5F91F2119D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:42:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D2561DFD6;
-	Wed, 13 Dec 2023 08:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 869941EB2F;
+	Wed, 13 Dec 2023 08:42:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YlsTbeja"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iB7k1AMs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F5091;
-	Wed, 13 Dec 2023 00:27:19 -0800 (PST)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BD7UFmv007336;
-	Wed, 13 Dec 2023 08:27:05 GMT
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3034DE8;
+	Wed, 13 Dec 2023 00:42:45 -0800 (PST)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 3BD7r1ak003468;
+	Wed, 13 Dec 2023 08:42:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	message-id:date:mime-version:subject:to:cc:references:from
 	:in-reply-to:content-type:content-transfer-encoding; s=
-	qcppdkim1; bh=3lO73/urnQDm+kr+1VeDVOz2JVDHAIwLqDv0H1bD5Iw=; b=Yl
-	sTbejaClQy+tJ8J+U+DkXgP4bSDdsy1txWlLvJdoqOEG+7n8LuDChqdbPY/B0zks
-	yP0wV4zT78EvblM5Zt+DDMonsU/cqTzx5gH9DWKzMLoQKNCGI/dRjZiqGLOIFtGA
-	JJ0mSjOOhOET00dcpo/K7d72EO95pInk8lmy5T7aJ3udTYXYOCD82W3xHk74Tp24
-	msQX0YiTZjqsQB9per3qb3f4oiM5xtgIRUYbJfCzlQETfR59l8wDsnAHdM7cmRpC
-	RUyq2QgbXIM28wEBaSZbdTucJ8kmdBhyEeEpoTv7jbKLF/3yHcsQ/9yrMPCGeLxw
-	Ng+Tpn2nsdhnMftTmu3w==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uy3rprs48-1
+	qcppdkim1; bh=iAjFsOwENPi7BwNpFRzZmgyc+Bw78gJRbpoqxoD3c+8=; b=iB
+	7k1AMsrq9g5IUpWmOdaYFr7oaRThtRqe4xwvgpK3P0raEYOnMFYYOIwxSDg3Kclo
+	zGlmm86Ga0ulaewGvxBSLIf7O6pRunrpS0h4aJBxw8kGAatTkviJIp4IgZ8TnT8Z
+	XkS1ZNUEuaVmsNdA+SlRruFbElUNAZFEaQS9IRDaqxAtIo4tJ2+tZz4ZrK4rFLtc
+	9lL6gPGs65SzYRotQN2ug7pZqwdjzOdfCM0RDe3cXNLZ2gXhCDQ5gkl3t15m7KAT
+	qacubV4svHcADlLnPWeVgOV+c+AoppUOxsafr6zxqkM5GHwD77gjLtbaURovBOcr
+	E7nK1MujQB4X0NITXyaQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3uy4kjgp4e-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Dec 2023 08:27:05 +0000 (GMT)
+	Wed, 13 Dec 2023 08:42:31 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BD8R4Dp012447
+	by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3BD8gUgD029301
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 13 Dec 2023 08:27:04 GMT
+	Wed, 13 Dec 2023 08:42:30 GMT
 Received: from [10.253.13.71] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.40; Wed, 13 Dec
- 2023 00:26:59 -0800
-Message-ID: <11ffc985-3f2b-46b9-ae0b-911f7abe98d1@quicinc.com>
-Date: Wed, 13 Dec 2023 16:26:56 +0800
+ 2023 00:42:25 -0800
+Message-ID: <d8e723f0-2c51-402b-9464-7e4a928cf748@quicinc.com>
+Date: Wed, 13 Dec 2023 16:42:22 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,40 +55,40 @@ User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 5/5] dt-bindings: net: ipq4019-mdio: Document ipq5332
  platform
 Content-Language: en-US
-To: Conor Dooley <conor@kernel.org>
+To: Rob Herring <robh@kernel.org>
 CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
         <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <andrew@lunn.ch>, <hkallweit1@gmail.com>, <linux@armlinux.org.uk>,
-        <robert.marko@sartura.hr>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+        <pabeni@redhat.com>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <andrew@lunn.ch>, <hkallweit1@gmail.com>,
+        <linux@armlinux.org.uk>, <robert.marko@sartura.hr>,
+        <linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>
 References: <20231212115151.20016-1-quic_luoj@quicinc.com>
  <20231212115151.20016-6-quic_luoj@quicinc.com>
- <20231212-caution-improvise-ed3cc6a1d305@spud>
+ <20231212200641.GA2331615-robh@kernel.org>
 From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <20231212-caution-improvise-ed3cc6a1d305@spud>
+In-Reply-To: <20231212200641.GA2331615-robh@kernel.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IhyU1Oqb6UTIJDWGvhhHChFCzN1KcSsK
-X-Proofpoint-GUID: IhyU1Oqb6UTIJDWGvhhHChFCzN1KcSsK
+X-Proofpoint-GUID: 34yrAcRTHXBHQBaobTMc3Bf9q-h_bjus
+X-Proofpoint-ORIG-GUID: 34yrAcRTHXBHQBaobTMc3Bf9q-h_bjus
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-12-09_01,2023-12-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- mlxscore=0 suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0
- mlxlogscore=999 bulkscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2311290000 definitions=main-2312130059
+ definitions=2023-12-09_02,2023-12-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 phishscore=0 bulkscore=0 lowpriorityscore=0 mlxscore=0
+ malwarescore=0 clxscore=1015 suspectscore=0 mlxlogscore=999 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2311290000 definitions=main-2312130061
 
 
 
-On 12/13/2023 12:06 AM, Conor Dooley wrote:
+On 12/13/2023 4:06 AM, Rob Herring wrote:
 > On Tue, Dec 12, 2023 at 07:51:50PM +0800, Luo Jie wrote:
 >> Update the yaml file for the new DTS properties.
 >>
@@ -113,6 +113,14 @@ On 12/13/2023 12:06 AM, Conor Dooley wrote:
 >> +              - qcom,ipq9574-mdio
 >> +              - qcom,ipq5332-mdio
 >>             - const: qcom,ipq4019-mdio
+> 
+> A driver can function without knowing about all these new registers and
+> clocks? If not, then it can't be compatible with "qcom,ipq4019-mdio".
+
+Yes, the driver can work without knowing the compatible string.
+the configuration is decided by the DT property defined or not.
+
+> 
 >>   
 >>     "#address-cells":
 >> @@ -30,19 +32,71 @@ properties:
@@ -143,6 +151,16 @@ On 12/13/2023 12:06 AM, Conor Dooley wrote:
 >> +      - description: UNIPHY1 AHB clock source frequency fixed to 100MHZ
 >> +      - description: UNIPHY0 SYS clock source frequency fixed to 24MHZ
 >> +      - description: UNIPHY1 SYS clock source frequency fixed to 24MHZ
+> 
+> These are all clock inputs to this h/w block and not some other clocks
+> you want to manage?
+
+Yes, for ipq5332, these 5 clocks are need to be managed, for the legacy 
+platform such as ipq8074, only MDIO clock is needed.
+
+No other more clock needs to be managed for the current IPQ platforms.
+
+> 
 >>   
 >>     clock-names:
 >> +    minItems: 1
@@ -153,6 +171,20 @@ On 12/13/2023 12:06 AM, Conor Dooley wrote:
 >> +      - const: gcc_uniphy0_sys_clk
 >> +      - const: gcc_uniphy1_sys_clk
 > 
+> "gcc" is presumably the name of the clock controller in QCom chips.
+> Well, the clock source should not be part of the binding. The names
+> should be local for what they are for. So drop 'gcc_'. And '_clk' is
+> also redundant, so drop it too. Unfortunately you are stuck with the
+> name of the 1st entry.
+
+Yes, gcc is the name of QCOM SOC clock controller.
+will remove the "gcc_" and "_clk" for the new added clocks.
+
+we should keep the existed DT gcc_mdio_ahb_clk unmodified, right?
+since it has been used in the current device tree.
+
+> 
+>> +
 >> +  cmn-reference-clock:
 >> +    oneOf:
 >> +      - items:
@@ -164,16 +196,7 @@ On 12/13/2023 12:06 AM, Conor Dooley wrote:
 >> +              - 4   # CMN PLL reference external 48MHZ
 >> +              - 5   # CMN PLL reference external 50MHZ
 >> +              - 6   # CMN PLL reference internal 96MHZ
-> 
-> Why is this not represented by an element of the clocks property?
-
-This property is for the reference clock source selection of CMN PLL,
-CMN PLL generates the different clock rates for the different Ethernet
-blocks, this CMN PLL configuration is not located in the GCC, so the
-clock framework can't be used, which is the general hardware register
-instead of RCG register for GCC.
-
-> 
+>> +
 >> +  clock-frequency:
 >> +    oneOf:
 >> +      - items:
@@ -188,20 +211,83 @@ instead of RCG register for GCC.
 >> +      The MDIO bus clock that must be output by the MDIO bus hardware,
 >> +      only the listed frequecies above can be configured, other frequency
 >> +      will cause malfunction. If absent, the default hardware value is used.
+>> +
+>> +  reset-gpios:
+>> +    maxItems: 1
+>> +
+>> +  reset-assert-us:
+>> +    maxItems: 1
+>> +
+>> +  reset-deassert-us:
+>> +    maxItems: 1
+>>   
+>>   required:
+>>     - compatible
+>> @@ -61,6 +115,8 @@ allOf:
+>>                 - qcom,ipq5018-mdio
+>>                 - qcom,ipq6018-mdio
+>>                 - qcom,ipq8074-mdio
+>> +              - qcom,ipq5332-mdio
+>> +              - qcom,ipq9574-mdio
+>>       then:
+>>         required:
+>>           - clocks
+>> @@ -70,6 +126,40 @@ allOf:
+>>           clocks: false
+>>           clock-names: false
+>>   
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,ipq5332-mdio
+>> +    then:
+>> +      properties:
+>> +        clocks:
+>> +          minItems: 5
+>> +          maxItems: 5
+>> +        reg-names:
+>> +          items:
+>> +            - const: mdio
+>> +            - const: eth_ldo1
+>> +            - const: eth_ldo2
+>> +            - const: cmn_blk
 > 
-> Likewise.
-> 
-> Your commit message contains a bullet point list of what you are doing,
-> but there's no explanation here for why custom properties are required
-> to provide clock information.
-> 
-> Thanks,
-> Conor.
+> Perhaps cmn_blk should come 2nd, so all the variants have the same entry
+> indices. Then you can move this to the top level and just say 'minItems:
+> 4' here.
 
-Hi Conor,
-This property clock-frequency is optional to configure the MDIO working
-clock rate, and this is the MDIO general DT property, since the hardware
-default clock rate is 390625HZ, there is requirement for higher clock 
-rate in the normal working case, i will update this information in the
-next patch set.
+Thanks Rob for the suggestion, i will update to move cmn_blk to the 2nd
+location.
+
+> 
+> 
+>> +
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,ipq9574-mdio
+>> +    then:
+>> +      properties:
+>> +        reg-names:
+>> +          items:
+>> +            - const: mdio
+>> +            - const: eth_ldo1
+>> +            - const: eth_ldo2
+>> +            - const: eth_ldo3
+>> +            - const: cmn_blk
+> 
+> And 'minItems: 5' here.
+> 
+> The ipq9574 adds the CMN block, but none of the clocks? Weird.
+> 
+> Rob
+
+For ipq9574, only mdio clock is needed, the uniphy ahb and sys clock is
+not needed to configure.
+
+Yes, there is some Ethernet design delta between ipq9574 and ipq5332.
 
