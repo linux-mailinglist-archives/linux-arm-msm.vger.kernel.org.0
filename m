@@ -1,101 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-4500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E4468109A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 06:51:18 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41E68810B01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 08:06:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC9791C20A60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 05:51:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ECD7A1F204E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 07:06:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DF81CA59;
-	Wed, 13 Dec 2023 05:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A771F171A3;
+	Wed, 13 Dec 2023 07:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZiiiMrN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XZN4pL7g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77D528E;
-	Tue, 12 Dec 2023 21:51:09 -0800 (PST)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5d33574f64eso66442097b3.3;
-        Tue, 12 Dec 2023 21:51:09 -0800 (PST)
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15778123
+	for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 23:06:18 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-54cd8f5bb5cso8364239a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Dec 2023 23:06:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702446668; x=1703051468; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cuCbUQb5WegONcfx1OBAUOwkSNfrcmV4RrW5gKHhwH4=;
-        b=TZiiiMrNdupuOEKUD+OTjC3OSHDF9KnPZZLhrHVLmdTFHfd0E9dprZCBwJxvjv3z58
-         jjrhLlzF1iqW6iGkVJgoWz9d6BSazMCOETDwjrS+/wTJPdiYdl+qoliV/oC9IKTp+Eqy
-         fIJMqzRDLQ3iKAPUj3bgnJk7BRj6TcnN91p9nigAIRkIsO78pSwxa/C2yB+5A57y9Z6c
-         IUZNU14FMocqtlaLws/fdquNSOmSD7hJGfHAIzcdsDDTqYQ2h+9pnxB+6Q3IETY8oY5l
-         QjcXxknqo4nNurBUy7fHrWvrymQG6SVOnezBFW44KRjPyr3C4q9BTwqAFufKH98jmUy3
-         oU1w==
+        d=linaro.org; s=google; t=1702451176; x=1703055976; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NzFGyTL0oZZDUCJr1TDfYYZr3e+1e61gGXyy8FIDTsk=;
+        b=XZN4pL7ggMlYdFUy0IY2Nby5Eo4DEVYZf5Kb4jTga1+SjIuIU7STUX5DgcWXNWQCNP
+         CBqIvAaC/ZK/wVOR/lrq70ln73s742U+9Q4936e5Sk4+VfOHN2oWtJsBpESLcZPSrNdz
+         OazIek/CwY/UcMqRvw9yMIza013P5qn0h6IGsFIi0bhXaOGdoSyG3xxG+QC/u0Rw2k0M
+         pNYtqn5iIXza6vuUVs+FHTXjCd5wjH5iSoUDHRsH/l+tA6KotySKRxgUA2xTgZQgz6j7
+         6FNg79jS18M29lH8L2e3R195oUI1Ob+dGdG++/QhcQf6U1GHKnSn0+/7mVJkKaAy3alU
+         /i/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702446668; x=1703051468;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cuCbUQb5WegONcfx1OBAUOwkSNfrcmV4RrW5gKHhwH4=;
-        b=TXptA94io4KfzFKVwVOVjEBhf3q+uEzegYMMU8kZ8XJ5ms3E1CxRsHXA+mwgRnKDJC
-         Re6dRtX8FPFGLcADcl0t4bT1e2sgdcLUVXejfmbAv2eb4deltnR1dXto4PgKHCwXrGpb
-         UDRqE3QC6cqtpvdP5IjXJyOLRtA4qoqML20VGAnCYc/VD4gqFd66ebWG5hafx/rJYWaX
-         +WN891pLYMzX/2QKrGRzrpXDHfrXgU7/YWMqQmzKoNTpH/rZE802xoi8POazVQOYnX3j
-         4dnrTsBBQAiS8Dn2LZKD8W7x8Z0Im24nj3qT9oaWYTR426ojl/sXLeAy5cshFfluzyd7
-         ADRA==
-X-Gm-Message-State: AOJu0Yy54KwWLmaXmhtDEv18Hf98RotUfBu/Kp65uDKLMzQTWBogfFeE
-	J7LKcaXQAcMiorlbbasZ4PDGRArfSUSKEA==
-X-Google-Smtp-Source: AGHT+IGHJG5AwQ6ERukPWZk9JkCzGueszXfxLlvKzK6e/M2zt812hcssOa+hOXZob7k4FVv2WFZlEw==
-X-Received: by 2002:a81:af66:0:b0:5e2:5d4:6f17 with SMTP id x38-20020a81af66000000b005e205d46f17mr1884372ywj.43.1702446668472;
-        Tue, 12 Dec 2023 21:51:08 -0800 (PST)
-Received: from google.com ([2620:15c:9d:2:96c1:256f:67e0:c0db])
-        by smtp.gmail.com with ESMTPSA id o4-20020a170902d4c400b001cfd049528esm9573609plg.110.2023.12.12.21.51.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Dec 2023 21:51:07 -0800 (PST)
-Date: Tue, 12 Dec 2023 21:51:04 -0800
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-arm-msm@vger.kernel.org, Jonathan Cameron <jic23@kernel.org>,
-	Lars-Peter Clausen <lars@metafoo.de>, linux-iio@vger.kernel.org,
-	linux-input@vger.kernel.org, Pavel Machek <pavel@ucw.cz>,
-	linux-leds@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v5 01/37] dt-bindings: input: qcom,pm8921-keypad: convert
- to YAML format
-Message-ID: <ZXlGSPTnineYmTyN@google.com>
-References: <20230827132525.951475-1-dmitry.baryshkov@linaro.org>
- <20230827132525.951475-2-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20230601; t=1702451176; x=1703055976;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NzFGyTL0oZZDUCJr1TDfYYZr3e+1e61gGXyy8FIDTsk=;
+        b=lYnMIhyNfnpwq5ZCwRzYPQKe5B1xlaBw1nXFnFxIFqxn/Es7vMFwufmhANGen7GoHi
+         zqjgytLqThsissNHW7rQRhHHweAqhdpFVHtUZy0uDWpDFTU/+oE+yNGX4ANAmfr3yXGO
+         xvpGeKHKZ4VS0xkZkMFBGQerHryS2d+It3VDs+6g8hlQWt6wHH4n9PYTCb57E6sDo2ag
+         HKRO10Qb+nN9bTSS0fgOYPl0ADthTsAvfpDIV2jGnUwgJfsA7Tg8zK0ezZdfIhMc+cL0
+         UbahtbybEOM5mPLp+yHljwT491MKQstlWlrXQR9tlY5zf3hKWZV9XERWPgnPYhX1w8yp
+         W0Zw==
+X-Gm-Message-State: AOJu0YyGzbr+Pyq4xKLWThC4nxVYhgcVIWhQVUCdjniAANmPG+/PM9mW
+	5giQaZbCmS/19Aiou/e68SfWifQ2v8fh+tPIJFQ=
+X-Google-Smtp-Source: AGHT+IFzmw9qR1vlx3wCugnI26nJY5j5kV1LjP1LiE/3P7iFl5oVJ3E7kqPeTIh2kPzbcX5S2jC9JA==
+X-Received: by 2002:a17:906:18d:b0:a1f:b541:6252 with SMTP id 13-20020a170906018d00b00a1fb5416252mr1765911ejb.92.1702451176521;
+        Tue, 12 Dec 2023 23:06:16 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id un7-20020a170907cb8700b00a1b65249053sm7175322ejc.128.2023.12.12.23.06.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 12 Dec 2023 23:06:16 -0800 (PST)
+Message-ID: <c40d691a-10ed-4678-b1f0-4b2f5f7f3557@linaro.org>
+Date: Wed, 13 Dec 2023 08:06:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230827132525.951475-2-dmitry.baryshkov@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Document WCD939x USB SubSystem
+ Altmode/Analog Audio Switch
+Content-Language: en-US
+To: Neil Armstrong <neil.armstrong@linaro.org>, Andy Gross
+ <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20231212-topic-sm8650-upstream-wcd939x-usbss-v2-0-38961fea5867@linaro.org>
+ <20231212-topic-sm8650-upstream-wcd939x-usbss-v2-1-38961fea5867@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <20231212-topic-sm8650-upstream-wcd939x-usbss-v2-1-38961fea5867@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, Aug 27, 2023 at 04:24:49PM +0300, Dmitry Baryshkov wrote:
-> Convert the bindings for the keypad subdevices of Qualcomm PM8921 and
-> PM8058 PMICs from text to YAML format.
+On 12/12/2023 09:54, Neil Armstrong wrote:
+> Document the Qualcomm WCD9390/WCD9395 USB SubSystem Altmode/Analog Audio Switch
+> which is a separate USB SubSystem for Altmode/Analog Audio Switch accessible
+> over an I2C interface.
 > 
-> While doing the conversion also drop the linux,keypad-no-autorepeat
-> The property was never used by DT files. Both input and DT binding
-> maintainers consider that bindings should switch to assertive
-> (linux,autorepeat) instead of negating (no-autorepeat) property.
+> Since Audio Headphone and Microphone data path between the Codec and the USB-C Mux
+> subsystems are external to the IC, it requires a second port to handle USB-C altmode
+> & orientation switching for Audio Accessory Mode to the Codec SubSystem.
 > 
-> Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Applied, thank you.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
--- 
-Dmitry
+Best regards,
+Krzysztof
+
 
