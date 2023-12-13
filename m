@@ -1,168 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-4626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2305381236E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 00:42:33 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94AEE81239C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Dec 2023 00:57:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 35A421C2148E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 23:42:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A496D1C209EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 23:57:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF5D979E37;
-	Wed, 13 Dec 2023 23:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 787A079E23;
+	Wed, 13 Dec 2023 23:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eDh8fRtH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lTz9xpNN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A3AD10DE;
-	Wed, 13 Dec 2023 15:42:00 -0800 (PST)
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB5AFC9;
+	Wed, 13 Dec 2023 15:57:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702510920; x=1734046920;
-  h=message-id:subject:from:reply-to:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=658FEJlu8iPbmeFy2fG1Ncs6XwLiyF4+NhBOJaUrxWI=;
-  b=eDh8fRtHEn4fbwgOb4ATn8MB0MkwaekdMWOSRwWyXOu1fmdDXXPe9BBq
-   TBtdgHFYfejAFVWHneEweGJkTouWWa6ze9ERWdU3BE845QhWs97qGD0XV
-   SamLc0guLmzk3w3YXwn1swZVod7w55ZXDk//Ko6qmNQseKSjQ9vSQ5Oqa
-   yReLeFcmvf7yAz15maEHASelaWlpAQSe0KrImQ7COwocE4fc1Mh1QWhEy
-   4JdARxlxyaMUqhNO7/N/xpoe+jDjm8R+NLkCWnFqYaDGnRvBmWkndOVah
-   IIscIjw59Ppl7feQ1XP8nHBX4XCJrYr6wuvMFpV92RGTgsFey69EC8FnW
+  t=1702511838; x=1734047838;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=poej8h3DeJjMomXJaNE+bWPiFUbNVUg3Mkr1BfGUJOQ=;
+  b=lTz9xpNNyc/rAyVfGJx3cuZPI2UAaghQFUg9VFGomX0PASatLrBd84TU
+   zmJVOvObUoStGcK2ATZiFcb+n9hFXzC/YKRnuAmeQLfkCvmhVI0z9jQ+Z
+   s25oMwbF1r/GENa17a68c50KccDBUPlQh67Bhj27H7+ziLSSS8eyEdBDn
+   6fiZNivthJPhaTBmYTITGN/Chpi6jD0Wkg+nT5iltbzzjRjTtEzP0ye7A
+   a7sztBxUwG2MFsSW0ORw1sraANE9JfIuRw4Z0aVEHIGe6eaKfl/7QjJFD
+   ajZgdg8p5ZDNwL7nvw/Ot7Xbirgr8AVijFkNRRK3+9uaXTmwYejZzwUjq
    A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="8402768"
+X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="375197738"
 X-IronPort-AV: E=Sophos;i="6.04,274,1695711600"; 
-   d="scan'208";a="8402768"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 15:39:26 -0800
+   d="scan'208";a="375197738"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 15:57:18 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="1021305090"
+X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="844504622"
 X-IronPort-AV: E=Sophos;i="6.04,274,1695711600"; 
-   d="scan'208";a="1021305090"
-Received: from linux.intel.com ([10.54.29.200])
-  by fmsmga006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 15:39:25 -0800
-Received: from acharris-mobl.amr.corp.intel.com (unknown [10.255.228.183])
-	by linux.intel.com (Postfix) with ESMTP id C5161580DAA;
-	Wed, 13 Dec 2023 15:39:24 -0800 (PST)
-Message-ID: <eb42db34f456c3a157cc574893fd73d877b85b75.camel@linux.intel.com>
-Subject: Re: [PATCH v2 1/6] PCI/ASPM: Add locked helper for enabling link
- state
-From: "David E. Box" <david.e.box@linux.intel.com>
-Reply-To: david.e.box@linux.intel.com
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Kai-Heng Feng <kai.heng.feng@canonical.com>, Johan Hovold
- <johan+linaro@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- Krzysztof =?UTF-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Bjorn Helgaas
- <bhelgaas@google.com>, Andy Gross <agross@kernel.org>, Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
- Nirmal Patel <nirmal.patel@linux.intel.com>, Jonathan Derrick
- <jonathan.derrick@linux.dev>, linux-arm-msm@vger.kernel.org, 
- linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org,  Manivannan Sadhasivam
- <manivannan.sadhasivam@linaro.org>
-Date: Wed, 13 Dec 2023 15:39:24 -0800
-In-Reply-To: <20231213204512.GA1056289@bhelgaas>
-References: <20231213204512.GA1056289@bhelgaas>
-Organization: David E. Box
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+   d="scan'208";a="844504622"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by fmsmga004.fm.intel.com with ESMTP; 13 Dec 2023 15:57:15 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rDZ6H-000LIZ-1s;
+	Wed, 13 Dec 2023 23:57:13 +0000
+Date: Thu, 14 Dec 2023 07:56:16 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jani Nikula <jani.nikula@intel.com>, linux-sound@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	Takashi Iwai <tiwai@suse.com>, dri-devel@lists.freedesktop.org,
+	Jaroslav Kysela <perex@perex.cz>
+Subject: Re: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
+Message-ID: <202312140733.2qj4HH0f-lkp@intel.com>
+References: <20231213095023.3928703-1-jani.nikula@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231213095023.3928703-1-jani.nikula@intel.com>
 
-On Wed, 2023-12-13 at 14:45 -0600, Bjorn Helgaas wrote:
-> On Wed, Dec 13, 2023 at 11:48:41AM -0800, David E. Box wrote:
-> > On Tue, 2023-12-12 at 15:27 -0600, Bjorn Helgaas wrote:
-> > > On Tue, Dec 12, 2023 at 11:48:27AM +0800, Kai-Heng Feng wrote:
-> > > > On Fri, Dec 8, 2023 at 4:47=E2=80=AFAM Bjorn Helgaas <helgaas@kerne=
-l.org> wrote:
-> > > > ...
-> > >=20
-> > > > > I hope we can obsolete this whole idea someday.=C2=A0 Using pci_w=
-alk_bus()
-> > > > > in qcom and vmd to enable ASPM is an ugly hack to work around thi=
-s
-> > > > > weird idea that "the OS isn't allowed to enable more ASPM states =
-than
-> > > > > the BIOS did because the BIOS might have left ASPM disabled becau=
-se it
-> > > > > knows about hardware issues."=C2=A0 More history at
-> > > > > https://lore.kernel.org/linux-pci/20230615070421.1704133-1-kai.he=
-ng.feng@canonical.com/T/#u
-> > > > >=20
-> > > > > I think we need to get to a point where Linux enables all support=
-ed
-> > > > > ASPM features by default.=C2=A0 If we really think x86 BIOS assum=
-es an
-> > > > > implicit contract that the OS will never enable ASPM more
-> > > > > aggressively, we might need some kind of arch quirk for that.
-> > > >=20
-> > > > The reality is that PC ODM toggles ASPM to workaround hardware
-> > > > defects, assuming that OS will honor what's set by the BIOS.
-> > > > If ASPM gets enabled for all devices, many devices will break.
-> > >=20
-> > > That's why I mentioned some kind of arch quirk.=C2=A0 Maybe we're for=
-ced to
-> > > do that for x86, for instance.=C2=A0 But even that is a stop-gap.
-> > >=20
-> > > The idea that the BIOS ASPM config is some kind of handoff protocol i=
-s
-> > > really unsupportable.
-> >=20
-> > To be clear, you are not talking about a situation where
-> > ACPI_FADT_NO_ASPM or _OSC PCIe disallow OS ASPM control, right?
-> > Everyone agrees that this should be honored? The question is what to
-> > do by default when the OS is not restricted by these mechanisms?
->=20
-> Exactly.=C2=A0 The OS should respect ACPI_FADT_NO_ASPM and _OSC.
->=20
-> I think there are a couple exceptions where we want to disable ASPM
-> even if the platform said the OS shouldn't touch ASPM at all, but
-> that's a special case.
->=20
-> > Reading the mentioned thread, I too think that using the BIOS config
-> > as the default would be the safest option, but only to avoid
-> > breaking systems, not because of an implied contract between the
-> > BIOS and OS. However, enabling all capable ASPM features is the
-> > ideal option. If the OS isn't limited by ACPI_FADT_NO_ASPM or _OSC
-> > PCIe, then ASPM enabling is fully under its control.=C2=A0 If this
-> > doesn't work for some devices then they are broken and need a quirk.
->=20
-> Agreed.=C2=A0 It may not be practical to identify such devices, so we may
-> need a broader arch-based and/or date-based quirk.
->=20
-> I'd be shocked if Windows treated the BIOS config as a "do not exceed
-> this" situation, so my secret hope is that some of these "broken"
-> devices are really caused by defects in the Linux ASPM support or the
-> driver, and that we can fix them if we find out about them.
->=20
-> But I have no details about any of these alleged broken devices, so
-> it's hard to make progress on them.=C2=A0=C2=A0
+Hi Jani,
 
-I don't have a sense of the scope either. But I could see BIOS not enabling
-features that would provide no added power savings benefit. We use ASPM to
-manage package power. There are Intel devices that certainly don't require =
-L1SS
-for the SoC to achieve the deepest power savings. L1 alone is fine for them=
-. I
-don't know what the test coveragae is for unenabled features. I've sent the=
-se
-questions to our BIOS folks.
+kernel test robot noticed the following build errors:
 
-> Maybe we should log a debug note
-> if the device advertises ASPM support that BIOS didn't enable.
+[auto build test ERROR on drm-misc/drm-misc-next]
+[also build test ERROR on tiwai-sound/for-next tiwai-sound/for-linus drm-tip/drm-tip linus/master v6.7-rc5 next-20231213]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Good idea.
+url:    https://github.com/intel-lab-lkp/linux/commits/Jani-Nikula/ASoC-hdmi-codec-drop-drm-drm_edid-h-include/20231213-175633
+base:   git://anongit.freedesktop.org/drm/drm-misc drm-misc-next
+patch link:    https://lore.kernel.org/r/20231213095023.3928703-1-jani.nikula%40intel.com
+patch subject: [PATCH v2] ASoC: hdmi-codec: drop drm/drm_edid.h include
+config: hexagon-randconfig-r063-20231213 (https://download.01.org/0day-ci/archive/20231214/202312140733.2qj4HH0f-lkp@intel.com/config)
+compiler: clang version 15.0.7 (https://github.com/llvm/llvm-project.git 8dfdcc7b7bf66834a761bd8de445840ef68e4d1a)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231214/202312140733.2qj4HH0f-lkp@intel.com/reproduce)
 
-David
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312140733.2qj4HH0f-lkp@intel.com/
 
->=20
-> Bjorn
+All errors (new ones prefixed by >>):
 
+   In file included from drivers/gpu/drm/bridge/lontium-lt9611.c:8:
+   In file included from include/linux/i2c.h:19:
+   In file included from include/linux/regulator/consumer.h:35:
+   In file included from include/linux/suspend.h:5:
+   In file included from include/linux/swap.h:9:
+   In file included from include/linux/memcontrol.h:13:
+   In file included from include/linux/cgroup.h:26:
+   In file included from include/linux/kernel_stat.h:9:
+   In file included from include/linux/interrupt.h:11:
+   In file included from include/linux/hardirq.h:11:
+   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
+   In file included from include/asm-generic/hardirq.h:17:
+   In file included from include/linux/irq.h:20:
+   In file included from include/linux/io.h:13:
+   In file included from arch/hexagon/include/asm/io.h:337:
+   include/asm-generic/io.h:547:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __raw_readb(PCI_IOBASE + addr);
+                             ~~~~~~~~~~ ^
+   include/asm-generic/io.h:560:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
+   #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
+                                                     ^
+   In file included from drivers/gpu/drm/bridge/lontium-lt9611.c:8:
+   In file included from include/linux/i2c.h:19:
+   In file included from include/linux/regulator/consumer.h:35:
+   In file included from include/linux/suspend.h:5:
+   In file included from include/linux/swap.h:9:
+   In file included from include/linux/memcontrol.h:13:
+   In file included from include/linux/cgroup.h:26:
+   In file included from include/linux/kernel_stat.h:9:
+   In file included from include/linux/interrupt.h:11:
+   In file included from include/linux/hardirq.h:11:
+   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
+   In file included from include/asm-generic/hardirq.h:17:
+   In file included from include/linux/irq.h:20:
+   In file included from include/linux/io.h:13:
+   In file included from arch/hexagon/include/asm/io.h:337:
+   include/asm-generic/io.h:573:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
+   #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
+                                                     ^
+   In file included from drivers/gpu/drm/bridge/lontium-lt9611.c:8:
+   In file included from include/linux/i2c.h:19:
+   In file included from include/linux/regulator/consumer.h:35:
+   In file included from include/linux/suspend.h:5:
+   In file included from include/linux/swap.h:9:
+   In file included from include/linux/memcontrol.h:13:
+   In file included from include/linux/cgroup.h:26:
+   In file included from include/linux/kernel_stat.h:9:
+   In file included from include/linux/interrupt.h:11:
+   In file included from include/linux/hardirq.h:11:
+   In file included from ./arch/hexagon/include/generated/asm/hardirq.h:1:
+   In file included from include/asm-generic/hardirq.h:17:
+   In file included from include/linux/irq.h:20:
+   In file included from include/linux/io.h:13:
+   In file included from arch/hexagon/include/asm/io.h:337:
+   include/asm-generic/io.h:584:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writeb(value, PCI_IOBASE + addr);
+                               ~~~~~~~~~~ ^
+   include/asm-generic/io.h:594:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:604:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+>> drivers/gpu/drm/bridge/lontium-lt9611.c:346:8: error: call to undeclared function 'drm_hdmi_avi_infoframe_from_display_mode'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
+           ret = drm_hdmi_avi_infoframe_from_display_mode(&infoframe.avi,
+                 ^
+>> drivers/gpu/drm/bridge/lontium-lt9611.c:359:8: error: call to undeclared function 'drm_hdmi_vendor_infoframe_from_display_mode'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
+           ret = drm_hdmi_vendor_infoframe_from_display_mode(&infoframe.vendor.hdmi,
+                 ^
+>> drivers/gpu/drm/bridge/lontium-lt9611.c:855:9: error: call to undeclared function 'drm_do_get_edid'; ISO C99 and later do not support implicit function declarations [-Werror,-Wimplicit-function-declaration]
+           return drm_do_get_edid(connector, lt9611_get_edid_block, lt9611);
+                  ^
+   drivers/gpu/drm/bridge/lontium-lt9611.c:855:9: note: did you mean 'drm_bridge_get_edid'?
+   include/drm/drm_bridge.h:891:14: note: 'drm_bridge_get_edid' declared here
+   struct edid *drm_bridge_get_edid(struct drm_bridge *bridge,
+                ^
+   drivers/gpu/drm/bridge/lontium-lt9611.c:855:9: error: incompatible integer to pointer conversion returning 'int' from a function with result type 'struct edid *' [-Wint-conversion]
+           return drm_do_get_edid(connector, lt9611_get_edid_block, lt9611);
+                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   6 warnings and 4 errors generated.
+
+
+vim +/drm_hdmi_avi_infoframe_from_display_mode +346 drivers/gpu/drm/bridge/lontium-lt9611.c
+
+23278bf54afe18 Vinod Koul       2020-07-23  334  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  335  static void lt9611_hdmi_set_infoframes(struct lt9611 *lt9611,
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  336  				       struct drm_connector *connector,
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  337  				       struct drm_display_mode *mode)
+23278bf54afe18 Vinod Koul       2020-07-23  338  {
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  339  	union hdmi_infoframe infoframe;
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  340  	ssize_t len;
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  341  	u8 iframes = 0x0a; /* UD1 infoframe */
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  342  	u8 buf[32];
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  343  	int ret;
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  344  	int i;
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  345  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18 @346  	ret = drm_hdmi_avi_infoframe_from_display_mode(&infoframe.avi,
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  347  						       connector,
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  348  						       mode);
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  349  	if (ret < 0)
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  350  		goto out;
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  351  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  352  	len = hdmi_infoframe_pack(&infoframe, buf, sizeof(buf));
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  353  	if (len < 0)
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  354  		goto out;
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  355  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  356  	for (i = 0; i < len; i++)
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  357  		regmap_write(lt9611->regmap, 0x8440 + i, buf[i]);
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  358  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18 @359  	ret = drm_hdmi_vendor_infoframe_from_display_mode(&infoframe.vendor.hdmi,
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  360  							  connector,
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  361  							  mode);
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  362  	if (ret < 0)
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  363  		goto out;
+23278bf54afe18 Vinod Koul       2020-07-23  364  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  365  	len = hdmi_infoframe_pack(&infoframe, buf, sizeof(buf));
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  366  	if (len < 0)
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  367  		goto out;
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  368  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  369  	for (i = 0; i < len; i++)
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  370  		regmap_write(lt9611->regmap, 0x8474 + i, buf[i]);
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  371  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  372  	iframes |= 0x20;
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  373  
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  374  out:
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  375  	regmap_write(lt9611->regmap, 0x843d, iframes); /* UD1 infoframe */
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  376  }
+84cf74d99f88bc Dmitry Baryshkov 2023-01-18  377  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
