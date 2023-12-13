@@ -1,39 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-4521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-4522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2031811305
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 14:36:12 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 822C4811409
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 15:04:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F390281227
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 13:36:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D9D39B20FFC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Dec 2023 14:04:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B7F12D04A;
-	Wed, 13 Dec 2023 13:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 788672E630;
+	Wed, 13 Dec 2023 14:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GZBgwDOY"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cqSOY00x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87D3286B6;
-	Wed, 13 Dec 2023 13:36:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D310CC433C7;
-	Wed, 13 Dec 2023 13:36:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702474570;
-	bh=FKo7DMS2ILBjt3i1R1vfFoKi54X0jPj1QGIZxzVw/k4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=GZBgwDOY8aC9JG2n44f5T6Xpy/9P4Q5M5cHnhogqs4y2CS4DvUQGX808eF7fk4ALP
-	 GYbqznrszsg1NpEWaQMHd7EYaOKMxLBT7eqZZ3VQn9u+GcJVRe7J7lVyfi750iRj3i
-	 Qwf0+EBL8vC4qihwH89IRRH/sX++6ahIFlX82UDe45PuYsTJNmHKEn/D9wsbunhRU9
-	 cQoxht6wNut+PD92exEr2w8Yks45e5VlzWOdpS2TvMIEAMAVbEUyDe3nngwobTE5ZE
-	 lJX/yi2Xby2mfnwekyiyiKmCaJiVeE2p1iazSM8I0YbWmvFS1drZKWo50b2DRMislR
-	 kuIUqGobfSZPA==
-Message-ID: <aefdf09b-3836-4f2c-ab12-7757448b9da2@kernel.org>
-Date: Wed, 13 Dec 2023 15:36:04 +0200
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99E7E121
+	for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 06:04:05 -0800 (PST)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50be3611794so8127571e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Dec 2023 06:04:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1702476244; x=1703081044; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=xRbYe9ijnkLeFnAmPMRsBoKr6vdwNz/E+CbxpHOS9z8=;
+        b=cqSOY00xSeuVcTQjI3EAhR0SbR/L13ft1/uwuTBcaCLFJGrS69/oaSoOQZT9RQW1ka
+         Sk0vQpN+8I8zU3shBVHYAD/Ym1OOrMl5TtC98NqBL3EOrlbumLiS6UVoXXW2FUz8ZrwD
+         EWe4hVr/auKf+GCTE39xEteqV56glJi6Zgz1fAOBXiMCWpWhnWYFyI0pjGZFy4MTeY5U
+         VyzYzNYhZ5jkddW0ife0I/o0pXGl0wCL+Qc0KrkO8esGD3SAIKIsN566OgmzfS0taqJK
+         CK8sQTS30QxlGfcB9xh6yY2XC/dPl/s31UOhBMJorF8cAL8CWct31mJQ69+o7Y1LRYPr
+         iqeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702476244; x=1703081044;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xRbYe9ijnkLeFnAmPMRsBoKr6vdwNz/E+CbxpHOS9z8=;
+        b=Usxui5KFK4JKmJN7aDNsQWWxPor/tuHK4rWOU2GjYCgSaIAoy09vH7MXwwsEpG5ag0
+         faZL1iDwJqAzMNWxsy0tZUbSrrtu5b8ftakGYfqEiG0JJjnuawI2dU1AUEezDo1bCU9E
+         imHMcVZh9xsCtaySY06Dot4P0IsGNFEo5BDgXDqfm1jPaRfY1ornJKZJuzx5vcfUBQik
+         xEEzVXDslCSPDcAW7ThOH2lFqQLj7EsdI5cFik51f4Z6fFn5O3r/IhT5KyVwLkIq4oqv
+         BqwiG+7HbvWx3a2/AT9maBJZeGChU9Wxbw2LHEe0i6oo+w4cNLnbCtkBLZjqKBfWkmSP
+         RcQw==
+X-Gm-Message-State: AOJu0YwIHH43kqcpLyrqWyDE/8Jfdz4PmMYRnDD1msRPBNnJPHJyRbBq
+	ONxYscTO28UhQjV2uwOrXfbOUg==
+X-Google-Smtp-Source: AGHT+IHXMStjoFGz66MJFO4YavP1JUOwKIwmrthJWwEQF3M0eEgC1L39Fi8DAqirkU/xgjnBz1rgVw==
+X-Received: by 2002:ac2:4247:0:b0:50c:6e:98c6 with SMTP id m7-20020ac24247000000b0050c006e98c6mr3987375lfl.122.1702476243773;
+        Wed, 13 Dec 2023 06:04:03 -0800 (PST)
+Received: from [192.168.1.20] ([178.197.218.27])
+        by smtp.gmail.com with ESMTPSA id kw20-20020a170907771400b00a1dc4307ed5sm7758194ejc.195.2023.12.13.06.04.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Dec 2023 06:04:03 -0800 (PST)
+Message-ID: <11257e57-693f-46db-8f97-09e5d4c20238@linaro.org>
+Date: Wed, 13 Dec 2023 15:04:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -41,116 +63,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] interconnect: qcom: Add SM6115 interconnect
- provider driver
+Subject: Re: [PATCH v2 7/7] arm64: dts: qcom: aim300: add AIM300 AIoT
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Tengfei Fan <quic_tengfan@quicinc.com>, agross@kernel.org,
+ andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Abel Vesa
+ <abel.vesa@linaro.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@quicinc.com,
+ Qiang Yu <quic_qianyu@quicinc.com>, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+References: <20231207092801.7506-1-quic_tengfan@quicinc.com>
+ <20231207092801.7506-8-quic_tengfan@quicinc.com>
+ <02be9f46-2187-45d0-9929-31f6a2c18b35@linaro.org>
 Content-Language: en-US
-To: Rob Herring <robh+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- Konrad Dybcio <konradybcio@kernel.org>
-References: <20231125-topic-6115icc-v3-0-bd8907b8cfd7@linaro.org>
- <20231125-topic-6115icc-v3-2-bd8907b8cfd7@linaro.org>
- <CAL_Jsq+FNYS-Ue1NQgDW_0D_NgONfsJj4Q-nzFWHHXpm0Ka=_Q@mail.gmail.com>
-From: Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <CAL_Jsq+FNYS-Ue1NQgDW_0D_NgONfsJj4Q-nzFWHHXpm0Ka=_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <02be9f46-2187-45d0-9929-31f6a2c18b35@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 11.12.23 19:55, Rob Herring wrote:
-> On Wed, Nov 29, 2023 at 8:41 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> Add a driver for managing NoC providers on SM6115.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>   drivers/interconnect/qcom/Kconfig  |    9 +
->>   drivers/interconnect/qcom/Makefile |    2 +
->>   drivers/interconnect/qcom/sm6115.c | 1427 ++++++++++++++++++++++++++++++++++++
->>   3 files changed, 1438 insertions(+)
->>
->> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
->> index 4d15ce2dab16..697f96c49f6f 100644
->> --- a/drivers/interconnect/qcom/Kconfig
->> +++ b/drivers/interconnect/qcom/Kconfig
->> @@ -191,6 +191,15 @@ config INTERCONNECT_QCOM_SDX75
->>            This is a driver for the Qualcomm Network-on-Chip on sdx75-based
->>            platforms.
->>
->> +config INTERCONNECT_QCOM_SM6115
->> +       tristate "Qualcomm SM6115 interconnect driver"
->> +       depends on INTERCONNECT_QCOM
->> +       depends on QCOM_SMD_RPM
->> +       select INTERCONNECT_QCOM_SMD_RPM
->> +       help
->> +         This is a driver for the Qualcomm Network-on-Chip on sm6115-based
->> +         platforms.
->> +
->>   config INTERCONNECT_QCOM_SM6350
->>          tristate "Qualcomm SM6350 interconnect driver"
->>          depends on INTERCONNECT_QCOM_RPMH_POSSIBLE
->> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
->> index 3a8a6ef67543..704846165022 100644
->> --- a/drivers/interconnect/qcom/Makefile
->> +++ b/drivers/interconnect/qcom/Makefile
->> @@ -24,6 +24,7 @@ qnoc-sdm845-objs                      := sdm845.o
->>   qnoc-sdx55-objs                                := sdx55.o
->>   qnoc-sdx65-objs                                := sdx65.o
->>   qnoc-sdx75-objs                                := sdx75.o
->> +qnoc-sm6115-objs                       := sm6115.o
->>   qnoc-sm6350-objs                       := sm6350.o
->>   qnoc-sm8150-objs                       := sm8150.o
->>   qnoc-sm8250-objs                       := sm8250.o
->> @@ -55,6 +56,7 @@ obj-$(CONFIG_INTERCONNECT_QCOM_SDM845) += qnoc-sdm845.o
->>   obj-$(CONFIG_INTERCONNECT_QCOM_SDX55) += qnoc-sdx55.o
->>   obj-$(CONFIG_INTERCONNECT_QCOM_SDX65) += qnoc-sdx65.o
->>   obj-$(CONFIG_INTERCONNECT_QCOM_SDX75) += qnoc-sdx75.o
->> +obj-$(CONFIG_INTERCONNECT_QCOM_SM6115) += qnoc-sm6115.o
->>   obj-$(CONFIG_INTERCONNECT_QCOM_SM6350) += qnoc-sm6350.o
->>   obj-$(CONFIG_INTERCONNECT_QCOM_SM8150) += qnoc-sm8150.o
->>   obj-$(CONFIG_INTERCONNECT_QCOM_SM8250) += qnoc-sm8250.o
->> diff --git a/drivers/interconnect/qcom/sm6115.c b/drivers/interconnect/qcom/sm6115.c
->> new file mode 100644
->> index 000000000000..c49a83c87739
->> --- /dev/null
->> +++ b/drivers/interconnect/qcom/sm6115.c
->> @@ -0,0 +1,1427 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
+On 11/12/2023 11:33, Krzysztof Kozlowski wrote:
+>> @@ -0,0 +1,579 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause
 >> +/*
->> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved.
->> + * Copyright (c) 2023, Linaro Limited
+>> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
 >> + */
 >> +
->> +#include <dt-bindings/interconnect/qcom,sm6115.h>
->> +#include <linux/clk.h>
->> +#include <linux/device.h>
->> +#include <linux/interconnect-provider.h>
->> +#include <linux/io.h>
->> +#include <linux/module.h>
->> +#include <linux/of_device.h>
+>> +/dts-v1/;
+>> +
+>> +#include <dt-bindings/leds/common.h>
+>> +#include "qcs8550-aim300.dtsi"
 > 
-> You probably don't need this header and the implicit includes it makes
-> are dropped now in linux-next. Please check what you actually need and
-> make them explicit.
+> Which includes sm8550.dtsi thus I think this is compatible with sm8550.
+> You even use sm8550 compatibles here, which is one more hint for that
+> compatibility.
 > 
->> +#include <linux/of_platform.h>
+> We followed this convention for RB5, although not for QRU/QDU1000 boards.
 > 
-> Also probably not needed. Please double check.
+> Anyway, if you add here new SoC compatible, I would expect to see new
+> SoC DTSI.
 > 
-> Rob
+> I don't have in my notes any previous consensus or decision in these
+> matters, so let's discuss now.
+> +CC few Linaro folks
 
-Yes, these are not needed. But we will need to include mod_devicetable.h
-for struct of_device_id. Now i notice also that other headers like clk.h
-io.h and slab.h are not really needed here as well.
+After some talks, the idea is to create qcs8550.dtsi, which will include
+sm8550.dtsi, and add top level compatible for qcs8550 using sm8550 fallback.
 
-Konrad, could you please submit a follow-up patch to fix this?
-
-Thanks,
-Georgi
-
+Best regards,
+Krzysztof
 
 
